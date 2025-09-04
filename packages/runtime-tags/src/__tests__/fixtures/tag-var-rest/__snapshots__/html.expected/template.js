@@ -1,6 +1,6 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   let obj = {
     a: 1,
     b: 2,
@@ -10,8 +10,8 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     a,
     ...partialObj
   } = obj;
-  _$.write(`<div class=obj>${_$.escapeXML(JSON.stringify(obj))}${_$.markResumeNode($scope0_id, "#text/0")}</div><div class=partialObj>${_$.escapeXML(JSON.stringify(partialObj))}${_$.markResumeNode($scope0_id, "#text/1")}</div><div class=a>${_$.escapeXML(a)}${_$.markResumeNode($scope0_id, "#text/2")}</div><div class=b>${_$.escapeXML(partialObj.b)}${_$.markResumeNode($scope0_id, "#text/3")}</div><div class=a>${_$.escapeXML(partialObj.a === undefined ? "removed a" : "didn't remove a")}${_$.markResumeNode($scope0_id, "#text/4")}</div><button>Update</button>${_$.markResumeNode($scope0_id, "#button/5")}`);
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0");
-  _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
-  _$.resumeClosestBranch($scope0_id);
+  _._html(`<div class=obj>${_._escape(JSON.stringify(obj))}${_._el_resume($scope0_id, "#text/0")}</div><div class=partialObj>${_._escape(JSON.stringify(partialObj))}${_._el_resume($scope0_id, "#text/1")}</div><div class=a>${_._escape(a)}${_._el_resume($scope0_id, "#text/2")}</div><div class=b>${_._escape(partialObj.b)}${_._el_resume($scope0_id, "#text/3")}</div><div class=a>${_._escape(partialObj.a === undefined ? "removed a" : "didn't remove a")}${_._el_resume($scope0_id, "#text/4")}</div><button>Update</button>${_._el_resume($scope0_id, "#button/5")}`);
+  _._script($scope0_id, "__tests__/template.marko_0");
+  _._scope($scope0_id, {}, "__tests__/template.marko", 0);
+  _._resume_branch($scope0_id);
 });

@@ -1,22 +1,22 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   let show = true;
-  _$.write("<div>");
-  _$.resumeConditional(() => {
+  _._html("<div>");
+  _._if(() => {
     if (show) {
-      const $scope1_id = _$.nextScopeId();
-      _$.write("Hello!");
-      _$.writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
+      const $scope1_id = _._scope_id();
+      _._html("Hello!");
+      _._scope($scope1_id, {}, "__tests__/template.marko", "3:4");
       return 0;
     }
   }, $scope0_id, "#text/0");
-  _$.write(`<button>Toggle</button>${_$.markResumeNode($scope0_id, "#button/1")}</div>`);
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0_show");
-  _$.writeScope($scope0_id, {
+  _._html(`<button>Toggle</button>${_._el_resume($scope0_id, "#button/1")}</div>`);
+  _._script($scope0_id, "__tests__/template.marko_0_show");
+  _._scope($scope0_id, {
     show
   }, "__tests__/template.marko", 0, {
     show: "2:8"
   });
-  _$.resumeClosestBranch($scope0_id);
+  _._resume_branch($scope0_id);
 });

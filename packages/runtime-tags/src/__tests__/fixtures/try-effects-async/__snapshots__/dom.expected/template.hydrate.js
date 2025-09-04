@@ -1,7 +1,7 @@
-// size: 564 (min) 299 (brotli)
-_$.enableCatch();
-const $value$await$content = _$.value(2, ($scope, value) =>
-    _$.data(
+// size: 561 (min) 296 (brotli)
+_._enable_catch();
+const $await_content__value = _._const(2, ($scope, value) =>
+    _._text(
       $scope[0],
       value > 1
         ? (() => {
@@ -10,38 +10,38 @@ const $value$await$content = _$.value(2, ($scope, value) =>
         : value,
     ),
   ),
-  $params3$await$content = _$.value(1, ($scope, $params3) =>
-    $value$await$content($scope, $params3[0]),
+  $await_content__$params = _._const(1, ($scope, $params3) =>
+    $await_content__value($scope, $params3[0]),
   ),
-  $await_content = _$.createRenderer(
+  $await_content = _._content_branch(
     "Async: <!>",
     "b%b",
     0,
-    $params3$await$content,
+    $await_content__$params,
   ),
-  $err$catch$content = _$.value(2, ($scope, err) => _$.data($scope[0], err)),
-  $params2$catch$content = _$.value(1, ($scope, $params2) =>
-    $err$catch$content($scope, $params2[0]),
+  $catch_content__err = _._const(2, ($scope, err) => _._text($scope[0], err)),
+  $catch_content__$params = _._const(1, ($scope, $params2) =>
+    $catch_content__err($scope, $params2[0]),
   );
-(_$.registerContent("a0", " ", " b", 0, $params2$catch$content),
-  _$.registerContent("a1", "LOADING...", "b"));
-const $await$try$content = _$.awaitTag(0, $await_content),
-  $clickCount$try$content_effect = _$.effect(
+(_._content_resume("a0", " ", " b", 0, $catch_content__$params),
+  _._content_resume("a1", "LOADING...", "b"));
+const $try_content__await = _._await(0, $await_content),
+  $try_content__clickCount__script = _._script(
     "a2",
     ($scope, { _: { 3: clickCount } }) =>
       ($scope._[1].textContent = clickCount),
   ),
-  $clickCount$try$content = _$.dynamicClosureRead(3, ($scope, clickCount) => {
-    ($await$try$content($scope, resolveAfter(clickCount, 1)),
-      $clickCount$try$content_effect($scope));
+  $try_content__clickCount = _._closure_get(3, ($scope, clickCount) => {
+    ($try_content__await($scope, resolveAfter(clickCount, 1)),
+      $try_content__clickCount__script($scope));
   }),
-  $clickCount_closure = _$.dynamicClosure($clickCount$try$content),
-  $clickCount_effect = _$.effect("a3", ($scope, { 3: clickCount }) =>
-    _$.on($scope[0], "click", function () {
+  $clickCount__closure = _._closure($try_content__clickCount),
+  $clickCount__script = _._script("a3", ($scope, { 3: clickCount }) =>
+    _._on($scope[0], "click", function () {
       $clickCount($scope, ++clickCount);
     }),
   ),
-  $clickCount = _$.state(3, ($scope) => {
-    ($clickCount_closure($scope), $clickCount_effect($scope));
+  $clickCount = _._let(3, ($scope) => {
+    ($clickCount__closure($scope), $clickCount__script($scope));
   });
 init();

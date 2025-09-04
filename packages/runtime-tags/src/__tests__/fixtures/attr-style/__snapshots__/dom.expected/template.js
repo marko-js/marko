@@ -2,16 +2,16 @@ export const $template = `<div></div><div style=width:100px></div><div style="co
 export const $walks = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(2) */` d/${_customTag_walks}&/${_customTag_walks}&/${_customTag_walks}&%c`;
 import CustomTag from "./tags/custom-tag.marko";
 const TestTag = CustomTag;
-import * as _$ from "@marko/runtime-tags/debug/dom";
+import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _customTag, $input_style as _customTag_input_style, $input_test as _customTag_input_test, $template as _customTag_template, $walks as _customTag_walks } from "./tags/custom-tag.marko";
-const $test_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello", /* over(1) */"b");
-export const $input_color = /* @__PURE__ */_$.value("input_color", ($scope, input_color) => {
-  _$.styleItem($scope["#div/0"], "color", input_color);
+const $test_content = _._content_resume("__tests__/template.marko_1_content", "Hello", /* over(1) */"b");
+export const $input_color = /* @__PURE__ */_._const("input_color", ($scope, input_color) => {
+  _._attr_style_item($scope["#div/0"], "color", input_color);
   _customTag_input_style($scope["#childScope/1"], {
     color: input_color
   });
 });
-const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/4");
+const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/4");
 export function $setup($scope) {
   _customTag($scope["#childScope/1"]);
   _customTag_input_test($scope["#childScope/1"], void 0);
@@ -27,7 +27,7 @@ export function $setup($scope) {
     style: {
       color: "green"
     },
-    test: _$.attrTag({
+    test: _.attrTag({
       style: {
         color: "green"
       },
@@ -35,5 +35,5 @@ export function $setup($scope) {
     })
   }));
 }
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_color($scope, input.color));
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);
+export const $input = /* @__PURE__ */_._const("input", ($scope, input) => $input_color($scope, input.color));
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -1,23 +1,24 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "n",
-      "$$count$if$content_effect": "o",
-      "$$count$if$content": "e",
-      "$$if_content2": "a",
-      "$$if$if$content": "c",
-      "$$inner$if$content_effect": "i",
-      "$$inner$if$content": "r",
-      "$$if_content": "d",
-      "$$if": "u",
-      "$$count_closure": "m",
-      "$$count": "f",
-      "$$inner": "s",
-      "$$outer_effect": "l",
-      "$$outer": "_",
-      "$$setup$if$content": "b",
-      "$$setup$if$content2": "k"
+      "$_": "t",
+      "$init": "_",
+      "$$if_content2__count__script": "n",
+      "$$if_content2__count": "o",
+      "$$if_content2__setup": "c",
+      "$$if_content2": "i",
+      "$$if_content__if": "r",
+      "$$if_content__inner__script": "e",
+      "$$if_content__inner": "u",
+      "$$if_content__setup": "a",
+      "$$if_content": "l",
+      "$$if": "m",
+      "$$outer__script": "s",
+      "$$outer": "f",
+      "$$inner": "b",
+      "$$count_closure": "k",
+      "$$count": "p",
+      "$$count__closure": "d"
     }
   }
 }

@@ -333,21 +333,21 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
     tag.insertBefore(
       t.variableDeclaration("const", [
-        t.variableDeclarator(peekScopeId, callRuntime("peekNextScopeId")),
+        t.variableDeclarator(peekScopeId, callRuntime("_peek_scope_id")),
       ]),
     );
 
     setBindingSerializedValue(
       section,
       childScopeBinding,
-      callRuntime("writeExistingScope", peekScopeId),
+      callRuntime("_existing_scope", peekScopeId),
     );
 
     if (tagVar) {
       statements.push(
         t.expressionStatement(
           callRuntime(
-            "setTagVar",
+            "_var",
             getScopeIdIdentifier(section),
             getScopeAccessorLiteral(tag.node.extra![kChildOffsetScopeBinding]!),
             peekScopeId,
@@ -456,7 +456,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     );
     source.register = true;
     source.buildAssignment = (valueSection, value) => {
-      return t.callExpression(importRuntime("tagVarSignalChange"), [
+      return t.callExpression(importRuntime("_var_change"), [
         createScopeReadExpression(valueSection, childScopeBinding),
         value,
       ]);
@@ -467,7 +467,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       undefined,
       t.expressionStatement(
         callRuntime(
-          "setTagVar",
+          "_var",
           scopeIdentifier,
           getScopeAccessorLiteral(childScopeBinding),
           source.identifier,

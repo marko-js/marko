@@ -1,47 +1,47 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
+import * as _ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
-export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
-  const $hoisted_el = _$.hoist($scope0_id, "__tests__/template.marko_0_$hoisted_el/hoist");
-  _$.resumeConditional(() => {
+export default _._template("__tests__/template.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
+  const $hoisted_el = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_el/hoist");
+  _._if(() => {
     if (input.show) {
-      const $scope1_id = _$.nextScopeId();
-      _$.resumeConditional(() => {
+      const $scope1_id = _._scope_id();
+      _._if(() => {
         if (input.show) {
-          const $scope2_id = _$.nextScopeId();
-          const el = _$.nodeRef($scope2_id, "__tests__/template.marko_2/#div");
-          _$.write(`<div></div>${_$.markResumeNode($scope2_id, "#div/0")}`);
+          const $scope2_id = _._scope_id();
+          const el = _._el($scope2_id, "__tests__/template.marko_2/#div");
+          _._html(`<div></div>${_._el_resume($scope2_id, "#div/0")}`);
           _child({
             value: el
           });
-          _$.writeScope($scope2_id, {}, "__tests__/template.marko", "2:4");
+          _._scope($scope2_id, {}, "__tests__/template.marko", "2:4");
           return 0;
         }
-      }, $scope1_id, "#text/0", 1, _$.serializeGuard($serialize, /* input.show */0), 0, 1);
-      _$.writeScope($scope1_id, {
-        _: _$.serializeIf($serialize, /* input.show */0) && _$.ensureScopeWithId($scope0_id)
+      }, $scope1_id, "#text/0", 1, _._serialize_guard($serialize, /* input.show */0), 0, 1);
+      _._scope($scope1_id, {
+        _: _._serialize_if($serialize, /* input.show */0) && _._scope_with_id($scope0_id)
       }, "__tests__/template.marko", "1:2");
       return 0;
     }
-  }, $scope0_id, "#text/0", 1, _$.serializeGuard($serialize, /* input.show */0));
-  const $childScope = _$.peekNextScopeId();
+  }, $scope0_id, "#text/0", 1, _._serialize_guard($serialize, /* input.show */0));
+  const $childScope = _._peek_scope_id();
   _child({
     value: $hoisted_el
   });
-  _$.write("<hr>");
-  _$.resumeConditional(() => {
+  _._html("<hr>");
+  _._if(() => {
     if (true) {
-      const $scope3_id = _$.nextScopeId();
-      const el2 = _$.nodeRef();
-      _$.write(`<div></div>${_$.markResumeNode($scope3_id, "#div/0")}`);
-      _$.writeScope($scope3_id, {}, "__tests__/template.marko", "19:2");
+      const $scope3_id = _._scope_id();
+      const el2 = _._el();
+      _._html(`<div></div>${_._el_resume($scope3_id, "#div/0")}`);
+      _._scope($scope3_id, {}, "__tests__/template.marko", "19:2");
       return 0;
     }
   }, $scope0_id, "#text/2", 1, 0, 0, 1);
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0");
-  _$.writeScope($scope0_id, {
-    input_show: _$.serializeIf($serialize, /* input.show */0) && input.show,
-    "#childScope/1": _$.writeExistingScope($childScope)
+  _._script($scope0_id, "__tests__/template.marko_0");
+  _._scope($scope0_id, {
+    input_show: _._serialize_if($serialize, /* input.show */0) && input.show,
+    "#childScope/1": _._existing_scope($childScope)
   }, "__tests__/template.marko", 0, {
     input_show: ["input.show"]
   });

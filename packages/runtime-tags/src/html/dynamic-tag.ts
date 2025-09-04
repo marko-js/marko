@@ -1,19 +1,15 @@
 import { normalizeDynamicRenderer } from "../common/helpers";
 import { type Accessor, AccessorPrefix, ResumeSymbol } from "../common/types";
-import {
-  attrs,
-  controllable_select_value,
-  controllable_textarea_value,
-} from "./attrs";
+import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
 import { isTemplate, type ServerRenderer } from "./template";
 import {
+  _html,
+  _peek_scope_id,
+  _resume,
+  _scope,
+  _scope_id,
   getState,
-  nextScopeId,
-  peekNextScopeId,
-  register,
   withBranchId,
-  write,
-  writeScope,
 } from "./writer";
 
 const voidElementsReg =
@@ -25,7 +21,7 @@ interface BodyContentObject {
 
 // TODO: refactor dynamicTagInput and dynamicTagArgs to be the same impl with a flag for input vs args.
 
-export let dynamicTag = (
+export let _dynamic_tag = (
   scopeId: number,
   accessor: Accessor,
   tag: unknown | string | ServerRenderer | BodyContentObject,
@@ -48,16 +44,16 @@ export let dynamicTag = (
   }
 
   const state = getState()!;
-  const branchId = peekNextScopeId();
+  const branchId = _peek_scope_id();
   let result: unknown;
 
   if (typeof renderer === "string") {
     const input = ((inputIsArgs
       ? (inputOrArgs as unknown[])[0]
       : inputOrArgs) || {}) as Record<string, unknown>;
-    nextScopeId();
-    write(
-      `<${renderer}${attrs(input, MARKO_DEBUG ? `#${renderer}/0` : 0, branchId, renderer)}>`,
+    _scope_id();
+    _html(
+      `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer}/0` : 0, branchId, renderer)}>`,
     );
 
     if (!voidElementsReg.test(renderer)) {
@@ -69,8 +65,8 @@ export let dynamicTag = (
             "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
           );
         }
-        write(
-          controllable_textarea_value(
+        _html(
+          _attr_textarea_value(
             branchId,
             MARKO_DEBUG ? `#${renderer}/0` : 0,
             input.value,
@@ -87,7 +83,7 @@ export let dynamicTag = (
           renderer === "select" &&
           ("value" in input || "valueChange" in input)
         ) {
-          controllable_select_value(
+          _attr_select_value(
             branchId,
             MARKO_DEBUG ? `#${renderer}/0` : 0,
             input.value,
@@ -95,7 +91,7 @@ export let dynamicTag = (
             renderContent,
           );
         } else {
-          dynamicTag(
+          _dynamic_tag(
             branchId,
             MARKO_DEBUG ? `#${renderer}/0` : 0,
             renderContent,
@@ -107,7 +103,7 @@ export let dynamicTag = (
         }
       }
 
-      write(`</${renderer}>`);
+      _html(`</${renderer}>`);
     } else if (MARKO_DEBUG && content) {
       throw new Error(
         `Body content is not supported for the \`<${renderer}>\` tag.`,
@@ -115,7 +111,7 @@ export let dynamicTag = (
     }
 
     if (shouldResume) {
-      write(
+      _html(
         state.mark(
           ResumeSymbol.BranchNativeTag,
           scopeId + " " + accessor + " " + branchId,
@@ -126,7 +122,7 @@ export let dynamicTag = (
     // TODO: this needs to set result the element getter
   } else {
     if (shouldResume) {
-      write(state.mark(ResumeSymbol.BranchStart, branchId + ""));
+      _html(state.mark(ResumeSymbol.BranchStart, branchId + ""));
     }
 
     const render = () => {
@@ -156,37 +152,37 @@ export let dynamicTag = (
     result = shouldResume ? withBranchId(branchId, render) : render();
 
     if (shouldResume) {
-      write(state.mark(ResumeSymbol.BranchEnd, scopeId + " " + accessor));
+      _html(state.mark(ResumeSymbol.BranchEnd, scopeId + " " + accessor));
     }
   }
 
-  const rendered = peekNextScopeId() !== branchId;
+  const rendered = _peek_scope_id() !== branchId;
   if (rendered) {
     if (shouldResume) {
-      writeScope(scopeId, {
-        [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
+      _scope(scopeId, {
+        [AccessorPrefix.ConditionalScope + accessor]: _scope(branchId, {}),
         [AccessorPrefix.ConditionalRenderer + accessor]:
           (renderer as ServerRenderer | undefined)?.___id || renderer,
       });
     }
   } else {
-    nextScopeId();
+    _scope_id();
   }
 
   return result;
 };
 
-export function createContent(id: string, fn: ServerRenderer) {
+export function _content(id: string, fn: ServerRenderer) {
   fn.___id = id;
   return fn;
 }
 
-export function registerContent(
+export function _content_resume(
   id: string,
   fn: ServerRenderer,
   scopeId?: number,
 ) {
-  return register(createContent(id, fn), id, scopeId);
+  return _resume(_content(id, fn), id, scopeId);
 }
 
 export function patchDynamicTag(
@@ -196,7 +192,7 @@ export function patchDynamicTag(
     tag: unknown | string | ServerRenderer | BodyContentObject,
   ) => unknown,
 ) {
-  dynamicTag = (
+  _dynamic_tag = (
     (originalDynamicTag) =>
     (scopeId, accessor, tag, input, content, inputIsArgs, resume) => {
       const patched = patch(scopeId, accessor, tag);
@@ -211,5 +207,5 @@ export function patchDynamicTag(
         resume,
       );
     }
-  )(dynamicTag);
+  )(_dynamic_tag);
 }

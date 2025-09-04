@@ -1,18 +1,17 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "e",
-      "$$x_effect": "r",
-      "$$x$1": "n",
-      "$$expr_count_$countChange": "o",
-      "$$count": "a",
-      "$$valueChange": "i",
-      "$$x$counter$content": "m",
-      "$$x_closure": "s",
-      "$$x": "c",
-      "$$x$counter$content2": "u",
-      "$$expr_$countChange_count": "d"
+      "$_": "t",
+      "$init": "r",
+      "$$x__script": "o",
+      "$$x$1": "e",
+      "$$countChange__OR__count": "_",
+      "$$count": "n",
+      "$$counter_content2__x": "m",
+      "$$counter_content__x": "a",
+      "$$x_closure": "c",
+      "$$x": "s",
+      "$$x__closure": "i"
     }
   }
 }

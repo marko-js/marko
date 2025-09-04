@@ -1,15 +1,15 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "a",
-      "$$number$define$content": "e",
-      "$$params2$define$content": "n",
-      "$$temp$define$content": "o",
-      "$$dynamicTag": "m",
-      "$$expr_x_MyTag": "r",
-      "$$x_effect": "i",
-      "$$x": "c"
+      "$_": "t",
+      "$init": "o",
+      "$$define_content__number": "n",
+      "$$define_content__$params": "m",
+      "$$define_content__$temp": "r",
+      "$$dynamicTag": "_",
+      "$$x__OR__MyTag": "c",
+      "$$x__script": "e",
+      "$$x": "i"
     }
   }
 }

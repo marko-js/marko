@@ -8,9 +8,9 @@ import {
 import { insertChildNodes } from "./dom";
 import { parseHTML } from "./parse-html";
 import { queueRender } from "./queue";
-import { register } from "./resume";
+import { _resume } from "./resume";
 import { createScope } from "./scope";
-import { type Signal, type SignalFn, value } from "./signals";
+import { _const, type Signal, type SignalFn } from "./signals";
 import { walk } from "./walker";
 
 export type Renderer = {
@@ -73,7 +73,7 @@ export function setupBranch(renderer: Renderer, branch: BranchScope) {
   return branch;
 }
 
-export function createContent(
+export function _content(
   id: string,
   template: string | 0,
   walks?: string | 0,
@@ -117,7 +117,7 @@ export function createContent(
   };
 }
 
-export function registerContent(
+export function _content_resume(
   id: string,
   template: string | 0,
   walks?: string | 0,
@@ -125,19 +125,19 @@ export function registerContent(
   params?: Signal<unknown> | 0,
   dynamicScopesAccessor?: Accessor,
 ) {
-  return register(
+  return _resume(
     id,
-    createContent(id, template, walks, setup, params, dynamicScopesAccessor),
+    _content(id, template, walks, setup, params, dynamicScopesAccessor),
   );
 }
 
-export function localClosures(
-  renderer: ReturnType<typeof createContent>,
+export function _content_closures(
+  renderer: ReturnType<typeof _content>,
   closureFns: Record<Accessor, SignalFn<unknown>>,
 ) {
   const closureSignals: NonNullable<Renderer["___localClosures"]> = {};
   for (const key in closureFns) {
-    closureSignals[key] = value(key, closureFns[key]);
+    closureSignals[key] = _const(key, closureFns[key]);
   }
   return (owner: Scope, closureValues: Record<Accessor, unknown>): Renderer => {
     const instance = renderer(owner);
@@ -147,13 +147,13 @@ export function localClosures(
   };
 }
 
-export function createRenderer(
+export function _content_branch(
   template: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
   params?: Signal<unknown> | 0,
 ) {
-  return createContent("", template, walks, setup, params)();
+  return _content("", template, walks, setup, params)();
 }
 
 const cloneCache: Partial<

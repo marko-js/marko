@@ -20,7 +20,7 @@
           x: !0,
           "#childScope/0": _.a = {
             "ConditionalScope:#text/0": _.b = {},
-            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
         }, _.a, _.b]),
         "__tests__/template.marko_0_x",
@@ -59,7 +59,7 @@ container.querySelector("button").click();
           x: !0,
           "#childScope/0": _.a = {
             "ConditionalScope:#text/0": _.b = {},
-            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
         }, _.a, _.b]),
         "__tests__/template.marko_0_x",
@@ -102,7 +102,7 @@ container.querySelector("button").click();
           x: !0,
           "#childScope/0": _.a = {
             "ConditionalScope:#text/0": _.b = {},
-            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
         }, _.a, _.b]),
         "__tests__/template.marko_0_x",
@@ -142,7 +142,7 @@ container.querySelector("button").click();
           x: !0,
           "#childScope/0": _.a = {
             "ConditionalScope:#text/0": _.b = {},
-            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
         }, _.a, _.b]),
         "__tests__/template.marko_0_x",

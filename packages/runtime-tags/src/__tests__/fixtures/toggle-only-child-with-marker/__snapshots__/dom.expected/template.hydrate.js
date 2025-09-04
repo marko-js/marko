@@ -1,6 +1,6 @@
-// size: 100 (min) 67 (brotli)
-(_$.effect("a0", ($scope) =>
-  _$.on($scope[0], "click", function () {
+// size: 102 (min) 71 (brotli)
+(_._script("a0", ($scope) =>
+  _._on($scope[0], "click", function () {
     document.getElementById("count").textContent++;
   }),
 ),

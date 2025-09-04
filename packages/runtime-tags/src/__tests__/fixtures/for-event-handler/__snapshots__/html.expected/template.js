@@ -1,19 +1,19 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   let num = 0;
-  _$.resumeForTo(num, 0, 1, i => {
-    const $scope1_id = _$.nextScopeId();
-    _$.write(`<button>${_$.escapeXML(i)}${_$.markResumeNode($scope1_id, "#text/1")}</button>${_$.markResumeNode($scope1_id, "#button/0")}`);
-    _$.writeEffect($scope1_id, "__tests__/template.marko_1_num");
-    _$.writeScope($scope1_id, {
-      _: _$.ensureScopeWithId($scope0_id)
+  _._for_to(num, 0, 1, i => {
+    const $scope1_id = _._scope_id();
+    _._html(`<button>${_._escape(i)}${_._el_resume($scope1_id, "#text/1")}</button>${_._el_resume($scope1_id, "#button/0")}`);
+    _._script($scope1_id, "__tests__/template.marko_1_num");
+    _._scope($scope1_id, {
+      _: _._scope_with_id($scope0_id)
     }, "__tests__/template.marko", "3:2");
   }, 0, $scope0_id, "#text/0", /* state: num */1, /* state: num */1, 0, 1);
-  _$.writeScope($scope0_id, {
+  _._scope($scope0_id, {
     num
   }, "__tests__/template.marko", 0, {
     num: "1:6"
   });
-  _$.resumeClosestBranch($scope0_id);
+  _._resume_branch($scope0_id);
 });

@@ -1,22 +1,22 @@
-// size: 359 (min) 218 (brotli)
-const $input_thing_selected = _$.value(5, ($scope, input_thing_selected) =>
-    _$.classItem($scope[0], "selected", input_thing_selected),
+// size: 368 (min) 211 (brotli)
+const $input_thing_selected = _._const(5, ($scope, input_thing_selected) =>
+    _._attr_class_item($scope[0], "selected", input_thing_selected),
   ),
-  $dynamicTag = _$.dynamicTag(1),
-  $input_thing_content = _$.value(6, $dynamicTag),
-  $input_thing = _$.value(4, ($scope, input_thing) => {
+  $dynamicTag = _._dynamic_tag(1),
+  $input_thing_content = _._const(6, $dynamicTag),
+  $input_thing = _._const(4, ($scope, input_thing) => {
     ($input_thing_selected($scope, input_thing?.selected),
       $input_thing_content($scope, input_thing?.content));
   }),
-  $define_content = _$.createContent("b0", "<span>The thing</span>", "b"),
-  $myThing = _$.value(3, ($scope, myThing) => $input_thing($scope[0], myThing)),
-  $selected_effect = _$.effect("b1", ($scope, { 2: selected }) =>
-    _$.on($scope[1], "click", function () {
+  $define_content = _._content("b0", "<span>The thing</span>", "b"),
+  $myThing = _._const(3, ($scope, myThing) => $input_thing($scope[0], myThing)),
+  $selected__script = _._script("b1", ($scope, { 2: selected }) =>
+    _._on($scope[1], "click", function () {
       $selected($scope, (selected = !selected));
     }),
   ),
-  $selected = _$.state(2, ($scope, selected) => {
+  $selected = _._let(2, ($scope, selected) => {
     ($myThing($scope, { selected: selected, content: $define_content($scope) }),
-      $selected_effect($scope));
+      $selected__script($scope));
   });
 init();

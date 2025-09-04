@@ -1,11 +1,10 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
+      "$_": "t",
       "$init": "o",
       "$$get$hoisted_el2": "r",
-      "$$get$hoisted_el3": "m",
-      "$$expr_i_j$for$content": "n"
+      "$$get$hoisted_el3": "m"
     }
   }
 }

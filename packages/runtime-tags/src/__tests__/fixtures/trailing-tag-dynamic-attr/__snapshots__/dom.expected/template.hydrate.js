@@ -1,10 +1,10 @@
-// size: 135 (min) 107 (brotli)
-const $toggle_effect = _$.effect("a0", ($scope, { 2: toggle }) =>
-    _$.on($scope[1], "click", function () {
+// size: 137 (min) 117 (brotli)
+const $toggle__script = _._script("a0", ($scope, { 2: toggle }) =>
+    _._on($scope[1], "click", function () {
       $toggle($scope, (toggle = !toggle));
     }),
   ),
-  $toggle = _$.state(2, ($scope, toggle) => {
-    (_$.attr($scope[0], "data-toggle", toggle), $toggle_effect($scope));
+  $toggle = _._let(2, ($scope, toggle) => {
+    (_._attr($scope[0], "data-toggle", toggle), $toggle__script($scope));
   });
 init();

@@ -1,10 +1,10 @@
 {
   "vars": {
     "props": {
-      "$_$": "e",
-      "$init": "t",
-      "$$expr_checkedValue_$checkedValueChange": "c",
-      "$$checkedValue": "l"
+      "$_": "t",
+      "$init": "e",
+      "$$checkedValue__OR__checkedValueChange": "_",
+      "$$checkedValue": "r"
     }
   }
 }

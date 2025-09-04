@@ -1,64 +1,64 @@
 import Child from "./tags/child.marko";
 import Thing from "./tags/thing.marko";
-import * as _$ from "@marko/runtime-tags/debug/html";
+import * as _ from "@marko/runtime-tags/debug/html";
 import _thing from "./tags/thing.marko";
-export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
-  const $hoisted_setHtml = _$.hoist($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml/hoist");
-  const $thing_content_subscribers = new Set();
-  const $inputshowThingnull_content_subscribers = new Set();
-  const $inputshowsectionnull_content_subscribers = new Set();
+export default _._template("__tests__/template.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
+  const $hoisted_setHtml = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml/hoist");
+  const $thing_content__subscribers = new Set();
+  const $inputshowThingnull_content__subscribers = new Set();
+  const $inputshowsectionnull_content__subscribers = new Set();
   _thing({
-    content: _$.createContent("__tests__/template.marko_1_renderer", () => {
-      const $scope1_id = _$.nextScopeId();
-      const $Child_scope = _$.peekNextScopeId();
-      let setHtml = _$.dynamicTag($scope1_id, "#text/0", 1 && Child, {});
-      _$.setTagVar($scope1_id, "#scopeOffset/1", $Child_scope, "__tests__/template.marko_1_setHtml/var");
-      _$.writeSubscribe($thing_content_subscribers, _$.writeScope($scope1_id, {
+    content: _._content("__tests__/template.marko_1_content", () => {
+      const $scope1_id = _._scope_id();
+      const $Child_scope = _._peek_scope_id();
+      let setHtml = _._dynamic_tag($scope1_id, "#text/0", 1 && Child, {});
+      _._var($scope1_id, "#scopeOffset/1", $Child_scope, "__tests__/template.marko_1_setHtml/var");
+      _._subscribe($thing_content__subscribers, _._scope($scope1_id, {
         setHtml
       }, "__tests__/template.marko", "4:2", {
         setHtml: "5:18"
       }));
     })
   });
-  _$.dynamicTag($scope0_id, "#text/1", input.show ? Thing : null, {}, _$.registerContent("__tests__/template.marko_2_renderer", () => {
-    const $scope2_id = _$.nextScopeId();
-    const $thing_content2_subscribers = new Set();
+  _._dynamic_tag($scope0_id, "#text/1", input.show ? Thing : null, {}, _._content_resume("__tests__/template.marko_2_content", () => {
+    const $scope2_id = _._scope_id();
+    const $thing_content2__subscribers = new Set();
     _thing({
-      content: _$.createContent("__tests__/template.marko_3_renderer", () => {
-        const $scope3_id = _$.nextScopeId();
-        const $Child_scope2 = _$.peekNextScopeId();
-        let setHtml2 = _$.dynamicTag($scope3_id, "#text/0", 1 && Child, {});
-        _$.setTagVar($scope3_id, "#scopeOffset/1", $Child_scope2, "__tests__/template.marko_3_setHtml2/var");
-        _$.writeSubscribe($thing_content2_subscribers, _$.writeScope($scope3_id, {
+      content: _._content("__tests__/template.marko_3_content", () => {
+        const $scope3_id = _._scope_id();
+        const $Child_scope2 = _._peek_scope_id();
+        let setHtml2 = _._dynamic_tag($scope3_id, "#text/0", 1 && Child, {});
+        _._var($scope3_id, "#scopeOffset/1", $Child_scope2, "__tests__/template.marko_3_setHtml2/var");
+        _._subscribe($thing_content2__subscribers, _._scope($scope3_id, {
           setHtml2
         }, "__tests__/template.marko", "17:4", {
           setHtml2: "18:20"
         }));
       })
     });
-    _$.writeSubscribe($inputshowThingnull_content_subscribers, _$.writeScope($scope2_id, {
-      "ClosureScopes:3": $thing_content2_subscribers
+    _._subscribe($inputshowThingnull_content__subscribers, _._scope($scope2_id, {
+      "ClosureScopes:3": $thing_content2__subscribers
     }, "__tests__/template.marko", "16:4"));
-  }, $scope0_id), 0, _$.serializeGuard($serialize, /* input.show */0));
-  _$.dynamicTag($scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.registerContent("__tests__/template.marko_4_renderer", () => {
-    const $scope4_id = _$.nextScopeId();
-    const $Child_scope3 = _$.peekNextScopeId();
-    let setHtml3 = _$.dynamicTag($scope4_id, "#text/0", 1 && Child, {});
-    _$.setTagVar($scope4_id, "#scopeOffset/1", $Child_scope3, "__tests__/template.marko_4_setHtml3/var");
-    _$.writeSubscribe($inputshowsectionnull_content_subscribers, _$.writeScope($scope4_id, {
+  }, $scope0_id), 0, _._serialize_guard($serialize, /* input.show */0));
+  _._dynamic_tag($scope0_id, "#text/2", input.show ? 'section' : null, {}, _._content_resume("__tests__/template.marko_4_content", () => {
+    const $scope4_id = _._scope_id();
+    const $Child_scope3 = _._peek_scope_id();
+    let setHtml3 = _._dynamic_tag($scope4_id, "#text/0", 1 && Child, {});
+    _._var($scope4_id, "#scopeOffset/1", $Child_scope3, "__tests__/template.marko_4_setHtml3/var");
+    _._subscribe($inputshowsectionnull_content__subscribers, _._scope($scope4_id, {
       setHtml3
     }, "__tests__/template.marko", "27:4", {
       setHtml3: "28:18"
     }));
-  }, $scope0_id), 0, _$.serializeGuard($serialize, /* input.show */0));
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0");
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml");
-  _$.writeScope($scope0_id, {
+  }, $scope0_id), 0, _._serialize_guard($serialize, /* input.show */0));
+  _._script($scope0_id, "__tests__/template.marko_0");
+  _._script($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml");
+  _._scope($scope0_id, {
     $hoisted_setHtml,
-    "ClosureScopes:1": $thing_content_subscribers,
-    "ClosureScopes:2": $inputshowThingnull_content_subscribers,
-    "ClosureScopes:4": $inputshowsectionnull_content_subscribers
+    "ClosureScopes:1": $thing_content__subscribers,
+    "ClosureScopes:2": $inputshowThingnull_content__subscribers,
+    "ClosureScopes:4": $inputshowsectionnull_content__subscribers
   }, "__tests__/template.marko", 0, {
     $hoisted_setHtml: "5:18"
   });

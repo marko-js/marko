@@ -1,17 +1,17 @@
 {
   "vars": {
     "props": {
-      "$_$": "e",
+      "$_": "t",
       "$init": "o",
-      "$$opt$for$content": "t",
-      "$$params2$for$content": "a",
-      "$$for_content": "n",
-      "$$for": "l",
-      "$$value": "c",
-      "$$options_": "r",
-      "$$options_effect": "i",
-      "$$options": "u",
-      "$$valueChange": "f"
+      "$$for_content__opt": "n",
+      "$$for_content__$params": "_",
+      "$$for_content": "c",
+      "$$for": "e",
+      "$$options__script": "r",
+      "$$options": "a",
+      "$$value": "i",
+      "$$options_": "l",
+      "$$valueChange": "s"
     }
   }
 }

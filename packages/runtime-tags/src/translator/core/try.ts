@@ -118,7 +118,7 @@ export default {
           .replaceWith(
             t.expressionStatement(
               callRuntime(
-                "tryContent",
+                "_try",
                 getScopeIdIdentifier(section),
                 getScopeAccessorLiteral(nodeRef),
                 contentProp?.value,
@@ -162,7 +162,7 @@ export default {
 
         signal.build = () => {
           return callRuntime(
-            "createTry",
+            "_try",
             getScopeAccessorLiteral(nodeRef),
             t.identifier(bodySection.name),
           );
@@ -178,7 +178,7 @@ export default {
         }
 
         getProgram().node.body.push(
-          t.expressionStatement(callRuntime("enableCatch")),
+          t.expressionStatement(callRuntime("_enable_catch")),
         );
 
         addValue(

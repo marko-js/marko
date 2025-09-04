@@ -1,40 +1,40 @@
 export const $template = "<!><!><!>";
 export const $walks = /* over(1), replace, over(2) */"b%c";
 export const $setup = () => {};
-import * as _$ from "@marko/runtime-tags/debug/dom";
+import * as _ from "@marko/runtime-tags/debug/dom";
 import { $template as _recurse_template, $walks as _recurse_walks } from "./recurse.marko";
-_$.enableCatch();
-const $placeholder_content = _$.registerContent("__tests__/tags/recurse.marko_4_renderer", "LOADING...", /* over(1) */"b");
-const $setup$await$content = $scope => {
+_._enable_catch();
+const $placeholder_content = _._content_resume("__tests__/tags/recurse.marko_4_content", "LOADING...", /* over(1) */"b");
+const $await_content__setup = $scope => {
   $setup($scope["#childScope/0"]);
-  $input_level$await$content($scope);
+  $await_content__input_level($scope);
 };
-const $input_level$await$content = /* @__PURE__ */_$.dynamicClosureRead("input_level", ($scope, input_level) => $input($scope["#childScope/0"], {
+const $await_content__input_level = /* @__PURE__ */_._closure_get("input_level", ($scope, input_level) => $input($scope["#childScope/0"], {
   level: input_level - 1
 }), $scope => $scope._._._);
-const $await_content = /* @__PURE__ */_$.createRenderer(`<!>${_recurse_template}<!>`, /* over(1), beginChild, _recurse_walks, endChild, over(1) */`b/${_recurse_walks}&b`, $setup$await$content);
-const $await$try$content = /* @__PURE__ */_$.awaitTag("#text/0", $await_content);
-const $setup$try$content = $scope => {
-  $await$try$content($scope, new Promise(setImmediate));
+const $await_content = /* @__PURE__ */_._content_branch(`<!>${_recurse_template}<!>`, /* over(1), beginChild, _recurse_walks, endChild, over(1) */`b/${_recurse_walks}&b`, $await_content__setup);
+const $try_content__await = /* @__PURE__ */_._await("#text/0", $await_content);
+const $try_content__setup = $scope => {
+  $try_content__await($scope, new Promise(setImmediate));
 };
-const $try_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* over(1), replace, over(2) */"b%c", $setup$try$content);
-const $input_level$if$content = /* @__PURE__ */_$.conditionalClosure("input_level", "#text/0", 0, ($scope, input_level) => _$.attr($scope["#div/0"], "data-level", input_level));
-const $try$if$content = /* @__PURE__ */_$.createTry("#text/1", $try_content);
-const $setup$if$content = $scope => {
-  $input_level$if$content._($scope);
-  $try$if$content($scope, {
-    placeholder: _$.attrTag({
+const $try_content = /* @__PURE__ */_._content_branch("<!><!><!>", /* over(1), replace, over(2) */"b%c", $try_content__setup);
+const $if_content__input_level = /* @__PURE__ */_._if_closure("input_level", "#text/0", 0, ($scope, input_level) => _._attr($scope["#div/0"], "data-level", input_level));
+const $if_content__try = /* @__PURE__ */_._try("#text/1", $try_content);
+const $if_content__setup = $scope => {
+  $if_content__input_level._($scope);
+  $if_content__try($scope, {
+    placeholder: _.attrTag({
       content: $placeholder_content($scope)
     })
   });
 };
-const $if_content = /* @__PURE__ */_$.createRenderer("<div><!></div>", /* get, next(1), replace, out(1) */" D%l", $setup$if$content);
-const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
-const $input_level_closure = /* @__PURE__ */_$.dynamicClosure($input_level$await$content);
-export const $input_level = /* @__PURE__ */_$.value("input_level", ($scope, input_level) => {
+const $if_content = /* @__PURE__ */_._content_branch("<div><!></div>", /* get, next(1), replace, out(1) */" D%l", $if_content__setup);
+const $if = /* @__PURE__ */_._if("#text/0", $if_content);
+const $input_level__closure = /* @__PURE__ */_._closure($await_content__input_level);
+export const $input_level = /* @__PURE__ */_._const("input_level", ($scope, input_level) => {
   $if($scope, input_level ? 0 : 1);
-  $input_level$if$content($scope);
-  $input_level_closure($scope);
+  $if_content__input_level($scope);
+  $input_level__closure($scope);
 });
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_level($scope, input.level));
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/recurse.marko", $template, $walks, $setup, $input);
+export const $input = /* @__PURE__ */_._const("input", ($scope, input) => $input_level($scope, input.level));
+export default /* @__PURE__ */_._template("__tests__/tags/recurse.marko", $template, $walks, $setup, $input);

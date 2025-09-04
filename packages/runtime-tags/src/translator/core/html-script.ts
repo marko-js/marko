@@ -216,7 +216,7 @@ export default {
           translateVar(
             tag,
             callRuntime(
-              "nodeRef",
+              "_el",
               getterId && getScopeIdIdentifier(tagSection),
               getterId && t.stringLiteral(getterId),
             ),
@@ -232,7 +232,7 @@ export default {
                 t.variableDeclarator(
                   getterFnIdentifier,
                   callRuntime(
-                    "nodeRef",
+                    "_el",
                     t.stringLiteral(getterId),
                     getScopeAccessorLiteral(nodeBinding!),
                   ),
@@ -278,7 +278,7 @@ export default {
         switch (name) {
           case "class":
           case "style": {
-            const helper = `${name}Attr` as const;
+            const helper = `_attr_${name}` as const;
             if (confident) {
               write`${getHTMLRuntime()[helper](computed)}`;
             } else if (isHTML) {
@@ -301,12 +301,12 @@ export default {
           }
           default:
             if (confident) {
-              write`${getHTMLRuntime().attr(name, computed)}`;
+              write`${getHTMLRuntime()._attr(name, computed)}`;
             } else if (isHTML) {
               if (isEventHandler(name)) {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
-                write`${callRuntime("attr", t.stringLiteral(name), value)}`;
+                write`${callRuntime("_attr", t.stringLiteral(name), value)}`;
               }
             } else if (isEventHandler(name)) {
               addStatement(
@@ -315,7 +315,7 @@ export default {
                 valueReferences,
                 t.expressionStatement(
                   callRuntime(
-                    "on",
+                    "_on",
                     t.memberExpression(scopeIdentifier, visitAccessor!, true),
                     t.stringLiteral(getEventHandlerName(name)),
                     value,
@@ -329,7 +329,7 @@ export default {
                 valueReferences,
                 t.expressionStatement(
                   callRuntime(
-                    "attr",
+                    "_attr",
                     t.memberExpression(scopeIdentifier, visitAccessor!, true),
                     t.stringLiteral(name),
                     value,
@@ -347,9 +347,9 @@ export default {
           addHTMLEffectCall(tagSection, tagExtra.referencedBindings);
 
           if (skipExpression) {
-            write`${callRuntime("partialAttrs", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(tagSection), t.stringLiteral("script"))}`;
+            write`${callRuntime("_attrs_partial", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(tagSection), t.stringLiteral("script"))}`;
           } else {
-            write`${callRuntime("attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(tagSection), t.stringLiteral("script"))}`;
+            write`${callRuntime("_attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(tagSection), t.stringLiteral("script"))}`;
           }
         } else {
           if (skipExpression) {
@@ -359,7 +359,7 @@ export default {
               tagExtra.referencedBindings,
               t.expressionStatement(
                 callRuntime(
-                  "partialAttrs",
+                  "_attrs_partial",
                   scopeIdentifier,
                   visitAccessor,
                   spreadExpression,
@@ -374,7 +374,7 @@ export default {
               tagExtra.referencedBindings,
               t.expressionStatement(
                 callRuntime(
-                  "attrs",
+                  "_attrs",
                   scopeIdentifier,
                   visitAccessor,
                   spreadExpression,
@@ -388,7 +388,7 @@ export default {
             tagSection,
             tagExtra.referencedBindings,
             t.expressionStatement(
-              callRuntime("attrsEvents", scopeIdentifier, visitAccessor),
+              callRuntime("_attrs_script", scopeIdentifier, visitAccessor),
             ),
             false,
           );
@@ -409,7 +409,7 @@ export default {
           if (t.isMarkoText(child)) {
             write`${child.value}`;
           } else if (t.isMarkoPlaceholder(child)) {
-            write`${callRuntime("escapeScript", child.value)}`;
+            write`${callRuntime("_escape_script", child.value)}`;
           }
         }
       } else {
@@ -438,7 +438,7 @@ export default {
             referencePlaceholder.value.extra?.referencedBindings,
             t.expressionStatement(
               callRuntime(
-                "textContent",
+                "_text_content",
                 t.memberExpression(
                   scopeIdentifier,
                   getScopeAccessorLiteral(nodeBinding!),

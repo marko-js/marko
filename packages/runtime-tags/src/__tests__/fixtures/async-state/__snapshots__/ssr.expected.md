@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>inc</button><!--M_*1 #button/0--><!--M_[2--><!--M_!^b-->LOADING...<!--M_!b--><!--M_]1 #text/1--><style M_>t{display:none}</style><t M_=b><!--M_#c--></t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:clickCount":0,"#BranchAccessor":"#text/1"},clickCount:0,"ClosureScopes:clickCount":_.d=new Set},_.b],_.b._=_.a,_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.a),(_.d).add(_.b),_.c),"__tests__/template.marko_0_clickCount",1];REORDER_RUNTIME(M._);M._.w()</script>
+  <button>inc</button><!--M_*1 #button/0--><!--M_[2--><!--M_!^b-->LOADING...<!--M_!b--><!--M_]1 #text/1--><style M_>t{display:none}</style><t M_=b><!--M_#c--></t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:clickCount":0,"#BranchAccessor":"#text/1"},clickCount:0,"ClosureScopes:clickCount":_.d=new Set},_.b],_.b._=_.a,_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_content"](_.a),(_.d).add(_.b),_.c),"__tests__/template.marko_0_clickCount",1];REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Write
@@ -39,7 +39,7 @@
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_0_clickCount",
         1

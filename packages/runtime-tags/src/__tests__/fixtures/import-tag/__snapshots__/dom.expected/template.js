@@ -4,11 +4,11 @@ import "./foo";
 import { b as c } from "./bar";
 import Baz from "./tags/baz.marko";
 import { $setup as _Baz, $template as _Baz_template, $walks as _Baz_walks } from "./tags/baz.marko";
-import * as _$ from "@marko/runtime-tags/debug/dom";
+import * as _ from "@marko/runtime-tags/debug/dom";
 export function $setup($scope) {
   _Baz($scope["#childScope/0"]);
   _Baz($scope["#childScope/1"]);
   _Baz($scope["#childScope/2"]);
-  _$.data($scope["#text/3"], c);
+  _._text($scope["#text/3"], c);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

@@ -1,13 +1,11 @@
 {
   "vars": {
     "props": {
-      "$_$": "r",
-      "$init": "t",
-      "$$dynamicTag$inputasdiv$content": "e",
-      "$$setup$inputasdiv$content": "o",
-      "$$dynamicTag": "n",
-      "$$expr_inputAs_inputClass_htmlInput_content": "a",
-      "$$content": "i"
+      "$_": "t",
+      "$init": "o",
+      "$$dynamicTag": "m",
+      "$$inputAs__OR__inputClass__OR__htmlInput__OR__content": "r",
+      "$$content": "e"
     }
   }
 }

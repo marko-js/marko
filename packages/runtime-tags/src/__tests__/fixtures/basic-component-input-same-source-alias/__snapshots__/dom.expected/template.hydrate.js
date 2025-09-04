@@ -1,15 +1,15 @@
-// size: 258 (min) 172 (brotli)
-const $onClick_effect = _$.effect("a0", ($scope, { 5: onClick }) =>
-    _$.on($scope[0], "click", onClick),
+// size: 262 (min) 175 (brotli)
+const $onClick__script = _._script("a0", ($scope, { 5: onClick }) =>
+    _._on($scope[0], "click", onClick),
   ),
-  $onClick$1 = _$.value(5, $onClick_effect),
-  $text = _$.value(6, ($scope, text) => {
-    (_$.data($scope[1], text), $textAlias($scope, text));
+  $onClick$1 = _._const(5, $onClick__script),
+  $text = _._const(6, ($scope, text) => {
+    (_._text($scope[1], text), $textAlias($scope, text));
   }),
   $textAlias = ($scope, textAlias) => {
-    _$.data($scope[2], textAlias);
+    _._text($scope[2], textAlias);
   },
-  $clickCount = _$.state(1, ($scope, clickCount) => {
+  $clickCount = _._let(1, ($scope, clickCount) => {
     ($text($scope[0], clickCount), $onClick$1($scope[0], $onClick($scope)));
   });
 function $onClick($scope, { 1: clickCount } = $scope) {
@@ -17,4 +17,4 @@ function $onClick($scope, { 1: clickCount } = $scope) {
     $clickCount($scope, ++clickCount);
   };
 }
-(_$.register("b0", $onClick), init());
+(_._resume("b0", $onClick), init());

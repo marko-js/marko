@@ -129,7 +129,7 @@ export default {
       const binding = tagVar.extra!.binding!;
 
       if (isOutputDOM()) {
-        const signal = initValue(binding, "state");
+        const signal = initValue(binding, true);
         const referencedBindings = tag.node.extra!.referencedBindings;
 
         addValue(section, referencedBindings, signal, valueAttr.value);

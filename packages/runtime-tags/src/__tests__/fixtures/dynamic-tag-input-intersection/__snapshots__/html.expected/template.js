@@ -1,18 +1,18 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
+import * as _ from "@marko/runtime-tags/debug/html";
 import _myTag from "./tags/my-tag.marko";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   _myTag({
-    content: _$.registerContent("__tests__/template.marko_1_renderer", () => {
-      const $scope1_id = _$.nextScopeId();
-      _$.write("Div");
+    content: _._content_resume("__tests__/template.marko_1_content", () => {
+      const $scope1_id = _._scope_id();
+      _._html("Div");
     }, $scope0_id)
   });
   _myTag({
     as: "span",
-    content: _$.registerContent("__tests__/template.marko_2_renderer", () => {
-      const $scope2_id = _$.nextScopeId();
-      _$.write("Span");
+    content: _._content_resume("__tests__/template.marko_2_content", () => {
+      const $scope2_id = _._scope_id();
+      _._html("Span");
     }, $scope0_id)
   });
 });

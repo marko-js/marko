@@ -1,8 +1,8 @@
 export const $template = `${_checkbox_template}${_checkbox_template}${_checkbox_template}<span> </span>`;
 export const $walks = /* beginChild, _checkbox_walks, endChild, beginChild, _checkbox_walks, endChild, beginChild, _checkbox_walks, endChild, next(1), get, out(1) */`/${_checkbox_walks}&/${_checkbox_walks}&/${_checkbox_walks}&D l`;
 import { $setup as _checkbox, $input as _checkbox_input, $template as _checkbox_template, $walks as _checkbox_walks } from "./tags/checkbox.marko";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $expr_checkedValue_$checkedValueChange = /* @__PURE__ */_$.intersection(6, $scope => {
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $checkedValue__OR__checkedValueChange = /* @__PURE__ */_._or(6, $scope => {
   let {
     checkedValue,
     $checkedValueChange
@@ -23,11 +23,11 @@ const $expr_checkedValue_$checkedValueChange = /* @__PURE__ */_$.intersection(6,
     value: "c"
   });
 });
-const $checkedValue = /* @__PURE__ */_$.state("checkedValue/4", ($scope, checkedValue) => {
-  _$.data($scope["#text/3"], checkedValue);
-  $expr_checkedValue_$checkedValueChange($scope);
+const $checkedValue = /* @__PURE__ */_._let("checkedValue/4", ($scope, checkedValue) => {
+  _._text($scope["#text/3"], checkedValue);
+  $checkedValue__OR__checkedValueChange($scope);
 });
-const $checkedValueChange3 = /* @__PURE__ */_$.value("$checkedValueChange", $expr_checkedValue_$checkedValueChange);
+const $checkedValueChange3 = /* @__PURE__ */_._const("$checkedValueChange", $checkedValue__OR__checkedValueChange);
 export function $setup($scope) {
   _checkbox($scope["#childScope/0"]);
   _checkbox($scope["#childScope/1"]);
@@ -40,5 +40,5 @@ function $checkedValueChange2($scope) {
     $checkedValue($scope, _new_checkedValue);
   };
 }
-_$.register("__tests__/template.marko_0/checkedValueChange2", $checkedValueChange2);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+_._resume("__tests__/template.marko_0/checkedValueChange2", $checkedValueChange2);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

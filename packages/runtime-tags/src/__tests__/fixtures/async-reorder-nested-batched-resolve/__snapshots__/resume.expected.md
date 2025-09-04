@@ -49,7 +49,7 @@
           r
         })
       }, _.b], _.b["#PlaceholderContent"] = _._[
-        "__tests__/template.marko_4_renderer"
+        "__tests__/template.marko_4_content"
         ](_.a), _.d)];
       REORDER_RUNTIME(M._);
       M._.w()
@@ -60,7 +60,7 @@
           "#BranchAccessor": "#text/1"
         }
       }, _.f], _.f["#PlaceholderContent"] = _._[
-        "__tests__/template.marko_5_renderer"
+        "__tests__/template.marko_5_content"
         ](_.e), _.g), _ =&gt; (_.c.f("a"), _.h = []), _ =&gt; (_.l = [_.i = {
         "ConditionalScope:#text/1": _.j = {
           "#BranchAccessor": "#text/1"
@@ -70,7 +70,7 @@
           r
         })
       }, _.j], _.j["#PlaceholderContent"] = _._[
-        "__tests__/template.marko_10_renderer"
+        "__tests__/template.marko_10_content"
         ](_.i), (_.f["ConditionalScope:#text/0"] = _.i), _.l));
       M._.w()
     </script>
@@ -80,7 +80,7 @@
           "#BranchAccessor": "#text/1"
         }
       }, _.n], _.n["#PlaceholderContent"] = _._[
-        "__tests__/template.marko_11_renderer"
+        "__tests__/template.marko_11_content"
         ](_.m), _.o), _ =&gt; (_.k.f("b"), _.p = []));
       M._.w()
     </script>

@@ -1,11 +1,11 @@
-// size: 165 (min) 139 (brotli)
-const $expr_a_b_effect = _$.effect("a0", ($scope, { 2: a, 3: b }) =>
-    _$.on($scope[0], "click", function () {
+// size: 158 (min) 147 (brotli)
+const $a__OR__b__script = _._script("a0", ($scope, { 2: a, 3: b }) =>
+    _._on($scope[0], "click", function () {
       $a($scope, (a = a.map((a) => b)));
     }),
   ),
-  $expr_a_b = _$.intersection(4, $expr_a_b_effect),
-  $a = _$.state(2, ($scope, a) => {
-    (_$.data($scope[1], a.join("")), $expr_a_b($scope));
+  $a__OR__b = _._or(4, $a__OR__b__script),
+  $a = _._let(2, ($scope, a) => {
+    (_._text($scope[1], a.join("")), $a__OR__b($scope));
   });
 init();

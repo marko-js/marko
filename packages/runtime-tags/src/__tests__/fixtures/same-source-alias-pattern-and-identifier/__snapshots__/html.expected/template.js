@@ -1,6 +1,6 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
   const {
     a: {
       b
@@ -12,6 +12,6 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   const {
     b: c
   } = a;
-  _$.write(`<button>${_$.escapeXML(b)}${_$.markResumeNode($scope0_id, "#text/0", _$.serializeGuard($serialize, /* b */1))} ${_$.commentSeparator(_$.serializeGuard($serialize, /* c */2))}${_$.escapeXML(c)}${_$.markResumeNode($scope0_id, "#text/1", _$.serializeGuard($serialize, /* c */2))}</button>`);
-  _$.serializeGuard($serialize, /* b,c */0) && _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+  _._html(`<button>${_._escape(b)}${_._el_resume($scope0_id, "#text/0", _._serialize_guard($serialize, /* b */1))} ${_._sep(_._serialize_guard($serialize, /* c */2))}${_._escape(c)}${_._el_resume($scope0_id, "#text/1", _._serialize_guard($serialize, /* c */2))}</button>`);
+  _._serialize_guard($serialize, /* b,c */0) && _._scope($scope0_id, {}, "__tests__/template.marko", 0);
 });

@@ -1,41 +1,33 @@
-// size: 399 (min) 236 (brotli)
-const $clickCount$else$content = _$.conditionalClosure(
-    1,
-    0,
-    1,
-    ($scope, clickCount) => _$.data($scope[0], clickCount),
+// size: 382 (min) 231 (brotli)
+const $else_content__clickCount = _._if_closure(1, 0, 1, ($scope, clickCount) =>
+    _._text($scope[0], clickCount),
   ),
-  $setup$else$content = $clickCount$else$content,
-  $else_content = _$.createRenderer(
+  $else_content__setup = $else_content__clickCount,
+  $else_content = _._content_branch(
     "<span>The button was clicked <!> times.</span>",
     "Db%l",
-    $setup$else$content,
+    $else_content__setup,
   ),
-  $clickCount$if$content_effect = _$.effect(
+  $if_content__clickCount__script = _._script(
     "a0",
     ($scope, { _: { 1: clickCount } }) =>
-      _$.on($scope[0], "click", function () {
+      _._on($scope[0], "click", function () {
         $clickCount($scope._, ++clickCount);
       }),
   ),
-  $clickCount$if$content = _$.conditionalClosure(
-    1,
-    0,
-    0,
-    ($scope, clickCount) => {
-      (_$.data($scope[1], clickCount), $clickCount$if$content_effect($scope));
-    },
-  ),
-  $setup$if$content = $clickCount$if$content,
-  $if_content = _$.createRenderer(
+  $if_content__clickCount = _._if_closure(1, 0, 0, ($scope, clickCount) => {
+    (_._text($scope[1], clickCount), $if_content__clickCount__script($scope));
+  }),
+  $if_content__setup = $if_content__clickCount,
+  $if_content = _._content_branch(
     "<button> </button>",
     " D l",
-    $setup$if$content,
+    $if_content__setup,
   ),
-  $if = _$.conditional(0, $if_content, $else_content),
-  $clickCount = _$.state(1, ($scope, clickCount) => {
+  $if = _._if(0, $if_content, $else_content),
+  $clickCount = _._let(1, ($scope, clickCount) => {
     ($if($scope, clickCount < 3 ? 0 : 1),
-      $clickCount$if$content($scope),
-      $clickCount$else$content($scope));
+      $if_content__clickCount($scope),
+      $else_content__clickCount($scope));
   });
 init();

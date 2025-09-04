@@ -1,27 +1,27 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
-  const $x_closures = new Set();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
+  const $x__closures = new Set();
   let x = 1;
   const MyTag = {
-    content: _$.createContent("__tests__/template.marko_1_renderer", () => {
-      const $scope1_id = _$.nextScopeId();
-      _$.write(`<div>${_$.escapeXML(x)}${_$.markResumeNode($scope1_id, "#text/0")}</div>`);
-      _$.writeSubscribe($x_closures, _$.writeScope($scope1_id, {
-        _: _$.ensureScopeWithId($scope0_id),
+    content: _._content("__tests__/template.marko_1_content", () => {
+      const $scope1_id = _._scope_id();
+      _._html(`<div>${_._escape(x)}${_._el_resume($scope1_id, "#text/0")}</div>`);
+      _._subscribe($x__closures, _._scope($scope1_id, {
+        _: _._scope_with_id($scope0_id),
         "ClosureSignalIndex:x": 0
       }, "__tests__/template.marko", "2:2"));
-      _$.resumeClosestBranch($scope1_id);
+      _._resume_branch($scope1_id);
     })
   };
-  _$.dynamicTag($scope0_id, "#text/0", MyTag, {}, 0, 0, 0);
-  _$.write(`<button>${_$.escapeXML(x)}${_$.markResumeNode($scope0_id, "#text/2")}</button>${_$.markResumeNode($scope0_id, "#button/1")}`);
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0_x");
-  _$.writeScope($scope0_id, {
+  _._dynamic_tag($scope0_id, "#text/0", MyTag, {}, 0, 0, 0);
+  _._html(`<button>${_._escape(x)}${_._el_resume($scope0_id, "#text/2")}</button>${_._el_resume($scope0_id, "#button/1")}`);
+  _._script($scope0_id, "__tests__/template.marko_0_x");
+  _._scope($scope0_id, {
     x,
-    "ClosureScopes:x": $x_closures
+    "ClosureScopes:x": $x__closures
   }, "__tests__/template.marko", 0, {
     x: "1:6"
   });
-  _$.resumeClosestBranch($scope0_id);
+  _._resume_branch($scope0_id);
 });

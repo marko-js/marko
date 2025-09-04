@@ -1,17 +1,15 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
+      "$_": "t",
       "$init": "o",
-      "$$className_effect": "m",
-      "$$className": "r",
-      "$$count$define$content": "n",
-      "$$setup$define$content": "e",
-      "$$expr_count_MyThing": "a",
-      "$$count_closure": "i",
-      "$$count_effect": "s",
-      "$$count": "c",
-      "$sideEffect": "d"
+      "$sideEffect": "e",
+      "$$define_content__count": "r",
+      "$$count__OR__MyThing": "_",
+      "$$count_closure": "c",
+      "$$count__script": "m",
+      "$$count": "n",
+      "$$count__closure": "s"
     }
   }
 }

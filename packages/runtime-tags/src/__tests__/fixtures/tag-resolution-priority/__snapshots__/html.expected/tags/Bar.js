@@ -1,5 +1,5 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/tags/Bar.marko", input => {
-  const $scope0_id = _$.nextScopeId();
-  _$.write("<span></span>");
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/tags/Bar.marko", input => {
+  const $scope0_id = _._scope_id();
+  _._html("<span></span>");
 });

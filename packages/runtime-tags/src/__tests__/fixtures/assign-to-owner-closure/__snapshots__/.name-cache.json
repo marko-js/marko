@@ -1,12 +1,12 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
+      "$_": "t",
       "$init": "o",
-      "$$setup$if$content": "n",
-      "$$if_content": "r",
-      "$$if": "e",
-      "$$hide": "m"
+      "$$if_content__setup": "n",
+      "$$if_content": "m",
+      "$$if": "r",
+      "$$hide": "i"
     }
   }
 }

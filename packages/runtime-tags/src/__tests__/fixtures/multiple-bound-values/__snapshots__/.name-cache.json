@@ -1,18 +1,18 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "e",
-      "$$expr_input_count2_input_count2Change": "a",
-      "$$expr_input_count1_input_count1Change": "n",
-      "$$count2_effect": "o",
-      "$$count2$1": "r",
-      "$$count_effect": "i",
-      "$$count$1": "c",
+      "$_": "t",
+      "$init": "o",
+      "$$count__script": "e",
+      "$$count$1": "r",
+      "$$input_count1__OR__input_count1Change": "_",
+      "$$input_count": "n",
+      "$$count2__script": "c",
+      "$$count2$1": "i",
+      "$$input_count2__OR__input_count2Change": "m",
       "$$input_count2": "s",
-      "$$input_count": "f",
-      "$$count2": "m",
-      "$$count": "u"
+      "$$count": "u",
+      "$$count2": "l"
     }
   }
 }

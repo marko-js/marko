@@ -1,11 +1,11 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
+      "$_": "t",
       "$init": "o",
-      "$$expr_x_handler": "n",
-      "$$y_effect": "a",
-      "$$y": "r",
+      "$$y__script": "r",
+      "$$y": "m",
+      "$$x__OR__handler": "n",
       "$$x": "e"
     }
   }

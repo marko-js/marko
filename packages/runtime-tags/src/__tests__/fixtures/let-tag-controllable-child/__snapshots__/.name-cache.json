@@ -1,18 +1,18 @@
 {
   "vars": {
     "props": {
-      "$_$": "a",
-      "$init": "t",
-      "$$expr_input_value_input_valueChange": "e",
-      "$$otherState_effect": "n",
-      "$$otherState": "o",
-      "$$state_effect": "u",
-      "$$state": "r",
-      "$$input_valueChange": "c",
-      "$$input_value": "i",
+      "$_": "t",
+      "$init": "e",
+      "$$state__script": "n",
+      "$$state": "o",
+      "$$input_value__OR__input_valueChange": "_",
+      "$$input_value": "a",
+      "$$input_valueChange": "r",
+      "$$otherState__script": "c",
+      "$$otherState": "u",
       "$$input": "l",
-      "$$source": "m",
-      "$$valueChange": "s"
+      "$$source": "i",
+      "$$valueChange": "m"
     }
   }
 }

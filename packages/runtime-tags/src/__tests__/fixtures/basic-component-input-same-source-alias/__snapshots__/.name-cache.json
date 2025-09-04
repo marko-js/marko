@@ -1,14 +1,14 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "a",
-      "$$text": "o",
-      "$$onClick_effect": "r",
-      "$$onClick$1": "e",
-      "$$clickCount": "m",
-      "$$onClick": "n",
-      "$$textAlias": "i"
+      "$_": "t",
+      "$init": "o",
+      "$$onClick__script": "r",
+      "$$onClick$1": "m",
+      "$$text": "n",
+      "$$textAlias": "c",
+      "$$clickCount": "e",
+      "$$onClick": "i"
     }
   }
 }

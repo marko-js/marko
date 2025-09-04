@@ -1,20 +1,20 @@
-// size: 270 (min) 170 (brotli)
-const $y_effect = _$.effect("a1", ($scope, { 6: y }) =>
-    _$.on($scope[0], "click", function () {
+// size: 262 (min) 176 (brotli)
+const $y__script = _._script("a1", ($scope, { 6: y }) =>
+    _._on($scope[0], "click", function () {
       $y($scope, ++y);
     }),
   ),
-  $y = _$.state(6, ($scope, y) => {
-    (_$.data($scope[2], y), $y_effect($scope));
+  $y = _._let(6, ($scope, y) => {
+    (_._text($scope[2], y), $y__script($scope));
   }),
-  $expr_x_handler = _$.intersection(5, ($scope) => {
+  $x__OR__handler = _._or(5, ($scope) => {
     let { 3: x, 4: handler } = $scope;
     $y($scope, x, handler);
   }),
-  $x = _$.state(3, ($scope, x) => {
-    (_$.data($scope[1], x), $expr_x_handler($scope));
+  $x = _._let(3, ($scope, x) => {
+    (_._text($scope[1], x), $x__OR__handler($scope));
   });
-(_$.register("a0", function ($scope) {
+(_._resume("a0", function ($scope) {
   return function (newValue) {
     $x($scope, newValue + 1);
   };

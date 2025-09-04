@@ -99,7 +99,7 @@ export default {
               section,
               exprRoot.node.extra?.referencedBindings,
               t.expressionStatement(
-                t.callExpression(importRuntime("resetAbortSignal"), [
+                t.callExpression(importRuntime("$signalReset"), [
                   scopeIdentifier,
                   t.numericLiteral(exprId),
                 ]),
@@ -109,7 +109,7 @@ export default {
           }
 
           identifier.replaceWith(
-            t.callExpression(importRuntime("getAbortSignal"), [
+            t.callExpression(importRuntime("$signal"), [
               scopeIdentifier,
               t.numericLiteral(exprId),
             ]),

@@ -1,16 +1,16 @@
 import { resolveAfter } from "../../utils/resolve";
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
-  _$.write("a");
-  _$.fork($scope0_id, "#text/0", resolveAfter("b", 2), value => {
-    const $scope1_id = _$.nextScopeId();
-    _$.write(_$.escapeXML(value));
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
+  _._html("a");
+  _._await($scope0_id, "#text/0", resolveAfter("b", 2), value => {
+    const $scope1_id = _._scope_id();
+    _._html(_._escape(value));
   }, 0);
-  _$.write("c");
-  _$.fork($scope0_id, "#text/1", resolveAfter("d", 1), value => {
-    const $scope2_id = _$.nextScopeId();
-    _$.write(_$.escapeXML(value));
+  _._html("c");
+  _._await($scope0_id, "#text/1", resolveAfter("d", 1), value => {
+    const $scope2_id = _._scope_id();
+    _._html(_._escape(value));
   }, 0);
-  _$.write("e");
+  _._html("e");
 });

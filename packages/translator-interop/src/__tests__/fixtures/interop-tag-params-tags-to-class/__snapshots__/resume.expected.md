@@ -62,7 +62,7 @@
             ["_0", 0,
             {
               "renderBody": [
-                "__tests__/template.marko_1_renderer",
+                "__tests__/template.marko_1_content",
                 1
               ]
             },
@@ -170,7 +170,7 @@ container.querySelector("#tags").click();
             ["_0", 0,
             {
               "renderBody": [
-                "__tests__/template.marko_1_renderer",
+                "__tests__/template.marko_1_content",
                 1
               ]
             },
@@ -267,7 +267,7 @@ container.querySelector("#class").click();
             ["_0", 0,
             {
               "renderBody": [
-                "__tests__/template.marko_1_renderer",
+                "__tests__/template.marko_1_content",
                 1
               ]
             },
@@ -366,7 +366,7 @@ container.querySelector("#tags").click();
             ["_0", 0,
             {
               "renderBody": [
-                "__tests__/template.marko_1_renderer",
+                "__tests__/template.marko_1_content",
                 1
               ]
             },
@@ -464,7 +464,7 @@ container.querySelector("#class").click();
             ["_0", 0,
             {
               "renderBody": [
-                "__tests__/template.marko_1_renderer",
+                "__tests__/template.marko_1_content",
                 1
               ]
             },
@@ -563,7 +563,7 @@ container.querySelector("#tags").click();
             ["_0", 0,
             {
               "renderBody": [
-                "__tests__/template.marko_1_renderer",
+                "__tests__/template.marko_1_content",
                 1
               ]
             },

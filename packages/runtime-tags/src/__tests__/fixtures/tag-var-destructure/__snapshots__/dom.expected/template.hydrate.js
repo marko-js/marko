@@ -1,11 +1,11 @@
-// size: 431 (min) 219 (brotli)
-const $a = _$.state(6, ($scope, a) => _$.data($scope[1], a)),
-  $b = _$.state(7, ($scope, b) => _$.data($scope[2], b)),
-  $c = _$.state(8, ($scope, c) => _$.data($scope[3], JSON.stringify(c))),
-  $d = _$.state(9, ($scope, d) => _$.data($scope[4], d)),
-  $e = _$.state(10, ($scope, e) => _$.data($scope[5], JSON.stringify(e)));
-(_$.effect("a0", ($scope) =>
-  _$.on($scope[0], "click", function () {
+// size: 433 (min) 223 (brotli)
+const $a = _2._let(6, ($scope, a) => _2._text($scope[1], a)),
+  $b = _2._let(7, ($scope, b) => _2._text($scope[2], b)),
+  $c = _2._let(8, ($scope, c) => _2._text($scope[3], JSON.stringify(c))),
+  $d = _2._let(9, ($scope, d) => _2._text($scope[4], d)),
+  $e = _2._let(10, ($scope, e) => _2._text($scope[5], JSON.stringify(e)));
+(_2._script("a0", ($scope) =>
+  _2._on($scope[0], "click", function () {
     let local;
     var $result2, $a2, $b2, $c2, $result, $d2, $e2;
     (($result2 = { a: 1, _b: { _b: 2 }, local: 3, c: 4 }),

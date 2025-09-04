@@ -2,10 +2,10 @@ import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 export const $template = "<!><!><!>";
 export const $walks = /* over(1), replace, over(2) */"b%c";
 import _helloInternal from "./components/hello-internal.marko";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-_$.register("__tests__/tags/components/hello-internal.marko", _helloInternal);
-const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
+import * as _ from "@marko/runtime-tags/debug/dom";
+_._resume("__tests__/tags/components/hello-internal.marko", _helloInternal);
+const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0");
 export function $setup($scope) {
   $dynamicTag($scope, _helloInternal);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/hello.marko", $template, $walks, $setup);
+export default /* @__PURE__ */_._template("__tests__/tags/hello.marko", $template, $walks, $setup);

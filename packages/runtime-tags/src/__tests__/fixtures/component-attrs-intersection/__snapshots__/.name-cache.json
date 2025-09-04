@@ -1,12 +1,12 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
+      "$_": "t",
       "$init": "o",
-      "$$expr_value_dummy": "m",
-      "$$value": "a",
-      "$$count_effect": "n",
-      "$$count": "r"
+      "$$value__OR__dummy": "m",
+      "$$value": "r",
+      "$$count__script": "i",
+      "$$count": "n"
     }
   }
 }

@@ -87,7 +87,7 @@ export function getExprIfSerialized<
         : t.logicalExpression(
             "&&",
             callRuntime(
-              "serializeIf",
+              "_serialize_if",
               t.identifier(getSharedUid("serialize")),
               withLeadingComment(
                 t.numericLiteral(
@@ -107,7 +107,7 @@ export function getExprIfSerialized<
 
 function getInputSerializeReasonGuard(reason: InputSerializeReason) {
   return callRuntime(
-    "serializeGuard",
+    "_serialize_guard",
     t.identifier(getSharedUid("serialize")),
     withLeadingComment(
       t.numericLiteral(
@@ -153,7 +153,7 @@ export default {
       );
       const exportDefault = t.exportDefaultDeclaration(
         callRuntime(
-          "createTemplate",
+          "_template",
           t.stringLiteral(program.hub.file.metadata.marko.id),
           contentId ? t.identifier(contentId) : contentFn,
         ),
@@ -261,11 +261,7 @@ function addRegisteredDeclarations(body: t.Statement[]) {
     for (const { id, registerId } of registeredFnDeclarations) {
       body.push(
         t.expressionStatement(
-          callRuntime(
-            "register",
-            t.identifier(id),
-            t.stringLiteral(registerId),
-          ),
+          callRuntime("_resume", t.identifier(id), t.stringLiteral(registerId)),
         ),
       );
     }
@@ -278,7 +274,7 @@ function getRegisteredFnExpression(
   const { extra } = node;
   if (isRegisteredFnExtra(extra)) {
     return callRuntime(
-      "register",
+      "_resume",
       simplifyFunction(node) as
         | t.FunctionExpression
         | t.ArrowFunctionExpression,

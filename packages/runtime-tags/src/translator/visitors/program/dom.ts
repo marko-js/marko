@@ -79,7 +79,7 @@ export default {
           const identifier = t.identifier(childSection.name);
           let renderer = getSectionParentIsOwner(childSection)
             ? callRuntime(
-                "createRenderer",
+                "_content_branch",
                 ...replaceNullishAndEmptyFunctionsWith0([
                   writes,
                   walks,
@@ -89,9 +89,9 @@ export default {
               )
             : callRuntime(
                 isSerializedSection(childSection)
-                  ? "registerContent"
-                  : "createContent",
-                t.stringLiteral(getResumeRegisterId(childSection, "renderer")),
+                  ? "_content_resume"
+                  : "_content",
+                t.stringLiteral(getResumeRegisterId(childSection, "content")),
                 ...replaceNullishAndEmptyFunctionsWith0([
                   writes,
                   walks,
@@ -104,7 +104,7 @@ export default {
               );
           if (childSection.referencedLocalClosures) {
             renderer = callRuntime(
-              "localClosures",
+              "_content_closures",
               renderer,
               t.objectExpression(
                 toArray(childSection.referencedLocalClosures, (closure) => {
@@ -168,7 +168,7 @@ export default {
       program.node.body.push(
         t.exportDefaultDeclaration(
           callRuntime(
-            "createTemplate",
+            "_template",
             t.stringLiteral(program.hub.file.metadata.marko.id),
             templateIdentifier,
             walksIdentifier,

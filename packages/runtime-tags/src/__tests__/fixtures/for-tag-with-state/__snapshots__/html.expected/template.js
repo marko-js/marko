@@ -1,17 +1,17 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   const arrA = [1, 2, 3];
-  _$.forOf(arrA, (val, i) => {
-    const $scope1_id = _$.nextScopeId();
-    _$.write(`<div>${_$.escapeXML(i)}: ${_$.escapeXML(val)}</div>`);
+  _.forOf(arrA, (val, i) => {
+    const $scope1_id = _._scope_id();
+    _._html(`<div>${_._escape(i)}: ${_._escape(val)}</div>`);
   });
   let arrB = [1, 2, 3];
-  _$.resumeForOf(arrB, (val, i) => {
-    const $scope2_id = _$.nextScopeId();
-    _$.write(`<div>${_$.escapeXML(i)}${_$.markResumeNode($scope2_id, "#text/0")}: <!>${_$.escapeXML(val)}${_$.markResumeNode($scope2_id, "#text/1")}</div>`);
-    _$.writeScope($scope2_id, {}, "__tests__/template.marko", "9:2");
+  _._for_of(arrB, (val, i) => {
+    const $scope2_id = _._scope_id();
+    _._html(`<div>${_._escape(i)}${_._el_resume($scope2_id, "#text/0")}: <!>${_._escape(val)}${_._el_resume($scope2_id, "#text/1")}</div>`);
+    _._scope($scope2_id, {}, "__tests__/template.marko", "9:2");
   }, 0, $scope0_id, "#text/1", /* state: arrB */1, /* state: arrB */1, 0, 1);
-  _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
-  _$.resumeClosestBranch($scope0_id);
+  _._scope($scope0_id, {}, "__tests__/template.marko", 0);
+  _._resume_branch($scope0_id);
 });

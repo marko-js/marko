@@ -1,35 +1,35 @@
-// size: 402 (min) 226 (brotli)
-const $x$for$content = _$.value(2, ($scope, x) => _$.data($scope[0], x)),
-  $params2$for$content = _$.value(1, ($scope, $params2) =>
-    $x$for$content($scope, $params2[0]),
+// size: 410 (min) 222 (brotli)
+const $for_content__x = _._const(2, ($scope, x) => _._text($scope[0], x)),
+  $for_content__$params = _._const(1, ($scope, $params2) =>
+    $for_content__x($scope, $params2[0]),
   ),
-  $for_content = _$.createRenderer(
+  $for_content = _._content_branch(
     "<li> </li>",
     "D l",
     0,
-    $params2$for$content,
+    $for_content__$params,
   ),
-  $open_effect = _$.effect("a0", ($scope, { 3: open }) =>
-    _$.on($scope[1], "click", function () {
+  $open__script = _._script("a0", ($scope, { 3: open }) =>
+    _._on($scope[1], "click", function () {
       $open($scope, (open = !open));
     }),
   ),
-  $open = _$.state(3, ($scope, open) => {
-    (_$.attr($scope[0], "hidden", !open), $open_effect($scope));
+  $open = _._let(3, ($scope, open) => {
+    (_._attr($scope[0], "hidden", !open), $open__script($scope));
   }),
-  $for = _$.loopOf(0, $for_content),
-  $list_effect = _$.effect("a1", ($scope, { 4: list }) =>
-    _$.on($scope[2], "click", function () {
+  $for = _._for_of(0, $for_content),
+  $list__script = _._script("a1", ($scope, { 4: list }) =>
+    _._on($scope[2], "click", function () {
       $list($scope, (list = [].concat(list).reverse()));
     }),
   ),
-  $list = _$.state(4, ($scope, list) => {
+  $list = _._let(4, ($scope, list) => {
     ($for($scope, [
       list,
       function (x) {
         return x;
       },
     ]),
-      $list_effect($scope));
+      $list__script($scope));
   });
 init();

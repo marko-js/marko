@@ -1,18 +1,18 @@
 export const $template = "<button class=inc-child> </button>";
 export const $walks = /* get, next(1), get, out(1) */" D l";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $x_effect = _$.effect("__tests__/tags/counter.marko_0_x", ($scope, {
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $x__script = _._script("__tests__/tags/counter.marko_0_x", ($scope, {
   x
-}) => _$.on($scope["#button/0"], "click", function () {
+}) => _._on($scope["#button/0"], "click", function () {
   $x($scope, ++x)
 }));
-const $x = /* @__PURE__ */_$.state("x/2", ($scope, x) => {
-  _$.data($scope["#text/1"], x);
-  _$.tagVarSignal($scope, x);
-  $x_effect($scope);
+const $x = /* @__PURE__ */_._let("x/2", ($scope, x) => {
+  _._text($scope["#text/1"], x);
+  _._return($scope, x);
+  $x__script($scope);
 });
 export function $setup($scope) {
-  _$.setTagVarChange($scope, $valueChange($scope));
+  _._return_change($scope, $valueChange($scope));
   $x($scope, 1);
 }
 function $valueChange($scope) {
@@ -20,5 +20,5 @@ function $valueChange($scope) {
     $x($scope, _new_x);
   };
 }
-_$.register("__tests__/tags/counter.marko_0/valueChange", $valueChange);
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/counter.marko", $template, $walks, $setup);
+_._resume("__tests__/tags/counter.marko_0/valueChange", $valueChange);
+export default /* @__PURE__ */_._template("__tests__/tags/counter.marko", $template, $walks, $setup);

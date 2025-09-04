@@ -1,14 +1,14 @@
-// size: 176 (min) 133 (brotli)
-const $count$child$content_effect = _$.effect(
+// size: 166 (min) 134 (brotli)
+const $child_content__count__script = _._script(
     "b1",
     ($scope, { _: { 1: count } }) =>
-      _$.on($scope[0], "click", function () {
+      _._on($scope[0], "click", function () {
         $count($scope._, ++count);
       }),
   ),
-  $count$child$content = _$.dynamicClosureRead(1, ($scope, count) => {
-    (_$.data($scope[1], count), $count$child$content_effect($scope));
+  $child_content__count = _._closure_get(1, ($scope, count) => {
+    (_._text($scope[1], count), $child_content__count__script($scope));
   }),
-  $count_closure = _$.dynamicClosure($count$child$content),
-  $count = _$.state(1, $count_closure);
+  $count__closure = _._closure($child_content__count),
+  $count = _._let(1, $count__closure);
 init();

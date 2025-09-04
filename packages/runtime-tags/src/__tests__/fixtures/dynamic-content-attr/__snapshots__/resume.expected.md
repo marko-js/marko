@@ -15,12 +15,12 @@
           "ConditionalScope:#button/0": _.b = {
             "ClosureSignalIndex:count": 0
           },
-          "ConditionalRenderer:#button/0": "__tests__/template.marko_1_renderer",
+          "ConditionalRenderer:#button/0": "__tests__/template.marko_1_content",
           count: 0,
           MyThing: _.c = {},
           "ClosureScopes:count": _.e = new Set
         }, _.b], _.b._ = _.a, _.c.content = _._[
-          "__tests__/template.marko_1_renderer"
+          "__tests__/template.marko_1_content"
           ](_.a), (_.e).add(_.b), _.d),
         "__tests__/template.marko_0_count",
         1
@@ -52,12 +52,12 @@ container.querySelector("button").click();
           "ConditionalScope:#button/0": _.b = {
             "ClosureSignalIndex:count": 0
           },
-          "ConditionalRenderer:#button/0": "__tests__/template.marko_1_renderer",
+          "ConditionalRenderer:#button/0": "__tests__/template.marko_1_content",
           count: 0,
           MyThing: _.c = {},
           "ClosureScopes:count": _.e = new Set
         }, _.b], _.b._ = _.a, _.c.content = _._[
-          "__tests__/template.marko_1_renderer"
+          "__tests__/template.marko_1_content"
           ](_.a), (_.e).add(_.b), _.d),
         "__tests__/template.marko_0_count",
         1
@@ -93,12 +93,12 @@ container.querySelector("button").click();
           "ConditionalScope:#button/0": _.b = {
             "ClosureSignalIndex:count": 0
           },
-          "ConditionalRenderer:#button/0": "__tests__/template.marko_1_renderer",
+          "ConditionalRenderer:#button/0": "__tests__/template.marko_1_content",
           count: 0,
           MyThing: _.c = {},
           "ClosureScopes:count": _.e = new Set
         }, _.b], _.b._ = _.a, _.c.content = _._[
-          "__tests__/template.marko_1_renderer"
+          "__tests__/template.marko_1_content"
           ](_.a), (_.e).add(_.b), _.d),
         "__tests__/template.marko_0_count",
         1

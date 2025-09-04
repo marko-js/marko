@@ -1,5 +1,5 @@
-// size: 616 (min) 299 (brotli)
-const $count$if$content_effect = _$.effect(
+// size: 587 (min) 285 (brotli)
+const $if_content2__count__script = _._script(
     "a0",
     (
       $scope,
@@ -9,48 +9,49 @@ const $count$if$content_effect = _$.effect(
         },
       },
     ) =>
-      _$.on($scope[0], "click", function () {
+      _._on($scope[0], "click", function () {
         $count($scope._._, ++count);
       }),
   ),
-  $count$if$content = _$.dynamicClosureRead(
+  $if_content2__count = _._closure_get(
     4,
     ($scope, count) => {
-      (_$.data($scope[1], count), $count$if$content_effect($scope));
+      (_._text($scope[1], count), $if_content2__count__script($scope));
     },
     ($scope) => $scope._._,
   ),
-  $setup$if$content = $count$if$content,
-  $if_content2 = _$.createRenderer(
+  $if_content2__setup = $if_content2__count,
+  $if_content2 = _._content_branch(
     "<button id=count> </button>",
     " D l",
-    $setup$if$content,
+    $if_content2__setup,
   ),
-  $if$if$content = _$.conditional(1, $if_content2),
-  $inner$if$content_effect = _$.effect("a1", ($scope, { _: { 3: inner } }) =>
-    _$.on($scope[0], "click", function () {
+  $if_content__if = _._if(1, $if_content2),
+  $if_content__inner__script = _._script("a1", ($scope, { _: { 3: inner } }) =>
+    _._on($scope[0], "click", function () {
       $inner($scope._, (inner = !inner));
     }),
   ),
-  $inner$if$content = _$.conditionalClosure(3, 1, 0, ($scope, inner) => {
-    ($if$if$content($scope, inner ? 0 : 1), $inner$if$content_effect($scope));
+  $if_content__inner = _._if_closure(3, 1, 0, ($scope, inner) => {
+    ($if_content__if($scope, inner ? 0 : 1),
+      $if_content__inner__script($scope));
   }),
-  $setup$if$content2 = $inner$if$content,
-  $if_content = _$.createRenderer(
+  $if_content__setup = $if_content__inner,
+  $if_content = _._content_branch(
     "<button id=inner></button><!><!>",
     " b%c",
-    $setup$if$content2,
+    $if_content__setup,
   ),
-  $if = _$.conditional(1, $if_content),
-  $outer_effect = _$.effect("a2", ($scope, { 2: outer }) =>
-    _$.on($scope[0], "click", function () {
+  $if = _._if(1, $if_content),
+  $outer__script = _._script("a2", ($scope, { 2: outer }) =>
+    _._on($scope[0], "click", function () {
       $outer($scope, (outer = !outer));
     }),
   ),
-  $outer = _$.state(2, ($scope, outer) => {
-    ($if($scope, outer ? 0 : 1), $outer_effect($scope));
+  $outer = _._let(2, ($scope, outer) => {
+    ($if($scope, outer ? 0 : 1), $outer__script($scope));
   }),
-  $inner = _$.state(3, $inner$if$content),
-  $count_closure = _$.dynamicClosure($count$if$content),
-  $count = _$.state(4, $count_closure);
+  $inner = _._let(3, $if_content__inner),
+  $count__closure = _._closure($if_content2__count),
+  $count = _._let(4, $count__closure);
 init();

@@ -119,7 +119,7 @@ export default {
           translateVar(
             tag,
             callRuntime(
-              "nodeRef",
+              "_el",
               getterId && getScopeIdIdentifier(getSection(tag)),
               getterId && t.stringLiteral(getterId),
             ),
@@ -135,7 +135,7 @@ export default {
                 t.variableDeclarator(
                   getterFnIdentifier,
                   callRuntime(
-                    "nodeRef",
+                    "_el",
                     t.stringLiteral(getterId),
                     getScopeAccessorLiteral(nodeBinding!),
                   ),
@@ -181,7 +181,7 @@ export default {
           if (t.isMarkoText(child)) {
             write`${child.value}`;
           } else if (t.isMarkoPlaceholder(child)) {
-            write`${callRuntime("escapeXML", child.value)}`;
+            write`${callRuntime("_escape", child.value)}`;
           }
         }
       } else {
@@ -208,7 +208,7 @@ export default {
             tagExtra.referencedBindings,
             t.expressionStatement(
               callRuntime(
-                "data",
+                "_text",
                 t.memberExpression(
                   scopeIdentifier,
                   getScopeAccessorLiteral(nodeBinding!),

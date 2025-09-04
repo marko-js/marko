@@ -1,14 +1,14 @@
 {
   "vars": {
     "props": {
-      "$_$": "a",
-      "$init": "t",
-      "$$setup": "o",
+      "$_": "t",
+      "$init": "o",
+      "$$setup": "i",
       "$$input": "m",
-      "$tags": "i",
-      "$$dynamicTag": "e",
-      "$$x_effect": "r",
-      "$$x": "n"
+      "$tags": "r",
+      "$$dynamicTag": "a",
+      "$$x__script": "n",
+      "$$x": "_"
     }
   }
 }

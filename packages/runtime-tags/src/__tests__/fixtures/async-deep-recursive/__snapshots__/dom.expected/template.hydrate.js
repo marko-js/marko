@@ -1,2 +1,2 @@
-// size: 57 (min) 59 (brotli)
-(_$.enableCatch(), _$.registerContent("a0", "LOADING...", "b"));
+// size: 59 (min) 63 (brotli)
+(_._enable_catch(), _._content_resume("a0", "LOADING...", "b"));

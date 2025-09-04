@@ -7,9 +7,9 @@ function getFunctionBy() {
 function getMissingBy() {
   return undefined;
 }
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   let items = [{
     id: 0,
     text: "first"
@@ -20,52 +20,52 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     id: 2,
     text: "third"
   }];
-  _$.write("<div><div class=by-string>");
-  _$.resumeForOf(items, ({
+  _._html("<div><div class=by-string>");
+  _._for_of(items, ({
     text
   }) => {
-    const $scope1_id = _$.nextScopeId();
-    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode($scope1_id, "#text/0")}`);
-    _$.writeScope($scope1_id, {}, "__tests__/template.marko", "17:6");
+    const $scope1_id = _._scope_id();
+    _._html(`${_._escape(text)}${_._el_resume($scope1_id, "#text/0")}`);
+    _._scope($scope1_id, {}, "__tests__/template.marko", "17:6");
   }, "id", $scope0_id, "#div/0", /* state: items */1, /* state: items */1, "</div>", 1);
-  _$.write("<div class=by-function>");
-  _$.resumeForOf(items, ({
+  _._html("<div class=by-function>");
+  _._for_of(items, ({
     text
   }) => {
-    const $scope2_id = _$.nextScopeId();
-    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode($scope2_id, "#text/0")}`);
-    _$.writeScope($scope2_id, {}, "__tests__/template.marko", "21:6");
+    const $scope2_id = _._scope_id();
+    _._html(`${_._escape(text)}${_._el_resume($scope2_id, "#text/0")}`);
+    _._scope($scope2_id, {}, "__tests__/template.marko", "21:6");
   }, item => item.id, $scope0_id, "#div/1", /* state: items */1, /* state: items */1, "</div>", 1);
-  _$.write("<div class=by-unknown-string>");
-  _$.resumeForOf(items, ({
+  _._html("<div class=by-unknown-string>");
+  _._for_of(items, ({
     text
   }) => {
-    const $scope3_id = _$.nextScopeId();
-    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode($scope3_id, "#text/0")}`);
-    _$.writeScope($scope3_id, {}, "__tests__/template.marko", "25:6");
+    const $scope3_id = _._scope_id();
+    _._html(`${_._escape(text)}${_._el_resume($scope3_id, "#text/0")}`);
+    _._scope($scope3_id, {}, "__tests__/template.marko", "25:6");
   }, getStringBy(), $scope0_id, "#div/2", /* state: items */1, /* state: items */1, "</div>", 1);
-  _$.write("<div class=by-unknown-function>");
-  _$.resumeForOf(items, ({
+  _._html("<div class=by-unknown-function>");
+  _._for_of(items, ({
     text
   }) => {
-    const $scope4_id = _$.nextScopeId();
-    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode($scope4_id, "#text/0")}`);
-    _$.writeScope($scope4_id, {}, "__tests__/template.marko", "29:6");
+    const $scope4_id = _._scope_id();
+    _._html(`${_._escape(text)}${_._el_resume($scope4_id, "#text/0")}`);
+    _._scope($scope4_id, {}, "__tests__/template.marko", "29:6");
   }, getFunctionBy(), $scope0_id, "#div/3", /* state: items */1, /* state: items */1, "</div>", 1);
-  _$.write("<div class=by-unknown-missing>");
-  _$.resumeForOf(items, ({
+  _._html("<div class=by-unknown-missing>");
+  _._for_of(items, ({
     text
   }) => {
-    const $scope5_id = _$.nextScopeId();
-    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode($scope5_id, "#text/0")}`);
-    _$.writeScope($scope5_id, {}, "__tests__/template.marko", "33:6");
+    const $scope5_id = _._scope_id();
+    _._html(`${_._escape(text)}${_._el_resume($scope5_id, "#text/0")}`);
+    _._scope($scope5_id, {}, "__tests__/template.marko", "33:6");
   }, getMissingBy(), $scope0_id, "#div/4", /* state: items */1, /* state: items */1, "</div>", 1);
-  _$.write(`<button>Rotate</button>${_$.markResumeNode($scope0_id, "#button/5")}</div>`);
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0_items");
-  _$.writeScope($scope0_id, {
+  _._html(`<button>Rotate</button>${_._el_resume($scope0_id, "#button/5")}</div>`);
+  _._script($scope0_id, "__tests__/template.marko_0_items");
+  _._scope($scope0_id, {
     items
   }, "__tests__/template.marko", 0, {
     items: "14:8"
   });
-  _$.resumeClosestBranch($scope0_id);
+  _._resume_branch($scope0_id);
 });

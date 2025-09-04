@@ -140,7 +140,7 @@ export default {
           .replaceWith(
             t.expressionStatement(
               callRuntime(
-                "fork",
+                "_await",
                 getScopeIdIdentifier(section),
                 getScopeAccessorLiteral(nodeRef),
                 valueAttr.value,
@@ -184,7 +184,7 @@ export default {
 
         signal.build = () => {
           return callRuntime(
-            "awaitTag",
+            "_await",
             getScopeAccessorLiteral(nodeRef),
             t.identifier(bodySection.name),
           );

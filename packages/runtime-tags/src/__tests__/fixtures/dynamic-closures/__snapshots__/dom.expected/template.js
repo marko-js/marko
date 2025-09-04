@@ -1,34 +1,34 @@
 export const $template = `<button></button>${_customTag_template}<div></div>`;
 export const $walks = /* get, over(1), beginChild, _customTag_walks, endChild, get, over(1) */` b/${_customTag_walks}& b`;
 const a = 1;
-import * as _$ from "@marko/runtime-tags/debug/dom";
+import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _customTag, $input_content as _customTag_input_content, $template as _customTag_template, $walks as _customTag_walks } from "./tags/custom-tag.marko";
-const $setup$if$content = $scope => {
-  _$.data($scope["#text/0"], a);
-  $b$if$content($scope);
-  $c$if$content($scope);
+const $if_content2__setup = $scope => {
+  _._text($scope["#text/0"], a);
+  $if_content2__b($scope);
+  $if_content2__c($scope);
 };
-const $b$if$content = /* @__PURE__ */_$.dynamicClosureRead("b", ($scope, b) => _$.data($scope["#text/1"], b), $scope => $scope._._);
-const $c$if$content = /* @__PURE__ */_$.dynamicClosureRead("c", ($scope, c) => _$.data($scope["#text/2"], c), $scope => $scope._._);
-const $if_content2 = /* @__PURE__ */_$.createRenderer("<!> <!> <!>", /* replace, over(2), replace, over(2), replace, over(1) */"%c%c%b", $setup$if$content);
-const $if$if$content = /* @__PURE__ */_$.conditional("#text/0", $if_content2);
-const $setup$if$content2 = $scope => {
-  $if$if$content($scope, Math.random() ? 0 : 1);
+const $if_content2__b = /* @__PURE__ */_._closure_get("b", ($scope, b) => _._text($scope["#text/1"], b), $scope => $scope._._);
+const $if_content2__c = /* @__PURE__ */_._closure_get("c", ($scope, c) => _._text($scope["#text/2"], c), $scope => $scope._._);
+const $if_content2 = /* @__PURE__ */_._content_branch("<!> <!> <!>", /* replace, over(2), replace, over(2), replace, over(1) */"%c%c%b", $if_content2__setup);
+const $if_content__if = /* @__PURE__ */_._if("#text/0", $if_content2);
+const $if_content__setup = $scope => {
+  $if_content__if($scope, Math.random() ? 0 : 1);
 };
-const $if_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* over(1), replace, over(2) */"b%c", $setup$if$content2);
-const $setup$customtag$content = $scope => {
-  _$.data($scope["#text/0"], a);
-  $b$customtag$content($scope);
-  $c$customtag$content($scope);
+const $if_content = /* @__PURE__ */_._content_branch("<!><!><!>", /* over(1), replace, over(2) */"b%c", $if_content__setup);
+const $customtag_content__setup = $scope => {
+  _._text($scope["#text/0"], a);
+  $customtag_content__b($scope);
+  $customtag_content__c($scope);
 };
-const $b$customtag$content = /* @__PURE__ */_$.dynamicClosureRead("b", ($scope, b) => _$.data($scope["#text/1"], b));
-const $c$customtag$content = /* @__PURE__ */_$.dynamicClosureRead("c", ($scope, c) => _$.data($scope["#text/2"], c));
-const $customtag_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<!> <!> <!>", /* replace, over(2), replace, over(2), replace, over(1) */"%c%c%b", $setup$customtag$content);
-const $b = /* @__PURE__ */_$.value("b");
-const $c_closure = /* @__PURE__ */_$.dynamicClosure($c$customtag$content, $c$if$content);
-const $c = /* @__PURE__ */_$.state("c/4", $c_closure);
-const $if = /* @__PURE__ */_$.conditional("#div/2", $if_content);
-const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => _$.on($scope["#button/0"], "click", function () {
+const $customtag_content__b = /* @__PURE__ */_._closure_get("b", ($scope, b) => _._text($scope["#text/1"], b));
+const $customtag_content__c = /* @__PURE__ */_._closure_get("c", ($scope, c) => _._text($scope["#text/2"], c));
+const $customtag_content = /* @__PURE__ */_._content("__tests__/template.marko_1_content", "<!> <!> <!>", /* replace, over(2), replace, over(2), replace, over(1) */"%c%c%b", $customtag_content__setup);
+const $b = /* @__PURE__ */_._const("b");
+const $c__closure = /* @__PURE__ */_._closure($customtag_content__c, $if_content2__c);
+const $c = /* @__PURE__ */_._let("c/4", $c__closure);
+const $if = /* @__PURE__ */_._if("#div/2", $if_content);
+const $setup__script = _._script("__tests__/template.marko_0", $scope => _._on($scope["#button/0"], "click", function () {
   $c($scope, 4);
 }));
 export function $setup($scope) {
@@ -37,6 +37,6 @@ export function $setup($scope) {
   $b($scope, 2);
   $c($scope, 3);
   $if($scope, Math.random() ? 0 : 1);
-  $setup_effect($scope);
+  $setup__script($scope);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

@@ -1,9 +1,9 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
+      "$_": "t",
       "$init": "r",
-      "$$get_effect": "e"
+      "$$get__script": "o"
     }
   }
 }

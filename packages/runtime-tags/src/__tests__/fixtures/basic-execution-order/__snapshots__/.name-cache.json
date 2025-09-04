@@ -1,15 +1,15 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
+      "$_": "t",
       "$init": "o",
-      "$$message_text$if$content": "a",
-      "$$if_content": "e",
-      "$$if": "n",
-      "$$show": "r",
-      "$$message_text": "i",
+      "$$if_content__message_text": "n",
+      "$$if_content__setup": "r",
+      "$$if_content": "_",
       "$$message": "m",
-      "$$setup$if$content": "c"
+      "$$message_text": "c",
+      "$$if": "i",
+      "$$show": "e"
     }
   }
 }

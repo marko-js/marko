@@ -1,13 +1,13 @@
-// size: 207 (min) 127 (brotli)
-const $checked = _$.state(2, ($scope, checked) => {
-  (_$.controllable_input_checked($scope, 0, checked, $checkedChange($scope)),
-    _$.data($scope[1], String(checked)));
+// size: 193 (min) 130 (brotli)
+const $checked = _._let(2, ($scope, checked) => {
+  (_._attr_input_checked($scope, 0, checked, $checkedChange($scope)),
+    _._text($scope[1], String(checked)));
 });
 function $checkedChange($scope) {
   return (_new_checked) => {
     $checked($scope, _new_checked);
   };
 }
-(_$.effect("a1", ($scope) => _$.controllable_input_checked_effect($scope, 0)),
-  _$.register("a0", $checkedChange),
+(_._script("a1", ($scope) => _._attr_input_checked_script($scope, 0)),
+  _._resume("a0", $checkedChange),
   init());

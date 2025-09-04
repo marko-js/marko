@@ -1,38 +1,38 @@
 export const $template = "<!><!><button class=once> </button><!><button class=twice> </button>";
 export const $walks = /* over(1), dynamicTagWithVar, over(1), get, next(1), get, out(1), dynamicTagWithVar, over(1), get, next(1), get, out(1) */"b1b D l1b D l";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $expr_value_call$define$content2 = /* @__PURE__ */_$.intersection(4, $scope => {
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $define_content2__value__OR__call = /* @__PURE__ */_._or(4, $scope => {
   let {
     value,
     call
   } = $scope;
-  _$.tagVarSignal($scope, $_return2($scope));
+  _._return($scope, $_return2($scope));
 });
-const $call$define$content2 = /* @__PURE__ */_$.state("call/3", $expr_value_call$define$content2);
-const $setup$define$content2 = $scope => {
-  $call$define$content2($scope, 2);
+const $define_content2__call = /* @__PURE__ */_._let("call/3", $define_content2__value__OR__call);
+const $define_content2__setup = $scope => {
+  $define_content2__call($scope, 2);
 };
-const $value$define$content2 = /* @__PURE__ */_$.value("value", $expr_value_call$define$content2);
-const $params3$define$content = /* @__PURE__ */_$.value("$params3", ($scope, $params3) => $temp2$define$content($scope, $params3?.[0]));
-const $temp2$define$content = /* @__PURE__ */_$.value("$temp2", ($scope, $temp2) => $value$define$content2($scope, $temp2.value));
-const $define_content2 = _$.registerContent("__tests__/template.marko_2_renderer", 0, 0, $setup$define$content2, $params3$define$content);
-const $expr_value_call$define$content = /* @__PURE__ */_$.intersection(4, $scope => {
+const $define_content2__value = /* @__PURE__ */_._const("value", $define_content2__value__OR__call);
+const $define_content2__$params = /* @__PURE__ */_._const("$params3", ($scope, $params3) => $define_content2__$temp($scope, $params3?.[0]));
+const $define_content2__$temp = /* @__PURE__ */_._const("$temp2", ($scope, $temp2) => $define_content2__value($scope, $temp2.value));
+const $define_content2 = _._content_resume("__tests__/template.marko_2_content", 0, 0, $define_content2__setup, $define_content2__$params);
+const $define_content__value__OR__call = /* @__PURE__ */_._or(4, $scope => {
   let {
     value,
     call
   } = $scope;
-  _$.tagVarSignal($scope, $_return($scope));
+  _._return($scope, $_return($scope));
 });
-const $call$define$content = /* @__PURE__ */_$.state("call/3", $expr_value_call$define$content);
-const $setup$define$content = $scope => {
-  $call$define$content($scope, 1);
+const $define_content__call = /* @__PURE__ */_._let("call/3", $define_content__value__OR__call);
+const $define_content__setup = $scope => {
+  $define_content__call($scope, 1);
 };
-const $value$define$content = /* @__PURE__ */_$.value("value", $expr_value_call$define$content);
-const $params2$define$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $temp$define$content($scope, $params2?.[0]));
-const $temp$define$content = /* @__PURE__ */_$.value("$temp", ($scope, $temp) => $value$define$content($scope, $temp.value));
-const $define_content = _$.registerContent("__tests__/template.marko_1_renderer", 0, 0, $setup$define$content, $params2$define$content);
-const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => $onClickOnce2);
-const $expr_Once_clickOnceCount = /* @__PURE__ */_$.intersection(10, $scope => {
+const $define_content__value = /* @__PURE__ */_._const("value", $define_content__value__OR__call);
+const $define_content__$params = /* @__PURE__ */_._const("$params2", ($scope, $params2) => $define_content__$temp($scope, $params2?.[0]));
+const $define_content__$temp = /* @__PURE__ */_._const("$temp", ($scope, $temp) => $define_content__value($scope, $temp.value));
+const $define_content = _._content_resume("__tests__/template.marko_1_content", 0, 0, $define_content__setup, $define_content__$params);
+const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $onClickOnce2);
+const $Once__OR__clickOnceCount = /* @__PURE__ */_._or(10, $scope => {
   let {
     Once,
     clickOnceCount
@@ -41,13 +41,13 @@ const $expr_Once_clickOnceCount = /* @__PURE__ */_$.intersection(10, $scope => {
     value: $onClickOnce($scope)
   }));
 });
-const $Once = /* @__PURE__ */_$.value("Once", $expr_Once_clickOnceCount);
-const $clickOnceCount = /* @__PURE__ */_$.state("clickOnceCount/9", ($scope, clickOnceCount) => {
-  _$.data($scope["#text/3"], clickOnceCount);
-  $expr_Once_clickOnceCount($scope);
+const $Once = /* @__PURE__ */_._const("Once", $Once__OR__clickOnceCount);
+const $clickOnceCount = /* @__PURE__ */_._let("clickOnceCount/9", ($scope, clickOnceCount) => {
+  _._text($scope["#text/3"], clickOnceCount);
+  $Once__OR__clickOnceCount($scope);
 });
-const $dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/4", 0, () => $onClickTwice2);
-const $expr_Twice_clickTwiceCount = /* @__PURE__ */_$.intersection(14, $scope => {
+const $dynamicTag2 = /* @__PURE__ */_._dynamic_tag("#text/4", 0, () => $onClickTwice2);
+const $Twice__OR__clickTwiceCount = /* @__PURE__ */_._or(14, $scope => {
   let {
     Twice,
     clickTwiceCount
@@ -56,10 +56,10 @@ const $expr_Twice_clickTwiceCount = /* @__PURE__ */_$.intersection(14, $scope =>
     value: $onClickTwice($scope)
   }));
 });
-const $Twice = /* @__PURE__ */_$.value("Twice", $expr_Twice_clickTwiceCount);
-const $clickTwiceCount = /* @__PURE__ */_$.state("clickTwiceCount/13", ($scope, clickTwiceCount) => {
-  _$.data($scope["#text/7"], clickTwiceCount);
-  $expr_Twice_clickTwiceCount($scope);
+const $Twice = /* @__PURE__ */_._const("Twice", $Twice__OR__clickTwiceCount);
+const $clickTwiceCount = /* @__PURE__ */_._let("clickTwiceCount/13", ($scope, clickTwiceCount) => {
+  _._text($scope["#text/7"], clickTwiceCount);
+  $Twice__OR__clickTwiceCount($scope);
 });
 export function $setup($scope) {
   $Once($scope, {
@@ -71,21 +71,21 @@ export function $setup($scope) {
   });
   $clickTwiceCount($scope, 0);
 }
-const $onClickOnce2_effect = _$.effect("__tests__/template.marko_0_onClickOnce", ($scope, {
+const $onClickOnce2__script = _._script("__tests__/template.marko_0_onClickOnce", ($scope, {
   onClickOnce
-}) => _$.on($scope["#button/2"], "click", onClickOnce));
-const $onClickOnce2 = _$.registerBoundSignal("__tests__/template.marko_0_onClickOnce/var", /* @__PURE__ */_$.value("onClickOnce", $onClickOnce2_effect));
-const $onClickTwice2_effect = _$.effect("__tests__/template.marko_0_onClickTwice", ($scope, {
+}) => _._on($scope["#button/2"], "click", onClickOnce));
+const $onClickOnce2 = _._var_resume("__tests__/template.marko_0_onClickOnce/var", /* @__PURE__ */_._const("onClickOnce", $onClickOnce2__script));
+const $onClickTwice2__script = _._script("__tests__/template.marko_0_onClickTwice", ($scope, {
   onClickTwice
-}) => _$.on($scope["#button/6"], "click", onClickTwice));
-const $onClickTwice2 = _$.registerBoundSignal("__tests__/template.marko_0_onClickTwice/var", /* @__PURE__ */_$.value("onClickTwice", $onClickTwice2_effect));
+}) => _._on($scope["#button/6"], "click", onClickTwice));
+const $onClickTwice2 = _._var_resume("__tests__/template.marko_0_onClickTwice/var", /* @__PURE__ */_._const("onClickTwice", $onClickTwice2__script));
 function $_return2($scope, {
   value,
   call
 } = $scope) {
   return function () {
     if (call) {
-      $call$define$content2($scope, --call)
+      $define_content2__call($scope, --call)
       value();
     }
   };
@@ -96,7 +96,7 @@ function $_return($scope, {
 } = $scope) {
   return function () {
     if (call) {
-      $call$define$content($scope, --call)
+      $define_content__call($scope, --call)
       value();
     }
   };
@@ -115,8 +115,8 @@ function $onClickTwice($scope, {
     $clickTwiceCount($scope, ++clickTwiceCount)
   };
 }
-_$.register("__tests__/template.marko_2/_return2", $_return2);
-_$.register("__tests__/template.marko_1/_return", $_return);
-_$.register("__tests__/template.marko_0/onClickOnce", $onClickOnce);
-_$.register("__tests__/template.marko_0/onClickTwice", $onClickTwice);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+_._resume("__tests__/template.marko_2/_return2", $_return2);
+_._resume("__tests__/template.marko_1/_return", $_return);
+_._resume("__tests__/template.marko_0/onClickOnce", $onClickOnce);
+_._resume("__tests__/template.marko_0/onClickTwice", $onClickTwice);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

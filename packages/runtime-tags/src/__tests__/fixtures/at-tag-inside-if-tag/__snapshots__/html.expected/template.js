@@ -1,37 +1,37 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
+import * as _ from "@marko/runtime-tags/debug/html";
 import _customTag from "./tags/custom-tag/index.marko";
-export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
+export default _._template("__tests__/template.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
   const {
     x
   } = input;
-  const $childScope = _$.peekNextScopeId();
+  const $childScope = _._peek_scope_id();
   let $thing;
   if (x) {
-    $thing = _$.attrTag({
+    $thing = _.attrTag({
       x: 1,
-      content: _$.registerContent("__tests__/template.marko_1_renderer", () => {
-        const $scope1_id = _$.nextScopeId();
-        _$.write("Hello");
+      content: _._content_resume("__tests__/template.marko_1_content", () => {
+        const $scope1_id = _._scope_id();
+        _._html("Hello");
       }, $scope0_id)
     });
   } else {
-    $thing = _$.attrTag({
+    $thing = _.attrTag({
       x: 2,
-      content: _$.registerContent("__tests__/template.marko_2_renderer", () => {
-        const $scope2_id = _$.nextScopeId();
-        _$.write("Goodbye");
+      content: _._content_resume("__tests__/template.marko_2_content", () => {
+        const $scope2_id = _._scope_id();
+        _._html("Goodbye");
       }, $scope0_id)
     });
   }
   _customTag({
     thing: $thing
   }, {
-    /* input.thing.x, input.thing.content */0: _$.serializeGuard($serialize, /* x */0),
-    /* input.thing.x */1: _$.serializeGuard($serialize, /* x */0),
-    /* input.thing.content */2: _$.serializeGuard($serialize, /* x */0)
+    /* input.thing.x, input.thing.content */0: _._serialize_guard($serialize, /* x */0),
+    /* input.thing.x */1: _._serialize_guard($serialize, /* x */0),
+    /* input.thing.content */2: _._serialize_guard($serialize, /* x */0)
   });
-  _$.serializeGuard($serialize, /* x */0) && _$.writeScope($scope0_id, {
-    "#childScope/0": _$.serializeIf($serialize, /* input.x */0) && _$.writeExistingScope($childScope)
+  _._serialize_guard($serialize, /* x */0) && _._scope($scope0_id, {
+    "#childScope/0": _._serialize_if($serialize, /* input.x */0) && _._existing_scope($childScope)
   }, "__tests__/template.marko", 0);
 });

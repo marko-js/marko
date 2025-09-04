@@ -1,56 +1,56 @@
 import Child from "./tags/child.marko";
-import * as _$ from "@marko/runtime-tags/debug/html";
+import * as _ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
-export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
-  const $hoisted_el = _$.hoist($scope0_id, "__tests__/template.marko_0_$hoisted_el/hoist");
-  const $child_content_subscribers = new Set();
-  const $hoisted_el3 = _$.hoist($scope0_id, "__tests__/template.marko_0_$hoisted_el3/hoist");
-  const $inputshowChildnull_content_subscribers = new Set();
-  const $inputshowsectionnull_content_subscribers = new Set();
+export default _._template("__tests__/template.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
+  const $hoisted_el = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_el/hoist");
+  const $child_content__subscribers = new Set();
+  const $hoisted_el3 = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_el3/hoist");
+  const $inputshowChildnull_content__subscribers = new Set();
+  const $inputshowsectionnull_content__subscribers = new Set();
   _child({
-    content: _$.createContent("__tests__/template.marko_1_renderer", () => {
-      const $scope1_id = _$.nextScopeId();
-      const el = _$.nodeRef();
-      _$.write(`<span></span>${_$.markResumeNode($scope1_id, "#span/0")}`);
-      _$.writeSubscribe($child_content_subscribers, _$.writeScope($scope1_id, {}, "__tests__/template.marko", "3:2"));
+    content: _._content("__tests__/template.marko_1_content", () => {
+      const $scope1_id = _._scope_id();
+      const el = _._el();
+      _._html(`<span></span>${_._el_resume($scope1_id, "#span/0")}`);
+      _._subscribe($child_content__subscribers, _._scope($scope1_id, {}, "__tests__/template.marko", "3:2"));
     })
   });
-  _$.dynamicTag($scope0_id, "#text/1", input.show ? Child : null, {}, _$.registerContent("__tests__/template.marko_2_renderer", () => {
-    const $scope2_id = _$.nextScopeId();
-    const $hoisted_el2 = _$.hoist($scope2_id, "__tests__/template.marko_2_$hoisted_el2/hoist");
-    const $child_content2_subscribers = new Set();
+  _._dynamic_tag($scope0_id, "#text/1", input.show ? Child : null, {}, _._content_resume("__tests__/template.marko_2_content", () => {
+    const $scope2_id = _._scope_id();
+    const $hoisted_el2 = _._hoist($scope2_id, "__tests__/template.marko_2_$hoisted_el2/hoist");
+    const $child_content2__subscribers = new Set();
     _child({
-      content: _$.createContent("__tests__/template.marko_3_renderer", () => {
-        const $scope3_id = _$.nextScopeId();
-        const el2 = _$.nodeRef();
-        _$.write(`<div></div>${_$.markResumeNode($scope3_id, "#div/0")}`);
-        _$.writeSubscribe($child_content2_subscribers, _$.writeScope($scope3_id, {}, "__tests__/template.marko", "16:4"));
+      content: _._content("__tests__/template.marko_3_content", () => {
+        const $scope3_id = _._scope_id();
+        const el2 = _._el();
+        _._html(`<div></div>${_._el_resume($scope3_id, "#div/0")}`);
+        _._subscribe($child_content2__subscribers, _._scope($scope3_id, {}, "__tests__/template.marko", "16:4"));
       })
     });
-    _$.writeEffect($scope2_id, "__tests__/template.marko_2_$hoisted_el2");
-    _$.writeSubscribe($inputshowChildnull_content_subscribers, _$.writeScope($scope2_id, {
+    _._script($scope2_id, "__tests__/template.marko_2_$hoisted_el2");
+    _._subscribe($inputshowChildnull_content__subscribers, _._scope($scope2_id, {
       $hoisted_el2,
-      "ClosureScopes:3": $child_content2_subscribers
+      "ClosureScopes:3": $child_content2__subscribers
     }, "__tests__/template.marko", "15:4", {
       $hoisted_el2: 0
     }));
-  }, $scope0_id), 0, _$.serializeGuard($serialize, /* input.show */0));
-  _$.dynamicTag($scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.registerContent("__tests__/template.marko_4_renderer", () => {
-    const $scope4_id = _$.nextScopeId();
-    const el3 = _$.nodeRef();
-    _$.write(`<p></p>${_$.markResumeNode($scope4_id, "#p/0")}`);
-    _$.writeSubscribe($inputshowsectionnull_content_subscribers, _$.writeScope($scope4_id, {}, "__tests__/template.marko", "34:4"));
-  }, $scope0_id), 0, _$.serializeGuard($serialize, /* input.show */0));
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0");
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0_$hoisted_el3");
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0_$hoisted_el");
-  _$.writeScope($scope0_id, {
+  }, $scope0_id), 0, _._serialize_guard($serialize, /* input.show */0));
+  _._dynamic_tag($scope0_id, "#text/2", input.show ? 'section' : null, {}, _._content_resume("__tests__/template.marko_4_content", () => {
+    const $scope4_id = _._scope_id();
+    const el3 = _._el();
+    _._html(`<p></p>${_._el_resume($scope4_id, "#p/0")}`);
+    _._subscribe($inputshowsectionnull_content__subscribers, _._scope($scope4_id, {}, "__tests__/template.marko", "34:4"));
+  }, $scope0_id), 0, _._serialize_guard($serialize, /* input.show */0));
+  _._script($scope0_id, "__tests__/template.marko_0");
+  _._script($scope0_id, "__tests__/template.marko_0_$hoisted_el3");
+  _._script($scope0_id, "__tests__/template.marko_0_$hoisted_el");
+  _._scope($scope0_id, {
     $hoisted_el,
     $hoisted_el3,
-    "ClosureScopes:1": $child_content_subscribers,
-    "ClosureScopes:2": $inputshowChildnull_content_subscribers,
-    "ClosureScopes:4": $inputshowsectionnull_content_subscribers
+    "ClosureScopes:1": $child_content__subscribers,
+    "ClosureScopes:2": $inputshowChildnull_content__subscribers,
+    "ClosureScopes:4": $inputshowsectionnull_content__subscribers
   }, "__tests__/template.marko", 0, {
     $hoisted_el: 0,
     $hoisted_el3: 0

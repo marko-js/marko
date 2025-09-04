@@ -276,12 +276,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 
 export let isResuming: undefined | 0 | 1;
 
-export function register<T>(id: string, obj: T): T {
+export function _resume<T>(id: string, obj: T): T {
   registeredValues[id] = obj;
   return obj;
 }
 
-export function registerBoundSignal<T extends Signal<unknown>>(
+export function _var_resume<T extends Signal<unknown>>(
   id: string,
   signal: T,
 ): T {
@@ -295,6 +295,6 @@ export function getRegisteredWithScope(id: string, scope?: Scope) {
   return scope ? (val as RegisteredFn)(scope) : val;
 }
 
-export function nodeRef(id: string, key: string) {
-  return register(id, (scope: Scope) => () => scope[key]());
+export function _el(id: string, key: string) {
+  return _resume(id, (scope: Scope) => () => scope[key]());
 }

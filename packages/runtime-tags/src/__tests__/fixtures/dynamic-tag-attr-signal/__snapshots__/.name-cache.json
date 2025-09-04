@@ -1,9 +1,9 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
+      "$_": "t",
       "$init": "o",
-      "$$className_effect": "m",
+      "$$className__script": "m",
       "$$className": "r"
     }
   }

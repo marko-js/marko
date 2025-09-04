@@ -1,40 +1,40 @@
 export const $template = "<!><!><hr><!><hr><!><!>";
 export const $walks = /* over(1), replace, over(2), replace, over(2), replace, over(2) */"b%c%c%c";
 import Child from "./tags/child.marko";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $get$hoisted_setHtml = _$.register("__tests__/template.marko_0_$hoisted_setHtml3/hoist", _$.hoist("setHtml3", "LoopScopeMap:#ul/0", "LoopScopeMap:#text/2"));
-const $dynamicTag$for$content3 = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => $setHtml3$for$content);
-const $setHtml3$for$content = _$.registerBoundSignal("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_$.value("setHtml3"));
-const $setup$for$content3 = $scope => {
-  $dynamicTag$for$content3($scope, 1 && Child);
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $get$hoisted_setHtml = _._resume("__tests__/template.marko_0_$hoisted_setHtml3/hoist", _._hoist("setHtml3", "LoopScopeMap:#ul/0", "LoopScopeMap:#text/2"));
+const $for_content4__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $for_content4__setHtml);
+const $for_content4__setHtml = _._var_resume("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_._const("setHtml3"));
+const $for_content4__setup = $scope => {
+  $for_content4__dynamicTag($scope, 1 && Child);
 };
-const $params3$for$content = /* @__PURE__ */_$.value("$params3");
-const $for_content4 = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $setup$for$content3, $params3$for$content);
-const $for$for$content = /* @__PURE__ */_$.loopTo("#ul/0", $for_content4);
-const $setup$for$content4 = $scope => {
-  $for$for$content($scope, [3, 0, 1]);
+const $for_content4__$params = /* @__PURE__ */_._const("$params3");
+const $for_content4 = /* @__PURE__ */_._content_branch("<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $for_content4__setup, $for_content4__$params);
+const $for_content3__for = /* @__PURE__ */_._for_to("#ul/0", $for_content4);
+const $for_content3__setup = $scope => {
+  $for_content3__for($scope, [3, 0, 1]);
 };
-const $params2$for$content = /* @__PURE__ */_$.value("$params2");
-const $for_content3 = /* @__PURE__ */_$.createRenderer("<ul></ul>", /* get, over(1) */" b", $setup$for$content4, $params2$for$content);
-const $get$hoisted_setHtml2 = _$.hoist("setHtml2", "LoopScopeMap:#text/1");
-const $dynamicTag$for$content2 = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => $setHtml2$for$content);
-const $setHtml2$for$content = _$.registerBoundSignal("__tests__/template.marko_2_setHtml2/var", /* @__PURE__ */_$.value("setHtml2"));
-const $setup$for$content2 = $scope => {
-  $dynamicTag$for$content2($scope, 1 && Child);
+const $for_content3__$params = /* @__PURE__ */_._const("$params2");
+const $for_content3 = /* @__PURE__ */_._content_branch("<ul></ul>", /* get, over(1) */" b", $for_content3__setup, $for_content3__$params);
+const $get$hoisted_setHtml2 = _._hoist("setHtml2", "LoopScopeMap:#text/1");
+const $for_content2__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $for_content2__setHtml);
+const $for_content2__setHtml = _._var_resume("__tests__/template.marko_2_setHtml2/var", /* @__PURE__ */_._const("setHtml2"));
+const $for_content2__setup = $scope => {
+  $for_content2__dynamicTag($scope, 1 && Child);
 };
-const $for_content2 = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $setup$for$content2);
-const $get$hoisted_setHtml3 = _$.hoist("setHtml", "LoopScopeMap:#text/0");
-const $dynamicTag$for$content = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => $setHtml$for$content);
-const $setHtml$for$content = _$.registerBoundSignal("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */_$.value("setHtml"));
-const $setup$for$content = $scope => {
-  $dynamicTag$for$content($scope, 1 && Child);
+const $for_content2 = /* @__PURE__ */_._content_branch("<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $for_content2__setup);
+const $get$hoisted_setHtml3 = _._hoist("setHtml", "LoopScopeMap:#text/0");
+const $for_content__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $for_content__setHtml);
+const $for_content__setHtml = _._var_resume("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */_._const("setHtml"));
+const $for_content__setup = $scope => {
+  $for_content__dynamicTag($scope, 1 && Child);
 };
-const $for_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $setup$for$content);
-const $for = /* @__PURE__ */_$.loopTo("#text/0", $for_content);
-const $for2 = /* @__PURE__ */_$.loopTo("#text/1", $for_content2);
-const $to = /* @__PURE__ */_$.state("to/3", ($scope, to) => $for2($scope, [to, 0, 1]));
-const $for3 = /* @__PURE__ */_$.loopTo("#text/2", $for_content3);
-const $hoisted_setHtml4_effect = _$.effect("__tests__/template.marko_0_$hoisted_setHtml3", ({
+const $for_content = /* @__PURE__ */_._content_branch("<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $for_content__setup);
+const $for = /* @__PURE__ */_._for_to("#text/0", $for_content);
+const $for2 = /* @__PURE__ */_._for_to("#text/1", $for_content2);
+const $to = /* @__PURE__ */_._let("to/3", ($scope, to) => $for2($scope, [to, 0, 1]));
+const $for3 = /* @__PURE__ */_._for_to("#text/2", $for_content3);
+const $hoisted_setHtml4__script = _._script("__tests__/template.marko_0_$hoisted_setHtml3", ({
   $hoisted_setHtml3
 }) => {
   {
@@ -44,8 +44,8 @@ const $hoisted_setHtml4_effect = _$.effect("__tests__/template.marko_0_$hoisted_
     }
   }
 });
-const $hoisted_setHtml4 = /* @__PURE__ */_$.value("$hoisted_setHtml3", $hoisted_setHtml4_effect);
-const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => {
+const $hoisted_setHtml4 = /* @__PURE__ */_._const("$hoisted_setHtml3", $hoisted_setHtml4__script);
+const $setup__script = _._script("__tests__/template.marko_0", $scope => {
   $get$hoisted_setHtml3($scope)('First Only');
   $get$hoisted_setHtml2($scope)('First Only');
 });
@@ -54,6 +54,6 @@ export function $setup($scope) {
   $to($scope, 3);
   $for3($scope, [3, 0, 1]);
   $hoisted_setHtml4($scope, $get$hoisted_setHtml($scope));
-  $setup_effect($scope);
+  $setup__script($scope);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

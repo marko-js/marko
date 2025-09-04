@@ -1,8 +1,8 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/tags/custom-tag.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
-  _$.write(`<div>Child: ${_$.commentSeparator(_$.serializeGuard($serialize, /* input */0))}${_$.escapeXML(input)}${_$.markResumeNode($scope0_id, "#text/0", _$.serializeGuard($serialize, /* input */0))}</div>`);
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/tags/custom-tag.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
+  _._html(`<div>Child: ${_._sep(_._serialize_guard($serialize, /* input */0))}${_._escape(input)}${_._el_resume($scope0_id, "#text/0", _._serialize_guard($serialize, /* input */0))}</div>`);
   const $return = input;
-  _$.serializeGuard($serialize, /* input */0) && _$.writeScope($scope0_id, {}, "__tests__/tags/custom-tag.marko", 0);
+  _._serialize_guard($serialize, /* input */0) && _._scope($scope0_id, {}, "__tests__/tags/custom-tag.marko", 0);
   return $return;
 });

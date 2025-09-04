@@ -1,16 +1,16 @@
 export const $template = "<!><!><!>";
 export const $walks = /* over(1), replace, over(2) */"b%c";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $setup$else$content_effect = _$.effect("__tests__/template.marko_3", $scope => _$.on($scope["#button/0"], "click", function () {
-  $editing$for$content($scope._, true);
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $else_content__setup__script = _._script("__tests__/template.marko_3", $scope => _._on($scope["#button/0"], "click", function () {
+  $for_content__editing($scope._, true);
 }));
-const $setup$else$content = $scope => {
-  $count$else$content._($scope);
-  $setup$else$content_effect($scope);
+const $else_content__setup = $scope => {
+  $else_content__count._($scope);
+  $else_content__setup__script($scope);
 };
-const $count$else$content = /* @__PURE__ */_$.conditionalClosure("count", "#text/0", 1, ($scope, count) => _$.data($scope["#text/1"], count));
-const $else_content = /* @__PURE__ */_$.createRenderer("<button>Increment <!></button>", /* get, next(1), over(1), replace, out(1) */" Db%l", $setup$else$content);
-const $expr_counts_count_i$if$content_effect = _$.effect("__tests__/template.marko_2_counts_count_i", ($scope, {
+const $else_content__count = /* @__PURE__ */_._if_closure("count", "#text/0", 1, ($scope, count) => _._text($scope["#text/1"], count));
+const $else_content = /* @__PURE__ */_._content_branch("<button>Increment <!></button>", /* get, next(1), over(1), replace, out(1) */" Db%l", $else_content__setup);
+const $if_content__counts__OR__count__OR__i__script = _._script("__tests__/template.marko_2_counts_count_i", ($scope, {
   _: {
     _: {
       counts
@@ -18,45 +18,45 @@ const $expr_counts_count_i$if$content_effect = _$.effect("__tests__/template.mar
     count,
     i
   }
-}) => _$.on($scope["#button/0"], "click", function () {
+}) => _._on($scope["#button/0"], "click", function () {
   $counts($scope._._, counts = [...counts.slice(0, i), count + 1, ...counts.slice(i + 1)]);
-  $editing$for$content($scope._, false);
+  $for_content__editing($scope._, false);
 }));
-const $expr_counts_count_i$if$content = /* @__PURE__ */_$.intersection(2, $expr_counts_count_i$if$content_effect, 2);
-const $counts$if$content = /* @__PURE__ */_$.dynamicClosureRead("counts", $expr_counts_count_i$if$content, $scope => $scope._._);
-const $count$if$content = /* @__PURE__ */_$.conditionalClosure("count", "#text/0", 0, ($scope, count) => {
-  _$.data($scope["#text/1"], count + 1);
-  $expr_counts_count_i$if$content($scope);
+const $if_content__counts__OR__count__OR__i = /* @__PURE__ */_._or(2, $if_content__counts__OR__count__OR__i__script, 2);
+const $if_content__counts = /* @__PURE__ */_._closure_get("counts", $if_content__counts__OR__count__OR__i, $scope => $scope._._);
+const $if_content__count = /* @__PURE__ */_._if_closure("count", "#text/0", 0, ($scope, count) => {
+  _._text($scope["#text/1"], count + 1);
+  $if_content__counts__OR__count__OR__i($scope);
 });
-const $i$if$content = /* @__PURE__ */_$.conditionalClosure("i", "#text/0", 0, $expr_counts_count_i$if$content);
-const $setup$if$content = $scope => {
-  $counts$if$content($scope);
-  $count$if$content._($scope);
-  $i$if$content._($scope);
+const $if_content__i = /* @__PURE__ */_._if_closure("i", "#text/0", 0, $if_content__counts__OR__count__OR__i);
+const $if_content__setup = $scope => {
+  $if_content__counts($scope);
+  $if_content__count._($scope);
+  $if_content__i._($scope);
 };
-const $if_content = /* @__PURE__ */_$.createRenderer("<button>Confirm <!></button>", /* get, next(1), over(1), replace, out(1) */" Db%l", $setup$if$content);
-const $if$for$content = /* @__PURE__ */_$.conditional("#text/0", $if_content, $else_content);
-const $editing$for$content = /* @__PURE__ */_$.state("editing/4", ($scope, editing) => $if$for$content($scope, editing ? 0 : 1));
-const $setup$for$content = $scope => {
-  $editing$for$content($scope, false);
+const $if_content = /* @__PURE__ */_._content_branch("<button>Confirm <!></button>", /* get, next(1), over(1), replace, out(1) */" Db%l", $if_content__setup);
+const $for_content__if = /* @__PURE__ */_._if("#text/0", $if_content, $else_content);
+const $for_content__editing = /* @__PURE__ */_._let("editing/4", ($scope, editing) => $for_content__if($scope, editing ? 0 : 1));
+const $for_content__setup = $scope => {
+  $for_content__editing($scope, false);
 };
-const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => {
-  $count$for$content($scope, $params2[0]);
-  $i$for$content($scope, $params2[1]);
+const $for_content__$params = /* @__PURE__ */_._const("$params2", ($scope, $params2) => {
+  $for_content__count($scope, $params2[0]);
+  $for_content__i($scope, $params2[1]);
 });
-const $count$for$content = /* @__PURE__ */_$.value("count", $scope => {
-  $count$if$content($scope);
-  $count$else$content($scope);
+const $for_content__count = /* @__PURE__ */_._const("count", $scope => {
+  $if_content__count($scope);
+  $else_content__count($scope);
 });
-const $i$for$content = /* @__PURE__ */_$.value("i", $i$if$content);
-const $for_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* over(1), replace, over(2) */"b%c", $setup$for$content, $params2$for$content);
-const $for = /* @__PURE__ */_$.loopOf("#text/0", $for_content);
-const $counts_closure = /* @__PURE__ */_$.dynamicClosure($counts$if$content);
-const $counts = /* @__PURE__ */_$.state("counts/1", ($scope, counts) => {
+const $for_content__i = /* @__PURE__ */_._const("i", $if_content__i);
+const $for_content = /* @__PURE__ */_._content_branch("<!><!><!>", /* over(1), replace, over(2) */"b%c", $for_content__setup, $for_content__$params);
+const $for = /* @__PURE__ */_._for_of("#text/0", $for_content);
+const $counts__closure = /* @__PURE__ */_._closure($if_content__counts);
+const $counts = /* @__PURE__ */_._let("counts/1", ($scope, counts) => {
   $for($scope, [counts]);
-  $counts_closure($scope);
+  $counts__closure($scope);
 });
 export function $setup($scope) {
   $counts($scope, [0, 0, 0]);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

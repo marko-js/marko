@@ -1,16 +1,16 @@
 {
   "vars": {
     "props": {
-      "$_$": "a",
-      "$init": "e",
-      "$$description$for$content": "t",
-      "$$name$for$content": "i",
-      "$$temp$for$content": "o",
-      "$$params2$for$content": "r",
-      "$$for_content": "c",
-      "$$for": "n",
-      "$$items_effect": "m",
-      "$$items": "d"
+      "$_": "t",
+      "$init": "o",
+      "$$for_content__name": "c",
+      "$$for_content__description": "n",
+      "$$for_content__$params": "i",
+      "$$for_content__$temp": "r",
+      "$$for_content": "_",
+      "$$for": "a",
+      "$$items__script": "s",
+      "$$items": "e"
     }
   }
 }

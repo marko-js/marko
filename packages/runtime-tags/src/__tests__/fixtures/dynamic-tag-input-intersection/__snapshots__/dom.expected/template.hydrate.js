@@ -1,6 +1,6 @@
-// size: 248 (min) 181 (brotli)
-const $dynamicTag = _$.dynamicTag(0),
-  $expr_inputAs_inputClass_htmlInput_content = _$.intersection(
+// size: 241 (min) 182 (brotli)
+const $dynamicTag = _._dynamic_tag(0),
+  $inputAs__OR__inputClass__OR__htmlInput__OR__content = _._or(
     9,
     ($scope) => {
       let { 3: inputAs, 4: inputClass, 6: htmlInput, 8: content } = $scope;
@@ -12,10 +12,10 @@ const $dynamicTag = _$.dynamicTag(0),
     },
     3,
   ),
-  $content = _$.state(8, $expr_inputAs_inputClass_htmlInput_content);
-(_$.effect("a1", ($scope, { 5: inputContent }) =>
+  $content = _._let(8, $inputAs__OR__inputClass__OR__htmlInput__OR__content);
+(_._script("a1", ($scope, { 5: inputContent }) =>
   $content($scope, inputContent),
 ),
-  _$.registerContent("b0", "Span", "b"),
-  _$.registerContent("b1", "Div", "b"),
+  _._content_resume("b0", "Span", "b"),
+  _._content_resume("b1", "Div", "b"),
   init());

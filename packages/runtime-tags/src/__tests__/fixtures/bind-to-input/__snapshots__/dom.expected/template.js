@@ -1,18 +1,18 @@
 export const $template = `${_counter_template}${_counter_template}`;
 export const $walks = /* beginChild, _counter_walks, endChild, beginChild, _counter_walks, endChild */`/${_counter_walks}&/${_counter_walks}&`;
-import * as _$ from "@marko/runtime-tags/debug/dom";
+import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _counter, $input_content as _counter_input_content, $count as _counter_input_count, $countChange2 as _counter_input_countChange, $input_id as _counter_input_id, $template as _counter_template, $walks as _counter_walks } from "./tags/counter.marko";
-const $x$counter$content2 = /* @__PURE__ */_$.dynamicClosureRead("x", ($scope, x) => _$.data($scope["#text/0"], x));
-const $setup$counter$content = $x$counter$content2;
-const $counter_content2 = /* @__PURE__ */_$.createContent("__tests__/template.marko_2_renderer", " ", /* get, over(1) */" b", $setup$counter$content);
-const $x$counter$content = /* @__PURE__ */_$.dynamicClosureRead("x", ($scope, x) => _$.data($scope["#text/0"], x));
-const $setup$counter$content2 = $x$counter$content;
-const $counter_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", " ", /* get, over(1) */" b", $setup$counter$content2);
-const $x_closure = /* @__PURE__ */_$.dynamicClosure($x$counter$content, $x$counter$content2);
-const $x = /* @__PURE__ */_$.state("x/2", ($scope, x) => {
+const $counter_content2__x = /* @__PURE__ */_._closure_get("x", ($scope, x) => _._text($scope["#text/0"], x));
+const $counter_content2__setup = $counter_content2__x;
+const $counter_content2 = /* @__PURE__ */_._content("__tests__/template.marko_2_content", " ", /* get, over(1) */" b", $counter_content2__setup);
+const $counter_content__x = /* @__PURE__ */_._closure_get("x", ($scope, x) => _._text($scope["#text/0"], x));
+const $counter_content__setup = $counter_content__x;
+const $counter_content = /* @__PURE__ */_._content("__tests__/template.marko_1_content", " ", /* get, over(1) */" b", $counter_content__setup);
+const $x__closure = /* @__PURE__ */_._closure($counter_content__x, $counter_content2__x);
+const $x = /* @__PURE__ */_._let("x/2", ($scope, x) => {
   _counter_input_count($scope["#childScope/0"], x);
   _counter_input_count($scope["#childScope/1"], x);
-  $x_closure($scope);
+  $x__closure($scope);
 });
 export function $setup($scope) {
   _counter($scope["#childScope/0"]);
@@ -30,5 +30,5 @@ function $countChange($scope) {
     $x($scope, _new_x);
   };
 }
-_$.register("__tests__/template.marko_0/countChange", $countChange);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+_._resume("__tests__/template.marko_0/countChange", $countChange);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

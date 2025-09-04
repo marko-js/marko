@@ -1,51 +1,51 @@
 export const $template = "<div><button id=outer></button><!> hello</div>";
 export const $walks = /* next(1), get, over(1), replace, out(1) */"D b%l";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $count$if$content_effect = _$.effect("__tests__/template.marko_2_count", ($scope, {
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $if_content2__count__script = _._script("__tests__/template.marko_2_count", ($scope, {
   _: {
     _: {
       count
     }
   }
-}) => _$.on($scope["#button/0"], "click", function () {
+}) => _._on($scope["#button/0"], "click", function () {
   $count($scope._._, ++count)
 }));
-const $count$if$content = /* @__PURE__ */_$.dynamicClosureRead("count", ($scope, count) => {
-  _$.data($scope["#text/1"], count);
-  $count$if$content_effect($scope);
+const $if_content2__count = /* @__PURE__ */_._closure_get("count", ($scope, count) => {
+  _._text($scope["#text/1"], count);
+  $if_content2__count__script($scope);
 }, $scope => $scope._._);
-const $setup$if$content = $count$if$content;
-const $if_content2 = /* @__PURE__ */_$.createRenderer("<button id=count> </button>", /* get, next(1), get, out(1) */" D l", $setup$if$content);
-const $if$if$content = /* @__PURE__ */_$.conditional("#text/1", $if_content2);
-const $inner$if$content_effect = _$.effect("__tests__/template.marko_1_inner", ($scope, {
+const $if_content2__setup = $if_content2__count;
+const $if_content2 = /* @__PURE__ */_._content_branch("<button id=count> </button>", /* get, next(1), get, out(1) */" D l", $if_content2__setup);
+const $if_content__if = /* @__PURE__ */_._if("#text/1", $if_content2);
+const $if_content__inner__script = _._script("__tests__/template.marko_1_inner", ($scope, {
   _: {
     inner
   }
-}) => _$.on($scope["#button/0"], "click", function () {
+}) => _._on($scope["#button/0"], "click", function () {
   $inner($scope._, inner = !inner);
 }));
-const $inner$if$content = /* @__PURE__ */_$.conditionalClosure("inner", "#text/1", 0, ($scope, inner) => {
-  $if$if$content($scope, inner ? 0 : 1);
-  $inner$if$content_effect($scope);
+const $if_content__inner = /* @__PURE__ */_._if_closure("inner", "#text/1", 0, ($scope, inner) => {
+  $if_content__if($scope, inner ? 0 : 1);
+  $if_content__inner__script($scope);
 });
-const $setup$if$content2 = $inner$if$content;
-const $if_content = /* @__PURE__ */_$.createRenderer("<button id=inner></button><!><!>", /* get, over(1), replace, over(2) */" b%c", $setup$if$content2);
-const $if = /* @__PURE__ */_$.conditional("#text/1", $if_content);
-const $outer_effect = _$.effect("__tests__/template.marko_0_outer", ($scope, {
+const $if_content__setup = $if_content__inner;
+const $if_content = /* @__PURE__ */_._content_branch("<button id=inner></button><!><!>", /* get, over(1), replace, over(2) */" b%c", $if_content__setup);
+const $if = /* @__PURE__ */_._if("#text/1", $if_content);
+const $outer__script = _._script("__tests__/template.marko_0_outer", ($scope, {
   outer
-}) => _$.on($scope["#button/0"], "click", function () {
+}) => _._on($scope["#button/0"], "click", function () {
   $outer($scope, outer = !outer);
 }));
-const $outer = /* @__PURE__ */_$.state("outer/2", ($scope, outer) => {
+const $outer = /* @__PURE__ */_._let("outer/2", ($scope, outer) => {
   $if($scope, outer ? 0 : 1);
-  $outer_effect($scope);
+  $outer__script($scope);
 });
-const $inner = /* @__PURE__ */_$.state("inner/3", $inner$if$content);
-const $count_closure = /* @__PURE__ */_$.dynamicClosure($count$if$content);
-const $count = /* @__PURE__ */_$.state("count/4", $count_closure);
+const $inner = /* @__PURE__ */_._let("inner/3", $if_content__inner);
+const $count__closure = /* @__PURE__ */_._closure($if_content2__count);
+const $count = /* @__PURE__ */_._let("count/4", $count__closure);
 export function $setup($scope) {
   $outer($scope, true);
   $inner($scope, true);
   $count($scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

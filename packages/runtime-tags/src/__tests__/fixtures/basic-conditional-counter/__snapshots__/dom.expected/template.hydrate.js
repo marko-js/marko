@@ -1,24 +1,24 @@
-// size: 335 (min) 194 (brotli)
-const $count$if$content = _$.conditionalClosure(4, 2, 0, ($scope, count) =>
-    _$.data($scope[0], count),
+// size: 324 (min) 189 (brotli)
+const $if_content__count = _._if_closure(4, 2, 0, ($scope, count) =>
+    _._text($scope[0], count),
   ),
-  $setup$if$content = $count$if$content,
-  $if_content = _$.createRenderer("<span> </span>", "D l", $setup$if$content),
-  $if = _$.conditional(2, $if_content),
-  $show_effect = _$.effect("a0", ($scope, { 3: show }) =>
-    _$.on($scope[1], "click", function () {
+  $if_content__setup = $if_content__count,
+  $if_content = _._content_branch("<span> </span>", "D l", $if_content__setup),
+  $if = _._if(2, $if_content),
+  $show__script = _._script("a0", ($scope, { 3: show }) =>
+    _._on($scope[1], "click", function () {
       $show($scope, (show = !show));
     }),
   ),
-  $show = _$.state(3, ($scope, show) => {
-    ($if($scope, show ? 0 : 1), $show_effect($scope));
+  $show = _._let(3, ($scope, show) => {
+    ($if($scope, show ? 0 : 1), $show__script($scope));
   }),
-  $count_effect = _$.effect("a1", ($scope, { 4: count }) =>
-    _$.on($scope[0], "click", function () {
+  $count__script = _._script("a1", ($scope, { 4: count }) =>
+    _._on($scope[0], "click", function () {
       $count($scope, ++count);
     }),
   ),
-  $count = _$.state(4, ($scope) => {
-    ($count$if$content($scope), $count_effect($scope));
+  $count = _._let(4, ($scope) => {
+    ($if_content__count($scope), $count__script($scope));
   });
 init();

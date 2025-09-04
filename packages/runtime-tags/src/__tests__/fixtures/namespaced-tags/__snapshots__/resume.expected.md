@@ -64,17 +64,17 @@
         {
           "ConditionalScope:#text/2": _.a = {
             "ConditionalScope:#a/0": _.b = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_content"
           },
           "ConditionalRenderer:#text/2": "a",
           "ConditionalScope:#text/4": _.c = {
             "ConditionalScope:#a/0": _.d = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_content"
           },
           "ConditionalRenderer:#text/4": "a",
           "ConditionalScope:#text/5": _.e = {
             "ConditionalScope:#div/0": _.f = {},
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
           },
           "ConditionalRenderer:#text/5": "div",
           input_value: "\x3Ca href=#&gt;\x3C/a&gt;",
@@ -169,17 +169,17 @@ container.querySelector(".toggle-parent").click();
         {
           "ConditionalScope:#text/2": _.a = {
             "ConditionalScope:#a/0": _.b = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_content"
           },
           "ConditionalRenderer:#text/2": "a",
           "ConditionalScope:#text/4": _.c = {
             "ConditionalScope:#a/0": _.d = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_content"
           },
           "ConditionalRenderer:#text/4": "a",
           "ConditionalScope:#text/5": _.e = {
             "ConditionalScope:#div/0": _.f = {},
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
           },
           "ConditionalRenderer:#text/5": "div",
           input_value: "\x3Ca href=#&gt;\x3C/a&gt;",
@@ -275,17 +275,17 @@ container.querySelector(".toggle-parent").click();
         {
           "ConditionalScope:#text/2": _.a = {
             "ConditionalScope:#a/0": _.b = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_content"
           },
           "ConditionalRenderer:#text/2": "a",
           "ConditionalScope:#text/4": _.c = {
             "ConditionalScope:#a/0": _.d = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_content"
           },
           "ConditionalRenderer:#text/4": "a",
           "ConditionalScope:#text/5": _.e = {
             "ConditionalScope:#div/0": _.f = {},
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
           },
           "ConditionalRenderer:#text/5": "div",
           input_value: "\x3Ca href=#&gt;\x3C/a&gt;",
@@ -381,17 +381,17 @@ container.querySelector(".toggle-parent").click();
         {
           "ConditionalScope:#text/2": _.a = {
             "ConditionalScope:#a/0": _.b = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_content"
           },
           "ConditionalRenderer:#text/2": "a",
           "ConditionalScope:#text/4": _.c = {
             "ConditionalScope:#a/0": _.d = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_content"
           },
           "ConditionalRenderer:#text/4": "a",
           "ConditionalScope:#text/5": _.e = {
             "ConditionalScope:#div/0": _.f = {},
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
           },
           "ConditionalRenderer:#text/5": "div",
           input_value: "\x3Ca href=#&gt;\x3C/a&gt;",
@@ -473,17 +473,17 @@ container.querySelector(".toggle-child").click();
         {
           "ConditionalScope:#text/2": _.a = {
             "ConditionalScope:#a/0": _.b = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_content"
           },
           "ConditionalRenderer:#text/2": "a",
           "ConditionalScope:#text/4": _.c = {
             "ConditionalScope:#a/0": _.d = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_content"
           },
           "ConditionalRenderer:#text/4": "a",
           "ConditionalScope:#text/5": _.e = {
             "ConditionalScope:#div/0": _.f = {},
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
           },
           "ConditionalRenderer:#text/5": "div",
           input_value: "\x3Ca href=#&gt;\x3C/a&gt;",
@@ -573,17 +573,17 @@ container.querySelector(".toggle-child").click();
         {
           "ConditionalScope:#text/2": _.a = {
             "ConditionalScope:#a/0": _.b = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_content"
           },
           "ConditionalRenderer:#text/2": "a",
           "ConditionalScope:#text/4": _.c = {
             "ConditionalScope:#a/0": _.d = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_content"
           },
           "ConditionalRenderer:#text/4": "a",
           "ConditionalScope:#text/5": _.e = {
             "ConditionalScope:#div/0": _.f = {},
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
           },
           "ConditionalRenderer:#text/5": "div",
           input_value: "\x3Ca href=#&gt;\x3C/a&gt;",
@@ -669,17 +669,17 @@ container.querySelector(".toggle-child").click();
         {
           "ConditionalScope:#text/2": _.a = {
             "ConditionalScope:#a/0": _.b = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_content"
           },
           "ConditionalRenderer:#text/2": "a",
           "ConditionalScope:#text/4": _.c = {
             "ConditionalScope:#a/0": _.d = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_content"
           },
           "ConditionalRenderer:#text/4": "a",
           "ConditionalScope:#text/5": _.e = {
             "ConditionalScope:#div/0": _.f = {},
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
           },
           "ConditionalRenderer:#text/5": "div",
           input_value: "\x3Ca href=#&gt;\x3C/a&gt;",

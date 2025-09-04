@@ -1,18 +1,18 @@
 import _child from "./tags/child.marko";
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   let source = 1;
-  const $childScope = _$.peekNextScopeId();
+  const $childScope = _._peek_scope_id();
   _child({
     value: source,
-    valueChange: _$.register(_new_source => {
+    valueChange: _._resume(_new_source => {
       source = _new_source;
     }, "__tests__/template.marko_0/valueChange", $scope0_id)
   }, 1);
-  _$.write(`source=<!>${_$.escapeXML(source)}${_$.markResumeNode($scope0_id, "#text/1")}`);
-  _$.writeScope($scope0_id, {
-    "#childScope/0": _$.writeExistingScope($childScope)
+  _._html(`source=<!>${_._escape(source)}${_._el_resume($scope0_id, "#text/1")}`);
+  _._scope($scope0_id, {
+    "#childScope/0": _._existing_scope($childScope)
   }, "__tests__/template.marko", 0);
-  _$.resumeClosestBranch($scope0_id);
+  _._resume_branch($scope0_id);
 });

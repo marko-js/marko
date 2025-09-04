@@ -1,9 +1,9 @@
-// size: 143 (min) 103 (brotli)
-_$.register("a0", function () {
+// size: 136 (min) 113 (brotli)
+_._resume("a0", function () {
   return "hello";
 });
-const $get_effect = _$.effect(
+const $get__script = _._script(
   "b0",
   ($scope, { 3: get }) => ($scope[2].textContent = get()),
 );
-(_$.registerBoundSignal("b1", _$.value(3, $get_effect)), init());
+(_._var_resume("b1", _._const(3, $get__script)), init());

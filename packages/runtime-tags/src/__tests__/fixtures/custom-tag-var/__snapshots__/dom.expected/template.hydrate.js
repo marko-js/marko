@@ -1,14 +1,14 @@
-// size: 201 (min) 144 (brotli)
-const $x_effect = _$.effect("a0", ($scope, { 2: x }) =>
-    _$.on($scope[0], "click", function () {
+// size: 192 (min) 146 (brotli)
+const $x__script = _._script("a0", ($scope, { 2: x }) =>
+    _._on($scope[0], "click", function () {
       $x($scope, ++x);
     }),
   ),
-  $x = _$.state(2, ($scope, x) => {
-    (_$.data($scope[1], x), _$.tagVarSignal($scope, x), $x_effect($scope));
+  $x = _._let(2, ($scope, x) => {
+    (_._text($scope[1], x), _._return($scope, x), $x__script($scope));
   });
-(_$.registerBoundSignal(
+(_._var_resume(
   "b0",
-  _$.value(3, ($scope, data) => _$.data($scope[2], data)),
+  _._const(3, ($scope, data) => _._text($scope[2], data)),
 ),
   init());

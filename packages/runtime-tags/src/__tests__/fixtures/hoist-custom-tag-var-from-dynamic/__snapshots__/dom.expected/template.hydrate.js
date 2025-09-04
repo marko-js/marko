@@ -1,48 +1,45 @@
-// size: 807 (min) 349 (brotli)
-const $dynamicTag = _$.dynamicTag(0),
-  $dynamicTag2 = _$.dynamicTag(1),
-  $input_content = _$.value(4, ($scope, input_content) => {
+// size: 774 (min) 336 (brotli)
+const $dynamicTag = _._dynamic_tag(0),
+  $dynamicTag2 = _._dynamic_tag(1),
+  $input_content = _._const(4, ($scope, input_content) => {
     ($dynamicTag($scope, input_content), $dynamicTag2($scope, input_content));
   });
 function $setup($scope) {
-  _$.tagVarSignal($scope, $_return($scope));
+  _._return($scope, $_return($scope));
 }
 function $_return($scope) {
   return function (html) {
     $scope[0].innerHTML = html;
   };
 }
-_$.register("a0", $_return);
-const $get$hoisted_setHtml = _$.hoist(2, "a4"),
-  $setHtml3$inputshowsectionnull$content = _$.registerBoundSignal(
-    "c1",
-    _$.value(2),
-  );
-_$.registerContent(
+_._resume("a0", $_return);
+const $get$hoisted_setHtml = _._hoist(2, "a4"),
+  $inputshowsectionnull_content__setHtml = _._var_resume("c1", _._const(2));
+_._content_resume(
   "c0",
   "<div></div>",
   "0 b&",
   ($scope) => {
-    (_$.setTagVar($scope, 0, $setHtml3$inputshowsectionnull$content),
+    (_._var($scope, 0, $inputshowsectionnull_content__setHtml),
       $setup($scope[0]));
   },
   0,
   "a4",
 );
-const $get$hoisted_setHtml2 = _$.hoist(2, "a3", "a2"),
-  $setHtml2$thing$content = _$.registerBoundSignal("c3", _$.value(2)),
-  $setup$thing$content2 = ($scope) => {
-    (_$.setTagVar($scope, 0, $setHtml2$thing$content), $setup($scope[0]));
+const $get$hoisted_setHtml2 = _._hoist(2, "a3", "a2"),
+  $thing_content2__setHtml = _._var_resume("c3", _._const(2)),
+  $thing_content2__setup = ($scope) => {
+    (_._var($scope, 0, $thing_content2__setHtml), $setup($scope[0]));
   },
-  $thing_content2 = _$.createContent(
+  $thing_content2 = _._content(
     "c2",
     "<div></div>",
     "0 b&",
-    $setup$thing$content2,
+    $thing_content2__setup,
     0,
     "a3",
   );
-(_$.registerContent(
+(_._content_resume(
   "c4",
   "<!><!><!><!><!><!>",
   "b/b%b%c&b",
@@ -52,12 +49,12 @@ const $get$hoisted_setHtml2 = _$.hoist(2, "a3", "a2"),
   0,
   "a2",
 ),
-  _$.register("c6", _$.hoist(2, "a1")),
-  _$.registerBoundSignal("c7", _$.value(2)),
-  _$.effect("c8", ({ 6: $hoisted_setHtml }) => {
+  _._resume("c6", _._hoist(2, "a1")),
+  _._var_resume("c7", _._const(2)),
+  _._script("c8", ({ 6: $hoisted_setHtml }) => {
     for (const fn of 6) fn("Hoist from custom tag");
   }),
-  _$.effect("c9", ($scope) => {
+  _._script("c9", ($scope) => {
     ($get$hoisted_setHtml2($scope)("Hoist from dynamic tag"),
       $get$hoisted_setHtml($scope)("Hoist from dynamic tag"));
   }),

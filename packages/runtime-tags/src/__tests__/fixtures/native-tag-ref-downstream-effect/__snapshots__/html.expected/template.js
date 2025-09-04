@@ -1,14 +1,14 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
-  const el = _$.nodeRef();
-  _$.write(`<div></div>${_$.markResumeNode($scope0_id, "#div/0")}`);
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
+  const el = _._el();
+  _._html(`<div></div>${_._el_resume($scope0_id, "#div/0")}`);
   if (true) {
-    const $scope1_id = _$.nextScopeId();
-    _$.writeEffect($scope1_id, "__tests__/template.marko_1");
-    _$.writeScope($scope1_id, {
-      _: _$.ensureScopeWithId($scope0_id)
+    const $scope1_id = _._scope_id();
+    _._script($scope1_id, "__tests__/template.marko_1");
+    _._scope($scope1_id, {
+      _: _._scope_with_id($scope0_id)
     }, "__tests__/template.marko", "2:2");
   }
-  _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+  _._scope($scope0_id, {}, "__tests__/template.marko", 0);
 });

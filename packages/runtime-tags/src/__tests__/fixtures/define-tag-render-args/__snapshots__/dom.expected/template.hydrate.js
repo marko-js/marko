@@ -1,30 +1,30 @@
-// size: 440 (min) 252 (brotli)
-const $a$define$content = _$.value(4, ($scope, a) => _$.data($scope[0], a)),
-  $b$define$content = _$.value(5, ($scope, b) => _$.data($scope[1], b)),
-  $c$define$content = _$.value(6, ($scope, c) => _$.data($scope[2], c)),
-  $params2$define$content = _$.value(3, ($scope, $params2) => {
-    ($a$define$content($scope, $params2[0]),
-      $b$define$content($scope, $params2[1]),
-      $c$define$content($scope, $params2[2]));
+// size: 442 (min) 252 (brotli)
+const $define_content__a = _._const(4, ($scope, a) => _._text($scope[0], a)),
+  $define_content__b = _._const(5, ($scope, b) => _._text($scope[1], b)),
+  $define_content__c = _._const(6, ($scope, c) => _._text($scope[2], c)),
+  $define_content__$params = _._const(3, ($scope, $params2) => {
+    ($define_content__a($scope, $params2[0]),
+      $define_content__b($scope, $params2[1]),
+      $define_content__c($scope, $params2[2]));
   });
-_$.registerContent(
+_._content_resume(
   "a0",
   "<div><!>|<!>|<!></div>",
   "D%c%c%l",
   0,
-  $params2$define$content,
+  $define_content__$params,
 );
-const $dynamicTag = _$.dynamicTag(0, 0, 0, 1),
-  $expr_x_MyTag = _$.intersection(5, ($scope) => {
+const $dynamicTag = _._dynamic_tag(0, 0, 0, 1),
+  $x__OR__MyTag = _._or(5, ($scope) => {
     let { 3: x, 4: MyTag } = $scope;
     $dynamicTag($scope, MyTag, () => [1, "Hello", x]);
   }),
-  $x_effect = _$.effect("a1", ($scope, { 3: x }) =>
-    _$.on($scope[1], "click", function () {
+  $x__script = _._script("a1", ($scope, { 3: x }) =>
+    _._on($scope[1], "click", function () {
       $x($scope, ++x);
     }),
   ),
-  $x = _$.state(3, ($scope, x) => {
-    (_$.data($scope[2], x), $expr_x_MyTag($scope), $x_effect($scope));
+  $x = _._let(3, ($scope, x) => {
+    (_._text($scope[2], x), $x__OR__MyTag($scope), $x__script($scope));
   });
 init();

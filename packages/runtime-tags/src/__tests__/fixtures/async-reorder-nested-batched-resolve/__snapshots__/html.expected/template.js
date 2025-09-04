@@ -1,78 +1,78 @@
 import { resolveAfter } from "../../utils/resolve";
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   const promiseA = resolveAfter("a", 1);
-  _$.tryContent($scope0_id, "#text/0", _$.registerContent("__tests__/template.marko_1_renderer", () => {
-    const $scope1_id = _$.nextScopeId();
-    _$.fork($scope1_id, "#text/0", promiseA, value => {
-      const $scope2_id = _$.nextScopeId();
-      _$.write(`<div${_$.classAttr(value)} level=1>`);
-      _$.tryContent($scope2_id, "#text/1", _$.registerContent("__tests__/template.marko_3_renderer", () => {
-        const $scope3_id = _$.nextScopeId();
-        _$.fork($scope3_id, "#text/0", promiseA, value => {
-          const $scope6_id = _$.nextScopeId();
+  _._try($scope0_id, "#text/0", _._content_resume("__tests__/template.marko_1_content", () => {
+    const $scope1_id = _._scope_id();
+    _._await($scope1_id, "#text/0", promiseA, value => {
+      const $scope2_id = _._scope_id();
+      _._html(`<div${_._attr_class(value)} level=1>`);
+      _._try($scope2_id, "#text/1", _._content_resume("__tests__/template.marko_3_content", () => {
+        const $scope3_id = _._scope_id();
+        _._await($scope3_id, "#text/0", promiseA, value => {
+          const $scope6_id = _._scope_id();
           const promiseB = resolveAfter("b", 2);
-          _$.write(`<div${_$.classAttr(value)} level=2>`);
-          _$.tryContent($scope6_id, "#text/1", _$.registerContent("__tests__/template.marko_7_renderer", () => {
-            const $scope7_id = _$.nextScopeId();
-            _$.fork($scope7_id, "#text/0", promiseB, value => {
-              const $scope8_id = _$.nextScopeId();
-              _$.write(`<div${_$.classAttr(value)} level=3>`);
-              _$.tryContent($scope8_id, "#text/1", _$.registerContent("__tests__/template.marko_9_renderer", () => {
-                const $scope9_id = _$.nextScopeId();
-                _$.fork($scope9_id, "#text/0", promiseB, value => {
-                  const $scope12_id = _$.nextScopeId();
-                  _$.write(`<div${_$.classAttr(value)} level=4></div>`);
+          _._html(`<div${_._attr_class(value)} level=2>`);
+          _._try($scope6_id, "#text/1", _._content_resume("__tests__/template.marko_7_content", () => {
+            const $scope7_id = _._scope_id();
+            _._await($scope7_id, "#text/0", promiseB, value => {
+              const $scope8_id = _._scope_id();
+              _._html(`<div${_._attr_class(value)} level=3>`);
+              _._try($scope8_id, "#text/1", _._content_resume("__tests__/template.marko_9_content", () => {
+                const $scope9_id = _._scope_id();
+                _._await($scope9_id, "#text/0", promiseB, value => {
+                  const $scope12_id = _._scope_id();
+                  _._html(`<div${_._attr_class(value)} level=4></div>`);
                 }, 0);
-                _$.resumeClosestBranch($scope9_id);
+                _._resume_branch($scope9_id);
               }, $scope8_id), {
-                placeholder: _$.attrTag({
-                  content: _$.registerContent("__tests__/template.marko_11_renderer", () => {
-                    const $scope11_id = _$.nextScopeId();
-                    _$.write("LOADING B2");
+                placeholder: _.attrTag({
+                  content: _._content_resume("__tests__/template.marko_11_content", () => {
+                    const $scope11_id = _._scope_id();
+                    _._html("LOADING B2");
                   }, $scope8_id)
                 })
               });
-              _$.write("</div>");
+              _._html("</div>");
             }, 0);
-            _$.resumeClosestBranch($scope7_id);
+            _._resume_branch($scope7_id);
           }, $scope6_id), {
-            placeholder: _$.attrTag({
-              content: _$.registerContent("__tests__/template.marko_10_renderer", () => {
-                const $scope10_id = _$.nextScopeId();
-                _$.write("LOADING B1");
+            placeholder: _.attrTag({
+              content: _._content_resume("__tests__/template.marko_10_content", () => {
+                const $scope10_id = _._scope_id();
+                _._html("LOADING B1");
               }, $scope6_id)
             })
           });
-          _$.write("</div>");
-          _$.writeScope($scope6_id, {
+          _._html("</div>");
+          _._scope($scope6_id, {
             promiseB
           }, "__tests__/template.marko", "12:9", {
             promiseB: "14:19"
           });
         });
-        _$.resumeClosestBranch($scope3_id);
+        _._resume_branch($scope3_id);
       }, $scope2_id), {
-        placeholder: _$.attrTag({
-          content: _$.registerContent("__tests__/template.marko_5_renderer", () => {
-            const $scope5_id = _$.nextScopeId();
-            _$.write("LOADING A2");
+        placeholder: _.attrTag({
+          content: _._content_resume("__tests__/template.marko_5_content", () => {
+            const $scope5_id = _._scope_id();
+            _._html("LOADING A2");
           }, $scope2_id)
         })
       });
-      _$.write("</div>");
+      _._html("</div>");
     }, 0);
-    _$.resumeClosestBranch($scope1_id);
+    _._resume_branch($scope1_id);
   }, $scope0_id), {
-    placeholder: _$.attrTag({
-      content: _$.registerContent("__tests__/template.marko_4_renderer", () => {
-        const $scope4_id = _$.nextScopeId();
-        _$.write("LOADING A1");
+    placeholder: _.attrTag({
+      content: _._content_resume("__tests__/template.marko_4_content", () => {
+        const $scope4_id = _._scope_id();
+        _._html("LOADING A1");
       }, $scope0_id)
     })
   });
-  _$.writeScope($scope0_id, {
+  _._scope($scope0_id, {
     promiseA
   }, "__tests__/template.marko", 0, {
     promiseA: "3:7"

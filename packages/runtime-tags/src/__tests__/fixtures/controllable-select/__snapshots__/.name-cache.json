@@ -1,9 +1,9 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "e",
-      "$$value": "o",
+      "$_": "t",
+      "$init": "r",
+      "$$value": "e",
       "$$valueChange": "a"
     }
   }

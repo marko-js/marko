@@ -1,14 +1,14 @@
-const formatNumber = _$.register(n => {
+const formatNumber = _._resume(n => {
   return "$" + n.toFixed(2);
 }, "__tests__/template.marko_0/formatNumber");
 function formatNumber2(n) {
   return "$" + n.toFixed(2);
 }
-_$.register(formatNumber2, "__tests__/template.marko_0/formatNumber2");
+_._resume(formatNumber2, "__tests__/template.marko_0/formatNumber2");
 import _counter from "./tags/counter.marko";
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   _counter({
     format: formatNumber
   });

@@ -4,10 +4,10 @@ import { $setup as _comments, $input_comments as _comments_input_comments, $inpu
 export function $setup($scope) {
   _comments($scope["#childScope/0"]);
 }
-import * as _$ from "@marko/runtime-tags/debug/dom";
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {
+import * as _ from "@marko/runtime-tags/debug/dom";
+export const $input = /* @__PURE__ */_._const("input", ($scope, input) => {
   const $comments_input_spread = input;
   _comments_input_comments($scope["#childScope/0"], $comments_input_spread.comments);
   _comments_input_path($scope["#childScope/0"], $comments_input_spread.path);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

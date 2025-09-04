@@ -1,13 +1,13 @@
-// size: 361 (min) 216 (brotli)
-const $count_effect = _$.effect("a0", ($scope, { 2: count }) =>
-    _$.on($scope[0], "click", function () {
+// size: 366 (min) 218 (brotli)
+const $count__script = _._script("a0", ($scope, { 2: count }) =>
+    _._on($scope[0], "click", function () {
       $count($scope, ++count);
     }),
   ),
-  $count = _$.state(2, ($scope, count) => {
-    (_$.data($scope[1], count), $count_effect($scope));
+  $count = _._let(2, ($scope, count) => {
+    (_._text($scope[1], count), $count__script($scope));
   });
-const $tagName_content = _$.registerContent(
+const $tagName_content = _._content_resume(
     "b0",
     "<button id=count> </button>",
     "/ D l&",
@@ -17,13 +17,13 @@ const $tagName_content = _$.registerContent(
       })($scope[0]);
     },
   ),
-  $dynamicTag = _$.dynamicTag(0, $tagName_content),
-  $tagName_effect = _$.effect("b1", ($scope, { 2: tagName }) =>
-    _$.on($scope[1], "click", function () {
+  $dynamicTag = _._dynamic_tag(0, $tagName_content),
+  $tagName__script = _._script("b1", ($scope, { 2: tagName }) =>
+    _._on($scope[1], "click", function () {
       $tagName($scope, (tagName = "span" === tagName ? "div" : "span"));
     }),
   ),
-  $tagName = _$.state(2, ($scope, tagName) => {
-    ($dynamicTag($scope, tagName), $tagName_effect($scope));
+  $tagName = _._let(2, ($scope, tagName) => {
+    ($dynamicTag($scope, tagName), $tagName__script($scope));
   });
 init();

@@ -3,36 +3,36 @@ import { getFile, importStar } from "@marko/compiler/babel-utils";
 
 import type { Falsy } from "../../common/types";
 import {
-  attr,
-  classAttr,
-  escapeScript,
-  escapeStyle,
-  escapeXML,
-  styleAttr,
-  toString,
+  _attr,
+  _attr_class,
+  _attr_style,
+  _escape,
+  _escape_script,
+  _escape_style,
+  _unescaped,
 } from "../../html";
 import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
 import { toMemberExpression } from "./to-property-name";
 
 const pureDOMFunctions = new Set<string>([
-  "awaitTag",
-  "conditional",
-  "conditionalClosure",
-  "createTry",
-  "dynamicTag",
-  "createRenderer",
-  "createContent",
-  "createTemplate",
-  "dynamicClosure",
-  "dynamicClosureRead",
-  "intersection",
-  "loopClosure",
-  "loopIn",
-  "loopOf",
-  "loopTo",
-  "state",
-  "value",
+  "_await",
+  "_if",
+  "_if_closure",
+  "_try",
+  "_dynamic_tag",
+  "_content_branch",
+  "_content",
+  "_template",
+  "_closure",
+  "_closure_get",
+  "_or",
+  "_for_closure",
+  "_for_in",
+  "_for_of",
+  "_for_to",
+  "_let",
+  "_const",
 ] satisfies (keyof typeof import("../../dom"))[]);
 
 export function importRuntime(
@@ -40,7 +40,7 @@ export function importRuntime(
 ) {
   const { output } = getMarkoOpts();
   return toMemberExpression(
-    importStar(getFile(), getRuntimePath(output), "$"),
+    importStar(getFile(), getRuntimePath(output), "_"),
     name,
   );
 }
@@ -66,13 +66,13 @@ export function callRuntime(
 
 export function getHTMLRuntime() {
   return {
-    escapeXML,
-    toString,
-    attr,
-    classAttr,
-    styleAttr,
-    escapeScript,
-    escapeStyle,
+    _escape,
+    _unescaped,
+    _attr,
+    _attr_class,
+    _attr_style,
+    _escape_script,
+    _escape_style,
   };
 }
 

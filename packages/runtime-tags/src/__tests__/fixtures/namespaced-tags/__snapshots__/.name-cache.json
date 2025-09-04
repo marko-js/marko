@@ -1,22 +1,21 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
+      "$_": "t",
       "$init": "e",
       "$$Child_content2": "a",
-      "$$Child_content": "n",
-      "$$input_value$Parent$content": "r",
-      "$$Parent_content": "i",
-      "$$expr_Parent_Child_effect": "o",
-      "$$expr_Parent_Child": "c",
-      "$$dynamicTag3": "s",
-      "$$dynamicTag2": "m",
-      "$$dynamicTag": "f",
-      "$$Child_effect": "g",
-      "$$Child": "d",
-      "$$Parent_effect": "l",
-      "$$Parent": "u",
-      "$$setup$Parent$content": "y"
+      "$$Child_content": "r",
+      "$$Parent_content__setup": "n",
+      "$$Parent_content": "_",
+      "$$dynamicTag3": "o",
+      "$$Parent__OR__Child__script": "c",
+      "$$Parent__OR__Child": "i",
+      "$$Parent__script": "m",
+      "$$Parent": "s",
+      "$$dynamicTag": "u",
+      "$$dynamicTag2": "l",
+      "$$Child__script": "f",
+      "$$Child": "g"
     }
   }
 }

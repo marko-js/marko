@@ -1,22 +1,22 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/tags/custom-tag.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
-  _$.write(`<div${_$.classAttr(input.class)}></div>${_$.markResumeNode($scope0_id, "#div/0", _$.serializeGuard($serialize, /* input.class */3))}`);
-  _$.resumeConditional(() => {
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/tags/custom-tag.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
+  _._html(`<div${_._attr_class(input.class)}></div>${_._el_resume($scope0_id, "#div/0", _._serialize_guard($serialize, /* input.class */3))}`);
+  _._if(() => {
     if (input.test) {
-      const $scope1_id = _$.nextScopeId();
-      _$.write(`<div${_$.classAttr(input.test.class)} id=test>`);
-      _$.dynamicTag($scope1_id, "#text/1", input.test.content, {}, 0, 0, _$.serializeGuard($serialize, /* input.test.content */6));
-      _$.write(`</div>${_$.markResumeNode($scope1_id, "#div/0", _$.serializeGuard($serialize, /* input.test.class */5))}`);
-      _$.serializeGuard($serialize, /* input.test,input.test.class,input.test.content */2) && _$.writeScope($scope1_id, {
-        _: _$.serializeIf($serialize, /* input.test.class, input.test.content */1) && _$.ensureScopeWithId($scope0_id)
+      const $scope1_id = _._scope_id();
+      _._html(`<div${_._attr_class(input.test.class)} id=test>`);
+      _._dynamic_tag($scope1_id, "#text/1", input.test.content, {}, 0, 0, _._serialize_guard($serialize, /* input.test.content */6));
+      _._html(`</div>${_._el_resume($scope1_id, "#div/0", _._serialize_guard($serialize, /* input.test.class */5))}`);
+      _._serialize_guard($serialize, /* input.test,input.test.class,input.test.content */2) && _._scope($scope1_id, {
+        _: _._serialize_if($serialize, /* input.test.class, input.test.content */1) && _._scope_with_id($scope0_id)
       }, "__tests__/tags/custom-tag.marko", "3:2");
       return 0;
     }
-  }, $scope0_id, "#text/1", _$.serializeGuard($serialize, /* input.test,input.test.class,input.test.content */2), _$.serializeGuard($serialize, /* input.test */4), 0, 1);
-  _$.serializeGuard($serialize, /* input.class,input.test */0) && _$.writeScope($scope0_id, {
-    input_test_class: _$.serializeIf($serialize, /* input.test */4) && input.test?.class,
-    input_test_content: _$.serializeIf($serialize, /* input.test */4) && input.test?.content
+  }, $scope0_id, "#text/1", _._serialize_guard($serialize, /* input.test,input.test.class,input.test.content */2), _._serialize_guard($serialize, /* input.test */4), 0, 1);
+  _._serialize_guard($serialize, /* input.class,input.test */0) && _._scope($scope0_id, {
+    input_test_class: _._serialize_if($serialize, /* input.test */4) && input.test?.class,
+    input_test_content: _._serialize_if($serialize, /* input.test */4) && input.test?.content
   }, "__tests__/tags/custom-tag.marko", 0, {
     input_test_class: ["input.test.class"],
     input_test_content: ["input.test.content"]

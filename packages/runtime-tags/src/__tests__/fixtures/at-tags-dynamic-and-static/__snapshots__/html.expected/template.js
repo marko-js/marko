@@ -1,17 +1,17 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
+import * as _ from "@marko/runtime-tags/debug/html";
 import _hello from "./tags/hello/index.marko";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   let $item;
-  _$.forIn({
+  _.forIn({
     a: 1,
     b: 2
   }, (a, v) => {
-    $item = _$.attrTags($item, {
-      content: _$.registerContent("__tests__/template.marko_1_renderer", () => {
-        const $scope1_id = _$.nextScopeId();
-        _$.write(`${_$.escapeXML(a)}${_$.markResumeNode($scope1_id, "#text/0")}:<!>${_$.escapeXML(v)}${_$.markResumeNode($scope1_id, "#text/1")}`);
-        _$.writeScope($scope1_id, {
+    $item = _.attrTags($item, {
+      content: _._content_resume("__tests__/template.marko_1_content", () => {
+        const $scope1_id = _._scope_id();
+        _._html(`${_._escape(a)}${_._el_resume($scope1_id, "#text/0")}:<!>${_._escape(v)}${_._el_resume($scope1_id, "#text/1")}`);
+        _._scope($scope1_id, {
           a,
           v
         }, "__tests__/template.marko", "3:8", {
@@ -22,10 +22,10 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     });
   });
   _hello({
-    other: _$.attrTag({
-      content: _$.registerContent("__tests__/template.marko_2_renderer", () => {
-        const $scope2_id = _$.nextScopeId();
-        _$.write("other");
+    other: _.attrTag({
+      content: _._content_resume("__tests__/template.marko_2_content", () => {
+        const $scope2_id = _._scope_id();
+        _._html("other");
       }, $scope0_id)
     }),
     item: $item

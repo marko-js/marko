@@ -89,7 +89,7 @@ export default {
         translatedAttrs.statements.push(
           t.expressionStatement(
             callRuntime(
-              "lifecycle",
+              "_lifecycle",
               scopeIdentifier,
               getScopeAccessorLiteral(lifecycleAttrsRef),
               propsToExpression(translatedAttrs.properties),

@@ -1,9 +1,9 @@
 export const $template = "<!><!><button></button>";
 export const $walks = /* over(1), replace, over(1), get, over(1) */"b%b b";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $tagName_content = _$.registerContent("__tests__/template.marko_1_renderer", "body content", /* over(1) */"b");
-const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", $tagName_content);
-const $expr_tagName_className = /* @__PURE__ */_$.intersection(4, $scope => {
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $tagName_content = _._content_resume("__tests__/template.marko_1_content", "body content", /* over(1) */"b");
+const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", $tagName_content);
+const $tagName__OR__className = /* @__PURE__ */_._or(4, $scope => {
   let {
     tagName,
     className
@@ -12,18 +12,18 @@ const $expr_tagName_className = /* @__PURE__ */_$.intersection(4, $scope => {
     class: className
   }));
 });
-const $tagName_effect = _$.effect("__tests__/template.marko_0_tagName", ($scope, {
+const $tagName__script = _._script("__tests__/template.marko_0_tagName", ($scope, {
   tagName
-}) => _$.on($scope["#button/1"], "click", function () {
+}) => _._on($scope["#button/1"], "click", function () {
   $tagName($scope, tagName = tagName === "span" ? "div" : "span");
 }));
-const $tagName = /* @__PURE__ */_$.state("tagName/2", $scope => {
-  $expr_tagName_className($scope);
-  $tagName_effect($scope);
+const $tagName = /* @__PURE__ */_._let("tagName/2", $scope => {
+  $tagName__OR__className($scope);
+  $tagName__script($scope);
 });
-const $className = /* @__PURE__ */_$.state("className/3", $expr_tagName_className);
+const $className = /* @__PURE__ */_._let("className/3", $tagName__OR__className);
 export function $setup($scope) {
   $tagName($scope, "span");
   $className($scope, "A");
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

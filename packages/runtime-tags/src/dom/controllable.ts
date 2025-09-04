@@ -4,13 +4,13 @@ import {
   ControlledType,
   type Scope,
 } from "../common/types";
-import { attr, normalizeAttrValue } from "./dom";
+import { _attr, normalizeAttrValue } from "./dom";
 import { createDelegator } from "./event";
 import { pendingEffects, run } from "./queue";
 import { resolveCursorPosition } from "./resolve-cursor-position";
 import { isResuming } from "./resume";
 
-export function controllable_input_checked(
+export function _attr_input_checked(
   scope: Scope,
   nodeAccessor: Accessor,
   checked: unknown,
@@ -24,7 +24,7 @@ export function controllable_input_checked(
     checkedChange,
   );
 }
-export function controllable_input_checked_effect(
+export function _attr_input_checked_script(
   scope: Scope,
   nodeAccessor: Accessor,
 ) {
@@ -42,7 +42,7 @@ export function controllable_input_checked_effect(
   });
 }
 
-export function controllable_input_checkedValue(
+export function _attr_input_checkedValue(
   scope: Scope,
   nodeAccessor: Accessor,
   checkedValue: unknown,
@@ -50,7 +50,7 @@ export function controllable_input_checkedValue(
   value: unknown,
 ) {
   scope[AccessorPrefix.ControlledValue + nodeAccessor] = checkedValue;
-  attr(scope[nodeAccessor] as HTMLInputElement, "value", value);
+  _attr(scope[nodeAccessor] as HTMLInputElement, "value", value);
   setCheckboxValue(
     scope,
     nodeAccessor,
@@ -61,7 +61,7 @@ export function controllable_input_checkedValue(
     checkedValueChange,
   );
 }
-export function controllable_input_checkedValue_effect(
+export function _attr_input_checkedValue_script(
   scope: Scope,
   nodeAccessor: Accessor,
 ) {
@@ -99,7 +99,7 @@ export function controllable_input_checkedValue_effect(
   });
 }
 
-export function controllable_input_value(
+export function _attr_input_value(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
@@ -124,10 +124,7 @@ export function controllable_input_value(
     el.defaultValue = normalizedValue;
   }
 }
-export function controllable_input_value_effect(
-  scope: Scope,
-  nodeAccessor: Accessor,
-) {
+export function _attr_input_value_script(scope: Scope, nodeAccessor: Accessor) {
   const el = scope[nodeAccessor] as HTMLInputElement;
   if (isResuming) {
     scope[AccessorPrefix.ControlledValue + nodeAccessor] = el.defaultValue;
@@ -150,11 +147,11 @@ export function controllable_input_value_effect(
 }
 
 export {
-  controllable_input_value as controllable_textarea_value,
-  controllable_input_value_effect as controllable_textarea_value_effect,
+  _attr_input_value as _attr_textarea_value,
+  _attr_input_value_script as _attr_textarea_value_script,
 };
 
-export function controllable_select_value(
+export function _attr_select_value(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
@@ -180,7 +177,7 @@ export function controllable_select_value(
     scope,
   );
 }
-export function controllable_select_value_effect(
+export function _attr_select_value_script(
   scope: Scope,
   nodeAccessor: Accessor,
 ) {
@@ -251,7 +248,7 @@ function setSelectOptions(
   }
 }
 
-export function controllable_detailsOrDialog_open(
+export function _attr_details_or_dialog_open(
   scope: Scope,
   nodeAccessor: Accessor,
   open: unknown,
@@ -269,7 +266,7 @@ export function controllable_detailsOrDialog_open(
     AccessorPrefix.ControlledValue + nodeAccessor
   ] = normalizeBoolProp(open);
 }
-export function controllable_detailsOrDialog_open_effect(
+export function _attr_details_or_dialog_open_script(
   scope: Scope,
   nodeAccessor: Accessor,
 ) {

@@ -1,16 +1,16 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "e",
-      "$$x$for$content": "o",
-      "$$params2$for$content": "a",
-      "$$for_content": "r",
-      "$$for": "n",
-      "$$list_effect": "c",
-      "$$list": "i",
-      "$$open_effect": "f",
-      "$$open": "m"
+      "$_": "t",
+      "$init": "o",
+      "$$for_content__x": "n",
+      "$$for_content__$params": "r",
+      "$$for_content": "c",
+      "$$open__script": "i",
+      "$$open": "_",
+      "$$for": "e",
+      "$$list__script": "a",
+      "$$list": "m"
     }
   }
 }

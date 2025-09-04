@@ -1,16 +1,16 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "a",
-      "$$expr_input_content_input_name_x": "n",
-      "$$dynamicTag": "o",
-      "$$x_effect": "e",
+      "$_": "t",
+      "$init": "o",
+      "$$dynamicTag": "n",
+      "$$input_content__OR__input_name__OR__x": "_",
+      "$$x__script": "c",
       "$$x": "m",
-      "$$name$customtag$content": "i",
-      "$$count$customtag$content": "c",
-      "$$temp$customtag$content": "r",
-      "$$params2$customtag$content": "u"
+      "$$customtag_content__name": "e",
+      "$$customtag_content__count": "r",
+      "$$customtag_content__$params": "a",
+      "$$customtag_content__$temp": "i"
     }
   }
 }

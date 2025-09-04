@@ -1,25 +1,25 @@
-// size: 363 (min) 230 (brotli)
-const $number$define$content = _$.value(3, ($scope, number) =>
-    _$.data($scope[0], number),
+// size: 362 (min) 223 (brotli)
+const $define_content__number = _._const(3, ($scope, number) =>
+    _._text($scope[0], number),
   ),
-  $params2$define$content = _$.value(1, ($scope, $params2) =>
-    $temp$define$content($scope, $params2?.[0]),
+  $define_content__$params = _._const(1, ($scope, $params2) =>
+    $define_content__$temp($scope, $params2?.[0]),
   ),
-  $temp$define$content = _$.value(2, ($scope, $temp) =>
-    $number$define$content($scope, $temp.number),
+  $define_content__$temp = _._const(2, ($scope, $temp) =>
+    $define_content__number($scope, $temp.number),
   );
-_$.registerContent("a0", "<div> </div>", "D l", 0, $params2$define$content);
-const $dynamicTag = _$.dynamicTag(0),
-  $expr_x_MyTag = _$.intersection(5, ($scope) => {
+_._content_resume("a0", "<div> </div>", "D l", 0, $define_content__$params);
+const $dynamicTag = _._dynamic_tag(0),
+  $x__OR__MyTag = _._or(5, ($scope) => {
     let { 3: x, 4: MyTag } = $scope;
     $dynamicTag($scope, MyTag, () => ({ number: x }));
   }),
-  $x_effect = _$.effect("a1", ($scope, { 3: x }) =>
-    _$.on($scope[1], "click", function () {
+  $x__script = _._script("a1", ($scope, { 3: x }) =>
+    _._on($scope[1], "click", function () {
       $x($scope, ++x);
     }),
   ),
-  $x = _$.state(3, ($scope, x) => {
-    (_$.data($scope[2], x), $expr_x_MyTag($scope), $x_effect($scope));
+  $x = _._let(3, ($scope, x) => {
+    (_._text($scope[2], x), $x__OR__MyTag($scope), $x__script($scope));
   });
 init();

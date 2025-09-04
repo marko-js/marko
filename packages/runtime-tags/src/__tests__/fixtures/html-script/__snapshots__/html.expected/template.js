@@ -1,19 +1,19 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   let count = 0;
-  _$.write(`<script type=importmap>
+  _._html(`<script type=importmap>
   {
     "imports": {
-      "${_$.escapeScript(count)}": "https://markojs.com",
+      "${_._escape_script(count)}": "https://markojs.com",
     }
   }
-</script>${_$.markResumeNode($scope0_id, "#script/0")}<div>${_$.escapeXML(count)}${_$.markResumeNode($scope0_id, "#text/1")}</div>`);
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0_count");
-  _$.writeScope($scope0_id, {
+</script>${_._el_resume($scope0_id, "#script/0")}<div>${_._escape(count)}${_._el_resume($scope0_id, "#text/1")}</div>`);
+  _._script($scope0_id, "__tests__/template.marko_0_count");
+  _._scope($scope0_id, {
     count
   }, "__tests__/template.marko", 0, {
     count: "1:6"
   });
-  _$.resumeClosestBranch($scope0_id);
+  _._resume_branch($scope0_id);
 });

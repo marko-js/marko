@@ -1,6 +1,6 @@
-// size: 264 (min) 135 (brotli)
-const $x_effect = _$.effect("a0", ($scope, { 1: x }) => {
-    (_$.lifecycle($scope, 2, {
+// size: 266 (min) 142 (brotli)
+const $x__script = _._script("a0", ($scope, { 1: x }) => {
+    (_._lifecycle($scope, 2, {
       onMount: function () {
         document.getElementById("ref").textContent = "Mount " + x;
       },
@@ -8,9 +8,9 @@ const $x_effect = _$.effect("a0", ($scope, { 1: x }) => {
         document.getElementById("ref").textContent = "Update " + x;
       },
     }),
-      _$.on($scope[0], "click", function () {
+      _._on($scope[0], "click", function () {
         $x($scope, ++x);
       }));
   }),
-  $x = _$.state(1, $x_effect);
+  $x = _._let(1, $x__script);
 init();

@@ -1,19 +1,10 @@
 {
   "vars": {
     "props": {
-      "$_$": "e",
-      "$init": "a",
-      "$resolveAfter": "t",
-      "$$value$await$content": "o",
-      "$$params2$await$content": "r",
-      "$$await_content": "m",
-      "$$await$try$content": "n",
-      "$$clickCount$try$content": "i",
-      "$$clickCount_closure": "s",
-      "$$clickCount_effect": "c",
-      "$$clickCount": "l",
-      "$$open_effect": "f",
-      "$$open": "d"
+      "$_": "t",
+      "$init": "o",
+      "$$open__script": "m",
+      "$$open": "i"
     }
   }
 }

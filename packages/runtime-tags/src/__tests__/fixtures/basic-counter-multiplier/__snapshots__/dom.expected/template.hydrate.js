@@ -1,27 +1,27 @@
-// size: 305 (min) 181 (brotli)
-const $multipliedCount = _$.value(7, ($scope, multipliedCount) =>
-    _$.data($scope[3], multipliedCount),
+// size: 301 (min) 171 (brotli)
+const $multipliedCount = _._const(7, ($scope, multipliedCount) =>
+    _._text($scope[3], multipliedCount),
   ),
-  $expr_count_multiplier = _$.intersection(6, ($scope) => {
+  $count__OR__multiplier = _._or(6, ($scope) => {
     let { 4: count, 5: multiplier } = $scope;
     $multipliedCount($scope, count * multiplier);
   }),
-  $count_effect = _$.effect("a0", ($scope, { 4: count }) =>
-    _$.on($scope[2], "click", function () {
+  $count__script = _._script("a0", ($scope, { 4: count }) =>
+    _._on($scope[2], "click", function () {
       $count($scope, ++count);
     }),
   ),
-  $count = _$.state(4, ($scope) => {
-    ($expr_count_multiplier($scope), $count_effect($scope));
+  $count = _._let(4, ($scope) => {
+    ($count__OR__multiplier($scope), $count__script($scope));
   }),
-  $multiplier_effect = _$.effect("a1", ($scope, { 5: multiplier }) =>
-    _$.on($scope[0], "click", function () {
+  $multiplier__script = _._script("a1", ($scope, { 5: multiplier }) =>
+    _._on($scope[0], "click", function () {
       $multiplier($scope, ++multiplier);
     }),
   ),
-  $multiplier = _$.state(5, ($scope, multiplier) => {
-    (_$.data($scope[1], multiplier),
-      $expr_count_multiplier($scope),
-      $multiplier_effect($scope));
+  $multiplier = _._let(5, ($scope, multiplier) => {
+    (_._text($scope[1], multiplier),
+      $count__OR__multiplier($scope),
+      $multiplier__script($scope));
   });
 init();

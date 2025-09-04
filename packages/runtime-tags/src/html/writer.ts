@@ -54,7 +54,7 @@ export function getScopeId(scope: unknown): number | undefined {
   return (scope as ScopeInternals)[K_SCOPE_ID];
 }
 
-export function write(html: string) {
+export function _html(html: string) {
   $chunk.writeHTML(html);
 }
 
@@ -62,12 +62,12 @@ export function writeScript(script: string) {
   $chunk.writeScript(script);
 }
 
-export function writeEffect(scopeId: number, registryId: string) {
+export function _script(scopeId: number, registryId: string) {
   $chunk.boundary.state.needsMainRuntime = true;
   $chunk.writeEffect(scopeId, registryId);
 }
 
-export function writeContent(
+export function _attr_content(
   nodeAccessor: Accessor,
   scopeId: number,
   content: unknown,
@@ -75,7 +75,7 @@ export function writeContent(
 ) {
   const shouldResume = serializeReason !== 0;
   const render = normalizeServerRender(content);
-  const branchId = peekNextScopeId();
+  const branchId = _peek_scope_id();
   if (render) {
     if (shouldResume) {
       withBranchId(branchId, render);
@@ -84,7 +84,7 @@ export function writeContent(
     }
   }
 
-  const rendered = peekNextScopeId() !== branchId;
+  const rendered = _peek_scope_id() !== branchId;
   if (rendered) {
     if (shouldResume) {
       writeScope(scopeId, {
@@ -96,7 +96,7 @@ export function writeContent(
       });
     }
   } else {
-    nextScopeId();
+    _scope_id();
   }
 }
 
@@ -127,31 +127,31 @@ export function withContext<T>(key: PropertyKey, value: unknown, cb: () => T) {
   }
 }
 
-export function setTagVar(
+export function _var(
   parentScopeId: number,
   scopeOffsetAccessor: Accessor,
   childScopeId: number,
   registryId: string,
 ) {
-  ensureScopeWithId(parentScopeId)[scopeOffsetAccessor] = nextScopeId();
-  ensureScopeWithId(childScopeId)[AccessorProp.TagVariable] = register(
+  _scope_with_id(parentScopeId)[scopeOffsetAccessor] = _scope_id();
+  _scope_with_id(childScopeId)[AccessorProp.TagVariable] = _resume(
     {},
     registryId,
     parentScopeId,
   );
 }
 
-export function register<T extends WeakKey>(
+export function _resume<T extends WeakKey>(
   val: T,
   id: string,
   scopeId?: number,
 ): T {
   return scopeId === undefined
     ? serializerRegister(id, val)
-    : serializerRegister(id, val, ensureScopeWithId(scopeId));
+    : serializerRegister(id, val, _scope_with_id(scopeId));
 }
 
-export function nextTagId() {
+export function _id() {
   const state = $chunk.boundary.state;
   const { $global } = state;
   return (
@@ -159,11 +159,11 @@ export function nextTagId() {
   );
 }
 
-export function nextScopeId() {
+export function _scope_id() {
   return $chunk.boundary.state.scopeId++;
 }
 
-export function peekNextScopeId() {
+export function _peek_scope_id() {
   return $chunk.boundary.state.scopeId;
 }
 
@@ -173,21 +173,21 @@ export function getScopeById(scopeId: number | undefined) {
   }
 }
 
-export function serializeIf(
+export function _serialize_if(
   condition: undefined | 1 | Record<string, 1>,
   key: string,
 ) {
   return condition && (condition === 1 || condition[key]) ? 1 : undefined;
 }
 
-export function serializeGuard(
+export function _serialize_guard(
   condition: undefined | 1 | Record<string, 1>,
   key: string,
 ) {
   return condition && (condition === 1 || condition[key]) ? 1 : 0;
 }
 
-export function markResumeNode(
+export function _el_resume(
   scopeId: number,
   accessor: Accessor,
   shouldResume?: 0 | 1,
@@ -199,31 +199,31 @@ export function markResumeNode(
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
-export function commentSeparator(shouldResume: 0 | 1) {
+export function _sep(shouldResume: 0 | 1) {
   return shouldResume === 0 ? "" : "<!>";
 }
 
-export function nodeRef(scopeId: number, id?: string) {
+export function _el(scopeId: number, id?: string) {
   const getter = () => {
     if (MARKO_DEBUG) {
       throw new Error("Cannot read a node reference on the server.");
     }
   };
 
-  return id ? register(getter, id, scopeId) : getter;
+  return id ? _resume(getter, id, scopeId) : getter;
 }
 
-export function hoist(scopeId: number, id?: string) {
+export function _hoist(scopeId: number, id?: string) {
   const getter = () => {
     if (MARKO_DEBUG) {
       throw new Error("Cannot read a hoisted value on the server.");
     }
   };
   getter[Symbol.iterator] = getter;
-  return id ? register(getter, id, scopeId) : getter;
+  return id ? _resume(getter, id, scopeId) : getter;
 }
 
-export function resumeClosestBranch(scopeId: number) {
+export function _resume_branch(scopeId: number) {
   const branchId = $chunk.context?.[branchIdKey];
   if (branchId !== undefined && branchId !== scopeId) {
     writeScope(scopeId, { [AccessorProp.ClosestBranchId]: branchId });
@@ -240,7 +240,7 @@ export function withBranchId<T>(branchId: number, cb: () => T): T {
   return withContext(branchIdKey, branchId, cb);
 }
 
-export function resumeForOf(
+export function _for_of(
   list: Falsy | Iterable<unknown>,
   cb: (item: unknown, index: number) => void,
   by: Falsy | ((item: unknown, index: number) => unknown),
@@ -259,7 +259,7 @@ export function resumeForOf(
   if (resumeBranch) {
     const loopScopes = new Map<unknown, ScopeInternals>();
     forOf(list, (item, index) => {
-      const branchId = peekNextScopeId();
+      const branchId = _peek_scope_id();
       if (resumeMarker) {
         if (singleNode) {
           singleNodeBranchIds = " " + branchId + singleNodeBranchIds;
@@ -303,7 +303,7 @@ export function resumeForOf(
   );
 }
 
-export function resumeForIn(
+export function _for_in(
   obj: Falsy | {},
   cb: (key: string, value: unknown) => void,
   by: Falsy | ((key: string, v: unknown) => unknown),
@@ -323,7 +323,7 @@ export function resumeForIn(
     const loopScopes = new Map<unknown, ScopeInternals>();
     let sep = "";
     forIn(obj, (key, value) => {
-      const branchId = peekNextScopeId();
+      const branchId = _peek_scope_id();
       if (resumeMarker) {
         if (singleNode) {
           singleNodeBranchIds = " " + branchId + singleNodeBranchIds;
@@ -368,7 +368,7 @@ export function resumeForIn(
   );
 }
 
-export function resumeForTo(
+export function _for_to(
   to: number,
   from: number | Falsy,
   step: number | Falsy,
@@ -390,7 +390,7 @@ export function resumeForTo(
     const loopScopes = new Map<unknown, ScopeInternals>();
     let sep = "";
     forTo(to, from, step, (i) => {
-      const branchId = peekNextScopeId();
+      const branchId = _peek_scope_id();
       if (resumeMarker) {
         if (singleNode) {
           singleNodeBranchIds = " " + branchId + singleNodeBranchIds;
@@ -435,7 +435,7 @@ export function resumeForTo(
   );
 }
 
-export function resumeConditional(
+export function _if(
   cb: () => void | number,
   scopeId: number,
   accessor: Accessor,
@@ -447,7 +447,7 @@ export function resumeConditional(
   const { state } = $chunk.boundary;
   const resumeBranch = serializeBranch !== 0;
   const resumeMarker = serializeMarker !== 0;
-  const branchId = peekNextScopeId();
+  const branchId = _peek_scope_id();
   if (resumeMarker && resumeBranch && !singleNode) {
     $chunk.writeHTML(state.mark(ResumeSymbol.BranchStart, branchId + ""));
   }
@@ -497,7 +497,7 @@ function writeBranchEnd(
     if (mark) {
       $chunk.writeHTML(mark + endTag);
     } else {
-      $chunk.writeHTML(endTag + markResumeNode(scopeId, accessor));
+      $chunk.writeHTML(endTag + _el_resume(scopeId, accessor));
     }
   } else {
     $chunk.writeHTML(endTag);
@@ -553,13 +553,13 @@ if (MARKO_DEBUG) {
   )(writeScope) as typeof writeScope;
 }
 
-export { writeScope };
+export { writeScope as _scope };
 
-export function writeExistingScope(scopeId: number) {
-  return writeScope(scopeId, ensureScopeWithId(scopeId));
+export function _existing_scope(scopeId: number) {
+  return writeScope(scopeId, _scope_with_id(scopeId));
 }
 
-export function ensureScopeWithId(scopeId: number) {
+export function _scope_with_id(scopeId: number) {
   const { state } = $chunk.boundary;
   let scope = state.scopes.get(scopeId);
   if (!scope) {
@@ -574,7 +574,7 @@ export function $global() {
   return $chunk.boundary.state.$global;
 }
 
-export function fork<T>(
+export function _await<T>(
   scopeId: number,
   accessor: Accessor,
   promise: Promise<T> | T,
@@ -585,7 +585,7 @@ export function fork<T>(
 
   if (!isPromise(promise)) {
     if (resumeMarker) {
-      const branchId = peekNextScopeId();
+      const branchId = _peek_scope_id();
       $chunk.writeHTML(
         $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + ""),
       );
@@ -621,7 +621,7 @@ export function fork<T>(
         if (!boundary.signal.aborted) {
           chunk.render(() => {
             if (resumeMarker) {
-              const branchId = peekNextScopeId();
+              const branchId = _peek_scope_id();
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(
                   ResumeSymbol.BranchStart,
@@ -631,7 +631,7 @@ export function fork<T>(
               content(value);
               boundary.state.serializer.writeAssign(
                 writeScope(branchId, {}),
-                ensureScopeWithId(scopeId),
+                _scope_with_id(scopeId),
                 AccessorPrefix.ConditionalScope + accessor,
               );
               $chunk.writeHTML(
@@ -655,7 +655,7 @@ export function fork<T>(
   );
 }
 
-export function tryContent(
+export function _try(
   scopeId: number,
   accessor: Accessor,
   content: () => void,
@@ -664,7 +664,7 @@ export function tryContent(
     catch?: { content?(err: unknown): void };
   },
 ) {
-  const branchId = peekNextScopeId();
+  const branchId = _peek_scope_id();
   $chunk.writeHTML(
     $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + ""),
   );
@@ -1222,7 +1222,7 @@ function flushSerializer(boundary: Boundary) {
   }
 }
 
-export function writeTrailers(html: string) {
+export function _trailers(html: string) {
   $chunk.boundary.state.trailerHTML += html;
 }
 
@@ -1311,7 +1311,7 @@ function getFilteredGlobals($global: Record<string, unknown>) {
   return filtered;
 }
 
-export function writeSubscribe(
+export function _subscribe(
   subscribers: Set<ScopeInternals>,
   scope: ScopeInternals,
 ) {

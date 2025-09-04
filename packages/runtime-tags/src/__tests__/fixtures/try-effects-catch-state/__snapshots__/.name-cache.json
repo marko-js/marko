@@ -1,14 +1,15 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "a",
-      "$$err$catch$content": "e",
-      "$$params2$catch$content": "o",
-      "$$clickCount$try$content_effect": "r",
-      "$$clickCount$try$content": "n",
-      "$$clickCount_closure": "m",
-      "$$clickCount": "i"
+      "$_": "t",
+      "$init": "o",
+      "$$catch_content__err": "_",
+      "$$catch_content__$params": "e",
+      "$$try_content__clickCount__script": "r",
+      "$$try_content__clickCount": "n",
+      "$$clickCount_closure": "c",
+      "$$clickCount": "m",
+      "$$clickCount__closure": "s"
     }
   }
 }

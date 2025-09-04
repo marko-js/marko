@@ -1,17 +1,17 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "a",
-      "$$expr_input_content_x_y": "e",
-      "$$expr_x_y_effect": "o",
-      "$$expr_x_y": "n",
-      "$$dynamicTag": "i",
-      "$$y": "r",
-      "$$x": "m",
-      "$$count2$customtag$content": "s",
-      "$$count$customtag$content": "c",
-      "$$params2$customtag$content": "d"
+      "$_": "t",
+      "$init": "o",
+      "$$x__OR__y__script": "_",
+      "$$x__OR__y": "n",
+      "$$dynamicTag": "e",
+      "$$input_content__OR__x__OR__y": "m",
+      "$$x": "r",
+      "$$y": "c",
+      "$$customtag_content__count": "i",
+      "$$customtag_content__count2": "s",
+      "$$customtag_content__$params": "a"
     }
   }
 }

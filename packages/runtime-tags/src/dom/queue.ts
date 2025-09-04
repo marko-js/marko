@@ -150,8 +150,8 @@ function runRenders() {
 let runRender = (render: PendingRender) =>
   render.___signal(render.___scope, render.___value);
 
-export let enableCatch = () => {
-  enableCatch = () => {};
+export let _enable_catch = () => {
+  _enable_catch = () => {};
   enableBranches();
   const handlePendingTry = (
     fn: ExecFn,

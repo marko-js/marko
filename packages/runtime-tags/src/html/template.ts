@@ -4,17 +4,14 @@ import type {
   Template,
   TemplateInput,
 } from "../common/types";
-import { registerContent } from "./dynamic-tag";
+import { _content_resume } from "./dynamic-tag";
 import { Boundary, Chunk, offTick, queueTick, State } from "./writer";
 
 export type ServerRenderer = ((...args: unknown[]) => unknown) & {
   ___id?: string;
 };
 
-export const createTemplate = (
-  templateId: string,
-  renderer: ServerRenderer,
-) => {
+export const _template = (templateId: string, renderer: ServerRenderer) => {
   (renderer as unknown as Template).render = render;
   (renderer as unknown as any)._ = renderer; // This is added exclusively for the compat layer, maybe someday it can be removed.
 
@@ -26,7 +23,7 @@ export const createTemplate = (
     };
   }
 
-  return registerContent(templateId, renderer) as unknown as Template;
+  return _content_resume(templateId, renderer) as unknown as Template;
 };
 
 export function isTemplate(

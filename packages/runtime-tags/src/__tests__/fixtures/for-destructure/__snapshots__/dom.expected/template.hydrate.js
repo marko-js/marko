@@ -1,26 +1,26 @@
-// size: 452 (min) 243 (brotli)
-const $name$for$content = _$.value(4, ($scope, name) =>
-    _$.data($scope[0], name),
+// size: 462 (min) 242 (brotli)
+const $for_content__name = _._const(4, ($scope, name) =>
+    _._text($scope[0], name),
   ),
-  $description$for$content = _$.value(5, ($scope, description) =>
-    _$.data($scope[1], description),
+  $for_content__description = _._const(5, ($scope, description) =>
+    _._text($scope[1], description),
   ),
-  $params2$for$content = _$.value(2, ($scope, $params2) =>
-    $temp$for$content($scope, $params2?.[0]),
+  $for_content__$params = _._const(2, ($scope, $params2) =>
+    $for_content__$temp($scope, $params2?.[0]),
   ),
-  $temp$for$content = _$.value(3, ($scope, $temp) => {
-    ($name$for$content($scope, $temp.name),
-      $description$for$content($scope, $temp.description));
+  $for_content__$temp = _._const(3, ($scope, $temp) => {
+    ($for_content__name($scope, $temp.name),
+      $for_content__description($scope, $temp.description));
   }),
-  $for_content = _$.createRenderer(
+  $for_content = _._content_branch(
     "<div><!>: <!></div>",
     "D%c%l",
     0,
-    $params2$for$content,
+    $for_content__$params,
   ),
-  $for = _$.loopOf(0, $for_content),
-  $items_effect = _$.effect("a0", ($scope, { 3: items }) => {
-    (_$.on($scope[1], "click", function () {
+  $for = _._for_of(0, $for_content),
+  $items__script = _._script("a0", ($scope, { 3: items }) => {
+    (_._on($scope[1], "click", function () {
       $items(
         $scope,
         (items = [
@@ -29,11 +29,11 @@ const $name$for$content = _$.value(4, ($scope, name) =>
         ]),
       );
     }),
-      _$.on($scope[2], "click", function () {
+      _._on($scope[2], "click", function () {
         $items($scope, (items = items.slice(0, -1)));
       }));
   }),
-  $items = _$.state(3, ($scope, items) => {
-    ($for($scope, [items]), $items_effect($scope));
+  $items = _._let(3, ($scope, items) => {
+    ($for($scope, [items]), $items__script($scope));
   });
 init();

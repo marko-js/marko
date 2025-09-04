@@ -205,7 +205,9 @@ export function getSignal(
       (signal = {
         identifier: exportName
           ? t.identifier(exportName)
-          : generateUidIdentifier(name + section.name.replace("_", "$")),
+          : generateUidIdentifier(
+              section.name ? `${section.name}__${name}` : name,
+            ),
         referencedBindings,
         section,
         values: [],
@@ -229,7 +231,7 @@ export function getSignal(
       signal.build = () => {
         const { id, scopeOffset } = intersectionMeta.get(referencedBindings)!;
         return callRuntime(
-          "intersection",
+          "_or",
           t.numericLiteral(id),
           getSignalFn(signal),
           scopeOffset || referencedBindings.length > 2
@@ -249,7 +251,7 @@ export function getSignal(
         return !closureSignalBuilder ||
           isDynamicClosure(section, canonicalClosure)
           ? callRuntime(
-              "dynamicClosureRead",
+              "_closure_get",
               getScopeAccessorLiteral(canonicalClosure),
               render,
               isImmediateOwner(section, canonicalClosure)
@@ -266,10 +268,7 @@ export function getSignal(
   return signal;
 }
 
-export function initValue(
-  binding: Binding,
-  runtimeHelper: "value" | "state" = "value",
-) {
+export function initValue(binding: Binding, isLet = false) {
   const section = binding.section;
   const signal = getSignal(section, binding);
   signal.build = () => {
@@ -294,8 +293,8 @@ export function initValue(
     const needsMarks = isParamBinding || signal.intersection;
     if (needsCache || needsMarks || binding.hoists.size) {
       return callRuntime(
-        runtimeHelper,
-        getScopeAccessorLiteral(binding, runtimeHelper === "state"),
+        isLet ? "_let" : "_const",
+        getScopeAccessorLiteral(binding, isLet),
         fn,
       );
     } else {
@@ -455,7 +454,7 @@ export function getSignalFn(signal: Signal): t.Expression {
           if (!dynamicClosureArgs) {
             dynamicClosureArgs = [];
             dynamicClosureSignalIdentifier = generateUidIdentifier(
-              signal.identifier.name + "_closure",
+              signal.identifier.name + "__closure",
             );
 
             signal.render.push(
@@ -486,7 +485,7 @@ export function getSignalFn(signal: Signal): t.Expression {
           t.variableDeclaration("const", [
             t.variableDeclarator(
               dynamicClosureSignalIdentifier,
-              callRuntime("dynamicClosure", ...dynamicClosureArgs!),
+              callRuntime("_closure", ...dynamicClosureArgs!),
             ),
           ]),
         );
@@ -495,7 +494,7 @@ export function getSignalFn(signal: Signal): t.Expression {
   }
 
   if (signal.effect.length) {
-    const effectIdentifier = t.identifier(`${signal.identifier.name}_effect`);
+    const effectIdentifier = t.identifier(`${signal.identifier.name}__script`);
     signal.render.push(
       t.expressionStatement(
         t.callExpression(effectIdentifier, [scopeIdentifier]),
@@ -591,9 +590,14 @@ function generateSignalName(referencedBindings?: ReferencedBindings) {
 
   if (referencedBindings) {
     if (Array.isArray(referencedBindings)) {
-      name = "expr";
+      name = "";
+
       for (const ref of referencedBindings) {
-        name += `_${ref.name}`;
+        if (name) {
+          name += `__OR__${ref.name.replace(/^\$/, "")}`;
+        } else {
+          name = ref.name;
+        }
       }
     } else {
       name = referencedBindings.name;
@@ -785,7 +789,9 @@ export function writeSignals(section: Section) {
     let effectDeclarator: t.VariableDeclarator | undefined;
     if (signal.effect.length) {
       traverseReplace(signal, "effect", replaceEffectNode);
-      const effectIdentifier = t.identifier(`${signal.identifier.name}_effect`);
+      const effectIdentifier = t.identifier(
+        `${signal.identifier.name}__script`,
+      );
       const referencedBindings = signal.effectReferencedBindings;
       const referencesScope = traverseContains(
         signal.effect,
@@ -794,7 +800,7 @@ export function writeSignals(section: Section) {
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
         callRuntime(
-          "effect",
+          "_script",
           t.stringLiteral(
             getResumeRegisterId(section, signal.referencedBindings),
           ),
@@ -839,7 +845,7 @@ export function writeSignals(section: Section) {
 
     if (signal.register) {
       value = callRuntime(
-        "registerBoundSignal",
+        "_var_resume",
         t.stringLiteral(
           getResumeRegisterId(section, signal.referencedBindings, "var"),
         ),
@@ -902,7 +908,7 @@ function writeHoists(section: Section) {
             hoistIdentifier,
             hoistedBinding.downstreamExpressions.size
               ? callRuntime(
-                  "register",
+                  "_resume", // TODO: add _hoist_resume runtime
                   t.stringLiteral(
                     getResumeRegisterId(
                       hoistedBinding.section,
@@ -910,9 +916,9 @@ function writeHoists(section: Section) {
                       "hoist",
                     ),
                   ),
-                  callRuntime("hoist", ...accessors),
+                  callRuntime("_hoist", ...accessors),
                 )
-              : callRuntime("hoist", ...accessors),
+              : callRuntime("_hoist", ...accessors),
           ),
         ]),
       );
@@ -986,7 +992,7 @@ export function writeRegisteredFns() {
       statements.push(
         t.expressionStatement(
           callRuntime(
-            "register",
+            "_resume",
             t.stringLiteral(registeredFn.registerId),
             t.identifier(registeredFn.id),
           ),
@@ -1032,7 +1038,7 @@ export function writeHTMLResumeStatements(
           htmlDynamicClosureInstancesIdentifier.set(
             closureSignal,
             (identifier = generateUidIdentifier(
-              closureSignal.identifier.name + "_closures",
+              closureSignal.identifier.name + "__closures",
             )),
           );
 
@@ -1059,7 +1065,7 @@ export function writeHTMLResumeStatements(
           getAccessorPrefix().ClosureSignalIndex,
         );
         addWriteScopeBuilder(section, (expr) =>
-          callRuntime("writeSubscribe", identifier, expr),
+          callRuntime("_subscribe", identifier, expr),
         );
       }
     }
@@ -1074,7 +1080,7 @@ export function writeHTMLResumeStatements(
             t.variableDeclarator(
               t.identifier(hoistedBinding.name),
               callRuntime(
-                "hoist",
+                "_hoist",
                 getScopeIdIdentifier(hoistedBinding.section),
                 t.stringLiteral(
                   getResumeRegisterId(
@@ -1097,7 +1103,7 @@ export function writeHTMLResumeStatements(
           !sectionDynamicSubscribers.has(currentSection)
         ) {
           const subscribersIdentifier = generateUidIdentifier(
-            `${currentSection.name}_subscribers`,
+            `${currentSection.name}__subscribers`,
           );
 
           sectionDynamicSubscribers.add(currentSection);
@@ -1112,7 +1118,7 @@ export function writeHTMLResumeStatements(
           );
 
           addWriteScopeBuilder(currentSection, (expr) =>
-            callRuntime("writeSubscribe", subscribersIdentifier, expr),
+            callRuntime("_subscribe", subscribersIdentifier, expr),
           );
           setSerializedValue(
             parentSection,
@@ -1139,7 +1145,7 @@ export function writeHTMLResumeStatements(
       body.push(
         t.expressionStatement(
           callRuntime(
-            "writeEffect",
+            "_script",
             scopeIdIdentifier,
             t.stringLiteral(getResumeRegisterId(section, signalRefs)),
           ),
@@ -1210,7 +1216,7 @@ export function writeHTMLResumeStatements(
     const ownerReason = getSectionSerializeReason(section, ownerAccessor);
     if (ownerReason) {
       const getOwnerExpr = callRuntime(
-        "ensureScopeWithId",
+        "_scope_with_id",
         getScopeIdIdentifier(section.parent),
       );
       serializedLookup.delete(ownerAccessor);
@@ -1267,8 +1273,8 @@ export function writeHTMLResumeStatements(
     }
 
     let writeScopeCall = writeScopeBuilder
-      ? writeScopeBuilder(callRuntime("writeScope", ...writeScopeArgs))
-      : callRuntime("writeScope", ...writeScopeArgs);
+      ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))
+      : callRuntime("_scope", ...writeScopeArgs);
 
     if (sectionSerializeReason !== true && !sectionSerializeReason.state) {
       writeScopeCall = t.logicalExpression(
@@ -1289,9 +1295,7 @@ export function writeHTMLResumeStatements(
 
   if (resumeClosestBranch) {
     body.push(
-      t.expressionStatement(
-        callRuntime("resumeClosestBranch", scopeIdIdentifier),
-      ),
+      t.expressionStatement(callRuntime("_resume_branch", scopeIdIdentifier)),
     );
   }
 
@@ -1299,7 +1303,7 @@ export function writeHTMLResumeStatements(
   if (body.length || additionalStatements.length) {
     body.unshift(
       t.variableDeclaration("const", [
-        t.variableDeclarator(scopeIdIdentifier, callRuntime("nextScopeId")),
+        t.variableDeclarator(scopeIdIdentifier, callRuntime("_scope_id")),
       ]),
       ...additionalStatements,
     );

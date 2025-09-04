@@ -1,27 +1,27 @@
 export const $template = "<button class=inc> </button><!><!>";
 export const $walks = /* get, next(1), get, out(1), replace, over(2) */" D l%c";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", 0, 0, 1);
-const $expr_input_content_x = /* @__PURE__ */_$.intersection(7, $scope => {
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/2", 0, 0, 1);
+const $input_content__OR__x = /* @__PURE__ */_._or(7, $scope => {
   let {
     input_content,
     x
   } = $scope;
   $dynamicTag($scope, input_content, () => [x]);
 });
-const $x_effect = _$.effect("__tests__/tags/custom-tag.marko_0_x", ($scope, {
+const $x__script = _._script("__tests__/tags/custom-tag.marko_0_x", ($scope, {
   x
-}) => _$.on($scope["#button/0"], "click", function () {
+}) => _._on($scope["#button/0"], "click", function () {
   $x($scope, ++x)
 }));
-const $x = /* @__PURE__ */_$.state("x/6", ($scope, x) => {
-  _$.data($scope["#text/1"], x);
-  $expr_input_content_x($scope);
-  $x_effect($scope);
+const $x = /* @__PURE__ */_._let("x/6", ($scope, x) => {
+  _._text($scope["#text/1"], x);
+  $input_content__OR__x($scope);
+  $x__script($scope);
 });
 export function $setup($scope) {
   $x($scope, 1);
 }
-export const $input_content = /* @__PURE__ */_$.value("input_content", $expr_input_content_x);
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_content($scope, input.content));
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/custom-tag.marko", $template, $walks, $setup, $input);
+export const $input_content = /* @__PURE__ */_._const("input_content", $input_content__OR__x);
+export const $input = /* @__PURE__ */_._const("input", ($scope, input) => $input_content($scope, input.content));
+export default /* @__PURE__ */_._template("__tests__/tags/custom-tag.marko", $template, $walks, $setup, $input);

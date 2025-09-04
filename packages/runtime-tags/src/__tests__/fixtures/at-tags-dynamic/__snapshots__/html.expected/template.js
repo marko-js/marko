@@ -1,41 +1,41 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
+import * as _ from "@marko/runtime-tags/debug/html";
 import _hello from "./tags/hello/index.marko";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   let $col;
   let $item;
-  _$.forOf(["red", "blue", "green"], color => {
+  _.forOf(["red", "blue", "green"], color => {
     if (color === "red") {
-      $item = _$.attrTags($item, {
+      $item = _.attrTags($item, {
         style: {
           color
         },
-        content: _$.registerContent("__tests__/template.marko_1_renderer", () => {
-          const $scope1_id = _$.nextScopeId();
-          _$.write("foo");
+        content: _._content_resume("__tests__/template.marko_1_content", () => {
+          const $scope1_id = _._scope_id();
+          _._html("foo");
         }, $scope0_id)
       });
     } else {
-      $item = _$.attrTags($item, {
+      $item = _.attrTags($item, {
         style: {
           color
         },
-        content: _$.registerContent("__tests__/template.marko_2_renderer", () => {
-          const $scope2_id = _$.nextScopeId();
-          _$.write("bar");
+        content: _._content_resume("__tests__/template.marko_2_content", () => {
+          const $scope2_id = _._scope_id();
+          _._html("bar");
         }, $scope0_id)
       });
     }
   });
-  _$.forOf([["a", "b"], ["c", "d"]], (col, i) => {
+  _.forOf([["a", "b"], ["c", "d"]], (col, i) => {
     let $row;
-    _$.forOf(col, row => {
-      $row = _$.attrTags($row, {
+    _.forOf(col, row => {
+      $row = _.attrTags($row, {
         row: row,
-        content: _$.registerContent("__tests__/template.marko_3_renderer", () => {
-          const $scope3_id = _$.nextScopeId();
-          _$.write(`${_$.escapeXML(row)}${_$.markResumeNode($scope3_id, "#text/0")}`);
-          _$.writeScope($scope3_id, {
+        content: _._content_resume("__tests__/template.marko_3_content", () => {
+          const $scope3_id = _._scope_id();
+          _._html(`${_._escape(row)}${_._el_resume($scope3_id, "#text/0")}`);
+          _._scope($scope3_id, {
             row
           }, "__tests__/template.marko", "16:18", {
             row: "15:18"
@@ -43,23 +43,23 @@ export default _$.createTemplate("__tests__/template.marko", input => {
         }, $scope0_id)
       });
     });
-    $col = _$.attrTags($col, {
+    $col = _.attrTags($col, {
       x: i,
       row: $row
     });
   });
-  $col = _$.attrTags($col, {
+  $col = _.attrTags($col, {
     outside: true,
-    row: _$.attrTag({
+    row: _.attrTag({
       row: -1,
-      content: _$.registerContent("__tests__/template.marko_4_renderer", () => {
-        const $scope4_id = _$.nextScopeId();
-        _$.write("Outside");
+      content: _._content_resume("__tests__/template.marko_4_content", () => {
+        const $scope4_id = _._scope_id();
+        _._html("Outside");
       }, $scope0_id)
     })
   });
   _hello({
-    list: _$.attrTag({
+    list: _.attrTag({
       item: $item
     }),
     col: $col

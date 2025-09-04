@@ -1,10 +1,10 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "a",
-      "$$count_effect": "o",
-      "$$count": "m"
+      "$_": "t",
+      "$init": "o",
+      "$$count__script": "m",
+      "$$count": "r"
     }
   }
 }

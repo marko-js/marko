@@ -4,9 +4,9 @@ import {
   AccessorProp,
   type Scope,
 } from "../common/types";
-import { getAbortSignal } from "./abort-signal";
+import { $signal } from "./abort-signal";
 import { queueEffect, queueRender, rendering } from "./queue";
-import { register } from "./resume";
+import { _resume } from "./resume";
 import { schedule } from "./schedule";
 
 export type SignalFn<T> = (scope: Scope, value?: T) => void;
@@ -14,7 +14,7 @@ export type Signal<T> = SignalFn<T> & {
   ___subscribe?(scope: Scope): void;
 };
 
-export function state<T>(valueAccessor: Accessor, fn: SignalFn<T>) {
+export function _let<T>(valueAccessor: Accessor, fn: SignalFn<T>) {
   if (MARKO_DEBUG) {
     // eslint-disable-next-line no-var
     var id = +(valueAccessor as string).slice(
@@ -59,7 +59,7 @@ export function state<T>(valueAccessor: Accessor, fn: SignalFn<T>) {
   };
 }
 
-export function value<T>(
+export function _const<T>(
   valueAccessor: Accessor,
   fn: SignalFn<T> = () => {},
 ): Signal<T> {
@@ -71,7 +71,7 @@ export function value<T>(
   };
 }
 
-export function intersection(
+export function _or(
   id: number,
   fn: SignalFn<never>,
   defaultPending: number = 1,
@@ -90,7 +90,7 @@ export function intersection(
   };
 }
 
-export function loopClosure<T>(
+export function _for_closure<T>(
   valueAccessor: Accessor,
   ownerLoopNodeAccessor: Accessor,
   fn: SignalFn<T>,
@@ -127,7 +127,7 @@ export function loopClosure<T>(
   return ownerSignal;
 }
 
-export function conditionalClosure<T>(
+export function _if_closure<T>(
   valueAccessor: Accessor,
   ownerConditionalNodeAccessor: Accessor,
   branch: number,
@@ -156,15 +156,13 @@ export function subscribeToScopeSet(
   const subscribers = (ownerScope[accessor] ||= new Set<Scope>());
   if (!subscribers.has(scope)) {
     subscribers.add(scope);
-    getAbortSignal(scope, -1).addEventListener("abort", () =>
+    $signal(scope, -1).addEventListener("abort", () =>
       ownerScope[accessor].delete(scope),
     );
   }
 }
 
-export function dynamicClosure(
-  ...closureSignals: ReturnType<typeof dynamicClosureRead>[]
-) {
+export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {
   const [{ ___scopeInstancesAccessor, ___signalIndexAccessor }] =
     closureSignals;
   for (let i = closureSignals.length; i--; ) {
@@ -186,7 +184,7 @@ export function dynamicClosure(
   };
 }
 
-export function dynamicClosureRead<T>(
+export function _closure_get<T>(
   valueAccessor: Accessor,
   fn: Signal<T>,
   getOwnerScope?: (scope: Scope) => Scope,
@@ -227,36 +225,36 @@ function closure<T>(
   };
 }
 
-export function setTagVar(
+export function _var(
   scope: Scope,
   childAccessor: Accessor,
-  tagVarSignal: Signal<unknown>,
+  signal: Signal<unknown>,
 ) {
   scope[childAccessor][AccessorProp.TagVariable] = (value: unknown) =>
-    tagVarSignal(scope, value);
+    signal(scope, value);
 }
 
-export const tagVarSignal = (scope: Scope, value: unknown) =>
+export const _return = (scope: Scope, value: unknown) =>
   scope[AccessorProp.TagVariable]?.(value);
 
-export function setTagVarChange(
+export function _return_change(
   scope: Scope,
   changeHandler: (value: unknown) => void,
 ) {
   scope[AccessorProp.TagVariableChange] = changeHandler;
 }
-export const tagVarSignalChange = (scope: Scope, value: unknown) =>
+export const _var_change = (scope: Scope, value: unknown) =>
   scope[AccessorProp.TagVariableChange]?.(value);
 
 const tagIdsByGlobal = new WeakMap<Scope["___global"], number>();
-export function nextTagId({ $global }: Scope) {
+export function _id({ $global }: Scope) {
   const id = tagIdsByGlobal.get($global) || 0;
   tagIdsByGlobal.set($global, id + 1);
   return "c" + $global.runtimeId + $global.renderId + id.toString(36);
 }
 
-export function effect(id: string, fn: (scope: Scope) => void) {
-  register(id, fn);
+export function _script(id: string, fn: (scope: Scope) => void) {
+  _resume(id, fn);
   return (scope: Scope) => {
     queueEffect(scope, fn);
   };
@@ -280,7 +278,7 @@ function* traverseAllHoisted(
   }
 }
 
-export function hoist(...path: Accessor[]) {
+export function _hoist(...path: Accessor[]) {
   return (scope: Scope) => {
     const getOne = (...args: unknown[]) =>
       iterator()

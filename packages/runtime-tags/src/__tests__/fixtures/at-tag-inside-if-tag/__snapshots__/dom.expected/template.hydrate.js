@@ -1,3 +1,3 @@
-// size: 74 (min) 64 (brotli)
-(_$.registerContent("b0", "Goodbye", "b"),
-  _$.registerContent("b1", "Hello", "b"));
+// size: 74 (min) 72 (brotli)
+(_._content_resume("b0", "Goodbye", "b"),
+  _._content_resume("b1", "Hello", "b"));

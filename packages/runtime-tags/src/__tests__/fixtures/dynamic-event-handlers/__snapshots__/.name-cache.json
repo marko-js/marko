@@ -1,10 +1,10 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
+      "$_": "t",
       "$init": "m",
-      "$$clickCount_effect": "o",
-      "$$clickCount": "a"
+      "$$clickCount__script": "o",
+      "$$clickCount": "r"
     }
   }
 }

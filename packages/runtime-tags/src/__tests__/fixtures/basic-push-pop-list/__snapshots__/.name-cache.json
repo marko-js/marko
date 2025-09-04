@@ -1,17 +1,17 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "e",
-      "$$item$for$content": "o",
-      "$$params2$for$content": "a",
-      "$$for_content": "c",
-      "$$expr_id_items_effect": "n",
-      "$$expr_id_items": "r",
-      "$$for": "i",
-      "$$items_effect": "m",
-      "$$items": "f",
-      "$$id": "s"
+      "$_": "o",
+      "$init": "t",
+      "$$for_content__item": "c",
+      "$$for_content__$params": "n",
+      "$$for_content": "_",
+      "$$id__OR__items__script": "r",
+      "$$id__OR__items": "i",
+      "$$id": "m",
+      "$$for": "s",
+      "$$items__script": "a",
+      "$$items": "e"
     }
   }
 }
