@@ -1114,7 +1114,7 @@ export function setBindingDownstream(
   binding: Binding,
   expr: boolean | Opt<t.NodeExtra>,
 ) {
-  bindingValueExprs.set(binding, expr || false);
+  getBindingValueExprs().set(binding, expr || false);
   if (expr && expr !== true) {
     forEach(expr, (expr) => {
       expr.downstream = bindingUtil.add(expr.downstream, binding);
@@ -1122,9 +1122,12 @@ export function setBindingDownstream(
   }
 }
 
-const resolvedSources = new WeakSet<Binding>();
-const bindingValueExprs = new WeakMap<Binding, boolean | Opt<t.NodeExtra>>();
+const [getResolvedSources] = createProgramState(() => new Set<Binding>());
+const [getBindingValueExprs] = createProgramState(
+  () => new Map<Binding, boolean | Opt<t.NodeExtra>>(),
+);
 function resolveBindingSources(binding: Binding) {
+  const resolvedSources = getResolvedSources();
   if (resolvedSources.has(binding)) return;
   resolvedSources.add(binding);
 
@@ -1156,6 +1159,7 @@ function resolveBindingSources(binding: Binding) {
 }
 
 function resolveDerivedSources(binding: Binding) {
+  const bindingValueExprs = getBindingValueExprs();
   const exprs = bindingValueExprs.get(binding);
   bindingValueExprs.delete(binding);
 
