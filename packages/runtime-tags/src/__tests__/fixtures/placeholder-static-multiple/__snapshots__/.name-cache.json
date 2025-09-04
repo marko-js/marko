@@ -7,7 +7,10 @@
       "$$setup$if$content": "r",
       "$$if_content": "e",
       "$$if": "m",
-      "$$mounted": "i"
+      "$$mounted": "i",
+      "$_": "_",
+      "$$if_content__mounted": "c",
+      "$$if_content__setup": "n"
     }
   }
 }
