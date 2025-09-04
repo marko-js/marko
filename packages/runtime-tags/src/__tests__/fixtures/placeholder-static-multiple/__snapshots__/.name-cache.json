@@ -1,0 +1,13 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "o",
+      "$init": "t",
+      "$$mounted$if$content": "a",
+      "$$setup$if$content": "r",
+      "$$if_content": "e",
+      "$$if": "m",
+      "$$mounted": "i"
+    }
+  }
+}

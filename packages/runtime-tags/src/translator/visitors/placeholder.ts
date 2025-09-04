@@ -59,7 +59,10 @@ export default {
     if (confident && isVoid(computed)) return;
 
     if (isStaticText(node)) {
-      if (isStaticText(getPrev(placeholder))) {
+      if (
+        isStaticText(getPrev(placeholder)) ||
+        isStaticText(getNext(placeholder))
+      ) {
         (node.extra ??= {})[kSharedText] = true;
       }
     } else {
@@ -242,6 +245,19 @@ function getPrev(path: t.NodePath) {
   }
 
   return prev.node;
+}
+
+function getNext(path: t.NodePath) {
+  let next = path.getNextSibling();
+  while (
+    next.node &&
+    (next.isMarkoComment() ||
+      (next.isMarkoPlaceholder() && isEmptyPlaceholder(next.node)))
+  ) {
+    next = next.getNextSibling();
+  }
+
+  return next.node;
 }
 
 function isEmptyPlaceholder(placeholder: t.MarkoPlaceholder) {
