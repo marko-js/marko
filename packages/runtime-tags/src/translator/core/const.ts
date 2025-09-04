@@ -66,6 +66,15 @@ export default {
     const binding = trackVarReferences(tag, BindingType.derived, upstreamAlias);
 
     if (binding) {
+      if (node.var!.type === "Identifier") {
+        const assignment = tag.scope.getBinding(node.var.name)
+          ?.constantViolations?.[0];
+        if (assignment) {
+          throw assignment.buildCodeFrameError(
+            `${node.var.name} is readonly and cannot be mutated.`,
+          );
+        }
+      }
       if (!valueExtra.nullable) binding.nullable = false;
       setBindingDownstream(binding, valueExtra);
     }
