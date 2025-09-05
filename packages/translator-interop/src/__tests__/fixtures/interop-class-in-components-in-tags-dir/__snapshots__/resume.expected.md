@@ -3,11 +3,11 @@
 <html>
   <head />
   <body>
-    <!--Ms[2-->
+    <!--Ms[-->
     <h1>
       Hello world
     </h1>
-    <!--Ms]1 #text/0-->
+    <!--Ms]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.b = [0,
@@ -40,6 +40,7 @@
 
 # Mutations
 ```
+INSERT html/body/#text2
 INSERT html/body/#text0
 INSERT html/body/#text1
 REMOVE #comment after html/body/#comment0

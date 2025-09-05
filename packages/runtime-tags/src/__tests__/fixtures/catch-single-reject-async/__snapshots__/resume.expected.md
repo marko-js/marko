@@ -10,10 +10,10 @@
   </head>
   <body>
     a
-    <!--M_[2-->
+    <!--M_[-->
     ERROR!
     <!--M_*4 #text/0-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     def
     <script>
       M._.r.push(_ =&gt; (_.d = [1,
@@ -23,4 +23,9 @@
     </script>
   </body>
 </html>
+```
+
+# Mutations
+```
+INSERT html/body/#text2
 ```

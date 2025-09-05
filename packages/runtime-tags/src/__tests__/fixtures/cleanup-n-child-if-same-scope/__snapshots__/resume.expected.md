@@ -12,7 +12,7 @@
 mounted
     </pre>
     <!--M_*1 #pre/1-->
-    <!--M_[2-->
+    <!--M_[-->
     <div>
       a
     </div>
@@ -22,7 +22,7 @@ mounted
     <p>
       c
     </p>
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -43,6 +43,7 @@ mounted
 
 # Mutations
 ```
+INSERT html/body/#text
 INSERT html/body/pre/#text
 ```
 
@@ -64,7 +65,7 @@ mounted
 destroyed
     </pre>
     <!--M_*1 #pre/1-->
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -85,7 +86,7 @@ destroyed
 
 # Mutations
 ```
-REMOVE html/body/#comment2 after p
+REMOVE html/body/#comment2 after #text
 INSERT html/body/#comment2
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
@@ -93,6 +94,7 @@ REMOVE #comment after html/body/#comment2
 REMOVE div after html/body/#comment2
 REMOVE span after html/body/#comment2
 REMOVE p after html/body/#comment2
+REMOVE #text after html/body/#comment2
 ```
 
 # Render
@@ -169,7 +171,7 @@ mounted
 destroyed
     </pre>
     <!--M_*1 #pre/1-->
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {

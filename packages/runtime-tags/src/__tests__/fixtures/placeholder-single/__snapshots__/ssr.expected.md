@@ -1,6 +1,6 @@
 # Write
 ```html
-  a<!--M_[2--><!--M_!^b-->_A_<!--M_!b--><!--M_]1 #text/0-->e<style M_>t{display:none}</style><t M_=b>b<!--M_#c-->d</t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalScope:#text/0":_.b={"#BranchAccessor":"#text/0"}},_.b],_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_content"](_.a),_.c)];REORDER_RUNTIME(M._);M._.w()</script>
+  a<!--M_[--><!--M_!^b-->_A_<!--M_!b--><!--M_]1 #text/0 2-->e<style M_>t{display:none}</style><t M_=b>b<!--M_#c-->d</t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalScope:#text/0":_.b={"#BranchAccessor":"#text/0"}},_.b],_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_content"](_.a),_.c)];REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Write
@@ -25,9 +25,9 @@
   </head>
   <body>
     a
-    <!--M_[2-->
+    <!--M_[-->
     bcd
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     e
     <script>
       WALKER_RUNTIME("M")("_");

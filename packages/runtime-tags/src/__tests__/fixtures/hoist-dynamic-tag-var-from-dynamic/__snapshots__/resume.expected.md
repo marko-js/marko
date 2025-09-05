@@ -4,43 +4,43 @@
 <html>
   <head />
   <body>
-    <!--M_[4-->
+    <!--M_[-->
     <div>
       Hoist from custom tag
     </div>
     <!--M_*4 #div/0-->
-    <!--M_]3 #text/0-->
-    <!--M_[7-->
+    <!--M_]3 #text/0 4-->
+    <!--M_[-->
     <div>
       Hoist from custom tag
     </div>
     <!--M_*7 #div/0-->
-    <!--M_]6 #text/0-->
-    <!--M_[13-->
+    <!--M_]6 #text/0 7-->
+    <!--M_[-->
     <div>
       Hoist from dynamic tag
     </div>
     <!--M_*13 #div/0-->
-    <!--M_]12 #text/0-->
-    <!--M_[16-->
+    <!--M_]12 #text/0 13-->
+    <!--M_[-->
     <div />
     <!--M_*16 #div/0-->
-    <!--M_]15 #text/0-->
-    <!--M_[21-->
+    <!--M_]15 #text/0 16-->
+    <!--M_[-->
     <div />
     <!--M_*21 #div/0-->
-    <!--M_]20 #text/0-->
-    <!--M_[24-->
+    <!--M_]20 #text/0 21-->
+    <!--M_[-->
     <div />
     <!--M_*24 #div/0-->
-    <!--M_]23 #text/0-->
+    <!--M_]23 #text/0 24-->
     <section>
-      <!--M_[28-->
+      <!--M_[-->
       <div>
         Hoist from dynamic tag
       </div>
       <!--M_*28 #div/0-->
-      <!--M_]27 #text/0-->
+      <!--M_]27 #text/0 28-->
     </section>
     <script>
       WALKER_RUNTIME("M")("_");
@@ -128,6 +128,13 @@
 ```
 REMOVE html/body/#comment0 before html
 INSERT html/body/#comment0
+INSERT html/body/#text0
+INSERT html/body/#text1
+INSERT html/body/#text2
+INSERT html/body/#text3
+INSERT html/body/#text4
+INSERT html/body/#text5
+INSERT html/body/section/#text
 INSERT html/body/div2/#text
 INSERT html/body/section/div/#text
 INSERT html/body/div0/#text

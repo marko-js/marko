@@ -1,11 +1,11 @@
 # Write
 ```html
-  a<!--M_[2--><!--M_!^b-->b<script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalScope:#text/0":_.b={"#BranchAccessor":"#text/0"}},_.b],_.b["#CatchContent"]=_._["__tests__/template.marko_2_content"](_.a),_.c)]</script>
+  a<!--M_[--><!--M_!^b-->b<script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalScope:#text/0":_.b={"#BranchAccessor":"#text/0"}},_.b],_.b["#CatchContent"]=_._["__tests__/template.marko_2_content"](_.a),_.c)]</script>
 ```
 
 # Write
 ```html
-  <!--M_!b--><!--M_]1 #text/0-->def<style M_>t{display:none}</style><t M_=b>ERROR!<!--M_*4 #text/0--></t><script>M._.r.push(_=>(_.d=[1,{}]));REORDER_RUNTIME(M._);M._.w()</script>
+  <!--M_!b--><!--M_]1 #text/0 2-->def<style M_>t{display:none}</style><t M_=b>ERROR!<!--M_*4 #text/0--></t><script>M._.r.push(_=>(_.d=[1,{}]));REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Render End
@@ -20,10 +20,10 @@
   </head>
   <body>
     a
-    <!--M_[2-->
+    <!--M_[-->
     ERROR!
     <!--M_*4 #text/0-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     def
     <script>
       M._.r.push(_ =&gt; (_.d = [1,

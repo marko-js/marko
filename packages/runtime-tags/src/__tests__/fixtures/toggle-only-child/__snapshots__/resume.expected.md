@@ -9,7 +9,7 @@
         Hello
         <!--M_*2 #text/0-->
       </span>
-      <!--M_=1 #div/0 2-->
+      <!--M_}1 #div/0 2-->
     </div>
     <input
       value="Hello"

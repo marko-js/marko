@@ -6,17 +6,17 @@
     <div
       class="foo"
     >
-      <!--M_[4-->
+      <!--M_[-->
       default
-      <!--M_]3 #div/0-->
+      <!--M_]3 #div/0 4-->
     </div>
     <!--M_'2 #text/0 3-->
     <span
       class="foo"
     >
-      <!--M_[7-->
+      <!--M_[-->
       default
-      <!--M_]6 #span/0-->
+      <!--M_]6 #span/0 7-->
     </span>
     <!--M_'5 #text/0 6-->
     <script>
@@ -56,6 +56,11 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/div/#text1
+INSERT html/body/span/#text1
+```
 
 # Render ASYNC
 ```html
@@ -113,8 +118,8 @@
 
 # Mutations
 ```
-REMOVE #comment, #text, #comment in html/body/div
+REMOVE #comment, #text, #text, #comment in html/body/div
 INSERT html/body/div/#text
-REMOVE #comment, #text, #comment in html/body/span
+REMOVE #comment, #text, #text, #comment in html/body/span
 INSERT html/body/span/#text
 ```

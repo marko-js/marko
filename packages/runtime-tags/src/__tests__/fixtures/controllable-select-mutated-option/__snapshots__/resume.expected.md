@@ -27,7 +27,7 @@
           <!--M_*4 #text/1-->
         </option>
         <!--M_*4 #option/0-->
-        <!--M_=1 #select/0 4 3 2-->
+        <!--M_}1 #select/0 4 3 2-->
       </select>
       <button
         type="reset"
@@ -104,7 +104,7 @@ container.querySelector(".remove").click();
           <!--M_*4 #text/1-->
         </option>
         <!--M_*4 #option/0-->
-        <!--M_=1 #select/0 4 3 2-->
+        <!--M_}1 #select/0 4 3 2-->
       </select>
       <button
         type="reset"
@@ -180,7 +180,7 @@ container.querySelector(".remove").click();
           <!--M_*4 #text/1-->
         </option>
         <!--M_*4 #option/0-->
-        <!--M_=1 #select/0 4 3 2-->
+        <!--M_}1 #select/0 4 3 2-->
       </select>
       <button
         type="reset"
@@ -249,7 +249,7 @@ container.querySelector(".remove").click();
         <!--M_*2 #option/0-->
         <!--M_*3 #option/0-->
         <!--M_*4 #option/0-->
-        <!--M_=1 #select/0 4 3 2-->
+        <!--M_}1 #select/0 4 3 2-->
       </select>
       <button
         type="reset"
@@ -318,7 +318,7 @@ container.querySelector(".add").click();
         <!--M_*2 #option/0-->
         <!--M_*3 #option/0-->
         <!--M_*4 #option/0-->
-        <!--M_=1 #select/0 4 3 2-->
+        <!--M_}1 #select/0 4 3 2-->
         <option
           selected=""
           value="3"
@@ -393,7 +393,7 @@ container.querySelector(".add").click();
         <!--M_*2 #option/0-->
         <!--M_*3 #option/0-->
         <!--M_*4 #option/0-->
-        <!--M_=1 #select/0 4 3 2-->
+        <!--M_}1 #select/0 4 3 2-->
         <option
           value="2"
         >
@@ -472,7 +472,7 @@ container.querySelector(".add").click();
         <!--M_*2 #option/0-->
         <!--M_*3 #option/0-->
         <!--M_*4 #option/0-->
-        <!--M_=1 #select/0 4 3 2-->
+        <!--M_}1 #select/0 4 3 2-->
         <option
           value="1"
         >

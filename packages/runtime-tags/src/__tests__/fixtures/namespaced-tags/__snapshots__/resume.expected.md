@@ -14,9 +14,9 @@
           href="#bar"
           ns="http://www.w3.org/2000/svg"
         >
-          <!--M_[3-->
+          <!--M_[-->
           Hi
-          <!--M_]2 #a/0-->
+          <!--M_]2 #a/0 3-->
         </a>
         <!--M_'1 #text/2 2-->
       </svg>
@@ -29,19 +29,19 @@
           href="#bar"
           ns="http://www.w3.org/1998/Math/MathML"
         >
-          <!--M_[5-->
+          <!--M_[-->
           Hi
-          <!--M_]4 #a/0-->
+          <!--M_]4 #a/0 5-->
         </a>
         <!--M_'1 #text/4 4-->
       </math>
       <div>
-        <!--M_[7-->
+        <!--M_[-->
         <a
           href="#"
           ns="http://www.w3.org/1999/xhtml"
         />
-        <!--M_]6 #div/0-->
+        <!--M_]6 #div/0 7-->
       </div>
       <!--M_'1 #text/5 6-->
       <button
@@ -96,6 +96,9 @@
 
 # Mutations
 ```
+INSERT html/body/div/svg/a1/#text1
+INSERT html/body/div/math/a1/#text1
+INSERT html/body/div/div/#text
 UPDATE html/body/div/svg/a0[ns] null => "http://www.w3.org/2000/svg"
 UPDATE html/body/div/svg/a1[ns] null => "http://www.w3.org/2000/svg"
 UPDATE html/body/div/math/a0[ns] null => "http://www.w3.org/1998/Math/MathML"
@@ -121,9 +124,9 @@ container.querySelector(".toggle-parent").click();
           href="#bar"
           ns="http://www.w3.org/2000/svg"
         >
-          <!--M_[3-->
+          <!--M_[-->
           Hi
-          <!--M_]2 #a/0-->
+          <!--M_]2 #a/0 3-->
         </a>
         <!--M_'1 #text/2 2-->
       </svg>
@@ -136,9 +139,9 @@ container.querySelector(".toggle-parent").click();
           href="#bar"
           ns="http://www.w3.org/1998/Math/MathML"
         >
-          <!--M_[5-->
+          <!--M_[-->
           Hi
-          <!--M_]4 #a/0-->
+          <!--M_]4 #a/0 5-->
         </a>
         <!--M_'1 #text/4 4-->
       </math>
@@ -227,9 +230,9 @@ container.querySelector(".toggle-parent").click();
           href="#bar"
           ns="http://www.w3.org/2000/svg"
         >
-          <!--M_[3-->
+          <!--M_[-->
           Hi
-          <!--M_]2 #a/0-->
+          <!--M_]2 #a/0 3-->
         </a>
         <!--M_'1 #text/2 2-->
       </svg>
@@ -242,9 +245,9 @@ container.querySelector(".toggle-parent").click();
           href="#bar"
           ns="http://www.w3.org/1998/Math/MathML"
         >
-          <!--M_[5-->
+          <!--M_[-->
           Hi
-          <!--M_]4 #a/0-->
+          <!--M_]4 #a/0 5-->
         </a>
         <!--M_'1 #text/4 4-->
       </math>
@@ -333,9 +336,9 @@ container.querySelector(".toggle-parent").click();
           href="#bar"
           ns="http://www.w3.org/2000/svg"
         >
-          <!--M_[3-->
+          <!--M_[-->
           Hi
-          <!--M_]2 #a/0-->
+          <!--M_]2 #a/0 3-->
         </a>
         <!--M_'1 #text/2 2-->
       </svg>
@@ -348,9 +351,9 @@ container.querySelector(".toggle-parent").click();
           href="#bar"
           ns="http://www.w3.org/1998/Math/MathML"
         >
-          <!--M_[5-->
+          <!--M_[-->
           Hi
-          <!--M_]4 #a/0-->
+          <!--M_]4 #a/0 5-->
         </a>
         <!--M_'1 #text/4 4-->
       </math>

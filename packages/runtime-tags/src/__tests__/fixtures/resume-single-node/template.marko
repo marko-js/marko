@@ -1,0 +1,13 @@
+<let/itemId=0>
+<let/items=[0]>
+
+<for of=items>
+  <div>a</div>
+  <if=(items.length > 1)>
+    <div>b</div>
+  </if>
+</for>
+
+<button onClick() { items = [...items, ++itemId] }>
+  More
+</button>

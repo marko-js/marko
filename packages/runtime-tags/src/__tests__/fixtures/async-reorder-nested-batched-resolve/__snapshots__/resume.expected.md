@@ -9,35 +9,35 @@
     </style>
   </head>
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <div
       class="a"
       level="1"
     >
-      <!--M_[5-->
-      <!--M_[6-->
+      <!--M_[-->
+      <!--M_[-->
       <div
         class="a"
         level="2"
       >
-        <!--M_[7-->
+        <!--M_[-->
         <div
           class="b"
           level="3"
         >
-          <!--M_[10-->
+          <!--M_[-->
           <div
             class="b"
             level="4"
           />
-          <!--M_]9 #text/1-->
+          <!--M_]9 #text/1 10-->
         </div>
-        <!--M_]6 #text/1-->
+        <!--M_]6 #text/1 7-->
       </div>
-      <!--M_]5 #text/0-->
-      <!--M_]4 #text/1-->
+      <!--M_]5 #text/0 6-->
+      <!--M_]4 #text/1 5-->
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
@@ -92,5 +92,9 @@
 ```
 REMOVE html/body/#comment0 before html
 INSERT html/body/#comment0
-INSERT html/body/div/#text
+INSERT html/body/#text
+INSERT html/body/div/div/#text
+INSERT html/body/div/#text0
+INSERT html/body/div/#text1
+INSERT html/body/div/div/div/#text
 ```

@@ -16,7 +16,7 @@
         3
         <!--M_*4 #text/0-->
       </li>
-      <!--M_=1 #ul/0 4 3 2-->
+      <!--M_}1 #ul/0 4 3 2-->
     </ul>
     <button
       id="toggle"
@@ -77,7 +77,7 @@ container.querySelector("#toggle").click();
         3
         <!--M_*4 #text/0-->
       </li>
-      <!--M_=1 #ul/0 4 3 2-->
+      <!--M_}1 #ul/0 4 3 2-->
     </ul>
     <button
       id="toggle"
@@ -140,7 +140,7 @@ container.querySelector("#toggle").click();
         3
         <!--M_*4 #text/0-->
       </li>
-      <!--M_=1 #ul/0 4 3 2-->
+      <!--M_}1 #ul/0 4 3 2-->
     </ul>
     <button
       id="toggle"
@@ -203,7 +203,7 @@ container.querySelector("#reverse").click();
         1
         <!--M_*2 #text/0-->
       </li>
-      <!--M_=1 #ul/0 4 3 2-->
+      <!--M_}1 #ul/0 4 3 2-->
     </ul>
     <button
       id="toggle"

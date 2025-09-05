@@ -30,9 +30,10 @@ export enum ResumeSymbol {
   Node = "*",
   BranchStart = "[",
   BranchEnd = "]",
-  BranchSingleNode = "|",
-  BranchNativeTag = "'",
-  BranchSingleNodeOnlyChildInParent = "=",
+  BranchEndNativeTag = "'",
+  BranchEndSingleNode = "|",
+  BranchEndOnlyChildInParent = ")",
+  BranchEndSingleNodeOnlyChildInParent = "}",
 }
 
 export { AccessorPrefix, AccessorProp } from "./accessor.debug";

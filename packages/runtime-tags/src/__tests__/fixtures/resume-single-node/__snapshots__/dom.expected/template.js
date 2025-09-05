@@ -1,0 +1,28 @@
+export const $template = "<!><!><button>More</button>";
+export const $walks = /* over(1), replace, over(1), get, over(1) */"b%b b";
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $if_content = /* @__PURE__ */_._content_branch("<div>b</div>", /* over(1) */"b");
+const $for_content__if = /* @__PURE__ */_._if("#text/0", $if_content);
+const $for_content__items_length = /* @__PURE__ */_._for_closure("items_length", "#text/0", ($scope, items_length) => $for_content__if($scope, items_length > 1 ? 0 : 1));
+const $for_content__setup = $for_content__items_length;
+const $for_content = /* @__PURE__ */_._content_branch("<div>a</div><!><!>", /* over(1), replace, over(2) */"b%c", $for_content__setup);
+const $itemId__OR__items__script = _._script("__tests__/template.marko_0_itemId_items", ($scope, {
+  itemId,
+  items
+}) => _._on($scope["#button/1"], "click", function () {
+  $items($scope, items = [...items, $itemId($scope, ++itemId)]);
+}));
+const $itemId__OR__items = /* @__PURE__ */_._or(4, $itemId__OR__items__script);
+const $itemId = /* @__PURE__ */_._let("itemId/2", $itemId__OR__items);
+const $for = /* @__PURE__ */_._for_of("#text/0", $for_content);
+const $items = /* @__PURE__ */_._let("items/3", ($scope, items) => {
+  $items_length($scope, items?.length);
+  $for($scope, [items]);
+  $itemId__OR__items($scope);
+});
+export function $setup($scope) {
+  $itemId($scope, 0);
+  $items($scope, [0]);
+}
+const $items_length = /* @__PURE__ */_._const("items_length", $for_content__items_length);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

@@ -3,7 +3,7 @@
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       id="class"
     >
@@ -30,7 +30,7 @@
       </button>
       <!--M_*3 #button/1-->
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {
@@ -89,6 +89,7 @@
 
 # Mutations
 ```
+INSERT html/body/#text2
 INSERT html/body/#text0
 INSERT html/body/#text1
 REMOVE #comment after html/body/#comment0
@@ -111,7 +112,7 @@ container.querySelector("#tags").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       id="class"
     >
@@ -138,7 +139,7 @@ container.querySelector("#tags").click();
       </button>
       <!--M_*3 #button/1-->
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {
@@ -208,7 +209,7 @@ container.querySelector("#class").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       id="class"
     >
@@ -235,7 +236,7 @@ container.querySelector("#class").click();
       </button>
       <!--M_*3 #button/1-->
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {
@@ -307,7 +308,7 @@ container.querySelector("#tags").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       id="class"
     >
@@ -334,7 +335,7 @@ container.querySelector("#tags").click();
       </button>
       <!--M_*3 #button/1-->
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {
@@ -405,7 +406,7 @@ container.querySelector("#class").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       id="class"
     >
@@ -432,7 +433,7 @@ container.querySelector("#class").click();
       </button>
       <!--M_*3 #button/1-->
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {
@@ -504,7 +505,7 @@ container.querySelector("#tags").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       id="class"
     >
@@ -531,7 +532,7 @@ container.querySelector("#tags").click();
       </button>
       <!--M_*3 #button/1-->
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {

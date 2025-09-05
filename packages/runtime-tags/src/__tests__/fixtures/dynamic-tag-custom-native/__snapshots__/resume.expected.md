@@ -5,14 +5,14 @@
   <body>
     <button />
     <!--M_*1 #button/0-->
-    <!--M_[2-->
+    <!--M_[-->
     <div>
       Id is 
       <!---->
       dynamic
       <!--M_*2 #text/0-->
     </div>
-    <!--M_]1 #text/1-->
+    <!--M_]1 #text/1 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0,
@@ -32,6 +32,10 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/#text
+```
 
 # Render
 ```js
@@ -46,7 +50,7 @@ container.querySelector("button").click();
     <div
       id="dynamic"
     />
-    <!--M_]1 #text/1-->
+    <!--M_]1 #text/1 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0,
@@ -71,6 +75,7 @@ container.querySelector("button").click();
 INSERT html/body/div
 REMOVE #comment after html/body/div
 REMOVE div after html/body/div
+REMOVE #text after html/body/div
 UPDATE html/body/div[id] null => "dynamic"
 ```
 
@@ -87,7 +92,7 @@ container.querySelector("button").click();
     <div>
       Id is dynamic
     </div>
-    <!--M_]1 #text/1-->
+    <!--M_]1 #text/1 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0,

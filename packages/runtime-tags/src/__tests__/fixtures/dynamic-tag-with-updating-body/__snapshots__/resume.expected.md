@@ -4,7 +4,7 @@
   <head />
   <body>
     <div>
-      <!--M_[3-->
+      <!--M_[-->
       <button
         id="count"
       >
@@ -12,7 +12,7 @@
         <!--M_*4 #text/1-->
       </button>
       <!--M_*4 #button/0-->
-      <!--M_]2 #div/0-->
+      <!--M_]2 #div/0 3-->
     </div>
     <!--M_'1 #text/0 2-->
     <button
@@ -45,6 +45,10 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/div/#text
+```
 
 # Render
 ```js
@@ -55,7 +59,7 @@ container.querySelector("#count").click();
   <head />
   <body>
     <div>
-      <!--M_[3-->
+      <!--M_[-->
       <button
         id="count"
       >
@@ -63,7 +67,7 @@ container.querySelector("#count").click();
         <!--M_*4 #text/1-->
       </button>
       <!--M_*4 #button/0-->
-      <!--M_]2 #div/0-->
+      <!--M_]2 #div/0 3-->
     </div>
     <!--M_'1 #text/0 2-->
     <button

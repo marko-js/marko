@@ -3,12 +3,12 @@
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <div>
       1
       <!--M_*2 #text/0-->
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button>
       1
       <!--M_*1 #text/2-->
@@ -37,6 +37,7 @@
 ```
 REMOVE html/body/#comment0 before html
 INSERT html/body/#comment0
+INSERT html/body/#text
 ```
 
 # Render
@@ -47,12 +48,12 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <div>
       2
       <!--M_*2 #text/0-->
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button>
       2
       <!--M_*1 #text/2-->
@@ -91,12 +92,12 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <div>
       3
       <!--M_*2 #text/0-->
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button>
       3
       <!--M_*1 #text/2-->
@@ -135,12 +136,12 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <div>
       4
       <!--M_*2 #text/0-->
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button>
       4
       <!--M_*1 #text/2-->

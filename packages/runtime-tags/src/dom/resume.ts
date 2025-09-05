@@ -54,7 +54,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         const render = (resumeRender[renderId] =
           renders[renderId] || renders(renderId));
         const walk = render.w;
-        const commentPrefixLen = render.i.length;
         const scopeLookup: Record<string | number, Scope> = (render.s = {});
         const serializeContext: Record<string, unknown> = {
           _: registeredValues,
@@ -62,110 +61,91 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         const branches =
           branchesEnabled &&
           (() => {
-            const branchStack: number[] = [];
-            const branchIds = new Set<number>();
-            const parentBranchIds = new Map<number, number>();
-            let lastEndNode: ChildNode | undefined;
-            let currentBranchId: number | undefined;
-            const endBranch = (branchId: number, reference: ChildNode) => {
-              const branch = (scopeLookup[branchId] ||=
-                {} as BranchScope) as BranchScope;
-              let endNode = reference;
-              let prevNode: ChildNode | null;
+            const branchParents = new Map<number, number>();
+            const branchStarts: Comment[] = [];
+            const orphanBranches: number[] = [];
+            const endBranch = (singleNode?: boolean) => {
+              const parent = visit.parentNode!;
+              let startVisit: ChildNode = visit;
+              let i = orphanBranches.length;
+              let claimed = 0;
+              let branchId: number;
+              let branch: BranchScope;
 
-              while (
-                (prevNode = endNode.previousSibling) !== branch.___startNode &&
-                ~visits.indexOf((endNode = prevNode as Comment))
-              );
+              while ((branchId = +lastToken)) {
+                branch = (scopeLookup[branchId] ||=
+                  {} as BranchScope) as BranchScope;
 
-              branch.___endNode = lastEndNode =
-                endNode === lastEndNode
-                  ? reference.parentNode!.insertBefore(new Text(), reference)
-                  : endNode;
-              branch.___startNode ||= lastEndNode;
+                if (singleNode) {
+                  while (
+                    startVisit.previousSibling &&
+                    ~visits.indexOf(
+                      (startVisit = startVisit.previousSibling) as Comment,
+                    )
+                  );
+                  branch.___endNode = branch.___startNode = startVisit;
+                  if (visitType === ResumeSymbol.BranchEndNativeTag) {
+                    branch[MARKO_DEBUG ? getDebugKey(0, startVisit) : 0] =
+                      startVisit;
+                  }
+                } else {
+                  startVisit = branchStarts.pop()!;
+                  if (parent !== startVisit.parentNode) {
+                    parent.prepend(startVisit);
+                  }
+                  branch.___startNode = startVisit;
+                  branch.___endNode =
+                    visit.previousSibling === startVisit
+                      ? startVisit
+                      : parent.insertBefore(new Text(), visit);
+                }
 
-              branchIds.add(branchId);
-              return branch;
+                while (i-- && orphanBranches[i] > branchId) {
+                  branchParents.set(orphanBranches[i], branchId);
+                  claimed++;
+                }
+
+                orphanBranches.push(branchId);
+                branchParents.set(branchId, 0);
+
+                nextToken(); // read optional next branchId
+              }
+
+              orphanBranches.splice(i, claimed);
             };
 
             return {
               ___visit() {
-                if (visitToken === ResumeSymbol.BranchStart) {
-                  if (currentBranchId && visitDataIndex) {
-                    endBranch(currentBranchId, visit);
-                    currentBranchId = branchStack.pop();
-                  }
-                  if (currentBranchId) {
-                    branchStack.push(currentBranchId);
-                    parentBranchIds!.set(scopeId, currentBranchId);
-                  }
-                  currentBranchId = scopeId;
-                  (visitScope as BranchScope).___startNode = visit;
-                } else if (visitToken === ResumeSymbol.BranchEnd) {
-                  const curParent = visit.parentNode!;
-                  const startNode = endBranch(
-                    currentBranchId!,
-                    visit,
-                  ).___startNode;
-                  visitScope[visitData] = visit;
-
-                  if (curParent !== startNode.parentNode) {
-                    curParent.prepend(startNode);
-                  }
-                  currentBranchId = branchStack.pop();
+                if (visitType === ResumeSymbol.BranchStart) {
+                  endBranch();
+                  branchStarts.push(visit);
                 } else {
-                  /**
-                   * visitToken === ResumeSymbol.BranchNativeTag ||
-                   * visitToken === ResumeSymbol.BranchSingleNode ||
-                   * visitToken === ResumeSymbol.BranchSingleNodeOnlyChildInParent
-                   */
-                  let next = visitData.indexOf(" ");
-                  let curNode: ChildNode = visit;
-                  visitScope[~next ? visitData.slice(0, next) : visitData] =
-                    visitToken ===
-                    ResumeSymbol.BranchSingleNodeOnlyChildInParent
+                  visitScope[nextToken() /* read accessor */] =
+                    visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
+                    visitType ===
+                      ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
                       ? visit.parentNode
                       : visit;
-                  while (~next) {
-                    const start = next + 1;
-                    next = visitData.indexOf(" ", start);
-                    const childScopeId = +visitData.slice(
-                      start,
-                      ~next ? next : visitData.length,
-                    );
-                    curNode = endBranch(childScopeId, curNode).___endNode;
-                    parentBranchIds.set(childScopeId, scopeId);
-
-                    if (visitToken === ResumeSymbol.BranchNativeTag) {
-                      const childBranch = scopeLookup[childScopeId];
-                      // const childTag = curNode.previousSibling as Element;
-                      childBranch[MARKO_DEBUG ? getDebugKey(0, curNode) : 0] =
-                        childBranch.___startNode =
-                        childBranch.___endNode =
-                          curNode;
-                    }
-                  }
+                  nextToken(); // read optional first branchId
+                  endBranch(
+                    visitType !== ResumeSymbol.BranchEnd &&
+                      visitType !== ResumeSymbol.BranchEndOnlyChildInParent,
+                  );
                 }
               },
               ___scope(scope: Scope) {
-                const parentBranchId =
+                scope.___closestBranch = scopeLookup[
                   (scope[AccessorProp.ClosestBranchId] as number | undefined) ||
-                  parentBranchIds.get(scopeId);
-                if (parentBranchId) {
-                  scope.___closestBranch = scopeLookup[
-                    parentBranchId
-                  ] as BranchScope;
-                }
+                    branchParents.get(scopeId)!
+                ] as BranchScope;
 
-                if (branchIds.has(scopeId)) {
-                  const branch = scope as BranchScope;
-                  const parentBranch = branch.___closestBranch;
-
-                  scope.___closestBranch = branch;
-                  if (parentBranch) {
-                    branch.___parentBranch = parentBranch;
-                    (parentBranch.___branchScopes ||= new Set()).add(branch);
+                if (branchParents.has(scopeId)) {
+                  if (scope.___closestBranch) {
+                    (((scope as BranchScope).___parentBranch =
+                      scope.___closestBranch).___branchScopes ||=
+                      new Set()).add(scope as BranchScope);
                   }
+                  scope.___closestBranch = scope as BranchScope;
                 }
               },
             };
@@ -178,37 +158,44 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         let scopeId: number;
         let visit: Comment;
         let visitText: string;
-        let visitData: string;
-        let visitDataIndex: number;
-        let visitToken: ResumeSymbol;
+        let visitType: ResumeSymbol;
         let visitScope: Scope;
+        let lastToken: string | 0;
+        let lastTokenIndex: number;
+        const nextToken = () =>
+          (lastToken = visitText.slice(
+            lastTokenIndex,
+            // eslint-disable-next-line no-cond-assign
+            (lastTokenIndex = visitText.indexOf(" ", lastTokenIndex) + 1)
+              ? lastTokenIndex - 1
+              : visitText.length,
+          ));
+
         render.w = () => {
           try {
             walk();
             isResuming = 1;
 
             for (visit of (visits = render.v)) {
+              lastTokenIndex = render.i.length;
               visitText = visit.data!;
-              visitDataIndex = visitText.indexOf(" ") + 1;
-              scopeId = +visitText.slice(
-                commentPrefixLen + 1,
-                visitDataIndex ? visitDataIndex - 1 : visitText.length,
-              );
-              visitData = visitDataIndex ? visitText.slice(visitDataIndex) : "";
-              visitToken = visitText[commentPrefixLen] as ResumeSymbol;
-              visitScope = scopeLookup[scopeId] ||= {
-                ___id: scopeId,
-              } as Scope;
+              visitType = visitText[lastTokenIndex++] as ResumeSymbol;
+
+              if ((scopeId = +nextToken()) /* read scope id */) {
+                visitScope = scopeLookup[scopeId] ||= {
+                  ___id: scopeId,
+                } as Scope;
+              }
 
               // TODO: switch?
-              if (visitToken === ResumeSymbol.Node) {
+              if (visitType === ResumeSymbol.Node) {
                 // TODO: could we use attr marker?
-                visitScope[AccessorPrefix.Getter + visitData] = (
+                visitScope[AccessorPrefix.Getter + nextToken()] = (
                   (node) => () =>
                     node
-                )((visitScope[visitData] = visit.previousSibling));
-              } else if (branches) {
-                branches.___visit();
+                )((visitScope[lastToken] = visit.previousSibling));
+              } else if (branchesEnabled) {
+                branches!.___visit();
               }
             }
 
@@ -242,8 +229,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                       ) as Scope;
                     }
 
-                    if (branches) {
-                      branches.___scope(scope);
+                    if (branchesEnabled) {
+                      branches!.___scope(scope);
                     }
 
                     if (MARKO_DEBUG) {

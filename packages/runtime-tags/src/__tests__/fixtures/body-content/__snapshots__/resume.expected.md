@@ -4,10 +4,10 @@
   <head />
   <body>
     <button>
-      <!--M_[3-->
+      <!--M_[-->
       0
       <!--M_*3 #text/0-->
-      <!--M_]2 #text/1-->
+      <!--M_]2 #text/1 3-->
     </button>
     <!--M_*2 #button/0-->
     <script>
@@ -35,6 +35,10 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/button/#text1
+```
 
 # Render
 ```js
@@ -45,10 +49,10 @@ container.querySelector("button").click();
   <head />
   <body>
     <button>
-      <!--M_[3-->
+      <!--M_[-->
       1
       <!--M_*3 #text/0-->
-      <!--M_]2 #text/1-->
+      <!--M_]2 #text/1 3-->
     </button>
     <!--M_*2 #button/0-->
     <script>
@@ -78,7 +82,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/button/#text "0" => "1"
+UPDATE html/body/button/#text0 "0" => "1"
 ```
 
 # Render
@@ -90,10 +94,10 @@ container.querySelector("button").click();
   <head />
   <body>
     <button>
-      <!--M_[3-->
+      <!--M_[-->
       2
       <!--M_*3 #text/0-->
-      <!--M_]2 #text/1-->
+      <!--M_]2 #text/1 3-->
     </button>
     <!--M_*2 #button/0-->
     <script>
@@ -123,7 +127,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/button/#text "1" => "2"
+UPDATE html/body/button/#text0 "1" => "2"
 ```
 
 # Render
@@ -135,10 +139,10 @@ container.querySelector("button").click();
   <head />
   <body>
     <button>
-      <!--M_[3-->
+      <!--M_[-->
       3
       <!--M_*3 #text/0-->
-      <!--M_]2 #text/1-->
+      <!--M_]2 #text/1 3-->
     </button>
     <!--M_*2 #button/0-->
     <script>
@@ -168,5 +172,5 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/button/#text "2" => "3"
+UPDATE html/body/button/#text0 "2" => "3"
 ```

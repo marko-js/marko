@@ -7,7 +7,7 @@
       0
     </div>
     <!--M_*1 #div/0-->
-    <!--M_[2-->
+    <!--M_[-->
     <button>
       inc
     </button>
@@ -16,7 +16,7 @@
     <!---->
     ‍
     <!--M_*2 #text/1-->
-    <!--M_]1 #text/1-->
+    <!--M_]1 #text/1 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -40,6 +40,7 @@
 
 # Mutations
 ```
+INSERT html/body/#text2
 INSERT html/body/div/#text
 ```
 
@@ -55,7 +56,7 @@ container.querySelector("button").click();
       1
     </div>
     <!--M_*1 #div/0-->
-    <!--M_[2-->
+    <!--M_[-->
     <button>
       inc
     </button>
@@ -64,7 +65,7 @@ container.querySelector("button").click();
     <!---->
     ‍
     <!--M_*2 #text/1-->
-    <!--M_]1 #text/1-->
+    <!--M_]1 #text/1 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -105,8 +106,7 @@ container.querySelector("button").click();
     </div>
     <!--M_*1 #div/0-->
     Error: ERROR!
-    <!--M_*2 #text/1-->
-    <!--M_]1 #text/1-->
+    <!--M_]1 #text/1 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -133,6 +133,8 @@ container.querySelector("button").click();
 INSERT html/body/#text
 REMOVE #comment after html/body/#text
 REMOVE button after html/body/#text
+REMOVE #comment after html/body/#text
+REMOVE #text after html/body/#text
 REMOVE #comment after html/body/#text
 REMOVE #text after html/body/#text
 REMOVE #comment after html/body/#text

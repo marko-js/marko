@@ -5,10 +5,10 @@
   <body>
     <div />
     <!--M_*1 #div/0-->
-    <!--M_[2-->
+    <!--M_[-->
     ERROR!
     <!--M_*3 #text/0-->
-    <!--M_]1 #text/1-->
+    <!--M_]1 #text/1 2-->
     <div>
       This is good
     </div>
@@ -34,5 +34,6 @@
 
 # Mutations
 ```
+INSERT html/body/#text1
 INSERT html/body/div1/#text
 ```

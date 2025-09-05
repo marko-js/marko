@@ -4,12 +4,12 @@
   <head />
   <body>
     <div>
-      <!--M_[2-->
+      <!--M_[-->
       Got: a 
       <!---->
       0
       <!--M_*2 #text/1-->
-      <!--M_]1 #text/0-->
+      <!--M_]1 #text/0 2-->
       <script>
         WALKER_RUNTIME("M")("_");
         M._.r = [_ =&gt; (_.a = [0,
@@ -30,18 +30,18 @@
         }], (_.d).add(_.g), (_.b["ConditionalScope:#text/2"] = _.g), _.f));
         M._.w()
       </script>
-      <!--M_[4-->
+      <!--M_[-->
       Got: b 
       <!---->
       0
       <!--M_*4 #text/1-->
-      <!--M_]1 #text/1-->
-      <!--M_[3-->
+      <!--M_]1 #text/1 4-->
+      <!--M_[-->
       Got: c 
       <!---->
       0
       <!--M_*3 #text/1-->
-      <!--M_]1 #text/2-->
+      <!--M_]1 #text/2 3-->
       <button>
         Inc
       </button>
@@ -70,12 +70,12 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      <!--M_[2-->
+      <!--M_[-->
       Got: a 
       <!---->
       1
       <!--M_*2 #text/1-->
-      <!--M_]1 #text/0-->
+      <!--M_]1 #text/0 2-->
       <script>
         WALKER_RUNTIME("M")("_");
         M._.r = [_ =&gt; (_.a = [0,
@@ -96,18 +96,18 @@ container.querySelector("button").click();
         }], (_.d).add(_.g), (_.b["ConditionalScope:#text/2"] = _.g), _.f));
         M._.w()
       </script>
-      <!--M_[4-->
+      <!--M_[-->
       Got: b 
       <!---->
       1
       <!--M_*4 #text/1-->
-      <!--M_]1 #text/1-->
-      <!--M_[3-->
+      <!--M_]1 #text/1 4-->
+      <!--M_[-->
       Got: c 
       <!---->
       1
       <!--M_*3 #text/1-->
-      <!--M_]1 #text/2-->
+      <!--M_]1 #text/2 3-->
       <button>
         Inc
       </button>
@@ -142,12 +142,12 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      <!--M_[2-->
+      <!--M_[-->
       Got: a 
       <!---->
       2
       <!--M_*2 #text/1-->
-      <!--M_]1 #text/0-->
+      <!--M_]1 #text/0 2-->
       <script>
         WALKER_RUNTIME("M")("_");
         M._.r = [_ =&gt; (_.a = [0,
@@ -168,18 +168,18 @@ container.querySelector("button").click();
         }], (_.d).add(_.g), (_.b["ConditionalScope:#text/2"] = _.g), _.f));
         M._.w()
       </script>
-      <!--M_[4-->
+      <!--M_[-->
       Got: b 
       <!---->
       2
       <!--M_*4 #text/1-->
-      <!--M_]1 #text/1-->
-      <!--M_[3-->
+      <!--M_]1 #text/1 4-->
+      <!--M_[-->
       Got: c 
       <!---->
       2
       <!--M_*3 #text/1-->
-      <!--M_]1 #text/2-->
+      <!--M_]1 #text/2 3-->
       <button>
         Inc
       </button>
@@ -214,12 +214,12 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      <!--M_[2-->
+      <!--M_[-->
       Got: a 
       <!---->
       3
       <!--M_*2 #text/1-->
-      <!--M_]1 #text/0-->
+      <!--M_]1 #text/0 2-->
       <script>
         WALKER_RUNTIME("M")("_");
         M._.r = [_ =&gt; (_.a = [0,
@@ -240,18 +240,18 @@ container.querySelector("button").click();
         }], (_.d).add(_.g), (_.b["ConditionalScope:#text/2"] = _.g), _.f));
         M._.w()
       </script>
-      <!--M_[4-->
+      <!--M_[-->
       Got: b 
       <!---->
       3
       <!--M_*4 #text/1-->
-      <!--M_]1 #text/1-->
-      <!--M_[3-->
+      <!--M_]1 #text/1 4-->
+      <!--M_[-->
       Got: c 
       <!---->
       3
       <!--M_*3 #text/1-->
-      <!--M_]1 #text/2-->
+      <!--M_]1 #text/2 3-->
       <button>
         Inc
       </button>

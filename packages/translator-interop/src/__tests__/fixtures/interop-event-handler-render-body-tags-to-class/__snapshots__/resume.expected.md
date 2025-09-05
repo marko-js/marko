@@ -3,14 +3,14 @@
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       data-marko="{\"onclick\":\"emit _0 false 0\"}"
     >
       0
       <!--M_*3 #text/0-->
     </button>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {
@@ -66,6 +66,7 @@
 
 # Mutations
 ```
+INSERT html/body/#text2
 INSERT html/body/#text0
 INSERT html/body/#text1
 REMOVE #comment after html/body/#comment0
@@ -88,14 +89,14 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       data-marko="{\"onclick\":\"emit _0 false 0\"}"
     >
       1
       <!--M_*3 #text/0-->
     </button>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {
@@ -162,14 +163,14 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       data-marko="{\"onclick\":\"emit _0 false 0\"}"
     >
       2
       <!--M_*3 #text/0-->
     </button>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {
@@ -236,14 +237,14 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       data-marko="{\"onclick\":\"emit _0 false 0\"}"
     >
       3
       <!--M_*3 #text/0-->
     </button>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {

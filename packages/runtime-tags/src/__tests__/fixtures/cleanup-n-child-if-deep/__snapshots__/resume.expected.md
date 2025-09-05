@@ -48,7 +48,7 @@ Inner mounted
         <p>
           Middle a
         </p>
-        <!--M_[6-->
+        <!--M_[-->
         <div>
           Inner a
         </div>
@@ -58,7 +58,7 @@ Inner mounted
         <p>
           Inner a
         </p>
-        <!--M_]4 #text/1-->
+        <!--M_]4 #text/1 6-->
       </div>
       <!--M_|2 #text/1 4-->
     </div>
@@ -109,6 +109,7 @@ Inner mounted
 
 # Mutations
 ```
+INSERT html/body/div/div1/#text
 INSERT #text
 REMOVE #text in html/body/pre
 INSERT #text
@@ -170,7 +171,7 @@ Inner destroyed
         <p>
           Middle a
         </p>
-        <!--M_]4 #text/1-->
+        <!--M_]4 #text/1 6-->
       </div>
       <!--M_|2 #text/1 4-->
     </div>
@@ -221,7 +222,7 @@ Inner destroyed
 
 # Mutations
 ```
-REMOVE html/body/div/div1/#comment after p
+REMOVE html/body/div/div1/#comment after #text
 INSERT html/body/div/div1/#comment
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
@@ -229,6 +230,7 @@ REMOVE #comment after html/body/div/div1/#comment
 REMOVE div after html/body/div/div1/#comment
 REMOVE span after html/body/div/div1/#comment
 REMOVE p after html/body/div/div1/#comment
+REMOVE #text after html/body/div/div1/#comment
 ```
 
 # Render
