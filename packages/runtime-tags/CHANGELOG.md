@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.62
+
+### Patch Changes
+
+- [#2808](https://github.com/marko-js/marko/pull/2808) [`a12d927`](https://github.com/marko-js/marko/commit/a12d927058067aab3bc7917010956293e2862e44) Thanks [@rturnq](https://github.com/rturnq)! - Improve resume walks to be easier to follow and more correct
+
 ## 6.0.61
 
 ### Patch Changes
