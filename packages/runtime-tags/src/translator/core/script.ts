@@ -42,13 +42,16 @@ export default {
       const start = body[0]?.start;
       const end = body[body.length - 1]?.end;
       const bodyStatements = parseStatements(tag.hub.file, code, start, end);
-      const valueFn = t.arrowFunctionExpression(
-        [],
-        t.blockStatement(bodyStatements),
-        traverseContains(bodyStatements, isAwaitExpression),
-      );
+      if (bodyStatements.length) {
+        const valueFn = t.arrowFunctionExpression(
+          [],
+          t.blockStatement(bodyStatements),
+          traverseContains(bodyStatements, isAwaitExpression),
+        );
 
-      node.attributes.push(t.markoAttribute("value", valueFn));
+        node.attributes.push(t.markoAttribute("value", valueFn));
+      }
+
       node.body.body = [];
     }
   },
