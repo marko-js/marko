@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.63
+
+### Patch Changes
+
+- [#2810](https://github.com/marko-js/marko/pull/2810) [`2e24f2d`](https://github.com/marko-js/marko/commit/2e24f2d938e27c6bf11856b90a4016ac68ef89b0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid compile error with empty script tag.
+
 ## 6.0.62
 
 ### Patch Changes
