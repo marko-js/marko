@@ -12,7 +12,7 @@ export default _._template("__tests__/template.marko", input => {
     x,
     handler,
     y,
-    "TagVariableChange:y": handler
+    "TagVariableChange:y": handler || void 0
   }, "__tests__/template.marko", 0, {
     x: "1:6",
     handler: "2:6",

@@ -2,7 +2,7 @@
 
 export interface Input<T> {
   value: T;
-  valueChange?: (newValue: T) => void;
+  valueChange?: ((newValue: T) => void) | false | null;
 }
 
 return=input.value valueChange=input.valueChange!
