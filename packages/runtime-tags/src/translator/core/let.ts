@@ -84,7 +84,7 @@ export default {
         );
     }
 
-    if (valueChangeAttr && computeNode(valueChangeAttr.value)) {
+    if (valueChangeAttr && computeNode(valueChangeAttr.value)?.value) {
       throw tag
         .get("attributes")
         .find((attr) => attr.node === valueChangeAttr)!
@@ -150,7 +150,11 @@ export default {
           setBindingSerializedValue(
             section,
             binding,
-            valueChangeAttr.value,
+            t.logicalExpression(
+              "||",
+              valueChangeAttr.value,
+              t.unaryExpression("void", t.numericLiteral(0)),
+            ),
             getAccessorPrefix().TagVariableChange,
           );
         }

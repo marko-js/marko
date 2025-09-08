@@ -239,12 +239,22 @@ export const _return = (scope: Scope, value: unknown) =>
 
 export function _return_change(
   scope: Scope,
-  changeHandler: (value: unknown) => void,
+  changeHandler?: ((value: unknown) => void) | null | false,
 ) {
-  scope[AccessorProp.TagVariableChange] = changeHandler;
+  if (changeHandler) {
+    scope[AccessorProp.TagVariableChange] = changeHandler;
+  }
 }
-export const _var_change = (scope: Scope, value: unknown) =>
-  scope[AccessorProp.TagVariableChange]?.(value);
+export const _var_change = MARKO_DEBUG
+  ? (scope: Scope, value: unknown, name: string = "This") => {
+      if (typeof scope[AccessorProp.TagVariableChange] !== "function") {
+        throw new TypeError(`${name} is a readonly tag variable.`);
+      }
+
+      scope[AccessorProp.TagVariableChange](value);
+    }
+  : (scope: Scope, value: unknown) =>
+      scope[AccessorProp.TagVariableChange]?.(value);
 
 const tagIdsByGlobal = new WeakMap<Scope["___global"], number>();
 export function _id({ $global }: Scope) {

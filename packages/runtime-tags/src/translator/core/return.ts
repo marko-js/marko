@@ -92,7 +92,11 @@ export default {
           setSectionSerializedValue(
             section,
             getAccessorProp().TagVariableChange,
-            attrs.valueChange,
+            t.logicalExpression(
+              "||",
+              attrs.valueChange,
+              t.unaryExpression("void", t.numericLiteral(0)),
+            ),
           );
         }
 

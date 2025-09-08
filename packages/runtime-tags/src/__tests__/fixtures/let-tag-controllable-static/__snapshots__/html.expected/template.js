@@ -9,7 +9,7 @@ export default _._template("__tests__/template.marko", input => {
     y,
     "TagVariableChange:y": _._resume(function (newValue) {
       x = newValue + 1;
-    }, "__tests__/template.marko_0/valueChange", $scope0_id)
+    }, "__tests__/template.marko_0/valueChange", $scope0_id) || void 0
   }, "__tests__/template.marko", 0, {
     y: "2:6"
   });

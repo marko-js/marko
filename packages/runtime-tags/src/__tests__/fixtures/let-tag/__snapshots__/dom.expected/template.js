@@ -16,6 +16,6 @@ const $y = /* @__PURE__ */_._let("y/4", ($scope, y) => {
 });
 export function $setup($scope) {
   $x($scope, 1);
-  $y($scope, 1);
+  $y($scope, 1, false);
 }
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

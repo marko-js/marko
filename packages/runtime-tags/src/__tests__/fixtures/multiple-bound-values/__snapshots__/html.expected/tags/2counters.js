@@ -13,8 +13,8 @@ export default _._template("__tests__/tags/2counters.marko", (input, $serialize)
     input_count2Change: _._serialize_if($serialize, /* input.count2 */2) && input.count2Change,
     count1,
     count2,
-    "TagVariableChange:count1": input.count1Change,
-    "TagVariableChange:count2": input.count2Change
+    "TagVariableChange:count1": input.count1Change || void 0,
+    "TagVariableChange:count2": input.count2Change || void 0
   }, "__tests__/tags/2counters.marko", 0, {
     input_count1: ["input.count1"],
     input_count1Change: ["input.count1Change"],

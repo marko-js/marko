@@ -7,7 +7,8 @@ export default _._template("__tests__/template.marko", input => {
   _._script($scope0_id, "__tests__/template.marko_0_x_y");
   _._scope($scope0_id, {
     x,
-    y
+    y,
+    "TagVariableChange:y": false || void 0
   }, "__tests__/template.marko", 0, {
     x: "1:6",
     y: "2:6"

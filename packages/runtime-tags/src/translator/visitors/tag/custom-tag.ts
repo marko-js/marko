@@ -13,7 +13,7 @@ import path from "path";
 
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getTagName } from "../../util/get-tag-name";
-import { isOutputHTML } from "../../util/marko-config";
+import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import {
   analyzeAttributeTags,
   type AttrTagLookup,
@@ -148,6 +148,10 @@ export default {
       }
 
       const varBinding = trackVarReferences(tag, BindingType.derived);
+      const mutatesTagVar = !!(
+        tag.node.var?.type === "Identifier" &&
+        tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
+      );
       if (varBinding) {
         varBinding.scopeOffset = tagExtra[kChildOffsetScopeBinding] =
           createBinding("#scopeOffset", BindingType.dom, section);
@@ -162,7 +166,7 @@ export default {
           addBindingSerializeReasonExpr(
             section,
             childScopeBinding,
-            varSerializeReason,
+            mutatesTagVar || varSerializeReason,
           );
         }
       } else {
@@ -191,7 +195,7 @@ export default {
           addBindingSerializeReasonExpr(
             section,
             childScopeBinding,
-            varSerializeReason,
+            mutatesTagVar || varSerializeReason,
           );
         }
 
@@ -450,16 +454,21 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const inputExport = childExports.input;
 
   if (node.var) {
+    const varBinding = node.var.extra!.binding!;
     const source = initValue(
       // TODO: support destructuring
-      node.var.extra!.binding!,
+      varBinding,
     );
     source.register = true;
     source.buildAssignment = (valueSection, value) => {
-      return t.callExpression(importRuntime("_var_change"), [
+      const changeArgs = [
         createScopeReadExpression(valueSection, childScopeBinding),
         value,
-      ]);
+      ];
+      if (!isOptimize()) {
+        changeArgs.push(t.stringLiteral(varBinding.name));
+      }
+      return t.callExpression(importRuntime("_var_change"), changeArgs);
     };
     addStatement(
       "render",

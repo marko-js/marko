@@ -11,7 +11,7 @@ import { isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorPrefix } from "../../util/get-accessor-char";
-import { isOutputHTML } from "../../util/marko-config";
+import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import {
   type Binding,
@@ -275,13 +275,14 @@ export default {
         const signal = getSignal(section, nodeBinding, "dynamicTag");
         let tagVarSignal: Signal | undefined;
         if (tag.node.var) {
+          const varBinding = tag.node.var.extra!.binding!;
           tagVarSignal = initValue(
             // TODO: support destructuring
-            tag.node.var.extra!.binding!,
+            varBinding,
           );
           tagVarSignal.register = true;
           tagVarSignal.buildAssignment = (valueSection, value) => {
-            return t.callExpression(importRuntime("_var_change"), [
+            const changeArgs = [
               t.memberExpression(
                 getScopeExpression(tagVarSignal!.section, valueSection),
                 t.stringLiteral(
@@ -291,7 +292,11 @@ export default {
                 true,
               ),
               value,
-            ]);
+            ];
+            if (!isOptimize()) {
+              changeArgs.push(t.stringLiteral(varBinding.name));
+            }
+            return t.callExpression(importRuntime("_var_change"), changeArgs);
           };
         }
 

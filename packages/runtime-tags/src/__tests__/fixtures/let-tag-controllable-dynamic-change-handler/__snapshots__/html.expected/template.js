@@ -13,7 +13,7 @@ export default _._template("__tests__/template.marko", input => {
     x,
     yChange,
     y,
-    "TagVariableChange:y": yChange
+    "TagVariableChange:y": yChange || void 0
   }, "__tests__/template.marko", 0, {
     x: "1:6",
     yChange: "2:6",

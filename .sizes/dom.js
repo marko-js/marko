@@ -1,4 +1,4 @@
-// size: 19091 (min) 7284 (brotli)
+// size: 19096 (min) 7317 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -731,7 +731,7 @@ function _var(scope, childAccessor, signal) {
 }
 var _return = (scope, value) => scope.e?.(value);
 function _return_change(scope, changeHandler) {
-  scope.f = changeHandler;
+  changeHandler && (scope.f = changeHandler);
 }
 var _var_change = (scope, value) => scope.f?.(value),
   tagIdsByGlobal = new WeakMap();

@@ -11,8 +11,8 @@ export default _._template("__tests__/tags/child.marko", (input, $serialize) => 
     input_valueChange: _._serialize_if($serialize, /* input.value */0) && input.valueChange,
     state,
     otherState,
-    "TagVariableChange:state": input.valueChange,
-    "TagVariableChange:otherState": input["value" + "Change"]
+    "TagVariableChange:state": input.valueChange || void 0,
+    "TagVariableChange:otherState": input["value" + "Change"] || void 0
   }, "__tests__/tags/child.marko", 0, {
     input_value: ["input.value"],
     input_valueChange: ["input.valueChange"],
