@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.46
+
+### Patch Changes
+
+- [#2813](https://github.com/marko-js/marko/pull/2813) [`65b6dde`](https://github.com/marko-js/marko/commit/65b6dde559f50afac6e285bd598ed49b015485f4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve class/tags api interop.
+
+- Updated dependencies [[`65b6dde`](https://github.com/marko-js/marko/commit/65b6dde559f50afac6e285bd598ed49b015485f4)]:
+  - marko@5.37.52
+  - @marko/runtime-tags@6.0.64
+
 ## 0.2.45
 
 ### Patch Changes
