@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.52
+
+### Patch Changes
+
+- [#2813](https://github.com/marko-js/marko/pull/2813) [`65b6dde`](https://github.com/marko-js/marko/commit/65b6dde559f50afac6e285bd598ed49b015485f4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve class/tags api interop.
+
 ## 5.37.51
 
 ### Patch Changes
