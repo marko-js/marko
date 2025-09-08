@@ -4,9 +4,7 @@
   <head />
   <body>
     <!--M_[-->
-    <button
-      data-marko="{\"onclick\":\"emit _0 false 0\"}"
-    >
+    <button>
       0
       <!--M_*3 #text/0-->
     </button>
@@ -32,30 +30,36 @@
       M._.w();
       $MC = (window.$MC || []).concat(
       {
-        "p": "_",
-        "w": [
-          ["_0", 0,
-          {},
-          {
-            "b": [
-              ["click"]
-            ],
-            "e": [
-              ["click", [
-                "__tests__/template.marko_0/onClick",
+        "o":
+        {
+          "p": "_",
+          "w": [
+            ["_0", 0,
+            {
+              "renderBody": [
+                "__tests__/template.marko_1_content",
                 1
-              ]]
-            ],
-            "f": 1,
-            "r": [
-              "__tests__/template.marko_1_content",
-              1
-            ]
-          }]
-        ],
-        "t": [
-          "__tests__/components/my-button.marko"
-        ]
+              ]
+            },
+            {
+              "e": [
+                ["click", [
+                  "__tests__/template.marko_0/onClick",
+                  1
+                ]]
+              ],
+              "f": 1
+            }]
+          ],
+          "t": [
+            "__tests__/components/my-button.marko"
+          ]
+        },
+        "$$": [
+        {
+          "l": ["w", 0, 3, "r"],
+          "r": ["w", 0, 2, "renderBody"]
+        }]
       });
       M._.r.push("$compat_setScope", 2);
       M._.w()
@@ -90,9 +94,7 @@ container.querySelector("button").click();
   <head />
   <body>
     <!--M_[-->
-    <button
-      data-marko="{\"onclick\":\"emit _0 false 0\"}"
-    >
+    <button>
       1
       <!--M_*3 #text/0-->
     </button>
@@ -118,30 +120,36 @@ container.querySelector("button").click();
       M._.w();
       $MC = (window.$MC || []).concat(
       {
-        "p": "_",
-        "w": [
-          ["_0", 0,
-          {},
-          {
-            "b": [
-              ["click"]
-            ],
-            "e": [
-              ["click", [
-                "__tests__/template.marko_0/onClick",
+        "o":
+        {
+          "p": "_",
+          "w": [
+            ["_0", 0,
+            {
+              "renderBody": [
+                "__tests__/template.marko_1_content",
                 1
-              ]]
-            ],
-            "f": 1,
-            "r": [
-              "__tests__/template.marko_1_content",
-              1
-            ]
-          }]
-        ],
-        "t": [
-          "__tests__/components/my-button.marko"
-        ]
+              ]
+            },
+            {
+              "e": [
+                ["click", [
+                  "__tests__/template.marko_0/onClick",
+                  1
+                ]]
+              ],
+              "f": 1
+            }]
+          ],
+          "t": [
+            "__tests__/components/my-button.marko"
+          ]
+        },
+        "$$": [
+        {
+          "l": ["w", 0, 3, "r"],
+          "r": ["w", 0, 2, "renderBody"]
+        }]
       });
       M._.r.push("$compat_setScope", 2);
       M._.w()
@@ -164,9 +172,7 @@ container.querySelector("button").click();
   <head />
   <body>
     <!--M_[-->
-    <button
-      data-marko="{\"onclick\":\"emit _0 false 0\"}"
-    >
+    <button>
       2
       <!--M_*3 #text/0-->
     </button>
@@ -192,30 +198,36 @@ container.querySelector("button").click();
       M._.w();
       $MC = (window.$MC || []).concat(
       {
-        "p": "_",
-        "w": [
-          ["_0", 0,
-          {},
-          {
-            "b": [
-              ["click"]
-            ],
-            "e": [
-              ["click", [
-                "__tests__/template.marko_0/onClick",
+        "o":
+        {
+          "p": "_",
+          "w": [
+            ["_0", 0,
+            {
+              "renderBody": [
+                "__tests__/template.marko_1_content",
                 1
-              ]]
-            ],
-            "f": 1,
-            "r": [
-              "__tests__/template.marko_1_content",
-              1
-            ]
-          }]
-        ],
-        "t": [
-          "__tests__/components/my-button.marko"
-        ]
+              ]
+            },
+            {
+              "e": [
+                ["click", [
+                  "__tests__/template.marko_0/onClick",
+                  1
+                ]]
+              ],
+              "f": 1
+            }]
+          ],
+          "t": [
+            "__tests__/components/my-button.marko"
+          ]
+        },
+        "$$": [
+        {
+          "l": ["w", 0, 3, "r"],
+          "r": ["w", 0, 2, "renderBody"]
+        }]
       });
       M._.r.push("$compat_setScope", 2);
       M._.w()
@@ -238,9 +250,7 @@ container.querySelector("button").click();
   <head />
   <body>
     <!--M_[-->
-    <button
-      data-marko="{\"onclick\":\"emit _0 false 0\"}"
-    >
+    <button>
       3
       <!--M_*3 #text/0-->
     </button>
@@ -266,30 +276,36 @@ container.querySelector("button").click();
       M._.w();
       $MC = (window.$MC || []).concat(
       {
-        "p": "_",
-        "w": [
-          ["_0", 0,
-          {},
-          {
-            "b": [
-              ["click"]
-            ],
-            "e": [
-              ["click", [
-                "__tests__/template.marko_0/onClick",
+        "o":
+        {
+          "p": "_",
+          "w": [
+            ["_0", 0,
+            {
+              "renderBody": [
+                "__tests__/template.marko_1_content",
                 1
-              ]]
-            ],
-            "f": 1,
-            "r": [
-              "__tests__/template.marko_1_content",
-              1
-            ]
-          }]
-        ],
-        "t": [
-          "__tests__/components/my-button.marko"
-        ]
+              ]
+            },
+            {
+              "e": [
+                ["click", [
+                  "__tests__/template.marko_0/onClick",
+                  1
+                ]]
+              ],
+              "f": 1
+            }]
+          ],
+          "t": [
+            "__tests__/components/my-button.marko"
+          ]
+        },
+        "$$": [
+        {
+          "l": ["w", 0, 3, "r"],
+          "r": ["w", 0, 2, "renderBody"]
+        }]
       });
       M._.r.push("$compat_setScope", 2);
       M._.w()

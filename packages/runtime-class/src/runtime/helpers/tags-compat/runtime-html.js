@@ -155,17 +155,18 @@ exports.p = function (htmlCompat) {
       // tags to class
       const $global = htmlCompat.$global();
       const state = htmlCompat.ensureState($global);
+      const out = defaultCreateOut($global);
+      const branchId = htmlCompat.nextScopeId();
+
       let writers = writersByGlobal.get($global);
       if (!writers) {
         writersByGlobal.set($global, (writers = { classAPI: [], tagsAPI: [] }));
       }
 
-      const out = defaultCreateOut($global);
-      const branchId = htmlCompat.nextScopeId();
-      let customEvents;
-
       if (renderer5) {
+        const componentsContext = ___getComponentsContext(out);
         const originalInput = input;
+        let customEvents;
         input = {};
 
         for (const key in originalInput) {
@@ -182,21 +183,20 @@ exports.p = function (htmlCompat) {
             input[key === "content" ? "renderBody" : key] = value;
           }
         }
-      }
 
-      if (renderer5) {
+        componentsContext.___forceBoundary = true;
         renderer5(input, out);
+
+        const componentDef = componentsContext.___components[0];
+        if (componentDef) {
+          htmlCompat.writeSetScopeForComponent(branchId, componentDef.id);
+          componentDef.___component.___customEvents = customEvents;
+          if (componentDef.___component.___input.toJSON) {
+            componentDef.___component.___input.toJSON = undefined;
+          }
+        }
       } else {
         renderBody5(out, input, ...args);
-      }
-
-      const componentsContext = ___getComponentsContext(out);
-      const componentDef = componentsContext.___components[0];
-      if (componentDef) {
-        componentDef.___component.___customEvents = customEvents;
-        componentDef._wrr = true;
-        componentDef.___flags |= 1; // FLAG_WILL_RERENDER_IN_BROWSER
-        htmlCompat.writeSetScopeForComponent(branchId, componentDef.id);
       }
 
       let async;
