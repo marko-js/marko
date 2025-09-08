@@ -1,5 +1,7 @@
 var toJSONDescriptor = {
+  configurable: true,
   enumerable: false,
+  writable: true,
   value: function emptyInput() {
     return {};
   },
