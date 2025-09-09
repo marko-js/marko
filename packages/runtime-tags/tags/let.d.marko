@@ -1,8 +1,8 @@
 /** File for types only, not actual implementation **/
 
-export interface Input<T> {
+export interface Input<T, K = T> {
   value: T;
-  valueChange?: ((newValue: T) => void) | false | null;
+  valueChange?: ((newValue: K) => void) | false | null;
 }
 
-return=input.value valueChange=input.valueChange!
+return=input.value valueChange=(input.valueChange as (newValue: K) => void)
