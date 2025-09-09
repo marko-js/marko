@@ -30,7 +30,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<const>` tag](https://next.markojs.com/docs/reference/core-tag#const) requires a [tag variable](https://next.markojs.com/docs/reference/language#tag-variables).",
+          "The [`<const>` tag](https://markojs.com/docs/reference/core-tag#const) requires a [tag variable](https://markojs.com/docs/reference/language#tag-variables).",
         );
     }
 
@@ -38,7 +38,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<const>` tag](https://next.markojs.com/docs/reference/core-tag#const) requires a [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
+          "The [`<const>` tag](https://markojs.com/docs/reference/core-tag#const) requires a [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
         );
     }
 
@@ -50,7 +50,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<const>` tag](https://next.markojs.com/docs/reference/core-tag#const) only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
+          "The [`<const>` tag](https://markojs.com/docs/reference/core-tag#const) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
         );
     }
 
@@ -107,8 +107,7 @@ export default {
   autocomplete: [
     {
       description: "Use to create an constant binding.",
-      descriptionMoreURL:
-        "https://next.markojs.com/docs/reference/core-tag#const",
+      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#const",
     },
   ],
   types: runtimeInfo.name + "/tags/const.d.marko",

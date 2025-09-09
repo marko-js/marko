@@ -1,5 +1,5 @@
 
     at packages/runtime-tags/src/__tests__/fixtures/error-log-extra-attr/template.marko:1:2
     > 1 | <log="Hello" y=1/>
-        |  ^^^ The [`<log>` tag](https://next.markojs.com/docs/reference/core-tag#log) only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).
+        |  ^^^ The [`<log>` tag](https://markojs.com/docs/reference/core-tag#log) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).
       2 |

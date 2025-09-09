@@ -5,7 +5,7 @@ export function assertNoSpreadAttrs(tag: t.NodePath<t.MarkoTag>) {
     if (attr.isMarkoSpreadAttribute()) {
       const tagName = (tag.get("name").node as t.StringLiteral).value;
       throw attr.buildCodeFrameError(
-        `The [\`<${tagName}>\`](https://next.markojs.com/docs/reference/core-tag#${tagName}) tag does not support \`...spread\` attributes.`,
+        `The [\`<${tagName}>\`](https://markojs.com/docs/reference/core-tag#${tagName}) tag does not support \`...spread\` attributes.`,
       );
     }
   }
@@ -16,7 +16,7 @@ export function assertNoBodyContent(tag: t.NodePath<t.MarkoTag>) {
     const tagName = tag.get("name");
     const tagNameLiteral = (tagName.node as t.StringLiteral).value;
     throw tagName.buildCodeFrameError(
-      `The [\`<${tagNameLiteral}>\`](https://next.markojs.com/docs/reference/core-tag#${tagNameLiteral}) tag does not support body content.`,
+      `The [\`<${tagNameLiteral}>\`](https://markojs.com/docs/reference/core-tag#${tagNameLiteral}) tag does not support body content.`,
     );
   }
 }

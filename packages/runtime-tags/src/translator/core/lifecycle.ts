@@ -58,7 +58,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<lifecycle>` tag](https://next.markojs.com/docs/reference/core-tag#lifecycle) requires at least one attribute.",
+          "The [`<lifecycle>` tag](https://markojs.com/docs/reference/core-tag#lifecycle) requires at least one attribute.",
         );
     }
 
@@ -67,7 +67,7 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            "The [`<lifecycle>` tag](https://next.markojs.com/docs/reference/core-tag#lifecycle) does not support [`...spread` attributes](https://next.markojs.com/docs/reference/language#spread-attributes).",
+            "The [`<lifecycle>` tag](https://markojs.com/docs/reference/core-tag#lifecycle) does not support [`...spread` attributes](https://markojs.com/docs/reference/language#spread-attributes).",
           );
       }
       (attr.value.extra ??= {}).isEffect = true;
@@ -117,7 +117,7 @@ export default {
     {
       description: "Use to create a side effects.",
       descriptionMoreURL:
-        "https://next.markojs.com/docs/reference/core-tag#lifecycle",
+        "https://markojs.com/docs/reference/core-tag#lifecycle",
     },
   ],
   types: runtimeInfo.name + "/tags/lifecycle.d.marko",

@@ -64,7 +64,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<await>` tag](https://next.markojs.com/docs/reference/core-tag#await) requires a [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
+          "The [`<await>` tag](https://markojs.com/docs/reference/core-tag#await) requires a [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
         );
     }
 
@@ -76,7 +76,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<await>` tag](https://next.markojs.com/docs/reference/core-tag#await) only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
+          "The [`<await>` tag](https://markojs.com/docs/reference/core-tag#await) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
         );
     }
 
@@ -84,7 +84,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<await>` tag](https://next.markojs.com/docs/reference/core-tag#await) requires [content](https://next.markojs.com/docs/reference/language#tag-content).",
+          "The [`<await>` tag](https://markojs.com/docs/reference/core-tag#await) requires [content](https://markojs.com/docs/reference/language#tag-content).",
         );
     }
 
@@ -95,7 +95,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<await>` tag](https://next.markojs.com/docs/reference/core-tag#await) only supports a single parameter.",
+          "The [`<await>` tag](https://markojs.com/docs/reference/core-tag#await) only supports a single parameter.",
         );
     }
 
@@ -205,8 +205,7 @@ export default {
   autocomplete: [
     {
       description: "Use to consume asynchronous an data.",
-      descriptionMoreURL:
-        "https://next.markojs.com/docs/reference/core-tag#await",
+      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#await",
     },
   ],
   types: runtimeInfo.name + "/tags/await.d.marko",

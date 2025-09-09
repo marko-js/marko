@@ -1,5 +1,5 @@
 
     at packages/runtime-tags/src/__tests__/fixtures/error-effect-tag-var/template.marko:1:9
     > 1 | <script/x=(() => {})/>
-        |         ^ The [`<script>` tag](https://next.markojs.com/docs/reference/core-tag#script) does not support a tag variable reference. For a native html [`<script>` tag](https://next.markojs.com/docs/reference/core-tag#script) use the `html-script` core tag instead.
+        |         ^ The [`<script>` tag](https://markojs.com/docs/reference/core-tag#script) does not support a tag variable reference. For a native html [`<script>` tag](https://markojs.com/docs/reference/core-tag#script) use the `html-script` core tag instead.
       2 |

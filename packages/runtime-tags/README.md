@@ -1,6 +1,6 @@
 <div align="center">
 
-# [<img alt="Marko" src="https://raw.githubusercontent.com/marko-js/website-next/refs/heads/main/public/logo.svg" width="250">](https://next.markojs.com/)
+# [<img alt="Marko" src="https://raw.githubusercontent.com/marko-js/website-next/refs/heads/main/public/logo.svg" width="250">](https://markojs.com/)
 
 **A declarative, HTML-based language that makes building web apps fun 🔥**
 
@@ -11,13 +11,13 @@
 [![# of monthly downloads](https://img.shields.io/npm/dm/marko.svg)](https://npm-stat.com/charts.html?package=marko)
 [![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7029/badge)](https://bestpractices.coreinfrastructure.org/projects/7029)
 
-[Docs](https://next.markojs.com/docs/introduction/getting-started) ∙ [Try Online](https://next.markojs.com/playground) ∙ [Contribute](#contributors) ∙ [Get Support](#community--support)
+[Docs](https://markojs.com/docs/introduction/getting-started) ∙ [Try Online](https://markojs.com/playground) ∙ [Contribute](#contributors) ∙ [Get Support](#community--support)
 
 </div>
 
 ## Intro
 
-Marko is HTML _reimagined_ as a language for building dynamic and reactive user interfaces. Almost any valid HTML is valid Marko, and Marko extends HTML for building modern applications more declaratively. Among these extensions are [components](https://next.markojs.com/docs/reference/custom-tag), [conditionals](https://next.markojs.com/docs/reference/core-tag#if--else) and [loops](https://next.markojs.com/docs/reference/core-tag#for), and a full [reactivity system](https://next.markojs.com/docs/reference/reactivity).
+Marko is HTML _reimagined_ as a language for building dynamic and reactive user interfaces. Almost any valid HTML is valid Marko, and Marko extends HTML for building modern applications more declaratively. Among these extensions are [components](https://markojs.com/docs/reference/custom-tag), [conditionals](https://markojs.com/docs/reference/core-tag#if--else) and [loops](https://markojs.com/docs/reference/core-tag#for), and a full [reactivity system](https://markojs.com/docs/reference/reactivity).
 
 ### Example Component
 
@@ -36,7 +36,7 @@ The following renders a button and a counter of how many times the button has be
 ## Getting Started
 
 1. `npm init marko`
-2. Read the [docs](https://next.markojs.com/docs/introduction/getting-started)
+2. Read the [docs](https://markojs.com/docs/introduction/getting-started)
 
 ## Community & Support
 

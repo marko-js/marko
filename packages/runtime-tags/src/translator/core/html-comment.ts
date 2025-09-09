@@ -63,7 +63,7 @@ export default {
         throw tag
           .get("var")
           .buildCodeFrameError(
-            "The [`<html-comment>` tag](https://next.markojs.com/docs/reference/core-tag#html-comment) tag variable cannot be destructured.",
+            "The [`<html-comment>` tag](https://markojs.com/docs/reference/core-tag#html-comment) tag variable cannot be destructured.",
           );
       }
       needsBinding = true;
@@ -244,7 +244,7 @@ export default {
       description:
         "Use to create an html comment that is not stripped from the output.",
       descriptionMoreURL:
-        "https://next.markojs.com/docs/reference/core-tag#html-comment",
+        "https://markojs.com/docs/reference/core-tag#html-comment",
     },
   ],
 } as Tag;

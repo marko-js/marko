@@ -24,7 +24,7 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            "[Attribute tags](https://next.markojs.com/docs/reference/language#attribute-tags) must be nested within another tag.",
+            "[Attribute tags](https://markojs.com/docs/reference/language#attribute-tags) must be nested within another tag.",
           );
       }
     },

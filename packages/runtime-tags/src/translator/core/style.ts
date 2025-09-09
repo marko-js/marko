@@ -16,7 +16,7 @@ import { getMarkoOpts } from "../util/marko-config";
 
 const STYLE_EXT_REG = /^style((?:\.[a-zA-Z0-9$_-]+)+)?/;
 const htmlStyleTagAlternateMsg =
-  " For a native html [`<style>` tag](https://next.markojs.com/docs/reference/core-tag#style) use the `html-style` core tag instead.";
+  " For a native html [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) use the `html-style` core tag instead.";
 
 export default {
   analyze(tag) {
@@ -48,7 +48,7 @@ export default {
       if (child.type !== "MarkoText") {
         throw tag.hub.buildError(
           child,
-          "The [`<style>` tag](https://next.markojs.com/docs/reference/core-tag#style) currently only supports static content." +
+          "The [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) currently only supports static content." +
             htmlStyleTagAlternateMsg,
         );
       }
@@ -57,7 +57,7 @@ export default {
     if (node.body.body.length > 1) {
       throw tag.hub.buildError(
         node.name,
-        "The [`<style>` tag](https://next.markojs.com/docs/reference/core-tag#style) currently only supports static content." +
+        "The [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) currently only supports static content." +
           htmlStyleTagAlternateMsg,
       );
     }

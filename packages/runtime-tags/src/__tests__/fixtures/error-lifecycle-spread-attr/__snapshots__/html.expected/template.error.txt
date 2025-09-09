@@ -1,7 +1,7 @@
 
     at packages/runtime-tags/src/__tests__/fixtures/error-lifecycle-spread-attr/template.marko:1:2
     > 1 | <lifecycle ...{
-        |  ^^^^^^^^^ The [`<lifecycle>` tag](https://next.markojs.com/docs/reference/core-tag#lifecycle) does not support [`...spread` attributes](https://next.markojs.com/docs/reference/language#spread-attributes).
+        |  ^^^^^^^^^ The [`<lifecycle>` tag](https://markojs.com/docs/reference/core-tag#lifecycle) does not support [`...spread` attributes](https://markojs.com/docs/reference/language#spread-attributes).
       2 |   onMount() {},
       3 |   onUpdate() {},
       4 |   onDestroy() {}
