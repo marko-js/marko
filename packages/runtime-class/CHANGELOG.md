@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.37.53
+
+### Patch Changes
+
+- [#2815](https://github.com/marko-js/marko/pull/2815) [`ed8d064`](https://github.com/marko-js/marko/commit/ed8d064d154532cfa7c12be524d6b47556da0c7f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure `@marko/compiler/modules` always uses packagem name imports for easier aliasing in website tooling.
+
+- Updated dependencies [[`ed8d064`](https://github.com/marko-js/marko/commit/ed8d064d154532cfa7c12be524d6b47556da0c7f)]:
+  - @marko/compiler@5.39.34
+
 ## 5.37.52
 
 ### Patch Changes

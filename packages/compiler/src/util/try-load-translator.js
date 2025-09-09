@@ -1,4 +1,5 @@
-import markoModules from "../../modules";
+import markoModules from "@marko/compiler/modules";
+
 import config from "../config";
 const cache = {};
 
