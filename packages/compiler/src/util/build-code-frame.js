@@ -1,8 +1,8 @@
 import { codeFrameColumns } from "@babel/code-frame";
+import { cwd } from "@marko/compiler/modules";
 import color from "kleur";
 import path from "path";
 
-import { cwd } from "../../modules";
 import { stripAnsi } from "./strip-ansi";
 const indent = "    ";
 

@@ -3,12 +3,12 @@ import markoModules from "@marko/compiler/modules";
 import { getRootDir } from "lasso-package-root";
 import { basename, dirname, join, relative, resolve } from "path";
 
-import { cwd, root } from "../../modules";
 import { Hash } from "../util/quick-hash";
 import { diagnosticWarn } from "./diagnostics";
 import { resolveRelativePath } from "./imports";
 import { getTagDefForTagName } from "./taglib";
 
+const { cwd, root } = markoModules;
 const MACRO_IDS_KEY = Symbol();
 const MACRO_NAMES_KEY = "__marko_macro_names__"; // must be a string literal since it is used across compiler stages.
 const TRANSPARENT_TAGS = new Set([
