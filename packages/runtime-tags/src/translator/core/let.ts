@@ -48,7 +48,7 @@ export default {
           const start = attr.loc?.start;
           const end = attr.loc?.end;
           const msg =
-            "The [`<let>` tag](https://next.markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value) and its change handler.";
+            "The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler.";
 
           if (start == null || end == null) {
             throw tag.get("name").buildCodeFrameError(msg);
@@ -72,7 +72,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<let>` tag](https://next.markojs.com/docs/reference/core-tag#let) requires a [tag variable](https://next.markojs.com/docs/reference/language#tag-variables).",
+          "The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) requires a [tag variable](https://markojs.com/docs/reference/language#tag-variables).",
         );
     }
 
@@ -80,7 +80,7 @@ export default {
       throw tag
         .get("var")
         .buildCodeFrameError(
-          "The [`<let>` tag](https://next.markojs.com/docs/reference/core-tag#let) variable cannot be destructured.",
+          "The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) variable cannot be destructured.",
         );
     }
 
@@ -90,7 +90,7 @@ export default {
         .find((attr) => attr.node === valueChangeAttr)!
         .get("value")
         .buildCodeFrameError(
-          "The [`<let>` tag](https://next.markojs.com/docs/reference/core-tag#let) [`valueChange=` attribute](https://next.markojs.com/docs/reference/core-tag#controllable-let) must be a function.",
+          "The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) [`valueChange=` attribute](https://markojs.com/docs/reference/core-tag#controllable-let) must be a function.",
         );
     }
 
@@ -170,8 +170,7 @@ export default {
   autocomplete: [
     {
       description: "Use to create a mutable binding.",
-      descriptionMoreURL:
-        "https://next.markojs.com/docs/reference/core-tag#let",
+      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#let",
     },
   ],
   types: runtimeInfo.name + "/tags/let.d.marko",

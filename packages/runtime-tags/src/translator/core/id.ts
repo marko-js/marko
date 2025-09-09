@@ -34,7 +34,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<id>` tag](https://next.markojs.com/docs/reference/core-tag#id) requires a [tag variable](https://next.markojs.com/docs/reference/language#tag-variables).",
+          "The [`<id>` tag](https://markojs.com/docs/reference/core-tag#id) requires a [tag variable](https://markojs.com/docs/reference/language#tag-variables).",
         );
     }
 
@@ -42,7 +42,7 @@ export default {
       throw tag
         .get("var")
         .buildCodeFrameError(
-          "The [`<id>` tag](https://next.markojs.com/docs/reference/core-tag#id) cannot be destructured.",
+          "The [`<id>` tag](https://markojs.com/docs/reference/core-tag#id) cannot be destructured.",
         );
     }
 
@@ -55,7 +55,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<id>` tag](https://next.markojs.com/docs/reference/core-tag#id) only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
+          "The [`<id>` tag](https://markojs.com/docs/reference/core-tag#id) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
         );
     }
 
@@ -111,7 +111,7 @@ export default {
       displayText: "id/<name>",
       description: "Use to create a unique identifier.",
       snippet: "id/${1:name}",
-      descriptionMoreURL: "https://next.markojs.com/docs/reference/core-tag#id",
+      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#id",
     },
   ],
   types: runtimeInfo.name + "/tags/id.d.marko",

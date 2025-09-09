@@ -30,7 +30,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<define>` tag](https://next.markojs.com/docs/reference/core-tag#define) requires a [tag variable](https://next.markojs.com/docs/reference/language#tag-variables).",
+          "The [`<define>` tag](https://markojs.com/docs/reference/core-tag#define) requires a [tag variable](https://markojs.com/docs/reference/language#tag-variables).",
         );
     }
 
@@ -103,8 +103,7 @@ export default {
     {
       description:
         "Use to create a constant object binding that can be rendered.",
-      descriptionMoreURL:
-        "https://next.markojs.com/docs/reference/core-tag#define",
+      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#define",
     },
   ],
   types: runtimeInfo.name + "/tags/define.d.marko",

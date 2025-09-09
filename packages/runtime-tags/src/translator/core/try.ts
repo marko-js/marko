@@ -72,7 +72,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<try>` tag](https://next.markojs.com/docs/reference/core-tag#try) requires [body content](https://next.markojs.com/docs/reference/language#tag-content).",
+          "The [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) requires [body content](https://markojs.com/docs/reference/language#tag-content).",
         );
     }
 
@@ -197,8 +197,7 @@ export default {
     {
       description:
         "Used to capture errors and display placeholders for nested content.",
-      descriptionMoreURL:
-        "https://next.markojs.com/docs/reference/core-tag#try",
+      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#try",
     },
   ],
   types: runtimeInfo.name + "/tags/try.d.marko",

@@ -125,7 +125,7 @@ export default {
         throw tag
           .get("var")
           .buildCodeFrameError(
-            "Tag variables on [native tags](https://next.markojs.com/docs/reference/native-tag) cannot be destructured.",
+            "Tag variables on [native tags](https://markojs.com/docs/reference/native-tag) cannot be destructured.",
           );
       }
 

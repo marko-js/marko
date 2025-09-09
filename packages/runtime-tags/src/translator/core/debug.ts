@@ -30,7 +30,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<debug>` tag](https://next.markojs.com/docs/reference/core-tag#debug) only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
+          "The [`<debug>` tag](https://markojs.com/docs/reference/core-tag#debug) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
         );
     }
   },
@@ -58,8 +58,7 @@ export default {
   autocomplete: [
     {
       description: "Debug on value change.",
-      descriptionMoreURL:
-        "https://next.markojs.com/docs/reference/core-tag#debug",
+      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#debug",
     },
   ],
   types: runtimeInfo.name + "/tags/debug.d.marko",

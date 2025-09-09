@@ -3,4 +3,4 @@
       1 | static const myTag = "div"
       2 |
     > 3 | <myTag/>
-        |  ^^^^^ Local variables must be in a [dynamic tag](https://next.markojs.com/docs/reference/language#dynamic-tags) unless they are PascalCase. Use `<${myTag}/>` or rename to `MyTag`.
+        |  ^^^^^ Local variables must be in a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags) unless they are PascalCase. Use `<${myTag}/>` or rename to `MyTag`.

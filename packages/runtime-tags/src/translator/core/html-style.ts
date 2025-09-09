@@ -479,7 +479,7 @@ export default {
       description:
         "Use instead of `<style>` to render a native tag directly, without processing by Marko.",
       descriptionMoreURL:
-        "https://next.markojs.com/docs/reference/core-tag#html-script--html-style",
+        "https://markojs.com/docs/reference/core-tag#html-script--html-style",
     },
   ],
 } as Tag;

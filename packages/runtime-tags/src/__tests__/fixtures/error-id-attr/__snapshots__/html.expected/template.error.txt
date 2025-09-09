@@ -1,5 +1,5 @@
 
     at packages/runtime-tags/src/__tests__/fixtures/error-id-attr/template.marko:1:2
     > 1 | <id/firstNameId x=1/>
-        |  ^^ The [`<id>` tag](https://next.markojs.com/docs/reference/core-tag#id) only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).
+        |  ^^ The [`<id>` tag](https://markojs.com/docs/reference/core-tag#id) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).
       2 |

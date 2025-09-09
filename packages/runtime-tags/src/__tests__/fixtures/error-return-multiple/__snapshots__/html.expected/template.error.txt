@@ -2,5 +2,5 @@
     at packages/runtime-tags/src/__tests__/fixtures/error-return-multiple/template.marko:2:2
       1 | <return=1/>
     > 2 | <return=2/>
-        |  ^^^^^^ Cannot have multiple [`<return>` tags](https://next.markojs.com/docs/reference/core-tag#return) for the template.
+        |  ^^^^^^ Cannot have multiple [`<return>` tags](https://markojs.com/docs/reference/core-tag#return) for the template.
       3 |
