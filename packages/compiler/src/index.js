@@ -4,9 +4,9 @@ import tsSyntaxPlugin from "@babel/plugin-syntax-typescript";
 import cjsPlugin from "@babel/plugin-transform-modules-commonjs";
 import tsTransformPlugin from "@babel/plugin-transform-typescript";
 import { DiagnosticType } from "@marko/compiler/babel-utils";
+import markoModules from "@marko/compiler/modules";
 import path from "path";
 
-import markoModules from "../modules";
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
 import * as taglib from "./taglib";

@@ -1,7 +1,7 @@
 "use strict";
 var nodePath = require("path");
 var lassoPackageRoot = require("lasso-package-root");
-var markoModules = require("../../../modules");
+var markoModules = require("@marko/compiler/modules");
 var taglibConfig = require("../config");
 var taglibLoader = require("../loader");
 var findCache = {};
