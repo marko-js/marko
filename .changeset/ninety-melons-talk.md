@@ -3,4 +3,4 @@
 "@marko/translator-interop-class-tags": patch
 ---
 
-Update ID tag types
+Update <id> and <let> tag types
