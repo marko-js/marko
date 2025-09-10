@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.54
+
+### Patch Changes
+
+- [#2820](https://github.com/marko-js/marko/pull/2820) [`f39c6da`](https://github.com/marko-js/marko/commit/f39c6da21ff8476130890e5482242acd2096e54a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve tags/class interop across async.
+
 ## 5.37.53
 
 ### Patch Changes
