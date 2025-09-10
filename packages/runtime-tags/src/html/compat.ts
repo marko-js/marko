@@ -134,19 +134,24 @@ export const compat = {
         renderer(normalizedInput);
       }
 
-      const asyncOut = classAPIOut.beginAsync();
-      (boundary.onNext = () => {
-        if (boundary.signal.aborted) {
-          asyncOut.error(boundary.signal.reason);
-          boundary.onNext = NOOP;
-        } else if (!boundary.count) {
-          completeChunks.push((head = head.consume()));
-          asyncOut.write(head.html);
-          asyncOut.script(head.scripts);
-          asyncOut.end();
-          head.html = head.scripts = "";
-        }
-      })();
+      const asyncOut = classAPIOut.beginAsync({ last: true, timeout: -1 });
+      classAPIOut.onLast((next: any) => {
+        (boundary.onNext = () => {
+          if (boundary.signal.aborted) {
+            asyncOut.error(boundary.signal.reason);
+            boundary.onNext = NOOP;
+          } else if (!boundary.count) {
+            boundary.onNext = NOOP;
+            head = head.consume();
+            asyncOut.write(head.html);
+            asyncOut.script(head.scripts);
+            asyncOut.end();
+            head.html = head.scripts = "";
+            completeChunks.push(head);
+            next();
+          }
+        })();
+      });
     });
   },
   registerRenderer(renderer: any, id: string) {

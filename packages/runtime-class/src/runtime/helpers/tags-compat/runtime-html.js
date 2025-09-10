@@ -13,11 +13,22 @@ exports.p = function (htmlCompat) {
   const writersByGlobal = new WeakMap();
   const isMarko6 = (fn) => htmlCompat.isTagsAPI(fn);
   const isMarko5 = (fn) => !isMarko6(fn);
-  const writeClassAPIResultToTagsAPI = (result) => {
-    const { writer } = result.out._state;
+  const writeClassAPIResultToTagsAPI = ({ out }) => {
+    const { writer } = out._state;
     htmlCompat.write(writer._content);
     htmlCompat.writeScript(writer._script);
     writer._content = writer._scripts = "";
+
+    if (out.___components) {
+      let writers = writersByGlobal.get(out.global);
+      if (!writers) {
+        writersByGlobal.set(
+          out.global,
+          (writers = { classAPI: [], tagsAPI: [] }),
+        );
+      }
+      ___addComponentsFromContext(out.___components, writers.classAPI);
+    }
   };
   const flushScripts = ($global, flushDefs) => {
     const writers = writersByGlobal.get($global);
@@ -158,11 +169,6 @@ exports.p = function (htmlCompat) {
       const out = defaultCreateOut($global);
       const branchId = htmlCompat.nextScopeId();
 
-      let writers = writersByGlobal.get($global);
-      if (!writers) {
-        writersByGlobal.set($global, (writers = { classAPI: [], tagsAPI: [] }));
-      }
-
       if (renderer5) {
         const componentsContext = ___getComponentsContext(out);
         const originalInput = input;
@@ -201,12 +207,6 @@ exports.p = function (htmlCompat) {
 
       let async;
       out.once("finish", (result) => {
-        if (result.out.___components) {
-          ___addComponentsFromContext(
-            result.out.___components,
-            writers.classAPI,
-          );
-        }
         if (!async) {
           async = false;
           writeClassAPIResultToTagsAPI(result);
