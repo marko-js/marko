@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.65
+
+### Patch Changes
+
+- [#2818](https://github.com/marko-js/marko/pull/2818) [`41c58d2`](https://github.com/marko-js/marko/commit/41c58d24bbbde24d0392ad315c6008193e8fd9d3) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Update <id> and <let> tag types
+
+- [#2817](https://github.com/marko-js/marko/pull/2817) [`e70f0c6`](https://github.com/marko-js/marko/commit/e70f0c69e5e42e5b29a61cbce2134ee27ca16b35) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Update error messages to markojs.com
+
 ## 6.0.64
 
 ### Patch Changes
