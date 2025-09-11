@@ -1,4 +1,4 @@
-// size: 19096 (min) 7317 (brotli)
+// size: 19249 (min) 7293 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -32,6 +32,12 @@ function forTo(to, from, step, cb) {
   let start = from || 0,
     delta = step || 1;
   for (let steps = (to - start) / delta, i = 0; i <= steps; i++)
+    cb(start + i * delta);
+}
+function forUntil(until, from, step, cb) {
+  let start = from || 0,
+    delta = step || 1;
+  for (let steps = (until - start) / delta, i = 0; i < steps; i++)
     cb(start + i * delta);
 }
 function stringifyClassObject(name, value) {
@@ -1383,6 +1389,14 @@ function _for_in(nodeAccessor, renderer) {
 function _for_to(nodeAccessor, renderer) {
   return loop(nodeAccessor, renderer, ([to, from, step, by = byFirstArg], cb) =>
     forTo(to, from, step, (v) => cb(by(v), [v])),
+  );
+}
+function _for_until(nodeAccessor, renderer) {
+  return loop(
+    nodeAccessor,
+    renderer,
+    ([until, from, step, by = byFirstArg], cb) =>
+      forUntil(until, from, step, (v) => cb(by(v), [v])),
   );
 }
 function loop(nodeAccessor, renderer, forEach) {

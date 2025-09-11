@@ -24,7 +24,15 @@ export {
   _unescaped,
 } from "./html/content";
 export { _content, _content_resume, _dynamic_tag } from "./html/dynamic-tag";
-export { forIn, forInBy, forOf, forOfBy, forTo, forToBy } from "./html/for";
+export {
+  forIn,
+  forInBy,
+  forOf,
+  forOfBy,
+  forStepBy,
+  forTo,
+  forUntil,
+} from "./html/for";
 export { _template } from "./html/template";
 export {
   _attr_content,
@@ -35,6 +43,7 @@ export {
   _for_in,
   _for_of,
   _for_to,
+  _for_until,
   _hoist,
   _html,
   _id,

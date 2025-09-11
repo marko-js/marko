@@ -1,4 +1,4 @@
-import { forIn, forOf, forTo } from "../common/for";
+import { forIn, forOf, forTo, forUntil } from "../common/for";
 import { normalizeDynamicRenderer } from "../common/helpers";
 import {
   type Accessor,
@@ -414,6 +414,14 @@ export function _for_to(nodeAccessor: Accessor, renderer: Renderer) {
     [to: number, from: number, step: number, by?: (v: number) => unknown]
   >(nodeAccessor, renderer, ([to, from, step, by = byFirstArg], cb) =>
     forTo(to, from, step, (v) => cb(by(v), [v])),
+  );
+}
+
+export function _for_until(nodeAccessor: Accessor, renderer: Renderer) {
+  return loop<
+    [until: number, from: number, step: number, by?: (v: number) => unknown]
+  >(nodeAccessor, renderer, ([until, from, step, by = byFirstArg], cb) =>
+    forUntil(until, from, step, (v) => cb(by(v), [v])),
   );
 }
 

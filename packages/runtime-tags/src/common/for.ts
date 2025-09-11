@@ -33,3 +33,16 @@ export function forTo(
     cb(start + i * delta);
   }
 }
+
+export function forUntil(
+  until: number,
+  from: number | Falsy,
+  step: number | Falsy,
+  cb: (index: number) => void,
+) {
+  const start = from || 0;
+  const delta = step || 1;
+  for (let steps = (until - start) / delta, i = 0; i < steps; i++) {
+    cb(start + i * delta);
+  }
+}
