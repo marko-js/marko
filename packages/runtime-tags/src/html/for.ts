@@ -1,4 +1,4 @@
-export { forIn, forOf, forTo } from "../common/for";
+export { forIn, forOf, forTo, forUntil } from "../common/for";
 
 export function forOfBy(by: unknown, item: any, index: unknown) {
   if (by) {
@@ -20,7 +20,7 @@ export function forInBy(by: unknown, name: string, value: unknown) {
   return name;
 }
 
-export function forToBy(by: unknown, index: number) {
+export function forStepBy(by: unknown, index: number) {
   if (by) {
     return (by as any)(index);
   }

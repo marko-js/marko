@@ -31,6 +31,7 @@ const pureDOMFunctions = new Set<string>([
   "_for_in",
   "_for_of",
   "_for_to",
+  "_for_until",
   "_let",
   "_const",
 ] satisfies (keyof typeof import("../../dom"))[]);

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
-import { forIn, forOf, forTo } from "../common/for";
+import { forIn, forOf, forTo, forUntil } from "../common/for";
 import { normalizeDynamicRenderer } from "../common/helpers";
 import {
   type $Global,
@@ -10,7 +10,7 @@ import {
   ResumeSymbol,
 } from "../common/types";
 import { attrAssignment } from "./attrs";
-import { forInBy, forOfBy, forToBy } from "./for";
+import { forInBy, forOfBy, forStepBy } from "./for";
 import { REORDER_RUNTIME_CODE, WALKER_RUNTIME_CODE } from "./inlined-runtimes";
 import {
   register as serializerRegister,
@@ -389,7 +389,7 @@ export function _for_to(
 
       withBranchId(branchId, () => {
         cb(i);
-        loopScopes.set(forToBy(by, i), writeScope(branchId, {}));
+        loopScopes.set(forStepBy(by, i), writeScope(branchId, {}));
       });
     });
 
@@ -400,6 +400,65 @@ export function _for_to(
     }
   } else {
     forTo(to, from, step, cb);
+  }
+
+  writeBranchEnd(
+    scopeId,
+    accessor,
+    resumeBranch,
+    resumeMarker,
+    parentEndTag,
+    singleNode,
+    singleNode ? flushBranchIds : flushBranchIds ? " " + flushBranchIds : "",
+  );
+}
+
+export function _for_until(
+  to: number,
+  from: number | Falsy,
+  step: number | Falsy,
+  cb: (index: number) => void,
+  by: Falsy | ((v: number) => unknown),
+  scopeId: number,
+  accessor: Accessor,
+  serializeBranch?: 0 | 1,
+  serializeMarker?: 0 | 1,
+  parentEndTag?: string | 0,
+  singleNode?: 1,
+): void {
+  const { state } = $chunk.boundary;
+  const resumeBranch = serializeBranch !== 0;
+  const resumeMarker = serializeMarker !== 0;
+  let flushBranchIds = "";
+
+  if (resumeBranch) {
+    const loopScopes = new Map<unknown, ScopeInternals>();
+    forUntil(to, from, step, (i) => {
+      const branchId = _peek_scope_id();
+      if (resumeMarker) {
+        if (singleNode) {
+          flushBranchIds = " " + branchId + flushBranchIds;
+        } else {
+          $chunk.writeHTML(
+            state.mark(ResumeSymbol.BranchStart, flushBranchIds),
+          );
+          flushBranchIds = branchId + "";
+        }
+      }
+
+      withBranchId(branchId, () => {
+        cb(i);
+        loopScopes.set(forStepBy(by, i), writeScope(branchId, {}));
+      });
+    });
+
+    if (loopScopes.size) {
+      writeScope(scopeId, {
+        [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
+      });
+    }
+  } else {
+    forUntil(to, from, step, cb);
   }
 
   writeBranchEnd(

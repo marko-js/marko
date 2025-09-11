@@ -1,5 +1,5 @@
 export { attrTag, attrTags } from "./common/attr-tag";
-export { forIn, forOf, forTo } from "./common/for";
+export { forIn, forOf, forTo, forUntil } from "./common/for";
 export { $signal, $signalReset } from "./dom/abort-signal";
 export { compat } from "./dom/compat";
 export {
@@ -8,6 +8,7 @@ export {
   _for_in,
   _for_of,
   _for_to,
+  _for_until,
   _if,
   _try,
 } from "./dom/control-flow";

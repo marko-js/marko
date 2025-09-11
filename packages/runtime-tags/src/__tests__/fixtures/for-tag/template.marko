@@ -1,7 +1,6 @@
 <const/arr=[1,2,3]/>
 <const/obj={ a: 1, b: 1, c: 1 }/>
 
-<!-- without keys -->
 <for|val, i| of=arr>
   <div>${i}: ${val}</div>
   <div/>
@@ -14,47 +13,58 @@
   <div/>
 </for>
 
-<for|i| from=0 to=10 step=2>
-  <div>${i}</div>
-  <div/>
-  <div/>
-</for>
-
-<!-- with keys -->
-<for|val, i| of=arr>
-  <div key=i>${i}: ${val}</div>
-  <div/>
-  <div key=`other-${i}`/>
-</for>
-
-<for|key, val| in=obj>
-  <div key=key>${key}: ${val}</div>
-  <div/>
-  <div key=`other-${key}`/>
-</for>
-
-<for|i| from=0 to=10 step=2>
-  <div key=i>${i}</div>
-  <div/>
-  <div key=`other-${i}`/>
-
-  <for|i| from=0 to=10 step=2>
-    <div key=i>${i}</div>
-    <div/>
-    <div key=`other-${i}`/>
+<div>
+  to 3:
+  <for|i| to=3>
+    ${i}
   </for>
-</for>
+</div>
 
-<for|i| from=10 to=0 step=-2>
-  <div key=i>${i}</div>
-  <div/>
-  <div key=`other-${i}`/>
-</for>
+<div>
+  until 3:
+  <for|i| until=3>
+    ${i}
+  </for>
+</div>
 
-<for from=0 to=10>
-  Hello
-</for>
+<div>
+  from 1 to 3:
+  <for|i| from=1 to=3>
+    ${i}
+  </for>
+</div>
 
-<for|| from=0 to=10>
-  Hello
-</for>
+<div>
+  from 1 until 3:
+  <for|i| from=1 until=3>
+    ${i}
+  </for>
+</div>
+
+<div>
+  from 1 to 5 step 2:
+  <for|i| from=1 to=5 step=2>
+    ${i}
+  </for>
+</div>
+
+<div>
+  from 1 until 5 step 2:
+  <for|i| from=1 until=5 step=2>
+    ${i}
+  </for>
+</div>
+
+<div>
+  from 4 to 2 step -0.6:
+  <for|i| from=4 to=2 step=-.6>
+    ${i}${" "}
+  </for>
+</div>
+
+<div>
+  from 4 until 2 step -0.6:
+  <for|i| from=4 until=2 step=-.6>
+    ${i}${" "}
+  </for>
+</div>

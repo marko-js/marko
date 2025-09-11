@@ -51,7 +51,7 @@ import * as writer from "../util/writer";
 import { getSerializeGuard } from "../visitors/program/html";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
 
-type ForType = "in" | "of" | "to";
+type ForType = "in" | "of" | "to" | "until";
 
 export default {
   analyze(tag) {
@@ -77,6 +77,9 @@ export default {
         break;
       case "to":
         allowAttrs = ["to", "from", "step"];
+        break;
+      case "until":
+        allowAttrs = ["until", "from", "step"];
         break;
       default:
         throw tag.buildCodeFrameError(
@@ -309,6 +312,14 @@ export default {
         },
       ],
     },
+    until: {
+      type: "number",
+      autocomplete: [
+        {
+          description: "Iterates up to the provided number (exclusive)",
+        },
+      ],
+    },
     from: {
       type: "number",
       autocomplete: [
@@ -322,7 +333,7 @@ export default {
       autocomplete: [
         {
           description:
-            "The amount to increment during each interation (with from/to)",
+            "The amount to increment during each iteration (with from/to/until)",
         },
       ],
     },
@@ -340,6 +351,10 @@ export default {
     },
     {
       snippet: "for|${1:index}| to=${2:number}",
+      descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#for",
+    },
+    {
+      snippet: "for|${1:index}| until=${2:number}",
       descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#for",
     },
   ],
@@ -367,6 +382,7 @@ export function getForType(tag: t.MarkoTag): ForType | undefined {
         case "of":
         case "in":
         case "to":
+        case "until":
           return attr.name;
       }
     }
@@ -381,6 +397,8 @@ function forTypeToRuntime(type: ForType) {
       return "forIn";
     case "to":
       return "forTo";
+    case "until":
+      return "forUntil";
   }
 }
 
@@ -392,6 +410,8 @@ function forTypeToHTMLResumeRuntime(type: ForType) {
       return "_for_in";
     case "to":
       return "_for_to";
+    case "until":
+      return "_for_until";
   }
 }
 
@@ -403,6 +423,8 @@ function forTypeToDOMRuntime(type: ForType) {
       return "_for_in";
     case "to":
       return "_for_to";
+    case "until":
+      return "_for_until";
   }
 }
 
@@ -418,6 +440,12 @@ function getBaseArgsInForTag(
     case "to":
       return [
         attrs.to,
+        attrs.from || t.numericLiteral(0),
+        attrs.step || t.numericLiteral(1),
+      ];
+    case "until":
+      return [
+        attrs.until,
         attrs.from || t.numericLiteral(0),
         attrs.step || t.numericLiteral(1),
       ];
