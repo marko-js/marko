@@ -1,8 +1,6 @@
 export * as types from "./babel-types";
 import * as babel from "@babel/core";
-import tsSyntaxPlugin from "@babel/plugin-syntax-typescript";
 import cjsPlugin from "@babel/plugin-transform-modules-commonjs";
-import tsTransformPlugin from "@babel/plugin-transform-typescript";
 import { DiagnosticType } from "@marko/compiler/babel-utils";
 import markoModules from "@marko/compiler/modules";
 import path from "path";
@@ -87,20 +85,7 @@ function loadBabelConfigSync(filename, config) {
 
 function getBaseBabelConfig(filename, { babelConfig, ...markoConfig }) {
   const isTranslated = isTranslatedOutput(markoConfig.output);
-  const requiredPlugins = [
-    [corePlugin, markoConfig],
-    [
-      markoConfig.stripTypes ? tsTransformPlugin : tsSyntaxPlugin,
-      {
-        isTSX: false,
-        allowNamespaces: true,
-        allowDeclareFields: true,
-        optimizeConstEnums: true,
-        onlyRemoveTypeImports: true,
-        disallowAmbiguousJSXLike: false,
-      },
-    ],
-  ];
+  const requiredPlugins = [[corePlugin, markoConfig]];
   const baseBabelConfig = {
     filenameRelative: filename
       ? path.relative(markoModules.cwd, filename)
