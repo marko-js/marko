@@ -1,5 +1,17 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.49
+
+### Patch Changes
+
+- [#2822](https://github.com/marko-js/marko/pull/2822) [`8449deb`](https://github.com/marko-js/marko/commit/8449debbef1c32fd1ffbb2dfe15929f0a1868652) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add for until tag
+
+- [#2823](https://github.com/marko-js/marko/pull/2823) [`58c2165`](https://github.com/marko-js/marko/commit/58c21653aa0a1d6e1db208c36a1a584b44ba2ff0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure type stripping runs before transform phase in compiler.
+
+- Updated dependencies [[`8449deb`](https://github.com/marko-js/marko/commit/8449debbef1c32fd1ffbb2dfe15929f0a1868652), [`58c2165`](https://github.com/marko-js/marko/commit/58c21653aa0a1d6e1db208c36a1a584b44ba2ff0)]:
+  - @marko/runtime-tags@6.0.67
+  - marko@5.37.55
+
 ## 0.2.48
 
 ### Patch Changes
