@@ -28,7 +28,7 @@ const $clickCount__closure = /* @__PURE__ */_._closure($try_content__clickCount)
 const $clickCount__script = _._script("__tests__/template.marko_0_clickCount", ($scope, {
   clickCount
 }) => _._on($scope["#button/0"], "click", function () {
-  $clickCount($scope, ++clickCount)
+  $clickCount($scope, ++clickCount);
 }));
 const $clickCount = /* @__PURE__ */_._let("clickCount/3", $scope => {
   $clickCount__closure($scope);

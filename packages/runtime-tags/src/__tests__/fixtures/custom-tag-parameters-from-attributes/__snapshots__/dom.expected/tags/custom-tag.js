@@ -16,7 +16,7 @@ const $input_content__OR__input_name__OR__x = /* @__PURE__ */_._or(8, $scope => 
 const $x__script = _._script("__tests__/tags/custom-tag.marko_0_x", ($scope, {
   x
 }) => _._on($scope["#button/0"], "click", function () {
-  $x($scope, ++x)
+  $x($scope, ++x);
 }));
 const $x = /* @__PURE__ */_._let("x/7", ($scope, x) => {
   _._text($scope["#text/1"], x);

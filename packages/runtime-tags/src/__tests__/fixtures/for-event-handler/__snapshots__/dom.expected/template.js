@@ -6,7 +6,7 @@ const $for_content__num__script = _._script("__tests__/template.marko_1_num", ($
     num
   }
 }) => _._on($scope["#button/0"], "click", function () {
-  $num($scope._, ++num)
+  $num($scope._, ++num);
 }));
 const $for_content__num = /* @__PURE__ */_._for_closure("num", "#text/0", $for_content__num__script);
 const $for_content__i = /* @__PURE__ */_._const("i", ($scope, i) => _._text($scope["#text/1"], i));

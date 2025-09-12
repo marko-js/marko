@@ -10,7 +10,7 @@ const $pattern2 = /* @__PURE__ */_._const("$pattern", ($scope, $pattern) => $a($
 const $count__script = _._script("__tests__/template.marko_0_count", ($scope, {
   count
 }) => _._on($scope["#button/0"], "click", function () {
-  $count($scope, ++count)
+  $count($scope, ++count);
 }));
 const $count = /* @__PURE__ */_._let("count/3", ($scope, count) => {
   $pattern2($scope, createWrapper(count));

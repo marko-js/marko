@@ -22,7 +22,7 @@ function $onClick($scope, {
   count
 } = $scope) {
   return function () {
-    $count($scope, ++count)
+    $count($scope, ++count);
   };
 }
 _._resume("__tests__/template.marko_0/onClick", $onClick);

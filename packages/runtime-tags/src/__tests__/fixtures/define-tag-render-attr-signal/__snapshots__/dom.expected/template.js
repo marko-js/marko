@@ -18,7 +18,7 @@ const $x__OR__MyTag = /* @__PURE__ */_._or(5, $scope => {
 const $x__script = _._script("__tests__/template.marko_0_x", ($scope, {
   x
 }) => _._on($scope["#button/1"], "click", function () {
-  $x($scope, ++x)
+  $x($scope, ++x);
 }));
 const $x = /* @__PURE__ */_._let("x/3", ($scope, x) => {
   _._text($scope["#text/2"], x);

@@ -22,7 +22,7 @@ const $if_content = /* @__PURE__ */_._content_branch(0, 0, $if_content__setup);
 const $x__script = _._script("__tests__/template.marko_0_x", ($scope, {
   x
 }) => _._on($scope["#button/1"], "click", function () {
-  $x($scope, ++x)
+  $x($scope, ++x);
 }));
 const $x = /* @__PURE__ */_._let("x/3", $scope => {
   $if_content__x($scope);

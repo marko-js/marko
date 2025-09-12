@@ -7,7 +7,7 @@ const $child_content__count__script = _._script("__tests__/template.marko_1_coun
     count
   }
 }) => _._on($scope["#button/0"], "click", function () {
-  $count($scope._, ++count)
+  $count($scope._, ++count);
 }));
 const $child_content__count = /* @__PURE__ */_._closure_get("count", ($scope, count) => {
   _._text($scope["#text/1"], count);

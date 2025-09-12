@@ -20,7 +20,7 @@ const $mult__closure = /* @__PURE__ */_._closure($item_content__mult);
 const $mult__script = _._script("__tests__/template.marko_0_mult", ($scope, {
   mult
 }) => _._on($scope["#button/1"], "click", function () {
-  $mult($scope, ++mult)
+  $mult($scope, ++mult);
 }));
 const $mult = /* @__PURE__ */_._let("mult/3", ($scope, mult) => {
   _._text($scope["#text/2"], mult);

@@ -8,7 +8,7 @@ const $mytag_content__count__script = _._script("__tests__/template.marko_1_coun
     count
   }
 }) => _._on($scope["#button/0"], "click", function () {
-  _._var_change($scope._["#childScope/0"], ++count, "count")
+  _._var_change($scope._["#childScope/0"], ++count, "count");
 }));
 const $mytag_content__count = /* @__PURE__ */_._closure_get("count", ($scope, count) => {
   _._text($scope["#text/1"], count);

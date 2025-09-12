@@ -5,8 +5,8 @@ const $a__OR__b__script = _._script("__tests__/template.marko_0_a_b", ($scope, {
   a,
   b
 }) => _._on($scope["#button/0"], "click", function () {
-  $a($scope, ++a)
-  $b($scope, ++b)
+  $a($scope, ++a);
+  $b($scope, ++b);
 }));
 const $a__OR__b = /* @__PURE__ */_._or(4, $scope => {
   let {

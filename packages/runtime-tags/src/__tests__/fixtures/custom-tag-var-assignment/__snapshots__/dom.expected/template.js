@@ -5,7 +5,7 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 const $count__script = _._script("__tests__/template.marko_0_count", ($scope, {
   count
 }) => _._on($scope["#button/2"], "click", function () {
-  _._var_change($scope["#childScope/0"], ++count, "count")
+  _._var_change($scope["#childScope/0"], ++count, "count");
 }));
 const $count = _._var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */_._const("count", ($scope, count) => {
   _._text($scope["#text/3"], count);

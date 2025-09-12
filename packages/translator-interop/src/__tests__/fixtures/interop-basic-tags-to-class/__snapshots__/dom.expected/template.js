@@ -8,7 +8,7 @@ const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/2");
 const $count__script = _._script("__tests__/template.marko_0_count", ($scope, {
   count
 }) => _._on($scope["#button/0"], "click", function () {
-  $count($scope, ++count)
+  $count($scope, ++count);
 }));
 const $count = /* @__PURE__ */_._let("count/3", ($scope, count) => {
   _._text($scope["#text/1"], count);

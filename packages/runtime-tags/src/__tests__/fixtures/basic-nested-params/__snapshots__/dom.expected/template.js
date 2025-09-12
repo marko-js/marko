@@ -20,7 +20,7 @@ const $child_content = _._content_resume("__tests__/template.marko_1_content", _
 const $x__script = _._script("__tests__/template.marko_0_x", ($scope, {
   x
 }) => _._on($scope["#button/0"], "click", function () {
-  $x($scope, ++x)
+  $x($scope, ++x);
 }));
 const $x = /* @__PURE__ */_._let("x/2", ($scope, x) => {
   _child_input_value($scope["#childScope/1"], x);

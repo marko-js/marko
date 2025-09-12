@@ -5,8 +5,8 @@ const $x__OR__y__script = _._script("__tests__/tags/custom-tag.marko_0_x_y", ($s
   x,
   y
 }) => _._on($scope["#button/0"], "click", function () {
-  $x($scope, ++x)
-  $y($scope, ++y)
+  $x($scope, ++x);
+  $y($scope, ++y);
 }));
 const $x__OR__y = /* @__PURE__ */_._or(9, $x__OR__y__script);
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/3", 0, 0, 1);

@@ -20,7 +20,7 @@ const $count__closure = /* @__PURE__ */_._closure($define_content__count);
 const $count__script = _._script("__tests__/template.marko_0_count", ($scope, {
   count
 }) => _._on($scope["#button/0"], "click", function () {
-  $count($scope, ++count)
+  $count($scope, ++count);
 }));
 const $count = /* @__PURE__ */_._let("count/1", $scope => {
   $count__OR__MyThing($scope);

@@ -16,7 +16,7 @@ function $increment($scope, {
   clickCount
 } = $scope) {
   return function () {
-    $clickCount($scope, ++clickCount)
+    $clickCount($scope, ++clickCount);
   };
 }
 _._resume("__tests__/template.marko_0/increment", $increment);

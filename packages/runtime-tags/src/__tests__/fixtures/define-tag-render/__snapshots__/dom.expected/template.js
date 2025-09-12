@@ -4,7 +4,7 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 const $define_content__y__script = _._script("__tests__/template.marko_1_y", ($scope, {
   y
 }) => _._on($scope["#button/2"], "click", function () {
-  $define_content__y($scope, ++y)
+  $define_content__y($scope, ++y);
 }));
 const $define_content__y = /* @__PURE__ */_._let("y/7", ($scope, y) => {
   _._text($scope["#text/1"], y);
