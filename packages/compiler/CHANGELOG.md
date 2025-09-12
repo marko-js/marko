@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.35
+
+### Patch Changes
+
+- [#2823](https://github.com/marko-js/marko/pull/2823) [`58c2165`](https://github.com/marko-js/marko/commit/58c21653aa0a1d6e1db208c36a1a584b44ba2ff0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure type stripping runs before transform phase in compiler.
+
 ## 5.39.34
 
 ### Patch Changes
