@@ -1,3 +1,4 @@
+import tsTransformPlugin from "@babel/plugin-transform-typescript";
 import traverse from "@babel/traverse";
 import path from "path";
 
@@ -18,6 +19,7 @@ import { visitor as migrate } from "./plugins/migrate";
 import { visitor as transform } from "./plugins/transform";
 
 const SOURCE_FILES = new WeakMap();
+let stripTypesVisitor;
 
 export default (api, markoOpts) => {
   api.assertVersion(7);
@@ -46,6 +48,17 @@ export default (api, markoOpts) => {
     );
   }
 
+  if (markoOpts.stripTypes) {
+    stripTypesVisitor ||= tsTransformPlugin(api, {
+      isTSX: false,
+      allowNamespaces: true,
+      allowDeclareFields: true,
+      optimizeConstEnums: true,
+      onlyRemoveTypeImports: true,
+      disallowAmbiguousJSXLike: false,
+    }).visitor;
+  }
+
   let curOpts;
 
   return {
@@ -60,6 +73,14 @@ export default (api, markoOpts) => {
         opts.parserOpts.allowUndeclaredExports =
         opts.parserOpts.allowNewTargetOutsideFunction =
           true;
+
+      opts.parserOpts.plugins.push("objectRestSpread", "classProperties", [
+        "typescript",
+        {
+          disallowAmbiguousJSXLike: false,
+          dts: false,
+        },
+      ]);
       curOpts = opts;
     },
     parserOverride(code) {
@@ -121,28 +142,6 @@ export default (api, markoOpts) => {
             undefined;
       }
     },
-    visitor:
-      markoOpts.stripTypes && isMarkoOutput(markoOpts.output)
-        ? {
-            MarkoClass(path) {
-              // We replace the MarkoClass with a regular class declaration so babel can strip it's types.
-              path.replaceWith(
-                t.classDeclaration(t.identifier(""), null, path.node.body),
-              );
-            },
-            ExportNamedDeclaration: {
-              exit(path) {
-                const { node } = path;
-                // The babel typescript plugin will add an empty export declaration
-                // if there are no other imports/exports in the file.
-                // This is not needed for Marko file outputs since there is always
-                // a default export.
-                if (!(node.declaration || node.specifiers.length))
-                  path.remove();
-              },
-            },
-          }
-        : undefined,
   };
 };
 
@@ -275,6 +274,24 @@ function getMarkoFile(code, fileOpts, markoOpts) {
       return file;
     }
 
+    file.___compileStage = "transform";
+    if (markoOpts.stripTypes) {
+      traverseAll(file, stripTypesVisitor);
+
+      for (const path of file.path.get("body")) {
+        if (
+          path.type === "ExportNamedDeclaration" &&
+          !(path.node.declaration || path.node.specifiers.length)
+        ) {
+          // The babel typescript plugin will add an empty export declaration
+          // if there are no other imports/exports in the file.
+          // This is not needed for Marko file outputs since there is always
+          // a default export.
+          path.remove();
+        }
+      }
+    }
+
     const rootTransformers = [];
     for (const id in taglibLookup.taglibsById) {
       for (const transformer of taglibLookup.taglibsById[id].transformers) {
@@ -286,7 +303,6 @@ function getMarkoFile(code, fileOpts, markoOpts) {
     if (translator.transform) {
       rootTransformers.push(translator.transform);
     }
-    file.___compileStage = "transform";
     traverseAll(file, rootTransformers);
 
     for (const taglibId in taglibLookup.taglibsById) {
@@ -378,7 +394,7 @@ function traverseAll(file, visitors) {
     program.node,
     mergeVisitors(visitors),
     program.scope,
-    (program.state = {}),
+    (program.state = { file }),
     program,
     true,
   );

@@ -94,7 +94,7 @@ const MarkoDefinitions = {
   },
 
   MarkoClass: {
-    aliases: ["Marko", "Statement"],
+    aliases: ["Marko", "Statement", "Class"],
     builder: ["body"],
     visitor: ["body"],
     fields: {
