@@ -13,7 +13,7 @@ const $x__script = _._script("__tests__/template.marko_0_x", ($scope, {
     }
   });
   _._on($scope["#button/0"], "click", function () {
-    $x($scope, ++x)
+    $x($scope, ++x);
   });
 });
 const $x = /* @__PURE__ */_._let("x/1", $x__script);

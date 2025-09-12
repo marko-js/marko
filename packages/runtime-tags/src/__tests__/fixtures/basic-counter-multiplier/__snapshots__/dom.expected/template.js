@@ -12,7 +12,7 @@ const $count__OR__multiplier = /* @__PURE__ */_._or(6, $scope => {
 const $count__script = _._script("__tests__/template.marko_0_count", ($scope, {
   count
 }) => _._on($scope["#button/2"], "click", function () {
-  $count($scope, ++count)
+  $count($scope, ++count);
 }));
 const $count = /* @__PURE__ */_._let("count/4", $scope => {
   $count__OR__multiplier($scope);
@@ -21,7 +21,7 @@ const $count = /* @__PURE__ */_._let("count/4", $scope => {
 const $multiplier__script = _._script("__tests__/template.marko_0_multiplier", ($scope, {
   multiplier
 }) => _._on($scope["#button/0"], "click", function () {
-  $multiplier($scope, ++multiplier)
+  $multiplier($scope, ++multiplier);
 }));
 const $multiplier = /* @__PURE__ */_._let("multiplier/5", ($scope, multiplier) => {
   _._text($scope["#text/1"], multiplier);

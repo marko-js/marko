@@ -1348,7 +1348,8 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
         node.expression.type === "SequenceExpression" &&
         updateExpressions.delete(node.expression)
       ) {
-        return node.expression.expressions[0];
+        node.expression = node.expression.expressions[0];
+        return node;
       }
       break;
     }

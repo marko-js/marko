@@ -12,7 +12,7 @@ const $input_content__OR__count = /* @__PURE__ */_._or(7, $scope => {
 const $count__script = _._script("__tests__/components/tags-layout.marko_0_count", ($scope, {
   count
 }) => _._on($scope["#button/0"], "click", function () {
-  $count($scope, ++count)
+  $count($scope, ++count);
 }));
 const $count = /* @__PURE__ */_._let("count/6", ($scope, count) => {
   _._text($scope["#text/1"], count);

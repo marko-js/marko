@@ -9,7 +9,7 @@ const $if_content__clickCount__script = _._script("__tests__/template.marko_1_cl
     clickCount
   }
 }) => _._on($scope["#button/0"], "click", function () {
-  $clickCount($scope._, ++clickCount)
+  $clickCount($scope._, ++clickCount);
 }));
 const $if_content__clickCount = /* @__PURE__ */_._if_closure("clickCount", "#text/0", 0, ($scope, clickCount) => {
   _._text($scope["#text/1"], clickCount);

@@ -5,7 +5,7 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 const $state__script = _._script("__tests__/tags/child.marko_0_state", ($scope, {
   state
 }) => _._on($scope["#button/0"], "click", function () {
-  $state($scope, ++state)
+  $state($scope, ++state);
 }));
 const $state = /* @__PURE__ */_._let("state/11", ($scope, state) => {
   _._text($scope["#text/2"], state);
@@ -27,7 +27,7 @@ const $input_valueChange = /* @__PURE__ */_._const("input_valueChange", $input_v
 const $otherState__script = _._script("__tests__/tags/child.marko_0_otherState", ($scope, {
   otherState
 }) => _._on($scope["#button/3"], "click", function () {
-  $otherState($scope, ++otherState)
+  $otherState($scope, ++otherState);
 }));
 const $otherState = /* @__PURE__ */_._let("otherState/12", ($scope, otherState) => {
   _._text($scope["#text/5"], otherState);

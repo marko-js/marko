@@ -1,0 +1,10 @@
+<let/x=1>
+<let/direction>
+
+<button.up onClick() { direction = "up" }>up</button>
+<button.down onClick() { direction = "down" }>down</button>
+
+<button.change onClick() {
+  if (direction === "up") x++;
+  else if (direction === "down") x--;
+}>${x}</button>

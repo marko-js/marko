@@ -19,7 +19,7 @@ const $classlayout_content__multiplier__script = _._script("__tests__/template.m
     multiplier
   }
 }) => _._on($scope["#button/1"], "click", function () {
-  $multiplier($scope._, ++multiplier)
+  $multiplier($scope._, ++multiplier);
 }));
 const $classlayout_content__multiplier = /* @__PURE__ */_._closure_get("multiplier", ($scope, multiplier) => {
   _._text($scope["#text/2"], multiplier);

@@ -6,7 +6,7 @@ const $clickCount__script = _._script("__tests__/template.marko_0_clickCount", (
 }) => {
   document.getElementById("button").textContent = clickCount;
   _._on($scope["#button/0"], "click", function () {
-    $clickCount($scope, ++clickCount)
+    $clickCount($scope, ++clickCount);
   });
 });
 const $clickCount = /* @__PURE__ */_._let("clickCount/1", $clickCount__script);

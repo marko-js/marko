@@ -11,7 +11,7 @@ const $input__OR__count = /* @__PURE__ */_._or(5, $scope => {
 const $count__script = _._script("__tests__/tags/counter.marko_0_count", ($scope, {
   count
 }) => _._on($scope["#button/0"], "click", function () {
-  $count($scope, ++count)
+  $count($scope, ++count);
 }));
 const $count = /* @__PURE__ */_._let("count/4", $scope => {
   $input__OR__count($scope);

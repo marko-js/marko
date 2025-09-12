@@ -5,7 +5,7 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 const $count__script = _._script("__tests__/tags/2counters.marko_0_count1", ($scope, {
   count1
 }) => _._on($scope["#button/0"], "click", function () {
-  $count($scope, ++count1)
+  $count($scope, ++count1);
 }));
 const $count = /* @__PURE__ */_._let("count1/12", ($scope, count1) => {
   _._text($scope["#text/1"], count1);
@@ -23,7 +23,7 @@ export const $input_count1Change = /* @__PURE__ */_._const("input_count1Change",
 const $count2__script = _._script("__tests__/tags/2counters.marko_0_count2", ($scope, {
   count2
 }) => _._on($scope["#button/2"], "click", function () {
-  $count2($scope, ++count2)
+  $count2($scope, ++count2);
 }));
 const $count2 = /* @__PURE__ */_._let("count2/13", ($scope, count2) => {
   _._text($scope["#text/3"], count2);
