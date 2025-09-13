@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.69
+
+### Patch Changes
+
+- [#2827](https://github.com/marko-js/marko/pull/2827) [`f3daa1d`](https://github.com/marko-js/marko/commit/f3daa1da10036c1e76456a5498266be65328444b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix style tag var hoisting in ssr
+
 ## 6.0.68
 
 ### Patch Changes
