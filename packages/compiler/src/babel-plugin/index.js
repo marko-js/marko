@@ -276,18 +276,43 @@ function getMarkoFile(code, fileOpts, markoOpts) {
 
     file.___compileStage = "transform";
     if (markoOpts.stripTypes) {
+      const importScriptlets = new Map();
+      for (const path of file.path.get("body")) {
+        if (path.type === "MarkoScriptlet" && path.node.static) {
+          for (const stmt of path.get("body")) {
+            if (stmt.isImportDeclaration()) {
+              // Hoist import declarations from scriptlets
+              // temporarily so that they will be processed by
+              // babel typescript transform.
+              const importNode = stmt.node;
+              importScriptlets.set(importNode, path.node);
+              stmt.remove();
+              path.insertBefore(importNode);
+            }
+          }
+        }
+      }
+
       traverseAll(file, stripTypesVisitor);
 
       for (const path of file.path.get("body")) {
-        if (
-          path.type === "ExportNamedDeclaration" &&
-          !(path.node.declaration || path.node.specifiers.length)
-        ) {
-          // The babel typescript plugin will add an empty export declaration
-          // if there are no other imports/exports in the file.
-          // This is not needed for Marko file outputs since there is always
-          // a default export.
-          path.remove();
+        if (path.type === "ExportNamedDeclaration") {
+          if (!(path.node.declaration || path.node.specifiers.length)) {
+            // The babel typescript plugin will add an empty export declaration
+            // if there are no other imports/exports in the file.
+            // This is not needed for Marko file outputs since there is always
+            // a default export.
+            path.remove();
+          }
+        } else if (path.isImportDeclaration()) {
+          const importNode = path.node;
+          const scriptlet = importScriptlets.get(importNode);
+          if (scriptlet) {
+            path.remove();
+            // Add back imports from scriptlets that were
+            // hoisted for the babel typescript transform.
+            scriptlet.body.unshift(importNode);
+          }
         }
       }
     }
