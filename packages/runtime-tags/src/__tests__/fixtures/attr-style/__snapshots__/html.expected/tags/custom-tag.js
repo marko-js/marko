@@ -13,7 +13,7 @@ export default _._template("__tests__/tags/custom-tag.marko", (input, $serialize
       }, "__tests__/tags/custom-tag.marko", "3:2");
       return 0;
     }
-  }, $scope0_id, "#text/1", _._serialize_guard($serialize, /* input.test,input.test.style,input.test.content */2), _._serialize_guard($serialize, /* input.test */4), 0, 1);
+  }, $scope0_id, "#text/1", _._serialize_guard($serialize, /* input.test,input.test.style,input.test.content */2), _._serialize_guard($serialize, /* input.test */4), _._serialize_guard($serialize, /* input.test */4), 0, 1);
   _._serialize_guard($serialize, /* input.style,input.test */0) && _._scope($scope0_id, {
     input_test_style: _._serialize_if($serialize, /* input.test */4) && input.test?.style,
     input_test_content: _._serialize_if($serialize, /* input.test */4) && input.test?.content

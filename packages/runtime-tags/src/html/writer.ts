@@ -248,15 +248,15 @@ export function _for_of(
   accessor: Accessor,
   serializeBranch?: 0 | 1,
   serializeMarker?: 0 | 1,
+  serializeStateful?: 0 | 1,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
   const { state } = $chunk.boundary;
-  const resumeBranch = serializeBranch !== 0;
   const resumeMarker = serializeMarker !== 0;
   let flushBranchIds = "";
 
-  if (resumeBranch) {
+  if (serializeBranch !== 0) {
     const loopScopes = new Map<unknown, ScopeInternals>();
     forOf(list, (item, index) => {
       const branchId = _peek_scope_id();
@@ -289,7 +289,7 @@ export function _for_of(
   writeBranchEnd(
     scopeId,
     accessor,
-    resumeBranch,
+    serializeStateful,
     resumeMarker,
     parentEndTag,
     singleNode,
@@ -305,15 +305,15 @@ export function _for_in(
   accessor: Accessor,
   serializeBranch?: 0 | 1,
   serializeMarker?: 0 | 1,
+  serializeStateful?: 0 | 1,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
   const { state } = $chunk.boundary;
-  const resumeBranch = serializeBranch !== 0;
   const resumeMarker = serializeMarker !== 0;
   let flushBranchIds = "";
 
-  if (resumeBranch) {
+  if (serializeBranch !== 0) {
     const loopScopes = new Map<unknown, ScopeInternals>();
     forIn(obj, (key, value) => {
       const branchId = _peek_scope_id();
@@ -346,7 +346,7 @@ export function _for_in(
   writeBranchEnd(
     scopeId,
     accessor,
-    resumeBranch,
+    serializeStateful,
     resumeMarker,
     parentEndTag,
     singleNode,
@@ -364,15 +364,15 @@ export function _for_to(
   accessor: Accessor,
   serializeBranch?: 0 | 1,
   serializeMarker?: 0 | 1,
+  serializeStateful?: 0 | 1,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
   const { state } = $chunk.boundary;
-  const resumeBranch = serializeBranch !== 0;
   const resumeMarker = serializeMarker !== 0;
   let flushBranchIds = "";
 
-  if (resumeBranch) {
+  if (serializeBranch !== 0) {
     const loopScopes = new Map<unknown, ScopeInternals>();
     forTo(to, from, step, (i) => {
       const branchId = _peek_scope_id();
@@ -405,7 +405,7 @@ export function _for_to(
   writeBranchEnd(
     scopeId,
     accessor,
-    resumeBranch,
+    serializeStateful,
     resumeMarker,
     parentEndTag,
     singleNode,
@@ -423,15 +423,15 @@ export function _for_until(
   accessor: Accessor,
   serializeBranch?: 0 | 1,
   serializeMarker?: 0 | 1,
+  serializeStateful?: 0 | 1,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
   const { state } = $chunk.boundary;
-  const resumeBranch = serializeBranch !== 0;
   const resumeMarker = serializeMarker !== 0;
   let flushBranchIds = "";
 
-  if (resumeBranch) {
+  if (serializeBranch !== 0) {
     const loopScopes = new Map<unknown, ScopeInternals>();
     forUntil(to, from, step, (i) => {
       const branchId = _peek_scope_id();
@@ -464,7 +464,7 @@ export function _for_until(
   writeBranchEnd(
     scopeId,
     accessor,
-    resumeBranch,
+    serializeStateful,
     resumeMarker,
     parentEndTag,
     singleNode,
@@ -478,6 +478,7 @@ export function _if(
   accessor: Accessor,
   serializeBranch?: 0 | 1,
   serializeMarker?: 0 | 1,
+  serializeStateful?: 0 | 1,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ) {
@@ -504,7 +505,7 @@ export function _if(
   writeBranchEnd(
     scopeId,
     accessor,
-    resumeBranch,
+    serializeStateful,
     resumeMarker,
     parentEndTag,
     singleNode,
@@ -515,7 +516,7 @@ export function _if(
 function writeBranchEnd(
   scopeId: number,
   accessor: Accessor,
-  resumeBranch: boolean,
+  serializeStateful: undefined | 0 | 1,
   resumeMarker: boolean,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
@@ -523,7 +524,7 @@ function writeBranchEnd(
 ) {
   const endTag = parentEndTag || "";
   if (resumeMarker) {
-    if (!parentEndTag || resumeBranch) {
+    if (!parentEndTag || serializeStateful !== 0) {
       const { state } = $chunk.boundary;
       const mark = singleNode
         ? state.mark(

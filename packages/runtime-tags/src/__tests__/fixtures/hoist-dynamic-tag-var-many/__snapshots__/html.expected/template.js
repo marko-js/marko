@@ -41,10 +41,10 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "26:4", {
         setHtml3: "27:20"
       });
-    }, 0, $scope3_id, "#ul/0", 1, 0);
+    }, 0, $scope3_id, "#ul/0", 1, 0, 0);
     _._html("</ul>");
     _._scope($scope3_id, {}, "__tests__/template.marko", "24:2");
-  }, 0, $scope0_id, "#text/2", 1, 0, 0, 1);
+  }, 0, $scope0_id, "#text/2", 1, 0, /* state: to */1, 0, 1);
   _._script($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml3");
   _._script($scope0_id, "__tests__/template.marko_0");
   _._scope($scope0_id, {

@@ -14,7 +14,7 @@ export default _._template("__tests__/tags/hello/index.marko", (input, $serializ
     }, "__tests__/tags/hello/index.marko", "1:1", {
       item: "1:5"
     });
-  }, 0, $scope0_id, "#text/0", _._serialize_guard($serialize, /* input.list.item */1), _._serialize_guard($serialize, /* input.list.item */1), 0, 1);
+  }, 0, $scope0_id, "#text/0", _._serialize_guard($serialize, /* input.list.item */1), _._serialize_guard($serialize, /* input.list.item */1), _._serialize_guard($serialize, /* input.list.item,input.col */0), 0, 1);
   _._for_of(input.col, col => {
     const $scope2_id = _._scope_id();
     _._html("<div class=col");
@@ -35,13 +35,13 @@ export default _._template("__tests__/tags/hello/index.marko", (input, $serializ
       }, "__tests__/tags/hello/index.marko", "7:3", {
         row: "7:7"
       });
-    }, 0, $scope2_id, "#text/1", _._serialize_guard($serialize, /* input.col */2), _._serialize_guard($serialize, /* input.col */2), 0, 1);
+    }, 0, $scope2_id, "#text/1", _._serialize_guard($serialize, /* input.col */2), _._serialize_guard($serialize, /* input.col */2), _._serialize_guard($serialize, /* input.col */2), 0, 1);
     _._script($scope2_id, "__tests__/tags/hello/index.marko_2_col");
     _._scope($scope2_id, {
       col
     }, "__tests__/tags/hello/index.marko", "5:1", {
       col: "5:5"
     });
-  }, 0, $scope0_id, "#text/1", _._serialize_guard($serialize, /* input.col */2), _._serialize_guard($serialize, /* input.col */2));
+  }, 0, $scope0_id, "#text/1", _._serialize_guard($serialize, /* input.col */2), _._serialize_guard($serialize, /* input.col */2), _._serialize_guard($serialize, /* input.list.item,input.col */0));
   _._serialize_guard($serialize, /* input.list.item,input.col */0) && _._scope($scope0_id, {}, "__tests__/tags/hello/index.marko", 0);
 });

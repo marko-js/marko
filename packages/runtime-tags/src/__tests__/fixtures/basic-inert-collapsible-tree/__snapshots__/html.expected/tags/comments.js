@@ -21,7 +21,7 @@ const $content = (input, $serialize) => {
         }, "__tests__/tags/comments.marko", "10:8");
         return 0;
       }
-    }, $scope1_id, "#text/4", _._serialize_guard($serialize, /* input.comments,input.path */0), _._serialize_guard($serialize, /* input.comments */1), 0, 1);
+    }, $scope1_id, "#text/4", _._serialize_guard($serialize, /* input.comments,input.path */0), _._serialize_guard($serialize, /* input.comments */1), _._serialize_guard($serialize, /* input.comments */1), 0, 1);
     _._html(`</li>${_._el_resume($scope1_id, "#li/0")}`);
     _._script($scope1_id, "__tests__/tags/comments.marko_1_open");
     _._scope($scope1_id, {
@@ -36,7 +36,7 @@ const $content = (input, $serialize) => {
       id: "3:12",
       open: "4:10"
     });
-  }, 0, $scope0_id, "#ul/0", _._serialize_guard($serialize, /* input.comments,input.path */0), _._serialize_guard($serialize, /* input.comments */1), "</ul>", 1);
+  }, 0, $scope0_id, "#ul/0", _._serialize_guard($serialize, /* input.comments,input.path */0), _._serialize_guard($serialize, /* input.comments */1), _._serialize_guard($serialize, /* input.comments */1), "</ul>", 1);
   _._serialize_guard($serialize, /* input.comments */1) && _._scope($scope0_id, {
     input_path: input.path
   }, "__tests__/tags/comments.marko", 0, {

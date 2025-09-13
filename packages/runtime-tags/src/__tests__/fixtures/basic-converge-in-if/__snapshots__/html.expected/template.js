@@ -12,7 +12,7 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "3:2");
       return 0;
     }
-  }, $scope0_id, "#text/0", 1, 0, 0, 1);
+  }, $scope0_id, "#text/0", 1, 0, 0, 0, 1);
   _._scope($scope0_id, {
     a,
     b

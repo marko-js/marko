@@ -18,7 +18,7 @@ export default _._template("__tests__/template.marko", input => {
     _._scope($scope1_id, {
       "#childScope/0": _._existing_scope($childScope)
     }, "__tests__/template.marko", "7:2");
-  }, 0, $scope0_id, "#text/2", /* state: items */1, /* state: items */1, 0, 1);
+  }, 0, $scope0_id, "#text/2", /* state: items */1, /* state: items */1, /* state: items */1, 0, 1);
   _._script($scope0_id, "__tests__/template.marko_0_items");
   _._scope($scope0_id, {
     items,

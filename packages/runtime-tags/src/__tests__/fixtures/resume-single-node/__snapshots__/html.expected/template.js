@@ -13,7 +13,7 @@ export default _._template("__tests__/template.marko", input => {
         _._scope($scope2_id, {}, "__tests__/template.marko", "6:4");
         return 0;
       }
-    }, $scope1_id, "#text/0", 1, /* state: items.length */1, 0, 1);
+    }, $scope1_id, "#text/0", 1, /* state: items.length */1, /* state: items.length */1, 0, 1);
     _._scope($scope1_id, {
       _: _._scope_with_id($scope0_id)
     }, "__tests__/template.marko", "4:2");
