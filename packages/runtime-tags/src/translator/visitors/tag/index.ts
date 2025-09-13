@@ -279,6 +279,8 @@ function getChangeHandler(
       markoRoot.unshiftContainer("body", changeHandlerConst);
     }
 
+    markoRoot.scope.crawl();
+
     return t.markoAttribute(
       changeAttrName,
       withPreviousLocation(t.identifier(changeHandlerId), attr.value),
