@@ -35,6 +35,7 @@ import {
   startSection,
 } from "../util/sections";
 import {
+  addSectionSerializeReasonExpr,
   getBindingSerializeReason,
   getSectionSerializeReason,
   type SerializeReasons,
@@ -55,6 +56,7 @@ import {
 } from "../visitors/program/html";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
 
+const kStatefulReason = Symbol("<if> stateful reason");
 const BRANCHES_LOOKUP = new WeakMap<
   t.NodePath<t.MarkoTag>,
   [tag: t.NodePath<t.MarkoTag>, bodySection: Section | undefined][]
@@ -100,6 +102,7 @@ export const IfTag = {
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       ifTagExtra.singleNodeOptimization = singleNodeOptimization;
+      addSectionSerializeReasonExpr(ifTagSection, ifTagExtra, kStatefulReason);
     }
   },
   translate: translateByTarget({
@@ -205,9 +208,13 @@ export const IfTag = {
               getParentTag(ifTag)!.node.extra![kSkipEndTag] = true;
             }
 
+            const statefulSerializeArg = getSerializeGuard(
+              getSectionSerializeReason(ifTagSection, kStatefulReason),
+              !(skipParentEnd || singleNodeOptimization),
+            );
             const markerSerializeArg = getSerializeGuard(
               markerSerializeReason,
-              !(skipParentEnd || singleNodeOptimization),
+              !statefulSerializeArg,
             );
             const cbNode = t.arrowFunctionExpression(
               [],
@@ -225,6 +232,7 @@ export const IfTag = {
                   !markerSerializeArg,
                 ),
                 markerSerializeArg,
+                statefulSerializeArg,
                 skipParentEnd
                   ? t.stringLiteral(`</${onlyChildParentTagName}>`)
                   : singleNodeOptimization

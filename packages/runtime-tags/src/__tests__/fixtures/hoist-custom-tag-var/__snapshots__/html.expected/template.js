@@ -18,13 +18,13 @@ export default _._template("__tests__/template.marko", (input, $serialize) => {
           });
           return 0;
         }
-      }, $scope1_id, "#text/0", 1, _._serialize_guard($serialize, /* input.show */0), 0, 1);
+      }, $scope1_id, "#text/0", 1, _._serialize_guard($serialize, /* input.show */0), _._serialize_guard($serialize, /* input.show */0), 0, 1);
       _._scope($scope1_id, {
         _: _._serialize_if($serialize, /* input.show */0) && _._scope_with_id($scope0_id)
       }, "__tests__/template.marko", "1:2");
       return 0;
     }
-  }, $scope0_id, "#text/0", 1, _._serialize_guard($serialize, /* input.show */0));
+  }, $scope0_id, "#text/0", 1, _._serialize_guard($serialize, /* input.show */0), _._serialize_guard($serialize, /* input.show */0));
   const $childScope = _._peek_scope_id();
   _thing({
     value: $hoisted_setHtml
@@ -40,7 +40,7 @@ export default _._template("__tests__/template.marko", (input, $serialize) => {
       });
       return 0;
     }
-  }, $scope0_id, "#text/2", 1, 0, 0, 1);
+  }, $scope0_id, "#text/2", 1, 0, _._serialize_guard($serialize, /* input.show */0), 0, 1);
   _._if(() => {
     if (true) {
       const $scope4_id = _._scope_id();
@@ -52,7 +52,7 @@ export default _._template("__tests__/template.marko", (input, $serialize) => {
       });
       return 0;
     }
-  }, $scope0_id, "#text/3", 1, 0, 0, 1);
+  }, $scope0_id, "#text/3", 1, 0, _._serialize_guard($serialize, /* input.show */0), 0, 1);
   if (true) {
     const $scope5_id = _._scope_id();
     _._script($scope5_id, "__tests__/template.marko_5");

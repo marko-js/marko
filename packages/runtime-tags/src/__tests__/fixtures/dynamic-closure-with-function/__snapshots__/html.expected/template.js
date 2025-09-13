@@ -19,7 +19,7 @@ export default _._template("__tests__/template.marko", (input, $serialize) => {
           }, "__tests__/template.marko", "6:3"));
           return 0;
         }
-      }, $scope1_id, "#text/0", _._serialize_guard($serialize, /* input.b */5), _._serialize_guard($serialize, /* input.b */5), 0, 1);
+      }, $scope1_id, "#text/0", _._serialize_guard($serialize, /* input.b */5), _._serialize_guard($serialize, /* input.b */5), _._serialize_guard($serialize, /* input.b */5), 0, 1);
       _._serialize_guard($serialize, /* input.c,input.b */0) && _._scope($scope1_id, {
         foo,
         _: _._scope_with_id($scope0_id)
@@ -28,7 +28,7 @@ export default _._template("__tests__/template.marko", (input, $serialize) => {
       });
       return 0;
     }
-  }, $scope0_id, "#text/0", _._serialize_guard($serialize, /* input.a,input.b */1), _._serialize_guard($serialize, /* input.a */4));
+  }, $scope0_id, "#text/0", _._serialize_guard($serialize, /* input.a,input.b */1), _._serialize_guard($serialize, /* input.a */4), _._serialize_guard($serialize, /* input.a */4));
   _._serialize_guard($serialize, /* input.c,input.a,input.b */2) && _._scope($scope0_id, {
     input_c: input.c,
     input_b: _._serialize_if($serialize, /* input.a */4) && input.b,

@@ -10,7 +10,7 @@ export default _._template("__tests__/template.marko", input => {
       _._scope($scope1_id, {}, "__tests__/template.marko", "4:6");
       return 0;
     }
-  }, $scope0_id, "#tbody/0", 1, /* state: show */1, "</tbody>", 1);
+  }, $scope0_id, "#tbody/0", 1, /* state: show */1, /* state: show */1, "</tbody>", 1);
   _._html(`</table><button>Toggle</button>${_._el_resume($scope0_id, "#button/1")}`);
   _._script($scope0_id, "__tests__/template.marko_0_show");
   _._scope($scope0_id, {

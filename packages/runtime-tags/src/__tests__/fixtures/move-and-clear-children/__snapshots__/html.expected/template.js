@@ -11,6 +11,6 @@ export default _._template("__tests__/template.marko", (input, $serialize) => {
     _._serialize_guard($serialize, /* children */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "3:4");
   }, function (c) {
     return c.id;
-  }, $scope0_id, "#div/0", _._serialize_guard($serialize, /* children */0), _._serialize_guard($serialize, /* children */0), "</div>", 1);
+  }, $scope0_id, "#div/0", _._serialize_guard($serialize, /* children */0), _._serialize_guard($serialize, /* children */0), _._serialize_guard($serialize, /* children */0), "</div>", 1);
   _._serialize_guard($serialize, /* children */0) && _._scope($scope0_id, {}, "__tests__/template.marko", 0);
 });

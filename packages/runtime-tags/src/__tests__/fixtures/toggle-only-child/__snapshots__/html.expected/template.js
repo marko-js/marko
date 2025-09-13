@@ -12,7 +12,7 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "3:4");
       return 0;
     }
-  }, $scope0_id, "#div/0", 1, /* state: value */1, "</div>", 1);
+  }, $scope0_id, "#div/0", 1, /* state: value */1, /* state: value */1, "</div>", 1);
   _._html(`<input${_._attr_input_value($scope0_id, "#input/1", value, _._resume(_new_value => {
     value = _new_value;
   }, "__tests__/template.marko_0/valueChange", $scope0_id))}>${_._el_resume($scope0_id, "#input/1")}`);

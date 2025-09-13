@@ -18,7 +18,7 @@ export default _._template("__tests__/template.marko", input => {
       _._scope($scope1_id, {}, "__tests__/template.marko", "6:4");
       return 0;
     }
-  }, $scope0_id, "#div/0", 1, /* state: show */1, "</div>", 1);
+  }, $scope0_id, "#div/0", 1, /* state: show */1, /* state: show */1, "</div>", 1);
   _._scope($scope0_id, {
     onCount
   }, "__tests__/template.marko", 0, {

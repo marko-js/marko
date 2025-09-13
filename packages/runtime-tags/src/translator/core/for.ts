@@ -36,6 +36,7 @@ import {
   startSection,
 } from "../util/sections";
 import {
+  addSectionSerializeReasonExpr,
   getBindingSerializeReason,
   getSectionSerializeReason,
 } from "../util/serialize-reasons";
@@ -52,6 +53,7 @@ import { getSerializeGuard } from "../visitors/program/html";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
 
 type ForType = "in" | "of" | "to" | "until";
+const kStatefulReason = Symbol("<for> stateful reason");
 
 export default {
   analyze(tag) {
@@ -108,6 +110,9 @@ export default {
       tag.node,
       getAllTagReferenceNodes(tag.node),
     );
+
+    addSectionSerializeReasonExpr(tagSection, tagExtra, kStatefulReason);
+
     if (paramsBinding) {
       setBindingDownstream(paramsBinding, tagExtra);
     }
@@ -185,9 +190,13 @@ export default {
 
         if (branchSerializeReason) {
           const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
+          const statefulSerializeArg = getSerializeGuard(
+            getSectionSerializeReason(tagSection, kStatefulReason),
+            !(skipParentEnd || singleNodeOptimization),
+          );
           const markerSerializeArg = getSerializeGuard(
             markerSerializeReason,
-            !(skipParentEnd || singleNodeOptimization),
+            !statefulSerializeArg,
           );
 
           forTagArgs.push(
@@ -196,6 +205,7 @@ export default {
             getScopeAccessorLiteral(nodeBinding),
             getSerializeGuard(branchSerializeReason, !markerSerializeArg),
             markerSerializeArg,
+            statefulSerializeArg,
           );
 
           if (skipParentEnd) {

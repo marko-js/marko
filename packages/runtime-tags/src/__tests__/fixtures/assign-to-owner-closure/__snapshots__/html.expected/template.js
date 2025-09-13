@@ -12,7 +12,7 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "2:2");
       return 0;
     }
-  }, $scope0_id, "#text/0", 1, /* state: hide */1, 0, 1);
+  }, $scope0_id, "#text/0", 1, /* state: hide */1, /* state: hide */1, 0, 1);
   _._scope($scope0_id, {}, "__tests__/template.marko", 0);
   _._resume_branch($scope0_id);
 });

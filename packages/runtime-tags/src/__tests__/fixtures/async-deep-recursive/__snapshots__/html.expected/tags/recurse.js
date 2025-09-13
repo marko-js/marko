@@ -38,7 +38,7 @@ const $content = (input, $serialize) => {
       }, "__tests__/tags/recurse.marko", "1:1");
       return 0;
     }
-  }, $scope0_id, "#text/0", _._serialize_guard($serialize, /* input.level */0), _._serialize_guard($serialize, /* input.level */0), 0, 1);
+  }, $scope0_id, "#text/0", _._serialize_guard($serialize, /* input.level */0), _._serialize_guard($serialize, /* input.level */0), _._serialize_guard($serialize, /* input.level */0), 0, 1);
   _._scope($scope0_id, {
     input_level: input.level,
     "ClosureScopes:input_level": _._serialize_if($serialize, /* input.level */0) && $input_level__closures
