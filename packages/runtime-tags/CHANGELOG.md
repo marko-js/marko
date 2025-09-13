@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.68
+
+### Patch Changes
+
+- [#2825](https://github.com/marko-js/marko/pull/2825) [`553acf0`](https://github.com/marko-js/marko/commit/553acf08ed85ae01625d04b6d52efd2a7eea0bf7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with single inert control flow nested under an element that needs to be visited.
+
+- [#2825](https://github.com/marko-js/marko/pull/2825) [`b828f48`](https://github.com/marko-js/marko/commit/b828f4889b3b30f864c452789e06741392ddc535) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with tag variable assignments in expression statements sometimes outputting invalid code.
+
 ## 6.0.67
 
 ### Patch Changes

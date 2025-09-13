@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.50
+
+### Patch Changes
+
+- [#2825](https://github.com/marko-js/marko/pull/2825) [`553acf0`](https://github.com/marko-js/marko/commit/553acf08ed85ae01625d04b6d52efd2a7eea0bf7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with single inert control flow nested under an element that needs to be visited.
+
+- Updated dependencies [[`553acf0`](https://github.com/marko-js/marko/commit/553acf08ed85ae01625d04b6d52efd2a7eea0bf7), [`b828f48`](https://github.com/marko-js/marko/commit/b828f4889b3b30f864c452789e06741392ddc535)]:
+  - @marko/runtime-tags@6.0.68
+
 ## 0.2.49
 
 ### Patch Changes
