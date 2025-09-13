@@ -12,7 +12,7 @@ import {
 import MagicString, { type SourceMap } from "magic-string";
 import path from "path";
 
-import { getMarkoOpts } from "../util/marko-config";
+import { getMarkoOpts, isOutputDOM } from "../util/marko-config";
 
 const STYLE_EXT_REG = /^style((?:\.[a-zA-Z0-9$_-]+)+)?/;
 const htmlStyleTagAlternateMsg =
@@ -123,13 +123,11 @@ export default {
           ),
         );
       } else {
+        const varDecl = t.variableDeclaration("const", [
+          t.variableDeclarator(node.var, importStar(file, importPath, "style")),
+        ]);
         getProgram().node.body.push(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              node.var,
-              importStar(file, importPath, "style"),
-            ),
-          ]),
+          isOutputDOM() ? varDecl : t.markoScriptlet([varDecl], true),
         );
       }
     }
