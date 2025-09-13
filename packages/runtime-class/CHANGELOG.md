@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.37.56
+
+### Patch Changes
+
+- [#2830](https://github.com/marko-js/marko/pull/2830) [`9a688af`](https://github.com/marko-js/marko/commit/9a688af3c92a73ae7492cdaa4b9ff1e0b2f9127e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with static/server/client statements with type imports not properly being stripped.
+
+- Updated dependencies [[`9a688af`](https://github.com/marko-js/marko/commit/9a688af3c92a73ae7492cdaa4b9ff1e0b2f9127e)]:
+  - @marko/compiler@5.39.36
+
 ## 5.37.55
 
 ### Patch Changes

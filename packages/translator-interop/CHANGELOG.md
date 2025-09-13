@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.51
+
+### Patch Changes
+
+- [#2830](https://github.com/marko-js/marko/pull/2830) [`9a688af`](https://github.com/marko-js/marko/commit/9a688af3c92a73ae7492cdaa4b9ff1e0b2f9127e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with static/server/client statements with type imports not properly being stripped.
+
+- Updated dependencies [[`9a688af`](https://github.com/marko-js/marko/commit/9a688af3c92a73ae7492cdaa4b9ff1e0b2f9127e), [`80bf906`](https://github.com/marko-js/marko/commit/80bf906e9903f8bf6c94935acad7c2a29df7844e)]:
+  - marko@5.37.56
+  - @marko/runtime-tags@6.0.70
+
 ## 0.2.50
 
 ### Patch Changes
