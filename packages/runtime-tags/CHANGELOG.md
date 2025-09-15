@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.72
+
+### Patch Changes
+
+- [#2837](https://github.com/marko-js/marko/pull/2837) [`ddac960`](https://github.com/marko-js/marko/commit/ddac960439f6e5f0d3f6c780b00bcbce11eb55d7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue updating closures to a stateless if.
+
 ## 6.0.71
 
 ### Patch Changes
