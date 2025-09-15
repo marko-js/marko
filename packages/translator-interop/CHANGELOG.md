@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.52
+
+### Patch Changes
+
+- [#2834](https://github.com/marko-js/marko/pull/2834) [`5c9a37f`](https://github.com/marko-js/marko/commit/5c9a37fa17c6a2f5f771c919b8415e4dfb25fca4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue striping type specifiers in imports.
+
+- Updated dependencies [[`5c9a37f`](https://github.com/marko-js/marko/commit/5c9a37fa17c6a2f5f771c919b8415e4dfb25fca4)]:
+  - marko@5.37.57
+  - @marko/runtime-tags@6.0.71
+
 ## 0.2.51
 
 ### Patch Changes
