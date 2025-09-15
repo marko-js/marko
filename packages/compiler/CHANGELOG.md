@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.37
+
+### Patch Changes
+
+- [#2834](https://github.com/marko-js/marko/pull/2834) [`5c9a37f`](https://github.com/marko-js/marko/commit/5c9a37fa17c6a2f5f771c919b8415e4dfb25fca4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue striping type specifiers in imports.
+
 ## 5.39.36
 
 ### Patch Changes
