@@ -1,4 +1,4 @@
-// size: 19249 (min) 7293 (brotli)
+// size: 19254 (min) 7297 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -682,7 +682,7 @@ function _if_closure(valueAccessor, ownerConditionalNodeAccessor, branch, fn) {
       let ifScope = scope[scopeAccessor];
       ifScope &&
         !ifScope.q &&
-        scope[branchAccessor] === branch &&
+        (scope[branchAccessor] ?? branch) === branch &&
         queueRender(ifScope, childSignal, -1);
     };
   return ((ownerSignal._ = childSignal), ownerSignal);
