@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div>true</div>
+  <div>truetrue</div>
 ```
 
 # Render End
@@ -9,7 +9,7 @@
   <head />
   <body>
     <div>
-      true
+      truetrue
     </div>
   </body>
 </html>

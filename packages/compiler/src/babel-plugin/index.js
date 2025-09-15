@@ -308,10 +308,24 @@ function getMarkoFile(code, fileOpts, markoOpts) {
           const importNode = path.node;
           const scriptlet = importScriptlets.get(importNode);
           if (scriptlet) {
+            let hasTypes = false;
+            for (const specifier of path.get("specifiers")) {
+              if (
+                specifier.node.type === "ImportSpecifier" &&
+                specifier.node.importKind === "type"
+              ) {
+                hasTypes = true;
+                specifier.remove();
+              }
+            }
+
             path.remove();
+
             // Add back imports from scriptlets that were
             // hoisted for the babel typescript transform.
-            scriptlet.body.unshift(importNode);
+            if (!hasTypes || importNode.specifiers.length) {
+              scriptlet.body.unshift(importNode);
+            }
           }
         }
       }
