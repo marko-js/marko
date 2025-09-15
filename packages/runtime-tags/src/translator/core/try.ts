@@ -76,7 +76,11 @@ export default {
         );
     }
 
-    startSection(tag.get("body"));
+    const bodySection = startSection(tag.get("body"));
+
+    if (bodySection) {
+      bodySection.upstreamExpression = tagExtra;
+    }
   },
   translate: translateByTarget({
     html: {

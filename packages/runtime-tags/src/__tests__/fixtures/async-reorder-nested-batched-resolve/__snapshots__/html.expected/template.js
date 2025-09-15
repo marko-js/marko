@@ -46,12 +46,7 @@ export default _._template("__tests__/template.marko", input => {
             })
           });
           _._html("</div>");
-          _._scope($scope6_id, {
-            promiseB
-          }, "__tests__/template.marko", "12:9", {
-            promiseB: "14:19"
-          });
-        });
+        }, 0);
         _._resume_branch($scope3_id);
       }, $scope2_id), {
         placeholder: _.attrTag({
@@ -71,10 +66,5 @@ export default _._template("__tests__/template.marko", input => {
         _._html("LOADING A1");
       }, $scope0_id)
     })
-  });
-  _._scope($scope0_id, {
-    promiseA
-  }, "__tests__/template.marko", 0, {
-    promiseA: "3:7"
   });
 });
