@@ -12,10 +12,14 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0,
         {
-          promise: new Promise((f, r) =&gt; _.a = {
+          promise: (p =&gt; p = new Promise((f, r) =&gt; _.a = {
             f,
-            r
-          })
+            r(e)
+            {
+              p.catch(_ =&gt; 0);
+              r(e)
+            }
+          }))()
         }]), _ =&gt; (_.a.f("hello"), _.c = []),
         "__tests__/template.marko_0_promise",
         1
@@ -41,10 +45,14 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0,
         {
-          promise: new Promise((f, r) =&gt; _.a = {
+          promise: (p =&gt; p = new Promise((f, r) =&gt; _.a = {
             f,
-            r
-          })
+            r(e)
+            {
+              p.catch(_ =&gt; 0);
+              r(e)
+            }
+          }))()
         }]), _ =&gt; (_.a.f("hello"), _.c = []),
         "__tests__/template.marko_0_promise",
         1

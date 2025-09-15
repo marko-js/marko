@@ -931,7 +931,7 @@ describe("serializer", () => {
       const promise = Promise.resolve(obj);
       const [result] = await serializer.assertStringify(
         promise,
-        `new Promise((f,r)=>_.a={f,r})`,
+        `(p=>p=new Promise((f,r)=>_.a={f,r(e){p.catch(_=>0);r(e)}}))()`,
         `_.a.f(_.a={x:1})`,
       );
       assert.deepEqual(serializer.get("a"), obj);
@@ -944,7 +944,7 @@ describe("serializer", () => {
       const promise = Promise.reject(error);
       const [result] = await serializer.assertStringify(
         promise,
-        `new Promise((f,r)=>_.a={f,r})`,
+        `(p=>p=new Promise((f,r)=>_.a={f,r(e){p.catch(_=>0);r(e)}}))()`,
         `_.a.r(_.a=new Error("test"))`,
       );
       assert.deepEqual(serializer.get("a"), error);

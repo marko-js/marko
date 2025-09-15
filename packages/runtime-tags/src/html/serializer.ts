@@ -915,7 +915,9 @@ function writePromise(state: State, val: Promise<unknown>, ref: Reference) {
 
   const pId = nextRefAccess(state);
   const pRef = new Reference(ref, null, state.flush, null, pId);
-  state.buf.push("new Promise((f,r)=>" + pId + "={f,r})");
+  state.buf.push(
+    "(p=>p=new Promise((f,r)=>" + pId + "={f,r(e){p.catch(_=>0);r(e)}}))()",
+  );
   val.then(
     (v) => writeAsyncCall(state, boundary, pRef, "f", v, pId),
     (v) => writeAsyncCall(state, boundary, pRef, "r", v, pId),
