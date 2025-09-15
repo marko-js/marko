@@ -1,16 +1,16 @@
 # Write
 ```html
-  <!--M_[--><!--M_!^b-->LOADING A1<!--M_!b--><!--M_]1 #text/0 2--><style M_>t{display:none}</style><t M_=b><!--M_#c--></t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,_.a={"ConditionalScope:#text/0":_.b={"#BranchAccessor":"#text/0"},promiseA:new Promise((f,r)=>_.c={f,r})},_.b],_.b["#PlaceholderContent"]=_._["__tests__/template.marko_4_content"](_.a),_.d)];REORDER_RUNTIME(M._);M._.w()</script>
+  <!--M_[--><!--M_!^b-->LOADING A1<!--M_!b--><!--M_]1 #text/0 2--><style M_>t{display:none}</style><t M_=b><!--M_#c--></t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalScope:#text/0":_.b={"#BranchAccessor":"#text/0"}},_.b],_.b["#PlaceholderContent"]=_._["__tests__/template.marko_4_content"](_.a),_.c)];REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Write
 ```html
-  <t M_=c><div class=a level=1><!--M_[--><!--M_[--><div class=a level=2><!--M_[--><!--M_!^d-->LOADING B1<!--M_!d--><!--M_]6 #text/1 7--></div><!--M_]5 #text/0 6--><!--M_]4 #text/1 5--></div></t><t M_=d><!--M_#e--></t><script>M._.r.push(_=>(_.g=[1,_.e={"ConditionalScope:#text/1":_.f={"#BranchAccessor":"#text/1"}},_.f],_.f["#PlaceholderContent"]=_._["__tests__/template.marko_5_content"](_.e),_.g),_=>(_.c.f("a"),_.h=[]),_=>(_.l=[_.i={"ConditionalScope:#text/1":_.j={"#BranchAccessor":"#text/1"},promiseB:new Promise((f,r)=>_.k={f,r})},_.j],_.j["#PlaceholderContent"]=_._["__tests__/template.marko_10_content"](_.i),(_.f["ConditionalScope:#text/0"]=_.i),_.l));M._.w()</script>
+  <t M_=c><div class=a level=1><!--M_[--><div class=a level=2><!--M_[--><!--M_!^d-->LOADING B1<!--M_!d--><!--M_]6 #text/1 7--></div><!--M_]4 #text/1 5--></div></t><t M_=d><!--M_#e--></t><script>M._.r.push(_=>(_.f=[1,_.d={"ConditionalScope:#text/1":_.e={"#BranchAccessor":"#text/1"}},_.e],_.e["#PlaceholderContent"]=_._["__tests__/template.marko_5_content"](_.d),_.f),_=>(_.i=[_.g={"ConditionalScope:#text/1":_.h={"#BranchAccessor":"#text/1"}},_.h],_.h["#PlaceholderContent"]=_._["__tests__/template.marko_10_content"](_.g),_.i));M._.w()</script>
 ```
 
 # Write
 ```html
-  <t M_=e><div class=b level=3><!--M_[--><div class=b level=4></div><!--M_]9 #text/1 10--></div></t><script>M._.r.push(_=>(_.o=[1,_.m={"ConditionalScope:#text/1":_.n={"#BranchAccessor":"#text/1"}},_.n],_.n["#PlaceholderContent"]=_._["__tests__/template.marko_11_content"](_.m),_.o),_=>(_.k.f("b"),_.p=[]));M._.w()</script>
+  <t M_=e><div class=b level=3><!--M_[--><div class=b level=4></div><!--M_]9 #text/1 10--></div></t><script>M._.r.push(_=>(_.l=[1,_.j={"ConditionalScope:#text/1":_.k={"#BranchAccessor":"#text/1"}},_.k],_.k["#PlaceholderContent"]=_._["__tests__/template.marko_11_content"](_.j),_.l));M._.w()</script>
 ```
 
 # Render End
@@ -30,7 +30,6 @@
       level="1"
     >
       <!--M_[-->
-      <!--M_[-->
       <div
         class="a"
         level="2"
@@ -49,54 +48,45 @@
         </div>
         <!--M_]6 #text/1 7-->
       </div>
-      <!--M_]5 #text/0 6-->
       <!--M_]4 #text/1 5-->
     </div>
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
         "ConditionalScope:#text/0": _.b = {
           "#BranchAccessor": "#text/0"
-        },
-        promiseA: new Promise((f, r) =&gt; _.c = {
-          f,
-          r
-        })
+        }
       }, _.b], _.b["#PlaceholderContent"] = _._[
         "__tests__/template.marko_4_content"
-        ](_.a), _.d)];
+        ](_.a), _.c)];
       REORDER_RUNTIME(M._);
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.g = [1, _.e = {
-        "ConditionalScope:#text/1": _.f = {
+      M._.r.push(_ =&gt; (_.f = [1, _.d = {
+        "ConditionalScope:#text/1": _.e = {
           "#BranchAccessor": "#text/1"
         }
-      }, _.f], _.f["#PlaceholderContent"] = _._[
+      }, _.e], _.e["#PlaceholderContent"] = _._[
         "__tests__/template.marko_5_content"
-        ](_.e), _.g), _ =&gt; (_.c.f("a"), _.h = []), _ =&gt; (_.l = [_.i = {
-        "ConditionalScope:#text/1": _.j = {
+        ](_.d), _.f), _ =&gt; (_.i = [_.g = {
+        "ConditionalScope:#text/1": _.h = {
           "#BranchAccessor": "#text/1"
-        },
-        promiseB: new Promise((f, r) =&gt; _.k = {
-          f,
-          r
-        })
-      }, _.j], _.j["#PlaceholderContent"] = _._[
+        }
+      }, _.h], _.h["#PlaceholderContent"] = _._[
         "__tests__/template.marko_10_content"
-        ](_.i), (_.f["ConditionalScope:#text/0"] = _.i), _.l));
+        ](_.g), _.i));
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.o = [1, _.m = {
-        "ConditionalScope:#text/1": _.n = {
+      M._.r.push(_ =&gt; (_.l = [1, _.j = {
+        "ConditionalScope:#text/1": _.k = {
           "#BranchAccessor": "#text/1"
         }
-      }, _.n], _.n["#PlaceholderContent"] = _._[
+      }, _.k], _.k["#PlaceholderContent"] = _._[
         "__tests__/template.marko_11_content"
-        ](_.m), _.o), _ =&gt; (_.k.f("b"), _.p = []));
+        ](_.j), _.l));
       M._.w()
     </script>
   </body>
@@ -124,15 +114,13 @@ INSERT html/head/style
 INSERT t
 INSERT html/body/div
 INSERT html/body/div/#comment0
-INSERT html/body/div/#comment1
 INSERT html/body/div/div
 INSERT html/body/div/div/#comment0
 INSERT #comment
 INSERT #text
 INSERT #comment
 INSERT html/body/div/div/#comment1
-INSERT html/body/div/#comment2
-INSERT html/body/div/#comment3
+INSERT html/body/div/#comment1
 INSERT t
 INSERT #comment
 INSERT html/body/script1

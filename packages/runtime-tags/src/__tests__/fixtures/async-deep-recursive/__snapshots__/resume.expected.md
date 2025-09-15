@@ -35,19 +35,13 @@
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, 1,
-      {
-        input_level: 4
-      }, _.a = {
+      M._.r = [_ =&gt; (_.c = [0, 2, _.a = {
         "ConditionalScope:#text/1": _.b = {
           "#BranchAccessor": "#text/1"
         }
       }, _.b], _.b["#PlaceholderContent"] = _._[
         "__tests__/tags/recurse.marko_4_content"
-        ](_.a), _.c), _ =&gt; (_.f = [1,
-      {
-        input_level: 3
-      }, _.d = {
+        ](_.a), _.c), _ =&gt; (_.f = [2, _.d = {
         "ConditionalScope:#text/1": _.e = {
           "#BranchAccessor": "#text/1"
         }
@@ -58,19 +52,13 @@
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.i = [2,
-      {
-        input_level: 2
-      }, _.g = {
+      M._.r.push(_ =&gt; (_.i = [3, _.g = {
         "ConditionalScope:#text/1": _.h = {
           "#BranchAccessor": "#text/1"
         }
       }, _.h], _.h["#PlaceholderContent"] = _._[
         "__tests__/tags/recurse.marko_4_content"
-        ](_.g), _.i), _ =&gt; (_.l = [1,
-      {
-        input_level: 1
-      }, _.j = {
+        ](_.g), _.i), _ =&gt; (_.l = [2, _.j = {
         "ConditionalScope:#text/1": _.k = {
           "#BranchAccessor": "#text/1"
         }
@@ -80,10 +68,6 @@
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.m = [2,
-      {
-        input_level: 0
-      }]));
       M._.w()
     </script>
   </body>
