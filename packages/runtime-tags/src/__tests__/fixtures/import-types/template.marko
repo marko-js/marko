@@ -1,3 +1,5 @@
 server import type { Test } from "./types";
+server import { type Test2 } from "./types-specifier";
 <const/foo:Test = true>
-<div>${String(foo)}</div>
+<const/bar:Test2 = true>
+<div>${String(foo)}${String(bar)}</div>

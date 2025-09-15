@@ -1,7 +1,7 @@
 # Render
 ```html
 <div>
-  true
+  truetrue
 </div>
 ```
 
