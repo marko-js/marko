@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.73
+
+### Patch Changes
+
+- [#2836](https://github.com/marko-js/marko/pull/2836) [`c4081bd`](https://github.com/marko-js/marko/commit/c4081bd96c627a09ca00b2b89dc4c9f3d77187a6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid unhandled promise rejections when serializing promises.
+
+- [#2839](https://github.com/marko-js/marko/pull/2839) [`f8b5c2a`](https://github.com/marko-js/marko/commit/f8b5c2af29a72592c98dbeb3e409efaab2b6e319) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with closures within a try being over serialized.
+
 ## 6.0.72
 
 ### Patch Changes
