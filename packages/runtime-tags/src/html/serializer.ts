@@ -631,7 +631,7 @@ function writeReferenceOr(
 
   if (write(state, val, ref)) return true;
 
-  state.refs.delete(ref);
+  state.refs.delete(val);
   return false;
 }
 
