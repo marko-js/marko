@@ -8,8 +8,10 @@ import {
 import { concat, type OneMany, type Opt } from "./optional";
 import {
   type Binding,
+  type InputBinding,
   isReferencedExtra,
   mergeSources,
+  type ParamBinding,
   type ReferencedBindings,
   type Sources,
 } from "./references";
@@ -102,6 +104,12 @@ export function isBindingForceSerialized(
       getBindingSerializeReasonKey(binding, prefix),
     ) === true
   );
+}
+
+export function isReasonDynamic(
+  reason: undefined | SerializeReason,
+): reason is { state: undefined; param: OneMany<InputBinding | ParamBinding> } {
+  return !!reason && reason !== true && !reason.state;
 }
 
 export function addSectionSerializeReasonExpr(

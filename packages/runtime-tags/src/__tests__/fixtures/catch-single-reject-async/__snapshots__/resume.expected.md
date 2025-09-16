@@ -16,8 +16,6 @@
     <!--M_]1 #text/0 2-->
     def
     <script>
-      M._.r.push(_ =&gt; (_.d = [1,
-      {}]));
       REORDER_RUNTIME(M._);
       M._.w()
     </script>

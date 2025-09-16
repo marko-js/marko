@@ -7,6 +7,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
+import type { ParamSerializeReasonGroups } from "../visitors/program";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag } from "./is-core-tag";
 import { filter, find, Sorted } from "./optional";
@@ -41,6 +42,8 @@ export interface Section {
   hoisted: ReferencedBindings;
   serializeReason: undefined | SerializeReason;
   serializeReasons: Map<symbol, SerializeReason>;
+  dynamicSerializeReasonGroups: ParamSerializeReasonGroups | undefined;
+  returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
   downstreamBinding: Binding | undefined;
@@ -105,6 +108,8 @@ export function startSection(
       isHoistThrough: undefined,
       serializeReason: undefined,
       serializeReasons: new Map(),
+      dynamicSerializeReasonGroups: undefined,
+      returnSerializeReason: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
       downstreamBinding: undefined,

@@ -11,10 +11,11 @@ export default _._template("__tests__/template.marko", input => {
   _._for_of(items, item => {
     const $scope1_id = _._scope_id();
     const $childScope = _._peek_scope_id();
+    _._set_serialize_reason(1);
     _child({
       write: write,
       name: item
-    }, 1);
+    });
     _._scope($scope1_id, {
       "#childScope/0": _._existing_scope($childScope)
     }, "__tests__/template.marko", "7:2");

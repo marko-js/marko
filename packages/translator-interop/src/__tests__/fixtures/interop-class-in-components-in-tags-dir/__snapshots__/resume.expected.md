@@ -3,22 +3,15 @@
 <html>
   <head />
   <body>
-    <!--Ms[-->
     <h1>
       Hello world
     </h1>
-    <!--Ms]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("s");
-      M.s.r = [_ =&gt; (_.b = [0,
+      M.s.r = [_ =&gt; (_.a = [0, 1,
       {
-        "ConditionalScope:#text/0": _.a = {
-          m5c: "s1"
-        },
-        "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-          "__tests__/tags/components/hello-internal.marko"
-          ])
-      }, _.a]), "$compat_setScope", 2];
+        m5c: "s1"
+      }]), "$compat_setScope", 2];
       M.s.w();
       $MC = (window.$MC || []).concat(
       {
@@ -40,9 +33,8 @@
 
 # Mutations
 ```
-INSERT html/body/#text2
 INSERT html/body/#text0
 INSERT html/body/#text1
-REMOVE #comment after html/body/#comment0
+REMOVE #comment before html/body/#text0
 REMOVE #comment after html/body/#text1
 ```

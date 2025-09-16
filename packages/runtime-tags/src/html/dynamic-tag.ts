@@ -1,13 +1,14 @@
 import { normalizeDynamicRenderer } from "../common/helpers";
 import { type Accessor, AccessorPrefix, ResumeSymbol } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
-import { isTemplate, type ServerRenderer } from "./template";
+import type { ServerRenderer } from "./template";
 import {
   _html,
   _peek_scope_id,
   _resume,
   _scope,
   _scope_id,
+  _set_serialize_reason,
   getState,
   withBranchId,
 } from "./writer";
@@ -129,24 +130,18 @@ export let _dynamic_tag = (
 
     const render = () => {
       if (renderer) {
-        if (isTemplate(renderer)) {
-          const input = inputIsArgs
-            ? (inputOrArgs as unknown[])[0]
-            : inputOrArgs;
-          return renderer(
-            content
-              ? { ...(input as Record<string, unknown>), content }
-              : input,
-            shouldResume ? 1 : 0,
-          );
+        try {
+          _set_serialize_reason(shouldResume ? 1 : 0);
+          return inputIsArgs
+            ? renderer(...(inputOrArgs as unknown[]))
+            : renderer(
+                content
+                  ? { ...(inputOrArgs as Record<string, unknown>), content }
+                  : inputOrArgs,
+              );
+        } finally {
+          _set_serialize_reason(undefined);
         }
-        return inputIsArgs
-          ? renderer(...(inputOrArgs as unknown[]))
-          : renderer(
-              content
-                ? { ...(inputOrArgs as Record<string, unknown>), content }
-                : inputOrArgs,
-            );
       } else if (content) {
         return content();
       }

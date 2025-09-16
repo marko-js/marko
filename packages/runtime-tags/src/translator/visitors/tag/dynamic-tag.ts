@@ -81,7 +81,6 @@ export default {
         ...getAllTagReferenceNodes(tag.node),
       ]);
       const tagBody = tag.get("body");
-      const isClassAPI = tagExtra.featureType === "class";
       const hasVar = !!tag.node.var;
       const nodeBinding = (tagExtra[kDOMBinding] = createBinding(
         "#text",
@@ -107,7 +106,7 @@ export default {
       addBindingSerializeReasonExpr(
         tagSection,
         nodeBinding,
-        isClassAPI || hasVar || tagExtra,
+        hasVar || tagExtra,
       );
     },
   },

@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
-export default _._template("__tests__/tags/my-for.marko", (input, $serialize) => {
+export default _._template("__tests__/tags/my-for.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   _._for_to(input.to, 0, 1, (...args) => {
     const $scope1_id = _._scope_id();

@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
-export default _._template("__tests__/template.marko", (input, $serialize) => {
+export default _._template("__tests__/template.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   const $bar2__closures = new Set();
   const bar = _._resume(function (test) {
@@ -32,7 +33,7 @@ export default _._template("__tests__/template.marko", (input, $serialize) => {
   _._serialize_guard($serialize, /* input.c,input.a,input.b */2) && _._scope($scope0_id, {
     input_c: input.c,
     input_b: _._serialize_if($serialize, /* input.a */4) && input.b,
-    bar: _._serialize_if($serialize, /* input.a, input.b */1) && bar,
+    bar: _._serialize_if($serialize, /* input.a,input.b */1) && bar,
     "ClosureScopes:bar": _._serialize_if($serialize, /* input.c */3) && $bar2__closures
   }, "__tests__/template.marko", 0, {
     input_c: ["input.c"],

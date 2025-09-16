@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
-export default _._template("__tests__/tags/2counters.marko", (input, $serialize) => {
+export default _._template("__tests__/tags/2counters.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   let count1 = input.count1;
   let count2 = input.count2;

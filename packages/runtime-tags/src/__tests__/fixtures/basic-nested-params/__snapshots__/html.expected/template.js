@@ -7,31 +7,38 @@ export default _._template("__tests__/template.marko", input => {
   let y = 2;
   _._html(`<button>Inc</button>${_._el_resume($scope0_id, "#button/0")}`);
   const $childScope2 = _._peek_scope_id();
+  _._set_serialize_reason({
+    /* input.content, input.value */0: 1,
+    /* input.value */2: 1
+  });
   _child({
     value: x,
     content: _._content_resume("__tests__/template.marko_1_content", outer => {
+      const $serialize = _._get_serialize_reason();
       const $scope1_id = _._scope_id();
       const $child_content__outer__closures = new Set();
       const $childScope = _._peek_scope_id();
+      _._set_serialize_reason({
+        /* input.content, input.value */0: 1,
+        /* input.value */2: 1
+      });
       _child({
         value: y,
         content: _._content_resume("__tests__/template.marko_2_content", inner => {
+          const $serialize2 = _._get_serialize_reason();
           const $scope2_id = _._scope_id();
-          _._html(`<div>${_._escape(outer)}${_._el_resume($scope2_id, "#text/0")}.<!>${_._escape(inner)}${_._el_resume($scope2_id, "#text/1")}</div>`);
-          _._subscribe($child_content__outer__closures, _._scope($scope2_id, {
-            _: _._scope_with_id($scope1_id),
-            "ClosureSignalIndex:outer": 0
+          _._html(`<div>${_._escape(outer)}${_._el_resume($scope2_id, "#text/0", $serialize)}.${_._sep($serialize2)}${_._escape(inner)}${_._el_resume($scope2_id, "#text/1", $serialize2)}</div>`);
+          ($serialize || $serialize2) && _._subscribe($child_content__outer__closures, _._scope($scope2_id, {
+            _: $serialize && _._scope_with_id($scope1_id),
+            "ClosureSignalIndex:outer": $serialize && 0
           }, "__tests__/template.marko", "7:6"));
           _._resume_branch($scope2_id);
         }, $scope1_id)
-      }, {
-        /* input.content, input.value */0: 1,
-        /* input.value */2: 1
       });
       _._subscribe($y__closures, _._scope($scope1_id, {
         outer,
         _: _._scope_with_id($scope0_id),
-        "ClosureScopes:outer": $child_content__outer__closures,
+        "ClosureScopes:outer": $serialize && $child_content__outer__closures,
         "#childScope/0": _._existing_scope($childScope),
         "ClosureSignalIndex:y": 0
       }, "__tests__/template.marko", "6:2", {
@@ -39,9 +46,6 @@ export default _._template("__tests__/template.marko", input => {
       }));
       _._resume_branch($scope1_id);
     }, $scope0_id)
-  }, {
-    /* input.content, input.value */0: 1,
-    /* input.value */2: 1
   });
   _._script($scope0_id, "__tests__/template.marko_0_x");
   _._scope($scope0_id, {

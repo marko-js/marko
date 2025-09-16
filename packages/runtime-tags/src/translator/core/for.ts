@@ -62,7 +62,7 @@ export default {
     const tagBody = tag.get("body");
     const paramsBinding = trackParamsReferences(
       tagBody,
-      isAttrTag ? BindingType.local : BindingType.param,
+      isAttrTag ? BindingType.local : BindingType.derived,
     );
 
     let allowAttrs: string[];
