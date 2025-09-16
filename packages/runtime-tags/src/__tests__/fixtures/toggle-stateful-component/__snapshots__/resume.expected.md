@@ -16,7 +16,6 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "ConditionalRenderer:#div/0": 0,
           "ConditionalScope:#div/0": _.b = {}
         }, _.b, _.c = {
           clickCount: 0,
@@ -46,7 +45,6 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "ConditionalRenderer:#div/0": 0,
           "ConditionalScope:#div/0": _.b = {}
         }, _.b, _.c = {
           clickCount: 0,

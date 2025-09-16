@@ -14,7 +14,6 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#text/0": 0,
           "ConditionalScope:#text/0": _.b = {},
           clickCount: 0
         }, _.b], _.b._ = _.a, _.c),
@@ -39,7 +38,6 @@ container.querySelector("button").click();
     <div>
       <button>
         1
-        <!--M_*2 #text/1-->
       </button>
       <!--M_*2 #button/0-->
       <!--M_|1 #text/0 2-->
@@ -47,7 +45,6 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#text/0": 0,
           "ConditionalScope:#text/0": _.b = {},
           clickCount: 0
         }, _.b], _.b._ = _.a, _.c),
@@ -62,7 +59,9 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div/button/#text "0" => "1"
+INSERT html/body/div/button
+REMOVE button after html/body/div/button
+UPDATE html/body/div/button/#text " " => "1"
 ```
 
 # Render
@@ -76,7 +75,6 @@ container.querySelector("button").click();
     <div>
       <button>
         2
-        <!--M_*2 #text/1-->
       </button>
       <!--M_*2 #button/0-->
       <!--M_|1 #text/0 2-->
@@ -84,7 +82,6 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#text/0": 0,
           "ConditionalScope:#text/0": _.b = {},
           clickCount: 0
         }, _.b], _.b._ = _.a, _.c),
@@ -120,7 +117,6 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#text/0": 0,
           "ConditionalScope:#text/0": _.b = {},
           clickCount: 0
         }, _.b], _.b._ = _.a, _.c),

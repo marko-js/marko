@@ -16,7 +16,6 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0,
         {
-          "ConditionalRenderer:#text/0": 0,
           "ConditionalScope:#text/0": _.a = {},
           show: !0
         }, _.a]),
@@ -53,7 +52,6 @@ container.querySelector("button").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0,
         {
-          "ConditionalRenderer:#text/0": 0,
           "ConditionalScope:#text/0": _.a = {},
           show: !0
         }, _.a]),
@@ -94,7 +92,6 @@ container.querySelector("button").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0,
         {
-          "ConditionalRenderer:#text/0": 0,
           "ConditionalScope:#text/0": _.a = {},
           show: !0
         }, _.a]),
@@ -132,7 +129,6 @@ container.querySelector("button").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0,
         {
-          "ConditionalRenderer:#text/0": 0,
           "ConditionalScope:#text/0": _.a = {},
           show: !0
         }, _.a]),
