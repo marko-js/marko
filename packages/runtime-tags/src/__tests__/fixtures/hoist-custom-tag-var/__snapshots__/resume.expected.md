@@ -19,18 +19,22 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.j = [0, _.d = {
+          "ConditionalRenderer:#text/0": 0,
           "ConditionalScope:#text/0": _.f = {
+            "ConditionalRenderer:#text/0": 0,
             "ConditionalScope:#text/0": _.g = {
               setHtml: _._[
                 "__tests__/tags/child.marko_0/_return"
                 ](_.a = {})
             }
           },
+          "ConditionalRenderer:#text/2": 0,
           "ConditionalScope:#text/2": _.h = {
             setHtml2: _._[
               "__tests__/tags/child.marko_0/_return"
               ](_.b = {})
           },
+          "ConditionalRenderer:#text/3": 0,
           "ConditionalScope:#text/3": _.i = {
             setHtml3: _._[
               "__tests__/tags/child.marko_0/_return"

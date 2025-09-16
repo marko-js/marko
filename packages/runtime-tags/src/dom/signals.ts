@@ -140,11 +140,7 @@ export function _if_closure<T>(
     AccessorPrefix.ConditionalRenderer + ownerConditionalNodeAccessor;
   const ownerSignal = (scope: Scope) => {
     const ifScope = scope[scopeAccessor];
-    if (
-      ifScope &&
-      !ifScope.___creating &&
-      (scope[branchAccessor] ?? branch) === branch
-    ) {
+    if (ifScope && !ifScope.___creating && scope[branchAccessor] === branch) {
       queueRender(ifScope, childSignal, -1);
     }
   };

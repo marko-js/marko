@@ -8,6 +8,7 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
+        "ConditionalRenderer:#text/0": 0,
         "ConditionalScope:#text/0": _.b = {},
         a: 0,
         b: 0

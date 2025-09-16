@@ -495,9 +495,10 @@ export function _if(
 
   if (shouldWriteBranch) {
     writeScope(scopeId, {
-      [AccessorPrefix.ConditionalRenderer + accessor]: resumeMarker
-        ? branchIndex
-        : undefined,
+      // TODO: technically conditional renderer should only be written when either the
+      // condition is stateful, or if there are direct closures.
+      // It may make sense to pass in another arg for this.
+      [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex,
       [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
     });
   }
