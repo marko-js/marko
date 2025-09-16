@@ -6,7 +6,7 @@ import {
   styleValue,
 } from "../common/helpers";
 import { type Accessor, AccessorPrefix, ControlledType } from "../common/types";
-import { escapeTextAreaValue } from "./content";
+import { _escape_textarea_value } from "./content";
 import {
   _attr_content,
   _html,
@@ -76,7 +76,7 @@ export function _attr_textarea_value(
     );
   }
 
-  return escapeTextAreaValue(value);
+  return _escape_textarea_value(value);
 }
 
 export function _attr_input_value(
