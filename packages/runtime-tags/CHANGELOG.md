@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.75
+
+### Patch Changes
+
+- [#2847](https://github.com/marko-js/marko/pull/2847) [`a19530c`](https://github.com/marko-js/marko/commit/a19530c833a992b19cea27afb2a3c27395276c60) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix uncontrolled textarea and select values.
+
+- [#2845](https://github.com/marko-js/marko/pull/2845) [`75fd29f`](https://github.com/marko-js/marko/commit/75fd29f469d015f1402a6c5a5e038d7c2db8bfca) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix deleting unserializable references in serializer.
+
 ## 6.0.74
 
 ### Patch Changes
