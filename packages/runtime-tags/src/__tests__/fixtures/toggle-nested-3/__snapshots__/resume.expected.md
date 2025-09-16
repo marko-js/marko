@@ -27,9 +27,7 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.c = {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.a = {
-            "ConditionalRenderer:#text/1": 0,
             "ConditionalScope:#text/1": _.b = {
               "ClosureSignalIndex:count": 0
             }
@@ -89,9 +87,7 @@ container.querySelector("#count").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.c = {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.a = {
-            "ConditionalRenderer:#text/1": 0,
             "ConditionalScope:#text/1": _.b = {
               "ClosureSignalIndex:count": 0
             }
@@ -151,9 +147,7 @@ container.querySelector("#count").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.c = {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.a = {
-            "ConditionalRenderer:#text/1": 0,
             "ConditionalScope:#text/1": _.b = {
               "ClosureSignalIndex:count": 0
             }
@@ -207,9 +201,7 @@ container.querySelector("#inner").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.c = {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.a = {
-            "ConditionalRenderer:#text/1": 0,
             "ConditionalScope:#text/1": _.b = {
               "ClosureSignalIndex:count": 0
             }
@@ -269,9 +261,7 @@ container.querySelector("#inner").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.c = {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.a = {
-            "ConditionalRenderer:#text/1": 0,
             "ConditionalScope:#text/1": _.b = {
               "ClosureSignalIndex:count": 0
             }
@@ -331,9 +321,7 @@ container.querySelector("#count").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.c = {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.a = {
-            "ConditionalRenderer:#text/1": 0,
             "ConditionalScope:#text/1": _.b = {
               "ClosureSignalIndex:count": 0
             }
@@ -380,9 +368,7 @@ container.querySelector("#outer").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.c = {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.a = {
-            "ConditionalRenderer:#text/1": 0,
             "ConditionalScope:#text/1": _.b = {
               "ClosureSignalIndex:count": 0
             }
@@ -444,9 +430,7 @@ container.querySelector("#outer").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.c = {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.a = {
-            "ConditionalRenderer:#text/1": 0,
             "ConditionalScope:#text/1": _.b = {
               "ClosureSignalIndex:count": 0
             }
@@ -505,9 +489,7 @@ container.querySelector("#count").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.c = {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.a = {
-            "ConditionalRenderer:#text/1": 0,
             "ConditionalScope:#text/1": _.b = {
               "ClosureSignalIndex:count": 0
             }

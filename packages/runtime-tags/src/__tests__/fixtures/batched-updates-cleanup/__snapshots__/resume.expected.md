@@ -13,7 +13,6 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.b = {},
           show: !0,
           message: "hi"
@@ -42,7 +41,6 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.b = {},
           show: !0,
           message: "hi"

@@ -24,7 +24,6 @@
           x: 1
         },
         {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.a = {},
           show: !1
         }, _.a]),
@@ -63,7 +62,6 @@ container.querySelector("button").click();
           x: 1
         },
         {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.a = {},
           show: !1
         }, _.a]),
@@ -113,7 +111,6 @@ container.querySelector("button").click();
           x: 1
         },
         {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.a = {},
           show: !1
         }, _.a]),
@@ -160,7 +157,6 @@ container.querySelector("button").click();
           x: 1
         },
         {
-          "ConditionalRenderer:#text/1": 0,
           "ConditionalScope:#text/1": _.a = {},
           show: !1
         }, _.a]),

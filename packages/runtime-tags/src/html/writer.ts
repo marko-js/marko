@@ -498,7 +498,7 @@ export function _if(
       // TODO: technically conditional renderer should only be written when either the
       // condition is stateful, or if there are direct closures.
       // It may make sense to pass in another arg for this.
-      [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex,
+      [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex || undefined, // we convert 0 to undefined since the runtime defaults branch to 0.
       [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
     });
   }

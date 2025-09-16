@@ -18,7 +18,6 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#div/0": 0,
           "ConditionalScope:#div/0": _.b = {},
           "ControlledType:#input/1": 2,
           value: "Hello"
@@ -53,7 +52,6 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#div/0": 0,
           "ConditionalScope:#div/0": _.b = {},
           "ControlledType:#input/1": 2,
           value: "Hello"
@@ -98,7 +96,6 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#div/0": 0,
           "ConditionalScope:#div/0": _.b = {},
           "ControlledType:#input/1": 2,
           value: "Hello"
@@ -144,7 +141,6 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#div/0": 0,
           "ConditionalScope:#div/0": _.b = {},
           "ControlledType:#input/1": 2,
           value: "Hello"

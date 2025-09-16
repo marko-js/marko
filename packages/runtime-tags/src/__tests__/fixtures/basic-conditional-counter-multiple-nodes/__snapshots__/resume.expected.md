@@ -20,7 +20,6 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#text/2": 0,
           "ConditionalScope:#text/2": _.b = {},
           show: !0,
           count: 0
@@ -66,7 +65,6 @@ container.querySelector("button.inc").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#text/2": 0,
           "ConditionalScope:#text/2": _.b = {},
           show: !0,
           count: 0
@@ -107,7 +105,6 @@ container.querySelector("button.toggle").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#text/2": 0,
           "ConditionalScope:#text/2": _.b = {},
           show: !0,
           count: 0
@@ -155,7 +152,6 @@ container.querySelector("button.inc").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#text/2": 0,
           "ConditionalScope:#text/2": _.b = {},
           show: !0,
           count: 0
@@ -192,7 +188,6 @@ container.querySelector("button.toggle").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#text/2": 0,
           "ConditionalScope:#text/2": _.b = {},
           show: !0,
           count: 0
@@ -235,7 +230,6 @@ container.querySelector("button.inc").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalRenderer:#text/2": 0,
           "ConditionalScope:#text/2": _.b = {},
           show: !0,
           count: 0
