@@ -5,7 +5,7 @@
 
 # Write
 ```html
-  <!--M_!b--><!--M_]1 #text/0 2-->def<style M_>t{display:none}</style><t M_=b>ERROR!<!--M_*4 #text/0--></t><script>M._.r.push(_=>(_.d=[1,{}]));REORDER_RUNTIME(M._);M._.w()</script>
+  <!--M_!b--><!--M_]1 #text/0 2-->def<style M_>t{display:none}</style><t M_=b>ERROR!<!--M_*4 #text/0--></t><script>REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Render End
@@ -26,8 +26,6 @@
     <!--M_]1 #text/0 2-->
     def
     <script>
-      M._.r.push(_ =&gt; (_.d = [1,
-      {}]));
       REORDER_RUNTIME(M._);
       M._.w()
     </script>

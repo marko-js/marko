@@ -3,13 +3,11 @@
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       id="class-api"
     >
       0
     </button>
-    <!--M_]1 #text/0 2-->
     <div
       id="tags-api"
     >
@@ -18,15 +16,11 @@
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
+      M._.r = [_ =&gt; (_.a = [0,
+      {},
       {
-        "ConditionalScope:#text/0": _.a = {
-          m5c: "_0"
-        },
-        "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-          "__tests__/components/class-counter.marko"
-          ])
-      }, _.a]), _ =&gt; (_.d = [-2, _.c = _.b[1]])];
+        m5c: "_0"
+      }]), _ =&gt; (_.c = [-2, _.b = _.a[1]])];
       M._.w();
       $MC = (window.$MC || []).concat(
       {
@@ -57,10 +51,9 @@
 
 # Mutations
 ```
-INSERT html/body/#text2
 INSERT html/body/#text0
 INSERT html/body/#text1
-REMOVE #comment after html/body/#comment0
+REMOVE #comment before html/body/#text0
 REMOVE #comment after html/body/#text1
 ```
 
@@ -72,13 +65,11 @@ container.querySelector("#class-api").click();
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       id="class-api"
     >
       1
     </button>
-    <!--M_]1 #text/0 2-->
     <div
       id="tags-api"
     >
@@ -87,15 +78,11 @@ container.querySelector("#class-api").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
+      M._.r = [_ =&gt; (_.a = [0,
+      {},
       {
-        "ConditionalScope:#text/0": _.a = {
-          m5c: "_0"
-        },
-        "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-          "__tests__/components/class-counter.marko"
-          ])
-      }, _.a]), _ =&gt; (_.d = [-2, _.c = _.b[1]])];
+        m5c: "_0"
+      }]), _ =&gt; (_.c = [-2, _.b = _.a[1]])];
       M._.w();
       $MC = (window.$MC || []).concat(
       {
@@ -138,13 +125,11 @@ container.querySelector("#class-api").click();
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       id="class-api"
     >
       2
     </button>
-    <!--M_]1 #text/0 2-->
     <div
       id="tags-api"
     >
@@ -153,15 +138,11 @@ container.querySelector("#class-api").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
+      M._.r = [_ =&gt; (_.a = [0,
+      {},
       {
-        "ConditionalScope:#text/0": _.a = {
-          m5c: "_0"
-        },
-        "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-          "__tests__/components/class-counter.marko"
-          ])
-      }, _.a]), _ =&gt; (_.d = [-2, _.c = _.b[1]])];
+        m5c: "_0"
+      }]), _ =&gt; (_.c = [-2, _.b = _.a[1]])];
       M._.w();
       $MC = (window.$MC || []).concat(
       {

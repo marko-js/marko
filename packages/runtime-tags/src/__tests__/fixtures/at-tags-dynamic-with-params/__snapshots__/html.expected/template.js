@@ -8,15 +8,17 @@ export default _._template("__tests__/template.marko", input => {
   if (x) {
     $item = _.attrTag({
       content: _._content_resume("__tests__/template.marko_1_content", y => {
+        const $serialize = _._get_serialize_reason();
         const $scope1_id = _._scope_id();
-        _._html(`y: <!>${_._escape(y)}${_._el_resume($scope1_id, "#text/0")}`);
-        _._scope($scope1_id, {}, "__tests__/template.marko", "4:10");
+        _._html(`y: ${_._sep($serialize)}${_._escape(y)}${_._el_resume($scope1_id, "#text/0", $serialize)}`);
+        $serialize && _._scope($scope1_id, {}, "__tests__/template.marko", "4:10");
       }, $scope0_id)
     });
   }
+  _._set_serialize_reason(1);
   _hello({
     item: $item
-  }, 1);
+  });
   _._html(`<button>Toggle</button>${_._el_resume($scope0_id, "#button/1")}`);
   _._script($scope0_id, "__tests__/template.marko_0_x");
   _._scope($scope0_id, {

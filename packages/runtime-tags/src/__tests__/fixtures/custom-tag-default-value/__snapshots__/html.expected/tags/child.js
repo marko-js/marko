@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
-export default _._template("__tests__/tags/child.marko", (input, $serialize) => {
+export default _._template("__tests__/tags/child.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   const value = input.value;
   _._html(`${_._sep(_._serialize_guard($serialize, /* input.value */0))}${_._escape(value)}${_._el_resume($scope0_id, "#text/0", _._serialize_guard($serialize, /* input.value */0))} `);

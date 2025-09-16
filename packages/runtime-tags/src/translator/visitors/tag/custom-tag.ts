@@ -24,6 +24,7 @@ import {
   forEach,
   fromIter,
   mapToString,
+  type OneMany,
   type Opt,
 } from "../../util/optional";
 import {
@@ -77,11 +78,7 @@ import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import { withLeadingComment } from "../../util/with-comment";
 import * as writer from "../../util/writer";
-import {
-  type InputSerializeReason,
-  scopeIdentifier,
-  type TemplateExport,
-} from "../program";
+import { scopeIdentifier, type TemplateExport } from "../program";
 import { getSerializeGuard, getTemplateContentName } from "../program/html";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
@@ -186,8 +183,13 @@ export default {
         );
 
         if (varBinding) {
+          const { returnSerializeReason } = childExtra.section!;
+
           const varSerializeReason = mapChildReasonToLocalReason(
-            childExtra.returnSerializeReason,
+            returnSerializeReason &&
+              (returnSerializeReason === true ||
+                !!returnSerializeReason.state ||
+                (returnSerializeReason.param as Opt<InputBinding>)),
             childInputBinding,
             inputExpr,
           );
@@ -199,19 +201,24 @@ export default {
           );
         }
 
-        if (childExtra.inputSerializeReasons) {
+        if (childExtra.section!.dynamicSerializeReasonGroups) {
           const childInputSerializePropIds = (tagExtra[
             kChildInputSerializePropIds
           ] = [] as unknown as NonNullable<
             (typeof tagExtra)[typeof kChildInputSerializePropIds]
           >);
-          for (const reason of childExtra.inputSerializeReasons) {
+          for (const reason of childExtra.section!
+            .dynamicSerializeReasonGroups) {
             const propId = Symbol();
             childInputSerializePropIds.push(propId);
             addBindingSerializeReasonExpr(
               section,
               childScopeBinding,
-              mapChildReasonToLocalReason(reason, childInputBinding, inputExpr),
+              mapChildReasonToLocalReason(
+                reason as OneMany<InputBinding>,
+                childInputBinding,
+                inputExpr,
+              ),
               propId,
             );
           }
@@ -307,7 +314,9 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         );
         if (reason) {
           hasDynamicReasons ||= reason !== true && !reason.state;
-          const childReason = childExtra.inputSerializeReasons![i];
+          const childReason = childExtra.section!.dynamicSerializeReasonGroups![
+            i
+          ] as OneMany<InputBinding>;
           props.push(
             t.objectProperty(
               withLeadingComment(
@@ -368,6 +377,14 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     }
   }
 
+  if (childSerializeReasonExpr) {
+    statements.push(
+      t.expressionStatement(
+        callRuntime("_set_serialize_reason", childSerializeReasonExpr),
+      ),
+    );
+  }
+
   if (node.extra!.tagNameNullable) {
     const contentProp = getTranslatedBodyContentProperty(properties);
     let contentId: t.Identifier | undefined = undefined;
@@ -390,7 +407,6 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     let renderTagExpr: t.Expression = callExpression(
       tagIdentifier,
       propsToExpression(properties),
-      childSerializeReasonExpr,
     );
 
     if (tagVar) {
@@ -408,20 +424,12 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   } else if (tagVar) {
     translateVar(
       tag,
-      callExpression(
-        tagIdentifier,
-        propsToExpression(properties),
-        childSerializeReasonExpr,
-      ),
+      callExpression(tagIdentifier, propsToExpression(properties)),
       "let",
     );
   } else {
     statements.push(
-      callStatement(
-        tagIdentifier,
-        propsToExpression(properties),
-        childSerializeReasonExpr,
-      ),
+      callStatement(tagIdentifier, propsToExpression(properties)),
     );
   }
 
@@ -1093,7 +1101,7 @@ function importOrSelfReferenceName(
 }
 
 function mapChildReasonToLocalReason(
-  childReason: undefined | boolean | InputSerializeReason,
+  childReason: boolean | Opt<InputBinding>,
   childInputBinding: InputBinding | undefined,
   inputExpr: InputExpr,
 ) {

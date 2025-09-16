@@ -11,9 +11,10 @@ export default _._template("__tests__/template.marko", input => {
     })
   };
   const $childScope = _._peek_scope_id();
+  _._set_serialize_reason(1);
   _child({
     thing: myThing
-  }, 1);
+  });
   _._html(`<button>Toggle</button>${_._el_resume($scope0_id, "#button/1")}`);
   _._script($scope0_id, "__tests__/template.marko_0_selected");
   _._scope($scope0_id, {

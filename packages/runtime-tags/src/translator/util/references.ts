@@ -3,7 +3,6 @@ import { getProgram } from "@marko/compiler/babel-utils";
 
 import { toAccess } from "../../html/serializer";
 import { finalizeFunctionRegistry } from "../visitors/function";
-import type { InputSerializeReasons } from "../visitors/program";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
@@ -18,6 +17,7 @@ import {
   findSorted,
   forEach,
   type Many,
+  type OneMany,
   type Opt,
   push,
   Sorted,
@@ -49,6 +49,7 @@ import {
   getBindingSerializeReason,
   getSerializeSourcesForExpr,
   isBindingForceSerialized,
+  isReasonDynamic,
   mergeSerializeReasons,
   type SerializeReason,
 } from "./serialize-reasons";
@@ -74,7 +75,7 @@ export enum BindingType {
 
 export interface Sources {
   state: Opt<Binding>;
-  input: Opt<InputBinding>;
+  param: Opt<InputBinding | ParamBinding>;
 }
 
 export interface Binding {
@@ -101,6 +102,10 @@ export interface Binding {
 
 export interface InputBinding extends Binding {
   type: BindingType.input;
+}
+
+export interface ParamBinding extends Binding {
+  type: BindingType.param;
 }
 
 export type ReferencedBindings = Opt<Binding>;
@@ -994,29 +999,40 @@ export function finalizeReferences() {
     });
   });
 
-  let inputSerializeReasons: undefined | InputSerializeReasons;
+  let paramSerializeReasons:
+    | undefined
+    | [OneMany<InputBinding>, ...OneMany<InputBinding>[]];
   forEachSection((section) => {
     finalizeSectionSerializeReasons(section);
 
-    if (
-      section.serializeReason &&
-      section.serializeReason !== true &&
-      section.serializeReason.input
-    ) {
-      inputSerializeReasons = inputSerializeReasons
-        ? addSorted(
-            compareReferences,
-            inputSerializeReasons,
-            section.serializeReason.input,
-          )
-        : [section.serializeReason.input];
+    if (isReasonDynamic(section.serializeReason)) {
+      const inputSerializeReasons = filter(
+        section.serializeReason.param,
+        (reason) => reason.type === BindingType.input,
+      ) as Opt<InputBinding>;
+
+      if (inputSerializeReasons) {
+        paramSerializeReasons = paramSerializeReasons
+          ? addSorted(
+              compareReferences,
+              paramSerializeReasons,
+              inputSerializeReasons,
+            )
+          : [inputSerializeReasons];
+      }
     }
 
     for (const [, reason] of section.serializeReasons) {
-      if (reason !== true && reason.input) {
-        inputSerializeReasons = inputSerializeReasons
-          ? addSorted(compareReferences, inputSerializeReasons, reason.input)
-          : [reason.input];
+      if (isReasonDynamic(reason)) {
+        const input = filter(
+          reason.param,
+          (reason) => reason.type === BindingType.input,
+        ) as Opt<InputBinding>;
+        if (input) {
+          paramSerializeReasons = paramSerializeReasons
+            ? addSorted(compareReferences, paramSerializeReasons, input)
+            : [input];
+        }
       }
     }
   });
@@ -1027,12 +1043,11 @@ export function finalizeReferences() {
       programExtra.returnValueExpr,
     );
     if (returnSources) {
-      programExtra.returnSerializeReason = returnSources.state
-        ? true
-        : returnSources.input;
+      programExtra.section!.returnSerializeReason = returnSources;
     }
   }
-  programExtra.inputSerializeReasons = inputSerializeReasons;
+
+  programExtra.section!.dynamicSerializeReasonGroups = paramSerializeReasons;
 
   forEachSection((section) => {
     let intersectionIndex = 0;
@@ -1098,7 +1113,7 @@ function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
         }
       };
       forEach(binding.sources.state, trackScopeOffset);
-      forEach(binding.sources.input, trackScopeOffset);
+      forEach(binding.sources.param, trackScopeOffset);
     }
   }
 
@@ -1137,6 +1152,9 @@ function resolveBindingSources(binding: Binding) {
       return;
     case BindingType.input:
       binding.sources = createSources(undefined, binding as InputBinding);
+      return;
+    case BindingType.param:
+      binding.sources = createSources(undefined, binding as ParamBinding);
       return;
   }
 
@@ -1183,24 +1201,24 @@ function resolveDerivedSources(binding: Binding) {
 
 export function createSources(
   state: Sources["state"],
-  input: Sources["input"],
+  param: Sources["param"],
 ): Sources {
-  if (!(state || input)) {
+  if (!(state || param)) {
     throw new Error(
-      "Cannot create a serialize reason that does not reference state or input.",
+      "Cannot create a serialize reason that does not reference state or a param.",
     );
   }
 
-  return { state, input } as Sources;
+  return { state, param };
 }
 
 export function compareSources(a: Sources, b: Sources) {
   let delta = 0;
 
-  if (a.input) {
-    if (!b.input) return 1;
-    if ((delta = compareReferences(a.input, b.input))) return delta;
-  } else if (b.input) {
+  if (a.param) {
+    if (!b.param) return 1;
+    if ((delta = compareReferences(a.param, b.param))) return delta;
+  } else if (b.param) {
     return -1;
   }
 
@@ -1217,10 +1235,10 @@ export function compareSources(a: Sources, b: Sources) {
 export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
   if (!a) return b;
   if (!b) return a;
-  if (a.state === b.state && a.input === b.input) return a;
+  if (a.state === b.state && a.param === b.param) return a;
   return createSources(
     bindingUtil.union(a.state, b.state),
-    bindingUtil.union(a.input, b.input),
+    bindingUtil.union(a.param, b.param),
   );
 }
 
@@ -1570,7 +1588,7 @@ function isSupersetSources(a: Binding, b: Binding) {
   if (!a.sources) return false;
   return (
     bindingUtil.isSuperset(a.sources.state, b.sources.state) &&
-    bindingUtil.isSuperset(a.sources.input, b.sources.input)
+    bindingUtil.isSuperset(a.sources.param, b.sources.param)
   );
 }
 

@@ -3,7 +3,6 @@
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       id="class"
     >
@@ -18,23 +17,19 @@
       </button>
       <!--M_*3 #button/0-->
     </div>
-    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
-          "ConditionalScope:#text/0": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-            "__tests__/components/class-layout.marko"
-            ]),
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           count: 0,
-          "ClosureScopes:count": _.d = new Set
-        }, _.a, _.e = {
+          "ClosureScopes:count": _.c = new Set
+        },
+        {
+          m5c: "_0"
+        }, _.d = {
           m5c: "_0-2",
-          _: _.b,
+          _: _.a,
           "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]), "$compat_setScope",
         3,
         "__tests__/template.marko_1_count",
         3
@@ -76,10 +71,9 @@
 
 # Mutations
 ```
-INSERT html/body/#text2
 INSERT html/body/#text0
 INSERT html/body/#text1
-REMOVE #comment after html/body/#comment0
+REMOVE #comment before html/body/#text0
 REMOVE #comment after html/body/#text1
 INSERT html/body/div/#text0
 INSERT html/body/div/#text3
@@ -99,7 +93,6 @@ container.querySelector("#tags").click();
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       id="class"
     >
@@ -114,23 +107,19 @@ container.querySelector("#tags").click();
       </button>
       <!--M_*3 #button/0-->
     </div>
-    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
-          "ConditionalScope:#text/0": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-            "__tests__/components/class-layout.marko"
-            ]),
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           count: 0,
-          "ClosureScopes:count": _.d = new Set
-        }, _.a, _.e = {
+          "ClosureScopes:count": _.c = new Set
+        },
+        {
+          m5c: "_0"
+        }, _.d = {
           m5c: "_0-2",
-          _: _.b,
+          _: _.a,
           "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]), "$compat_setScope",
         3,
         "__tests__/template.marko_1_count",
         3
@@ -183,7 +172,6 @@ container.querySelector("#class").click();
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       id="class"
     >
@@ -198,23 +186,19 @@ container.querySelector("#class").click();
       </button>
       <!--M_*3 #button/0-->
     </div>
-    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
-          "ConditionalScope:#text/0": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-            "__tests__/components/class-layout.marko"
-            ]),
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           count: 0,
-          "ClosureScopes:count": _.d = new Set
-        }, _.a, _.e = {
+          "ClosureScopes:count": _.c = new Set
+        },
+        {
+          m5c: "_0"
+        }, _.d = {
           m5c: "_0-2",
-          _: _.b,
+          _: _.a,
           "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]), "$compat_setScope",
         3,
         "__tests__/template.marko_1_count",
         3
@@ -267,7 +251,6 @@ container.querySelector("#tags").click();
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       id="class"
     >
@@ -282,23 +265,19 @@ container.querySelector("#tags").click();
       </button>
       <!--M_*3 #button/0-->
     </div>
-    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
-          "ConditionalScope:#text/0": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-            "__tests__/components/class-layout.marko"
-            ]),
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           count: 0,
-          "ClosureScopes:count": _.d = new Set
-        }, _.a, _.e = {
+          "ClosureScopes:count": _.c = new Set
+        },
+        {
+          m5c: "_0"
+        }, _.d = {
           m5c: "_0-2",
-          _: _.b,
+          _: _.a,
           "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]), "$compat_setScope",
         3,
         "__tests__/template.marko_1_count",
         3
@@ -351,7 +330,6 @@ container.querySelector("#class").click();
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       id="class"
     >
@@ -366,23 +344,19 @@ container.querySelector("#class").click();
       </button>
       <!--M_*3 #button/0-->
     </div>
-    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
-          "ConditionalScope:#text/0": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-            "__tests__/components/class-layout.marko"
-            ]),
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           count: 0,
-          "ClosureScopes:count": _.d = new Set
-        }, _.a, _.e = {
+          "ClosureScopes:count": _.c = new Set
+        },
+        {
+          m5c: "_0"
+        }, _.d = {
           m5c: "_0-2",
-          _: _.b,
+          _: _.a,
           "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]), "$compat_setScope",
         3,
         "__tests__/template.marko_1_count",
         3
@@ -435,7 +409,6 @@ container.querySelector("#tags").click();
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       id="class"
     >
@@ -450,23 +423,19 @@ container.querySelector("#tags").click();
       </button>
       <!--M_*3 #button/0-->
     </div>
-    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
-          "ConditionalScope:#text/0": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-            "__tests__/components/class-layout.marko"
-            ]),
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           count: 0,
-          "ClosureScopes:count": _.d = new Set
-        }, _.a, _.e = {
+          "ClosureScopes:count": _.c = new Set
+        },
+        {
+          m5c: "_0"
+        }, _.d = {
           m5c: "_0-2",
-          _: _.b,
+          _: _.a,
           "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]), "$compat_setScope",
         3,
         "__tests__/template.marko_1_count",
         3

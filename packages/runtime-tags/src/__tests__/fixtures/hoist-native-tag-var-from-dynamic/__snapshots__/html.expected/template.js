@@ -1,7 +1,8 @@
 import Child from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
-export default _._template("__tests__/template.marko", (input, $serialize) => {
+export default _._template("__tests__/template.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   const $hoisted_el = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_el/hoist");
   const $child_content__subscribers = new Set();

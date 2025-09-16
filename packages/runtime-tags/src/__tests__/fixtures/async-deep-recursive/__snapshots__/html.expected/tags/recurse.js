@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
-const $content = (input, $serialize) => {
+const $content = input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   const $input_level__closures = new Set();
   _._if(() => {
@@ -8,6 +9,7 @@ const $content = (input, $serialize) => {
       _._html(`<div${_._attr("data-level", input.level)}>`);
       _._try($scope1_id, "#text/1", _._content_resume("__tests__/tags/recurse.marko_2_content", () => {
         const $scope2_id = _._scope_id();
+        const $serialize2 = _._get_serialize_reason();
         _._await($scope2_id, "#text/0", new Promise(setImmediate), () => {
           const $scope3_id = _._scope_id();
           const $childScope = _._peek_scope_id();

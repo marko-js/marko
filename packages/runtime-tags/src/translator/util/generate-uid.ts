@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import { getFile } from "@marko/compiler/babel-utils";
 
 import { isTranslate } from "./get-compile-stage";
+import type { Section } from "./sections";
 import { traverse } from "./traverse";
 
 const countsForFile = new WeakMap<t.BabelFile, Map<string, number>>();
@@ -43,15 +44,22 @@ export function generateUidIdentifier(name?: string) {
   return t.identifier(generateUid(name));
 }
 
-const sharedUIDsForFile = new WeakMap<t.BabelFile, Map<string, string>>();
-export function getSharedUid(name: string) {
+const sharedUIDsForFile = new WeakMap<
+  t.BabelFile | Section,
+  Map<string, string>
+>();
+export function getSharedUid(name: string, section?: Section) {
   const file = getFile();
-  let sharedUIDs = sharedUIDsForFile.get(file);
+  const key = section || file;
+  let sharedUIDs = sharedUIDsForFile.get(key);
 
   if (!sharedUIDs) {
     const { cache } = file.markoOpts;
     const { filename } = file.opts;
-    const cacheKey = `uid-shared:${filename}`;
+    let cacheKey = `uid-shared:${filename}`;
+    if (section) {
+      cacheKey += `:${section.id}`;
+    }
     sharedUIDs = cache.get(cacheKey) as typeof sharedUIDs;
 
     if (sharedUIDs) {
@@ -67,7 +75,7 @@ export function getSharedUid(name: string) {
       }
     }
 
-    sharedUIDsForFile.set(file, sharedUIDs);
+    sharedUIDsForFile.set(key, sharedUIDs);
   }
 
   let uniqueName = sharedUIDs.get(name);

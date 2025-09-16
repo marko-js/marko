@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
-export default _._template("__tests__/template.marko", (input, $serialize) => {
+export default _._template("__tests__/template.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   _._html(`<div${_._attr_class(input.foo)}${_._attr("foo", 'a' + input.foo + 'b')}${_._attr("bar", `a ${input.bar} b`)}${_._attr("nested", `a ${input.foo + ` nested ${input.bar}`} b`)}></div>${_._el_resume($scope0_id, "#div/0", _._serialize_guard($serialize, /* input.foo,input.bar */0))}`);
   _._serialize_guard($serialize, /* input.foo,input.bar */0) && _._scope($scope0_id, {

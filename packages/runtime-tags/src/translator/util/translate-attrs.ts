@@ -3,6 +3,7 @@ import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { buildForRuntimeCall, getForType } from "../core/for";
 import { scopeIdentifier, type TemplateExports } from "../visitors/program";
+import { getSharedUid } from "./generate-uid";
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
@@ -20,6 +21,7 @@ import {
   getSection,
   isSerializedSection,
 } from "./sections";
+import { isReasonDynamic } from "./serialize-reasons";
 import { getResumeRegisterId } from "./signals";
 import { toObjectProperty, toPropertyName } from "./to-property-name";
 
@@ -411,6 +413,29 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   if (bodySection) {
     if (isOutputHTML()) {
       const serialized = isSerializedSection(bodySection);
+
+      let dynamicSerializeReason = isReasonDynamic(bodySection.serializeReason);
+      if (!dynamicSerializeReason) {
+        for (const reason of bodySection.serializeReasons.values()) {
+          if (isReasonDynamic(reason)) {
+            dynamicSerializeReason = true;
+            break;
+          }
+        }
+      }
+
+      if (dynamicSerializeReason) {
+        // TODO: not this
+        body.node.body.unshift(
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              t.identifier(getSharedUid("serialize", bodySection)),
+              callRuntime("_get_serialize_reason"),
+            ),
+          ]) as any,
+        );
+      }
+
       return callRuntime(
         serialized ? "_content_resume" : "_content",
         t.stringLiteral(getResumeRegisterId(bodySection, "content")),

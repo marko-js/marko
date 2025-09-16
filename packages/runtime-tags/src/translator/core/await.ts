@@ -103,7 +103,7 @@ export default {
     const valueExtra = evaluate(valueAttr.value);
 
     getOrCreateSection(tag);
-    const paramsBinding = trackParamsReferences(tagBody, BindingType.param);
+    const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
 
     if (paramsBinding) {
       setBindingDownstream(paramsBinding, valueExtra);

@@ -90,7 +90,7 @@ export class Sorted<T> {
   }
 }
 
-export function push<T>(data: Opt<T>, item: T): Opt<T> {
+export function push<T>(data: Opt<T>, item: T): OneMany<T> {
   if (data) {
     if (Array.isArray(data)) {
       data.push(item);
@@ -358,6 +358,30 @@ export function addSorted<T, U extends T[]>(
   result[len] = cur;
 
   return result;
+}
+
+export function groupBy<T, U>(
+  data: Opt<T>,
+  cb: (item: T) => U,
+): Map<U, OneMany<T>> {
+  const group = new Map<U, OneMany<T>>();
+  if (data) {
+    if (Array.isArray(data)) {
+      for (const item of data) {
+        const key = cb(item);
+        group.set(key, push(group.get(key), item));
+      }
+    } else {
+      group.set(cb(data), data);
+    }
+  }
+  return group;
+}
+
+export function first<U, T>(
+  data: T & Opt<U>,
+): T extends OneMany<U> ? U : U | undefined {
+  return (data ? (Array.isArray(data) ? data[0] : data) : undefined) as any;
 }
 
 function unionSortedRepeatable<T>(

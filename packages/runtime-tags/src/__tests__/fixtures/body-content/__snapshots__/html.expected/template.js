@@ -5,6 +5,7 @@ export default _._template("__tests__/template.marko", input => {
   const $clickCount__closures = new Set();
   let clickCount = 0;
   const $childScope = _._peek_scope_id();
+  _._set_serialize_reason(1);
   _FancyButton({
     onClick: _._resume(function () {
       clickCount++;
@@ -18,7 +19,7 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "2:2"));
       _._resume_branch($scope1_id);
     }, $scope0_id)
-  }, 1);
+  });
   _._scope($scope0_id, {
     clickCount,
     "ClosureScopes:clickCount": $clickCount__closures,

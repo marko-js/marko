@@ -25,15 +25,15 @@ import {
   trackParamsReferences,
 } from "../../util/references";
 import { getCompatRuntimeFile } from "../../util/runtime";
-import { startSection } from "../../util/sections";
+import { type Section, startSection } from "../../util/sections";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
 
-export type InputSerializeReason = NonNullable<Sources["input"]>;
-export type InputSerializeReasons = [
-  InputSerializeReason,
-  ...InputSerializeReason[],
+export type ParamSerializeReason = NonNullable<Sources["param"]>;
+export type ParamSerializeReasonGroups = [
+  ParamSerializeReason,
+  ...ParamSerializeReason[],
 ];
 
 export let cleanIdentifier: t.Identifier;
@@ -51,8 +51,6 @@ export type TemplateExports = TemplateExport["props"];
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    inputSerializeReasons?: InputSerializeReasons;
-    returnSerializeReason?: InputSerializeReason | true;
     returnValueExpr?: t.NodeExtra;
     domExports?: {
       template: string;
@@ -175,10 +173,16 @@ export default {
 } satisfies TemplateVisitor<t.Program>;
 
 export function resolveSerializeReasonId(
-  inputSerializeReasons: InputSerializeReasons,
-  reason: InputSerializeReason,
+  dynamicSerializeReasonGroups: NonNullable<
+    Section["dynamicSerializeReasonGroups"]
+  >,
+  reason: ParamSerializeReason,
 ) {
-  const id = findIndexSorted(compareReferences, inputSerializeReasons, reason);
+  const id = findIndexSorted(
+    compareReferences,
+    dynamicSerializeReasonGroups,
+    reason,
+  );
 
   if (id === -1) {
     throw new Error("Unable to resolve serialize reason against input");
