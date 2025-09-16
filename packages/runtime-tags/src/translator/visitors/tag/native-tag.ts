@@ -175,7 +175,12 @@ export default {
 
       assertExclusiveControllableGroups(tag, seen);
 
-      if (node.var || hasEventHandlers || hasDynamicAttributes) {
+      if (
+        node.var ||
+        hasEventHandlers ||
+        hasDynamicAttributes ||
+        getRelatedControllable(tagName, seen)?.special
+      ) {
         const tagExtra = (node.extra ??= {});
         const tagSection = getOrCreateSection(tag);
         const nodeBinding = (tagExtra[kNativeTagBinding] = createBinding(
@@ -186,7 +191,10 @@ export default {
           BindingType.dom,
           tagSection,
         ));
-        getProgram().node.extra.isInteractive ||= hasEventHandlers;
+
+        if (hasEventHandlers) {
+          getProgram().node.extra.isInteractive = true;
+        }
 
         if (spreadReferenceNodes) {
           if (
@@ -289,13 +297,18 @@ export default {
         let { spreadExpression } = usedAttrs;
 
         if (staticControllable) {
-          const { helper, attrs } = staticControllable;
-
           if (tagName !== "select" && tagName !== "textarea") {
-            const values = attrs.map((attr) => attr?.value);
-            write`${callRuntime(helper, getScopeIdIdentifier(tagSection), visitAccessor, ...values)}`;
+            write`${callRuntime(
+              staticControllable.helper,
+              getScopeIdIdentifier(tagSection),
+              visitAccessor,
+              ...staticControllable.attrs.map((attr) => attr?.value),
+            )}`;
           }
-          addHTMLEffectCall(tagSection, undefined);
+
+          if (!(staticControllable.special && !staticControllable.attrs[1])) {
+            addHTMLEffectCall(tagSection, undefined);
+          }
         }
 
         let writeAtStartOfBody: t.Expression | undefined;
@@ -347,14 +360,16 @@ export default {
             spreadExpression = spreadIdentifier;
           }
 
-          if (value || valueChange) {
+          if (valueChange) {
             writeAtStartOfBody = callRuntime(
               "_attr_textarea_value",
               getScopeIdIdentifier(getSection(tag)),
-              getScopeAccessorLiteral(nodeBinding!),
+              visitAccessor,
               value,
               valueChange,
             );
+          } else if (value) {
+            writeAtStartOfBody = callRuntime("_escape_textarea_value", value);
           }
         }
 
@@ -511,7 +526,7 @@ export default {
               callRuntime(
                 "_attr_select_value",
                 getScopeIdIdentifier(getSection(tag)),
-                getScopeAccessorLiteral(nodeBinding!),
+                nodeBinding && getScopeAccessorLiteral(nodeBinding),
                 selectArgs.value,
                 selectArgs.valueChange,
                 t.arrowFunctionExpression(
@@ -649,14 +664,17 @@ export default {
               callRuntime(helper, scopeIdentifier, visitAccessor, ...values),
             ),
           );
-          addStatement(
-            "effect",
-            tagSection,
-            undefined,
-            t.expressionStatement(
-              callRuntime(`${helper}_script`, scopeIdentifier, visitAccessor),
-            ),
-          );
+
+          if (!(staticControllable.special && !attrs[1])) {
+            addStatement(
+              "effect",
+              tagSection,
+              undefined,
+              t.expressionStatement(
+                callRuntime(`${helper}_script`, scopeIdentifier, visitAccessor),
+              ),
+            );
+          }
         }
 
         for (const attr of staticAttrs) {
