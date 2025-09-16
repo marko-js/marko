@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.74
+
+### Patch Changes
+
+- [#2843](https://github.com/marko-js/marko/pull/2843) [`4319ad0`](https://github.com/marko-js/marko/commit/4319ad08b2b2ebc36eb2e491e96da99e9b2d79de) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Serialize branch index for inert if tags to ensure closures update properly.
+
 ## 6.0.73
 
 ### Patch Changes
