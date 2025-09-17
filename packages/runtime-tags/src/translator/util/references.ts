@@ -271,7 +271,7 @@ export function trackParamsReferences(
           section,
           paramsBinding,
           undefined,
-          addNumericPropertiesUntil(undefined, i - 1),
+          i > 0 ? addNumericPropertiesUntil(undefined, i - 1) : undefined,
         );
       } else if (t.isLVal(param)) {
         createBindingsAndTrackReferences(
@@ -532,10 +532,10 @@ function createBindingsAndTrackReferences(
         i++;
         if (element) {
           if (element.type === "RestElement") {
-            excludeProperties = addNumericPropertiesUntil(
-              excludeProperties,
-              i - 1,
-            );
+            excludeProperties =
+              i > 0
+                ? addNumericPropertiesUntil(excludeProperties, i - 1)
+                : undefined;
             createBindingsAndTrackReferences(
               element.argument,
               type,
@@ -1702,7 +1702,7 @@ function setCanonicalExtra(extra: t.NodeExtra, merged: t.NodeExtra) {
 
 function addNumericPropertiesUntil(props: Opt<string>, len: number) {
   let result = props;
-  for (let i = len; i-- >= 0; ) {
+  for (let i = len; i--; ) {
     result = propsUtil.add(result, i + "");
   }
   return result;
