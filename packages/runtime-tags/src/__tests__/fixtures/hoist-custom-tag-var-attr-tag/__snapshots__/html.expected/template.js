@@ -7,7 +7,7 @@ export default _._template("__tests__/template.marko", input => {
   const $what_content__subscribers = new Set();
   _thing({
     what: _.attrTag({
-      content: _._content_resume("__tests__/template.marko_1_content", () => {
+      content: _._content("__tests__/template.marko_1_content", () => {
         const $scope1_id = _._scope_id();
         let setHtml = _child({});
         _._subscribe($what_content__subscribers, _._scope($scope1_id, {
@@ -15,7 +15,7 @@ export default _._template("__tests__/template.marko", input => {
         }, "__tests__/template.marko", "3:4", {
           setHtml: "4:12"
         }));
-      }, $scope0_id)
+      })
     })
   });
   _._script($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml");
