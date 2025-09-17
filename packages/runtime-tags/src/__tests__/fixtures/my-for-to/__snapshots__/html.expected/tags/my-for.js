@@ -10,7 +10,7 @@ export default _._template("__tests__/tags/my-for.marko", (input, $serialize) =>
     }, "__tests__/tags/my-for.marko", "1:2", {
       $params2: "1:9"
     });
-  }, 0, $scope0_id, "#text/0", _._serialize_guard($serialize, /* input.to,input.content */0), _._serialize_guard($serialize, /* input.to */1));
+  }, 0, $scope0_id, "#text/0", _._serialize_guard($serialize, /* input.to,input.content */0), _._serialize_guard($serialize, /* input.to */1), _._serialize_guard($serialize, /* input.to */1));
   _._serialize_guard($serialize, /* input.to */1) && _._scope($scope0_id, {
     input_content: input.content
   }, "__tests__/tags/my-for.marko", 0, {
