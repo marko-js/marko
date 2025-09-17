@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.53
+
+### Patch Changes
+
+- [#2848](https://github.com/marko-js/marko/pull/2848) [`cab5759`](https://github.com/marko-js/marko/commit/cab575925dcc08ca079999cceed3a3dac23a0173) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Prevent compile-time infinite loop
+
+- Updated dependencies [[`cab5759`](https://github.com/marko-js/marko/commit/cab575925dcc08ca079999cceed3a3dac23a0173)]:
+  - @marko/runtime-tags@6.0.76
+
 ## 0.2.52
 
 ### Patch Changes
