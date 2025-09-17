@@ -618,6 +618,11 @@ function analyzeAttrs(
           const attrTagMeta = attrTagLookup[getTagName(child)];
           const childAttrExports = templateExport.props[attrTagMeta.name];
           if (childAttrExports) {
+            const childBodySection = startSection(child.get("body"));
+            if (childBodySection) {
+              childBodySection.downstreamBinding = childAttrExports.binding;
+            }
+
             if (childAttrExports.props && !attrTagMeta.dynamic) {
               analyzeAttrs(
                 rootTagExtra,

@@ -9,7 +9,7 @@ const $what_content__setup = $scope => {
   _._var($scope, "#childScope/0", $what_content__setHtml);
   _child($scope["#childScope/0"]);
 };
-const $what_content = _._content_resume("__tests__/template.marko_1_content", _child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $what_content__setup, 0, "ClosureScopes:1");
+const $what_content = /* @__PURE__ */_._content("__tests__/template.marko_1_content", _child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $what_content__setup, 0, "ClosureScopes:1");
 const $hoisted_setHtml2__script = _._script("__tests__/template.marko_0_$hoisted_setHtml", ({
   $hoisted_setHtml
 }) => {
