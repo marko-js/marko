@@ -1702,7 +1702,7 @@ function setCanonicalExtra(extra: t.NodeExtra, merged: t.NodeExtra) {
 
 function addNumericPropertiesUntil(props: Opt<string>, len: number) {
   let result = props;
-  for (let i = len; i--; ) {
+  for (let i = len; i-- >= 0; ) {
     result = propsUtil.add(result, i + "");
   }
   return result;
