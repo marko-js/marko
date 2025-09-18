@@ -378,12 +378,6 @@ export function groupBy<T, U>(
   return group;
 }
 
-export function first<U, T>(
-  data: T & Opt<U>,
-): T extends OneMany<U> ? U : U | undefined {
-  return (data ? (Array.isArray(data) ? data[0] : data) : undefined) as any;
-}
-
 function unionSortedRepeatable<T>(
   compare: Compare<T>,
   a: Many<T>,

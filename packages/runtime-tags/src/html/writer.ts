@@ -174,7 +174,7 @@ export function getScopeById(scopeId: number | undefined) {
 }
 
 export function _set_serialize_reason(reason: undefined | 0 | 1) {
-  return ($chunk.boundary.state.serializeReason = reason);
+  $chunk.boundary.state.serializeReason = reason;
 }
 
 export function _get_serialize_reason() {

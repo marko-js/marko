@@ -6,7 +6,6 @@
     a
     <!--M_[-->
     ERROR!
-    <!--M_*3 #text/0-->
     <!--M_]1 #text/0 2-->
     d
     <script>

@@ -16,8 +16,8 @@ import {
   find,
   findSorted,
   forEach,
+  groupBy,
   type Many,
-  type OneMany,
   type Opt,
   push,
   Sorted,
@@ -401,7 +401,8 @@ function trackAssignment(
           binding.upstreamAlias.propertyAliases.get(changePropName) ||
           createBinding(
             generateUid(changePropName),
-            binding.type === BindingType.input
+            binding.type === BindingType.input ||
+              binding.type == BindingType.param
               ? binding.type
               : BindingType.derived,
             binding.section,
@@ -999,39 +1000,32 @@ export function finalizeReferences() {
     });
   });
 
-  let paramSerializeReasons:
-    | undefined
-    | [OneMany<InputBinding>, ...OneMany<InputBinding>[]];
   forEachSection((section) => {
     finalizeSectionSerializeReasons(section);
 
     if (isReasonDynamic(section.serializeReason)) {
-      const inputSerializeReasons = filter(
+      const paramGroups = groupBy(
         section.serializeReason.param,
-        (reason) => reason.type === BindingType.input,
-      ) as Opt<InputBinding>;
-
-      if (inputSerializeReasons) {
-        paramSerializeReasons = paramSerializeReasons
-          ? addSorted(
-              compareReferences,
-              paramSerializeReasons,
-              inputSerializeReasons,
-            )
-          : [inputSerializeReasons];
+        (it) => it.section,
+      );
+      for (const [paramSection, param] of paramGroups) {
+        paramSection.paramReasonGroups = paramSection.paramReasonGroups
+          ? addSorted(compareReferences, paramSection.paramReasonGroups, param)
+          : [param];
       }
     }
 
     for (const [, reason] of section.serializeReasons) {
       if (isReasonDynamic(reason)) {
-        const input = filter(
-          reason.param,
-          (reason) => reason.type === BindingType.input,
-        ) as Opt<InputBinding>;
-        if (input) {
-          paramSerializeReasons = paramSerializeReasons
-            ? addSorted(compareReferences, paramSerializeReasons, input)
-            : [input];
+        const paramGroups = groupBy(reason.param, (it) => it.section);
+        for (const [paramSection, param] of paramGroups) {
+          paramSection.paramReasonGroups = paramSection.paramReasonGroups
+            ? addSorted(
+                compareReferences,
+                paramSection.paramReasonGroups,
+                param,
+              )
+            : [param];
         }
       }
     }
@@ -1046,8 +1040,6 @@ export function finalizeReferences() {
       programExtra.section!.returnSerializeReason = returnSources;
     }
   }
-
-  programExtra.section!.dynamicSerializeReasonGroups = paramSerializeReasons;
 
   forEachSection((section) => {
     let intersectionIndex = 0;

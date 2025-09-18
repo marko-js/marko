@@ -9,7 +9,7 @@ export default _._template("__tests__/template.marko", input => {
   _._dynamic_tag($scope0_id, "#text/0", _classLayout, {}, _._content_resume("__tests__/template.marko_1_content", (baseCount, message) => {
     const $scope1_id = _._scope_id();
     const $serialize = _._get_serialize_reason();
-    _._html(`<h1>${_._escape(message)}${_._el_resume($scope1_id, "#text/0", $serialize)}</h1><button id=tags>${_._escape(multiplier)}${_._el_resume($scope1_id, "#text/2")} * ${_._sep($serialize)}${_._escape(baseCount)}${_._el_resume($scope1_id, "#text/3", $serialize)} = <!>${_._escape(multiplier * baseCount)}${_._el_resume($scope1_id, "#text/4")}</button>${_._el_resume($scope1_id, "#button/1")}`);
+    _._html(`<h1>${_._escape(message)}${_._el_resume($scope1_id, "#text/0", _._serialize_guard($serialize, /* message */1))}</h1><button id=tags>${_._escape(multiplier)}${_._el_resume($scope1_id, "#text/2")} * ${_._sep(_._serialize_guard($serialize, /* baseCount */0))}${_._escape(baseCount)}${_._el_resume($scope1_id, "#text/3", _._serialize_guard($serialize, /* baseCount */0))} = <!>${_._escape(multiplier * baseCount)}${_._el_resume($scope1_id, "#text/4")}</button>${_._el_resume($scope1_id, "#button/1")}`);
     _._script($scope1_id, "__tests__/template.marko_1_multiplier");
     _._subscribe($multiplier__closures, _._scope($scope1_id, {
       baseCount,

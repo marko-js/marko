@@ -42,7 +42,7 @@ export interface Section {
   hoisted: ReferencedBindings;
   serializeReason: undefined | SerializeReason;
   serializeReasons: Map<symbol, SerializeReason>;
-  dynamicSerializeReasonGroups: ParamSerializeReasonGroups | undefined;
+  paramReasonGroups: ParamSerializeReasonGroups | undefined;
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
@@ -108,7 +108,7 @@ export function startSection(
       isHoistThrough: undefined,
       serializeReason: undefined,
       serializeReasons: new Map(),
-      dynamicSerializeReasonGroups: undefined,
+      paramReasonGroups: undefined,
       returnSerializeReason: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,

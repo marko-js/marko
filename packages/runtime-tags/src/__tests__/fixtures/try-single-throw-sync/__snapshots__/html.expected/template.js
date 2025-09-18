@@ -12,8 +12,8 @@ export default _._template("__tests__/template.marko", input => {
       content: _._content_resume("__tests__/template.marko_2_content", err => {
         const $serialize = _._get_serialize_reason();
         const $scope2_id = _._scope_id();
-        _._html(`${_._escape(err.message)}${_._el_resume($scope2_id, "#text/0", $serialize)}`);
-        $serialize && _._scope($scope2_id, {}, "__tests__/template.marko", "5:3");
+        _._html(`${_._escape(err.message)}${_._el_resume($scope2_id, "#text/0", _._serialize_guard($serialize, /* err.message */0))}`);
+        _._serialize_guard($serialize, /* err.message */0) && _._scope($scope2_id, {}, "__tests__/template.marko", "5:3");
       }, $scope0_id)
     })
   });

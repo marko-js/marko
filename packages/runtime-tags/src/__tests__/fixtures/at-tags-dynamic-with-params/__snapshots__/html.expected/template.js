@@ -10,8 +10,8 @@ export default _._template("__tests__/template.marko", input => {
       content: _._content_resume("__tests__/template.marko_1_content", y => {
         const $serialize = _._get_serialize_reason();
         const $scope1_id = _._scope_id();
-        _._html(`y: ${_._sep($serialize)}${_._escape(y)}${_._el_resume($scope1_id, "#text/0", $serialize)}`);
-        $serialize && _._scope($scope1_id, {}, "__tests__/template.marko", "4:10");
+        _._html(`y: ${_._sep(_._serialize_guard($serialize, /* y */0))}${_._escape(y)}${_._el_resume($scope1_id, "#text/0", _._serialize_guard($serialize, /* y */0))}`);
+        _._serialize_guard($serialize, /* y */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "4:10");
       }, $scope0_id)
     });
   }

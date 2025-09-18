@@ -94,16 +94,14 @@ export function getExprIfSerialized<
     const serializeIdentifier = t.identifier(
       getSharedUid("serialize", section),
     );
-    const guard = section.dynamicSerializeReasonGroups
+
+    const guard = section.paramReasonGroups
       ? callRuntime(
           "_serialize_if",
           serializeIdentifier,
           withLeadingComment(
             t.numericLiteral(
-              resolveSerializeReasonId(
-                section.dynamicSerializeReasonGroups!,
-                reasons,
-              ),
+              resolveSerializeReasonId(section.paramReasonGroups!, reasons),
             ),
             mapToString(reasons, ",", getDebugName),
           ),
@@ -124,16 +122,13 @@ function getInputSerializeReasonGuard(reason: Sources) {
     const serializeIdentifier = t.identifier(
       getSharedUid("serialize", section),
     );
-    const guard = section.dynamicSerializeReasonGroups
+    const guard = section.paramReasonGroups
       ? callRuntime(
           "_serialize_guard",
           serializeIdentifier,
           withLeadingComment(
             t.numericLiteral(
-              resolveSerializeReasonId(
-                section.dynamicSerializeReasonGroups!,
-                reasons,
-              ),
+              resolveSerializeReasonId(section.paramReasonGroups!, reasons),
             ),
             mapToString(reasons, ",", getDebugName),
           ),

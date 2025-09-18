@@ -173,16 +173,10 @@ export default {
 } satisfies TemplateVisitor<t.Program>;
 
 export function resolveSerializeReasonId(
-  dynamicSerializeReasonGroups: NonNullable<
-    Section["dynamicSerializeReasonGroups"]
-  >,
+  paramReasonGroups: NonNullable<Section["paramReasonGroups"]>,
   reason: ParamSerializeReason,
 ) {
-  const id = findIndexSorted(
-    compareReferences,
-    dynamicSerializeReasonGroups,
-    reason,
-  );
+  const id = findIndexSorted(compareReferences, paramReasonGroups, reason);
 
   if (id === -1) {
     throw new Error("Unable to resolve serialize reason against input");

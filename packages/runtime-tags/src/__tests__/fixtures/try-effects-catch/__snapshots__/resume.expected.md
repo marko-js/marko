@@ -7,7 +7,6 @@
     <!--M_*1 #div/0-->
     <!--M_[-->
     ERROR!
-    <!--M_*3 #text/0-->
     <!--M_]1 #text/1 2-->
     <div>
       This is good

@@ -27,10 +27,10 @@ export default _._template("__tests__/template.marko", input => {
         content: _._content_resume("__tests__/template.marko_2_content", inner => {
           const $serialize2 = _._get_serialize_reason();
           const $scope2_id = _._scope_id();
-          _._html(`<div>${_._escape(outer)}${_._el_resume($scope2_id, "#text/0", $serialize)}.${_._sep($serialize2)}${_._escape(inner)}${_._el_resume($scope2_id, "#text/1", $serialize2)}</div>`);
-          ($serialize || $serialize2) && _._subscribe($child_content__outer__closures, _._scope($scope2_id, {
-            _: $serialize && _._scope_with_id($scope1_id),
-            "ClosureSignalIndex:outer": $serialize && 0
+          _._html(`<div>${_._escape(outer)}${_._el_resume($scope2_id, "#text/0", _._serialize_guard($serialize, /* outer */0))}.${_._sep(_._serialize_guard($serialize2, /* inner */0))}${_._escape(inner)}${_._el_resume($scope2_id, "#text/1", _._serialize_guard($serialize2, /* inner */0))}</div>`);
+          (_._serialize_guard($serialize, /* outer */0) || _._serialize_guard($serialize2, /* inner */0)) && _._subscribe($child_content__outer__closures, _._scope($scope2_id, {
+            _: _._serialize_if($serialize, /* outer */0) && _._scope_with_id($scope1_id),
+            "ClosureSignalIndex:outer": _._serialize_if($serialize, /* outer */0) && 0
           }, "__tests__/template.marko", "7:6"));
           _._resume_branch($scope2_id);
         }, $scope1_id)
@@ -38,7 +38,7 @@ export default _._template("__tests__/template.marko", input => {
       _._subscribe($y__closures, _._scope($scope1_id, {
         outer,
         _: _._scope_with_id($scope0_id),
-        "ClosureScopes:outer": $serialize && $child_content__outer__closures,
+        "ClosureScopes:outer": _._serialize_if($serialize, /* outer */0) && $child_content__outer__closures,
         "#childScope/0": _._existing_scope($childScope),
         "ClosureSignalIndex:y": 0
       }, "__tests__/template.marko", "6:2", {

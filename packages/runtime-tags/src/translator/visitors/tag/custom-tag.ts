@@ -201,14 +201,13 @@ export default {
           );
         }
 
-        if (childExtra.section!.dynamicSerializeReasonGroups) {
+        if (childExtra.section!.paramReasonGroups) {
           const childInputSerializePropIds = (tagExtra[
             kChildInputSerializePropIds
           ] = [] as unknown as NonNullable<
             (typeof tagExtra)[typeof kChildInputSerializePropIds]
           >);
-          for (const reason of childExtra.section!
-            .dynamicSerializeReasonGroups) {
+          for (const reason of childExtra.section!.paramReasonGroups) {
             const propId = Symbol();
             childInputSerializePropIds.push(propId);
             addBindingSerializeReasonExpr(
@@ -314,7 +313,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         );
         if (reason) {
           hasDynamicReasons ||= reason !== true && !reason.state;
-          const childReason = childExtra.section!.dynamicSerializeReasonGroups![
+          const childReason = childExtra.section!.paramReasonGroups![
             i
           ] as OneMany<InputBinding>;
           props.push(
