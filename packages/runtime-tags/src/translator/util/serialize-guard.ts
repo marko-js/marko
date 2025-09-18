@@ -134,7 +134,7 @@ function getInputSerializeReasonGuard(reason: Sources) {
 
 export function getPropertySerializeGuard(
   section: Section,
-  childExtra: t.NodeExtra,
+  childSection: Section,
   childScopeBinding: Binding,
   childSerializeReasonIds: [symbol, ...symbol[]],
 ) {
@@ -163,7 +163,7 @@ export function getPropertySerializeGuard(
       );
       if (reason) {
         hasDynamicReasons ||= reason !== true && !reason.state;
-        const childReason = childExtra.section!.paramReasonGroups![
+        const childReason = childSection.paramReasonGroups![
           i
         ] as OneMany<InputBinding>;
         props.push(
