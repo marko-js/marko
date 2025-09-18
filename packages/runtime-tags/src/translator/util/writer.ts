@@ -6,7 +6,6 @@ import {
   getSection,
   type Section,
 } from "../util/sections";
-import { getSerializeGuard } from "../visitors/program/html";
 import { isOutputHTML } from "./marko-config";
 import normalizeStringExpression, {
   appendLiteral,
@@ -17,6 +16,7 @@ import {
   getScopeAccessorLiteral,
 } from "./references";
 import { callRuntime } from "./runtime";
+import { getSerializeGuard } from "./serialize-guard";
 import type { SerializeReason } from "./serialize-reasons";
 import { getSetup } from "./signals";
 import { createSectionState } from "./state";

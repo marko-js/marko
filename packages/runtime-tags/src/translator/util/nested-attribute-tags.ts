@@ -16,6 +16,8 @@ export type AttrTagLookup = Record<
   }
 >;
 
+export type AttrTagGroup = AttrTagLookup[string]["group"];
+
 type AttrTagNames = string[];
 
 declare module "@marko/compiler/dist/types" {

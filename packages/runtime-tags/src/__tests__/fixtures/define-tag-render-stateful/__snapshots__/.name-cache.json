@@ -1,0 +1,18 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "o",
+      "$$define_content__y__script": "m",
+      "$$define_content__y": "r",
+      "$$define_content__name": "n",
+      "$$define_content__count": "c",
+      "$$define_content__$params": "_",
+      "$$define_content__$temp": "e",
+      "$$dynamicTag": "a",
+      "$$count__OR__MyTag": "s",
+      "$$count__script": "i",
+      "$$count": "l"
+    }
+  }
+}

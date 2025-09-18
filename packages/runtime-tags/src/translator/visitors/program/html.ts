@@ -2,143 +2,18 @@ import { types as t } from "@marko/compiler";
 
 import { getSharedUid, usedSharedUid } from "../../util/generate-uid";
 import isStatic from "../../util/is-static";
-import { groupBy, mapToString } from "../../util/optional";
-import {
-  getDebugName,
-  getReadReplacement,
-  isRegisteredFnExtra,
-  type Sources,
-} from "../../util/references";
+import { getReadReplacement, isRegisteredFnExtra } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import { getScopeIdIdentifier, getSection } from "../../util/sections";
-import {
-  isReasonDynamic,
-  type SerializeReason,
-  type SerializeReasons,
-} from "../../util/serialize-reasons";
+import { isReasonDynamic } from "../../util/serialize-reasons";
 import { writeHTMLResumeStatements } from "../../util/signals";
 import { simplifyFunction } from "../../util/simplify-fn";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
-import { withLeadingComment } from "../../util/with-comment";
 import { flushInto } from "../../util/writer";
-import { resolveSerializeReasonId } from ".";
 
 export function getTemplateContentName() {
   return getSharedUid("content");
-}
-
-export function getSerializeGuard(
-  reason: undefined | SerializeReason,
-  optional: boolean,
-) {
-  return !reason
-    ? t.numericLiteral(0)
-    : reason === true || reason.state
-      ? optional
-        ? undefined
-        : reason === true
-          ? t.numericLiteral(1)
-          : withLeadingComment(
-              t.numericLiteral(1),
-              `state: ${mapToString(reason.state, ", ", getDebugName)}`,
-            )
-      : getInputSerializeReasonGuard(reason);
-}
-
-export function getSerializeGuardForAny(
-  reasons: undefined | SerializeReasons,
-  optional: boolean,
-) {
-  if (!reasons || reasons === true) {
-    return getSerializeGuard(reasons, optional);
-  }
-
-  if (reasons.length === 1) {
-    return getSerializeGuard(reasons[0], optional);
-  }
-
-  let expr!: t.Expression;
-  for (const reason of reasons) {
-    if (reason.state) {
-      return optional
-        ? undefined
-        : withLeadingComment(
-            t.numericLiteral(1),
-            `state: ${mapToString(reason.state, ", ", getDebugName)}`,
-          );
-    }
-
-    const guard = getSerializeGuard(reason, false)!;
-    expr = expr ? t.logicalExpression("||", expr, guard) : guard;
-  }
-
-  return expr;
-}
-
-export function getExprIfSerialized<
-  T extends undefined | SerializeReason,
-  U extends t.Expression,
->(reason: T, expr: U): T extends {} ? U : undefined {
-  if (!reason) {
-    return undefined as any;
-  }
-  if (reason === true || reason.state) {
-    return expr as any;
-  }
-
-  let orExpr: t.Expression | undefined;
-
-  const grouped = groupBy(reason.param, (binding) => binding.section);
-  for (const [section, reasons] of grouped) {
-    const serializeIdentifier = t.identifier(
-      getSharedUid("serialize", section),
-    );
-
-    const guard = section.paramReasonGroups
-      ? callRuntime(
-          "_serialize_if",
-          serializeIdentifier,
-          withLeadingComment(
-            t.numericLiteral(
-              resolveSerializeReasonId(section.paramReasonGroups!, reasons),
-            ),
-            mapToString(reasons, ",", getDebugName),
-          ),
-        )
-      : serializeIdentifier;
-
-    orExpr = orExpr ? t.logicalExpression("||", orExpr, guard) : guard;
-  }
-
-  return t.logicalExpression("&&", orExpr!, expr) as any;
-}
-
-function getInputSerializeReasonGuard(reason: Sources) {
-  let expr: t.Expression | undefined;
-
-  const grouped = groupBy(reason.param, (binding) => binding.section);
-  for (const [section, reasons] of grouped) {
-    const serializeIdentifier = t.identifier(
-      getSharedUid("serialize", section),
-    );
-    const guard = section.paramReasonGroups
-      ? callRuntime(
-          "_serialize_guard",
-          serializeIdentifier,
-          withLeadingComment(
-            t.numericLiteral(
-              resolveSerializeReasonId(section.paramReasonGroups!, reasons),
-            ),
-            mapToString(reasons, ",", getDebugName),
-          ),
-        )
-      : serializeIdentifier;
-
-    expr = expr ? t.logicalExpression("||", expr, guard) : guard;
-  }
-
-  return expr!;
 }
 
 export default {

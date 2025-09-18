@@ -35,6 +35,7 @@ import {
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
+import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSectionSerializeReasonExpr,
   getBindingSerializeReason,
@@ -49,7 +50,6 @@ import {
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
-import { getSerializeGuard } from "../visitors/program/html";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
 
 type ForType = "in" | "of" | "to" | "until";

@@ -6,6 +6,10 @@ import {
 import path from "path";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
+import {
+  type BindingPropTree,
+  getBindingPropTree,
+} from "../../util/binding-prop-tree";
 import entryBuilder from "../../util/entry-builder";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getKnownAttrValues } from "../../util/get-known-attr-values";
@@ -17,7 +21,6 @@ import {
 } from "../../util/marko-config";
 import { findIndexSorted } from "../../util/optional";
 import {
-  type Binding,
   BindingType,
   compareReferences,
   finalizeReferences,
@@ -42,12 +45,7 @@ export function isScopeIdentifier(node: t.Node): node is t.Identifier {
   return node === scopeIdentifier;
 }
 
-export type TemplateExport = {
-  id: string;
-  binding: Binding;
-  props: { [prop: string]: TemplateExport } | undefined;
-};
-export type TemplateExports = TemplateExport["props"];
+export type TemplateExports = BindingPropTree["props"];
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -56,7 +54,7 @@ declare module "@marko/compiler/dist/types" {
       template: string;
       walks: string;
       setup: string;
-      input: TemplateExport | undefined;
+      input: BindingPropTree | undefined;
     };
   }
 }
@@ -106,10 +104,7 @@ export default {
       const programExtra = program.node.extra;
       const inputBinding = program.node.params[0].extra?.binding;
       if (inputBinding && bindingHasDownstreamExpressions(inputBinding)) {
-        programExtra.domExports!.input = buildTemplateExports(
-          inputBinding,
-          program,
-        );
+        programExtra.domExports!.input = getBindingPropTree(inputBinding);
       }
     },
   },
@@ -198,23 +193,4 @@ function resolveRelativeToEntry(
           ? path.join(file.opts.filename as string, "..", req)
           : req,
       );
-}
-
-function buildTemplateExports(
-  binding: Binding,
-  program: t.NodePath<t.Program>,
-) {
-  const templateExport: TemplateExport = {
-    id: (binding.export ??= generateUid(binding.name)),
-    binding,
-    props: undefined,
-  };
-  if (!(binding.aliases.size || binding.downstreamExpressions.size)) {
-    templateExport.props = {};
-    for (const [property, alias] of binding.propertyAliases) {
-      templateExport.props[property] = buildTemplateExports(alias, program);
-    }
-  }
-
-  return templateExport;
 }

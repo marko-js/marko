@@ -42,8 +42,15 @@ export default {
       if (varBinding) {
         // TODO: need to do this for attr tags.
         // Should probably allow passing a binding to analyzeAttrTags.
-        bodySection.downstreamBinding =
-          varBinding.propertyAliases.get("content") || varBinding;
+        const contentAlias = varBinding.propertyAliases.get("content");
+
+        if (contentAlias) {
+          contentAlias.downstreamExpressions;
+
+          bodySection.downstreamBinding = contentAlias;
+        } else {
+          bodySection.downstreamBinding = varBinding;
+        }
       }
     }
     // TODO: should determine if var bindings are nullable based on attrs.

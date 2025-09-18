@@ -37,6 +37,7 @@ import {
   getSectionForBody,
   startSection,
 } from "../../util/sections";
+import { getSerializeGuard } from "../../util/serialize-guard";
 import {
   addBindingSerializeReasonExpr,
   getBindingSerializeReason,
@@ -57,7 +58,6 @@ import {
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
-import { getSerializeGuard } from "../program/html";
 import { getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");

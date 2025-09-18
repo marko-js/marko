@@ -35,6 +35,10 @@ import {
   startSection,
 } from "../util/sections";
 import {
+  getSerializeGuard,
+  getSerializeGuardForAny,
+} from "../util/serialize-guard";
+import {
   addSectionSerializeReasonExpr,
   getBindingSerializeReason,
   getSectionSerializeReason,
@@ -50,10 +54,6 @@ import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
-import {
-  getSerializeGuard,
-  getSerializeGuardForAny,
-} from "../visitors/program/html";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
 
 const kStatefulReason = Symbol("<if> stateful reason");

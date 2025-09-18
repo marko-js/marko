@@ -11,6 +11,7 @@ import {
 } from "@marko/compiler/babel-utils";
 import path from "path";
 
+import type { BindingPropTree } from "../../util/binding-prop-tree";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getTagName } from "../../util/get-tag-name";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
@@ -23,7 +24,6 @@ import {
   filterMap,
   forEach,
   fromIter,
-  mapToString,
   type OneMany,
   type Opt,
 } from "../../util/optional";
@@ -34,7 +34,6 @@ import {
   createBinding,
   dropReferences,
   getAllTagReferenceNodes,
-  getInputDebugName,
   getScopeAccessorLiteral,
   type InputBinding,
   mergeReferences,
@@ -52,6 +51,7 @@ import {
   type Section,
   startSection,
 } from "../../util/sections";
+import { getPropertySerializeGuard } from "../../util/serialize-guard";
 import {
   addBindingSerializeReasonExpr,
   getBindingSerializeReason,
@@ -76,10 +76,9 @@ import {
 import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
-import { withLeadingComment } from "../../util/with-comment";
 import * as writer from "../../util/writer";
-import { scopeIdentifier, type TemplateExport } from "../program";
-import { getSerializeGuard, getTemplateContentName } from "../program/html";
+import { scopeIdentifier } from "../program";
+import { getTemplateContentName } from "../program/html";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
 interface InputExpr {
@@ -172,14 +171,12 @@ export default {
         const childInputBinding = childProgram.params[0].extra?.binding as
           | undefined
           | InputBinding;
-        const inputExpr: InputExpr = {};
-        analyzeAttrs(
+        const inputExpr = analyzeAttrs(
           tagExtra,
           section,
           tag,
           childExtra?.domExports!.input,
           attrExprs,
-          inputExpr,
         );
 
         if (varBinding) {
@@ -285,61 +282,16 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     section,
     childScopeBinding,
   );
-  const childSerializeReasonIds = tagExtra[kChildInputSerializePropIds];
-  let childSerializeReasonExpr: t.Expression | undefined;
 
-  if (childSerializeReasonIds) {
-    if (childSerializeReasonIds.length === 1) {
-      // Special case single reason to pass either 1 or undefined.
-      const reason = getBindingSerializeReason(
-        section,
-        childScopeBinding,
-        childSerializeReasonIds[0],
-      );
-      childSerializeReasonExpr = !reason
-        ? undefined
-        : reason == true || reason.state
-          ? t.numericLiteral(1)
-          : getSerializeGuard(reason, true);
-    } else {
-      const props: t.ObjectExpression["properties"] = [];
-      let hasDynamicReasons = false;
-      let hasSkippedReasons = false;
-      for (let i = 0; i < childSerializeReasonIds.length; i++) {
-        const reason = getBindingSerializeReason(
-          section,
-          childScopeBinding,
-          childSerializeReasonIds[i],
-        );
-        if (reason) {
-          hasDynamicReasons ||= reason !== true && !reason.state;
-          const childReason = childExtra.section!.paramReasonGroups![
-            i
-          ] as OneMany<InputBinding>;
-          props.push(
-            t.objectProperty(
-              withLeadingComment(
-                t.numericLiteral(i),
-                mapToString(childReason, ", ", getInputDebugName),
-              ),
-              reason === true || reason.state
-                ? t.numericLiteral(1)
-                : getSerializeGuard(reason, false)!,
-            ),
-          );
-        } else {
-          hasSkippedReasons = true;
-        }
-      }
-
-      if (props.length) {
-        childSerializeReasonExpr =
-          hasDynamicReasons || hasSkippedReasons
-            ? t.objectExpression(props)
-            : t.numericLiteral(1);
-      }
-    }
-  }
+  const childInputSerializePropIds = tagExtra[kChildInputSerializePropIds];
+  const childSerializeReasonExpr =
+    childInputSerializePropIds &&
+    getPropertySerializeGuard(
+      section,
+      childExtra,
+      childScopeBinding,
+      childInputSerializePropIds,
+    );
 
   if (childScopeSerializeReason) {
     const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
@@ -558,13 +510,13 @@ function analyzeAttrs(
   rootTagExtra: t.MarkoTagExtra,
   section: Section,
   tag: t.NodePath<t.MarkoTag>,
-  templateExport: TemplateExport | undefined,
+  templateExport: BindingPropTree | undefined,
   rootAttrExprs: Set<t.NodeExtra>,
-  inputExpr: InputExpr,
-) {
+): InputExpr {
+  const inputExpr: InputExpr = {};
   if (!templateExport) {
     dropReferences(getAllTagReferenceNodes(tag.node));
-    return;
+    return inputExpr;
   }
 
   if (!templateExport.props || tag.node.arguments?.length) {
@@ -575,7 +527,7 @@ function analyzeAttrs(
     ));
 
     setBindingDownstream(templateExport.binding, extra);
-    return;
+    return inputExpr;
   }
 
   const known: NonNullable<InputExpr["known"]> = (inputExpr.known = {});
@@ -623,13 +575,12 @@ function analyzeAttrs(
             }
 
             if (childAttrExports.props && !attrTagMeta.dynamic) {
-              analyzeAttrs(
+              known[attrTagMeta.name] = analyzeAttrs(
                 rootTagExtra,
                 section,
                 child,
                 childAttrExports,
                 rootAttrExprs,
-                (known[attrTagMeta.name] = {}),
               );
             } else {
               analyzeDynamicChildGroup(attrTagMeta.group, child);
@@ -754,11 +705,13 @@ function analyzeAttrs(
 
     setBindingDownstream(spreadBinding, extra);
   }
+
+  return inputExpr;
 }
 
 function writeAttrsToExports(
   tag: t.NodePath<t.MarkoTag>,
-  templateExport: TemplateExport,
+  templateExport: BindingPropTree,
   importAlias: string,
   info: {
     circular: boolean;
@@ -782,7 +735,7 @@ function writeAttrsToExports(
     const tagInputIdentifier = importOrSelfReferenceName(
       tag.hub.file,
       info.relativePath,
-      templateExport.id,
+      templateExport.binding.export!,
       importAlias,
     );
     addStatement(
@@ -808,7 +761,7 @@ function writeAttrsToExports(
     const tagInputIdentifier = importOrSelfReferenceName(
       tag.hub.file,
       info.relativePath,
-      templateExport.id,
+      templateExport.binding.export!,
       importAlias,
     );
 
@@ -957,7 +910,7 @@ function writeAttrsToExports(
         const attrExportIdentifier = importOrSelfReferenceName(
           tag.hub.file,
           info.relativePath,
-          childAttrExports.id,
+          childAttrExports.binding.export!,
           `${importAlias}_${attrTagMeta.name}`,
         );
         decls.push(t.variableDeclarator(getAttrTagIdentifier(attrTagMeta)));
@@ -990,7 +943,7 @@ function writeAttrsToExports(
       const contentExportIdentifier = importNamed(
         tag.hub.file,
         info.relativePath,
-        templateExport.props.content.id,
+        templateExport.props.content.binding.export!,
         `${importAlias}_content`,
       );
       addStatement(
@@ -1035,7 +988,7 @@ function writeAttrsToExports(
     const attrExportIdentifier = importOrSelfReferenceName(
       tag.hub.file,
       info.relativePath,
-      childAttrExports.id,
+      childAttrExports.binding.export!,
       `${importAlias}_${attr.name}`,
     );
     addStatement(
@@ -1073,7 +1026,7 @@ function writeAttrsToExports(
       const attrExportIdentifier = importOrSelfReferenceName(
         tag.hub.file,
         info.relativePath,
-        childAttrExports.id,
+        childAttrExports.binding.export!,
         `${importAlias}_${name}`,
       );
       addStatement(

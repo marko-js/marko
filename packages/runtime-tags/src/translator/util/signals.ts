@@ -8,10 +8,6 @@ import {
 import type { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getSectionReturnValueIdentifier } from "../core/return";
 import { isScopeIdentifier, scopeIdentifier } from "../visitors/program";
-import {
-  getExprIfSerialized,
-  getSerializeGuard,
-} from "../visitors/program/html";
 import { forEachIdentifier } from "./for-each-identifier";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
@@ -46,6 +42,7 @@ import {
   isImmediateOwner,
   type Section,
 } from "./sections";
+import { getExprIfSerialized, getSerializeGuard } from "./serialize-guard";
 import {
   getBindingSerializeReason,
   getSectionSerializeReason,
