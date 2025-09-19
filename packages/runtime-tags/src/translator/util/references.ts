@@ -1432,7 +1432,7 @@ export function getReadReplacement(node: t.Identifier | t.MemberExpression) {
           ? t.callExpression(getHoistFunctionIdentifier(binding), [
               getScopeExpression(node.extra.section!, binding.section),
             ])
-          : t.identifier(getScopeAccessor(binding)!);
+          : t.identifier(binding.name);
       } else if (binding.name !== node.name) {
         node.name = binding.name;
       }

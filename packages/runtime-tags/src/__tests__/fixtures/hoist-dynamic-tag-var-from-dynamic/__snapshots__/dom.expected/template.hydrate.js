@@ -1,4 +1,4 @@
-// size: 832 (min) 363 (brotli)
+// size: 832 (min) 370 (brotli)
 function $setup$1($scope) {
   _._return($scope, $_return($scope));
 }
@@ -62,7 +62,7 @@ const $get$hoisted_setHtml2 = _._hoist(2, "a3", "a2"),
   _._resume("c6", _._hoist(2, "a1")),
   _._var_resume("c7", _._const(2)),
   _._script("c8", ({ 6: $hoisted_setHtml }) => {
-    for (const fn of 6) fn("Hoist from custom tag");
+    for (const fn of $hoisted_setHtml) fn("Hoist from custom tag");
   }),
   _._script("c9", ($scope) => {
     ($get$hoisted_setHtml2($scope)("Hoist from dynamic tag"),

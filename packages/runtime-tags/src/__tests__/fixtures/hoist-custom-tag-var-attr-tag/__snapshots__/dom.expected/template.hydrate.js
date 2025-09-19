@@ -20,6 +20,6 @@ const $what_content__setHtml = _._var_resume("c2", _._const(2));
   "a1",
 ),
   _._script("c3", ({ 1: $hoisted_setHtml }) => {
-    for (const fn of 1) fn("Hoist from custom tag");
+    for (const fn of $hoisted_setHtml) fn("Hoist from custom tag");
   }),
   init());
