@@ -9,9 +9,10 @@ export default _._template("__tests__/template.marko", input => {
     _._for_of(items, inner => {
       const $scope2_id = _._scope_id();
       const $childScope = _._peek_scope_id();
+      _._set_serialize_reason(1);
       _child({
         name: `${outer}.${inner}`
-      }, 1);
+      });
       _._scope($scope2_id, {
         _: _._scope_with_id($scope1_id),
         "#childScope/0": _._existing_scope($childScope)

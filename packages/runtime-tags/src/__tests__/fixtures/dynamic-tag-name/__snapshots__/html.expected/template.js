@@ -2,7 +2,8 @@ import tagA from "./tags/tag-a/index.marko";
 import tagB from "./tags/tag-b/index.marko";
 const foo = '';
 import * as _ from "@marko/runtime-tags/debug/html";
-export default _._template("__tests__/template.marko", (input, $serialize) => {
+export default _._template("__tests__/template.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   const {
     content,
@@ -85,17 +86,17 @@ export default _._template("__tests__/template.marko", (input, $serialize) => {
   _._dynamic_tag($scope0_id, "#text/17", foo + 'div', {}, 0, 0, 0);
   _._dynamic_tag($scope0_id, "#text/18", "d" + "iv", {}, 0, 0, 0);
   _._serialize_guard($serialize, /* content,x,show,showTagA,isLarge,tag,level,other */8) && _._scope($scope0_id, {
-    content: _._serialize_if($serialize, /* input.other */9) && content,
-    x: _._serialize_if($serialize, /* input.other */9) && x,
-    show: _._serialize_if($serialize, /* input.other */9) && show,
-    showTagA: _._serialize_if($serialize, /* input.other */9) && showTagA,
-    isLarge: _._serialize_if($serialize, /* input.other */9) && isLarge,
-    tag: _._serialize_if($serialize, /* input.other */9) && tag,
-    level: _._serialize_if($serialize, /* input.other */9) && level,
-    other: _._serialize_if($serialize, /* input.content, input.x, input.show, input.showTagA, input.isLarge, input.tag, input.level */7) && other,
-    largeHeading: _._serialize_if($serialize, /* input.other */9) && largeHeading,
-    tagConstA: _._serialize_if($serialize, /* input.other */9) && tagConstA,
-    tagConstB: _._serialize_if($serialize, /* input.other */9) && tagConstB
+    content: _._serialize_if($serialize, /* other */9) && content,
+    x: _._serialize_if($serialize, /* other */9) && x,
+    show: _._serialize_if($serialize, /* other */9) && show,
+    showTagA: _._serialize_if($serialize, /* other */9) && showTagA,
+    isLarge: _._serialize_if($serialize, /* other */9) && isLarge,
+    tag: _._serialize_if($serialize, /* other */9) && tag,
+    level: _._serialize_if($serialize, /* other */9) && level,
+    other: _._serialize_if($serialize, /* content,x,show,showTagA,isLarge,tag,level */7) && other,
+    largeHeading: _._serialize_if($serialize, /* other */9) && largeHeading,
+    tagConstA: _._serialize_if($serialize, /* other */9) && tagConstA,
+    tagConstB: _._serialize_if($serialize, /* other */9) && tagConstB
   }, "__tests__/template.marko", 0, {
     content: "5:10",
     x: "5:19",

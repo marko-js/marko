@@ -4,11 +4,7 @@
   <head />
   <body>
     <div>
-      Hello 
-      <!---->
-      Ryan
-      <!--M_*2 #text/0-->
-       
+      Hello Ryan 
       <!---->
       1
       <!--M_*2 #text/1-->
@@ -43,11 +39,7 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      Hello 
-      <!---->
-      Ryan
-      <!--M_*2 #text/0-->
-       
+      Hello Ryan 
       <!---->
       2
       <!--M_*2 #text/1-->
@@ -74,7 +66,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div/#text3 "1" => "2"
+UPDATE html/body/div/#text1 "1" => "2"
 UPDATE html/body/button/#text "1" => "2"
 ```
 
@@ -87,11 +79,7 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      Hello 
-      <!---->
-      Ryan
-      <!--M_*2 #text/0-->
-       
+      Hello Ryan 
       <!---->
       3
       <!--M_*2 #text/1-->
@@ -118,7 +106,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div/#text3 "2" => "3"
+UPDATE html/body/div/#text1 "2" => "3"
 UPDATE html/body/button/#text "2" => "3"
 ```
 
@@ -131,11 +119,7 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      Hello 
-      <!---->
-      Ryan
-      <!--M_*2 #text/0-->
-       
+      Hello Ryan 
       <!---->
       4
       <!--M_*2 #text/1-->
@@ -162,6 +146,6 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div/#text3 "3" => "4"
+UPDATE html/body/div/#text1 "3" => "4"
 UPDATE html/body/button/#text "3" => "4"
 ```

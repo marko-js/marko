@@ -1,6 +1,7 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
-export default _._template("__tests__/template.marko", (input, $serialize) => {
+export default _._template("__tests__/template.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   const output = _._el($scope0_id, "__tests__/template.marko_0/#div");
   _._html(`<div></div>${_._el_resume($scope0_id, "#div/0")}`);

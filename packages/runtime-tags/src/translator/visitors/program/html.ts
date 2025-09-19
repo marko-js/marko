@@ -1,20 +1,20 @@
 import { types as t } from "@marko/compiler";
-import { getProgram } from "@marko/compiler/babel-utils";
 
 import { getSharedUid, usedSharedUid } from "../../util/generate-uid";
 import isStatic from "../../util/is-static";
-import { mapToString } from "../../util/optional";
+import { groupBy, mapToString } from "../../util/optional";
 import {
   getDebugName,
-  getInputDebugName,
   getReadReplacement,
   isRegisteredFnExtra,
+  type Sources,
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
-import { getScopeIdIdentifier } from "../../util/sections";
-import type {
-  SerializeReason,
-  SerializeReasons,
+import { getScopeIdIdentifier, getSection } from "../../util/sections";
+import {
+  isReasonDynamic,
+  type SerializeReason,
+  type SerializeReasons,
 } from "../../util/serialize-reasons";
 import { writeHTMLResumeStatements } from "../../util/signals";
 import { simplifyFunction } from "../../util/simplify-fn";
@@ -22,7 +22,7 @@ import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
 import { withLeadingComment } from "../../util/with-comment";
 import { flushInto } from "../../util/writer";
-import { type InputSerializeReason, resolveSerializeReasonId } from ".";
+import { resolveSerializeReasonId } from ".";
 
 export function getTemplateContentName() {
   return getSharedUid("content");
@@ -43,7 +43,7 @@ export function getSerializeGuard(
               t.numericLiteral(1),
               `state: ${mapToString(reason.state, ", ", getDebugName)}`,
             )
-      : getInputSerializeReasonGuard(reason.input!);
+      : getInputSerializeReasonGuard(reason);
 }
 
 export function getSerializeGuardForAny(
@@ -79,46 +79,71 @@ export function getSerializeGuardForAny(
 export function getExprIfSerialized<
   T extends undefined | SerializeReason,
   U extends t.Expression,
->(reason: T, expr: U) {
-  return (
-    reason
-      ? reason === true || reason.state
-        ? expr
-        : t.logicalExpression(
-            "&&",
-            callRuntime(
-              "_serialize_if",
-              t.identifier(getSharedUid("serialize")),
-              withLeadingComment(
-                t.numericLiteral(
-                  resolveSerializeReasonId(
-                    getProgram().node.extra.inputSerializeReasons!,
-                    reason.input!,
-                  ),
-                ),
-                mapToString(reason.input!, ", ", getInputDebugName),
+>(reason: T, expr: U): T extends {} ? U : undefined {
+  if (!reason) {
+    return undefined as any;
+  }
+  if (reason === true || reason.state) {
+    return expr as any;
+  }
+
+  let orExpr: t.Expression | undefined;
+
+  const grouped = groupBy(reason.param, (binding) => binding.section);
+  for (const [section, reasons] of grouped) {
+    const serializeIdentifier = t.identifier(
+      getSharedUid("serialize", section),
+    );
+    const guard = section.dynamicSerializeReasonGroups
+      ? callRuntime(
+          "_serialize_if",
+          serializeIdentifier,
+          withLeadingComment(
+            t.numericLiteral(
+              resolveSerializeReasonId(
+                section.dynamicSerializeReasonGroups!,
+                reasons,
               ),
             ),
-            expr,
-          )
-      : undefined
-  ) as T extends {} ? U : undefined;
+            mapToString(reasons, ",", getDebugName),
+          ),
+        )
+      : serializeIdentifier;
+
+    orExpr = orExpr ? t.logicalExpression("||", orExpr, guard) : guard;
+  }
+
+  return t.logicalExpression("&&", orExpr!, expr) as any;
 }
 
-function getInputSerializeReasonGuard(reason: InputSerializeReason) {
-  return callRuntime(
-    "_serialize_guard",
-    t.identifier(getSharedUid("serialize")),
-    withLeadingComment(
-      t.numericLiteral(
-        resolveSerializeReasonId(
-          getProgram().node.extra.inputSerializeReasons!,
-          reason,
-        ),
-      ),
-      mapToString(reason, ",", getDebugName),
-    ),
-  );
+function getInputSerializeReasonGuard(reason: Sources) {
+  let expr: t.Expression | undefined;
+
+  const grouped = groupBy(reason.param, (binding) => binding.section);
+  for (const [section, reasons] of grouped) {
+    const serializeIdentifier = t.identifier(
+      getSharedUid("serialize", section),
+    );
+    const guard = section.dynamicSerializeReasonGroups
+      ? callRuntime(
+          "_serialize_guard",
+          serializeIdentifier,
+          withLeadingComment(
+            t.numericLiteral(
+              resolveSerializeReasonId(
+                section.dynamicSerializeReasonGroups!,
+                reasons,
+              ),
+            ),
+            mapToString(reasons, ",", getDebugName),
+          ),
+        )
+      : serializeIdentifier;
+
+    expr = expr ? t.logicalExpression("||", expr, guard) : guard;
+  }
+
+  return expr!;
 }
 
 export default {
@@ -128,6 +153,28 @@ export default {
       writeHTMLResumeStatements(program);
       traverseReplace(program.node, "body", replaceNode);
       const renderContent: t.Statement[] = [];
+      const section = getSection(program);
+
+      let dynamicSerializeReason = isReasonDynamic(section.serializeReason);
+      if (!dynamicSerializeReason) {
+        for (const reason of section.serializeReasons.values()) {
+          if (isReasonDynamic(reason)) {
+            dynamicSerializeReason = true;
+            break;
+          }
+        }
+      }
+
+      if (dynamicSerializeReason) {
+        renderContent.push(
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              t.identifier(getSharedUid("serialize", section)),
+              callRuntime("_get_serialize_reason"),
+            ),
+          ]),
+        );
+      }
 
       for (const child of program.get("body")) {
         if (!isStatic(child)) {
@@ -142,13 +189,9 @@ export default {
         }
       }
 
-      const serializeId =
-        usedSharedUid("serialize") && getSharedUid("serialize");
       const contentId = usedSharedUid("content") && getTemplateContentName();
       const contentFn = t.arrowFunctionExpression(
-        serializeId
-          ? [t.identifier("input"), t.identifier(serializeId)]
-          : [t.identifier("input")],
+        [t.identifier("input")],
         t.blockStatement(renderContent),
       );
       const exportDefault = t.exportDefaultDeclaration(

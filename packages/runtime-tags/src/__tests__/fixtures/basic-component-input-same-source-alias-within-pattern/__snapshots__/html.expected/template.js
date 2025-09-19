@@ -4,6 +4,7 @@ export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   let clickCount = 0;
   const $childScope = _._peek_scope_id();
+  _._set_serialize_reason(1);
   _myButton({
     value: {
       text: clickCount
@@ -11,8 +12,9 @@ export default _._template("__tests__/template.marko", input => {
     onClick: _._resume(function () {
       clickCount++;
     }, "__tests__/template.marko_0/onClick", $scope0_id)
-  }, 1);
+  });
   const $childScope2 = _._peek_scope_id();
+  _._set_serialize_reason(1);
   _myButton({
     onClick: _._resume(function () {
       clickCount++;
@@ -20,7 +22,7 @@ export default _._template("__tests__/template.marko", input => {
     value: _.attrTag({
       text: clickCount
     })
-  }, 1);
+  });
   _._scope($scope0_id, {
     clickCount,
     "#childScope/0": _._existing_scope($childScope),

@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
-export default _._template("__tests__/tags/custom-tag.marko", (input, $serialize) => {
+export default _._template("__tests__/tags/custom-tag.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   _._html(`<div${_._attr_style(input.style)}></div>${_._el_resume($scope0_id, "#div/0", _._serialize_guard($serialize, /* input.style */3))}`);
   _._if(() => {
@@ -9,7 +10,7 @@ export default _._template("__tests__/tags/custom-tag.marko", (input, $serialize
       _._dynamic_tag($scope1_id, "#text/1", input.test.content, {}, 0, 0, _._serialize_guard($serialize, /* input.test.content */6));
       _._html(`</div>${_._el_resume($scope1_id, "#div/0", _._serialize_guard($serialize, /* input.test.style */5))}`);
       _._serialize_guard($serialize, /* input.test,input.test.style,input.test.content */2) && _._scope($scope1_id, {
-        _: _._serialize_if($serialize, /* input.test.style, input.test.content */1) && _._scope_with_id($scope0_id)
+        _: _._serialize_if($serialize, /* input.test.style,input.test.content */1) && _._scope_with_id($scope0_id)
       }, "__tests__/tags/custom-tag.marko", "3:2");
       return 0;
     }

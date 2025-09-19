@@ -1,6 +1,7 @@
 import _myConst from "./my-const.marko";
 import * as _ from "@marko/runtime-tags/debug/html";
-export default _._template("__tests__/tags/child.marko", (input, $serialize) => {
+export default _._template("__tests__/tags/child.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   const $childScope = _._peek_scope_id();
   let x = _myConst({

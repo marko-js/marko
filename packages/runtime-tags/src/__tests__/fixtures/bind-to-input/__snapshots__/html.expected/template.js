@@ -5,6 +5,9 @@ export default _._template("__tests__/template.marko", input => {
   const $x__closures = new Set();
   let x = 0;
   const $childScope = _._peek_scope_id();
+  _._set_serialize_reason({
+    /* input.count */2: 1
+  });
   _counter({
     count: x,
     countChange: _._resume(_new_x => {
@@ -20,10 +23,11 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "3:2"));
       _._resume_branch($scope1_id);
     })
-  }, {
-    /* input.count */2: 1
   });
   const $childScope2 = _._peek_scope_id();
+  _._set_serialize_reason({
+    /* input.count */2: 1
+  });
   _counter({
     count: x,
     id: "uncontrolled",
@@ -36,8 +40,6 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "4:2"));
       _._resume_branch($scope2_id);
     })
-  }, {
-    /* input.count */2: 1
   });
   _._scope($scope0_id, {
     "ClosureScopes:x": $x__closures,

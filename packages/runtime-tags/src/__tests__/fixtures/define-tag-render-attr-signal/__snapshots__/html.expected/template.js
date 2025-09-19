@@ -7,8 +7,9 @@ export default _._template("__tests__/template.marko", input => {
       number
     }) => {
       const $scope1_id = _._scope_id();
-      _._html(`<div>${_._escape(number)}${_._el_resume($scope1_id, "#text/0")}</div>`);
-      _._scope($scope1_id, {}, "__tests__/template.marko", "2:2");
+      const $serialize = _._get_serialize_reason();
+      _._html(`<div>${_._escape(number)}${_._el_resume($scope1_id, "#text/0", $serialize)}</div>`);
+      $serialize && _._scope($scope1_id, {}, "__tests__/template.marko", "2:2");
     }, $scope0_id)
   };
   _._dynamic_tag($scope0_id, "#text/0", MyTag, {

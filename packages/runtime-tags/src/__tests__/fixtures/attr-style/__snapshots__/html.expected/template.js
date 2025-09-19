@@ -2,19 +2,21 @@ import CustomTag from "./tags/custom-tag.marko";
 const TestTag = CustomTag;
 import * as _ from "@marko/runtime-tags/debug/html";
 import _customTag from "./tags/custom-tag.marko";
-export default _._template("__tests__/template.marko", (input, $serialize) => {
+export default _._template("__tests__/template.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   _._html(`<div${_._attr_style({
     color: input.color
   })}></div>${_._el_resume($scope0_id, "#div/0", _._serialize_guard($serialize, /* input.color */0))}<div style=width:100px></div><div style="color: green"></div>`);
   const $childScope = _._peek_scope_id();
+  _._set_serialize_reason({
+    /* input.style, input.test */0: _._serialize_guard($serialize, /* input.color */0),
+    /* input.style */3: _._serialize_guard($serialize, /* input.color */0)
+  });
   _customTag({
     style: {
       color: input.color
     }
-  }, {
-    /* input.style, input.test */0: _._serialize_guard($serialize, /* input.color */0),
-    /* input.style */3: _._serialize_guard($serialize, /* input.color */0)
   });
   _customTag({
     style: {
