@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.77
+
+### Patch Changes
+
+- [#2851](https://github.com/marko-js/marko/pull/2851) [`44fbf8d`](https://github.com/marko-js/marko/commit/44fbf8dd2672d3a39e511ee4f647b9e591943616) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix hoisted element reference variable name in production builds.
+
 ## 6.0.76
 
 ### Patch Changes
