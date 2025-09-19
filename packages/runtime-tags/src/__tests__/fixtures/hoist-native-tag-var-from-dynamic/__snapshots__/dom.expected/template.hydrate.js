@@ -1,4 +1,4 @@
-// size: 751 (min) 332 (brotli)
+// size: 751 (min) 330 (brotli)
 const $dynamicTag = _._dynamic_tag(0),
   $dynamicTag2 = _._dynamic_tag(1),
   $input_content = _._const(4, ($scope, input_content) => {
@@ -12,7 +12,7 @@ const $child_content2 = _._content("b1", "<div></div>", " b", 0, 0, "a3"),
   $inputshowChildnull_content__$hoisted_el__script = _._script(
     "b5",
     ({ 1: $hoisted_el2 }) => {
-      for (const element of 1) element().classList.add("inner");
+      for (const element of $hoisted_el2) element().classList.add("inner");
     },
   ),
   $inputshowChildnull_content__$hoisted_el = _._const(
@@ -36,10 +36,11 @@ const $child_content2 = _._content("b1", "<div></div>", " b", 0, 0, "a3"),
 ),
   _._resume("b7", _._hoist("j0", "a1")),
   _._script("b8", ({ 7: $hoisted_el3 }) => {
-    for (const element of 7) element().classList.add("outer");
+    for (const element of $hoisted_el3) element().classList.add("outer");
   }),
   _._script("b9", ({ 6: $hoisted_el }) => {
-    for (const element of 6) element().innerHTML = "Hoist from custom tag";
+    for (const element of $hoisted_el)
+      element().innerHTML = "Hoist from custom tag";
   }),
   _._script("b10", ($scope) => {
     {

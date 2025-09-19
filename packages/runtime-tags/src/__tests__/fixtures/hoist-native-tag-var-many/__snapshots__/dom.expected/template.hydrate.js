@@ -5,7 +5,7 @@ const $get$hoisted_el2 = _._hoist("j0", "m1"),
 (_._script("a1", ({ 4: $hoisted_el3 }) => {
   {
     let i = 0;
-    for (const el of 4) el().innerHTML = `All (${i++})`;
+    for (const el of $hoisted_el3) el().innerHTML = `All (${i++})`;
   }
 }),
   _._script("a2", ($scope) => {

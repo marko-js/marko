@@ -1,4 +1,4 @@
-// size: 385 (min) 187 (brotli)
+// size: 385 (min) 189 (brotli)
 (_._resume("a0", function ($scope) {
   return function (html) {
     $scope[0].innerHTML = html;
@@ -13,7 +13,7 @@ const $get$hoisted_setHtml3 = _._hoist(2, "m0");
   _._script("b4", ({ 4: $hoisted_setHtml3 }) => {
     {
       let i = 0;
-      for (const fn of 4) fn(`All (${i++})`);
+      for (const fn of $hoisted_setHtml3) fn(`All (${i++})`);
     }
   }),
   _._script("b5", ($scope) => {
