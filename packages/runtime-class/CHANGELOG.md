@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.37.58
+
+### Patch Changes
+
+- [#2853](https://github.com/marko-js/marko/pull/2853) [`b52a62f`](https://github.com/marko-js/marko/commit/b52a62f3ae5d07bee23685289aec169476820f69) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure stripTypes compiler option is applied when targeting source output.
+
+- Updated dependencies [[`b52a62f`](https://github.com/marko-js/marko/commit/b52a62f3ae5d07bee23685289aec169476820f69)]:
+  - @marko/compiler@5.39.38
+
 ## 5.37.57
 
 ### Patch Changes
