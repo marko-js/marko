@@ -8,28 +8,19 @@
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
-    <!--M_[-->
     <div>
-      Hello 
-      <!---->
-      Ryan
-      <!--M_*2 #text/0-->
-       
+      Hello Ryan 
       <!---->
       0
       <!--M_*2 #text/1-->
     </div>
-    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "ConditionalScope:#text/2": _.c = {},
-          "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
+      M._.r = [_ =&gt; (_.b = [0,
+        {
           count: 0,
-          MyTag: _.b = {}
-        }, _.c], _.b.content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.a), _.d),
+          "#childScope/2": _.a = {}
+        }, _.a]),
         "__tests__/template.marko_0_count",
         1
       ];
@@ -39,10 +30,6 @@
 </html>
 ```
 
-# Mutations
-```
-INSERT html/body/#text
-```
 
 # Render
 ```js
@@ -57,28 +44,19 @@ container.querySelector("button").click();
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
-    <!--M_[-->
     <div>
-      Hello 
-      <!---->
-      Ryan
-      <!--M_*2 #text/0-->
-       
+      Hello Ryan 
       <!---->
       1
       <!--M_*2 #text/1-->
     </div>
-    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "ConditionalScope:#text/2": _.c = {},
-          "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
+      M._.r = [_ =&gt; (_.b = [0,
+        {
           count: 0,
-          MyTag: _.b = {}
-        }, _.c], _.b.content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.a), _.d),
+          "#childScope/2": _.a = {}
+        }, _.a]),
         "__tests__/template.marko_0_count",
         1
       ];
@@ -91,7 +69,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE html/body/button/#text "0" => "1"
-UPDATE html/body/div/#text3 "0" => "1"
+UPDATE html/body/div/#text1 "0" => "1"
 ```
 
 # Render
@@ -107,28 +85,19 @@ container.querySelector("button").click();
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
-    <!--M_[-->
     <div>
-      Hello 
-      <!---->
-      Ryan
-      <!--M_*2 #text/0-->
-       
+      Hello Ryan 
       <!---->
       2
       <!--M_*2 #text/1-->
     </div>
-    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "ConditionalScope:#text/2": _.c = {},
-          "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
+      M._.r = [_ =&gt; (_.b = [0,
+        {
           count: 0,
-          MyTag: _.b = {}
-        }, _.c], _.b.content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.a), _.d),
+          "#childScope/2": _.a = {}
+        }, _.a]),
         "__tests__/template.marko_0_count",
         1
       ];
@@ -141,7 +110,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE html/body/button/#text "1" => "2"
-UPDATE html/body/div/#text3 "1" => "2"
+UPDATE html/body/div/#text1 "1" => "2"
 ```
 
 # Render
@@ -157,28 +126,19 @@ container.querySelector("button").click();
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
-    <!--M_[-->
     <div>
-      Hello 
-      <!---->
-      Ryan
-      <!--M_*2 #text/0-->
-       
+      Hello Ryan 
       <!---->
       3
       <!--M_*2 #text/1-->
     </div>
-    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "ConditionalScope:#text/2": _.c = {},
-          "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
+      M._.r = [_ =&gt; (_.b = [0,
+        {
           count: 0,
-          MyTag: _.b = {}
-        }, _.c], _.b.content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.a), _.d),
+          "#childScope/2": _.a = {}
+        }, _.a]),
         "__tests__/template.marko_0_count",
         1
       ];
@@ -191,5 +151,5 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE html/body/button/#text "2" => "3"
-UPDATE html/body/div/#text3 "2" => "3"
+UPDATE html/body/div/#text1 "2" => "3"
 ```

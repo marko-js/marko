@@ -2,7 +2,7 @@ import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   const MyTag = {
-    content: _._content("__tests__/template.marko_1_content", ({
+    content: _._content_resume("__tests__/template.marko_1_content", ({
       name
     }) => {
       const $scope1_id = _._scope_id();
@@ -16,9 +16,9 @@ export default _._template("__tests__/template.marko", input => {
         y: "2:8"
       });
       _._resume_branch($scope1_id);
-    })
+    }, $scope0_id)
   };
-  _._dynamic_tag($scope0_id, "#text/0", MyTag, {
+  MyTag.content({
     name: "Ryan"
-  }, 0, 0, 0);
+  });
 });

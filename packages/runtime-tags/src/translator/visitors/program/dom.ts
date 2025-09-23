@@ -36,7 +36,7 @@ export default {
   translate: {
     exit(program) {
       const section = getSectionForBody(program)!;
-      const { walks, writes, setup } = writer.getSectionMeta(section);
+      const { walks, writes, setup, decls } = writer.getSectionMeta(section);
       const domExports = program.node.extra.domExports!;
       const templateIdentifier = t.identifier(domExports.template);
       const walksIdentifier = t.identifier(domExports.walks);
@@ -46,7 +46,7 @@ export default {
         inputBinding && bindingHasDownstreamExpressions(inputBinding)
           ? initValue(inputBinding)
           : undefined;
-
+      let extraDecls = decls;
       const styleFile = getStyleFile(program.hub.file);
       if (styleFile) {
         importDefault(program.hub.file, styleFile);
@@ -75,7 +75,8 @@ export default {
           });
           const tagParamsSignal =
             childSection.params && initValue(childSection.params);
-          const { walks, writes, setup } = writer.getSectionMeta(childSection);
+          const { walks, writes, setup, decls } =
+            writer.getSectionMeta(childSection);
           const identifier = t.identifier(childSection.name);
           let renderer = getSectionParentIsOwner(childSection)
             ? callRuntime(
@@ -102,6 +103,11 @@ export default {
                     : undefined,
                 ]),
               );
+
+          if (decls) {
+            extraDecls = extraDecls ? [...extraDecls, ...decls] : decls;
+          }
+
           if (childSection.referencedLocalClosures) {
             renderer = callRuntime(
               "_content_closures",
@@ -164,6 +170,10 @@ export default {
           ]),
         ),
       );
+
+      if (extraDecls) {
+        program.node.body.unshift(t.variableDeclaration("const", extraDecls));
+      }
 
       program.node.body.push(
         t.exportDefaultDeclaration(

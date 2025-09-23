@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
+  assertAttributesOrSingleArg,
   getProgram,
   getTagTemplate,
   importDefault,
@@ -40,6 +41,8 @@ export default {
             `Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName}>\`.`,
           );
       }
+
+      assertAttributesOrSingleArg(tag);
 
       const childFile = loadFileForTag(tag);
 

@@ -15,7 +15,7 @@ export default _._template("__tests__/template.marko", input => {
       }, $scope0_id)
     });
   }
-  _._set_serialize_reason(1);
+  _._set_serialize_reason(/* state: x */1);
   _hello({
     item: $item
   });

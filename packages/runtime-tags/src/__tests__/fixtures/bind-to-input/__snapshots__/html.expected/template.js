@@ -6,7 +6,7 @@ export default _._template("__tests__/template.marko", input => {
   let x = 0;
   const $childScope = _._peek_scope_id();
   _._set_serialize_reason({
-    /* input.count */2: 1
+    /* input.count */2: /* state: x */1
   });
   _counter({
     count: x,
@@ -26,7 +26,7 @@ export default _._template("__tests__/template.marko", input => {
   });
   const $childScope2 = _._peek_scope_id();
   _._set_serialize_reason({
-    /* input.count */2: 1
+    /* input.count */2: /* state: x */1
   });
   _counter({
     count: x,

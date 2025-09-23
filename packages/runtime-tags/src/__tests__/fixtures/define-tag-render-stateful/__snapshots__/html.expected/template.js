@@ -14,17 +14,21 @@ export default _._template("__tests__/template.marko", input => {
       _._serialize_guard($serialize, /* name,count */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "6:2");
     }, $scope0_id)
   };
-  _._dynamic_tag($scope0_id, "#text/2", MyTag, {
+  const $childScope = _._peek_scope_id();
+  _._set_serialize_reason({
+    /* name, count */0: /* state: count */1,
+    /* count */2: /* state: count */1
+  });
+  MyTag.content({
     name: "Ryan",
     count: count
   });
   _._script($scope0_id, "__tests__/template.marko_0_count");
   _._scope($scope0_id, {
     count,
-    MyTag
+    "#childScope/2": _._existing_scope($childScope)
   }, "__tests__/template.marko", 0, {
-    count: "1:6",
-    MyTag: "6:9"
+    count: "1:6"
   });
   _._resume_branch($scope0_id);
 });

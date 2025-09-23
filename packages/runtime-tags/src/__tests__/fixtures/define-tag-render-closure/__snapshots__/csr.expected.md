@@ -4,6 +4,11 @@
 <div>
   1
 </div>
+<!---->
+<div>
+  1
+</div>
+<!---->
 <button>
   1
 </button>
@@ -11,7 +16,7 @@
 
 # Mutations
 ```
-INSERT #comment, div, button
+INSERT #comment0, div0, #comment1, div1, #comment2, button
 ```
 
 # Render
@@ -23,6 +28,11 @@ container.querySelector("button").click();
 <div>
   2
 </div>
+<!---->
+<div>
+  2
+</div>
+<!---->
 <button>
   2
 </button>
@@ -31,7 +41,8 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE button/#text "1" => "2"
-UPDATE div/#text "1" => "2"
+UPDATE div0/#text "1" => "2"
+UPDATE div1/#text "1" => "2"
 ```
 
 # Render
@@ -43,6 +54,11 @@ container.querySelector("button").click();
 <div>
   3
 </div>
+<!---->
+<div>
+  3
+</div>
+<!---->
 <button>
   3
 </button>
@@ -51,7 +67,8 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE button/#text "2" => "3"
-UPDATE div/#text "2" => "3"
+UPDATE div0/#text "2" => "3"
+UPDATE div1/#text "2" => "3"
 ```
 
 # Render
@@ -63,6 +80,11 @@ container.querySelector("button").click();
 <div>
   4
 </div>
+<!---->
+<div>
+  4
+</div>
+<!---->
 <button>
   4
 </button>
@@ -71,5 +93,6 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE button/#text "3" => "4"
-UPDATE div/#text "3" => "4"
+UPDATE div0/#text "3" => "4"
+UPDATE div1/#text "3" => "4"
 ```

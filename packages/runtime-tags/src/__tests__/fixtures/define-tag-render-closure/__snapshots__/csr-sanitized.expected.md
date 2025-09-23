@@ -3,6 +3,9 @@
 <div>
   1
 </div>
+<div>
+  1
+</div>
 <button>
   1
 </button>
@@ -17,6 +20,9 @@ container.querySelector("button").click();
 <div>
   2
 </div>
+<div>
+  2
+</div>
 <button>
   2
 </button>
@@ -31,6 +37,9 @@ container.querySelector("button").click();
 <div>
   3
 </div>
+<div>
+  3
+</div>
 <button>
   3
 </button>
@@ -42,6 +51,9 @@ container.querySelector("button").click();
 container.querySelector("button").click();
 ```
 ```html
+<div>
+  4
+</div>
 <div>
   4
 </div>

@@ -57,6 +57,7 @@ export {
 } from "./dom/renderer";
 export { _el, _resume, _var_resume, init } from "./dom/resume";
 export {
+  _child_setup,
   _closure,
   _closure_get,
   _const,

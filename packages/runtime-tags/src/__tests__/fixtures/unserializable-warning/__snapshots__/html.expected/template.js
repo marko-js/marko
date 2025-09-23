@@ -2,7 +2,7 @@ import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   const Foo = {
-    content: _._content("__tests__/template.marko_1_content", () => {
+    content: _._content_resume("__tests__/template.marko_1_content", () => {
       const $scope1_id = _._scope_id();
       const unserializable = {
         nested: {
@@ -20,7 +20,7 @@ export default _._template("__tests__/template.marko", input => {
         unserializable: "2:10",
         test: "7:10"
       });
-    })
+    }, $scope0_id)
   };
-  _._dynamic_tag($scope0_id, "#text/0", Foo, {}, 0, 0, 0);
+  Foo.content({});
 });

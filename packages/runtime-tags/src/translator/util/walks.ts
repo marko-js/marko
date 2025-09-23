@@ -71,14 +71,17 @@ export function enterShallow(path: t.NodePath<any>) {
   steps.push(Step.Enter, Step.Exit);
 }
 
-export function injectWalks(tag: t.NodePath<t.MarkoTag>, expr: t.Expression) {
+export function injectWalks(
+  tag: t.NodePath<t.MarkoTag>,
+  expr: t.Expression | undefined,
+) {
   const section = getSection(tag);
   const walks = getWalks(section);
   const walkComment = getWalkComment(section);
   visitInternal(section);
   walkComment.push(
     `${walkCodeToName[tag.node.var ? WalkCode.BeginChildWithVar : WalkCode.BeginChild]}`,
-    (expr as t.Identifier).name,
+    expr && t.isIdentifier(expr) ? expr.name : tag.get("name").toString(),
     walkCodeToName[WalkCode.EndChild],
   );
   appendLiteral(
@@ -87,7 +90,10 @@ export function injectWalks(tag: t.NodePath<t.MarkoTag>, expr: t.Expression) {
       tag.node.var ? WalkCode.BeginChildWithVar : WalkCode.BeginChild,
     ),
   );
-  walks.push(expr, String.fromCharCode(WalkCode.EndChild));
+  if (expr) {
+    walks.push(expr);
+  }
+  walks.push(String.fromCharCode(WalkCode.EndChild));
 }
 
 export function visit(

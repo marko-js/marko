@@ -2,21 +2,10 @@ import { types as t } from "@marko/compiler";
 
 import { resolveSerializeReasonId } from "../visitors/program";
 import { getSharedUid } from "./generate-uid";
-import { groupBy, mapToString, type OneMany } from "./optional";
-import {
-  type Binding,
-  getDebugName,
-  getInputDebugName,
-  type InputBinding,
-  type Sources,
-} from "./references";
+import { groupBy, mapToString } from "./optional";
+import { getDebugName, type Sources } from "./references";
 import { callRuntime } from "./runtime";
-import type { Section } from "./sections";
-import {
-  getBindingSerializeReason,
-  type SerializeReason,
-  type SerializeReasons,
-} from "./serialize-reasons";
+import type { SerializeReason, SerializeReasons } from "./serialize-reasons";
 import { withLeadingComment } from "./with-comment";
 
 export function getSerializeGuard(
@@ -130,64 +119,4 @@ function getInputSerializeReasonGuard(reason: Sources) {
   }
 
   return expr!;
-}
-
-export function getPropertySerializeGuard(
-  section: Section,
-  childSection: Section,
-  childScopeBinding: Binding,
-  childSerializeReasonIds: [symbol, ...symbol[]],
-) {
-  let childSerializeReasonExpr: t.Expression | undefined;
-  if (childSerializeReasonIds.length === 1) {
-    // Special case single reason to pass either 1 or undefined.
-    const reason = getBindingSerializeReason(
-      section,
-      childScopeBinding,
-      childSerializeReasonIds[0],
-    );
-    childSerializeReasonExpr = !reason
-      ? undefined
-      : reason == true || reason.state
-        ? t.numericLiteral(1)
-        : getSerializeGuard(reason, true);
-  } else {
-    const props: t.ObjectExpression["properties"] = [];
-    let hasDynamicReasons = false;
-    let hasSkippedReasons = false;
-    for (let i = 0; i < childSerializeReasonIds.length; i++) {
-      const reason = getBindingSerializeReason(
-        section,
-        childScopeBinding,
-        childSerializeReasonIds[i],
-      );
-      if (reason) {
-        hasDynamicReasons ||= reason !== true && !reason.state;
-        const childReason = childSection.paramReasonGroups![
-          i
-        ] as OneMany<InputBinding>;
-        props.push(
-          t.objectProperty(
-            withLeadingComment(
-              t.numericLiteral(i),
-              mapToString(childReason, ", ", getInputDebugName),
-            ),
-            reason === true || reason.state
-              ? t.numericLiteral(1)
-              : getSerializeGuard(reason, false)!,
-          ),
-        );
-      } else {
-        hasSkippedReasons = true;
-      }
-    }
-
-    if (props.length) {
-      childSerializeReasonExpr =
-        hasDynamicReasons || hasSkippedReasons
-          ? t.objectExpression(props)
-          : t.numericLiteral(1);
-    }
-  }
-  return childSerializeReasonExpr;
 }

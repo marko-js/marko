@@ -12,7 +12,7 @@ export default _._template("__tests__/template.marko", input => {
     const $scope1_id = _._scope_id();
     _._html("<div>");
     const $childScope = _._peek_scope_id();
-    _._set_serialize_reason(1);
+    _._set_serialize_reason(/* state: items */1);
     _child({
       write: write,
       name: `${outerItem}`
@@ -21,7 +21,7 @@ export default _._template("__tests__/template.marko", input => {
       const $scope2_id = _._scope_id();
       _._html("<div>");
       const $childScope2 = _._peek_scope_id();
-      _._set_serialize_reason(1);
+      _._set_serialize_reason(/* state: items */1);
       _child({
         write: write,
         name: `${outerItem}.${middleItem}`

@@ -25,13 +25,14 @@ export default _._template("__tests__/template.marko", input => {
     }, $scope0_id)
   };
   let clickOnceCount = 0;
-  const $Once_scope = _._peek_scope_id();
-  let onClickOnce = _._dynamic_tag($scope0_id, "#text/0", Once, {
+  const $childScope = _._peek_scope_id();
+  let onClickOnce = Once.content({
     value: _._resume(function () {
       clickOnceCount++;
     }, "__tests__/template.marko_0/onClickOnce", $scope0_id)
   });
-  _._var($scope0_id, "#scopeOffset/1", $Once_scope, "__tests__/template.marko_0_onClickOnce/var");
+  _._var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_onClickOnce/var");
+  _._set_serialize_reason(/* state: clickOnceCount */1);
   _._html(`<button class=once>${_._escape(clickOnceCount)}${_._el_resume($scope0_id, "#text/3")}</button>${_._el_resume($scope0_id, "#button/2")}`);
   const Twice = {
     content: _._content_resume("__tests__/template.marko_2_content", ({
@@ -57,28 +58,27 @@ export default _._template("__tests__/template.marko", input => {
     }, $scope0_id)
   };
   let clickTwiceCount = 0;
-  const $Twice_scope = _._peek_scope_id();
-  let onClickTwice = _._dynamic_tag($scope0_id, "#text/4", Twice, {
+  const $childScope2 = _._peek_scope_id();
+  let onClickTwice = Twice.content({
     value: _._resume(function () {
       clickTwiceCount++;
     }, "__tests__/template.marko_0/onClickTwice", $scope0_id)
   });
-  _._var($scope0_id, "#scopeOffset/5", $Twice_scope, "__tests__/template.marko_0_onClickTwice/var");
+  _._var($scope0_id, "#scopeOffset/5", $childScope2, "__tests__/template.marko_0_onClickTwice/var");
+  _._set_serialize_reason(/* state: clickTwiceCount */1);
   _._html(`<button class=twice>${_._escape(clickTwiceCount)}${_._el_resume($scope0_id, "#text/7")}</button>${_._el_resume($scope0_id, "#button/6")}`);
   _._script($scope0_id, "__tests__/template.marko_0_onClickTwice");
   _._script($scope0_id, "__tests__/template.marko_0_onClickOnce");
   _._scope($scope0_id, {
-    Once,
     clickOnceCount,
     onClickOnce,
-    Twice,
     clickTwiceCount,
-    onClickTwice
+    onClickTwice,
+    "#childScope/0": _._existing_scope($childScope),
+    "#childScope/4": _._existing_scope($childScope2)
   }, "__tests__/template.marko", 0, {
-    Once: "1:8",
     clickOnceCount: "9:5",
     onClickOnce: "10:6",
-    Twice: "15:8",
     clickTwiceCount: "23:5",
     onClickTwice: "24:7"
   });

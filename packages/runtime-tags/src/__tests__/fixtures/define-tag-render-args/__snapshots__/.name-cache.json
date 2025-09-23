@@ -10,7 +10,8 @@
       "$$dynamicTag": "m",
       "$$x__OR__MyTag": "r",
       "$$x__script": "s",
-      "$$x": "i"
+      "$$x": "i",
+      "$$define_content__setup": "a"
     }
   }
 }

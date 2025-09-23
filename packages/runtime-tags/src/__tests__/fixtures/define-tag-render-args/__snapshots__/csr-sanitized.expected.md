@@ -1,7 +1,7 @@
 # Render
 ```html
 <div>
-  1|Hello|1
+  1||
 </div>
 <button>
   1
@@ -15,7 +15,7 @@ container.querySelector("button").click();
 ```
 ```html
 <div>
-  1|Hello|2
+  1||
 </div>
 <button>
   2
@@ -29,7 +29,7 @@ container.querySelector("button").click();
 ```
 ```html
 <div>
-  1|Hello|3
+  1||
 </div>
 <button>
   3
@@ -43,7 +43,7 @@ container.querySelector("button").click();
 ```
 ```html
 <div>
-  1|Hello|4
+  1||
 </div>
 <button>
   4

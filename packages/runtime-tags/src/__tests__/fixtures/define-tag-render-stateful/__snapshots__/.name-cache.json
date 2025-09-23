@@ -3,16 +3,14 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$define_content__y__script": "m",
-      "$$define_content__y": "r",
-      "$$define_content__name": "n",
-      "$$define_content__count": "c",
-      "$$define_content__$params": "_",
-      "$$define_content__$temp": "e",
-      "$$dynamicTag": "a",
-      "$$count__OR__MyTag": "s",
-      "$$count__script": "i",
-      "$$count": "l"
+      "$$define_content__count": "m",
+      "$$count__script": "r",
+      "$$count": "i",
+      "$$input_count": "n",
+      "$$define_content__name": "_",
+      "$$define_content__setup": "c",
+      "$$define_content__$params": "e",
+      "$$define_content__$temp": "s"
     }
   }
 }

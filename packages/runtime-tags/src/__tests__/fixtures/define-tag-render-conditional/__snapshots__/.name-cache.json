@@ -1,0 +1,22 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "o",
+      "$$define_content__y__script": "m",
+      "$$define_content__y": "r",
+      "$$define_content__value": "i",
+      "$$if_content__x": "_",
+      "$$x__script": "c",
+      "$$x": "n",
+      "$$if_content__setup": "e",
+      "$$if_content__MyTag": "l",
+      "$$if_content": "s",
+      "$$if": "a",
+      "$$show": "f",
+      "$$define_content__setup": "d",
+      "$$define_content__$params": "u",
+      "$$define_content__$temp": "b"
+    }
+  }
+}

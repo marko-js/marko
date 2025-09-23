@@ -9,8 +9,14 @@ import {
 
 import { isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
+import { getBindingPropTree } from "../../util/binding-prop-tree";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorPrefix } from "../../util/get-accessor-char";
+import {
+  knownTagAnalyze,
+  knownTagTranslateDOM,
+  knownTagTranslateHTML,
+} from "../../util/known-tag";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import {
@@ -35,6 +41,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  type Section,
   startSection,
 } from "../../util/sections";
 import { getSerializeGuard } from "../../util/serialize-guard";
@@ -46,6 +53,7 @@ import {
   addValue,
   getResumeRegisterId,
   getSignal,
+  getSignalFn,
   initValue,
   type Signal,
   writeHTMLResumeStatements,
@@ -67,6 +75,7 @@ declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kDOMBinding]?: Binding;
     [kChildOffsetScopeBinding]?: Binding;
+    defineBodySection?: Section;
   }
 }
 
@@ -74,11 +83,26 @@ export default {
   analyze: {
     enter(tag) {
       assertAttributesOrArgs(tag);
+      const { node } = tag;
+      const definedBodySection = node.extra?.defineBodySection;
+      if (definedBodySection) {
+        const inputBinding =
+          definedBodySection.params?.propertyAliases.get("0");
+        knownTagAnalyze(
+          tag,
+          definedBodySection,
+          inputBinding && getBindingPropTree(inputBinding),
+        );
+
+        return;
+      }
+
       analyzeAttributeTags(tag);
+
       const tagSection = getOrCreateSection(tag);
-      const tagExtra = mergeReferences(tagSection, tag.node, [
-        tag.node.name,
-        ...getAllTagReferenceNodes(tag.node),
+      const tagExtra = mergeReferences(tagSection, node, [
+        node.name,
+        ...getAllTagReferenceNodes(node),
       ]);
       const tagBody = tag.get("body");
       const hasVar = !!tag.node.var;
@@ -112,6 +136,13 @@ export default {
   },
   translate: {
     enter(tag) {
+      if (tag.node.extra?.defineBodySection) {
+        if (isOutputHTML()) {
+          writer.flushBefore(tag);
+        }
+        return;
+      }
+
       walks.visit(
         tag,
         tag.node.var ? WalkCode.DynamicTagWithVar : WalkCode.Replace,
@@ -124,9 +155,56 @@ export default {
     },
     exit(tag) {
       const { node } = tag;
+      const tagSection = getSection(tag);
+      const definedBodySection = node.extra?.defineBodySection;
+      if (definedBodySection) {
+        const inputBinding =
+          definedBodySection.params?.propertyAliases.get("0");
+        const propTree = inputBinding && getBindingPropTree(inputBinding);
+
+        if (isOutputHTML()) {
+          knownTagTranslateHTML(
+            tag,
+            t.memberExpression(tag.node.name, t.identifier("content")),
+            definedBodySection,
+            propTree,
+          );
+        } else {
+          const write = writer.writeTo(tag);
+          const sectionMeta =
+            writer.getSectionMetaIdentifiers(definedBodySection);
+
+          knownTagTranslateDOM(
+            tag,
+            sectionMeta.setup,
+            definedBodySection,
+            propTree,
+            (binding, preferedName) => {
+              return getSignal(definedBodySection, binding, preferedName)
+                .identifier;
+            },
+            true,
+          );
+
+          const signal = getSignal(definedBodySection, undefined);
+          signal.identifier = sectionMeta.setup as t.Identifier;
+          signal.build = () => {
+            return callRuntime("_child_setup", getSignalFn(signal));
+          };
+
+          if (sectionMeta.writes) {
+            write`${sectionMeta.writes}`;
+          }
+          walks.injectWalks(tag, sectionMeta.walks);
+
+          tag.remove();
+        }
+
+        return;
+      }
+
       const tagExtra = node.extra!;
       const nodeBinding = tagExtra[kDOMBinding]!;
-      const tagSection = getSection(tag);
       const isClassAPI = tagExtra.featureType === "class";
       let tagExpression = node.name;
 

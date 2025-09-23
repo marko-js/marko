@@ -1,5 +1,5 @@
-export const $template = "<!><!><button class=once> </button><!><button class=twice> </button>";
-export const $walks = /* over(1), dynamicTagWithVar, over(1), get, next(1), get, out(1), dynamicTagWithVar, over(1), get, next(1), get, out(1) */"b1b D l1b D l";
+export const $template = "<!><button class=once> </button><button class=twice> </button>";
+export const $walks = /* over(1), beginChildWithVar, Once, endChild, get, next(1), get, out(1), beginChildWithVar, Twice, endChild, get, next(1), get, out(1) */"b0& D l0& D l";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $define_content2__value__OR__call = /* @__PURE__ */_._or(4, $scope => {
   let {
@@ -31,44 +31,20 @@ const $define_content__value = /* @__PURE__ */_._const("value", $define_content_
 const $define_content__$params = /* @__PURE__ */_._const("$params2", ($scope, $params2) => $define_content__$temp($scope, $params2?.[0]));
 const $define_content__$temp = /* @__PURE__ */_._const("$temp", ($scope, $temp) => $define_content__value($scope, $temp.value));
 const $define_content = _._content_resume("__tests__/template.marko_1_content", 0, 0, $define_content__setup, $define_content__$params);
-const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $onClickOnce2);
-const $Once__OR__clickOnceCount = /* @__PURE__ */_._or(10, $scope => {
-  let {
-    Once,
-    clickOnceCount
-  } = $scope;
-  $dynamicTag($scope, Once, () => ({
-    value: $onClickOnce($scope)
-  }));
-});
-const $Once = /* @__PURE__ */_._const("Once", $Once__OR__clickOnceCount);
-const $clickOnceCount = /* @__PURE__ */_._let("clickOnceCount/9", ($scope, clickOnceCount) => {
+const $clickOnceCount = /* @__PURE__ */_._let("clickOnceCount/8", ($scope, clickOnceCount) => {
+  $define_content__value($scope["#childScope/0"], $onClickOnce($scope));
   _._text($scope["#text/3"], clickOnceCount);
-  $Once__OR__clickOnceCount($scope);
 });
-const $dynamicTag2 = /* @__PURE__ */_._dynamic_tag("#text/4", 0, () => $onClickTwice2);
-const $Twice__OR__clickTwiceCount = /* @__PURE__ */_._or(14, $scope => {
-  let {
-    Twice,
-    clickTwiceCount
-  } = $scope;
-  $dynamicTag2($scope, Twice, () => ({
-    value: $onClickTwice($scope)
-  }));
-});
-const $Twice = /* @__PURE__ */_._const("Twice", $Twice__OR__clickTwiceCount);
-const $clickTwiceCount = /* @__PURE__ */_._let("clickTwiceCount/13", ($scope, clickTwiceCount) => {
+const $clickTwiceCount = /* @__PURE__ */_._let("clickTwiceCount/10", ($scope, clickTwiceCount) => {
+  $define_content2__value($scope["#childScope/4"], $onClickTwice($scope));
   _._text($scope["#text/7"], clickTwiceCount);
-  $Twice__OR__clickTwiceCount($scope);
 });
 export function $setup($scope) {
-  $Once($scope, {
-    content: $define_content($scope)
-  });
+  _._var($scope, "#childScope/0", $onClickOnce2);
+  $define_content__setup($scope["#childScope/0"], $scope);
+  _._var($scope, "#childScope/4", $onClickTwice2);
+  $define_content2__setup($scope["#childScope/4"], $scope);
   $clickOnceCount($scope, 0);
-  $Twice($scope, {
-    content: $define_content2($scope)
-  });
   $clickTwiceCount($scope, 0);
 }
 const $onClickOnce2__script = _._script("__tests__/template.marko_0_onClickOnce", ($scope, {

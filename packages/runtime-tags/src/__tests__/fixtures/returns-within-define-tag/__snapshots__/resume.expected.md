@@ -1,7 +1,5 @@
 # Render
 ```html
-<!--M_[-->
-<!--M_]1 #text/0 2-->
 <html>
   <head />
   <body>
@@ -12,8 +10,6 @@
       <!--M_*1 #text/3-->
     </button>
     <!--M_*1 #button/2-->
-    <!--M_[-->
-    <!--M_]1 #text/4 4-->
     <button
       class="twice"
     >
@@ -23,38 +19,32 @@
     <!--M_*1 #button/6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.a = {
-          "ConditionalScope:#text/0": _.b = {
+      M._.r = [_ =&gt; (_.d = [0, _.a = {
+          "#scopeOffset/1": 3,
+          "#scopeOffset/5": 5,
+          clickOnceCount: 0,
+          onClickOnce: _.b = {
             call: 1
           },
-          "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content",
-          "#scopeOffset/1": 3,
-          "ConditionalScope:#text/4": _.c = {
+          clickTwiceCount: 0,
+          onClickTwice: _.c = {
             call: 2
           },
-          "ConditionalRenderer:#text/4": "__tests__/template.marko_2_content",
-          "#scopeOffset/5": 5,
-          Once: _.d = {},
-          clickOnceCount: 0,
-          Twice: _.e = {},
-          clickTwiceCount: 0
+          "#childScope/0": _.b,
+          "#childScope/4": _.c
         }, _.b, 1, _.c], _.b.value = _._[
           "__tests__/template.marko_0/onClickOnce"
           ](_.a), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickOnce/var"
-          ](_.a), _.c.value = _._[
+          ](_.a), _.a.onClickOnce = _._[
+          "__tests__/template.marko_1/_return"
+          ](_.b), _.c.value = _._[
           "__tests__/template.marko_0/onClickTwice"
           ](_.a), _.c["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickTwice/var"
-          ](_.a), _.d.content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.a), _.a.onClickOnce = _._[
-          "__tests__/template.marko_1/_return"
-          ](_.b), _.e.content = _._[
-          "__tests__/template.marko_2_content"
           ](_.a), _.a.onClickTwice = _._[
           "__tests__/template.marko_2/_return2"
-          ](_.c), _.f),
+          ](_.c), _.d),
         "__tests__/template.marko_0_onClickTwice",
         1,
         "__tests__/template.marko_0_onClickOnce",
@@ -72,8 +62,6 @@
 container.querySelector("button.once").click();
 ```
 ```html
-<!--M_[-->
-<!--M_]1 #text/0 2-->
 <html>
   <head />
   <body>
@@ -84,8 +72,6 @@ container.querySelector("button.once").click();
       <!--M_*1 #text/3-->
     </button>
     <!--M_*1 #button/2-->
-    <!--M_[-->
-    <!--M_]1 #text/4 4-->
     <button
       class="twice"
     >
@@ -95,38 +81,32 @@ container.querySelector("button.once").click();
     <!--M_*1 #button/6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.a = {
-          "ConditionalScope:#text/0": _.b = {
+      M._.r = [_ =&gt; (_.d = [0, _.a = {
+          "#scopeOffset/1": 3,
+          "#scopeOffset/5": 5,
+          clickOnceCount: 0,
+          onClickOnce: _.b = {
             call: 1
           },
-          "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content",
-          "#scopeOffset/1": 3,
-          "ConditionalScope:#text/4": _.c = {
+          clickTwiceCount: 0,
+          onClickTwice: _.c = {
             call: 2
           },
-          "ConditionalRenderer:#text/4": "__tests__/template.marko_2_content",
-          "#scopeOffset/5": 5,
-          Once: _.d = {},
-          clickOnceCount: 0,
-          Twice: _.e = {},
-          clickTwiceCount: 0
+          "#childScope/0": _.b,
+          "#childScope/4": _.c
         }, _.b, 1, _.c], _.b.value = _._[
           "__tests__/template.marko_0/onClickOnce"
           ](_.a), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickOnce/var"
-          ](_.a), _.c.value = _._[
+          ](_.a), _.a.onClickOnce = _._[
+          "__tests__/template.marko_1/_return"
+          ](_.b), _.c.value = _._[
           "__tests__/template.marko_0/onClickTwice"
           ](_.a), _.c["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickTwice/var"
-          ](_.a), _.d.content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.a), _.a.onClickOnce = _._[
-          "__tests__/template.marko_1/_return"
-          ](_.b), _.e.content = _._[
-          "__tests__/template.marko_2_content"
           ](_.a), _.a.onClickTwice = _._[
           "__tests__/template.marko_2/_return2"
-          ](_.c), _.f),
+          ](_.c), _.d),
         "__tests__/template.marko_0_onClickTwice",
         1,
         "__tests__/template.marko_0_onClickOnce",
@@ -148,8 +128,6 @@ UPDATE html/body/button0/#text "0" => "1"
 container.querySelector("button.once").click();
 ```
 ```html
-<!--M_[-->
-<!--M_]1 #text/0 2-->
 <html>
   <head />
   <body>
@@ -160,8 +138,6 @@ container.querySelector("button.once").click();
       <!--M_*1 #text/3-->
     </button>
     <!--M_*1 #button/2-->
-    <!--M_[-->
-    <!--M_]1 #text/4 4-->
     <button
       class="twice"
     >
@@ -171,38 +147,32 @@ container.querySelector("button.once").click();
     <!--M_*1 #button/6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.a = {
-          "ConditionalScope:#text/0": _.b = {
+      M._.r = [_ =&gt; (_.d = [0, _.a = {
+          "#scopeOffset/1": 3,
+          "#scopeOffset/5": 5,
+          clickOnceCount: 0,
+          onClickOnce: _.b = {
             call: 1
           },
-          "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content",
-          "#scopeOffset/1": 3,
-          "ConditionalScope:#text/4": _.c = {
+          clickTwiceCount: 0,
+          onClickTwice: _.c = {
             call: 2
           },
-          "ConditionalRenderer:#text/4": "__tests__/template.marko_2_content",
-          "#scopeOffset/5": 5,
-          Once: _.d = {},
-          clickOnceCount: 0,
-          Twice: _.e = {},
-          clickTwiceCount: 0
+          "#childScope/0": _.b,
+          "#childScope/4": _.c
         }, _.b, 1, _.c], _.b.value = _._[
           "__tests__/template.marko_0/onClickOnce"
           ](_.a), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickOnce/var"
-          ](_.a), _.c.value = _._[
+          ](_.a), _.a.onClickOnce = _._[
+          "__tests__/template.marko_1/_return"
+          ](_.b), _.c.value = _._[
           "__tests__/template.marko_0/onClickTwice"
           ](_.a), _.c["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickTwice/var"
-          ](_.a), _.d.content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.a), _.a.onClickOnce = _._[
-          "__tests__/template.marko_1/_return"
-          ](_.b), _.e.content = _._[
-          "__tests__/template.marko_2_content"
           ](_.a), _.a.onClickTwice = _._[
           "__tests__/template.marko_2/_return2"
-          ](_.c), _.f),
+          ](_.c), _.d),
         "__tests__/template.marko_0_onClickTwice",
         1,
         "__tests__/template.marko_0_onClickOnce",
@@ -220,8 +190,6 @@ container.querySelector("button.once").click();
 container.querySelector("button.twice").click();
 ```
 ```html
-<!--M_[-->
-<!--M_]1 #text/0 2-->
 <html>
   <head />
   <body>
@@ -232,8 +200,6 @@ container.querySelector("button.twice").click();
       <!--M_*1 #text/3-->
     </button>
     <!--M_*1 #button/2-->
-    <!--M_[-->
-    <!--M_]1 #text/4 4-->
     <button
       class="twice"
     >
@@ -243,38 +209,32 @@ container.querySelector("button.twice").click();
     <!--M_*1 #button/6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.a = {
-          "ConditionalScope:#text/0": _.b = {
+      M._.r = [_ =&gt; (_.d = [0, _.a = {
+          "#scopeOffset/1": 3,
+          "#scopeOffset/5": 5,
+          clickOnceCount: 0,
+          onClickOnce: _.b = {
             call: 1
           },
-          "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content",
-          "#scopeOffset/1": 3,
-          "ConditionalScope:#text/4": _.c = {
+          clickTwiceCount: 0,
+          onClickTwice: _.c = {
             call: 2
           },
-          "ConditionalRenderer:#text/4": "__tests__/template.marko_2_content",
-          "#scopeOffset/5": 5,
-          Once: _.d = {},
-          clickOnceCount: 0,
-          Twice: _.e = {},
-          clickTwiceCount: 0
+          "#childScope/0": _.b,
+          "#childScope/4": _.c
         }, _.b, 1, _.c], _.b.value = _._[
           "__tests__/template.marko_0/onClickOnce"
           ](_.a), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickOnce/var"
-          ](_.a), _.c.value = _._[
+          ](_.a), _.a.onClickOnce = _._[
+          "__tests__/template.marko_1/_return"
+          ](_.b), _.c.value = _._[
           "__tests__/template.marko_0/onClickTwice"
           ](_.a), _.c["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickTwice/var"
-          ](_.a), _.d.content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.a), _.a.onClickOnce = _._[
-          "__tests__/template.marko_1/_return"
-          ](_.b), _.e.content = _._[
-          "__tests__/template.marko_2_content"
           ](_.a), _.a.onClickTwice = _._[
           "__tests__/template.marko_2/_return2"
-          ](_.c), _.f),
+          ](_.c), _.d),
         "__tests__/template.marko_0_onClickTwice",
         1,
         "__tests__/template.marko_0_onClickOnce",
@@ -296,8 +256,6 @@ UPDATE html/body/button1/#text "0" => "1"
 container.querySelector("button.twice").click();
 ```
 ```html
-<!--M_[-->
-<!--M_]1 #text/0 2-->
 <html>
   <head />
   <body>
@@ -308,8 +266,6 @@ container.querySelector("button.twice").click();
       <!--M_*1 #text/3-->
     </button>
     <!--M_*1 #button/2-->
-    <!--M_[-->
-    <!--M_]1 #text/4 4-->
     <button
       class="twice"
     >
@@ -319,38 +275,32 @@ container.querySelector("button.twice").click();
     <!--M_*1 #button/6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.a = {
-          "ConditionalScope:#text/0": _.b = {
+      M._.r = [_ =&gt; (_.d = [0, _.a = {
+          "#scopeOffset/1": 3,
+          "#scopeOffset/5": 5,
+          clickOnceCount: 0,
+          onClickOnce: _.b = {
             call: 1
           },
-          "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content",
-          "#scopeOffset/1": 3,
-          "ConditionalScope:#text/4": _.c = {
+          clickTwiceCount: 0,
+          onClickTwice: _.c = {
             call: 2
           },
-          "ConditionalRenderer:#text/4": "__tests__/template.marko_2_content",
-          "#scopeOffset/5": 5,
-          Once: _.d = {},
-          clickOnceCount: 0,
-          Twice: _.e = {},
-          clickTwiceCount: 0
+          "#childScope/0": _.b,
+          "#childScope/4": _.c
         }, _.b, 1, _.c], _.b.value = _._[
           "__tests__/template.marko_0/onClickOnce"
           ](_.a), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickOnce/var"
-          ](_.a), _.c.value = _._[
+          ](_.a), _.a.onClickOnce = _._[
+          "__tests__/template.marko_1/_return"
+          ](_.b), _.c.value = _._[
           "__tests__/template.marko_0/onClickTwice"
           ](_.a), _.c["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickTwice/var"
-          ](_.a), _.d.content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.a), _.a.onClickOnce = _._[
-          "__tests__/template.marko_1/_return"
-          ](_.b), _.e.content = _._[
-          "__tests__/template.marko_2_content"
           ](_.a), _.a.onClickTwice = _._[
           "__tests__/template.marko_2/_return2"
-          ](_.c), _.f),
+          ](_.c), _.d),
         "__tests__/template.marko_0_onClickTwice",
         1,
         "__tests__/template.marko_0_onClickOnce",
@@ -372,8 +322,6 @@ UPDATE html/body/button1/#text "1" => "2"
 container.querySelector("button.twice").click();
 ```
 ```html
-<!--M_[-->
-<!--M_]1 #text/0 2-->
 <html>
   <head />
   <body>
@@ -384,8 +332,6 @@ container.querySelector("button.twice").click();
       <!--M_*1 #text/3-->
     </button>
     <!--M_*1 #button/2-->
-    <!--M_[-->
-    <!--M_]1 #text/4 4-->
     <button
       class="twice"
     >
@@ -395,38 +341,32 @@ container.querySelector("button.twice").click();
     <!--M_*1 #button/6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.a = {
-          "ConditionalScope:#text/0": _.b = {
+      M._.r = [_ =&gt; (_.d = [0, _.a = {
+          "#scopeOffset/1": 3,
+          "#scopeOffset/5": 5,
+          clickOnceCount: 0,
+          onClickOnce: _.b = {
             call: 1
           },
-          "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content",
-          "#scopeOffset/1": 3,
-          "ConditionalScope:#text/4": _.c = {
+          clickTwiceCount: 0,
+          onClickTwice: _.c = {
             call: 2
           },
-          "ConditionalRenderer:#text/4": "__tests__/template.marko_2_content",
-          "#scopeOffset/5": 5,
-          Once: _.d = {},
-          clickOnceCount: 0,
-          Twice: _.e = {},
-          clickTwiceCount: 0
+          "#childScope/0": _.b,
+          "#childScope/4": _.c
         }, _.b, 1, _.c], _.b.value = _._[
           "__tests__/template.marko_0/onClickOnce"
           ](_.a), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickOnce/var"
-          ](_.a), _.c.value = _._[
+          ](_.a), _.a.onClickOnce = _._[
+          "__tests__/template.marko_1/_return"
+          ](_.b), _.c.value = _._[
           "__tests__/template.marko_0/onClickTwice"
           ](_.a), _.c["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickTwice/var"
-          ](_.a), _.d.content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.a), _.a.onClickOnce = _._[
-          "__tests__/template.marko_1/_return"
-          ](_.b), _.e.content = _._[
-          "__tests__/template.marko_2_content"
           ](_.a), _.a.onClickTwice = _._[
           "__tests__/template.marko_2/_return2"
-          ](_.c), _.f),
+          ](_.c), _.d),
         "__tests__/template.marko_0_onClickTwice",
         1,
         "__tests__/template.marko_0_onClickOnce",

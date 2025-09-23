@@ -5,6 +5,7 @@ import { isOutputHTML } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
   BindingType,
+  dropReferences,
   getAllTagReferenceNodes,
   mergeReferences,
   setBindingDownstream,
@@ -38,23 +39,43 @@ export default {
     const bodySection = startSection(tagBody);
     const varBinding = trackVarReferences(tag, BindingType.derived);
 
-    if (bodySection) {
-      if (varBinding) {
-        // TODO: need to do this for attr tags.
-        // Should probably allow passing a binding to analyzeAttrTags.
-        const contentAlias = varBinding.propertyAliases.get("content");
-
-        if (contentAlias) {
-          contentAlias.downstreamExpressions;
-
-          bodySection.downstreamBinding = contentAlias;
-        } else {
-          bodySection.downstreamBinding = varBinding;
-        }
-      }
+    if (!varBinding) {
+      dropReferences(getAllTagReferenceNodes(tag.node));
+      return;
     }
+
     // TODO: should determine if var bindings are nullable based on attrs.
     trackParamsReferences(tagBody, BindingType.param);
+
+    if (bodySection) {
+      if (t.isIdentifier(tag.node.var)) {
+        const babelBinding = tag.scope.getBinding(tag.node.var.name)!;
+        let allDirectReferences = true;
+        for (const ref of babelBinding.referencePaths) {
+          if (ref.parent.type === "MarkoTag" && ref.parent.name === ref.node) {
+            (ref.parent.extra ??= {}).defineBodySection = bodySection;
+            dropReferences(ref.parent.name);
+          } else {
+            allDirectReferences = false;
+          }
+        }
+        if (allDirectReferences) {
+          dropReferences(getAllTagReferenceNodes(tag.node));
+          return;
+        }
+      }
+
+      // TODO: need to do this for attr tags.
+      // Should probably allow passing a binding to analyzeAttrTags.
+      const contentAlias = varBinding.propertyAliases.get("content");
+
+      if (contentAlias) {
+        bodySection.downstreamBinding = contentAlias;
+      } else {
+        bodySection.downstreamBinding = varBinding;
+      }
+    }
+
     analyzeAttributeTags(tag);
     const tagExtra = mergeReferences(
       getOrCreateSection(tag),
@@ -62,12 +83,15 @@ export default {
       getAllTagReferenceNodes(tag.node),
     );
 
-    if (varBinding) {
-      setBindingDownstream(varBinding, tagExtra);
-    }
+    setBindingDownstream(varBinding, tagExtra);
   },
   translate: {
     enter(tag) {
+      if (!tag.node.var) {
+        tag.remove();
+        return;
+      }
+
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
@@ -82,9 +106,21 @@ export default {
         tag.insertBefore(translatedAttrs.statements);
         translateVar(tag, propsToExpression(translatedAttrs.properties));
       } else {
+        if (t.isIdentifier(node.var)) {
+          const babelBinding = tag.scope.getBinding(node.var.name)!;
+          if (
+            babelBinding.referencePaths.every(
+              (ref) =>
+                ref.parent.type === "MarkoTag" && ref.parent.name === ref.node,
+            )
+          ) {
+            tag.remove();
+            return;
+          }
+        }
+
         const section = getSection(tag);
         const referencedBindings = node.extra?.referencedBindings;
-        const derivation = initValue(tag.get("var").node!.extra!.binding!)!;
         if (translatedAttrs.statements.length) {
           addStatement(
             "render",
@@ -97,7 +133,7 @@ export default {
         addValue(
           section,
           referencedBindings,
-          derivation,
+          initValue(tag.get("var").node!.extra!.binding!)!,
           propsToExpression(translatedAttrs.properties),
         );
       }

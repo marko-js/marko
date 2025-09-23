@@ -1,4 +1,4 @@
-// size: 1134 (min) 411 (brotli)
+// size: 976 (min) 365 (brotli)
 const $define_content2__value__OR__call = _._or(4, ($scope) => {
     let { 2: value, 3: call } = $scope;
     _._return($scope, $_return2($scope));
@@ -41,30 +41,21 @@ _._content_resume(
   },
   $define_content__$params,
 );
-const $dynamicTag = _._dynamic_tag(0, 0, () => $onClickOnce2),
-  $Once__OR__clickOnceCount = _._or(10, ($scope) => {
-    let { 8: Once, 9: clickOnceCount } = $scope;
-    $dynamicTag($scope, Once, () => ({ value: $onClickOnce($scope) }));
+const $clickOnceCount = _._let(8, ($scope, clickOnceCount) => {
+    ($define_content__value($scope[0], $onClickOnce($scope)),
+      _._text($scope[3], clickOnceCount));
   }),
-  $clickOnceCount = _._let(9, ($scope, clickOnceCount) => {
-    (_._text($scope[3], clickOnceCount), $Once__OR__clickOnceCount($scope));
+  $clickTwiceCount = _._let(10, ($scope, clickTwiceCount) => {
+    ($define_content2__value($scope[4], $onClickTwice($scope)),
+      _._text($scope[7], clickTwiceCount));
   }),
-  $dynamicTag2 = _._dynamic_tag(4, 0, () => $onClickTwice2),
-  $Twice__OR__clickTwiceCount = _._or(14, ($scope) => {
-    let { 12: Twice, 13: clickTwiceCount } = $scope;
-    $dynamicTag2($scope, Twice, () => ({ value: $onClickTwice($scope) }));
-  }),
-  $clickTwiceCount = _._let(13, ($scope, clickTwiceCount) => {
-    (_._text($scope[7], clickTwiceCount), $Twice__OR__clickTwiceCount($scope));
-  }),
-  $onClickOnce2__script = _._script("a6", ($scope, { 11: onClickOnce }) =>
+  $onClickOnce2__script = _._script("a6", ($scope, { 9: onClickOnce }) =>
     _._on($scope[2], "click", onClickOnce),
-  ),
-  $onClickOnce2 = _._var_resume("a7", _._const(11, $onClickOnce2__script)),
-  $onClickTwice2__script = _._script("a8", ($scope, { 15: onClickTwice }) =>
-    _._on($scope[6], "click", onClickTwice),
-  ),
-  $onClickTwice2 = _._var_resume("a9", _._const(15, $onClickTwice2__script));
+  );
+_._var_resume("a7", _._const(9, $onClickOnce2__script));
+const $onClickTwice2__script = _._script("a8", ($scope, { 11: onClickTwice }) =>
+  _._on($scope[6], "click", onClickTwice),
+);
 function $_return2($scope, { 2: value, 3: call } = $scope) {
   return function () {
     call && ($define_content2__call($scope, --call), value());
@@ -75,17 +66,18 @@ function $_return($scope, { 2: value, 3: call } = $scope) {
     call && ($define_content__call($scope, --call), value());
   };
 }
-function $onClickOnce($scope, { 9: clickOnceCount } = $scope) {
+function $onClickOnce($scope, { 8: clickOnceCount } = $scope) {
   return function () {
     $clickOnceCount($scope, ++clickOnceCount);
   };
 }
-function $onClickTwice($scope, { 13: clickTwiceCount } = $scope) {
+function $onClickTwice($scope, { 10: clickTwiceCount } = $scope) {
   return function () {
     $clickTwiceCount($scope, ++clickTwiceCount);
   };
 }
-(_._resume("a2", $_return2),
+(_._var_resume("a9", _._const(11, $onClickTwice2__script)),
+  _._resume("a2", $_return2),
   _._resume("a0", $_return),
   _._resume("a1", $onClickOnce),
   _._resume("a3", $onClickTwice),

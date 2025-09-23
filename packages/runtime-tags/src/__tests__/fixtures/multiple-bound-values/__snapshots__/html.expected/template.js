@@ -6,8 +6,8 @@ export default _._template("__tests__/template.marko", input => {
   let count2 = 0;
   const $childScope = _._peek_scope_id();
   _._set_serialize_reason({
-    /* input.count1 */0: 1,
-    /* input.count2 */2: 1
+    /* input.count1 */0: /* state: count1 */1,
+    /* input.count2 */2: /* state: count2 */1
   });
   _counters({
     count1: count1,
