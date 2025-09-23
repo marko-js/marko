@@ -223,6 +223,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
     });
 
     parseMarko(file);
+    file.path.scope.crawl(); // Initialize bindings.
 
     if (isSource) {
       if (markoOpts.stripTypes) {
@@ -230,8 +231,6 @@ function getMarkoFile(code, fileOpts, markoOpts) {
       }
       return file;
     }
-
-    file.path.scope.crawl(); // Initialize bindings.
 
     const rootMigrators = [];
     for (const id in taglibLookup.taglibsById) {
