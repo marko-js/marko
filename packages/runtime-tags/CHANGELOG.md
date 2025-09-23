@@ -1,5 +1,14 @@
 # @marko/runtime-tags
 
+## 6.0.79
+
+### Patch Changes
+
+- [#2855](https://github.com/marko-js/marko/pull/2855) [`29173ce`](https://github.com/marko-js/marko/commit/29173ced3806d932eb05dc14002fc4969ef4ac6b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure scopes are crawled before stripping types.
+
+- Updated dependencies [[`29173ce`](https://github.com/marko-js/marko/commit/29173ced3806d932eb05dc14002fc4969ef4ac6b)]:
+  - @marko/compiler@5.39.39
+
 ## 6.0.78
 
 ### Patch Changes
