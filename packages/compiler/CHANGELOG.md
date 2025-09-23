@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.39
+
+### Patch Changes
+
+- [#2855](https://github.com/marko-js/marko/pull/2855) [`29173ce`](https://github.com/marko-js/marko/commit/29173ced3806d932eb05dc14002fc4969ef4ac6b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure scopes are crawled before stripping types.
+
 ## 5.39.38
 
 ### Patch Changes
