@@ -264,7 +264,7 @@ export function trackParamsReferences(
         undefined,
       ));
 
-    section.params = paramsBinding;
+    section.params = paramsBinding as ParamBinding;
 
     for (let i = 0; i < params.length; i++) {
       const param = params[i];

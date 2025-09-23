@@ -11,7 +11,12 @@ import type { ParamSerializeReasonGroups } from "../visitors/program";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag } from "./is-core-tag";
 import { filter, find, Sorted } from "./optional";
-import type { Binding, ReferencedBindings } from "./references";
+import type {
+  Binding,
+  InputBinding,
+  ParamBinding,
+  ReferencedBindings,
+} from "./references";
 import {
   getBindingSerializeReason,
   type SerializeReason,
@@ -34,7 +39,7 @@ export interface Section {
   depth: number;
   parent: Section | undefined;
   sectionAccessor: { binding: Binding; prefix: AccessorPrefix } | undefined;
-  params: undefined | Binding;
+  params: undefined | ParamBinding | InputBinding;
   referencedLocalClosures: ReferencedBindings;
   referencedClosures: ReferencedBindings;
   referencedHoists: ReferencedBindings;

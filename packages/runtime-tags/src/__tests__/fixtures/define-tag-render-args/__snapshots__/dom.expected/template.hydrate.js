@@ -1,4 +1,4 @@
-// size: 384 (min) 209 (brotli)
+// size: 384 (min) 207 (brotli)
 const $define_content__a = _._const(4, ($scope, a) => _._text($scope[0], a)),
   $define_content__b = _._const(5, ($scope, b) => _._text($scope[1], b)),
   $define_content__c = _._const(6, ($scope, c) => _._text($scope[2], c)),
@@ -21,7 +21,7 @@ const $x__script = _._script("a1", ($scope, { 3: x }) =>
     }),
   ),
   $x = _._let(3, ($scope, x) => {
-    ($define_content__a($scope[0], 1),
+    ($define_content__c($scope[0], x),
       _._text($scope[2], x),
       $x__script($scope));
   });

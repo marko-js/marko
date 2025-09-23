@@ -1,9 +1,12 @@
-// size: 976 (min) 365 (brotli)
+// size: 1012 (min) 368 (brotli)
 const $define_content2__value__OR__call = _._or(4, ($scope) => {
     let { 2: value, 3: call } = $scope;
     _._return($scope, $_return2($scope));
   }),
   $define_content2__call = _._let(3, $define_content2__value__OR__call),
+  $define_content2__setup = _._child_setup(($scope) =>
+    $define_content2__call($scope, 2),
+  ),
   $define_content2__value = _._const(2, $define_content2__value__OR__call),
   $define_content2__$params = _._const(0, ($scope, $params3) =>
     $define_content2__$temp($scope, $params3?.[0]),
@@ -15,9 +18,7 @@ _._content_resume(
   "a4",
   0,
   0,
-  ($scope) => {
-    $define_content2__call($scope, 2);
-  },
+  $define_content2__setup,
   $define_content2__$params,
 );
 const $define_content__value__OR__call = _._or(4, ($scope) => {
@@ -25,6 +26,9 @@ const $define_content__value__OR__call = _._or(4, ($scope) => {
     _._return($scope, $_return($scope));
   }),
   $define_content__call = _._let(3, $define_content__value__OR__call),
+  $define_content__setup = _._child_setup(($scope) =>
+    $define_content__call($scope, 1),
+  ),
   $define_content__value = _._const(2, $define_content__value__OR__call),
   $define_content__$params = _._const(0, ($scope, $params2) =>
     $define_content__$temp($scope, $params2?.[0]),
@@ -32,15 +36,7 @@ const $define_content__value__OR__call = _._or(4, ($scope) => {
   $define_content__$temp = _._const(1, ($scope, $temp) =>
     $define_content__value($scope, $temp.value),
   );
-_._content_resume(
-  "a5",
-  0,
-  0,
-  ($scope) => {
-    $define_content__call($scope, 1);
-  },
-  $define_content__$params,
-);
+_._content_resume("a5", 0, 0, $define_content__setup, $define_content__$params);
 const $clickOnceCount = _._let(8, ($scope, clickOnceCount) => {
     ($define_content__value($scope[0], $onClickOnce($scope)),
       _._text($scope[3], clickOnceCount));

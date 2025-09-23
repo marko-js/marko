@@ -86,12 +86,11 @@ export default {
       const { node } = tag;
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
-        const inputBinding =
-          definedBodySection.params?.propertyAliases.get("0");
         knownTagAnalyze(
           tag,
           definedBodySection,
-          inputBinding && getBindingPropTree(inputBinding),
+          definedBodySection.params &&
+            getBindingPropTree(definedBodySection.params),
         );
 
         return;
@@ -158,9 +157,8 @@ export default {
       const tagSection = getSection(tag);
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
-        const inputBinding =
-          definedBodySection.params?.propertyAliases.get("0");
-        const propTree = inputBinding && getBindingPropTree(inputBinding);
+        const paramsBinding = definedBodySection.params;
+        const propTree = paramsBinding && getBindingPropTree(paramsBinding);
 
         if (isOutputHTML()) {
           knownTagTranslateHTML(
@@ -179,10 +177,8 @@ export default {
             sectionMeta.setup,
             definedBodySection,
             propTree,
-            (binding, preferedName) => {
-              return getSignal(definedBodySection, binding, preferedName)
-                .identifier;
-            },
+            (binding, preferedName) =>
+              getSignal(definedBodySection, binding, preferedName).identifier,
             true,
           );
 

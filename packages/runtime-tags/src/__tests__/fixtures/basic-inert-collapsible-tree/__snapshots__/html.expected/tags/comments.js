@@ -12,6 +12,11 @@ const $content = input => {
       if (comment.comments) {
         const $scope2_id = _._scope_id();
         const $childScope = _._peek_scope_id();
+        _._set_serialize_reason({
+          /* input.comments, input.path */0: _._serialize_guard($serialize, /* input.comments,input.path */0),
+          /* input.comments */1: _._serialize_guard($serialize, /* input.comments */1),
+          /* input.path */2: _._serialize_guard($serialize, /* input.comments,input.path */0)
+        });
         $content({
           comments: comment.comments,
           path: id
@@ -26,7 +31,7 @@ const $content = input => {
     _._html(`</li>${_._el_resume($scope1_id, "#li/0")}`);
     _._script($scope1_id, "__tests__/tags/comments.marko_1_open");
     _._scope($scope1_id, {
-      comment_comments: _._serialize_if($serialize, /* input.comments,input.path */0) && comment?.comments,
+      comment_comments: _._serialize_if($serialize, /* input.comments */1) && comment?.comments,
       i: _._serialize_if($serialize, /* input.path */2) && i,
       id: _._serialize_if($serialize, /* input.comments */1) && id,
       open,

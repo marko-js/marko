@@ -13,6 +13,7 @@ const $content = input => {
         _._await($scope2_id, "#text/0", new Promise(setImmediate), () => {
           const $scope3_id = _._scope_id();
           const $childScope = _._peek_scope_id();
+          _._set_serialize_reason(_._serialize_guard($serialize, /* input.level */0));
           $content({
             level: input.level - 1
           });

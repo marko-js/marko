@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 import {
-  getProgram,
   getTagTemplate,
   isAttributeTag,
   resolveRelativePath,
@@ -124,50 +123,31 @@ export function knownTagAnalyze(
     );
   }
 
-  const programExtra = getProgram().node.extra;
-  if (programExtra.section === contentSection) {
-    mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
+  const exprs = (tagExtra[kKnownExprs] = analyzeParams(
+    tagExtra,
+    section,
+    tag,
+    propTree,
+    attrExprs,
+  ));
 
-    if (varBinding) {
-      const varSerializeReason = programExtra.returnValueExpr;
-      setBindingDownstream(varBinding, varSerializeReason);
-      addBindingSerializeReasonExpr(
-        section,
-        childScopeBinding,
-        mutatesTagVar || varSerializeReason,
-      );
-    }
-  } else {
-    const paramBinding = contentSection.params?.propertyAliases.get("0") as
-      | undefined
-      | InputBinding
-      | ParamBinding;
-    const exprs = (tagExtra[kKnownExprs] = analyzeAttrs(
-      tagExtra,
+  if (varBinding) {
+    const { returnSerializeReason } = contentSection;
+
+    const varExpr = mapParamReasonToExpr(
+      exprs,
+      contentSection.params,
+      returnSerializeReason &&
+        (returnSerializeReason === true ||
+          !!returnSerializeReason.state ||
+          (returnSerializeReason.param as Opt<InputBinding>)),
+    );
+    setBindingDownstream(varBinding, varExpr);
+    addBindingSerializeReasonExpr(
       section,
-      tag,
-      propTree,
-      attrExprs,
-    ));
-
-    if (varBinding) {
-      const { returnSerializeReason } = contentSection;
-
-      const varExpr = mapParamReasonToExpr(
-        exprs,
-        paramBinding,
-        returnSerializeReason &&
-          (returnSerializeReason === true ||
-            !!returnSerializeReason.state ||
-            (returnSerializeReason.param as Opt<InputBinding>)),
-      );
-      setBindingDownstream(varBinding, varExpr);
-      addBindingSerializeReasonExpr(
-        section,
-        childScopeBinding,
-        mutatesTagVar || varExpr,
-      );
-    }
+      childScopeBinding,
+      mutatesTagVar || varExpr,
+    );
   }
 
   addBindingSerializeReasonExpr(
@@ -192,12 +172,15 @@ export function knownTagTranslateHTML(
 
   const tagVar = node.var;
   const section = getSection(tag);
-  const { properties, statements } = propTree
-    ? translateAttrs(tag, propTree.props)
-    : {
-        properties: [],
-        statements: [],
-      };
+
+  const attrsPropTree = propTree?.props?.[tag.node.arguments?.length || 0];
+  const { properties, statements } =
+    (propTree && !propTree.props) || attrsPropTree
+      ? translateAttrs(tag, attrsPropTree?.props)
+      : {
+          properties: [],
+          statements: [],
+        };
 
   const childScopeBinding = tagExtra[kChildScopeBinding]!;
   const childScopeSerializeReason = getBindingSerializeReason(
@@ -205,14 +188,10 @@ export function knownTagTranslateHTML(
     childScopeBinding,
   );
 
-  const paramBinding = contentSection.params?.propertyAliases.get("0") as
-    | undefined
-    | InputBinding
-    | ParamBinding;
   const childSerializeReasonExpr = getParamGroupsSerializeGuard(
     contentSection,
     tagExtra[kKnownExprs]!,
-    paramBinding!,
+    contentSection.params,
   );
 
   if (childScopeSerializeReason) {
@@ -258,6 +237,18 @@ export function knownTagTranslateHTML(
     );
   }
 
+  // TODO: make this better
+  const getArgs = () => {
+    let renderArgs: (t.Expression | t.SpreadElement)[] = [];
+    if (tag.node.arguments) {
+      renderArgs = [...renderArgs, ...tag.node.arguments];
+    }
+    if (!tag.node.arguments?.length || properties.length) {
+      renderArgs.push(propsToExpression(properties));
+    }
+    return renderArgs;
+  };
+
   if (node.extra!.tagNameNullable) {
     const contentProp = getTranslatedBodyContentProperty(properties);
     let contentId: t.Identifier | undefined = undefined;
@@ -279,7 +270,7 @@ export function knownTagTranslateHTML(
 
     let renderTagExpr: t.Expression = callExpression(
       tagIdentifier,
-      propsToExpression(properties),
+      ...getArgs(),
     );
 
     if (tagVar) {
@@ -295,15 +286,9 @@ export function knownTagTranslateHTML(
       ),
     );
   } else if (tagVar) {
-    translateVar(
-      tag,
-      callExpression(tagIdentifier, propsToExpression(properties)),
-      "let",
-    );
+    translateVar(tag, callExpression(tagIdentifier, ...getArgs()), "let");
   } else {
-    statements.push(
-      callStatement(tagIdentifier, propsToExpression(properties)),
-    );
+    statements.push(callStatement(tagIdentifier, ...getArgs()));
   }
 
   for (const replacement of tag.replaceWithMultiple(statements)) {
@@ -378,8 +363,7 @@ export function knownTagTranslateDOM(
   }
 
   if (propTree) {
-    writeAttrsToExports(tag, propTree, `${getTagName(tag) || "tag"}_input`, {
-      circular: getProgram().node.extra.section === contentSection,
+    writeParamsToSignals(tag, propTree, getTagName(tag) || "tag", {
       tagSection,
       getBindingIdentifier,
       childScopeBinding,
@@ -421,27 +405,86 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
   return relativePath;
 }
 
-function analyzeAttrs(
+function analyzeParams(
   rootTagExtra: t.MarkoTagExtra,
   section: Section,
   tag: t.NodePath<t.MarkoTag>,
-  templateExport: BindingPropTree | undefined,
+  propTree: BindingPropTree | undefined,
   rootAttrExprs: Set<t.NodeExtra>,
 ): KnownExprs {
   const inputExpr: KnownExprs = {};
-  if (!templateExport) {
+  if (!propTree) {
     dropReferences(getAllTagReferenceNodes(tag.node));
     return inputExpr;
   }
 
-  if (!templateExport.props || tag.node.arguments?.length) {
+  if (
+    !propTree.props ||
+    tag.node.arguments?.some((node) => t.isSpreadElement(node))
+  ) {
     const extra = (inputExpr.value = mergeReferences(
       section,
       tag.node,
       getAllTagReferenceNodes(tag.node),
     ));
 
-    setBindingDownstream(templateExport.binding, extra);
+    setBindingDownstream(propTree.binding, extra);
+    return inputExpr;
+  }
+
+  const known: NonNullable<KnownExprs["known"]> = (inputExpr.known = {});
+
+  let i = 0;
+  if (tag.node.arguments) {
+    for (const arg of tag.node.arguments) {
+      const argExport = propTree.props[i];
+      if (!argExport) {
+        // drop references for duplicated attributes and unused attributes.
+        dropReferences(arg);
+        continue;
+      }
+
+      const argValueExtra = (arg.extra ??= {});
+      known[i++] = { value: argValueExtra };
+      rootAttrExprs.add(argValueExtra);
+    }
+  }
+
+  const attrPropsTree = propTree.props[i];
+  if (attrPropsTree) {
+    known[i] = analyzeAttrs(
+      rootTagExtra,
+      section,
+      tag,
+      attrPropsTree,
+      rootAttrExprs,
+    );
+  } else {
+    const args = tag.node.arguments;
+    tag.node.arguments = null;
+    dropReferences(getAllTagReferenceNodes(tag.node));
+    tag.node.arguments = args;
+  }
+
+  return inputExpr;
+}
+
+function analyzeAttrs(
+  rootTagExtra: t.MarkoTagExtra,
+  section: Section,
+  tag: t.NodePath<t.MarkoTag>,
+  propTree: BindingPropTree,
+  rootAttrExprs: Set<t.NodeExtra>,
+): KnownExprs {
+  const inputExpr: KnownExprs = {};
+  if (!propTree.props) {
+    const extra = (inputExpr.value = mergeReferences(
+      section,
+      tag.node,
+      getAllTagReferenceNodes(tag.node),
+    ));
+
+    setBindingDownstream(propTree.binding, extra);
     return inputExpr;
   }
 
@@ -482,7 +525,7 @@ function analyzeAttrs(
       if (child.isMarkoTag()) {
         if (isAttributeTag(child)) {
           const attrTagMeta = attrTagLookup[getTagName(child)];
-          const childAttrExports = templateExport.props[attrTagMeta.name];
+          const childAttrExports = propTree.props[attrTagMeta.name];
           if (childAttrExports) {
             const childBodySection = startSection(child.get("body"));
             if (childBodySection) {
@@ -507,7 +550,7 @@ function analyzeAttrs(
           const group = child.node.extra!.attributeTagGroup!;
           let childUsesGroupProp = false;
           for (const name of group) {
-            if (templateExport.props[attrTagLookup[name].name]) {
+            if (propTree.props[attrTagLookup[name].name]) {
               childUsesGroupProp = true;
               break;
             }
@@ -536,9 +579,9 @@ function analyzeAttrs(
 
       for (const tagName of group) {
         const attrName = tagName.slice(1);
-        const templateExportAttr = templateExport.props[attrName];
+        const templateExportAttr = propTree.props[attrName];
         if (!templateExportAttr) {
-          bindings = templateExport.binding;
+          bindings = propTree.binding;
           break;
         }
 
@@ -563,7 +606,7 @@ function analyzeAttrs(
       seen.add("content");
       known.content = { value: undefined }; // Should probably be default params extra.
       bodySection.downstreamBinding = (
-        templateExport.props.content || templateExport.props
+        propTree.props.content || propTree.props
       ).binding;
     }
   }
@@ -573,7 +616,7 @@ function analyzeAttrs(
   for (let i = attributes.length; i--; ) {
     const attr = attributes[i];
     if (t.isMarkoAttribute(attr)) {
-      const templateExportAttr = templateExport.props[attr.name];
+      const templateExportAttr = propTree.props[attr.name];
       if (!templateExportAttr || seen.has(attr.name)) {
         // drop references for duplicated attributes and unused attributes.
         dropReferences(attr.value);
@@ -604,7 +647,7 @@ function analyzeAttrs(
       tag.node,
       spreadReferenceNodes,
     ));
-    let spreadBinding = templateExport.binding;
+    let spreadBinding = propTree.binding;
     if (seen.size) {
       spreadBinding = createBinding(
         generateUid(`${getTagName(tag)}_attrs`),
@@ -624,12 +667,11 @@ function analyzeAttrs(
   return inputExpr;
 }
 
-function writeAttrsToExports(
+function writeParamsToSignals(
   tag: t.NodePath<t.MarkoTag>,
   propTree: BindingPropTree,
   importAlias: string,
   info: {
-    circular: boolean;
     tagSection: Section;
     getBindingIdentifier: (
       binding: Binding,
@@ -647,32 +689,106 @@ function writeAttrsToExports(
         >;
   },
 ) {
-  if (tag.node.arguments?.length) {
-    // With arguments passed to a custom tag we supply the first arg and thats all.
-    const [arg] = tag.node.arguments;
+  if (
+    !propTree.props ||
+    tag.node.arguments?.some((node) => t.isSpreadElement(node))
+  ) {
+    const referencedBindings = tag.node.extra?.referencedBindings;
     const tagInputIdentifier = info.getBindingIdentifier(
       propTree.binding,
-      importAlias,
+      `${importAlias}_params`,
     );
+    const translatedAttrs = translateAttrs(tag);
+
+    if (translatedAttrs.statements.length) {
+      addStatement(
+        "render",
+        info.tagSection,
+        referencedBindings,
+        translatedAttrs.statements,
+      );
+    }
+
+    let renderArgs: (t.Expression | t.SpreadElement)[] = [
+      createScopeReadExpression(info.tagSection, info.childScopeBinding),
+    ];
+    if (tag.node.arguments) {
+      renderArgs = [...renderArgs, ...tag.node.arguments];
+    }
+    if (!tag.node.arguments?.length || translatedAttrs.properties.length) {
+      renderArgs.push(propsToExpression(translatedAttrs.properties));
+    }
+
     addStatement(
       "render",
       info.tagSection,
-      // technically this should be `arg.extra?.referencedBindings`
-      // but we should probably ensure all other references are dropped in this case before we do that.
-      tag.node.extra?.referencedBindings,
+      referencedBindings,
       t.expressionStatement(
-        t.callExpression(tagInputIdentifier, [
-          createScopeReadExpression(info.tagSection, info.childScopeBinding),
-          t.isSpreadElement(arg)
-            ? t.memberExpression(arg.argument, t.numericLiteral(0), true)
-            : arg,
-        ]),
+        t.callExpression(tagInputIdentifier, [t.arrayExpression(renderArgs)]),
       ),
     );
+
     return;
   }
 
-  if (!propTree.props || info.circular) {
+  let i = 0;
+  if (tag.node.arguments) {
+    for (const arg of tag.node.arguments) {
+      const argExport = propTree.props[i];
+      if (argExport) {
+        const argExportIdentifier = info.getBindingIdentifier(
+          argExport.binding,
+          `${importAlias}_param_${i}`,
+        );
+        addStatement(
+          "render",
+          info.tagSection,
+          arg.extra?.referencedBindings, // TODO: pretty sure content needs to have the reference group of it's param defaults.
+          t.expressionStatement(
+            t.callExpression(argExportIdentifier, [
+              createScopeReadExpression(
+                info.tagSection,
+                info.childScopeBinding,
+              ),
+              arg,
+            ]),
+          ),
+        );
+      }
+
+      i++;
+    }
+  }
+
+  const attrPropsTree = propTree.props[i];
+  if (attrPropsTree) {
+    writeAttrsToSignals(tag, attrPropsTree, `${importAlias}_input`, info);
+  }
+}
+
+function writeAttrsToSignals(
+  tag: t.NodePath<t.MarkoTag>,
+  propTree: BindingPropTree,
+  importAlias: string,
+  info: {
+    tagSection: Section;
+    getBindingIdentifier: (
+      binding: Binding,
+      preferedName?: string,
+    ) => t.Identifier;
+    childScopeBinding: Binding;
+    attrTagCallsByTag:
+      | undefined
+      | Map<
+          t.NodePath<t.MarkoTag>,
+          Map<
+            string,
+            t.ParenthesizedExpression & { expression: t.CallExpression }
+          >
+        >;
+  },
+) {
+  if (!propTree.props) {
     const referencedBindings = tag.node.extra?.referencedBindings;
     const tagInputIdentifier = info.getBindingIdentifier(
       propTree.binding,
@@ -794,7 +910,7 @@ function writeAttrsToExports(
             if (attrTagMeta.dynamic) {
               i = translateDynamicAttrTagChildInGroup(attrTagMeta.group, i);
             } else {
-              writeAttrsToExports(
+              writeAttrsToSignals(
                 child,
                 childAttrExport,
                 `${importAlias}_${attrTagMeta.name}`,
@@ -989,14 +1105,14 @@ function mapParamReasonToExpr(
 
 function callStatement(
   id: t.Expression,
-  ...args: Array<t.Expression | undefined>
+  ...args: Array<t.Expression | t.SpreadElement | undefined>
 ) {
   return t.expressionStatement(callExpression(id, ...args));
 }
 
 function callExpression(
   id: t.Expression,
-  ...args: Array<t.Expression | undefined>
+  ...args: Array<t.Expression | t.SpreadElement | undefined>
 ) {
   return t.callExpression(id, args.filter(Boolean) as t.Expression[]);
 }
@@ -1008,7 +1124,7 @@ function buildUndefined() {
 function getParamGroupsSerializeGuard(
   contentSection: Section,
   knownExprs: KnownExprs,
-  paramBinding: InputBinding | ParamBinding,
+  paramBinding: undefined | InputBinding | ParamBinding,
 ) {
   let childSerializeReasonExpr: t.Expression | undefined;
   const reasonGroups = contentSection.paramReasonGroups;

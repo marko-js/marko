@@ -10,6 +10,7 @@ import {
 } from "@marko/compiler/babel-utils";
 import path from "path";
 
+import { getBindingPropTree } from "../../util/binding-prop-tree";
 import { getTagName } from "../../util/get-tag-name";
 import {
   knownTagAnalyze,
@@ -17,6 +18,7 @@ import {
   knownTagTranslateHTML,
 } from "../../util/known-tag";
 import { isOutputHTML } from "../../util/marko-config";
+import { getSignal } from "../../util/signals";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
@@ -52,10 +54,18 @@ export default {
           .buildCodeFrameError("Unable to resolve file for tag.");
       }
 
+      const programSection = getProgram().node.extra.section!;
       const childProgram = childFile.ast.program;
       const childExtra = childProgram.extra;
+      const childSection = childExtra.section!;
 
-      knownTagAnalyze(tag, childExtra.section!, childExtra.domExports?.input);
+      knownTagAnalyze(
+        tag,
+        childSection,
+        programSection === childSection
+          ? getBindingPropTree(programSection.params!)
+          : childExtra.domExports?.params,
+      );
 
       // TODO: should check individual inputs to see if they are intersecting with state
       getProgram().node.extra!.hasInteractiveChild =
@@ -97,7 +107,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     tag,
     tagIdentifier,
     childExtra.section!,
-    childExtra.domExports?.input,
+    childExtra.domExports?.params,
   );
 }
 
@@ -106,40 +116,55 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const { file } = tag.hub;
   const write = writer.writeTo(tag);
   const relativePath = getTagRelativePath(tag);
+  const programSection = getProgram().node.extra.section!;
   const childFile = loadFileForTag(tag)!;
   const childExtra = childFile.ast.program.extra;
   const childExports = childExtra.domExports!;
+  const childSection = childExtra.section!;
   const tagName = t.isIdentifier(node.name)
     ? node.name.name
     : t.isStringLiteral(node.name)
       ? node.name.value
       : "tag";
-  const tagIdentifier = importOrSelfReferenceName(
-    file,
-    relativePath,
-    childExports.setup,
-    tagName,
-  );
 
-  knownTagTranslateDOM(
-    tag,
-    tagIdentifier,
-    childExtra.section!,
-    childExports.input,
-    (binding, perferedName) =>
+  if (programSection === childSection) {
+    knownTagTranslateDOM(
+      tag,
+      t.identifier(childExports.setup),
+      childSection,
+      childExports.params,
+      (binding, preferedName) =>
+        getSignal(programSection, binding, preferedName).identifier,
+    );
+
+    write`${t.identifier(childExports.template)}`;
+    walks.injectWalks(tag, t.identifier(childExports.walks));
+  } else {
+    knownTagTranslateDOM(
+      tag,
       importOrSelfReferenceName(
-        tag.hub.file,
+        file,
         relativePath,
-        binding.export!,
-        perferedName,
+        childExports.setup,
+        tagName,
       ),
-  );
+      childSection,
+      childExports.params,
+      (binding, perferedName) =>
+        importOrSelfReferenceName(
+          tag.hub.file,
+          relativePath,
+          binding.export!,
+          perferedName,
+        ),
+    );
 
-  write`${importNamed(file, relativePath, childExports.template, `${tagName}_template`)}`;
-  walks.injectWalks(
-    tag,
-    importNamed(file, relativePath, childExports.walks, `${tagName}_walks`),
-  );
+    write`${importNamed(file, relativePath, childExports.template, `${tagName}_template`)}`;
+    walks.injectWalks(
+      tag,
+      importNamed(file, relativePath, childExports.walks, `${tagName}_walks`),
+    );
+  }
 
   tag.remove();
 }

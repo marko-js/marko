@@ -1,26 +1,17 @@
-// size: 890 (min) 457 (brotli)
+// size: 809 (min) 431 (brotli)
 const $if_content__setup = ($scope) => {
     ($scope[0],
       $if_content__comment_comments._($scope),
       $if_content__id._($scope));
   },
-  $if_content__comment_comments__OR__id = _or(1, ($scope) => {
-    let {
-      _: { 8: comment_comments, 11: id },
-    } = $scope;
-    $input$1($scope[0], { comments: comment_comments, path: id });
-  }),
   $if_content__comment_comments = _if_closure(
     8,
     4,
     0,
-    $if_content__comment_comments__OR__id,
+    ($scope, comment_comments) => $input_comments($scope[0], comment_comments),
   ),
-  $if_content__id = _if_closure(
-    11,
-    4,
-    0,
-    $if_content__comment_comments__OR__id,
+  $if_content__id = _if_closure(11, 4, 0, ($scope, id) =>
+    $input_path($scope[0], id),
   ),
   $if_content = _content_branch("<ul></ul>", "/ b&", $if_content__setup),
   $for_content__id = _const(11, ($scope, id) => {
@@ -80,9 +71,6 @@ const $if_content__setup = ($scope) => {
   $input_comments = _const(3, ($scope, input_comments) =>
     $for($scope, [input_comments]),
   ),
-  $input$1 = _const(2, ($scope, input) => {
-    ($input_comments($scope, input.comments), $input_path($scope, input.path));
-  }),
   $input_path = _const(4, $for_content__input_path);
 function $setup($scope) {
   $scope[0];

@@ -1,7 +1,7 @@
 # Render End
 ```html
 <div>
-  [object Object]|‍|‍
+  1|Hello|1
 </div>
 <button>
   1

@@ -54,7 +54,7 @@ declare module "@marko/compiler/dist/types" {
       template: string;
       walks: string;
       setup: string;
-      input: BindingPropTree | undefined;
+      params: BindingPropTree | undefined;
     };
   }
 }
@@ -84,7 +84,7 @@ export default {
         template: generateUid("template"),
         walks: generateUid("walks"),
         setup: generateUid("setup"),
-        input: undefined, // TODO look into recursive components with fine grained params.
+        params: undefined,
       };
 
       for (const child of program.get("body")) {
@@ -101,10 +101,10 @@ export default {
 
     exit(program) {
       finalizeReferences();
-      const programExtra = program.node.extra;
-      const inputBinding = program.node.params[0].extra?.binding;
-      if (inputBinding && bindingHasDownstreamExpressions(inputBinding)) {
-        programExtra.domExports!.input = getBindingPropTree(inputBinding);
+      const programExtra = program.node.extra!;
+      const paramsBinding = programExtra.binding;
+      if (paramsBinding && bindingHasDownstreamExpressions(paramsBinding)) {
+        programExtra.domExports!.params = getBindingPropTree(paramsBinding);
       }
     },
   },

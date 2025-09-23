@@ -9,9 +9,7 @@ const $define_content2__value__OR__call = /* @__PURE__ */_._or(4, $scope => {
   _._return($scope, $_return2($scope));
 });
 const $define_content2__call = /* @__PURE__ */_._let("call/3", $define_content2__value__OR__call);
-const $define_content2__setup = $scope => {
-  $define_content2__call($scope, 2);
-};
+const $define_content2__setup = _._child_setup($scope => $define_content2__call($scope, 2));
 const $define_content2__value = /* @__PURE__ */_._const("value", $define_content2__value__OR__call);
 const $define_content2__$params = /* @__PURE__ */_._const("$params3", ($scope, $params3) => $define_content2__$temp($scope, $params3?.[0]));
 const $define_content2__$temp = /* @__PURE__ */_._const("$temp2", ($scope, $temp2) => $define_content2__value($scope, $temp2.value));
@@ -24,9 +22,7 @@ const $define_content__value__OR__call = /* @__PURE__ */_._or(4, $scope => {
   _._return($scope, $_return($scope));
 });
 const $define_content__call = /* @__PURE__ */_._let("call/3", $define_content__value__OR__call);
-const $define_content__setup = $scope => {
-  $define_content__call($scope, 1);
-};
+const $define_content__setup = _._child_setup($scope => $define_content__call($scope, 1));
 const $define_content__value = /* @__PURE__ */_._const("value", $define_content__value__OR__call);
 const $define_content__$params = /* @__PURE__ */_._const("$params2", ($scope, $params2) => $define_content__$temp($scope, $params2?.[0]));
 const $define_content__$temp = /* @__PURE__ */_._const("$temp", ($scope, $temp) => $define_content__value($scope, $temp.value));

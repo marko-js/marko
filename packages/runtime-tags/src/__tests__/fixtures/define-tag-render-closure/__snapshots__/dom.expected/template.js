@@ -8,7 +8,7 @@ const $if_content__setup = $scope => {
 };
 const $if_content = /* @__PURE__ */_._content_branch(`<!>${$define_content__template}<!>`, /* over(1), beginChild, $define_content__walks, endChild, over(1) */`b/${$define_content__walks}&b`, $if_content__setup);
 const $define_content__x = /* @__PURE__ */_._closure_get("x", ($scope, x) => _._text($scope["#text/0"], x));
-const $define_content__setup = $define_content__x;
+const $define_content__setup = _._child_setup($define_content__x);
 const $define_content = _._content_resume("__tests__/template.marko_1_content", $define_content__template, $define_content__walks, $define_content__setup);
 const $if = /* @__PURE__ */_._if("#text/1", $if_content);
 const $x__closure = /* @__PURE__ */_._closure($define_content__x);

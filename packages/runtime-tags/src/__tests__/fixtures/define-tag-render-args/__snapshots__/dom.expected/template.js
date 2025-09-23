@@ -19,12 +19,14 @@ const $x__script = _._script("__tests__/template.marko_0_x", ($scope, {
   $x($scope, ++x);
 }));
 const $x = /* @__PURE__ */_._let("x/3", ($scope, x) => {
-  $define_content__a($scope["#childScope/0"], 1);
+  $define_content__c($scope["#childScope/0"], x);
   _._text($scope["#text/2"], x);
   $x__script($scope);
 });
 export function $setup($scope) {
   $define_content__setup($scope["#childScope/0"], $scope);
+  $define_content__a($scope["#childScope/0"], 1);
+  $define_content__b($scope["#childScope/0"], "Hello");
   $x($scope, 1);
 }
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);
