@@ -4,7 +4,7 @@ export default _._template("__tests__/template.marko", input => {
   const $x__closures = new Set();
   let x = 1;
   const MyTag = {
-    content: _._content_resume("__tests__/template.marko_1_content", () => {
+    content: _._content("__tests__/template.marko_1_content", () => {
       const $scope1_id = _._scope_id();
       _._html(`<div>${_._escape(x)}${_._el_resume($scope1_id, "#text/0")}</div>`);
       _._subscribe($x__closures, _._scope($scope1_id, {
@@ -12,7 +12,7 @@ export default _._template("__tests__/template.marko", input => {
         "ClosureSignalIndex:x": 0
       }, "__tests__/template.marko", "2:2"));
       _._resume_branch($scope1_id);
-    }, $scope0_id)
+    })
   };
   MyTag.content({});
   _._if(() => {

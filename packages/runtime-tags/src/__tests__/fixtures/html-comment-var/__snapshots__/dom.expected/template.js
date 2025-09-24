@@ -1,7 +1,7 @@
 export const $template = `<div>${_parentEl_template} </div><span>${_parentEl_template} </span>`;
 export const $walks = /* next(1), beginChildWithVar, _parentEl_walks, endChild, get, out(1), next(1), beginChildWithVar, _parentEl_walks, endChild, get, out(1) */`D0${_parentEl_walks}& lD0${_parentEl_walks}& l`;
-import { $setup as _parentEl, $template as _parentEl_template, $walks as _parentEl_walks } from "./tags/parent-el.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
+import { $setup as _parentEl, $template as _parentEl_template, $walks as _parentEl_walks } from "./tags/parent-el.marko";
 const $divName = _._var_resume("__tests__/template.marko_0_divName/var", /* @__PURE__ */_._const("divName", ($scope, divName) => _._text($scope["#text/2"], divName)));
 export function $setup($scope) {
   _._var($scope, "#childScope/0", $divName);

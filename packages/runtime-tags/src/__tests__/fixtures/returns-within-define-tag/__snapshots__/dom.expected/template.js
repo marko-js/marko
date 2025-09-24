@@ -9,11 +9,10 @@ const $define_content2__value__OR__call = /* @__PURE__ */_._or(4, $scope => {
   _._return($scope, $_return2($scope));
 });
 const $define_content2__call = /* @__PURE__ */_._let("call/3", $define_content2__value__OR__call);
-const $define_content2__setup = _._child_setup($scope => $define_content2__call($scope, 2));
+const $define_content2__setup = /* @__PURE__ */_._child_setup($scope => $define_content2__call($scope, 2));
 const $define_content2__value = /* @__PURE__ */_._const("value", $define_content2__value__OR__call);
 const $define_content2__$params = /* @__PURE__ */_._const("$params3", ($scope, $params3) => $define_content2__$temp($scope, $params3?.[0]));
 const $define_content2__$temp = /* @__PURE__ */_._const("$temp2", ($scope, $temp2) => $define_content2__value($scope, $temp2.value));
-const $define_content2 = _._content_resume("__tests__/template.marko_2_content", 0, 0, $define_content2__setup, $define_content2__$params);
 const $define_content__value__OR__call = /* @__PURE__ */_._or(4, $scope => {
   let {
     value,
@@ -22,11 +21,10 @@ const $define_content__value__OR__call = /* @__PURE__ */_._or(4, $scope => {
   _._return($scope, $_return($scope));
 });
 const $define_content__call = /* @__PURE__ */_._let("call/3", $define_content__value__OR__call);
-const $define_content__setup = _._child_setup($scope => $define_content__call($scope, 1));
+const $define_content__setup = /* @__PURE__ */_._child_setup($scope => $define_content__call($scope, 1));
 const $define_content__value = /* @__PURE__ */_._const("value", $define_content__value__OR__call);
 const $define_content__$params = /* @__PURE__ */_._const("$params2", ($scope, $params2) => $define_content__$temp($scope, $params2?.[0]));
 const $define_content__$temp = /* @__PURE__ */_._const("$temp", ($scope, $temp) => $define_content__value($scope, $temp.value));
-const $define_content = _._content_resume("__tests__/template.marko_1_content", 0, 0, $define_content__setup, $define_content__$params);
 const $clickOnceCount = /* @__PURE__ */_._let("clickOnceCount/8", ($scope, clickOnceCount) => {
   $define_content__value($scope["#childScope/0"], $onClickOnce($scope));
   _._text($scope["#text/3"], clickOnceCount);
@@ -37,9 +35,9 @@ const $clickTwiceCount = /* @__PURE__ */_._let("clickTwiceCount/10", ($scope, cl
 });
 export function $setup($scope) {
   _._var($scope, "#childScope/0", $onClickOnce2);
-  $define_content__setup($scope["#childScope/0"], $scope);
+  $define_content__setup._($scope["#childScope/0"], $scope);
   _._var($scope, "#childScope/4", $onClickTwice2);
-  $define_content2__setup($scope["#childScope/4"], $scope);
+  $define_content2__setup._($scope["#childScope/4"], $scope);
   $clickOnceCount($scope, 0);
   $clickTwiceCount($scope, 0);
 }

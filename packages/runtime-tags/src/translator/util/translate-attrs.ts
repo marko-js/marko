@@ -425,7 +425,6 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
       }
 
       if (dynamicSerializeReason) {
-        // TODO: not this
         body.node.body.unshift(
           t.variableDeclaration("const", [
             t.variableDeclarator(

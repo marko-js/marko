@@ -4,14 +4,14 @@ export default _._template("__tests__/template.marko", input => {
   let show = true;
   let x = 1;
   const MyTag = {
-    content: _._content_resume("__tests__/template.marko_2_content", ({
+    content: _._content("__tests__/template.marko_2_content", ({
       value
     }) => {
       const $scope2_id = _._scope_id();
       const $serialize = _._get_serialize_reason();
       _._html(`<div>Hello ${_._sep(_._serialize_guard($serialize, /* value */0))}${_._escape(value)}${_._el_resume($scope2_id, "#text/0", _._serialize_guard($serialize, /* value */0))}</div>`);
       _._serialize_guard($serialize, /* value */0) && _._scope($scope2_id, {}, "__tests__/template.marko", "4:2");
-    }, $scope0_id)
+    })
   };
   _._if(() => {
     if (show) {

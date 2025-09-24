@@ -66,7 +66,7 @@ export type Signal = {
   valueAccessor?: t.Expression;
   referencedBindings: ReferencedBindings;
   section: Section;
-  build: undefined | (() => t.Expression);
+  build: undefined | (() => t.Expression | undefined);
   register?: boolean;
   values: Array<{
     signal: Signal;
@@ -309,6 +309,30 @@ export function initValue(binding: Binding, isLet = false) {
   }
 
   return signal;
+}
+
+export function signalHasStatements(signal: Signal): boolean {
+  if (
+    signal.render.length ||
+    signal.effect.length ||
+    signal.values.length ||
+    signal.intersection
+  ) {
+    return true;
+  }
+  const binding = signal.referencedBindings;
+  if (binding) {
+    if (
+      !Array.isArray(binding) &&
+      binding.section === signal.section &&
+      (binding.aliases.size || binding.propertyAliases.size)
+    ) {
+      return true;
+    }
+  } else if (signal.section.referencedClosures) {
+    return true;
+  }
+  return false;
 }
 
 export function getSignalFn(signal: Signal): t.Expression {
@@ -819,6 +843,10 @@ export function writeSignals(section: Section) {
     }
 
     let value = signal.build();
+
+    if (!value) {
+      return;
+    }
 
     if (
       // It's possible for aliases to render nothing

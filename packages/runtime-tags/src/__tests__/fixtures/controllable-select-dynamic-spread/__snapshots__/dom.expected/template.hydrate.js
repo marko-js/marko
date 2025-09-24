@@ -1,11 +1,11 @@
 // size: 482 (min) 249 (brotli)
-const $tagselect_content__setup__script = _._script("a2", ($scope) => {
+const $tagselect_content__setup__script = _._script("a1", ($scope) => {
     (_._attrs_script($scope, 0),
       _._attrs_script($scope, 1),
       _._attrs_script($scope, 2));
   }),
   $tagselect_content = _._content_resume(
-    "a1",
+    "a2",
     "<option>A</option><option>B</option><option>C</option>",
     " b b b",
     ($scope) => {

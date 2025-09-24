@@ -1,7 +1,7 @@
 export const $template = `<!>${_thing_template}<!>`;
 export const $walks = /* over(1), beginChild, _thing_walks, endChild, over(1) */`b/${_thing_walks}&b`;
-import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
+import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import { $setup as _thing, $input_what as _thing_input_what, $template as _thing_template, $walks as _thing_walks } from "./tags/thing.marko";
 const $get$hoisted_setHtml = _._resume("__tests__/template.marko_0_$hoisted_setHtml/hoist", _._hoist("setHtml", "ClosureScopes:1"));
 const $what_content__setHtml = _._var_resume("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */_._const("setHtml"));

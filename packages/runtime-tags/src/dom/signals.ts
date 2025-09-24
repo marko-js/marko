@@ -229,13 +229,12 @@ function closure<T>(
   };
 }
 
-export function _child_setup(setup?: Signal<never>) {
-  return setup
-    ? (scope: Scope, owner: Scope) => {
-        scope[AccessorProp.Owner] = owner;
-        queueRender(scope, setup, -1);
-      }
-    : () => {};
+export function _child_setup(setup: Signal<never> & { _: Signal<Scope> }) {
+  setup._ = (scope, owner) => {
+    scope[AccessorProp.Owner] = owner;
+    queueRender(scope, setup, -1);
+  };
+  return setup;
 }
 
 export function _var(

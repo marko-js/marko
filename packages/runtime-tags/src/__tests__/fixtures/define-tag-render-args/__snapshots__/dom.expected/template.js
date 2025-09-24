@@ -6,13 +6,11 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 const $define_content__a = /* @__PURE__ */_._const("a", ($scope, a) => _._text($scope["#text/0"], a));
 const $define_content__b = /* @__PURE__ */_._const("b", ($scope, b) => _._text($scope["#text/1"], b));
 const $define_content__c = /* @__PURE__ */_._const("c", ($scope, c) => _._text($scope["#text/2"], c));
-const $define_content__setup = _._child_setup();
 const $define_content__$params = /* @__PURE__ */_._const("$params2", ($scope, $params2) => {
   $define_content__a($scope, $params2[0]);
   $define_content__b($scope, $params2[1]);
   $define_content__c($scope, $params2[2]);
 });
-const $define_content = _._content_resume("__tests__/template.marko_1_content", $define_content__template, $define_content__walks, $define_content__setup, $define_content__$params);
 const $x__script = _._script("__tests__/template.marko_0_x", ($scope, {
   x
 }) => _._on($scope["#button/1"], "click", function () {
@@ -24,7 +22,6 @@ const $x = /* @__PURE__ */_._let("x/3", ($scope, x) => {
   $x__script($scope);
 });
 export function $setup($scope) {
-  $define_content__setup($scope["#childScope/0"], $scope);
   $define_content__a($scope["#childScope/0"], 1);
   $define_content__b($scope["#childScope/0"], "Hello");
   $x($scope, 1);

@@ -2,7 +2,6 @@ import { types as t } from "@marko/compiler";
 import { importDefault } from "@marko/compiler/babel-utils";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
-import { getAccessorProp } from "../../util/get-accessor-char";
 import getStyleFile from "../../util/get-style-file";
 import { forEach, toArray } from "../../util/optional";
 import {
@@ -66,7 +65,7 @@ export default {
                     ? closureSignal.identifier
                     : t.memberExpression(
                         closureSignal.identifier,
-                        t.identifier(getAccessorProp().Owner),
+                        t.identifier("_"),
                       ),
                   [scopeIdentifier],
                 ),
@@ -77,65 +76,72 @@ export default {
             childSection.params && initValue(childSection.params);
           const { walks, writes, setup, decls } =
             writer.getSectionMeta(childSection);
-          const identifier = t.identifier(childSection.name);
-          let renderer = getSectionParentIsOwner(childSection)
-            ? callRuntime(
-                "_content_branch",
-                ...replaceNullishAndEmptyFunctionsWith0([
-                  writes,
-                  walks,
-                  setup,
-                  tagParamsSignal?.identifier,
-                ]),
-              )
-            : callRuntime(
-                isSerializedSection(childSection)
-                  ? "_content_resume"
-                  : "_content",
-                t.stringLiteral(getResumeRegisterId(childSection, "content")),
-                ...replaceNullishAndEmptyFunctionsWith0([
-                  writes,
-                  walks,
-                  setup,
-                  tagParamsSignal?.identifier,
-                  childSection.hoisted || childSection.isHoistThrough
-                    ? getSectionInstancesAccessorLiteral(childSection)
-                    : undefined,
-                ]),
+
+          writeSignals(childSection);
+
+          if (
+            !childSection.downstreamBinding ||
+            bindingHasDownstreamExpressions(childSection.downstreamBinding)
+          ) {
+            let renderer = getSectionParentIsOwner(childSection)
+              ? callRuntime(
+                  "_content_branch",
+                  ...replaceNullishAndEmptyFunctionsWith0([
+                    writes,
+                    walks,
+                    setup,
+                    tagParamsSignal?.identifier,
+                  ]),
+                )
+              : callRuntime(
+                  isSerializedSection(childSection)
+                    ? "_content_resume"
+                    : "_content",
+                  t.stringLiteral(getResumeRegisterId(childSection, "content")),
+                  ...replaceNullishAndEmptyFunctionsWith0([
+                    writes,
+                    walks,
+                    setup,
+                    tagParamsSignal?.identifier,
+                    childSection.hoisted || childSection.isHoistThrough
+                      ? getSectionInstancesAccessorLiteral(childSection)
+                      : undefined,
+                  ]),
+                );
+
+            if (childSection.referencedLocalClosures) {
+              renderer = callRuntime(
+                "_content_closures",
+                renderer,
+                t.objectExpression(
+                  toArray(childSection.referencedLocalClosures, (closure) => {
+                    const expr = getSignalFn(getSignal(childSection, closure));
+                    const key = toPropertyName(getScopeAccessor(closure));
+                    if (t.isFunction(expr) && t.isBlockStatement(expr.body)) {
+                      return t.objectMethod(
+                        "method",
+                        key,
+                        expr.params,
+                        expr.body,
+                      );
+                    }
+
+                    return t.objectProperty(key, expr);
+                  }),
+                ),
               );
+            }
+
+            program.node.body.push(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(t.identifier(childSection.name), renderer),
+              ]),
+            );
+          }
 
           if (decls) {
             extraDecls = extraDecls ? [...extraDecls, ...decls] : decls;
           }
-
-          if (childSection.referencedLocalClosures) {
-            renderer = callRuntime(
-              "_content_closures",
-              renderer,
-              t.objectExpression(
-                toArray(childSection.referencedLocalClosures, (closure) => {
-                  const expr = getSignalFn(getSignal(childSection, closure));
-                  const key = toPropertyName(getScopeAccessor(closure));
-                  if (t.isFunction(expr) && t.isBlockStatement(expr.body)) {
-                    return t.objectMethod(
-                      "method",
-                      key,
-                      expr.params,
-                      expr.body,
-                    );
-                  }
-
-                  return t.objectProperty(key, expr);
-                }),
-              ),
-            );
-          }
-          writeSignals(childSection);
-          program.node.body.push(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(identifier, renderer),
-            ]),
-          );
         }
       });
 

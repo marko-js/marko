@@ -1,4 +1,4 @@
-// size: 751 (min) 330 (brotli)
+// size: 751 (min) 328 (brotli)
 const $dynamicTag = _._dynamic_tag(0),
   $dynamicTag2 = _._dynamic_tag(1),
   $input_content = _._const(4, ($scope, input_content) => {
@@ -6,11 +6,11 @@ const $dynamicTag = _._dynamic_tag(0),
   }),
   $get$hoisted_el = _._hoist("j0", "a4");
 _._content_resume("b0", "<p></p>", " b", 0, 0, "a4");
-const $get$hoisted_el2 = _._resume("b2", _._hoist("j0", "a3"));
-_._resume("b3", _._hoist("j0", "a3", "a2"));
-const $child_content2 = _._content("b1", "<div></div>", " b", 0, 0, "a3"),
+const $get$hoisted_el2 = _._resume("b1", _._hoist("j0", "a3"));
+_._resume("b2", _._hoist("j0", "a3", "a2"));
+const $child_content2 = _._content("b3", "<div></div>", " b", 0, 0, "a3"),
   $inputshowChildnull_content__$hoisted_el__script = _._script(
-    "b5",
+    "b4",
     ({ 1: $hoisted_el2 }) => {
       for (const element of $hoisted_el2) element().classList.add("inner");
     },
@@ -20,7 +20,7 @@ const $child_content2 = _._content("b1", "<div></div>", " b", 0, 0, "a3"),
     $inputshowChildnull_content__$hoisted_el__script,
   );
 (_._content_resume(
-  "b4",
+  "b5",
   "<!><!><!><!><!><!>",
   "b/b%b%c&b",
   ($scope) => {
@@ -34,7 +34,7 @@ const $child_content2 = _._content("b1", "<div></div>", " b", 0, 0, "a3"),
   0,
   "a2",
 ),
-  _._resume("b7", _._hoist("j0", "a1")),
+  _._resume("b6", _._hoist("j0", "a1")),
   _._script("b8", ({ 7: $hoisted_el3 }) => {
     for (const element of $hoisted_el3) element().classList.add("outer");
   }),

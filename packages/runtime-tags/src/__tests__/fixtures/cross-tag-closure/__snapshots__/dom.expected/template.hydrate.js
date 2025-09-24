@@ -1,4 +1,4 @@
-// size: 277 (min) 188 (brotli)
+// size: 277 (min) 187 (brotli)
 const $value = _._let(3, _._return);
 _._resume("a0", function ($scope) {
   return (_new_value) => {
@@ -6,7 +6,7 @@ _._resume("a0", function ($scope) {
   };
 });
 const $mytag_content__count__script = _._script(
-    "c1",
+    "c0",
     ($scope, { _: { 3: count } }) =>
       _._on($scope[0], "click", function () {
         _._var_change($scope._[0], ++count);

@@ -17,6 +17,7 @@ import { toMemberExpression } from "./to-property-name";
 
 const pureDOMFunctions = new Set<string>([
   "_await",
+  "_child_setup",
   "_if",
   "_if_closure",
   "_try",

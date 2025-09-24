@@ -40,7 +40,7 @@ import {
   trackVarReferences,
 } from "./references";
 import { callRuntime, importRuntime } from "./runtime";
-import { createScopeReadExpression, getScopeExpression } from "./scope-read";
+import { createScopeReadExpression } from "./scope-read";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
@@ -298,14 +298,12 @@ export function knownTagTranslateHTML(
 
 export function knownTagTranslateDOM(
   tag: t.NodePath<t.MarkoTag>,
-  setupExpression: t.Expression | undefined,
-  contentSection: Section,
   propTree: BindingPropTree | undefined,
   getBindingIdentifier: (
     binding: Binding,
     preferedName?: string,
   ) => t.Identifier,
-  passOwner?: true,
+  callSetup: (section: Section, childBinding: Binding) => void,
 ) {
   const tagSection = getSection(tag);
   const { node } = tag;
@@ -343,24 +341,7 @@ export function knownTagTranslateDOM(
       ),
     );
   }
-  if (setupExpression) {
-    addStatement(
-      "render",
-      tagSection,
-      undefined,
-      t.expressionStatement(
-        t.callExpression(
-          setupExpression,
-          passOwner
-            ? [
-                createScopeReadExpression(tagSection, childScopeBinding),
-                getScopeExpression(tagSection, contentSection.parent!),
-              ]
-            : [createScopeReadExpression(tagSection, childScopeBinding)],
-        ),
-      ),
-    );
-  }
+  callSetup(tagSection, childScopeBinding);
 
   if (propTree) {
     writeParamsToSignals(tag, propTree, getTagName(tag) || "tag", {

@@ -4,7 +4,7 @@ export default _._template("__tests__/template.marko", input => {
   let count = 0;
   _._html(`<button>${_._escape(count)}${_._el_resume($scope0_id, "#text/1")}</button>${_._el_resume($scope0_id, "#button/0")}`);
   const MyTag = {
-    content: _._content_resume("__tests__/template.marko_1_content", ({
+    content: _._content("__tests__/template.marko_1_content", ({
       name,
       count
     }) => {
@@ -12,7 +12,7 @@ export default _._template("__tests__/template.marko", input => {
       const $serialize = _._get_serialize_reason();
       _._html(`<div>Hello ${_._sep(_._serialize_guard($serialize, /* name */1))}${_._escape(name)}${_._el_resume($scope1_id, "#text/0", _._serialize_guard($serialize, /* name */1))} ${_._sep(_._serialize_guard($serialize, /* count */2))}${_._escape(count)}${_._el_resume($scope1_id, "#text/1", _._serialize_guard($serialize, /* count */2))}</div>`);
       _._serialize_guard($serialize, /* name,count */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "6:2");
-    }, $scope0_id)
+    })
   };
   const $childScope = _._peek_scope_id();
   _._set_serialize_reason({

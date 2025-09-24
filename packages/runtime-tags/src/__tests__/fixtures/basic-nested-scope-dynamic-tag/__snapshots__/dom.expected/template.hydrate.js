@@ -1,6 +1,6 @@
 // size: 230 (min) 173 (brotli)
 const $falseChild_content__count__script = _._script(
-    "b1",
+    "b0",
     ($scope, { _: { 1: count } }) =>
       _._on($scope[0], "click", function () {
         $count($scope._, ++count);
@@ -11,7 +11,7 @@ const $falseChild_content__count__script = _._script(
   }),
   $falseChild_content__setup = $falseChild_content__count;
 _._content_resume(
-  "b0",
+  "b1",
   "<button> </button>",
   " D l",
   $falseChild_content__setup,

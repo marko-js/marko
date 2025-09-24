@@ -124,12 +124,8 @@ export function getSectionMetaIdentifiers(section: Section) {
   const meta = getSectionMeta(section);
   if (!sectionMetaIsIds.has(meta)) {
     sectionMetaIsIds.add(meta);
-    const { setup, walks, writes } = meta;
+    const { walks, writes } = meta;
     const decls: t.VariableDeclarator[] = [];
-
-    if (!setup) {
-      meta.setup = generateUidIdentifier(`${section.name}__setup`);
-    }
 
     if (walks) {
       meta.walks = generateUidIdentifier(`${section.name}__walks`);

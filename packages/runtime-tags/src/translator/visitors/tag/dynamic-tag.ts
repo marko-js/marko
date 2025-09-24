@@ -35,7 +35,10 @@ import {
   getCompatRuntimeFile,
   importRuntime,
 } from "../../util/runtime";
-import { getScopeExpression } from "../../util/scope-read";
+import {
+  createScopeReadExpression,
+  getScopeExpression,
+} from "../../util/scope-read";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
@@ -50,12 +53,13 @@ import {
   getBindingSerializeReason,
 } from "../../util/serialize-reasons";
 import {
+  addStatement,
   addValue,
   getResumeRegisterId,
   getSignal,
-  getSignalFn,
   initValue,
   type Signal,
+  signalHasStatements,
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import {
@@ -169,24 +173,35 @@ export default {
           );
         } else {
           const write = writer.writeTo(tag);
-          const sectionMeta =
-            writer.getSectionMetaIdentifiers(definedBodySection);
 
           knownTagTranslateDOM(
             tag,
-            sectionMeta.setup,
-            definedBodySection,
             propTree,
             (binding, preferedName) =>
               getSignal(definedBodySection, binding, preferedName).identifier,
-            true,
+            (section, childBinding) => {
+              const signal = getSignal(definedBodySection, undefined);
+              if (signalHasStatements(signal)) {
+                addStatement(
+                  "render",
+                  section,
+                  undefined,
+                  t.expressionStatement(
+                    t.callExpression(
+                      t.memberExpression(signal.identifier, t.identifier("_")),
+                      [
+                        createScopeReadExpression(section, childBinding),
+                        getScopeExpression(section, definedBodySection.parent!),
+                      ],
+                    ),
+                  ),
+                );
+              }
+            },
           );
 
-          const signal = getSignal(definedBodySection, undefined);
-          signal.identifier = sectionMeta.setup as t.Identifier;
-          signal.build = () => {
-            return callRuntime("_child_setup", getSignalFn(signal));
-          };
+          const sectionMeta =
+            writer.getSectionMetaIdentifiers(definedBodySection);
 
           if (sectionMeta.writes) {
             write`${sectionMeta.writes}`;

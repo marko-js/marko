@@ -45,11 +45,6 @@ function register({ extensions = require.extensions, ...options } = {}) {
       setSourceMap(filename, compiled.map);
     }
 
-    // console.log({
-    //   filename,
-    //   code: compiled.code
-    // })
-
     return module._compile(compiled.code, filename);
   };
 

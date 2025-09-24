@@ -18,7 +18,8 @@ import {
   knownTagTranslateHTML,
 } from "../../util/known-tag";
 import { isOutputHTML } from "../../util/marko-config";
-import { getSignal } from "../../util/signals";
+import { createScopeReadExpression } from "../../util/scope-read";
+import { addStatement, getSignal } from "../../util/signals";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
@@ -130,11 +131,21 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   if (programSection === childSection) {
     knownTagTranslateDOM(
       tag,
-      t.identifier(childExports.setup),
-      childSection,
       childExports.params,
       (binding, preferedName) =>
         getSignal(programSection, binding, preferedName).identifier,
+      (section, childBinding) => {
+        addStatement(
+          "render",
+          section,
+          undefined,
+          t.expressionStatement(
+            t.callExpression(t.identifier(childExports.setup), [
+              createScopeReadExpression(section, childBinding),
+            ]),
+          ),
+        );
+      },
     );
 
     write`${t.identifier(childExports.template)}`;
@@ -142,13 +153,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   } else {
     knownTagTranslateDOM(
       tag,
-      importOrSelfReferenceName(
-        file,
-        relativePath,
-        childExports.setup,
-        tagName,
-      ),
-      childSection,
       childExports.params,
       (binding, perferedName) =>
         importOrSelfReferenceName(
@@ -157,6 +161,24 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           binding.export!,
           perferedName,
         ),
+      (section, childBinding) => {
+        addStatement(
+          "render",
+          section,
+          undefined,
+          t.expressionStatement(
+            t.callExpression(
+              importOrSelfReferenceName(
+                file,
+                relativePath,
+                childExports.setup,
+                tagName,
+              ),
+              [createScopeReadExpression(section, childBinding)],
+            ),
+          ),
+        );
+      },
     );
 
     write`${importNamed(file, relativePath, childExports.template, `${tagName}_template`)}`;

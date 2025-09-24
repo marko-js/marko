@@ -1,7 +1,7 @@
 export const $template = "<!><!><hr><!><hr><!><!>";
 export const $walks = /* over(1), replace, over(2), replace, over(2), replace, over(2) */"b%c%c%c";
-import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
+import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 const $get$hoisted_setHtml = _._resume("__tests__/template.marko_0_$hoisted_setHtml3/hoist", _._hoist("setHtml3", "LoopScopeMap:#ul/0", "LoopScopeMap:#text/2"));
 const $for_content4__setHtml = _._var_resume("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_._const("setHtml3"));
 const $for_content4__setup = $scope => {

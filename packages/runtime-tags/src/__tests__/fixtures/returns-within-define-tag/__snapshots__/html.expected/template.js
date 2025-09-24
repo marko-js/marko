@@ -2,7 +2,7 @@ import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   const Once = {
-    content: _._content_resume("__tests__/template.marko_1_content", ({
+    content: _._content("__tests__/template.marko_1_content", ({
       value
     }) => {
       const $scope1_id = _._scope_id();
@@ -22,7 +22,7 @@ export default _._template("__tests__/template.marko", input => {
       });
       _._resume_branch($scope1_id);
       return $return;
-    }, $scope0_id)
+    })
   };
   let clickOnceCount = 0;
   const $childScope = _._peek_scope_id();
@@ -35,7 +35,7 @@ export default _._template("__tests__/template.marko", input => {
   _._set_serialize_reason(/* state: clickOnceCount */1);
   _._html(`<button class=once>${_._escape(clickOnceCount)}${_._el_resume($scope0_id, "#text/3")}</button>${_._el_resume($scope0_id, "#button/2")}`);
   const Twice = {
-    content: _._content_resume("__tests__/template.marko_2_content", ({
+    content: _._content("__tests__/template.marko_2_content", ({
       value
     }) => {
       const $scope2_id = _._scope_id();
@@ -55,7 +55,7 @@ export default _._template("__tests__/template.marko", input => {
       });
       _._resume_branch($scope2_id);
       return $return2;
-    }, $scope0_id)
+    })
   };
   let clickTwiceCount = 0;
   const $childScope2 = _._peek_scope_id();
