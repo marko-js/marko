@@ -7,10 +7,16 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
+import type { ParamSerializeReasonGroups } from "../visitors/program";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag } from "./is-core-tag";
 import { filter, find, Sorted } from "./optional";
-import type { Binding, ReferencedBindings } from "./references";
+import type {
+  Binding,
+  InputBinding,
+  ParamBinding,
+  ReferencedBindings,
+} from "./references";
 import {
   getBindingSerializeReason,
   type SerializeReason,
@@ -33,7 +39,7 @@ export interface Section {
   depth: number;
   parent: Section | undefined;
   sectionAccessor: { binding: Binding; prefix: AccessorPrefix } | undefined;
-  params: undefined | Binding;
+  params: undefined | ParamBinding | InputBinding;
   referencedLocalClosures: ReferencedBindings;
   referencedClosures: ReferencedBindings;
   referencedHoists: ReferencedBindings;
@@ -41,6 +47,8 @@ export interface Section {
   hoisted: ReferencedBindings;
   serializeReason: undefined | SerializeReason;
   serializeReasons: Map<symbol, SerializeReason>;
+  paramReasonGroups: ParamSerializeReasonGroups | undefined;
+  returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
   downstreamBinding: Binding | undefined;
@@ -105,6 +113,8 @@ export function startSection(
       isHoistThrough: undefined,
       serializeReason: undefined,
       serializeReasons: new Map(),
+      paramReasonGroups: undefined,
+      returnSerializeReason: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
       downstreamBinding: undefined,

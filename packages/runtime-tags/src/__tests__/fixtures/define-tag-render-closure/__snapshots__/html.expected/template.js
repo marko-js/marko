@@ -14,8 +14,16 @@ export default _._template("__tests__/template.marko", input => {
       _._resume_branch($scope1_id);
     })
   };
-  _._dynamic_tag($scope0_id, "#text/0", MyTag, {}, 0, 0, 0);
-  _._html(`<button>${_._escape(x)}${_._el_resume($scope0_id, "#text/2")}</button>${_._el_resume($scope0_id, "#button/1")}`);
+  MyTag.content({});
+  _._if(() => {
+    if (x || 1) {
+      const $scope2_id = _._scope_id();
+      MyTag.content({});
+      _._scope($scope2_id, {}, "__tests__/template.marko", "7:2");
+      return 0;
+    }
+  }, $scope0_id, "#text/1");
+  _._html(`<button>${_._escape(x)}${_._el_resume($scope0_id, "#text/3")}</button>${_._el_resume($scope0_id, "#button/2")}`);
   _._script($scope0_id, "__tests__/template.marko_0_x");
   _._scope($scope0_id, {
     x,

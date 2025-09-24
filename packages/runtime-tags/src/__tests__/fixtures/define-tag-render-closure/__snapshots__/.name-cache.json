@@ -3,11 +3,14 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$define_content__x": "r",
-      "$$x_closure": "m",
-      "$$x__script": "e",
-      "$$x": "_",
-      "$$x__closure": "c"
+      "$$define_content__x": "m",
+      "$$x__script": "r",
+      "$$x": "e",
+      "$$x__closure": "_",
+      "$$define_content__setup": "c",
+      "$$if_content__setup": "i",
+      "$$if_content": "n",
+      "$$if": "s"
     }
   }
 }

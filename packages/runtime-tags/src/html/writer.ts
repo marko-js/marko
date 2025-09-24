@@ -173,6 +173,16 @@ export function getScopeById(scopeId: number | undefined) {
   }
 }
 
+export function _set_serialize_reason(reason: undefined | 0 | 1) {
+  $chunk.boundary.state.serializeReason = reason;
+}
+
+export function _get_serialize_reason() {
+  const reason = $chunk.boundary.state.serializeReason;
+  $chunk.boundary.state.serializeReason = undefined;
+  return reason;
+}
+
 export function _serialize_if(
   condition: undefined | 1 | Record<string, 1>,
   key: string,
@@ -849,6 +859,7 @@ export class State {
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, PartialScope>();
   public writeScopes: null | Record<number, PartialScope> = null;
+  public serializeReason: undefined | 0 | 1;
   constructor(
     public $global: $Global & { renderId: string; runtimeId: string },
   ) {

@@ -24,9 +24,10 @@ export default _._template("__tests__/template.marko", input => {
   }, $scope0_id), {
     catch: _.attrTag({
       content: _._content_resume("__tests__/template.marko_3_content", err => {
+        const $serialize = _._get_serialize_reason();
         const $scope3_id = _._scope_id();
-        _._html(`${_._escape(err)}${_._el_resume($scope3_id, "#text/0")}`);
-        _._scope($scope3_id, {}, "__tests__/template.marko", "17:4");
+        _._html(`${_._escape(err)}${_._el_resume($scope3_id, "#text/0", _._serialize_guard($serialize, /* err */0))}`);
+        _._serialize_guard($serialize, /* err */0) && _._scope($scope3_id, {}, "__tests__/template.marko", "17:4");
       }, $scope0_id)
     }),
     placeholder: _.attrTag({

@@ -1,0 +1,14 @@
+<let/show=true>
+<let/x=1>
+
+<define/MyTag|{value}|>
+  <div>Hello ${value}</div>
+</define>
+
+<if=show>
+  <MyTag=x />
+</if>
+
+<button onClick() { x++; show=true }>
+  ${x}
+</button>

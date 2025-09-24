@@ -1,6 +1,7 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 import _customTag from "./tags/custom-tag/index.marko";
-export default _._template("__tests__/template.marko", (input, $serialize) => {
+export default _._template("__tests__/template.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   const {
     x
@@ -24,14 +25,15 @@ export default _._template("__tests__/template.marko", (input, $serialize) => {
       }, $scope0_id)
     });
   }
-  _customTag({
-    thing: $thing
-  }, {
+  _._set_serialize_reason({
     /* input.thing.x, input.thing.content */0: _._serialize_guard($serialize, /* x */0),
     /* input.thing.x */1: _._serialize_guard($serialize, /* x */0),
     /* input.thing.content */2: _._serialize_guard($serialize, /* x */0)
   });
+  _customTag({
+    thing: $thing
+  });
   _._serialize_guard($serialize, /* x */0) && _._scope($scope0_id, {
-    "#childScope/0": _._serialize_if($serialize, /* input.x */0) && _._existing_scope($childScope)
+    "#childScope/0": _._serialize_if($serialize, /* x */0) && _._existing_scope($childScope)
   }, "__tests__/template.marko", 0);
 });

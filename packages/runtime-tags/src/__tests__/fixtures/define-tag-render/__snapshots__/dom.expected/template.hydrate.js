@@ -1,5 +1,5 @@
 // size: 138 (min) 112 (brotli)
-const $define_content__y__script = _._script("a1", ($scope, { 7: y }) =>
+const $define_content__y__script = _._script("a0", ($scope, { 7: y }) =>
     _._on($scope[2], "click", function () {
       $define_content__y($scope, ++y);
     }),

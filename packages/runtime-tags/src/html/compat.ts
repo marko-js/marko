@@ -7,7 +7,7 @@ import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import type { Scope } from "../common/types";
 import { patchDynamicTag } from "./dynamic-tag";
 import { getRegistered, register } from "./serializer";
-import { isTemplate, type ServerRenderer } from "./template";
+import type { ServerRenderer } from "./template";
 import {
   _await,
   _html,
@@ -15,6 +15,7 @@ import {
   _scope,
   _scope_id,
   _script,
+  _set_serialize_reason,
   $global,
   Boundary,
   Chunk,
@@ -128,10 +129,11 @@ export const compat = {
         _script(scopeId, SET_SCOPE_REGISTER_ID);
       }
 
-      if (isTemplate(renderer) && willRerender) {
-        renderer(normalizedInput, 1);
-      } else {
+      _set_serialize_reason(willRerender ? 1 : 0);
+      try {
         renderer(normalizedInput);
+      } finally {
+        _set_serialize_reason(undefined);
       }
 
       const asyncOut = classAPIOut.beginAsync({ last: true, timeout: -1 });

@@ -5,7 +5,7 @@
 
 # Write
 ```html
-  <!--M_!b--><!--M_]1 #text/0 2-->def<style M_>t{display:none}</style><t M_=b>ERROR!<!--M_*4 #text/0--></t><script>M._.r.push(_=>(_.d=[1,{}]));REORDER_RUNTIME(M._);M._.w()</script>
+  <!--M_!b--><!--M_]1 #text/0 2-->def<style M_>t{display:none}</style><t M_=b>ERROR!</t><script>REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Render End
@@ -22,12 +22,9 @@
     a
     <!--M_[-->
     ERROR!
-    <!--M_*4 #text/0-->
     <!--M_]1 #text/0 2-->
     def
     <script>
-      M._.r.push(_ =&gt; (_.d = [1,
-      {}]));
       REORDER_RUNTIME(M._);
       M._.w()
     </script>
@@ -47,13 +44,12 @@ INSERT #text
 INSERT script
 INSERT script/#text
 INSERT #comment
-INSERT html/body/#comment2
+INSERT html/body/#comment1
 INSERT html/body/#text2
 INSERT html/head/style
 INSERT html/head/style/#text
 INSERT t
 INSERT html/body/#text1
-INSERT html/body/#comment1
 INSERT html/body/script
 INSERT html/body/script/#text
 REMOVE html/head/style after html/body/#text2
@@ -61,9 +57,8 @@ INSERT html/head/style
 REMOVE script after #text
 REMOVE #text after #comment
 REMOVE #comment after html/body/#comment0
-REMOVE html/body/#text1 before html/body/#comment1
-REMOVE html/body/#comment1 in t
+REMOVE html/body/#text1 in t
 REMOVE #comment after html/body/#comment0
-INSERT html/body/#text1, html/body/#comment1
+INSERT html/body/#text1
 REMOVE t after html/body/#text2
 ```

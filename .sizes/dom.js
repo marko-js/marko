@@ -1,4 +1,4 @@
-// size: 19254 (min) 7298 (brotli)
+// size: 19308 (min) 7346 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -731,6 +731,14 @@ function closure(valueAccessor, fn, getOwnerScope) {
   return (scope) => {
     fn(scope, (getOwnerScope ? getOwnerScope(scope) : scope._)[valueAccessor]);
   };
+}
+function _child_setup(setup) {
+  return (
+    (setup._ = (scope, owner) => {
+      ((scope._ = owner), queueRender(scope, setup, -1));
+    }),
+    setup
+  );
 }
 function _var(scope, childAccessor, signal) {
   scope[childAccessor].e = (value) => signal(scope, value);

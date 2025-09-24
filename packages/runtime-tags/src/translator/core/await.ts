@@ -27,6 +27,7 @@ import {
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
+import { getSerializeGuard } from "../util/serialize-guard";
 import { getSectionSerializeReason } from "../util/serialize-reasons";
 import {
   addValue,
@@ -37,7 +38,6 @@ import { toFirstExpressionOrBlock } from "../util/to-first-expression-or-block";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
-import { getSerializeGuard } from "../visitors/program/html";
 
 const kDOMBinding = Symbol("await tag dom binding");
 
@@ -103,7 +103,7 @@ export default {
     const valueExtra = evaluate(valueAttr.value);
 
     getOrCreateSection(tag);
-    const paramsBinding = trackParamsReferences(tagBody, BindingType.param);
+    const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
 
     if (paramsBinding) {
       setBindingDownstream(paramsBinding, valueExtra);

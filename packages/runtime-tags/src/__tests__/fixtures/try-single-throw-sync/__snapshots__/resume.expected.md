@@ -6,7 +6,6 @@
     Before
     <!--M_[-->
     ERROR!
-    <!--M_*3 #text/0-->
     <!--M_]1 #text/0 2-->
     After
     <script>
@@ -15,8 +14,7 @@
         "ConditionalScope:#text/0": _.b = {
           "#BranchAccessor": "#text/0"
         }
-      }, _.b,
-      {}], _.b["#CatchContent"] = _._[
+      }, _.b], _.b["#CatchContent"] = _._[
         "__tests__/template.marko_2_content"
         ](_.a), _.c)]
     </script>

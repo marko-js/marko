@@ -10,9 +10,10 @@ export default _._template("__tests__/template.marko", input => {
   }, $scope0_id), {
     catch: _.attrTag({
       content: _._content_resume("__tests__/template.marko_2_content", error => {
+        const $serialize = _._get_serialize_reason();
         const $scope2_id = _._scope_id();
-        _._html(`${_._escape(error.message)}${_._el_resume($scope2_id, "#text/0")}`);
-        _._scope($scope2_id, {}, "__tests__/template.marko", "4:4");
+        _._html(`${_._escape(error.message)}${_._el_resume($scope2_id, "#text/0", _._serialize_guard($serialize, /* error.message */0))}`);
+        _._serialize_guard($serialize, /* error.message */0) && _._scope($scope2_id, {}, "__tests__/template.marko", "4:4");
       }, $scope0_id)
     })
   });

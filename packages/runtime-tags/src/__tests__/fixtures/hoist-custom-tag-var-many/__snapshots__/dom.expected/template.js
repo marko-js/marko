@@ -1,20 +1,20 @@
 export const $template = "<!><!><hr><!><hr><!><!>";
 export const $walks = /* over(1), replace, over(2), replace, over(2), replace, over(2) */"b%c%c%c";
-import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
+import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 const $get$hoisted_setHtml = _._resume("__tests__/template.marko_0_$hoisted_setHtml3/hoist", _._hoist("setHtml3", "LoopScopeMap:#ul/0", "LoopScopeMap:#text/2"));
 const $for_content4__setHtml = _._var_resume("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_._const("setHtml3"));
 const $for_content4__setup = $scope => {
   _._var($scope, "#childScope/0", $for_content4__setHtml);
   _child($scope["#childScope/0"]);
 };
-const $for_content4__$params = /* @__PURE__ */_._const("$params3");
+const $for_content4__$params = $scope => {};
 const $for_content4 = /* @__PURE__ */_._content_branch(_child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $for_content4__setup, $for_content4__$params);
 const $for_content3__for = /* @__PURE__ */_._for_to("#ul/0", $for_content4);
 const $for_content3__setup = $scope => {
   $for_content3__for($scope, [3, 0, 1]);
 };
-const $for_content3__$params = /* @__PURE__ */_._const("$params2");
+const $for_content3__$params = $scope => {};
 const $for_content3 = /* @__PURE__ */_._content_branch("<ul></ul>", /* get, over(1) */" b", $for_content3__setup, $for_content3__$params);
 const $get$hoisted_setHtml2 = _._hoist("setHtml2", "LoopScopeMap:#text/1");
 const $for_content2__setHtml = _._var_resume("__tests__/template.marko_2_setHtml2/var", /* @__PURE__ */_._const("setHtml2"));

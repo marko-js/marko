@@ -17,6 +17,7 @@ import {
   getOrCreateSection,
   getSection,
 } from "../util/sections";
+import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addBindingSerializeReasonExpr,
   getBindingSerializeReason,
@@ -26,7 +27,6 @@ import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "./program";
-import { getSerializeGuard } from "./program/html";
 
 const kNodeBinding = Symbol("placeholder node binding");
 const kSiblingText = Symbol("placeholder has sibling text");

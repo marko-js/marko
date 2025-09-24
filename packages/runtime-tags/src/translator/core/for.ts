@@ -35,6 +35,7 @@ import {
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
+import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSectionSerializeReasonExpr,
   getBindingSerializeReason,
@@ -49,7 +50,6 @@ import {
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
-import { getSerializeGuard } from "../visitors/program/html";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
 
 type ForType = "in" | "of" | "to" | "until";
@@ -62,7 +62,7 @@ export default {
     const tagBody = tag.get("body");
     const paramsBinding = trackParamsReferences(
       tagBody,
-      isAttrTag ? BindingType.local : BindingType.param,
+      isAttrTag ? BindingType.local : BindingType.derived,
     );
 
     let allowAttrs: string[];

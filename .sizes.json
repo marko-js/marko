@@ -7,8 +7,8 @@
     {
       "name": "*",
       "total": {
-        "min": 19254,
-        "brotli": 7298
+        "min": 19308,
+        "brotli": 7346
       }
     },
     {
@@ -44,16 +44,16 @@
     {
       "name": "comments",
       "user": {
-        "min": 890,
-        "brotli": 457
+        "min": 809,
+        "brotli": 431
       },
       "runtime": {
         "min": 6990,
         "brotli": 2989
       },
       "total": {
-        "min": 7880,
-        "brotli": 3446
+        "min": 7799,
+        "brotli": 3420
       }
     },
     {

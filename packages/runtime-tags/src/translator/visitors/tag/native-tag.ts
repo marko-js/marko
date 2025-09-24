@@ -40,6 +40,7 @@ import {
   getSection,
   isSameOrChildSection,
 } from "../../util/sections";
+import { getSerializeGuard } from "../../util/serialize-guard";
 import {
   addBindingSerializeReasonExpr,
   forceBindingSerialize,
@@ -58,7 +59,6 @@ import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../program";
-import { getSerializeGuard } from "../program/html";
 
 export const kNativeTagBinding = Symbol("native tag binding");
 export const kSkipEndTag = Symbol("skip native tag mark");

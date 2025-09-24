@@ -22,5 +22,5 @@ export default _._template("__tests__/template.marko", input => {
       });
     })
   };
-  _._dynamic_tag($scope0_id, "#text/0", Foo, {}, 0, 0, 0);
+  Foo.content({});
 });

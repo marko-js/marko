@@ -6,6 +6,10 @@ import {
 import path from "path";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
+import {
+  type BindingPropTree,
+  getBindingPropTree,
+} from "../../util/binding-prop-tree";
 import entryBuilder from "../../util/entry-builder";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getKnownAttrValues } from "../../util/get-known-attr-values";
@@ -17,7 +21,6 @@ import {
 } from "../../util/marko-config";
 import { findIndexSorted } from "../../util/optional";
 import {
-  type Binding,
   BindingType,
   compareReferences,
   finalizeReferences,
@@ -25,15 +28,15 @@ import {
   trackParamsReferences,
 } from "../../util/references";
 import { getCompatRuntimeFile } from "../../util/runtime";
-import { startSection } from "../../util/sections";
+import { type Section, startSection } from "../../util/sections";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
 
-export type InputSerializeReason = NonNullable<Sources["input"]>;
-export type InputSerializeReasons = [
-  InputSerializeReason,
-  ...InputSerializeReason[],
+export type ParamSerializeReason = NonNullable<Sources["param"]>;
+export type ParamSerializeReasonGroups = [
+  ParamSerializeReason,
+  ...ParamSerializeReason[],
 ];
 
 export let cleanIdentifier: t.Identifier;
@@ -42,23 +45,16 @@ export function isScopeIdentifier(node: t.Node): node is t.Identifier {
   return node === scopeIdentifier;
 }
 
-export type TemplateExport = {
-  id: string;
-  binding: Binding;
-  props: { [prop: string]: TemplateExport } | undefined;
-};
-export type TemplateExports = TemplateExport["props"];
+export type TemplateExports = BindingPropTree["props"];
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    inputSerializeReasons?: InputSerializeReasons;
-    returnSerializeReason?: InputSerializeReason | true;
     returnValueExpr?: t.NodeExtra;
     domExports?: {
       template: string;
       walks: string;
       setup: string;
-      input: TemplateExport | undefined;
+      params: BindingPropTree | undefined;
     };
   }
 }
@@ -88,7 +84,7 @@ export default {
         template: generateUid("template"),
         walks: generateUid("walks"),
         setup: generateUid("setup"),
-        input: undefined, // TODO look into recursive components with fine grained params.
+        params: undefined,
       };
 
       for (const child of program.get("body")) {
@@ -105,13 +101,10 @@ export default {
 
     exit(program) {
       finalizeReferences();
-      const programExtra = program.node.extra;
-      const inputBinding = program.node.params[0].extra?.binding;
-      if (inputBinding && bindingHasDownstreamExpressions(inputBinding)) {
-        programExtra.domExports!.input = buildTemplateExports(
-          inputBinding,
-          program,
-        );
+      const programExtra = program.node.extra!;
+      const paramsBinding = programExtra.binding;
+      if (paramsBinding && bindingHasDownstreamExpressions(paramsBinding)) {
+        programExtra.domExports!.params = getBindingPropTree(paramsBinding);
       }
     },
   },
@@ -175,10 +168,10 @@ export default {
 } satisfies TemplateVisitor<t.Program>;
 
 export function resolveSerializeReasonId(
-  inputSerializeReasons: InputSerializeReasons,
-  reason: InputSerializeReason,
+  paramReasonGroups: NonNullable<Section["paramReasonGroups"]>,
+  reason: ParamSerializeReason,
 ) {
-  const id = findIndexSorted(compareReferences, inputSerializeReasons, reason);
+  const id = findIndexSorted(compareReferences, paramReasonGroups, reason);
 
   if (id === -1) {
     throw new Error("Unable to resolve serialize reason against input");
@@ -200,23 +193,4 @@ function resolveRelativeToEntry(
           ? path.join(file.opts.filename as string, "..", req)
           : req,
       );
-}
-
-function buildTemplateExports(
-  binding: Binding,
-  program: t.NodePath<t.Program>,
-) {
-  const templateExport: TemplateExport = {
-    id: (binding.export ??= generateUid(binding.name)),
-    binding,
-    props: undefined,
-  };
-  if (!(binding.aliases.size || binding.downstreamExpressions.size)) {
-    templateExport.props = {};
-    for (const [property, alias] of binding.propertyAliases) {
-      templateExport.props[property] = buildTemplateExports(alias, program);
-    }
-  }
-
-  return templateExport;
 }

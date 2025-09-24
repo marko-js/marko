@@ -1,8 +1,8 @@
 export const $template = `<!>${_thing_template}<!><!><!>`;
 export const $walks = /* over(1), beginChild, _thing_walks, endChild, replace, over(1), replace, over(2) */`b/${_thing_walks}&%b%c`;
 import Thing from "./tags/thing.marko";
-import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
+import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import { $setup as _thing, $input_content as _thing_input_content, $template as _thing_template, $walks as _thing_walks } from "./tags/thing.marko";
 const $get$hoisted_setHtml = _._hoist("setHtml3", "ClosureScopes:4");
 const $inputshowsectionnull_content__setHtml = _._var_resume("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_._const("setHtml3"));

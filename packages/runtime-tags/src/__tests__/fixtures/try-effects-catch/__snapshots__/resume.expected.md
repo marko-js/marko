@@ -7,7 +7,6 @@
     <!--M_*1 #div/0-->
     <!--M_[-->
     ERROR!
-    <!--M_*3 #text/0-->
     <!--M_]1 #text/1 2-->
     <div>
       This is good
@@ -19,8 +18,7 @@
           "ConditionalScope:#text/1": _.b = {
             "#BranchAccessor": "#text/1"
           }
-        }, _.b,
-        {}], _.b["#CatchContent"] = _._[
+        }, _.b], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), _.c),
         "__tests__/template.marko_0",

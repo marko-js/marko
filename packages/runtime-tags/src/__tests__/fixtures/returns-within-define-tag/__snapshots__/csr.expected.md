@@ -15,7 +15,7 @@
 
 # Mutations
 ```
-INSERT #comment, #text0, button0, #text1, button1
+INSERT #comment, button0, button1
 ```
 
 # Render

@@ -7,9 +7,10 @@ export default _._template("__tests__/template.marko", input => {
     value: 3
   });
   const $childScope = _._peek_scope_id();
+  _._set_serialize_reason(/* state: x */1);
   _child({
     value: x
-  }, 1);
+  });
   _._scope($scope0_id, {
     "#childScope/1": _._existing_scope($childScope)
   }, "__tests__/template.marko", 0);

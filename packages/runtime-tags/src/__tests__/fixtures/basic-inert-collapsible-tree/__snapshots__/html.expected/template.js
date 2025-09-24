@@ -1,13 +1,15 @@
 import _comments from "./tags/comments.marko";
 import * as _ from "@marko/runtime-tags/debug/html";
-export default _._template("__tests__/template.marko", (input, $serialize) => {
+export default _._template("__tests__/template.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   const $childScope = _._peek_scope_id();
-  _comments(input, {
+  _._set_serialize_reason({
     /* input.comments, input.path */0: _._serialize_guard($serialize, /* input */0),
     /* input.comments */1: _._serialize_guard($serialize, /* input */0),
     /* input.path */2: _._serialize_guard($serialize, /* input */0)
   });
+  _comments(input);
   _._serialize_guard($serialize, /* input */0) && _._scope($scope0_id, {
     "#childScope/0": _._serialize_if($serialize, /* input */0) && _._existing_scope($childScope)
   }, "__tests__/template.marko", 0);

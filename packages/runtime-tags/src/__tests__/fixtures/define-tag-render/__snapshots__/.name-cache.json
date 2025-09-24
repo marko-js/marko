@@ -4,7 +4,11 @@
       "$_": "t",
       "$init": "o",
       "$$define_content__y__script": "m",
-      "$$define_content__y": "r"
+      "$$define_content__y": "r",
+      "$$define_content__setup": "n",
+      "$$define_content__name": "_",
+      "$$define_content__$params": "e",
+      "$$define_content__$temp": "c"
     }
   }
 }

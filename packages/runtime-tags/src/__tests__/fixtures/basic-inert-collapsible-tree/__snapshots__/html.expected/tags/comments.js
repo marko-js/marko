@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
-const $content = (input, $serialize) => {
+const $content = input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   _._html("<ul>");
   _._for_of(input.comments, (comment, i) => {
@@ -11,13 +12,18 @@ const $content = (input, $serialize) => {
       if (comment.comments) {
         const $scope2_id = _._scope_id();
         const $childScope = _._peek_scope_id();
+        _._set_serialize_reason({
+          /* input.comments, input.path */0: _._serialize_guard($serialize, /* input.comments,input.path */0),
+          /* input.comments */1: _._serialize_guard($serialize, /* input.comments */1),
+          /* input.path */2: _._serialize_guard($serialize, /* input.comments,input.path */0)
+        });
         $content({
           comments: comment.comments,
           path: id
         });
         _._serialize_guard($serialize, /* input.comments,input.path */0) && _._scope($scope2_id, {
           _: _._scope_with_id($scope1_id),
-          "#childScope/0": _._serialize_if($serialize, /* input.comments, input.path */0) && _._existing_scope($childScope)
+          "#childScope/0": _._serialize_if($serialize, /* input.comments,input.path */0) && _._existing_scope($childScope)
         }, "__tests__/tags/comments.marko", "10:8");
         return 0;
       }
@@ -25,11 +31,11 @@ const $content = (input, $serialize) => {
     _._html(`</li>${_._el_resume($scope1_id, "#li/0")}`);
     _._script($scope1_id, "__tests__/tags/comments.marko_1_open");
     _._scope($scope1_id, {
-      comment_comments: _._serialize_if($serialize, /* input.comments, input.path */0) && comment?.comments,
+      comment_comments: _._serialize_if($serialize, /* input.comments */1) && comment?.comments,
       i: _._serialize_if($serialize, /* input.path */2) && i,
       id: _._serialize_if($serialize, /* input.comments */1) && id,
       open,
-      _: _._serialize_if($serialize, /* input.comments, input.path */0) && _._scope_with_id($scope0_id)
+      _: _._serialize_if($serialize, /* input.comments,input.path */0) && _._scope_with_id($scope0_id)
     }, "__tests__/tags/comments.marko", "2:4", {
       comment_comments: ["comment.comments", "2:8"],
       i: "2:17",

@@ -2,7 +2,8 @@ import CustomTag from "./tags/custom-tag.marko";
 const TestTag = CustomTag;
 import * as _ from "@marko/runtime-tags/debug/html";
 import _customTag from "./tags/custom-tag.marko";
-export default _._template("__tests__/template.marko", (input, $serialize) => {
+export default _._template("__tests__/template.marko", input => {
+  const $serialize = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   const {
     c,
@@ -13,14 +14,15 @@ export default _._template("__tests__/template.marko", (input, $serialize) => {
     d
   }])}></div>${_._el_resume($scope0_id, "#div/0", _._serialize_guard($serialize, /* c,d */0))}<div class="a b"></div><div class="a b c"></div>`);
   const $childScope = _._peek_scope_id();
+  _._set_serialize_reason({
+    /* input.class, input.test */0: _._serialize_guard($serialize, /* c,d */0),
+    /* input.class */3: _._serialize_guard($serialize, /* c,d */0)
+  });
   _customTag({
     class: ["a", {
       b: c,
       d
     }]
-  }, {
-    /* input.class, input.test */0: _._serialize_guard($serialize, /* c,d */0),
-    /* input.class */3: _._serialize_guard($serialize, /* c,d */0)
   });
   _customTag({
     class: ["a", false, "b"]
@@ -42,9 +44,9 @@ export default _._template("__tests__/template.marko", (input, $serialize) => {
     })
   }, 0, 0, _._serialize_guard($serialize, /* c,d */0));
   _._serialize_guard($serialize, /* c,d */0) && _._scope($scope0_id, {
-    c: _._serialize_if($serialize, /* input.d */2) && c,
-    d: _._serialize_if($serialize, /* input.c */1) && d,
-    "#childScope/1": _._serialize_if($serialize, /* input.c, input.d */0) && _._existing_scope($childScope)
+    c: _._serialize_if($serialize, /* d */2) && c,
+    d: _._serialize_if($serialize, /* c */1) && d,
+    "#childScope/1": _._serialize_if($serialize, /* c,d */0) && _._existing_scope($childScope)
   }, "__tests__/template.marko", 0, {
     c: "4:10",
     d: "4:13"

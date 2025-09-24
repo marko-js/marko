@@ -9,8 +9,14 @@ import {
 
 import { isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
+import { getBindingPropTree } from "../../util/binding-prop-tree";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorPrefix } from "../../util/get-accessor-char";
+import {
+  knownTagAnalyze,
+  knownTagTranslateDOM,
+  knownTagTranslateHTML,
+} from "../../util/known-tag";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import {
@@ -29,24 +35,31 @@ import {
   getCompatRuntimeFile,
   importRuntime,
 } from "../../util/runtime";
-import { getScopeExpression } from "../../util/scope-read";
+import {
+  createScopeReadExpression,
+  getScopeExpression,
+} from "../../util/scope-read";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  type Section,
   startSection,
 } from "../../util/sections";
+import { getSerializeGuard } from "../../util/serialize-guard";
 import {
   addBindingSerializeReasonExpr,
   getBindingSerializeReason,
 } from "../../util/serialize-reasons";
 import {
+  addStatement,
   addValue,
   getResumeRegisterId,
   getSignal,
   initValue,
   type Signal,
+  signalHasStatements,
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import {
@@ -57,7 +70,6 @@ import {
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
-import { getSerializeGuard } from "../program/html";
 import { getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
@@ -67,6 +79,7 @@ declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kDOMBinding]?: Binding;
     [kChildOffsetScopeBinding]?: Binding;
+    defineBodySection?: Section;
   }
 }
 
@@ -74,14 +87,27 @@ export default {
   analyze: {
     enter(tag) {
       assertAttributesOrArgs(tag);
+      const { node } = tag;
+      const definedBodySection = node.extra?.defineBodySection;
+      if (definedBodySection) {
+        knownTagAnalyze(
+          tag,
+          definedBodySection,
+          definedBodySection.params &&
+            getBindingPropTree(definedBodySection.params),
+        );
+
+        return;
+      }
+
       analyzeAttributeTags(tag);
+
       const tagSection = getOrCreateSection(tag);
-      const tagExtra = mergeReferences(tagSection, tag.node, [
-        tag.node.name,
-        ...getAllTagReferenceNodes(tag.node),
+      const tagExtra = mergeReferences(tagSection, node, [
+        node.name,
+        ...getAllTagReferenceNodes(node),
       ]);
       const tagBody = tag.get("body");
-      const isClassAPI = tagExtra.featureType === "class";
       const hasVar = !!tag.node.var;
       const nodeBinding = (tagExtra[kDOMBinding] = createBinding(
         "#text",
@@ -107,12 +133,19 @@ export default {
       addBindingSerializeReasonExpr(
         tagSection,
         nodeBinding,
-        isClassAPI || hasVar || tagExtra,
+        hasVar || tagExtra,
       );
     },
   },
   translate: {
     enter(tag) {
+      if (tag.node.extra?.defineBodySection) {
+        if (isOutputHTML()) {
+          writer.flushBefore(tag);
+        }
+        return;
+      }
+
       walks.visit(
         tag,
         tag.node.var ? WalkCode.DynamicTagWithVar : WalkCode.Replace,
@@ -125,9 +158,64 @@ export default {
     },
     exit(tag) {
       const { node } = tag;
+      const tagSection = getSection(tag);
+      const definedBodySection = node.extra?.defineBodySection;
+      if (definedBodySection) {
+        const paramsBinding = definedBodySection.params;
+        const propTree = paramsBinding && getBindingPropTree(paramsBinding);
+
+        if (isOutputHTML()) {
+          knownTagTranslateHTML(
+            tag,
+            t.memberExpression(tag.node.name, t.identifier("content")),
+            definedBodySection,
+            propTree,
+          );
+        } else {
+          const write = writer.writeTo(tag);
+
+          knownTagTranslateDOM(
+            tag,
+            propTree,
+            (binding, preferedName) =>
+              getSignal(definedBodySection, binding, preferedName).identifier,
+            (section, childBinding) => {
+              const signal = getSignal(definedBodySection, undefined);
+              if (signalHasStatements(signal)) {
+                addStatement(
+                  "render",
+                  section,
+                  undefined,
+                  t.expressionStatement(
+                    t.callExpression(
+                      t.memberExpression(signal.identifier, t.identifier("_")),
+                      [
+                        createScopeReadExpression(section, childBinding),
+                        getScopeExpression(section, definedBodySection.parent!),
+                      ],
+                    ),
+                  ),
+                );
+              }
+            },
+          );
+
+          const sectionMeta =
+            writer.getSectionMetaIdentifiers(definedBodySection);
+
+          if (sectionMeta.writes) {
+            write`${sectionMeta.writes}`;
+          }
+          walks.injectWalks(tag, sectionMeta.walks);
+
+          tag.remove();
+        }
+
+        return;
+      }
+
       const tagExtra = node.extra!;
       const nodeBinding = tagExtra[kDOMBinding]!;
-      const tagSection = getSection(tag);
       const isClassAPI = tagExtra.featureType === "class";
       let tagExpression = node.name;
 

@@ -6,7 +6,7 @@ import {
   getSection,
   type Section,
 } from "../util/sections";
-import { getSerializeGuard } from "../visitors/program/html";
+import { generateUidIdentifier } from "./generate-uid";
 import { isOutputHTML } from "./marko-config";
 import normalizeStringExpression, {
   appendLiteral,
@@ -17,6 +17,7 @@ import {
   getScopeAccessorLiteral,
 } from "./references";
 import { callRuntime } from "./runtime";
+import { getSerializeGuard } from "./serialize-guard";
 import type { SerializeReason } from "./serialize-reasons";
 import { getSetup } from "./signals";
 import { createSectionState } from "./state";
@@ -93,17 +94,54 @@ export function flushInto(
   }
 }
 
-export function getSectionMeta(section: Section) {
-  const writePrefix =
-    section.content?.startType === ContentType.Dynamic ? "<!>" : "";
-  const writePostfix =
-    section.content?.endType === ContentType.Dynamic ? "<!>" : "";
-  const writes = getWrites(section);
-  return {
-    setup: getSetup(section),
-    walks: getWalkString(section),
-    writes: normalizeStringExpression([writePrefix, ...writes, writePostfix]),
-  };
+interface SectionMeta {
+  setup: t.Expression | undefined;
+  walks: t.Expression | undefined;
+  writes: t.Expression | undefined;
+  decls: t.VariableDeclarator[] | undefined;
+}
+
+export const [getSectionMeta] = createSectionState<SectionMeta>(
+  "SectionMeta",
+  (section) => {
+    const writePrefix =
+      section.content?.startType === ContentType.Dynamic ? "<!>" : "";
+    const writePostfix =
+      section.content?.endType === ContentType.Dynamic ? "<!>" : "";
+    const writes = getWrites(section);
+    const meta = {
+      setup: getSetup(section),
+      walks: getWalkString(section),
+      writes: normalizeStringExpression([writePrefix, ...writes, writePostfix]),
+      decls: undefined,
+    };
+    return meta;
+  },
+);
+
+const sectionMetaIsIds = new WeakSet<SectionMeta>();
+export function getSectionMetaIdentifiers(section: Section) {
+  const meta = getSectionMeta(section);
+  if (!sectionMetaIsIds.has(meta)) {
+    sectionMetaIsIds.add(meta);
+    const { walks, writes } = meta;
+    const decls: t.VariableDeclarator[] = [];
+
+    if (walks) {
+      meta.walks = generateUidIdentifier(`${section.name}__walks`);
+      decls.push(t.variableDeclarator(meta.walks, walks));
+    }
+    if (writes) {
+      meta.writes = generateUidIdentifier(`${section.name}__template`);
+      decls.push(t.variableDeclarator(meta.writes, writes));
+    }
+
+    if (decls.length) {
+      meta.decls = decls;
+    }
+  }
+
+  return meta;
 }
 
 export function markNode(
