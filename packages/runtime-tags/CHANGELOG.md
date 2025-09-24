@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.80
+
+### Patch Changes
+
+- [#2850](https://github.com/marko-js/marko/pull/2850) [`d5224b0`](https://github.com/marko-js/marko/commit/d5224b01512827784949a7816d5b6cf3d2a81826) Thanks [@rturnq](https://github.com/rturnq)! - Guard param serialize reasons and avoid registering body content for stateless attribute tags
+
 ## 6.0.79
 
 ### Patch Changes
