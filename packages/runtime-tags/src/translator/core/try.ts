@@ -53,7 +53,7 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export default {
-  analyze(tag: t.NodePath<t.MarkoTag>) {
+  analyze(tag) {
     assertNoVar(tag);
     assertNoArgs(tag);
     assertNoParams(tag);

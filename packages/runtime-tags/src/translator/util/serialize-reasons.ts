@@ -5,6 +5,7 @@ import {
   AccessorPrefix,
   AccessorProp,
 } from "../../common/types";
+import { getAccessorProp } from "./get-accessor-char";
 import { concat, type OneMany, type Opt } from "./optional";
 import {
   type Binding,
@@ -21,89 +22,117 @@ export type SerializeReasons = true | [Sources, ...Sources[]];
 export type SerializeReason = true | Sources;
 export type SerializeKey = symbol & { __serialize_key__: 1 };
 
-const reasonExprs = new WeakMap<Section, OneMany<t.NodeExtra>>();
-const keyedReasonExprs = new WeakMap<
+const scopeExprsBySection = new WeakMap<Section, OneMany<t.NodeExtra>>();
+const propExprsBySection = new WeakMap<
   Section,
   Map<SerializeKey, OneMany<t.NodeExtra>>
 >();
-const serializeKeysByBinding = new WeakMap<Binding, SerializeKey>();
-const serializeKeyBySourceModifier: Record<
+const serializePropsByBinding = new WeakMap<Binding, SerializeKey>();
+const serializePropByModifier: Record<
   Accessor | symbol,
   WeakMap<Section | Binding, SerializeKey>
 > = {};
 
-export function forceOwnersSerialize(
-  from: Section,
-  to: Section,
-  prop?: AccessorProp | symbol,
+export function isForceSerialized(
+  section: Section,
+  prop?: Binding | AccessorProp | symbol,
+  prefix?: AccessorPrefix | symbol,
 ) {
-  let cur = from;
-  while (cur !== to && cur.parent) {
-    forceSectionSerialize(cur, prop);
-    cur = cur.parent;
-  }
+  return (
+    true ===
+    (prop
+      ? section.serializeReasons.get(getPropKey(section, prop, prefix))
+      : section.serializeReason)
+  );
 }
 
-export function addOwnersSerializeReason(
-  from: Section,
-  to: Section,
-  reason: undefined | boolean | SerializeReason,
-  prop?: AccessorProp | symbol,
+export function addSerializeReason(
+  section: Section,
+  reason: undefined | false | SerializeReason,
+  prop?: Binding | AccessorProp | symbol,
+  prefix?: AccessorPrefix | symbol,
 ) {
   if (reason) {
-    let cur = from;
-    while (cur !== to && cur.parent) {
-      addSectionSerializeReason(cur, reason, prop);
-      cur = cur.parent;
+    if (prop) {
+      const key = getPropKey(section, prop, prefix);
+      const curReason = section.serializeReasons.get(key);
+      if (curReason !== true) {
+        if (reason === true) {
+          forcePropSerialize(section, key);
+        } else {
+          const newReason = mergeSerializeReasons(curReason, reason);
+          if (curReason !== newReason) {
+            setPropSerializeReason(section, key, newReason);
+          }
+        }
+      }
+    } else {
+      const curReason = section.serializeReason;
+      if (curReason !== true) {
+        if (reason === true) {
+          forceSerialize(section);
+        } else {
+          const newReason = mergeSerializeReasons(curReason, reason);
+          if (curReason !== newReason) {
+            setSerializeReason(section, newReason);
+          }
+        }
+      }
     }
   }
 }
 
-export function forceSectionSerialize(
+export function addSerializeExpr(
   section: Section,
-  prop?: AccessorProp | symbol,
-) {
-  if (prop) {
-    forceSerializeKey(section, getSectionPropSerializeReasonKey(section, prop));
-  } else if (section.serializeReason !== true) {
-    reasonExprs.delete(section);
-    setSectionSerializeReason(section, true);
-  }
-}
-export function forceBindingSerialize(
-  section: Section,
-  binding: Binding,
+  expr: boolean | Opt<t.NodeExtra>,
+  prop?: Binding | AccessorProp | symbol,
   prefix?: AccessorPrefix | symbol,
 ) {
-  forceSerializeKey(section, getBindingSerializeReasonKey(binding, prefix));
-}
-function forceSerializeKey(section: Section, key: SerializeKey) {
-  if (section.serializeReasons.get(key) !== true) {
-    setSectionKeyedSerializeReason(section, key, true);
-    keyedReasonExprs.get(section)?.delete(key);
+  if (expr) {
+    if (prop) {
+      const key = getPropKey(section, prop, prefix);
+      if (section.serializeReasons.get(key) !== true) {
+        if (expr === true) {
+          forcePropSerialize(section, key);
+        } else {
+          let curExpr: Opt<t.NodeExtra>;
+          let curExprs = propExprsBySection.get(section);
+          if (curExprs) {
+            curExpr = curExprs.get(key);
+          } else {
+            curExprs = new Map();
+            propExprsBySection.set(section, curExprs);
+          }
+
+          curExprs.set(key, curExpr ? concat(curExpr, expr)! : expr);
+        }
+      }
+    } else if (section.serializeReason !== true) {
+      if (expr === true) {
+        forceSerialize(section);
+      } else {
+        const curExpr = scopeExprsBySection.get(section);
+        scopeExprsBySection.set(
+          section,
+          curExpr ? concat(curExpr, expr)! : expr,
+        );
+      }
+    }
   }
 }
 
-export function isSectionForceSerialized(
-  section: Section,
-  prop?: AccessorProp | symbol,
+export function addOwnerSerializeReason(
+  from: Section,
+  to: Section,
+  reason: undefined | boolean | SerializeReason,
 ) {
-  return prop
-    ? section.serializeReasons.get(
-        getSectionPropSerializeReasonKey(section, prop),
-      ) === true
-    : section.serializeReason === true;
-}
-export function isBindingForceSerialized(
-  section: Section,
-  binding: Binding,
-  prefix?: AccessorPrefix | symbol,
-) {
-  return (
-    section.serializeReasons.get(
-      getBindingSerializeReasonKey(binding, prefix),
-    ) === true
-  );
+  if (reason) {
+    let cur = from;
+    while (cur !== to && cur.parent) {
+      addSerializeReason(cur, reason, getAccessorProp().Owner);
+      cur = cur.parent;
+    }
+  }
 }
 
 export function isReasonDynamic(
@@ -112,296 +141,15 @@ export function isReasonDynamic(
   return !!reason && reason !== true && !reason.state;
 }
 
-export function addSectionSerializeReasonExpr(
+export function getSerializeReason(
   section: Section,
-  expr: undefined | boolean | Opt<t.NodeExtra>,
-  prop?: AccessorProp | symbol,
-) {
-  if (expr) {
-    if (prop) {
-      addKeyedSerializeReasonExpr(
-        section,
-        getSectionPropSerializeReasonKey(section, prop),
-        expr,
-      );
-    } else if (section.serializeReason !== true) {
-      if (expr === true) {
-        forceSectionSerialize(section);
-      } else {
-        const existingExpr = reasonExprs.get(section);
-        reasonExprs.set(
-          section,
-          existingExpr ? concat(existingExpr, expr)! : expr,
-        );
-      }
-    }
-  }
-}
-export function addBindingSerializeReasonExpr(
-  section: Section,
-  binding: Binding,
-  expr: undefined | boolean | Opt<t.NodeExtra>,
+  prop?: Binding | AccessorProp | symbol,
   prefix?: AccessorPrefix | symbol,
 ) {
-  const key = getBindingSerializeReasonKey(binding, prefix);
-  if (expr && section.serializeReasons.get(key) !== true) {
-    addKeyedSerializeReasonExpr(section, key, expr);
-  }
-}
-function addKeyedSerializeReasonExpr(
-  section: Section,
-  key: SerializeKey,
-  expr: true | OneMany<t.NodeExtra>,
-) {
-  if (expr === true) {
-    forceSerializeKey(section, key);
+  if (prop) {
+    return section.serializeReasons.get(getPropKey(section, prop, prefix));
   } else {
-    let existingExpr: Opt<t.NodeExtra>;
-    let keyedExprs = keyedReasonExprs.get(section);
-    if (keyedExprs) {
-      existingExpr = keyedExprs.get(key);
-    } else {
-      keyedExprs = new Map();
-      keyedReasonExprs.set(section, keyedExprs);
-    }
-
-    keyedExprs.set(key, existingExpr ? concat(existingExpr, expr)! : expr);
-  }
-}
-
-export function addSectionSerializeReasonRef(
-  section: Section,
-  ref: undefined | boolean | ReferencedBindings,
-  prop?: AccessorProp | symbol,
-) {
-  if (ref) {
-    if (prop) {
-      addKeyedSerializeReasonRef(
-        section,
-        getSectionPropSerializeReasonKey(section, prop),
-        ref,
-      );
-    } else {
-      const existingReason = section.serializeReason;
-      if (existingReason !== true) {
-        if (ref === true) {
-          forceSectionSerialize(section);
-        } else {
-          const reason = getSerializeSourcesForRef(ref);
-          if (reason) {
-            setSectionSerializeReason(
-              section,
-              mergeSerializeReasons(existingReason, reason),
-            );
-          }
-        }
-      }
-    }
-  }
-}
-export function addBindingSerializeReasonRef(
-  section: Section,
-  binding: Binding,
-  ref: undefined | boolean | ReferencedBindings,
-  prefix?: AccessorPrefix | symbol,
-) {
-  if (ref) {
-    addKeyedSerializeReasonRef(
-      section,
-      getBindingSerializeReasonKey(binding, prefix),
-      ref,
-    );
-  }
-}
-function addKeyedSerializeReasonRef(
-  section: Section,
-  key: SerializeKey,
-  ref: true | OneMany<Binding>,
-) {
-  const existingReason = section.serializeReasons.get(key);
-  if (existingReason !== true) {
-    if (ref === true) {
-      forceSerializeKey(section, key);
-    } else {
-      const reason = getSerializeSourcesForRef(ref);
-      if (reason) {
-        setSectionKeyedSerializeReason(
-          section,
-          key,
-          mergeSerializeReasons(existingReason, reason),
-        );
-      }
-    }
-  }
-}
-
-export function addSectionSerializeReason(
-  section: Section,
-  reason: undefined | false | SerializeReason,
-  prop?: AccessorProp | symbol,
-) {
-  if (reason) {
-    if (prop) {
-      addKeyedSerializeReason(
-        section,
-        getSectionPropSerializeReasonKey(section, prop),
-        reason,
-      );
-    } else {
-      const existingReason = section.serializeReason;
-      if (existingReason !== true) {
-        if (reason === true) {
-          forceSectionSerialize(section);
-        } else {
-          setSectionSerializeReason(
-            section,
-            mergeSerializeReasons(existingReason, reason),
-          );
-        }
-      }
-    }
-  }
-}
-export function addBindingSerializeReason(
-  section: Section,
-  binding: Binding,
-  reason: undefined | false | SerializeReason,
-  prefix?: AccessorPrefix | symbol,
-) {
-  if (reason) {
-    addKeyedSerializeReason(
-      section,
-      getBindingSerializeReasonKey(binding, prefix),
-      reason,
-    );
-  }
-}
-function addKeyedSerializeReason(
-  section: Section,
-  key: SerializeKey,
-  reason: SerializeReason,
-) {
-  const existingReason = section.serializeReasons.get(key);
-  if (existingReason !== true) {
-    if (reason === true) {
-      forceSerializeKey(section, key);
-    } else {
-      setSectionKeyedSerializeReason(
-        section,
-        key,
-        mergeSerializeReasons(existingReason, reason)!,
-      );
-    }
-  }
-}
-
-export function getSectionSerializeReason(
-  section: Section,
-  prop?: AccessorProp | symbol,
-) {
-  return prop
-    ? section.serializeReasons.get(
-        getSectionPropSerializeReasonKey(section, prop),
-      )
-    : section.serializeReason;
-}
-export function getBindingSerializeReason(
-  section: Section,
-  binding: Binding,
-  prefix?: AccessorPrefix | symbol,
-) {
-  return section.serializeReasons.get(
-    getBindingSerializeReasonKey(binding, prefix),
-  );
-}
-
-function getSectionPropSerializeReasonKey(
-  section: Section,
-  prop: AccessorProp | symbol,
-) {
-  const keys = (serializeKeyBySourceModifier[prop] ||= new WeakMap());
-  let key = keys.get(section);
-  if (!key) {
-    keys.set(
-      section,
-      (key = Symbol(
-        typeof prop === "symbol" ? `Symbol(${prop.description})` : prop,
-      ) as SerializeKey),
-    );
-  }
-
-  return key;
-}
-
-function getBindingSerializeReasonKey(
-  binding: Binding,
-  prefix?: AccessorPrefix | symbol,
-) {
-  const keys = prefix
-    ? (serializeKeyBySourceModifier[prefix] ||= new WeakMap())
-    : serializeKeysByBinding;
-
-  let key = keys.get(binding);
-  if (!key) {
-    keys.set(
-      binding,
-      (key = Symbol(
-        (prefix
-          ? typeof prefix === "symbol"
-            ? `Symbol(${prefix.description})`
-            : prefix
-          : "") + binding.name,
-      ) as SerializeKey),
-    );
-  }
-
-  return key;
-}
-
-export function applySerializeReasonExprs(section: Section) {
-  const keyedExprs = keyedReasonExprs.get(section);
-  if (keyedExprs) {
-    keyedReasonExprs.delete(section);
-    for (const [key, exprs] of keyedExprs) {
-      const reason = getSerializeSourcesForExprs(exprs);
-      if (reason) {
-        setSectionKeyedSerializeReason(
-          section,
-          key,
-          mergeSerializeReasons(section.serializeReasons.get(key), reason),
-        );
-      }
-    }
-  }
-
-  const reason = getSerializeSourcesForExprs(reasonExprs.get(section));
-  if (reason) {
-    setSectionSerializeReason(
-      section,
-      mergeSerializeReasons(section.serializeReason, reason),
-    );
-  }
-
-  reasonExprs.delete(section);
-}
-
-export function finalizeSectionSerializeReasons(section: Section) {
-  let reason = section.serializeReason;
-
-  if (reason !== true) {
-    // Merge all keyed reasons into the section reason.
-    for (const [, keyedReason] of section.serializeReasons) {
-      if (keyedReason === true) {
-        reason = true;
-        break;
-      }
-
-      reason = mergeSerializeReasons(reason, keyedReason);
-    }
-
-    if (reason) {
-      setSectionSerializeReason(section, reason);
-    }
+    return section.serializeReason;
   }
 }
 
@@ -460,13 +208,128 @@ export function mergeSerializeReasons(
   return mergeSources(a, b);
 }
 
+export function applySerializeExprs(section: Section) {
+  const propExprs = propExprsBySection.get(section);
+  if (propExprs) {
+    propExprsBySection.delete(section);
+    for (const [key, exprs] of propExprs) {
+      const exprReason = getSerializeSourcesForExprs(exprs);
+      if (exprReason) {
+        const curReason = section.serializeReasons.get(key);
+        const newReason = mergeSerializeReasons(curReason, exprReason);
+        if (curReason !== newReason) {
+          setPropSerializeReason(section, key, newReason);
+        }
+      }
+    }
+  }
+
+  const scopeExprs = scopeExprsBySection.get(section);
+  if (scopeExprs) {
+    const exprReason = getSerializeSourcesForExprs(scopeExprs);
+    scopeExprsBySection.delete(section);
+    if (exprReason) {
+      const curReason = section.serializeReason;
+      const newReason = mergeSerializeReasons(curReason, exprReason);
+      if (curReason !== newReason) {
+        setSerializeReason(section, newReason);
+      }
+    }
+  }
+}
+
+export function finalizeSerializeReason(section: Section) {
+  const curReason = section.serializeReason;
+  if (curReason !== true) {
+    // Merge all prop reasons into the scope reason.
+    let newReason = curReason;
+    for (const [, propReason] of section.serializeReasons) {
+      if (propReason === true) {
+        setSerializeReason(section, true);
+        return;
+      }
+
+      newReason = mergeSources(newReason, propReason);
+    }
+
+    if (newReason && curReason !== newReason) {
+      setSerializeReason(section, newReason);
+    }
+  }
+}
+
+function getPropKey(
+  section: Section,
+  prop: Binding | AccessorProp | symbol,
+  prefix?: AccessorPrefix | symbol,
+) {
+  if (isStrOrSym(prop)) {
+    const keys = (serializePropByModifier[prop] ||= new WeakMap());
+    let key = keys.get(section);
+    if (!key) {
+      keys.set(
+        section,
+        (key = Symbol(
+          typeof prop === "symbol" ? `Symbol(${prop.description})` : prop,
+        ) as SerializeKey),
+      );
+    }
+
+    if (prefix) {
+      throw new Error("Cannot have a scope property reason with a prefix.");
+    }
+
+    return key;
+  } else {
+    const keys = prefix
+      ? (serializePropByModifier[prefix] ||= new WeakMap())
+      : serializePropsByBinding;
+
+    let key = keys.get(prop);
+    if (!key) {
+      keys.set(
+        prop,
+        (key = Symbol(
+          (prefix
+            ? typeof prefix === "symbol"
+              ? `Symbol(${prefix.description})`
+              : prefix
+            : "") + prop.name,
+        ) as SerializeKey),
+      );
+    }
+
+    return key;
+  }
+}
+
+function forceSerialize(section: Section) {
+  scopeExprsBySection.delete(section);
+  setSerializeReason(section, true);
+}
+
+function forcePropSerialize(section: Section, key: SerializeKey) {
+  setPropSerializeReason(section, key, true);
+  propExprsBySection.get(section)?.delete(key);
+}
+
+function isStrOrSym(v: unknown): v is string | symbol {
+  switch (typeof v) {
+    case "string":
+    case "symbol":
+      return true;
+    default:
+      return false;
+  }
+}
+
 // Exists as the single point of assigning section reasons to aid in debugging.
-function setSectionSerializeReason(section: Section, reason: SerializeReason) {
+function setSerializeReason(section: Section, reason: SerializeReason) {
   section.serializeReason = reason;
 }
 
 // Exists as the single point of assigning section reasons to aid in debugging.
-function setSectionKeyedSerializeReason(
+function setPropSerializeReason(
   section: Section,
   key: SerializeKey,
   reason: SerializeReason,

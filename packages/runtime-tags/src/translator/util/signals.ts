@@ -43,11 +43,7 @@ import {
   type Section,
 } from "./sections";
 import { getExprIfSerialized, getSerializeGuard } from "./serialize-guard";
-import {
-  getBindingSerializeReason,
-  getSectionSerializeReason,
-  type SerializeReason,
-} from "./serialize-reasons";
+import { getSerializeReason, type SerializeReason } from "./serialize-reasons";
 import { simplifyFunction } from "./simplify-fn";
 import { createSectionState } from "./state";
 import {
@@ -113,7 +109,7 @@ export function setSectionSerializedValue(
   prop: AccessorProp,
   expression: t.Expression,
 ) {
-  const reason = getSectionSerializeReason(section, prop);
+  const reason = getSerializeReason(section, prop);
   if (reason) {
     getSerializedAccessors(section).set(prop, { expression, reason });
   }
@@ -124,7 +120,7 @@ export function setBindingSerializedValue(
   expression: t.Expression,
   prefix?: AccessorPrefix,
 ) {
-  const reason = getBindingSerializeReason(section, binding, prefix);
+  const reason = getSerializeReason(section, binding, prefix);
   if (reason) {
     getSerializedAccessors(section).set(
       (prefix || "") + getScopeAccessor(binding),
@@ -1188,7 +1184,7 @@ export function writeHTMLResumeStatements(
     : section.serializeReason;
   let debugVars: t.ObjectProperty[] | undefined;
   const writeSerializedBinding = (binding: Binding) => {
-    const reason = getBindingSerializeReason(section, binding);
+    const reason = getSerializeReason(section, binding);
     if (!reason) return;
     const accessor = getScopeAccessor(binding);
     serializedLookup.delete(accessor);
@@ -1238,7 +1234,7 @@ export function writeHTMLResumeStatements(
 
   if (section.parent) {
     const ownerAccessor = getAccessorProp().Owner;
-    const ownerReason = getSectionSerializeReason(section, ownerAccessor);
+    const ownerReason = getSerializeReason(section, ownerAccessor);
     if (ownerReason) {
       const getOwnerExpr = callRuntime(
         "_scope_with_id",

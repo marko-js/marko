@@ -28,7 +28,6 @@ import {
   startSection,
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
-import { getSectionSerializeReason } from "../util/serialize-reasons";
 import {
   addValue,
   getSignal,
@@ -148,10 +147,7 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
-                getSerializeGuard(
-                  bodySection && getSectionSerializeReason(bodySection),
-                  true,
-                ),
+                getSerializeGuard(bodySection?.serializeReason, true),
               ),
             ),
           )[0]
@@ -177,10 +173,10 @@ export default {
         const { node } = tag;
         const tagExtra = node.extra!;
         const nodeRef = tagExtra[kDOMBinding]!;
-
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"))!;
         const signal = getSignal(section, nodeRef, "await");
+        const valueExpr = node.attributes[0].value;
 
         signal.build = () => {
           return callRuntime(
@@ -192,9 +188,9 @@ export default {
 
         addValue(
           section,
-          bodySection.upstreamExpression?.referencedBindings,
+          valueExpr.extra?.referencedBindings,
           signal,
-          tag.node.attributes[0].value,
+          valueExpr,
         );
 
         tag.remove();

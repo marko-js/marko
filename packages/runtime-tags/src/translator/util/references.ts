@@ -5,8 +5,9 @@ import { toAccess } from "../../html/serializer";
 import { finalizeFunctionRegistry } from "../visitors/function";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
-import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
+import { getAccessorPrefix } from "./get-accessor-char";
 import { getExprRoot, getFnRoot } from "./get-root";
+import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import { isOptimize } from "./marko-config";
 import {
@@ -28,31 +29,27 @@ import {
   getCommonSection,
   getDirectClosures,
   getOrCreateSection,
+  getSectionRegisterReasons,
   isDynamicClosure,
   isSameOrChildSection,
-  isSerializedSection,
   type Section,
   sectionUtil,
 } from "./sections";
 import {
-  addBindingSerializeReason,
-  addBindingSerializeReasonExpr,
-  addOwnersSerializeReason,
-  addSectionSerializeReason,
-  addSectionSerializeReasonExpr,
-  addSectionSerializeReasonRef,
-  applySerializeReasonExprs,
-  finalizeSectionSerializeReasons,
-  forceBindingSerialize,
-  forceOwnersSerialize,
-  forceSectionSerialize,
-  getBindingSerializeReason,
+  addOwnerSerializeReason,
+  addSerializeExpr,
+  addSerializeReason,
+  applySerializeExprs,
+  finalizeSerializeReason,
+  getSerializeReason,
   getSerializeSourcesForExpr,
-  isBindingForceSerialized,
+  getSerializeSourcesForRef,
+  isForceSerialized,
   isReasonDynamic,
   mergeSerializeReasons,
   type SerializeReason,
 } from "./serialize-reasons";
+import { finalizeTagDownstreams } from "./set-tag-sections-downstream";
 import { getHoistFunctionIdentifier } from "./signals";
 import { createProgramState } from "./state";
 import { toMemberExpression } from "./to-property-name";
@@ -749,11 +746,11 @@ export function finalizeReferences() {
     if (binding.type !== BindingType.dom) {
       resolveBindingSources(binding);
       if (binding.hoists.size) {
-        forceBindingSerialize(binding.section, binding);
+        addSerializeReason(binding.section, true, binding);
       }
 
       forEach(binding.assignmentSections, (assignedSection) =>
-        forceOwnersSerialize(assignedSection, section, getAccessorProp().Owner),
+        addOwnerSerializeReason(assignedSection, section, true),
       );
 
       if (find(section.bindings, ({ name }) => name === binding.name)) {
@@ -796,17 +793,16 @@ export function finalizeReferences() {
             binding,
           );
 
-          addOwnersSerializeReason(
+          addOwnerSerializeReason(
             section,
             canonicalUpstreamAlias.section,
             !!isEffect || canonicalUpstreamAlias.sources,
-            getAccessorProp().Owner,
           );
         }
       }
       if (isEffect) {
         forEach(referencedBindings, (binding) =>
-          forceBindingSerialize(binding.section, binding),
+          addSerializeReason(binding.section, true, binding),
         );
       }
     }
@@ -814,15 +810,11 @@ export function finalizeReferences() {
 
   forEachSection((section) => {
     if (section.isHoistThrough) {
-      forceSectionSerialize(section);
+      addSerializeReason(section, true);
     }
 
     forEach(section.referencedHoists, (hoistedBinding) => {
-      forceOwnersSerialize(
-        section,
-        hoistedBinding.section,
-        getAccessorProp().Owner,
-      );
+      addOwnerSerializeReason(section, hoistedBinding.section, true);
     });
 
     if (
@@ -831,26 +823,27 @@ export function finalizeReferences() {
       section.sectionAccessor &&
       section.upstreamExpression
     ) {
-      addSectionSerializeReasonRef(
+      addSerializeReason(
         section,
         !!(section.isHoistThrough || section.hoisted) ||
-          getDirectClosures(section),
+          getSerializeSourcesForRef(getDirectClosures(section)),
         kBranchSerializeReason,
       );
-      addSectionSerializeReasonExpr(
+      addSerializeExpr(
         section,
         section.upstreamExpression,
         kBranchSerializeReason,
       );
-      addBindingSerializeReasonExpr(
+      addSerializeExpr(
         section.parent,
-        section.sectionAccessor.binding,
         section.upstreamExpression,
+        section.sectionAccessor.binding,
       );
     }
   });
 
-  forEachSection(applySerializeReasonExprs);
+  forEachSection(applySerializeExprs);
+  finalizeTagDownstreams();
 
   forEachSection((section) => {
     const intersections = intersectionsBySection.get(section);
@@ -865,49 +858,31 @@ export function finalizeReferences() {
             const binding1 = intersection[i];
             const binding2 = intersection[j];
             if (
-              !isBindingForceSerialized(section, binding1) &&
+              !isForceSerialized(section, binding1) &&
               !isSupersetSources(binding1, binding2)
             ) {
               if (!isSameOrChildSection(section, binding1.section)) {
-                addOwnersSerializeReason(
+                addOwnerSerializeReason(
                   section,
                   binding1.section,
-                  mergeSerializeReasons(
-                    // TODO should check for an actual intersection, not just stateful
-                    binding1.sources,
-                    binding2.sources,
-                  ),
-                  getAccessorProp().Owner,
+                  mergeSources(binding1.sources, binding2.sources),
                 );
               }
 
-              addBindingSerializeReason(
-                binding1.section,
-                binding1,
-                binding2.sources, // TODO should check for an actual intersection, not just binding2.sources stateful
-              );
+              addSerializeReason(binding1.section, binding2.sources, binding1);
             }
             if (
-              !isBindingForceSerialized(section, binding2) &&
+              !isForceSerialized(section, binding2) &&
               !isSupersetSources(binding2, binding1)
             ) {
               if (!isSameOrChildSection(section, binding2.section)) {
-                addOwnersSerializeReason(
+                addOwnerSerializeReason(
                   section,
                   binding2.section,
-                  mergeSerializeReasons(
-                    // TODO should check for an actual intersection, not just stateful
-                    binding1.sources,
-                    binding2.sources,
-                  ),
-                  getAccessorProp().Owner,
+                  mergeSources(binding1.sources, binding2.sources),
                 );
               }
-              addBindingSerializeReason(
-                binding2.section,
-                binding2,
-                binding1.sources, // TODO should check for an actual intersection, not just binding1.sources stateful
-              );
+              addSerializeReason(binding2.section, binding1.sources, binding2);
             }
           }
         }
@@ -915,50 +890,24 @@ export function finalizeReferences() {
     }
 
     forEach(section.referencedLocalClosures, (closure) => {
-      // mark bindings that need to be serialized due to being closed over by stateful sections
-      if (!isBindingForceSerialized(section, closure)) {
-        const sourceSection = closure.section;
-        let serializeReason: undefined | SerializeReason;
-        let currentSection = section;
-
-        while (currentSection !== sourceSection) {
-          const upstreamReason = currentSection.downstreamBinding
-            ? isSerializedSection(currentSection) || undefined
-            : !currentSection.upstreamExpression ||
-              getSerializeSourcesForExpr(currentSection.upstreamExpression);
-          if (upstreamReason === true) {
-            serializeReason = true;
-            break;
-          }
-
-          serializeReason = mergeSerializeReasons(
-            serializeReason,
-            upstreamReason,
-          );
-          currentSection = currentSection.parent!;
-        }
-
-        addBindingSerializeReason(section, closure, serializeReason);
-      }
-
-      if (closure.sources) {
-        addSectionSerializeReason(
-          section,
-          getBindingSerializeReason(section, closure),
-        );
-      }
+      // Local closures inherit serialize reasons from the owner section.
+      addSerializeReason(
+        section,
+        getSerializeReason(closure.section, closure),
+        closure,
+      );
     });
 
     forEach(section.referencedClosures, (closure) => {
       // mark bindings that need to be serialized due to being closed over by stateful sections
-      if (!isBindingForceSerialized(closure.section, closure)) {
+      if (!isForceSerialized(closure.section, closure)) {
         const sourceSection = closure.section;
         let serializeReason: undefined | SerializeReason;
         let currentSection = section;
 
         while (currentSection !== sourceSection) {
           const upstreamReason = currentSection.downstreamBinding
-            ? isSerializedSection(currentSection) || undefined
+            ? getSectionRegisterReasons(currentSection) || undefined
             : !currentSection.upstreamExpression ||
               getSerializeSourcesForExpr(currentSection.upstreamExpression);
           if (upstreamReason === true) {
@@ -973,35 +922,48 @@ export function finalizeReferences() {
           currentSection = currentSection.parent!;
         }
 
-        addBindingSerializeReason(closure.section, closure, serializeReason);
+        addSerializeReason(closure.section, serializeReason, closure);
       }
 
-      if (closure.sources) {
-        addSectionSerializeReason(
-          closure.section,
-          getBindingSerializeReason(closure.section, closure),
-        );
-      }
+      addSerializeReason(
+        closure.section,
+        getSerializeReason(closure.section, closure),
+      );
 
       if (closure.sources && isDynamicClosure(section, closure)) {
-        addBindingSerializeReason(
+        addSerializeReason(
           closure.section,
-          closure,
           closure.sources,
+          closure,
           getAccessorPrefix().ClosureScopes,
         );
-        addBindingSerializeReason(
+        addSerializeReason(
           section,
-          closure,
           closure.sources,
+          closure,
           getAccessorPrefix().ClosureSignalIndex,
         );
       }
     });
   });
 
+  finalizeFunctionRegistry();
+  for (const [fn, reads] of readsByFn) {
+    const { registerReason } = fn;
+    fn.referencedBindingsInFunction = resolveReferencedBindings(
+      fn,
+      reads,
+      intersectionsBySection,
+    );
+    if (registerReason) {
+      forEach(fn.referencedBindingsInFunction, (binding) =>
+        addSerializeReason(binding.section, registerReason, binding),
+      );
+    }
+  }
+
   forEachSection((section) => {
-    finalizeSectionSerializeReasons(section);
+    finalizeSerializeReason(section);
 
     if (isReasonDynamic(section.serializeReason)) {
       const paramGroups = groupBy(
@@ -1071,20 +1033,6 @@ export function finalizeReferences() {
       });
     }
   });
-
-  finalizeFunctionRegistry();
-  for (const [fn, reads] of readsByFn) {
-    fn.referencedBindingsInFunction = resolveReferencedBindings(
-      fn,
-      reads,
-      intersectionsBySection,
-    );
-    if (fn.registerId) {
-      forEach(fn.referencedBindingsInFunction, (binding) =>
-        forceBindingSerialize(binding.section, binding),
-      );
-    }
-  }
 
   mergedReferences.clear();
   readsByExpression.clear();
@@ -1610,10 +1558,6 @@ function getMemberExpressionPropString(expr: t.MemberExpression) {
   }
 }
 
-function isEventOrChangeHandler(prop: string) {
-  return /^on[-A-Z][a-zA-Z0-9_$]|[a-zA-Z_$][a-zA-Z0-9_$]*Change$/.test(prop);
-}
-
 export interface ReferencedExtra extends t.NodeExtra {
   section: Section;
   fnExtra?: FnExtra;
@@ -1635,6 +1579,7 @@ export function isAssignedBindingExtra(
 
 export interface RegisteredFnExtra extends ReferencedExtra {
   registerId: string;
+  registerReason: SerializeReason;
   name: string;
   referencesScope?: boolean;
   referencedBindingsInFunction: ReferencedBindings;
@@ -1653,57 +1598,74 @@ export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {
   return extra;
 }
 
-const couldSerializeLookup = new WeakMap<t.NodeExtra | Binding, boolean>();
-export function couldSerializeExtra(extra: t.NodeExtra) {
-  let couldSerialize = couldSerializeLookup.get(extra);
-  if (couldSerialize === undefined) {
-    couldSerializeLookup.set(
-      extra,
-      (couldSerialize =
-        extra === getProgram().node.extra?.returnValueExpr ||
-        !!find(extra.downstream, couldSerializeBinding)),
-    );
+const serializeReasonCache = new WeakMap<
+  t.NodeExtra | Binding,
+  boolean | SerializeReason
+>();
+export function getAllSerializeReasonsForExtra(
+  extra: t.NodeExtra,
+): undefined | SerializeReason {
+  let reason = serializeReasonCache.get(extra);
+  if (reason === false) return;
+  if (reason === undefined) {
+    if (extra === getProgram().node.extra?.returnValueExpr) {
+      reason = true;
+    } else {
+      forEach(extra.downstream, (binding) => {
+        reason = mergeSerializeReasons(
+          reason as SerializeReason,
+          getAllSerializeReasonsForBinding(binding),
+        );
+      });
+    }
+    serializeReasonCache.set(extra, reason || false);
   }
 
-  return couldSerialize;
+  return reason;
 }
 
-export function couldSerializeBinding(binding: Binding) {
-  let couldSerialize = couldSerializeLookup.get(binding);
-  if (couldSerialize === undefined) {
-    if (getBindingSerializeReason(binding.section, binding)) {
-      couldSerialize = true;
-    } else {
+export function getAllSerializeReasonsForBinding(
+  binding: Binding,
+): undefined | SerializeReason {
+  let reason = serializeReasonCache.get(binding);
+  if (reason === false) return;
+
+  if (reason === undefined) {
+    reason = getSerializeReason(binding.section, binding);
+
+    if (reason !== true) {
       for (const expr of binding.downstreamExpressions) {
-        if (expr.isEffect || couldSerializeExtra(expr)) {
-          couldSerialize = true;
-          break;
-        }
+        reason =
+          expr.isEffect ||
+          mergeSerializeReasons(reason, getAllSerializeReasonsForExtra(expr));
+        if (reason === true) break;
       }
 
-      if (!couldSerialize) {
+      if (reason !== true) {
         for (const alias of binding.aliases) {
-          if (couldSerializeBinding(alias)) {
-            couldSerialize = true;
-            break;
-          }
+          reason = mergeSerializeReasons(
+            reason,
+            getAllSerializeReasonsForBinding(alias),
+          );
+          if (reason === true) break;
         }
 
-        if (!couldSerialize) {
-          for (const [, propBinding] of binding.propertyAliases) {
-            if (couldSerializeBinding(propBinding)) {
-              couldSerialize = true;
-              break;
-            }
+        if (reason !== true) {
+          for (const propBinding of binding.propertyAliases.values()) {
+            reason = mergeSerializeReasons(
+              reason,
+              getAllSerializeReasonsForBinding(propBinding),
+            );
+            if (reason === true) break;
           }
         }
       }
     }
 
-    couldSerializeLookup.set(binding, (couldSerialize ??= false));
+    serializeReasonCache.set(binding, reason || false);
   }
 
-  return couldSerialize;
+  return reason;
 }
 
 function setCanonicalExtra(extra: t.NodeExtra, merged: t.NodeExtra) {

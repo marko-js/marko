@@ -13,7 +13,7 @@ const $item_content__mult__OR__item = /* @__PURE__ */_._or(1, $scope => {
 });
 const $item_content__mult = /* @__PURE__ */_._closure_get("mult", $item_content__mult__OR__item);
 const $item_content__setup = $item_content__mult;
-const $item_content = _._content_closures(_._content_resume("__tests__/template.marko_1_content", " ", /* get, over(1) */" b", $item_content__setup), {
+const $item_content = /* @__PURE__ */_._content_closures(/* @__PURE__ */_._content("__tests__/template.marko_1_content", " ", /* get, over(1) */" b", $item_content__setup), {
   item: $item_content__mult__OR__item
 });
 const $mult__closure = /* @__PURE__ */_._closure($item_content__mult);

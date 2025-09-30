@@ -19,8 +19,8 @@ import {
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
 import {
-  addBindingSerializeReasonExpr,
-  getBindingSerializeReason,
+  addSerializeExpr,
+  getSerializeReason,
 } from "../util/serialize-reasons";
 import { addStatement } from "../util/signals";
 import type { TemplateVisitor } from "../util/visitors";
@@ -73,7 +73,7 @@ export default {
         section,
       ));
       analyzeSiblingText(placeholder);
-      addBindingSerializeReasonExpr(section, nodeBinding, valueExtra);
+      addSerializeExpr(section, valueExtra, nodeBinding);
     }
   },
   translate: {
@@ -109,7 +109,7 @@ export default {
         const section = getSection(placeholder);
         const siblingText = extra[kSiblingText]!;
         const markerSerializeReason =
-          nodeBinding && getBindingSerializeReason(section, nodeBinding);
+          nodeBinding && getSerializeReason(section, nodeBinding);
 
         if (siblingText === SiblingText.Before) {
           if (isHTML && markerSerializeReason) {

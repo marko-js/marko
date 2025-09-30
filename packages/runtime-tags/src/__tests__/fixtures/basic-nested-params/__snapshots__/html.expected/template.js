@@ -1,6 +1,7 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
 export default _._template("__tests__/template.marko", input => {
+  const $serialize3 = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
   const $y__closures = new Set();
   let x = 1;
@@ -36,7 +37,7 @@ export default _._template("__tests__/template.marko", input => {
         }, $scope1_id)
       });
       _._subscribe($y__closures, _._scope($scope1_id, {
-        outer,
+        outer: _._serialize_if($serialize3, /* value */2) && outer,
         _: _._scope_with_id($scope0_id),
         "ClosureScopes:outer": _._serialize_if($serialize, /* outer */0) && $child_content__outer__closures,
         "#childScope/0": _._existing_scope($childScope),
@@ -50,7 +51,7 @@ export default _._template("__tests__/template.marko", input => {
   _._script($scope0_id, "__tests__/template.marko_0_x");
   _._scope($scope0_id, {
     x,
-    y,
+    y: _._serialize_if($serialize3, /* value */2) && y,
     "ClosureScopes:y": $y__closures,
     "#childScope/1": _._existing_scope($childScope2)
   }, "__tests__/template.marko", 0, {

@@ -73,7 +73,7 @@ export default {
       (attr.value.extra ??= {}).isEffect = true;
     }
 
-    (getProgram().node.extra ??= {}).isInteractive = true;
+    getProgram().node.extra.isInteractive = true;
   },
   translate: {
     exit(tag) {

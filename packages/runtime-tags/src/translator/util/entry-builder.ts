@@ -7,7 +7,6 @@ declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     needsCompat?: boolean;
     isInteractive?: boolean;
-    hasInteractiveChild?: boolean;
   }
 }
 
@@ -76,10 +75,10 @@ export default {
     state.imports.push(
       resolveRelativePath(entryFile, file.opts.filename as string),
     );
-    state.init ||=
-      file.path.node.extra.hasInteractiveChild ||
-      file.path.node.extra.isInteractive ||
-      false;
+
+    if (file.path.node.extra.isInteractive) {
+      state.init = true;
+    }
 
     for (const tag of analyzedTags || []) {
       visitChild(tag);

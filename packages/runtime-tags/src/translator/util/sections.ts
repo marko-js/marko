@@ -11,16 +11,14 @@ import type { ParamSerializeReasonGroups } from "../visitors/program";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag } from "./is-core-tag";
 import { filter, find, Sorted } from "./optional";
-import type {
-  Binding,
-  InputBinding,
-  ParamBinding,
-  ReferencedBindings,
-} from "./references";
 import {
-  getBindingSerializeReason,
-  type SerializeReason,
-} from "./serialize-reasons";
+  type Binding,
+  getAllSerializeReasonsForBinding,
+  type InputBinding,
+  type ParamBinding,
+  type ReferencedBindings,
+} from "./references";
+import type { SerializeReason } from "./serialize-reasons";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
@@ -51,7 +49,7 @@ export interface Section {
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
-  downstreamBinding: Binding | undefined;
+  downstreamBinding: Binding | undefined | false;
   hasAbortSignal: boolean;
   isBranch: boolean;
   content: null | {
@@ -288,22 +286,18 @@ export function getNodeContentType(
   return ContentType.Dynamic;
 }
 
-export const isSerializedSection = (section: Section) => {
+export function getSectionRegisterReasons(section: Section) {
   if (section.isBranch) return false; // Branches handle wether to register their section/renderer.
 
   const { downstreamBinding } = section;
   if (downstreamBinding) {
-    // TODO: this downstream is possible from another program.
-    // This might make more sense to use "downstream sources" instead and resolve those sources
-    // (accouting from resolving input sources from the child.
-    return !!getBindingSerializeReason(
-      downstreamBinding.section,
-      downstreamBinding,
-    );
+    return getAllSerializeReasonsForBinding(downstreamBinding);
+  } else if (downstreamBinding === false) {
+    return false;
   }
 
   return true;
-};
+}
 
 export function isSectionWithHoists(section: Section) {
   return !!(

@@ -51,10 +51,11 @@ import {
 } from "./sections";
 import { getSerializeGuard } from "./serialize-guard";
 import {
-  addBindingSerializeReasonExpr,
-  getBindingSerializeReason,
+  addSerializeExpr,
+  getSerializeReason,
   getSerializeSourcesForExprs,
 } from "./serialize-reasons";
+import { setTagDownstream } from "./set-tag-sections-downstream";
 import {
   addStatement,
   getResumeRegisterId,
@@ -97,6 +98,7 @@ export function knownTagAnalyze(
   propTree: BindingPropTree | undefined,
 ) {
   analyzeAttributeTags(tag);
+  setTagDownstream(tag, propTree?.props?.[0].binding);
 
   const section = getOrCreateSection(tag);
   const tagBody = tag.get("body");
@@ -143,18 +145,10 @@ export function knownTagAnalyze(
           (returnSerializeReason.param as Opt<InputBinding>)),
     );
     setBindingDownstream(varBinding, varExpr);
-    addBindingSerializeReasonExpr(
-      section,
-      childScopeBinding,
-      mutatesTagVar || varExpr,
-    );
+    addSerializeExpr(section, mutatesTagVar || varExpr, childScopeBinding);
   }
 
-  addBindingSerializeReasonExpr(
-    section,
-    childScopeBinding,
-    fromIter(attrExprs),
-  );
+  addSerializeExpr(section, fromIter(attrExprs), childScopeBinding);
 }
 
 export function knownTagTranslateHTML(
@@ -183,7 +177,7 @@ export function knownTagTranslateHTML(
         };
 
   const childScopeBinding = tagExtra[kChildScopeBinding]!;
-  const childScopeSerializeReason = getBindingSerializeReason(
+  const childScopeSerializeReason = getSerializeReason(
     section,
     childScopeBinding,
   );
@@ -508,11 +502,6 @@ function analyzeAttrs(
           const attrTagMeta = attrTagLookup[getTagName(child)];
           const childAttrExports = propTree.props[attrTagMeta.name];
           if (childAttrExports) {
-            const childBodySection = startSection(child.get("body"));
-            if (childBodySection) {
-              childBodySection.downstreamBinding = childAttrExports.binding;
-            }
-
             if (childAttrExports.props && !attrTagMeta.dynamic) {
               known[attrTagMeta.name] = analyzeAttrs(
                 rootTagExtra,
@@ -586,9 +575,6 @@ function analyzeAttrs(
     if (bodySection) {
       seen.add("content");
       known.content = { value: undefined }; // Should probably be default params extra.
-      bodySection.downstreamBinding = (
-        propTree.props.content || propTree.props
-      ).binding;
     }
   }
 

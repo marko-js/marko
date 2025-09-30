@@ -19,7 +19,7 @@ import { callRuntime } from "./runtime";
 import {
   getScopeIdIdentifier,
   getSection,
-  isSerializedSection,
+  getSectionRegisterReasons,
 } from "./sections";
 import { isReasonDynamic } from "./serialize-reasons";
 import { getResumeRegisterId } from "./signals";
@@ -412,7 +412,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   const bodySection = body.node.extra?.section;
   if (bodySection) {
     if (isOutputHTML()) {
-      const serialized = isSerializedSection(bodySection);
+      const serialized = getSectionRegisterReasons(bodySection);
 
       let dynamicSerializeReason = isReasonDynamic(bodySection.serializeReason);
       if (!dynamicSerializeReason) {

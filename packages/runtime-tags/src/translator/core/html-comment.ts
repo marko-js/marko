@@ -29,9 +29,8 @@ import {
   getSection,
 } from "../util/sections";
 import {
-  addBindingSerializeReasonExpr,
-  forceBindingSerialize,
-  getBindingSerializeReason,
+  addSerializeExpr,
+  getSerializeReason,
 } from "../util/serialize-reasons";
 import { addStatement, getRegisterUID } from "../util/signals";
 import translateVar from "../util/translate-var";
@@ -100,11 +99,7 @@ export default {
         tagExtra[kGetterId] = getRegisterUID(tagSection, "comment");
       }
 
-      if (tagVar) {
-        forceBindingSerialize(tagSection, nodeBinding);
-      } else {
-        addBindingSerializeReasonExpr(tagSection, nodeBinding, tagExtra);
-      }
+      addSerializeExpr(tagSection, !!tagVar || tagExtra, nodeBinding);
     }
     tag.skip();
   },
@@ -228,7 +223,7 @@ export default {
         writer.markNode(
           tag,
           nodeBinding,
-          getBindingSerializeReason(tagSection, nodeBinding),
+          getSerializeReason(tagSection, nodeBinding),
         );
       }
 

@@ -2,7 +2,7 @@ export const $template = `<!>${_list_template}<!>`;
 export const $walks = /* over(1), beginChild, _list_walks, endChild, over(1) */`b/${_list_walks}&b`;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _list, $input_item as _list_input_item, $template as _list_template, $walks as _list_walks } from "./tags/list/index.marko";
-const $item_content = _._content_closures(_._content_resume("__tests__/template.marko_1_content", " ", /* get, over(1) */" b"), {
+const $item_content = /* @__PURE__ */_._content_closures(/* @__PURE__ */_._content("__tests__/template.marko_1_content", " ", /* get, over(1) */" b"), {
   item($scope, item) {
     _._text($scope["#text/0"], item);
   }

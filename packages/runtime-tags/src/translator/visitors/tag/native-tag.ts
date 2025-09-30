@@ -11,10 +11,7 @@ import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
-import {
-  getAccessorPrefix,
-  getAccessorProp,
-} from "../../util/get-accessor-char";
+import { getAccessorPrefix } from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
 import isInvokedFunction from "../../util/is-invoked-function";
 import normalizeStringExpression from "../../util/normalize-string-expression";
@@ -42,10 +39,9 @@ import {
 } from "../../util/sections";
 import { getSerializeGuard } from "../../util/serialize-guard";
 import {
-  addBindingSerializeReasonExpr,
-  forceBindingSerialize,
-  forceOwnersSerialize,
-  getBindingSerializeReason,
+  addOwnerSerializeReason,
+  addSerializeExpr,
+  getSerializeReason,
 } from "../../util/serialize-reasons";
 import {
   addHTMLEffectCall,
@@ -151,7 +147,10 @@ export default {
 
           seen[attr.name] = attr;
 
-          if (isEventHandler(attr.name) || isChangeHandler(attr.name)) {
+          if (
+            isEventHandler(attr.name) ||
+            isNativeTagChangeHandler(attr.name)
+          ) {
             valueExtra.isEffect = true;
             hasEventHandlers = true;
           } else if (!evaluate(attr.value).confident) {
@@ -221,23 +220,20 @@ export default {
           );
         }
 
-        if (hasEventHandlers || spreadReferenceNodes) {
-          forceBindingSerialize(tagSection, nodeBinding);
-        }
+        addSerializeExpr(
+          tagSection,
+          !!(node.var || hasEventHandlers),
+          nodeBinding,
+        );
 
         if (node.var) {
-          forceBindingSerialize(tagSection, nodeBinding);
           for (const ref of tag.scope.getBinding(node.var.name)!
             .referencePaths) {
             const refSection = getOrCreateSection(ref);
             setReferencesScope(ref);
 
             if (isSameOrChildSection(tagSection, refSection)) {
-              forceOwnersSerialize(
-                refSection,
-                tagSection,
-                getAccessorProp().Owner,
-              );
+              addOwnerSerializeReason(refSection, tagSection, true);
               if (!tagExtra[kGetterId] && !isInvokedFunction(ref)) {
                 tagExtra[kGetterId] = getRegisterUID(
                   tagSection,
@@ -253,10 +249,10 @@ export default {
           }
         }
 
-        addBindingSerializeReasonExpr(
+        addSerializeExpr(
           tagSection,
-          nodeBinding,
           push(attrExprExtras, tagExtra),
+          nodeBinding,
         );
       }
     },
@@ -444,8 +440,7 @@ export default {
                   getScopeIdIdentifier(tagSection),
                   usedAttrs.staticContentAttr.value,
                   getSerializeGuard(
-                    nodeBinding &&
-                      getBindingSerializeReason(tagSection, nodeBinding),
+                    nodeBinding && getSerializeReason(tagSection, nodeBinding),
                     true,
                   ),
                 ),
@@ -453,7 +448,7 @@ export default {
             ];
           } else if (spreadExpression && !hasChildren) {
             const serializeReason = getSerializeGuard(
-              nodeBinding && getBindingSerializeReason(tagSection, nodeBinding),
+              nodeBinding && getSerializeReason(tagSection, nodeBinding),
               true,
             );
             tagExtra[kTagContentAttr] = true;
@@ -543,7 +538,7 @@ export default {
         const markerSerializeReason =
           !tagExtra[kSkipEndTag] &&
           nodeBinding &&
-          getBindingSerializeReason(tagSection, nodeBinding);
+          getSerializeReason(tagSection, nodeBinding);
 
         if (!tagExtra[kSkipEndTag] && !openTagOnly && !selectArgs) {
           writer.writeTo(
@@ -1166,8 +1161,8 @@ function trackDelimitedAttrObjectProperties(
   }
 }
 
-function isChangeHandler(propName: string) {
-  return /^(?:value|checked(?:Value)?|open)Change/.test(propName);
+function isNativeTagChangeHandler(propName: string) {
+  return /^(?:value|checked(?:Value)?|open)Change$/.test(propName);
 }
 
 function buildUndefined() {

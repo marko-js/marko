@@ -12,13 +12,12 @@ import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
   mergeReferences,
-  setBindingDownstream,
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
-import { forceBindingSerialize } from "../util/serialize-reasons";
+import { addSerializeReason } from "../util/serialize-reasons";
 import {
   addValue,
   initValue,
@@ -96,18 +95,16 @@ export default {
 
     const tagSection = getOrCreateSection(tag);
     const binding = trackVarReferences(tag, BindingType.let)!;
-    setBindingDownstream(
-      binding,
-      mergeReferences(tagSection, tag.node, [
-        valueAttr?.value,
-        valueChangeAttr?.value,
-      ]),
-    );
+    mergeReferences(tagSection, tag.node, [
+      valueAttr?.value,
+      valueChangeAttr?.value,
+    ]);
 
     if (valueChangeAttr) {
       // TODO: could be based on if there are actually assignments.
-      forceBindingSerialize(
+      addSerializeReason(
         tagSection,
+        true,
         binding,
         getAccessorPrefix().TagVariableChange,
       );

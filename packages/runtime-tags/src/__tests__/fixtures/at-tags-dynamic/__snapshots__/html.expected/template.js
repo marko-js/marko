@@ -35,11 +35,7 @@ export default _._template("__tests__/template.marko", input => {
         content: _._content_resume("__tests__/template.marko_3_content", () => {
           const $scope3_id = _._scope_id();
           _._html(`${_._escape(row)}${_._el_resume($scope3_id, "#text/0")}`);
-          _._scope($scope3_id, {
-            row
-          }, "__tests__/template.marko", "16:18", {
-            row: "15:18"
-          });
+          _._scope($scope3_id, {}, "__tests__/template.marko", "16:18");
         }, $scope0_id)
       });
     });

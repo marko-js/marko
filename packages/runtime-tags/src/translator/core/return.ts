@@ -16,7 +16,7 @@ import { getParentTag } from "../util/get-parent-tag";
 import { isControlFlowTag } from "../util/is-core-tag";
 import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
-import { forceSectionSerialize } from "../util/serialize-reasons";
+import { addSerializeReason } from "../util/serialize-reasons";
 import { addStatement, setSectionSerializedValue } from "../util/signals";
 import { createSectionState } from "../util/state";
 import { translateByTarget } from "../util/visitors";
@@ -75,8 +75,9 @@ export default {
     if (attrs.valueChange) {
       (attrs.valueChange.extra ??= {}).isEffect = true;
       // TODO: this should be based on the parent actually mutating the tag variable.
-      forceSectionSerialize(
+      addSerializeReason(
         getOrCreateSection(tag),
+        true,
         getAccessorProp().TagVariableChange,
       );
     }

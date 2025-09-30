@@ -14,7 +14,6 @@ import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
 import evaluate from "../util/evaluate";
 import { generateUidIdentifier } from "../util/generate-uid";
-import { getAccessorProp } from "../util/get-accessor-char";
 import isInvokedFunction from "../util/is-invoked-function";
 import { isOutputHTML } from "../util/marko-config";
 import { type Opt, push } from "../util/optional";
@@ -40,10 +39,9 @@ import {
   isSameOrChildSection,
 } from "../util/sections";
 import {
-  addBindingSerializeReasonExpr,
-  forceBindingSerialize,
-  forceOwnersSerialize,
-  getBindingSerializeReason,
+  addOwnerSerializeReason,
+  addSerializeExpr,
+  getSerializeReason,
 } from "../util/serialize-reasons";
 import {
   addHTMLEffectCall,
@@ -149,7 +147,9 @@ export default {
         BindingType.dom,
         tagSection,
       ));
-      getProgram().node.extra.isInteractive ||= hasEventHandlers;
+      if (hasEventHandlers) {
+        getProgram().node.extra.isInteractive = true;
+      }
 
       if (spreadReferenceNodes) {
         mergeReferences(tagSection, tag.node, spreadReferenceNodes);
@@ -168,23 +168,19 @@ export default {
         );
       }
 
-      if (hasEventHandlers || spreadReferenceNodes) {
-        forceBindingSerialize(tagSection, nodeBinding);
-      }
+      addSerializeExpr(
+        tagSection,
+        !!(node.var || hasEventHandlers),
+        nodeBinding,
+      );
 
       if (node.var) {
-        forceBindingSerialize(tagSection, nodeBinding);
-
         for (const ref of tag.scope.getBinding(node.var.name)!.referencePaths) {
           const refSection = getOrCreateSection(ref);
           setReferencesScope(ref);
 
           if (isSameOrChildSection(tagSection, refSection)) {
-            forceOwnersSerialize(
-              refSection,
-              tagSection,
-              getAccessorProp().Owner,
-            );
+            addOwnerSerializeReason(refSection, tagSection, true);
             if (!tagExtra[kGetterId] && !isInvokedFunction(ref)) {
               tagExtra[kGetterId] = getRegisterUID(tagSection, "#script");
             }
@@ -194,11 +190,7 @@ export default {
         }
       }
 
-      addBindingSerializeReasonExpr(
-        tagSection,
-        nodeBinding,
-        push(exprExtras, tagExtra),
-      );
+      addSerializeExpr(tagSection, push(exprExtras, tagExtra), nodeBinding);
     }
   },
   translate: {
@@ -457,7 +449,7 @@ export default {
         writer.markNode(
           tag,
           nodeBinding,
-          getBindingSerializeReason(tagSection, nodeBinding),
+          getSerializeReason(tagSection, nodeBinding),
         );
       }
 

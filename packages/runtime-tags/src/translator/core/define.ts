@@ -15,6 +15,7 @@ import {
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection, startSection } from "../util/sections";
+import { setTagDownstream } from "../util/set-tag-sections-downstream";
 import {
   addStatement,
   addValue,
@@ -50,13 +51,9 @@ export default {
 
     // TODO: should determine if var bindings are nullable based on attrs.
     trackParamsReferences(tagBody, BindingType.param);
+    setTagDownstream(tag, varBinding);
 
     if (bodySection) {
-      // TODO: need to do this for attr tags.
-      // Should probably allow passing a binding to analyzeAttrTags.
-      bodySection.downstreamBinding =
-        varBinding.propertyAliases.get("content") || varBinding;
-
       // TODO: support member expressions
       if (t.isIdentifier(tag.node.var)) {
         const babelBinding = tag.scope.getBinding(tag.node.var.name)!;
