@@ -32,7 +32,6 @@ export default _._template("__tests__/template.marko", input => {
     }, "__tests__/template.marko_0/onClickOnce", $scope0_id)
   });
   _._var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_onClickOnce/var");
-  _._set_serialize_reason(/* state: clickOnceCount */1);
   _._html(`<button class=once>${_._escape(clickOnceCount)}${_._el_resume($scope0_id, "#text/3")}</button>${_._el_resume($scope0_id, "#button/2")}`);
   const Twice = {
     content: _._content("__tests__/template.marko_2_content", ({
@@ -65,7 +64,6 @@ export default _._template("__tests__/template.marko", input => {
     }, "__tests__/template.marko_0/onClickTwice", $scope0_id)
   });
   _._var($scope0_id, "#scopeOffset/5", $childScope2, "__tests__/template.marko_0_onClickTwice/var");
-  _._set_serialize_reason(/* state: clickTwiceCount */1);
   _._html(`<button class=twice>${_._escape(clickTwiceCount)}${_._el_resume($scope0_id, "#text/7")}</button>${_._el_resume($scope0_id, "#button/6")}`);
   _._script($scope0_id, "__tests__/template.marko_0_onClickTwice");
   _._script($scope0_id, "__tests__/template.marko_0_onClickOnce");

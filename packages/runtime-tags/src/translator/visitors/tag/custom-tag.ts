@@ -64,13 +64,9 @@ export default {
         tag,
         childSection,
         programSection === childSection
-          ? getBindingPropTree(programSection.params!)
+          ? programSection.params && getBindingPropTree(programSection.params)
           : childExtra.domExports?.params,
       );
-
-      // TODO: should check individual inputs to see if they are intersecting with state
-      getProgram().node.extra!.hasInteractiveChild =
-        childExtra?.isInteractive || childExtra?.hasInteractiveChild || false;
     },
   },
   translate: {

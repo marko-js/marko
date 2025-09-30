@@ -31,7 +31,7 @@ export default _._template("__tests__/template.marko", input => {
     }
   }, $scope0_id, "#text/0", _._serialize_guard($serialize, /* input.a,input.b */1), _._serialize_guard($serialize, /* input.a */4), _._serialize_guard($serialize, /* input.a */4));
   _._serialize_guard($serialize, /* input.c,input.a,input.b */2) && _._scope($scope0_id, {
-    input_c: input.c,
+    input_c: _._serialize_if($serialize, /* input.a,input.b */1) && input.c,
     input_b: _._serialize_if($serialize, /* input.a */4) && input.b,
     bar: _._serialize_if($serialize, /* input.a,input.b */1) && bar,
     "ClosureScopes:bar": _._serialize_if($serialize, /* input.c */3) && $bar2__closures

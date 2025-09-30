@@ -7,11 +7,11 @@ import {
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
-import { isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import { getBindingPropTree } from "../../util/binding-prop-tree";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorPrefix } from "../../util/get-accessor-char";
+import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import {
   knownTagAnalyze,
   knownTagTranslateDOM,
@@ -49,8 +49,8 @@ import {
 } from "../../util/sections";
 import { getSerializeGuard } from "../../util/serialize-guard";
 import {
-  addBindingSerializeReasonExpr,
-  getBindingSerializeReason,
+  addSerializeExpr,
+  getSerializeReason,
 } from "../../util/serialize-reasons";
 import {
   addStatement,
@@ -115,11 +115,15 @@ export default {
         tagSection,
       ));
 
-      getProgram().node.extra.isInteractive ||=
+      if (
         hasVar ||
         tag.node.attributes.some(
-          (attr) => t.isMarkoSpreadAttribute(attr) || isEventHandler(attr.name),
-        );
+          (attr) =>
+            t.isMarkoSpreadAttribute(attr) || isEventOrChangeHandler(attr.name),
+        )
+      ) {
+        getProgram().node.extra.isInteractive = true;
+      }
 
       if (hasVar) {
         trackVarReferences(tag, BindingType.derived);
@@ -130,11 +134,7 @@ export default {
 
       startSection(tagBody);
       trackParamsReferences(tagBody, BindingType.param);
-      addBindingSerializeReasonExpr(
-        tagSection,
-        nodeBinding,
-        hasVar || tagExtra,
-      );
+      addSerializeExpr(tagSection, hasVar || tagExtra, nodeBinding);
     },
   },
   translate: {
@@ -291,7 +291,7 @@ export default {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
         const serializeArg = getSerializeGuard(
-          getBindingSerializeReason(tagSection, nodeBinding),
+          getSerializeReason(tagSection, nodeBinding),
           true,
         );
         const dynamicTagExpr = hasTagArgs

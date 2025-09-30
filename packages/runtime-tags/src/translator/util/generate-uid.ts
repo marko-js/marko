@@ -50,8 +50,7 @@ const sharedUIDsForFile = new WeakMap<
 >();
 export function getSharedUid(name: string, section?: Section) {
   const file = getFile();
-  const key = section || file;
-  let sharedUIDs = sharedUIDsForFile.get(key);
+  let sharedUIDs = sharedUIDsForFile.get(file);
 
   if (!sharedUIDs) {
     const { cache } = file.markoOpts;
@@ -75,13 +74,14 @@ export function getSharedUid(name: string, section?: Section) {
       }
     }
 
-    sharedUIDsForFile.set(key, sharedUIDs);
+    sharedUIDsForFile.set(file, sharedUIDs);
   }
 
-  let uniqueName = sharedUIDs.get(name);
+  const nameKey = section ? `${section.id}:${name}` : name;
+  let uniqueName = sharedUIDs.get(nameKey);
   if (!uniqueName) {
     uniqueName = generateUid(name);
-    sharedUIDs.set(name, uniqueName);
+    sharedUIDs.set(nameKey, uniqueName);
   }
 
   return uniqueName;

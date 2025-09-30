@@ -37,9 +37,8 @@ import {
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
 import {
-  addSectionSerializeReasonExpr,
-  getBindingSerializeReason,
-  getSectionSerializeReason,
+  addSerializeExpr,
+  getSerializeReason,
 } from "../util/serialize-reasons";
 import {
   addValue,
@@ -111,7 +110,7 @@ export default {
       getAllTagReferenceNodes(tag.node),
     );
 
-    addSectionSerializeReasonExpr(tagSection, tagExtra, kStatefulReason);
+    addSerializeExpr(tagSection, tagExtra, kStatefulReason);
 
     if (paramsBinding) {
       setBindingDownstream(paramsBinding, tagExtra);
@@ -165,11 +164,11 @@ export default {
           (bodySection.content.singleChild &&
             bodySection.content.startType !== ContentType.Text);
 
-        const branchSerializeReason = getSectionSerializeReason(
+        const branchSerializeReason = getSerializeReason(
           bodySection,
           kBranchSerializeReason,
         );
-        const markerSerializeReason = getBindingSerializeReason(
+        const markerSerializeReason = getSerializeReason(
           tagSection,
           nodeBinding,
         );
@@ -191,7 +190,7 @@ export default {
         if (branchSerializeReason) {
           const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
           const statefulSerializeArg = getSerializeGuard(
-            getSectionSerializeReason(tagSection, kStatefulReason),
+            getSerializeReason(tagSection, kStatefulReason),
             !(skipParentEnd || singleNodeOptimization),
           );
           const markerSerializeArg = getSerializeGuard(

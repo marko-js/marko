@@ -2,8 +2,8 @@ export const $template = `<!>${_customTag_template}`;
 export const $walks = /* over(1), beginChild, _customTag_walks, endChild */`b/${_customTag_walks}&`;
 import { $setup as _customTag, $thing2 as _customTag_input_thing, $template as _customTag_template, $walks as _customTag_walks } from "./tags/custom-tag/index.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $thing_content2 = _._content_resume("__tests__/template.marko_2_content", "Goodbye", /* over(1) */"b");
-const $thing_content = _._content_resume("__tests__/template.marko_1_content", "Hello", /* over(1) */"b");
+const $thing_content2 = /* @__PURE__ */_._content("__tests__/template.marko_2_content", "Goodbye", /* over(1) */"b");
+const $thing_content = /* @__PURE__ */_._content("__tests__/template.marko_1_content", "Hello", /* over(1) */"b");
 export function $setup($scope) {
   _customTag($scope["#childScope/0"]);
 }

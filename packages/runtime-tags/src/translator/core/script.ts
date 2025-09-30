@@ -79,7 +79,7 @@ export default {
         }
         seenValueAttr = true;
         (attr.value.extra ??= {}).isEffect = true;
-        (getProgram().node.extra ??= {}).isInteractive = true;
+        getProgram().node.extra.isInteractive = true;
       } else {
         throw tag.hub.buildError(
           attr,

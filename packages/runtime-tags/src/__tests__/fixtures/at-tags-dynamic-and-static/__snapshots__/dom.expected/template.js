@@ -2,7 +2,8 @@ export const $template = `<!>${_hello_template}<!>`;
 export const $walks = /* over(1), beginChild, _hello_walks, endChild, over(1) */`b/${_hello_walks}&b`;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _hello, $input_other as _hello_input_other, $input_item as _hello_input_item, $template as _hello_template, $walks as _hello_walks } from "./tags/hello/index.marko";
-const $item_content = _._content_closures(_._content_resume("__tests__/template.marko_2_content", "<!>:<!>", /* replace, over(2), replace, over(1) */"%c%b"), {
+const $other_content = /* @__PURE__ */_._content("__tests__/template.marko_2_content", "other", /* over(1) */"b");
+const $item_content = /* @__PURE__ */_._content_closures(/* @__PURE__ */_._content("__tests__/template.marko_1_content", "<!>:<!>", /* replace, over(2), replace, over(1) */"%c%b"), {
   a($scope, a) {
     _._text($scope["#text/0"], a);
   },
@@ -10,7 +11,6 @@ const $item_content = _._content_closures(_._content_resume("__tests__/template.
     _._text($scope["#text/1"], v);
   }
 });
-const $other_content = /* @__PURE__ */_._content("__tests__/template.marko_1_content", "other", /* over(1) */"b");
 export function $setup($scope) {
   _hello($scope["#childScope/0"]);
   _hello_input_other($scope["#childScope/0"], _.attrTag({

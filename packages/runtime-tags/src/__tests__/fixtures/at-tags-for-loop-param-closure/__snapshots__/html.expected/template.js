@@ -5,15 +5,11 @@ export default _._template("__tests__/template.marko", input => {
   let $item;
   _.forOf([1, 2, 3], item => {
     $item = _.attrTags($item, {
-      content: _._content_resume("__tests__/template.marko_1_content", () => {
+      content: _._content("__tests__/template.marko_1_content", () => {
         const $scope1_id = _._scope_id();
         _._html(`${_._escape(item)}${_._el_resume($scope1_id, "#text/0")}`);
-        _._scope($scope1_id, {
-          item
-        }, "__tests__/template.marko", "3:5", {
-          item: "2:7"
-        });
-      }, $scope0_id)
+        _._scope($scope1_id, {}, "__tests__/template.marko", "3:5");
+      })
     });
   });
   _list({

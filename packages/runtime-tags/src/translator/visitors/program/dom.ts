@@ -13,8 +13,8 @@ import {
   forEachSectionReverse,
   getSectionForBody,
   getSectionParentIsOwner,
+  getSectionRegisterReasons,
   isDynamicClosure,
-  isSerializedSection,
 } from "../../util/sections";
 import {
   addStatement,
@@ -94,7 +94,7 @@ export default {
                   ]),
                 )
               : callRuntime(
-                  isSerializedSection(childSection)
+                  getSectionRegisterReasons(childSection)
                     ? "_content_resume"
                     : "_content",
                   t.stringLiteral(getResumeRegisterId(childSection, "content")),

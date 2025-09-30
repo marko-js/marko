@@ -39,9 +39,8 @@ import {
   getSerializeGuardForAny,
 } from "../util/serialize-guard";
 import {
-  addSectionSerializeReasonExpr,
-  getBindingSerializeReason,
-  getSectionSerializeReason,
+  addSerializeExpr,
+  getSerializeReason,
   type SerializeReasons,
 } from "../util/serialize-reasons";
 import {
@@ -102,7 +101,7 @@ export const IfTag = {
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
       ifTagExtra.singleNodeOptimization = singleNodeOptimization;
-      addSectionSerializeReasonExpr(ifTagSection, ifTagExtra, kStatefulReason);
+      addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
     }
   },
   translate: translateByTarget({
@@ -146,7 +145,7 @@ export const IfTag = {
             ifTagSection,
           );
           const onlyChildParentTagName = getOnlyChildParentTagName(ifTag);
-          const markerSerializeReason = getBindingSerializeReason(
+          const markerSerializeReason = getSerializeReason(
             ifTagSection,
             nodeBinding,
           );
@@ -158,7 +157,7 @@ export const IfTag = {
             const [branchTag, branchBody] = branches[i];
             const bodyStatements = branchTag.node.body.body;
             if (branchBody) {
-              const branchSerializeReason = getSectionSerializeReason(
+              const branchSerializeReason = getSerializeReason(
                 branchBody,
                 kBranchSerializeReason,
               );
@@ -209,7 +208,7 @@ export const IfTag = {
             }
 
             const statefulSerializeArg = getSerializeGuard(
-              getSectionSerializeReason(ifTagSection, kStatefulReason),
+              getSerializeReason(ifTagSection, kStatefulReason),
               !(skipParentEnd || singleNodeOptimization),
             );
             const markerSerializeArg = getSerializeGuard(

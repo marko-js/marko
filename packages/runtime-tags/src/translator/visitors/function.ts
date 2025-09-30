@@ -13,11 +13,15 @@ import {
 import { isCoreTagName } from "../util/is-core-tag";
 import isInvokedFunction from "../util/is-invoked-function";
 import {
-  couldSerializeExtra,
+  getAllSerializeReasonsForExtra,
   getCanonicalExtra,
   type RegisteredFnExtra,
 } from "../util/references";
 import { getSection } from "../util/sections";
+import {
+  mergeSerializeReasons,
+  type SerializeReason,
+} from "../util/serialize-reasons";
 import { createProgramState } from "../util/state";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import type { TemplateVisitor } from "../util/visitors";
@@ -25,16 +29,19 @@ import type { TemplateVisitor } from "../util/visitors";
 declare module "@marko/compiler/dist/types" {
   export interface FunctionDeclarationExtra {
     registerId?: string;
+    registerReason?: SerializeReason;
     name?: string;
   }
 
   export interface FunctionExpressionExtra {
     registerId?: string;
+    registerReason?: SerializeReason;
     name?: string;
   }
 
   export interface ArrowFunctionExpressionExtra {
     registerId?: string;
+    registerReason?: SerializeReason;
     name?: string;
   }
 }
@@ -75,12 +82,12 @@ export default {
     if (markoRoot.isMarkoScriptlet()) {
       const refs = getStaticDeclRefs(fnExtra, fn);
       if (refs === true) {
-        registerFunction(fnExtra);
+        registerFunction(fnExtra, true);
       } else if (refs.size) {
         getReferencesByFn().set(fnExtra, refs);
       }
     } else if (shouldAlwaysRegister(markoRoot)) {
-      registerFunction(fnExtra);
+      registerFunction(fnExtra, true);
     } else {
       getReferencesByFn().set(fnExtra, new Set([(exprRoot.node.extra ??= {})]));
     }
@@ -89,16 +96,16 @@ export default {
 
 export function finalizeFunctionRegistry() {
   for (const [fnExtra, exprExtras] of getReferencesByFn()) {
-    let shouldRegister = false;
+    let reason: undefined | SerializeReason;
     for (const exprExtra of exprExtras) {
-      if (couldSerializeExtra(getCanonicalExtra(exprExtra))) {
-        shouldRegister = true;
-        break;
-      }
+      reason = mergeSerializeReasons(
+        reason,
+        getAllSerializeReasonsForExtra(getCanonicalExtra(exprExtra)),
+      );
     }
 
-    if (shouldRegister) {
-      registerFunction(fnExtra);
+    if (reason) {
+      registerFunction(fnExtra, reason);
     }
   }
 }
@@ -194,13 +201,14 @@ function getTagFromMarkoRoot(
   } while (cur);
 }
 
-function registerFunction(fnExtra: RegisteredFnExtra) {
+function registerFunction(fnExtra: RegisteredFnExtra, reason: SerializeReason) {
   const {
     markoOpts,
     path: program,
     opts: { filename },
   } = getFile();
   program.node.extra.isInteractive = true;
+  fnExtra.registerReason = reason;
   fnExtra.name = generateUid(fnExtra.name);
   fnExtra.registerId = getTemplateId(
     markoOpts,

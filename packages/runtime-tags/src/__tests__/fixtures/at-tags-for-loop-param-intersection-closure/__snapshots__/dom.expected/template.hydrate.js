@@ -1,4 +1,4 @@
-// size: 290 (min) 202 (brotli)
+// size: 218 (min) 161 (brotli)
 const $item_content__mult__OR__item = _._or(1, ($scope) => {
     let {
       _: { 3: mult },
@@ -7,11 +7,7 @@ const $item_content__mult__OR__item = _._or(1, ($scope) => {
     _._text($scope[0], item * mult);
   }),
   $item_content__mult = _._closure_get(3, $item_content__mult__OR__item),
-  $item_content__setup = $item_content__mult;
-_._content_closures(_._content_resume("b0", " ", " b", $item_content__setup), {
-  5: $item_content__mult__OR__item,
-});
-const $mult__closure = _._closure($item_content__mult),
+  $mult__closure = _._closure($item_content__mult),
   $mult__script = _._script("b1", ($scope, { 3: mult }) =>
     _._on($scope[1], "click", function () {
       $mult($scope, ++mult);

@@ -27,11 +27,9 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.f = [0, _.a = {
           x: 1,
-          y: 2,
           "ClosureScopes:y": _.h = new Set,
           "#childScope/1": _.e = {
             "ConditionalScope:#text/0": _.b = {
-              outer: 1,
               "ClosureScopes:outer": _.g = new Set,
               "#childScope/0": _.d = {
                 "ConditionalScope:#text/0": _.c = {
@@ -95,11 +93,9 @@ container.querySelector("button").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.f = [0, _.a = {
           x: 1,
-          y: 2,
           "ClosureScopes:y": _.h = new Set,
           "#childScope/1": _.e = {
             "ConditionalScope:#text/0": _.b = {
-              outer: 1,
               "ClosureScopes:outer": _.g = new Set,
               "#childScope/0": _.d = {
                 "ConditionalScope:#text/0": _.c = {
@@ -162,11 +158,9 @@ container.querySelector("button").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.f = [0, _.a = {
           x: 1,
-          y: 2,
           "ClosureScopes:y": _.h = new Set,
           "#childScope/1": _.e = {
             "ConditionalScope:#text/0": _.b = {
-              outer: 1,
               "ClosureScopes:outer": _.g = new Set,
               "#childScope/0": _.d = {
                 "ConditionalScope:#text/0": _.c = {
@@ -229,11 +223,9 @@ container.querySelector("button").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.f = [0, _.a = {
           x: 1,
-          y: 2,
           "ClosureScopes:y": _.h = new Set,
           "#childScope/1": _.e = {
             "ConditionalScope:#text/0": _.b = {
-              outer: 1,
               "ClosureScopes:outer": _.g = new Set,
               "#childScope/0": _.d = {
                 "ConditionalScope:#text/0": _.c = {
