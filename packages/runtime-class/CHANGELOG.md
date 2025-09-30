@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.37.60
+
+### Patch Changes
+
+- [#2859](https://github.com/marko-js/marko/pull/2859) [`22112e5`](https://github.com/marko-js/marko/commit/22112e524cf12baf0b119a5ad3417145459a159c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure markoOpts is always accurate when running child template analysis.
+
+- Updated dependencies [[`22112e5`](https://github.com/marko-js/marko/commit/22112e524cf12baf0b119a5ad3417145459a159c)]:
+  - @marko/compiler@5.39.40
+
 ## 5.37.59
 
 ### Patch Changes
