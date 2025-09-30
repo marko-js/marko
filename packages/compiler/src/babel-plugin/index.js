@@ -184,6 +184,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
   }
 
   if (cached) {
+    cached.file.markoOpts = markoOpts;
     return cached.file;
   }
 
