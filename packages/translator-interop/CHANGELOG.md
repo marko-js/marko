@@ -1,5 +1,17 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.54
+
+### Patch Changes
+
+- [#2857](https://github.com/marko-js/marko/pull/2857) [`13e5007`](https://github.com/marko-js/marko/commit/13e50070594b75a0fc03233b4b93ea0a6af390ca) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Update type definitions for `<log>` and `<debug>` tags
+
+- [#2859](https://github.com/marko-js/marko/pull/2859) [`e12aa2e`](https://github.com/marko-js/marko/commit/e12aa2e79dfa2e38d721d64857c0496b0bfcc84f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Track reasons for function closure serialization and add appropriate guards.
+
+- Updated dependencies [[`22112e5`](https://github.com/marko-js/marko/commit/22112e524cf12baf0b119a5ad3417145459a159c), [`13e5007`](https://github.com/marko-js/marko/commit/13e50070594b75a0fc03233b4b93ea0a6af390ca), [`e12aa2e`](https://github.com/marko-js/marko/commit/e12aa2e79dfa2e38d721d64857c0496b0bfcc84f), [`e12aa2e`](https://github.com/marko-js/marko/commit/e12aa2e79dfa2e38d721d64857c0496b0bfcc84f)]:
+  - marko@5.37.60
+  - @marko/runtime-tags@6.0.81
+
 ## 0.2.53
 
 ### Patch Changes
