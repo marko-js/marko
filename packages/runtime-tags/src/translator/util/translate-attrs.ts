@@ -413,8 +413,9 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   if (bodySection) {
     if (isOutputHTML()) {
       const serialized = getSectionRegisterReasons(bodySection);
-
-      let dynamicSerializeReason = isReasonDynamic(bodySection.serializeReason);
+      let dynamicSerializeReason =
+        !!bodySection.paramReasonGroups ||
+        isReasonDynamic(bodySection.serializeReason);
       if (!dynamicSerializeReason) {
         for (const reason of bodySection.serializeReasons.values()) {
           if (isReasonDynamic(reason)) {

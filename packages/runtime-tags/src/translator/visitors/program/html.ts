@@ -24,8 +24,9 @@ export default {
       traverseReplace(program.node, "body", replaceNode);
       const renderContent: t.Statement[] = [];
       const section = getSection(program);
+      let dynamicSerializeReason =
+        !!section.paramReasonGroups || isReasonDynamic(section.serializeReason);
 
-      let dynamicSerializeReason = isReasonDynamic(section.serializeReason);
       if (!dynamicSerializeReason) {
         for (const reason of section.serializeReasons.values()) {
           if (isReasonDynamic(reason)) {

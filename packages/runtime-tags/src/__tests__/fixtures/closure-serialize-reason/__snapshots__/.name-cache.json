@@ -1,0 +1,39 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "n",
+      "$$define_content2__value__OR__call": "e",
+      "$$define_content2__call": "_",
+      "$$define_content2__value": "r",
+      "$$define_content2__$params": "o",
+      "$$define_content2__$temp": "c",
+      "$$define_content__value__OR__call": "u",
+      "$$define_content__call": "a",
+      "$$define_content__value": "s",
+      "$$define_content__$params": "m",
+      "$$define_content__$temp": "i",
+      "$$dynamicTag": "l",
+      "$$Once__OR__clickOnceCount": "f",
+      "$$clickOnceCount": "v",
+      "$$dynamicTag2": "d",
+      "$$Twice__OR__clickTwiceCount": "g",
+      "$$clickTwiceCount": "k",
+      "$$onClickOnce2__script": "p",
+      "$$onClickOnce2": "x",
+      "$$onClickTwice2__script": "y",
+      "$$onClickTwice2": "b",
+      "$$_return2": "h",
+      "$$_return": "j",
+      "$$onClickOnce": "q",
+      "$$onClickTwice": "w",
+      "$$define_content2__setup": "z",
+      "$$define_content__setup": "A",
+      "$$if_content__setup": "D",
+      "$$if_content": "B",
+      "$$if": "C",
+      "$$x__script": "E",
+      "$$x": "F"
+    }
+  }
+}
