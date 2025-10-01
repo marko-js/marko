@@ -1,0 +1,10 @@
+<let/x=0>
+<const/getMessage=() => input.message>
+<div>
+  <if=x>
+    <span>${getMessage()}</>
+  </>
+</div>
+<button onClick() { x++ }>
+  ${x}
+</button>
