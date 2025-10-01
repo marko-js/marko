@@ -1,6 +1,5 @@
 export const WALKER_RUNTIME_CODE = MARKO_DEBUG
-  ? /* js */ `((runtimeId) => (
-(self[runtimeId] = (
+  ? /* js */ `((runtimeId) => (self[runtimeId] || (self[runtimeId] = (
   renderId,
   prefix = runtimeId + renderId,
   prefixLen = prefix.length,
@@ -34,12 +33,12 @@ export const WALKER_RUNTIME_CODE = MARKO_DEBUG
         }
       }
     },
-  })),
-self[runtimeId]
-))`
-  : `(e=>(self[e]=(l,d=e+l,f=d.length,o={},n=[],s=document,t=s.createTreeWalker(s,129))=>s=self[e][l]={i:d,d:s,l:o,v:n,x(){},w(e,l,x){for(;e=t.nextNode();)s.x(l=(l=e.data)&&!l.indexOf(d)&&(o[x=l.slice(f+1)]=e,l[f]),x,e),l>"#"&&n.push(e)}},self[e]))`;
+  })
+)))`
+  : `(e=>(self[e]||(self[e]=(o,l=e+o,d=l.length,n={},f=[],s=document,a=s.createTreeWalker(s,129))=>s=self[e][o]={i:l,d:s,l:n,v:f,x(){},w(e,o,i){for(;e=a.nextNode();)s.x(o=(o=e.data)&&!o.indexOf(l)&&(n[i=o.slice(d+1)]=e,o[d]),i,e),o>"#"&&f.push(e)}})))`;
 export const REORDER_RUNTIME_CODE = MARKO_DEBUG
   ? /* js */ `((runtime) => {
+if (runtime.j) return;
 let onNextSibling,
   placeholder,
   nextSibling,
@@ -93,4 +92,4 @@ runtime.x = (op, id, node, start, placeholderCallback) => {
   }
 };
 })`
-  : `(e=>{let i,l,t,r={},c=(e,i)=>{e.replaceWith(...i.childNodes),i.remove()};e.d.head.append(e.d.querySelector("style["+e.i+"]")||""),e.j={},e.x=(d,o,n,a,g)=>{"#"==d?(r[o]=l).i++:n==t&&i(),"T"==n.tagName&&(o=n.getAttribute(e.i))&&((a=e.l["^"+o])&&(r[o]={i:1,c(i=e.l[o]||n){for(;(t=i.previousSibling||a).remove(),a!=t;);c(i,n)}}),t=n.nextSibling,l=r[o],i=()=>{a||c(e.l[o],n),--l.i||l.c()},(d=e.j[o])&&(g=l.c,l.c=()=>g()+d(e.r)))}})`;
+  : `(e=>{if(e.j)return;let i,o,l,r={},t=(e,i)=>{e.replaceWith(...i.childNodes),i.remove()};e.d.head.append(e.d.querySelector("style["+e.i+"]")||""),e.j={},e.x=(c,d,n,a,g)=>{"#"==c?(r[d]=o).i++:n==l&&i(),"T"==n.tagName&&(d=n.getAttribute(e.i))&&((a=e.l["^"+d])&&(r[d]={i:1,c(i=e.l[d]||n){for(;(l=i.previousSibling||a).remove(),a!=l;);t(i,n)}}),l=n.nextSibling,o=r[d],i=()=>{a||t(e.l[d],n),--o.i||o.c()},(c=e.j[d])&&(g=o.c,o.c=()=>g()+c(e.r)))}})`;
