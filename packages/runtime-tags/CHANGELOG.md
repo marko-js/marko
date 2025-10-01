@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.82
+
+### Patch Changes
+
+- [#2863](https://github.com/marko-js/marko/pull/2863) [`1d898d0`](https://github.com/marko-js/marko/commit/1d898d08b19ceeb7f078a23c1924db641eba161f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with multiple renders into the same runtime.
+
+- [#2861](https://github.com/marko-js/marko/pull/2861) [`97e9ae8`](https://github.com/marko-js/marko/commit/97e9ae894abd8ce420d4c8eff04bbec75b60a8ae) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with invalid html compilation output when having param only serialize reasons.
+
 ## 6.0.81
 
 ### Patch Changes
