@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.83
+
+### Patch Changes
+
+- [#2864](https://github.com/marko-js/marko/pull/2864) [`1e75400`](https://github.com/marko-js/marko/commit/1e7540087720e748d0f7889f10ace4ddf93a4f80) Thanks [@rturnq](https://github.com/rturnq)! - Ensure serialize reason is set before child call in server compilation
+
 ## 6.0.82
 
 ### Patch Changes
