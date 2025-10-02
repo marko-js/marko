@@ -4,6 +4,7 @@ export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   let x = true;
   const $childScope = _._peek_scope_id();
+  _._set_serialize_reason(/* state: x */1);
   let $item;
   if (x) {
     $item = _.attrTag({
@@ -15,7 +16,6 @@ export default _._template("__tests__/template.marko", input => {
       })
     });
   }
-  _._set_serialize_reason(/* state: x */1);
   _hello({
     item: $item
   });
