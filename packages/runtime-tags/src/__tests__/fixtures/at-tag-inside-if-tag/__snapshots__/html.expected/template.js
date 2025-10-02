@@ -7,6 +7,11 @@ export default _._template("__tests__/template.marko", input => {
     x
   } = input;
   const $childScope = _._peek_scope_id();
+  _._set_serialize_reason({
+    /* input.thing.x, input.thing.content */0: _._serialize_guard($serialize, /* x */0),
+    /* input.thing.x */1: _._serialize_guard($serialize, /* x */0),
+    /* input.thing.content */2: _._serialize_guard($serialize, /* x */0)
+  });
   let $thing;
   if (x) {
     $thing = _.attrTag({
@@ -25,11 +30,6 @@ export default _._template("__tests__/template.marko", input => {
       })
     });
   }
-  _._set_serialize_reason({
-    /* input.thing.x, input.thing.content */0: _._serialize_guard($serialize, /* x */0),
-    /* input.thing.x */1: _._serialize_guard($serialize, /* x */0),
-    /* input.thing.content */2: _._serialize_guard($serialize, /* x */0)
-  });
   _customTag({
     thing: $thing
   });

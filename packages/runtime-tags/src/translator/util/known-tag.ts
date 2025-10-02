@@ -182,12 +182,6 @@ export function knownTagTranslateHTML(
     childScopeBinding,
   );
 
-  const childSerializeReasonExpr = getParamGroupsSerializeGuard(
-    contentSection,
-    tagExtra[kKnownExprs]!,
-    contentSection.params,
-  );
-
   if (childScopeSerializeReason) {
     const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
     tag.insertBefore(
@@ -223,8 +217,14 @@ export function knownTagTranslateHTML(
     }
   }
 
+  const childSerializeReasonExpr = getParamGroupsSerializeGuard(
+    contentSection,
+    tagExtra[kKnownExprs]!,
+    contentSection.params,
+  );
+
   if (childSerializeReasonExpr) {
-    statements.push(
+    tag.insertBefore(
       t.expressionStatement(
         callRuntime("_set_serialize_reason", childSerializeReasonExpr),
       ),
