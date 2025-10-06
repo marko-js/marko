@@ -8,6 +8,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
+import { bodyToTextLiteral } from "../util/body-to-text-literal";
 import { generateUidIdentifier } from "../util/generate-uid";
 import isInvokedFunction from "../util/is-invoked-function";
 import { isOutputHTML } from "../util/marko-config";
@@ -180,23 +181,11 @@ export default {
           }
         }
       } else {
-        const templateQuasis: t.TemplateElement[] = [];
-        const templateExpressions: t.Expression[] = [];
-        let currentQuasi = "";
-        for (const child of tag.node.body.body) {
-          if (t.isMarkoText(child)) {
-            currentQuasi += child.value;
-          } else if (t.isMarkoPlaceholder(child)) {
-            templateQuasis.push(t.templateElement({ raw: currentQuasi }));
-            templateExpressions.push(child.value);
-            currentQuasi = "";
-          }
-        }
+        const textLiteral = bodyToTextLiteral(tag.node.body);
 
-        if (templateExpressions.length === 0) {
-          write`${currentQuasi}`;
+        if (t.isStringLiteral(textLiteral)) {
+          write`${textLiteral}`;
         } else {
-          templateQuasis.push(t.templateElement({ raw: currentQuasi }));
           addStatement(
             "render",
             getSection(tag),
@@ -209,7 +198,7 @@ export default {
                   getScopeAccessorLiteral(nodeBinding!),
                   true,
                 ),
-                t.templateLiteral(templateQuasis, templateExpressions),
+                textLiteral,
               ),
             ),
           );

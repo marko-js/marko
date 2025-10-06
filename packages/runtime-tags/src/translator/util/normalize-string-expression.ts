@@ -44,7 +44,7 @@ export default function normalizeStringExpression(
     strs.push(curStr);
 
     return t.templateLiteral(
-      strs.map((raw) => t.templateElement({ raw })),
+      strs.map((raw) => t.templateElement({ raw: raw.replace(/`/g, "\\`") })),
       exprs,
     );
   } else if (curStr) {

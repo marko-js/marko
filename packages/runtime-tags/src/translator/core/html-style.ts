@@ -12,6 +12,7 @@ import {
 
 import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
+import { bodyToTextLiteral } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
 import { generateUidIdentifier } from "../util/generate-uid";
 import isInvokedFunction from "../util/is-invoked-function";
@@ -405,29 +406,15 @@ export default {
           }
         }
       } else {
-        const templateQuasis: t.TemplateElement[] = [];
-        const templateExpressions: t.Expression[] = [];
-        let currentQuasi = "";
-        let referencePlaceholder: t.MarkoPlaceholder | undefined;
-        for (const child of tag.node.body.body) {
-          if (t.isMarkoText(child)) {
-            currentQuasi += child.value;
-          } else if (t.isMarkoPlaceholder(child)) {
-            referencePlaceholder ||= child;
-            templateQuasis.push(t.templateElement({ raw: currentQuasi }));
-            templateExpressions.push(child.value);
-            currentQuasi = "";
-          }
-        }
+        const textLiteral = bodyToTextLiteral(tag.node.body);
 
-        if (!referencePlaceholder) {
-          write`${currentQuasi}`;
+        if (t.isStringLiteral(textLiteral)) {
+          write`${textLiteral}`;
         } else {
-          templateQuasis.push(t.templateElement({ raw: currentQuasi }));
           addStatement(
             "render",
             getSection(tag),
-            referencePlaceholder.value.extra?.referencedBindings,
+            textLiteral.extra?.referencedBindings,
             t.expressionStatement(
               callRuntime(
                 "_text_content",
@@ -436,7 +423,7 @@ export default {
                   getScopeAccessorLiteral(nodeBinding!),
                   true,
                 ),
-                t.templateLiteral(templateQuasis, templateExpressions),
+                textLiteral,
               ),
             ),
           );
