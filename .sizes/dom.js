@@ -1,4 +1,4 @@
-// size: 19308 (min) 7346 (brotli)
+// size: 19360 (min) 7338 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -69,7 +69,11 @@ function getEventHandlerName(name) {
   return "-" === name[2] ? name.slice(3) : name.slice(2).toLowerCase();
 }
 function normalizeDynamicRenderer(value) {
-  return value ? value.content || value.default || value : void 0;
+  if (value) {
+    if ("string" == typeof value) return value;
+    let normalized = value.content || value.default || value;
+    if ("___id" in normalized) return normalized;
+  }
 }
 var defaultDelegator = createDelegator();
 function _on(element, type, handler) {
