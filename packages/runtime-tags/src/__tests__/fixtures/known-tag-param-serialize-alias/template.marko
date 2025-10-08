@@ -1,0 +1,8 @@
+<define/Child|input|>
+  <const/{ a, b } = input>
+  <div>${a}</div>
+  <div>${b}</div>
+  <script>if (a !== "a") throw new Error("did not serialize a")</>
+  <script>if (input.a !== "a") throw new Error("did not serialize input.a")</>
+</>
+<Child a=input.a b=input.b/>

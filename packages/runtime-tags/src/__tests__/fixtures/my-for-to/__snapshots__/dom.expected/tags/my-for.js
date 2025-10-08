@@ -3,7 +3,7 @@ export const $walks = /* over(1), replace, over(2) */"b%c";
 export const $setup = () => {};
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $for_content__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, 0, 1);
-const $for_content__input_content__OR__args = /* @__PURE__ */_._or(3, $scope => {
+const $for_content__input_content__OR__args = /* @__PURE__ */_._or(2, $scope => {
   let {
     _: {
       input_content

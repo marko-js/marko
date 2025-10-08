@@ -8,7 +8,7 @@ export default _._template("__tests__/template.marko", input => {
     _._scope($scope1_id, {
       _: _._scope_with_id($scope0_id)
     }, "__tests__/template.marko", "3:2");
-  }, 0, $scope0_id, "#text/0", /* state: count */1, 0, 0);
+  }, 0, $scope0_id, "#text/0", /* count */1, 0, 0);
   _._html(`<button>${_._escape(count)}${_._el_resume($scope0_id, "#text/2")}</button>${_._el_resume($scope0_id, "#button/1")}`);
   _._script($scope0_id, "__tests__/template.marko_0_count");
   _._scope($scope0_id, {

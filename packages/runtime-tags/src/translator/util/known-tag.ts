@@ -30,7 +30,6 @@ import {
   dropReferences,
   getAllTagReferenceNodes,
   getDebugName,
-  getInputDebugName,
   getScopeAccessorLiteral,
   type InputBinding,
   mergeReferences,
@@ -52,6 +51,7 @@ import {
 import { getSerializeGuard } from "./serialize-guard";
 import {
   addSerializeExpr,
+  addSerializeReason,
   getSerializeReason,
   getSerializeSourcesForExprs,
 } from "./serialize-reasons";
@@ -63,6 +63,7 @@ import {
   setBindingSerializedValue,
   writeHTMLResumeStatements,
 } from "./signals";
+import { createSectionState } from "./state";
 import { toMemberExpression, toObjectProperty } from "./to-property-name";
 import {
   addDynamicAttrTagStatements,
@@ -80,12 +81,19 @@ interface KnownExprs {
   value?: t.NodeExtra;
 }
 
-const kChildScopeBinding = Symbol("custom tag child scope");
-const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
-const kKnownExprs = Symbol("known exprs");
+const [getKnownTags] = createSectionState(
+  "known tags",
+  () => [] as t.MarkoTagExtra[],
+);
+
+const kContentSection = Symbol("known tag content section");
+const kChildScopeBinding = Symbol("known tag scope binding");
+const kChildOffsetScopeBinding = Symbol("known tag scope offset binding");
+const kKnownExprs = Symbol("known tag exprs");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
+    [kContentSection]?: Section;
     [kChildScopeBinding]?: Binding;
     [kChildOffsetScopeBinding]?: Binding;
     [kKnownExprs]?: KnownExprs;
@@ -98,7 +106,6 @@ export function knownTagAnalyze(
   propTree: BindingPropTree | undefined,
 ) {
   analyzeAttributeTags(tag);
-  setTagDownstream(tag, propTree?.props?.[0].binding);
 
   const section = getOrCreateSection(tag);
   const tagBody = tag.get("body");
@@ -111,6 +118,9 @@ export function knownTagAnalyze(
   const attrExprs = new Set([tagExtra]);
   startSection(tagBody);
   trackParamsReferences(tagBody, BindingType.param);
+  getKnownTags(section).push(tagExtra);
+  setTagDownstream(tag, propTree?.props?.[0]?.binding);
+  tagExtra[kContentSection] = contentSection;
 
   const varBinding = trackVarReferences(tag, BindingType.derived);
   const mutatesTagVar = !!(
@@ -138,7 +148,6 @@ export function knownTagAnalyze(
 
     const varExpr = mapParamReasonToExpr(
       exprs,
-      contentSection.params,
       returnSerializeReason &&
         (returnSerializeReason === true ||
           !!returnSerializeReason.state ||
@@ -217,18 +226,51 @@ export function knownTagTranslateHTML(
     }
   }
 
-  const childSerializeReasonExpr = getParamGroupsSerializeGuard(
-    contentSection,
-    tagExtra[kKnownExprs]!,
-    contentSection.params,
-  );
+  if (contentSection.paramReasonGroups) {
+    let childSerializeReasonExpr: t.Expression | undefined;
+    if (contentSection.paramReasonGroups.length === 1) {
+      // Special case single reason to pass either 1 or undefined.
+      const [group] = contentSection.paramReasonGroups;
+      const reason = getSerializeReason(section, childScopeBinding, group.id);
+      childSerializeReasonExpr = reason && getSerializeGuard(reason, false);
+    } else {
+      const props: t.ObjectExpression["properties"] = [];
+      let hasDynamicReasons = false;
+      let hasSkippedReasons = false;
+      for (let i = 0; i < contentSection.paramReasonGroups.length; i++) {
+        const group = contentSection.paramReasonGroups[i];
+        const reason = getSerializeReason(section, childScopeBinding, group.id);
+        if (reason) {
+          hasDynamicReasons ||= reason !== true && !reason.state;
+          props.push(
+            t.objectProperty(
+              withLeadingComment(
+                t.numericLiteral(i),
+                mapToString(group.reason, ", ", getDebugName),
+              ),
+              getSerializeGuard(reason, false)!,
+            ),
+          );
+        } else {
+          hasSkippedReasons = true;
+        }
+      }
 
-  if (childSerializeReasonExpr) {
-    tag.insertBefore(
-      t.expressionStatement(
-        callRuntime("_set_serialize_reason", childSerializeReasonExpr),
-      ),
-    );
+      if (props.length) {
+        childSerializeReasonExpr =
+          hasDynamicReasons || hasSkippedReasons
+            ? t.objectExpression(props)
+            : t.numericLiteral(1);
+      }
+    }
+
+    if (childSerializeReasonExpr) {
+      tag.insertBefore(
+        t.expressionStatement(
+          callRuntime("_set_serialize_reason", childSerializeReasonExpr),
+        ),
+      );
+    }
   }
 
   // TODO: make this better
@@ -378,6 +420,26 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
   }
 
   return relativePath;
+}
+
+export function finalizeKnownTags(section: Section) {
+  for (const tagExtra of getKnownTags(section)) {
+    const scopeBinding = tagExtra[kChildScopeBinding];
+    const knownExprs = tagExtra[kKnownExprs];
+    const contentSection = tagExtra[kContentSection];
+    if (knownExprs && scopeBinding && contentSection?.paramReasonGroups) {
+      for (const group of contentSection.paramReasonGroups) {
+        addSerializeReason(
+          section,
+          getSerializeSourcesForExprs(
+            mapParamReasonToExpr(knownExprs, group.reason),
+          ),
+          scopeBinding,
+          group.id,
+        );
+      }
+    }
+  }
 }
 
 function analyzeParams(
@@ -1034,7 +1096,6 @@ function writeAttrsToSignals(
 
 function mapParamReasonToExpr(
   exprs: KnownExprs,
-  param: InputBinding | ParamBinding | undefined,
   reason: boolean | Opt<InputBinding | ParamBinding>,
 ) {
   if (reason) {
@@ -1042,17 +1103,17 @@ function mapParamReasonToExpr(
     return filterMap(reason, (prop) => {
       if (exprs) {
         let curExpr = exprs;
-        if (param !== prop) {
-          const props = [prop.property!];
-          let curBinding = prop;
-          while (
-            param !==
+        let curBinding = prop;
+        if (curBinding.property) {
+          const props: string[] = [];
+          do {
+            props.push(curBinding.property);
+          } while (
             (curBinding = curBinding.upstreamAlias as
               | InputBinding
-              | ParamBinding)
-          ) {
-            props.push(curBinding.property!);
-          }
+              | ParamBinding) &&
+            curBinding.property
+          );
 
           for (let i = props.length; i--; ) {
             const nestedExpr = curExpr.known?.[props[i]];
@@ -1086,62 +1147,4 @@ function callExpression(
 
 function buildUndefined() {
   return t.unaryExpression("void", t.numericLiteral(0));
-}
-
-function getParamGroupsSerializeGuard(
-  contentSection: Section,
-  knownExprs: KnownExprs,
-  paramBinding: undefined | InputBinding | ParamBinding,
-) {
-  let childSerializeReasonExpr: t.Expression | undefined;
-  const reasonGroups = contentSection.paramReasonGroups;
-  if (!reasonGroups) {
-    return;
-  }
-
-  if (reasonGroups.length === 1) {
-    // Special case single reason to pass either 1 or undefined.
-    const [group] = reasonGroups;
-    const exprs = mapParamReasonToExpr(knownExprs, paramBinding, group);
-    const reason =
-      exprs && (exprs === true || getSerializeSourcesForExprs(exprs));
-    childSerializeReasonExpr = reason && getSerializeGuard(reason, false);
-  } else {
-    const props: t.ObjectExpression["properties"] = [];
-    let hasDynamicReasons = false;
-    let hasSkippedReasons = false;
-    for (let i = 0; i < reasonGroups.length; i++) {
-      const group = reasonGroups[i];
-      const exprs = mapParamReasonToExpr(knownExprs, paramBinding, group);
-      const reason =
-        exprs && (exprs === true || getSerializeSourcesForExprs(exprs));
-
-      if (reason) {
-        hasDynamicReasons ||= reason !== true && !reason.state;
-        props.push(
-          t.objectProperty(
-            withLeadingComment(
-              t.numericLiteral(i),
-              mapToString(
-                group as InputBinding,
-                ", ",
-                contentSection.parent ? getDebugName : getInputDebugName,
-              ),
-            ),
-            getSerializeGuard(reason, false)!,
-          ),
-        );
-      } else {
-        hasSkippedReasons = true;
-      }
-    }
-
-    if (props.length) {
-      childSerializeReasonExpr =
-        hasDynamicReasons || hasSkippedReasons
-          ? t.objectExpression(props)
-          : t.numericLiteral(1);
-    }
-  }
-  return childSerializeReasonExpr;
 }

@@ -12,7 +12,7 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "4:3");
       return 0;
     }
-  }, $scope0_id, "#div/0", 1, /* state: mounted */1, /* state: mounted */1, "</div>");
+  }, $scope0_id, "#div/0", 1, /* mounted */1, /* mounted */1, "</div>");
   _._script($scope0_id, "__tests__/template.marko_0");
   _._scope($scope0_id, {
     mounted

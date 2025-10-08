@@ -14,7 +14,7 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "4:4");
       return 0;
     }
-  }, $scope0_id, "#div/0", 1, /* state: x */1, /* state: x */1, "</div>", 1);
+  }, $scope0_id, "#div/0", 1, /* x */1, /* x */1, "</div>", 1);
   _._html(`<button>${_._escape(x)}${_._el_resume($scope0_id, "#text/2")}</button>${_._el_resume($scope0_id, "#button/1")}`);
   _._script($scope0_id, "__tests__/template.marko_0_x");
   _._scope($scope0_id, {

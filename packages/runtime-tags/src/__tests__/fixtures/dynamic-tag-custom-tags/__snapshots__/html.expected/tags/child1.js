@@ -5,6 +5,6 @@ export default _._template("__tests__/tags/child1.marko", input => {
   const {
     value
   } = input;
-  _._html(`<div>Child 1 has ${_._sep(_._serialize_guard($serialize, /* value */0))}${_._escape(value)}${_._el_resume($scope0_id, "#text/0", _._serialize_guard($serialize, /* value */0))}</div>`);
-  _._serialize_guard($serialize, /* value */0) && _._scope($scope0_id, {}, "__tests__/tags/child1.marko", 0);
+  _._html(`<div>Child 1 has ${_._sep(_._serialize_guard($serialize, /* input.value */0))}${_._escape(value)}${_._el_resume($scope0_id, "#text/0", _._serialize_guard($serialize, /* input.value */0))}</div>`);
+  _._serialize_guard($serialize, /* input.value */0) && _._scope($scope0_id, {}, "__tests__/tags/child1.marko", 0);
 });

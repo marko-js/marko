@@ -11,7 +11,7 @@ export default _._template("__tests__/template.marko", input => {
   const $childScope = _._peek_scope_id();
   _._set_serialize_reason({
     /* input.style, input.test */0: _._serialize_guard($serialize, /* input.color */0),
-    /* input.style */3: _._serialize_guard($serialize, /* input.color */0)
+    /* input.style */2: _._serialize_guard($serialize, /* input.color */0)
   });
   _customTag({
     style: {

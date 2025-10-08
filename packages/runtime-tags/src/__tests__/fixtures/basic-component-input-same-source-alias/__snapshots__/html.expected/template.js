@@ -4,7 +4,7 @@ export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   let clickCount = 0;
   const $childScope = _._peek_scope_id();
-  _._set_serialize_reason(1);
+  _._set_serialize_reason(/* clickCount */1);
   _myButton({
     text: clickCount,
     onClick: _._resume(function () {

@@ -2,7 +2,7 @@ export const $template = "<div><!><!></div>";
 export const $walks = /* next(1), replace, over(1), replace, out(1) */"D%b%l";
 export const $setup = () => {};
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $a__OR__b = /* @__PURE__ */_._or(7, $scope => {
+const $a__OR__b = /* @__PURE__ */_._or(6, $scope => {
   let {
     input_a: a,
     b

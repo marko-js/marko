@@ -19,24 +19,26 @@ import {
   isOutputDOM,
   isOutputHTML,
 } from "../../util/marko-config";
-import { findIndexSorted } from "../../util/optional";
 import {
   BindingType,
-  compareReferences,
   finalizeReferences,
   type Sources,
   trackParamsReferences,
 } from "../../util/references";
 import { getCompatRuntimeFile } from "../../util/runtime";
-import { type Section, startSection } from "../../util/sections";
+import { startSection } from "../../util/sections";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
 
 export type ParamSerializeReason = NonNullable<Sources["param"]>;
+export interface ParamSerializeReasonGroup {
+  id: symbol;
+  reason: ParamSerializeReason;
+}
 export type ParamSerializeReasonGroups = [
-  ParamSerializeReason,
-  ...ParamSerializeReason[],
+  ParamSerializeReasonGroup,
+  ...ParamSerializeReasonGroup[],
 ];
 
 export let cleanIdentifier: t.Identifier;
@@ -166,19 +168,6 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
-
-export function resolveSerializeReasonId(
-  paramReasonGroups: NonNullable<Section["paramReasonGroups"]>,
-  reason: ParamSerializeReason,
-) {
-  const id = findIndexSorted(compareReferences, paramReasonGroups, reason);
-
-  if (id === -1) {
-    throw new Error("Unable to resolve serialize reason against input");
-  }
-
-  return id;
-}
 
 function resolveRelativeToEntry(
   entryFile: t.BabelFile,

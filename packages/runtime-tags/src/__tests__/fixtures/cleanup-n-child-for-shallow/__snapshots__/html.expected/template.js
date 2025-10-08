@@ -11,7 +11,7 @@ export default _._template("__tests__/template.marko", input => {
   _._for_of(items, item => {
     const $scope1_id = _._scope_id();
     const $childScope = _._peek_scope_id();
-    _._set_serialize_reason(/* state: items */1);
+    _._set_serialize_reason(/* items */1);
     _child({
       write: write,
       name: item

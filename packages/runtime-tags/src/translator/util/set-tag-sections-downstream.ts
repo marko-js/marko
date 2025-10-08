@@ -4,10 +4,11 @@ import { isAttributeTag } from "@marko/compiler/babel-utils";
 import { type BindingPropTree, getBindingPropTree } from "./binding-prop-tree";
 import { getTagName } from "./get-tag-name";
 import type { Binding } from "./references";
-import { getSectionForBody } from "./sections";
-import { createProgramState } from "./state";
+import { getSection, getSectionForBody, type Section } from "./sections";
+import { createSectionState } from "./state";
 
-const [getTagDownstreams] = createProgramState(
+const [getTagDownstreams] = createSectionState(
+  "tag-downstreams",
   () => new Map<t.NodePath<t.MarkoTag>, false | Binding>(),
 );
 
@@ -15,11 +16,11 @@ export function setTagDownstream(
   tag: t.NodePath<t.MarkoTag>,
   binding: undefined | false | Binding,
 ) {
-  getTagDownstreams().set(tag, binding || false);
+  getTagDownstreams(getSection(tag)).set(tag, binding || false);
 }
 
-export function finalizeTagDownstreams() {
-  for (const [tag, binding] of getTagDownstreams()) {
+export function finalizeTagDownstreams(section: Section) {
+  for (const [tag, binding] of getTagDownstreams(section)) {
     crawlSectionsAndSetBinding(
       tag,
       binding,

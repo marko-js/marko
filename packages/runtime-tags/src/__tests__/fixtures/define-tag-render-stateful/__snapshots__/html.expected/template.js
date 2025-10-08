@@ -11,13 +11,13 @@ export default _._template("__tests__/template.marko", input => {
       const $scope1_id = _._scope_id();
       const $serialize = _._get_serialize_reason();
       _._html(`<div>Hello ${_._sep(_._serialize_guard($serialize, /* name */1))}${_._escape(name)}${_._el_resume($scope1_id, "#text/0", _._serialize_guard($serialize, /* name */1))} ${_._sep(_._serialize_guard($serialize, /* count */2))}${_._escape(count)}${_._el_resume($scope1_id, "#text/1", _._serialize_guard($serialize, /* count */2))}</div>`);
-      _._serialize_guard($serialize, /* name,count */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "6:2");
+      _._serialize_guard($serialize, /* name, count */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "6:2");
     })
   };
   const $childScope = _._peek_scope_id();
   _._set_serialize_reason({
-    /* name, count */0: /* state: count */1,
-    /* count */2: /* state: count */1
+    /* name, count */0: /* count */1,
+    /* count */2: /* count */1
   });
   MyTag.content({
     name: "Ryan",

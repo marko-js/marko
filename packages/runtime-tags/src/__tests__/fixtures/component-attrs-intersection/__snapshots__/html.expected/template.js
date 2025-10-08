@@ -4,7 +4,7 @@ export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   let count = 0;
   const $childScope = _._peek_scope_id();
-  _._set_serialize_reason(/* state: count */1);
+  _._set_serialize_reason(/* count */1);
   _displayIntersection({
     value: count
   });

@@ -6,7 +6,7 @@ export default _._template("__tests__/tags/layout.marko", input => {
     content
   } = input;
   _._html("<body>");
-  _._dynamic_tag($scope0_id, "#text/0", content, {}, 0, 0, _._serialize_guard($serialize, /* content */0));
+  _._dynamic_tag($scope0_id, "#text/0", content, {}, 0, 0, _._serialize_guard($serialize, /* input.content */0));
   _._trailers("</body>");
-  _._serialize_guard($serialize, /* content */0) && _._scope($scope0_id, {}, "__tests__/tags/layout.marko", 0);
+  _._serialize_guard($serialize, /* input.content */0) && _._scope($scope0_id, {}, "__tests__/tags/layout.marko", 0);
 });

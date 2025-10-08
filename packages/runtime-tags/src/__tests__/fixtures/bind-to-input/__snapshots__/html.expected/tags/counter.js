@@ -12,8 +12,8 @@ export default _._template("__tests__/tags/counter.marko", input => {
   _._html(`</button>${_._el_resume($scope0_id, "#button/0")}`);
   _._script($scope0_id, "__tests__/tags/counter.marko_0_x");
   _._scope($scope0_id, {
-    $countChange: _._serialize_if($serialize, /* count */2) && $countChange,
-    count: _._serialize_if($serialize, /* $countChange */1) && count,
+    $countChange: _._serialize_if($serialize, /* input.count */2) && $countChange,
+    count: _._serialize_if($serialize, /* input.countChange */1) && count,
     x,
     "TagVariableChange:x": $countChange || void 0
   }, "__tests__/tags/counter.marko", 0, {
