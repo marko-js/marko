@@ -1,4 +1,4 @@
-// size: 19366 (min) 7367 (brotli)
+// size: 19362 (min) 7336 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -72,7 +72,7 @@ function normalizeDynamicRenderer(value) {
   if (value) {
     if ("string" == typeof value) return value;
     let normalized = value.content || value.default || value;
-    if ("___id" in normalized) return normalized;
+    if ("l" in normalized) return normalized;
   }
 }
 var defaultDelegator = createDelegator();
