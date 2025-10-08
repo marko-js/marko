@@ -1,5 +1,21 @@
 # @marko/runtime-tags
 
+## 6.0.83
+
+### Patch Changes
+
+- [#2867](https://github.com/marko-js/marko/pull/2867) [`3cb6721`](https://github.com/marko-js/marko/commit/3cb6721830831cdfda891bb38e636da70c17b5c4) Thanks [@rturnq](https://github.com/rturnq)! - Escape grave (`) characters in template literals
+
+- [#2864](https://github.com/marko-js/marko/pull/2864) [`1e75400`](https://github.com/marko-js/marko/commit/1e7540087720e748d0f7889f10ace4ddf93a4f80) Thanks [@rturnq](https://github.com/rturnq)! - Ensure serialize reason is set before child call in server compilation
+
+- [#2870](https://github.com/marko-js/marko/pull/2870) [`c7fe62e`](https://github.com/marko-js/marko/commit/c7fe62e66b1d06f2163004a929380d3e7b0aedd9) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Improve types for CSS properties
+
+- [#2869](https://github.com/marko-js/marko/pull/2869) [`cc266e8`](https://github.com/marko-js/marko/commit/cc266e8dee398095d456fbaff8b9c493a91c6c28) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix some edge cases around serialize reason generation.
+
+- [#2868](https://github.com/marko-js/marko/pull/2868) [`3e55ba6`](https://github.com/marko-js/marko/commit/3e55ba6aa16977fe5244fb5561391769084365e2) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Increase specificity of dynamic tag normalization
+
+- [#2869](https://github.com/marko-js/marko/pull/2869) [`df93413`](https://github.com/marko-js/marko/commit/df93413c5785d4f12fe4c0899de69a167b77bc44) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - A "let" tag without assignments should not be seen as a stateful source.
+
 ## 6.0.82
 
 ### Patch Changes
