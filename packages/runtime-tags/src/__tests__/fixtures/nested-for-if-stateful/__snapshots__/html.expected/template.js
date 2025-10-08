@@ -25,7 +25,7 @@ export default _._template("__tests__/template.marko", input => {
         }, "__tests__/template.marko", "12:4");
         return 1;
       }
-    }, $scope1_id, "#text/0", 1, /* state: editing */1, /* state: editing */1, 0, 1);
+    }, $scope1_id, "#text/0", 1, /* editing */1, /* editing */1, 0, 1);
     _._scope($scope1_id, {
       count,
       i,

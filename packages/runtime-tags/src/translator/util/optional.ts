@@ -62,6 +62,23 @@ export class Sorted<T> {
 
     return -1;
   }
+  groupBy<U extends NonNullable<T>, K>(
+    data: Opt<U>,
+    cb: (item: U) => K,
+  ): Map<K, OneMany<U>> {
+    const group = new Map<K, OneMany<U>>();
+    if (data) {
+      if (Array.isArray(data)) {
+        for (const item of data) {
+          const key = cb(item);
+          group.set(key, this.union(group.get(key), item) as OneMany<U>);
+        }
+      } else {
+        group.set(cb(data), data);
+      }
+    }
+    return group;
+  }
   isSuperset<U extends NonNullable<T>>(superset: Opt<U>, subset: Opt<U>) {
     if (!subset) {
       return true;
@@ -358,24 +375,6 @@ export function addSorted<T, U extends T[]>(
   result[len] = cur;
 
   return result;
-}
-
-export function groupBy<T, U>(
-  data: Opt<T>,
-  cb: (item: T) => U,
-): Map<U, OneMany<T>> {
-  const group = new Map<U, OneMany<T>>();
-  if (data) {
-    if (Array.isArray(data)) {
-      for (const item of data) {
-        const key = cb(item);
-        group.set(key, push(group.get(key), item));
-      }
-    } else {
-      group.set(cb(data), data);
-    }
-  }
-  return group;
 }
 
 function unionSortedRepeatable<T>(

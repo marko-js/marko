@@ -10,7 +10,7 @@ export default _._template("__tests__/template.marko", input => {
       _._scope($scope1_id, {}, "__tests__/template.marko", "3:4");
       return 0;
     }
-  }, $scope0_id, "#text/0", 1, /* state: show */1, /* state: show */1, 0, 1);
+  }, $scope0_id, "#text/0", 1, /* show */1, /* show */1, 0, 1);
   _._if(() => {
     if (!show) {
       const $scope2_id = _._scope_id();
@@ -18,7 +18,7 @@ export default _._template("__tests__/template.marko", input => {
       _._scope($scope2_id, {}, "__tests__/template.marko", "7:4");
       return 0;
     }
-  }, $scope0_id, "#text/1", 1, /* state: show */1, /* state: show */1, 0, 1);
+  }, $scope0_id, "#text/1", 1, /* show */1, /* show */1, 0, 1);
   _._html(`<button>Toggle</button>${_._el_resume($scope0_id, "#button/2")}</div>`);
   _._script($scope0_id, "__tests__/template.marko_0_show");
   _._scope($scope0_id, {

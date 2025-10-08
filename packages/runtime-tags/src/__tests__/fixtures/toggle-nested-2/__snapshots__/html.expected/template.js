@@ -21,7 +21,7 @@ export default _._template("__tests__/template.marko", input => {
           }, "__tests__/template.marko", "8:6"));
           return 0;
         }
-      }, $scope1_id, "#text/1", 1, /* state: inner */1, /* state: inner */1, 0, 1);
+      }, $scope1_id, "#text/1", 1, /* inner */1, /* inner */1, 0, 1);
       _._script($scope1_id, "__tests__/template.marko_1_inner");
       _._scope($scope1_id, {
         _: _._scope_with_id($scope0_id)

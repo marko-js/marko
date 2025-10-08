@@ -8,9 +8,9 @@ export default _._template("__tests__/template.marko", input => {
   } = input;
   const $childScope = _._peek_scope_id();
   _._set_serialize_reason({
-    /* input.thing.x, input.thing.content */0: _._serialize_guard($serialize, /* x */0),
-    /* input.thing.x */1: _._serialize_guard($serialize, /* x */0),
-    /* input.thing.content */2: _._serialize_guard($serialize, /* x */0)
+    /* input.thing.x, input.thing.content */0: _._serialize_guard($serialize, /* input.x */0),
+    /* input.thing.x */1: _._serialize_guard($serialize, /* input.x */0),
+    /* input.thing.content */2: _._serialize_guard($serialize, /* input.x */0)
   });
   let $thing;
   if (x) {
@@ -33,7 +33,7 @@ export default _._template("__tests__/template.marko", input => {
   _customTag({
     thing: $thing
   });
-  _._serialize_guard($serialize, /* x */0) && _._scope($scope0_id, {
-    "#childScope/0": _._serialize_if($serialize, /* x */0) && _._existing_scope($childScope)
+  _._serialize_guard($serialize, /* input.x */0) && _._scope($scope0_id, {
+    "#childScope/0": _._serialize_if($serialize, /* input.x */0) && _._existing_scope($childScope)
   }, "__tests__/template.marko", 0);
 });

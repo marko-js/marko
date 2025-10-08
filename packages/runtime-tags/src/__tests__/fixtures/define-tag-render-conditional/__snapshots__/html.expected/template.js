@@ -17,7 +17,7 @@ export default _._template("__tests__/template.marko", input => {
     if (show) {
       const $scope1_id = _._scope_id();
       const $childScope = _._peek_scope_id();
-      _._set_serialize_reason(/* state: x */1);
+      _._set_serialize_reason(/* x */1);
       MyTag.content({
         value: x
       });

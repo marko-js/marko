@@ -6,7 +6,7 @@ export default _._template("__tests__/template.marko", input => {
     a
   } = input;
   let b = a * 2;
-  _._html(`<button>Increment</button>${_._el_resume($scope0_id, "#button/0")}${_._escape(a)}${_._el_resume($scope0_id, "#text/1", _._serialize_guard($serialize, /* a */0))} <!>${_._escape(b)}${_._el_resume($scope0_id, "#text/2")}`);
+  _._html(`<button>Increment</button>${_._el_resume($scope0_id, "#button/0")}${_._escape(a)}${_._el_resume($scope0_id, "#text/1", _._serialize_guard($serialize, /* input.a */0))} <!>${_._escape(b)}${_._el_resume($scope0_id, "#text/2")}`);
   _._script($scope0_id, "__tests__/template.marko_0_b");
   _._scope($scope0_id, {
     b

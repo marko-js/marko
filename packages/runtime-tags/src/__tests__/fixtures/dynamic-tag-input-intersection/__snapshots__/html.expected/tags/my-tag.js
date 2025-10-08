@@ -26,7 +26,7 @@ export default _._template("__tests__/tags/my-tag.marko", input => {
     inputClass,
     inputContent,
     htmlInput,
-    content: _._serialize_if($serialize, /* inputAs,inputClass,htmlInput */0) && content
+    content: _._serialize_if($serialize, /* input.as, input.class, htmlInput */0) && content
   }, "__tests__/tags/my-tag.marko", 0, {
     inputAs: "1:13",
     inputClass: "1:29",

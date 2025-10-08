@@ -7,20 +7,38 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
-import type { ParamSerializeReasonGroups } from "../visitors/program";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag } from "./is-core-tag";
-import { filter, find, Sorted } from "./optional";
+import {
+  addSorted,
+  filter,
+  find,
+  findIndexSorted,
+  findSorted,
+  Sorted,
+} from "./optional";
 import {
   type Binding,
+  bindingUtil,
+  compareReferences,
   getAllSerializeReasonsForBinding,
   type InputBinding,
   type ParamBinding,
   type ReferencedBindings,
+  type Sources,
 } from "./references";
-import type { SerializeReason } from "./serialize-reasons";
+import { isReasonDynamic, type SerializeReason } from "./serialize-reasons";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
+
+export interface ParamSerializeReasonGroup {
+  id: symbol;
+  reason: NonNullable<Sources["param"]>;
+}
+export type ParamSerializeReasonGroups = [
+  ParamSerializeReasonGroup,
+  ...ParamSerializeReasonGroup[],
+];
 
 export enum ContentType {
   Comment,
@@ -368,6 +386,77 @@ export function getCommonSection(section: Section, other: Section) {
     }
   }
   throw new Error("No common section");
+}
+
+export function finalizeParamSerializeReasonGroups(section: Section) {
+  if (isReasonDynamic(section.serializeReason)) {
+    for (const [paramSection, params] of groupParamsBySection(
+      section.serializeReason.param,
+    )) {
+      ensureParamReasonGroup(paramSection, params);
+    }
+  }
+
+  for (const reason of section.serializeReasons.values()) {
+    if (isReasonDynamic(reason)) {
+      for (const [paramSection, params] of groupParamsBySection(reason.param)) {
+        ensureParamReasonGroup(paramSection, params);
+      }
+    }
+  }
+}
+
+function ensureParamReasonGroup(
+  section: Section,
+  reason: ParamSerializeReasonGroup["reason"],
+) {
+  const { paramReasonGroups } = section;
+  const group: ParamSerializeReasonGroup = { id: Symbol(), reason };
+
+  if (paramReasonGroups) {
+    const found = findSorted(compareParamGroups, paramReasonGroups, group);
+    if (found) return found;
+
+    section.paramReasonGroups = addSorted(
+      compareParamGroups,
+      paramReasonGroups,
+      group,
+    );
+  } else {
+    section.paramReasonGroups = [group];
+  }
+}
+
+export function getParamReasonGroupIndex(
+  section: Section,
+  reason: ParamSerializeReasonGroup["reason"],
+) {
+  const index =
+    section.paramReasonGroups &&
+    findIndexSorted(compareParamGroups, section.paramReasonGroups, {
+      reason,
+    } as ParamSerializeReasonGroup);
+  if (index === undefined || index === -1) {
+    throw new Error(
+      "Invalid compiler state, cannot ask for a serialize reason group that was not analyzed.",
+    );
+  }
+  return index;
+}
+
+export function groupParamsBySection(params: Sources["param"]) {
+  return bindingUtil.groupBy(params, bindingToSection);
+}
+
+function bindingToSection(binding: Binding) {
+  return binding.section;
+}
+
+function compareParamGroups(
+  a: ParamSerializeReasonGroup,
+  b: ParamSerializeReasonGroup,
+) {
+  return compareReferences(a.reason, b.reason);
 }
 
 function isNativeNode(tag: t.NodePath<t.MarkoTag>) {

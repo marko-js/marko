@@ -9,6 +9,7 @@ import { getAccessorProp } from "./get-accessor-char";
 import { concat, type OneMany, type Opt } from "./optional";
 import {
   type Binding,
+  getCanonicalBinding,
   type InputBinding,
   isReferencedExtra,
   mergeSources,
@@ -159,9 +160,11 @@ export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
   }
 }
 
-export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra>) {
+export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {
   if (exprs) {
-    if (Array.isArray(exprs)) {
+    if (exprs === true) {
+      return exprs;
+    } else if (Array.isArray(exprs)) {
       let allSources: Sources | undefined;
       for (const expr of exprs) {
         allSources = mergeSources(allSources, getSerializeSourcesForExpr(expr));
@@ -240,13 +243,13 @@ export function applySerializeExprs(section: Section) {
 
 export function finalizeSerializeReason(section: Section) {
   const curReason = section.serializeReason;
-  if (curReason !== true) {
+  let newReason: undefined | SerializeReason = curReason;
+  if (newReason !== true) {
     // Merge all prop reasons into the scope reason.
-    let newReason = curReason;
-    for (const [, propReason] of section.serializeReasons) {
+    for (const propReason of section.serializeReasons.values()) {
       if (propReason === true) {
-        setSerializeReason(section, true);
-        return;
+        newReason = true;
+        break;
       }
 
       newReason = mergeSources(newReason, propReason);
@@ -284,17 +287,18 @@ function getPropKey(
     const keys = prefix
       ? (serializePropByModifier[prefix] ||= new WeakMap())
       : serializePropsByBinding;
+    const binding = getCanonicalBinding(prop);
 
-    let key = keys.get(prop);
+    let key = keys.get(binding);
     if (!key) {
       keys.set(
-        prop,
+        binding,
         (key = Symbol(
           (prefix
             ? typeof prefix === "symbol"
               ? `Symbol(${prefix.description})`
               : prefix
-            : "") + prop.name,
+            : "") + binding.name,
         ) as SerializeKey),
       );
     }

@@ -7,7 +7,7 @@ export default _._template("__tests__/tags/FancyButton.marko", input => {
     ...attrs
   } = input;
   _._html(`<button${_._attrs(attrs, "#button/0", $scope0_id, "button")}>`);
-  _._dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _._serialize_guard($serialize, /* content */0));
+  _._dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _._serialize_guard($serialize, /* input.content */0));
   _._html(`</button>${_._el_resume($scope0_id, "#button/0")}`);
   _._script($scope0_id, "__tests__/tags/FancyButton.marko_0_attrs");
   _._scope($scope0_id, {

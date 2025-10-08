@@ -9,6 +9,7 @@ import { getAccessorPrefix } from "./get-accessor-char";
 import { getExprRoot, getFnRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
+import { finalizeKnownTags } from "./known-tag";
 import { isOptimize } from "./marko-config";
 import {
   addSorted,
@@ -17,7 +18,6 @@ import {
   find,
   findSorted,
   forEach,
-  groupBy,
   type Many,
   type Opt,
   push,
@@ -25,7 +25,9 @@ import {
 } from "./optional";
 import { getScopeExpression } from "./scope-read";
 import {
+  finalizeParamSerializeReasonGroups,
   forEachSection,
+  forEachSectionReverse,
   getCommonSection,
   getDirectClosures,
   getOrCreateSection,
@@ -45,7 +47,6 @@ import {
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
   isForceSerialized,
-  isReasonDynamic,
   mergeSerializeReasons,
   type SerializeReason,
 } from "./serialize-reasons";
@@ -205,7 +206,8 @@ export function trackVarReferences(
 ) {
   const tagVar = tag.node.var;
   if (tagVar) {
-    let canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
+    let canonicalUpstreamAlias =
+      upstreamAlias && getCanonicalBinding(upstreamAlias);
     if (canonicalUpstreamAlias) {
       const { excludeProperties } = canonicalUpstreamAlias;
       if (excludeProperties !== undefined) {
@@ -243,7 +245,8 @@ export function trackParamsReferences(
 ) {
   const params = body.node.params;
   if (body.node.body.length && params.length) {
-    const canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
+    const canonicalUpstreamAlias =
+      upstreamAlias && getCanonicalBinding(upstreamAlias);
     let section: Section;
     if (canonicalUpstreamAlias) {
       section = canonicalUpstreamAlias.section;
@@ -259,6 +262,8 @@ export function trackParamsReferences(
         section,
         undefined,
         undefined,
+        undefined,
+        params[0].loc,
       ));
 
     section.params = paramsBinding as ParamBinding;
@@ -741,6 +746,8 @@ export function finalizeReferences() {
     }
   }
 
+  forEachSection(finalizeTagDownstreams);
+
   for (const binding of bindings) {
     const { name, section } = binding;
     if (binding.type !== BindingType.dom) {
@@ -769,7 +776,10 @@ export function finalizeReferences() {
       }
     }
 
-    section.bindings = bindingUtil.add(section.bindings, binding);
+    section.bindings = bindingUtil.add(
+      section.bindings,
+      getCanonicalBinding(binding),
+    );
     for (const {
       referencedBindings,
       isEffect,
@@ -843,7 +853,6 @@ export function finalizeReferences() {
   });
 
   forEachSection(applySerializeExprs);
-  finalizeTagDownstreams();
 
   forEachSection((section) => {
     const intersections = intersectionsBySection.get(section);
@@ -962,46 +971,13 @@ export function finalizeReferences() {
     }
   }
 
-  forEachSection((section) => {
+  forEachSectionReverse((section) => {
+    finalizeParamSerializeReasonGroups(section);
+    finalizeKnownTags(section);
     finalizeSerializeReason(section);
-
-    if (isReasonDynamic(section.serializeReason)) {
-      const paramGroups = groupBy(
-        section.serializeReason.param,
-        (it) => it.section,
-      );
-      for (const [paramSection, param] of paramGroups) {
-        paramSection.paramReasonGroups = paramSection.paramReasonGroups
-          ? addSorted(compareReferences, paramSection.paramReasonGroups, param)
-          : [param];
-      }
-    }
-
-    for (const [, reason] of section.serializeReasons) {
-      if (isReasonDynamic(reason)) {
-        const paramGroups = groupBy(reason.param, (it) => it.section);
-        for (const [paramSection, param] of paramGroups) {
-          paramSection.paramReasonGroups = paramSection.paramReasonGroups
-            ? addSorted(
-                compareReferences,
-                paramSection.paramReasonGroups,
-                param,
-              )
-            : [param];
-        }
-      }
-    }
+    // TODO: this duplication is needed when a known tag is circular. We should find a better way.
+    finalizeParamSerializeReasonGroups(section);
   });
-
-  const programExtra = getProgram().node.extra;
-  if (programExtra.returnValueExpr) {
-    const returnSources = getSerializeSourcesForExpr(
-      programExtra.returnValueExpr,
-    );
-    if (returnSources) {
-      programExtra.section!.returnSerializeReason = returnSources;
-    }
-  }
 
   forEachSection((section) => {
     let intersectionIndex = 0;
@@ -1033,6 +1009,13 @@ export function finalizeReferences() {
       });
     }
   });
+
+  const programExtra = getProgram().node.extra;
+  if (programExtra.returnValueExpr) {
+    programExtra.section!.returnSerializeReason = getSerializeSourcesForExpr(
+      programExtra.returnValueExpr,
+    );
+  }
 
   mergedReferences.clear();
   readsByExpression.clear();
@@ -1091,10 +1074,16 @@ function resolveBindingSources(binding: Binding) {
       binding.sources = createSources(binding, undefined);
       return;
     case BindingType.input:
-      binding.sources = createSources(undefined, binding as InputBinding);
+      binding.sources = createSources(
+        undefined,
+        getCanonicalBinding(binding) as InputBinding,
+      );
       return;
     case BindingType.param:
-      binding.sources = createSources(undefined, binding as ParamBinding);
+      binding.sources = createSources(
+        undefined,
+        getCanonicalBinding(binding) as ParamBinding,
+      );
       return;
   }
 
@@ -1178,8 +1167,29 @@ export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
   if (a.state === b.state && a.param === b.param) return a;
   return createSources(
     bindingUtil.union(a.state, b.state),
-    bindingUtil.union(a.param, b.param),
+    unionParamSources(a.param, b.param),
   );
+}
+
+function unionParamSources(a: Sources["param"], b: Sources["param"]) {
+  const merged = bindingUtil.union(a, b);
+  if (merged && Array.isArray(merged)) {
+    // When merging param sources we filter out
+    // any property aliases that are already a part of the merged set.
+    // Eg if `input` is present, we don't need properties like `input.foo`
+    // even though for params properties are seen as discrete sources.
+    return filter(merged, (binding) => {
+      let alias = binding.upstreamAlias;
+      while (alias) {
+        if (bindingUtil.has(merged, alias)) return false;
+        alias = alias.upstreamAlias;
+      }
+
+      return true;
+    });
+  }
+
+  return merged;
 }
 
 export const bindingUtil = new Sorted(function compareBindings(
@@ -1241,8 +1251,8 @@ export function dropReferences(node: t.Node | t.Node[]) {
   }
 }
 
-export function getCanonicalBinding(binding?: Binding) {
-  const alias = binding?.upstreamAlias;
+export function getCanonicalBinding(binding: Binding) {
+  const alias = binding.upstreamAlias;
   if (
     alias &&
     binding.property === undefined &&
@@ -1335,20 +1345,23 @@ export function getDebugScopeAccess(binding: Binding) {
 }
 
 export function getDebugName(binding: Binding) {
-  const { root, access } = getDebugScopeAccess(binding);
-  return root.name + access;
-}
-
-export function getInputDebugName(binding: InputBinding) {
-  let root = binding;
-  let access = "";
-  while (root.upstreamAlias !== root.section.params) {
-    if (root.property !== undefined) {
-      access = toAccess(root.property) + access;
+  if (binding.type === BindingType.input) {
+    let root = binding;
+    let access = "";
+    while (
+      root.upstreamAlias !== root.section.params &&
+      root.excludeProperties === undefined
+    ) {
+      if (root.property !== undefined) {
+        access = toAccess(root.property) + access;
+      }
+      root = root.upstreamAlias as InputBinding;
     }
-    root = root.upstreamAlias as InputBinding;
+
+    return root.name + access;
   }
 
+  const { root, access } = getDebugScopeAccess(binding);
   return root.name + access;
 }
 

@@ -12,7 +12,7 @@ export default _._template("__tests__/template.marko", input => {
     }, "__tests__/template.marko", "3:3", {
       i: "3:7"
     });
-  }, 0, $scope0_id, "#select/0", /* state: selected */1, 1, 0, "</select>", 1);
+  }, 0, $scope0_id, "#select/0", /* selected */1, 1, 0, "</select>", 1);
   _._script($scope0_id, "__tests__/template.marko_0");
   _._scope($scope0_id, {}, "__tests__/template.marko", 0);
   _._resume_branch($scope0_id);

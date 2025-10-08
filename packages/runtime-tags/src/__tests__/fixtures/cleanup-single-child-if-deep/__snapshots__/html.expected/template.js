@@ -37,7 +37,7 @@ export default _._template("__tests__/template.marko", input => {
               _._scope($scope3_id, {}, "__tests__/template.marko", "17:10");
               return 0;
             }
-          }, $scope2_id, "#text/1", 1, /* state: showInner */1, /* state: showInner */1, 0, 1);
+          }, $scope2_id, "#text/1", 1, /* showInner */1, /* showInner */1, 0, 1);
           _._html("</div>");
           _._subscribe($showInner__closures, _._scope($scope2_id, {
             _: _._scope_with_id($scope1_id),
@@ -45,14 +45,14 @@ export default _._template("__tests__/template.marko", input => {
           }, "__tests__/template.marko", "14:6"));
           return 0;
         }
-      }, $scope1_id, "#text/1", 1, /* state: showMiddle */1, /* state: showMiddle */1, 0, 1);
+      }, $scope1_id, "#text/1", 1, /* showMiddle */1, /* showMiddle */1, 0, 1);
       _._html("</div>");
       _._scope($scope1_id, {
         _: _._scope_with_id($scope0_id)
       }, "__tests__/template.marko", "11:2");
       return 0;
     }
-  }, $scope0_id, "#text/4", 1, /* state: showOuter */1, /* state: showOuter */1, 0, 1);
+  }, $scope0_id, "#text/4", 1, /* showOuter */1, /* showOuter */1, 0, 1);
   _._script($scope0_id, "__tests__/template.marko_0_showInner");
   _._script($scope0_id, "__tests__/template.marko_0_showMiddle");
   _._script($scope0_id, "__tests__/template.marko_0_showOuter");

@@ -20,7 +20,7 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "8:4");
       return 1;
     }
-  }, $scope0_id, "#text/0", 1, /* state: clickCount */1, /* state: clickCount */1, 0, 1);
+  }, $scope0_id, "#text/0", 1, /* clickCount */1, /* clickCount */1, 0, 1);
   _._html("</div>");
   _._scope($scope0_id, {
     clickCount

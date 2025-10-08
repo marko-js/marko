@@ -9,8 +9,8 @@ export default _._template("__tests__/template.marko", input => {
   _._html(`<button>Inc</button>${_._el_resume($scope0_id, "#button/0")}`);
   const $childScope2 = _._peek_scope_id();
   _._set_serialize_reason({
-    /* input.content, input.value */0: /* state: x */1,
-    /* input.value */2: /* state: x */1
+    /* input.content, input.value */0: /* x */1,
+    /* input.value */2: /* x */1
   });
   _child({
     value: x,
@@ -20,8 +20,8 @@ export default _._template("__tests__/template.marko", input => {
       const $child_content__outer__closures = new Set();
       const $childScope = _._peek_scope_id();
       _._set_serialize_reason({
-        /* input.content, input.value */0: /* state: y */1,
-        /* input.value */2: /* state: y */1
+        /* input.content, input.value */0: /* y */1,
+        /* input.value */2: /* y */1
       });
       _child({
         value: y,
@@ -37,7 +37,7 @@ export default _._template("__tests__/template.marko", input => {
         }, $scope1_id)
       });
       _._subscribe($y__closures, _._scope($scope1_id, {
-        outer: _._serialize_if($serialize3, /* value */2) && outer,
+        outer: _._serialize_if($serialize3, /* input.value */2) && outer,
         _: _._scope_with_id($scope0_id),
         "ClosureScopes:outer": _._serialize_if($serialize, /* outer */0) && $child_content__outer__closures,
         "#childScope/0": _._existing_scope($childScope),
@@ -51,7 +51,7 @@ export default _._template("__tests__/template.marko", input => {
   _._script($scope0_id, "__tests__/template.marko_0_x");
   _._scope($scope0_id, {
     x,
-    y: _._serialize_if($serialize3, /* value */2) && y,
+    y: _._serialize_if($serialize3, /* input.value */2) && y,
     "ClosureScopes:y": $y__closures,
     "#childScope/1": _._existing_scope($childScope2)
   }, "__tests__/template.marko", 0, {

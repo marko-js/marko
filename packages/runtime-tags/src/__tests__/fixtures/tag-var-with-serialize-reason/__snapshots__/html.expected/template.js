@@ -5,7 +5,7 @@ export default _._template("__tests__/template.marko", input => {
   let count = 1;
   _._html(`<button>${_._escape(count)}${_._el_resume($scope0_id, "#text/1")}</button>${_._el_resume($scope0_id, "#button/0")}`);
   const $childScope = _._peek_scope_id();
-  _._set_serialize_reason(/* state: count */1);
+  _._set_serialize_reason(/* count */1);
   let x = _child({
     value: count
   });

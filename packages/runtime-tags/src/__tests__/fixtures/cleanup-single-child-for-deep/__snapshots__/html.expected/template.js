@@ -12,7 +12,7 @@ export default _._template("__tests__/template.marko", input => {
     const $scope1_id = _._scope_id();
     _._html("<div>");
     const $childScope = _._peek_scope_id();
-    _._set_serialize_reason(/* state: items */1);
+    _._set_serialize_reason(/* items */1);
     _child({
       write: write,
       name: `${outerItem}`
@@ -21,7 +21,7 @@ export default _._template("__tests__/template.marko", input => {
       const $scope2_id = _._scope_id();
       _._html("<div>");
       const $childScope2 = _._peek_scope_id();
-      _._set_serialize_reason(/* state: items */1);
+      _._set_serialize_reason(/* items */1);
       _child({
         write: write,
         name: `${outerItem}.${middleItem}`
@@ -31,7 +31,7 @@ export default _._template("__tests__/template.marko", input => {
         _: _._scope_with_id($scope1_id),
         "#childScope/0": _._existing_scope($childScope2)
       }, "__tests__/template.marko", "10:6");
-    }, 0, $scope1_id, "#text/1", /* state: items */1, /* state: items */1, /* state: items */1, 0, 1);
+    }, 0, $scope1_id, "#text/1", /* items */1, /* items */1, /* items */1, 0, 1);
     _._html("</div>");
     _._scope($scope1_id, {
       outerItem,
@@ -40,7 +40,7 @@ export default _._template("__tests__/template.marko", input => {
     }, "__tests__/template.marko", "7:2", {
       outerItem: "7:6"
     });
-  }, 0, $scope0_id, "#text/2", /* state: items */1, /* state: items */1, /* state: items */1, 0, 1);
+  }, 0, $scope0_id, "#text/2", /* items */1, /* items */1, /* items */1, 0, 1);
   _._script($scope0_id, "__tests__/template.marko_0_items");
   _._scope($scope0_id, {
     items,
