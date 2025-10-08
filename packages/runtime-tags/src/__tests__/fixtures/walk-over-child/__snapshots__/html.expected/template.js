@@ -5,7 +5,6 @@ export default _._template("__tests__/template.marko", input => {
   let count = 0;
   _._html("<section>");
   _child({});
-  _._html(`</section><div>${_._escape(count)}${_._el_resume($scope0_id, "#text/1")}</div>`);
-  _._scope($scope0_id, {}, "__tests__/template.marko", 0);
+  _._html(`</section><div>${_._escape(count)}</div>`);
   _._resume_branch($scope0_id);
 });

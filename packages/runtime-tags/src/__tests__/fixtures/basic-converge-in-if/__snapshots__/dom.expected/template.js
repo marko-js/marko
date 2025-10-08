@@ -17,8 +17,8 @@ const $if_content__setup = $scope => {
   $if_content__b._($scope);
 };
 const $if_content = /* @__PURE__ */_._content_branch(" ", /* get, over(1) */" b", $if_content__setup);
-const $a = /* @__PURE__ */_._let("a/1", $if_content__a);
-const $b = /* @__PURE__ */_._let("b/2", $if_content__b);
+const $a = /* @__PURE__ */_._let("a/1");
+const $b = /* @__PURE__ */_._let("b/2");
 const $if = /* @__PURE__ */_._if("#text/0", $if_content);
 export function $setup($scope) {
   $a($scope, 0);

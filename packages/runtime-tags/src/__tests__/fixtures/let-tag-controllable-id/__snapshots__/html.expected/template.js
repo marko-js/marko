@@ -9,12 +9,10 @@ export default _._template("__tests__/template.marko", input => {
   _._html(`<button>${_._escape(x)}${_._el_resume($scope0_id, "#text/1")}|<!>${_._escape(y)}${_._el_resume($scope0_id, "#text/2")}</button>${_._el_resume($scope0_id, "#button/0")}`);
   _._script($scope0_id, "__tests__/template.marko_0_y");
   _._scope($scope0_id, {
-    x,
     handler,
     y,
     "TagVariableChange:y": handler || void 0
   }, "__tests__/template.marko", 0, {
-    x: "1:6",
     handler: "2:6",
     y: "3:6"
   });

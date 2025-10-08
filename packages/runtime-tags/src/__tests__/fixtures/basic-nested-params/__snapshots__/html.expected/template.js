@@ -3,11 +3,10 @@ import _child from "./tags/child.marko";
 export default _._template("__tests__/template.marko", input => {
   const $serialize3 = _._get_serialize_reason();
   const $scope0_id = _._scope_id();
-  const $y__closures = new Set();
   let x = 1;
   let y = 2;
   _._html(`<button>Inc</button>${_._el_resume($scope0_id, "#button/0")}`);
-  const $childScope2 = _._peek_scope_id();
+  const $childScope = _._peek_scope_id();
   _._set_serialize_reason({
     /* input.content, input.value */0: /* x */1,
     /* input.value */2: /* x */1
@@ -18,11 +17,6 @@ export default _._template("__tests__/template.marko", input => {
       const $serialize = _._get_serialize_reason();
       const $scope1_id = _._scope_id();
       const $child_content__outer__closures = new Set();
-      const $childScope = _._peek_scope_id();
-      _._set_serialize_reason({
-        /* input.content, input.value */0: /* y */1,
-        /* input.value */2: /* y */1
-      });
       _child({
         value: y,
         content: _._content_resume("__tests__/template.marko_2_content", inner => {
@@ -36,15 +30,12 @@ export default _._template("__tests__/template.marko", input => {
           _._resume_branch($scope2_id);
         }, $scope1_id)
       });
-      _._subscribe($y__closures, _._scope($scope1_id, {
+      (_._serialize_guard($serialize3, /* input.value */2) || _._serialize_guard($serialize, /* outer */0)) && _._scope($scope1_id, {
         outer: _._serialize_if($serialize3, /* input.value */2) && outer,
-        _: _._scope_with_id($scope0_id),
-        "ClosureScopes:outer": _._serialize_if($serialize, /* outer */0) && $child_content__outer__closures,
-        "#childScope/0": _._existing_scope($childScope),
-        "ClosureSignalIndex:y": 0
+        "ClosureScopes:outer": _._serialize_if($serialize, /* outer */0) && $child_content__outer__closures
       }, "__tests__/template.marko", "6:2", {
         outer: "6:8"
-      }));
+      });
       _._resume_branch($scope1_id);
     }, $scope0_id)
   });
@@ -52,8 +43,7 @@ export default _._template("__tests__/template.marko", input => {
   _._scope($scope0_id, {
     x,
     y: _._serialize_if($serialize3, /* input.value */2) && y,
-    "ClosureScopes:y": $y__closures,
-    "#childScope/1": _._existing_scope($childScope2)
+    "#childScope/1": _._existing_scope($childScope)
   }, "__tests__/template.marko", 0, {
     x: "1:6",
     y: "2:6"

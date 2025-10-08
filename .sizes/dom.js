@@ -1,4 +1,4 @@
-// size: 19360 (min) 7338 (brotli)
+// size: 19366 (min) 7367 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -624,14 +624,14 @@ function _let(valueAccessor, fn) {
   let valueChangeAccessor = "o" + valueAccessor,
     update = (scope, value) => {
       scope[valueAccessor] !== value &&
-        ((scope[valueAccessor] = value), fn(scope, value));
+        ((scope[valueAccessor] = value), fn && fn(scope, value));
     };
   return (scope, value, valueChange) => (
     rendering
       ? (((scope[valueChangeAccessor] = valueChange) &&
           scope[valueAccessor] !== value) ||
           !(valueAccessor in scope)) &&
-        ((scope[valueAccessor] = value), fn(scope, value))
+        ((scope[valueAccessor] = value), fn && fn(scope, value))
       : scope[valueChangeAccessor]
         ? scope[valueChangeAccessor](value)
         : (schedule(), queueRender(scope, update, valueAccessor, value)),
