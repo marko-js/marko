@@ -70,7 +70,7 @@ export function normalizeDynamicRenderer<Renderer>(
   if (value) {
     if (typeof value === "string") return value;
     const normalized = value.content || value.default || value;
-    if ("___id" in normalized) {
+    if (/*@__KEY__*/ "___id" in normalized) {
       return normalized;
     }
   }
