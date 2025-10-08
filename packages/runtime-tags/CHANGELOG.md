@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.84
+
+### Patch Changes
+
+- [#2871](https://github.com/marko-js/marko/pull/2871) [`826a1a9`](https://github.com/marko-js/marko/commit/826a1a95ea44159156720fc125eb9e270c7d1245) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix invalid renderer id check in prod builds.
+
 ## 6.0.83
 
 ### Patch Changes
