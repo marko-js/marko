@@ -15,7 +15,6 @@
         {
           count: 0,
           "#childScope/0": _.a = {
-            value: 0,
             dummy:
             {}
           }
@@ -50,7 +49,6 @@ container.querySelector("button").click();
         {
           count: 0,
           "#childScope/0": _.a = {
-            value: 0,
             dummy:
             {}
           }

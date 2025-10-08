@@ -7,7 +7,7 @@ export default _._template("__tests__/template.marko", input => {
     const $scope1_id = _._scope_id();
     _._html("<div></div>");
     _._scope($scope1_id, {}, "__tests__/template.marko", "3:4");
-  }, 0, $scope0_id, "#div/0", /* children */1, /* children, children.length */1, /* children */1, "</div>", 1);
+  }, 0, $scope0_id, "#div/0", /* children */1, /* children */1, /* children */1, "</div>", 1);
   _._script($scope0_id, "__tests__/template.marko_0_children");
   _._scope($scope0_id, {
     children

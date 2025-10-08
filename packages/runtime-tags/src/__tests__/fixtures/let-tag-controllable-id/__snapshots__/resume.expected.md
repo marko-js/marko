@@ -15,7 +15,6 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          x: 1,
           y: 1
         }], _.a.handler = _.a["TagVariableChange:y"] = _._[
           "__tests__/template.marko_0/handler"
@@ -50,7 +49,6 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          x: 1,
           y: 1
         }], _.a.handler = _.a["TagVariableChange:y"] = _._[
           "__tests__/template.marko_0/handler"
@@ -90,7 +88,6 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          x: 1,
           y: 1
         }], _.a.handler = _.a["TagVariableChange:y"] = _._[
           "__tests__/template.marko_0/handler"
@@ -130,7 +127,6 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          x: 1,
           y: 1
         }], _.a.handler = _.a["TagVariableChange:y"] = _._[
           "__tests__/template.marko_0/handler"

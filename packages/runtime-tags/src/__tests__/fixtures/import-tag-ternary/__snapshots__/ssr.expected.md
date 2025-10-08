@@ -1,39 +1,25 @@
 # Write
 ```html
-  <!--M_[--><div>baz</div><!--M_]1 #text/0 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"__tests__/tags/baz.marko"},_.a])]</script>
+  <div>baz</div>
 ```
 
 # Render End
 ```html
-<!--M_[-->
 <html>
   <head />
   <body>
     <div>
       baz
     </div>
-    <!--M_]1 #text/0 2-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-      {
-        "ConditionalScope:#text/0": _.a = {},
-        "ConditionalRenderer:#text/0": "__tests__/tags/baz.marko"
-      }, _.a])]
-    </script>
   </body>
 </html>
 ```
 
 # Mutations
 ```
-INSERT #comment
 INSERT html
 INSERT html/head
 INSERT html/body
 INSERT html/body/div
 INSERT html/body/div/#text
-INSERT html/body/#comment
-INSERT html/body/script
-INSERT html/body/script/#text
 ```

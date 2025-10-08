@@ -14,7 +14,7 @@ export type Signal<T> = SignalFn<T> & {
   ___subscribe?(scope: Scope): void;
 };
 
-export function _let<T>(valueAccessor: Accessor, fn: SignalFn<T>) {
+export function _let<T>(valueAccessor: Accessor, fn?: SignalFn<T>) {
   if (MARKO_DEBUG) {
     // eslint-disable-next-line no-var
     var id = +(valueAccessor as string).slice(
@@ -30,7 +30,7 @@ export function _let<T>(valueAccessor: Accessor, fn: SignalFn<T>) {
   const update = (scope: Scope, value?: T) => {
     if (scope[valueAccessor] !== value) {
       scope[valueAccessor] = value;
-      fn(scope, value);
+      fn && fn(scope, value);
     }
   };
 
@@ -42,7 +42,7 @@ export function _let<T>(valueAccessor: Accessor, fn: SignalFn<T>) {
         !(valueAccessor in scope)
       ) {
         scope[valueAccessor] = value;
-        fn(scope, value);
+        fn && fn(scope, value);
       }
     } else if (scope[valueChangeAccessor]) {
       scope[valueChangeAccessor](value);

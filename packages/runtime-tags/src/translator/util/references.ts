@@ -403,10 +403,7 @@ function trackAssignment(
           binding.upstreamAlias.propertyAliases.get(changePropName) ||
           createBinding(
             generateUid(changePropName),
-            binding.type === BindingType.input ||
-              binding.type == BindingType.param
-              ? binding.type
-              : BindingType.derived,
+            binding.type,
             binding.section,
             binding.upstreamAlias,
             changePropName,
@@ -1070,9 +1067,16 @@ function resolveBindingSources(binding: Binding) {
   resolvedSources.add(binding);
 
   switch (binding.type) {
-    case BindingType.let:
-      binding.sources = createSources(binding, undefined);
+    case BindingType.let: {
+      const aliasRoot = getAliasRoot(binding);
+      if (aliasRoot) {
+        resolveBindingSources(aliasRoot);
+        binding.sources = aliasRoot.sources;
+      } else if (binding.assignmentSections) {
+        binding.sources = createSources(binding, undefined);
+      }
       return;
+    }
     case BindingType.input:
       binding.sources = createSources(
         undefined,
@@ -1087,22 +1091,27 @@ function resolveBindingSources(binding: Binding) {
       return;
   }
 
-  if (binding.upstreamAlias) {
-    let alias: Binding | undefined;
-    let source = binding;
-    while ((alias = source.upstreamAlias)) {
-      source = alias;
+  const aliasRoot = getAliasRoot(binding);
+  if (aliasRoot) {
+    if (!resolvedSources.has(aliasRoot)) {
+      resolvedSources.add(aliasRoot);
+      resolveDerivedSources(aliasRoot);
     }
 
-    if (!resolvedSources.has(source)) {
-      resolvedSources.add(source);
-      resolveDerivedSources(source);
-    }
-
-    binding.sources = source.sources;
+    binding.sources = aliasRoot.sources;
   } else {
     resolveDerivedSources(binding);
   }
+}
+
+function getAliasRoot(binding: Binding) {
+  let alias = binding.upstreamAlias;
+  while (alias) {
+    if (!alias.upstreamAlias) return alias;
+    alias = alias.upstreamAlias;
+  }
+
+  return alias;
 }
 
 function resolveDerivedSources(binding: Binding) {

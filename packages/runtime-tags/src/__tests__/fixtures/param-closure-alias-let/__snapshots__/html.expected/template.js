@@ -6,8 +6,7 @@ export default _._template("__tests__/template.marko", input => {
     if (true) {
       const $scope2_id = _._scope_id();
       let baz = foo;
-      _._html(`${_._escape(baz)}${_._el_resume($scope2_id, "#text/0")}`);
-      _._scope($scope2_id, {}, "__tests__/template.marko", "2:3");
+      _._html(_._escape(baz));
     }
   });
 });

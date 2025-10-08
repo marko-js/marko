@@ -19,8 +19,10 @@ const $for = /* @__PURE__ */_._for_of("#text/0", $for_content);
 const $arrA = /* @__PURE__ */_._const("arrA", ($scope, arrA) => $for($scope, [arrA]));
 const $for2 = /* @__PURE__ */_._for_of("#text/1", $for_content2);
 const $arrB = /* @__PURE__ */_._let("arrB/3", ($scope, arrB) => $for2($scope, [arrB]));
+const $setup__script = _._script("__tests__/template.marko_0", $scope => $arrB($scope, [1, 2]));
 export function $setup($scope) {
   $arrA($scope, [1, 2, 3]);
   $arrB($scope, [1, 2, 3]);
+  $setup__script($scope);
 }
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

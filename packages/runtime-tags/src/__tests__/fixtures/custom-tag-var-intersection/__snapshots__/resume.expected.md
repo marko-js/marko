@@ -19,7 +19,6 @@
       M._.r = [_ =&gt; (_.c = [0, _.a = {
           "#scopeOffset/1": 3,
           name: "Marko",
-          data: 1,
           "#childScope/0": _.b = {
             input_extra: 1,
             x: 0
@@ -61,7 +60,6 @@ container.querySelector("button.inc").click();
       M._.r = [_ =&gt; (_.c = [0, _.a = {
           "#scopeOffset/1": 3,
           name: "Marko",
-          data: 1,
           "#childScope/0": _.b = {
             input_extra: 1,
             x: 0
@@ -108,7 +106,6 @@ container.querySelector("button.inc").click();
       M._.r = [_ =&gt; (_.c = [0, _.a = {
           "#scopeOffset/1": 3,
           name: "Marko",
-          data: 1,
           "#childScope/0": _.b = {
             input_extra: 1,
             x: 0
@@ -155,7 +152,6 @@ container.querySelector("button.inc").click();
       M._.r = [_ =&gt; (_.c = [0, _.a = {
           "#scopeOffset/1": 3,
           name: "Marko",
-          data: 1,
           "#childScope/0": _.b = {
             input_extra: 1,
             x: 0

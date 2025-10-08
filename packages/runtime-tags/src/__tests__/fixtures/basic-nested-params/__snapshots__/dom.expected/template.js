@@ -26,8 +26,7 @@ const $x = /* @__PURE__ */_._let("x/2", ($scope, x) => {
   _child_input_value($scope["#childScope/1"], x);
   $x__script($scope);
 });
-const $y__closure = /* @__PURE__ */_._closure($child_content__y);
-const $y = /* @__PURE__ */_._let("y/3", $y__closure);
+const $y = /* @__PURE__ */_._let("y/3");
 export function $setup($scope) {
   _child($scope["#childScope/1"]);
   _child_input_content($scope["#childScope/1"], $child_content($scope));

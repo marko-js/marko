@@ -12,11 +12,9 @@ export default _._template("__tests__/template.marko", input => {
   _._html(`<div>${_._escape(message)}${_._el_resume($scope0_id, "#text/2")}</div>`);
   _._scope($scope0_id, {
     name,
-    data,
     "#childScope/0": _._existing_scope($childScope)
   }, "__tests__/template.marko", 0, {
-    name: "1:6",
-    data: "2:8"
+    name: "1:6"
   });
   _._resume_branch($scope0_id);
 });

@@ -465,48 +465,44 @@ export function getSignalFn(signal: Signal): t.Expression {
   if (isValue && binding.sources && binding.type !== BindingType.local) {
     let dynamicClosureArgs: t.Expression[] | undefined;
     let dynamicClosureSignalIdentifier: t.Identifier | undefined;
-    if (binding.sources) {
-      forEach(binding.closureSections, (closureSection) => {
-        if (isDynamicClosure(closureSection, binding)) {
-          if (!dynamicClosureArgs) {
-            dynamicClosureArgs = [];
-            dynamicClosureSignalIdentifier = generateUidIdentifier(
-              signal.identifier.name + "__closure",
-            );
-
-            signal.render.push(
-              t.expressionStatement(
-                t.callExpression(dynamicClosureSignalIdentifier, [
-                  scopeIdentifier,
-                ]),
-              ),
-            );
-          }
-
-          dynamicClosureArgs.push(
-            getSignal(closureSection, binding).identifier,
+    forEach(binding.closureSections, (closureSection) => {
+      if (isDynamicClosure(closureSection, binding)) {
+        if (!dynamicClosureArgs) {
+          dynamicClosureArgs = [];
+          dynamicClosureSignalIdentifier = generateUidIdentifier(
+            signal.identifier.name + "__closure",
           );
-        } else {
+
           signal.render.push(
             t.expressionStatement(
-              t.callExpression(getSignal(closureSection, binding).identifier, [
+              t.callExpression(dynamicClosureSignalIdentifier, [
                 scopeIdentifier,
               ]),
             ),
           );
         }
-      });
 
-      if (dynamicClosureSignalIdentifier) {
-        (signal.prependStatements ||= []).push(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              dynamicClosureSignalIdentifier,
-              callRuntime("_closure", ...dynamicClosureArgs!),
-            ),
-          ]),
+        dynamicClosureArgs.push(getSignal(closureSection, binding).identifier);
+      } else {
+        signal.render.push(
+          t.expressionStatement(
+            t.callExpression(getSignal(closureSection, binding).identifier, [
+              scopeIdentifier,
+            ]),
+          ),
         );
       }
+    });
+
+    if (dynamicClosureSignalIdentifier) {
+      (signal.prependStatements ||= []).push(
+        t.variableDeclaration("const", [
+          t.variableDeclarator(
+            dynamicClosureSignalIdentifier,
+            callRuntime("_closure", ...dynamicClosureArgs!),
+          ),
+        ]),
+      );
     }
   }
 
