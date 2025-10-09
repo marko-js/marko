@@ -4,7 +4,10 @@
       "$_": "r",
       "$init": "t",
       "$$get$hoisted_setHtml2": "o",
-      "$$get$hoisted_setHtml3": "s"
+      "$$get$hoisted_setHtml3": "s",
+      "$$_return": "n",
+      "$$for_content4__setHtml": "_",
+      "$$for_content4__setup": "m"
     }
   }
 }

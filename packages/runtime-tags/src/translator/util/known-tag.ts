@@ -15,13 +15,7 @@ import {
   type AttrTagLookup,
   getAttrTagIdentifier,
 } from "./nested-attribute-tags";
-import {
-  filterMap,
-  forEach,
-  fromIter,
-  mapToString,
-  type Opt,
-} from "./optional";
+import { filterMap, forEach, fromIter, type Opt } from "./optional";
 import {
   type Binding,
   BindingType,
@@ -29,7 +23,7 @@ import {
   createBinding,
   dropReferences,
   getAllTagReferenceNodes,
-  getDebugName,
+  getDebugNames,
   getScopeAccessorLiteral,
   type InputBinding,
   mergeReferences,
@@ -246,7 +240,7 @@ export function knownTagTranslateHTML(
             t.objectProperty(
               withLeadingComment(
                 t.numericLiteral(i),
-                mapToString(group.reason, ", ", getDebugName),
+                getDebugNames(group.reason),
               ),
               getSerializeGuard(reason, false)!,
             ),

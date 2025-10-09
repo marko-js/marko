@@ -3,7 +3,7 @@ import { importDefault } from "@marko/compiler/babel-utils";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import getStyleFile from "../../util/get-style-file";
-import { forEach, toArray } from "../../util/optional";
+import { forEach } from "../../util/optional";
 import {
   getScopeAccessor,
   getSectionInstancesAccessorLiteral,
@@ -23,6 +23,7 @@ import {
   getSignalFn,
   initValue,
   replaceNullishAndEmptyFunctionsWith0,
+  signalHasStatements,
   writeRegisteredFns,
   writeSignals,
 } from "../../util/signals";
@@ -55,25 +56,32 @@ export default {
         if (childSection !== section) {
           forEach(childSection.referencedClosures, (closure) => {
             const closureSignal = getSignal(childSection, closure);
-            addStatement(
-              "render",
-              childSection,
-              undefined,
-              t.expressionStatement(
-                t.callExpression(
-                  isDynamicClosure(childSection, closure)
-                    ? closureSignal.identifier
-                    : t.memberExpression(
-                        closureSignal.identifier,
-                        t.identifier("_"),
-                      ),
-                  [scopeIdentifier],
+            if (signalHasStatements(closureSignal)) {
+              addStatement(
+                "render",
+                childSection,
+                undefined,
+                t.expressionStatement(
+                  t.callExpression(
+                    isDynamicClosure(childSection, closure)
+                      ? closureSignal.identifier
+                      : t.memberExpression(
+                          closureSignal.identifier,
+                          t.identifier("_"),
+                        ),
+                    [scopeIdentifier],
+                  ),
                 ),
-              ),
-            );
+              );
+            }
           });
+
           const tagParamsSignal =
             childSection.params && initValue(childSection.params);
+          const tagParamsIdentifier =
+            tagParamsSignal && signalHasStatements(tagParamsSignal)
+              ? tagParamsSignal.identifier
+              : undefined;
           const { walks, writes, setup, decls } =
             writer.getSectionMeta(childSection);
 
@@ -90,7 +98,7 @@ export default {
                     writes,
                     walks,
                     setup,
-                    tagParamsSignal?.identifier,
+                    tagParamsIdentifier,
                   ]),
                 )
               : callRuntime(
@@ -102,7 +110,7 @@ export default {
                     writes,
                     walks,
                     setup,
-                    tagParamsSignal?.identifier,
+                    tagParamsIdentifier,
                     childSection.hoisted || childSection.isHoistThrough
                       ? getSectionInstancesAccessorLiteral(childSection)
                       : undefined,
@@ -110,26 +118,29 @@ export default {
                 );
 
             if (childSection.referencedLocalClosures) {
-              renderer = callRuntime(
-                "_content_closures",
-                renderer,
-                t.objectExpression(
-                  toArray(childSection.referencedLocalClosures, (closure) => {
-                    const expr = getSignalFn(getSignal(childSection, closure));
-                    const key = toPropertyName(getScopeAccessor(closure));
-                    if (t.isFunction(expr) && t.isBlockStatement(expr.body)) {
-                      return t.objectMethod(
-                        "method",
-                        key,
-                        expr.params,
-                        expr.body,
-                      );
-                    }
+              const objProps: t.ObjectExpression["properties"] = [];
+              forEach(childSection.referencedLocalClosures, (closure) => {
+                const closureSignal = getSignal(childSection, closure);
+                const key = toPropertyName(getScopeAccessor(closure));
+                if (signalHasStatements(closureSignal)) {
+                  const expr = getSignalFn(closureSignal);
+                  if (t.isFunction(expr) && t.isBlockStatement(expr.body)) {
+                    objProps.push(
+                      t.objectMethod("method", key, expr.params, expr.body),
+                    );
+                  } else {
+                    objProps.push(t.objectProperty(key, expr));
+                  }
+                }
+              });
 
-                    return t.objectProperty(key, expr);
-                  }),
-                ),
-              );
+              if (objProps.length) {
+                renderer = callRuntime(
+                  "_content_closures",
+                  renderer,
+                  t.objectExpression(objProps),
+                );
+              }
             }
 
             program.node.body.push(

@@ -1,8 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { getSharedUid } from "./generate-uid";
-import { mapToString } from "./optional";
-import { getDebugName, type Sources } from "./references";
+import { getDebugNames, type Sources } from "./references";
 import { callRuntime } from "./runtime";
 import { getParamReasonGroupIndex, groupParamsBySection } from "./sections";
 import {
@@ -23,10 +22,7 @@ export function getSerializeGuard(
         ? undefined
         : reason === true
           ? t.numericLiteral(1)
-          : withLeadingComment(
-              t.numericLiteral(1),
-              mapToString(reason.state, ", ", getDebugName),
-            )
+          : withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state))
       : getInputSerializeReasonGuard(reason);
 }
 
@@ -47,10 +43,7 @@ export function getSerializeGuardForAny(
     if (reason.state) {
       return optional
         ? undefined
-        : withLeadingComment(
-            t.numericLiteral(1),
-            mapToString(reason.state, ", ", getDebugName),
-          );
+        : withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state));
     }
 
     const guard = getSerializeGuard(reason, false)!;
@@ -81,7 +74,7 @@ export function getExprIfSerialized<
           serializeIdentifier,
           withLeadingComment(
             t.numericLiteral(getParamReasonGroupIndex(section, reasons)),
-            mapToString(reasons, ", ", getDebugName),
+            getDebugNames(reasons),
           ),
         )
       : serializeIdentifier;
@@ -105,7 +98,7 @@ function getInputSerializeReasonGuard(reason: Sources) {
           serializeIdentifier,
           withLeadingComment(
             t.numericLiteral(getParamReasonGroupIndex(section, reasons)),
-            mapToString(reasons, ", ", getDebugName),
+            getDebugNames(reasons),
           ),
         )
       : serializeIdentifier;
