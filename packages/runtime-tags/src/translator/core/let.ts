@@ -137,7 +137,7 @@ export default {
         }
 
         signal.buildAssignment = (valueSection, value) => {
-          if (signalHasStatements(signal)) {
+          if (valueChangeAttr || signalHasStatements(signal)) {
             return t.callExpression(signal.identifier, [
               getScopeExpression(valueSection, signal.section),
               value,
