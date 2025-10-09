@@ -5,12 +5,14 @@ static function noop(_) {}
 <let/c={}/>
 <let/d=0/>
 <let/e=[]/>
+<let/unused=0>
 <button onClick() {
   let local;
   ({
     a,
     _b: { _b: b },
     local,
+    unused,
     ...c
   } = { a: 1, _b: { _b: 2 }, local: 3, c: 4 });
   noop([

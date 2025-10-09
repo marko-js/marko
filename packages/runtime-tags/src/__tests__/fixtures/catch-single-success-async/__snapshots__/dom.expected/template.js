@@ -9,7 +9,6 @@ const $await_content2 = /* @__PURE__ */_._content_branch(" ", /* get, over(1) */
 const $await_content__data = /* @__PURE__ */_._const("data", ($scope, data) => _._text($scope["#text/0"], data));
 const $await_content__$params = /* @__PURE__ */_._const("$params3", ($scope, $params3) => $await_content__data($scope, $params3[0]));
 const $await_content = /* @__PURE__ */_._content_branch(" ", /* get, over(1) */" b", 0, $await_content__$params);
-const $catch_content__$params = /* @__PURE__ */_._const("$params2");
 const $catch_content = _._content_resume("__tests__/template.marko_2_content", "ERROR!", /* over(1) */"b");
 const $try_content__await = /* @__PURE__ */_._await("#text/0", $await_content);
 const $try_content__setup = $scope => {

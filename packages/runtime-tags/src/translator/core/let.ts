@@ -22,6 +22,7 @@ import {
   addValue,
   initValue,
   setBindingSerializedValue,
+  signalHasStatements,
 } from "../util/signals";
 import translateVar from "../util/translate-var";
 
@@ -136,9 +137,12 @@ export default {
         }
 
         signal.buildAssignment = (valueSection, value) => {
-          const scope = getScopeExpression(valueSection, signal.section);
-
-          return t.callExpression(signal.identifier, [scope, value]);
+          if (signalHasStatements(signal)) {
+            return t.callExpression(signal.identifier, [
+              getScopeExpression(valueSection, signal.section),
+              value,
+            ]);
+          }
         };
       } else {
         translateVar(tag, valueAttr.value, "let");
