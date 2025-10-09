@@ -9,12 +9,13 @@ const $d = /* @__PURE__ */_2._let("d/9", ($scope, d) => _2._text($scope["#text/4
 const $e = /* @__PURE__ */_2._let("e/10", ($scope, e) => _2._text($scope["#text/5"], JSON.stringify(e)));
 const $setup__script = _2._script("__tests__/template.marko_0", $scope => _2._on($scope["#button/0"], "click", function () {
   let local;
-  (($result2, $a2, $b2, $c2) => ({
+  (($result2, $a2, $b2, unused, $c2) => ({
     a: $a2,
     _b: {
       _b: $b2
     },
     local,
+    unused,
     ...$c2
   } = $result2, $a($scope, $a2), $b($scope, $b2), $c($scope, $c2), $result2))({
     a: 1,
@@ -36,6 +37,7 @@ export function $setup($scope) {
   $c($scope, {});
   $d($scope, 0);
   $e($scope, []);
+  /* unused */0;
   $setup__script($scope);
 }
 export default /* @__PURE__ */_2._template("__tests__/template.marko", $template, $walks, $setup);

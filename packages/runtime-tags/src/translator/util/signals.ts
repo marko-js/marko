@@ -83,7 +83,7 @@ export type Signal = {
   buildAssignment?: (
     valueSection: Section,
     value: t.Expression,
-  ) => t.Expression;
+  ) => t.Expression | undefined;
 };
 
 type closureSignalBuilder = (
@@ -269,33 +269,19 @@ export function initValue(binding: Binding, isLet = false) {
   const signal = getSignal(section, binding);
   signal.build = () => {
     const fn = getSignalFn(signal);
-    const isParamBinding =
-      !binding.upstreamAlias &&
-      (binding.type === BindingType.param ||
-        binding.type === BindingType.local ||
-        binding.type === BindingType.input);
-    const isNakedAlias =
+    const isDirectAlias =
       binding.upstreamAlias &&
       binding.property === undefined &&
       binding.excludeProperties === undefined;
-    const needsGuard =
-      !isNakedAlias &&
-      (binding.closureSections ||
-        binding.downstreamExpressions.size ||
-        (fn.type === "ArrowFunctionExpression" &&
-          (fn.body as t.BlockStatement).body.length > 0));
-    const needsCache = needsGuard || signal.intersection;
-    // TODO: marks not used anymore. can remove?
-    const needsMarks = isParamBinding || signal.intersection;
-    if (needsCache || needsMarks || binding.hoists.size) {
-      return callRuntime(
-        isLet ? "_let" : "_const",
-        getScopeAccessorLiteral(binding, isLet),
-        fn,
-      );
-    } else {
+    if (isDirectAlias || !signalHasStatements(signal)) {
       return fn;
     }
+
+    return callRuntime(
+      isLet ? "_let" : "_const",
+      getScopeAccessorLiteral(binding, isLet),
+      fn,
+    );
   };
   signal.valueAccessor = getScopeAccessorLiteral(binding);
 
@@ -312,7 +298,6 @@ export function initValue(binding: Binding, isLet = false) {
 
 export function signalHasStatements(signal: Signal): boolean {
   if (
-    signal.register ||
     signal.render.length ||
     signal.effect.length ||
     signal.values.length ||
@@ -327,7 +312,9 @@ export function signalHasStatements(signal: Signal): boolean {
       (binding.closureSections ||
         binding.type === BindingType.dom ||
         (binding.section === signal.section &&
-          (binding.aliases.size || binding.propertyAliases.size)))
+          (binding.hoists.size ||
+            binding.aliases.size ||
+            binding.propertyAliases.size)))
     ) {
       return true;
     }
@@ -1362,12 +1349,15 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
     case "UpdateExpression": {
       const { extra } = node.argument;
       if (isAssignedBindingExtra(extra)) {
-        const buildAssignment = getBuildAssignment(extra);
-        if (buildAssignment) {
+        const builtAssignment = getBuildAssignment(extra)?.(
+          extra.section,
+          node,
+        );
+        if (builtAssignment) {
           if (!node.prefix) {
             node.prefix = true;
             const replacement = t.sequenceExpression([
-              buildAssignment(extra.section, node),
+              builtAssignment,
               t.binaryExpression(
                 node.operator === "++" ? "-" : "+",
                 node.argument,
@@ -1378,7 +1368,7 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
             return replacement;
           }
 
-          return buildAssignment(extra.section, node);
+          return builtAssignment;
         }
       }
       break;
@@ -1388,19 +1378,15 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
         case "Identifier": {
           const { extra } = node.left;
           if (isAssignedBindingExtra(extra)) {
-            const buildAssignment = getBuildAssignment(extra);
-            if (buildAssignment) {
-              if (
+            return (
+              getBuildAssignment(extra)?.(
+                extra.section,
                 bindingUtil.has(
                   extra.fnExtra?.referencedBindingsInFunction,
                   extra.assignment,
                 )
-              ) {
-                return buildAssignment(extra.section, node);
-              } else {
-                return buildAssignment(
-                  extra.section,
-                  node.operator === "="
+                  ? node
+                  : node.operator === "="
                     ? node.right
                     : t.binaryExpression(
                         node.operator.slice(
@@ -1410,15 +1396,9 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
                         node.left as t.Identifier,
                         node.right,
                       ),
-                );
-              }
-            }
-          }
-
-          if (extra?.assignment) {
-            return withLeadingComment(
-              node.right,
-              getDebugName(extra.assignment),
+              ) ||
+              (extra?.assignment &&
+                withLeadingComment(node.right, getDebugName(extra.assignment)))
             );
           }
           break;
@@ -1432,20 +1412,29 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
             if (isAssignedBindingExtra(extra)) {
               const buildAssignment = getBuildAssignment(extra);
               if (buildAssignment) {
-                if (
-                  !bindingUtil.has(
-                    extra.fnExtra?.referencedBindingsInFunction,
-                    extra.assignment,
-                  )
-                ) {
-                  id.name = generateUid(id.name);
-                  (params ||= []).push(t.identifier(id.name));
-                }
-
-                (assignments ||= []).push(
-                  buildAssignment(extra.section, t.identifier(id.name)),
+                const uid = generateUid(id.name);
+                const builtAssignment = buildAssignment(
+                  extra.section,
+                  t.identifier(uid),
                 );
+                if (builtAssignment) {
+                  if (
+                    !bindingUtil.has(
+                      extra.fnExtra?.referencedBindingsInFunction,
+                      extra.assignment,
+                    )
+                  ) {
+                    id.name = uid;
+                  }
+                  (params ||= []).push(t.identifier(uid));
+                  (assignments ||= []).push(builtAssignment);
+                  return;
+                }
               }
+            }
+
+            if (extra?.assignment) {
+              (params ||= []).push(t.identifier(id.name));
             }
           });
           if (assignments) {
@@ -1481,10 +1470,7 @@ function getBuildAssignment(extra: AssignedBindingExtra) {
     };
   }
 
-  const signal = getSignal(assignment.section, assignment);
-  if (signalHasStatements(signal)) {
-    return signal.buildAssignment;
-  }
+  return getSignal(assignment.section, assignment).buildAssignment;
 }
 
 const registeredFnsForProgram = new WeakMap<
