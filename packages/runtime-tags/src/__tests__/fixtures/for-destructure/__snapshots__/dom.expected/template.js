@@ -9,7 +9,6 @@ const $for_content__$temp = /* @__PURE__ */_._const("$temp", ($scope, $temp) => 
   $for_content__description($scope, $temp.description);
 });
 const $for_content = /* @__PURE__ */_._content_branch("<div><!>: <!></div>", /* next(1), replace, over(2), replace, out(1) */"D%c%l", 0, $for_content__$params);
-const $id = $scope => {};
 const $for = /* @__PURE__ */_._for_of("#text/0", $for_content);
 const $items__script = _._script("__tests__/template.marko_0_items", ($scope, {
   items
@@ -29,7 +28,7 @@ const $items = /* @__PURE__ */_._let("items/3", ($scope, items) => {
   $items__script($scope);
 });
 export function $setup($scope) {
-  $id($scope, 0);
+  /* id */0;
   $items($scope, [{
     name: "Marko",
     description: "HTML Reimagined"

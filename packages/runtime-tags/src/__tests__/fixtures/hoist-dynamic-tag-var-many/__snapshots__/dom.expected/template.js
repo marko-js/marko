@@ -8,14 +8,12 @@ const $for_content4__setHtml = _._var_resume("__tests__/template.marko_4_setHtml
 const $for_content4__setup = $scope => {
   $for_content4__dynamicTag($scope, 1 && Child);
 };
-const $for_content4__$params = $scope => {};
-const $for_content4 = /* @__PURE__ */_._content_branch("<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $for_content4__setup, $for_content4__$params);
+const $for_content4 = /* @__PURE__ */_._content_branch("<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $for_content4__setup);
 const $for_content3__for = /* @__PURE__ */_._for_to("#ul/0", $for_content4);
 const $for_content3__setup = $scope => {
   $for_content3__for($scope, [3, 0, 1]);
 };
-const $for_content3__$params = $scope => {};
-const $for_content3 = /* @__PURE__ */_._content_branch("<ul></ul>", /* get, over(1) */" b", $for_content3__setup, $for_content3__$params);
+const $for_content3 = /* @__PURE__ */_._content_branch("<ul></ul>", /* get, over(1) */" b", $for_content3__setup);
 const $get$hoisted_setHtml2 = _._hoist("setHtml2", "LoopScopeMap:#text/1");
 const $for_content2__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $for_content2__setHtml);
 const $for_content2__setHtml = _._var_resume("__tests__/template.marko_2_setHtml2/var", /* @__PURE__ */_._const("setHtml2"));

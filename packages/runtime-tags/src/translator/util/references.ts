@@ -19,6 +19,7 @@ import {
   findSorted,
   forEach,
   type Many,
+  mapToString,
   type Opt,
   push,
   Sorted,
@@ -758,17 +759,6 @@ export function finalizeReferences() {
       );
 
       if (find(section.bindings, ({ name }) => name === binding.name)) {
-        /*
-          TODO: this will break if parent sections use the generated UID.
-          ```
-          let/_count
-          my-tag
-            let/count
-            div
-              let/count
-              -- ${_count}
-          ```
-        */
         binding.name = generateUid(name);
       }
     }
@@ -1372,6 +1362,10 @@ export function getDebugName(binding: Binding) {
 
   const { root, access } = getDebugScopeAccess(binding);
   return root.name + access;
+}
+
+export function getDebugNames(refs: ReferencedBindings) {
+  return mapToString(refs, ", ", getDebugName);
 }
 
 export function getSectionInstancesAccessor(section: Section) {

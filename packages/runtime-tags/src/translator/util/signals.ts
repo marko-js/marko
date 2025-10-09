@@ -21,6 +21,8 @@ import {
   bindingUtil,
   compareSources,
   getCanonicalBinding,
+  getDebugName,
+  getDebugNames,
   getDebugScopeAccess,
   getReadReplacement,
   getScopeAccessor,
@@ -56,6 +58,7 @@ import {
   toPropertyName,
 } from "./to-property-name";
 import { traverseContains, traverseReplace } from "./traverse";
+import { withLeadingComment } from "./with-comment";
 
 export type Signal = {
   identifier: t.Identifier;
@@ -309,6 +312,7 @@ export function initValue(binding: Binding, isLet = false) {
 
 export function signalHasStatements(signal: Signal): boolean {
   if (
+    signal.register ||
     signal.render.length ||
     signal.effect.length ||
     signal.values.length ||
@@ -320,8 +324,10 @@ export function signalHasStatements(signal: Signal): boolean {
   if (binding) {
     if (
       !Array.isArray(binding) &&
-      binding.section === signal.section &&
-      (binding.aliases.size || binding.propertyAliases.size)
+      (binding.closureSections ||
+        binding.type === BindingType.dom ||
+        (binding.section === signal.section &&
+          (binding.aliases.size || binding.propertyAliases.size)))
     ) {
       return true;
     }
@@ -358,11 +364,7 @@ export function getSignalFn(signal: Signal): t.Expression {
   if (isValue) {
     for (const alias of binding.aliases) {
       const aliasSignal = getSignal(alias.section, alias);
-      if (
-        aliasSignal.render.length ||
-        aliasSignal.values.length ||
-        aliasSignal.effect.length
-      ) {
+      if (signalHasStatements(aliasSignal)) {
         if (alias.excludeProperties !== undefined) {
           const props: t.ObjectPattern["properties"] = [];
           const aliasId = t.identifier(alias.name);
@@ -429,17 +431,7 @@ export function getSignalFn(signal: Signal): t.Expression {
   }
 
   for (const value of signal.values) {
-    const valSignal = value.signal;
-    if (
-      !valSignal.referencedBindings ||
-      Array.isArray(valSignal.referencedBindings) ||
-      !valSignal.referencedBindings.upstreamAlias ||
-      valSignal.referencedBindings.property !== undefined ||
-      valSignal.referencedBindings.excludeProperties !== undefined ||
-      valSignal.effect.length ||
-      valSignal.render.length ||
-      valSignal.values.length
-    ) {
+    if (signalHasStatements(value.signal)) {
       signal.render.push(
         t.expressionStatement(
           t.callExpression(value.signal.identifier, [
@@ -450,7 +442,14 @@ export function getSignalFn(signal: Signal): t.Expression {
         ),
       );
     } else {
-      signal.render.push(t.expressionStatement(value.value));
+      signal.render.push(
+        t.expressionStatement(
+          withLeadingComment(
+            value.value,
+            getDebugNames(value.signal.referencedBindings),
+          ),
+        ),
+      );
     }
   }
 
@@ -836,22 +835,12 @@ export function writeSignals(section: Section) {
 
     let value = signal.build();
 
-    if (!value) {
-      return;
-    }
-
     if (
-      // It's possible for aliases to render nothing
-      // if they're only consumed in effects/closures.
-      // This ignores writing out those signals in that case.
-      signal.referencedBindings &&
-      !Array.isArray(signal.referencedBindings) &&
-      signal.referencedBindings.upstreamAlias &&
-      signal.referencedBindings.property === undefined &&
-      signal.referencedBindings.excludeProperties === undefined &&
-      t.isFunction(value) &&
-      t.isBlockStatement(value.body) &&
-      !value.body.body.length
+      !value ||
+      (!signal.register &&
+        t.isFunction(value) &&
+        t.isBlockStatement(value.body) &&
+        !value.body.body.length)
     ) {
       return;
     }
@@ -1425,6 +1414,13 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
               }
             }
           }
+
+          if (extra?.assignment) {
+            return withLeadingComment(
+              node.right,
+              getDebugName(extra.assignment),
+            );
+          }
           break;
         }
         case "ArrayPattern":
@@ -1485,7 +1481,10 @@ function getBuildAssignment(extra: AssignedBindingExtra) {
     };
   }
 
-  return getSignal(assignment.section, assignment).buildAssignment;
+  const signal = getSignal(assignment.section, assignment);
+  if (signalHasStatements(signal)) {
+    return signal.buildAssignment;
+  }
 }
 
 const registeredFnsForProgram = new WeakMap<
