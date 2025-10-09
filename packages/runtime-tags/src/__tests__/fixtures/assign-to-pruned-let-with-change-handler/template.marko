@@ -1,0 +1,6 @@
+<let/liveCount=0>
+<let/count=0 valueChange(v) {
+  liveCount = v;
+}>
+<button onClick(_, el) { el.textContent = "" + (count = 1); }>Before</>
+<div>${liveCount}</div>

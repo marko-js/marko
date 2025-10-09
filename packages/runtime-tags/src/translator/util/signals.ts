@@ -298,6 +298,7 @@ export function initValue(binding: Binding, isLet = false) {
 
 export function signalHasStatements(signal: Signal): boolean {
   if (
+    signal.extraArgs ||
     signal.render.length ||
     signal.effect.length ||
     signal.values.length ||
