@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.85
+
+### Patch Changes
+
+- [#2875](https://github.com/marko-js/marko/pull/2875) [`8f66850`](https://github.com/marko-js/marko/commit/8f66850f57767a77815a9da6141a385f6aa89829) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid writing unnecessary param signals.
+
+- [#2873](https://github.com/marko-js/marko/pull/2873) [`0b9d0a8`](https://github.com/marko-js/marko/commit/0b9d0a8f0c676f07e8fd5a564f879850dd6cab52) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid writing signals with no statements.
+
 ## 6.0.84
 
 ### Patch Changes
