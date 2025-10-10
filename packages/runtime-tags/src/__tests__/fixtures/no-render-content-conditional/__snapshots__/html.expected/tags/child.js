@@ -1,7 +1,7 @@
 import _myConst from "./my-const.marko";
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/tags/child.marko", input => {
-  const $serialize = _._get_serialize_reason();
+  const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();
   const $childScope = _._peek_scope_id();
   let x = _myConst({
@@ -12,7 +12,7 @@ export default _._template("__tests__/tags/child.marko", input => {
   _._scope($scope0_id, {
     input,
     x,
-    "#childScope/0": _._serialize_if($serialize, /* input.foo */0) && _._existing_scope($childScope)
+    "#childScope/0": _._serialize_if($scope0_reason, /* input.foo */0) && _._existing_scope($childScope)
   }, "__tests__/tags/child.marko", 0, {
     input: 0,
     x: "1:10"

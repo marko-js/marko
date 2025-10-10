@@ -65,7 +65,7 @@ export function getExprIfSerialized<
 
   for (const [section, reasons] of groupParamsBySection(reason.param)) {
     const serializeIdentifier = t.identifier(
-      getSharedUid("serialize", section),
+      getSharedUid(`scope${section.id}_reason`, section),
     );
 
     const guard = section.paramReasonGroups
@@ -90,7 +90,7 @@ function getInputSerializeReasonGuard(reason: Sources) {
 
   for (const [section, reasons] of groupParamsBySection(reason.param)) {
     const serializeIdentifier = t.identifier(
-      getSharedUid("serialize", section),
+      getSharedUid(`scope${section.id}_reason`, section),
     );
     const guard = section.paramReasonGroups
       ? callRuntime(

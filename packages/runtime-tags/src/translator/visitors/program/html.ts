@@ -40,8 +40,8 @@ export default {
         renderContent.push(
           t.variableDeclaration("const", [
             t.variableDeclarator(
-              t.identifier(getSharedUid("serialize", section)),
-              callRuntime("_get_serialize_reason"),
+              t.identifier(getSharedUid(`scope${section.id}_reason`, section)),
+              callRuntime("_scope_reason"),
             ),
           ]),
         );

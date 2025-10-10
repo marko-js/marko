@@ -1,6 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/tags/counter.marko", input => {
-  const $serialize = _._get_serialize_reason();
+  const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();
   const {
     "countChange": $countChange,
@@ -8,12 +8,12 @@ export default _._template("__tests__/tags/counter.marko", input => {
   } = input;
   let x = count;
   _._html(`<button${_._attr("id", input.id)}${_._attr("data-internal", x)}>`);
-  _._dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, _._serialize_guard($serialize, /* input.content */0));
+  _._dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, _._serialize_guard($scope0_reason, /* input.content */0));
   _._html(`</button>${_._el_resume($scope0_id, "#button/0")}`);
   _._script($scope0_id, "__tests__/tags/counter.marko_0_x");
   _._scope($scope0_id, {
-    $countChange: _._serialize_if($serialize, /* input.count */2) && $countChange,
-    count: _._serialize_if($serialize, /* input.countChange */1) && count,
+    $countChange: _._serialize_if($scope0_reason, /* input.count */2) && $countChange,
+    count: _._serialize_if($scope0_reason, /* input.countChange */1) && count,
     x,
     "TagVariableChange:x": $countChange || void 0
   }, "__tests__/tags/counter.marko", 0, {

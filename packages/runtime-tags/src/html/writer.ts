@@ -177,7 +177,7 @@ export function _set_serialize_reason(reason: undefined | 0 | 1) {
   $chunk.boundary.state.serializeReason = reason;
 }
 
-export function _get_serialize_reason() {
+export function _scope_reason() {
   const reason = $chunk.boundary.state.serializeReason;
   $chunk.boundary.state.serializeReason = undefined;
   return reason;

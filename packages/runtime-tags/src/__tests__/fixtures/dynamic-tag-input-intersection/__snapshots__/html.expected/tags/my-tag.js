@@ -1,6 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/tags/my-tag.marko", input => {
-  const $serialize = _._get_serialize_reason();
+  const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();
   const {
     as: inputAs,
@@ -26,7 +26,7 @@ export default _._template("__tests__/tags/my-tag.marko", input => {
     inputClass,
     inputContent,
     htmlInput,
-    content: _._serialize_if($serialize, /* input.as, input.class, htmlInput */0) && content
+    content: _._serialize_if($scope0_reason, /* input.as, input.class, htmlInput */0) && content
   }, "__tests__/tags/my-tag.marko", 0, {
     inputAs: "1:13",
     inputClass: "1:29",
