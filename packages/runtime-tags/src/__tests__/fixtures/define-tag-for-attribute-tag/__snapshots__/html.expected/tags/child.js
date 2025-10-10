@@ -7,5 +7,5 @@ export default _._template("__tests__/tags/child.marko", input => {
   })}>`);
   _._dynamic_tag($scope0_id, "#text/1", input.thing.content, {}, 0, 0, _._serialize_guard($scope0_reason, /* input.thing.content */2));
   _._html(`</div>${_._el_resume($scope0_id, "#div/0", _._serialize_guard($scope0_reason, /* input.thing.selected */1))}`);
-  _._serialize_guard($scope0_reason, /* input.thing.selected, input.thing.content */0) && _._scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+  _._serialize_if($scope0_reason, /* input.thing.selected, input.thing.content */0) && _._scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });

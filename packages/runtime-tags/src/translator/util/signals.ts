@@ -44,7 +44,7 @@ import {
   isImmediateOwner,
   type Section,
 } from "./sections";
-import { getExprIfSerialized, getSerializeGuard } from "./serialize-guard";
+import { getExprIfSerialized } from "./serialize-guard";
 import { getSerializeReason, type SerializeReason } from "./serialize-reasons";
 import { simplifyFunction } from "./simplify-fn";
 import { createSectionState } from "./state";
@@ -1266,19 +1266,16 @@ export function writeHTMLResumeStatements(
       }
     }
 
-    let writeScopeCall = writeScopeBuilder
-      ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))
-      : callRuntime("_scope", ...writeScopeArgs);
-
-    if (sectionSerializeReason !== true && !sectionSerializeReason.state) {
-      writeScopeCall = t.logicalExpression(
-        "&&",
-        getSerializeGuard(sectionSerializeReason, false)!,
-        writeScopeCall,
-      );
-    }
-
-    body.push(t.expressionStatement(writeScopeCall));
+    body.push(
+      t.expressionStatement(
+        getExprIfSerialized(
+          sectionSerializeReason,
+          writeScopeBuilder
+            ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))
+            : callRuntime("_scope", ...writeScopeArgs),
+        ),
+      ),
+    );
   }
 
   const resumeClosestBranch =

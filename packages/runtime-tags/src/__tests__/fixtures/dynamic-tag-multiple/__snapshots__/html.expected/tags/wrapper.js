@@ -10,7 +10,7 @@ export default _._template("__tests__/tags/wrapper.marko", input => {
     const $scope1_id = _._scope_id();
     _._html("hi");
   }, $scope0_id), 0, _._serialize_guard($scope0_reason, /* input.as, htmlInput */0));
-  _._serialize_guard($scope0_reason, /* input.as, htmlInput */0) && _._scope($scope0_id, {
+  _._serialize_if($scope0_reason, /* input.as, htmlInput */0) && _._scope($scope0_id, {
     inputAs: _._serialize_if($scope0_reason, /* htmlInput */2) && inputAs,
     htmlInput: _._serialize_if($scope0_reason, /* input.as */1) && htmlInput
   }, "__tests__/tags/wrapper.marko", 0, {

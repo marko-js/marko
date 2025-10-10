@@ -44,5 +44,5 @@ export default _._template("__tests__/tags/hello/index.marko", input => {
       col: "5:5"
     });
   }, 0, $scope0_id, "#text/1", _._serialize_guard($scope0_reason, /* input.col */2), _._serialize_guard($scope0_reason, /* input.col */2), _._serialize_guard($scope0_reason, /* input.list.item, input.col */0));
-  _._serialize_guard($scope0_reason, /* input.list.item, input.col */0) && _._scope($scope0_id, {}, "__tests__/tags/hello/index.marko", 0);
+  _._serialize_if($scope0_reason, /* input.list.item, input.col */0) && _._scope($scope0_id, {}, "__tests__/tags/hello/index.marko", 0);
 });

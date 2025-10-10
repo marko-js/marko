@@ -85,7 +85,7 @@ export default _._template("__tests__/template.marko", input => {
   _._dynamic_tag($scope0_id, "#text/16", foo || 'div', {}, 0, 0, 0);
   _._dynamic_tag($scope0_id, "#text/17", foo + 'div', {}, 0, 0, 0);
   _._dynamic_tag($scope0_id, "#text/18", "d" + "iv", {}, 0, 0, 0);
-  _._serialize_guard($scope0_reason, /* input.content, input.x, input.show, input.showTagA, input.isLarge, input.tag, input.level, input.other */8) && _._scope($scope0_id, {
+  _._serialize_if($scope0_reason, /* input.content, input.x, input.show, input.showTagA, input.isLarge, input.tag, input.level, input.other */8) && _._scope($scope0_id, {
     content: _._serialize_if($scope0_reason, /* input.other */9) && content,
     x: _._serialize_if($scope0_reason, /* input.other */9) && x,
     show: _._serialize_if($scope0_reason, /* input.other */9) && show,

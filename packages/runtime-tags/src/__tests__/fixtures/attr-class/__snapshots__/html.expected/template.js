@@ -43,7 +43,7 @@ export default _._template("__tests__/template.marko", input => {
       }, $scope0_id)
     })
   }, 0, 0, _._serialize_guard($scope0_reason, /* input.c, input.d */0));
-  _._serialize_guard($scope0_reason, /* input.c, input.d */0) && _._scope($scope0_id, {
+  _._serialize_if($scope0_reason, /* input.c, input.d */0) && _._scope($scope0_id, {
     c: _._serialize_if($scope0_reason, /* input.d */2) && c,
     d: _._serialize_if($scope0_reason, /* input.c */1) && d,
     "#childScope/1": _._serialize_if($scope0_reason, /* input.c, input.d */0) && _._existing_scope($childScope)

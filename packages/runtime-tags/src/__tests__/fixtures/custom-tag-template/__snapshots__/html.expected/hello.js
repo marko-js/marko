@@ -3,5 +3,5 @@ export default _._template("__tests__/hello.marko", input => {
   const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();
   _._html(`Hello ${_._sep(_._serialize_guard($scope0_reason, /* input.name */0))}${_._escape(input.name)}${_._el_resume($scope0_id, "#text/0", _._serialize_guard($scope0_reason, /* input.name */0))}!`);
-  _._serialize_guard($scope0_reason, /* input.name */0) && _._scope($scope0_id, {}, "__tests__/hello.marko", 0);
+  _._serialize_if($scope0_reason, /* input.name */0) && _._scope($scope0_id, {}, "__tests__/hello.marko", 0);
 });
