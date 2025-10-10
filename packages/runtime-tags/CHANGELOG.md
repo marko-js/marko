@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.86
+
+### Patch Changes
+
+- [#2876](https://github.com/marko-js/marko/pull/2876) [`a774ed6`](https://github.com/marko-js/marko/commit/a774ed6a8d5fdc0b54ff31f373803ea7dc0cdd0b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with invalid serialize guard references.
+
 ## 6.0.85
 
 ### Patch Changes
