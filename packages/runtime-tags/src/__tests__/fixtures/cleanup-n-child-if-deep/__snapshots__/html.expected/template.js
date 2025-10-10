@@ -34,7 +34,9 @@ export default _._template("__tests__/template.marko", input => {
                 write: write,
                 name: "Inner"
               });
-              _._scope($scope3_id, {}, "__tests__/template.marko", "17:10");
+              _._scope($scope3_id, {
+                _: _._scope_with_id($scope2_id)
+              }, "__tests__/template.marko", "17:10");
               return 0;
             }
           }, $scope2_id, "#text/1");

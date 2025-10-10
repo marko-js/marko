@@ -190,10 +190,12 @@ export default {
         if (branchSerializeReason) {
           const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
           const statefulSerializeArg = getSerializeGuard(
+            tagSection,
             getSerializeReason(tagSection, kStatefulReason),
             !(skipParentEnd || singleNodeOptimization),
           );
           const markerSerializeArg = getSerializeGuard(
+            tagSection,
             markerSerializeReason,
             !statefulSerializeArg,
           );
@@ -202,7 +204,11 @@ export default {
             forAttrs.by || t.numericLiteral(0),
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeBinding),
-            getSerializeGuard(branchSerializeReason, !markerSerializeArg),
+            getSerializeGuard(
+              tagSection,
+              branchSerializeReason,
+              !markerSerializeArg,
+            ),
             markerSerializeArg,
             statefulSerializeArg,
           );

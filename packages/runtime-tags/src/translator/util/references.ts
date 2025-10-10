@@ -898,49 +898,47 @@ export function finalizeReferences() {
 
     forEach(section.referencedClosures, (closure) => {
       // mark bindings that need to be serialized due to being closed over by stateful sections
-      if (!isForceSerialized(closure.section, closure)) {
-        const sourceSection = closure.section;
-        let serializeReason: undefined | SerializeReason;
-        let currentSection = section;
+      const sourceSection = closure.section;
+      let currentSection = section;
+      let branchesReason: undefined | SerializeReason;
 
-        while (currentSection !== sourceSection) {
-          const upstreamReason = currentSection.downstreamBinding
-            ? getSectionRegisterReasons(currentSection) || undefined
-            : !currentSection.upstreamExpression ||
-              getSerializeSourcesForExpr(currentSection.upstreamExpression);
-          if (upstreamReason === true) {
-            serializeReason = true;
-            break;
-          }
-
-          serializeReason = mergeSerializeReasons(
-            serializeReason,
-            upstreamReason,
-          );
-          currentSection = currentSection.parent!;
+      while (currentSection !== sourceSection) {
+        const upstreamReason = currentSection.downstreamBinding
+          ? getSectionRegisterReasons(currentSection) || undefined
+          : !currentSection.upstreamExpression ||
+            getSerializeSourcesForExpr(currentSection.upstreamExpression);
+        if (upstreamReason === true) {
+          branchesReason = true;
+          break;
         }
 
-        addSerializeReason(closure.section, serializeReason, closure);
+        branchesReason = mergeSerializeReasons(branchesReason, upstreamReason);
+        currentSection = currentSection.parent!;
       }
 
+      addSerializeReason(sourceSection, branchesReason, closure);
       addSerializeReason(
-        closure.section,
-        getSerializeReason(closure.section, closure),
+        sourceSection,
+        getSerializeReason(sourceSection, closure),
       );
 
-      if (closure.sources && isDynamicClosure(section, closure)) {
-        addSerializeReason(
-          closure.section,
-          closure.sources,
-          closure,
-          getAccessorPrefix().ClosureScopes,
-        );
-        addSerializeReason(
-          section,
-          closure.sources,
-          closure,
-          getAccessorPrefix().ClosureSignalIndex,
-        );
+      if (isDynamicClosure(section, closure)) {
+        addOwnerSerializeReason(section, sourceSection, branchesReason);
+
+        if (closure.sources) {
+          addSerializeReason(
+            sourceSection,
+            closure.sources,
+            closure,
+            getAccessorPrefix().ClosureScopes,
+          );
+          addSerializeReason(
+            section,
+            closure.sources,
+            closure,
+            getAccessorPrefix().ClosureSignalIndex,
+          );
+        }
       }
     });
   });

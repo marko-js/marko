@@ -208,10 +208,12 @@ export const IfTag = {
             }
 
             const statefulSerializeArg = getSerializeGuard(
+              ifTagSection,
               getSerializeReason(ifTagSection, kStatefulReason),
               !(skipParentEnd || singleNodeOptimization),
             );
             const markerSerializeArg = getSerializeGuard(
+              ifTagSection,
               markerSerializeReason,
               !statefulSerializeArg,
             );
@@ -227,6 +229,7 @@ export const IfTag = {
                 getScopeIdIdentifier(ifTagSection),
                 getScopeAccessorLiteral(nodeBinding),
                 getSerializeGuardForAny(
+                  ifTagSection,
                   branchSerializeReasons,
                   !markerSerializeArg,
                 ),

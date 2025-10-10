@@ -226,7 +226,8 @@ export function knownTagTranslateHTML(
       // Special case single reason to pass either 1 or undefined.
       const [group] = contentSection.paramReasonGroups;
       const reason = getSerializeReason(section, childScopeBinding, group.id);
-      childSerializeReasonExpr = reason && getSerializeGuard(reason, false);
+      childSerializeReasonExpr =
+        reason && getSerializeGuard(section, reason, false);
     } else {
       const props: t.ObjectExpression["properties"] = [];
       let hasDynamicReasons = false;
@@ -242,7 +243,7 @@ export function knownTagTranslateHTML(
                 t.numericLiteral(i),
                 getDebugNames(group.reason),
               ),
-              getSerializeGuard(reason, false)!,
+              getSerializeGuard(section, reason, false)!,
             ),
           );
         } else {

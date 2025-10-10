@@ -46,10 +46,10 @@ Inner mounted
     <!--M_|1 #text/4 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.h = [0, _.c = {
-            "ConditionalScope:#text/4": _.a = {
-              "ConditionalScope:#text/1": _.b = {
-                "ConditionalScope:#text/1": _.f = {},
+      M._.r = [_ =&gt; (_.h = [0, _.d = {
+            "ConditionalScope:#text/4": _.c = {
+              "ConditionalScope:#text/1": _.a = {
+                "ConditionalScope:#text/1": _.b = {},
                 "ClosureSignalIndex:showInner": 0
               }
             },
@@ -57,19 +57,19 @@ Inner mounted
             showMiddle: !0,
             showInner: !0,
             "ClosureScopes:showInner": _.i = new Set
-          }, _.a, _.d = {
+          }, _.c, _.e = {
             name: "Outer",
             "#ClosestBranchId": 2
-          }, _.b, _.e = {
+          }, _.a, _.f = {
             name: "Middle",
             "#ClosestBranchId": 4
-          }, _.f, _.g = {
+          }, _.b, _.g = {
             name: "Inner",
             "#ClosestBranchId": 6
-          }], _.b._ = _.a, _.a._ = _.c, _.c.write = _.d.write = _.e.write = _
-          .g.write = _._[
+          }], _.b._ = _.a, _.a._ = _.c, _.c._ = _.d, _.d.write = _.e.write = _
+          .f.write = _.g.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.c), (_.i).add(_.b), _.h),
+            ](_.d), (_.i).add(_.a), _.h),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7,
         "__tests__/template.marko_0_showInner",
@@ -143,10 +143,10 @@ Inner destroyed
     <!--M_|1 #text/4 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.h = [0, _.c = {
-            "ConditionalScope:#text/4": _.a = {
-              "ConditionalScope:#text/1": _.b = {
-                "ConditionalScope:#text/1": _.f = {},
+      M._.r = [_ =&gt; (_.h = [0, _.d = {
+            "ConditionalScope:#text/4": _.c = {
+              "ConditionalScope:#text/1": _.a = {
+                "ConditionalScope:#text/1": _.b = {},
                 "ClosureSignalIndex:showInner": 0
               }
             },
@@ -154,19 +154,19 @@ Inner destroyed
             showMiddle: !0,
             showInner: !0,
             "ClosureScopes:showInner": _.i = new Set
-          }, _.a, _.d = {
+          }, _.c, _.e = {
             name: "Outer",
             "#ClosestBranchId": 2
-          }, _.b, _.e = {
+          }, _.a, _.f = {
             name: "Middle",
             "#ClosestBranchId": 4
-          }, _.f, _.g = {
+          }, _.b, _.g = {
             name: "Inner",
             "#ClosestBranchId": 6
-          }], _.b._ = _.a, _.a._ = _.c, _.c.write = _.d.write = _.e.write = _
-          .g.write = _._[
+          }], _.b._ = _.a, _.a._ = _.c, _.c._ = _.d, _.d.write = _.e.write = _
+          .f.write = _.g.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.c), (_.i).add(_.b), _.h),
+            ](_.d), (_.i).add(_.a), _.h),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7,
         "__tests__/template.marko_0_showInner",
@@ -235,10 +235,10 @@ Middle destroyed
     <!--M_|1 #text/4 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.h = [0, _.c = {
-            "ConditionalScope:#text/4": _.a = {
-              "ConditionalScope:#text/1": _.b = {
-                "ConditionalScope:#text/1": _.f = {},
+      M._.r = [_ =&gt; (_.h = [0, _.d = {
+            "ConditionalScope:#text/4": _.c = {
+              "ConditionalScope:#text/1": _.a = {
+                "ConditionalScope:#text/1": _.b = {},
                 "ClosureSignalIndex:showInner": 0
               }
             },
@@ -246,19 +246,19 @@ Middle destroyed
             showMiddle: !0,
             showInner: !0,
             "ClosureScopes:showInner": _.i = new Set
-          }, _.a, _.d = {
+          }, _.c, _.e = {
             name: "Outer",
             "#ClosestBranchId": 2
-          }, _.b, _.e = {
+          }, _.a, _.f = {
             name: "Middle",
             "#ClosestBranchId": 4
-          }, _.f, _.g = {
+          }, _.b, _.g = {
             name: "Inner",
             "#ClosestBranchId": 6
-          }], _.b._ = _.a, _.a._ = _.c, _.c.write = _.d.write = _.e.write = _
-          .g.write = _._[
+          }], _.b._ = _.a, _.a._ = _.c, _.c._ = _.d, _.d.write = _.e.write = _
+          .f.write = _.g.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.c), (_.i).add(_.b), _.h),
+            ](_.d), (_.i).add(_.a), _.h),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7,
         "__tests__/template.marko_0_showInner",
@@ -322,10 +322,10 @@ Outer destroyed
     <!--M_|1 #text/4 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.h = [0, _.c = {
-            "ConditionalScope:#text/4": _.a = {
-              "ConditionalScope:#text/1": _.b = {
-                "ConditionalScope:#text/1": _.f = {},
+      M._.r = [_ =&gt; (_.h = [0, _.d = {
+            "ConditionalScope:#text/4": _.c = {
+              "ConditionalScope:#text/1": _.a = {
+                "ConditionalScope:#text/1": _.b = {},
                 "ClosureSignalIndex:showInner": 0
               }
             },
@@ -333,19 +333,19 @@ Outer destroyed
             showMiddle: !0,
             showInner: !0,
             "ClosureScopes:showInner": _.i = new Set
-          }, _.a, _.d = {
+          }, _.c, _.e = {
             name: "Outer",
             "#ClosestBranchId": 2
-          }, _.b, _.e = {
+          }, _.a, _.f = {
             name: "Middle",
             "#ClosestBranchId": 4
-          }, _.f, _.g = {
+          }, _.b, _.g = {
             name: "Inner",
             "#ClosestBranchId": 6
-          }], _.b._ = _.a, _.a._ = _.c, _.c.write = _.d.write = _.e.write = _
-          .g.write = _._[
+          }], _.b._ = _.a, _.a._ = _.c, _.c._ = _.d, _.d.write = _.e.write = _
+          .f.write = _.g.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.c), (_.i).add(_.b), _.h),
+            ](_.d), (_.i).add(_.a), _.h),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7,
         "__tests__/template.marko_0_showInner",
@@ -409,10 +409,10 @@ Outer destroyed
     <!--M_|1 #text/4 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.h = [0, _.c = {
-            "ConditionalScope:#text/4": _.a = {
-              "ConditionalScope:#text/1": _.b = {
-                "ConditionalScope:#text/1": _.f = {},
+      M._.r = [_ =&gt; (_.h = [0, _.d = {
+            "ConditionalScope:#text/4": _.c = {
+              "ConditionalScope:#text/1": _.a = {
+                "ConditionalScope:#text/1": _.b = {},
                 "ClosureSignalIndex:showInner": 0
               }
             },
@@ -420,19 +420,19 @@ Outer destroyed
             showMiddle: !0,
             showInner: !0,
             "ClosureScopes:showInner": _.i = new Set
-          }, _.a, _.d = {
+          }, _.c, _.e = {
             name: "Outer",
             "#ClosestBranchId": 2
-          }, _.b, _.e = {
+          }, _.a, _.f = {
             name: "Middle",
             "#ClosestBranchId": 4
-          }, _.f, _.g = {
+          }, _.b, _.g = {
             name: "Inner",
             "#ClosestBranchId": 6
-          }], _.b._ = _.a, _.a._ = _.c, _.c.write = _.d.write = _.e.write = _
-          .g.write = _._[
+          }], _.b._ = _.a, _.a._ = _.c, _.c._ = _.d, _.d.write = _.e.write = _
+          .f.write = _.g.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.c), (_.i).add(_.b), _.h),
+            ](_.d), (_.i).add(_.a), _.h),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7,
         "__tests__/template.marko_0_showInner",
@@ -488,10 +488,10 @@ Outer destroyed
     <!--M_|1 #text/4 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.h = [0, _.c = {
-            "ConditionalScope:#text/4": _.a = {
-              "ConditionalScope:#text/1": _.b = {
-                "ConditionalScope:#text/1": _.f = {},
+      M._.r = [_ =&gt; (_.h = [0, _.d = {
+            "ConditionalScope:#text/4": _.c = {
+              "ConditionalScope:#text/1": _.a = {
+                "ConditionalScope:#text/1": _.b = {},
                 "ClosureSignalIndex:showInner": 0
               }
             },
@@ -499,19 +499,19 @@ Outer destroyed
             showMiddle: !0,
             showInner: !0,
             "ClosureScopes:showInner": _.i = new Set
-          }, _.a, _.d = {
+          }, _.c, _.e = {
             name: "Outer",
             "#ClosestBranchId": 2
-          }, _.b, _.e = {
+          }, _.a, _.f = {
             name: "Middle",
             "#ClosestBranchId": 4
-          }, _.f, _.g = {
+          }, _.b, _.g = {
             name: "Inner",
             "#ClosestBranchId": 6
-          }], _.b._ = _.a, _.a._ = _.c, _.c.write = _.d.write = _.e.write = _
-          .g.write = _._[
+          }], _.b._ = _.a, _.a._ = _.c, _.c._ = _.d, _.d.write = _.e.write = _
+          .f.write = _.g.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.c), (_.i).add(_.b), _.h),
+            ](_.d), (_.i).add(_.a), _.h),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7,
         "__tests__/template.marko_0_showInner",
@@ -582,10 +582,10 @@ Inner mounted
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.h = [0, _.c = {
-            "ConditionalScope:#text/4": _.a = {
-              "ConditionalScope:#text/1": _.b = {
-                "ConditionalScope:#text/1": _.f = {},
+      M._.r = [_ =&gt; (_.h = [0, _.d = {
+            "ConditionalScope:#text/4": _.c = {
+              "ConditionalScope:#text/1": _.a = {
+                "ConditionalScope:#text/1": _.b = {},
                 "ClosureSignalIndex:showInner": 0
               }
             },
@@ -593,19 +593,19 @@ Inner mounted
             showMiddle: !0,
             showInner: !0,
             "ClosureScopes:showInner": _.i = new Set
-          }, _.a, _.d = {
+          }, _.c, _.e = {
             name: "Outer",
             "#ClosestBranchId": 2
-          }, _.b, _.e = {
+          }, _.a, _.f = {
             name: "Middle",
             "#ClosestBranchId": 4
-          }, _.f, _.g = {
+          }, _.b, _.g = {
             name: "Inner",
             "#ClosestBranchId": 6
-          }], _.b._ = _.a, _.a._ = _.c, _.c.write = _.d.write = _.e.write = _
-          .g.write = _._[
+          }], _.b._ = _.a, _.a._ = _.c, _.c._ = _.d, _.d.write = _.e.write = _
+          .f.write = _.g.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.c), (_.i).add(_.b), _.h),
+            ](_.d), (_.i).add(_.a), _.h),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7,
         "__tests__/template.marko_0_showInner",
@@ -685,10 +685,10 @@ Outer destroyed
     <!--M_|1 #text/4 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.h = [0, _.c = {
-            "ConditionalScope:#text/4": _.a = {
-              "ConditionalScope:#text/1": _.b = {
-                "ConditionalScope:#text/1": _.f = {},
+      M._.r = [_ =&gt; (_.h = [0, _.d = {
+            "ConditionalScope:#text/4": _.c = {
+              "ConditionalScope:#text/1": _.a = {
+                "ConditionalScope:#text/1": _.b = {},
                 "ClosureSignalIndex:showInner": 0
               }
             },
@@ -696,19 +696,19 @@ Outer destroyed
             showMiddle: !0,
             showInner: !0,
             "ClosureScopes:showInner": _.i = new Set
-          }, _.a, _.d = {
+          }, _.c, _.e = {
             name: "Outer",
             "#ClosestBranchId": 2
-          }, _.b, _.e = {
+          }, _.a, _.f = {
             name: "Middle",
             "#ClosestBranchId": 4
-          }, _.f, _.g = {
+          }, _.b, _.g = {
             name: "Inner",
             "#ClosestBranchId": 6
-          }], _.b._ = _.a, _.a._ = _.c, _.c.write = _.d.write = _.e.write = _
-          .g.write = _._[
+          }], _.b._ = _.a, _.a._ = _.c, _.c._ = _.d, _.d.write = _.e.write = _
+          .f.write = _.g.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.c), (_.i).add(_.b), _.h),
+            ](_.d), (_.i).add(_.a), _.h),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7,
         "__tests__/template.marko_0_showInner",

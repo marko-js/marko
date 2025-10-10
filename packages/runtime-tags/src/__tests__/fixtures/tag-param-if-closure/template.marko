@@ -1,0 +1,13 @@
+<let/count=0>
+<const/a="abc">
+<define/Foo|input|>
+  <${input.content}(input.value)/>
+</define>
+<button onClick() { count++ }>
+  Increment
+</button>
+<Foo|v|=count>
+  <if=v>
+    ${a}
+  </if>
+</>

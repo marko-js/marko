@@ -147,7 +147,7 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
-                getSerializeGuard(bodySection?.serializeReason, true),
+                getSerializeGuard(section, bodySection?.serializeReason, true),
               ),
             ),
           )[0]

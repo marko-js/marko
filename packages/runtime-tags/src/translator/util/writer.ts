@@ -162,7 +162,7 @@ export function markNode(
         "_el_resume",
         getScopeIdIdentifier(section),
         getScopeAccessorLiteral(nodeBinding),
-        getSerializeGuard(reason, true),
+        getSerializeGuard(section, reason, true),
       )}`;
     }
   }
