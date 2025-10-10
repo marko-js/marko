@@ -10,5 +10,5 @@ export default _._template("__tests__/tags/custom-tag/index.marko", input => {
   } = input;
   _._dynamic_tag($scope0_id, "#text/0", content, {}, 0, 0, _._serialize_guard($scope0_reason, /* input.thing.content */2));
   _._html(`<div>${_._escape(x)}${_._el_resume($scope0_id, "#text/1", _._serialize_guard($scope0_reason, /* input.thing.x */1))}</div>`);
-  _._serialize_guard($scope0_reason, /* input.thing.x, input.thing.content */0) && _._scope($scope0_id, {}, "__tests__/tags/custom-tag/index.marko", 0);
+  _._serialize_if($scope0_reason, /* input.thing.x, input.thing.content */0) && _._scope($scope0_id, {}, "__tests__/tags/custom-tag/index.marko", 0);
 });

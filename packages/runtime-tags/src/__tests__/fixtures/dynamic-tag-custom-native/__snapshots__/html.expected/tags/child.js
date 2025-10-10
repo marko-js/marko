@@ -6,5 +6,5 @@ export default _._template("__tests__/tags/child.marko", input => {
     id
   } = input;
   _._html(`<div>Id is ${_._sep(_._serialize_guard($scope0_reason, /* input.id */0))}${_._escape(id)}${_._el_resume($scope0_id, "#text/0", _._serialize_guard($scope0_reason, /* input.id */0))}</div>`);
-  _._serialize_guard($scope0_reason, /* input.id */0) && _._scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+  _._serialize_if($scope0_reason, /* input.id */0) && _._scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });

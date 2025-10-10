@@ -9,7 +9,7 @@ export default _._template("__tests__/tags/child.marko", input => {
   _._html("<div>");
   _._dynamic_tag($scope0_id, "#text/0", content, [value], 0, 1, _._serialize_guard($scope0_reason, /* input.content, input.value */0));
   _._html("</div>");
-  _._serialize_guard($scope0_reason, /* input.content, input.value */0) && _._scope($scope0_id, {
+  _._serialize_if($scope0_reason, /* input.content, input.value */0) && _._scope($scope0_id, {
     content: _._serialize_if($scope0_reason, /* input.value */2) && content,
     value: _._serialize_if($scope0_reason, /* input.content */1) && value
   }, "__tests__/tags/child.marko", 0, {

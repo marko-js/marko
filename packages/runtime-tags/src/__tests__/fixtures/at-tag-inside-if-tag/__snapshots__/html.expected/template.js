@@ -33,7 +33,7 @@ export default _._template("__tests__/template.marko", input => {
   _customTag({
     thing: $thing
   });
-  _._serialize_guard($scope0_reason, /* input.x */0) && _._scope($scope0_id, {
+  _._serialize_if($scope0_reason, /* input.x */0) && _._scope($scope0_id, {
     "#childScope/0": _._serialize_if($scope0_reason, /* input.x */0) && _._existing_scope($childScope)
   }, "__tests__/template.marko", 0);
 });

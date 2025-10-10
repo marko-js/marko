@@ -7,5 +7,5 @@ export default _._template("__tests__/template.marko", input => {
   </script><style>
     ${_._escape_style(".test { content: 'Hello <b> </style>' }")}
   </style></div>`);
-  _._serialize_guard($scope0_reason, /* input.x */0) && _._scope($scope0_id, {}, "__tests__/template.marko", 0);
+  _._serialize_if($scope0_reason, /* input.x */0) && _._scope($scope0_id, {}, "__tests__/template.marko", 0);
 });

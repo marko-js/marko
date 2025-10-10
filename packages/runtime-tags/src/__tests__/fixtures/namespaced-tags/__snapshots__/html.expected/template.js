@@ -25,7 +25,7 @@ export default _._template("__tests__/template.marko", input => {
     const $scope1_id = _._scope_id();
     const $scope1_reason = _._scope_reason();
     _._html(`${_._unescaped(input.value)}${_._el_resume($scope1_id, "#text/0", _._serialize_guard($scope0_reason, /* input.value */0))}`);
-    _._serialize_guard($scope0_reason, /* input.value */0) && _._subscribe($input_value__closures, _._scope($scope1_id, {
+    _._serialize_if($scope0_reason, /* input.value */0) && _._subscribe($input_value__closures, _._scope($scope1_id, {
       _: _._scope_with_id($scope0_id),
       "ClosureSignalIndex:input_value": _._serialize_if($scope0_reason, /* input.value */0) && 0
     }, "__tests__/template.marko", "12:3"));

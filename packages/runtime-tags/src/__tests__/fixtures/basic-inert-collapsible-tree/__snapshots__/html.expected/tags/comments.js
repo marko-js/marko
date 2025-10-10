@@ -19,7 +19,7 @@ const $content = input => {
           comments: comment.comments,
           path: id
         });
-        _._serialize_guard($scope0_reason, /* input.comments, input.path */0) && _._scope($scope2_id, {
+        _._serialize_if($scope0_reason, /* input.comments, input.path */0) && _._scope($scope2_id, {
           _: _._scope_with_id($scope1_id),
           "#childScope/0": _._serialize_if($scope0_reason, /* input.comments, input.path */0) && _._existing_scope($childScope)
         }, "__tests__/tags/comments.marko", "10:8");
@@ -41,7 +41,7 @@ const $content = input => {
       open: "4:10"
     });
   }, 0, $scope0_id, "#ul/0", _._serialize_guard($scope0_reason, /* input.comments, input.path */0), _._serialize_guard($scope0_reason, /* input.comments */1), _._serialize_guard($scope0_reason, /* input.comments */1), "</ul>", 1);
-  _._serialize_guard($scope0_reason, /* input.comments */1) && _._scope($scope0_id, {
+  _._serialize_if($scope0_reason, /* input.comments */1) && _._scope($scope0_id, {
     input_path: input.path
   }, "__tests__/tags/comments.marko", 0, {
     input_path: ["input.path"]

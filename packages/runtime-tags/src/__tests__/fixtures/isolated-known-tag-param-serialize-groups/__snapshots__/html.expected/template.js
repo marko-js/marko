@@ -18,7 +18,7 @@ export default _._template("__tests__/template.marko", input => {
       const $scope1_id = _._scope_id();
       const $scope1_reason = _._scope_reason();
       _._html(`<div>${_._escape(input.a)}${_._el_resume($scope1_id, "#text/0", _._serialize_guard($scope1_reason, /* input.a */1))}</div><div>${_._escape(input.b)}${_._el_resume($scope1_id, "#text/1", _._serialize_guard($scope1_reason, /* input.b */2))}</div>`);
-      _._serialize_guard($scope1_reason, /* input.a, input.b */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "3:2");
+      _._serialize_if($scope1_reason, /* input.a, input.b */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "3:2");
     })
   };
   const $childScope2 = _._peek_scope_id();
@@ -31,7 +31,7 @@ export default _._template("__tests__/template.marko", input => {
     a: input.a,
     b: input.b
   });
-  _._serialize_guard($scope0_reason, /* input.a, input.b */0) && _._scope($scope0_id, {
+  _._serialize_if($scope0_reason, /* input.a, input.b */0) && _._scope($scope0_id, {
     "#childScope/0": _._serialize_if($scope0_reason, /* input.a, input.b */0) && _._existing_scope($childScope),
     "#childScope/1": _._serialize_if($scope0_reason, /* input.a, input.b */0) && _._existing_scope($childScope2)
   }, "__tests__/template.marko", 0);
