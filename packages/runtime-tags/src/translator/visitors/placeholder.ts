@@ -116,7 +116,7 @@ export default {
             if (markerSerializeReason === true || markerSerializeReason.state) {
               write`<!>`;
             } else {
-              write`${callRuntime("_sep", getSerializeGuard(markerSerializeReason, true))}`;
+              write`${callRuntime("_sep", getSerializeGuard(section, markerSerializeReason, true))}`;
             }
           }
           walks.visit(placeholder, WalkCode.Replace);

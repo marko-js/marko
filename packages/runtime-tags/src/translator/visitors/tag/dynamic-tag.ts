@@ -291,6 +291,7 @@ export default {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
         const serializeArg = getSerializeGuard(
+          tagSection,
           getSerializeReason(tagSection, nodeBinding),
           true,
         );

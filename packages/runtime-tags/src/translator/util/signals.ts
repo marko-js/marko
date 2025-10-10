@@ -1170,7 +1170,11 @@ export function writeHTMLResumeStatements(
               reason !== true &&
               compareSources(sectionSerializeReason, reason) === 0))
           ? getDeclaredBindingExpression(binding)
-          : getExprIfSerialized(reason, getDeclaredBindingExpression(binding)),
+          : getExprIfSerialized(
+              section,
+              reason,
+              getDeclaredBindingExpression(binding),
+            ),
       ),
     );
 
@@ -1223,7 +1227,7 @@ export function writeHTMLResumeStatements(
                 ownerReason !== true &&
                 compareSources(sectionSerializeReason, ownerReason) === 0))
             ? getOwnerExpr
-            : getExprIfSerialized(ownerReason, getOwnerExpr),
+            : getExprIfSerialized(section, ownerReason, getOwnerExpr),
         ),
       );
     }
@@ -1231,7 +1235,7 @@ export function writeHTMLResumeStatements(
 
   for (const [key, { expression, reason }] of serializedLookup) {
     serializedProperties.push(
-      toObjectProperty(key, getExprIfSerialized(reason, expression)),
+      toObjectProperty(key, getExprIfSerialized(section, reason, expression)),
     );
   }
 
@@ -1269,6 +1273,7 @@ export function writeHTMLResumeStatements(
     body.push(
       t.expressionStatement(
         getExprIfSerialized(
+          section,
           sectionSerializeReason,
           writeScopeBuilder
             ? writeScopeBuilder(callRuntime("_scope", ...writeScopeArgs))

@@ -1,9 +1,14 @@
 import { types as t } from "@marko/compiler";
 
 import { getSharedUid } from "./generate-uid";
-import { getDebugNames, type Sources } from "./references";
+import { getDebugNames } from "./references";
 import { callRuntime } from "./runtime";
-import { getParamReasonGroupIndex, groupParamsBySection } from "./sections";
+import {
+  getParamReasonGroupIndex,
+  groupParamsBySection,
+  isSameOrChildSection,
+  type Section,
+} from "./sections";
 import {
   isReasonDynamic,
   type SerializeReason,
@@ -12,41 +17,71 @@ import {
 import { withLeadingComment } from "./with-comment";
 
 export function getSerializeGuard(
+  section: Section,
   reason: undefined | SerializeReason,
   optional: boolean,
 ) {
-  return !reason
-    ? t.numericLiteral(0)
-    : reason === true || reason.state
+  if (!isReasonDynamic(reason)) {
+    return reason
       ? optional
         ? undefined
-        : reason === true
-          ? t.numericLiteral(1)
-          : withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state))
-      : getInputSerializeReasonGuard(reason);
+        : withLeadingComment(
+            t.numericLiteral(1),
+            getDebugNames(reason === true ? undefined : reason.state),
+          )
+      : t.numericLiteral(0);
+  }
+
+  let expr: t.Expression | undefined;
+  for (const [paramsSection, params] of groupParamsBySection(reason.param)) {
+    if (!isSameOrChildSection(paramsSection, section)) {
+      return optional
+        ? undefined
+        : withLeadingComment(t.numericLiteral(1), getDebugNames(params));
+    }
+
+    const serializeIdentifier = t.identifier(
+      getSharedUid(`scope${paramsSection.id}_reason`, paramsSection),
+    );
+    const guard = paramsSection.paramReasonGroups
+      ? callRuntime(
+          "_serialize_guard",
+          serializeIdentifier,
+          withLeadingComment(
+            t.numericLiteral(getParamReasonGroupIndex(paramsSection, params)),
+            getDebugNames(params),
+          ),
+        )
+      : serializeIdentifier;
+
+    expr = expr ? t.logicalExpression("||", expr, guard) : guard;
+  }
+
+  return expr!;
 }
 
 export function getSerializeGuardForAny(
+  section: Section,
   reasons: undefined | SerializeReasons,
   optional: boolean,
 ) {
   if (!reasons || reasons === true) {
-    return getSerializeGuard(reasons, optional);
+    return getSerializeGuard(section, reasons, optional);
   }
 
   if (reasons.length === 1) {
-    return getSerializeGuard(reasons[0], optional);
+    return getSerializeGuard(section, reasons[0], optional);
   }
 
   let expr!: t.Expression;
   for (const reason of reasons) {
-    if (reason.state) {
+    if (!isReasonDynamic(reason)) {
       return optional
         ? undefined
         : withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state));
     }
 
-    const guard = getSerializeGuard(reason, false)!;
+    const guard = getSerializeGuard(section, reason, false)!;
     expr = expr ? t.logicalExpression("||", expr, guard) : guard;
   }
 
@@ -56,25 +91,28 @@ export function getSerializeGuardForAny(
 export function getExprIfSerialized<
   T extends undefined | SerializeReason,
   U extends t.Expression,
->(reason: T, expr: U): T extends {} ? U : undefined {
+>(section: Section, reason: T, expr: U): T extends {} ? U : undefined {
   if (!isReasonDynamic(reason)) {
     return (reason && expr) as T extends {} ? U : undefined;
   }
 
   let orExpr: t.Expression | undefined;
+  for (const [paramsSection, params] of groupParamsBySection(reason.param)) {
+    if (!isSameOrChildSection(paramsSection, section)) {
+      return expr as T extends {} ? U : undefined;
+    }
 
-  for (const [section, reasons] of groupParamsBySection(reason.param)) {
     const serializeIdentifier = t.identifier(
-      getSharedUid(`scope${section.id}_reason`, section),
+      getSharedUid(`scope${paramsSection.id}_reason`, paramsSection),
     );
 
-    const guard = section.paramReasonGroups
+    const guard = paramsSection.paramReasonGroups
       ? callRuntime(
           "_serialize_if",
           serializeIdentifier,
           withLeadingComment(
-            t.numericLiteral(getParamReasonGroupIndex(section, reasons)),
-            getDebugNames(reasons),
+            t.numericLiteral(getParamReasonGroupIndex(paramsSection, params)),
+            getDebugNames(params),
           ),
         )
       : serializeIdentifier;
@@ -83,28 +121,4 @@ export function getExprIfSerialized<
   }
 
   return t.logicalExpression("&&", orExpr!, expr) as any;
-}
-
-function getInputSerializeReasonGuard(reason: Sources) {
-  let expr: t.Expression | undefined;
-
-  for (const [section, reasons] of groupParamsBySection(reason.param)) {
-    const serializeIdentifier = t.identifier(
-      getSharedUid(`scope${section.id}_reason`, section),
-    );
-    const guard = section.paramReasonGroups
-      ? callRuntime(
-          "_serialize_guard",
-          serializeIdentifier,
-          withLeadingComment(
-            t.numericLiteral(getParamReasonGroupIndex(section, reasons)),
-            getDebugNames(reasons),
-          ),
-        )
-      : serializeIdentifier;
-
-    expr = expr ? t.logicalExpression("||", expr, guard) : guard;
-  }
-
-  return expr!;
 }

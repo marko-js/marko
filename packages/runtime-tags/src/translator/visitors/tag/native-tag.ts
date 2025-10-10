@@ -440,6 +440,7 @@ export default {
                   getScopeIdIdentifier(tagSection),
                   usedAttrs.staticContentAttr.value,
                   getSerializeGuard(
+                    tagSection,
                     nodeBinding && getSerializeReason(tagSection, nodeBinding),
                     true,
                   ),
@@ -448,6 +449,7 @@ export default {
             ];
           } else if (spreadExpression && !hasChildren) {
             const serializeReason = getSerializeGuard(
+              tagSection,
               nodeBinding && getSerializeReason(tagSection, nodeBinding),
               true,
             );

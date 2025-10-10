@@ -1,0 +1,27 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "o",
+      "$$define_content__dynamicTag": "_",
+      "$$define_content__input_content__OR__input_value": "n",
+      "$$define_content__input_value": "c",
+      "$$if_content__setup": "r",
+      "$$if_content": "m",
+      "$$Foo_content__if": "e",
+      "$$Foo_content__v": "s",
+      "$$Foo_content__$params": "a",
+      "$$count__script": "i",
+      "$$count": "u",
+      "$$Foo_content__setup": "g",
+      "$$define_content__input_value__OR__content": "d",
+      "$$define_content__input_content": "l",
+      "$$define_content__$params": "f",
+      "$$define_content__input": "k",
+      "$$MathrandomFoo_content__setup": "p",
+      "$$MathrandomFoo_content": "b",
+      "$$dynamicTag": "v",
+      "$$count__OR__Foo": "y"
+    }
+  }
+}

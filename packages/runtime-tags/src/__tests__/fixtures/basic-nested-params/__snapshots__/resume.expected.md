@@ -22,17 +22,19 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
           x: 1,
-          "#childScope/1": _.b = {
-            "ConditionalScope:#text/0": _.c = {
+          y: 2,
+          "#childScope/1": _.c = {
+            "ConditionalScope:#text/0": _.b = {
+              outer: 1,
               "ClosureScopes:outer": _.e = new Set
             },
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.b, _.c, 1, _.f = {
-          _: _.c,
+        }, _.c, _.b, 1, _.f = {
+          _: _.b,
           "ClosureSignalIndex:outer": 0,
           "#ClosestBranchId": 3
-        }], _.b.content = _._[
+        }], _.b._ = _.a, _.c.content = _._[
           "__tests__/template.marko_1_content"
           ](_.a), (_.e).add(_.f), _.d),
         "__tests__/template.marko_0_x",
@@ -76,17 +78,19 @@ container.querySelector("button").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
           x: 1,
-          "#childScope/1": _.b = {
-            "ConditionalScope:#text/0": _.c = {
+          y: 2,
+          "#childScope/1": _.c = {
+            "ConditionalScope:#text/0": _.b = {
+              outer: 1,
               "ClosureScopes:outer": _.e = new Set
             },
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.b, _.c, 1, _.f = {
-          _: _.c,
+        }, _.c, _.b, 1, _.f = {
+          _: _.b,
           "ClosureSignalIndex:outer": 0,
           "#ClosestBranchId": 3
-        }], _.b.content = _._[
+        }], _.b._ = _.a, _.c.content = _._[
           "__tests__/template.marko_1_content"
           ](_.a), (_.e).add(_.f), _.d),
         "__tests__/template.marko_0_x",
@@ -130,17 +134,19 @@ container.querySelector("button").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
           x: 1,
-          "#childScope/1": _.b = {
-            "ConditionalScope:#text/0": _.c = {
+          y: 2,
+          "#childScope/1": _.c = {
+            "ConditionalScope:#text/0": _.b = {
+              outer: 1,
               "ClosureScopes:outer": _.e = new Set
             },
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.b, _.c, 1, _.f = {
-          _: _.c,
+        }, _.c, _.b, 1, _.f = {
+          _: _.b,
           "ClosureSignalIndex:outer": 0,
           "#ClosestBranchId": 3
-        }], _.b.content = _._[
+        }], _.b._ = _.a, _.c.content = _._[
           "__tests__/template.marko_1_content"
           ](_.a), (_.e).add(_.f), _.d),
         "__tests__/template.marko_0_x",
@@ -184,17 +190,19 @@ container.querySelector("button").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
           x: 1,
-          "#childScope/1": _.b = {
-            "ConditionalScope:#text/0": _.c = {
+          y: 2,
+          "#childScope/1": _.c = {
+            "ConditionalScope:#text/0": _.b = {
+              outer: 1,
               "ClosureScopes:outer": _.e = new Set
             },
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.b, _.c, 1, _.f = {
-          _: _.c,
+        }, _.c, _.b, 1, _.f = {
+          _: _.b,
           "ClosureSignalIndex:outer": 0,
           "#ClosestBranchId": 3
-        }], _.b.content = _._[
+        }], _.b._ = _.a, _.c.content = _._[
           "__tests__/template.marko_1_content"
           ](_.a), (_.e).add(_.f), _.d),
         "__tests__/template.marko_0_x",

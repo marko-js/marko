@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>Inc</button><!--M_*1 #button/0--><div><!--M_[--><div><div>1<!--M_*5 #text/0-->.2</div></div><!--M_]2 #text/0 3--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,_.a={x:1,"#childScope/1":_.b={"ConditionalScope:#text/0":_.c={"ClosureScopes:outer":_.e=new Set},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_content"}},_.b,_.c,1,_.f={_:_.c,"ClosureSignalIndex:outer":0,"#ClosestBranchId":3}],_.b.content=_._["__tests__/template.marko_1_content"](_.a),(_.e).add(_.f),_.d),"__tests__/template.marko_0_x",1];M._.w()</script>
+  <button>Inc</button><!--M_*1 #button/0--><div><!--M_[--><div><div>1<!--M_*5 #text/0-->.2</div></div><!--M_]2 #text/0 3--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,_.a={x:1,y:2,"#childScope/1":_.c={"ConditionalScope:#text/0":_.b={outer:1,"ClosureScopes:outer":_.e=new Set},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_content"}},_.c,_.b,1,_.f={_:_.b,"ClosureSignalIndex:outer":0,"#ClosestBranchId":3}],_.b._=_.a,_.c.content=_._["__tests__/template.marko_1_content"](_.a),(_.e).add(_.f),_.d),"__tests__/template.marko_0_x",1];M._.w()</script>
 ```
 
 # Render End
@@ -27,17 +27,19 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
           x: 1,
-          "#childScope/1": _.b = {
-            "ConditionalScope:#text/0": _.c = {
+          y: 2,
+          "#childScope/1": _.c = {
+            "ConditionalScope:#text/0": _.b = {
+              outer: 1,
               "ClosureScopes:outer": _.e = new Set
             },
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.b, _.c, 1, _.f = {
-          _: _.c,
+        }, _.c, _.b, 1, _.f = {
+          _: _.b,
           "ClosureSignalIndex:outer": 0,
           "#ClosestBranchId": 3
-        }], _.b.content = _._[
+        }], _.b._ = _.a, _.c.content = _._[
           "__tests__/template.marko_1_content"
           ](_.a), (_.e).add(_.f), _.d),
         "__tests__/template.marko_0_x",
