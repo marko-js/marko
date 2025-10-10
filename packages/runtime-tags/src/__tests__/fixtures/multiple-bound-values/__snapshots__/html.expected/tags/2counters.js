@@ -1,6 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/tags/2counters.marko", input => {
-  const $serialize = _._get_serialize_reason();
+  const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();
   let count1 = input.count1;
   let count2 = input.count2;
@@ -8,10 +8,10 @@ export default _._template("__tests__/tags/2counters.marko", input => {
   _._script($scope0_id, "__tests__/tags/2counters.marko_0_count2");
   _._script($scope0_id, "__tests__/tags/2counters.marko_0_count1");
   _._scope($scope0_id, {
-    input_count1: _._serialize_if($serialize, /* input.count1Change */1) && input.count1,
-    input_count1Change: _._serialize_if($serialize, /* input.count1 */0) && input.count1Change,
-    input_count2: _._serialize_if($serialize, /* input.count2Change */3) && input.count2,
-    input_count2Change: _._serialize_if($serialize, /* input.count2 */2) && input.count2Change,
+    input_count1: _._serialize_if($scope0_reason, /* input.count1Change */1) && input.count1,
+    input_count1Change: _._serialize_if($scope0_reason, /* input.count1 */0) && input.count1Change,
+    input_count2: _._serialize_if($scope0_reason, /* input.count2Change */3) && input.count2,
+    input_count2Change: _._serialize_if($scope0_reason, /* input.count2 */2) && input.count2Change,
     count1,
     count2,
     "TagVariableChange:count1": input.count1Change || void 0,

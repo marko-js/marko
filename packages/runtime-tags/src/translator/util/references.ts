@@ -884,7 +884,9 @@ export function finalizeReferences() {
         }
       }
     }
+  });
 
+  forEachSection((section) => {
     forEach(section.referencedLocalClosures, (closure) => {
       // Local closures inherit serialize reasons from the owner section.
       addSerializeReason(

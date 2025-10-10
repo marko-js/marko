@@ -2,7 +2,7 @@ import Child from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
 export default _._template("__tests__/template.marko", input => {
-  const $serialize = _._get_serialize_reason();
+  const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();
   const $hoisted_el = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_el/hoist");
   const $child_content__subscribers = new Set();
@@ -36,13 +36,13 @@ export default _._template("__tests__/template.marko", input => {
     }, "__tests__/template.marko", "15:4", {
       $hoisted_el2: 0
     }));
-  }, $scope0_id), 0, _._serialize_guard($serialize, /* input.show */0));
+  }, $scope0_id), 0, _._serialize_guard($scope0_reason, /* input.show */0));
   _._dynamic_tag($scope0_id, "#text/2", input.show ? 'section' : null, {}, _._content_resume("__tests__/template.marko_4_content", () => {
     const $scope4_id = _._scope_id();
     const el3 = _._el();
     _._html(`<p></p>${_._el_resume($scope4_id, "#p/0")}`);
     _._subscribe($inputshowsectionnull_content__subscribers, _._scope($scope4_id, {}, "__tests__/template.marko", "34:4"));
-  }, $scope0_id), 0, _._serialize_guard($serialize, /* input.show */0));
+  }, $scope0_id), 0, _._serialize_guard($scope0_reason, /* input.show */0));
   _._script($scope0_id, "__tests__/template.marko_0");
   _._script($scope0_id, "__tests__/template.marko_0_$hoisted_el3");
   _._script($scope0_id, "__tests__/template.marko_0_$hoisted_el");

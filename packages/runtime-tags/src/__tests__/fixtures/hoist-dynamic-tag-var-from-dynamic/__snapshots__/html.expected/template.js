@@ -3,7 +3,7 @@ import Thing from "./tags/thing.marko";
 import * as _ from "@marko/runtime-tags/debug/html";
 import _thing from "./tags/thing.marko";
 export default _._template("__tests__/template.marko", input => {
-  const $serialize = _._get_serialize_reason();
+  const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();
   const $hoisted_setHtml = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml/hoist");
   const $thing_content__subscribers = new Set();
@@ -41,7 +41,7 @@ export default _._template("__tests__/template.marko", input => {
     _._subscribe($inputshowThingnull_content__subscribers, _._scope($scope2_id, {
       "ClosureScopes:3": $thing_content2__subscribers
     }, "__tests__/template.marko", "16:4"));
-  }, $scope0_id), 0, _._serialize_guard($serialize, /* input.show */0));
+  }, $scope0_id), 0, _._serialize_guard($scope0_reason, /* input.show */0));
   _._dynamic_tag($scope0_id, "#text/2", input.show ? 'section' : null, {}, _._content_resume("__tests__/template.marko_4_content", () => {
     const $scope4_id = _._scope_id();
     const $Child_scope3 = _._peek_scope_id();
@@ -52,7 +52,7 @@ export default _._template("__tests__/template.marko", input => {
     }, "__tests__/template.marko", "27:4", {
       setHtml3: "28:18"
     }));
-  }, $scope0_id), 0, _._serialize_guard($serialize, /* input.show */0));
+  }, $scope0_id), 0, _._serialize_guard($scope0_reason, /* input.show */0));
   _._script($scope0_id, "__tests__/template.marko_0");
   _._script($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml");
   _._scope($scope0_id, {

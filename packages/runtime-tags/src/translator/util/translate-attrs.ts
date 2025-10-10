@@ -429,8 +429,10 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         body.node.body.unshift(
           t.variableDeclaration("const", [
             t.variableDeclarator(
-              t.identifier(getSharedUid("serialize", bodySection)),
-              callRuntime("_get_serialize_reason"),
+              t.identifier(
+                getSharedUid(`scope${bodySection.id}_reason`, bodySection),
+              ),
+              callRuntime("_scope_reason"),
             ),
           ]) as any,
         );
