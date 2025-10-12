@@ -12,6 +12,6 @@ container.querySelector("button").click();
 ```
 ```html
 <button>
-  before
+  after
 </button>
 ```

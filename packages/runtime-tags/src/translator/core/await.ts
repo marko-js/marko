@@ -29,6 +29,7 @@ import {
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
 import {
+  addTagParamDefaultAssignmentValues,
   addValue,
   getSignal,
   writeHTMLResumeStatements,
@@ -192,6 +193,7 @@ export default {
           signal,
           valueExpr,
         );
+        addTagParamDefaultAssignmentValues(node.body);
 
         tag.remove();
       },

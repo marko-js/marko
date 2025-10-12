@@ -76,3 +76,41 @@ export function forEachIdentifierPath(
     }
   }
 }
+
+export function forEachAssignPattern(
+  node: t.Node,
+  cb: (pattern: t.AssignmentPattern) => void,
+) {
+  switch (node.type) {
+    case "ObjectPattern":
+      for (const prop of node.properties) {
+        switch (prop.type) {
+          case "ObjectProperty":
+            forEachAssignPattern(prop.value, cb);
+            break;
+          case "RestElement":
+            forEachAssignPattern(prop.argument, cb);
+            break;
+        }
+      }
+      break;
+    case "ArrayPattern":
+      for (const el of node.elements) {
+        if (el != null) {
+          switch (el.type) {
+            case "RestElement":
+              forEachAssignPattern(el.argument, cb);
+              break;
+            default:
+              forEachAssignPattern(el, cb);
+              break;
+          }
+        }
+      }
+      break;
+    case "AssignmentPattern":
+      forEachAssignPattern(node.left, cb);
+      cb(node);
+      break;
+  }
+}

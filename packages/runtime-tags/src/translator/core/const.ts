@@ -15,7 +15,11 @@ import {
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getSection } from "../util/sections";
-import { addValue, initValue } from "../util/signals";
+import {
+  addTagVarDefaultAssignmentValues,
+  addValue,
+  initValue,
+} from "../util/signals";
 import translateVar from "../util/translate-var";
 
 export default {
@@ -92,6 +96,7 @@ export default {
         if (varBinding && !varBinding.upstreamAlias) {
           const derivation = initValue(varBinding)!;
           addValue(section, value.extra?.referencedBindings, derivation, value);
+          addTagVarDefaultAssignmentValues(node);
         }
       } else {
         translateVar(tag, value);

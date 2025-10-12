@@ -19,6 +19,7 @@ import { getScopeExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addSerializeReason } from "../util/serialize-reasons";
 import {
+  addTagVarDefaultAssignmentValues,
   addValue,
   initValue,
   setBindingSerializedValue,
@@ -128,9 +129,10 @@ export default {
 
       if (isOutputDOM()) {
         const signal = initValue(binding, true);
-        const referencedBindings = tag.node.extra!.referencedBindings;
+        const referencedBindings = node.extra!.referencedBindings;
 
         addValue(section, referencedBindings, signal, valueAttr.value);
+        addTagVarDefaultAssignmentValues(node);
 
         if (valueChangeAttr) {
           signal.extraArgs = [valueChangeAttr.value];

@@ -14,10 +14,16 @@ import {
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
-import { getOrCreateSection, getSection, startSection } from "../util/sections";
+import {
+  getOrCreateSection,
+  getSection,
+  getSectionForBody,
+  startSection,
+} from "../util/sections";
 import { setTagDownstream } from "../util/set-tag-sections-downstream";
 import {
   addStatement,
+  addTagVarDefaultAssignmentValues,
   addValue,
   getSignal,
   getSignalFn,
@@ -95,6 +101,7 @@ export default {
     },
     exit(tag) {
       const { node } = tag;
+      const tagVar = node.var!;
       const translatedAttrs = translateAttrs(tag);
       if (isOutputHTML()) {
         writer.flushInto(tag);
@@ -102,8 +109,8 @@ export default {
         tag.insertBefore(translatedAttrs.statements);
         translateVar(tag, propsToExpression(translatedAttrs.properties));
       } else {
-        if (t.isIdentifier(node.var)) {
-          const babelBinding = tag.scope.getBinding(node.var.name)!;
+        if (t.isIdentifier(tagVar)) {
+          const babelBinding = tag.scope.getBinding(tagVar.name)!;
           let hasDirectReferences = false;
           let allDirectReferences = true;
 
@@ -119,7 +126,10 @@ export default {
           }
 
           if (hasDirectReferences) {
-            const signal = getSignal(node.body.extra!.section!, undefined);
+            const signal = getSignal(
+              getSectionForBody(tag.get("body"))!,
+              undefined,
+            );
             signal.build = () => {
               if (signalHasStatements(signal)) {
                 return callRuntime("_child_setup", getSignalFn(signal));
@@ -147,9 +157,10 @@ export default {
         addValue(
           section,
           referencedBindings,
-          initValue(tag.get("var").node!.extra!.binding!)!,
+          initValue(tagVar.extra!.binding!)!,
           propsToExpression(translatedAttrs.properties),
         );
+        addTagVarDefaultAssignmentValues(node);
       }
 
       tag.remove();

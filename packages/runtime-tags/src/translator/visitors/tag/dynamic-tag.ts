@@ -54,6 +54,7 @@ import {
 } from "../../util/serialize-reasons";
 import {
   addStatement,
+  addTagVarDefaultAssignmentValues,
   addValue,
   getResumeRegisterId,
   getSignal,
@@ -423,6 +424,7 @@ export default {
         }
 
         addValue(section, tagExtra.referencedBindings, signal, tagExpression);
+        addTagVarDefaultAssignmentValues(node);
         tag.remove();
       }
     },

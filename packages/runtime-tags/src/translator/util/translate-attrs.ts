@@ -22,7 +22,10 @@ import {
   getSectionRegisterReasons,
 } from "./sections";
 import { isReasonDynamic } from "./serialize-reasons";
-import { getResumeRegisterId } from "./signals";
+import {
+  addTagParamDefaultAssignmentValues,
+  getResumeRegisterId,
+} from "./signals";
 import { toObjectProperty, toPropertyName } from "./to-property-name";
 
 const contentProps = new WeakSet<t.Node>();
@@ -456,6 +459,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
           : undefined,
       );
     } else {
+      addTagParamDefaultAssignmentValues(body.node);
       return t.callExpression(
         t.identifier(bodySection.name),
         bodySection.referencedLocalClosures

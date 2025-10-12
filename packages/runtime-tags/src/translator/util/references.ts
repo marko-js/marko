@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import type { AssignmentPatternExtra } from "@marko/compiler/babel-types";
 import { getProgram } from "@marko/compiler/babel-utils";
 
 import { toAccess } from "../../html/serializer";
@@ -142,6 +143,9 @@ declare module "@marko/compiler/dist/types" {
   export interface ArrowFunctionExpressionExtra extends FunctionExtra {}
   export interface FunctionDeclarationExtra extends FunctionExtra {}
   export interface FunctionExpressionExtra extends FunctionExtra {}
+  export interface AssignmentPatternExtra {
+    assignmentSource?: Binding;
+  }
 }
 
 const [getBindings] = createProgramState(() => new Set<Binding>());
@@ -566,26 +570,55 @@ function createBindingsAndTrackReferences(
       }
       break;
     }
-    case "AssignmentPattern":
-      // TODO: this makes a default value an alias,
-      // but it really should be a computed value
-      createBindingsAndTrackReferences(
-        lVal.left,
+    case "AssignmentPattern": {
+      const defaultBinding = ((lVal.left.extra ??= {}).binding = createBinding(
+        generateUid(`${property!}_default`),
         type,
-        scope,
         section,
-        upstreamAlias,
-        property,
         undefined,
-      );
+        undefined,
+        undefined,
+        lVal.loc,
+        lVal.left.type === "Identifier",
+      ));
 
-      if (lVal.left.extra?.binding) {
-        setBindingDownstream(
-          lVal.left.extra.binding,
-          (lVal.right.extra ??= {}),
+      if (lVal.left.type === "Identifier") {
+        trackReferencesForBinding(
+          scope.getBinding(lVal.left.name)!,
+          defaultBinding,
+        );
+      } else {
+        createBindingsAndTrackReferences(
+          lVal.left,
+          type,
+          scope,
+          section,
+          defaultBinding,
+          undefined,
+          undefined,
         );
       }
+
+      const sourceBinding =
+        upstreamAlias!.propertyAliases.get(property!) ||
+        createBinding(
+          property!,
+          type,
+          section,
+          upstreamAlias,
+          property,
+          excludeProperties,
+          lVal.loc,
+          false,
+        );
+      const defaultExtra = (lVal.right.extra ??= {}) as ReferencedExtra &
+        AssignmentPatternExtra;
+      defaultExtra.section = section;
+      defaultExtra.referencedBindings = sourceBinding;
+      sourceBinding.downstreamExpressions.add(defaultExtra);
+      (lVal.extra ??= {}).assignmentSource = sourceBinding;
       break;
+    }
   }
 }
 
@@ -1468,11 +1501,11 @@ function pruneBinding(bindings: Set<Binding>, binding: Binding) {
 }
 
 function resolveReferencedBindings(
-  expr: { section: Section },
+  expr: { section: Section; referencedBindings?: ReferencedBindings },
   reads: Opt<Read>,
   intersectionsBySection: Map<Section, Intersection[]>,
 ) {
-  let referencedBindings: ReferencedBindings;
+  let referencedBindings = expr.referencedBindings;
   if (Array.isArray(reads)) {
     for (const read of reads) {
       let { binding } = read;

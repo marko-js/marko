@@ -8,7 +8,7 @@ import {
 import type { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getSectionReturnValueIdentifier } from "../core/return";
 import { isScopeIdentifier, scopeIdentifier } from "../visitors/program";
-import { forEachIdentifier } from "./for-each-identifier";
+import { forEachAssignPattern, forEachIdentifier } from "./for-each-identifier";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
 import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
@@ -710,6 +710,40 @@ export function addValue(
     signal,
     value,
   });
+}
+
+export function addTagVarDefaultAssignmentValues(tag: t.MarkoTag) {
+  if (tag.var?.extra?.binding) {
+    forEachAssignPattern(tag.var, addValueToDefaultAssignment);
+  }
+}
+
+export function addTagParamDefaultAssignmentValues(body: t.MarkoTagBody) {
+  if (body.extra?.binding) {
+    for (const param of body.params) {
+      forEachAssignPattern(param, addValueToDefaultAssignment);
+    }
+  }
+}
+
+function addValueToDefaultAssignment(assign: t.AssignmentPattern) {
+  const assignmentSource = assign.extra?.assignmentSource;
+  const defaultBinding = assign.left.extra?.binding;
+  if (!assignmentSource || !defaultBinding) return;
+  addValue(
+    defaultBinding.section,
+    assign.right.extra!.referencedBindings,
+    initValue(defaultBinding),
+    t.conditionalExpression(
+      t.binaryExpression(
+        "!==",
+        t.unaryExpression("void", t.numericLiteral(0)),
+        t.identifier(assignmentSource.name),
+      ),
+      t.identifier(assignmentSource.name),
+      assign.right,
+    ),
+  );
 }
 
 export function getResumeRegisterId(

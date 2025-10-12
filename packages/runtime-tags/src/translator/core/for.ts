@@ -41,6 +41,7 @@ import {
   getSerializeReason,
 } from "../util/serialize-reasons";
 import {
+  addTagParamDefaultAssignmentValues,
   addValue,
   getSignal,
   setClosureSignalBuilder,
@@ -296,6 +297,8 @@ export default {
           signal,
           t.arrayExpression(loopArgs),
         );
+
+        addTagParamDefaultAssignmentValues(node.body);
 
         tag.remove();
       },

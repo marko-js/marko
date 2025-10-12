@@ -16,6 +16,12 @@ container.querySelector("button").click();
 ```
 ```html
 <button>
-  before
+  after
 </button>
+```
+
+# Mutations
+```
+REMOVE #text in button
+INSERT button/#text
 ```
