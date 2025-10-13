@@ -48,10 +48,6 @@ module.exports = function (input, out) {
       return;
     }
 
-    // Track pending script calls to batch them together
-    var pendingScripts = [];
-    var runtimeFunctionWritten = false;
-
     function handleAwait(awaitInfo) {
       let flushedScript = false;
       let flushedContent = false;
@@ -66,8 +62,7 @@ module.exports = function (input, out) {
           flushedPlaceholder = true;
           if (!flushedScript && flushedContent) {
             flushedScript = true;
-            // Store the script call for later batch execution
-            pendingScripts.push(
+            asyncOut.script(
               `$${reorderFunctionId}(` +
                 (typeof awaitInfo.id === "number"
                   ? awaitInfo.id
@@ -88,9 +83,11 @@ module.exports = function (input, out) {
 
       function writeResult(result) {
         flushedContent = true;
-        // Mark that we need the runtime function but don't write it yet
-        if (!global._afRuntime && !runtimeFunctionWritten) {
-          runtimeFunctionWritten = true;
+        if (!global._afRuntime) {
+          // Minified version of ./client-reorder-runtime.js
+          asyncOut.script(
+            `function $${reorderFunctionId}(d,a,e,l,g,h,k,b,f,c){c=$${reorderFunctionId};if(a&&!c[a])(c[a+="$"]||(c[a]=[])).push(d);else{e=document;l=e.getElementById("${reorderFunctionId}"+d);g=e.getElementById("${reorderFunctionId}ph"+d);h=e.createDocumentFragment();k=l.childNodes;b=0;for(f=k.length;b<f;b++)h.appendChild(k.item(0));g&&g.parentNode.replaceChild(h,g);c[d]=1;if(a=c[d+"$"])for(b=0,f=a.length;b<f;b++)c(a[b])}}`,
+          );
           global._afRuntime = true;
         }
 
@@ -121,8 +118,7 @@ module.exports = function (input, out) {
 
         if (!flushedScript && flushedPlaceholder) {
           flushedScript = true;
-          // Store the script call for later batch execution
-          pendingScripts.push(
+          asyncOut.script(
             `$${reorderFunctionId}(` +
               (typeof awaitInfo.id === "number"
                 ? awaitInfo.id
@@ -139,18 +135,6 @@ module.exports = function (input, out) {
         out.flush();
 
         if (--remaining === 0) {
-          // Now that all HTML content has been flushed, write the runtime function and batch all script calls
-          var scriptContent = "";
-          if (runtimeFunctionWritten) {
-            scriptContent += `function $${reorderFunctionId}(d,a,e,l,g,h,k,b,f,c){c=$${reorderFunctionId};if(a&&!c[a])(c[a+="$"]||(c[a]=[])).push(d);else{e=document;l=e.getElementById("${reorderFunctionId}"+d);g=e.getElementById("${reorderFunctionId}ph"+d);h=e.createDocumentFragment();k=l.childNodes;b=0;for(f=k.length;b<f;b++)h.appendChild(k.item(0));g&&g.parentNode.replaceChild(h,g);c[d]=1;if(a=c[d+"$"])for(b=0,f=a.length;b<f;b++)c(a[b])}}`;
-          }
-          if (pendingScripts.length > 0) {
-            if (scriptContent) scriptContent += ";";
-            scriptContent += pendingScripts.join(";");
-          }
-          if (scriptContent) {
-            asyncOut.script(scriptContent);
-          }
           asyncOut.end();
           next();
         }

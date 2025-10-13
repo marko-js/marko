@@ -1,0 +1,16 @@
+import { resolveAfter, rejectAfter } from "../../utils/resolve";
+
+-- BEFORE
+<try>
+  await|result|=resolveAfter("First", 10) -- First: ${result}
+  <@catch|error|>
+    Error in first: ${error.message}
+  </@catch>
+</try>
+<try>
+  await|result|=rejectAfter(new Error("Second rejected"), 5) -- Second: ${result}
+  <@catch|error|>
+    Error in second: ${error.message}
+  </@catch>
+</try>
+-- AFTER
