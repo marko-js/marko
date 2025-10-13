@@ -1,0 +1,20 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<html>
+<head></head>
+<body>
+  -- Start
+  <try>
+    <await|promise1|=resolveAfter("promise1 resolved", 2)>
+      <div>Promise 1: ${promise1}</div>
+    </await>
+    <await|promise2|=rejectAfter(new Error("promise2 rejected"), 1)>
+      <div>Promise 2: ${promise2}</div>
+    </await>
+    <@catch|err|>
+      <div>Caught: ${err.message}</div>
+    </@catch>
+  </try>
+  -- End
+</body>
+</html>

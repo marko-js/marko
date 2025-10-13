@@ -916,7 +916,6 @@ export class Boundary extends AbortController {
     this.state = state;
     this.signal.addEventListener("abort", () => {
       this.count = 0;
-      this.state = new State(this.state.$global);
       this.onNext();
     });
 

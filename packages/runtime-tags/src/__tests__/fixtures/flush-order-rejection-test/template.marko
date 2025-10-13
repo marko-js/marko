@@ -1,0 +1,15 @@
+import { rejectAfter } from "../../utils/resolve";
+
+<html>
+<head></head>
+<body>
+  <try>
+    <await|data|=rejectAfter(new Error("failed"), 1)>
+      <div>Should not see this: ${data}</div>
+    </await>
+    <@catch|err|>
+      <div>Caught: ${err.message}</div>
+    </@catch>
+  </try>
+</body>
+</html>
