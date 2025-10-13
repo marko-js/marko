@@ -1,9 +1,9 @@
 // size: 322 (min) 213 (brotli)
-const $define_content__value = _._const(3, ($scope, value) =>
+const $MyTag_content__value = _._const(3, ($scope, value) =>
     _._text($scope[0], value),
   ),
   $if_content__x = _._if_closure(4, 0, 0, ($scope, x) =>
-    $define_content__value($scope[0], x),
+    $MyTag_content__value($scope[0], x),
   ),
   $if_content__setup = $if_content__x,
   $if_content = _._content_branch(

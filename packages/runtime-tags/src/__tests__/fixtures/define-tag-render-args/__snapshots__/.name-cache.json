@@ -11,7 +11,8 @@
       "$$x__OR__MyTag": "r",
       "$$x__script": "s",
       "$$x": "i",
-      "$$define_content__setup": "a"
+      "$$define_content__setup": "a",
+      "$$MyTag_content__c": "f"
     }
   }
 }

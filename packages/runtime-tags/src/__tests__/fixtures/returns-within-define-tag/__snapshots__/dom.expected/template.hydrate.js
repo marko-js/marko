@@ -1,22 +1,22 @@
-// size: 746 (min) 308 (brotli)
-const $define_content2__value__OR__call = _._or(4, ($scope) => {
+// size: 746 (min) 296 (brotli)
+const $Twice_content__value__OR__call = _._or(4, ($scope) => {
     let { 2: value, 3: call } = $scope;
     _._return($scope, $_return2($scope));
   }),
-  $define_content2__call = _._let(3, $define_content2__value__OR__call),
-  $define_content2__value = _._const(2, $define_content2__value__OR__call),
-  $define_content__value__OR__call = _._or(4, ($scope) => {
+  $Twice_content__call = _._let(3, $Twice_content__value__OR__call),
+  $Twice_content__value = _._const(2, $Twice_content__value__OR__call),
+  $Once_content__value__OR__call = _._or(4, ($scope) => {
     let { 2: value, 3: call } = $scope;
     _._return($scope, $_return($scope));
   }),
-  $define_content__call = _._let(3, $define_content__value__OR__call),
-  $define_content__value = _._const(2, $define_content__value__OR__call),
+  $Once_content__call = _._let(3, $Once_content__value__OR__call),
+  $Once_content__value = _._const(2, $Once_content__value__OR__call),
   $clickOnceCount = _._let(8, ($scope, clickOnceCount) => {
-    ($define_content__value($scope[0], $onClickOnce($scope)),
+    ($Once_content__value($scope[0], $onClickOnce($scope)),
       _._text($scope[3], clickOnceCount));
   }),
   $clickTwiceCount = _._let(10, ($scope, clickTwiceCount) => {
-    ($define_content2__value($scope[4], $onClickTwice($scope)),
+    ($Twice_content__value($scope[4], $onClickTwice($scope)),
       _._text($scope[7], clickTwiceCount));
   }),
   $onClickOnce2__script = _._script("a4", ($scope, { 9: onClickOnce }) =>
@@ -28,12 +28,12 @@ const $onClickTwice2__script = _._script("a6", ($scope, { 11: onClickTwice }) =>
 );
 function $_return2($scope, { 2: value, 3: call } = $scope) {
   return function () {
-    call && ($define_content2__call($scope, --call), value());
+    call && ($Twice_content__call($scope, --call), value());
   };
 }
 function $_return($scope, { 2: value, 3: call } = $scope) {
   return function () {
-    call && ($define_content__call($scope, --call), value());
+    call && ($Once_content__call($scope, --call), value());
   };
 }
 function $onClickOnce($scope, { 8: clickOnceCount } = $scope) {

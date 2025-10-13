@@ -28,7 +28,13 @@
       "$$onClickOnce": "q",
       "$$onClickTwice": "w",
       "$$define_content2__setup": "z",
-      "$$define_content__setup": "A"
+      "$$define_content__setup": "A",
+      "$$Twice_content__value__OR__call": "B",
+      "$$Twice_content__call": "C",
+      "$$Twice_content__value": "D",
+      "$$Once_content__value__OR__call": "E",
+      "$$Once_content__call": "F",
+      "$$Once_content__value": "G"
     }
   }
 }

@@ -10,7 +10,8 @@
       "$$if": "c",
       "$$show": "r",
       "$$x__script": "m",
-      "$$x": "s"
+      "$$x": "s",
+      "$$MyTag_content__value": "a"
     }
   }
 }

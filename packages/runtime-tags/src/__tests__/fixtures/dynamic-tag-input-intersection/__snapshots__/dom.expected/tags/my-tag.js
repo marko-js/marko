@@ -1,7 +1,7 @@
 export const $template = "<!><!><!>";
 export const $walks = /* over(1), replace, over(2) */"b%c";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $define_content = /* @__PURE__ */_._content("__tests__/tags/my-tag.marko_1_content", "default", /* over(1) */"b");
+const $startContent_content = /* @__PURE__ */_._content("__tests__/tags/my-tag.marko_1_content", "default", /* over(1) */"b");
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0");
 const $inputAs__OR__inputClass__OR__htmlInput__OR__content = /* @__PURE__ */_._or(9, $scope => {
   let {
@@ -20,7 +20,7 @@ const $content = /* @__PURE__ */_._let("content/8", $inputAs__OR__inputClass__OR
 const $startContent = /* @__PURE__ */_._const("startContent", $content);
 export function $setup($scope) {
   $startContent($scope, {
-    content: $define_content($scope)
+    content: $startContent_content($scope)
   });
 }
 const $inputAs = /* @__PURE__ */_._const("inputAs", $inputAs__OR__inputClass__OR__htmlInput__OR__content);

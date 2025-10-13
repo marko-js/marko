@@ -8,7 +8,7 @@ import {
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
-import { isCoreTag } from "./is-core-tag";
+import { isCoreTag, isCoreTagName } from "./is-core-tag";
 import {
   addSorted,
   filter,
@@ -102,21 +102,26 @@ export function startSection(
   let section = extra.section;
 
   if (!section && (path.type === "Program" || path.get("body").length)) {
+    const parentTag = path.parentPath?.isMarkoTag()
+      ? path.parentPath
+      : undefined;
     const parentSection = path.parentPath
       ? getOrCreateSection(path.parentPath)
       : undefined;
-    const sectionNamePath = (path.parentPath as t.NodePath<t.MarkoTag>)?.get(
-      "name",
-    );
-    const sectionName = path.isProgram()
-      ? ""
-      : generateUid(sectionNamePath.toString() + "_content");
+    const sectionName = parentTag
+      ? generateUid(
+          (isCoreTagName(parentTag, "define") &&
+          t.isIdentifier(parentTag.node.var)
+            ? parentTag.node.var.name
+            : parentTag.get("name").toString()) + "_content",
+        )
+      : "";
     const programExtra = (path.hub.file.path.node.extra ??= {});
     const sections = (programExtra.sections ??= []);
     section = extra.section = {
       id: sections.length,
       name: sectionName,
-      loc: sectionNamePath?.node.loc || undefined,
+      loc: parentTag?.node.name.loc || undefined,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
       sectionAccessor: undefined,
