@@ -1,0 +1,1 @@
+exports.skip_vdom = "client-reorder/placeholders are not supported in vdom";

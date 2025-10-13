@@ -1,0 +1,12 @@
+---
+BEFORE
+<await(new Promise((resolve) => setTimeout(resolve, 10, "First"))) client-reorder name="first">
+    <@then|result|>First: ${result}</@then>
+</await>
+<await(new Promise((resolve, reject) => setTimeout(reject, 5, new Error("Rejected")))) client-reorder name="second">
+    <@then|result|>Second: ${result}</@then>
+    <@catch|error|>Error: ${error.message}</@catch>
+</await>
+AFTER
+<await-reorderer/>
+---
