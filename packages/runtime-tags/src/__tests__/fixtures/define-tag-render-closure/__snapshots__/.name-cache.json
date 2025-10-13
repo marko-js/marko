@@ -10,7 +10,9 @@
       "$$define_content__setup": "c",
       "$$if_content__setup": "i",
       "$$if_content": "n",
-      "$$if": "s"
+      "$$if": "s",
+      "$$MyTag_content__x": "a",
+      "$$MyTag_content__setup": "l"
     }
   }
 }

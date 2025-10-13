@@ -21,7 +21,10 @@
       "$$MathrandomFoo_content__setup": "p",
       "$$MathrandomFoo_content": "b",
       "$$dynamicTag": "v",
-      "$$count__OR__Foo": "y"
+      "$$count__OR__Foo": "y",
+      "$$Foo_content2__dynamicTag": "h",
+      "$$Foo_content2__input_content__OR__input_value": "x",
+      "$$Foo_content2__input_value": "j"
     }
   }
 }

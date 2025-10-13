@@ -10,7 +10,8 @@
       "$$define_content": "_",
       "$$myThing": "m",
       "$$selected__script": "a",
-      "$$selected": "i"
+      "$$selected": "i",
+      "$$myThing_content": "r"
     }
   }
 }

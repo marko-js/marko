@@ -9,7 +9,8 @@
       "$$count_closure": "c",
       "$$count__script": "m",
       "$$count": "n",
-      "$$count__closure": "s"
+      "$$count__closure": "s",
+      "$$MyThing_content__count": "a"
     }
   }
 }

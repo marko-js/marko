@@ -1,7 +1,7 @@
 export const $template = "<div></div><button></button><span>Overridden</span><output></output><strong></strong><p></p><em></em>";
 export const $walks = /* get, over(1), get, over(1), get, over(1), get, over(1), get, over(1), get, over(1), get, over(1) */" b b b b b b b";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $define_content = _._content_resume("__tests__/tags/my-div.marko_1_content", "Custom content", /* over(1) */"b");
+const $CustomContent_content = _._content_resume("__tests__/tags/my-div.marko_1_content", "Custom content", /* over(1) */"b");
 const $input__OR__CustomContent_content__script = _._script("__tests__/tags/my-div.marko_0_input_CustomContent_content", $scope => _._attrs_script($scope, "#p/5"));
 const $input__OR__CustomContent_content = /* @__PURE__ */_._or(11, $scope => {
   let {
@@ -35,15 +35,15 @@ export const $input = /* @__PURE__ */_._const("input", ($scope, input) => {
 });
 const $CustomContent = /* @__PURE__ */_._const("CustomContent", ($scope, CustomContent) => {
   _._attr_content($scope, "#em/6", CustomContent);
-  $CustomContent_content($scope, CustomContent?.content);
+  $CustomContent_content2($scope, CustomContent?.content);
 });
 export function $setup($scope) {
   _._attr_content($scope, "#output/3", undefined);
   $CustomContent($scope, {
-    content: $define_content($scope)
+    content: $CustomContent_content($scope)
   });
 }
-const $CustomContent_content = /* @__PURE__ */_._const("CustomContent_content", ($scope, CustomContent_content) => {
+const $CustomContent_content2 = /* @__PURE__ */_._const("CustomContent_content", ($scope, CustomContent_content) => {
   _._attr_content($scope, "#strong/4", CustomContent_content);
   $input__OR__CustomContent_content($scope);
 });

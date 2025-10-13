@@ -10,7 +10,8 @@
       "$$x__OR__MyTag": "c",
       "$$x__script": "e",
       "$$x": "i",
-      "$$define_content__setup": "s"
+      "$$define_content__setup": "s",
+      "$$MyTag_content__number": "a"
     }
   }
 }
