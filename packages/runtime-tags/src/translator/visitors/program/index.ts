@@ -30,6 +30,7 @@ import { startSection } from "../../util/sections";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
+import { preAnalyze } from "./pre-analyze";
 
 export type ParamSerializeReason = NonNullable<Sources["param"]>;
 export interface ParamSerializeReasonGroup {
@@ -69,6 +70,9 @@ export default {
     exit(program) {
       program.scope.crawl();
     },
+  },
+  transform: {
+    exit: preAnalyze,
   },
   analyze: {
     enter(program) {

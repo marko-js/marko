@@ -14,7 +14,6 @@ import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorPrefix } from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
 import isInvokedFunction from "../../util/is-invoked-function";
-import normalizeStringExpression from "../../util/normalize-string-expression";
 import { type Opt, push } from "../../util/optional";
 import {
   type Binding,
@@ -79,37 +78,6 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export default {
-  transform: {
-    enter(tag) {
-      const tagName = getTagName(tag);
-      if (tagName === "textarea" && tag.node.body.body.length) {
-        // convert textarea body into a static value attribute.
-        const parts: (string | t.Expression)[] = [];
-        for (const child of tag.node.body.body) {
-          if (
-            child.type === "MarkoText" ||
-            (child.type === "MarkoPlaceholder" && child.escape)
-          ) {
-            parts.push(child.value);
-          } else {
-            throw tag.hub.file.hub.buildError(
-              child,
-              "Unexpected content in textarea, only text and placeholders are supported.",
-              SyntaxError,
-            );
-          }
-        }
-        tag.node.attributes.push(
-          t.markoAttribute(
-            "value",
-            normalizeStringExpression(parts) || buildUndefined(),
-          ),
-        );
-
-        tag.node.body.body = [];
-      }
-    },
-  },
   analyze: {
     enter(tag) {
       assertNoArgs(tag);
