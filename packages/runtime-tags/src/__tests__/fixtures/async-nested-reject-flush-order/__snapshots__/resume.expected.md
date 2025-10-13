@@ -9,11 +9,13 @@
     </style>
   </head>
   <body>
+    -- Start 
     <!--M_[-->
     <div>
-      Error: Second failed
+      Caught: promise2 rejected
     </div>
     <!--M_]1 #text/0 2-->
+     -- End
     <script>
       REORDER_RUNTIME(M._);
       M._.w()
@@ -24,5 +26,5 @@
 
 # Mutations
 ```
-INSERT html/body/#text
+INSERT html/body/#text1
 ```

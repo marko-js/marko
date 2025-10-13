@@ -1,4 +1,4 @@
-// size: 188 (min) 134 (brotli)
+// size: 189 (min) 149 (brotli)
 _._enable_catch();
 const $catch_content__err_message = _._const(3, ($scope, err_message) =>
     _._text($scope[0], err_message),
@@ -11,7 +11,7 @@ const $catch_content__err_message = _._const(3, ($scope, err_message) =>
   );
 _._content_resume(
   "a0",
-  "<div>Error: <!></div>",
+  "<div>Caught: <!></div>",
   "Db%l",
   0,
   $catch_content__$params,

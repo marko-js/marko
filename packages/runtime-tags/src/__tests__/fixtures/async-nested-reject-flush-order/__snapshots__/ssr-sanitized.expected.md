@@ -1,6 +1,8 @@
 # Render End
 ```html
+-- Start
 <div>
-  Error: Second failed
+  Caught: promise2 rejected
 </div>
+-- End
 ```
