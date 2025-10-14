@@ -1,0 +1,23 @@
+{
+  "vars": {
+    "props": {
+      "$_": "o",
+      "$init": "t",
+      "$$ChildB_content__$pattern": "_",
+      "$$ChildB_content__bar": "r",
+      "$$ChildB_content__count__OR__bar": "c",
+      "$$ChildB_content__$bar": "e",
+      "$$ChildB_content__count__OR__foo": "s",
+      "$$ChildB_content__count": "n",
+      "$$ChildA_content__$pattern": "i",
+      "$$ChildA_content__bar": "a",
+      "$$ChildA_content__count__OR__bar": "m",
+      "$$ChildA_content__$bar": "l",
+      "$$ChildA_content__count__OR__foo": "d",
+      "$$ChildA_content__count": "u",
+      "$$count__closure": "b",
+      "$$count__script": "g",
+      "$$count": "v"
+    }
+  }
+}

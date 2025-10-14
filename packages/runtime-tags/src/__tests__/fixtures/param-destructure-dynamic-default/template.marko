@@ -1,0 +1,19 @@
+let/count = 0
+define/ChildA|{ id, foo, foo: { bar = count + 1 } = { bar: count + 2 } }|
+  div.a id=id -- ${bar} ${typeof foo}
+
+ChildA#a foo={ bar: 0 }
+ChildA#b foo={}
+ChildA#c
+
+define/ChildB|input|
+  const/{ foo, foo: { bar = count + 1 } = { bar: count + 2 } }=input
+  div.b id=input.id -- ${bar} ${typeof foo}
+
+ChildB#d foo={ bar: 0 }
+ChildB#e foo={}
+ChildB#f
+
+button onClick() {
+  count++
+} -- Increment default

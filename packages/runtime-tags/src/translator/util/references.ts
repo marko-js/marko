@@ -566,26 +566,6 @@ function createBindingsAndTrackReferences(
       }
       break;
     }
-    case "AssignmentPattern":
-      // TODO: this makes a default value an alias,
-      // but it really should be a computed value
-      createBindingsAndTrackReferences(
-        lVal.left,
-        type,
-        scope,
-        section,
-        upstreamAlias,
-        property,
-        undefined,
-      );
-
-      if (lVal.left.extra?.binding) {
-        setBindingDownstream(
-          lVal.left.extra.binding,
-          (lVal.right.extra ??= {}),
-        );
-      }
-      break;
   }
 }
 

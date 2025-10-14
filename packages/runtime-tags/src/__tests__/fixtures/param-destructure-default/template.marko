@@ -1,0 +1,14 @@
+define/ChildA|{ foo, foo: { bar = 1 } = { bar: 2 } }|
+  div.a -- ${bar} ${typeof foo}
+
+ChildA foo={ bar: 0 }
+ChildA foo={}
+ChildA
+
+define/ChildB|input|
+  const/{ foo, foo: { bar = 1 } = { bar: 2 } }=input
+  div.b -- ${bar} ${typeof foo}
+
+ChildB foo={ bar: 0 }
+ChildB foo={}
+ChildB

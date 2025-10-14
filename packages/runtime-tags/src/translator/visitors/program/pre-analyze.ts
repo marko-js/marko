@@ -39,6 +39,27 @@ function normalizeBody(
 function normalizeTag(state: State, tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   const { name, attributes } = node;
+  normalizeBody(state, tag.get("body").get("body"));
+
+  if (node.var) {
+    const insertions = getAssignmentInsertions(node.var);
+    if (insertions) {
+      state.crawl = true;
+      tag.insertAfter(insertions);
+    }
+  }
+
+  if (node.body.params.length) {
+    let insertions: t.MarkoTag[] | undefined;
+    for (const param of node.body.params) {
+      insertions = getAssignmentInsertions(param, insertions);
+    }
+
+    if (insertions) {
+      state.crawl = true;
+      node.body.body = [...insertions, ...node.body.body];
+    }
+  }
 
   if (name.type === "StringLiteral") {
     const tagName = name.value;
@@ -62,8 +83,6 @@ function normalizeTag(state: State, tag: t.NodePath<t.MarkoTag>) {
       attributes.splice(++i, 0, getChangeHandler(tag, attr));
     }
   }
-
-  normalizeBody(state, tag.get("body").get("body"));
 }
 
 function getChangeHandler(
@@ -244,5 +263,84 @@ function getChangeHandlerFromObjectPattern(
 }
 
 function getStringOrIdentifierValue(path: StringOrIdPath) {
-  return path.isStringLiteral() ? path.node.value : path.node.name;
+  return getLiteralName(path.node);
+}
+
+function getLiteralName(node: t.Node) {
+  switch (node.type) {
+    case "Identifier":
+      return node.name;
+    case "StringLiteral":
+      return node.value;
+  }
+}
+
+export function getAssignmentInsertions(
+  node: t.Node,
+  insertions?: t.MarkoTag[] | undefined,
+) {
+  switch (node.type) {
+    case "ObjectPattern":
+      for (const prop of node.properties) {
+        if (prop.type === "ObjectProperty") {
+          if (prop.value.type === "AssignmentPattern") {
+            const { left, right } = prop.value;
+            const sourceName = generateUid(
+              getLiteralName(left) || getLiteralName(prop.key) || "pattern",
+            );
+            prop.shorthand = false;
+            prop.value = t.identifier(sourceName);
+            (insertions ||= []).push(
+              toConstTag(left as any, toFallbackExpr(sourceName, right)),
+            );
+            getAssignmentInsertions(left, insertions);
+          } else {
+            insertions = getAssignmentInsertions(prop.value, insertions);
+          }
+        }
+      }
+      break;
+    case "ArrayPattern":
+      for (let i = 0, len = node.elements.length; i < len; i++) {
+        const el = node.elements[i];
+        if (el != null) {
+          if (el.type === "AssignmentPattern") {
+            const { left, right } = el;
+            const sourceName = generateUid(getLiteralName(left) || "pattern");
+            node.elements[i] = t.identifier(sourceName);
+            (insertions ||= []).push(
+              toConstTag(left as any, toFallbackExpr(sourceName, right)),
+            );
+            getAssignmentInsertions(left, insertions);
+          } else {
+            insertions = getAssignmentInsertions(el, insertions);
+          }
+        }
+      }
+      break;
+  }
+
+  return insertions;
+}
+
+function toFallbackExpr(id: string, fallback: t.Expression) {
+  return t.conditionalExpression(
+    t.binaryExpression("!==", buildUndefined(), t.identifier(id)),
+    t.identifier(id),
+    fallback,
+  );
+}
+
+function toConstTag(id: t.Identifier, expr: t.Expression) {
+  return t.markoTag(
+    t.stringLiteral("const"),
+    [t.markoAttribute("value", expr, null, null, true)],
+    t.markoTagBody(),
+    null,
+    id,
+  );
+}
+
+function buildUndefined() {
+  return t.unaryExpression("void", t.numericLiteral(0));
 }
