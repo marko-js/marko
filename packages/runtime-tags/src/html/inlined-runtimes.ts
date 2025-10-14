@@ -35,61 +35,60 @@ export const WALKER_RUNTIME_CODE = MARKO_DEBUG
     },
   })
 ), self[runtimeId]))`
-  : `(e=>(self[e]||(self[e]=(l,s=e+l,f=s.length,o={},d=[],n=document,t=n.createTreeWalker(n,129))=>n=self[e][l]={i:s,d:n,l:o,v:d,x(){},w(e,l,a){for(;e=t.nextNode();)n.x(l=(l=e.data)&&!l.indexOf(s)&&(o[a=l.slice(f+1)]=e,l[f]),a,e),l>"#"&&d.push(e)}}),self[e]))`;
+  : `(e=>(self[e]||(self[e]=(l,f=e+l,s=f.length,a={},d=[],t=document,n=t.createTreeWalker(t,129))=>t=self[e][l]={i:f,d:t,l:a,v:d,x(){},w(e,l,r){for(;e=n.nextNode();)t.x(l=(l=e.data)&&!l.indexOf(f)&&(a[r=l.slice(s+1)]=e,l[s]),r,e),l>"#"&&d.push(e)}}),self[e]))`;
 export const REORDER_RUNTIME_CODE = MARKO_DEBUG
   ? /* js */ `((runtime) => {
-if (runtime.j) return;
-let onNextSibling,
-  placeholder,
-  nextSibling,
-  placeholders = {},
-  replace = (marker, container) => {
-    marker.replaceWith(...container.childNodes);
-    container.remove();
-  };
-runtime.d.head.append(
-  runtime.d.querySelector("style[" + runtime.i + "]") || "",
-);
-runtime.j = {};
-runtime.x = (op, id, node, start, placeholderCallback) => {
-  if (op == "#") {
-    (placeholders[id] = placeholder).i++;
-  } else if (node == nextSibling) {
-    onNextSibling();
-  }
-
-  if (node.tagName == "T" && (id = node.getAttribute(runtime.i))) {
-    start = runtime.l["^" + id];
-
-    if (start) {
-      placeholders[id] = {
-        i: 1,
-        c(end = runtime.l[id] || node) {
-          for (
-            ;
-            (nextSibling = end.previousSibling || start).remove(),
-            start != nextSibling;
-          );
-          replace(end, node);
-        },
-      };
+  if (runtime.j) return;
+  let onNextSibling,
+    placeholder,
+    nextSibling,
+    placeholders = {},
+    replace = (id, container) => runtime.l[id].replaceWith(...container.childNodes);
+  runtime.d.head.append(
+    runtime.d.querySelector("style[" + runtime.i + "]") || ""
+  );
+  runtime.j = {};
+  runtime.x = (op, id, node, placeholderRoot, placeholderCb) => {
+    if (node == nextSibling) {
+      onNextSibling();
     }
 
-    nextSibling = node.nextSibling;
-    placeholder = placeholders[id];
-    onNextSibling = () => {
-      start || replace(runtime.l[id], node);
-      if (!--placeholder.i) {
-        placeholder.c();
+    if (op == "#") {
+      (placeholders[id] = placeholder).i++;
+    } else if (op == "!") {
+      if (runtime.l[id] && placeholders[id]) {
+        placeholders[id].c();
       }
-    };
+    } else if (node.tagName == "T" && (id = node.getAttribute(runtime.i))) {
+      nextSibling = node.nextSibling;
+      onNextSibling = () => {
+        node.remove();
+        placeholderRoot || replace(id, node);
+        placeholder.c();
+      };
+      placeholder =
+        placeholders[id] ||
+        (placeholderRoot = placeholders[id] =
+          {
+            i: runtime.l[id] ? 1 : 2,
+            c(start = runtime.l["^" + id]) {
+              if (--placeholderRoot.i) return 1;
+              for (
+                ;
+                (nextSibling =
+                  runtime.l[id].previousSibling || start).remove(),
+                  start != nextSibling;
 
-    // repurpose "op" for callbacks ...carefully
-    if (op = runtime.j[id]) {
-      placeholderCallback = placeholder.c;
-      placeholder.c = () => placeholderCallback() + op(runtime.r);
+              );
+              replace(id, node);
+            },
+          });
+      // repurpose "op" for callbacks ...carefully
+      if ((op = runtime.j[id])) {
+        placeholderCb = placeholder.c;
+        placeholder.c = () => placeholderCb() || op(runtime.r);
+      }
     }
-  }
-};
+  };
 })`
-  : `(e=>{if(e.j)return;let i,o,l,r={},t=(e,i)=>{e.replaceWith(...i.childNodes),i.remove()};e.d.head.append(e.d.querySelector("style["+e.i+"]")||""),e.j={},e.x=(c,d,n,a,g)=>{"#"==c?(r[d]=o).i++:n==l&&i(),"T"==n.tagName&&(d=n.getAttribute(e.i))&&((a=e.l["^"+d])&&(r[d]={i:1,c(i=e.l[d]||n){for(;(l=i.previousSibling||a).remove(),a!=l;);t(i,n)}}),l=n.nextSibling,o=r[d],i=()=>{a||t(e.l[d],n),--o.i||o.c()},(c=e.j[d])&&(g=o.c,o.c=()=>g()+c(e.r)))}})`;
+  : `(e=>{if(e.j)return;let i,r,l,t={},c=(i,r)=>e.l[i].replaceWith(...r.childNodes);e.d.head.append(e.d.querySelector("style["+e.i+"]")||""),e.j={},e.x=(a,d,n,o,u)=>{n==l&&i(),"#"==a?(t[d]=r).i++:"!"==a?e.l[d]&&t[d]&&t[d].c():"T"==n.tagName&&(d=n.getAttribute(e.i))&&(l=n.nextSibling,i=()=>{n.remove(),o||c(d,n),r.c()},r=t[d]||(o=t[d]={i:e.l[d]?1:2,c(i=e.l["^"+d]){if(--o.i)return 1;for(;(l=e.l[d].previousSibling||i).remove(),i!=l;);c(d,n)}}),(a=e.j[d])&&(u=r.c,r.c=()=>u()||a(e.r)))}})`;

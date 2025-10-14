@@ -71,21 +71,15 @@ INSERT html/body/script0
 INSERT html/body/script0/#text
 REMOVE html/head/style after html/body/#text4
 INSERT html/head/style
+REMOVE t after html/body/#text4
 INSERT html/body/#text5
 INSERT t
 INSERT html/body/#text2
 INSERT html/body/script1
 INSERT html/body/script1/#text
-REMOVE html/body/#text2 in t
-REMOVE #comment after html/body/#text1
-INSERT html/body/#text2
 REMOVE t after html/body/#text5
 REMOVE #text after #comment
 REMOVE #comment after html/body/#comment0
-REMOVE html/body/#text1 before html/body/#text2
-REMOVE html/body/#text2 before html/body/#text3
-REMOVE html/body/#text3 in t
 REMOVE #comment after html/body/#comment0
 INSERT html/body/#text1, html/body/#text2, html/body/#text3
-REMOVE t after html/body/#text4
 ```

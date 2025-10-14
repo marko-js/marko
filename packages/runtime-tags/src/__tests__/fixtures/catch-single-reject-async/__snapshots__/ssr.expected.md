@@ -54,11 +54,10 @@ INSERT html/body/script
 INSERT html/body/script/#text
 REMOVE html/head/style after html/body/#text2
 INSERT html/head/style
+REMOVE t after html/body/#text2
 REMOVE script after #text
 REMOVE #text after #comment
 REMOVE #comment after html/body/#comment0
-REMOVE html/body/#text1 in t
 REMOVE #comment after html/body/#comment0
 INSERT html/body/#text1
-REMOVE t after html/body/#text2
 ```

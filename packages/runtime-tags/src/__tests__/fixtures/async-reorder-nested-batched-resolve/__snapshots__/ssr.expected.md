@@ -111,6 +111,7 @@ INSERT html/body/script0
 INSERT html/body/script0/#text
 REMOVE html/head/style after html/body/#comment
 INSERT html/head/style
+REMOVE t after html/body/#comment
 INSERT t
 INSERT html/body/div
 INSERT html/body/div/#comment0
@@ -125,16 +126,12 @@ INSERT t
 INSERT #comment
 INSERT html/body/script1
 INSERT html/body/script1/#text
-REMOVE html/body/div in t
-REMOVE #comment in t
-INSERT html/body/div
 REMOVE t after html/body/script0
 REMOVE #text before #comment
 REMOVE #comment after #comment
-REMOVE html/body/div in t
 REMOVE #comment before html/body/#comment
 INSERT html/body/div
-REMOVE t after html/body/#comment
+REMOVE t after html/body/script0
 INSERT t
 INSERT html/body/div/div/div
 INSERT html/body/div/div/div/#comment0
@@ -142,14 +139,9 @@ INSERT html/body/div/div/div/div
 INSERT html/body/div/div/div/#comment1
 INSERT html/body/script2
 INSERT html/body/script2/#text
-REMOVE html/body/div/div/div in t
-REMOVE #comment in t
-INSERT html/body/div/div/div
 REMOVE t after html/body/script1
 REMOVE #text after #comment
 REMOVE #comment after html/body/div/div/#comment0
-REMOVE html/body/div/div/div in t
 REMOVE #comment after html/body/div/div/#comment0
 INSERT html/body/div/div/div
-REMOVE t after html/body/script0
 ```

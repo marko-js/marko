@@ -94,14 +94,14 @@ export function prepareEffects(fn: () => void): unknown[] {
   return preparedEffects;
 }
 
-export let runEffects = (effects: unknown[]) => {
+export let runEffects = ((effects) => {
   for (let i = 0, scope: Scope; i < effects.length; ) {
     (effects[i++] as (a: Scope, b: Scope) => void)(
       (scope = effects[i++] as Scope),
       scope,
     );
   }
-};
+}) as (effects: unknown[], checkPending?: boolean) => void;
 
 function runRenders() {
   while (pendingRenders.length) {
