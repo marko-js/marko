@@ -34,8 +34,8 @@ export const WALKER_RUNTIME_CODE = MARKO_DEBUG
       }
     },
   })
-)))`
-  : `(e=>(self[e]||(self[e]=(o,l=e+o,d=l.length,n={},f=[],s=document,a=s.createTreeWalker(s,129))=>s=self[e][o]={i:l,d:s,l:n,v:f,x(){},w(e,o,i){for(;e=a.nextNode();)s.x(o=(o=e.data)&&!o.indexOf(l)&&(n[i=o.slice(d+1)]=e,o[d]),i,e),o>"#"&&f.push(e)}})))`;
+), self[runtimeId]))`
+  : `(e=>(self[e]||(self[e]=(l,s=e+l,f=s.length,o={},d=[],n=document,t=n.createTreeWalker(n,129))=>n=self[e][l]={i:s,d:n,l:o,v:d,x(){},w(e,l,a){for(;e=t.nextNode();)n.x(l=(l=e.data)&&!l.indexOf(s)&&(o[a=l.slice(f+1)]=e,l[f]),a,e),l>"#"&&d.push(e)}}),self[e]))`;
 export const REORDER_RUNTIME_CODE = MARKO_DEBUG
   ? /* js */ `((runtime) => {
 if (runtime.j) return;
