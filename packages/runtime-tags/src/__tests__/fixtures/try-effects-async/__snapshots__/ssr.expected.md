@@ -95,6 +95,7 @@ INSERT html/body/script0
 INSERT html/body/script0/#text
 REMOVE html/head/style after html/body/#comment9
 INSERT html/head/style
+REMOVE t after html/body/#comment9
 INSERT t
 INSERT html/body/#comment4
 INSERT html/body/#text0
@@ -104,24 +105,9 @@ INSERT html/body/#comment6
 INSERT html/body/#comment7
 INSERT html/body/script1
 INSERT html/body/script1/#text
-REMOVE html/body/#comment4 before html/body/#text0
-REMOVE html/body/#text0 before html/body/#comment5
-REMOVE html/body/#comment5 before html/body/#text1
-REMOVE html/body/#text1 before html/body/#comment6
-REMOVE html/body/#comment6 before html/body/#comment7
-REMOVE html/body/#comment7 in t
-REMOVE #comment in t
-INSERT html/body/#comment4, html/body/#text0, html/body/#comment5, html/body/#text1, html/body/#comment6, html/body/#comment7
 REMOVE t after html/body/script0
 REMOVE #text after #comment
 REMOVE #comment after html/body/#comment3
-REMOVE html/body/#comment4 before html/body/#text0
-REMOVE html/body/#text0 before html/body/#comment5
-REMOVE html/body/#comment5 before html/body/#text1
-REMOVE html/body/#text1 before html/body/#comment6
-REMOVE html/body/#comment6 before html/body/#comment7
-REMOVE html/body/#comment7 in t
 REMOVE #comment after html/body/#comment3
 INSERT html/body/#comment4, html/body/#text0, html/body/#comment5, html/body/#text1, html/body/#comment6, html/body/#comment7
-REMOVE t after html/body/#comment9
 ```

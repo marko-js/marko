@@ -111,8 +111,6 @@ Async: 1
 INSERT #comment0, #text0, #text1, #comment1
 REMOVE #text after #comment1
 REMOVE #text in div
-INSERT #text
-REMOVE #text in div
 INSERT div/#text
 ```
 

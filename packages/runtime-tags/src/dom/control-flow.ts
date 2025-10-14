@@ -141,8 +141,11 @@ export function _await(nodeAccessor: Accessor, renderer: Renderer) {
                     );
                     removeAndDestroyBranch(placeholderBranch);
                   }
-                  if (tryWithPlaceholder.___effects) {
-                    (runEffects as any)(tryWithPlaceholder.___effects, true);
+
+                  const pendingEffects = tryWithPlaceholder.___effects;
+                  if (pendingEffects) {
+                    tryWithPlaceholder.___effects = [];
+                    runEffects(pendingEffects, true);
                   }
                 }
               }

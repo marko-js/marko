@@ -819,6 +819,7 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
             writeMarker = false;
             cur.async = false;
             cur.next = bodyNext;
+            cur.needsWalk = true;
             cur.html = endMarker;
             cur.scripts = cur.effects = cur.lastEffect = "";
             cur.placeholderBody = cur.placeholderRender = cur.reorderId = null;
@@ -962,6 +963,7 @@ export class Chunk {
   public lastEffect = "";
   public async = false;
   public consumed = false;
+  public needsWalk = false;
   public reorderId: string | null = null;
   public placeholderBody: Chunk | null = null;
   public placeholderRender: (() => void) | null = null;
@@ -1030,6 +1032,7 @@ export class Chunk {
 
   consume() {
     let cur: Chunk = this;
+    let needsWalk = cur.needsWalk;
 
     if (cur.next && !cur.async) {
       let html = "";
@@ -1038,6 +1041,7 @@ export class Chunk {
       let lastEffect = "";
       do {
         cur.flushPlaceholder();
+        needsWalk ||= cur.needsWalk;
         html += cur.html;
         effects = concatEffects(effects, cur.effects);
         scripts = concatScripts(scripts, cur.scripts);
@@ -1046,6 +1050,7 @@ export class Chunk {
         cur = cur.next;
       } while (cur.next && !cur.async);
 
+      cur.needsWalk = needsWalk;
       cur.html = html + cur.html;
       cur.effects = concatEffects(effects, cur.effects);
       cur.scripts = concatScripts(scripts, cur.scripts);
@@ -1076,8 +1081,8 @@ export class Chunk {
     const { state } = boundary;
     const { $global, runtimePrefix, nonceAttr } = state;
     let { html, scripts } = this;
-    let hasWalk = state.walkOnNextFlush;
-    if (hasWalk) state.walkOnNextFlush = false;
+    let needsWalk = state.walkOnNextFlush;
+    if (needsWalk) state.walkOnNextFlush = false;
 
     if (state.needsMainRuntime && !state.hasMainRuntime) {
       state.hasMainRuntime = true;
@@ -1093,7 +1098,7 @@ export class Chunk {
     }
 
     if (effects) {
-      hasWalk = true;
+      needsWalk = true;
       state.resumes = state.resumes ? state.resumes + "," + effects : effects;
     }
 
@@ -1113,7 +1118,7 @@ export class Chunk {
     }
 
     if (state.writeReorders) {
-      hasWalk = true;
+      needsWalk = true;
 
       if (!state.hasReorderRuntime) {
         state.hasReorderRuntime = true;
@@ -1200,7 +1205,7 @@ export class Chunk {
       state.writeReorders = null;
     }
 
-    if (hasWalk) {
+    if (needsWalk) {
       scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");
     }
 
@@ -1211,9 +1216,15 @@ export class Chunk {
   }
 
   flushHTML() {
-    this.flushScript();
-    const { boundary, scripts } = this;
+    const { boundary } = this;
     const { state } = boundary;
+    if (this.needsWalk) {
+      this.needsWalk = false;
+      state.walkOnNextFlush = true;
+    }
+
+    this.flushScript();
+    const { scripts } = this;
     const { $global, nonceAttr } = state;
     const { __flush__ } = $global;
     let { html } = this;

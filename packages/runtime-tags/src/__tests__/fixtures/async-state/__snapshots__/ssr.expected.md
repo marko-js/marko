@@ -77,6 +77,7 @@ INSERT html/body/script0
 INSERT html/body/script0/#text
 REMOVE html/head/style after html/body/#comment5
 INSERT html/head/style
+REMOVE t after html/body/#comment5
 INSERT t
 INSERT html/body/#comment2
 INSERT html/body/#text
@@ -84,20 +85,9 @@ INSERT html/body/#comment3
 INSERT html/body/#comment4
 INSERT html/body/script1
 INSERT html/body/script1/#text
-REMOVE html/body/#comment2 before html/body/#text
-REMOVE html/body/#text before html/body/#comment3
-REMOVE html/body/#comment3 before html/body/#comment4
-REMOVE html/body/#comment4 in t
-REMOVE #comment in t
-INSERT html/body/#comment2, html/body/#text, html/body/#comment3, html/body/#comment4
 REMOVE t after html/body/script0
 REMOVE #text after #comment
 REMOVE #comment after html/body/#comment1
-REMOVE html/body/#comment2 before html/body/#text
-REMOVE html/body/#text before html/body/#comment3
-REMOVE html/body/#comment3 before html/body/#comment4
-REMOVE html/body/#comment4 in t
 REMOVE #comment after html/body/#comment1
 INSERT html/body/#comment2, html/body/#text, html/body/#comment3, html/body/#comment4
-REMOVE t after html/body/#comment5
 ```
