@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.87
+
+### Patch Changes
+
+- [#2882](https://github.com/marko-js/marko/pull/2882) [`90f9738`](https://github.com/marko-js/marko/commit/90f9738c7b557fb797afeb40a597bb0b3e0760df) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix support for assignment patterns.
+
+- [`eb77489`](https://github.com/marko-js/marko/commit/eb77489b58eb880ce8ca43cc4e7a858a5515a438) Thanks [@rturnq](https://github.com/rturnq)! - Fix regression with bundle load before inline runtime
+
 ## 6.0.86
 
 ### Patch Changes
