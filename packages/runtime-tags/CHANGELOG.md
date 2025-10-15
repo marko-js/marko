@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.0.88
+
+### Patch Changes
+
+- [#2886](https://github.com/marko-js/marko/pull/2886) [`d6e7a1d`](https://github.com/marko-js/marko/commit/d6e7a1d10ea2ec70e7cb81cb55fd5f241bd1051d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix attribute tags not being included in pre analyze transforms.
+
+- [#2884](https://github.com/marko-js/marko/pull/2884) [`c1d752c`](https://github.com/marko-js/marko/commit/c1d752cf9c14f066a390eb7d6b7e50c6eeedbd65) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where client side placeholders were not clearing batched effects, causing extra execution.
+
+- [#2884](https://github.com/marko-js/marko/pull/2884) [`c1d752c`](https://github.com/marko-js/marko/commit/c1d752cf9c14f066a390eb7d6b7e50c6eeedbd65) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue moving @placeholder/@catch content when the replacement range was not yet flushed.
+
 ## 6.0.87
 
 ### Patch Changes
