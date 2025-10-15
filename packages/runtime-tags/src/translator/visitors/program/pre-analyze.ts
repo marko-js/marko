@@ -25,13 +25,19 @@ export function preAnalyze(program: t.NodePath<t.Program>) {
 
 function normalizeBody(
   state: State,
-  body: t.NodePath<
-    t.Program["body"][number] | t.MarkoTagBody["body"][number]
-  >[],
+  body:
+    | undefined
+    | t.NodePath<
+        | t.Program["body"][number]
+        | t.MarkoTagBody["body"][number]
+        | t.MarkoTag["attributeTags"]
+      >[],
 ) {
-  for (const child of body) {
-    if (child.isMarkoTag()) {
-      normalizeTag(state, child);
+  if (body?.length) {
+    for (const child of body) {
+      if (child.isMarkoTag()) {
+        normalizeTag(state, child);
+      }
     }
   }
 }
@@ -40,6 +46,7 @@ function normalizeTag(state: State, tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   const { name, attributes } = node;
   normalizeBody(state, tag.get("body").get("body"));
+  normalizeBody(state, tag.get("attributeTags"));
 
   if (node.var) {
     const insertions = getAssignmentInsertions(node.var);
