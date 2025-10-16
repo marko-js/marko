@@ -1,0 +1,32 @@
+import { resolveAfter, rejectAfter } from "../../utils/resolve";
+<try>
+  <@catch>
+    Rejected A
+  </>
+  <await|v|=resolveAfter("A Value", 2)>
+    <div>Resolved A: ${v}</div>
+  </await>
+</try>
+
+<try>
+  <@catch>
+    Rejected B
+  </>
+  <await|v|=rejectAfter(new Error("rejected b"), 1)>
+    <div>Resolved B: ${v}</div>
+  </await>
+</try>
+
+<try>
+  <@catch>
+    Rejected C
+  </>
+  <await|v|=resolveAfter("C Value", 2)>
+    <div>Resolved C: ${v}</div>
+    <button onClick() {
+      document.querySelector("button")!.textContent = "After";
+    }>
+      Before
+    </button>
+  </await>
+</try>
