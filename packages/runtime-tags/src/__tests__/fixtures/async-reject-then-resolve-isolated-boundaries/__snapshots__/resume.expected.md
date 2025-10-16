@@ -50,4 +50,5 @@
 REMOVE html/body/#comment0 before #comment
 INSERT html/body/#comment0
 INSERT html/body/#text0
+INSERT html/body/#text2
 ```
