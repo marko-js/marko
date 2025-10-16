@@ -29,7 +29,7 @@
         }, _.f = {
           _: _.b,
           "ClosureSignalIndex:c": 1
-        }], (_.d).add(_.e), (_.d).add(_.f), _.c),
+        }], (_.d).add(_.e), _.d.add(_.f), _.c),
         "__tests__/template.marko_0",
         1
       ];
@@ -74,7 +74,7 @@ container.querySelector("button").click();
         }, _.f = {
           _: _.b,
           "ClosureSignalIndex:c": 1
-        }], (_.d).add(_.e), (_.d).add(_.f), _.c),
+        }], (_.d).add(_.e), _.d.add(_.f), _.c),
         "__tests__/template.marko_0",
         1
       ];

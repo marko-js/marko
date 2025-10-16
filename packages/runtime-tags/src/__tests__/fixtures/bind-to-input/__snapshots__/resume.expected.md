@@ -37,7 +37,7 @@
           "ClosureSignalIndex:x": 1
         }], _.b.$countChange = _.b["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
-          ](_.a), (_.e).add(_.f), (_.e).add(_.g), _.d),
+          ](_.a), (_.e).add(_.f), _.e.add(_.g), _.d),
         "__tests__/tags/counter.marko_0_x",
         2, 4
       ];
@@ -90,7 +90,7 @@ container.querySelector("#controlled").click();
           "ClosureSignalIndex:x": 1
         }], _.b.$countChange = _.b["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
-          ](_.a), (_.e).add(_.f), (_.e).add(_.g), _.d),
+          ](_.a), (_.e).add(_.f), _.e.add(_.g), _.d),
         "__tests__/tags/counter.marko_0_x",
         2, 4
       ];
@@ -149,7 +149,7 @@ container.querySelector("#uncontrolled").click();
           "ClosureSignalIndex:x": 1
         }], _.b.$countChange = _.b["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
-          ](_.a), (_.e).add(_.f), (_.e).add(_.g), _.d),
+          ](_.a), (_.e).add(_.f), _.e.add(_.g), _.d),
         "__tests__/tags/counter.marko_0_x",
         2, 4
       ];
@@ -206,7 +206,7 @@ container.querySelector("#controlled").click();
           "ClosureSignalIndex:x": 1
         }], _.b.$countChange = _.b["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
-          ](_.a), (_.e).add(_.f), (_.e).add(_.g), _.d),
+          ](_.a), (_.e).add(_.f), _.e.add(_.g), _.d),
         "__tests__/tags/counter.marko_0_x",
         2, 4
       ];
@@ -265,7 +265,7 @@ container.querySelector("#uncontrolled").click();
           "ClosureSignalIndex:x": 1
         }], _.b.$countChange = _.b["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
-          ](_.a), (_.e).add(_.f), (_.e).add(_.g), _.d),
+          ](_.a), (_.e).add(_.f), _.e.add(_.g), _.d),
         "__tests__/tags/counter.marko_0_x",
         2, 4
       ];
@@ -322,7 +322,7 @@ container.querySelector("#controlled").click();
           "ClosureSignalIndex:x": 1
         }], _.b.$countChange = _.b["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
-          ](_.a), (_.e).add(_.f), (_.e).add(_.g), _.d),
+          ](_.a), (_.e).add(_.f), _.e.add(_.g), _.d),
         "__tests__/tags/counter.marko_0_x",
         2, 4
       ];
@@ -381,7 +381,7 @@ container.querySelector("#uncontrolled").click();
           "ClosureSignalIndex:x": 1
         }], _.b.$countChange = _.b["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
-          ](_.a), (_.e).add(_.f), (_.e).add(_.g), _.d),
+          ](_.a), (_.e).add(_.f), _.e.add(_.g), _.d),
         "__tests__/tags/counter.marko_0_x",
         2, 4
       ];

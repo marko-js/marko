@@ -57,8 +57,8 @@
     <!--M_!d-->
     <!--M_]1 #text/2 4-->
     <script>
-      M._.r.push(_ =&gt; (_.f = [2, _.g = {}], (_.d["ConditionalScope:#text/0"] = _
-          .g), _.f),
+      M._.r.push(_ =&gt; (_.f = [2, _.g = {}], _.d["ConditionalScope:#text/0"] = _
+          .g, _.f),
         "__tests__/template.marko_9",
         7);
       M._.w()
@@ -139,8 +139,8 @@ container.querySelector("button").click();
     <!--M_!d-->
     <!--M_]1 #text/2 4-->
     <script>
-      M._.r.push(_ =&gt; (_.f = [2, _.g = {}], (_.d["ConditionalScope:#text/0"] = _
-          .g), _.f),
+      M._.r.push(_ =&gt; (_.f = [2, _.g = {}], _.d["ConditionalScope:#text/0"] = _
+          .g, _.f),
         "__tests__/template.marko_9",
         7);
       M._.w()
