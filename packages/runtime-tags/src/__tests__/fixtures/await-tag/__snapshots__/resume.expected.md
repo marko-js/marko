@@ -19,15 +19,15 @@
         }]), _ =&gt; (_.c = [_.e = {
           _: _.b = _.a[1],
           "ClosureSignalIndex:count": 0
-        }], (_.d = _.b["ClosureScopes:count"]).add(_.e), (_.b[
-          "ConditionalScope:#text/0"] = _.e), _.c)];
+        }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.b[
+          "ConditionalScope:#text/0"] = _.e, _.c)];
         M._.w()
       </script>
       <script>
         M._.r.push(_ =&gt; (_.f = [_.g = {
           _: _.b,
           "ClosureSignalIndex:count": 2
-        }], (_.d).add(_.g), (_.b["ConditionalScope:#text/2"] = _.g), _.f));
+        }], _.d.add(_.g), _.b["ConditionalScope:#text/2"] = _.g, _.f));
         M._.w()
       </script>
       <!--M_[-->
@@ -51,7 +51,7 @@
       M._.r.push(_ =&gt; (_.h = [_.i = {
           _: _.b,
           "ClosureSignalIndex:count": 1
-        }], (_.d).add(_.i), (_.b["ConditionalScope:#text/1"] = _.i), _.h),
+        }], _.d.add(_.i), _.b["ConditionalScope:#text/1"] = _.i, _.h),
         "__tests__/template.marko_0_count",
         1);
       M._.w()
@@ -60,6 +60,12 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/div/#text2
+INSERT html/body/div/#text5
+INSERT html/body/div/#text8
+```
 
 # Render
 ```js
@@ -85,15 +91,15 @@ container.querySelector("button").click();
         }]), _ =&gt; (_.c = [_.e = {
           _: _.b = _.a[1],
           "ClosureSignalIndex:count": 0
-        }], (_.d = _.b["ClosureScopes:count"]).add(_.e), (_.b[
-          "ConditionalScope:#text/0"] = _.e), _.c)];
+        }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.b[
+          "ConditionalScope:#text/0"] = _.e, _.c)];
         M._.w()
       </script>
       <script>
         M._.r.push(_ =&gt; (_.f = [_.g = {
           _: _.b,
           "ClosureSignalIndex:count": 2
-        }], (_.d).add(_.g), (_.b["ConditionalScope:#text/2"] = _.g), _.f));
+        }], _.d.add(_.g), _.b["ConditionalScope:#text/2"] = _.g, _.f));
         M._.w()
       </script>
       <!--M_[-->
@@ -117,7 +123,7 @@ container.querySelector("button").click();
       M._.r.push(_ =&gt; (_.h = [_.i = {
           _: _.b,
           "ClosureSignalIndex:count": 1
-        }], (_.d).add(_.i), (_.b["ConditionalScope:#text/1"] = _.i), _.h),
+        }], _.d.add(_.i), _.b["ConditionalScope:#text/1"] = _.i, _.h),
         "__tests__/template.marko_0_count",
         1);
       M._.w()
@@ -129,8 +135,8 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE html/body/div/#text1 "0" => "1"
-UPDATE html/body/div/#text5 "0" => "1"
-UPDATE html/body/div/#text3 "0" => "1"
+UPDATE html/body/div/#text7 "0" => "1"
+UPDATE html/body/div/#text4 "0" => "1"
 ```
 
 # Render
@@ -157,15 +163,15 @@ container.querySelector("button").click();
         }]), _ =&gt; (_.c = [_.e = {
           _: _.b = _.a[1],
           "ClosureSignalIndex:count": 0
-        }], (_.d = _.b["ClosureScopes:count"]).add(_.e), (_.b[
-          "ConditionalScope:#text/0"] = _.e), _.c)];
+        }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.b[
+          "ConditionalScope:#text/0"] = _.e, _.c)];
         M._.w()
       </script>
       <script>
         M._.r.push(_ =&gt; (_.f = [_.g = {
           _: _.b,
           "ClosureSignalIndex:count": 2
-        }], (_.d).add(_.g), (_.b["ConditionalScope:#text/2"] = _.g), _.f));
+        }], _.d.add(_.g), _.b["ConditionalScope:#text/2"] = _.g, _.f));
         M._.w()
       </script>
       <!--M_[-->
@@ -189,7 +195,7 @@ container.querySelector("button").click();
       M._.r.push(_ =&gt; (_.h = [_.i = {
           _: _.b,
           "ClosureSignalIndex:count": 1
-        }], (_.d).add(_.i), (_.b["ConditionalScope:#text/1"] = _.i), _.h),
+        }], _.d.add(_.i), _.b["ConditionalScope:#text/1"] = _.i, _.h),
         "__tests__/template.marko_0_count",
         1);
       M._.w()
@@ -201,8 +207,8 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE html/body/div/#text1 "1" => "2"
-UPDATE html/body/div/#text5 "1" => "2"
-UPDATE html/body/div/#text3 "1" => "2"
+UPDATE html/body/div/#text7 "1" => "2"
+UPDATE html/body/div/#text4 "1" => "2"
 ```
 
 # Render
@@ -229,15 +235,15 @@ container.querySelector("button").click();
         }]), _ =&gt; (_.c = [_.e = {
           _: _.b = _.a[1],
           "ClosureSignalIndex:count": 0
-        }], (_.d = _.b["ClosureScopes:count"]).add(_.e), (_.b[
-          "ConditionalScope:#text/0"] = _.e), _.c)];
+        }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.b[
+          "ConditionalScope:#text/0"] = _.e, _.c)];
         M._.w()
       </script>
       <script>
         M._.r.push(_ =&gt; (_.f = [_.g = {
           _: _.b,
           "ClosureSignalIndex:count": 2
-        }], (_.d).add(_.g), (_.b["ConditionalScope:#text/2"] = _.g), _.f));
+        }], _.d.add(_.g), _.b["ConditionalScope:#text/2"] = _.g, _.f));
         M._.w()
       </script>
       <!--M_[-->
@@ -261,7 +267,7 @@ container.querySelector("button").click();
       M._.r.push(_ =&gt; (_.h = [_.i = {
           _: _.b,
           "ClosureSignalIndex:count": 1
-        }], (_.d).add(_.i), (_.b["ConditionalScope:#text/1"] = _.i), _.h),
+        }], _.d.add(_.i), _.b["ConditionalScope:#text/1"] = _.i, _.h),
         "__tests__/template.marko_0_count",
         1);
       M._.w()
@@ -273,6 +279,6 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE html/body/div/#text1 "2" => "3"
-UPDATE html/body/div/#text5 "2" => "3"
-UPDATE html/body/div/#text3 "2" => "3"
+UPDATE html/body/div/#text7 "2" => "3"
+UPDATE html/body/div/#text4 "2" => "3"
 ```

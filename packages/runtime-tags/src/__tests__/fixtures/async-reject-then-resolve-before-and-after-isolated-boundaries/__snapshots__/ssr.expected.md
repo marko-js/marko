@@ -10,7 +10,7 @@
 
 # Write
 ```html
-  <div>Resolved A: A Value</div><!--M_!b--><!--M_]1 #text/0 2--><!--M_[--><!--M_!^c--><!--M_!c--><!--M_]1 #text/1 3--><!--M_[--><!--M_!^d--><!--M_[--><div>Resolved C: C Value</div><button>Before</button><!--M_*7 #button/1--><!--M_]4 #text/0 7--><!--M_!d--><!--M_]1 #text/2 4--><script>M._.r.push(_=>(_.f=[2,_.g={}],(_.d["ConditionalScope:#text/0"]=_.g),_.f),"__tests__/template.marko_9",7);M._.w()</script>
+  <div>Resolved A: A Value</div><!--M_!b--><!--M_]1 #text/0 2--><!--M_[--><!--M_!^c--><!--M_!c--><!--M_]1 #text/1 3--><!--M_[--><!--M_!^d--><!--M_[--><div>Resolved C: C Value</div><button>Before</button><!--M_*7 #button/1--><!--M_]4 #text/0 7--><!--M_!d--><!--M_]1 #text/2 4--><script>M._.r.push(_=>(_.f=[2,_.g={}],_.d["ConditionalScope:#text/0"]=_.g,_.f),"__tests__/template.marko_9",7);M._.w()</script>
 ```
 
 # Render End
@@ -72,8 +72,8 @@
     <!--M_!d-->
     <!--M_]1 #text/2 4-->
     <script>
-      M._.r.push(_ =&gt; (_.f = [2, _.g = {}], (_.d["ConditionalScope:#text/0"] = _
-          .g), _.f),
+      M._.r.push(_ =&gt; (_.f = [2, _.g = {}], _.d["ConditionalScope:#text/0"] = _
+          .g, _.f),
         "__tests__/template.marko_9",
         7);
       M._.w()

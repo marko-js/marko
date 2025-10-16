@@ -38,8 +38,8 @@
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
-        .f), _.e));
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], _.b["ConditionalScope:#text/0"] = _
+        .f, _.e));
       M._.w()
     </script>
   </body>
@@ -95,8 +95,8 @@ container.querySelector("button").click();
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
-        .f), _.e));
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], _.b["ConditionalScope:#text/0"] = _
+        .f, _.e));
       M._.w()
     </script>
   </body>
@@ -140,8 +140,8 @@ container.querySelector("button").click();
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
-        .f), _.e));
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], _.b["ConditionalScope:#text/0"] = _
+        .f, _.e));
       M._.w()
     </script>
   </body>
@@ -200,8 +200,8 @@ REMOVE #document-fragment/#text2 after html/body/#text
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
-        .f), _.e));
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], _.b["ConditionalScope:#text/0"] = _
+        .f, _.e));
       M._.w()
     </script>
   </body>
@@ -257,8 +257,8 @@ container.querySelector("button").click();
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
-        .f), _.e));
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], _.b["ConditionalScope:#text/0"] = _
+        .f, _.e));
       M._.w()
     </script>
   </body>
@@ -302,8 +302,8 @@ container.querySelector("button").click();
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
-        .f), _.e));
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], _.b["ConditionalScope:#text/0"] = _
+        .f, _.e));
       M._.w()
     </script>
   </body>
@@ -362,8 +362,8 @@ REMOVE #document-fragment/#text2 after html/body/#text
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
-        .f), _.e));
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], _.b["ConditionalScope:#text/0"] = _
+        .f, _.e));
       M._.w()
     </script>
   </body>

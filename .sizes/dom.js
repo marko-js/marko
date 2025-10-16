@@ -1,4 +1,4 @@
-// size: 19377 (min) 7348 (brotli)
+// size: 19382 (min) 7394 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -1133,98 +1133,101 @@ function toInsertNode(startNode, endNode) {
 function _await(nodeAccessor, renderer) {
   let promiseAccessor = "n" + nodeAccessor,
     branchAccessor = "d" + nodeAccessor;
-  return (scope, promise) => {
-    let referenceNode = scope[nodeAccessor],
-      tryWithPlaceholder = findBranchWithKey(scope, "d"),
-      awaitBranch = scope[branchAccessor];
-    tryWithPlaceholder
-      ? (placeholderShown.add(pendingEffects),
-        !scope[promiseAccessor] &&
-          1 === (tryWithPlaceholder.o = (tryWithPlaceholder.o || 0) + 1) &&
-          requestAnimationFrame(
-            () =>
-              tryWithPlaceholder.o &&
-              runEffects(
-                prepareEffects(() =>
-                  queueRender(
-                    tryWithPlaceholder,
-                    () => {
-                      (insertBranchBefore(
-                        (tryWithPlaceholder.c = createAndSetupBranch(
-                          scope.$global,
-                          tryWithPlaceholder.d,
-                          tryWithPlaceholder._,
+  return (
+    enableBranches(),
+    (scope, promise) => {
+      let referenceNode = scope[nodeAccessor],
+        tryWithPlaceholder = findBranchWithKey(scope, "d"),
+        awaitBranch = scope[branchAccessor];
+      tryWithPlaceholder
+        ? (placeholderShown.add(pendingEffects),
+          !scope[promiseAccessor] &&
+            1 === (tryWithPlaceholder.o = (tryWithPlaceholder.o || 0) + 1) &&
+            requestAnimationFrame(
+              () =>
+                tryWithPlaceholder.o &&
+                runEffects(
+                  prepareEffects(() =>
+                    queueRender(
+                      tryWithPlaceholder,
+                      () => {
+                        (insertBranchBefore(
+                          (tryWithPlaceholder.c = createAndSetupBranch(
+                            scope.$global,
+                            tryWithPlaceholder.d,
+                            tryWithPlaceholder._,
+                            tryWithPlaceholder.h.parentNode,
+                          )),
                           tryWithPlaceholder.h.parentNode,
-                        )),
-                        tryWithPlaceholder.h.parentNode,
-                        tryWithPlaceholder.h,
-                      ),
-                        tempDetachBranch(tryWithPlaceholder));
-                    },
-                    -1,
+                          tryWithPlaceholder.h,
+                        ),
+                          tempDetachBranch(tryWithPlaceholder));
+                      },
+                      -1,
+                    ),
                   ),
                 ),
-              ),
-          ))
-      : awaitBranch &&
-        !scope[promiseAccessor] &&
-        (awaitBranch.h.parentNode.insertBefore(referenceNode, awaitBranch.h),
-        tempDetachBranch(awaitBranch));
-    let thisPromise = (scope[promiseAccessor] = promise.then(
-      (data) => {
-        thisPromise === scope[promiseAccessor] &&
-          ((scope[promiseAccessor] = 0),
-          schedule(),
-          queueRender(
-            scope,
-            () => {
-              if (
-                (awaitBranch
-                  ? tryWithPlaceholder ||
-                    referenceNode.replaceWith(awaitBranch.h.parentNode)
-                  : (insertBranchBefore(
-                      (awaitBranch = scope[branchAccessor] =
-                        createAndSetupBranch(
-                          scope.$global,
-                          renderer,
-                          scope,
-                          referenceNode.parentNode,
-                        )),
-                      referenceNode.parentNode,
-                      referenceNode,
-                    ),
-                    referenceNode.remove()),
-                renderer.m?.(awaitBranch, [data]),
-                tryWithPlaceholder &&
-                  (placeholderShown.add(pendingEffects),
-                  !--tryWithPlaceholder.o))
-              ) {
-                let placeholderBranch = tryWithPlaceholder.c;
-                ((tryWithPlaceholder.c = 0),
-                  placeholderBranch &&
-                    (placeholderBranch.h.parentNode.insertBefore(
-                      tryWithPlaceholder.h.parentNode,
-                      placeholderBranch.h,
-                    ),
-                    removeAndDestroyBranch(placeholderBranch)));
-                let pendingEffects2 = tryWithPlaceholder.H;
-                pendingEffects2 &&
-                  ((tryWithPlaceholder.H = []),
-                  runEffects(pendingEffects2, !0));
-              }
-            },
-            -1,
-          ));
-      },
-      (error) => {
-        thisPromise === scope[promiseAccessor] &&
-          (tryWithPlaceholder && (tryWithPlaceholder.o = 0),
-          (scope[promiseAccessor] = 0),
-          schedule(),
-          queueRender(scope, renderCatch, -1, error));
-      },
-    ));
-  };
+            ))
+        : awaitBranch &&
+          !scope[promiseAccessor] &&
+          (awaitBranch.h.parentNode.insertBefore(referenceNode, awaitBranch.h),
+          tempDetachBranch(awaitBranch));
+      let thisPromise = (scope[promiseAccessor] = promise.then(
+        (data) => {
+          thisPromise === scope[promiseAccessor] &&
+            ((scope[promiseAccessor] = 0),
+            schedule(),
+            queueRender(
+              scope,
+              () => {
+                if (
+                  (awaitBranch
+                    ? tryWithPlaceholder ||
+                      referenceNode.replaceWith(awaitBranch.h.parentNode)
+                    : (insertBranchBefore(
+                        (awaitBranch = scope[branchAccessor] =
+                          createAndSetupBranch(
+                            scope.$global,
+                            renderer,
+                            scope,
+                            referenceNode.parentNode,
+                          )),
+                        referenceNode.parentNode,
+                        referenceNode,
+                      ),
+                      referenceNode.remove()),
+                  renderer.m?.(awaitBranch, [data]),
+                  tryWithPlaceholder &&
+                    (placeholderShown.add(pendingEffects),
+                    !--tryWithPlaceholder.o))
+                ) {
+                  let placeholderBranch = tryWithPlaceholder.c;
+                  ((tryWithPlaceholder.c = 0),
+                    placeholderBranch &&
+                      (placeholderBranch.h.parentNode.insertBefore(
+                        tryWithPlaceholder.h.parentNode,
+                        placeholderBranch.h,
+                      ),
+                      removeAndDestroyBranch(placeholderBranch)));
+                  let pendingEffects2 = tryWithPlaceholder.H;
+                  pendingEffects2 &&
+                    ((tryWithPlaceholder.H = []),
+                    runEffects(pendingEffects2, !0));
+                }
+              },
+              -1,
+            ));
+        },
+        (error) => {
+          thisPromise === scope[promiseAccessor] &&
+            (tryWithPlaceholder && (tryWithPlaceholder.o = 0),
+            (scope[promiseAccessor] = 0),
+            schedule(),
+            queueRender(scope, renderCatch, -1, error));
+        },
+      ));
+    }
+  );
 }
 function _try(nodeAccessor, content) {
   let branchAccessor = "d" + nodeAccessor;

@@ -5,7 +5,7 @@
 
 # Write
 ```html
-  <t M_=d><!--M_[-->Async: <!>0<!--M_*4 #text/0--><!--M_]2 #text/0 4--></t><script>M._.r.push(_=>(_.e=[1,_.f={}],(_.b["ConditionalScope:#text/0"]=_.f),_.e));M._.w()</script>
+  <t M_=d><!--M_[-->Async: <!>0<!--M_*4 #text/0--><!--M_]2 #text/0 4--></t><script>M._.r.push(_=>(_.e=[1,_.f={}],_.b["ConditionalScope:#text/0"]=_.f,_.e));M._.w()</script>
 ```
 
 # Render End
@@ -62,8 +62,8 @@
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
-        .f), _.e));
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], _.b["ConditionalScope:#text/0"] = _
+        .f, _.e));
       M._.w()
     </script>
   </body>

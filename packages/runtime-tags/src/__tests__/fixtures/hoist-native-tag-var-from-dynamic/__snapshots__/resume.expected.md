@@ -37,24 +37,24 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "ClosureScopes:1": _.e = new Set,
-          "ClosureScopes:2": _.k = new Set,
-          "ClosureScopes:4": _.o = new Set
-        }, 1, _.f = {}, _.g = {}, 1, _.b = {
-          "ClosureScopes:3": _.h = new Set
-        }, 1, _.i = {}, _.j = {}, _.c = {
-          "ClosureScopes:3": _.l = new Set
-        }, 1, _.m = {}, _.n = {}, 1, _.p = {}], _.a.$hoisted_el = _._[
-          "__tests__/template.marko_0_$hoisted_el/hoist"
-          ](_.a), _.a.$hoisted_el3 = _._[
-          "__tests__/template.marko_0_$hoisted_el3/hoist"
-          ](_.a), _.b.$hoisted_el2 = _._[
-          "__tests__/template.marko_2_$hoisted_el2/hoist"
-          ](_.b), _.c.$hoisted_el2 = _._[
-          "__tests__/template.marko_2_$hoisted_el2/hoist"
-          ](_.c), (_.e).add(_.f), (_.e).add(_.g), (_.h).add(_.i), (_.h).add(
-          _.j), (_.k).add(_.b), (_.l).add(_.m), (_.l).add(_.n), (_.k).add(_
-          .c), (_.o).add(_.p), _.d),
+            "ClosureScopes:1": _.e = new Set,
+            "ClosureScopes:2": _.k = new Set,
+            "ClosureScopes:4": _.o = new Set
+          }, 1, _.f = {}, _.g = {}, 1, _.b = {
+            "ClosureScopes:3": _.h = new Set
+          }, 1, _.i = {}, _.j = {}, _.c = {
+            "ClosureScopes:3": _.l = new Set
+          }, 1, _.m = {}, _.n = {}, 1, _.p = {}], _.a.$hoisted_el = _._[
+            "__tests__/template.marko_0_$hoisted_el/hoist"
+            ](_.a), _.a.$hoisted_el3 = _._[
+            "__tests__/template.marko_0_$hoisted_el3/hoist"
+            ](_.a), _.b.$hoisted_el2 = _._[
+            "__tests__/template.marko_2_$hoisted_el2/hoist"
+            ](_.b), _.c.$hoisted_el2 = _._[
+            "__tests__/template.marko_2_$hoisted_el2/hoist"
+            ](_.c), (_.e).add(_.f), _.e.add(_.g), (_.h).add(_.i), _.h.add(_
+          .j), (_.k).add(_.b), (_.l).add(_.m), _.l.add(_.n), _.k.add(_.c), (_
+            .o).add(_.p), _.d),
         "__tests__/template.marko_2_$hoisted_el2",
         6, 10,
         "__tests__/template.marko_0",

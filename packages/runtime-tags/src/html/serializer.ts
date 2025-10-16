@@ -508,27 +508,34 @@ function writeAssigned(state: State) {
 
   if (state.mutations.length) {
     for (const mutation of state.mutations) {
+      const hasSeen = state.refs.get(mutation.object as object)?.id;
       const objectStartIndex = state.buf.push(
-        state.buf.length === 0 ? "(" : ",(",
+        state.buf.length === 0 ? "" : ",",
       );
 
       if (writeProp(state, mutation.object, null, "")) {
         const objectRef = state.refs.get(mutation.object as object);
-        if (objectRef && !objectRef.id) {
-          objectRef.id = nextRefAccess(state);
-          state.buf[objectStartIndex] =
-            objectRef.id + "=" + state.buf[objectStartIndex];
+        if (objectRef) {
+          if (!objectRef.id) {
+            objectRef.id = nextRefAccess(state);
+            state.buf[objectStartIndex] =
+              "(" + objectRef.id + "=" + state.buf[objectStartIndex];
+            state.buf.push(")");
+          } else if (!hasSeen) {
+            state.buf[objectStartIndex] = "(" + state.buf[objectStartIndex];
+            state.buf.push(")");
+          }
         }
       } else {
         state.buf.push("void 0");
       }
 
+      const isCall = mutation.type === MutationType.call;
       const valueStartIndex = state.buf.push(
-        mutation.type === MutationType.call
-          ? ")" +
-              (mutation.property === undefined
-                ? ""
-                : toAccess(toObjectKey(mutation.property))) +
+        isCall
+          ? (mutation.property === undefined
+              ? ""
+              : toAccess(toObjectKey(mutation.property))) +
               "(" +
               (mutation.spread ? "..." : "")
           : toAccess(toObjectKey(mutation.property)) + "=",
@@ -545,7 +552,9 @@ function writeAssigned(state: State) {
         state.buf.push("void 0");
       }
 
-      state.buf.push(")");
+      if (isCall) {
+        state.buf.push(")");
+      }
     }
     state.mutations = [];
 

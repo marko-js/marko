@@ -31,7 +31,7 @@
           _: _.a,
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
-        }], (_.d).add(_.e), (_.d).add(_.f), _.c),
+        }], (_.d).add(_.e), _.d.add(_.f), _.c),
         "__tests__/template.marko_0_x",
         1
       ];
@@ -82,7 +82,7 @@ container.querySelector("button").click();
           _: _.a,
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
-        }], (_.d).add(_.e), (_.d).add(_.f), _.c),
+        }], (_.d).add(_.e), _.d.add(_.f), _.c),
         "__tests__/template.marko_0_x",
         1
       ];
@@ -139,7 +139,7 @@ container.querySelector("button").click();
           _: _.a,
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
-        }], (_.d).add(_.e), (_.d).add(_.f), _.c),
+        }], (_.d).add(_.e), _.d.add(_.f), _.c),
         "__tests__/template.marko_0_x",
         1
       ];
@@ -192,7 +192,7 @@ container.querySelector("button").click();
           _: _.a,
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
-        }], (_.d).add(_.e), (_.d).add(_.f), _.c),
+        }], (_.d).add(_.e), _.d.add(_.f), _.c),
         "__tests__/template.marko_0_x",
         1
       ];

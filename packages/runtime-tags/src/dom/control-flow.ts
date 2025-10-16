@@ -38,6 +38,7 @@ import { _var, type Signal, subscribeToScopeSet } from "./signals";
 export function _await(nodeAccessor: Accessor, renderer: Renderer) {
   const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const branchAccessor = AccessorPrefix.ConditionalScope + nodeAccessor;
+  enableBranches();
   return (scope: Scope, promise: Promise<unknown>) => {
     // TODO: !isPromise, render synchronously
     const referenceNode = scope[nodeAccessor] as Text | Comment;

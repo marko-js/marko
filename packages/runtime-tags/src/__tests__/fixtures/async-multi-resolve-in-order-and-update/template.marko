@@ -1,0 +1,10 @@
+import { resolveAfter } from "../../utils/resolve";
+static const multiply = (multiplier, n) => resolveAfter(multiplier * n, n);
+
+<let/n=2>
+<button onClick() { n++ }>increment</button>
+<p>1 * ${n} = <await|result|=multiply(1, n)>${result}</await></p>
+<p>2 * ${n} = <await|result|=multiply(2, n)>${result}</await></p>
+<p>3 * ${n} = <await|result|=multiply(3, n)>${result}</await></p>
+<p>4 * ${n} = <await|result|=multiply(4, n)>${result}</await></p>
+<p>5 * ${n} = <await|result|=multiply(5, n)>${result}</await></p>
