@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.90
+
+### Patch Changes
+
+- [#2889](https://github.com/marko-js/marko/pull/2889) [`f0e0eb5`](https://github.com/marko-js/marko/commit/f0e0eb5885e3adda1765cc7ed1cfa2b3581591f2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where multiple serialize mutation assignments were not correctly being wrapped with parens.
+
+- [#2889](https://github.com/marko-js/marko/pull/2889) [`f0e0eb5`](https://github.com/marko-js/marko/commit/f0e0eb5885e3adda1765cc7ed1cfa2b3581591f2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure that await tag client runtime enables branch walking.
+
 ## 6.0.89
 
 ### Patch Changes
