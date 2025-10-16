@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.89
+
+### Patch Changes
+
+- [#2887](https://github.com/marko-js/marko/pull/2887) [`38aa757`](https://github.com/marko-js/marko/commit/38aa75777f08005e53cfcae0b7ac3cbfac16c4c0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where the resume walker was incorrectly stopping when an incomplete placeholder was ended.
+
 ## 6.0.88
 
 ### Patch Changes
