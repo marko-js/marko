@@ -270,6 +270,15 @@ export function _for_of(
     const loopScopes = new Map<unknown, ScopeInternals>();
     forOf(list, (item, index) => {
       const branchId = _peek_scope_id();
+      const itemKey = forOfBy(by, item, index);
+      if (MARKO_DEBUG) {
+        if (by && loopScopes.has(itemKey)) {
+          console.error(
+            `A <for> tag's \`by\` attribute must return a unique value for each item, but a duplicate was found matching:`,
+            itemKey,
+          );
+        }
+      }
       if (resumeMarker) {
         if (singleNode) {
           flushBranchIds = " " + branchId + flushBranchIds;
@@ -283,7 +292,7 @@ export function _for_of(
 
       withBranchId(branchId, () => {
         cb(item, index);
-        loopScopes.set(forOfBy(by, item, index), writeScope(branchId, {}));
+        loopScopes.set(itemKey, writeScope(branchId, {}));
       });
     });
 
@@ -327,6 +336,15 @@ export function _for_in(
     const loopScopes = new Map<unknown, ScopeInternals>();
     forIn(obj, (key, value) => {
       const branchId = _peek_scope_id();
+      const itemKey = forInBy(by, key, value);
+      if (MARKO_DEBUG) {
+        if (by && loopScopes.has(itemKey)) {
+          console.error(
+            `A <for> tag's \`by\` attribute must return a unique value for each item, but a duplicate was found matching:`,
+            itemKey,
+          );
+        }
+      }
       if (resumeMarker) {
         if (singleNode) {
           flushBranchIds = " " + branchId + flushBranchIds;
@@ -340,7 +358,7 @@ export function _for_in(
 
       withBranchId(branchId, () => {
         cb(key, value);
-        loopScopes.set(forInBy(by, key, value), writeScope(branchId, {}));
+        loopScopes.set(itemKey, writeScope(branchId, {}));
       });
     });
 
@@ -386,6 +404,15 @@ export function _for_to(
     const loopScopes = new Map<unknown, ScopeInternals>();
     forTo(to, from, step, (i) => {
       const branchId = _peek_scope_id();
+      const itemKey = forStepBy(by, i);
+      if (MARKO_DEBUG) {
+        if (by && loopScopes.has(itemKey)) {
+          console.error(
+            `A <for> tag's \`by\` attribute must return a unique value for each item, but a duplicate was found matching:`,
+            itemKey,
+          );
+        }
+      }
       if (resumeMarker) {
         if (singleNode) {
           flushBranchIds = " " + branchId + flushBranchIds;
@@ -399,7 +426,7 @@ export function _for_to(
 
       withBranchId(branchId, () => {
         cb(i);
-        loopScopes.set(forStepBy(by, i), writeScope(branchId, {}));
+        loopScopes.set(itemKey, writeScope(branchId, {}));
       });
     });
 
@@ -445,6 +472,16 @@ export function _for_until(
     const loopScopes = new Map<unknown, ScopeInternals>();
     forUntil(to, from, step, (i) => {
       const branchId = _peek_scope_id();
+      const itemKey = forStepBy(by, i);
+      if (MARKO_DEBUG) {
+        if (by && loopScopes.has(itemKey)) {
+          console.error(
+            `A <for> tag's \`by\` attribute must return a unique value for each item, but a duplicate was found matching:`,
+            itemKey,
+          );
+        }
+      }
+
       if (resumeMarker) {
         if (singleNode) {
           flushBranchIds = " " + branchId + flushBranchIds;
@@ -458,7 +495,7 @@ export function _for_until(
 
       withBranchId(branchId, () => {
         cb(i);
-        loopScopes.set(forStepBy(by, i), writeScope(branchId, {}));
+        loopScopes.set(itemKey, writeScope(branchId, {}));
       });
     });
 
