@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.91
+
+### Patch Changes
+
+- [#2897](https://github.com/marko-js/marko/pull/2897) [`5161e7a`](https://github.com/marko-js/marko/commit/5161e7a9c919b9f3ee74239fb64280c4d1dd9f74) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Show debug warnings when duplicate for loop keys are used.
+
+- [#2892](https://github.com/marko-js/marko/pull/2892) [`06c1707`](https://github.com/marko-js/marko/commit/06c1707469cac8da51e2f22f300efeda83878fbd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Error message when using Event.currentTarget api in a delegated event.
+
 ## 6.0.90
 
 ### Patch Changes
