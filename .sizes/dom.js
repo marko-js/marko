@@ -1,4 +1,4 @@
-// size: 19382 (min) 7394 (brotli)
+// size: 19432 (min) 7368 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -1434,11 +1434,14 @@ function loop(nodeAccessor, renderer, forEach) {
         newMap = (scope["m" + nodeAccessor] = new Map()),
         newArray = (scope["l" + nodeAccessor] = []);
       forEach(value, (key, args) => {
-        let branch =
-          oldMap?.get(key) ||
-          createAndSetupBranch(scope.$global, renderer, scope, parentNode);
+        let forKey = (function (key) {
+            return "number" == typeof key ? key : key + "";
+          })(key),
+          branch =
+            oldMap?.get(forKey) ||
+            createAndSetupBranch(scope.$global, renderer, scope, parentNode);
         (params?.(branch, args),
-          newMap.set(key, branch),
+          newMap.set(forKey, branch),
           newArray.push(branch));
       });
       let afterReference = null;

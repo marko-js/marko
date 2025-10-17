@@ -1,4 +1,4 @@
-import { forIn, forOf, forTo, forUntil } from "../common/for";
+import { forIn, forOf, forTo, forUntil, toForKey } from "../common/for";
 import { normalizeDynamicRenderer } from "../common/helpers";
 import {
   type Accessor,
@@ -451,18 +451,26 @@ function loop<T extends unknown[] = unknown[]>(
         ? referenceNode.parentNode || oldArray[0].___startNode.parentNode
         : referenceNode
     ) as Element;
-    const newMap: Map<unknown, BranchScope> = (scope[
+    const newMap: Map<string | number, BranchScope> = (scope[
       AccessorPrefix.LoopScopeMap + nodeAccessor
     ] = new Map());
     const newArray: BranchScope[] = (scope[
       AccessorPrefix.LoopScopeArray + nodeAccessor
     ] = []);
     forEach(value, (key, args) => {
+      const forKey = toForKey(key);
+      if (MARKO_DEBUG) {
+        if (newMap.has(forKey)) {
+          console.error(
+            `A <for> tag's \`by\` attribute must return a unique id, but a duplicate was found matching '${forKey}'.`,
+          );
+        }
+      }
       const branch =
-        oldMap?.get(key) ||
+        oldMap?.get(forKey) ||
         createAndSetupBranch(scope.$global, renderer, scope, parentNode);
       params?.(branch, args);
-      newMap.set(key, branch);
+      newMap.set(forKey, branch);
       newArray.push(branch);
     });
 

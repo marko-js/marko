@@ -267,9 +267,17 @@ export function _for_of(
   let flushBranchIds = "";
 
   if (serializeBranch !== 0) {
-    const loopScopes = new Map<unknown, ScopeInternals>();
+    const forScopes = new Map<string | number, ScopeInternals>();
     forOf(list, (item, index) => {
       const branchId = _peek_scope_id();
+      const forKey = forOfBy(by, item, index);
+      if (MARKO_DEBUG) {
+        if (by && forScopes.has(forKey)) {
+          console.error(
+            `A <for> tag's \`by\` attribute must return a unique id, but a duplicate was found matching '${forKey}'.`,
+          );
+        }
+      }
       if (resumeMarker) {
         if (singleNode) {
           flushBranchIds = " " + branchId + flushBranchIds;
@@ -283,13 +291,13 @@ export function _for_of(
 
       withBranchId(branchId, () => {
         cb(item, index);
-        loopScopes.set(forOfBy(by, item, index), writeScope(branchId, {}));
+        forScopes.set(forKey, writeScope(branchId, {}));
       });
     });
 
-    if (loopScopes.size) {
+    if (forScopes.size) {
       writeScope(scopeId, {
-        [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
+        [AccessorPrefix.LoopScopeMap + accessor]: forScopes,
       });
     }
   } else {
@@ -324,9 +332,17 @@ export function _for_in(
   let flushBranchIds = "";
 
   if (serializeBranch !== 0) {
-    const loopScopes = new Map<unknown, ScopeInternals>();
+    const forScopes = new Map<string | number, ScopeInternals>();
     forIn(obj, (key, value) => {
       const branchId = _peek_scope_id();
+      const forKey = forInBy(by, key, value);
+      if (MARKO_DEBUG) {
+        if (by && forScopes.has(forKey)) {
+          console.error(
+            `A <for> tag's \`by\` attribute must return a unique id, but a duplicate was found matching '${forKey}'.`,
+          );
+        }
+      }
       if (resumeMarker) {
         if (singleNode) {
           flushBranchIds = " " + branchId + flushBranchIds;
@@ -340,13 +356,13 @@ export function _for_in(
 
       withBranchId(branchId, () => {
         cb(key, value);
-        loopScopes.set(forInBy(by, key, value), writeScope(branchId, {}));
+        forScopes.set(forKey, writeScope(branchId, {}));
       });
     });
 
-    if (loopScopes.size) {
+    if (forScopes.size) {
       writeScope(scopeId, {
-        [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
+        [AccessorPrefix.LoopScopeMap + accessor]: forScopes,
       });
     }
   } else {
@@ -383,9 +399,17 @@ export function _for_to(
   let flushBranchIds = "";
 
   if (serializeBranch !== 0) {
-    const loopScopes = new Map<unknown, ScopeInternals>();
+    const forScopes = new Map<string | number, ScopeInternals>();
     forTo(to, from, step, (i) => {
       const branchId = _peek_scope_id();
+      const forKey = forStepBy(by, i);
+      if (MARKO_DEBUG) {
+        if (by && forScopes.has(forKey)) {
+          console.error(
+            `A <for> tag's \`by\` attribute must return a unique id, but a duplicate was found matching '${forKey}'.`,
+          );
+        }
+      }
       if (resumeMarker) {
         if (singleNode) {
           flushBranchIds = " " + branchId + flushBranchIds;
@@ -399,13 +423,13 @@ export function _for_to(
 
       withBranchId(branchId, () => {
         cb(i);
-        loopScopes.set(forStepBy(by, i), writeScope(branchId, {}));
+        forScopes.set(forKey, writeScope(branchId, {}));
       });
     });
 
-    if (loopScopes.size) {
+    if (forScopes.size) {
       writeScope(scopeId, {
-        [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
+        [AccessorPrefix.LoopScopeMap + accessor]: forScopes,
       });
     }
   } else {
@@ -442,9 +466,18 @@ export function _for_until(
   let flushBranchIds = "";
 
   if (serializeBranch !== 0) {
-    const loopScopes = new Map<unknown, ScopeInternals>();
+    const forScopes = new Map<string | number, ScopeInternals>();
     forUntil(to, from, step, (i) => {
       const branchId = _peek_scope_id();
+      const forKey = forStepBy(by, i);
+      if (MARKO_DEBUG) {
+        if (by && forScopes.has(forKey)) {
+          console.error(
+            `A <for> tag's \`by\` attribute must return a unique id, but a duplicate was found matching '${forKey}'.`,
+          );
+        }
+      }
+
       if (resumeMarker) {
         if (singleNode) {
           flushBranchIds = " " + branchId + flushBranchIds;
@@ -458,13 +491,13 @@ export function _for_until(
 
       withBranchId(branchId, () => {
         cb(i);
-        loopScopes.set(forStepBy(by, i), writeScope(branchId, {}));
+        forScopes.set(forKey, writeScope(branchId, {}));
       });
     });
 
-    if (loopScopes.size) {
+    if (forScopes.size) {
       writeScope(scopeId, {
-        [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
+        [AccessorPrefix.LoopScopeMap + accessor]: forScopes,
       });
     }
   } else {

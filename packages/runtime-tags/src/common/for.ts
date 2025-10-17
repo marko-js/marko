@@ -46,3 +46,14 @@ export function forUntil(
     cb(start + i * delta);
   }
 }
+
+export function toForKey(key: unknown) {
+  if (MARKO_DEBUG) {
+    if (typeof key !== "number" && typeof key !== "string") {
+      console.error(
+        "A <for> tag's `by` attribute must return a string or number.",
+      );
+    }
+  }
+  return typeof key === "number" ? key : key + "";
+}

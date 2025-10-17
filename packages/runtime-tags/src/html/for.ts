@@ -1,12 +1,12 @@
+import { toForKey } from "../common/for";
+
 export { forIn, forOf, forTo, forUntil } from "../common/for";
 
-export function forOfBy(by: unknown, item: any, index: unknown) {
+export function forOfBy(by: unknown, item: any, index: number) {
   if (by) {
-    if (typeof by === "string") {
-      return item[by];
-    }
-
-    return (by as any)(item, index);
+    return toForKey(
+      typeof by === "string" ? item[by] : (by as any)(item, index),
+    );
   }
 
   return index;
@@ -14,7 +14,7 @@ export function forOfBy(by: unknown, item: any, index: unknown) {
 
 export function forInBy(by: unknown, name: string, value: unknown) {
   if (by) {
-    return (by as any)(name, value);
+    return toForKey((by as any)(name, value));
   }
 
   return name;
@@ -22,7 +22,7 @@ export function forInBy(by: unknown, name: string, value: unknown) {
 
 export function forStepBy(by: unknown, index: number) {
   if (by) {
-    return (by as any)(index);
+    return toForKey((by as any)(index));
   }
 
   return index;
