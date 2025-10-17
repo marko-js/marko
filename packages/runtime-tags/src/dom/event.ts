@@ -36,8 +36,24 @@ export function createDelegator() {
 
 function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
   let target = !rendering && (ev.target as ParentNode | null);
+  if (MARKO_DEBUG) {
+    Object.defineProperty(ev, "currentTarget", {
+      configurable: true,
+      get() {
+        console.error(
+          "Event.currentTarget is not supported in Marko's delegated events. Instead use an element reference or the second parameter of the event handler.",
+        );
+        return null;
+      },
+    });
+  }
+
   while (target) {
     (target as any)["$" + ev.type]?.(ev, target);
     target = ev.bubbles && !ev.cancelBubble && target.parentNode;
+  }
+
+  if (MARKO_DEBUG) {
+    delete (ev as any).currentTarget;
   }
 }
