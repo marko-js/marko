@@ -5,9 +5,9 @@ export default function normalizeStringExpression(
 ): t.Expression | undefined {
   const strs: string[] = [];
   const exprs: t.Expression[] = [];
-  let curStr: string = parts[0] as string;
+  let curStr = "";
 
-  for (let i = 1; i < parts.length; i++) {
+  for (let i = 0; i < parts.length; i++) {
     let content = parts[i];
 
     if (typeof content === "object") {
