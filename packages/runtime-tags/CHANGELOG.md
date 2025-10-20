@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.92
+
+### Patch Changes
+
+- [#2898](https://github.com/marko-js/marko/pull/2898) [`08c0604`](https://github.com/marko-js/marko/commit/08c060470f56d261ae5f7cee5dc0effc1194c31a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with text normalization helper that was breaking textareas (and similar text content tags) with leading dynamic placeholder content.
+
 ## 6.0.91
 
 ### Patch Changes
