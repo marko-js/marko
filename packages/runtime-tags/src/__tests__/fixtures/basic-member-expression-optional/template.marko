@@ -1,0 +1,21 @@
+
+static const names = [
+  "Dylan",
+  "Michael",
+  "Ryan",
+  "Luke"
+]
+
+let/index=-1
+let/user=undefined
+
+div -- ${user?.id}
+div -- ${user?.name}
+
+button onClick() {
+  index = index === names.length - 1 ? -1 : index + 1;
+  user = index !== -1 && {
+    id: index,
+    name: names[index],
+  }
+} -- Update

@@ -176,22 +176,28 @@ function getChangeHandler(
       changeAttrName,
       withPreviousLocation(t.identifier(changeHandlerId), attr.value),
     );
-  } else if (t.isMemberExpression(attr.value)) {
+  } else if (
+    t.isMemberExpression(attr.value) ||
+    t.isOptionalMemberExpression(attr.value)
+  ) {
     const prop = attr.value.property;
     if (!t.isPrivateName(attr.value.property)) {
+      const memberObj = t.cloneNode(attr.value.object);
+      const memberProp =
+        prop.type === "Identifier"
+          ? withPreviousLocation(t.identifier(prop.name + "Change"), prop)
+          : t.binaryExpression(
+              "+",
+              t.cloneNode(prop),
+              t.stringLiteral("Change"),
+            );
+      const computed = memberProp.type !== "Identifier";
+
       return t.markoAttribute(
         changeAttrName,
-        t.memberExpression(
-          t.cloneNode(attr.value.object),
-          prop.type === "Identifier"
-            ? withPreviousLocation(t.identifier(prop.name + "Change"), prop)
-            : t.binaryExpression(
-                "+",
-                t.cloneNode(prop),
-                t.stringLiteral("Change"),
-              ),
-          prop.type !== "Identifier",
-        ),
+        attr.value.optional
+          ? t.optionalMemberExpression(memberObj, memberProp, computed, true)
+          : t.memberExpression(memberObj, memberProp, computed),
       );
     }
   }

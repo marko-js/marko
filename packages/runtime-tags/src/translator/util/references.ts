@@ -118,7 +118,11 @@ type FnExtra = (
 
 interface Read {
   binding: Binding;
-  node: undefined | t.MemberExpression | t.Identifier;
+  node:
+    | undefined
+    | t.Identifier
+    | t.MemberExpression
+    | t.OptionalMemberExpression;
 }
 
 declare module "@marko/compiler/dist/types" {
@@ -573,14 +577,17 @@ function trackReference(
   referencePath: t.NodePath<t.Identifier>,
   binding: Binding,
 ) {
-  let root: t.NodePath<t.Identifier> | t.NodePath<t.MemberExpression> =
-    referencePath;
+  let root:
+    | t.NodePath<t.Identifier>
+    | t.NodePath<t.MemberExpression>
+    | t.NodePath<t.OptionalMemberExpression> = referencePath;
   let reference = binding;
   let propPath = binding.name;
 
   while (true) {
     const { parent } = root;
-    if (!t.isMemberExpression(parent)) break;
+    if (!t.isMemberExpression(parent) && !t.isOptionalMemberExpression(parent))
+      break;
 
     const prop = getMemberExpressionPropString(parent);
     if (prop === undefined) break;
@@ -594,7 +601,9 @@ function trackReference(
     }
 
     if (reference.propertyAliases.has(prop)) {
-      root = root.parentPath as t.NodePath<t.MemberExpression>;
+      root = root.parentPath as
+        | t.NodePath<t.MemberExpression>
+        | t.NodePath<t.OptionalMemberExpression>;
       reference = reference.propertyAliases.get(prop)!;
       propPath = reference.name;
       continue;
@@ -604,7 +613,9 @@ function trackReference(
       break;
     }
 
-    root = root.parentPath as t.NodePath<t.MemberExpression>;
+    root = root.parentPath as
+      | t.NodePath<t.MemberExpression>
+      | t.NodePath<t.OptionalMemberExpression>;
     reference = createBinding(
       (propPath += `_${prop.replace(/[^a-zA-Z0-9_$]/g, "_")}`),
       reference.type,
@@ -1196,7 +1207,10 @@ const [getReadsByFunction] = createProgramState(
 );
 
 function addReadToExpression(
-  root: t.NodePath<t.Identifier> | t.NodePath<t.MemberExpression>,
+  root:
+    | t.NodePath<t.Identifier>
+    | t.NodePath<t.MemberExpression>
+    | t.NodePath<t.OptionalMemberExpression>,
   binding: Binding,
 ) {
   const { node } = root;
@@ -1364,7 +1378,9 @@ export function getSectionInstancesAccessorLiteral(section: Section) {
     : undefined;
 }
 
-export function getReadReplacement(node: t.Identifier | t.MemberExpression) {
+export function getReadReplacement(
+  node: t.Identifier | t.MemberExpression | t.OptionalMemberExpression,
+) {
   const { extra } = node;
   if (!extra) return;
   let { binding, read } = extra;
@@ -1542,7 +1558,9 @@ function createRead(binding: Binding, props: Opt<string>) {
   return { binding, props };
 }
 
-function getMemberExpressionPropString(expr: t.MemberExpression) {
+function getMemberExpressionPropString(
+  expr: t.MemberExpression | t.OptionalMemberExpression,
+) {
   switch (expr.property.type) {
     case "StringLiteral":
       return expr.property.value;

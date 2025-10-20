@@ -5,7 +5,7 @@ import { toMemberExpression } from "./to-property-name";
 
 export function getDeclaredBindingExpression(
   binding: Binding,
-): t.Identifier | t.OptionalMemberExpression | t.MemberExpression {
+): t.Identifier | t.MemberExpression | t.OptionalMemberExpression {
   const canonicalBinding = getCanonicalBinding(binding)!;
   if (
     canonicalBinding.declared ||
