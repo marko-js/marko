@@ -97,7 +97,8 @@ function replaceNode(node: t.Node, container: t.Node | t.Node[]) {
 function replaceBindingReadNode(node: t.Node) {
   switch (node.type) {
     case "Identifier":
-    case "MemberExpression": {
+    case "MemberExpression":
+    case "OptionalMemberExpression": {
       const { extra } = node;
       if (
         extra &&

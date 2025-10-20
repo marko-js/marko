@@ -1330,7 +1330,8 @@ function replaceEffectNode(node: t.Node) {
 function replaceBindingReadNode(node: t.Node) {
   switch (node.type) {
     case "Identifier":
-    case "MemberExpression": {
+    case "MemberExpression":
+    case "OptionalMemberExpression": {
       return getReadReplacement(node);
     }
   }
