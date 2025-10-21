@@ -3,10 +3,10 @@ import _child from "./tags/child.marko";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   const $showInner__closures = new Set();
+  const el = _._el();
   let showOuter = true;
   let showMiddle = true;
   let showInner = true;
-  const el = _._el();
   const write = _._resume(function (msg) {
     el().innerHTML += '\n' + msg;
   }, "__tests__/template.marko_0/write", $scope0_id);

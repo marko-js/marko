@@ -52,7 +52,8 @@ import {
   type SerializeReason,
 } from "./serialize-reasons";
 import { finalizeTagDownstreams } from "./set-tag-sections-downstream";
-import { getHoistFunctionIdentifier } from "./signals";
+import { getRegisterUID } from "./signals";
+import { getBindingGetterIdentifier } from "./signals";
 import { createProgramState } from "./state";
 import { toMemberExpression } from "./to-property-name";
 import withPreviousLocation from "./with-previous-location";
@@ -201,6 +202,54 @@ export function createBinding(
 
   setNextBindingId(id + 1);
   getBindings().add(binding);
+  return binding;
+}
+
+export function trackDomVarReferences(
+  tag: t.NodePath<t.MarkoTag>,
+  binding: Binding,
+) {
+  const tagVar = tag.node.var;
+  if (!tagVar) {
+    return;
+  }
+  if (!t.isIdentifier(tagVar)) {
+    throw tag
+      .get("var")
+      .buildCodeFrameError(
+        "Tag variables on native elements cannot be destructured.",
+      );
+  }
+
+  const babelBinding = tag.scope.getBinding(tagVar.name)!;
+  const section = getOrCreateSection(tag);
+
+  if (babelBinding.constantViolations.length) {
+    throw babelBinding.constantViolations[0].buildCodeFrameError(
+      "Tag variables on native elements cannot be assigned to.",
+    );
+  }
+
+  let registerId: string | undefined;
+  for (const ref of babelBinding.referencePaths as t.NodePath<t.Identifier>[]) {
+    const refSection = getOrCreateSection(ref);
+    setReferencesScope(ref);
+    if (isSameOrChildSection(binding.section, refSection)) {
+      (ref.node.extra ??= {}).read = createRead(binding, undefined);
+
+      if (!isInvokedFunction(ref)) {
+        section.domGetterBindings.set(
+          binding,
+          (registerId ??= getRegisterUID(section, binding.name)),
+        );
+      }
+
+      addOwnerSerializeReason(refSection, section, true);
+    } else {
+      trackHoistedReference(ref, binding);
+    }
+  }
+
   return binding;
 }
 
@@ -1397,9 +1446,15 @@ export function getReadReplacement(
 
   if (binding) {
     if (node.type === "Identifier") {
-      if (binding.type === BindingType.hoist) {
+      if (binding.type === BindingType.dom) {
+        if (binding.section.domGetterBindings.has(binding)) {
+          replacement = t.callExpression(getBindingGetterIdentifier(binding), [
+            getScopeExpression(node.extra!.section!, binding.section),
+          ]);
+        }
+      } else if (binding.type === BindingType.hoist) {
         replacement = node.extra?.[kIsInvoked]
-          ? t.callExpression(getHoistFunctionIdentifier(binding), [
+          ? t.callExpression(getBindingGetterIdentifier(binding), [
               getScopeExpression(node.extra.section!, binding.section),
             ])
           : t.identifier(binding.name);

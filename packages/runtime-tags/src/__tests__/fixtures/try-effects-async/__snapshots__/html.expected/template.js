@@ -3,8 +3,8 @@ import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   const $clickCount__closures = new Set();
-  let clickCount = 0;
   const el = _._el();
+  let clickCount = 0;
   _._html(`<button>inc</button>${_._el_resume($scope0_id, "#button/0")}<div></div>${_._el_resume($scope0_id, "#div/1")}`);
   _._try($scope0_id, "#text/2", _._content_resume("__tests__/template.marko_1_content", () => {
     const $scope1_id = _._scope_id();

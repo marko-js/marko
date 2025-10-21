@@ -13,7 +13,9 @@
       "$$get$hoisted_setHtml2": "i",
       "$$thing_content2__setHtml": "e",
       "$$thing_content2__setup": "u",
-      "$$thing_content2": "d"
+      "$$thing_content2": "d",
+      "$$get_$hoisted_setHtml": "f",
+      "$$get_$hoisted_setHtml2": "v"
     }
   }
 }

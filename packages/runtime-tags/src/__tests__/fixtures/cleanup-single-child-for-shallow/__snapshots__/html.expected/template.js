@@ -2,8 +2,8 @@ import * as _ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
-  let items = [1, 2, 3];
   const el = _._el();
+  let items = [1, 2, 3];
   const write = _._resume(function (msg) {
     el().innerHTML += '\n' + msg;
   }, "__tests__/template.marko_0/write", $scope0_id);

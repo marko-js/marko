@@ -35,7 +35,11 @@ import {
   type ReferencedBindings,
 } from "./references";
 import { callRuntime } from "./runtime";
-import { createScopeReadPattern, getScopeExpression } from "./scope-read";
+import {
+  createScopeReadExpression,
+  createScopeReadPattern,
+  getScopeExpression,
+} from "./scope-read";
 import {
   getDynamicClosureIndex,
   getScopeIdIdentifier,
@@ -166,17 +170,18 @@ export const [getHTMLSectionStatements] = createSectionState<t.Statement[]>(
   () => [],
 );
 
-const [getHoistFunctionsIdsMap] = createSectionState<
-  Map<Binding, t.Identifier>
->("hoistFunctionsIdsMap", () => new Map());
+const [getBindingGetterIdMap] = createSectionState<Map<Binding, t.Identifier>>(
+  "bindingGetterIdMap",
+  () => new Map(),
+);
 
-export function getHoistFunctionIdentifier(hoistedBinding: Binding) {
-  const idsMap = getHoistFunctionsIdsMap(hoistedBinding.section);
-  let identifier = idsMap.get(hoistedBinding);
+export function getBindingGetterIdentifier(binding: Binding) {
+  const idsMap = getBindingGetterIdMap(binding.section);
+  let identifier = idsMap.get(binding);
   if (!identifier) {
     idsMap.set(
-      hoistedBinding,
-      (identifier = generateUidIdentifier(`get${hoistedBinding.name}`)),
+      binding,
+      (identifier = generateUidIdentifier(`get${binding.name}`)),
     );
   }
   return identifier;
@@ -769,6 +774,7 @@ export function getRegisterUID(section: Section, name: string) {
 export function writeSignals(section: Section) {
   const seen = new Set<Signal>();
   writeHoists(section);
+  writeDomGetters(section);
 
   for (const signal of getSignals(section).values()) {
     writeSignal(signal);
@@ -875,6 +881,26 @@ export function writeSignals(section: Section) {
   }
 }
 
+function writeDomGetters(section: Section) {
+  for (const [binding, registerId] of section.domGetterBindings) {
+    getProgram().node.body.push(
+      t.variableDeclaration("const", [
+        t.variableDeclarator(
+          getBindingGetterIdentifier(binding),
+          callRuntime(
+            "_el",
+            t.stringLiteral(registerId),
+            t.stringLiteral(
+              getAccessorPrefix().Getter +
+                getScopeAccessorLiteral(binding).value,
+            ),
+          ),
+        ),
+      ]),
+    );
+  }
+}
+
 function writeHoists(section: Section) {
   forEach(section.hoisted, (binding) => {
     for (const hoistedBinding of binding.hoists.values()) {
@@ -894,7 +920,7 @@ function writeHoists(section: Section) {
         currentSection = parentSection;
       }
 
-      const hoistIdentifier = getHoistFunctionIdentifier(hoistedBinding);
+      const hoistIdentifier = getBindingGetterIdentifier(hoistedBinding);
 
       getProgram().node.body.push(
         t.variableDeclaration("const", [
@@ -1333,6 +1359,14 @@ function replaceBindingReadNode(node: t.Node) {
     case "MemberExpression":
     case "OptionalMemberExpression": {
       return getReadReplacement(node);
+    }
+    case "CallExpression": {
+      const { extra } = node.callee;
+      const readBinding = extra?.read?.binding;
+      if (readBinding?.type === BindingType.dom) {
+        return createScopeReadExpression(extra!.section!, readBinding);
+      }
+      break;
     }
   }
 }

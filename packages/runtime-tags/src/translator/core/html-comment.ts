@@ -3,14 +3,11 @@ import {
   assertNoArgs,
   assertNoAttributes,
   assertNoParams,
-  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
 import { bodyToTextLiteral } from "../util/body-to-text-literal";
-import { generateUidIdentifier } from "../util/generate-uid";
-import isInvokedFunction from "../util/is-invoked-function";
 import { isOutputHTML } from "../util/marko-config";
 import {
   type Binding,
@@ -18,34 +15,25 @@ import {
   createBinding,
   getScopeAccessorLiteral,
   mergeReferences,
+  trackDomVarReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
-import {
-  createScopeReadExpression,
-  getScopeExpression,
-} from "../util/scope-read";
-import {
-  getOrCreateSection,
-  getScopeIdIdentifier,
-  getSection,
-} from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
 import {
   addSerializeExpr,
   getSerializeReason,
 } from "../util/serialize-reasons";
-import { addStatement, getRegisterUID } from "../util/signals";
-import translateVar from "../util/translate-var";
+import { addStatement } from "../util/signals";
+import { translateDomVar } from "../util/translate-var";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
 const kNodeBinding = Symbol("comment tag binding");
-const kGetterId = Symbol("node getter id");
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kNodeBinding]?: Binding;
-    [kGetterId]?: string;
   }
 }
 
@@ -57,7 +45,6 @@ export default {
 
     const tagVar = tag.node.var;
     let needsBinding = false;
-    let needsGetter = false;
     if (tagVar) {
       if (!t.isIdentifier(tagVar)) {
         throw tag
@@ -67,13 +54,6 @@ export default {
           );
       }
       needsBinding = true;
-
-      for (const ref of tag.scope.getBinding(tagVar.name)!.referencePaths) {
-        if (!isInvokedFunction(ref)) {
-          needsGetter = true;
-          break;
-        }
-      }
     }
 
     const referenceNodes: t.Node[] = [];
@@ -96,9 +76,7 @@ export default {
         tagSection,
       ));
 
-      if (needsGetter) {
-        tagExtra[kGetterId] = getRegisterUID(tagSection, "comment");
-      }
+      trackDomVarReferences(tag, nodeBinding);
 
       addSerializeExpr(tagSection, !!tagVar || tagExtra, nodeBinding);
     }
@@ -108,54 +86,9 @@ export default {
     enter(tag) {
       const tagExtra = tag.node.extra!;
       const nodeBinding = tagExtra[kNodeBinding];
-      const hasVar = !!tag.node.var;
-      if (hasVar) {
-        const getterId = tagExtra[kGetterId];
-        if (isOutputHTML()) {
-          translateVar(
-            tag,
-            callRuntime(
-              "_el",
-              getterId && getScopeIdIdentifier(getSection(tag)),
-              getterId && t.stringLiteral(getterId),
-            ),
-          );
-        } else {
-          const varName = (tag.node.var as t.Identifier).name;
-          const references = tag.scope.getBinding(varName)!.referencePaths;
-          let getterFnIdentifier: t.Identifier | undefined;
-          if (getterId) {
-            getterFnIdentifier = generateUidIdentifier(`get_${varName}`);
-            getProgram().node.body.push(
-              t.variableDeclaration("const", [
-                t.variableDeclarator(
-                  getterFnIdentifier,
-                  callRuntime(
-                    "_el",
-                    t.stringLiteral(getterId),
-                    getScopeAccessorLiteral(nodeBinding!),
-                  ),
-                ),
-              ]),
-            );
-          }
-          for (const reference of references) {
-            const referenceSection = getSection(reference);
-            if (isInvokedFunction(reference)) {
-              reference.parentPath.replaceWith(
-                t.expressionStatement(
-                  createScopeReadExpression(referenceSection, nodeBinding!),
-                ),
-              );
-            } else if (getterFnIdentifier) {
-              reference.replaceWith(
-                t.callExpression(getterFnIdentifier, [
-                  getScopeExpression(referenceSection, getSection(tag)),
-                ]),
-              );
-            }
-          }
-        }
+
+      if (isOutputHTML()) {
+        translateDomVar(tag, nodeBinding);
       }
 
       if (nodeBinding) {

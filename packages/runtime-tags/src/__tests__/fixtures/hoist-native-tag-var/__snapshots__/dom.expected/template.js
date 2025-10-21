@@ -1,15 +1,15 @@
 export const $template = `<!><!>${_child_template}<hr><!><!>`;
 export const $walks = /* over(1), replace, over(1), beginChild, _child_walks, endChild, over(1), replace, over(2) */`b%b/${_child_walks}&b%c`;
-import * as _ from "@marko/runtime-tags/debug/dom";
-const $get_el = _._el("__tests__/template.marko_2/#div", "Getter:#div/0");
 import { $setup as _child, $input as _child_input, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
+import * as _ from "@marko/runtime-tags/debug/dom";
 const $get$hoisted_el = _._hoist("Getter:#div/0", "ConditionalScope:#text/2");
 const $if_content3 = /* @__PURE__ */_._content_branch("<div></div>", /* get, over(1) */" b");
 const $get$hoisted_el2 = _._resume("__tests__/template.marko_0_$hoisted_el/hoist", _._hoist("Getter:#div/0", "ConditionalScope:#text/0", "ConditionalScope:#text/0"));
+const $getdiv = _._el("__tests__/template.marko_2/#div", "Getter:#div/0");
 const $if_content2__setup = $scope => {
   _child($scope["#childScope/1"]);
   _child_input($scope["#childScope/1"], {
-    value: $get_el($scope)
+    value: $getdiv($scope)
   });
 };
 const $if_content2 = /* @__PURE__ */_._content_branch(`<div></div>${_child_template}`, /* get, over(1), beginChild, _child_walks, endChild */` b/${_child_walks}&`, $if_content2__setup);
