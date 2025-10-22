@@ -1,0 +1,3 @@
+path_filters:
+  - "!**/__snapshots__/**"
+  - "**/src/**"
