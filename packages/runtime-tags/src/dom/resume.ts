@@ -222,7 +222,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                     $global = (scope || {}) as Scope["$global"];
                     $global.runtimeId = runtimeId;
                     $global.renderId = renderId;
-                    $global.___nextScopeId = 1e6;
                   } else if (typeof scope === "number") {
                     lastScopeId += scope;
                   } else {

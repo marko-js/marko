@@ -54,7 +54,6 @@ function mount(
   if ($global) {
     ({ $global, ...input } = input);
     $global = {
-      ___nextScopeId: 0,
       runtimeId: DEFAULT_RUNTIME_ID,
       renderId: DEFAULT_RENDER_ID,
       ...$global,
@@ -75,7 +74,6 @@ function mount(
     }
   } else {
     $global = {
-      ___nextScopeId: 0,
       runtimeId: DEFAULT_RUNTIME_ID,
       renderId: DEFAULT_RENDER_ID,
     };
