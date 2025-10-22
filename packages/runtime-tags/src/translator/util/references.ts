@@ -1015,9 +1015,12 @@ export function finalizeReferences() {
       intersectionsBySection,
     );
     if (registerReason) {
-      forEach(fn.referencedBindingsInFunction, (binding) =>
-        addSerializeReason(binding.section, registerReason, binding),
-      );
+      forEach(fn.referencedBindingsInFunction, (binding) => {
+        addSerializeReason(binding.section, registerReason, binding);
+        if (binding.section !== fn.section) {
+          addOwnerSerializeReason(fn.section, binding.section, registerReason);
+        }
+      });
     }
   }
 
