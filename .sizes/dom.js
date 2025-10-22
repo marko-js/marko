@@ -1,4 +1,4 @@
-// size: 19452 (min) 7369 (brotli)
+// size: 19446 (min) 7372 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -99,11 +99,11 @@ function stripSpacesAndPunctuation(str) {
   return str.replace(/[^\p{L}\p{N}]/gu, "");
 }
 function createScope($global, closestBranch) {
-  let scope = { l: $global.p++, q: 1, k: closestBranch, $global: $global };
+  let scope = { l: $global.q++, n: 1, k: closestBranch, $global: $global };
   return (pendingScopes.push(scope), scope);
 }
 function skipScope(scope) {
-  return scope.$global.p++;
+  return scope.$global.q++;
 }
 function findBranchWithKey(scope, key) {
   let branch = scope.k;
@@ -324,7 +324,7 @@ function init(runtimeId = "M") {
                         : (($global = scope || {}),
                           ($global.runtimeId = runtimeId),
                           ($global.renderId = renderId),
-                          ($global.p = 1e6));
+                          ($global.q = 1e6));
               } finally {
                 isResuming = visits.length = resumes.length = 0;
               }
@@ -636,7 +636,7 @@ function _let(valueAccessor, fn) {
     rendering
       ? (((scope[valueChangeAccessor] = valueChange) &&
           scope[valueAccessor] !== value) ||
-          !(valueAccessor in scope)) &&
+          scope.n) &&
         ((scope[valueAccessor] = value), fn && fn(scope, value))
       : scope[valueChangeAccessor]
         ? scope[valueChangeAccessor](value)
@@ -652,7 +652,7 @@ function _const(valueAccessor, fn = () => {}) {
 }
 function _or(id, fn, defaultPending = 1, scopeIdAccessor = "l") {
   return (scope) => {
-    scope.q
+    scope.n
       ? void 0 === scope[id]
         ? (scope[id] = defaultPending)
         : --scope[id] || fn(scope)
@@ -675,7 +675,7 @@ function _for_closure(valueAccessor, ownerLoopNodeAccessor, fn) {
           ownerScope,
           () => {
             for (let scope of scopes)
-              !scope.q && !scope.A && childSignal(scope);
+              !scope.n && !scope.A && childSignal(scope);
           },
           -1,
           0,
@@ -691,7 +691,7 @@ function _if_closure(valueAccessor, ownerConditionalNodeAccessor, branch, fn) {
     ownerSignal = (scope) => {
       let ifScope = scope[scopeAccessor];
       ifScope &&
-        !ifScope.q &&
+        !ifScope.n &&
         (scope[branchAccessor] || 0) === branch &&
         queueRender(ifScope, childSignal, -1);
     };
@@ -712,7 +712,7 @@ function _closure(...closureSignals) {
   return (scope) => {
     if (scope[___scopeInstancesAccessor])
       for (let childScope of scope[___scopeInstancesAccessor])
-        childScope.q ||
+        childScope.n ||
           queueRender(
             childScope,
             closureSignals[childScope[___signalIndexAccessor]],
@@ -859,7 +859,7 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
     u: owner,
     D: setup,
     m: params,
-    n: dynamicScopesAccessor,
+    o: dynamicScopesAccessor,
   });
 }
 function _content_resume(
@@ -1062,8 +1062,8 @@ function _attr_content(scope, nodeAccessor, value) {
     rendererAccessor = "c" + nodeAccessor;
   scope[rendererAccessor] !== (scope[rendererAccessor] = content?.l) &&
     (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
-    content?.n &&
-      subscribeToScopeSet(content.u, content.n, scope["d" + nodeAccessor]));
+    content?.o &&
+      subscribeToScopeSet(content.u, content.o, scope["d" + nodeAccessor]));
 }
 function _attrs_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
@@ -1151,10 +1151,10 @@ function _await(nodeAccessor, renderer) {
       tryWithPlaceholder
         ? (placeholderShown.add(pendingEffects),
           !scope[promiseAccessor] &&
-            1 === (tryWithPlaceholder.o = (tryWithPlaceholder.o || 0) + 1) &&
+            1 === (tryWithPlaceholder.p = (tryWithPlaceholder.p || 0) + 1) &&
             requestAnimationFrame(
               () =>
-                tryWithPlaceholder.o &&
+                tryWithPlaceholder.p &&
                 runEffects(
                   prepareEffects(() =>
                     queueRender(
@@ -1208,7 +1208,7 @@ function _await(nodeAccessor, renderer) {
                   renderer.m?.(awaitBranch, [data]),
                   tryWithPlaceholder &&
                     (placeholderShown.add(pendingEffects),
-                    !--tryWithPlaceholder.o))
+                    !--tryWithPlaceholder.p))
                 ) {
                   let placeholderBranch = tryWithPlaceholder.c;
                   ((tryWithPlaceholder.c = 0),
@@ -1230,7 +1230,7 @@ function _await(nodeAccessor, renderer) {
         },
         (error) => {
           thisPromise === scope[promiseAccessor] &&
-            (tryWithPlaceholder && (tryWithPlaceholder.o = 0),
+            (tryWithPlaceholder && (tryWithPlaceholder.p = 0),
             (scope[promiseAccessor] = 0),
             schedule(),
             queueRender(scope, renderCatch, -1, error));
@@ -1263,7 +1263,7 @@ function renderCatch(scope, error) {
     let owner = tryWithCatch._,
       placeholderBranch = tryWithCatch.c;
     (placeholderBranch &&
-      ((tryWithCatch.o = 0),
+      ((tryWithCatch.p = 0),
       (owner["d" + tryWithCatch.a] = placeholderBranch),
       destroyBranch(tryWithCatch)),
       caughtError.add(pendingEffects),
@@ -1322,18 +1322,18 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
               content,
               createAndSetupBranch,
             ),
-              content.n &&
+              content.o &&
                 subscribeToScopeSet(
                   content.u,
-                  content.n,
+                  content.o,
                   scope[childScopeAccessor].d0,
                 ));
           }
         } else
-          normalizedRenderer?.n &&
+          normalizedRenderer?.o &&
             subscribeToScopeSet(
               normalizedRenderer.u,
-              normalizedRenderer.n,
+              normalizedRenderer.o,
               scope[childScopeAccessor],
             );
       if (normalizedRenderer) {
@@ -1710,7 +1710,7 @@ function runRenders() {
     }
     render.t.k?.A || runRender(render);
   }
-  for (let scope of pendingScopes) scope.q = 0;
+  for (let scope of pendingScopes) scope.n = 0;
   pendingScopes = [];
 }
 var runRender = (render) => render.N(render.t, render.I),
@@ -1718,7 +1718,7 @@ var runRender = (render) => render.N(render.t, render.I),
     ((_enable_catch = () => {}), enableBranches());
     let handlePendingTry = (fn, scope, branch) => {
       for (; branch; ) {
-        if (branch.o) return (branch.H ||= []).push(fn, scope);
+        if (branch.p) return (branch.H ||= []).push(fn, scope);
         branch = branch.y;
       }
     };
@@ -1826,7 +1826,7 @@ var classIdToBranch = new Map(),
         ((component.effects = prepareEffects(() => {
           (branch ||
             ((created = 1),
-            (out.global.p ||= 0),
+            (out.global.q ||= 0),
             (branch = component.scope =
               createAndSetupBranch(
                 out.global,
@@ -1857,8 +1857,8 @@ function mount(input = {}, reference, position) {
   switch (
     ($global
       ? (({ $global: $global, ...input } = input),
-        ($global = { p: 0, runtimeId: "M", renderId: "_", ...$global }))
-      : ($global = { p: 0, runtimeId: "M", renderId: "_" }),
+        ($global = { q: 0, runtimeId: "M", renderId: "_", ...$global }))
+      : ($global = { q: 0, runtimeId: "M", renderId: "_" }),
     position)
   ) {
     case "beforebegin":

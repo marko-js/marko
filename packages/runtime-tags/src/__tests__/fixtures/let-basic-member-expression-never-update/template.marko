@@ -1,0 +1,10 @@
+let/index=-1
+let/user=index !== -1 && {
+  id: index,
+}
+
+div -- ${user?.id}
+
+button onClick() {
+  index++;
+} -- Update
