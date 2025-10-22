@@ -6,7 +6,7 @@ export function $setup($scope) {
 }
 function $_return($scope) {
   return function (html) {
-    $scope["#div/0"].innerHTML = html;
+    _._el_read($scope["#div/0"]).innerHTML = html;
   };
 }
 _._resume("__tests__/tags/child.marko_0/_return", $_return);

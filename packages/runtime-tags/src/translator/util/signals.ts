@@ -27,7 +27,6 @@ import {
   getReadReplacement,
   getScopeAccessor,
   getScopeAccessorLiteral,
-  getSectionInstancesAccessor,
   getSectionInstancesAccessorLiteral,
   intersectionMeta,
   isAssignedBindingExtra,
@@ -149,7 +148,7 @@ const [getSectionWriteScopeBuilder, setSectionWriteScopeBuilder] =
   createSectionState<undefined | ((expr: t.Expression) => t.Expression)>(
     "sectionWriteScopeBuilder",
   );
-function addWriteScopeBuilder(
+export function addWriteScopeBuilder(
   section: Section,
   builder: (writeCall: t.Expression) => t.Expression,
 ) {
@@ -1091,74 +1090,6 @@ export function writeHTMLResumeStatements(
     }
   });
 
-  const sectionDynamicSubscribers = new Set<Section>();
-  forEach(section.hoisted, (binding) => {
-    for (const hoistedBinding of binding.hoists.values()) {
-      if (hoistedBinding.downstreamExpressions.size) {
-        getHTMLSectionStatements(hoistedBinding.section).push(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              t.identifier(hoistedBinding.name),
-              callRuntime(
-                "_hoist",
-                getScopeIdIdentifier(hoistedBinding.section),
-                t.stringLiteral(
-                  getResumeRegisterId(
-                    hoistedBinding.section,
-                    hoistedBinding,
-                    "hoist",
-                  ),
-                ),
-              ),
-            ),
-          ]),
-        );
-      }
-
-      let currentSection: Section | undefined = section;
-      while (currentSection && currentSection !== hoistedBinding.section) {
-        const parentSection: Section = currentSection.parent!;
-        if (
-          !currentSection.sectionAccessor &&
-          !sectionDynamicSubscribers.has(currentSection)
-        ) {
-          const subscribersIdentifier = generateUidIdentifier(
-            `${currentSection.name}__subscribers`,
-          );
-
-          sectionDynamicSubscribers.add(currentSection);
-
-          getHTMLSectionStatements(parentSection).push(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(
-                subscribersIdentifier,
-                t.newExpression(t.identifier("Set"), []),
-              ),
-            ]),
-          );
-
-          addWriteScopeBuilder(currentSection, (expr) =>
-            callRuntime("_subscribe", subscribersIdentifier, expr),
-          );
-          setSerializedValue(
-            parentSection,
-            getSectionInstancesAccessor(currentSection)!,
-            subscribersIdentifier,
-          );
-        }
-        currentSection = parentSection!;
-      }
-    }
-
-    if (binding.hoists.size && binding.type !== BindingType.dom) {
-      setBindingSerializedValue(
-        section,
-        binding,
-        getDeclaredBindingExpression(binding),
-      );
-    }
-  });
-
   for (let i = allSignals.length; i--; ) {
     if (allSignals[i].effect.length) {
       const signalRefs = allSignals[i].referencedBindings;
@@ -1362,9 +1293,12 @@ function replaceBindingReadNode(node: t.Node) {
     }
     case "CallExpression": {
       const { extra } = node.callee;
-      const readBinding = extra?.read?.binding;
-      if (readBinding?.type === BindingType.dom) {
-        return createScopeReadExpression(extra!.section!, readBinding);
+      const binding = extra?.read?.binding;
+      if (binding?.type === BindingType.dom) {
+        const replacement = createScopeReadExpression(extra!.section!, binding);
+        return isOptimize()
+          ? replacement
+          : callRuntime("_el_read", replacement);
       }
       break;
     }

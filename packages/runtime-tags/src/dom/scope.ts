@@ -1,4 +1,5 @@
 import type { BranchScope, Scope } from "../common/types";
+import { $signalReset } from "./abort-signal";
 import { insertChildNodes, removeChildNodes } from "./dom";
 import { pendingScopes } from "./queue";
 
@@ -42,7 +43,7 @@ function destroyNestedBranches(branch: BranchScope) {
   branch.___branchScopes?.forEach(destroyNestedBranches);
   branch.___abortScopes?.forEach((scope) => {
     for (const id in scope.___abortControllers) {
-      scope.___abortControllers[id]?.abort();
+      $signalReset(scope, id);
     }
   });
 }

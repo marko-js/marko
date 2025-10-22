@@ -55,20 +55,24 @@ export function translateDomVar(
 ) {
   if (binding && tag.node.var) {
     const tagSection = getSection(tag);
-    const getterId = tagSection.domGetterBindings.get(binding);
-    (tag.parentPath as t.NodePath<t.MarkoTagBody | t.Program>).unshiftContainer(
-      "body",
-      t.variableDeclaration("const", [
-        t.variableDeclarator(
-          tag.node.var,
-          callRuntime(
-            "_el",
-            getterId && getScopeIdIdentifier(tagSection),
-            getterId && t.stringLiteral(getterId),
+    const registerId = tagSection.domGetterBindings.get(binding);
+    if (registerId) {
+      (
+        tag.parentPath as t.NodePath<t.MarkoTagBody | t.Program>
+      ).unshiftContainer(
+        "body",
+        t.variableDeclaration("const", [
+          t.variableDeclarator(
+            tag.node.var,
+            callRuntime(
+              "_el",
+              getScopeIdIdentifier(tagSection),
+              t.stringLiteral(registerId),
+            ),
           ),
-        ),
-      ]),
-    );
+        ]),
+      );
+    }
   }
 }
 

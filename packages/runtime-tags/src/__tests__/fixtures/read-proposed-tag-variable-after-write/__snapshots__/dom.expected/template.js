@@ -4,8 +4,8 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 const $clickCount__script = _._script("__tests__/template.marko_0_clickCount", ($scope, {
   clickCount
 }) => _._on($scope["#button/0"], "click", function () {
-  $scope["#div/2"].innerHTML = ($clickCount($scope, ++clickCount), clickCount - 1);
-  $scope["#div/3"].innerHTML = clickCount;
+  _._el_read($scope["#div/2"]).innerHTML = ($clickCount($scope, ++clickCount), clickCount - 1);
+  _._el_read($scope["#div/3"]).innerHTML = clickCount;
 }));
 const $clickCount = /* @__PURE__ */_._let("clickCount/4", ($scope, clickCount) => {
   _._text($scope["#text/1"], clickCount);

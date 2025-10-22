@@ -38,9 +38,9 @@ destroyed
 # Mutations
 ```
 INSERT #text
+REMOVE div after #text
 REMOVE #text in pre
 INSERT pre/#text
-REMOVE div after #text
 ```
 
 # Render
@@ -92,7 +92,7 @@ destroyed
 # Mutations
 ```
 INSERT #text
+REMOVE div after #text
 REMOVE #text in pre
 INSERT pre/#text
-REMOVE div after #text
 ```

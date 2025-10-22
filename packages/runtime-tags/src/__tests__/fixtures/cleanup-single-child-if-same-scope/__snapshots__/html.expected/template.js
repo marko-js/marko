@@ -1,7 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
-  const el = _._el();
   let show = true;
   _._html(`<button>Toggle</button>${_._el_resume($scope0_id, "#button/0")}<pre></pre>${_._el_resume($scope0_id, "#pre/1")}`);
   _._if(() => {

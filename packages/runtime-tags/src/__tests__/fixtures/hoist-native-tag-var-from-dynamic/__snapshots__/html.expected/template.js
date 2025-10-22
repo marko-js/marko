@@ -12,7 +12,6 @@ export default _._template("__tests__/template.marko", input => {
   _child({
     content: _._content("__tests__/template.marko_1_content", () => {
       const $scope1_id = _._scope_id();
-      const el = _._el();
       _._html(`<span></span>${_._el_resume($scope1_id, "#span/0")}`);
       _._subscribe($child_content__subscribers, _._scope($scope1_id, {}, "__tests__/template.marko", "3:2"));
     })
@@ -24,7 +23,6 @@ export default _._template("__tests__/template.marko", input => {
     _child({
       content: _._content("__tests__/template.marko_3_content", () => {
         const $scope3_id = _._scope_id();
-        const el2 = _._el();
         _._html(`<div></div>${_._el_resume($scope3_id, "#div/0")}`);
         _._subscribe($child_content2__subscribers, _._scope($scope3_id, {}, "__tests__/template.marko", "16:4"));
       })
@@ -39,7 +37,6 @@ export default _._template("__tests__/template.marko", input => {
   }, $scope0_id), 0, _._serialize_guard($scope0_reason, /* input.show */0));
   _._dynamic_tag($scope0_id, "#text/2", input.show ? 'section' : null, {}, _._content_resume("__tests__/template.marko_4_content", () => {
     const $scope4_id = _._scope_id();
-    const el3 = _._el();
     _._html(`<p></p>${_._el_resume($scope4_id, "#p/0")}`);
     _._subscribe($inputshowsectionnull_content__subscribers, _._scope($scope4_id, {}, "__tests__/template.marko", "34:4"));
   }, $scope0_id), 0, _._serialize_guard($scope0_reason, /* input.show */0));

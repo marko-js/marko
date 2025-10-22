@@ -1,0 +1,15 @@
+<let/items=[0,1]>
+<button onClick() {
+  items = [...items, items.length]
+} />
+
+<ul/$ul>
+  <for|item| of=items>
+    <li>${item}</li>
+  </for>
+</ul>
+
+<script>
+  const getter = $ul;
+  getter().classList.add('attached')
+</script>

@@ -6,7 +6,7 @@ const $for_content__$params = /* @__PURE__ */_._const("$params2", ($scope, $para
 const $for_content = /* @__PURE__ */_._content_branch("<li> </li>", /* next(1), get, out(1) */"D l", 0, $for_content__$params);
 const $for = /* @__PURE__ */_._for_until("#ul/0", $for_content);
 const $count = /* @__PURE__ */_._let("count/1", ($scope, count) => $for($scope, [count, 0, 1]));
-const $setup__script = _._script("__tests__/template.marko_0", $scope => $scope["#ul/0"].classList.add("mounted"));
+const $setup__script = _._script("__tests__/template.marko_0", $scope => _._el_read($scope["#ul/0"]).classList.add("mounted"));
 export function $setup($scope) {
   $count($scope, 1);
   $setup__script($scope);

@@ -8,6 +8,7 @@ import {
 
 import type { AccessorPrefix } from "../../common/accessor.debug";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
+import { getMarkoRoot } from "./get-root";
 import { isCoreTag, isCoreTagName } from "./is-core-tag";
 import {
   addSorted,
@@ -375,6 +376,31 @@ export function isSameOrChildSection(section: Section, other: Section) {
     }
   } while ((other = other.parent!));
   return false;
+}
+
+export function isCustomTagHoist(
+  bindingPath: t.NodePath,
+  reference: t.NodePath,
+) {
+  const tag = bindingPath.isMarkoTag()
+    ? bindingPath
+    : getMarkoRoot(bindingPath)?.parentPath;
+
+  if (!tag?.isMarkoTag()) {
+    return false;
+  }
+
+  const body = tag.parentPath!;
+
+  let cur: t.NodePath | null = reference;
+  while (cur) {
+    if (cur.parentPath === body) {
+      return +tag.key! > +cur.key!;
+    }
+    cur = cur.parentPath;
+  }
+
+  return true;
 }
 
 export function getCommonSection(section: Section, other: Section) {

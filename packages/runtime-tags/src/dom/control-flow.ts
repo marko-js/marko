@@ -14,6 +14,7 @@ import {
   pendingEffects,
   placeholderShown,
   prepareEffects,
+  queueEffect,
   queueRender,
   runEffects,
 } from "./queue";
@@ -143,11 +144,13 @@ export function _await(nodeAccessor: Accessor, renderer: Renderer) {
                     removeAndDestroyBranch(placeholderBranch);
                   }
 
-                  const pendingEffects = tryWithPlaceholder.___effects;
-                  if (pendingEffects) {
-                    tryWithPlaceholder.___effects = [];
-                    runEffects(pendingEffects, true);
-                  }
+                  queueEffect(tryWithPlaceholder, (scope) => {
+                    const pendingEffects = scope.___effects;
+                    if (pendingEffects) {
+                      scope.___effects = [];
+                      runEffects(pendingEffects, true);
+                    }
+                  });
                 }
               }
             },

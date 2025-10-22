@@ -10,7 +10,7 @@ import { getExprRoot, getFnRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
-import { isOptimize } from "./marko-config";
+import { isOptimize, isOutputDOM } from "./marko-config";
 import {
   addSorted,
   concat,
@@ -33,6 +33,7 @@ import {
   getDirectClosures,
   getOrCreateSection,
   getSectionRegisterReasons,
+  isCustomTagHoist,
   isDynamicClosure,
   isSameOrChildSection,
   type Section,
@@ -402,22 +403,26 @@ export function trackHoistedReference(
 function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
   const { referencePaths, constantViolations } = babelBinding;
 
-  for (const referencePath of referencePaths) {
-    const referenceSection = getOrCreateSection(referencePath);
-    if (isSameOrChildSection(binding.section, referenceSection)) {
+  for (const ref of referencePaths) {
+    const refSection = getOrCreateSection(ref);
+    if (!isCustomTagHoist(babelBinding.path, ref)) {
       if (
         binding.type === BindingType.local &&
-        referenceSection === binding.section
+        refSection === binding.section
       ) {
         continue;
       }
-      trackReference(referencePath as t.NodePath<t.Identifier>, binding);
+      trackReference(ref as t.NodePath<t.Identifier>, binding);
     } else {
-      trackHoistedReference(referencePath as t.NodePath<t.Identifier>, binding);
+      trackHoistedReference(ref as t.NodePath<t.Identifier>, binding);
     }
   }
 
   for (const ref of constantViolations) {
+    if (isCustomTagHoist(babelBinding.path, ref)) {
+      throw ref.buildCodeFrameError("Cannot assign to hoisted tag variable.");
+    }
+
     if (ref.isUpdateExpression()) {
       trackAssignment(ref.get("argument"), binding);
     } else if (ref.isAssignmentExpression()) {
@@ -1447,17 +1452,22 @@ export function getReadReplacement(
   if (binding) {
     if (node.type === "Identifier") {
       if (binding.type === BindingType.dom) {
-        if (binding.section.domGetterBindings.has(binding)) {
+        if (binding.section.domGetterBindings.has(binding) && isOutputDOM()) {
           replacement = t.callExpression(getBindingGetterIdentifier(binding), [
             getScopeExpression(node.extra!.section!, binding.section),
           ]);
         }
       } else if (binding.type === BindingType.hoist) {
-        replacement = node.extra?.[kIsInvoked]
-          ? t.callExpression(getBindingGetterIdentifier(binding), [
-              getScopeExpression(node.extra.section!, binding.section),
-            ])
-          : t.identifier(binding.name);
+        if (node.extra?.[kIsInvoked]) {
+          if (isOutputDOM()) {
+            replacement = t.callExpression(
+              getBindingGetterIdentifier(binding),
+              [getScopeExpression(node.extra.section!, binding.section)],
+            );
+          }
+        } else {
+          replacement = t.identifier(binding.name);
+        }
       } else if (binding.name !== node.name) {
         node.name = binding.name;
       }

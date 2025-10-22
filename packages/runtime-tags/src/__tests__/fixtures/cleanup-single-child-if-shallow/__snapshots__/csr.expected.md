@@ -35,9 +35,9 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT #text
+REMOVE div after #text
 REMOVE #text in div
 INSERT div/#text
-REMOVE div after #text
 ```
 
 # Render
@@ -82,7 +82,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT #text
+REMOVE div after #text
 REMOVE #text in div
 INSERT div/#text
-REMOVE div after #text
 ```

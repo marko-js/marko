@@ -1,7 +1,7 @@
 import Thing from "./tags/thing.marko";
+import * as _ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
 import _thing from "./tags/thing.marko";
-import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();

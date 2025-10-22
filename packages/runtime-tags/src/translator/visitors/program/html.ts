@@ -1,12 +1,35 @@
 import { types as t } from "@marko/compiler";
 
-import { getSharedUid, usedSharedUid } from "../../util/generate-uid";
+import {
+  generateUidIdentifier,
+  getSharedUid,
+  usedSharedUid,
+} from "../../util/generate-uid";
+import { getDeclaredBindingExpression } from "../../util/get-defined-binding-expression";
 import isStatic from "../../util/is-static";
-import { getReadReplacement, isRegisteredFnExtra } from "../../util/references";
-import { callRuntime } from "../../util/runtime";
-import { getScopeIdIdentifier, getSection } from "../../util/sections";
+import { forEach } from "../../util/optional";
+import {
+  BindingType,
+  getReadReplacement,
+  getSectionInstancesAccessor,
+  isRegisteredFnExtra,
+} from "../../util/references";
+import { callRuntime, importRuntime } from "../../util/runtime";
+import {
+  forEachSection,
+  getScopeIdIdentifier,
+  getSection,
+  type Section,
+} from "../../util/sections";
 import { isReasonDynamic } from "../../util/serialize-reasons";
-import { writeHTMLResumeStatements } from "../../util/signals";
+import {
+  addWriteScopeBuilder,
+  getHTMLSectionStatements,
+  getResumeRegisterId,
+  setBindingSerializedValue,
+  setSerializedValue,
+  writeHTMLResumeStatements,
+} from "../../util/signals";
 import { simplifyFunction } from "../../util/simplify-fn";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -18,6 +41,80 @@ export function getTemplateContentName() {
 
 export default {
   translate: {
+    enter() {
+      forEachSection((section) => {
+        const sectionDynamicSubscribers = new Set<Section>();
+        forEach(section.hoisted, (binding) => {
+          for (const hoistedBinding of binding.hoists.values()) {
+            if (hoistedBinding.downstreamExpressions.size) {
+              getHTMLSectionStatements(hoistedBinding.section).push(
+                t.variableDeclaration("const", [
+                  t.variableDeclarator(
+                    t.identifier(hoistedBinding.name),
+                    callRuntime(
+                      "_hoist",
+                      getScopeIdIdentifier(hoistedBinding.section),
+                      t.stringLiteral(
+                        getResumeRegisterId(
+                          hoistedBinding.section,
+                          hoistedBinding,
+                          "hoist",
+                        ),
+                      ),
+                    ),
+                  ),
+                ]),
+              );
+            }
+
+            let currentSection: Section | undefined = section;
+            while (
+              currentSection &&
+              currentSection !== hoistedBinding.section
+            ) {
+              const parentSection: Section = currentSection.parent!;
+              if (
+                !currentSection.sectionAccessor &&
+                !sectionDynamicSubscribers.has(currentSection)
+              ) {
+                const subscribersIdentifier = generateUidIdentifier(
+                  `${currentSection.name}__subscribers`,
+                );
+
+                sectionDynamicSubscribers.add(currentSection);
+
+                getHTMLSectionStatements(parentSection).push(
+                  t.variableDeclaration("const", [
+                    t.variableDeclarator(
+                      subscribersIdentifier,
+                      t.newExpression(t.identifier("Set"), []),
+                    ),
+                  ]),
+                );
+
+                addWriteScopeBuilder(currentSection, (expr) =>
+                  callRuntime("_subscribe", subscribersIdentifier, expr),
+                );
+                setSerializedValue(
+                  parentSection,
+                  getSectionInstancesAccessor(currentSection)!,
+                  subscribersIdentifier,
+                );
+              }
+              currentSection = parentSection!;
+            }
+          }
+
+          if (binding.hoists.size && binding.type !== BindingType.dom) {
+            setBindingSerializedValue(
+              section,
+              binding,
+              getDeclaredBindingExpression(binding),
+            );
+          }
+        });
+      });
+    },
     exit(program) {
       flushInto(program);
       writeHTMLResumeStatements(program);
@@ -111,6 +208,29 @@ function replaceBindingReadNode(node: t.Node) {
         // TODO this is probably wrong and should walk up to the closest declared binding.
         return getReadReplacement(node);
       }
+      break;
+    }
+    case "CallExpression": {
+      const binding = node.callee.extra?.read?.binding;
+      if (
+        binding &&
+        (binding.type === BindingType.hoist || binding.type === BindingType.dom)
+      ) {
+        return t.callExpression(
+          t.arrowFunctionExpression(
+            [t.cloneNode(node.callee as t.Identifier)],
+            node,
+          ),
+          [
+            importRuntime(
+              binding.type === BindingType.dom
+                ? "_el_read_error"
+                : "_hoist_read_error",
+            ),
+          ],
+        );
+      }
+      break;
     }
   }
 }

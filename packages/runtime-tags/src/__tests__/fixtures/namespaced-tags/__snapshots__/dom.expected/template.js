@@ -13,7 +13,7 @@ const $Parent__OR__Child__script = _._script("__tests__/template.marko_0_Parent_
 }) => {
   Parent;
   Child;
-  for (const node of $scope["#div/0"].querySelectorAll("a")) {
+  for (const node of _._el_read($scope["#div/0"]).querySelectorAll("a")) {
     if (node.getAttribute("ns") !== node.namespaceURI) {
       node.setAttribute("ns", node.namespaceURI);
     }

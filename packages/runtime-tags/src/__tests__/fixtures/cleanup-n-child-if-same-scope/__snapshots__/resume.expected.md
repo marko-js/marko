@@ -86,13 +86,13 @@ destroyed
 ```
 REMOVE html/body/#comment2 after #text
 INSERT html/body/#comment2
-REMOVE #text in html/body/pre
-INSERT html/body/pre/#text
 REMOVE #comment after html/body/#comment2
 REMOVE div after html/body/#comment2
 REMOVE span after html/body/#comment2
 REMOVE p after html/body/#comment2
 REMOVE #text after html/body/#comment2
+REMOVE #text in html/body/pre
+INSERT html/body/pre/#text
 ```
 
 # Render
@@ -189,9 +189,9 @@ destroyed
 # Mutations
 ```
 INSERT html/body/#comment2
-REMOVE #text in html/body/pre
-INSERT html/body/pre/#text
 REMOVE div after html/body/#comment2
 REMOVE span after html/body/#comment2
 REMOVE p after html/body/#comment2
+REMOVE #text in html/body/pre
+INSERT html/body/pre/#text
 ```

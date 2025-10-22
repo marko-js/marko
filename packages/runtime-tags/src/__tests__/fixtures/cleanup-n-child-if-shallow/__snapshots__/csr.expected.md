@@ -41,11 +41,11 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT #text
-REMOVE #text in div
-INSERT div/#text
 REMOVE div after #text
 REMOVE span after #text
 REMOVE p after #text
+REMOVE #text in div
+INSERT div/#text
 ```
 
 # Render
@@ -96,9 +96,9 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT #text
-REMOVE #text in div
-INSERT div/#text
 REMOVE div after #text
 REMOVE span after #text
 REMOVE p after #text
+REMOVE #text in div
+INSERT div/#text
 ```

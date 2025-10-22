@@ -79,9 +79,9 @@ container.querySelector("#toggle")?.click();
 # Mutations
 ```
 INSERT #text
+REMOVE #text after #text
 REMOVE #text in div
 INSERT div/#text
-REMOVE #text after #text
 ```
 
 # Render

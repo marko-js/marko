@@ -363,18 +363,18 @@ destroyed 2.3
 
 # Mutations
 ```
-INSERT #text
-REMOVE #text in html/body/div0
-INSERT #text
-REMOVE #text in html/body/div0
-INSERT #text
-REMOVE #text in html/body/div0
-INSERT #text
 REMOVE div after html/body/div2
+REMOVE div after html/body/div1/div2
+REMOVE div after html/body/div2/div2
+INSERT #text
 REMOVE #text in html/body/div0
 INSERT #text
-REMOVE div after html/body/div1/div2
+REMOVE #text in html/body/div0
+INSERT #text
+REMOVE #text in html/body/div0
+INSERT #text
+REMOVE #text in html/body/div0
+INSERT #text
 REMOVE #text in html/body/div0
 INSERT html/body/div0/#text
-REMOVE div after html/body/div2/div2
 ```

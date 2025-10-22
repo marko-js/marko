@@ -3,7 +3,6 @@ export default _._template("__tests__/template.marko", input => {
   const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();
   const $input_value__closures = new Set();
-  const el = _._el();
   let Parent = "div";
   let Child = "a";
   _._html(`<div><svg>${_._unescaped(input.value)}${_._el_resume($scope0_id, "#text/1", _._serialize_guard($scope0_reason, /* input.value */0))}`);

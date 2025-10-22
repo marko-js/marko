@@ -87,11 +87,11 @@ destroyed 3
 
 # Mutations
 ```
-REMOVE #text in div0
-INSERT div0/#text
 REMOVE div after p1
 REMOVE span after p1
 REMOVE p after p1
+REMOVE #text in div0
+INSERT div0/#text
 ```
 
 # Render
@@ -124,11 +124,11 @@ destroyed 2
 
 # Mutations
 ```
-REMOVE #text in div0
-INSERT div0/#text
 REMOVE div after p
 REMOVE span after p
 REMOVE p after p
+REMOVE #text in div0
+INSERT div0/#text
 ```
 
 # Render
@@ -154,11 +154,11 @@ destroyed 1
 # Mutations
 ```
 INSERT #text
-REMOVE #text in div
-INSERT div/#text
 REMOVE div after div
 REMOVE span after div
 REMOVE p after div
+REMOVE #text in div
+INSERT div/#text
 ```
 
 # Render

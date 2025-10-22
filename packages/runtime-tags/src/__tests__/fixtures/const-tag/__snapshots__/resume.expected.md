@@ -6,7 +6,15 @@
     <div>
       1
     </div>
-    1
+    function
+    <!--M_*1 #text/1-->
+    <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0,
+      {
+        y: 1
+      }])]
+    </script>
   </body>
 </html>
 ```

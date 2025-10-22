@@ -218,13 +218,13 @@ Inner destroyed
 ```
 REMOVE html/body/div/div1/#comment after #text
 INSERT html/body/div/div1/#comment
-REMOVE #text in html/body/pre
-INSERT html/body/pre/#text
 REMOVE #comment after html/body/div/div1/#comment
 REMOVE div after html/body/div/div1/#comment
 REMOVE span after html/body/div/div1/#comment
 REMOVE p after html/body/div/div1/#comment
 REMOVE #text after html/body/div/div1/#comment
+REMOVE #text in html/body/pre
+INSERT html/body/pre/#text
 ```
 
 # Render
@@ -320,9 +320,9 @@ Middle destroyed
 ```
 REMOVE html/body/div/#comment after div
 INSERT html/body/div/#comment
+REMOVE div after html/body/div/#comment
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE div after html/body/div/#comment
 ```
 
 # Render
@@ -407,9 +407,9 @@ Outer destroyed
 ```
 REMOVE html/body/#comment4 after div
 INSERT html/body/#comment4
+REMOVE div after html/body/#comment4
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE div after html/body/#comment4
 ```
 
 # Render
@@ -793,11 +793,11 @@ Outer destroyed
 # Mutations
 ```
 INSERT html/body/#comment4
+REMOVE div after html/body/#comment4
 REMOVE #text in html/body/pre
 INSERT #text
 REMOVE #text in html/body/pre
 INSERT #text
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE div after html/body/#comment4
 ```

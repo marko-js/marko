@@ -57,9 +57,9 @@ destroyed 3
 
 # Mutations
 ```
+REMOVE div after div2
 REMOVE #text in div0
 INSERT div0/#text
-REMOVE div after div2
 ```
 
 # Render
@@ -86,9 +86,9 @@ destroyed 2
 
 # Mutations
 ```
+REMOVE div after div1
 REMOVE #text in div0
 INSERT div0/#text
-REMOVE div after div1
 ```
 
 # Render
@@ -114,9 +114,9 @@ destroyed 1
 # Mutations
 ```
 INSERT #text
+REMOVE div after div
 REMOVE #text in div
 INSERT div/#text
-REMOVE div after div
 ```
 
 # Render

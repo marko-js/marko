@@ -1,0 +1,1 @@
+Element references can only be read in scripts and event handlers.

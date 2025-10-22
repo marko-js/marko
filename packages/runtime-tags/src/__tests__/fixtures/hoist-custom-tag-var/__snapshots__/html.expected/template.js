@@ -1,5 +1,5 @@
-import _child from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/html";
+import _child from "./tags/child.marko";
 import _thing from "./tags/thing.marko";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_reason = _._scope_reason();

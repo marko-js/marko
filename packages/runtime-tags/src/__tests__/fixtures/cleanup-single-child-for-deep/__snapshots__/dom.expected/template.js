@@ -53,7 +53,7 @@ export function $setup($scope) {
 }
 function $write($scope) {
   return function (msg) {
-    $scope["#div/1"].innerHTML += '\n' + msg;
+    _._el_read($scope["#div/1"]).innerHTML += '\n' + msg;
   };
 }
 _._resume("__tests__/template.marko_0/write", $write);

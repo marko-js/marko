@@ -1,5 +1,3 @@
-export const steps = [{}, click, click, click];
+export const steps = [{}];
 
-function click(container: Element) {
-  container.querySelector("button")!.click();
-}
+export const error_compiler = true;

@@ -3,12 +3,11 @@ import _child from "./tags/child.marko";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   const $showInner__closures = new Set();
-  const el = _._el();
   let showOuter = true;
   let showMiddle = true;
   let showInner = true;
   const write = _._resume(function (msg) {
-    el().innerHTML += '\n' + msg;
+    (el => el())(_._el_read_error).innerHTML += '\n' + msg;
   }, "__tests__/template.marko_0/write", $scope0_id);
   _._html(`<button id=outer>Toggle Outer</button>${_._el_resume($scope0_id, "#button/0")}<button id=middle>Toggle Middle</button>${_._el_resume($scope0_id, "#button/1")}<button id=inner>Toggle Inner</button>${_._el_resume($scope0_id, "#button/2")}<pre></pre>${_._el_resume($scope0_id, "#pre/3")}`);
   _._if(() => {
