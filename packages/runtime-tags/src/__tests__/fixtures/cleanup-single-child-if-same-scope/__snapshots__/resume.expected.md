@@ -78,9 +78,9 @@ destroyed
 ```
 REMOVE html/body/#comment2 after div
 INSERT html/body/#comment2
+REMOVE div after html/body/#comment2
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE div after html/body/#comment2
 ```
 
 # Render
@@ -171,7 +171,7 @@ destroyed
 # Mutations
 ```
 INSERT html/body/#comment2
+REMOVE div after html/body/#comment2
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE div after html/body/#comment2
 ```

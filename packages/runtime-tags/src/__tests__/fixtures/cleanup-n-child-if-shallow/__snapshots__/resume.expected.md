@@ -101,13 +101,13 @@ container.querySelector("button").click();
 ```
 REMOVE html/body/#comment2 after #text
 INSERT html/body/#comment2
-REMOVE #text in html/body/div
-INSERT html/body/div/#text
 REMOVE #comment after html/body/#comment2
 REMOVE div after html/body/#comment2
 REMOVE span after html/body/#comment2
 REMOVE p after html/body/#comment2
 REMOVE #text after html/body/#comment2
+REMOVE #text in html/body/div
+INSERT html/body/div/#text
 ```
 
 # Render
@@ -215,9 +215,9 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/#comment2
-REMOVE #text in html/body/div
-INSERT html/body/div/#text
 REMOVE div after html/body/#comment2
 REMOVE span after html/body/#comment2
 REMOVE p after html/body/#comment2
+REMOVE #text in html/body/div
+INSERT html/body/div/#text
 ```

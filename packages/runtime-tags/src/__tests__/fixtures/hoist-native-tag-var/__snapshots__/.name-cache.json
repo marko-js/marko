@@ -5,7 +5,9 @@
       "$init": "r",
       "$id": "t",
       "$$get$hoisted_el": "s",
-      "$$get$hoisted_el2": "i"
+      "$$get$hoisted_el2": "i",
+      "$$get_$hoisted_el": "e",
+      "$$get_$hoisted_el2": "l"
     }
   }
 }

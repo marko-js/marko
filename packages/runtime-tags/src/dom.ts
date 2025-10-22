@@ -1,4 +1,5 @@
 export { attrTag, attrTags } from "./common/attr-tag";
+export { _assert_hoist } from "./common/errors";
 export { forIn, forOf, forTo, forUntil } from "./common/for";
 export { $signal, $signalReset } from "./dom/abort-signal";
 export { compat } from "./dom/compat";
@@ -61,6 +62,7 @@ export {
   _closure,
   _closure_get,
   _const,
+  _el_read,
   _for_closure,
   _hoist,
   _id,

@@ -13,7 +13,7 @@ const $try_content__clickCount__script = _._script("__tests__/template.marko_1_c
   _._on($scope["#button/0"], "click", function () {
     $clickCount($scope._, ++clickCount);
   });
-  $scope._["#div/0"].textContent = clickCount;
+  _._el_read($scope._["#div/0"]).textContent = clickCount;
 });
 const $try_content__clickCount = /* @__PURE__ */_._closure_get("clickCount", ($scope, clickCount) => {
   _._text($scope["#text/1"], (() => {

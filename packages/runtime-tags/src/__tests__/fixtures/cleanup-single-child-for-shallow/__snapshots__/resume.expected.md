@@ -145,9 +145,9 @@ destroyed 3
 
 # Mutations
 ```
+REMOVE div after html/body/div2
 REMOVE #text in html/body/div0
 INSERT html/body/div0/#text
-REMOVE div after html/body/div2
 ```
 
 # Render
@@ -217,9 +217,9 @@ destroyed 2
 
 # Mutations
 ```
+REMOVE div after html/body/div1
 REMOVE #text in html/body/div0
 INSERT html/body/div0/#text
-REMOVE div after html/body/div1
 ```
 
 # Render
@@ -288,9 +288,9 @@ destroyed 1
 ```
 REMOVE html/body/#comment2 after div
 INSERT html/body/#comment2
+REMOVE div after html/body/#comment1
 REMOVE #text in html/body/div
 INSERT html/body/div/#text
-REMOVE div after html/body/#comment1
 ```
 
 # Render

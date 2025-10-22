@@ -1,3 +1,4 @@
+import { _el_read_error, _hoist_read_error } from "../common/errors";
 import {
   type Accessor,
   AccessorPrefix,
@@ -282,11 +283,21 @@ export function _script(id: string, fn: (scope: Scope) => void) {
   };
 }
 
+export function _el_read<T>(value: T): T {
+  if (rendering) {
+    _el_read_error();
+  }
+  return value;
+}
+
 function* traverseAllHoisted(
   scope: Scope | Iterable<Scope>,
   path: Accessor[],
   curIndex: number = path.length - 1,
 ): IterableIterator<(...args: unknown[]) => unknown> {
+  if (MARKO_DEBUG && rendering) {
+    _hoist_read_error();
+  }
   if (scope) {
     if (Symbol.iterator in scope) {
       for (const s of scope instanceof Map ? scope.values() : scope) {
@@ -305,7 +316,7 @@ export function _hoist(...path: Accessor[]) {
     const getOne = (...args: unknown[]) =>
       iterator()
         .next()
-        .value(...args);
+        .value?.(...args);
     const iterator = ((getOne as any)[Symbol.iterator] = () =>
       traverseAllHoisted(scope, path));
     return getOne;

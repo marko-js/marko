@@ -44,11 +44,11 @@ destroyed
 # Mutations
 ```
 INSERT #text
-REMOVE #text in pre
-INSERT pre/#text
 REMOVE div after #text
 REMOVE span after #text
 REMOVE p after #text
+REMOVE #text in pre
+INSERT pre/#text
 ```
 
 # Render
@@ -106,9 +106,9 @@ destroyed
 # Mutations
 ```
 INSERT #text
-REMOVE #text in pre
-INSERT pre/#text
 REMOVE div after #text
 REMOVE span after #text
 REMOVE p after #text
+REMOVE #text in pre
+INSERT pre/#text
 ```

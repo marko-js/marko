@@ -2,9 +2,9 @@ export const $template = "<button>Toggle</button><pre></pre><!><!>";
 export const $walks = /* get, over(1), get, over(1), replace, over(2) */" b b%c";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $if_content__setup__script = _._script("__tests__/template.marko_1", $scope => {
-  $scope._["#pre/1"].innerHTML += '\nmounted';
+  _._el_read($scope._["#pre/1"]).innerHTML += '\nmounted';
   _.$signal($scope, 0).onabort = () => {
-    $scope._["#pre/1"].innerHTML += '\ndestroyed';
+    _._el_read($scope._["#pre/1"]).innerHTML += '\ndestroyed';
   };
 });
 const $if_content__setup = $scope => {

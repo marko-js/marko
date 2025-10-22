@@ -3,7 +3,6 @@ export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   const $clickCount__closures = new Set();
   let clickCount = 0;
-  const el = _._el();
   _._html(`<div></div>${_._el_resume($scope0_id, "#div/0")}`);
   _._try($scope0_id, "#text/1", _._content_resume("__tests__/template.marko_1_content", () => {
     const $scope1_id = _._scope_id();

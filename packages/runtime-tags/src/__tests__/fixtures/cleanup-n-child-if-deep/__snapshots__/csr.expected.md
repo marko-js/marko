@@ -120,11 +120,11 @@ Inner destroyed
 # Mutations
 ```
 INSERT div/div1/#text
-REMOVE #text in pre
-INSERT pre/#text
 REMOVE div after div/div1/#text
 REMOVE span after div/div1/#text
 REMOVE p after div/div1/#text
+REMOVE #text in pre
+INSERT pre/#text
 ```
 
 # Render
@@ -172,9 +172,9 @@ Middle destroyed
 # Mutations
 ```
 INSERT div/#text
+REMOVE div after div/#text
 REMOVE #text in pre
 INSERT pre/#text
-REMOVE div after div/#text
 ```
 
 # Render
@@ -212,9 +212,9 @@ Outer destroyed
 # Mutations
 ```
 INSERT #text
+REMOVE div after #text
 REMOVE #text in pre
 INSERT pre/#text
-REMOVE div after #text
 ```
 
 # Render
@@ -415,11 +415,11 @@ Outer destroyed
 # Mutations
 ```
 INSERT #text
+REMOVE div after #text
 REMOVE #text in pre
 INSERT #text
 REMOVE #text in pre
 INSERT #text
 REMOVE #text in pre
 INSERT pre/#text
-REMOVE div after #text
 ```

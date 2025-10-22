@@ -1,4 +1,4 @@
-// size: 561 (min) 296 (brotli)
+// size: 563 (min) 308 (brotli)
 _._enable_catch();
 const $await_content__value = _._const(2, ($scope, value) =>
     _._text(
@@ -28,8 +28,9 @@ const $await_content__value = _._const(2, ($scope, value) =>
 const $try_content__await = _._await(0, $await_content),
   $try_content__clickCount__script = _._script(
     "a2",
-    ($scope, { _: { 3: clickCount } }) =>
-      ($scope._[1].textContent = clickCount),
+    ($scope, { _: { 3: clickCount } }) => {
+      $scope._[1].textContent = clickCount;
+    },
   ),
   $try_content__clickCount = _._closure_get(3, ($scope, clickCount) => {
     ($try_content__await($scope, resolveAfter(clickCount, 1)),

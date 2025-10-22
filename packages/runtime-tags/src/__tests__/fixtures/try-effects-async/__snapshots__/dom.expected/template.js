@@ -17,7 +17,10 @@ const $try_content__clickCount__script = _._script("__tests__/template.marko_1_c
   _: {
     clickCount
   }
-}) => ($scope._["#div/1"].textContent = clickCount));
+}) => {
+  debugger;
+  _._el_read($scope._["#div/1"]).textContent = clickCount;
+});
 const $try_content__clickCount = /* @__PURE__ */_._closure_get("clickCount", ($scope, clickCount) => {
   $try_content__await($scope, resolveAfter(clickCount, 1));
   $try_content__clickCount__script($scope);

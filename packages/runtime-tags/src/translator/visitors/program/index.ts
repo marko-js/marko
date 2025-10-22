@@ -143,6 +143,9 @@ export default {
         program.skip();
         return;
       }
+      if (isOutputHTML()) {
+        programHTML.translate.enter();
+      }
     },
     exit(program) {
       if (isOutputHTML()) {

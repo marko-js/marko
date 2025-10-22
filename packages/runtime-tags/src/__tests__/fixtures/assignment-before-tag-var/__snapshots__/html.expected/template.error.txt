@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/assignment-before-tag-var/template.marko:3:3
+      1 | <button onClick() {
+      2 |   lastClickCount = clickCount;
+    > 3 |   clickCount++;
+        |   ^^^^^^^^^^^^ Cannot assign to hoisted tag variable.
+      4 | }>+</button>
+      5 |
+      6 | <let/clickCount = 0/>

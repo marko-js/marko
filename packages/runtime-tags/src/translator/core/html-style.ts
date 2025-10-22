@@ -14,8 +14,6 @@ import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
 import { bodyToTextLiteral } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
-import { generateUidIdentifier } from "../util/generate-uid";
-import isInvokedFunction from "../util/is-invoked-function";
 import { isOutputHTML } from "../util/marko-config";
 import { type Opt, push } from "../util/optional";
 import {
@@ -25,44 +23,31 @@ import {
   dropReferences,
   getScopeAccessorLiteral,
   mergeReferences,
-  setReferencesScope,
-  trackHoistedReference,
+  trackDomVarReferences,
 } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
-import {
-  createScopeReadExpression,
-  getScopeExpression,
-} from "../util/scope-read";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
-  isSameOrChildSection,
 } from "../util/sections";
 import {
-  addOwnerSerializeReason,
   addSerializeExpr,
   getSerializeReason,
 } from "../util/serialize-reasons";
-import {
-  addHTMLEffectCall,
-  addStatement,
-  getRegisterUID,
-} from "../util/signals";
+import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { toObjectProperty } from "../util/to-property-name";
 import { propsToExpression } from "../util/translate-attrs";
-import translateVar from "../util/translate-var";
+import { translateDomVar } from "../util/translate-var";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
 const kNodeBinding = Symbol("style tag node binding");
-const kGetterId = Symbol("node getter id");
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kNodeBinding]?: Binding;
-    [kGetterId]?: string;
   }
 }
 
@@ -169,27 +154,13 @@ export default {
         );
       }
 
+      trackDomVarReferences(tag, nodeBinding);
+
       addSerializeExpr(
         tagSection,
         !!(node.var || hasEventHandlers),
         nodeBinding,
       );
-
-      if (node.var) {
-        for (const ref of tag.scope.getBinding(node.var.name)!.referencePaths) {
-          const refSection = getOrCreateSection(ref);
-          setReferencesScope(ref);
-
-          if (isSameOrChildSection(tagSection, refSection)) {
-            addOwnerSerializeReason(refSection, tagSection, true);
-            if (!tagExtra[kGetterId] && !isInvokedFunction(ref)) {
-              tagExtra[kGetterId] = getRegisterUID(tagSection, "#style");
-            }
-          } else {
-            trackHoistedReference(ref as t.NodePath<t.Identifier>, nodeBinding);
-          }
-        }
-      }
 
       addSerializeExpr(tagSection, push(exprExtras, tagExtra), nodeBinding);
     }
@@ -201,56 +172,9 @@ export default {
       const isHTML = isOutputHTML();
       const write = writer.writeTo(tag);
       const tagSection = getSection(tag);
-      const hasVar = !!tag.node.var;
 
-      if (hasVar) {
-        const getterId = tagExtra[kGetterId];
-        if (isHTML) {
-          translateVar(
-            tag,
-            callRuntime(
-              "_el",
-              getterId && getScopeIdIdentifier(tagSection),
-              getterId && t.stringLiteral(getterId),
-            ),
-          );
-        } else {
-          const varName = (tag.node.var as t.Identifier).name;
-          const references = tag.scope.getBinding(varName)!.referencePaths;
-          let getterFnIdentifier: t.Identifier | undefined;
-          if (getterId) {
-            getterFnIdentifier = generateUidIdentifier(`get_${varName}`);
-            getProgram().node.body.push(
-              t.variableDeclaration("const", [
-                t.variableDeclarator(
-                  getterFnIdentifier,
-                  callRuntime(
-                    "_el",
-                    t.stringLiteral(getterId),
-                    getScopeAccessorLiteral(nodeBinding!),
-                  ),
-                ),
-              ]),
-            );
-          }
-
-          for (const reference of references) {
-            const referenceSection = getSection(reference);
-            if (isInvokedFunction(reference)) {
-              reference.parentPath.replaceWith(
-                t.expressionStatement(
-                  createScopeReadExpression(referenceSection, nodeBinding!),
-                ),
-              );
-            } else if (getterFnIdentifier) {
-              reference.replaceWith(
-                t.callExpression(getterFnIdentifier, [
-                  getScopeExpression(referenceSection, getSection(tag)),
-                ]),
-              );
-            }
-          }
-        }
+      if (isHTML) {
+        translateDomVar(tag, nodeBinding);
       }
 
       const visitAccessor = nodeBinding && getScopeAccessorLiteral(nodeBinding);

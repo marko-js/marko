@@ -24,7 +24,7 @@ export function $setup($scope) {
 }
 function $write($scope) {
   return function (state) {
-    $scope._["#div/1"].innerHTML = state;
+    _._el_read($scope._["#div/1"]).innerHTML = state;
   };
 }
 _._resume("__tests__/template.marko_1/write", $write);

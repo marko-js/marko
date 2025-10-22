@@ -11,9 +11,7 @@ import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
-import { getAccessorPrefix } from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
-import isInvokedFunction from "../../util/is-invoked-function";
 import { type Opt, push } from "../../util/optional";
 import {
   type Binding,
@@ -22,34 +20,23 @@ import {
   dropReferences,
   getScopeAccessorLiteral,
   mergeReferences,
-  setReferencesScope,
-  trackHoistedReference,
+  trackDomVarReferences,
 } from "../../util/references";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
-import {
-  createScopeReadExpression,
-  getScopeExpression,
-} from "../../util/scope-read";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
-  isSameOrChildSection,
 } from "../../util/sections";
 import { getSerializeGuard } from "../../util/serialize-guard";
 import {
-  addOwnerSerializeReason,
   addSerializeExpr,
   getSerializeReason,
 } from "../../util/serialize-reasons";
-import {
-  addHTMLEffectCall,
-  addStatement,
-  getRegisterUID,
-} from "../../util/signals";
+import { addHTMLEffectCall, addStatement } from "../../util/signals";
 import { toObjectProperty, toPropertyName } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
-import translateVar from "../../util/translate-var";
+import { translateDomVar } from "../../util/translate-var";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
@@ -57,7 +44,6 @@ import { scopeIdentifier } from "../program";
 
 export const kNativeTagBinding = Symbol("native tag binding");
 export const kSkipEndTag = Symbol("skip native tag mark");
-const kGetterId = Symbol("node getter id");
 const kTagContentAttr = Symbol("tag could have dynamic content attribute");
 
 const htmlSelectArgs = new WeakMap<
@@ -72,7 +58,6 @@ declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kNativeTagBinding]?: Binding;
     [kSkipEndTag]?: true;
-    [kGetterId]?: string;
     [kTagContentAttr]?: true;
   }
 }
@@ -194,28 +179,7 @@ export default {
           nodeBinding,
         );
 
-        if (node.var) {
-          for (const ref of tag.scope.getBinding(node.var.name)!
-            .referencePaths) {
-            const refSection = getOrCreateSection(ref);
-            setReferencesScope(ref);
-
-            if (isSameOrChildSection(tagSection, refSection)) {
-              addOwnerSerializeReason(refSection, tagSection, true);
-              if (!tagExtra[kGetterId] && !isInvokedFunction(ref)) {
-                tagExtra[kGetterId] = getRegisterUID(
-                  tagSection,
-                  nodeBinding.name,
-                );
-              }
-            } else {
-              trackHoistedReference(
-                ref as t.NodePath<t.Identifier>,
-                nodeBinding,
-              );
-            }
-          }
-        }
+        trackDomVarReferences(tag, nodeBinding);
 
         addSerializeExpr(
           tagSection,
@@ -239,17 +203,7 @@ export default {
           writer.flushBefore(tag);
         }
 
-        if (tag.node.var) {
-          const getterId = tagExtra[kGetterId];
-          translateVar(
-            tag,
-            callRuntime(
-              "_el",
-              getterId && getScopeIdIdentifier(tagSection),
-              getterId && t.stringLiteral(getterId),
-            ),
-          );
-        }
+        translateDomVar(tag, nodeBinding);
 
         const visitAccessor =
           nodeBinding && getScopeAccessorLiteral(nodeBinding);
@@ -542,64 +496,6 @@ export default {
         const tagDef = getTagDef(tag);
         const write = writer.writeTo(tag);
         const tagSection = getSection(tag);
-
-        if (tag.node.var) {
-          const varName = (tag.node.var as t.Identifier).name;
-          const varBinding = tag.scope.getBinding(varName)!;
-          const getterId = tagExtra[kGetterId];
-          let getterFnIdentifier: t.Identifier | undefined;
-          if (getterId) {
-            getterFnIdentifier = generateUidIdentifier(`get_${varName}`);
-            getProgram().node.body.push(
-              t.variableDeclaration("const", [
-                t.variableDeclarator(
-                  getterFnIdentifier,
-                  callRuntime(
-                    "_el",
-                    t.stringLiteral(getterId),
-                    t.stringLiteral(
-                      getAccessorPrefix().Getter +
-                        getScopeAccessorLiteral(nodeBinding!).value,
-                    ),
-                  ),
-                ),
-              ]),
-            );
-          }
-
-          for (const reference of varBinding.referencePaths) {
-            const referenceSection = getSection(reference);
-            if (isSameOrChildSection(tagSection, referenceSection)) {
-              if (isInvokedFunction(reference)) {
-                reference.parentPath.replaceWith(
-                  t.expressionStatement(
-                    createScopeReadExpression(referenceSection, nodeBinding!),
-                  ),
-                );
-              } else if (getterFnIdentifier) {
-                reference.replaceWith(
-                  t.callExpression(getterFnIdentifier, [
-                    getScopeExpression(referenceSection, getSection(tag)),
-                  ]),
-                );
-              } else {
-                reference.replaceWith(
-                  t.expressionStatement(
-                    t.memberExpression(
-                      getScopeExpression(tagSection, referenceSection),
-                      t.stringLiteral(
-                        getAccessorPrefix().Getter +
-                          getScopeAccessorLiteral(nodeBinding!).value,
-                      ),
-                      true,
-                    ),
-                  ),
-                );
-              }
-            }
-          }
-        }
-
         const visitAccessor =
           nodeBinding && getScopeAccessorLiteral(nodeBinding);
         if (visitAccessor) {

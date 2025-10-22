@@ -1,5 +1,10 @@
 export { attrTag, attrTags } from "./common/attr-tag";
 export {
+  _assert_hoist,
+  _el_read_error,
+  _hoist_read_error,
+} from "./common/errors";
+export {
   _attr,
   _attr_class,
   _attr_details_or_dialog_open as _attr_details_open,

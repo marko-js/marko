@@ -5,7 +5,6 @@ export default _._template("__tests__/template.marko", input => {
   const $input_value__closures = new Set();
   let Parent = "div";
   let Child = "a";
-  const el = _._el();
   _._html(`<div><svg>${_._unescaped(input.value)}${_._el_resume($scope0_id, "#text/1", _._serialize_guard($scope0_reason, /* input.value */0))}`);
   _._dynamic_tag($scope0_id, "#text/2", Child, {
     href: "#bar"

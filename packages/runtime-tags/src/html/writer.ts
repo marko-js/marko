@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
+import { _el_read_error, _hoist_read_error } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
 import { normalizeDynamicRenderer } from "../common/helpers";
 import {
@@ -213,24 +214,14 @@ export function _sep(shouldResume: 0 | 1) {
   return shouldResume === 0 ? "" : "<!>";
 }
 
-export function _el(scopeId: number, id?: string) {
-  const getter = () => {
-    if (MARKO_DEBUG) {
-      throw new Error("Cannot read a node reference on the server.");
-    }
-  };
-
-  return id ? _resume(getter, id, scopeId) : getter;
+export function _el(scopeId: number, id: string) {
+  return _resume(() => _el_read_error(), id, scopeId);
 }
 
-export function _hoist(scopeId: number, id?: string) {
-  const getter = () => {
-    if (MARKO_DEBUG) {
-      throw new Error("Cannot read a hoisted value on the server.");
-    }
-  };
-  getter[Symbol.iterator] = getter;
-  return id ? _resume(getter, id, scopeId) : getter;
+export function _hoist(scopeId: number, id: string) {
+  const getter = () => _hoist_read_error();
+  getter[Symbol.iterator] = _hoist_read_error;
+  return _resume(getter, id, scopeId);
 }
 
 export function _resume_branch(scopeId: number) {

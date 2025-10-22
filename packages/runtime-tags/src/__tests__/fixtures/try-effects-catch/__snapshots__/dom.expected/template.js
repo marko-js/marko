@@ -6,7 +6,7 @@ const $catch_content__err_message = /* @__PURE__ */_._const("err_message", ($sco
 const $catch_content__$params = /* @__PURE__ */_._const("$params2", ($scope, $params2) => $catch_content__err($scope, $params2[0]));
 const $catch_content__err = /* @__PURE__ */_._const("err", ($scope, err) => $catch_content__err_message($scope, err?.message));
 const $catch_content = _._content_resume("__tests__/template.marko_2_content", " ", /* get, over(1) */" b", 0, $catch_content__$params);
-const $try_content__setup__script = _._script("__tests__/template.marko_1", $scope => ($scope._["#div/0"].textContent = "This shouldn't happen"));
+const $try_content__setup__script = _._script("__tests__/template.marko_1", $scope => (_._el_read($scope._["#div/0"]).textContent = "This shouldn't happen"));
 const $try_content__setup = $scope => {
   _._text($scope["#text/0"], (() => {
     throw new Error("ERROR!");
@@ -15,7 +15,7 @@ const $try_content__setup = $scope => {
 };
 const $try_content = /* @__PURE__ */_._content_branch(" ", /* get, over(1) */" b", $try_content__setup);
 const $try = /* @__PURE__ */_._try("#text/1", $try_content);
-const $setup__script = _._script("__tests__/template.marko_0", $scope => ($scope["#div/2"].textContent = "This is good"));
+const $setup__script = _._script("__tests__/template.marko_0", $scope => (_._el_read($scope["#div/2"]).textContent = "This is good"));
 export function $setup($scope) {
   $try($scope, {
     catch: _.attrTag({

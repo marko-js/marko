@@ -7,21 +7,21 @@ const $if_content5__setup__script = _._script("__tests__/template.marko_5", $sco
 const $if_content5__setup = $if_content5__setup__script;
 const $if_content5 = /* @__PURE__ */_._content_branch(0, 0, $if_content5__setup);
 const $get$hoisted_setHtml = _._hoist("setHtml3", "ConditionalScope:#text/3");
-const $if_content4__setHtml = _._var_resume("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_._const("setHtml3"));
+const $if_content4__setHtml = _._var_resume("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_._const("setHtml3", ($scope, setHtml3) => _._assert_hoist(setHtml3)));
 const $if_content4__setup = $scope => {
   _._var($scope, "#childScope/0", $if_content4__setHtml);
   _child($scope["#childScope/0"]);
 };
 const $if_content4 = /* @__PURE__ */_._content_branch(_child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $if_content4__setup);
 const $get$hoisted_setHtml2 = _._hoist("setHtml2", "ConditionalScope:#text/2");
-const $if_content3__setHtml = _._var_resume("__tests__/template.marko_3_setHtml2/var", /* @__PURE__ */_._const("setHtml2"));
+const $if_content3__setHtml = _._var_resume("__tests__/template.marko_3_setHtml2/var", /* @__PURE__ */_._const("setHtml2", ($scope, setHtml2) => _._assert_hoist(setHtml2)));
 const $if_content3__setup = $scope => {
   _._var($scope, "#childScope/0", $if_content3__setHtml);
   _child($scope["#childScope/0"]);
 };
 const $if_content3 = /* @__PURE__ */_._content_branch(_child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $if_content3__setup);
 const $get$hoisted_setHtml3 = _._resume("__tests__/template.marko_0_$hoisted_setHtml/hoist", _._hoist("setHtml", "ConditionalScope:#text/0", "ConditionalScope:#text/0"));
-const $if_content2__setHtml = _._var_resume("__tests__/template.marko_2_setHtml/var", /* @__PURE__ */_._const("setHtml"));
+const $if_content2__setHtml = _._var_resume("__tests__/template.marko_2_setHtml/var", /* @__PURE__ */_._const("setHtml", ($scope, setHtml) => _._assert_hoist(setHtml)));
 const $if_content2__setup = $scope => {
   _._var($scope, "#childScope/0", $if_content2__setHtml);
   _child($scope["#childScope/0"]);

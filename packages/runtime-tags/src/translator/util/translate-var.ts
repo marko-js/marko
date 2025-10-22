@@ -1,6 +1,9 @@
 import { types as t } from "@marko/compiler";
 
 import { forEachIdentifierPath } from "./for-each-identifier";
+import type { Binding } from "./references";
+import { callRuntime } from "./runtime";
+import { getScopeIdIdentifier, getSection } from "./sections";
 
 export default function translateVar(
   tag: t.NodePath<t.MarkoTag>,
@@ -44,6 +47,33 @@ export default function translateVar(
   tag.insertBefore(
     t.variableDeclaration(kind, [t.variableDeclarator(tagVar, initialValue)]),
   );
+}
+
+export function translateDomVar(
+  tag: t.NodePath<t.MarkoTag>,
+  binding: Binding | undefined,
+) {
+  if (binding && tag.node.var) {
+    const tagSection = getSection(tag);
+    const registerId = tagSection.domGetterBindings.get(binding);
+    if (registerId) {
+      (
+        tag.parentPath as t.NodePath<t.MarkoTagBody | t.Program>
+      ).unshiftContainer(
+        "body",
+        t.variableDeclaration("const", [
+          t.variableDeclarator(
+            tag.node.var,
+            callRuntime(
+              "_el",
+              getScopeIdIdentifier(tagSection),
+              t.stringLiteral(registerId),
+            ),
+          ),
+        ]),
+      );
+    }
+  }
 }
 
 function getDestructurePattern(id: t.NodePath<t.Identifier>) {

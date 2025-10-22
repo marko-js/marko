@@ -193,13 +193,13 @@ destroyed 3
 
 # Mutations
 ```
-REMOVE #text in html/body/div0
-INSERT html/body/div0/#text
 REMOVE #comment after html/body/#text1
 REMOVE div after html/body/#text1
 REMOVE span after html/body/#text1
 REMOVE p after html/body/#text1
 REMOVE #text after html/body/#text1
+REMOVE #text in html/body/div0
+INSERT html/body/div0/#text
 ```
 
 # Render
@@ -278,13 +278,13 @@ destroyed 2
 
 # Mutations
 ```
-REMOVE #text in html/body/div0
-INSERT html/body/div0/#text
 REMOVE #comment after html/body/#text
 REMOVE div after html/body/#text
 REMOVE span after html/body/#text
 REMOVE p after html/body/#text
 REMOVE #text after html/body/#text
+REMOVE #text in html/body/div0
+INSERT html/body/div0/#text
 ```
 
 # Render
@@ -353,13 +353,13 @@ destroyed 1
 ```
 REMOVE html/body/#comment2 after #text
 INSERT html/body/#comment2
-REMOVE #text in html/body/div
-INSERT html/body/div/#text
 REMOVE #comment after html/body/#comment1
 REMOVE div after html/body/#comment1
 REMOVE span after html/body/#comment1
 REMOVE p after html/body/#comment1
 REMOVE #text after html/body/#comment1
+REMOVE #text in html/body/div
+INSERT html/body/div/#text
 ```
 
 # Render

@@ -5,7 +5,10 @@
       "$init": "r",
       "$$get$hoisted_setHtml": "t",
       "$$get$hoisted_setHtml2": "s",
-      "$$get$hoisted_setHtml3": "_"
+      "$$get$hoisted_setHtml3": "_",
+      "$$get_$hoisted_setHtml": "e",
+      "$$get_$hoisted_setHtml2": "c",
+      "$$get_$hoisted_setHtml3": "m"
     }
   }
 }

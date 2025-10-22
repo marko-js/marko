@@ -120,12 +120,19 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   endBranch();
                   branchStarts.push(visit);
                 } else {
-                  visitScope[nextToken() /* read accessor */] =
-                    visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
-                    visitType ===
-                      ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
-                      ? visit.parentNode
-                      : visit;
+                  visitScope[
+                    AccessorPrefix.Getter + nextToken() /* read accessor */
+                  ] = (
+                    (node) => () =>
+                      node
+                  )(
+                    (visitScope[lastToken] =
+                      visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
+                      visitType ===
+                        ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
+                        ? visit.parentNode
+                        : visit),
+                  );
                   nextToken(); // read optional first branchId
                   endBranch(
                     visitType !== ResumeSymbol.BranchEnd &&

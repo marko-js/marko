@@ -6,11 +6,11 @@ import { finalizeFunctionRegistry } from "../visitors/function";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-char";
-import { getExprRoot, getFnRoot } from "./get-root";
+import { getExprRoot, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
-import { isOptimize } from "./marko-config";
+import { isOptimize, isOutputDOM } from "./marko-config";
 import {
   addSorted,
   concat,
@@ -52,7 +52,8 @@ import {
   type SerializeReason,
 } from "./serialize-reasons";
 import { finalizeTagDownstreams } from "./set-tag-sections-downstream";
-import { getHoistFunctionIdentifier } from "./signals";
+import { getRegisterUID } from "./signals";
+import { getBindingGetterIdentifier } from "./signals";
 import { createProgramState } from "./state";
 import { toMemberExpression } from "./to-property-name";
 import withPreviousLocation from "./with-previous-location";
@@ -204,6 +205,54 @@ export function createBinding(
   return binding;
 }
 
+export function trackDomVarReferences(
+  tag: t.NodePath<t.MarkoTag>,
+  binding: Binding,
+) {
+  const tagVar = tag.node.var;
+  if (!tagVar) {
+    return;
+  }
+  if (!t.isIdentifier(tagVar)) {
+    throw tag
+      .get("var")
+      .buildCodeFrameError(
+        "Tag variables on native elements cannot be destructured.",
+      );
+  }
+
+  const babelBinding = tag.scope.getBinding(tagVar.name)!;
+  const section = getOrCreateSection(tag);
+
+  if (babelBinding.constantViolations.length) {
+    throw babelBinding.constantViolations[0].buildCodeFrameError(
+      "Tag variables on native elements cannot be assigned to.",
+    );
+  }
+
+  let registerId: string | undefined;
+  for (const ref of babelBinding.referencePaths as t.NodePath<t.Identifier>[]) {
+    const refSection = getOrCreateSection(ref);
+    setReferencesScope(ref);
+    if (isSameOrChildSection(binding.section, refSection)) {
+      (ref.node.extra ??= {}).read = createRead(binding, undefined);
+
+      if (!isInvokedFunction(ref)) {
+        section.domGetterBindings.set(
+          binding,
+          (registerId ??= getRegisterUID(section, binding.name)),
+        );
+      }
+
+      addOwnerSerializeReason(refSection, section, true);
+    } else {
+      trackHoistedReference(ref, binding);
+    }
+  }
+
+  return binding;
+}
+
 export function trackVarReferences(
   tag: t.NodePath<t.MarkoTag>,
   type: BindingType,
@@ -350,25 +399,48 @@ export function trackHoistedReference(
   );
 }
 
+function isReferenceHoisted(bindingPath: t.NodePath, reference: t.NodePath) {
+  const tag = bindingPath.isMarkoTag()
+    ? bindingPath
+    : getMarkoRoot(bindingPath)?.parentPath;
+
+  if (!tag?.isMarkoTag()) {
+    return false;
+  }
+
+  const body = tag.parentPath!;
+
+  let cur: t.NodePath | null = reference;
+  while (cur) {
+    if (cur.parentPath === body) {
+      return +tag.key! > +cur.key!;
+    }
+    cur = cur.parentPath;
+  }
+
+  return true;
+}
+
 function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
   const { referencePaths, constantViolations } = babelBinding;
 
-  for (const referencePath of referencePaths) {
-    const referenceSection = getOrCreateSection(referencePath);
-    if (isSameOrChildSection(binding.section, referenceSection)) {
-      if (
-        binding.type === BindingType.local &&
-        referenceSection === binding.section
-      ) {
-        continue;
-      }
-      trackReference(referencePath as t.NodePath<t.Identifier>, binding);
-    } else {
-      trackHoistedReference(referencePath as t.NodePath<t.Identifier>, binding);
+  for (const ref of referencePaths) {
+    const refSection = getOrCreateSection(ref);
+    if (isReferenceHoisted(babelBinding.path, ref)) {
+      trackHoistedReference(ref as t.NodePath<t.Identifier>, binding);
+    } else if (
+      binding.type !== BindingType.local ||
+      refSection !== binding.section
+    ) {
+      trackReference(ref as t.NodePath<t.Identifier>, binding);
     }
   }
 
   for (const ref of constantViolations) {
+    if (isReferenceHoisted(babelBinding.path, ref)) {
+      throw ref.buildCodeFrameError("Cannot assign to hoisted tag variable.");
+    }
+
     if (ref.isUpdateExpression()) {
       trackAssignment(ref.get("argument"), binding);
     } else if (ref.isAssignmentExpression()) {
@@ -1397,12 +1469,23 @@ export function getReadReplacement(
 
   if (binding) {
     if (node.type === "Identifier") {
-      if (binding.type === BindingType.hoist) {
-        replacement = node.extra?.[kIsInvoked]
-          ? t.callExpression(getHoistFunctionIdentifier(binding), [
-              getScopeExpression(node.extra.section!, binding.section),
-            ])
-          : t.identifier(binding.name);
+      if (binding.type === BindingType.dom) {
+        if (binding.section.domGetterBindings.has(binding) && isOutputDOM()) {
+          replacement = t.callExpression(getBindingGetterIdentifier(binding), [
+            getScopeExpression(node.extra!.section!, binding.section),
+          ]);
+        }
+      } else if (binding.type === BindingType.hoist) {
+        if (node.extra?.[kIsInvoked]) {
+          if (isOutputDOM()) {
+            replacement = t.callExpression(
+              getBindingGetterIdentifier(binding),
+              [getScopeExpression(node.extra.section!, binding.section)],
+            );
+          }
+        } else {
+          replacement = t.identifier(binding.name);
+        }
       } else if (binding.name !== node.name) {
         node.name = binding.name;
       }

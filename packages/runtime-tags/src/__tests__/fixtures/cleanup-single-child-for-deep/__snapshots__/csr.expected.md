@@ -124,18 +124,18 @@ destroyed 2.3
 
 # Mutations
 ```
-INSERT #text
-REMOVE #text in div0
-INSERT #text
-REMOVE #text in div0
-INSERT #text
-REMOVE #text in div0
-INSERT #text
 REMOVE div after div2
+REMOVE div after div1/div2
+REMOVE div after div2/div2
+INSERT #text
 REMOVE #text in div0
 INSERT #text
-REMOVE div after div1/div2
+REMOVE #text in div0
+INSERT #text
+REMOVE #text in div0
+INSERT #text
+REMOVE #text in div0
+INSERT #text
 REMOVE #text in div0
 INSERT div0/#text
-REMOVE div after div2/div2
 ```

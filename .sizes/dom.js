@@ -1,4 +1,4 @@
-// size: 19382 (min) 7394 (brotli)
+// size: 19452 (min) 7369 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -19,6 +19,7 @@ function attrTags(first, attrs) {
 function* attrTagIterator() {
   (yield this, yield* this[rest]);
 }
+function _assert_hoist(value) {}
 function forIn(obj, cb) {
   for (let key in obj) cb(key, obj[key]);
 }
@@ -110,13 +111,13 @@ function findBranchWithKey(scope, key) {
   return branch;
 }
 function destroyBranch(branch) {
-  (branch.y?.A?.delete(branch), destroyNestedBranches(branch));
+  (branch.y?.z?.delete(branch), destroyNestedBranches(branch));
 }
 function destroyNestedBranches(branch) {
-  ((branch.B = 1),
-    branch.A?.forEach(destroyNestedBranches),
+  ((branch.A = 1),
+    branch.z?.forEach(destroyNestedBranches),
     branch.J?.forEach((scope) => {
-      for (let id in scope.z) scope.z[id]?.abort();
+      for (let id in scope.B) $signalReset(scope, id);
     }));
 }
 function removeAndDestroyBranch(branch) {
@@ -254,10 +255,15 @@ function init(runtimeId = "M") {
                   K() {
                     "[" === visitType
                       ? (endBranch(), branchStarts.push(visit))
-                      : ((visitScope[nextToken()] =
-                          ")" === visitType || "}" === visitType
-                            ? visit.parentNode
-                            : visit),
+                      : ((visitScope["j" + nextToken()] = (
+                          (node) => () =>
+                            node
+                        )(
+                          (visitScope[lastToken] =
+                            ")" === visitType || "}" === visitType
+                              ? visit.parentNode
+                              : visit),
+                        )),
                         nextToken(),
                         endBranch("]" !== visitType && ")" !== visitType));
                   },
@@ -266,7 +272,7 @@ function init(runtimeId = "M") {
                       scopeLookup[scope.g || branchParents.get(scopeId)]),
                       branchParents.has(scopeId) &&
                         (scope.k &&
-                          ((scope.y = scope.k).A ||= new Set()).add(scope),
+                          ((scope.y = scope.k).z ||= new Set()).add(scope),
                         (scope.k = scope)));
                   },
                 };
@@ -669,7 +675,7 @@ function _for_closure(valueAccessor, ownerLoopNodeAccessor, fn) {
           ownerScope,
           () => {
             for (let scope of scopes)
-              !scope.q && !scope.B && childSignal(scope);
+              !scope.q && !scope.A && childSignal(scope);
           },
           -1,
           0,
@@ -768,6 +774,9 @@ function _script(id, fn) {
     }
   );
 }
+function _el_read(value) {
+  return value;
+}
 function* traverseAllHoisted(scope, path, curIndex = path.length - 1) {
   if (scope)
     if (Symbol.iterator in scope)
@@ -783,7 +792,7 @@ function _hoist(...path) {
     let getOne = (...args) =>
         iterator()
           .next()
-          .value(...args),
+          .value?.(...args),
       iterator = (getOne[Symbol.iterator] = () =>
         traverseAllHoisted(scope, path));
     return getOne;
@@ -796,7 +805,7 @@ function createBranch($global, renderer, parentScope, parentNode) {
     (branch._ = renderer.u || parentScope),
     (branch.k = branch),
     parentBranch &&
-      ((branch.y = parentBranch), (parentBranch.A ||= new Set()).add(branch)),
+      ((branch.y = parentBranch), (parentBranch.z ||= new Set()).add(branch)),
     renderer.C?.(branch, parentNode.namespaceURI),
     branch
   );
@@ -1208,11 +1217,12 @@ function _await(nodeAccessor, renderer) {
                         tryWithPlaceholder.h.parentNode,
                         placeholderBranch.h,
                       ),
-                      removeAndDestroyBranch(placeholderBranch)));
-                  let pendingEffects2 = tryWithPlaceholder.H;
-                  pendingEffects2 &&
-                    ((tryWithPlaceholder.H = []),
-                    runEffects(pendingEffects2, !0));
+                      removeAndDestroyBranch(placeholderBranch)),
+                    queueEffect(tryWithPlaceholder, (scope2) => {
+                      let pendingEffects2 = scope2.H;
+                      pendingEffects2 &&
+                        ((scope2.H = []), runEffects(pendingEffects2, !0));
+                    }));
                 }
               },
               -1,
@@ -1698,7 +1708,7 @@ function runRenders() {
       }
       pendingRenders[i] = item;
     }
-    render.t.k?.B || runRender(render);
+    render.t.k?.A || runRender(render);
   }
   for (let scope of pendingScopes) scope.q = 0;
   pendingScopes = [];
@@ -1724,7 +1734,7 @@ var runRender = (render) => render.N(render.t, render.I),
             ((fn = effects[i++]),
               (scope = effects[i++]),
               (branch = scope.k),
-              !branch?.B &&
+              !branch?.A &&
                 (!checkPending || !handlePendingTry(fn, scope, branch)) &&
                 fn(scope, scope));
         } else runEffects2(effects);
@@ -1739,13 +1749,13 @@ var runRender = (render) => render.N(render.t, render.I),
       })(runRender)));
   };
 function $signalReset(scope, id) {
-  let ctrl = scope.z?.[id];
-  ctrl && (queueEffect(ctrl, abort), (scope.z[id] = void 0));
+  let ctrl = scope.B?.[id];
+  ctrl && (queueEffect(ctrl, abort), (scope.B[id] = void 0));
 }
 function $signal(scope, id) {
   return (
     scope.k && (scope.k.J ||= new Set()).add(scope),
-    ((scope.z ||= {})[id] ||= new AbortController()).signal
+    ((scope.B ||= {})[id] ||= new AbortController()).signal
   );
 }
 function abort(ctrl) {

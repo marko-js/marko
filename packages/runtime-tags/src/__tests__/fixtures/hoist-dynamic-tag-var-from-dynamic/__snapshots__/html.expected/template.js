@@ -20,6 +20,7 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "4:2", {
         setHtml: "5:18"
       }));
+      _._assert_hoist(setHtml);
     })
   });
   _._dynamic_tag($scope0_id, "#text/1", input.show ? Thing : null, {}, _._content_resume("__tests__/template.marko_2_content", () => {
@@ -36,6 +37,7 @@ export default _._template("__tests__/template.marko", input => {
         }, "__tests__/template.marko", "17:4", {
           setHtml2: "18:20"
         }));
+        _._assert_hoist(setHtml2);
       })
     });
     _._subscribe($inputshowThingnull_content__subscribers, _._scope($scope2_id, {
@@ -52,6 +54,7 @@ export default _._template("__tests__/template.marko", input => {
     }, "__tests__/template.marko", "27:4", {
       setHtml3: "28:18"
     }));
+    _._assert_hoist(setHtml3);
   }, $scope0_id), 0, _._serialize_guard($scope0_reason, /* input.show */0));
   _._script($scope0_id, "__tests__/template.marko_0");
   _._script($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml");

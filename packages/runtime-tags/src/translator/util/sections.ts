@@ -60,6 +60,7 @@ export interface Section {
   referencedClosures: ReferencedBindings;
   referencedHoists: ReferencedBindings;
   bindings: ReferencedBindings;
+  domGetterBindings: Map<Binding, string>;
   hoisted: ReferencedBindings;
   serializeReason: undefined | SerializeReason;
   serializeReasons: Map<symbol, SerializeReason>;
@@ -130,6 +131,7 @@ export function startSection(
       referencedClosures: undefined,
       referencedHoists: undefined,
       bindings: undefined,
+      domGetterBindings: new Map(),
       hoisted: undefined,
       isHoistThrough: undefined,
       serializeReason: undefined,

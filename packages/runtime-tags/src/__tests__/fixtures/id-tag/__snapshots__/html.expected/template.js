@@ -3,5 +3,5 @@ export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   const x = _._id();
   const y = _._id();
-  _._html(`<div>${_._escape(x)}</div>${_._escape(y)}`);
+  _._html(`<div>${_._escape(x)} ${_._escape(y)}</div>`);
 });

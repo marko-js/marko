@@ -3,9 +3,8 @@ import _child from "./tags/child.marko";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   let items = [1, 2, 3];
-  const el = _._el();
   const write = _._resume(function (msg) {
-    el().innerHTML += '\n' + msg;
+    (el => el())(_._el_read_error).innerHTML += '\n' + msg;
   }, "__tests__/template.marko_0/write", $scope0_id);
   _._html(`<button>Toggle</button>${_._el_resume($scope0_id, "#button/0")}<div></div>${_._el_resume($scope0_id, "#div/1")}`);
   _._for_of(items, item => {

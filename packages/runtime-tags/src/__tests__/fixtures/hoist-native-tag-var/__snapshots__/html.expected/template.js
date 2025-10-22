@@ -33,7 +33,6 @@ export default _._template("__tests__/template.marko", input => {
   _._if(() => {
     if (true) {
       const $scope3_id = _._scope_id();
-      const el2 = _._el();
       _._html(`<div></div>${_._el_resume($scope3_id, "#div/0")}`);
       _._scope($scope3_id, {}, "__tests__/template.marko", "19:2");
       return 0;

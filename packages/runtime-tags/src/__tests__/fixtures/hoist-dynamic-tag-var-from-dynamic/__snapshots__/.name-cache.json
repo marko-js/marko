@@ -16,7 +16,11 @@
       "$$thing_content2__dynamicTag": "d",
       "$$thing_content2__setHtml": "f",
       "$$thing_content2__setup": "g",
-      "$$thing_content2": "b"
+      "$$thing_content2": "b",
+      "$$get_$hoisted_setHtml": "v",
+      "$$get_$hoisted_setHtml2": "y",
+      "$$inputshowsectionnull_content__$hoisted_setHtml": "p",
+      "$$thing_content2__$hoisted_setHtml": "H"
     }
   }
 }

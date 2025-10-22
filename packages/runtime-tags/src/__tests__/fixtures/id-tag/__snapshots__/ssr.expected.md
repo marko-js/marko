@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div>sM_1</div>sM_2
+  <div>sM_1 sM_2</div>
 ```
 
 # Render End
@@ -9,9 +9,8 @@
   <head />
   <body>
     <div>
-      sM_1
+      sM_1 sM_2
     </div>
-    sM_2
   </body>
 </html>
 ```
@@ -23,5 +22,4 @@ INSERT html/head
 INSERT html/body
 INSERT html/body/div
 INSERT html/body/div/#text
-INSERT html/body/#text
 ```
