@@ -1,5 +1,18 @@
 # @marko/runtime-tags
 
+## 6.0.93
+
+### Patch Changes
+
+- [#2900](https://github.com/marko-js/marko/pull/2900) [`d81c1ed`](https://github.com/marko-js/marko/commit/d81c1edb2ba2423c33e9a28d1e5f16e6ea973e8c) Thanks [@rturnq](https://github.com/rturnq)! - Fix native tag var when used before defined in same scope
+  Fix custom tag hoists
+  Error when reading hoisted values during render phase
+  Assert hoisted values are functions in dev mode
+
+- [#2902](https://github.com/marko-js/marko/pull/2902) [`4aa8120`](https://github.com/marko-js/marko/commit/4aa8120f1ed33fbf44639bf6b84239ba576db8ac) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid storing client scope id counter on $global.
+
+- [#2902](https://github.com/marko-js/marko/pull/2902) [`0807d31`](https://github.com/marko-js/marko/commit/0807d31b1b01bed64c96d2ad465bd612f1dfe9cc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where a let tag that depends on other values was incorrectly re-running when resumed from the server even without a change handler.
+
 ## 6.0.92
 
 ### Patch Changes
