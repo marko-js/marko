@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.94
+
+### Patch Changes
+
+- [#2904](https://github.com/marko-js/marko/pull/2904) [`006d1a5`](https://github.com/marko-js/marko/commit/006d1a55cf42179fdc48974e409d1dc7c4564fcb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where value serialized because of function closure was not serializing owner scopes.
+
 ## 6.0.93
 
 ### Patch Changes
