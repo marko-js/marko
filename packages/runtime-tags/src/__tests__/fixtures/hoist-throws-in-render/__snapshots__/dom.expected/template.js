@@ -2,7 +2,7 @@ export const $template = "<!><!><div> </div>";
 export const $walks = /* over(1), replace, over(1), next(1), get, out(1) */"b%bD l";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $get$hoisted_x = _._hoist("x", "ConditionalScope:#text/0");
-const $if_content__x = /* @__PURE__ */_._const("x");
+const $if_content__x = /* @__PURE__ */_._const("x", ($scope, x) => _._assert_hoist(x));
 const $if_content__setup = $scope => {
   $if_content__x($scope, 1);
 };

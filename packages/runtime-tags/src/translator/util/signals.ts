@@ -336,10 +336,12 @@ export function getSignalFn(signal: Signal): t.Expression {
   const isIntersection = Array.isArray(binding);
   const isBinding = binding && !isIntersection;
   const isValue = isBinding && binding.section === section;
+  const assertsHoists = isValue && binding.hoists.size && !isOptimize();
 
   if (
     isBinding &&
     (signal.renderReferencedBindings ||
+      assertsHoists ||
       binding.aliases.size ||
       binding.propertyAliases.size)
   ) {
@@ -417,6 +419,14 @@ export function getSignalFn(signal: Signal): t.Expression {
             ),
             ...getTranslatedExtraArgs(aliasSignal),
           ]),
+        ),
+      );
+    }
+
+    if (assertsHoists) {
+      signal.render.push(
+        t.expressionStatement(
+          callRuntime("_assert_hoist", t.identifier(binding.name)),
         ),
       );
     }
@@ -1260,6 +1270,18 @@ export function writeHTMLResumeStatements(
       ]),
       ...additionalStatements,
     );
+  }
+
+  if (debug) {
+    forEach(section.bindings, (binding) => {
+      if (binding.hoists.size && binding.type !== BindingType.dom) {
+        body.push(
+          t.expressionStatement(
+            callRuntime("_assert_hoist", t.identifier(binding.name)),
+          ),
+        );
+      }
+    });
   }
 
   const returnIdentifier = getSectionReturnValueIdentifier(section);

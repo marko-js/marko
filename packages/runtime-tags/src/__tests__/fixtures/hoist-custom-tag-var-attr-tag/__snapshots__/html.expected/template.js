@@ -15,6 +15,7 @@ export default _._template("__tests__/template.marko", input => {
         }, "__tests__/template.marko", "3:4", {
           setHtml: "4:12"
         }));
+        _._assert_hoist(setHtml);
       })
     })
   });

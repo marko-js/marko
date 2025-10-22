@@ -6,7 +6,7 @@ import { finalizeFunctionRegistry } from "../visitors/function";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-char";
-import { getExprRoot, getFnRoot } from "./get-root";
+import { getExprRoot, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
@@ -33,7 +33,6 @@ import {
   getDirectClosures,
   getOrCreateSection,
   getSectionRegisterReasons,
-  isCustomTagHoist,
   isDynamicClosure,
   isSameOrChildSection,
   type Section,
@@ -400,26 +399,45 @@ export function trackHoistedReference(
   );
 }
 
+function isReferenceHoisted(bindingPath: t.NodePath, reference: t.NodePath) {
+  const tag = bindingPath.isMarkoTag()
+    ? bindingPath
+    : getMarkoRoot(bindingPath)?.parentPath;
+
+  if (!tag?.isMarkoTag()) {
+    return false;
+  }
+
+  const body = tag.parentPath!;
+
+  let cur: t.NodePath | null = reference;
+  while (cur) {
+    if (cur.parentPath === body) {
+      return +tag.key! > +cur.key!;
+    }
+    cur = cur.parentPath;
+  }
+
+  return true;
+}
+
 function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
   const { referencePaths, constantViolations } = babelBinding;
 
   for (const ref of referencePaths) {
     const refSection = getOrCreateSection(ref);
-    if (!isCustomTagHoist(babelBinding.path, ref)) {
-      if (
-        binding.type === BindingType.local &&
-        refSection === binding.section
-      ) {
-        continue;
-      }
-      trackReference(ref as t.NodePath<t.Identifier>, binding);
-    } else {
+    if (isReferenceHoisted(babelBinding.path, ref)) {
       trackHoistedReference(ref as t.NodePath<t.Identifier>, binding);
+    } else if (
+      binding.type !== BindingType.local ||
+      refSection !== binding.section
+    ) {
+      trackReference(ref as t.NodePath<t.Identifier>, binding);
     }
   }
 
   for (const ref of constantViolations) {
-    if (isCustomTagHoist(babelBinding.path, ref)) {
+    if (isReferenceHoisted(babelBinding.path, ref)) {
       throw ref.buildCodeFrameError("Cannot assign to hoisted tag variable.");
     }
 

@@ -1,1 +1,1 @@
-iterator(...).next(...).value is not a function
+Hoisted values must be functions, received type "number".

@@ -1,4 +1,5 @@
 export { attrTag, attrTags } from "./common/attr-tag";
+export { _assert_hoist } from "./common/errors";
 export { forIn, forOf, forTo, forUntil } from "./common/for";
 export { $signal, $signalReset } from "./dom/abort-signal";
 export { compat } from "./dom/compat";

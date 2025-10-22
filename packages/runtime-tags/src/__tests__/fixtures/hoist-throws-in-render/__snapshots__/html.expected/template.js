@@ -10,6 +10,7 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "1:2", {
         x: "2:10"
       });
+      _._assert_hoist(x);
       return 0;
     }
   }, $scope0_id, "#text/0", 1, 0, 0, 0, 1);

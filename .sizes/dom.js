@@ -1,4 +1,4 @@
-// size: 19436 (min) 7366 (brotli)
+// size: 19452 (min) 7369 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -19,6 +19,7 @@ function attrTags(first, attrs) {
 function* attrTagIterator() {
   (yield this, yield* this[rest]);
 }
+function _assert_hoist(value) {}
 function forIn(obj, cb) {
   for (let key in obj) cb(key, obj[key]);
 }

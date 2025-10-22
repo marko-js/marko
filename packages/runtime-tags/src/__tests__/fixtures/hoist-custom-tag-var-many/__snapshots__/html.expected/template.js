@@ -11,6 +11,7 @@ export default _._template("__tests__/template.marko", input => {
     }, "__tests__/template.marko", "1:2", {
       setHtml: "2:10"
     });
+    _._assert_hoist(setHtml);
   }, 0, $scope0_id, "#text/0", 1, 0, 0, 0, 1);
   let to = 3;
   _._html("<hr>");
@@ -22,6 +23,7 @@ export default _._template("__tests__/template.marko", input => {
     }, "__tests__/template.marko", "12:2", {
       setHtml2: "13:10"
     });
+    _._assert_hoist(setHtml2);
   }, 0, $scope0_id, "#text/1", 1, 0, 0, 0, 1);
   _._html("<hr>");
   _._for_to(3, 0, 1, i => {
@@ -35,6 +37,7 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "24:4", {
         setHtml3: "25:12"
       });
+      _._assert_hoist(setHtml3);
     }, 0, $scope3_id, "#ul/0", 1, 0, 0, 0, 1);
     _._html("</ul>");
     _._scope($scope3_id, {}, "__tests__/template.marko", "22:2");

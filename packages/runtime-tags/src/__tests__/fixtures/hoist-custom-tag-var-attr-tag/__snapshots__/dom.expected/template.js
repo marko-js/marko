@@ -4,7 +4,7 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import { $setup as _thing, $input_what as _thing_input_what, $template as _thing_template, $walks as _thing_walks } from "./tags/thing.marko";
 const $get$hoisted_setHtml = _._resume("__tests__/template.marko_0_$hoisted_setHtml/hoist", _._hoist("setHtml", "ClosureScopes:1"));
-const $what_content__setHtml = _._var_resume("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */_._const("setHtml"));
+const $what_content__setHtml = _._var_resume("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */_._const("setHtml", ($scope, setHtml) => _._assert_hoist(setHtml)));
 const $what_content__setup = $scope => {
   _._var($scope, "#childScope/0", $what_content__setHtml);
   _child($scope["#childScope/0"]);

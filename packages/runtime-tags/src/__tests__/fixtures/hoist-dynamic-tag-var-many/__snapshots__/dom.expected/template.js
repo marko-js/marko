@@ -4,7 +4,7 @@ import Child from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $get$hoisted_setHtml = _._resume("__tests__/template.marko_0_$hoisted_setHtml3/hoist", _._hoist("setHtml3", "LoopScopeMap:#ul/0", "LoopScopeMap:#text/2"));
 const $for_content4__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $for_content4__setHtml);
-const $for_content4__setHtml = _._var_resume("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_._const("setHtml3"));
+const $for_content4__setHtml = _._var_resume("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_._const("setHtml3", ($scope, setHtml3) => _._assert_hoist(setHtml3)));
 const $for_content4__setup = $scope => {
   $for_content4__dynamicTag($scope, 1 && Child);
 };
@@ -16,14 +16,14 @@ const $for_content3__setup = $scope => {
 const $for_content3 = /* @__PURE__ */_._content_branch("<ul></ul>", /* get, over(1) */" b", $for_content3__setup);
 const $get$hoisted_setHtml2 = _._hoist("setHtml2", "LoopScopeMap:#text/1");
 const $for_content2__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $for_content2__setHtml);
-const $for_content2__setHtml = _._var_resume("__tests__/template.marko_2_setHtml2/var", /* @__PURE__ */_._const("setHtml2"));
+const $for_content2__setHtml = _._var_resume("__tests__/template.marko_2_setHtml2/var", /* @__PURE__ */_._const("setHtml2", ($scope, setHtml2) => _._assert_hoist(setHtml2)));
 const $for_content2__setup = $scope => {
   $for_content2__dynamicTag($scope, 1 && Child);
 };
 const $for_content2 = /* @__PURE__ */_._content_branch("<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $for_content2__setup);
 const $get$hoisted_setHtml3 = _._hoist("setHtml", "LoopScopeMap:#text/0");
 const $for_content__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $for_content__setHtml);
-const $for_content__setHtml = _._var_resume("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */_._const("setHtml"));
+const $for_content__setHtml = _._var_resume("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */_._const("setHtml", ($scope, setHtml) => _._assert_hoist(setHtml)));
 const $for_content__setup = $scope => {
   $for_content__dynamicTag($scope, 1 && Child);
 };

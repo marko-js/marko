@@ -13,3 +13,11 @@ export function _hoist_read_error() {
     );
   }
 }
+
+export function _assert_hoist(value: unknown) {
+  if (MARKO_DEBUG && typeof value !== "function") {
+    throw new Error(
+      `Hoisted values must be functions, received type "${typeof value}".`,
+    );
+  }
+}

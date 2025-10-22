@@ -1,1 +1,1 @@
-Hoisted values can only be read in scripts and event handlers.
+Hoisted values must be functions, received type "number".

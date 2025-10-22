@@ -11,5 +11,5 @@ export function $setup($scope) {
   _child($scope["#childScope/1"]);
   $hoisted_setHtml2($scope, $get$hoisted_setHtml($scope));
 }
-const $setHtml = _._var_resume("__tests__/template.marko_0_setHtml/var", /* @__PURE__ */_._const("setHtml"));
+const $setHtml = _._var_resume("__tests__/template.marko_0_setHtml/var", /* @__PURE__ */_._const("setHtml", ($scope, setHtml) => _._assert_hoist(setHtml)));
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);
