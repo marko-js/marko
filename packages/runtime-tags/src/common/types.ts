@@ -13,7 +13,7 @@ export interface BranchScope extends Scope {
   ___effects: unknown[] | undefined;
 }
 export interface Scope {
-  $global: Record<string, unknown> & { ___nextScopeId: number };
+  $global: Record<string, unknown>;
   _: Scope | undefined;
   ___id: number;
   ___args: unknown;

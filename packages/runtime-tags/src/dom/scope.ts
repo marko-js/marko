@@ -3,12 +3,14 @@ import { $signalReset } from "./abort-signal";
 import { insertChildNodes, removeChildNodes } from "./dom";
 import { pendingScopes } from "./queue";
 
+let nextScopeId = 1e6; // Intentionally high to avoid conflict with server rendered ids.
+
 export function createScope(
   $global: Scope["$global"],
   closestBranch?: BranchScope,
 ): Scope {
   const scope = {
-    ___id: $global.___nextScopeId++,
+    ___id: nextScopeId++,
     ___creating: 1,
     ___closestBranch: closestBranch,
     $global,
@@ -18,8 +20,8 @@ export function createScope(
   return scope;
 }
 
-export function skipScope(scope: Scope) {
-  return scope.$global.___nextScopeId++;
+export function skipScope() {
+  return nextScopeId++;
 }
 
 export function findBranchWithKey(
