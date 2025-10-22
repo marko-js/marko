@@ -1,0 +1,12 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "o",
+      "$$user": "m",
+      "$$index__script": "i",
+      "$$index": "r",
+      "$$user_id": "n"
+    }
+  }
+}

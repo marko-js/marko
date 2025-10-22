@@ -40,7 +40,7 @@ export function _let<T>(valueAccessor: Accessor, fn?: SignalFn<T>) {
       if (
         ((scope[valueChangeAccessor] = valueChange) &&
           scope[valueAccessor] !== value) ||
-        !(valueAccessor in scope)
+        scope.___creating
       ) {
         scope[valueAccessor] = value;
         fn && fn(scope, value);
