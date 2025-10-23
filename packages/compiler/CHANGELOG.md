@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.41
+
+### Patch Changes
+
+- [#2906](https://github.com/marko-js/marko/pull/2906) [`c6a9c12`](https://github.com/marko-js/marko/commit/c6a9c125e82d9a1fbb158677cc8c26a94d80e2ec) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with incorrect babel scopes after stripping types.
+
 ## 5.39.40
 
 ### Patch Changes
