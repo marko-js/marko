@@ -275,6 +275,9 @@ function getMarkoFile(code, fileOpts, markoOpts) {
 
     if (markoOpts.stripTypes) {
       stripTypes(file);
+      if (!isMigrate) {
+        file.path.scope.crawl();
+      }
     }
 
     if (isMigrate) {
