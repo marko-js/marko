@@ -1,0 +1,5 @@
+let/foo={ bar: "bar" }
+const/baz={ foo, bar: () => foo.bar }
+div/el
+script --
+  el().textContent = baz.bar();

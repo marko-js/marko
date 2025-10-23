@@ -20,6 +20,7 @@ import {
   forEach,
   type Many,
   mapToString,
+  type OneMany,
   type Opt,
   push,
   Sorted,
@@ -763,13 +764,14 @@ function compareIntersections(a: Intersection, b: Intersection) {
 export function finalizeReferences() {
   const bindings = getBindings();
   const readsByExpression = getReadsByExpression();
-  const readsByFn = getReadsByFunction();
+  const fnReadsByExpression = getFunctionReadsByExpression();
   const mergedReferences = getMergedReferences();
 
   if (mergedReferences.size) {
     for (const [target, nodes] of mergedReferences) {
       const targetExtra = target.extra as ReferencedExtra;
       let reads = readsByExpression.get(targetExtra);
+      let exprFnReads = fnReadsByExpression.get(targetExtra);
       let { isEffect } = targetExtra;
       for (const node of nodes) {
         const extra = node?.extra;
@@ -777,10 +779,24 @@ export function finalizeReferences() {
           setCanonicalExtra(extra, targetExtra);
           if (isReferencedExtra(extra)) {
             const additionalReads = readsByExpression.get(extra);
+            const additionalExprFnReads = fnReadsByExpression.get(extra);
             isEffect ||= extra.isEffect;
             if (additionalReads) {
               reads = concat(reads, additionalReads);
               readsByExpression.delete(extra);
+            }
+
+            if (additionalExprFnReads) {
+              if (exprFnReads) {
+                for (const [key, value] of additionalExprFnReads) {
+                  exprFnReads.set(key, value);
+                }
+              } else {
+                fnReadsByExpression.set(
+                  targetExtra,
+                  (exprFnReads = new Map(additionalExprFnReads)),
+                );
+              }
             }
           }
         }
@@ -794,14 +810,29 @@ export function finalizeReferences() {
   const intersectionsBySection = new Map<Section, Intersection[]>();
   for (const [expr, reads] of readsByExpression) {
     if (isReferencedExtra(expr)) {
-      expr.referencedBindings = resolveReferencedBindings(
-        expr,
-        reads,
-        intersectionsBySection,
-      );
-      forEach(expr.referencedBindings, (binding) => {
-        binding.downstreamExpressions.add(expr);
-      });
+      const referencedBindings = (expr.referencedBindings =
+        resolveReferencedBindings(expr, reads, intersectionsBySection));
+
+      if (referencedBindings) {
+        forEach(referencedBindings, (binding) => {
+          binding.downstreamExpressions.add(expr);
+        });
+
+        const exprFnReads = fnReadsByExpression.get(expr);
+        if (exprFnReads) {
+          for (const [fn, fnReads] of exprFnReads) {
+            if (fn === expr) {
+              expr.referencedBindingsInFunction = referencedBindings;
+            } else {
+              fn.referencedBindingsInFunction =
+                resolveReferencedBindingsInFunction(
+                  referencedBindings,
+                  fnReads,
+                );
+            }
+          }
+        }
+      }
     }
   }
 
@@ -1011,20 +1042,30 @@ export function finalizeReferences() {
   });
 
   finalizeFunctionRegistry();
-  for (const [fn, reads] of readsByFn) {
-    const { registerReason } = fn;
-    fn.referencedBindingsInFunction = resolveReferencedBindings(
-      fn,
-      reads,
-      intersectionsBySection,
-    );
-    if (registerReason) {
-      forEach(fn.referencedBindingsInFunction, (binding) => {
-        addSerializeReason(binding.section, registerReason, binding);
-        if (binding.section !== fn.section) {
-          addOwnerSerializeReason(fn.section, binding.section, registerReason);
+  const referencedExprs = new Set<ReferencedExtra>();
+  for (const binding of bindings) {
+    for (const expr of binding.downstreamExpressions) {
+      referencedExprs.add(expr);
+    }
+  }
+
+  for (const expr of referencedExprs) {
+    const exprFnReads = fnReadsByExpression.get(expr);
+    if (exprFnReads) {
+      for (const fn of exprFnReads.keys()) {
+        if (fn.registerReason) {
+          forEach(fn.referencedBindingsInFunction, (binding) => {
+            addSerializeReason(binding.section, fn.registerReason, binding);
+            if (binding.section !== fn.section) {
+              addOwnerSerializeReason(
+                fn.section,
+                binding.section,
+                fn.registerReason,
+              );
+            }
+          });
         }
-      });
+      }
     }
   }
 
@@ -1076,7 +1117,7 @@ export function finalizeReferences() {
 
   mergedReferences.clear();
   readsByExpression.clear();
-  readsByFn.clear();
+  fnReadsByExpression.clear();
 }
 
 function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
@@ -1281,8 +1322,8 @@ const propsUtil = new Sorted(function compareProps(a: string, b: string) {
 const [getReadsByExpression] = createProgramState(
   () => new Map<ReferencedExtra, Opt<Read>>(),
 );
-const [getReadsByFunction] = createProgramState(
-  () => new Map<ReferencedFunctionExtra, Opt<Read>>(),
+const [getFunctionReadsByExpression] = createProgramState(
+  () => new Map<ReferencedExtra, Map<ReferencedFunctionExtra, OneMany<Read>>>(),
 );
 
 function addReadToExpression(
@@ -1305,10 +1346,14 @@ function addReadToExpression(
   );
 
   if (fnRoot) {
-    const readsByFn = getReadsByFunction();
+    const fnReadsByExpr = getFunctionReadsByExpression();
+    let exprFnReads = fnReadsByExpr.get(exprExtra);
+    if (!exprFnReads) {
+      fnReadsByExpr.set(exprExtra, (exprFnReads = new Map()));
+    }
     const fnExtra = (fnRoot.node.extra ??= {}) as ReferencedFunctionExtra;
     fnExtra.section = section;
-    readsByFn.set(fnExtra, push(readsByFn.get(fnExtra), read));
+    exprFnReads.set(fnExtra, push(exprFnReads.get(fnExtra), read));
   }
 }
 
@@ -1550,6 +1595,53 @@ function pruneBinding(bindings: Set<Binding>, binding: Binding) {
   }
 
   return shouldPrune;
+}
+
+function resolveReferencedBindingsInFunction(
+  refs: OneMany<Binding>,
+  reads: Opt<Read>,
+) {
+  if (reads) {
+    if (Array.isArray(reads)) {
+      let referencedBindings: ReferencedBindings;
+      for (const read of reads) {
+        referencedBindings = bindingUtil.add(
+          referencedBindings,
+          findClosestReference(read.binding, refs),
+        );
+      }
+      return referencedBindings;
+    } else {
+      return findClosestReference(reads.binding, refs);
+    }
+  }
+}
+
+function findClosestReference(from: Binding, refs: OneMany<Binding>): Binding {
+  if (Array.isArray(refs)) {
+    if (bindingUtil.has(refs, from)) {
+      return from;
+    }
+
+    for (const ref of refs) {
+      const closest = findClosestUpstream(from, ref);
+      if (closest) return closest;
+    }
+  } else {
+    const closest = findClosestUpstream(from, refs);
+    if (closest) return closest;
+  }
+
+  throw new Error("Unable to resolve closest binding reference.");
+}
+
+function findClosestUpstream(from: Binding, to: Binding) {
+  let closest: Binding | undefined = from;
+  do {
+    if (closest === to) {
+      return closest;
+    }
+  } while ((closest = closest.upstreamAlias));
 }
 
 function resolveReferencedBindings(
