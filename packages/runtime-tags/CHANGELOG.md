@@ -1,5 +1,18 @@
 # @marko/runtime-tags
 
+## 6.0.95
+
+### Patch Changes
+
+- [#2906](https://github.com/marko-js/marko/pull/2906) [`af067b7`](https://github.com/marko-js/marko/commit/af067b737c4b8684b8d56b14d3d96266b7e61d9d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add compile error when assigning to tag var/param outside a function.
+
+- [#2906](https://github.com/marko-js/marko/pull/2906) [`c6a9c12`](https://github.com/marko-js/marko/commit/c6a9c125e82d9a1fbb158677cc8c26a94d80e2ec) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with incorrect babel scopes after stripping types.
+
+- [#2906](https://github.com/marko-js/marko/pull/2906) [`355d5fd`](https://github.com/marko-js/marko/commit/355d5fd3c2284b8c149047002b95f16157573334) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure function references are a subset of the expression references.
+
+- Updated dependencies [[`c6a9c12`](https://github.com/marko-js/marko/commit/c6a9c125e82d9a1fbb158677cc8c26a94d80e2ec)]:
+  - @marko/compiler@5.39.41
+
 ## 6.0.94
 
 ### Patch Changes
