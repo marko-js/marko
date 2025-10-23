@@ -26,26 +26,6 @@ import { createProgramState } from "../util/state";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import type { TemplateVisitor } from "../util/visitors";
 
-declare module "@marko/compiler/dist/types" {
-  export interface FunctionDeclarationExtra {
-    registerId?: string;
-    registerReason?: SerializeReason;
-    name?: string;
-  }
-
-  export interface FunctionExpressionExtra {
-    registerId?: string;
-    registerReason?: SerializeReason;
-    name?: string;
-  }
-
-  export interface ArrowFunctionExpressionExtra {
-    registerId?: string;
-    registerReason?: SerializeReason;
-    name?: string;
-  }
-}
-
 const [getReferencesByFn] = createProgramState(
   () => new Map<RegisteredFnExtra, Set<t.NodeExtra>>(),
 );

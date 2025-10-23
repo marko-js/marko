@@ -111,12 +111,7 @@ export interface ParamBinding extends Binding {
 export type ReferencedBindings = Opt<Binding>;
 export type Intersection = Many<Binding>;
 
-type FnExtra = (
-  | t.FunctionExpressionExtra
-  | t.ArrowFunctionExpressionExtra
-  | t.FunctionDeclarationExtra
-) & { section: Section };
-
+interface ReferencedFunctionExtra extends t.FunctionExtra, ReferencedExtra {}
 interface Read {
   binding: Binding;
   node:
@@ -141,7 +136,11 @@ declare module "@marko/compiler/dist/types" {
   }
 
   export interface FunctionExtra {
+    referencesScope?: boolean;
     referencedBindingsInFunction?: ReferencedBindings;
+    name?: string;
+    registerId?: string;
+    registerReason?: SerializeReason;
   }
 
   export interface ArrowFunctionExpressionExtra extends FunctionExtra {}
@@ -467,12 +466,25 @@ function trackAssignment(
   binding: Binding,
 ) {
   const fnRoot = getFnRoot(assignment);
-  const fnExtra = fnRoot && ((fnRoot.node.extra ??= {}) as FnExtra);
   const section = getOrCreateSection(assignment);
   setReferencesScope(assignment);
   forEachIdentifierPath(assignment, (id) => {
     if (id.node.name === binding.name) {
-      const extra = (id.node.extra ??= {}) as AssignedBindingExtra;
+      if (!fnRoot) {
+        throw id.buildCodeFrameError(
+          `Assignments to a tag ${binding.type === BindingType.param ? "parameter" : "variable"} must be within a script or function.`,
+        );
+      }
+      const fnExtra =
+        fnRoot && ((fnRoot.node.extra ??= {}) as ReferencedFunctionExtra);
+      const idExtra = (id.node.extra ??= {}) as AssignedBindingExtra;
+      idExtra.assignment = binding;
+      idExtra.assignmentFunction = fnExtra;
+      fnExtra.section = idExtra.section = section;
+      binding.assignmentSections = sectionUtil.add(
+        binding.assignmentSections,
+        section,
+      );
 
       if (binding.upstreamAlias && binding.property !== undefined) {
         const changePropName = binding.property + "Change";
@@ -488,17 +500,9 @@ function trackAssignment(
             id.node.loc,
             true,
           );
-        extra.assignmentTo = changeBinding;
+        idExtra.assignmentTo = changeBinding;
         addReadToExpression(id, changeBinding);
       }
-
-      binding.assignmentSections = sectionUtil.add(
-        binding.assignmentSections,
-        section,
-      );
-      extra.assignment = binding;
-      extra.section = section;
-      extra.fnExtra = fnExtra;
     }
   });
 }
@@ -1278,7 +1282,7 @@ const [getReadsByExpression] = createProgramState(
   () => new Map<ReferencedExtra, Opt<Read>>(),
 );
 const [getReadsByFunction] = createProgramState(
-  () => new Map<FnExtra, Opt<Read>>(),
+  () => new Map<ReferencedFunctionExtra, Opt<Read>>(),
 );
 
 function addReadToExpression(
@@ -1302,8 +1306,7 @@ function addReadToExpression(
 
   if (fnRoot) {
     const readsByFn = getReadsByFunction();
-    const fnExtra = (fnRoot.node.extra ??= {}) as FnExtra;
-    exprExtra.fnExtra = fnExtra;
+    const fnExtra = (fnRoot.node.extra ??= {}) as ReferencedFunctionExtra;
     fnExtra.section = section;
     readsByFn.set(fnExtra, push(readsByFn.get(fnExtra), read));
   }
@@ -1660,7 +1663,6 @@ function getMemberExpressionPropString(
 
 export interface ReferencedExtra extends t.NodeExtra {
   section: Section;
-  fnExtra?: FnExtra;
 }
 export function isReferencedExtra(
   extra: t.NodeExtra | undefined,
@@ -1670,6 +1672,7 @@ export function isReferencedExtra(
 
 export interface AssignedBindingExtra extends ReferencedExtra {
   assignment: Binding;
+  assignmentFunction: ReferencedFunctionExtra;
 }
 export function isAssignedBindingExtra(
   extra: t.NodeExtra | undefined,
@@ -1677,12 +1680,10 @@ export function isAssignedBindingExtra(
   return isReferencedExtra(extra) && extra.assignment !== undefined;
 }
 
-export interface RegisteredFnExtra extends ReferencedExtra {
+export interface RegisteredFnExtra extends ReferencedExtra, t.FunctionExtra {
+  name: string;
   registerId: string;
   registerReason: SerializeReason;
-  name: string;
-  referencesScope?: boolean;
-  referencedBindingsInFunction: ReferencedBindings;
 }
 export function isRegisteredFnExtra(
   extra: t.NodeExtra | undefined,
