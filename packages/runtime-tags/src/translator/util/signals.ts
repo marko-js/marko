@@ -1376,7 +1376,7 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
               getBuildAssignment(extra)?.(
                 extra.section,
                 bindingUtil.has(
-                  extra.fnExtra?.referencedBindingsInFunction,
+                  extra.assignmentFunction.referencedBindingsInFunction,
                   extra.assignment,
                 )
                   ? node
@@ -1414,7 +1414,7 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
                 if (builtAssignment) {
                   if (
                     !bindingUtil.has(
-                      extra.fnExtra?.referencedBindingsInFunction,
+                      extra.assignmentFunction.referencedBindingsInFunction,
                       extra.assignment,
                     )
                   ) {

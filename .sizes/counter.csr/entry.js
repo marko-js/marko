@@ -1,4 +1,4 @@
-// size: 184 (min) 158 (brotli)
+// size: 184 (min) 141 (brotli)
 const $clickCount__script = _script("a0", ($scope, { 2: clickCount }) =>
     _on($scope[0], "click", function () {
       $clickCount($scope, ++clickCount);
