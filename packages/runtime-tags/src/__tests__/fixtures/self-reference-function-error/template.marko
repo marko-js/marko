@@ -1,0 +1,5 @@
+<let/items=[0, 1, 2]/>
+<button onClick() { items = [...items, items.length] }/>
+
+<const/sum = (i = 0) => (i >= items.length ? 0 : items[i] + sum(i + 1))>
+<div>${sum()}</div>

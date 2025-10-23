@@ -1,0 +1,9 @@
+{
+  "vars": {
+    "props": {
+      "$_": "m",
+      "$init": "o",
+      "$$getbutton": "r"
+    }
+  }
+}

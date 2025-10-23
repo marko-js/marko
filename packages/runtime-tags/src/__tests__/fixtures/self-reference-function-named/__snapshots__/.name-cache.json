@@ -1,0 +1,11 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "o",
+      "$$sum": "n",
+      "$$items__script": "r",
+      "$$items": "m"
+    }
+  }
+}

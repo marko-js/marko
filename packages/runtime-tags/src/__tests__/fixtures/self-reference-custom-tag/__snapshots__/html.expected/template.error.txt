@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/self-reference-custom-tag/template.marko:6:24
+      4 | </define>
+      5 |
+    > 6 | <Child/foo onClick() { foo().innerHTML = 'clicked' } />
+        |                        ^^^ Tag variable circular references are not supported.
+      7 |
