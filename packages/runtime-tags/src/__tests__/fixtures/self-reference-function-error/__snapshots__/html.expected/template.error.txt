@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/self-reference-function-error/template.marko:4:61
+      2 | <button onClick() { items = [...items, items.length] }/>
+      3 |
+    > 4 | <const/sum = (i = 0) => (i >= items.length ? 0 : items[i] + sum(i + 1))>
+        |                                                             ^^^ Tag variable circular references are not supported.
+      5 | <div>${sum()}</div>
+      6 |

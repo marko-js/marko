@@ -426,7 +426,16 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
 
   for (const ref of referencePaths) {
     const refSection = getOrCreateSection(ref);
-    if (isReferenceHoisted(babelBinding.path, ref)) {
+
+    const markoRoot = getMarkoRoot(ref);
+    if (
+      markoRoot?.type === "MarkoAttribute" &&
+      markoRoot.parentPath === babelBinding.path
+    ) {
+      throw ref.buildCodeFrameError(
+        `Tag variable circular references are not supported.`,
+      );
+    } else if (isReferenceHoisted(babelBinding.path, ref)) {
       trackHoistedReference(ref as t.NodePath<t.Identifier>, binding);
     } else if (
       binding.type !== BindingType.local ||
@@ -1726,7 +1735,6 @@ function resolveReferencedBindings(
           resolveExpressionReference(rootBindings, binding));
         ({ binding } = (read.node.extra ??= {}).read = exprReference);
       }
-
       referencedBindings = bindingUtil.add(referencedBindings, binding);
     }
   } else if (reads) {
