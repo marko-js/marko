@@ -1,4 +1,4 @@
-// size: 973 (min) 295 (brotli)
+// size: 975 (min) 282 (brotli)
 const $for_content5__text = _._const(3, ($scope, text) =>
     _._text($scope[0], text),
   ),
@@ -48,7 +48,7 @@ const $for_content5__text = _._const(3, ($scope, text) =>
   $for5 = _._for_of(4, $for_content5),
   $items__script = _._script("a0", ($scope, { 6: items }) =>
     _._on($scope[5], "click", function () {
-      $items($scope, (items = [...items.slice(1), items[0]]));
+      $items($scope, (items = [...items.slice(1), items?.[0]]));
     }),
   ),
   $items = _._let(6, ($scope, items) => {

@@ -1507,7 +1507,7 @@ export function getReadReplacement(
   const { extra } = node;
   if (!extra) return;
   let { binding, read } = extra;
-  let replacement: t.Node | undefined;
+  let replacement: t.Expression | undefined;
 
   if (read) {
     if (read.props === undefined) {
@@ -1544,15 +1544,55 @@ export function getReadReplacement(
       replacement = t.identifier(binding.name);
     }
   } else if (read) {
-    replacement = toMemberExpression(
-      t.identifier(read.binding.name),
-      Array.isArray(read.props) ? read.props[0] : read.props!,
-    );
+    const props = read.props
+      ? Array.isArray(read.props)
+        ? read.props.slice()
+        : [read.props]
+      : [];
+    let curNode = node;
+    let curBinding: Binding | undefined = read.binding;
+    let replaceMember:
+      | t.MemberExpression
+      | t.OptionalMemberExpression
+      | undefined;
+    replacement = t.identifier(read.binding.name);
 
-    if (Array.isArray(read.props)) {
-      for (let i = 1; i < read.props.length; i++) {
-        replacement = toMemberExpression(replacement, read.props[i]);
+    while (
+      props.length &&
+      (curNode.type === "MemberExpression" ||
+        curNode.type === "OptionalMemberExpression")
+    ) {
+      const prop = props.pop()!;
+      const memberProp = getMemberExpressionPropString(curNode);
+      if (memberProp !== prop) break;
+      replaceMember = curNode;
+      curNode = curNode.object as
+        | t.Identifier
+        | t.MemberExpression
+        | t.OptionalMemberExpression;
+    }
+
+    for (const prop of props) {
+      if (curBinding) {
+        curBinding = curBinding.propertyAliases.get(prop);
       }
+      replacement = toMemberExpression(
+        replacement,
+        prop,
+        !!curBinding?.nullable,
+      );
+    }
+
+    if (replaceMember) {
+      if (read.binding.nullable) {
+        replaceMember.type = "OptionalMemberExpression";
+        replaceMember.optional = true;
+      }
+      replaceMember.object = withPreviousLocation(
+        replacement,
+        replaceMember.object,
+      );
+      replacement = undefined;
     }
   }
 
@@ -1607,17 +1647,20 @@ function resolveReferencedBindingsInFunction(
       for (const read of reads) {
         referencedBindings = bindingUtil.add(
           referencedBindings,
-          findClosestReference(read.binding, refs),
+          findClosestReference(read.binding, refs)!,
         );
       }
       return referencedBindings;
     } else {
-      return findClosestReference(reads.binding, refs);
+      return findClosestReference(reads.binding, refs)!;
     }
   }
 }
 
-function findClosestReference(from: Binding, refs: OneMany<Binding>): Binding {
+function findClosestReference(
+  from: Binding,
+  refs: OneMany<Binding>,
+): undefined | Binding {
   if (Array.isArray(refs)) {
     if (bindingUtil.has(refs, from)) {
       return from;
@@ -1631,8 +1674,6 @@ function findClosestReference(from: Binding, refs: OneMany<Binding>): Binding {
     const closest = findClosestUpstream(from, refs);
     if (closest) return closest;
   }
-
-  throw new Error("Unable to resolve closest binding reference.");
 }
 
 function findClosestUpstream(from: Binding, to: Binding) {
@@ -1644,6 +1685,29 @@ function findClosestUpstream(from: Binding, to: Binding) {
   } while ((closest = closest.upstreamAlias));
 }
 
+function getRootBindings(reads: Many<Read>): OneMany<Binding> {
+  let rootRefs!: OneMany<Binding>;
+  let allBindings!: OneMany<Binding>;
+
+  for (const { binding } of reads) {
+    allBindings = bindingUtil.add(allBindings, binding);
+  }
+
+  for (const { binding } of reads) {
+    let alias = binding.upstreamAlias;
+    while (alias) {
+      if (bindingUtil.has(allBindings, alias)) break;
+      alias = alias.upstreamAlias;
+    }
+
+    if (!alias) {
+      rootRefs = bindingUtil.add(rootRefs, binding);
+    }
+  }
+
+  return rootRefs;
+}
+
 function resolveReferencedBindings(
   expr: { section: Section },
   reads: Opt<Read>,
@@ -1651,11 +1715,12 @@ function resolveReferencedBindings(
 ) {
   let referencedBindings: ReferencedBindings;
   if (Array.isArray(reads)) {
+    const rootBindings = getRootBindings(reads);
     for (const read of reads) {
       let { binding } = read;
       if (read.node) {
         const exprReference = ((read.node.extra ??= {}).read ??=
-          resolveExpressionReference(reads, binding, undefined));
+          resolveExpressionReference(rootBindings, binding));
         ({ binding } = (read.node.extra ??= {}).read = exprReference);
       }
 
@@ -1690,30 +1755,32 @@ function resolveReferencedBindings(
 }
 
 function resolveExpressionReference(
-  reads: Opt<Read>,
+  rootBindings: OneMany<Binding>,
   readBinding: Binding,
-  readProps: Opt<string>,
 ) {
-  const { upstreamAlias } = readBinding;
-  if (upstreamAlias && Array.isArray(reads)) {
-    const prop = getCanonicalProperty(readBinding);
-    const aliasProps = prop === undefined ? readProps : push(readProps, prop);
-    for (const { binding } of reads) {
-      if (binding !== readBinding) {
-        let alias = upstreamAlias;
-
-        while (alias) {
-          if (binding === alias) {
-            return resolveExpressionReference(reads, alias, aliasProps);
-          }
-
-          alias = alias.upstreamAlias!;
-        }
-      }
-    }
+  const upstreamRoot =
+    readBinding.upstreamAlias &&
+    findClosestReference(readBinding.upstreamAlias, rootBindings);
+  if (!upstreamRoot) {
+    return createRead(readBinding, undefined);
   }
 
-  return createRead(readBinding, readProps);
+  let curBinding = readBinding;
+  let props: Opt<string>;
+  while (curBinding !== upstreamRoot) {
+    const prop = getCanonicalProperty(curBinding);
+    if (prop !== undefined) {
+      props = push(props, prop);
+    }
+
+    curBinding = curBinding.upstreamAlias!;
+  }
+
+  if (Array.isArray(props)) {
+    props.reverse();
+  }
+
+  return createRead(upstreamRoot, props);
 }
 
 function isSupersetSources(a: Binding, b: Binding) {

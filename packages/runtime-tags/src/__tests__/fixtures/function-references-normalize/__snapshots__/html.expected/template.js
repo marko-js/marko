@@ -6,7 +6,7 @@ export default _._template("__tests__/template.marko", input => {
   };
   const baz = {
     foo,
-    bar: _._resume(() => foo.bar, "__tests__/template.marko_0/baz", $scope0_id)
+    bar: _._resume(() => foo?.bar, "__tests__/template.marko_0/baz", $scope0_id)
   };
   _._html(`<div></div>${_._el_resume($scope0_id, "#div/0")}`);
   _._script($scope0_id, "__tests__/template.marko_0_baz");

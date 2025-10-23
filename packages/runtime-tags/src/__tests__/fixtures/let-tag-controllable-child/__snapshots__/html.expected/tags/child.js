@@ -3,7 +3,7 @@ export default _._template("__tests__/tags/child.marko", input => {
   const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();
   let state = input.value;
-  let otherState = input.value;
+  let otherState = input["value"];
   _._html(`<button>${_._escape(input.value)}${_._el_resume($scope0_id, "#text/1", _._serialize_guard($scope0_reason, /* input.value */0))}|<!>${_._escape(state)}${_._el_resume($scope0_id, "#text/2")}</button>${_._el_resume($scope0_id, "#button/0")}<button>${_._escape(input.value)}${_._el_resume($scope0_id, "#text/4", _._serialize_guard($scope0_reason, /* input.value */0))}|<!>${_._escape(otherState)}${_._el_resume($scope0_id, "#text/5")}</button>${_._el_resume($scope0_id, "#button/3")}`);
   _._script($scope0_id, "__tests__/tags/child.marko_0_otherState");
   _._script($scope0_id, "__tests__/tags/child.marko_0_state");

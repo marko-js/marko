@@ -1,4 +1,4 @@
-// size: 664 (min) 356 (brotli)
+// size: 665 (min) 359 (brotli)
 const $name__OR__write__script = _._script(
     "a0",
     ($scope, { 5: name, 6: write }) => {
@@ -37,7 +37,7 @@ const $name__OR__write__script = _._script(
   $for = _._for_of(2, $for_content),
   $items__script = _._script("b1", ($scope, { 3: items }) =>
     _._on($scope[0], "click", function () {
-      $items($scope, (items = items.length ? items.slice(0, -1) : [1, 2, 3]));
+      $items($scope, (items = items?.length ? items.slice(0, -1) : [1, 2, 3]));
     }),
   ),
   $items = _._let(3, ($scope, items) => {

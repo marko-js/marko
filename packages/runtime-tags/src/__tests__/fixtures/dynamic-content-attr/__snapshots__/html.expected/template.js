@@ -7,7 +7,6 @@ export default _._template("__tests__/template.marko", input => {
   const MyThing = {
     content: _._content_resume("__tests__/template.marko_1_content", () => {
       const $scope1_id = _._scope_id();
-      debugger;
       _._html(`${_._escape(count)}${_._el_resume($scope1_id, "#text/0")} ${_._escape(sideEffect++)}`);
       _._subscribe($count__closures, _._scope($scope1_id, {
         _: _._scope_with_id($scope0_id),

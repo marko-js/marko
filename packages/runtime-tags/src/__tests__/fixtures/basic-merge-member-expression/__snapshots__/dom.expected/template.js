@@ -3,7 +3,7 @@ export const $walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $foo = /* @__PURE__ */_._let("foo/3", ($scope, foo) => {
   _._attr_class($scope["#div/0"], (foo, foo.class));
-  _._attr_class($scope["#div/1"], (foo, foo.class));
+  _._attr_class($scope["#div/1"], (foo, foo.class.class));
 });
 const $setup__script = _._script("__tests__/template.marko_0", $scope => _._on($scope["#button/2"], "click", function () {
   $foo($scope, {
