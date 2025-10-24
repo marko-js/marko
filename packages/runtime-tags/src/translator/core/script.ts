@@ -15,7 +15,7 @@ import runtimeInfo from "../util/runtime-info";
 import { getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { skip, traverseContains } from "../util/traverse";
-import { scopeIdentifier } from "../visitors/program";
+import { isScopeIdentifier, scopeIdentifier } from "../visitors/program";
 
 const htmlScriptTagAlternateMsg =
   " For a native html [`<script>` tag](https://markojs.com/docs/reference/core-tag#script) use the `html-script` core tag instead.";
@@ -110,8 +110,11 @@ export default {
         const isFunction =
           t.isFunctionExpression(value) || t.isArrowFunctionExpression(value);
         let inlineBody: t.Statement | t.Statement[] | null = null;
-        if (isFunction && !(value.async || value.generator)) {
-          if (t.isBlockStatement(value.body)) {
+        let referencesScope = false;
+        if (isFunction) {
+          if (value.async || value.generator) {
+            referencesScope = traverseContains(value, isScopeIdentifier);
+          } else if (t.isBlockStatement(value.body)) {
             let hasDeclaration = false;
             for (const child of value.body.body) {
               if (t.isDeclaration(child)) {
@@ -131,7 +134,7 @@ export default {
           referencedBindings,
           inlineBody ||
             t.expressionStatement(
-              t.callExpression(value, isFunction ? [] : [scopeIdentifier]),
+              t.callExpression(value, referencesScope ? [scopeIdentifier] : []),
             ),
         );
       } else {
