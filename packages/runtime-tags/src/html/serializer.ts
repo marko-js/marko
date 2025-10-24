@@ -695,6 +695,9 @@ function writeRegistered(
     } else {
       const pos = state.buf.push("") - 1;
       const assigns = state.assigned.size;
+      // TODO: setting init to anything here will ensure future writes of fnRef will add their accessor;
+      // however, there is maybe a better solution? Could this break something?
+      fnRef.init ||= access;
       writeProp(state, scope, parent, "");
       const scopeRef = parent && state.refs.get(scope);
       const scopeId = scopeRef && ensureId(state, scopeRef);
