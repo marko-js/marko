@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.96
+
+### Patch Changes
+
+- [#2909](https://github.com/marko-js/marko/pull/2909) [`43a88eb`](https://github.com/marko-js/marko/commit/43a88ebab65f8e1d781e15f7cfb9a215e52ed75f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issues printing optional member expressions.
+
+- [#2908](https://github.com/marko-js/marko/pull/2908) [`e77008a`](https://github.com/marko-js/marko/commit/e77008a63431539e04cc1abc28fe2920728e68b5) Thanks [@rturnq](https://github.com/rturnq)! - Add compile error when referencing tag variable in providing tag's attributes
+
 ## 6.0.95
 
 ### Patch Changes
