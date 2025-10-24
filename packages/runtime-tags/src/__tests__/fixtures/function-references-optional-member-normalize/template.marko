@@ -1,0 +1,16 @@
+let/foo=undefined
+const/a={ foo, bar: () => foo?.bar }
+div/elA
+script --
+  elA().textContent = a.bar() || "missing a"
+
+const/b={ foo, baz: () => foo?.bar.baz }
+div/elB
+script --
+  elB().textContent = b.baz() || "missing b";
+
+const/c={ foo: foo?.bar, baz: () => foo?.bar.baz }
+div/elC
+script --
+  elC().textContent = c.baz() || "missing c";
+
