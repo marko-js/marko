@@ -6,7 +6,7 @@ const $for = /* @__PURE__ */_._for_of("#text/1", $for_content);
 const $children__script = _._script("__tests__/template.marko_0_children", ($scope, {
   children
 }) => {
-  if (children?.length === 1) {
+  if (children.length === 1) {
     $children($scope, children = [...children, 2]);
   }
 });

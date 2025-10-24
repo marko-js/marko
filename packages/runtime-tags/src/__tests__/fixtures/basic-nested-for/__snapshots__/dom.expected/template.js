@@ -29,7 +29,7 @@ const $for = /* @__PURE__ */_._for_of("#text/1", $for_content);
 const $items__script = _._script("__tests__/template.marko_0_items", ($scope, {
   items
 }) => _._on($scope["#button/0"], "click", function () {
-  $items($scope, items = [...items, items?.length]);
+  $items($scope, items = [...items, items.length]);
 }));
 const $items = /* @__PURE__ */_._let("items/2", ($scope, items) => {
   $for($scope, [items]);

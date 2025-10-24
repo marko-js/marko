@@ -1584,14 +1584,16 @@ export function getReadReplacement(
     }
 
     if (replaceMember) {
-      if (read.binding.nullable) {
-        replaceMember.type = "OptionalMemberExpression";
-        replaceMember.optional = true;
+      if (replaceMember.object.type !== replacement.type) {
+        if (read.binding.nullable) {
+          replaceMember.type = "OptionalMemberExpression";
+          replaceMember.optional = true;
+        }
+        replaceMember.object = withPreviousLocation(
+          replacement,
+          replaceMember.object,
+        );
       }
-      replaceMember.object = withPreviousLocation(
-        replacement,
-        replaceMember.object,
-      );
       replacement = undefined;
     }
   }
@@ -1768,9 +1770,8 @@ function resolveExpressionReference(
   let curBinding = readBinding;
   let props: Opt<string>;
   while (curBinding !== upstreamRoot) {
-    const prop = getCanonicalProperty(curBinding);
-    if (prop !== undefined) {
-      props = push(props, prop);
+    if (curBinding.property !== undefined) {
+      props = push(props, curBinding.property);
     }
 
     curBinding = curBinding.upstreamAlias!;
@@ -1790,16 +1791,6 @@ function isSupersetSources(a: Binding, b: Binding) {
     bindingUtil.isSuperset(a.sources.state, b.sources.state) &&
     bindingUtil.isSuperset(a.sources.param, b.sources.param)
   );
-}
-
-function getCanonicalProperty(binding: Binding) {
-  if (binding.property !== undefined) {
-    return binding.property;
-  }
-
-  if (binding.upstreamAlias && binding.excludeProperties === undefined) {
-    return binding.upstreamAlias.property;
-  }
 }
 
 function createRead(binding: Binding, props: Opt<string>) {

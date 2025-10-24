@@ -38,7 +38,7 @@ const $for5 = /* @__PURE__ */_._for_of("#div/4", $for_content5);
 const $items__script = _._script("__tests__/template.marko_0_items", ($scope, {
   items
 }) => _._on($scope["#button/5"], "click", function () {
-  $items($scope, items = [...items.slice(1), items?.[0]]);
+  $items($scope, items = [...items.slice(1), items[0]]);
 }));
 const $items = /* @__PURE__ */_._let("items/6", ($scope, items) => {
   $for($scope, [items, "id"]);

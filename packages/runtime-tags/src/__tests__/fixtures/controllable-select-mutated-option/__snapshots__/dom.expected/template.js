@@ -15,7 +15,7 @@ const $options__script = _._script("__tests__/template.marko_0_options", ($scope
     $options($scope, options = options.slice(1));
   });
   _._on($scope["#button/3"], "click", function () {
-    $options($scope, options = [options?.length ? options?.[0] - 1 : 3, ...options]);
+    $options($scope, options = [options.length ? options[0] - 1 : 3, ...options]);
   });
 });
 const $options = /* @__PURE__ */_._let("options/4", ($scope, options) => {

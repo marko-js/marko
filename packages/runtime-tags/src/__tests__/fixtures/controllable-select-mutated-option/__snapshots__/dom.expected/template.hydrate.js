@@ -1,4 +1,4 @@
-// size: 630 (min) 326 (brotli)
+// size: 627 (min) 306 (brotli)
 const $for_content__opt = _._const(3, ($scope, opt) => {
     (_._attr($scope[0], "value", opt), _._text($scope[1], opt));
   }),
@@ -19,7 +19,7 @@ const $for_content__opt = _._const(3, ($scope, opt) => {
       _._on($scope[3], "click", function () {
         $options(
           $scope,
-          (options = [options?.length ? options?.[0] - 1 : 3, ...options]),
+          (options = [options.length ? options[0] - 1 : 3, ...options]),
         );
       }));
   }),
