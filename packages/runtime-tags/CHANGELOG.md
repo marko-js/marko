@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.97
+
+### Patch Changes
+
+- [#2912](https://github.com/marko-js/marko/pull/2912) [`917c88e`](https://github.com/marko-js/marko/commit/917c88ed23955bbf68cf9e19382315345974e79d) Thanks [@rturnq](https://github.com/rturnq)! - Avoid calling script functions with scope argument unnecessarily
+
+- [#2913](https://github.com/marko-js/marko/pull/2913) [`280f4d3`](https://github.com/marko-js/marko/commit/280f4d3141a3fcbd1ec2c6e95c8db6613f9eff1b) Thanks [@rturnq](https://github.com/rturnq)! - Ensure increment and decrement assignments don't prune change handler bindings
+
 ## 6.0.96
 
 ### Patch Changes
