@@ -1730,10 +1730,9 @@ function resolveReferencedBindings(
     const rootBindings = getRootBindings(reads);
     for (const read of reads) {
       let { binding } = read;
-      if (read.node) {
-        const exprReference = ((read.node.extra ??= {}).read ??=
+      if (read.node && read.node.extra?.assignmentTo !== binding) {
+        ({ binding } = (read.node.extra ??= {}).read ??=
           resolveExpressionReference(rootBindings, binding));
-        ({ binding } = (read.node.extra ??= {}).read = exprReference);
       }
       referencedBindings = bindingUtil.add(referencedBindings, binding);
     }

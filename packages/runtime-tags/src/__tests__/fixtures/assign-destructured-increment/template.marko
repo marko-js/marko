@@ -1,0 +1,10 @@
+let/bar=0
+const/{ foo }={
+  foo: bar,
+  fooChange(v) {
+    bar = v;
+  }
+}
+
+button onClick() { foo++ }
+  -- ${foo}:${bar}
