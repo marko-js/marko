@@ -1,0 +1,14 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "r",
+      "$$z__OR__x__OR__setter": "e",
+      "$$z": "o",
+      "$$count": "n",
+      "$$setCount__script": "m",
+      "$$input_value__OR__setter": "s",
+      "$$input_value": "u"
+    }
+  }
+}
