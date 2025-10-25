@@ -2,4 +2,4 @@
 "@marko/runtime-tags": patch
 ---
 
-Ensure increment and decrement assignements don't prune change handler bindings
+Ensure increment and decrement assignments don't prune change handler bindings
