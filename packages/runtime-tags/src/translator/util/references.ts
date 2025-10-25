@@ -377,6 +377,7 @@ export function trackHoistedReference(
     );
 
     section.hoisted = bindingUtil.add(section.hoisted, binding);
+    hoistSection.hoistedTo = bindingUtil.add(hoistSection.hoistedTo, binding);
 
     let currentSection = section.parent;
     while (currentSection && currentSection !== hoistSection) {
