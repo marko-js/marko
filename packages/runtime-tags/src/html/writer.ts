@@ -135,6 +135,7 @@ export function _var(
   registryId: string,
 ) {
   _scope_with_id(parentScopeId)[scopeOffsetAccessor] = _scope_id();
+  // TODO: if the return value is already registered, use that.
   _scope_with_id(childScopeId)[AccessorProp.TagVariable] = _resume(
     {},
     registryId,
