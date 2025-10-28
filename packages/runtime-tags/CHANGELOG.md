@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 6.0.97
+
+### Patch Changes
+
+- [#2917](https://github.com/marko-js/marko/pull/2917) [`8f82e28`](https://github.com/marko-js/marko/commit/8f82e2855fe322fcfa206cbea4dcae3230d5b6ef) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix circular issue when serializing functions.
+
+- [#2912](https://github.com/marko-js/marko/pull/2912) [`917c88e`](https://github.com/marko-js/marko/commit/917c88ed23955bbf68cf9e19382315345974e79d) Thanks [@rturnq](https://github.com/rturnq)! - Avoid calling script functions with scope argument unnecessarily
+
+- [#2913](https://github.com/marko-js/marko/pull/2913) [`280f4d3`](https://github.com/marko-js/marko/commit/280f4d3141a3fcbd1ec2c6e95c8db6613f9eff1b) Thanks [@rturnq](https://github.com/rturnq)! - Ensure increment and decrement assignments don't prune change handler bindings
+
+- [#2916](https://github.com/marko-js/marko/pull/2916) [`5963a78`](https://github.com/marko-js/marko/commit/5963a7894425d4993de2104e5bcbf6d3ffda6651) Thanks [@rturnq](https://github.com/rturnq)! - Fix duplicate setup identifier when hoisting
+
 ## 6.0.96
 
 ### Patch Changes
