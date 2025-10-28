@@ -62,6 +62,7 @@ export interface Section {
   bindings: ReferencedBindings;
   domGetterBindings: Map<Binding, string>;
   hoisted: ReferencedBindings;
+  hoistedTo: ReferencedBindings;
   serializeReason: undefined | SerializeReason;
   serializeReasons: Map<symbol, SerializeReason>;
   paramReasonGroups: ParamSerializeReasonGroups | undefined;
@@ -133,6 +134,7 @@ export function startSection(
       bindings: undefined,
       domGetterBindings: new Map(),
       hoisted: undefined,
+      hoistedTo: undefined,
       isHoistThrough: undefined,
       serializeReason: undefined,
       serializeReasons: new Map(),

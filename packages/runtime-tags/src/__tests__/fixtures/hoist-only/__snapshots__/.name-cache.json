@@ -1,0 +1,18 @@
+{
+  "vars": {
+    "props": {
+      "$_": "r",
+      "$init": "m",
+      "$$get$hoisted_hoist": "o",
+      "$$get$hoisted_hoistY": "t",
+      "$$if_content__$hoisted_hoistY": "_",
+      "$$if_content__hoistY": "e",
+      "$$if_content__input_value": "n",
+      "$$if_content__setup": "s",
+      "$$if_content": "a",
+      "$$if": "i",
+      "$$show": "u",
+      "$$hoistY": "c"
+    }
+  }
+}

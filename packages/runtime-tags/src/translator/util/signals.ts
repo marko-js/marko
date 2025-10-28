@@ -1291,7 +1291,9 @@ export function writeHTMLResumeStatements(
 }
 
 export function getSetup(section: Section) {
-  return getSignals(section).get(undefined)?.identifier;
+  return section.hoistedTo
+    ? getSignal(section, undefined).identifier
+    : getSignals(section).get(undefined)?.identifier;
 }
 
 function replaceRenderNode(node: t.Node) {
