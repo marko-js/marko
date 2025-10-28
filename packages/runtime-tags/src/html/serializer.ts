@@ -11,7 +11,6 @@ interface Registered {
   id: string;
   access: string;
   scope: unknown;
-  getter: boolean;
 }
 
 enum MutationType {
@@ -398,21 +397,6 @@ export function register<T extends WeakKey>(
     id,
     scope,
     access: "_._" + toAccess(toObjectKey(id)),
-    getter: false,
-  });
-  return val;
-}
-
-export function registerGetter<T extends WeakKey>(
-  accessor: string,
-  val: T,
-  scope?: unknown,
-) {
-  REGISTRY.set(val, {
-    id: "",
-    scope,
-    access: toAccess(accessor),
-    getter: true,
   });
   return val;
 }
@@ -649,7 +633,7 @@ function writeRegistered(
   val: WeakKey,
   parent: Reference | null,
   accessor: string,
-  { access, scope, getter }: Registered,
+  { access, scope }: Registered,
 ) {
   if (scope) {
     const scopeRef = state.refs.get(scope);
@@ -660,21 +644,6 @@ function writeRegistered(
       state.buf.length,
     );
     state.refs.set(val, fnRef);
-
-    if (getter) {
-      if (scopeRef) {
-        state.buf.push("()=>" + ensureId(state, scopeRef) + access);
-        return true;
-      }
-
-      state.buf.push("(s=>()=>s" + access + ")(");
-      writeProp(state, scope, parent, "");
-      state.buf.push(")");
-
-      const newScopeRef = state.refs.get(scope);
-      if (newScopeRef) ensureId(state, newScopeRef);
-      return true;
-    }
 
     if (scopeRef) {
       if (
