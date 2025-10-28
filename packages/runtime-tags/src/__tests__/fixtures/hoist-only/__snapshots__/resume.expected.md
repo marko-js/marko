@@ -8,11 +8,11 @@
         "ConditionalScope:#text/0": _.b = {
           "ConditionalScope:#text/0": _.a = {}
         }
-      }, _.b, _.a], _.a._ = _.b, _.b._ = _.c, _.a.hoist3 = _._[
-        "__tests__/template.marko_2/hoist2"
-        ](_.a), _.c.hoist1 = _._[
+      }, , _.a], _.a._ = _.d[2] = _.b, _.b._ = _.c, _.c.hoist1 = _._[
         "__tests__/template.marko_0/hoist"
-        ](_.c), (_.e = new Set).add(_.a), _.d)];
+        ](_.c), _.a.hoist3 = _._[
+        "__tests__/template.marko_2/hoist2"
+        ](_.a), (_.e = new Set).add(_.a), _.d)];
       M._.w()
     </script>
   </head>

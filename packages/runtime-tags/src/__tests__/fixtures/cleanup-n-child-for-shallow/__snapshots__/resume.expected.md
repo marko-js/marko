@@ -56,32 +56,32 @@ mounted 3
     <!--M_]1 #text/2 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.b = {
+      M._.r = [_ =&gt; (_.i = [0, _.e = {
             "LoopScopeMap:#text/2": new Map(_.a = [
               [0, _.f = {
-                "#childScope/0": _.c = {
+                "#childScope/0": _.b = {
                   name: 1,
                   "#ClosestBranchId": 2
                 }
               }],
               [1, _.g = {
-                "#childScope/0": _.d = {
+                "#childScope/0": _.c = {
                   name: 2,
                   "#ClosestBranchId": 4
                 }
               }],
               [2, _.h = {
-                "#childScope/0": _.e = {
+                "#childScope/0": _.d = {
                   name: 3,
                   "#ClosestBranchId": 6
                 }
               }]
             ]),
             items: [1, 2, 3]
-          }, _.f, _.c, _.g, _.d, _.h, _.e], _.c.write = _.d.write = _.e
-          .write = _.b.write = _._[
+          }, _.f, _.b, _.g, _.c, _.h, _.d], _.b.write = _.c.write = _.d
+          .write = _.e.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.b), _.i),
+            ](_.e), _.i),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7,
         "__tests__/template.marko_0_items",
@@ -154,32 +154,32 @@ destroyed 3
     <!--M_]1 #text/2 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.b = {
+      M._.r = [_ =&gt; (_.i = [0, _.e = {
             "LoopScopeMap:#text/2": new Map(_.a = [
               [0, _.f = {
-                "#childScope/0": _.c = {
+                "#childScope/0": _.b = {
                   name: 1,
                   "#ClosestBranchId": 2
                 }
               }],
               [1, _.g = {
-                "#childScope/0": _.d = {
+                "#childScope/0": _.c = {
                   name: 2,
                   "#ClosestBranchId": 4
                 }
               }],
               [2, _.h = {
-                "#childScope/0": _.e = {
+                "#childScope/0": _.d = {
                   name: 3,
                   "#ClosestBranchId": 6
                 }
               }]
             ]),
             items: [1, 2, 3]
-          }, _.f, _.c, _.g, _.d, _.h, _.e], _.c.write = _.d.write = _.e
-          .write = _.b.write = _._[
+          }, _.f, _.b, _.g, _.c, _.h, _.d], _.b.write = _.c.write = _.d
+          .write = _.e.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.b), _.i),
+            ](_.e), _.i),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7,
         "__tests__/template.marko_0_items",
@@ -239,32 +239,32 @@ destroyed 2
     <!--M_]1 #text/2 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.b = {
+      M._.r = [_ =&gt; (_.i = [0, _.e = {
             "LoopScopeMap:#text/2": new Map(_.a = [
               [0, _.f = {
-                "#childScope/0": _.c = {
+                "#childScope/0": _.b = {
                   name: 1,
                   "#ClosestBranchId": 2
                 }
               }],
               [1, _.g = {
-                "#childScope/0": _.d = {
+                "#childScope/0": _.c = {
                   name: 2,
                   "#ClosestBranchId": 4
                 }
               }],
               [2, _.h = {
-                "#childScope/0": _.e = {
+                "#childScope/0": _.d = {
                   name: 3,
                   "#ClosestBranchId": 6
                 }
               }]
             ]),
             items: [1, 2, 3]
-          }, _.f, _.c, _.g, _.d, _.h, _.e], _.c.write = _.d.write = _.e
-          .write = _.b.write = _._[
+          }, _.f, _.b, _.g, _.c, _.h, _.d], _.b.write = _.c.write = _.d
+          .write = _.e.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.b), _.i),
+            ](_.e), _.i),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7,
         "__tests__/template.marko_0_items",
@@ -312,32 +312,32 @@ destroyed 1
     <!--M_]1 #text/2 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.b = {
+      M._.r = [_ =&gt; (_.i = [0, _.e = {
             "LoopScopeMap:#text/2": new Map(_.a = [
               [0, _.f = {
-                "#childScope/0": _.c = {
+                "#childScope/0": _.b = {
                   name: 1,
                   "#ClosestBranchId": 2
                 }
               }],
               [1, _.g = {
-                "#childScope/0": _.d = {
+                "#childScope/0": _.c = {
                   name: 2,
                   "#ClosestBranchId": 4
                 }
               }],
               [2, _.h = {
-                "#childScope/0": _.e = {
+                "#childScope/0": _.d = {
                   name: 3,
                   "#ClosestBranchId": 6
                 }
               }]
             ]),
             items: [1, 2, 3]
-          }, _.f, _.c, _.g, _.d, _.h, _.e], _.c.write = _.d.write = _.e
-          .write = _.b.write = _._[
+          }, _.f, _.b, _.g, _.c, _.h, _.d], _.b.write = _.c.write = _.d
+          .write = _.e.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.b), _.i),
+            ](_.e), _.i),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7,
         "__tests__/template.marko_0_items",
@@ -416,32 +416,32 @@ mounted 3
     </p>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.b = {
+      M._.r = [_ =&gt; (_.i = [0, _.e = {
             "LoopScopeMap:#text/2": new Map(_.a = [
               [0, _.f = {
-                "#childScope/0": _.c = {
+                "#childScope/0": _.b = {
                   name: 1,
                   "#ClosestBranchId": 2
                 }
               }],
               [1, _.g = {
-                "#childScope/0": _.d = {
+                "#childScope/0": _.c = {
                   name: 2,
                   "#ClosestBranchId": 4
                 }
               }],
               [2, _.h = {
-                "#childScope/0": _.e = {
+                "#childScope/0": _.d = {
                   name: 3,
                   "#ClosestBranchId": 6
                 }
               }]
             ]),
             items: [1, 2, 3]
-          }, _.f, _.c, _.g, _.d, _.h, _.e], _.c.write = _.d.write = _.e
-          .write = _.b.write = _._[
+          }, _.f, _.b, _.g, _.c, _.h, _.d], _.b.write = _.c.write = _.d
+          .write = _.e.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.b), _.i),
+            ](_.e), _.i),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7,
         "__tests__/template.marko_0_items",

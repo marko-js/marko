@@ -87,24 +87,24 @@
     <!--M_|1 #text/2 18 10 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.D = [0, _.e = {
+      M._.r = [_ =&gt; (_.D = [0, _.j = {
               "LoopScopeMap:#text/2": new Map(_.a = [
                 [0, _.c = {
                   "LoopScopeMap:#text/1": new Map(_.b = [
                     [0, _.d = {
-                      "#childScope/0": _.f = {
+                      "#childScope/0": _.e = {
                         name: "1.1",
                         "#ClosestBranchId": 4
                       }
                     }],
-                    [1, _.g = {
-                      "#childScope/0": _.h = {
+                    [1, _.f = {
+                      "#childScope/0": _.g = {
                         name: "1.2",
                         "#ClosestBranchId": 6
                       }
                     }],
-                    [2, _.i = {
-                      "#childScope/0": _.j = {
+                    [2, _.h = {
+                      "#childScope/0": _.i = {
                         name: "1.3",
                         "#ClosestBranchId": 8
                       }
@@ -172,15 +172,15 @@
                 }]
               ]),
               items: [1, 2, 3]
-            }, _.c, _.k, _.d, _.f, _.g, _.h, _.i, _.j, _.m, _.t, _.n, _.o, _
-            .p, _.q, _.r, _.s, _.v, _.C, _.w, _.x, _.y, _.z, _.A, _.B
-          ], _.d._ = _.g._ = _.i._ = _.c, _.c._ = _.m._ = _.v._ = _.e, _.n._ =
-          _.p._ = _.r._ = _.m, _.w._ = _.y._ = _.A._ = _.v, _.f.write = _.h
-          .write = _.j.write = _.k.write = _.o.write = _.q.write = _.s.write =
-          _.t.write = _.x.write = _.z.write = _.B.write = _.C.write = _.e
-          .write = _._[
+            }, , _.k, _.d, _.e, _.f, _.g, _.h, _.i, , _.t, _.n, _.o, _.p, _.q,
+            _.r, _.s, , _.C, _.w, _.x, _.y, _.z, _.A, _.B
+          ], _.d._ = _.f._ = _.h._ = _.D[2] = _.c, _.c._ = _.m._ = _.v._ = _
+          .j, _.n._ = _.p._ = _.r._ = _.D[10] = _.m, _.w._ = _.y._ = _.A._ = _
+          .D[18] = _.v, _.e.write = _.g.write = _.i.write = _.k.write = _.o
+          .write = _.q.write = _.s.write = _.t.write = _.x.write = _.z.write =
+          _.B.write = _.C.write = _.j.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.e), _.D),
+            ](_.j), _.D),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25,
         "__tests__/template.marko_0_items",
@@ -256,24 +256,24 @@ destroyed 2.3
     <!--M_|1 #text/2 18 10 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.D = [0, _.e = {
+      M._.r = [_ =&gt; (_.D = [0, _.j = {
               "LoopScopeMap:#text/2": new Map(_.a = [
                 [0, _.c = {
                   "LoopScopeMap:#text/1": new Map(_.b = [
                     [0, _.d = {
-                      "#childScope/0": _.f = {
+                      "#childScope/0": _.e = {
                         name: "1.1",
                         "#ClosestBranchId": 4
                       }
                     }],
-                    [1, _.g = {
-                      "#childScope/0": _.h = {
+                    [1, _.f = {
+                      "#childScope/0": _.g = {
                         name: "1.2",
                         "#ClosestBranchId": 6
                       }
                     }],
-                    [2, _.i = {
-                      "#childScope/0": _.j = {
+                    [2, _.h = {
+                      "#childScope/0": _.i = {
                         name: "1.3",
                         "#ClosestBranchId": 8
                       }
@@ -341,15 +341,15 @@ destroyed 2.3
                 }]
               ]),
               items: [1, 2, 3]
-            }, _.c, _.k, _.d, _.f, _.g, _.h, _.i, _.j, _.m, _.t, _.n, _.o, _
-            .p, _.q, _.r, _.s, _.v, _.C, _.w, _.x, _.y, _.z, _.A, _.B
-          ], _.d._ = _.g._ = _.i._ = _.c, _.c._ = _.m._ = _.v._ = _.e, _.n._ =
-          _.p._ = _.r._ = _.m, _.w._ = _.y._ = _.A._ = _.v, _.f.write = _.h
-          .write = _.j.write = _.k.write = _.o.write = _.q.write = _.s.write =
-          _.t.write = _.x.write = _.z.write = _.B.write = _.C.write = _.e
-          .write = _._[
+            }, , _.k, _.d, _.e, _.f, _.g, _.h, _.i, , _.t, _.n, _.o, _.p, _.q,
+            _.r, _.s, , _.C, _.w, _.x, _.y, _.z, _.A, _.B
+          ], _.d._ = _.f._ = _.h._ = _.D[2] = _.c, _.c._ = _.m._ = _.v._ = _
+          .j, _.n._ = _.p._ = _.r._ = _.D[10] = _.m, _.w._ = _.y._ = _.A._ = _
+          .D[18] = _.v, _.e.write = _.g.write = _.i.write = _.k.write = _.o
+          .write = _.q.write = _.s.write = _.t.write = _.x.write = _.z.write =
+          _.B.write = _.C.write = _.j.write = _._[
             "__tests__/template.marko_0/write"
-            ](_.e), _.D),
+            ](_.j), _.D),
         "__tests__/tags/child.marko_0_name_write",
         3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25,
         "__tests__/template.marko_0_items",

@@ -25,7 +25,7 @@
     <!--M_*1 #button/4-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
           "#scopeOffset/1": 3,
           count: 1,
           "#childScope/0": _.a = {
@@ -35,7 +35,7 @@
           "__tests__/tags/counter.marko_0/valueChange"
           ](_.a), _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_count/var"
-          ](_.b), _.c),
+          ](_.c), _.b),
         "__tests__/tags/counter.marko_0_x",
         2,
         "__tests__/template.marko_0",
@@ -80,7 +80,7 @@ container.querySelector("button.inc-child").click();
     <!--M_*1 #button/4-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
           "#scopeOffset/1": 3,
           count: 1,
           "#childScope/0": _.a = {
@@ -90,7 +90,7 @@ container.querySelector("button.inc-child").click();
           "__tests__/tags/counter.marko_0/valueChange"
           ](_.a), _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_count/var"
-          ](_.b), _.c),
+          ](_.c), _.b),
         "__tests__/tags/counter.marko_0_x",
         2,
         "__tests__/template.marko_0",
@@ -140,7 +140,7 @@ container.querySelector("button.inc-parent").click();
     <!--M_*1 #button/4-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
           "#scopeOffset/1": 3,
           count: 1,
           "#childScope/0": _.a = {
@@ -150,7 +150,7 @@ container.querySelector("button.inc-parent").click();
           "__tests__/tags/counter.marko_0/valueChange"
           ](_.a), _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_count/var"
-          ](_.b), _.c),
+          ](_.c), _.b),
         "__tests__/tags/counter.marko_0_x",
         2,
         "__tests__/template.marko_0",
@@ -200,7 +200,7 @@ container.querySelector("button.reset").click();
     <!--M_*1 #button/4-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
           "#scopeOffset/1": 3,
           count: 1,
           "#childScope/0": _.a = {
@@ -210,7 +210,7 @@ container.querySelector("button.reset").click();
           "__tests__/tags/counter.marko_0/valueChange"
           ](_.a), _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_count/var"
-          ](_.b), _.c),
+          ](_.c), _.b),
         "__tests__/tags/counter.marko_0_x",
         2,
         "__tests__/template.marko_0",

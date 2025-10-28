@@ -17,17 +17,17 @@
     <!--M_*1 #div/2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.e = [0, _.a = {
-          a: _.b = {},
-          b: _.c = {},
-          c: _.d = {}
-        }], _.b.bar = _._[
+      M._.r = [_ =&gt; (_.d = [0, _.e = {
+          a: _.a = {},
+          b: _.b = {},
+          c: _.c = {}
+        }], _.a.bar = _._[
           "__tests__/template.marko_0/a"
-          ](_.a), _.c.baz = _._[
+          ](_.e), _.b.baz = _._[
           "__tests__/template.marko_0/b"
-          ](_.a), _.d.baz = _._[
+          ](_.e), _.c.baz = _._[
           "__tests__/template.marko_0/c"
-          ](_.a), _.e),
+          ](_.e), _.d),
         "__tests__/template.marko_0_c",
         1,
         "__tests__/template.marko_0_b",

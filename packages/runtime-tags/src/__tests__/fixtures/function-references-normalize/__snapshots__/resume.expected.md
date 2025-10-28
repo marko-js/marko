@@ -9,16 +9,16 @@
     <!--M_*1 #div/0-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.b = {
+      M._.r = [_ =&gt; (_.c = [0, _.d = {
           foo: _.a = {
             bar: "bar"
           },
-          baz: _.c = {
+          baz: _.b = {
             foo: _.a
           }
-        }], _.c.bar = _._[
+        }], _.b.bar = _._[
           "__tests__/template.marko_0/baz"
-          ](_.b), _.d),
+          ](_.d), _.c),
         "__tests__/template.marko_0_baz",
         1
       ];

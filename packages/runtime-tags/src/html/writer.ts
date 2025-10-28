@@ -150,7 +150,11 @@ export function _resume<T extends WeakKey>(
 ): T {
   return scopeId === undefined
     ? serializerRegister(id, val)
-    : serializerRegister(id, val, _scope_with_id(scopeId));
+    : $chunk.boundary.state.serializer.register(
+        id,
+        val,
+        _scope_with_id(scopeId),
+      );
 }
 
 export function _id() {

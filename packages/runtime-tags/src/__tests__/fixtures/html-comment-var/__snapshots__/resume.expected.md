@@ -17,16 +17,16 @@
     </span>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
+      M._.r = [_ =&gt; (_.c = [0, _.d = {
           "#scopeOffset/1": 3,
           "#scopeOffset/4": 5,
-          "#childScope/0": _.b = {},
-          "#childScope/3": _.c = {}
-        }, _.b, 1, _.c], _.b["#TagVariable"] = _._[
+          "#childScope/0": _.a = {},
+          "#childScope/3": _.b = {}
+        }, _.a, 1, _.b], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_divName/var"
-          ](_.a), _.c["#TagVariable"] = _._[
+          ](_.d), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_spanName/var"
-          ](_.a), _.d),
+          ](_.d), _.c),
         "__tests__/tags/parent-el.marko_0",
         2, 4
       ];
@@ -56,16 +56,16 @@
     </span>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
+      M._.r = [_ =&gt; (_.c = [0, _.d = {
           "#scopeOffset/1": 3,
           "#scopeOffset/4": 5,
-          "#childScope/0": _.b = {},
-          "#childScope/3": _.c = {}
-        }, _.b, 1, _.c], _.b["#TagVariable"] = _._[
+          "#childScope/0": _.a = {},
+          "#childScope/3": _.b = {}
+        }, _.a, 1, _.b], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_divName/var"
-          ](_.a), _.c["#TagVariable"] = _._[
+          ](_.d), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_spanName/var"
-          ](_.a), _.d),
+          ](_.d), _.c),
         "__tests__/tags/parent-el.marko_0",
         2, 4
       ];

@@ -16,16 +16,16 @@
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
           "#scopeOffset/1": 3,
           name: "Marko",
-          "#childScope/0": _.b = {
+          "#childScope/0": _.a = {
             input_extra: 1,
             x: 0
           }
-        }, _.b], _.b["#TagVariable"] = _._[
+        }, _.a], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_data/var"
-          ](_.a), _.c),
+          ](_.c), _.b),
         "__tests__/tags/child.marko_0_x",
         2
       ];
@@ -57,16 +57,16 @@ container.querySelector("button.inc").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
           "#scopeOffset/1": 3,
           name: "Marko",
-          "#childScope/0": _.b = {
+          "#childScope/0": _.a = {
             input_extra: 1,
             x: 0
           }
-        }, _.b], _.b["#TagVariable"] = _._[
+        }, _.a], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_data/var"
-          ](_.a), _.c),
+          ](_.c), _.b),
         "__tests__/tags/child.marko_0_x",
         2
       ];
@@ -103,16 +103,16 @@ container.querySelector("button.inc").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
           "#scopeOffset/1": 3,
           name: "Marko",
-          "#childScope/0": _.b = {
+          "#childScope/0": _.a = {
             input_extra: 1,
             x: 0
           }
-        }, _.b], _.b["#TagVariable"] = _._[
+        }, _.a], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_data/var"
-          ](_.a), _.c),
+          ](_.c), _.b),
         "__tests__/tags/child.marko_0_x",
         2
       ];
@@ -149,16 +149,16 @@ container.querySelector("button.inc").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
           "#scopeOffset/1": 3,
           name: "Marko",
-          "#childScope/0": _.b = {
+          "#childScope/0": _.a = {
             input_extra: 1,
             x: 0
           }
-        }, _.b], _.b["#TagVariable"] = _._[
+        }, _.a], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_data/var"
-          ](_.a), _.c),
+          ](_.c), _.b),
         "__tests__/tags/child.marko_0_x",
         2
       ];

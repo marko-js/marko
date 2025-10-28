@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button id=controlled data-internal=0>0<!--M_*3 #text/0--></button><!--M_*2 #button/0--><button id=uncontrolled data-internal=0>0<!--M_*5 #text/0--></button><!--M_*4 #button/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,_.a={"ClosureScopes:x":_.e=new Set,"#childScope/0":_.b={x:0},"#childScope/1":_.c={x:0}},_.b,_.f={_:_.a,"ClosureSignalIndex:x":0},_.c,_.g={_:_.a,"ClosureSignalIndex:x":1}],_.b.$countChange=_.b["TagVariableChange:x"]=_._["__tests__/template.marko_0/countChange"](_.a),(_.e).add(_.f),_.e.add(_.g),_.d),"__tests__/tags/counter.marko_0_x",2,4];M._.w()</script>
+  <button id=controlled data-internal=0>0<!--M_*3 #text/0--></button><!--M_*2 #button/0--><button id=uncontrolled data-internal=0>0<!--M_*5 #text/0--></button><!--M_*4 #button/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,_.b={"ClosureScopes:x":_.e=new Set,"#childScope/0":_.a={x:0},"#childScope/1":_.c={x:0}},_.a,_.f={_:_.b,"ClosureSignalIndex:x":0},_.c,_.g={_:_.b,"ClosureSignalIndex:x":1}],_.a.$countChange=_.a["TagVariableChange:x"]=_._["__tests__/template.marko_0/countChange"](_.b),(_.e).add(_.f),_.e.add(_.g),_.d),"__tests__/tags/counter.marko_0_x",2,4];M._.w()</script>
 ```
 
 # Render End
@@ -26,23 +26,23 @@
     <!--M_*4 #button/0-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
+      M._.r = [_ =&gt; (_.d = [0, _.b = {
           "ClosureScopes:x": _.e = new Set,
-          "#childScope/0": _.b = {
+          "#childScope/0": _.a = {
             x: 0
           },
           "#childScope/1": _.c = {
             x: 0
           }
-        }, _.b, _.f = {
-          _: _.a,
+        }, _.a, _.f = {
+          _: _.b,
           "ClosureSignalIndex:x": 0
         }, _.c, _.g = {
-          _: _.a,
+          _: _.b,
           "ClosureSignalIndex:x": 1
-        }], _.b.$countChange = _.b["TagVariableChange:x"] = _._[
+        }], _.a.$countChange = _.a["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
-          ](_.a), (_.e).add(_.f), _.e.add(_.g), _.d),
+          ](_.b), (_.e).add(_.f), _.e.add(_.g), _.d),
         "__tests__/tags/counter.marko_0_x",
         2, 4
       ];
