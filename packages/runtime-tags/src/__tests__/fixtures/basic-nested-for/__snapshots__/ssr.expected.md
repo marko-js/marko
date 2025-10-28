@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>Push</button><!--M_*1 #button/0--><!--M_[--><div>0.0<!--M_*4 #text/0--></div><div>0.1<!--M_*6 #text/0--></div><!--M_|2 #text/0 5 3--><!--M_[2--><div>1.0<!--M_*9 #text/0--></div><div>1.1<!--M_*11 #text/0--></div><!--M_|7 #text/0 10 8--><!--M_]1 #text/1 7--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.o=[0,_.f={"LoopScopeMap:#text/1":new Map(_.a=[[0,_.c={"LoopScopeMap:#text/0":new Map(_.b=[[0,_.d={"#childScope/0":_.k={}}],[1,_.e={"#childScope/0":_.l={}}]]),outer:0}],[1,_.h={"LoopScopeMap:#text/0":new Map(_.g=[[0,_.i={"#childScope/0":_.m={}}],[1,_.j={"#childScope/0":_.n={}}]]),outer:1}]]),items:[0,1]},_.c,_.d,_.k,_.e,_.l,_.h,_.i,_.m,_.j,_.n],_.d._=_.e._=_.c,_.c._=_.h._=_.f,_.i._=_.j._=_.h,_.o),"__tests__/template.marko_0_items",1];M._.w()</script>
+  <button>Push</button><!--M_*1 #button/0--><!--M_[--><div>0.0<!--M_*4 #text/0--></div><div>0.1<!--M_*6 #text/0--></div><!--M_|2 #text/0 5 3--><!--M_[2--><div>1.0<!--M_*9 #text/0--></div><div>1.1<!--M_*11 #text/0--></div><!--M_|7 #text/0 10 8--><!--M_]1 #text/1 7--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.k=[0,_.f={"LoopScopeMap:#text/1":new Map(_.a=[[0,_.c={"LoopScopeMap:#text/0":new Map(_.b=[[0,_.d={"#childScope/0":_.l={}}],[1,_.e={"#childScope/0":_.m={}}]]),outer:0}],[1,_.h={"LoopScopeMap:#text/0":new Map(_.g=[[0,_.i={"#childScope/0":_.n={}}],[1,_.j={"#childScope/0":_.o={}}]]),outer:1}]]),items:[0,1]},,_.d,_.l,_.e,_.m,,_.i,_.n,_.j,_.o],_.d._=_.e._=_.k[2]=_.c,_.c._=_.h._=_.f,_.i._=_.j._=_.k[7]=_.h,_.k),"__tests__/template.marko_0_items",1];M._.w()</script>
 ```
 
 # Render End
@@ -35,34 +35,34 @@
     <!--M_]1 #text/1 7-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.o = [0, _.f = {
-            "LoopScopeMap:#text/1": new Map(_.a = [
-              [0, _.c = {
-                "LoopScopeMap:#text/0": new Map(_.b = [
-                  [0, _.d = {
-                    "#childScope/0": _.k = {}
-                  }],
-                  [1, _.e = {
-                    "#childScope/0": _.l = {}
-                  }]
-                ]),
-                outer: 0
-              }],
-              [1, _.h = {
-                "LoopScopeMap:#text/0": new Map(_.g = [
-                  [0, _.i = {
-                    "#childScope/0": _.m = {}
-                  }],
-                  [1, _.j = {
-                    "#childScope/0": _.n = {}
-                  }]
-                ]),
-                outer: 1
-              }]
-            ]),
-            items: [0, 1]
-          }, _.c, _.d, _.k, _.e, _.l, _.h, _.i, _.m, _.j, _.n], _.d._ = _.e
-          ._ = _.c, _.c._ = _.h._ = _.f, _.i._ = _.j._ = _.h, _.o),
+      M._.r = [_ =&gt; (_.k = [0, _.f = {
+          "LoopScopeMap:#text/1": new Map(_.a = [
+            [0, _.c = {
+              "LoopScopeMap:#text/0": new Map(_.b = [
+                [0, _.d = {
+                  "#childScope/0": _.l = {}
+                }],
+                [1, _.e = {
+                  "#childScope/0": _.m = {}
+                }]
+              ]),
+              outer: 0
+            }],
+            [1, _.h = {
+              "LoopScopeMap:#text/0": new Map(_.g = [
+                [0, _.i = {
+                  "#childScope/0": _.n = {}
+                }],
+                [1, _.j = {
+                  "#childScope/0": _.o = {}
+                }]
+              ]),
+              outer: 1
+            }]
+          ]),
+          items: [0, 1]
+        }, , _.d, _.l, _.e, _.m, , _.i, _.n, _.j, _.o], _.d._ = _.e._ = _.k[
+          2] = _.c, _.c._ = _.h._ = _.f, _.i._ = _.j._ = _.k[7] = _.h, _.k),
         "__tests__/template.marko_0_items",
         1
       ];

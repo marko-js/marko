@@ -34,17 +34,17 @@
           "#childScope/4": _.c
         }, _.b, 1, _.c], _.b.value = _._[
           "__tests__/template.marko_0/onClickOnce"
-          ](_.a), _.b["#TagVariable"] = _._[
-          "__tests__/template.marko_0_onClickOnce/var"
           ](_.a), _.a.onClickOnce = _._[
           "__tests__/template.marko_1/_return"
-          ](_.b), _.c.value = _._[
+          ](_.b), _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_onClickOnce/var"
+          ](_.a), _.c.value = _._[
           "__tests__/template.marko_0/onClickTwice"
-          ](_.a), _.c["#TagVariable"] = _._[
-          "__tests__/template.marko_0_onClickTwice/var"
           ](_.a), _.a.onClickTwice = _._[
           "__tests__/template.marko_2/_return2"
-          ](_.c), _.d),
+          ](_.c), _.c["#TagVariable"] = _._[
+          "__tests__/template.marko_0_onClickTwice/var"
+          ](_.a), _.d),
         "__tests__/template.marko_0_onClickTwice",
         1,
         "__tests__/template.marko_0_onClickOnce",
@@ -96,17 +96,17 @@ container.querySelector("button.once").click();
           "#childScope/4": _.c
         }, _.b, 1, _.c], _.b.value = _._[
           "__tests__/template.marko_0/onClickOnce"
-          ](_.a), _.b["#TagVariable"] = _._[
-          "__tests__/template.marko_0_onClickOnce/var"
           ](_.a), _.a.onClickOnce = _._[
           "__tests__/template.marko_1/_return"
-          ](_.b), _.c.value = _._[
+          ](_.b), _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_onClickOnce/var"
+          ](_.a), _.c.value = _._[
           "__tests__/template.marko_0/onClickTwice"
-          ](_.a), _.c["#TagVariable"] = _._[
-          "__tests__/template.marko_0_onClickTwice/var"
           ](_.a), _.a.onClickTwice = _._[
           "__tests__/template.marko_2/_return2"
-          ](_.c), _.d),
+          ](_.c), _.c["#TagVariable"] = _._[
+          "__tests__/template.marko_0_onClickTwice/var"
+          ](_.a), _.d),
         "__tests__/template.marko_0_onClickTwice",
         1,
         "__tests__/template.marko_0_onClickOnce",
@@ -162,17 +162,17 @@ container.querySelector("button.once").click();
           "#childScope/4": _.c
         }, _.b, 1, _.c], _.b.value = _._[
           "__tests__/template.marko_0/onClickOnce"
-          ](_.a), _.b["#TagVariable"] = _._[
-          "__tests__/template.marko_0_onClickOnce/var"
           ](_.a), _.a.onClickOnce = _._[
           "__tests__/template.marko_1/_return"
-          ](_.b), _.c.value = _._[
+          ](_.b), _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_onClickOnce/var"
+          ](_.a), _.c.value = _._[
           "__tests__/template.marko_0/onClickTwice"
-          ](_.a), _.c["#TagVariable"] = _._[
-          "__tests__/template.marko_0_onClickTwice/var"
           ](_.a), _.a.onClickTwice = _._[
           "__tests__/template.marko_2/_return2"
-          ](_.c), _.d),
+          ](_.c), _.c["#TagVariable"] = _._[
+          "__tests__/template.marko_0_onClickTwice/var"
+          ](_.a), _.d),
         "__tests__/template.marko_0_onClickTwice",
         1,
         "__tests__/template.marko_0_onClickOnce",
@@ -224,17 +224,17 @@ container.querySelector("button.twice").click();
           "#childScope/4": _.c
         }, _.b, 1, _.c], _.b.value = _._[
           "__tests__/template.marko_0/onClickOnce"
-          ](_.a), _.b["#TagVariable"] = _._[
-          "__tests__/template.marko_0_onClickOnce/var"
           ](_.a), _.a.onClickOnce = _._[
           "__tests__/template.marko_1/_return"
-          ](_.b), _.c.value = _._[
+          ](_.b), _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_onClickOnce/var"
+          ](_.a), _.c.value = _._[
           "__tests__/template.marko_0/onClickTwice"
-          ](_.a), _.c["#TagVariable"] = _._[
-          "__tests__/template.marko_0_onClickTwice/var"
           ](_.a), _.a.onClickTwice = _._[
           "__tests__/template.marko_2/_return2"
-          ](_.c), _.d),
+          ](_.c), _.c["#TagVariable"] = _._[
+          "__tests__/template.marko_0_onClickTwice/var"
+          ](_.a), _.d),
         "__tests__/template.marko_0_onClickTwice",
         1,
         "__tests__/template.marko_0_onClickOnce",
@@ -290,17 +290,17 @@ container.querySelector("button.twice").click();
           "#childScope/4": _.c
         }, _.b, 1, _.c], _.b.value = _._[
           "__tests__/template.marko_0/onClickOnce"
-          ](_.a), _.b["#TagVariable"] = _._[
-          "__tests__/template.marko_0_onClickOnce/var"
           ](_.a), _.a.onClickOnce = _._[
           "__tests__/template.marko_1/_return"
-          ](_.b), _.c.value = _._[
+          ](_.b), _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_onClickOnce/var"
+          ](_.a), _.c.value = _._[
           "__tests__/template.marko_0/onClickTwice"
-          ](_.a), _.c["#TagVariable"] = _._[
-          "__tests__/template.marko_0_onClickTwice/var"
           ](_.a), _.a.onClickTwice = _._[
           "__tests__/template.marko_2/_return2"
-          ](_.c), _.d),
+          ](_.c), _.c["#TagVariable"] = _._[
+          "__tests__/template.marko_0_onClickTwice/var"
+          ](_.a), _.d),
         "__tests__/template.marko_0_onClickTwice",
         1,
         "__tests__/template.marko_0_onClickOnce",
@@ -356,17 +356,17 @@ container.querySelector("button.twice").click();
           "#childScope/4": _.c
         }, _.b, 1, _.c], _.b.value = _._[
           "__tests__/template.marko_0/onClickOnce"
-          ](_.a), _.b["#TagVariable"] = _._[
-          "__tests__/template.marko_0_onClickOnce/var"
           ](_.a), _.a.onClickOnce = _._[
           "__tests__/template.marko_1/_return"
-          ](_.b), _.c.value = _._[
+          ](_.b), _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_onClickOnce/var"
+          ](_.a), _.c.value = _._[
           "__tests__/template.marko_0/onClickTwice"
-          ](_.a), _.c["#TagVariable"] = _._[
-          "__tests__/template.marko_0_onClickTwice/var"
           ](_.a), _.a.onClickTwice = _._[
           "__tests__/template.marko_2/_return2"
-          ](_.c), _.d),
+          ](_.c), _.c["#TagVariable"] = _._[
+          "__tests__/template.marko_0_onClickTwice/var"
+          ](_.a), _.d),
         "__tests__/template.marko_0_onClickTwice",
         1,
         "__tests__/template.marko_0_onClickOnce",

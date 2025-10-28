@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>0<!--M_*2 #text/1--> <!>0<!--M_*2 #text/2--></button><!--M_*2 #button/0--><button>0<!--M_*3 #text/1--> <!>0<!--M_*3 #text/2--></button><!--M_*3 #button/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,_.a={clickCount:0,"#childScope/0":_.b={},"#childScope/1":_.c={}},_.b,_.c],_.b.onClick=_._["__tests__/template.marko_0/onClick"](_.a),_.c.onClick=_._["__tests__/template.marko_0/onClick2"](_.a),_.d),"__tests__/tags/my-button.marko_0_onClick",2,3];M._.w()</script>
+  <button>0<!--M_*2 #text/1--> <!>0<!--M_*2 #text/2--></button><!--M_*2 #button/0--><button>0<!--M_*3 #text/1--> <!>0<!--M_*3 #text/2--></button><!--M_*3 #button/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.d={clickCount:0,"#childScope/0":_.a={},"#childScope/1":_.b={}},_.a,_.b],_.a.onClick=_._["__tests__/template.marko_0/onClick"](_.d),_.b.onClick=_._["__tests__/template.marko_0/onClick2"](_.d),_.c),"__tests__/tags/my-button.marko_0_onClick",2,3];M._.w()</script>
 ```
 
 # Render End
@@ -28,15 +28,15 @@
     <!--M_*3 #button/0-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
+      M._.r = [_ =&gt; (_.c = [0, _.d = {
           clickCount: 0,
-          "#childScope/0": _.b = {},
-          "#childScope/1": _.c = {}
-        }, _.b, _.c], _.b.onClick = _._[
+          "#childScope/0": _.a = {},
+          "#childScope/1": _.b = {}
+        }, _.a, _.b], _.a.onClick = _._[
           "__tests__/template.marko_0/onClick"
-          ](_.a), _.c.onClick = _._[
+          ](_.d), _.b.onClick = _._[
           "__tests__/template.marko_0/onClick2"
-          ](_.a), _.d),
+          ](_.d), _.c),
         "__tests__/tags/my-button.marko_0_onClick",
         2, 3
       ];

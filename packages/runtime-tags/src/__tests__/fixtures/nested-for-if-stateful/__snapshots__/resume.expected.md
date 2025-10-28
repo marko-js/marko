@@ -56,8 +56,8 @@
             ]),
             counts: [0, 0, 0],
             "ClosureScopes:counts": new Set
-          }, _.b, _.c, _.e, _.f, _.g, _.h], _.c._ = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.e, _.h._ = _.g, _.i),
+          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
+          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -135,8 +135,8 @@ buttonIndex = (buttonIndex + 1) % 3;
             ]),
             counts: [0, 0, 0],
             "ClosureScopes:counts": new Set
-          }, _.b, _.c, _.e, _.f, _.g, _.h], _.c._ = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.e, _.h._ = _.g, _.i),
+          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
+          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -209,8 +209,8 @@ buttonIndex = (buttonIndex + 1) % 3;
             ]),
             counts: [0, 0, 0],
             "ClosureScopes:counts": new Set
-          }, _.b, _.c, _.e, _.f, _.g, _.h], _.c._ = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.e, _.h._ = _.g, _.i),
+          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
+          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -280,8 +280,8 @@ buttonIndex = (buttonIndex + 1) % 3;
             ]),
             counts: [0, 0, 0],
             "ClosureScopes:counts": new Set
-          }, _.b, _.c, _.e, _.f, _.g, _.h], _.c._ = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.e, _.h._ = _.g, _.i),
+          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
+          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -351,8 +351,8 @@ buttonIndex = (buttonIndex + 1) % 3;
             ]),
             counts: [0, 0, 0],
             "ClosureScopes:counts": new Set
-          }, _.b, _.c, _.e, _.f, _.g, _.h], _.c._ = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.e, _.h._ = _.g, _.i),
+          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
+          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -422,8 +422,8 @@ buttonIndex = (buttonIndex + 1) % 3;
             ]),
             counts: [0, 0, 0],
             "ClosureScopes:counts": new Set
-          }, _.b, _.c, _.e, _.f, _.g, _.h], _.c._ = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.e, _.h._ = _.g, _.i),
+          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
+          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -493,8 +493,8 @@ buttonIndex = (buttonIndex + 1) % 3;
             ]),
             counts: [0, 0, 0],
             "ClosureScopes:counts": new Set
-          }, _.b, _.c, _.e, _.f, _.g, _.h], _.c._ = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.e, _.h._ = _.g, _.i),
+          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
+          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -564,8 +564,8 @@ buttonIndex = (buttonIndex + 1) % 3;
             ]),
             counts: [0, 0, 0],
             "ClosureScopes:counts": new Set
-          }, _.b, _.c, _.e, _.f, _.g, _.h], _.c._ = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.e, _.h._ = _.g, _.i),
+          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
+          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -635,8 +635,8 @@ buttonIndex = (buttonIndex + 1) % 3;
             ]),
             counts: [0, 0, 0],
             "ClosureScopes:counts": new Set
-          }, _.b, _.c, _.e, _.f, _.g, _.h], _.c._ = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.e, _.h._ = _.g, _.i),
+          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
+          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -706,8 +706,8 @@ buttonIndex = (buttonIndex + 1) % 3;
             ]),
             counts: [0, 0, 0],
             "ClosureScopes:counts": new Set
-          }, _.b, _.c, _.e, _.f, _.g, _.h], _.c._ = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.e, _.h._ = _.g, _.i),
+          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
+          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
         "__tests__/template.marko_3",
         3, 5, 7
       ];

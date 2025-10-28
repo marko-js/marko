@@ -10,16 +10,16 @@
     <!--M_*2 #button/0-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
+      M._.r = [_ =&gt; (_.c = [0, _.b = {
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set,
-          "#childScope/0": _.b = {}
-        }, _.b, _.e = {
-          _: _.a,
+          "#childScope/0": _.a = {}
+        }, _.a, _.e = {
+          _: _.b,
           "ClosureSignalIndex:clickCount": 0
-        }], _.b.onClick = _._[
+        }], _.a.onClick = _._[
           "__tests__/template.marko_0/onClick"
-          ](_.a), (_.d).add(_.e), _.c),
+          ](_.b), (_.d).add(_.e), _.c),
         "__tests__/tags/my-button.marko_0_onClick",
         2
       ];
@@ -45,16 +45,16 @@ container.querySelector("button").click();
     <!--M_*2 #button/0-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
+      M._.r = [_ =&gt; (_.c = [0, _.b = {
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set,
-          "#childScope/0": _.b = {}
-        }, _.b, _.e = {
-          _: _.a,
+          "#childScope/0": _.a = {}
+        }, _.a, _.e = {
+          _: _.b,
           "ClosureSignalIndex:clickCount": 0
-        }], _.b.onClick = _._[
+        }], _.a.onClick = _._[
           "__tests__/template.marko_0/onClick"
-          ](_.a), (_.d).add(_.e), _.c),
+          ](_.b), (_.d).add(_.e), _.c),
         "__tests__/tags/my-button.marko_0_onClick",
         2
       ];
@@ -84,16 +84,16 @@ container.querySelector("button").click();
     <!--M_*2 #button/0-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
+      M._.r = [_ =&gt; (_.c = [0, _.b = {
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set,
-          "#childScope/0": _.b = {}
-        }, _.b, _.e = {
-          _: _.a,
+          "#childScope/0": _.a = {}
+        }, _.a, _.e = {
+          _: _.b,
           "ClosureSignalIndex:clickCount": 0
-        }], _.b.onClick = _._[
+        }], _.a.onClick = _._[
           "__tests__/template.marko_0/onClick"
-          ](_.a), (_.d).add(_.e), _.c),
+          ](_.b), (_.d).add(_.e), _.c),
         "__tests__/tags/my-button.marko_0_onClick",
         2
       ];
@@ -123,16 +123,16 @@ container.querySelector("button").click();
     <!--M_*2 #button/0-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
+      M._.r = [_ =&gt; (_.c = [0, _.b = {
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set,
-          "#childScope/0": _.b = {}
-        }, _.b, _.e = {
-          _: _.a,
+          "#childScope/0": _.a = {}
+        }, _.a, _.e = {
+          _: _.b,
           "ClosureSignalIndex:clickCount": 0
-        }], _.b.onClick = _._[
+        }], _.a.onClick = _._[
           "__tests__/template.marko_0/onClick"
-          ](_.a), (_.d).add(_.e), _.c),
+          ](_.b), (_.d).add(_.e), _.c),
         "__tests__/tags/my-button.marko_0_onClick",
         2
       ];

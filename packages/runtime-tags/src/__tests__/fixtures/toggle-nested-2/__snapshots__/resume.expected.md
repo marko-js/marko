@@ -35,7 +35,7 @@
           inner: !0,
           count: 0,
           "ClosureScopes:count": _.e = new Set
-        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        }, , _.b], _.b._ = _.d[2] = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
         "__tests__/template.marko_2_count",
         3,
         "__tests__/template.marko_1_inner",
@@ -94,7 +94,7 @@ container.querySelector("#count").click();
           inner: !0,
           count: 0,
           "ClosureScopes:count": _.e = new Set
-        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        }, , _.b], _.b._ = _.d[2] = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
         "__tests__/template.marko_2_count",
         3,
         "__tests__/template.marko_1_inner",
@@ -153,7 +153,7 @@ container.querySelector("#count").click();
           inner: !0,
           count: 0,
           "ClosureScopes:count": _.e = new Set
-        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        }, , _.b], _.b._ = _.d[2] = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
         "__tests__/template.marko_2_count",
         3,
         "__tests__/template.marko_1_inner",
@@ -206,7 +206,7 @@ container.querySelector("#inner").click();
           inner: !0,
           count: 0,
           "ClosureScopes:count": _.e = new Set
-        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        }, , _.b], _.b._ = _.d[2] = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
         "__tests__/template.marko_2_count",
         3,
         "__tests__/template.marko_1_inner",
@@ -265,7 +265,7 @@ container.querySelector("#inner").click();
           inner: !0,
           count: 0,
           "ClosureScopes:count": _.e = new Set
-        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        }, , _.b], _.b._ = _.d[2] = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
         "__tests__/template.marko_2_count",
         3,
         "__tests__/template.marko_1_inner",
@@ -324,7 +324,7 @@ container.querySelector("#count").click();
           inner: !0,
           count: 0,
           "ClosureScopes:count": _.e = new Set
-        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        }, , _.b], _.b._ = _.d[2] = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
         "__tests__/template.marko_2_count",
         3,
         "__tests__/template.marko_1_inner",
@@ -370,7 +370,7 @@ container.querySelector("#outer").click();
           inner: !0,
           count: 0,
           "ClosureScopes:count": _.e = new Set
-        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        }, , _.b], _.b._ = _.d[2] = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
         "__tests__/template.marko_2_count",
         3,
         "__tests__/template.marko_1_inner",
@@ -431,7 +431,7 @@ container.querySelector("#outer").click();
           inner: !0,
           count: 0,
           "ClosureScopes:count": _.e = new Set
-        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        }, , _.b], _.b._ = _.d[2] = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
         "__tests__/template.marko_2_count",
         3,
         "__tests__/template.marko_1_inner",
@@ -489,7 +489,7 @@ container.querySelector("#count").click();
           inner: !0,
           count: 0,
           "ClosureScopes:count": _.e = new Set
-        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        }, , _.b], _.b._ = _.d[2] = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
         "__tests__/template.marko_2_count",
         3,
         "__tests__/template.marko_1_inner",

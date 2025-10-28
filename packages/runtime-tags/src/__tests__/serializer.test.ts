@@ -847,7 +847,7 @@ describe("serializer", () => {
       const scope = { value: 1 };
       const obj = { fn: builder(scope) };
       register("fn", obj.fn, scope);
-      assertStringify(obj, `{fn:_._.fn(_.a={value:1})}`, {
+      assertStringify(obj, `{fn:_.b={value:1}},_.a.fn=_._.fn(_.b)`, {
         _: { fn: builder },
       });
     });

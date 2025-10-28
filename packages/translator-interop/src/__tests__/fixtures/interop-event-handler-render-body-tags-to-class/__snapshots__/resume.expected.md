@@ -11,22 +11,23 @@
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
-          "ConditionalScope:#text/0": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-            "__tests__/components/my-button.marko"
-            ]),
-          count: 0,
-          "ClosureScopes:count": _.d = new Set
-        }, _.a, _.e = {
-          m5c: "_0-1",
-          _: _.b,
-          "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
-        3
-      ];
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+        "ConditionalScope:#text/0": _.b = {
+          m5c: "_0"
+        },
+        "ConditionalRenderer:#text/0": _._[
+          "__tests__/components/my-button.marko"
+          ],
+        count: 0,
+        "ClosureScopes:count": _.d = new Set
+      }, _.b, _.e = {
+        m5c: "_0-1",
+        _: _.a,
+        "ClosureSignalIndex:count": 0
+      }], _.a["ConditionalRenderer:#text/0"] = _._.$compat_renderer(_.a[
+        "ConditionalRenderer:#text/0"]), (_.d).add(_.e), _.c), _ =&gt; (_.f = [
+        -3, _.a
+      ]), "$compat_setScope", 3];
       M._.w();
       $MC = (window.$MC || []).concat(
       {
@@ -101,22 +102,23 @@ container.querySelector("button").click();
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
-          "ConditionalScope:#text/0": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-            "__tests__/components/my-button.marko"
-            ]),
-          count: 0,
-          "ClosureScopes:count": _.d = new Set
-        }, _.a, _.e = {
-          m5c: "_0-1",
-          _: _.b,
-          "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
-        3
-      ];
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+        "ConditionalScope:#text/0": _.b = {
+          m5c: "_0"
+        },
+        "ConditionalRenderer:#text/0": _._[
+          "__tests__/components/my-button.marko"
+          ],
+        count: 0,
+        "ClosureScopes:count": _.d = new Set
+      }, _.b, _.e = {
+        m5c: "_0-1",
+        _: _.a,
+        "ClosureSignalIndex:count": 0
+      }], _.a["ConditionalRenderer:#text/0"] = _._.$compat_renderer(_.a[
+        "ConditionalRenderer:#text/0"]), (_.d).add(_.e), _.c), _ =&gt; (_.f = [
+        -3, _.a
+      ]), "$compat_setScope", 3];
       M._.w();
       $MC = (window.$MC || []).concat(
       {
@@ -179,22 +181,23 @@ container.querySelector("button").click();
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
-          "ConditionalScope:#text/0": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-            "__tests__/components/my-button.marko"
-            ]),
-          count: 0,
-          "ClosureScopes:count": _.d = new Set
-        }, _.a, _.e = {
-          m5c: "_0-1",
-          _: _.b,
-          "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
-        3
-      ];
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+        "ConditionalScope:#text/0": _.b = {
+          m5c: "_0"
+        },
+        "ConditionalRenderer:#text/0": _._[
+          "__tests__/components/my-button.marko"
+          ],
+        count: 0,
+        "ClosureScopes:count": _.d = new Set
+      }, _.b, _.e = {
+        m5c: "_0-1",
+        _: _.a,
+        "ClosureSignalIndex:count": 0
+      }], _.a["ConditionalRenderer:#text/0"] = _._.$compat_renderer(_.a[
+        "ConditionalRenderer:#text/0"]), (_.d).add(_.e), _.c), _ =&gt; (_.f = [
+        -3, _.a
+      ]), "$compat_setScope", 3];
       M._.w();
       $MC = (window.$MC || []).concat(
       {
@@ -257,22 +260,23 @@ container.querySelector("button").click();
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.b = {
-          "ConditionalScope:#text/0": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/0": _._.$compat_renderer(_._[
-            "__tests__/components/my-button.marko"
-            ]),
-          count: 0,
-          "ClosureScopes:count": _.d = new Set
-        }, _.a, _.e = {
-          m5c: "_0-1",
-          _: _.b,
-          "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
-        3
-      ];
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+        "ConditionalScope:#text/0": _.b = {
+          m5c: "_0"
+        },
+        "ConditionalRenderer:#text/0": _._[
+          "__tests__/components/my-button.marko"
+          ],
+        count: 0,
+        "ClosureScopes:count": _.d = new Set
+      }, _.b, _.e = {
+        m5c: "_0-1",
+        _: _.a,
+        "ClosureSignalIndex:count": 0
+      }], _.a["ConditionalRenderer:#text/0"] = _._.$compat_renderer(_.a[
+        "ConditionalRenderer:#text/0"]), (_.d).add(_.e), _.c), _ =&gt; (_.f = [
+        -3, _.a
+      ]), "$compat_setScope", 3];
       M._.w();
       $MC = (window.$MC || []).concat(
       {

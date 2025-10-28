@@ -41,13 +41,12 @@
           "ConditionalRenderer:#strong/4": "__tests__/tags/my-div.marko_1_content",
           "ConditionalScope:#p/5": _.f = {},
           "ConditionalRenderer:#p/5": "__tests__/template.marko_1_content",
-          input:
-          {
-            content: _._[
-              "__tests__/template.marko_1_content"
-              ](_.a = {})
+          input: _.a = {
+            content: _.h = {}
           }
-        }, _.c, _.d, 1, _.e, _.f], _.b.CustomContent_content = _._[
+        }, _.c, _.d, 1, _.e, _.f], _.a.content = _._[
+          "__tests__/template.marko_1_content"
+          ](_.h), _.b.CustomContent_content = _._[
           "__tests__/tags/my-div.marko_1_content"
           ](_.b), _.g),
         "__tests__/tags/my-div.marko_0_input_CustomContent_content",

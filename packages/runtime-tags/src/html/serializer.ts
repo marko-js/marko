@@ -11,6 +11,7 @@ interface Registered {
   id: string;
   access: string;
   scope: unknown;
+  instanceId: number;
 }
 
 enum MutationType {
@@ -294,18 +295,20 @@ const KNOWN_OBJECTS = new Map<object, string>([
 class State {
   ids = 0;
   flush = 0;
+  registerInstanceId = 0;
   flushed = false;
   wroteUndefined = false;
   buf = [] as string[];
   refs = new WeakMap<WeakKey, Reference>();
   assigned = new Set<Reference>();
+  registered = [] as Reference[];
   boundary: Boundary | undefined = undefined;
-  mutations: Mutation[] = [];
+  mutated: Mutation[] = [];
 }
 
 class Reference {
   declare debug?: Debug;
-  public init = "";
+  public registered: null | Registered = null;
   public assigns: null | string[] = null;
   constructor(
     public parent: Reference | null,
@@ -367,7 +370,7 @@ export class Serializer {
     spread?: boolean,
   ) {
     const state = this.#state;
-    state.mutations.push({
+    state.mutated.push({
       type: MutationType.call,
       value,
       object,
@@ -378,7 +381,7 @@ export class Serializer {
   }
   writeAssign(value: unknown, object: unknown, property: string) {
     const state = this.#state;
-    state.mutations.push({
+    state.mutated.push({
       type: MutationType.assign,
       value,
       object,
@@ -386,16 +389,26 @@ export class Serializer {
     });
     state.flushed = true;
   }
+  register<T extends WeakKey>(id: string, val: T, scope?: unknown) {
+    return register(
+      id,
+      val,
+      scope,
+      scope ? ++this.#state.registerInstanceId : 0,
+    );
+  }
 }
 
 export function register<T extends WeakKey>(
   id: string,
   val: T,
   scope?: unknown,
+  instanceId?: number,
 ) {
   REGISTRY.set(val, {
     id,
     scope,
+    instanceId: instanceId ?? 0,
     access: "_._" + toAccess(toObjectKey(id)),
   });
   return val;
@@ -413,7 +426,7 @@ export function stringify(val: unknown) {
 }
 
 function writeRoot(state: State, root: unknown) {
-  const { buf, assigned, mutations } = state;
+  const { buf } = state;
   const hadBuf = buf.length !== 0;
   let result = "";
   if (hadBuf) {
@@ -424,8 +437,12 @@ function writeRoot(state: State, root: unknown) {
     const rootRef = state.refs.get(root as object);
     if (rootRef) {
       const rootId = ensureId(state, rootRef);
-      if (assigned.size || mutations.length) {
-        assigned.delete(rootRef!);
+      if (
+        state.assigned.size ||
+        state.registered.length ||
+        state.mutated.length
+      ) {
+        state.assigned.delete(rootRef!);
         writeAssigned(state);
         buf.push(
           "," +
@@ -462,36 +479,39 @@ function writeRoot(state: State, root: unknown) {
 
 function writeAssigned(state: State) {
   if (state.assigned.size) {
-    let inits = "";
-    let assigns = "";
-    for (const valueRef of state.assigned) {
-      if (valueRef.init) {
-        inits +=
-          "," +
-          (valueRef.assigns
-            ? assignsToString(valueRef.assigns, valueRef.init)
-            : valueRef.init);
-        valueRef.init = "";
-      } else if (valueRef.assigns) {
-        assigns += "," + assignsToString(valueRef.assigns, valueRef.id!);
-      }
-
-      valueRef.assigns = null;
+    let buf = "";
+    for (const ref of state.assigned) {
+      buf += "," + assignsToString(ref.assigns!, ref.id!);
+      ref.assigns = null;
     }
 
-    if (assigns) {
-      state.buf.push(assigns);
-    }
-
-    if (inits) {
-      state.buf.push(inits);
-    }
-
+    state.buf.push(buf);
     state.assigned = new Set();
   }
 
-  if (state.mutations.length) {
-    for (const mutation of state.mutations) {
+  if (state.registered.length) {
+    let buf = "";
+    for (const ref of state.registered.sort(compareRegisteredReferences)) {
+      const scopeRef = state.refs.get(ref.registered!.scope!);
+      buf +=
+        "," +
+        assignsToString(
+          ref.assigns!,
+          ref.registered!.access +
+            "(" +
+            (scopeRef ? ensureId(state, scopeRef) : ref.assigns![0]) +
+            ")",
+        );
+      ref.assigns = null;
+      ref.registered = null;
+    }
+
+    state.buf.push(buf);
+    state.registered = [];
+  }
+
+  if (state.mutated.length) {
+    for (const mutation of state.mutated) {
       const hasSeen = state.refs.get(mutation.object as object)?.id;
       const objectStartIndex = state.buf.push(
         state.buf.length === 0 ? "" : ",",
@@ -540,9 +560,9 @@ function writeAssigned(state: State) {
         state.buf.push(")");
       }
     }
-    state.mutations = [];
+    state.mutated = [];
 
-    if (state.assigned.size) {
+    if (state.assigned.size || state.registered.length) {
       writeAssigned(state);
     }
   }
@@ -591,18 +611,16 @@ function writeReferenceOr(
 ) {
   let ref = state.refs.get(val);
   if (ref) {
-    if (ref.init) {
-      addAssignment(ref, ensureId(state, parent!) + toAccess(accessor));
-      return false;
-    }
-
-    if (isCircular(parent, ref)) {
-      if (!ref.assigns) {
+    if (parent) {
+      if (ref.assigns) {
+        addAssignment(ref, ensureId(state, parent) + toAccess(accessor));
+        return false;
+      } else if (isCircular(parent, ref)) {
         ensureId(state, ref);
         state.assigned.add(ref);
+        addAssignment(ref, ensureId(state, parent) + toAccess(accessor));
+        return false;
       }
-      addAssignment(ref, ensureId(state, parent!) + toAccess(accessor));
-      return false;
     }
 
     state.buf.push(ensureId(state, ref));
@@ -633,55 +651,26 @@ function writeRegistered(
   val: WeakKey,
   parent: Reference | null,
   accessor: string,
-  { access, scope }: Registered,
+  registered: Registered,
 ) {
-  if (scope) {
-    const scopeRef = state.refs.get(scope);
+  if (parent && registered.scope) {
     const fnRef = new Reference(
       parent,
       accessor,
       state.flush,
       state.buf.length,
     );
+    fnRef.registered = registered;
     state.refs.set(val, fnRef);
+    state.registered.push(fnRef);
+    addAssignment(fnRef, ensureId(state, parent) + toAccess(accessor));
 
-    if (scopeRef) {
-      if (
-        parent &&
-        (state.assigned.has(scopeRef) || isCircular(parent, scopeRef))
-      ) {
-        // TODO: adding parent here is is probably wrong, but is currently needed to ensure the
-        // parent of the function has it's assignments before the function so that when the
-        // function is called the parent is complete.
-        state.assigned.add(parent);
-        state.assigned.add(fnRef);
-        fnRef.init = access + "(" + ensureId(state, scopeRef) + ")";
-        addAssignment(fnRef, ensureId(state, parent) + toAccess(accessor));
-        return false;
-      }
-
-      state.buf.push(access + "(" + ensureId(state, scopeRef) + ")");
-    } else {
-      const pos = state.buf.push("") - 1;
-      const assigns = state.assigned.size;
-      writeProp(state, scope, parent, "");
-      const scopeRef = parent && state.refs.get(scope);
-      const scopeId = scopeRef && ensureId(state, scopeRef);
-      if (scopeId && assigns !== state.assigned.size) {
-        // TODO: adding parent here is is probably wrong, but is currently needed to ensure the
-        // parent of the function has it's assignments before the function so that when the
-        // function is called the parent is complete.
-        state.assigned.add(parent);
-        state.assigned.add(fnRef);
-        fnRef.init = access + "(" + scopeId + ")";
-        addAssignment(fnRef, ensureId(state, parent) + toAccess(accessor));
-      } else {
-        state.buf[pos] = access + "(" + state.buf[pos];
-        state.buf.push(")");
-      }
-    }
+    return (
+      !state.refs.has(registered.scope) &&
+      writeProp(state, registered.scope, null, "")
+    );
   } else {
-    state.buf.push(access);
+    state.buf.push(registered.access);
   }
 
   return true;
@@ -1737,4 +1726,8 @@ function patchIteratorNext(proto: Iterator<any>) {
     (this as any)[kTouchedIterator] = 1;
     return next.call(this, value);
   };
+}
+
+function compareRegisteredReferences(a: Reference, b: Reference) {
+  return a.registered!.instanceId - b.registered!.instanceId;
 }

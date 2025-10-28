@@ -1,6 +1,6 @@
 # Write
 ```html
-  a<!--M_[--><!--M_!^b-->_A_<!--M_!b--><!--M_]1 #text/0 2-->e<style M_>t{display:none}</style><t M_=b>b<!--M_#c-->d</t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalScope:#text/0":_.b={"#BranchAccessor":"#text/0"}},_.b],_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_content"](_.a),_.c)];REORDER_RUNTIME(M._);M._.w()</script>
+  a<!--M_[--><!--M_!^b-->_A_<!--M_!b--><!--M_]1 #text/0 2-->e<style M_>t{display:none}</style><t M_=b>b<!--M_#c-->d</t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.c={"ConditionalScope:#text/0":_.a={"#BranchAccessor":"#text/0"}},_.a],_.a["#PlaceholderContent"]=_._["__tests__/template.marko_2_content"](_.c),_.b)];REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Write
@@ -31,13 +31,13 @@
     e
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-        "ConditionalScope:#text/0": _.b = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
+        "ConditionalScope:#text/0": _.a = {
           "#BranchAccessor": "#text/0"
         }
-      }, _.b], _.b["#PlaceholderContent"] = _._[
+      }, _.a], _.a["#PlaceholderContent"] = _._[
         "__tests__/template.marko_2_content"
-        ](_.a), _.c)];
+        ](_.c), _.b)];
       REORDER_RUNTIME(M._);
       M._.w()
     </script>

@@ -27,16 +27,16 @@
     <!--M_*1 #text/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-            "#childScope/0": _.b = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
+            "#childScope/0": _.a = {
               input_value: 1,
               state: 1,
               otherState: 1
             }
-          }, _.b], _.b.input_valueChange = _.b["TagVariableChange:state"] = _
-          .b["TagVariableChange:otherState"] = _._[
+          }, _.a], _.a.input_valueChange = _.a["TagVariableChange:state"] = _
+          .a["TagVariableChange:otherState"] = _._[
             "__tests__/template.marko_0/valueChange"
-            ](_.a), _.c),
+            ](_.c), _.b),
         "__tests__/tags/child.marko_0_otherState",
         2,
         "__tests__/tags/child.marko_0_state",
@@ -81,16 +81,16 @@ container.querySelectorAll("button").forEach(item => item.click());
     <!--M_*1 #text/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-            "#childScope/0": _.b = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
+            "#childScope/0": _.a = {
               input_value: 1,
               state: 1,
               otherState: 1
             }
-          }, _.b], _.b.input_valueChange = _.b["TagVariableChange:state"] = _
-          .b["TagVariableChange:otherState"] = _._[
+          }, _.a], _.a.input_valueChange = _.a["TagVariableChange:state"] = _
+          .a["TagVariableChange:otherState"] = _._[
             "__tests__/template.marko_0/valueChange"
-            ](_.a), _.c),
+            ](_.c), _.b),
         "__tests__/tags/child.marko_0_otherState",
         2,
         "__tests__/tags/child.marko_0_state",
@@ -143,16 +143,16 @@ container.querySelectorAll("button").forEach(item => item.click());
     <!--M_*1 #text/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-            "#childScope/0": _.b = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
+            "#childScope/0": _.a = {
               input_value: 1,
               state: 1,
               otherState: 1
             }
-          }, _.b], _.b.input_valueChange = _.b["TagVariableChange:state"] = _
-          .b["TagVariableChange:otherState"] = _._[
+          }, _.a], _.a.input_valueChange = _.a["TagVariableChange:state"] = _
+          .a["TagVariableChange:otherState"] = _._[
             "__tests__/template.marko_0/valueChange"
-            ](_.a), _.c),
+            ](_.c), _.b),
         "__tests__/tags/child.marko_0_otherState",
         2,
         "__tests__/tags/child.marko_0_state",
@@ -205,16 +205,16 @@ container.querySelectorAll("button").forEach(item => item.click());
     <!--M_*1 #text/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-            "#childScope/0": _.b = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
+            "#childScope/0": _.a = {
               input_value: 1,
               state: 1,
               otherState: 1
             }
-          }, _.b], _.b.input_valueChange = _.b["TagVariableChange:state"] = _
-          .b["TagVariableChange:otherState"] = _._[
+          }, _.a], _.a.input_valueChange = _.a["TagVariableChange:state"] = _
+          .a["TagVariableChange:otherState"] = _._[
             "__tests__/template.marko_0/valueChange"
-            ](_.a), _.c),
+            ](_.c), _.b),
         "__tests__/tags/child.marko_0_otherState",
         2,
         "__tests__/tags/child.marko_0_state",

@@ -30,47 +30,47 @@
     </section>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.a = {
-            "ClosureScopes:1": _.j = new Set,
-            "ClosureScopes:2": _.p = new Set,
-            "ClosureScopes:4": _.v = new Set
-          }, 1, _.k = {
-            setHtml: _._[
-              "__tests__/tags/child.marko_0/_return"
-              ](_.b = {})
-          }, _.b, _.l = {
-            setHtml: _._[
-              "__tests__/tags/child.marko_0/_return"
-              ](_.c = {})
-          }, _.c, 1, _.q = {
-            "ClosureScopes:3": _.m = new Set
-          }, 1, _.n = {
-            setHtml2: _._[
-              "__tests__/tags/child.marko_0/_return"
-              ](_.d = {})
-          }, _.d, _.o = {
-            setHtml2: _._[
-              "__tests__/tags/child.marko_0/_return"
-              ](_.e = {})
-          }, _.e, _.u = {
+      M._.r = [_ =&gt; (_.p = [0, _.a = {
+            "ClosureScopes:1": _.q = new Set,
+            "ClosureScopes:2": _.s = new Set,
+            "ClosureScopes:4": _.w = new Set
+          }, 1, _.b = {
+            setHtml: _.c = {}
+          }, _.c, _.d = {
+            setHtml: _.e = {}
+          }, _.e, 1, _.t = {
             "ClosureScopes:3": _.r = new Set
-          }, 1, _.s = {
-            setHtml2: _._[
-              "__tests__/tags/child.marko_0/_return"
-              ](_.f = {})
-          }, _.f, _.t = {
-            setHtml2: _._[
-              "__tests__/tags/child.marko_0/_return"
-              ](_.g = {})
-          }, _.g, 1, _.w = {
-            setHtml3: _._[
-              "__tests__/tags/child.marko_0/_return"
-              ](_.h = {})
-          }, _.h], _.a.$hoisted_setHtml = _._[
+          }, 1, _.f = {
+            setHtml2: _.g = {}
+          }, _.g, _.h = {
+            setHtml2: _.i = {}
+          }, _.i, _.v = {
+            "ClosureScopes:3": _.u = new Set
+          }, 1, _.j = {
+            setHtml2: _.k = {}
+          }, _.k, _.l = {
+            setHtml2: _.m = {}
+          }, _.m, 1, _.n = {
+            setHtml3: _.o = {}
+          }, _.o], _.a.$hoisted_setHtml = _._[
             "__tests__/template.marko_0_$hoisted_setHtml/hoist"
-            ](_.a), (_.j).add(_.k), _.j.add(_.l), (_.m).add(_.n), _.m.add(_
-          .o), (_.p).add(_.q), (_.r).add(_.s), _.r.add(_.t), _.p.add(_.u), (_
-            .v).add(_.w), _.i),
+            ](_.a), _.b.setHtml = _._[
+            "__tests__/tags/child.marko_0/_return"
+            ](_.c), _.d.setHtml = _._[
+            "__tests__/tags/child.marko_0/_return"
+            ](_.e), _.f.setHtml2 = _._[
+            "__tests__/tags/child.marko_0/_return"
+            ](_.g), _.h.setHtml2 = _._[
+            "__tests__/tags/child.marko_0/_return"
+            ](_.i), _.j.setHtml2 = _._[
+            "__tests__/tags/child.marko_0/_return"
+            ](_.k), _.l.setHtml2 = _._[
+            "__tests__/tags/child.marko_0/_return"
+            ](_.m), _.n.setHtml3 = _._[
+            "__tests__/tags/child.marko_0/_return"
+            ](_.o), (_.q).add(_.b), _.q.add(_.d), (_.r).add(_.f), _.r.add(_
+          .h), (_.s).add(_.t), (_.u).add(_.j), _.u.add(_.l), _.s.add(_.v), (_
+            .w).add(_.n), _.p),
         "__tests__/template.marko_0",
         1,
         "__tests__/template.marko_0_$hoisted_setHtml",

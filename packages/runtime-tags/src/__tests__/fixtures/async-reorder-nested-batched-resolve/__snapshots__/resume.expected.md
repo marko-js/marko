@@ -38,40 +38,40 @@
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-        "ConditionalScope:#text/0": _.b = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
+        "ConditionalScope:#text/0": _.a = {
           "#BranchAccessor": "#text/0"
         }
-      }, _.b], _.b["#PlaceholderContent"] = _._[
+      }, _.a], _.a["#PlaceholderContent"] = _._[
         "__tests__/template.marko_4_content"
-        ](_.a), _.c)];
+        ](_.c), _.b)];
       REORDER_RUNTIME(M._);
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.f = [1, _.d = {
-        "ConditionalScope:#text/1": _.e = {
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {
+        "ConditionalScope:#text/1": _.d = {
           "#BranchAccessor": "#text/1"
         }
-      }, _.e], _.e["#PlaceholderContent"] = _._[
+      }, _.d], _.d["#PlaceholderContent"] = _._[
         "__tests__/template.marko_5_content"
-        ](_.d), _.f), _ =&gt; (_.i = [_.g = {
-        "ConditionalScope:#text/1": _.h = {
+        ](_.f), _.e), _ =&gt; (_.h = [_.i = {
+        "ConditionalScope:#text/1": _.g = {
           "#BranchAccessor": "#text/1"
         }
-      }, _.h], _.h["#PlaceholderContent"] = _._[
+      }, _.g], _.g["#PlaceholderContent"] = _._[
         "__tests__/template.marko_10_content"
-        ](_.g), _.i));
+        ](_.i), _.h));
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.l = [1, _.j = {
-        "ConditionalScope:#text/1": _.k = {
+      M._.r.push(_ =&gt; (_.k = [1, _.l = {
+        "ConditionalScope:#text/1": _.j = {
           "#BranchAccessor": "#text/1"
         }
-      }, _.k], _.k["#PlaceholderContent"] = _._[
+      }, _.j], _.j["#PlaceholderContent"] = _._[
         "__tests__/template.marko_11_content"
-        ](_.j), _.l));
+        ](_.l), _.k));
       M._.w()
     </script>
   </body>

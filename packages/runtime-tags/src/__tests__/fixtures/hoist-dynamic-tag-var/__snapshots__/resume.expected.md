@@ -24,43 +24,43 @@
     <!--M_]10 #text/0 11-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.j = [0, _.g = {
-          "ConditionalScope:#text/0": _.i = {
-            "ConditionalScope:#text/0": _.a = {
-              "ConditionalScope:#text/0": _.b = {},
+      M._.r = [_ =&gt; (_.j = [0, _.i = {
+          "ConditionalScope:#text/0": _.h = {
+            "ConditionalScope:#text/0": _.b = {
+              "ConditionalScope:#text/0": _.a = {},
               "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
               "#scopeOffset/1": 5
             }
           },
-          "ConditionalScope:#text/2": _.c = {
-            "ConditionalScope:#text/0": _.d = {},
+          "ConditionalScope:#text/2": _.d = {
+            "ConditionalScope:#text/0": _.c = {},
             "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
             "#scopeOffset/1": 9
           },
-          "ConditionalScope:#text/3": _.e = {
-            "ConditionalScope:#text/0": _.f = {},
+          "ConditionalScope:#text/3": _.f = {
+            "ConditionalScope:#text/0": _.e = {},
             "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
             "#scopeOffset/1": 12
           },
-          "#childScope/1": _.h = {}
-        }, _.i, _.a, _.b, 1, _.h, _.c, _.d, 1, _.e, _.f, 1,
+          "#childScope/1": _.g = {}
+        }, _.h, _.b, _.a, 1, _.g, _.d, _.c, 1, _.f, _.e, 1,
         {
-          _: _.g
-        }], _.b["#TagVariable"] = _._[
-          "__tests__/template.marko_2_setHtml/var"
-          ](_.a), _.a.setHtml = _._[
-          "__tests__/tags/child.marko_0/_return"
-          ](_.b), _.d["#TagVariable"] = _._[
-          "__tests__/template.marko_3_setHtml2/var"
-          ](_.c), _.c.setHtml2 = _._[
-          "__tests__/tags/child.marko_0/_return"
-          ](_.d), _.f["#TagVariable"] = _._[
-          "__tests__/template.marko_4_setHtml3/var"
-          ](_.e), _.e.setHtml3 = _._[
-          "__tests__/tags/child.marko_0/_return"
-          ](_.f), _.h.input_value = _._[
+          _: _.i
+        }], _.g.input_value = _._[
           "__tests__/template.marko_0_$hoisted_setHtml/hoist"
-          ](_.g), _.j),
+          ](_.i), _.b.setHtml = _._[
+          "__tests__/tags/child.marko_0/_return"
+          ](_.a), _.a["#TagVariable"] = _._[
+          "__tests__/template.marko_2_setHtml/var"
+          ](_.b), _.d.setHtml2 = _._[
+          "__tests__/tags/child.marko_0/_return"
+          ](_.c), _.c["#TagVariable"] = _._[
+          "__tests__/template.marko_3_setHtml2/var"
+          ](_.d), _.f.setHtml3 = _._[
+          "__tests__/tags/child.marko_0/_return"
+          ](_.e), _.e["#TagVariable"] = _._[
+          "__tests__/template.marko_4_setHtml3/var"
+          ](_.f), _.j),
         "__tests__/tags/thing.marko_0_input_value",
         6,
         "__tests__/template.marko_5",

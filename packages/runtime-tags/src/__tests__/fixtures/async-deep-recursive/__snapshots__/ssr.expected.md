@@ -1,11 +1,11 @@
 # Write
 ```html
-  <div data-level=4><!--M_[--><div data-level=3><!--M_[--><!--M_!^b-->LOADING...<!--M_!b--><!--M_]7 #text/1 8--></div><!--M_]3 #text/1 4--></div><style M_>t{display:none}</style><t M_=b><!--M_#c--></t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,2,_.a={"ConditionalScope:#text/1":_.b={"#BranchAccessor":"#text/1"}},_.b],_.b["#PlaceholderContent"]=_._["__tests__/tags/recurse.marko_4_content"](_.a),_.c),_=>(_.f=[2,_.d={"ConditionalScope:#text/1":_.e={"#BranchAccessor":"#text/1"}},_.e],_.e["#PlaceholderContent"]=_._["__tests__/tags/recurse.marko_4_content"](_.d),_.f)];REORDER_RUNTIME(M._);M._.w()</script>
+  <div data-level=4><!--M_[--><div data-level=3><!--M_[--><!--M_!^b-->LOADING...<!--M_!b--><!--M_]7 #text/1 8--></div><!--M_]3 #text/1 4--></div><style M_>t{display:none}</style><t M_=b><!--M_#c--></t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,2,_.c={"ConditionalScope:#text/1":_.a={"#BranchAccessor":"#text/1"}},_.a],_.a["#PlaceholderContent"]=_._["__tests__/tags/recurse.marko_4_content"](_.c),_.b),_=>(_.e=[2,_.f={"ConditionalScope:#text/1":_.d={"#BranchAccessor":"#text/1"}},_.d],_.d["#PlaceholderContent"]=_._["__tests__/tags/recurse.marko_4_content"](_.f),_.e)];REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Write
 ```html
-  <t M_=c><div data-level=2><!--M_[--><div data-level=1><!--M_[--><!--M_!^d-->LOADING...<!--M_!d--><!--M_]16 #text/1 17--></div><!--M_]12 #text/1 13--></div></t><t M_=d><!--M_#e--></t><script>M._.r.push(_=>(_.i=[3,_.g={"ConditionalScope:#text/1":_.h={"#BranchAccessor":"#text/1"}},_.h],_.h["#PlaceholderContent"]=_._["__tests__/tags/recurse.marko_4_content"](_.g),_.i),_=>(_.l=[2,_.j={"ConditionalScope:#text/1":_.k={"#BranchAccessor":"#text/1"}},_.k],_.k["#PlaceholderContent"]=_._["__tests__/tags/recurse.marko_4_content"](_.j),_.l));M._.w()</script>
+  <t M_=c><div data-level=2><!--M_[--><div data-level=1><!--M_[--><!--M_!^d-->LOADING...<!--M_!d--><!--M_]16 #text/1 17--></div><!--M_]12 #text/1 13--></div></t><t M_=d><!--M_#e--></t><script>M._.r.push(_=>(_.h=[3,_.i={"ConditionalScope:#text/1":_.g={"#BranchAccessor":"#text/1"}},_.g],_.g["#PlaceholderContent"]=_._["__tests__/tags/recurse.marko_4_content"](_.i),_.h),_=>(_.k=[2,_.l={"ConditionalScope:#text/1":_.j={"#BranchAccessor":"#text/1"}},_.j],_.j["#PlaceholderContent"]=_._["__tests__/tags/recurse.marko_4_content"](_.l),_.k));M._.w()</script>
 ```
 
 # Write
@@ -50,36 +50,36 @@
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, 2, _.a = {
-        "ConditionalScope:#text/1": _.b = {
+      M._.r = [_ =&gt; (_.b = [0, 2, _.c = {
+        "ConditionalScope:#text/1": _.a = {
           "#BranchAccessor": "#text/1"
         }
-      }, _.b], _.b["#PlaceholderContent"] = _._[
+      }, _.a], _.a["#PlaceholderContent"] = _._[
         "__tests__/tags/recurse.marko_4_content"
-        ](_.a), _.c), _ =&gt; (_.f = [2, _.d = {
-        "ConditionalScope:#text/1": _.e = {
+        ](_.c), _.b), _ =&gt; (_.e = [2, _.f = {
+        "ConditionalScope:#text/1": _.d = {
           "#BranchAccessor": "#text/1"
         }
-      }, _.e], _.e["#PlaceholderContent"] = _._[
+      }, _.d], _.d["#PlaceholderContent"] = _._[
         "__tests__/tags/recurse.marko_4_content"
-        ](_.d), _.f)];
+        ](_.f), _.e)];
       REORDER_RUNTIME(M._);
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.i = [3, _.g = {
-        "ConditionalScope:#text/1": _.h = {
+      M._.r.push(_ =&gt; (_.h = [3, _.i = {
+        "ConditionalScope:#text/1": _.g = {
           "#BranchAccessor": "#text/1"
         }
-      }, _.h], _.h["#PlaceholderContent"] = _._[
+      }, _.g], _.g["#PlaceholderContent"] = _._[
         "__tests__/tags/recurse.marko_4_content"
-        ](_.g), _.i), _ =&gt; (_.l = [2, _.j = {
-        "ConditionalScope:#text/1": _.k = {
+        ](_.i), _.h), _ =&gt; (_.k = [2, _.l = {
+        "ConditionalScope:#text/1": _.j = {
           "#BranchAccessor": "#text/1"
         }
-      }, _.k], _.k["#PlaceholderContent"] = _._[
+      }, _.j], _.j["#PlaceholderContent"] = _._[
         "__tests__/tags/recurse.marko_4_content"
-        ](_.j), _.l));
+        ](_.l), _.k));
       M._.w()
     </script>
     <script>
