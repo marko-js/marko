@@ -6,7 +6,7 @@ import { finalizeFunctionRegistry } from "../visitors/function";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-char";
-import { getExprRoot, getFnRoot, getMarkoRoot } from "./get-root";
+import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
@@ -476,26 +476,31 @@ function trackAssignment(
   >,
   binding: Binding,
 ) {
-  const fnRoot = getFnRoot(assignment);
+  const fnParent = getFnParent(assignment);
+  if (!fnParent) {
+    throw assignment.buildCodeFrameError(
+      `Assignments to a tag ${binding.type === BindingType.param ? "parameter" : "variable"} must be within a script or function.`,
+    );
+  }
+
+  const fnRoot = getFnRoot(fnParent);
+  const fnExtra =
+    fnRoot && ((fnRoot.node.extra ??= {}) as ReferencedFunctionExtra);
   const section = getOrCreateSection(assignment);
   setReferencesScope(assignment);
   forEachIdentifierPath(assignment, (id) => {
     if (id.node.name === binding.name) {
-      if (!fnRoot) {
-        throw id.buildCodeFrameError(
-          `Assignments to a tag ${binding.type === BindingType.param ? "parameter" : "variable"} must be within a script or function.`,
-        );
-      }
-      const fnExtra =
-        fnRoot && ((fnRoot.node.extra ??= {}) as ReferencedFunctionExtra);
       const idExtra = (id.node.extra ??= {}) as AssignedBindingExtra;
       idExtra.assignment = binding;
-      idExtra.assignmentFunction = fnExtra;
-      fnExtra.section = idExtra.section = section;
       binding.assignmentSections = sectionUtil.add(
         binding.assignmentSections,
         section,
       );
+
+      if (fnExtra) {
+        idExtra.assignmentFunction = fnExtra;
+        fnExtra.section = idExtra.section = section;
+      }
 
       if (binding.upstreamAlias && binding.property !== undefined) {
         const changePropName = binding.property + "Change";
