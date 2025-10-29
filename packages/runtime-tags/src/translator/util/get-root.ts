@@ -55,6 +55,23 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
   return fnPath;
 }
 
+export function getFnParent(path: t.NodePath<t.Node>) {
+  let curPath = path;
+
+  while (!isMarko(curPath)) {
+    if (isFunction(curPath)) {
+      return curPath;
+    }
+
+    const parentPath = curPath.parentPath;
+    if (parentPath) {
+      curPath = parentPath;
+    } else {
+      break;
+    }
+  }
+}
+
 export function getDeclarationRoot(path: t.NodePath<t.Node>) {
   let curPath = path;
   let declPath:

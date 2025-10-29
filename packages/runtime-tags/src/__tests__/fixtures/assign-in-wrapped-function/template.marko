@@ -1,0 +1,8 @@
+static function identity(fn) {
+  return fn;
+}
+
+<let/count=0>
+<button onClick=identity(() => {
+  count++
+})>${count}</button>
