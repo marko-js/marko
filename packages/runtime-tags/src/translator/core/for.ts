@@ -159,10 +159,9 @@ export default {
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
-        const singleNodeOptimization =
-          bodySection.content === null ||
-          (bodySection.content.singleChild &&
-            bodySection.content.startType !== ContentType.Text);
+        const singleChild =
+          bodySection.content?.singleChild &&
+          bodySection.content.startType !== ContentType.Text;
 
         const branchSerializeReason = getSerializeReason(
           bodySection,
@@ -192,7 +191,7 @@ export default {
           const statefulSerializeArg = getSerializeGuard(
             tagSection,
             getSerializeReason(tagSection, kStatefulReason),
-            !(skipParentEnd || singleNodeOptimization),
+            !(skipParentEnd || singleChild),
           );
           const markerSerializeArg = getSerializeGuard(
             tagSection,
@@ -218,7 +217,7 @@ export default {
             forTagArgs.push(t.stringLiteral(`</${onlyChildParentTagName}>`));
           }
 
-          if (singleNodeOptimization) {
+          if (singleChild) {
             if (!skipParentEnd) {
               forTagArgs.push(t.numericLiteral(0));
             }

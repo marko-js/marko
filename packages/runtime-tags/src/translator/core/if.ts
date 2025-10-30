@@ -80,15 +80,10 @@ export const IfTag = {
         binding: nodeBinding,
         prefix: getAccessorPrefix().ConditionalScope,
       };
-      let singleNodeOptimization = true;
       // TODO: remove all branches if none have body content.
 
       for (const [branchTag, branchBodySection] of branches) {
         if (branchBodySection) {
-          singleNodeOptimization &&=
-            branchBodySection.content === null ||
-            (branchBodySection.content?.singleChild &&
-              branchBodySection.content.startType !== ContentType.Text);
           branchBodySection.isBranch = true;
           branchBodySection.upstreamExpression = ifTagExtra;
           branchBodySection.sectionAccessor = sectionAccessor;
@@ -100,7 +95,6 @@ export const IfTag = {
       }
 
       mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
-      ifTagExtra.singleNodeOptimization = singleNodeOptimization;
       addSerializeExpr(ifTagSection, ifTagExtra, kStatefulReason);
     }
   },
@@ -138,8 +132,6 @@ export const IfTag = {
           const branches = getBranches(tag);
           const [ifTag] = branches[0];
           const ifTagSection = getSection(ifTag);
-          const ifTagExtra = ifTag.node.extra!;
-          const singleNodeOptimization = ifTagExtra.singleNodeOptimization;
           const nodeBinding = getOptimizedOnlyChildNodeBinding(
             ifTag,
             ifTagSection,
@@ -152,6 +144,19 @@ export const IfTag = {
           const nextTag = tag.getNextSibling();
           let branchSerializeReasons: SerializeReasons | undefined;
           let statement: t.Statement | undefined;
+          let singleChild = true;
+
+          for (const [, branchBody] of branches) {
+            if (
+              !(
+                branchBody?.content?.singleChild &&
+                branchBody.content.startType !== ContentType.Text
+              )
+            ) {
+              singleChild = false;
+              break;
+            }
+          }
 
           for (let i = branches.length; i--; ) {
             const [branchTag, branchBody] = branches[i];
@@ -210,7 +215,7 @@ export const IfTag = {
             const statefulSerializeArg = getSerializeGuard(
               ifTagSection,
               getSerializeReason(ifTagSection, kStatefulReason),
-              !(skipParentEnd || singleNodeOptimization),
+              !(skipParentEnd || singleChild),
             );
             const markerSerializeArg = getSerializeGuard(
               ifTagSection,
@@ -237,10 +242,10 @@ export const IfTag = {
                 statefulSerializeArg,
                 skipParentEnd
                   ? t.stringLiteral(`</${onlyChildParentTagName}>`)
-                  : singleNodeOptimization
+                  : singleChild
                     ? t.numericLiteral(0)
                     : undefined,
-                singleNodeOptimization ? t.numericLiteral(1) : undefined,
+                singleChild ? t.numericLiteral(1) : undefined,
               ),
             );
           }

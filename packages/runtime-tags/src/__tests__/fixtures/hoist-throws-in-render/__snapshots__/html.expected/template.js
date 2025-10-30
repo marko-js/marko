@@ -13,6 +13,6 @@ export default _._template("__tests__/template.marko", input => {
       _._assert_hoist(x);
       return 0;
     }
-  }, $scope0_id, "#text/0", 1, 0, 0, 0, 1);
+  }, $scope0_id, "#text/0", 1, 0, 0);
   _._html(`<div>${_._escape((x => x())(_._hoist_read_error))}</div>`);
 });

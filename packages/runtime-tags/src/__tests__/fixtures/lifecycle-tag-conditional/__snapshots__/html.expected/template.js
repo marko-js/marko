@@ -12,7 +12,7 @@ export default _._template("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "3:2");
       return 0;
     }
-  }, $scope0_id, "#text/0", 1, /* show */1, /* show */1, 0, 1);
+  }, $scope0_id, "#text/0");
   _._html(`<div id=ref></div><button id=increment>Increment</button>${_._el_resume($scope0_id, "#button/1")}<button id=toggle>Toggle</button>${_._el_resume($scope0_id, "#button/2")}`);
   _._script($scope0_id, "__tests__/template.marko_0_show");
   _._script($scope0_id, "__tests__/template.marko_0_x");

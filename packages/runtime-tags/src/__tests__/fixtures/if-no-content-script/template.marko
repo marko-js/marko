@@ -1,0 +1,6 @@
+let/count=0
+
+div/el
+button onClick() { count++ } -- ${count}
+if=!count
+  script -- el().textContent = "Hit"
