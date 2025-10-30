@@ -1,0 +1,16 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "o",
+      "$$bar__OR__fooChange__script": "r",
+      "$$bar__OR__fooChange": "m",
+      "$$bar": "n",
+      "$$if_content__setup": "i",
+      "$$if_content": "_",
+      "$$if": "a",
+      "$$count__script": "c",
+      "$$count": "e"
+    }
+  }
+}

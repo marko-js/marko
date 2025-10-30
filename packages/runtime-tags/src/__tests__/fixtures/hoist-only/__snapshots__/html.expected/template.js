@@ -27,7 +27,7 @@ export default _._template("__tests__/template.marko", input => {
           _._assert_hoist(hoist3);
           return 0;
         }
-      }, $scope1_id, "#text/0", 1, 0, 0, 0, 1);
+      }, $scope1_id, "#text/0", 1, 0, 0);
       _._scope($scope1_id, {
         _: _._scope_with_id($scope0_id)
       }, "__tests__/template.marko", "4:2");
