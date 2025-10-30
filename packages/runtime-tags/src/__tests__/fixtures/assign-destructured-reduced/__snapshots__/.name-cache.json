@@ -1,0 +1,14 @@
+{
+  "vars": {
+    "props": {
+      "$_": "e",
+      "$init": "r",
+      "$$input__OR__valueChange__script": "o",
+      "$$input__OR__valueChange": "t",
+      "$$input": "a",
+      "$$valueChange2": "m",
+      "$$count": "n",
+      "$$valueChange": "u"
+    }
+  }
+}
