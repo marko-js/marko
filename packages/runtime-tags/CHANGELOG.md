@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.98
+
+### Patch Changes
+
+- [#2918](https://github.com/marko-js/marko/pull/2918) [`baf830b`](https://github.com/marko-js/marko/commit/baf830b6b76cc5dc5f104280185952830b881f71) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue removing if statements which rendered no content.
+
 ## 6.0.97
 
 ### Patch Changes
