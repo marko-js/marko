@@ -1,4 +1,4 @@
-// size: 301 (min) 202 (brotli)
+// size: 303 (min) 205 (brotli)
 const $if_content__setup = ($scope) => {
     $MyTag_content__setup._($scope[0], $scope._);
   },
@@ -7,18 +7,20 @@ const $if_content__setup = ($scope) => {
     "b/D l&b",
     $if_content__setup,
   ),
-  $MyTag_content__x = _._closure_get(4, ($scope, x) => _._text($scope[0], x)),
+  $MyTag_content__x = _._closure_get(4, ($scope) =>
+    _._text($scope[0], $scope._[4]),
+  ),
   $MyTag_content__setup = _._child_setup($MyTag_content__x),
   $if = _._if(1, $if_content),
   $x__closure = _._closure($MyTag_content__x),
-  $x__script = _._script("a0", ($scope, { 4: x }) =>
+  $x__script = _._script("a0", ($scope) =>
     _._on($scope[2], "click", function () {
-      $x($scope, ++x);
+      $x($scope, $scope[4] + 1);
     }),
   ),
-  $x = _._let(4, ($scope, x) => {
-    (_._text($scope[3], x),
-      $if($scope, 0),
+  $x = _._let(4, ($scope) => {
+    (_._text($scope[3], $scope[4]),
+      $if($scope, ($scope[4], 0)),
       $x__closure($scope),
       $x__script($scope));
   });

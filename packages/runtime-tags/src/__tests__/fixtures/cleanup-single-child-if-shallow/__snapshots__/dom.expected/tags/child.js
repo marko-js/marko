@@ -2,12 +2,10 @@ export const $template = "<div>child</div>";
 export const $walks = /* over(1) */"b";
 export const $setup = () => {};
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $input__script = _._script("__tests__/tags/child.marko_0_input", ($scope, {
-  input
-}) => {
-  input.write('mounted');
+const $input__script = _._script("__tests__/tags/child.marko_0_input", $scope => {
+  $scope.input.write('mounted');
   _.$signal($scope, 0).onabort = () => {
-    input.write('destroyed');
+    $scope.input.write('destroyed');
   };
 });
 export const $input = /* @__PURE__ */_._const("input", $scope => {

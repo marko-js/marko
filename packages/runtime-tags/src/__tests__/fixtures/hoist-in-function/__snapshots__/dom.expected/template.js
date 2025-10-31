@@ -3,7 +3,7 @@ export const $walks = /* beginChild, _child_walks, endChild */`/${_child_walks}&
 import { $setup as _child, $input_fn as _child_input_fn, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $get$hoisted_x = _._hoist("x");
-const $x = /* @__PURE__ */_._const("x", ($scope, x) => _._assert_hoist(x));
+const $x = /* @__PURE__ */_._const("x", $scope => _._assert_hoist($scope.x));
 const $setup__script = _._script("__tests__/template.marko_0", $scope => $get$hoisted_x($scope)());
 export function $setup($scope) {
   _child($scope["#childScope/0"]);

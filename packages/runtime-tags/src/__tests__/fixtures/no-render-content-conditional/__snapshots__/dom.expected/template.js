@@ -6,9 +6,9 @@ const $getdiv = _._el("__tests__/template.marko_0/#div", "Getter:#div/0");
 export function $setup($scope) {
   _child($scope["#childScope/1"]);
 }
-export const $input_foo = /* @__PURE__ */_._const("input_foo", ($scope, input_foo) => _child_input($scope["#childScope/1"], {
-  foo: input_foo,
+export const $input_foo = /* @__PURE__ */_._const("input_foo", $scope => _child_input($scope["#childScope/1"], {
+  foo: $scope.input_foo,
   output: $getdiv($scope)
 }));
-export const $input = /* @__PURE__ */_._const("input", ($scope, input) => $input_foo($scope, input.foo));
+export const $input = /* @__PURE__ */_._const("input", $scope => $input_foo($scope, $scope.input.foo));
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

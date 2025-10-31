@@ -7,7 +7,7 @@ import {
 
 import type { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getSectionReturnValueIdentifier } from "../core/return";
-import { isScopeIdentifier, scopeIdentifier } from "../visitors/program";
+import { scopeIdentifier } from "../visitors/program";
 import { forEachIdentifier } from "./for-each-identifier";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
@@ -34,11 +34,7 @@ import {
   type ReferencedBindings,
 } from "./references";
 import { callRuntime } from "./runtime";
-import {
-  createScopeReadExpression,
-  createScopeReadPattern,
-  getScopeExpression,
-} from "./scope-read";
+import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
   getDynamicClosureIndex,
   getScopeIdIdentifier,
@@ -60,7 +56,7 @@ import {
   toObjectProperty,
   toPropertyName,
 } from "./to-property-name";
-import { traverseContains, traverseReplace } from "./traverse";
+import { traverseReplace } from "./traverse";
 import { withLeadingComment } from "./with-comment";
 
 export type Signal = {
@@ -332,28 +328,10 @@ export function signalHasStatements(signal: Signal): boolean {
 export function getSignalFn(signal: Signal): t.Expression {
   const section = signal.section;
   const binding = signal.referencedBindings;
-  const params: (t.Identifier | t.ObjectPattern)[] = [scopeIdentifier];
   const isIntersection = Array.isArray(binding);
   const isBinding = binding && !isIntersection;
   const isValue = isBinding && binding.section === section;
   const assertsHoists = isValue && binding.hoists.size && !isOptimize();
-
-  if (
-    isBinding &&
-    (signal.renderReferencedBindings ||
-      assertsHoists ||
-      binding.aliases.size ||
-      binding.propertyAliases.size)
-  ) {
-    const valueParam = t.identifier(binding.name);
-    if (binding.loc) {
-      valueParam.loc = binding.loc;
-      valueParam.start = (binding.loc.start as any).index;
-      valueParam.end = (binding.loc.end as any).index;
-    }
-
-    params.push(valueParam);
-  }
 
   if (isValue) {
     for (const alias of binding.aliases) {
@@ -388,7 +366,7 @@ export function getSignalFn(signal: Signal): t.Expression {
                     ...getTranslatedExtraArgs(aliasSignal),
                   ]),
                 ),
-                [t.identifier(binding.name)],
+                [createScopeReadExpression(binding.section, binding)],
               ),
             ),
           );
@@ -397,7 +375,7 @@ export function getSignalFn(signal: Signal): t.Expression {
             t.expressionStatement(
               t.callExpression(aliasSignal.identifier, [
                 scopeIdentifier,
-                t.identifier(binding.name),
+                createScopeReadExpression(binding.section, binding),
                 ...getTranslatedExtraArgs(aliasSignal),
               ]),
             ),
@@ -413,7 +391,7 @@ export function getSignalFn(signal: Signal): t.Expression {
           t.callExpression(aliasSignal.identifier, [
             scopeIdentifier,
             toMemberExpression(
-              t.identifier(binding.name),
+              createScopeReadExpression(binding.section, binding),
               key,
               binding.nullable,
             ),
@@ -426,7 +404,10 @@ export function getSignalFn(signal: Signal): t.Expression {
     if (assertsHoists) {
       signal.render.push(
         t.expressionStatement(
-          callRuntime("_assert_hoist", t.identifier(binding.name)),
+          callRuntime(
+            "_assert_hoist",
+            createScopeReadExpression(binding.section, binding),
+          ),
         ),
       );
     }
@@ -516,55 +497,36 @@ export function getSignalFn(signal: Signal): t.Expression {
     );
   }
 
-  if (isIntersection && signal.renderReferencedBindings) {
-    signal.render.unshift(
-      t.variableDeclaration("let", [
-        t.variableDeclarator(
-          createScopeReadPattern(section, signal.renderReferencedBindings),
-          scopeIdentifier,
-        ),
-      ]),
-    );
-  }
-
   if (signal.render.length === 1) {
     const render = signal.render[0];
     if (render.type === "ExpressionStatement") {
       const { expression } = render;
       if (expression.type === "CallExpression") {
         const args = expression.arguments;
-        if (params.length >= args.length) {
-          let i = args.length;
-          for (; i--; ) {
-            const param = params[i];
-            const arg = args[i];
-            if (
-              arg.type !== "Identifier" ||
-              param.type !== "Identifier" ||
-              param.name !== arg.name
-            ) {
-              break;
-            }
+        if (
+          args.length === 1 &&
+          args[0].type === "Identifier" &&
+          args[0].name === scopeIdentifier.name
+        ) {
+          if (
+            expression.callee.type === "MemberExpression" &&
+            expression.callee.property.type === "Identifier" &&
+            expression.callee.property.name === "_"
+          ) {
+            // Special case closure reads of `IDENTIFIER._`.
+            return expression.callee.object;
           }
 
-          if (i === -1) {
-            if (
-              expression.callee.type === "MemberExpression" &&
-              expression.callee.property.type === "Identifier" &&
-              expression.callee.property.name === "_"
-            ) {
-              // Special case closure reads of `IDENTIFIER._`.
-              return expression.callee.object;
-            }
-
-            return expression.callee as t.Expression;
-          }
+          return expression.callee as t.Expression;
         }
       }
     }
   }
 
-  return t.arrowFunctionExpression(params, t.blockStatement(signal.render));
+  return t.arrowFunctionExpression(
+    [scopeIdentifier],
+    t.blockStatement(signal.render),
+  );
 }
 
 const hasTranslatedExtraArgs = new WeakSet<{ extraArgs?: t.Expression[] }>();
@@ -790,7 +752,7 @@ export function writeSignals(section: Section) {
   }
 
   function writeSignal(signal: Signal) {
-    if (!signal.build || seen.has(signal)) return;
+    if (seen.has(signal)) return;
     seen.add(signal);
 
     for (const value of signal.values) {
@@ -807,11 +769,6 @@ export function writeSignals(section: Section) {
       const effectIdentifier = t.identifier(
         `${signal.identifier.name}__script`,
       );
-      const referencedBindings = signal.effectReferencedBindings;
-      const referencesScope = traverseContains(
-        signal.effect,
-        isScopeIdentifier,
-      );
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
         callRuntime(
@@ -820,63 +777,57 @@ export function writeSignals(section: Section) {
             getResumeRegisterId(section, signal.referencedBindings),
           ),
           t.arrowFunctionExpression(
-            referencedBindings
-              ? referencesScope
-                ? [
-                    scopeIdentifier,
-                    createScopeReadPattern(section, referencedBindings),
-                  ]
-                : [createScopeReadPattern(section, referencedBindings)]
-              : referencesScope
-                ? [scopeIdentifier]
-                : [],
+            [scopeIdentifier],
             toFirstExpressionOrBlock(signal.effect),
           ),
         ),
       );
     }
 
-    let value = signal.build();
+    let signalDeclaration: t.Statement | undefined;
+    if (signal.build) {
+      let value = signal.build();
 
-    if (
-      !value ||
-      (!signal.register &&
-        t.isFunction(value) &&
-        t.isBlockStatement(value.body) &&
-        !value.body.body.length)
-    ) {
-      return;
-    }
+      if (
+        !value ||
+        (!signal.register &&
+          t.isFunction(value) &&
+          t.isBlockStatement(value.body) &&
+          !value.body.body.length)
+      ) {
+        return;
+      }
 
-    if (t.isCallExpression(value)) {
-      replaceNullishAndEmptyFunctionsWith0(value.arguments as t.Expression[]);
-    }
+      if (t.isCallExpression(value)) {
+        replaceNullishAndEmptyFunctionsWith0(value.arguments as t.Expression[]);
+      }
 
-    if (signal.register) {
-      value = callRuntime(
-        "_var_resume",
-        t.stringLiteral(
-          getResumeRegisterId(section, signal.referencedBindings, "var"),
-        ),
-        value,
-      );
-    }
+      if (signal.register) {
+        value = callRuntime(
+          "_var_resume",
+          t.stringLiteral(
+            getResumeRegisterId(section, signal.referencedBindings, "var"),
+          ),
+          value,
+        );
+      }
 
-    const signalDeclarator = t.variableDeclarator(signal.identifier, value);
-    let signalDeclaration: t.Statement =
-      !section.parent &&
-      !signal.referencedBindings &&
-      (t.isFunctionExpression(value) || t.isArrowFunctionExpression(value))
-        ? t.functionDeclaration(
-            signal.identifier,
-            value.params,
-            t.isExpression(value.body)
-              ? t.blockStatement([t.expressionStatement(value.body)])
-              : value.body,
-          )
-        : t.variableDeclaration("const", [signalDeclarator]);
-    if (signal.export) {
-      signalDeclaration = t.exportNamedDeclaration(signalDeclaration);
+      const signalDeclarator = t.variableDeclarator(signal.identifier, value);
+      signalDeclaration =
+        !section.parent &&
+        !signal.referencedBindings &&
+        (t.isFunctionExpression(value) || t.isArrowFunctionExpression(value))
+          ? t.functionDeclaration(
+              signal.identifier,
+              value.params,
+              t.isExpression(value.body)
+                ? t.blockStatement([t.expressionStatement(value.body)])
+                : value.body,
+            )
+          : t.variableDeclaration("const", [signalDeclarator]);
+      if (signal.export) {
+        signalDeclaration = t.exportNamedDeclaration(signalDeclaration);
+      }
     }
 
     const signalStatements = signal.prependStatements || [];
@@ -885,7 +836,9 @@ export function writeSignals(section: Section) {
       signalStatements.push(t.variableDeclaration("const", [effectDeclarator]));
     }
 
-    signalStatements.push(signalDeclaration);
+    if (signalDeclaration) {
+      signalStatements.push(signalDeclaration);
+    }
     getProgram().node.body.push(...signalStatements);
   }
 }
@@ -970,31 +923,10 @@ export function writeRegisteredFns() {
   if (registeredFns) {
     for (const registeredFn of registeredFns) {
       let fn: t.FunctionDeclaration;
-      const params = registeredFn.referencedBindings
-        ? registeredFn.referencesScope
-          ? [
-              scopeIdentifier,
-              t.assignmentPattern(
-                createScopeReadPattern(
-                  registeredFn.section,
-                  registeredFn.referencedBindings,
-                ),
-                scopeIdentifier,
-              ),
-            ]
-          : [
-              createScopeReadPattern(
-                registeredFn.section,
-                registeredFn.referencedBindings,
-              ),
-            ]
-        : registeredFn.referencesScope
-          ? [scopeIdentifier]
-          : undefined;
-      if (params) {
+      if (registeredFn.referencedBindings || registeredFn.referencesScope) {
         fn = t.functionDeclaration(
           t.identifier(registeredFn.id),
-          params,
+          [scopeIdentifier],
           t.blockStatement(toReturnedFunction(registeredFn.node)),
         );
       } else if (
@@ -1334,10 +1266,10 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
   switch (node.type) {
     case "ExpressionStatement": {
       if (
-        node.expression.type === "SequenceExpression" &&
+        node.expression.type === "BinaryExpression" &&
         updateExpressions.delete(node.expression)
       ) {
-        node.expression = node.expression.expressions[0];
+        node.expression = node.expression.left as t.Expression;
         return node;
       }
       break;
@@ -1345,23 +1277,22 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
     case "UpdateExpression": {
       const { extra } = node.argument;
       if (isAssignedBindingExtra(extra)) {
-        const builtAssignment = getBuildAssignment(extra)?.(
+        let builtAssignment = getBuildAssignment(extra)?.(
           extra.section,
-          node,
+          t.binaryExpression(
+            node.operator === "++" ? "+" : "-",
+            createScopeReadExpression(extra.section, extra.assignment),
+            t.numericLiteral(1),
+          ),
         );
         if (builtAssignment) {
           if (!node.prefix) {
-            node.prefix = true;
-            const replacement = t.sequenceExpression([
+            builtAssignment = t.binaryExpression(
+              node.operator === "++" ? "-" : "+",
               builtAssignment,
-              t.binaryExpression(
-                node.operator === "++" ? "-" : "+",
-                node.argument,
-                t.numericLiteral(1),
-              ),
-            ]);
-            updateExpressions.add(replacement);
-            return replacement;
+              t.numericLiteral(1),
+            );
+            updateExpressions.add(builtAssignment);
           }
 
           return builtAssignment;
@@ -1377,21 +1308,19 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
             return (
               getBuildAssignment(extra)?.(
                 extra.section,
-                bindingUtil.has(
-                  extra.assignmentFunction.referencedBindingsInFunction,
-                  extra.assignment,
-                )
-                  ? node
-                  : node.operator === "="
-                    ? node.right
-                    : t.binaryExpression(
-                        node.operator.slice(
-                          0,
-                          -1,
-                        ) as t.BinaryExpression["operator"],
-                        node.left as t.Identifier,
-                        node.right,
+                node.operator === "="
+                  ? node.right
+                  : t.binaryExpression(
+                      node.operator.slice(
+                        0,
+                        -1,
+                      ) as t.BinaryExpression["operator"],
+                      createScopeReadExpression(
+                        extra.section,
+                        extra.assignment,
                       ),
+                      node.right,
+                    ),
               ) ||
               (extra?.assignment &&
                 withLeadingComment(node.right, getDebugName(extra.assignment)))
@@ -1414,14 +1343,7 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
                   t.identifier(uid),
                 );
                 if (builtAssignment) {
-                  if (
-                    !bindingUtil.has(
-                      extra.assignmentFunction.referencedBindingsInFunction,
-                      extra.assignment,
-                    )
-                  ) {
-                    id.name = uid;
-                  }
+                  id.name = uid;
                   (params ||= []).push(t.identifier(uid));
                   (assignments ||= []).push(builtAssignment);
                   return;
@@ -1461,8 +1383,11 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
 function getBuildAssignment(extra: AssignedBindingExtra) {
   const { assignmentTo, assignment } = extra;
   if (assignmentTo) {
-    return (_section: Section, value: t.Expression) => {
-      return t.callExpression(t.identifier(assignmentTo.name), [value]);
+    return (section: Section, value: t.Expression) => {
+      return t.callExpression(
+        createScopeReadExpression(section, assignmentTo),
+        [value],
+      );
     };
   }
 

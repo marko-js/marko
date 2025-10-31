@@ -1,4 +1,4 @@
-// size: 19419 (min) 7382 (brotli)
+// size: 19294 (min) 7309 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -306,7 +306,6 @@ function init(runtimeId = "M") {
                   else if ("number" == typeof serialized)
                     registeredValues[lastEffect](
                       (scopeLookup[serialized] ||= { l: scopeId }),
-                      scopeLookup[serialized],
                     );
                   else
                     for (let scope of serialized(serializeContext))
@@ -627,27 +626,25 @@ function triggerMacroTask() {
     channel.port2.postMessage(0));
 }
 function _let(valueAccessor, fn) {
-  let valueChangeAccessor = "o" + valueAccessor,
-    update = (scope, value) => {
-      scope[valueAccessor] !== value &&
-        ((scope[valueAccessor] = value), fn && fn(scope, value));
-    };
+  let valueChangeAccessor = "o" + valueAccessor;
   return (scope, value, valueChange) => (
     rendering
       ? (((scope[valueChangeAccessor] = valueChange) &&
           scope[valueAccessor] !== value) ||
           scope.n) &&
-        ((scope[valueAccessor] = value), fn && fn(scope, value))
+        ((scope[valueAccessor] = value), fn && fn(scope))
       : scope[valueChangeAccessor]
         ? scope[valueChangeAccessor](value)
-        : (schedule(), queueRender(scope, update, valueAccessor, value)),
+        : scope[valueAccessor] !== (scope[valueAccessor] = value) &&
+          fn &&
+          (schedule(), queueRender(scope, fn, valueAccessor)),
     value
   );
 }
 function _const(valueAccessor, fn = () => {}) {
   return (scope, value) => {
     (!(valueAccessor in scope) || scope[valueAccessor] !== value) &&
-      ((scope[valueAccessor] = value), fn(scope, value));
+      ((scope[valueAccessor] = value), fn(scope));
   };
 }
 function _or(id, fn, defaultPending = 1, scopeIdAccessor = "l") {
@@ -659,9 +656,8 @@ function _or(id, fn, defaultPending = 1, scopeIdAccessor = "l") {
       : queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
   };
 }
-function _for_closure(valueAccessor, ownerLoopNodeAccessor, fn) {
-  let childSignal = closure(valueAccessor, fn),
-    loopScopeAccessor = "l" + ownerLoopNodeAccessor,
+function _for_closure(ownerLoopNodeAccessor, fn) {
+  let loopScopeAccessor = "l" + ownerLoopNodeAccessor,
     loopScopeMapAccessor = "m" + ownerLoopNodeAccessor,
     ownerSignal = (ownerScope) => {
       let scopes = (ownerScope[loopScopeAccessor] ||= ownerScope[
@@ -674,28 +670,26 @@ function _for_closure(valueAccessor, ownerLoopNodeAccessor, fn) {
         queueRender(
           ownerScope,
           () => {
-            for (let scope of scopes)
-              !scope.n && !scope.z && childSignal(scope);
+            for (let scope of scopes) !scope.n && !scope.z && fn(scope);
           },
           -1,
           0,
           firstScope.l,
         );
     };
-  return ((ownerSignal._ = childSignal), ownerSignal);
+  return ((ownerSignal._ = fn), ownerSignal);
 }
-function _if_closure(valueAccessor, ownerConditionalNodeAccessor, branch, fn) {
-  let childSignal = closure(valueAccessor, fn),
-    scopeAccessor = "d" + ownerConditionalNodeAccessor,
+function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
+  let scopeAccessor = "d" + ownerConditionalNodeAccessor,
     branchAccessor = "c" + ownerConditionalNodeAccessor,
     ownerSignal = (scope) => {
       let ifScope = scope[scopeAccessor];
       ifScope &&
         !ifScope.n &&
         (scope[branchAccessor] || 0) === branch &&
-        queueRender(ifScope, childSignal, -1);
+        queueRender(ifScope, fn, -1);
     };
-  return ((ownerSignal._ = childSignal), ownerSignal);
+  return ((ownerSignal._ = fn), ownerSignal);
 }
 function subscribeToScopeSet(ownerScope, accessor, scope) {
   let subscribers = (ownerScope[accessor] ||= new Set());
@@ -721,26 +715,20 @@ function _closure(...closureSignals) {
   };
 }
 function _closure_get(valueAccessor, fn, getOwnerScope) {
-  let childSignal = closure(valueAccessor, fn, getOwnerScope),
-    closureSignal = (scope) => {
-      ((scope[closureSignal.E] = closureSignal.K),
-        childSignal(scope),
-        subscribeToScopeSet(
-          getOwnerScope ? getOwnerScope(scope) : scope._,
-          closureSignal.D,
-          scope,
-        ));
-    };
+  let closureSignal = (scope) => {
+    ((scope[closureSignal.E] = closureSignal.K),
+      fn(scope),
+      subscribeToScopeSet(
+        getOwnerScope ? getOwnerScope(scope) : scope._,
+        closureSignal.D,
+        scope,
+      ));
+  };
   return (
     (closureSignal.D = "a" + valueAccessor),
     (closureSignal.E = "b" + valueAccessor),
     closureSignal
   );
-}
-function closure(valueAccessor, fn, getOwnerScope) {
-  return (scope) => {
-    fn(scope, (getOwnerScope ? getOwnerScope(scope) : scope._)[valueAccessor]);
-  };
 }
 function _child_setup(setup) {
   return (
@@ -1683,8 +1671,7 @@ function prepareEffects(fn) {
   return preparedEffects;
 }
 var runEffects = (effects) => {
-  for (let scope, i = 0; i < effects.length; )
-    effects[i++]((scope = effects[i++]), scope);
+  for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
 };
 function runRenders() {
   for (; pendingRenders.length; ) {

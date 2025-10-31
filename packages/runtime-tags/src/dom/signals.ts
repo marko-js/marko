@@ -10,12 +10,12 @@ import { queueEffect, queueRender, rendering } from "./queue";
 import { _resume } from "./resume";
 import { schedule } from "./schedule";
 
-export type SignalFn<T> = (scope: Scope, value?: T) => void;
-export type Signal<T> = SignalFn<T> & {
+export type SignalFn = (scope: Scope) => void;
+export type Signal<T> = ((scope: Scope, value: T) => void) & {
   ___subscribe?(scope: Scope): void;
 };
 
-export function _let<T>(valueAccessor: Accessor, fn?: SignalFn<T>) {
+export function _let<T>(valueAccessor: Accessor, fn?: SignalFn) {
   if (MARKO_DEBUG) {
     // eslint-disable-next-line no-var
     var id = +(valueAccessor as string).slice(
@@ -28,12 +28,6 @@ export function _let<T>(valueAccessor: Accessor, fn?: SignalFn<T>) {
   }
 
   const valueChangeAccessor = AccessorPrefix.TagVariableChange + valueAccessor;
-  const update = (scope: Scope, value?: T) => {
-    if (scope[valueAccessor] !== value) {
-      scope[valueAccessor] = value;
-      fn && fn(scope, value);
-    }
-  };
 
   return (scope: Scope, value: T, valueChange?: (v: T) => void) => {
     if (rendering) {
@@ -43,18 +37,13 @@ export function _let<T>(valueAccessor: Accessor, fn?: SignalFn<T>) {
         scope.___creating
       ) {
         scope[valueAccessor] = value;
-        fn && fn(scope, value);
+        fn && fn(scope);
       }
     } else if (scope[valueChangeAccessor]) {
       scope[valueChangeAccessor](value);
-    } else {
+    } else if (scope[valueAccessor] !== (scope[valueAccessor] = value) && fn) {
       schedule();
-      queueRender(
-        scope,
-        update,
-        MARKO_DEBUG ? id : (valueAccessor as number),
-        value,
-      );
+      queueRender(scope, fn, MARKO_DEBUG ? id : (valueAccessor as number));
     }
     return value;
   };
@@ -62,19 +51,19 @@ export function _let<T>(valueAccessor: Accessor, fn?: SignalFn<T>) {
 
 export function _const<T>(
   valueAccessor: Accessor,
-  fn: SignalFn<T> = () => {},
+  fn: SignalFn = () => {},
 ): Signal<T> {
   return (scope, value) => {
     if (!(valueAccessor in scope) || scope[valueAccessor] !== value) {
       scope[valueAccessor] = value;
-      fn(scope, value);
+      fn(scope);
     }
   };
 }
 
 export function _or(
   id: number,
-  fn: SignalFn<never>,
+  fn: SignalFn,
   defaultPending: number = 1,
   scopeIdAccessor: Accessor = /*@__KEY__*/ "___id",
 ): Signal<never> {
@@ -91,12 +80,10 @@ export function _or(
   };
 }
 
-export function _for_closure<T>(
-  valueAccessor: Accessor,
+export function _for_closure(
   ownerLoopNodeAccessor: Accessor,
-  fn: SignalFn<T>,
-): SignalFn<T> {
-  const childSignal = closure(valueAccessor, fn);
+  fn: SignalFn,
+): SignalFn {
   const loopScopeAccessor =
     AccessorPrefix.LoopScopeArray + ownerLoopNodeAccessor;
   const loopScopeMapAccessor =
@@ -114,7 +101,7 @@ export function _for_closure<T>(
         () => {
           for (const scope of scopes) {
             if (!scope.___creating && !scope.___destroyed) {
-              childSignal(scope);
+              fn(scope);
             }
           }
         },
@@ -124,17 +111,15 @@ export function _for_closure<T>(
       );
     }
   };
-  ownerSignal._ = childSignal;
+  ownerSignal._ = fn;
   return ownerSignal;
 }
 
-export function _if_closure<T>(
-  valueAccessor: Accessor,
+export function _if_closure(
   ownerConditionalNodeAccessor: Accessor,
   branch: number,
-  fn: SignalFn<T>,
-): SignalFn<T> {
-  const childSignal = closure(valueAccessor, fn);
+  fn: SignalFn,
+): SignalFn {
   const scopeAccessor =
     AccessorPrefix.ConditionalScope + ownerConditionalNodeAccessor;
   const branchAccessor =
@@ -146,10 +131,10 @@ export function _if_closure<T>(
       !ifScope.___creating &&
       (scope[branchAccessor] || 0) === branch
     ) {
-      queueRender(ifScope, childSignal, -1);
+      queueRender(ifScope, fn, -1);
     }
   };
-  ownerSignal._ = childSignal;
+  ownerSignal._ = fn;
   return ownerSignal;
 }
 
@@ -158,7 +143,7 @@ export function subscribeToScopeSet(
   accessor: Accessor,
   scope: Scope,
 ) {
-  const subscribers = (ownerScope[accessor] ||= new Set<Scope>());
+  const subscribers = (ownerScope[accessor] ||= new Set()) as Set<Scope>;
   if (!subscribers.has(scope)) {
     subscribers.add(scope);
     $signal(scope, -1).addEventListener("abort", () =>
@@ -189,21 +174,20 @@ export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {
   };
 }
 
-export function _closure_get<T>(
+export function _closure_get(
   valueAccessor: Accessor,
-  fn: Signal<T>,
+  fn: SignalFn,
   getOwnerScope?: (scope: Scope) => Scope,
 ) {
-  const childSignal = closure(valueAccessor, fn, getOwnerScope);
-  const closureSignal = ((scope: Scope) => {
+  const closureSignal = ((scope) => {
     scope[closureSignal.___signalIndexAccessor] = closureSignal.___index;
-    childSignal(scope);
+    fn(scope);
     subscribeToScopeSet(
       getOwnerScope ? getOwnerScope(scope) : scope[AccessorProp.Owner]!,
       closureSignal.___scopeInstancesAccessor,
       scope,
     );
-  }) as ((scope: Scope) => void) & {
+  }) as SignalFn & {
     ___scopeInstancesAccessor: string;
     ___signalIndexAccessor: string;
     ___index: number;
@@ -213,21 +197,6 @@ export function _closure_get<T>(
   closureSignal.___signalIndexAccessor =
     AccessorPrefix.ClosureSignalIndex + valueAccessor;
   return closureSignal;
-}
-
-function closure<T>(
-  valueAccessor: Accessor,
-  fn: SignalFn<T>,
-  getOwnerScope?: (scope: Scope) => Scope,
-): (scope: Scope) => void {
-  return (scope) => {
-    fn(
-      scope,
-      (getOwnerScope ? getOwnerScope(scope) : scope[AccessorProp.Owner]!)[
-        valueAccessor
-      ],
-    );
-  };
 }
 
 export function _child_setup(setup: Signal<never> & { _: Signal<Scope> }) {

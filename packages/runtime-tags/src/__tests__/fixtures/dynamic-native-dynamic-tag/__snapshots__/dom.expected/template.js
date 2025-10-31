@@ -3,19 +3,11 @@ export const $walks = /* over(1), replace, over(1), get, over(1) */"b%b b";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $tagName_content = _._content_resume("__tests__/template.marko_1_content", "body content", /* over(1) */"b");
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", $tagName_content);
-const $tagName__OR__className = /* @__PURE__ */_._or(4, $scope => {
-  let {
-    tagName,
-    className
-  } = $scope;
-  $dynamicTag($scope, tagName, () => ({
-    class: className
-  }));
-});
-const $tagName__script = _._script("__tests__/template.marko_0_tagName", ($scope, {
-  tagName
-}) => _._on($scope["#button/1"], "click", function () {
-  $tagName($scope, tagName = tagName === "span" ? "div" : "span");
+const $tagName__OR__className = /* @__PURE__ */_._or(4, $scope => $dynamicTag($scope, $scope.tagName, () => ({
+  class: $scope.className
+})));
+const $tagName__script = _._script("__tests__/template.marko_0_tagName", $scope => _._on($scope["#button/1"], "click", function () {
+  $tagName($scope, $scope.tagName === "span" ? "div" : "span");
 }));
 const $tagName = /* @__PURE__ */_._let("tagName/2", $scope => {
   $tagName__OR__className($scope);

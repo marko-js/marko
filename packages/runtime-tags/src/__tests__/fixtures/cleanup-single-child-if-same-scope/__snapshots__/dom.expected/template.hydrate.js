@@ -1,4 +1,4 @@
-// size: 323 (min) 209 (brotli)
+// size: 315 (min) 201 (brotli)
 const $if_content__setup__script = _._script("a0", ($scope) => {
     (($scope._[1].innerHTML += "\nmounted"),
       (_.$signal($scope, 0).onabort = () => {
@@ -10,12 +10,12 @@ const $if_content__setup__script = _._script("a0", ($scope) => {
   },
   $if_content = _._content_branch("<div>child</div>", "b", $if_content__setup),
   $if = _._if(2, $if_content),
-  $show__script = _._script("a1", ($scope, { 3: show }) =>
+  $show__script = _._script("a1", ($scope) =>
     _._on($scope[0], "click", function () {
-      $show($scope, (show = !show));
+      $show($scope, !$scope[3]);
     }),
   ),
-  $show = _._let(3, ($scope, show) => {
-    ($if($scope, show ? 0 : 1), $show__script($scope));
+  $show = _._let(3, ($scope) => {
+    ($if($scope, $scope[3] ? 0 : 1), $show__script($scope));
   });
 init();

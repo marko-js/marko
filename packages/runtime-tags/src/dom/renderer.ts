@@ -133,7 +133,7 @@ export function _content_resume(
 
 export function _content_closures(
   renderer: ReturnType<typeof _content>,
-  closureFns: Record<Accessor, SignalFn<unknown>>,
+  closureFns: Record<Accessor, SignalFn>,
 ) {
   const closureSignals: NonNullable<Renderer["___localClosures"]> = {};
   for (const key in closureFns) {

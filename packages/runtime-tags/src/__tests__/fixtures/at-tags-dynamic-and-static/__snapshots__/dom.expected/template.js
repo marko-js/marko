@@ -4,11 +4,11 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _hello, $input_other as _hello_input_other, $input_item as _hello_input_item, $template as _hello_template, $walks as _hello_walks } from "./tags/hello/index.marko";
 const $other_content = /* @__PURE__ */_._content("__tests__/template.marko_2_content", "other", /* over(1) */"b");
 const $item_content = /* @__PURE__ */_._content_closures(/* @__PURE__ */_._content("__tests__/template.marko_1_content", "<!>:<!>", /* replace, over(2), replace, over(1) */"%c%b"), {
-  a($scope, a) {
-    _._text($scope["#text/0"], a);
+  a($scope) {
+    _._text($scope["#text/0"], $scope.a);
   },
-  v($scope, v) {
-    _._text($scope["#text/1"], v);
+  v($scope) {
+    _._text($scope["#text/1"], $scope.v);
   }
 });
 export function $setup($scope) {

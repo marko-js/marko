@@ -1,9 +1,7 @@
 export const $template = "<div></div>";
 export const $walks = /* get, over(1) */" b";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $setText2__script = _._script("__tests__/template.marko_0_setText", ({
-  setText
-}) => setText());
+const $setText2__script = _._script("__tests__/template.marko_0_setText", $scope => $scope.setText());
 const $setText2 = /* @__PURE__ */_._const("setText", $setText2__script);
 export function $setup($scope) {
   $setText2($scope, $setText($scope));

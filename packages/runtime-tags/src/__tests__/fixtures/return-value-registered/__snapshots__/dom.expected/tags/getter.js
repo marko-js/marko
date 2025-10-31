@@ -1,7 +1,7 @@
 export const $template = "";
 export const $walks = "";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $getter2 = /* @__PURE__ */_._const("getter", _._return);
+const $getter2 = /* @__PURE__ */_._const("getter", $scope => _._return($scope, $scope.getter));
 export function $setup($scope) {
   $getter2($scope, $getter);
 }

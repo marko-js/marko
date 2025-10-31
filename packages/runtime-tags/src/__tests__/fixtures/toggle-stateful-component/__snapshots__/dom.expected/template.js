@@ -6,10 +6,10 @@ const $if_content__setup = $scope => {
   $if_content__onCount._($scope);
 };
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $if_content__onCount = /* @__PURE__ */_._if_closure("onCount", "#div/0", 0, ($scope, onCount) => _counter_input_onCount($scope["#childScope/0"], onCount));
+const $if_content__onCount = /* @__PURE__ */_._if_closure("#div/0", 0, $scope => _counter_input_onCount($scope["#childScope/0"], $scope._.onCount));
 const $if_content = /* @__PURE__ */_._content_branch(`<div>${_counter_template}</div>`, /* next(1), beginChild, _counter_walks, endChild, out(1) */`D/${_counter_walks}&l`, $if_content__setup);
 const $if = /* @__PURE__ */_._if("#div/0", $if_content);
-const $show = /* @__PURE__ */_._let("show/1", ($scope, show) => $if($scope, show ? 0 : 1));
+const $show = /* @__PURE__ */_._let("show/1", $scope => $if($scope, $scope.show ? 0 : 1));
 const $onCount2 = /* @__PURE__ */_._const("onCount");
 export function $setup($scope) {
   $show($scope, true);

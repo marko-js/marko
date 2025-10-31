@@ -2,15 +2,11 @@ export const $template = "<!><!><!>";
 export const $walks = /* over(1), replace, over(2) */"b%c";
 import Child from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $falseChild_content__count__script = _._script("__tests__/template.marko_1_count", ($scope, {
-  _: {
-    count
-  }
-}) => _._on($scope["#button/0"], "click", function () {
-  $count($scope._, ++count);
+const $falseChild_content__count__script = _._script("__tests__/template.marko_1_count", $scope => _._on($scope["#button/0"], "click", function () {
+  $count($scope._, $scope._.count + 1);
 }));
-const $falseChild_content__count = /* @__PURE__ */_._closure_get("count", ($scope, count) => {
-  _._text($scope["#text/1"], count);
+const $falseChild_content__count = /* @__PURE__ */_._closure_get("count", $scope => {
+  _._text($scope["#text/1"], $scope._.count);
   $falseChild_content__count__script($scope);
 });
 const $falseChild_content__setup = $falseChild_content__count;

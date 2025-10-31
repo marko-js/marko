@@ -1,21 +1,18 @@
-// size: 1224 (min) 492 (brotli)
+// size: 1216 (min) 491 (brotli)
 const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
-  $name__OR__write__script = _._script(
-    "a0",
-    ($scope, { 5: name, 6: write }) => {
-      (write(`${name} mounted`),
-        (_.$signal($scope, 0).onabort = () => {
-          write(`${name} destroyed`);
-        }));
-    },
-  ),
+  $name__OR__write__script = _._script("a0", ($scope) => {
+    ($scope[6](`${$scope[5]} mounted`),
+      (_.$signal($scope, 0).onabort = () => {
+        $scope[6](`${$scope[5]} destroyed`);
+      }));
+  }),
   $name__OR__write = _._or(7, ($scope) => {
     (_.$signalReset($scope, 0), $name__OR__write__script($scope));
   }),
-  $name = _._const(5, ($scope, name) => {
-    (_._text($scope[0], name),
-      _._text($scope[1], name),
-      _._text($scope[2], name),
+  $name = _._const(5, ($scope) => {
+    (_._text($scope[0], $scope[5]),
+      _._text($scope[1], $scope[5]),
+      _._text($scope[2], $scope[5]),
       $name__OR__write($scope));
   }),
   $write$1 = _._const(6, $name__OR__write),
@@ -24,7 +21,7 @@ const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   },
   $if_content3__write = _._closure_get(
     8,
-    ($scope, write) => $write$1($scope[0], write),
+    ($scope) => $write$1($scope[0], $scope._._._[8]),
     ($scope) => $scope._._._,
   ),
   $if_content3 = _._content_branch(
@@ -40,13 +37,13 @@ const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   },
   $if_content2__write = _._closure_get(
     8,
-    ($scope, write) => $write$1($scope[0], write),
+    ($scope) => $write$1($scope[0], $scope._._[8]),
     ($scope) => $scope._._,
   ),
   $if_content2__if = _._if(1, $if_content3),
   $if_content2__showInner = _._closure_get(
     7,
-    ($scope, showInner) => $if_content2__if($scope, showInner ? 0 : 1),
+    ($scope) => $if_content2__if($scope, $scope._._[7] ? 0 : 1),
     ($scope) => $scope._._,
   ),
   $if_content2 = _._content_branch(
@@ -60,12 +57,12 @@ const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
       $if_content__showMiddle._($scope),
       $if_content__write._($scope));
   },
-  $if_content__write = _._if_closure(8, 4, 0, ($scope, write) =>
-    $write$1($scope[0], write),
+  $if_content__write = _._if_closure(4, 0, ($scope) =>
+    $write$1($scope[0], $scope._[8]),
   ),
   $if_content__if = _._if(1, $if_content2),
-  $if_content__showMiddle = _._if_closure(6, 4, 0, ($scope, showMiddle) =>
-    $if_content__if($scope, showMiddle ? 0 : 1),
+  $if_content__showMiddle = _._if_closure(4, 0, ($scope) =>
+    $if_content__if($scope, $scope._[6] ? 0 : 1),
   ),
   $if_content = _._content_branch(
     `<div>${$template}<!></div>`,
@@ -73,26 +70,26 @@ const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     $if_content__setup,
   ),
   $if = _._if(4, $if_content),
-  $showOuter__script = _._script("b1", ($scope, { 5: showOuter }) =>
+  $showOuter__script = _._script("b1", ($scope) =>
     _._on($scope[0], "click", function () {
-      $showOuter($scope, (showOuter = !showOuter));
+      $showOuter($scope, !$scope[5]);
     }),
   ),
-  $showOuter = _._let(5, ($scope, showOuter) => {
-    ($if($scope, showOuter ? 0 : 1), $showOuter__script($scope));
+  $showOuter = _._let(5, ($scope) => {
+    ($if($scope, $scope[5] ? 0 : 1), $showOuter__script($scope));
   }),
-  $showMiddle__script = _._script("b2", ($scope, { 6: showMiddle }) =>
+  $showMiddle__script = _._script("b2", ($scope) =>
     _._on($scope[1], "click", function () {
-      $showMiddle($scope, (showMiddle = !showMiddle));
+      $showMiddle($scope, !$scope[6]);
     }),
   ),
   $showMiddle = _._let(6, ($scope) => {
     ($if_content__showMiddle($scope), $showMiddle__script($scope));
   }),
   $showInner__closure = _._closure($if_content2__showInner),
-  $showInner__script = _._script("b3", ($scope, { 7: showInner }) =>
+  $showInner__script = _._script("b3", ($scope) =>
     _._on($scope[2], "click", function () {
-      $showInner($scope, (showInner = !showInner));
+      $showInner($scope, !$scope[7]);
     }),
   ),
   $showInner = _._let(7, ($scope) => {

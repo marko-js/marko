@@ -288,10 +288,9 @@ export const IfTag = {
             const consequent = t.numericLiteral(branchBodySection ? i : -1);
             if (branchBodySection) {
               rendererIdentifiers.push(t.identifier(branchBodySection.name));
-              setClosureSignalBuilder(branchTag, (closure, render) => {
+              setClosureSignalBuilder(branchTag, (_closure, render) => {
                 return callRuntime(
                   "_if_closure",
-                  getScopeAccessorLiteral(closure),
                   getScopeAccessorLiteral(nodeRef),
                   t.numericLiteral(i),
                   render,

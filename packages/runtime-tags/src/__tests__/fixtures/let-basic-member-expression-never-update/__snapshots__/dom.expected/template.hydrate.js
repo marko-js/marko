@@ -1,12 +1,13 @@
-// size: 193 (min) 150 (brotli)
-const $user = _._let(3, ($scope, user) => $user_id($scope, user?.id)),
-  $index__script = _._script("a0", ($scope, { 2: index }) =>
+// size: 188 (min) 151 (brotli)
+const $user = _._let(3, ($scope) => $user_id($scope, $scope[3]?.id)),
+  $index__script = _._script("a0", ($scope) =>
     _._on($scope[1], "click", function () {
-      $index($scope, ++index);
+      $index($scope, $scope[2] + 1);
     }),
   ),
-  $index = _._let(2, ($scope, index) => {
-    ($user($scope, -1 !== index && { id: index }), $index__script($scope));
+  $index = _._let(2, ($scope) => {
+    ($user($scope, -1 !== $scope[2] && { id: $scope[2] }),
+      $index__script($scope));
   }),
-  $user_id = _._const(4, ($scope, user_id) => _._text($scope[0], user_id));
+  $user_id = _._const(4, ($scope) => _._text($scope[0], $scope[4]));
 init();

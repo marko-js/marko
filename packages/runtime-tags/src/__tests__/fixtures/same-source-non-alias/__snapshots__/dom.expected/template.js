@@ -6,24 +6,22 @@ function createWrapper(a) {
   };
 }
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $pattern2 = /* @__PURE__ */_._const("$pattern", ($scope, $pattern) => $a($scope, $pattern.a));
-const $count__script = _._script("__tests__/template.marko_0_count", ($scope, {
-  count
-}) => _._on($scope["#button/0"], "click", function () {
-  $count($scope, ++count);
+const $pattern2 = /* @__PURE__ */_._const("$pattern", $scope => $a($scope, $scope.$pattern.a));
+const $count__script = _._script("__tests__/template.marko_0_count", $scope => _._on($scope["#button/0"], "click", function () {
+  $count($scope, $scope.count + 1);
 }));
-const $count = /* @__PURE__ */_._let("count/3", ($scope, count) => {
-  $pattern2($scope, createWrapper(count));
+const $count = /* @__PURE__ */_._let("count/3", $scope => {
+  $pattern2($scope, createWrapper($scope.count));
   $count__script($scope);
 });
 export function $setup($scope) {
   $count($scope, 0);
 }
-const $a = /* @__PURE__ */_._const("a", ($scope, a) => {
-  _._text($scope["#text/1"], a);
-  $b($scope, a);
+const $a = /* @__PURE__ */_._const("a", $scope => {
+  _._text($scope["#text/1"], $scope.a);
+  $b($scope, $scope.a);
 });
-const $b = ($scope, b) => {
-  _._text($scope["#text/2"], b);
+const $b = $scope => {
+  _._text($scope["#text/2"], $scope.a);
 };
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

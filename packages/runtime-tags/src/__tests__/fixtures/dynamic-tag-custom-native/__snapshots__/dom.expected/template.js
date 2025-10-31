@@ -3,13 +3,11 @@ export const $walks = /* get, over(1), replace, over(2) */" b%c";
 import child from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/1");
-const $tagName__script = _._script("__tests__/template.marko_0_tagName", ($scope, {
-  tagName
-}) => _._on($scope["#button/0"], "click", function () {
-  $tagName($scope, tagName = tagName === child ? "div" : child);
+const $tagName__script = _._script("__tests__/template.marko_0_tagName", $scope => _._on($scope["#button/0"], "click", function () {
+  $tagName($scope, $scope.tagName === child ? "div" : child);
 }));
-const $tagName = /* @__PURE__ */_._let("tagName/2", ($scope, tagName) => {
-  $dynamicTag($scope, tagName, () => ({
+const $tagName = /* @__PURE__ */_._let("tagName/2", $scope => {
+  $dynamicTag($scope, $scope.tagName, () => ({
     id: "dynamic"
   }));
   $tagName__script($scope);

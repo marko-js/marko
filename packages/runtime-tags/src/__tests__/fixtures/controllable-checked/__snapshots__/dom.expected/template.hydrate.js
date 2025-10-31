@@ -1,7 +1,7 @@
-// size: 193 (min) 130 (brotli)
-const $checked = _._let(2, ($scope, checked) => {
-  (_._attr_input_checked($scope, 0, checked, $checkedChange($scope)),
-    _._text($scope[1], String(checked)));
+// size: 195 (min) 130 (brotli)
+const $checked = _._let(2, ($scope) => {
+  (_._attr_input_checked($scope, 0, $scope[2], $checkedChange($scope)),
+    _._text($scope[1], String($scope[2])));
 });
 function $checkedChange($scope) {
   return (_new_checked) => {

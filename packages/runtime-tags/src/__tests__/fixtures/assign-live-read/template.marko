@@ -1,0 +1,6 @@
+<let/count=0>
+<const/resetCount() { if (count > 0) { count = 0 }}>
+<button onClick() { count++; count++ }>${count}</button>
+<button onClick=resetCount/>
+
+<script>count;</script>

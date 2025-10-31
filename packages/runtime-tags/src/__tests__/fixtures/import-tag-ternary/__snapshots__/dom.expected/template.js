@@ -4,7 +4,7 @@ import baz from "./tags/baz.marko";
 import foo from "./tags/foo.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0");
-const $x = /* @__PURE__ */_._let("x/1", ($scope, x) => $dynamicTag($scope, x === 1 ? baz : foo));
+const $x = /* @__PURE__ */_._let("x/1", $scope => $dynamicTag($scope, $scope.x === 1 ? baz : foo));
 export function $setup($scope) {
   $x($scope, 1);
 }

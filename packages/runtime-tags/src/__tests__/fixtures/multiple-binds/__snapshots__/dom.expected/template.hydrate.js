@@ -1,12 +1,11 @@
-// size: 329 (min) 182 (brotli)
+// size: 321 (min) 178 (brotli)
 const $count__OR__valueChange = _._or(5, ($scope) => {
-    let { 3: count, 4: $valueChange } = $scope;
-    (_._attr_input_value($scope, 1, count, $valueChange),
-      _._attr_input_value($scope, 2, count, $valueChange));
+    (_._attr_input_value($scope, 1, $scope[3], $scope[4]),
+      _._attr_input_value($scope, 2, $scope[3], $scope[4]));
   }),
-  $count__script = _._script("a1", ($scope, { 3: count }) =>
+  $count__script = _._script("a1", ($scope) =>
     _._on($scope[0], "click", function () {
-      $count($scope, ++count);
+      $count($scope, $scope[3] + 1);
     }),
   ),
   $count = _._let(3, ($scope) => {

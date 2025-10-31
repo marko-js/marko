@@ -1,10 +1,10 @@
-// size: 137 (min) 117 (brotli)
-const $toggle__script = _._script("a0", ($scope, { 2: toggle }) =>
+// size: 129 (min) 114 (brotli)
+const $toggle__script = _._script("a0", ($scope) =>
     _._on($scope[1], "click", function () {
-      $toggle($scope, (toggle = !toggle));
+      $toggle($scope, !$scope[2]);
     }),
   ),
-  $toggle = _._let(2, ($scope, toggle) => {
-    (_._attr($scope[0], "data-toggle", toggle), $toggle__script($scope));
+  $toggle = _._let(2, ($scope) => {
+    (_._attr($scope[0], "data-toggle", $scope[2]), $toggle__script($scope));
   });
 init();

@@ -14,17 +14,17 @@ const $if_content2__setup = $scope => {
 };
 const $if_content2 = /* @__PURE__ */_._content_branch(`<div></div>${_child_template}`, /* get, over(1), beginChild, _child_walks, endChild */` b/${_child_walks}&`, $if_content2__setup);
 const $if_content__if = /* @__PURE__ */_._if("#text/0", $if_content2);
-const $if_content__input_show = /* @__PURE__ */_._if_closure("input_show", "#text/0", 0, ($scope, input_show) => $if_content__if($scope, input_show ? 0 : 1));
+const $if_content__input_show = /* @__PURE__ */_._if_closure("#text/0", 0, $scope => $if_content__if($scope, $scope._.input_show ? 0 : 1));
 const $if_content__setup = $if_content__input_show;
 const $if_content = /* @__PURE__ */_._content_branch("<!><!><!>", /* over(1), replace, over(2) */"b%c", $if_content__setup);
 const $if = /* @__PURE__ */_._if("#text/0", $if_content);
-export const $input_show = /* @__PURE__ */_._const("input_show", ($scope, input_show) => {
-  $if($scope, input_show ? 0 : 1);
+export const $input_show = /* @__PURE__ */_._const("input_show", $scope => {
+  $if($scope, $scope.input_show ? 0 : 1);
   $if_content__input_show($scope);
 });
 const $if2 = /* @__PURE__ */_._if("#text/2", $if_content3);
-const $hoisted_el3 = /* @__PURE__ */_._const("$hoisted_el", ($scope, $hoisted_el) => _child_input($scope["#childScope/1"], {
-  value: $hoisted_el
+const $hoisted_el3 = /* @__PURE__ */_._const("$hoisted_el", $scope => _child_input($scope["#childScope/1"], {
+  value: $scope.$hoisted_el
 }));
 const $setup__script = _._script("__tests__/template.marko_0", $scope => {
   {
@@ -46,5 +46,5 @@ export function $setup($scope) {
   $hoisted_el3($scope, $get$hoisted_el2($scope));
   $setup__script($scope);
 }
-export const $input = /* @__PURE__ */_._const("input", ($scope, input) => $input_show($scope, input.show));
+export const $input = /* @__PURE__ */_._const("input", $scope => $input_show($scope, $scope.input.show));
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

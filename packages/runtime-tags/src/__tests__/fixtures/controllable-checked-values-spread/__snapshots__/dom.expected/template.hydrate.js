@@ -1,29 +1,28 @@
-// size: 406 (min) 202 (brotli)
+// size: 407 (min) 193 (brotli)
 const $input__script = _._script("a0", ($scope) => _._attrs_script($scope, 0)),
-  $input = _._const(2, ($scope, input) => {
-    (_._attrs($scope, 0, { type: "checkbox", ...input }),
+  $input = _._const(2, ($scope) => {
+    (_._attrs($scope, 0, { type: "checkbox", ...$scope[2] }),
       $input__script($scope));
   }),
   $checkedValue__OR__checkedValueChange = _._or(6, ($scope) => {
-    let { 4: checkedValue, 5: $checkedValueChange } = $scope;
     ($input($scope[0], {
-      checkedValue: checkedValue,
-      checkedValueChange: $checkedValueChange,
+      checkedValue: $scope[4],
+      checkedValueChange: $scope[5],
       value: "a",
     }),
       $input($scope[1], {
-        checkedValue: checkedValue,
-        checkedValueChange: $checkedValueChange,
+        checkedValue: $scope[4],
+        checkedValueChange: $scope[5],
         value: "b",
       }),
       $input($scope[2], {
-        checkedValue: checkedValue,
-        checkedValueChange: $checkedValueChange,
+        checkedValue: $scope[4],
+        checkedValueChange: $scope[5],
         value: "c",
       }));
   }),
-  $checkedValue = _._let(4, ($scope, checkedValue) => {
-    (_._text($scope[3], checkedValue),
+  $checkedValue = _._let(4, ($scope) => {
+    (_._text($scope[3], $scope[4]),
       $checkedValue__OR__checkedValueChange($scope));
   });
 (_._resume("b0", function ($scope) {

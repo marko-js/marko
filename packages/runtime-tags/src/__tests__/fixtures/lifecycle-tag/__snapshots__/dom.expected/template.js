@@ -1,19 +1,17 @@
 export const $template = "<div id=ref></div><button id=increment>Increment</button>";
 export const $walks = /* over(1), get, over(1) */"b b";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $x__script = _._script("__tests__/template.marko_0_x", ($scope, {
-  x
-}) => {
+const $x__script = _._script("__tests__/template.marko_0_x", $scope => {
   _._lifecycle($scope, "$lifecycle", {
     onMount: function () {
-      document.getElementById("ref").textContent = "Mount " + x;
+      document.getElementById("ref").textContent = "Mount " + $scope.x;
     },
     onUpdate: function () {
-      document.getElementById("ref").textContent = "Update " + x;
+      document.getElementById("ref").textContent = "Update " + $scope.x;
     }
   });
   _._on($scope["#button/0"], "click", function () {
-    $x($scope, ++x);
+    $x($scope, $scope.x + 1);
   });
 });
 const $x = /* @__PURE__ */_._let("x/1", $x__script);

@@ -1,8 +1,8 @@
-// size: 143 (min) 85 (brotli)
-(_._script("a0", ({ 2: input_valueChange }) => input_valueChange(1)),
-  _._resume("b1", function ({ _: { 1: setter } }) {
+// size: 137 (min) 83 (brotli)
+(_._script("a0", ($scope) => $scope[2](1)),
+  _._resume("b1", function ($scope) {
     return function () {
-      setter();
+      $scope._[1]();
     };
   }),
   _._resume("b0", function ($scope) {

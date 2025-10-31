@@ -1,4 +1,4 @@
-// size: 482 (min) 249 (brotli)
+// size: 470 (min) 228 (brotli)
 const $tagselect_content__setup__script = _._script("a1", ($scope) => {
     (_._attrs_script($scope, 0),
       _._attrs_script($scope, 1),
@@ -16,15 +16,14 @@ const $tagselect_content__setup__script = _._script("a1", ($scope) => {
     },
   ),
   $dynamicTag = _._dynamic_tag(0, $tagselect_content),
-  $value__OR__tag = _._or(4, ($scope) => {
-    let { 2: value, 3: tag } = $scope;
-    $dynamicTag($scope, tag ? "select" : {}, () => ({
-      value: value,
+  $value__OR__tag = _._or(4, ($scope) =>
+    $dynamicTag($scope, $scope[3] ? "select" : {}, () => ({
+      value: $scope[2],
       valueChange: $valueChange($scope),
-    }));
-  }),
-  $value = _._let(2, ($scope, value) => {
-    (_._text($scope[1], value), $value__OR__tag($scope));
+    })),
+  ),
+  $value = _._let(2, ($scope) => {
+    (_._text($scope[1], $scope[2]), $value__OR__tag($scope));
   });
 function $valueChange($scope) {
   return function (v) {

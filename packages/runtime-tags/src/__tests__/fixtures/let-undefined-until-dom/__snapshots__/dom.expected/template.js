@@ -1,7 +1,7 @@
 export const $template = "<div> </div>";
 export const $walks = /* next(1), get, out(1) */"D l";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $x = /* @__PURE__ */_._let("x/1", ($scope, x) => _._text($scope["#text/0"], x));
+const $x = /* @__PURE__ */_._let("x/1", $scope => _._text($scope["#text/0"], $scope.x));
 const $setup__script = _._script("__tests__/template.marko_0", $scope => $x($scope, "Client Only"));
 export function $setup($scope) {
   $x($scope, undefined);

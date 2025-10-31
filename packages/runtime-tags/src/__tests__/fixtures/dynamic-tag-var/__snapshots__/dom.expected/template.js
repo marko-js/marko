@@ -11,16 +11,16 @@ export function $setup($scope) {
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/2", 0, () => $data2);
 const $data2 = _._var_resume("__tests__/template.marko_0_data2/var", $scope => {});
 const $dynamicTag3 = /* @__PURE__ */_._dynamic_tag("#text/6", 0, () => $el);
-export const $input_show = /* @__PURE__ */_._const("input_show", ($scope, input_show) => {
-  $dynamicTag($scope, input_show && child);
-  $dynamicTag3($scope, input_show && "div");
+export const $input_show = /* @__PURE__ */_._const("input_show", $scope => {
+  $dynamicTag($scope, $scope.input_show && child);
+  $dynamicTag3($scope, $scope.input_show && "div");
 });
 const $dynamicTag2 = /* @__PURE__ */_._dynamic_tag("#text/4", 0, () => $data3);
 const $data3 = _._var_resume("__tests__/template.marko_0_data3/var", $scope => {});
-export const $input_dynamic = /* @__PURE__ */_._const("input_dynamic", $dynamicTag2);
+export const $input_dynamic = /* @__PURE__ */_._const("input_dynamic", $scope => $dynamicTag2($scope, $scope.input_dynamic));
 const $el = _._var_resume("__tests__/template.marko_0_el1/var", $scope => {});
-export const $input = /* @__PURE__ */_._const("input", ($scope, input) => {
-  $input_show($scope, input.show);
-  $input_dynamic($scope, input.dynamic);
+export const $input = /* @__PURE__ */_._const("input", $scope => {
+  $input_show($scope, $scope.input.show);
+  $input_dynamic($scope, $scope.input.dynamic);
 });
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

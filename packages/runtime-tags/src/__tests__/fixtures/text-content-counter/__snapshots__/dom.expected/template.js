@@ -1,12 +1,10 @@
 export const $template = "<div><button id=button>0</button></div>";
 export const $walks = /* next(1), get, out(1) */"D l";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $clickCount__script = _._script("__tests__/template.marko_0_clickCount", ($scope, {
-  clickCount
-}) => {
-  document.getElementById("button").textContent = clickCount;
+const $clickCount__script = _._script("__tests__/template.marko_0_clickCount", $scope => {
+  document.getElementById("button").textContent = $scope.clickCount;
   _._on($scope["#button/0"], "click", function () {
-    $clickCount($scope, ++clickCount);
+    $clickCount($scope, $scope.clickCount + 1);
   });
 });
 const $clickCount = /* @__PURE__ */_._let("clickCount/1", $clickCount__script);

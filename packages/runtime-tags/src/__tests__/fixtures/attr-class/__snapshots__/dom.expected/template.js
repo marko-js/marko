@@ -7,27 +7,23 @@ import { $setup as _customTag, $input_class as _customTag_input_class, $input_te
 const $test_content = _._content_resume("__tests__/template.marko_1_content", "Hello", /* over(1) */"b");
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/3");
 const $c__OR__d = /* @__PURE__ */_._or(8, $scope => {
-  let {
-    c,
-    d
-  } = $scope;
   _._attr_class_items($scope["#div/0"], {
-    b: c,
-    d: d
+    b: $scope.c,
+    d: $scope.d
   });
   _customTag_input_class($scope["#childScope/1"], ["a", {
-    b: c,
-    d
+    b: $scope.c,
+    d: $scope.d
   }]);
   $dynamicTag($scope, TestTag, () => ({
     class: ["a", {
-      b: c,
-      d
+      b: $scope.c,
+      d: $scope.d
     }],
     test: _.attrTag({
       class: ["a", {
-        b: c,
-        d
+        b: $scope.c,
+        d: $scope.d
       }],
       content: $test_content($scope)
     })
@@ -42,8 +38,8 @@ export function $setup($scope) {
   _customTag_input_class($scope["#childScope/2"], ["a", false, "b"]);
   _customTag_input_test($scope["#childScope/2"], void 0);
 }
-export const $input = /* @__PURE__ */_._const("input", ($scope, input) => {
-  $c($scope, input.c);
-  $d($scope, input.d);
+export const $input = /* @__PURE__ */_._const("input", $scope => {
+  $c($scope, $scope.input.c);
+  $d($scope, $scope.input.d);
 });
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

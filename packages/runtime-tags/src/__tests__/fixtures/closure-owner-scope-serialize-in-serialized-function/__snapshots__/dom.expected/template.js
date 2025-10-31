@@ -1,11 +1,9 @@
 export const $template = "<!><!><!>";
 export const $walks = /* over(1), replace, over(2) */"b%c";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $if_content__run__script = _._script("__tests__/template.marko_1_run", ({
-  run
-}) => run());
+const $if_content__run__script = _._script("__tests__/template.marko_1_run", $scope => $scope.run());
 const $if_content__run = /* @__PURE__ */_._const("run", $if_content__run__script);
-const $if_content__text = /* @__PURE__ */_._if_closure("text", "#text/0", 0, ($scope, text) => $if_content__run($scope, $run($scope)));
+const $if_content__text = /* @__PURE__ */_._if_closure("#text/0", 0, $scope => $if_content__run($scope, $run($scope)));
 const $if_content__setup = $if_content__text;
 const $if_content = /* @__PURE__ */_._content_branch("<div></div>", /* get, over(1) */" b", $if_content__setup);
 const $text2 = /* @__PURE__ */_._const("text");
@@ -14,13 +12,9 @@ export function $setup($scope) {
   $text2($scope, $text);
   $if($scope, 1 ? 0 : 1);
 }
-function $run($scope, {
-  _: {
-    text
-  }
-} = $scope) {
+function $run($scope) {
   return function () {
-    _._el_read($scope["#div/0"]).innerHTML = text();
+    _._el_read($scope["#div/0"]).innerHTML = $scope._.text();
   };
 }
 function $text() {

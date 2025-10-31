@@ -1,14 +1,12 @@
 export const $template = "<button class=inc-child> </button>";
 export const $walks = /* get, next(1), get, out(1) */" D l";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $x__script = _._script("__tests__/tags/counter.marko_0_x", ($scope, {
-  x
-}) => _._on($scope["#button/0"], "click", function () {
-  $x($scope, ++x);
+const $x__script = _._script("__tests__/tags/counter.marko_0_x", $scope => _._on($scope["#button/0"], "click", function () {
+  $x($scope, $scope.x + 1);
 }));
-const $x = /* @__PURE__ */_._let("x/2", ($scope, x) => {
-  _._text($scope["#text/1"], x);
-  _._return($scope, x);
+const $x = /* @__PURE__ */_._let("x/2", $scope => {
+  _._text($scope["#text/1"], $scope.x);
+  _._return($scope, $scope.x);
   $x__script($scope);
 });
 export function $setup($scope) {

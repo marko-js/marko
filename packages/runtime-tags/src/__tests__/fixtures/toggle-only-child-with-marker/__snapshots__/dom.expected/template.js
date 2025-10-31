@@ -7,6 +7,6 @@ const $setup__script = _._script("__tests__/template.marko_0", $scope => _._on($
 }));
 export const $setup = $setup__script;
 const $if = /* @__PURE__ */_._if("#button/0", $if_content);
-export const $input_show = /* @__PURE__ */_._const("input_show", ($scope, input_show) => $if($scope, input_show ? 0 : 1));
-export const $input = /* @__PURE__ */_._const("input", ($scope, input) => $input_show($scope, input.show));
+export const $input_show = /* @__PURE__ */_._const("input_show", $scope => $if($scope, $scope.input_show ? 0 : 1));
+export const $input = /* @__PURE__ */_._const("input", $scope => $input_show($scope, $scope.input.show));
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

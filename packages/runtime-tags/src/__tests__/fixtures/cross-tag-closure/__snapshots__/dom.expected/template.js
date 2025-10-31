@@ -3,15 +3,11 @@ export const $walks = /* over(1), beginChildWithVar, _myLet_walks, endChild, beg
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _myLet, $input_value as _myLet_input_value, $template as _myLet_template, $walks as _myLet_walks } from "./tags/my-let.marko";
 import { $setup as _myTag, $input_content as _myTag_input_content, $template as _myTag_template, $walks as _myTag_walks } from "./tags/my-tag.marko";
-const $mytag_content__count__script = _._script("__tests__/template.marko_1_count", ($scope, {
-  _: {
-    count
-  }
-}) => _._on($scope["#button/0"], "click", function () {
-  _._var_change($scope._["#childScope/0"], ++count, "count");
+const $mytag_content__count__script = _._script("__tests__/template.marko_1_count", $scope => _._on($scope["#button/0"], "click", function () {
+  _._var_change($scope._["#childScope/0"], $scope._.count + 1, "count");
 }));
-const $mytag_content__count = /* @__PURE__ */_._closure_get("count", ($scope, count) => {
-  _._text($scope["#text/1"], count);
+const $mytag_content__count = /* @__PURE__ */_._closure_get("count", $scope => {
+  _._text($scope["#text/1"], $scope._.count);
   $mytag_content__count__script($scope);
 });
 const $mytag_content__setup = $mytag_content__count;

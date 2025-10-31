@@ -2,11 +2,11 @@ export const $template = "<button><pre>a    1    <!></pre><pre>b    2    <!></pr
 export const $walks = /* get, next(2), over(1), replace, out(1), next(1), over(1), replace, out(1), next(1), over(1), replace, out(1), next(1), over(1), replace, out(1), next(1), over(1), replace, out(2) */" Eb%lDb%lDb%lDb%lDb%m";
 function noop(_) {}
 import * as _2 from "@marko/runtime-tags/debug/dom";
-const $a = /* @__PURE__ */_2._let("a/6", ($scope, a) => _2._text($scope["#text/1"], a));
-const $b = /* @__PURE__ */_2._let("b/7", ($scope, b) => _2._text($scope["#text/2"], b));
-const $c = /* @__PURE__ */_2._let("c/8", ($scope, c) => _2._text($scope["#text/3"], JSON.stringify(c)));
-const $d = /* @__PURE__ */_2._let("d/9", ($scope, d) => _2._text($scope["#text/4"], d));
-const $e = /* @__PURE__ */_2._let("e/10", ($scope, e) => _2._text($scope["#text/5"], JSON.stringify(e)));
+const $a = /* @__PURE__ */_2._let("a/6", $scope => _2._text($scope["#text/1"], $scope.a));
+const $b = /* @__PURE__ */_2._let("b/7", $scope => _2._text($scope["#text/2"], $scope.b));
+const $c = /* @__PURE__ */_2._let("c/8", $scope => _2._text($scope["#text/3"], JSON.stringify($scope.c)));
+const $d = /* @__PURE__ */_2._let("d/9", $scope => _2._text($scope["#text/4"], $scope.d));
+const $e = /* @__PURE__ */_2._let("e/10", $scope => _2._text($scope["#text/5"], JSON.stringify($scope.e)));
 const $setup__script = _2._script("__tests__/template.marko_0", $scope => _2._on($scope["#button/0"], "click", function () {
   let local;
   (($result2, $a2, $b2, unused, $c2) => ({

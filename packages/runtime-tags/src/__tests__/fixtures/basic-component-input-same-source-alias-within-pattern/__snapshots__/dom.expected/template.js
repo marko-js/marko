@@ -2,12 +2,12 @@ export const $template = `${_myButton_template}${_myButton_template}`;
 export const $walks = /* beginChild, _myButton_walks, endChild, beginChild, _myButton_walks, endChild */`/${_myButton_walks}&/${_myButton_walks}&`;
 import { $setup as _myButton, $value2 as _myButton_input_value, $onClick as _myButton_input_onClick, $template as _myButton_template, $walks as _myButton_walks, $text as _myButton_input_value_text } from "./tags/my-button.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $clickCount = /* @__PURE__ */_._let("clickCount/2", ($scope, clickCount) => {
+const $clickCount = /* @__PURE__ */_._let("clickCount/2", $scope => {
   _myButton_input_value($scope["#childScope/0"], {
-    text: clickCount
+    text: $scope.clickCount
   });
   _myButton_input_onClick($scope["#childScope/0"], $onClick($scope));
-  _myButton_input_value_text($scope["#childScope/1"], clickCount);
+  _myButton_input_value_text($scope["#childScope/1"], $scope.clickCount);
   _myButton_input_onClick($scope["#childScope/1"], $onClick2($scope));
 });
 export function $setup($scope) {
@@ -15,18 +15,14 @@ export function $setup($scope) {
   _myButton($scope["#childScope/1"]);
   $clickCount($scope, 0);
 }
-function $onClick2($scope, {
-  clickCount
-} = $scope) {
+function $onClick2($scope) {
   return function () {
-    $clickCount($scope, ++clickCount);
+    $clickCount($scope, $scope.clickCount + 1);
   };
 }
-function $onClick($scope, {
-  clickCount
-} = $scope) {
+function $onClick($scope) {
   return function () {
-    $clickCount($scope, ++clickCount);
+    $clickCount($scope, $scope.clickCount + 1);
   };
 }
 _._resume("__tests__/template.marko_0/onClick2", $onClick2);
