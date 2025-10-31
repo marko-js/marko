@@ -5,14 +5,12 @@ const $if_content__setup__script = _._script("__tests__/template.marko_1", $scop
 const $if_content__setup = $if_content__setup__script;
 const $if_content = /* @__PURE__ */_._content_branch(0, 0, $if_content__setup);
 const $if = /* @__PURE__ */_._if("#text/3", $if_content);
-const $count__script = _._script("__tests__/template.marko_0_count", ($scope, {
-  count
-}) => _._on($scope["#button/1"], "click", function () {
-  $count($scope, ++count);
+const $count__script = _._script("__tests__/template.marko_0_count", $scope => _._on($scope["#button/1"], "click", function () {
+  $count($scope, $scope.count + 1);
 }));
-const $count = /* @__PURE__ */_._let("count/4", ($scope, count) => {
-  _._text($scope["#text/2"], count);
-  $if($scope, !count ? 0 : 1);
+const $count = /* @__PURE__ */_._let("count/4", $scope => {
+  _._text($scope["#text/2"], $scope.count);
+  $if($scope, !$scope.count ? 0 : 1);
   $count__script($scope);
 });
 export function $setup($scope) {

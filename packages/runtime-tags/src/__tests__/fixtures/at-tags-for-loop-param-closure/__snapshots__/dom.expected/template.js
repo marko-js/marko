@@ -3,17 +3,17 @@ export const $walks = /* over(1), beginChild, _list_walks, endChild, over(1) */`
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _list, $input_item as _list_input_item, $template as _list_template, $walks as _list_walks } from "./tags/list/index.marko";
 const $item_content = /* @__PURE__ */_._content_closures(/* @__PURE__ */_._content("__tests__/template.marko_1_content", " ", /* get, over(1) */" b"), {
-  item($scope, item) {
-    _._text($scope["#text/0"], item);
+  zzz($scope) {
+    _._text($scope["#text/0"], $scope.zzz);
   }
 });
 export function $setup($scope) {
   _list($scope["#childScope/0"]);
   let $item;
-  _.forOf([1, 2, 3], item => {
+  _.forOf([1, 2, 3], zzz => {
     $item = _.attrTags($item, {
       content: $item_content($scope, {
-        item
+        zzz
       })
     });
   });

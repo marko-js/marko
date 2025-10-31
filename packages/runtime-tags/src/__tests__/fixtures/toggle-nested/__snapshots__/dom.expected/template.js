@@ -2,27 +2,27 @@ export const $template = "<div></div>";
 export const $walks = /* get, over(1) */" b";
 export const $setup = () => {};
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $if_content3__value = /* @__PURE__ */_._closure_get("value2", ($scope, value2) => _._text($scope["#text/0"], value2), $scope => $scope._._);
+const $if_content3__value = /* @__PURE__ */_._closure_get("value2", $scope => _._text($scope["#text/0"], $scope._._.value2), $scope => $scope._._);
 const $if_content3__setup = $if_content3__value;
 const $if_content3 = /* @__PURE__ */_._content_branch("<span> </span>", /* next(1), get, out(1) */"D l", $if_content3__setup);
-const $if_content2__value = /* @__PURE__ */_._closure_get("value1", ($scope, value1) => _._text($scope["#text/0"], value1), $scope => $scope._._);
+const $if_content2__value = /* @__PURE__ */_._closure_get("value1", $scope => _._text($scope["#text/0"], $scope._._.value1), $scope => $scope._._);
 const $if_content2__setup = $if_content2__value;
 const $if_content2 = /* @__PURE__ */_._content_branch("<span> </span>", /* next(1), get, out(1) */"D l", $if_content2__setup);
 const $if_content__if = /* @__PURE__ */_._if("#text/0", $if_content2);
-const $if_content__value = /* @__PURE__ */_._if_closure("value1", "#div/0", 0, ($scope, value1) => $if_content__if($scope, value1 ? 0 : 1));
+const $if_content__value = /* @__PURE__ */_._if_closure("#div/0", 0, $scope => $if_content__if($scope, $scope._.value1 ? 0 : 1));
 const $if_content__if2 = /* @__PURE__ */_._if("#text/1", $if_content3);
-const $if_content__value2 = /* @__PURE__ */_._if_closure("value2", "#div/0", 0, ($scope, value2) => $if_content__if2($scope, value2 ? 0 : 1));
+const $if_content__value2 = /* @__PURE__ */_._if_closure("#div/0", 0, $scope => $if_content__if2($scope, $scope._.value2 ? 0 : 1));
 const $if_content__setup = $scope => {
   $if_content__value._($scope);
   $if_content__value2._($scope);
 };
 const $if_content = /* @__PURE__ */_._content_branch("<!><!><!><!>", /* over(1), replace, over(1), replace, over(2) */"b%b%c", $if_content__setup);
 const $if = /* @__PURE__ */_._if("#div/0", $if_content);
-export const $show = /* @__PURE__ */_._const("show", ($scope, show) => $if($scope, show ? 0 : 1));
-export const $input = /* @__PURE__ */_._const("input", ($scope, input) => {
-  $show($scope, input.show);
-  $value($scope, input.value1);
-  $value2($scope, input.value2);
+export const $show = /* @__PURE__ */_._const("show", $scope => $if($scope, $scope.show ? 0 : 1));
+export const $input = /* @__PURE__ */_._const("input", $scope => {
+  $show($scope, $scope.input.show);
+  $value($scope, $scope.input.value1);
+  $value2($scope, $scope.input.value2);
 });
 const $value__closure = /* @__PURE__ */_._closure($if_content2__value);
 export const $value = /* @__PURE__ */_._const("value1", $scope => {

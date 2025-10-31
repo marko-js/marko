@@ -1,8 +1,8 @@
 export const $template = "<div><!><!></div>";
 export const $walks = /* next(1), replace, over(1), replace, out(1) */"D%b%l";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $foo = /* @__PURE__ */_._const("foo", ($scope, foo) => _._text($scope["#text/0"], String(foo)));
-const $bar = /* @__PURE__ */_._const("bar", ($scope, bar) => _._text($scope["#text/1"], String(bar)));
+const $foo = /* @__PURE__ */_._const("foo", $scope => _._text($scope["#text/0"], String($scope.foo)));
+const $bar = /* @__PURE__ */_._const("bar", $scope => _._text($scope["#text/1"], String($scope.bar)));
 export function $setup($scope) {
   $foo($scope, true);
   $bar($scope, true);

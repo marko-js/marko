@@ -5,10 +5,10 @@ const TestTag = CustomTag;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _customTag, $input_style as _customTag_input_style, $input_test as _customTag_input_test, $template as _customTag_template, $walks as _customTag_walks } from "./tags/custom-tag.marko";
 const $test_content = _._content_resume("__tests__/template.marko_1_content", "Hello", /* over(1) */"b");
-export const $input_color = /* @__PURE__ */_._const("input_color", ($scope, input_color) => {
-  _._attr_style_item($scope["#div/0"], "color", input_color);
+export const $input_color = /* @__PURE__ */_._const("input_color", $scope => {
+  _._attr_style_item($scope["#div/0"], "color", $scope.input_color);
   _customTag_input_style($scope["#childScope/1"], {
-    color: input_color
+    color: $scope.input_color
   });
 });
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/4");
@@ -35,5 +35,5 @@ export function $setup($scope) {
     })
   }));
 }
-export const $input = /* @__PURE__ */_._const("input", ($scope, input) => $input_color($scope, input.color));
+export const $input = /* @__PURE__ */_._const("input", $scope => $input_color($scope, $scope.input.color));
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -1,6 +1,6 @@
-// size: 74 (min) 76 (brotli)
+// size: 71 (min) 70 (brotli)
 (_._script(
   "a0",
-  ({ 0: x }) => (document.getElementById("ref").textContent = x),
+  ($scope) => (document.getElementById("ref").textContent = $scope[0]),
 ),
   init());

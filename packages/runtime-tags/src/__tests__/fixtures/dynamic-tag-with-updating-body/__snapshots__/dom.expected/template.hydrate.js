@@ -1,11 +1,11 @@
-// size: 366 (min) 218 (brotli)
-const $count__script = _._script("a0", ($scope, { 2: count }) =>
+// size: 352 (min) 208 (brotli)
+const $count__script = _._script("a0", ($scope) =>
     _._on($scope[0], "click", function () {
-      $count($scope, ++count);
+      $count($scope, $scope[2] + 1);
     }),
   ),
-  $count = _._let(2, ($scope, count) => {
-    (_._text($scope[1], count), $count__script($scope));
+  $count = _._let(2, ($scope) => {
+    (_._text($scope[1], $scope[2]), $count__script($scope));
   });
 const $tagName_content = _._content_resume(
     "b0",
@@ -18,12 +18,12 @@ const $tagName_content = _._content_resume(
     },
   ),
   $dynamicTag = _._dynamic_tag(0, $tagName_content),
-  $tagName__script = _._script("b1", ($scope, { 2: tagName }) =>
+  $tagName__script = _._script("b1", ($scope) =>
     _._on($scope[1], "click", function () {
-      $tagName($scope, (tagName = "span" === tagName ? "div" : "span"));
+      $tagName($scope, "span" === $scope[2] ? "div" : "span");
     }),
   ),
-  $tagName = _._let(2, ($scope, tagName) => {
-    ($dynamicTag($scope, tagName), $tagName__script($scope));
+  $tagName = _._let(2, ($scope) => {
+    ($dynamicTag($scope, $scope[2]), $tagName__script($scope));
   });
 init();

@@ -1,6 +1,6 @@
-// size: 105 (min) 95 (brotli)
-(_._script("a1", ($scope, { 2: baz }) => ($scope[0].textContent = baz.bar())),
-  _._resume("a0", function ({ 1: foo }) {
-    return () => foo.bar;
+// size: 100 (min) 86 (brotli)
+(_._script("a1", ($scope) => ($scope[0].textContent = $scope[2].bar())),
+  _._resume("a0", function ($scope) {
+    return () => $scope[1]?.bar;
   }),
   init());

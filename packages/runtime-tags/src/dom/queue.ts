@@ -95,11 +95,8 @@ export function prepareEffects(fn: () => void): unknown[] {
 }
 
 export let runEffects = ((effects) => {
-  for (let i = 0, scope: Scope; i < effects.length; ) {
-    (effects[i++] as (a: Scope, b: Scope) => void)(
-      (scope = effects[i++] as Scope),
-      scope,
-    );
+  for (let i = 0; i < effects.length; ) {
+    (effects[i++] as (scope: Scope) => void)(effects[i++] as Scope);
   }
 }) as (effects: unknown[], checkPending?: boolean) => void;
 

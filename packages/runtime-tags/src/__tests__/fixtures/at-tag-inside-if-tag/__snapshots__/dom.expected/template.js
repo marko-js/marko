@@ -7,9 +7,9 @@ const $thing_content = /* @__PURE__ */_._content("__tests__/template.marko_1_con
 export function $setup($scope) {
   _customTag($scope["#childScope/0"]);
 }
-export const $x = /* @__PURE__ */_._const("x", ($scope, x) => {
+export const $x = /* @__PURE__ */_._const("x", $scope => {
   let $thing;
-  if (x) {
+  if ($scope.x) {
     $thing = _.attrTag({
       x: 1,
       content: $thing_content($scope)
@@ -22,5 +22,5 @@ export const $x = /* @__PURE__ */_._const("x", ($scope, x) => {
   }
   _customTag_input_thing($scope["#childScope/0"], $thing);
 });
-export const $input = /* @__PURE__ */_._const("input", ($scope, input) => $x($scope, input.x));
+export const $input = /* @__PURE__ */_._const("input", $scope => $x($scope, $scope.input.x));
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

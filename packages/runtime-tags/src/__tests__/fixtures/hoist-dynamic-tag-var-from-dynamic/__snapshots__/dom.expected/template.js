@@ -6,14 +6,14 @@ import { $setup as _thing, $input_content as _thing_input_content, $template as 
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $get$hoisted_setHtml = _._hoist("setHtml3", "ClosureScopes:4");
 const $inputshowsectionnull_content__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $inputshowsectionnull_content__setHtml);
-const $inputshowsectionnull_content__setHtml = _._var_resume("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_._const("setHtml3", ($scope, setHtml3) => _._assert_hoist(setHtml3)));
+const $inputshowsectionnull_content__setHtml = _._var_resume("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_._const("setHtml3", $scope => _._assert_hoist($scope.setHtml3)));
 const $inputshowsectionnull_content__setup = $scope => {
   $inputshowsectionnull_content__dynamicTag($scope, 1 && Child);
 };
 const $inputshowsectionnull_content = _._content_resume("__tests__/template.marko_4_content", "<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $inputshowsectionnull_content__setup, 0, "ClosureScopes:4");
 const $get$hoisted_setHtml2 = _._hoist("setHtml2", "ClosureScopes:3", "ClosureScopes:2");
 const $thing_content2__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $thing_content2__setHtml);
-const $thing_content2__setHtml = _._var_resume("__tests__/template.marko_3_setHtml2/var", /* @__PURE__ */_._const("setHtml2", ($scope, setHtml2) => _._assert_hoist(setHtml2)));
+const $thing_content2__setHtml = _._var_resume("__tests__/template.marko_3_setHtml2/var", /* @__PURE__ */_._const("setHtml2", $scope => _._assert_hoist($scope.setHtml2)));
 const $thing_content2__setup = $scope => {
   $thing_content2__dynamicTag($scope, 1 && Child);
 };
@@ -25,15 +25,13 @@ const $inputshowThingnull_content__setup = $scope => {
 const $inputshowThingnull_content = _._content_resume("__tests__/template.marko_2_content", `<!>${_thing_template}<!>`, /* over(1), beginChild, _thing_walks, endChild, over(1) */`b/${_thing_walks}&b`, $inputshowThingnull_content__setup, 0, "ClosureScopes:2");
 const $get$hoisted_setHtml3 = _._resume("__tests__/template.marko_0_$hoisted_setHtml/hoist", _._hoist("setHtml", "ClosureScopes:1"));
 const $thing_content__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $thing_content__setHtml);
-const $thing_content__setHtml = _._var_resume("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */_._const("setHtml", ($scope, setHtml) => _._assert_hoist(setHtml)));
+const $thing_content__setHtml = _._var_resume("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */_._const("setHtml", $scope => _._assert_hoist($scope.setHtml)));
 const $thing_content__setup = $scope => {
   $thing_content__dynamicTag($scope, 1 && Child);
 };
 const $thing_content = /* @__PURE__ */_._content("__tests__/template.marko_1_content", "<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $thing_content__setup, 0, "ClosureScopes:1");
-const $hoisted_setHtml4__script = _._script("__tests__/template.marko_0_$hoisted_setHtml", ({
-  $hoisted_setHtml
-}) => {
-  for (const fn of $hoisted_setHtml) {
+const $hoisted_setHtml4__script = _._script("__tests__/template.marko_0_$hoisted_setHtml", $scope => {
+  for (const fn of $scope.$hoisted_setHtml) {
     fn('Hoist from custom tag');
   }
 });
@@ -50,9 +48,9 @@ export function $setup($scope) {
 }
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/1", $inputshowThingnull_content);
 const $dynamicTag2 = /* @__PURE__ */_._dynamic_tag("#text/2", $inputshowsectionnull_content);
-export const $input_show = /* @__PURE__ */_._const("input_show", ($scope, input_show) => {
-  $dynamicTag($scope, input_show ? Thing : null);
-  $dynamicTag2($scope, input_show ? 'section' : null);
+export const $input_show = /* @__PURE__ */_._const("input_show", $scope => {
+  $dynamicTag($scope, $scope.input_show ? Thing : null);
+  $dynamicTag2($scope, $scope.input_show ? 'section' : null);
 });
-export const $input = /* @__PURE__ */_._const("input", ($scope, input) => $input_show($scope, input.show));
+export const $input = /* @__PURE__ */_._const("input", $scope => $input_show($scope, $scope.input.show));
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

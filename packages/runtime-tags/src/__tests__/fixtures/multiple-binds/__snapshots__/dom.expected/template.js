@@ -2,17 +2,11 @@ export const $template = "<button><input><input></button>";
 export const $walks = /* get, next(1), get, over(1), get, out(1) */" D b l";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $count__OR__valueChange = /* @__PURE__ */_._or(5, $scope => {
-  let {
-    count,
-    $valueChange
-  } = $scope;
-  _._attr_input_value($scope, "#input/1", count, $valueChange);
-  _._attr_input_value($scope, "#input/2", count, $valueChange);
+  _._attr_input_value($scope, "#input/1", $scope.count, $scope.$valueChange);
+  _._attr_input_value($scope, "#input/2", $scope.count, $scope.$valueChange);
 });
-const $count__script = _._script("__tests__/template.marko_0_count", ($scope, {
-  count
-}) => _._on($scope["#button/0"], "click", function () {
-  $count($scope, ++count);
+const $count__script = _._script("__tests__/template.marko_0_count", $scope => _._on($scope["#button/0"], "click", function () {
+  $count($scope, $scope.count + 1);
 }));
 const $count = /* @__PURE__ */_._let("count/3", $scope => {
   $count__OR__valueChange($scope);

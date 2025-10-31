@@ -1,7 +1,7 @@
-// size: 95 (min) 73 (brotli)
-(_._script("a0", ({ 0: promise }) =>
+// size: 92 (min) 72 (brotli)
+(_._script("a0", ($scope) =>
   (async () => {
-    document.getElementById("ref").textContent = await promise;
+    document.getElementById("ref").textContent = await $scope[0];
   })(),
 ),
   init());

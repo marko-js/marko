@@ -20,18 +20,12 @@ const $tagselect_content__setup = $scope => {
 };
 const $tagselect_content = _._content_resume("__tests__/template.marko_1_content", "<option>A</option><option>B</option><option>C</option>", /* get, over(1), get, over(1), get, over(1) */" b b b", $tagselect_content__setup);
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", $tagselect_content);
-const $value__OR__tag = /* @__PURE__ */_._or(4, $scope => {
-  let {
-    value,
-    tag
-  } = $scope;
-  $dynamicTag($scope, tag ? "select" : {}, () => ({
-    value,
-    valueChange: $valueChange($scope)
-  }));
-});
-const $value = /* @__PURE__ */_._let("value/2", ($scope, value) => {
-  _._text($scope["#text/1"], value);
+const $value__OR__tag = /* @__PURE__ */_._or(4, $scope => $dynamicTag($scope, $scope.tag ? "select" : {}, () => ({
+  value: $scope.value,
+  valueChange: $valueChange($scope)
+})));
+const $value = /* @__PURE__ */_._let("value/2", $scope => {
+  _._text($scope["#text/1"], $scope.value);
   $value__OR__tag($scope);
 });
 const $tag = /* @__PURE__ */_._const("tag", $value__OR__tag);

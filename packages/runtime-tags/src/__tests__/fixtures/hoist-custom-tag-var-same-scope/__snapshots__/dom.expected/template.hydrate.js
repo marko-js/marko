@@ -1,5 +1,5 @@
-// size: 157 (min) 105 (brotli)
-(_._script("b0", ({ 2: input_value }) => input_value),
+// size: 154 (min) 106 (brotli)
+(_._script("b0", ($scope) => $scope[2]),
   _._resume("a0", function ($scope) {
     return function (html) {
       $scope[0].innerHTML = html;

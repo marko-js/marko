@@ -1,5 +1,5 @@
-// size: 195 (min) 125 (brotli)
-(_._script("a1", ({ 1: setText }) => setText()),
+// size: 192 (min) 122 (brotli)
+(_._script("a1", ($scope) => $scope[1]()),
   _._resume("a0", function ($scope) {
     return function (arg) {
       if (arg)

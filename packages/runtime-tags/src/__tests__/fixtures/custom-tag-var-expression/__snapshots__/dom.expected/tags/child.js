@@ -1,7 +1,7 @@
 export const $template = "<span>child</span>";
 export const $walks = /* over(1) */"b";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $x = /* @__PURE__ */_._let("x/0", ($scope, x) => _._return($scope, x + 3));
+const $x = /* @__PURE__ */_._let("x/0", $scope => _._return($scope, $scope.x + 3));
 export function $setup($scope) {
   $x($scope, 1);
 }

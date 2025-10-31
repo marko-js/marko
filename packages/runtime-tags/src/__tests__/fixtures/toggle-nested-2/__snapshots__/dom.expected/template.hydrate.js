@@ -1,22 +1,13 @@
-// size: 587 (min) 285 (brotli)
-const $if_content2__count__script = _._script(
-    "a0",
-    (
-      $scope,
-      {
-        _: {
-          _: { 4: count },
-        },
-      },
-    ) =>
-      _._on($scope[0], "click", function () {
-        $count($scope._._, ++count);
-      }),
+// size: 563 (min) 275 (brotli)
+const $if_content2__count__script = _._script("a0", ($scope) =>
+    _._on($scope[0], "click", function () {
+      $count($scope._._, $scope._._[4] + 1);
+    }),
   ),
   $if_content2__count = _._closure_get(
     4,
-    ($scope, count) => {
-      (_._text($scope[1], count), $if_content2__count__script($scope));
+    ($scope) => {
+      (_._text($scope[1], $scope._._[4]), $if_content2__count__script($scope));
     },
     ($scope) => $scope._._,
   ),
@@ -27,13 +18,13 @@ const $if_content2__count__script = _._script(
     $if_content2__setup,
   ),
   $if_content__if = _._if(1, $if_content2),
-  $if_content__inner__script = _._script("a1", ($scope, { _: { 3: inner } }) =>
+  $if_content__inner__script = _._script("a1", ($scope) =>
     _._on($scope[0], "click", function () {
-      $inner($scope._, (inner = !inner));
+      $inner($scope._, !$scope._[3]);
     }),
   ),
-  $if_content__inner = _._if_closure(3, 1, 0, ($scope, inner) => {
-    ($if_content__if($scope, inner ? 0 : 1),
+  $if_content__inner = _._if_closure(1, 0, ($scope) => {
+    ($if_content__if($scope, $scope._[3] ? 0 : 1),
       $if_content__inner__script($scope));
   }),
   $if_content__setup = $if_content__inner,
@@ -43,13 +34,13 @@ const $if_content2__count__script = _._script(
     $if_content__setup,
   ),
   $if = _._if(1, $if_content),
-  $outer__script = _._script("a2", ($scope, { 2: outer }) =>
+  $outer__script = _._script("a2", ($scope) =>
     _._on($scope[0], "click", function () {
-      $outer($scope, (outer = !outer));
+      $outer($scope, !$scope[2]);
     }),
   ),
-  $outer = _._let(2, ($scope, outer) => {
-    ($if($scope, outer ? 0 : 1), $outer__script($scope));
+  $outer = _._let(2, ($scope) => {
+    ($if($scope, $scope[2] ? 0 : 1), $outer__script($scope));
   }),
   $inner = _._let(3, $if_content__inner),
   $count__closure = _._closure($if_content2__count),

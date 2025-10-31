@@ -3,28 +3,24 @@ export const $walks = /* beginChild, _checkbox_walks, endChild, beginChild, _che
 import { $setup as _checkbox, $input as _checkbox_input, $template as _checkbox_template, $walks as _checkbox_walks } from "./tags/checkbox.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $checkedValue__OR__checkedValueChange = /* @__PURE__ */_._or(6, $scope => {
-  let {
-    checkedValue,
-    $checkedValueChange
-  } = $scope;
   _checkbox_input($scope["#childScope/0"], {
-    checkedValue: checkedValue,
-    checkedValueChange: $checkedValueChange,
+    checkedValue: $scope.checkedValue,
+    checkedValueChange: $scope.$checkedValueChange,
     value: "a"
   });
   _checkbox_input($scope["#childScope/1"], {
-    checkedValue: checkedValue,
-    checkedValueChange: $checkedValueChange,
+    checkedValue: $scope.checkedValue,
+    checkedValueChange: $scope.$checkedValueChange,
     value: "b"
   });
   _checkbox_input($scope["#childScope/2"], {
-    checkedValue: checkedValue,
-    checkedValueChange: $checkedValueChange,
+    checkedValue: $scope.checkedValue,
+    checkedValueChange: $scope.$checkedValueChange,
     value: "c"
   });
 });
-const $checkedValue = /* @__PURE__ */_._let("checkedValue/4", ($scope, checkedValue) => {
-  _._text($scope["#text/3"], checkedValue);
+const $checkedValue = /* @__PURE__ */_._let("checkedValue/4", $scope => {
+  _._text($scope["#text/3"], $scope.checkedValue);
   $checkedValue__OR__checkedValueChange($scope);
 });
 const $checkedValueChange3 = /* @__PURE__ */_._const("$checkedValueChange", $checkedValue__OR__checkedValueChange);

@@ -25,7 +25,7 @@ import {
   push,
   Sorted,
 } from "./optional";
-import { getScopeExpression } from "./scope-read";
+import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
   finalizeParamSerializeReasonGroups,
   forEachSection,
@@ -1515,101 +1515,113 @@ export function getReadReplacement(
   node: t.Identifier | t.MemberExpression | t.OptionalMemberExpression,
 ) {
   const { extra } = node;
-  if (!extra) return;
-  let { binding, read } = extra;
-  let replacement: t.Expression | undefined;
+  if (!extra || extra.assignment) return;
+  const { read, binding } = extra;
 
   if (read) {
-    if (read.props === undefined) {
-      binding = read.binding;
-      read = undefined;
-    } else {
-      binding = undefined;
-    }
-  }
+    const readBinding = read.binding;
+    let replacement: t.Expression | undefined;
 
-  if (binding) {
-    if (node.type === "Identifier") {
-      if (binding.type === BindingType.dom) {
-        if (binding.section.domGetterBindings.has(binding) && isOutputDOM()) {
-          replacement = t.callExpression(getBindingGetterIdentifier(binding), [
-            getScopeExpression(node.extra!.section!, binding.section),
-          ]);
-        }
-      } else if (binding.type === BindingType.hoist) {
-        if (node.extra?.[kIsInvoked]) {
-          if (isOutputDOM()) {
+    if (read.props === undefined) {
+      if (isOutputDOM()) {
+        if (readBinding.type === BindingType.dom) {
+          if (
+            !extra[kIsInvoked] &&
+            readBinding.section.domGetterBindings.has(readBinding)
+          ) {
             replacement = t.callExpression(
-              getBindingGetterIdentifier(binding),
-              [getScopeExpression(node.extra.section!, binding.section)],
+              getBindingGetterIdentifier(readBinding),
+              [getScopeExpression(extra.section!, readBinding.section)],
             );
           }
+        } else if (
+          readBinding.type === BindingType.hoist &&
+          extra[kIsInvoked]
+        ) {
+          replacement = t.callExpression(
+            getBindingGetterIdentifier(readBinding),
+            [getScopeExpression(extra.section!, readBinding.section)],
+          );
         } else {
-          replacement = t.identifier(binding.name);
+          replacement = createScopeReadExpression(extra.section!, readBinding);
         }
-      } else if (binding.name !== node.name) {
-        node.name = binding.name;
+      } else {
+        if (node.type !== "Identifier") {
+          replacement = t.identifier(readBinding.name);
+        } else if (
+          readBinding.name !== node.name &&
+          readBinding.type !== BindingType.dom &&
+          (readBinding.type !== BindingType.hoist || !extra[kIsInvoked])
+        ) {
+          node.name = readBinding.name;
+        }
       }
     } else {
-      replacement = t.identifier(binding.name);
-    }
-  } else if (read) {
-    const props = read.props
-      ? Array.isArray(read.props)
-        ? read.props.slice()
-        : [read.props]
-      : [];
-    let curNode = node;
-    let curBinding: Binding | undefined = read.binding;
-    let replaceMember:
-      | t.MemberExpression
-      | t.OptionalMemberExpression
-      | undefined;
-    replacement = t.identifier(read.binding.name);
-
-    while (
-      props.length &&
-      (curNode.type === "MemberExpression" ||
-        curNode.type === "OptionalMemberExpression")
-    ) {
-      const prop = props.pop()!;
-      const memberProp = getMemberExpressionPropString(curNode);
-      if (memberProp !== prop) break;
-      replaceMember = curNode;
-      curNode = curNode.object as
-        | t.Identifier
+      const props = read.props
+        ? Array.isArray(read.props)
+          ? read.props.slice()
+          : [read.props]
+        : [];
+      let curNode = node;
+      let curBinding: Binding | undefined = read.binding;
+      let replaceMember:
         | t.MemberExpression
-        | t.OptionalMemberExpression;
-    }
+        | t.OptionalMemberExpression
+        | undefined;
+      replacement = isOutputDOM()
+        ? createScopeReadExpression(extra.section!, read.binding)
+        : t.identifier(read.binding.name);
 
-    for (const prop of props) {
-      if (curBinding) {
-        curBinding = curBinding.propertyAliases.get(prop);
-      }
-      replacement = toMemberExpression(
-        replacement,
-        prop,
-        !!curBinding?.nullable,
-      );
-    }
-
-    if (replaceMember) {
-      if (
-        read.binding.nullable &&
-        replaceMember.object.type !== replacement.type
+      while (
+        props.length &&
+        (curNode.type === "MemberExpression" ||
+          curNode.type === "OptionalMemberExpression")
       ) {
-        replaceMember.type = "OptionalMemberExpression";
-        replaceMember.optional = true;
+        const prop = props.pop()!;
+        const memberProp = getMemberExpressionPropString(curNode);
+        if (memberProp !== prop) break;
+        replaceMember = curNode;
+        curNode = curNode.object as
+          | t.Identifier
+          | t.MemberExpression
+          | t.OptionalMemberExpression;
       }
-      replaceMember.object = withPreviousLocation(
-        replacement,
-        replaceMember.object,
-      );
-      replacement = undefined;
-    }
-  }
 
-  return replacement && withPreviousLocation(replacement, node);
+      for (const prop of props) {
+        if (curBinding) {
+          curBinding = curBinding.propertyAliases.get(prop);
+        }
+        replacement = toMemberExpression(
+          replacement,
+          prop,
+          !!curBinding?.nullable,
+        );
+      }
+
+      if (replaceMember) {
+        if (
+          read.binding.nullable &&
+          replaceMember.object.type !== replacement.type
+        ) {
+          replaceMember.type = "OptionalMemberExpression";
+          replaceMember.optional = true;
+        }
+        replaceMember.object = withPreviousLocation(
+          replacement,
+          replaceMember.object,
+        );
+        replacement = undefined;
+      }
+    }
+
+    return replacement && withPreviousLocation(replacement, node);
+  } else if (
+    binding &&
+    node.type == "Identifier" &&
+    node.name !== binding.name
+  ) {
+    node.name = binding.name;
+  }
 }
 
 function pruneBinding(bindings: Set<Binding>, binding: Binding) {
@@ -1731,15 +1743,23 @@ function resolveReferencedBindings(
     const rootBindings = getRootBindings(reads);
     for (const read of reads) {
       let { binding } = read;
-      if (read.node && read.node.extra?.assignmentTo !== binding) {
-        ({ binding } = (read.node.extra ??= {}).read ??=
-          resolveExpressionReference(rootBindings, binding));
+      if (read.node) {
+        const readExtra = (read.node.extra ??= {});
+        if (readExtra.assignmentTo !== binding) {
+          readExtra.section = expr.section;
+          ({ binding } = readExtra.read ??= resolveExpressionReference(
+            rootBindings,
+            binding,
+          ));
+        }
       }
       referencedBindings = bindingUtil.add(referencedBindings, binding);
     }
   } else if (reads) {
     if (reads.node) {
-      (reads.node.extra ??= {}).read = createRead(reads.binding, undefined);
+      const readExtra = (reads.node.extra ??= {});
+      readExtra.section = expr.section;
+      readExtra.read = createRead(reads.binding, undefined);
     }
     referencedBindings = reads.binding;
   }

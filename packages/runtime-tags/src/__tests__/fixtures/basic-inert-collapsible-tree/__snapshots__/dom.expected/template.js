@@ -5,8 +5,8 @@ export function $setup($scope) {
   _comments($scope["#childScope/0"]);
 }
 import * as _ from "@marko/runtime-tags/debug/dom";
-export const $input = /* @__PURE__ */_._const("input", ($scope, input) => {
-  const $comments_input_spread = input;
+export const $input = /* @__PURE__ */_._const("input", $scope => {
+  const $comments_input_spread = $scope.input;
   _comments_input_comments($scope["#childScope/0"], $comments_input_spread.comments);
   _comments_input_path($scope["#childScope/0"], $comments_input_spread.path);
 });

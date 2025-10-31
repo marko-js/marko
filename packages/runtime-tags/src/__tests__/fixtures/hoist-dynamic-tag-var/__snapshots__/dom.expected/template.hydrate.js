@@ -1,10 +1,10 @@
-// size: 391 (min) 171 (brotli)
+// size: 388 (min) 184 (brotli)
 (_._resume("a0", function ($scope) {
   return function (html) {
     $scope[0].innerHTML = html;
   };
 }),
-  _._script("b0", ({ 2: input_value }) => input_value),
+  _._script("b0", ($scope) => $scope[2]),
   _._script("c0", ($scope) => $get$hoisted_setHtml($scope._)("Hello world")));
 const $get$hoisted_setHtml = _._hoist(2, "d3");
 _._var_resume("c1", _._const(2));

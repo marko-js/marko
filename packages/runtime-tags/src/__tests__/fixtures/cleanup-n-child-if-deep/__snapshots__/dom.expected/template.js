@@ -7,7 +7,7 @@ const $if_content3__setup = $scope => {
   _child_input_name($scope["#childScope/0"], "Inner");
   $if_content3__write($scope);
 };
-const $if_content3__write = /* @__PURE__ */_._closure_get("write", ($scope, write) => _child_input_write($scope["#childScope/0"], write), $scope => $scope._._._);
+const $if_content3__write = /* @__PURE__ */_._closure_get("write", $scope => _child_input_write($scope["#childScope/0"], $scope._._._.write), $scope => $scope._._._);
 const $if_content3 = /* @__PURE__ */_._content_branch(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, $if_content3__setup);
 const $if_content2__setup = $scope => {
   _child($scope["#childScope/0"]);
@@ -15,9 +15,9 @@ const $if_content2__setup = $scope => {
   $if_content2__showInner($scope);
   $if_content2__write($scope);
 };
-const $if_content2__write = /* @__PURE__ */_._closure_get("write", ($scope, write) => _child_input_write($scope["#childScope/0"], write), $scope => $scope._._);
+const $if_content2__write = /* @__PURE__ */_._closure_get("write", $scope => _child_input_write($scope["#childScope/0"], $scope._._.write), $scope => $scope._._);
 const $if_content2__if = /* @__PURE__ */_._if("#text/1", $if_content3);
-const $if_content2__showInner = /* @__PURE__ */_._closure_get("showInner", ($scope, showInner) => $if_content2__if($scope, showInner ? 0 : 1), $scope => $scope._._);
+const $if_content2__showInner = /* @__PURE__ */_._closure_get("showInner", $scope => $if_content2__if($scope, $scope._._.showInner ? 0 : 1), $scope => $scope._._);
 const $if_content2 = /* @__PURE__ */_._content_branch(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace, out(1) */`D/${_child_walks}&%l`, $if_content2__setup);
 const $if_content__setup = $scope => {
   _child($scope["#childScope/0"]);
@@ -25,34 +25,28 @@ const $if_content__setup = $scope => {
   $if_content__showMiddle._($scope);
   $if_content__write._($scope);
 };
-const $if_content__write = /* @__PURE__ */_._if_closure("write", "#text/4", 0, ($scope, write) => _child_input_write($scope["#childScope/0"], write));
+const $if_content__write = /* @__PURE__ */_._if_closure("#text/4", 0, $scope => _child_input_write($scope["#childScope/0"], $scope._.write));
 const $if_content__if = /* @__PURE__ */_._if("#text/1", $if_content2);
-const $if_content__showMiddle = /* @__PURE__ */_._if_closure("showMiddle", "#text/4", 0, ($scope, showMiddle) => $if_content__if($scope, showMiddle ? 0 : 1));
+const $if_content__showMiddle = /* @__PURE__ */_._if_closure("#text/4", 0, $scope => $if_content__if($scope, $scope._.showMiddle ? 0 : 1));
 const $if_content = /* @__PURE__ */_._content_branch(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace, out(1) */`D/${_child_walks}&%l`, $if_content__setup);
 const $if = /* @__PURE__ */_._if("#text/4", $if_content);
-const $showOuter__script = _._script("__tests__/template.marko_0_showOuter", ($scope, {
-  showOuter
-}) => _._on($scope["#button/0"], "click", function () {
-  $showOuter($scope, showOuter = !showOuter);
+const $showOuter__script = _._script("__tests__/template.marko_0_showOuter", $scope => _._on($scope["#button/0"], "click", function () {
+  $showOuter($scope, !$scope.showOuter);
 }));
-const $showOuter = /* @__PURE__ */_._let("showOuter/5", ($scope, showOuter) => {
-  $if($scope, showOuter ? 0 : 1);
+const $showOuter = /* @__PURE__ */_._let("showOuter/5", $scope => {
+  $if($scope, $scope.showOuter ? 0 : 1);
   $showOuter__script($scope);
 });
-const $showMiddle__script = _._script("__tests__/template.marko_0_showMiddle", ($scope, {
-  showMiddle
-}) => _._on($scope["#button/1"], "click", function () {
-  $showMiddle($scope, showMiddle = !showMiddle);
+const $showMiddle__script = _._script("__tests__/template.marko_0_showMiddle", $scope => _._on($scope["#button/1"], "click", function () {
+  $showMiddle($scope, !$scope.showMiddle);
 }));
 const $showMiddle = /* @__PURE__ */_._let("showMiddle/6", $scope => {
   $if_content__showMiddle($scope);
   $showMiddle__script($scope);
 });
 const $showInner__closure = /* @__PURE__ */_._closure($if_content2__showInner);
-const $showInner__script = _._script("__tests__/template.marko_0_showInner", ($scope, {
-  showInner
-}) => _._on($scope["#button/2"], "click", function () {
-  $showInner($scope, showInner = !showInner);
+const $showInner__script = _._script("__tests__/template.marko_0_showInner", $scope => _._on($scope["#button/2"], "click", function () {
+  $showInner($scope, !$scope.showInner);
 }));
 const $showInner = /* @__PURE__ */_._let("showInner/7", $scope => {
   $showInner__closure($scope);

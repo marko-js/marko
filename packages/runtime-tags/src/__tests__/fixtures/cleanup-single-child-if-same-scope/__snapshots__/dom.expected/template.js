@@ -13,13 +13,11 @@ const $if_content__setup = $scope => {
 };
 const $if_content = /* @__PURE__ */_._content_branch("<div>child</div>", /* over(1) */"b", $if_content__setup);
 const $if = /* @__PURE__ */_._if("#text/2", $if_content);
-const $show__script = _._script("__tests__/template.marko_0_show", ($scope, {
-  show
-}) => _._on($scope["#button/0"], "click", function () {
-  $show($scope, show = !show);
+const $show__script = _._script("__tests__/template.marko_0_show", $scope => _._on($scope["#button/0"], "click", function () {
+  $show($scope, !$scope.show);
 }));
-const $show = /* @__PURE__ */_._let("show/3", ($scope, show) => {
-  $if($scope, show ? 0 : 1);
+const $show = /* @__PURE__ */_._let("show/3", $scope => {
+  $if($scope, $scope.show ? 0 : 1);
   $show__script($scope);
 });
 export function $setup($scope) {

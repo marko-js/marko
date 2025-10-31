@@ -1,11 +1,13 @@
-// size: 284 (min) 179 (brotli)
-const $x__script = _._script("a1", ($scope, { 2: x }) =>
+// size: 281 (min) 181 (brotli)
+const $x__script = _._script("a1", ($scope) =>
     _._on($scope[0], "click", function () {
-      $x($scope, ++x);
+      $x($scope, $scope[2] + 1);
     }),
   ),
-  $x = _._let(2, ($scope, x) => {
-    (_._text($scope[1], x), _._return($scope, x), $x__script($scope));
+  $x = _._let(2, ($scope) => {
+    (_._text($scope[1], $scope[2]),
+      _._return($scope, $scope[2]),
+      $x__script($scope));
   });
 (_._resume("a0", function ($scope) {
   return (_new_x) => {

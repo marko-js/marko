@@ -1,13 +1,15 @@
-// size: 169 (min) 119 (brotli)
-const $MyTag_content__c = _._const(6, ($scope, c) => _._text($scope[2], c)),
-  $x__script = _._script("a0", ($scope, { 3: x }) =>
+// size: 165 (min) 121 (brotli)
+const $MyTag_content__c = _._const(6, ($scope) =>
+    _._text($scope[2], $scope[6]),
+  ),
+  $x__script = _._script("a0", ($scope) =>
     _._on($scope[1], "click", function () {
-      $x($scope, ++x);
+      $x($scope, $scope[3] + 1);
     }),
   ),
-  $x = _._let(3, ($scope, x) => {
-    ($MyTag_content__c($scope[0], x),
-      _._text($scope[2], x),
+  $x = _._let(3, ($scope) => {
+    ($MyTag_content__c($scope[0], $scope[3]),
+      _._text($scope[2], $scope[3]),
       $x__script($scope));
   });
 init();

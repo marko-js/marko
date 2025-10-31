@@ -214,7 +214,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   (scopeLookup[serialized] ||= {
                     ___id: scopeId,
                   } as Scope),
-                  scopeLookup[serialized],
                 );
               } else {
                 for (const scope of serialized(serializeContext)) {

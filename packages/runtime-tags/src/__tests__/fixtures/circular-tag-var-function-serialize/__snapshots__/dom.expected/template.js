@@ -6,7 +6,7 @@ const $if_content__setup = $scope => {
   $if_content__setter._($scope);
 };
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $if_content__setter = /* @__PURE__ */_._if_closure("setter", "#text/0", 0, ($scope, setter) => _child_input_valueChange($scope["#childScope/0"], $valueChange($scope)));
+const $if_content__setter = /* @__PURE__ */_._if_closure("#text/0", 0, $scope => _child_input_valueChange($scope["#childScope/0"], $valueChange($scope)));
 const $if_content = /* @__PURE__ */_._content_branch(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, $if_content__setup);
 const $setter2 = /* @__PURE__ */_._const("setter");
 const $if = /* @__PURE__ */_._if("#text/0", $if_content);
@@ -15,13 +15,9 @@ export function $setup($scope) {
   $setter2($scope, $setter($scope));
   $if($scope, true ? 0 : 1);
 }
-function $valueChange({
-  _: {
-    setter
-  }
-}) {
+function $valueChange($scope) {
   return function () {
-    setter();
+    $scope._.setter();
   };
 }
 function $setter($scope) {

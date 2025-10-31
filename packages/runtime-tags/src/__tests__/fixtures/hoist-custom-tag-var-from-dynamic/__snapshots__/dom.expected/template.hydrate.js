@@ -1,8 +1,8 @@
-// size: 774 (min) 336 (brotli)
+// size: 773 (min) 347 (brotli)
 const $dynamicTag = _._dynamic_tag(0),
   $dynamicTag2 = _._dynamic_tag(1),
-  $input_content = _._const(4, ($scope, input_content) => {
-    ($dynamicTag($scope, input_content), $dynamicTag2($scope, input_content));
+  $input_content = _._const(4, ($scope) => {
+    ($dynamicTag($scope, $scope[4]), $dynamicTag2($scope, $scope[4]));
   });
 function $setup($scope) {
   _._return($scope, $_return($scope));
@@ -51,8 +51,8 @@ const $get$hoisted_setHtml2 = _._hoist(2, "a3", "a2"),
 ),
   _._resume("c5", _._hoist(2, "a1")),
   _._var_resume("c6", _._const(2)),
-  _._script("c8", ({ 6: $hoisted_setHtml }) => {
-    for (const fn of $hoisted_setHtml) fn("Hoist from custom tag");
+  _._script("c8", ($scope) => {
+    for (const fn of $scope[6]) fn("Hoist from custom tag");
   }),
   _._script("c9", ($scope) => {
     ($get$hoisted_setHtml2($scope)("Hoist from dynamic tag"),

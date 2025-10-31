@@ -264,10 +264,9 @@ export default {
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
         const nodeRef = getOptimizedOnlyChildNodeBinding(tag, tagSection);
-        setClosureSignalBuilder(tag, (closure, render) => {
+        setClosureSignalBuilder(tag, (_closure, render) => {
           return callRuntime(
             "_for_closure",
-            getScopeAccessorLiteral(closure),
             getScopeAccessorLiteral(nodeRef),
             render,
           );

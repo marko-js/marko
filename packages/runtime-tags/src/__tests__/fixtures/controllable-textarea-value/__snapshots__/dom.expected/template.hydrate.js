@@ -1,7 +1,7 @@
-// size: 187 (min) 117 (brotli)
-const $value = _._let(2, ($scope, value) => {
-  (_._attr_textarea_value($scope, 0, value, $valueChange($scope)),
-    _._text($scope[1], value));
+// size: 189 (min) 119 (brotli)
+const $value = _._let(2, ($scope) => {
+  (_._attr_textarea_value($scope, 0, $scope[2], $valueChange($scope)),
+    _._text($scope[1], $scope[2]));
 });
 function $valueChange($scope) {
   return (_new_value) => {

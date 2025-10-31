@@ -1,9 +1,9 @@
 export const $template = "<input type=text><span> </span>";
 export const $walks = /* get, over(1), next(1), get, out(1) */" bD l";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $value = /* @__PURE__ */_._let("value/2", ($scope, value) => {
-  _._attr_input_value($scope, "#input/0", value, $valueChange($scope));
-  _._text($scope["#text/1"], value);
+const $value = /* @__PURE__ */_._let("value/2", $scope => {
+  _._attr_input_value($scope, "#input/0", $scope.value, $valueChange($scope));
+  _._text($scope["#text/1"], $scope.value);
 });
 const $setup__script = _._script("__tests__/template.marko_0", $scope => _._attr_input_value_script($scope, "#input/0"));
 export function $setup($scope) {

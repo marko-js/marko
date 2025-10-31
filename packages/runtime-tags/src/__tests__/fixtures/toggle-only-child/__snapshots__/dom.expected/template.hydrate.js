@@ -1,13 +1,13 @@
-// size: 290 (min) 185 (brotli)
-const $if_content__value = _._if_closure(5, 0, 0, ($scope, value) =>
-    _._text($scope[0], value),
+// size: 291 (min) 193 (brotli)
+const $if_content__value = _._if_closure(0, 0, ($scope) =>
+    _._text($scope[0], $scope._[5]),
   ),
   $if_content__setup = $if_content__value,
   $if_content = _._content_branch("<span> </span>", "D l", $if_content__setup),
   $if = _._if(0, $if_content),
-  $value = _._let(5, ($scope, value) => {
-    (_._attr_input_value($scope, 1, value, $valueChange($scope)),
-      $if($scope, value ? 0 : 1),
+  $value = _._let(5, ($scope) => {
+    (_._attr_input_value($scope, 1, $scope[5], $valueChange($scope)),
+      $if($scope, $scope[5] ? 0 : 1),
       $if_content__value($scope));
   });
 function $valueChange($scope) {
