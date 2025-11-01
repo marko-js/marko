@@ -11,6 +11,6 @@ export default _._template("__tests__/tags/child.marko", input => {
     $valueChange
   }, "__tests__/tags/child.marko", 0, {
     input: 0,
-    $valueChange: "4:3"
+    $valueChange: "4:8"
   });
 });

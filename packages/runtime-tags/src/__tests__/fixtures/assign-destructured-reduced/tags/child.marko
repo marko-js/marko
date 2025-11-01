@@ -1,8 +1,8 @@
 <const/{value}=input>
 <script>
   input;
-  value = 2
-  if (!value === 2) {
+  if ((value = 2) !== 2) {
+    // Assignments always return their value.
     throw new Error(`Expected value to be 2`);
   }
 </script>

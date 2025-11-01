@@ -1,4 +1,4 @@
-// size: 19294 (min) 7309 (brotli)
+// size: 19325 (min) 7358 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -40,6 +40,9 @@ function forUntil(until, from, step, cb) {
     delta = step || 1;
   for (let steps = (until - start) / delta, i = 0; i < steps; i++)
     cb(start + i * delta);
+}
+function _call(fn, v) {
+  return (fn(v), v);
 }
 function stringifyClassObject(name, value) {
   return value ? name : "";

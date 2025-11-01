@@ -1,6 +1,6 @@
-// size: 286 (min) 209 (brotli)
+// size: 282 (min) 178 (brotli)
 const $input__OR__valueChange__script = _._script("a0", ($scope) => {
-    if (($scope[1], $scope[2](2), 2 === !$scope[1].value))
+    if (($scope[1], 2 !== _._call($scope[2], 2)))
       throw new Error("Expected value to be 2");
   }),
   $input__OR__valueChange = _._or(3, $input__OR__valueChange__script),
