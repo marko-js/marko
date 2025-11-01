@@ -1270,7 +1270,15 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
         updateExpressions.delete(node.expression)
       ) {
         node.expression = node.expression.left as t.Expression;
-        return node;
+      }
+
+      if (
+        node.expression.type === "CallExpression" &&
+        updateExpressions.delete(node.expression)
+      ) {
+        node.expression.callee = node.expression
+          .arguments[0] as t.MemberExpression;
+        node.expression.arguments = [node.expression.arguments[1]];
       }
       break;
     }
@@ -1384,10 +1392,13 @@ function getBuildAssignment(extra: AssignedBindingExtra) {
   const { assignmentTo, assignment } = extra;
   if (assignmentTo) {
     return (section: Section, value: t.Expression) => {
-      return t.callExpression(
+      const replacement = callRuntime(
+        "_call",
         createScopeReadExpression(section, assignmentTo),
-        [value],
+        value,
       );
+      updateExpressions.add(replacement);
+      return replacement;
     };
   }
 

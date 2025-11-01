@@ -1,3 +1,8 @@
+export function _call<T>(fn: (v: T) => unknown, v: T): T {
+  fn(v);
+  return v;
+}
+
 export function classValue(classValue: unknown) {
   return toDelimitedString(classValue, " ", stringifyClassObject);
 }
