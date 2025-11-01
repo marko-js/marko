@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.99
+
+### Patch Changes
+
+- [#2921](https://github.com/marko-js/marko/pull/2921) [`279eaad`](https://github.com/marko-js/marko/commit/279eaad827775332b150ccd6d5aa40e987f2c3e8) Thanks [@rturnq](https://github.com/rturnq)! - Loosen assignment check to allow any function parent
+
+- [#2920](https://github.com/marko-js/marko/pull/2920) [`2bed9ef`](https://github.com/marko-js/marko/commit/2bed9ef7d7ba59ac65773be2424cef33ea4623f9) Thanks [@rturnq](https://github.com/rturnq)! - Consistently read latest value from let tags
+
 ## 6.0.98
 
 ### Patch Changes
