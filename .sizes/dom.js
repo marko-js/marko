@@ -1,4 +1,4 @@
-// size: 19325 (min) 7358 (brotli)
+// size: 19323 (min) 7323 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -1726,7 +1726,7 @@ var runRender = (render) => render.M(render.q, render.H),
               (branch = scope.k),
               !branch?.z &&
                 (!checkPending || !handlePendingTry(fn, scope, branch)) &&
-                fn(scope, scope));
+                fn(scope));
         } else runEffects2(effects);
       }
     )(runEffects)),

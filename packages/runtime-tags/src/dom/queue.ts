@@ -1,7 +1,7 @@
 import type { BranchScope, Scope } from "../common/types";
 import { renderCatch } from "./control-flow";
 import { enableBranches } from "./resume";
-import type { Signal } from "./signals";
+import type { Signal, SignalFn } from "./signals";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 type PendingRender = {
@@ -170,18 +170,18 @@ export let _enable_catch = () => {
     (effects: unknown[], checkPending = placeholderShown.has(effects)) => {
       if (checkPending || caughtError.has(effects)) {
         let i = 0;
-        let fn: ExecFn;
+        let fn: SignalFn;
         let scope: Scope;
         let branch: BranchScope | undefined;
         for (; i < effects.length; ) {
-          fn = effects[i++] as ExecFn;
+          fn = effects[i++] as SignalFn;
           scope = effects[i++] as Scope;
           branch = scope.___closestBranch;
           if (
             !branch?.___destroyed &&
             !(checkPending && handlePendingTry(fn, scope, branch))
           ) {
-            fn(scope, scope);
+            fn(scope);
           }
         }
       } else {
