@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-if-else-wrong-attr/template.marko:3:6
+      1 | if=false
+      2 |   -- A
+    > 3 | else of=true
+        |      ^^^^^^^ The [`else` tag](https://markojs.com/docs/reference/core-tag#if--else) only supports an `if=` attribute.
+      4 |   -- B

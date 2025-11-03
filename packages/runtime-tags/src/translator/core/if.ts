@@ -381,7 +381,7 @@ function assertHasPrecedingCondition(tag: t.NodePath<t.MarkoTag>) {
 
   if (
     !isConditionTag(prev) ||
-    (getTagName(prev) !== "else" && !prev.node.attributes.length)
+    (getTagName(prev) === "else" && !prev.node.attributes.length)
   ) {
     throw tag.buildCodeFrameError(
       `The [\`<${getTagName(tag)}>\` tag](https://markojs.com/docs/reference/core-tag#if--else) must have a preceding \`<if=cond>\` or \`<else if=cond>\`.`,
@@ -436,7 +436,7 @@ function assertOptionalIfAttribute(tag: t.NodePath<t.MarkoTag>) {
     node.attributes.length > 1 ||
     (ifAttr && (ifAttr as t.MarkoAttribute).name !== "if")
   ) {
-    const start = node.attributes[1].loc?.start;
+    const start = node.attributes[0].loc?.start;
     const end = node.attributes[node.attributes.length - 1].loc?.end;
     const msg = `The [\`${getTagName(tag)}\` tag](https://markojs.com/docs/reference/core-tag#if--else) only supports an \`if=\` attribute.`;
 
