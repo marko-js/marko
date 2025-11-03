@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.100
+
+### Patch Changes
+
+- [#2923](https://github.com/marko-js/marko/pull/2923) [`5ce5231`](https://github.com/marko-js/marko/commit/5ce523177bf9c4ff01f47fd726a163f19ba2dec7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with source tracking being broken with destructured aliases.
+
+- [#2923](https://github.com/marko-js/marko/pull/2923) [`852974b`](https://github.com/marko-js/marko/commit/852974ba7b3db7da93e06db79e452a8282c92b7c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure let tag with change handler properly tracks reactive sources.
+
 ## 6.0.99
 
 ### Patch Changes
