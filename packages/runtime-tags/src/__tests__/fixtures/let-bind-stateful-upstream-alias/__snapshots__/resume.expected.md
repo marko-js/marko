@@ -1,0 +1,93 @@
+# Render
+```html
+<html>
+  <head />
+  <body>
+    <button>
+      Clear
+    </button>
+    <!--M_*1 #button/2-->
+    <ul>
+      <li>
+        Learn Marko
+        <!--M_*4 #text/0-->
+      </li>
+      <li>
+        Make a Website
+        <!--M_*5 #text/0-->
+      </li>
+      <!--M_}1 #ul/3 5 4-->
+    </ul>
+    <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.f = [0, _.b = {
+          "#scopeOffset/1": 3,
+          "LoopScopeMap:#ul/3": new Map(_.a = [
+            [0, _.d = {}],
+            [1, _.e = {}]
+          ]),
+          store_clear: _.c = {},
+          "#childScope/0": _.c
+        }, _.c, 1, _.d, _.e], _.b["TagVariableChange:list"] = _._[
+          "__tests__/tags/store.marko_0/_return"
+          ](_.c), _.b.store_clear = _._[
+          "__tests__/tags/store.marko_0/_return2"
+          ](_.c), _.c["#TagVariable"] = _._[
+          "__tests__/template.marko_0_store/var"
+          ](_.b), _.f),
+        "__tests__/template.marko_0_store_clear",
+        1
+      ];
+      M._.w()
+    </script>
+  </body>
+</html>
+```
+
+
+# Render
+```js
+container.querySelector("button").click();
+```
+```html
+<html>
+  <head />
+  <body>
+    <button>
+      Clear
+    </button>
+    <!--M_*1 #button/2-->
+    <ul>
+      <!--M_}1 #ul/3 5 4-->
+    </ul>
+    <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.f = [0, _.b = {
+          "#scopeOffset/1": 3,
+          "LoopScopeMap:#ul/3": new Map(_.a = [
+            [0, _.d = {}],
+            [1, _.e = {}]
+          ]),
+          store_clear: _.c = {},
+          "#childScope/0": _.c
+        }, _.c, 1, _.d, _.e], _.b["TagVariableChange:list"] = _._[
+          "__tests__/tags/store.marko_0/_return"
+          ](_.c), _.b.store_clear = _._[
+          "__tests__/tags/store.marko_0/_return2"
+          ](_.c), _.c["#TagVariable"] = _._[
+          "__tests__/template.marko_0_store/var"
+          ](_.b), _.f),
+        "__tests__/template.marko_0_store_clear",
+        1
+      ];
+      M._.w()
+    </script>
+  </body>
+</html>
+```
+
+# Mutations
+```
+REMOVE li before li
+REMOVE li before html/body/ul/#comment
+```

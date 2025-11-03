@@ -1,0 +1,23 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "n",
+      "$$list$1": "o",
+      "$$_return2": "r",
+      "$$_return": "c",
+      "$$for_content__item": "s",
+      "$$for_content__$params": "_",
+      "$$for_content": "e",
+      "$$for": "i",
+      "$$list": "m",
+      "$$clear__script": "a",
+      "$$clear": "u",
+      "$$store_list__OR__store_listChange": "l",
+      "$$store_list": "f",
+      "$$store_listChange": "g",
+      "$$store_clear__script": "b",
+      "$$store_clear": "h"
+    }
+  }
+}

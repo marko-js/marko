@@ -1190,6 +1190,8 @@ function resolveBindingSources(binding: Binding) {
         binding.sources = aliasRoot.sources;
       } else if (binding.assignmentSections) {
         binding.sources = createSources(binding, undefined);
+      } else {
+        resolveDerivedSources(binding);
       }
       return;
     }
