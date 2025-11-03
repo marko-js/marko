@@ -1,0 +1,15 @@
+<store/store=[
+  "Learn Marko",
+  "Make a Website",
+]/>
+
+<const/{ list, clear }=store>
+
+<button onClick=clear>Clear</>
+<ul>
+  <for|item| of=list>
+    <li>
+      ${item}
+    </li>
+  </for>
+</ul>

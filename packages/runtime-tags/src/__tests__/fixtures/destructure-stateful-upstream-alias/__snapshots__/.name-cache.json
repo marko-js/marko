@@ -1,0 +1,18 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "n",
+      "$$list$1": "o",
+      "$$_return2": "r",
+      "$$_return": "c",
+      "$$for_content__item": "s",
+      "$$for_content__$params": "_",
+      "$$for_content": "e",
+      "$$for": "i",
+      "$$list": "m",
+      "$$clear__script": "a",
+      "$$clear": "u"
+    }
+  }
+}

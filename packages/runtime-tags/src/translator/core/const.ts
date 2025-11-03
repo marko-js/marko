@@ -76,7 +76,7 @@ export default {
         }
       }
       if (!valueExtra.nullable) binding.nullable = false;
-      setBindingDownstream(binding, valueExtra);
+      if (!upstreamAlias) setBindingDownstream(binding, valueExtra);
     }
   },
   translate: {
