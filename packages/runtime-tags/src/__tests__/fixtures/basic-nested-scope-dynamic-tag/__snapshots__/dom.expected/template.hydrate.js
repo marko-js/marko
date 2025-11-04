@@ -1,12 +1,11 @@
-// size: 224 (min) 169 (brotli)
+// size: 220 (min) 155 (brotli)
 const $falseChild_content__count__script = _._script("b0", ($scope) =>
-    _._on($scope[0], "click", function () {
-      $count($scope._, $scope._[1] + 1);
+    _._on($scope.a, "click", function () {
+      $count($scope._, $scope._.b + 1);
     }),
   ),
   $falseChild_content__count = _._closure_get(1, ($scope) => {
-    (_._text($scope[1], $scope._[1]),
-      $falseChild_content__count__script($scope));
+    (_._text($scope.b, $scope._.b), $falseChild_content__count__script($scope));
   }),
   $falseChild_content__setup = $falseChild_content__count;
 _._content_resume(

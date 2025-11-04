@@ -121,7 +121,7 @@ export default {
               const objProps: t.ObjectExpression["properties"] = [];
               forEach(childSection.referencedLocalClosures, (closure) => {
                 const closureSignal = getSignal(childSection, closure);
-                const key = toPropertyName(getScopeAccessor(closure));
+                const key = toPropertyName(getScopeAccessor(closure, true));
                 if (signalHasStatements(closureSignal)) {
                   const expr = getSignalFn(closureSignal);
                   if (t.isFunction(expr) && t.isBlockStatement(expr.body)) {

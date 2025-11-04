@@ -91,7 +91,7 @@ export default {
             callRuntime(
               "_lifecycle",
               scopeIdentifier,
-              getScopeAccessorLiteral(lifecycleAttrsRef),
+              getScopeAccessorLiteral(lifecycleAttrsRef, true),
               propsToExpression(translatedAttrs.properties),
             ),
           ),

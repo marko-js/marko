@@ -1,10 +1,10 @@
-// size: 252 (min) 165 (brotli)
+// size: 247 (min) 149 (brotli)
 const $input__OR__count = _._or(5, ($scope) =>
-    _._text($scope[1], $scope[3].format($scope[4])),
+    _._text($scope.b, $scope.d.format($scope.e)),
   ),
   $count__script = _._script("a0", ($scope) =>
-    _._on($scope[0], "click", function () {
-      $count($scope, $scope[4] + 1);
+    _._on($scope.a, "click", function () {
+      $count($scope, $scope.e + 1);
     }),
   ),
   $count = _._let(4, ($scope) => {

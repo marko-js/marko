@@ -291,7 +291,7 @@ export const IfTag = {
               setClosureSignalBuilder(branchTag, (_closure, render) => {
                 return callRuntime(
                   "_if_closure",
-                  getScopeAccessorLiteral(nodeRef),
+                  getScopeAccessorLiteral(nodeRef, true),
                   t.numericLiteral(i),
                   render,
                 );
@@ -308,7 +308,7 @@ export const IfTag = {
           signal.build = () => {
             return callRuntime(
               "_if",
-              getScopeAccessorLiteral(nodeRef),
+              getScopeAccessorLiteral(nodeRef, true),
               ...rendererIdentifiers.reverse(),
             );
           };

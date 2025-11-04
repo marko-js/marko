@@ -106,9 +106,9 @@ container?.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/button/pre0/#text1 "0" => "1"
-UPDATE html/body/button/pre1/#text1 "0" => "2"
-UPDATE html/body/button/pre2/#text1 "{}" => "{\"c\":4}"
-UPDATE html/body/button/pre3/#text1 "0" => "7"
 UPDATE html/body/button/pre4/#text1 "[]" => "[9]"
+UPDATE html/body/button/pre3/#text1 "0" => "7"
+UPDATE html/body/button/pre0/#text1 "0" => "1"
+UPDATE html/body/button/pre2/#text1 "{}" => "{\"c\":4}"
+UPDATE html/body/button/pre1/#text1 "0" => "2"
 ```

@@ -64,7 +64,7 @@ export let _dynamic_tag = (
     rendered = true;
     _scope_id();
     _html(
-      `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer}/0` : 0, branchId, renderer)}>`,
+      `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer}/0` : "a", branchId, renderer)}>`,
     );
 
     if (!voidElementsReg.test(renderer)) {
@@ -79,7 +79,7 @@ export let _dynamic_tag = (
         _html(
           _attr_textarea_value(
             branchId,
-            MARKO_DEBUG ? `#${renderer}/0` : 0,
+            MARKO_DEBUG ? `#${renderer}/0` : "a",
             input.value,
             input.valueChange,
           ),
@@ -96,7 +96,7 @@ export let _dynamic_tag = (
         ) {
           _attr_select_value(
             branchId,
-            MARKO_DEBUG ? `#${renderer}/0` : 0,
+            MARKO_DEBUG ? `#${renderer}/0` : "a",
             input.value,
             input.valueChange,
             renderContent,
@@ -104,7 +104,7 @@ export let _dynamic_tag = (
         } else {
           _dynamic_tag(
             branchId,
-            MARKO_DEBUG ? `#${renderer}/0` : 0,
+            MARKO_DEBUG ? `#${renderer}/0` : "a",
             renderContent,
             [],
             0,
@@ -125,11 +125,11 @@ export let _dynamic_tag = (
     if (
       childScope &&
       (childScope[
-        AccessorPrefix.EventAttributes + (MARKO_DEBUG ? `#${renderer}/0` : 0)
+        AccessorPrefix.EventAttributes + (MARKO_DEBUG ? `#${renderer}/0` : "a")
       ] ||
         childScope[
           AccessorPrefix.ControlledHandler +
-            (MARKO_DEBUG ? `#${renderer}/0` : 0)
+            (MARKO_DEBUG ? `#${renderer}/0` : "a")
         ])
     ) {
       childScope.___renderer = renderer;

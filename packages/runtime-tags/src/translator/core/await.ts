@@ -181,7 +181,7 @@ export default {
         signal.build = () => {
           return callRuntime(
             "_await",
-            getScopeAccessorLiteral(nodeRef),
+            getScopeAccessorLiteral(nodeRef, true),
             t.identifier(bodySection.name),
           );
         };

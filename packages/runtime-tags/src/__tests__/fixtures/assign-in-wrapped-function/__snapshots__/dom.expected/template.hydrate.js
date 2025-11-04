@@ -1,10 +1,10 @@
-// size: 110 (min) 103 (brotli)
+// size: 106 (min) 98 (brotli)
 const $count__script = _._script("a0", ($scope) =>
-    _._on($scope[0], "click", () => {
-      $count($scope, $scope[2] + 1);
+    _._on($scope.a, "click", () => {
+      $count($scope, $scope.c + 1);
     }),
   ),
   $count = _._let(2, ($scope) => {
-    (_._text($scope[1], $scope[2]), $count__script($scope));
+    (_._text($scope.b, $scope.c), $count__script($scope));
   });
 init();

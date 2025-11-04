@@ -1,5 +1,5 @@
-// size: 54 (min) 58 (brotli)
+// size: 52 (min) 55 (brotli)
 _._var_resume(
   "b0",
-  _._const(3, ($scope) => _._text($scope[2], $scope[3])),
+  _._const(3, ($scope) => _._text($scope.c, $scope.d)),
 );

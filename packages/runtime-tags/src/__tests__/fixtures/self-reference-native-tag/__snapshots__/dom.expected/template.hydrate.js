@@ -1,7 +1,7 @@
-// size: 80 (min) 74 (brotli)
+// size: 78 (min) 71 (brotli)
 (_._script("a0", ($scope) =>
-  _._on($scope[0], "click", function () {
-    $scope[0].innerHTML = "clicked";
+  _._on($scope.a, "click", function () {
+    $scope.a.innerHTML = "clicked";
   }),
 ),
   init());

@@ -1,6 +1,6 @@
-// size: 669 (min) 289 (brotli)
+// size: 670 (min) 285 (brotli)
 const $if_content__checkedValue__OR__checkedValueChange = _._or(1, ($scope) =>
-    _._attr_input_checkedValue($scope, 0, $scope._[6], $scope._[7], "b"),
+    _._attr_input_checkedValue($scope, "a", $scope._.g, $scope._.h, "b"),
   ),
   $if_content__checkedValue = _._if_closure(
     1,
@@ -13,7 +13,7 @@ const $if_content__checkedValue__OR__checkedValueChange = _._or(1, ($scope) =>
     $if_content__checkedValue__OR__checkedValueChange,
   ),
   $if_content__setup__script = _._script("a1", ($scope) =>
-    _._attr_input_checkedValue_script($scope, 0),
+    _._attr_input_checkedValue_script($scope, "a"),
   ),
   $if_content__setup = ($scope) => {
     ($if_content__checkedValue._($scope),
@@ -27,25 +27,25 @@ const $if_content__checkedValue__OR__checkedValueChange = _._or(1, ($scope) =>
   ),
   $if = _._if(1, $if_content),
   $show__script = _._script("a2", ($scope) =>
-    _._on($scope[4], "click", function () {
-      $show($scope, !$scope[5]);
+    _._on($scope.e, "click", function () {
+      $show($scope, !$scope.f);
     }),
   ),
   $show = _._let(5, ($scope) => {
-    ($if($scope, $scope[5] ? 0 : 1), $show__script($scope));
+    ($if($scope, $scope.f ? 0 : 1), $show__script($scope));
   }),
   $checkedValue__OR__checkedValueChange = _._or(8, ($scope) => {
-    (_._attr_input_checkedValue($scope, 0, $scope[6], $scope[7], "a"),
-      _._attr_input_checkedValue($scope, 2, $scope[6], $scope[7], "c"));
+    (_._attr_input_checkedValue($scope, "a", $scope.g, $scope.h, "a"),
+      _._attr_input_checkedValue($scope, "c", $scope.g, $scope.h, "c"));
   }),
   $checkedValue = _._let(6, ($scope) => {
-    (_._text($scope[3], $scope[6]),
+    (_._text($scope.d, $scope.g),
       $checkedValue__OR__checkedValueChange($scope),
       $if_content__checkedValue($scope));
   });
 (_._script("a3", ($scope) => {
-  (_._attr_input_checkedValue_script($scope, 0),
-    _._attr_input_checkedValue_script($scope, 2));
+  (_._attr_input_checkedValue_script($scope, "a"),
+    _._attr_input_checkedValue_script($scope, "c"));
 }),
   _._resume("a0", function ($scope) {
     return (_new_checkedValue) => {

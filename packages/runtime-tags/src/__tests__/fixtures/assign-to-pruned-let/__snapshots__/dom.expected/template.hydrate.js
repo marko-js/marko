@@ -1,6 +1,6 @@
-// size: 76 (min) 80 (brotli)
+// size: 75 (min) 73 (brotli)
 (_2._script("a0", ($scope) =>
-  _2._on($scope[0], "click", function (_, el) {
+  _2._on($scope.a, "click", function (_, el) {
     el.textContent = "0";
   }),
 ),

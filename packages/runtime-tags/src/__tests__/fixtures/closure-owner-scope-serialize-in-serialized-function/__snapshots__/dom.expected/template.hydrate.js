@@ -1,8 +1,8 @@
-// size: 141 (min) 108 (brotli)
-(_._script("a2", ($scope) => $scope[1]()),
+// size: 138 (min) 102 (brotli)
+(_._script("a2", ($scope) => $scope.b()),
   _._resume("a1", function ($scope) {
     return function () {
-      $scope[0].innerHTML = $scope._[1]();
+      $scope.a.innerHTML = $scope._.b();
     };
   }),
   _._resume("a0", function () {

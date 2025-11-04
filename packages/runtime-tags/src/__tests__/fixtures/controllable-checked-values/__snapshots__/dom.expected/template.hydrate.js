@@ -1,17 +1,17 @@
-// size: 391 (min) 172 (brotli)
+// size: 395 (min) 157 (brotli)
 const $checkedValue__OR__checkedValueChange = _._or(6, ($scope) => {
-    (_._attr_input_checkedValue($scope, 0, $scope[4], $scope[5], "a"),
-      _._attr_input_checkedValue($scope, 1, $scope[4], $scope[5], "b"),
-      _._attr_input_checkedValue($scope, 2, $scope[4], $scope[5], "c"));
+    (_._attr_input_checkedValue($scope, "a", $scope.e, $scope.f, "a"),
+      _._attr_input_checkedValue($scope, "b", $scope.e, $scope.f, "b"),
+      _._attr_input_checkedValue($scope, "c", $scope.e, $scope.f, "c"));
   }),
   $checkedValue = _._let(4, ($scope) => {
-    (_._text($scope[3], $scope[4]),
+    (_._text($scope.d, $scope.e),
       $checkedValue__OR__checkedValueChange($scope));
   });
 (_._script("a1", ($scope) => {
-  (_._attr_input_checkedValue_script($scope, 0),
-    _._attr_input_checkedValue_script($scope, 1),
-    _._attr_input_checkedValue_script($scope, 2));
+  (_._attr_input_checkedValue_script($scope, "a"),
+    _._attr_input_checkedValue_script($scope, "b"),
+    _._attr_input_checkedValue_script($scope, "c"));
 }),
   _._resume("a0", function ($scope) {
     return (_new_checkedValue) => {

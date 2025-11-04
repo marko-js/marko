@@ -167,7 +167,7 @@ export default {
         signal.build = () => {
           return callRuntime(
             "_try",
-            getScopeAccessorLiteral(nodeRef),
+            getScopeAccessorLiteral(nodeRef, true),
             t.identifier(bodySection.name),
           );
         };

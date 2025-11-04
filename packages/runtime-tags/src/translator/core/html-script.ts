@@ -26,6 +26,7 @@ import {
   trackDomVarReferences,
 } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import { createScopeReadExpression } from "../util/scope-read";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
@@ -177,8 +178,7 @@ export default {
         translateDomVar(tag, nodeBinding);
       }
 
-      const visitAccessor = nodeBinding && getScopeAccessorLiteral(nodeBinding);
-      if (visitAccessor) {
+      if (nodeBinding) {
         walks.visit(tag, WalkCode.Get);
       }
 
@@ -208,7 +208,7 @@ export default {
                 t.expressionStatement(
                   callRuntime(
                     helper,
-                    t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                    createScopeReadExpression(nodeBinding!),
                     value,
                   ),
                 ),
@@ -233,7 +233,7 @@ export default {
                 t.expressionStatement(
                   callRuntime(
                     "_on",
-                    t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                    createScopeReadExpression(nodeBinding!),
                     t.stringLiteral(getEventHandlerName(name)),
                     value,
                   ),
@@ -247,7 +247,7 @@ export default {
                 t.expressionStatement(
                   callRuntime(
                     "_attr",
-                    t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                    createScopeReadExpression(nodeBinding!),
                     t.stringLiteral(name),
                     value,
                   ),
@@ -260,6 +260,7 @@ export default {
       }
 
       if (spreadExpression) {
+        const visitAccessor = getScopeAccessorLiteral(nodeBinding!);
         if (isHTML) {
           addHTMLEffectCall(tagSection, tagExtra.referencedBindings);
 
@@ -342,11 +343,7 @@ export default {
             t.expressionStatement(
               callRuntime(
                 "_text_content",
-                t.memberExpression(
-                  scopeIdentifier,
-                  getScopeAccessorLiteral(nodeBinding!),
-                  true,
-                ),
+                createScopeReadExpression(nodeBinding!),
                 textLiteral,
               ),
             ),

@@ -61,7 +61,6 @@ import { withLeadingComment } from "./with-comment";
 
 export type Signal = {
   identifier: t.Identifier;
-  valueAccessor?: t.Expression;
   referencedBindings: ReferencedBindings;
   section: Section;
   build: undefined | (() => t.Expression | undefined);
@@ -233,7 +232,7 @@ export function getSignal(
           scopeOffset || referencedBindings.length > 2
             ? t.numericLiteral(referencedBindings.length - 1)
             : undefined,
-          scopeOffset && getScopeAccessorLiteral(scopeOffset),
+          scopeOffset && getScopeAccessorLiteral(scopeOffset, true),
         );
       };
     } else if (
@@ -248,7 +247,7 @@ export function getSignal(
           isDynamicClosure(section, canonicalClosure)
           ? callRuntime(
               "_closure_get",
-              getScopeAccessorLiteral(canonicalClosure),
+              getScopeAccessorLiteral(canonicalClosure, true),
               render,
               isImmediateOwner(section, canonicalClosure)
                 ? undefined
@@ -279,11 +278,10 @@ export function initValue(binding: Binding, isLet = false) {
 
     return callRuntime(
       isLet ? "_let" : "_const",
-      getScopeAccessorLiteral(binding, isLet),
+      getScopeAccessorLiteral(binding, true, isLet),
       fn,
     );
   };
-  signal.valueAccessor = getScopeAccessorLiteral(binding);
 
   for (const alias of binding.aliases) {
     initValue(alias);
@@ -366,7 +364,7 @@ export function getSignalFn(signal: Signal): t.Expression {
                     ...getTranslatedExtraArgs(aliasSignal),
                   ]),
                 ),
-                [createScopeReadExpression(binding.section, binding)],
+                [createScopeReadExpression(binding)],
               ),
             ),
           );
@@ -375,7 +373,7 @@ export function getSignalFn(signal: Signal): t.Expression {
             t.expressionStatement(
               t.callExpression(aliasSignal.identifier, [
                 scopeIdentifier,
-                createScopeReadExpression(binding.section, binding),
+                createScopeReadExpression(binding),
                 ...getTranslatedExtraArgs(aliasSignal),
               ]),
             ),
@@ -391,7 +389,7 @@ export function getSignalFn(signal: Signal): t.Expression {
           t.callExpression(aliasSignal.identifier, [
             scopeIdentifier,
             toMemberExpression(
-              createScopeReadExpression(binding.section, binding),
+              createScopeReadExpression(binding),
               key,
               binding.nullable,
             ),
@@ -404,10 +402,7 @@ export function getSignalFn(signal: Signal): t.Expression {
     if (assertsHoists) {
       signal.render.push(
         t.expressionStatement(
-          callRuntime(
-            "_assert_hoist",
-            createScopeReadExpression(binding.section, binding),
-          ),
+          callRuntime("_assert_hoist", createScopeReadExpression(binding)),
         ),
       );
     }
@@ -852,10 +847,7 @@ function writeDomGetters(section: Section) {
           callRuntime(
             "_el",
             t.stringLiteral(registerId),
-            t.stringLiteral(
-              getAccessorPrefix().Getter +
-                getScopeAccessorLiteral(binding).value,
-            ),
+            getScopeAccessorLiteral(binding, true),
           ),
         ),
       ]),
@@ -871,7 +863,7 @@ function writeHoists(section: Section) {
           ? t.stringLiteral(
               getAccessorPrefix().Getter + getScopeAccessor(binding),
             )
-          : getScopeAccessorLiteral(binding),
+          : getScopeAccessorLiteral(binding, true),
       ];
       let currentSection: Section | undefined = section;
       while (currentSection && currentSection !== hoistedBinding.section) {
@@ -1251,7 +1243,7 @@ function replaceBindingReadNode(node: t.Node) {
       const { extra } = node.callee;
       const binding = extra?.read?.binding;
       if (binding?.type === BindingType.dom) {
-        const replacement = createScopeReadExpression(extra!.section!, binding);
+        const replacement = createScopeReadExpression(binding, extra!.section);
         return isOptimize()
           ? replacement
           : callRuntime("_el_read", replacement);
@@ -1289,7 +1281,7 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
           extra.section,
           t.binaryExpression(
             node.operator === "++" ? "+" : "-",
-            createScopeReadExpression(extra.section, extra.assignment),
+            createScopeReadExpression(extra.assignment, extra.section),
             t.numericLiteral(1),
           ),
         );
@@ -1324,8 +1316,8 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
                         -1,
                       ) as t.BinaryExpression["operator"],
                       createScopeReadExpression(
-                        extra.section,
                         extra.assignment,
+                        extra.section,
                       ),
                       node.right,
                     ),
@@ -1394,7 +1386,7 @@ function getBuildAssignment(extra: AssignedBindingExtra) {
     return (section: Section, value: t.Expression) => {
       const replacement = callRuntime(
         "_call",
-        createScopeReadExpression(section, assignmentTo),
+        createScopeReadExpression(assignmentTo, section),
         value,
       );
       updateExpressions.add(replacement);

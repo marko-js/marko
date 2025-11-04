@@ -70,8 +70,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div0/#text "a" => "b"
 UPDATE html/body/div1/#text "a" => "c"
+UPDATE html/body/div0/#text "a" => "b"
 ```
 
 # Render
@@ -153,8 +153,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div0/#text "c" => "‍"
 UPDATE html/body/div1/#text "c" => "‍"
+UPDATE html/body/div0/#text "c" => "‍"
 ```
 
 # Render

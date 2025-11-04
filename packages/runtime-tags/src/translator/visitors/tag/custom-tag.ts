@@ -137,7 +137,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           undefined,
           t.expressionStatement(
             t.callExpression(t.identifier(childExports.setup), [
-              createScopeReadExpression(section, childBinding),
+              createScopeReadExpression(childBinding, section),
             ]),
           ),
         );
@@ -170,7 +170,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
                 childExports.setup,
                 tagName,
               ),
-              [createScopeReadExpression(section, childBinding)],
+              [createScopeReadExpression(childBinding, section)],
             ),
           ),
         );

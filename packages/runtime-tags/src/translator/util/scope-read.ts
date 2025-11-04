@@ -74,14 +74,14 @@ export function getScopeExpression(section: Section, targetSection: Section) {
 }
 
 export function createScopeReadExpression(
-  section: Section,
   reference: Binding,
+  section?: Section | undefined,
 ) {
   const propName = toPropertyName(getScopeAccessor(reference));
   return t.memberExpression(
-    reference.type === BindingType.local
-      ? scopeIdentifier
-      : getScopeExpression(section, reference.section),
+    section && reference.type !== BindingType.local
+      ? getScopeExpression(section, reference.section)
+      : scopeIdentifier,
     propName,
     propName.type !== "Identifier",
   );

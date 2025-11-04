@@ -28,6 +28,6 @@ container.querySelectorAll("button").forEach(button => button.click());
 
 # Mutations
 ```
-UPDATE button0/#text "$0.00" => "$1.00"
 UPDATE button1/#text "$0.00" => "$1.00"
+UPDATE button0/#text "$0.00" => "$1.00"
 ```

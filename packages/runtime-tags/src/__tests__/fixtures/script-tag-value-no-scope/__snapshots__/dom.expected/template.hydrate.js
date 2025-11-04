@@ -1,12 +1,12 @@
-// size: 192 (min) 122 (brotli)
-(_._script("a1", ($scope) => $scope[1]()),
+// size: 190 (min) 121 (brotli)
+(_._script("a1", ($scope) => $scope.b()),
   _._resume("a0", function ($scope) {
     return function (arg) {
       if (arg)
         throw new Error(
           `Expected no argument to be passed, but received "${typeof arg}".`,
         );
-      $scope[0].textContent = typeof arg;
+      $scope.a.textContent = typeof arg;
     };
   }),
   init());

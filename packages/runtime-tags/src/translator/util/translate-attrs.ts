@@ -463,7 +463,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
               scopeIdentifier,
               t.objectExpression(
                 toArray(bodySection.referencedLocalClosures, (ref) => {
-                  const accessor = getScopeAccessor(ref);
+                  const accessor = getScopeAccessor(ref, true);
                   const isShorthand = accessor === ref.name;
                   return t.objectProperty(
                     toPropertyName(accessor),

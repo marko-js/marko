@@ -1,8 +1,8 @@
-// size: 110 (min) 101 (brotli)
+// size: 106 (min) 106 (brotli)
 const $b__script = _._script("a0", ($scope) =>
-    _._on($scope[0], "click", () => $b($scope, $scope[6] + 1) - 1),
+    _._on($scope.a, "click", () => $b($scope, $scope.g + 1) - 1),
   ),
   $b = _._let(6, ($scope) => {
-    (_._text($scope[2], $scope[6]), $b__script($scope));
+    (_._text($scope.c, $scope.g), $b__script($scope));
   });
 init();

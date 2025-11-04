@@ -3,12 +3,16 @@ import fs from "fs";
 import path from "path";
 
 import { AccessorProp } from "../src/common/accessor";
+import { ScopeProperties } from "../src/common/types";
 
 const absWorkingDir = path.join(__dirname, "..");
 const mangleCache = Object.fromEntries(
   // Prime esbuild mangle cache to avoid creating properties
   // that would minify to the same property name as one of the AccessorProps
-  Object.values(AccessorProp).map((value) => [`___${value}`, value]),
+  Object.values({ ...AccessorProp, ...ScopeProperties }).map((value) => [
+    `___${value}`,
+    value,
+  ]),
 );
 
 Promise.all([

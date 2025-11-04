@@ -45,8 +45,8 @@ INSERT #comment0, #comment1, div, #comment2, #comment3, span, #comment4, #commen
 
 # Mutations
 ```
-REMOVE #text in div
-INSERT div/#text
 REMOVE #text in span
 INSERT span/#text
+REMOVE #text in div
+INSERT div/#text
 ```

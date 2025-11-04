@@ -129,7 +129,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 <!---->
 <!---->
 <button>
-  Increment 1
+  Increment 0
 </button>
 <!---->
 <!---->
@@ -149,7 +149,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 INSERT button0
 REMOVE button after button0
-UPDATE button0/#text1 "" => "1"
+UPDATE button0/#text1 "" => "0"
 ```
 
 # Render
@@ -161,12 +161,12 @@ buttonIndex = (buttonIndex + 1) % 3;
 <!---->
 <!---->
 <button>
-  Increment 1
+  Increment 0
 </button>
 <!---->
 <!---->
 <button>
-  Increment 1
+  Increment 0
 </button>
 <!---->
 <!---->
@@ -181,7 +181,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 INSERT button1
 REMOVE button after button1
-UPDATE button1/#text1 "" => "1"
+UPDATE button1/#text1 "" => "0"
 ```
 
 # Render
@@ -193,17 +193,17 @@ buttonIndex = (buttonIndex + 1) % 3;
 <!---->
 <!---->
 <button>
-  Increment 1
+  Increment 0
 </button>
 <!---->
 <!---->
 <button>
-  Increment 1
+  Increment 0
 </button>
 <!---->
 <!---->
 <button>
-  Increment 1
+  Increment 0
 </button>
 <!---->
 <!---->
@@ -213,7 +213,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 INSERT button2
 REMOVE button after button2
-UPDATE button2/#text1 "" => "1"
+UPDATE button2/#text1 "" => "0"
 ```
 
 # Render
@@ -230,12 +230,12 @@ buttonIndex = (buttonIndex + 1) % 3;
 <!---->
 <!---->
 <button>
-  Increment 1
+  Increment 0
 </button>
 <!---->
 <!---->
 <button>
-  Increment 1
+  Increment 0
 </button>
 <!---->
 <!---->
@@ -267,7 +267,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 <!---->
 <!---->
 <button>
-  Increment 1
+  Increment 0
 </button>
 <!---->
 <!---->

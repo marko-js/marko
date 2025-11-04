@@ -267,7 +267,7 @@ export default {
         setClosureSignalBuilder(tag, (_closure, render) => {
           return callRuntime(
             "_for_closure",
-            getScopeAccessorLiteral(nodeRef),
+            getScopeAccessorLiteral(nodeRef, true),
             render,
           );
         });
@@ -277,7 +277,7 @@ export default {
         signal.build = () => {
           return callRuntime(
             forTypeToDOMRuntime(forType),
-            getScopeAccessorLiteral(nodeRef),
+            getScopeAccessorLiteral(nodeRef, true),
             t.identifier(bodySection.name),
           );
         };

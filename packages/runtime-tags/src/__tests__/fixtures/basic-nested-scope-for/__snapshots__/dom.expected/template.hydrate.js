@@ -1,11 +1,11 @@
-// size: 221 (min) 153 (brotli)
+// size: 213 (min) 147 (brotli)
 const $for_content__selected__OR__num = _._or(4, ($scope) => {
-  (_._attr($scope[0], "data-selected", $scope._[1] === $scope[3]),
-    _._attr($scope[0], "data-multiple", $scope[3] % $scope._[1] === 0));
+  (_._attr($scope.a, "data-selected", $scope._.b === $scope.d),
+    _._attr($scope.a, "data-multiple", $scope.d % $scope._.b === 0));
 });
 _._script("a0", ($scope) =>
-  _._on($scope[0], "click", function () {
-    $selected($scope._, $scope[3]);
+  _._on($scope.a, "click", function () {
+    $selected($scope._, $scope.d);
   }),
 );
 const $for_content__selected = _._for_closure(

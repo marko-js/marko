@@ -5,7 +5,7 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 const $get$hoisted_el = _._hoist("Getter:#div/0", "ConditionalScope:#text/2");
 const $if_content3 = /* @__PURE__ */_._content_branch("<div></div>", /* get, over(1) */" b");
 const $get$hoisted_el2 = _._resume("__tests__/template.marko_0_$hoisted_el/hoist", _._hoist("Getter:#div/0", "ConditionalScope:#text/0", "ConditionalScope:#text/0"));
-const $getdiv = _._el("__tests__/template.marko_2/#div", "Getter:#div/0");
+const $getdiv = _._el("__tests__/template.marko_2/#div", "#div/0");
 const $if_content2__setup = $scope => {
   _child($scope["#childScope/1"]);
   _child_input($scope["#childScope/1"], {
