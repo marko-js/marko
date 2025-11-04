@@ -137,7 +137,7 @@ export function _content_closures(
 ) {
   const closureSignals: NonNullable<Renderer["___localClosures"]> = {};
   for (const key in closureFns) {
-    closureSignals[key] = _const(key, closureFns[key]);
+    closureSignals[key] = _const(MARKO_DEBUG ? key : +key, closureFns[key]);
   }
   return (owner: Scope, closureValues: Record<Accessor, unknown>): Renderer => {
     const instance = renderer(owner);

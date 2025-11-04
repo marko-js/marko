@@ -26,6 +26,23 @@ export interface Scope {
   [x: string | number]: any;
 }
 
+export enum ScopeProperties {
+  id = "H",
+  args = "I",
+  creating = "J",
+  abortControllers = "K",
+  closestBranch = "L",
+  startNode = "M",
+  endNode = "N",
+  parentBranch = "O",
+  destroyed = "P",
+  abortScopes = "Q",
+  branchScopes = "R",
+  renderer = "S",
+  pendingAsyncCount = "T",
+  effects = "U",
+}
+
 export enum ResumeSymbol {
   Node = "*",
   BranchStart = "[",
@@ -81,7 +98,10 @@ export enum WalkRangeSize {
   Multiplier = 10, // 117 through 126
 }
 
-export type Accessor = string | number;
+export type Accessor = string;
+
+export type EncodedAccessor = number | string;
+
 export interface $Global {
   [x: PropertyKey]: unknown;
   signal?: AbortSignal;

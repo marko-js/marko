@@ -192,7 +192,7 @@ export default {
                     t.callExpression(
                       t.memberExpression(signal.identifier, t.identifier("_")),
                       [
-                        createScopeReadExpression(section, childBinding),
+                        createScopeReadExpression(childBinding, section),
                         getScopeExpression(section, definedBodySection.parent!),
                       ],
                     ),
@@ -394,7 +394,7 @@ export default {
         signal.build = () => {
           return callRuntime(
             "_dynamic_tag",
-            getScopeAccessorLiteral(nodeBinding),
+            getScopeAccessorLiteral(nodeBinding, true),
             bodySection && t.identifier(bodySection.name),
             tagVarSignal
               ? t.arrowFunctionExpression([], tagVarSignal.identifier)

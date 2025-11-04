@@ -350,7 +350,7 @@ export function knownTagTranslateDOM(
     source.register = true;
     source.buildAssignment = (valueSection, value) => {
       const changeArgs = [
-        createScopeReadExpression(valueSection, childScopeBinding),
+        createScopeReadExpression(childScopeBinding, valueSection),
         value,
       ];
       if (!isOptimize()) {
@@ -366,7 +366,7 @@ export function knownTagTranslateDOM(
         callRuntime(
           "_var",
           scopeIdentifier,
-          getScopeAccessorLiteral(childScopeBinding),
+          getScopeAccessorLiteral(childScopeBinding, true),
           source.identifier,
         ),
       ),
@@ -734,7 +734,7 @@ function writeParamsToSignals(
     }
 
     let renderArgs: (t.Expression | t.SpreadElement)[] = [
-      createScopeReadExpression(info.tagSection, info.childScopeBinding),
+      createScopeReadExpression(info.childScopeBinding, info.tagSection),
     ];
     if (tag.node.arguments) {
       renderArgs = [...renderArgs, ...tag.node.arguments];
@@ -771,8 +771,8 @@ function writeParamsToSignals(
           t.expressionStatement(
             t.callExpression(argExportIdentifier, [
               createScopeReadExpression(
-                info.tagSection,
                 info.childScopeBinding,
+                info.tagSection,
               ),
               arg,
             ]),
@@ -877,7 +877,7 @@ function writeAttrsToSignals(
       referencedBindings,
       t.expressionStatement(
         t.callExpression(tagInputIdentifier, [
-          createScopeReadExpression(info.tagSection, info.childScopeBinding),
+          createScopeReadExpression(info.childScopeBinding, info.tagSection),
           translatedProps,
         ]),
       ),
@@ -976,8 +976,8 @@ function writeAttrsToSignals(
           t.expressionStatement(
             t.callExpression(attrExportIdentifier, [
               createScopeReadExpression(
-                info.tagSection,
                 info.childScopeBinding,
+                info.tagSection,
               ),
               getAttrTagIdentifier(attrTagMeta),
             ]),
@@ -1001,7 +1001,7 @@ function writeAttrsToSignals(
         undefined, // TODO: pretty sure content needs to have the reference group of it's param defaults.
         t.expressionStatement(
           t.callExpression(contentExportIdentifier, [
-            createScopeReadExpression(info.tagSection, info.childScopeBinding),
+            createScopeReadExpression(info.childScopeBinding, info.tagSection),
             t.callExpression(t.identifier(bodySection.name), [scopeIdentifier]),
           ]),
         ),
@@ -1044,7 +1044,7 @@ function writeAttrsToSignals(
       attr.value.extra?.referencedBindings,
       t.expressionStatement(
         t.callExpression(attrExportIdentifier, [
-          createScopeReadExpression(info.tagSection, info.childScopeBinding),
+          createScopeReadExpression(info.childScopeBinding, info.tagSection),
           attr.value,
         ]),
       ),
@@ -1080,7 +1080,7 @@ function writeAttrsToSignals(
         referencedBindings,
         t.expressionStatement(
           t.callExpression(attrExportIdentifier, [
-            createScopeReadExpression(info.tagSection, info.childScopeBinding),
+            createScopeReadExpression(info.childScopeBinding, info.tagSection),
             getMissingPropValue(name),
           ]),
         ),

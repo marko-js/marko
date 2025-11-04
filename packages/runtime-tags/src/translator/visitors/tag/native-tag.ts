@@ -24,6 +24,7 @@ import {
   trackDomVarReferences,
 } from "../../util/references";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
+import { createScopeReadExpression } from "../../util/scope-read";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
@@ -501,7 +502,8 @@ export default {
         const tagSection = getSection(tag);
         const visitAccessor =
           nodeBinding && getScopeAccessorLiteral(nodeBinding);
-        if (visitAccessor) {
+
+        if (nodeBinding) {
           walks.visit(tag, WalkCode.Get);
         }
 
@@ -553,11 +555,7 @@ export default {
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
               } else {
-                const nodeExpr = t.memberExpression(
-                  scopeIdentifier,
-                  visitAccessor!,
-                  true,
-                );
+                const nodeExpr = createScopeReadExpression(nodeBinding!);
                 const meta: DelimitedAttrMeta = {
                   staticItems: undefined,
                   dynamicItems: undefined,
@@ -626,7 +624,7 @@ export default {
                   t.expressionStatement(
                     callRuntime(
                       "_on",
-                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                      createScopeReadExpression(nodeBinding!),
                       t.stringLiteral(getEventHandlerName(name)),
                       value,
                     ),
@@ -640,7 +638,7 @@ export default {
                   t.expressionStatement(
                     callRuntime(
                       "_attr",
-                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                      createScopeReadExpression(nodeBinding!),
                       t.stringLiteral(name),
                       value,
                     ),

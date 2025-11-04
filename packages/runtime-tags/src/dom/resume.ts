@@ -1,8 +1,10 @@
+import { decodeAccessor } from "../common/helpers";
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import {
   AccessorPrefix,
   AccessorProp,
   type BranchScope,
+  type EncodedAccessor,
   ResumeSymbol,
   type Scope,
 } from "../common/types";
@@ -85,7 +87,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   );
                   branch.___endNode = branch.___startNode = startVisit;
                   if (visitType === ResumeSymbol.BranchEndNativeTag) {
-                    branch[MARKO_DEBUG ? getDebugKey(0, startVisit) : 0] =
+                    branch[MARKO_DEBUG ? getDebugKey(0, startVisit) : "a"] =
                       startVisit;
                   }
                 } else {
@@ -268,25 +270,28 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 
 export let isResuming: undefined | 0 | 1;
 
+export function getRegisteredWithScope(id: string, scope?: Scope) {
+  const val = registeredValues[id];
+  return scope ? (val as RegisteredFn)(scope) : val;
+}
+
 export function _resume<T>(id: string, obj: T): T {
-  registeredValues[id] = obj;
-  return obj;
+  return (registeredValues[id] = obj);
 }
 
 export function _var_resume<T extends Signal<unknown>>(
   id: string,
   signal: T,
 ): T {
-  registeredValues[id] = (scope: Scope) => (value: unknown) =>
-    signal(scope, value);
+  _resume(id, (scope: Scope) => (value: unknown) => signal(scope, value));
   return signal;
 }
 
-export function getRegisteredWithScope(id: string, scope?: Scope) {
-  const val = registeredValues[id];
-  return scope ? (val as RegisteredFn)(scope) : val;
-}
-
-export function _el(id: string, key: string) {
-  return _resume(id, (scope: Scope) => () => scope[key]());
+export function _el(id: string, accessor: EncodedAccessor) {
+  const getterAccessor =
+    AccessorPrefix.Getter +
+    (MARKO_DEBUG ? accessor : decodeAccessor(accessor as number));
+  return _resume(id, (scope: Scope) => () => {
+    return scope[getterAccessor]();
+  });
 }

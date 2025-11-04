@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
+import { decodeAccessor } from "../../common/helpers";
 import { toAccess } from "../../html/serializer";
 import { finalizeFunctionRegistry } from "../visitors/function";
 import { forEachIdentifierPath } from "./for-each-identifier";
@@ -1445,32 +1446,36 @@ export function getAllTagReferenceNodes(
   return referenceNodes;
 }
 
-export function getScopeAccessorLiteral(binding: Binding, includeId?: boolean) {
+export function getScopeAccessorLiteral(
+  binding: Binding,
+  encoded?: boolean,
+  includeId?: boolean,
+) {
   const canonicalBinding = getCanonicalBinding(binding)!;
   if (isOptimize()) {
-    return t.numericLiteral(canonicalBinding.id);
+    return encoded
+      ? t.numericLiteral(canonicalBinding.id)
+      : t.stringLiteral(decodeAccessor(canonicalBinding.id));
+  } else if (includeId || canonicalBinding.type === BindingType.dom) {
+    return t.stringLiteral(`${canonicalBinding.name}/${canonicalBinding.id}`);
   }
-
-  return t.stringLiteral(
-    canonicalBinding.name +
-      (includeId || canonicalBinding.type === BindingType.dom
-        ? `/${canonicalBinding.id}`
-        : ""),
-  );
+  return t.stringLiteral(canonicalBinding.name);
 }
 
-export function getScopeAccessor(binding: Binding, includeId?: boolean) {
+export function getScopeAccessor(
+  binding: Binding,
+  encoded?: boolean,
+  includeId?: boolean,
+) {
   const canonicalBinding = getCanonicalBinding(binding)!;
   if (isOptimize()) {
-    return canonicalBinding.id + "";
+    return encoded
+      ? canonicalBinding.id + ""
+      : decodeAccessor(canonicalBinding.id);
+  } else if (includeId || canonicalBinding.type === BindingType.dom) {
+    return `${canonicalBinding.name}/${canonicalBinding.id}`;
   }
-
-  return (
-    canonicalBinding.name +
-    (includeId || canonicalBinding.type === BindingType.dom
-      ? `/${canonicalBinding.id}`
-      : "")
-  );
+  return canonicalBinding.name;
 }
 
 export function getDebugScopeAccess(binding: Binding) {
@@ -1566,7 +1571,7 @@ export function getReadReplacement(
             [getScopeExpression(extra.section!, readBinding.section)],
           );
         } else {
-          replacement = createScopeReadExpression(extra.section!, readBinding);
+          replacement = createScopeReadExpression(readBinding, extra.section);
         }
       } else {
         if (node.type !== "Identifier") {
@@ -1592,7 +1597,7 @@ export function getReadReplacement(
         | t.OptionalMemberExpression
         | undefined;
       replacement = isOutputDOM()
-        ? createScopeReadExpression(extra.section!, read.binding)
+        ? createScopeReadExpression(read.binding, extra.section)
         : t.identifier(read.binding.name);
 
       while (

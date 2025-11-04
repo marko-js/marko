@@ -112,8 +112,8 @@ INSERT html/body/span/#text1
 
 # Mutations
 ```
-REMOVE #comment, #text, #text, #comment in html/body/div
-INSERT html/body/div/#text
 REMOVE #comment, #text, #text, #comment in html/body/span
 INSERT html/body/span/#text
+REMOVE #comment, #text, #text, #comment in html/body/div
+INSERT html/body/div/#text
 ```

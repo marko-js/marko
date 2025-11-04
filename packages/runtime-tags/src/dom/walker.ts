@@ -1,3 +1,4 @@
+import { decodeAccessor } from "../common/helpers";
 import {
   AccessorPrefix,
   type BranchScope,
@@ -35,6 +36,7 @@ function walkInternal(
   scope: Scope,
 ) {
   let value: number;
+  let id: string | number;
   let storedMultiplier = 0;
   let currentMultiplier = 0;
   let currentScopeIndex = 0;
@@ -47,16 +49,11 @@ function walkInternal(
     if (value === WalkCode.Get) {
       const node = walker.currentNode;
       scope[
-        MARKO_DEBUG
-          ? getDebugKey(currentScopeIndex, walker.currentNode)
-          : currentScopeIndex
+        (id = MARKO_DEBUG
+          ? getDebugKey(currentScopeIndex++, node)
+          : decodeAccessor(currentScopeIndex++))
       ] = node;
-      scope[
-        AccessorPrefix.Getter +
-          (MARKO_DEBUG
-            ? getDebugKey(currentScopeIndex++, walker.currentNode)
-            : currentScopeIndex++)
-      ] = () => node;
+      scope[AccessorPrefix.Getter + id] = () => node;
     } else if (
       value === WalkCode.Replace ||
       value === WalkCode.DynamicTagWithVar
@@ -65,7 +62,7 @@ function walkInternal(
         (walker.currentNode = scope[
           MARKO_DEBUG
             ? getDebugKey(currentScopeIndex++, "#text")
-            : currentScopeIndex++
+            : decodeAccessor(currentScopeIndex++)
         ] =
           new Text()),
       );
@@ -73,7 +70,7 @@ function walkInternal(
         scope[
           MARKO_DEBUG
             ? getDebugKey(currentScopeIndex++, "#scopeOffset")
-            : currentScopeIndex++
+            : decodeAccessor(currentScopeIndex++)
         ] = skipScope();
       }
     } else if (value === WalkCode.EndChild) {
@@ -88,14 +85,14 @@ function walkInternal(
         (scope[
           MARKO_DEBUG
             ? getDebugKey(currentScopeIndex++, "#childScope")
-            : currentScopeIndex++
+            : decodeAccessor(currentScopeIndex++)
         ] = createScope(scope.$global, scope.___closestBranch)),
       )!;
       if (value === WalkCode.BeginChildWithVar) {
         scope[
           MARKO_DEBUG
             ? getDebugKey(currentScopeIndex++, "#scopeOffset")
-            : currentScopeIndex++
+            : decodeAccessor(currentScopeIndex++)
         ] = skipScope();
       }
     } else if (value < WalkCode.NextEnd + 1) {

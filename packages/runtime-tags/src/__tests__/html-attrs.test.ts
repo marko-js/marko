@@ -56,41 +56,41 @@ describe("runtime-tags/html/attrs", () => {
 
   describe("attrs", () => {
     it("should remove falseish values", () => {
-      assert.equal(helpers._attrs({}, 0, 0, ""), "");
+      assert.equal(helpers._attrs({}, "a", 0, ""), "");
       for (const value of falseishValues) {
-        assert.equal(helpers._attrs({ foo: value }, 0, 0, ""), "");
+        assert.equal(helpers._attrs({ foo: value }, "a", 0, ""), "");
         assert.equal(
-          helpers._attrs({ foo: "bar", baz: value }, 0, 0, ""),
+          helpers._attrs({ foo: "bar", baz: value }, "a", 0, ""),
           " foo=bar",
         );
       }
     });
 
     it("should return a single attribute for a single key-value pair", () => {
-      assert.equal(helpers._attrs({ foo: "bar" }, 0, 0, ""), " foo=bar");
+      assert.equal(helpers._attrs({ foo: "bar" }, "a", 0, ""), " foo=bar");
     });
 
     it("should return multiple attributes for multiple key-value pairs", () => {
       assert.equal(
-        helpers._attrs({ foo: "bar", baz: "qux" }, 0, 0, ""),
+        helpers._attrs({ foo: "bar", baz: "qux" }, "a", 0, ""),
         " foo=bar baz=qux",
       );
     });
 
     it("should strip event handlers, invalid attribute names and content", () => {
-      // assert.equal(helpers.attrs({ onClick() {} }, 0, 0, ""), "");
-      // assert.equal(helpers.attrs({ "on-click"() {}, 0, 0, "" }), "");
-      assert.equal(helpers._attrs({ content() {} }, 0, 0, ""), "");
-      assert.equal(helpers._attrs({ "foo bar": "baz" }, 0, 0, ""), "");
-      assert.equal(helpers._attrs({ "foo\tbar": "baz" }, 0, 0, ""), "");
-      assert.equal(helpers._attrs({ "foo\nbar": "baz" }, 0, 0, ""), "");
-      assert.equal(helpers._attrs({ "foo\rbar": "baz" }, 0, 0, ""), "");
-      assert.equal(helpers._attrs({ "foo\fbar": "baz" }, 0, 0, ""), "");
-      assert.equal(helpers._attrs({ "=foo": "bar" }, 0, 0, ""), "");
-      assert.equal(helpers._attrs({ "'foo": "bar" }, 0, 0, ""), "");
-      assert.equal(helpers._attrs({ '"foo': "bar" }, 0, 0, ""), "");
-      assert.equal(helpers._attrs({ "/foo": "bar" }, 0, 0, ""), "");
-      assert.equal(helpers._attrs({ ">foo": "bar" }, 0, 0, ""), "");
+      // assert.equal(helpers.attrs({ onClick() {} }, "a", 0, ""), "");
+      // assert.equal(helpers.attrs({ "on-click"() {}, "a", 0, "" }), "");
+      assert.equal(helpers._attrs({ content() {} }, "a", 0, ""), "");
+      assert.equal(helpers._attrs({ "foo bar": "baz" }, "a", 0, ""), "");
+      assert.equal(helpers._attrs({ "foo\tbar": "baz" }, "a", 0, ""), "");
+      assert.equal(helpers._attrs({ "foo\nbar": "baz" }, "a", 0, ""), "");
+      assert.equal(helpers._attrs({ "foo\rbar": "baz" }, "a", 0, ""), "");
+      assert.equal(helpers._attrs({ "foo\fbar": "baz" }, "a", 0, ""), "");
+      assert.equal(helpers._attrs({ "=foo": "bar" }, "a", 0, ""), "");
+      assert.equal(helpers._attrs({ "'foo": "bar" }, "a", 0, ""), "");
+      assert.equal(helpers._attrs({ '"foo': "bar" }, "a", 0, ""), "");
+      assert.equal(helpers._attrs({ "/foo": "bar" }, "a", 0, ""), "");
+      assert.equal(helpers._attrs({ ">foo": "bar" }, "a", 0, ""), "");
     });
   });
 

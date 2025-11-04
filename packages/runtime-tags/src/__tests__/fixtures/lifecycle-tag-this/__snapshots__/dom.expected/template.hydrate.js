@@ -1,4 +1,4 @@
-// size: 254 (min) 169 (brotli)
+// size: 250 (min) 159 (brotli)
 const $x__script = _._script("a0", ($scope) => {
     (_._lifecycle($scope, 2, {
       onMount: function () {
@@ -6,12 +6,12 @@ const $x__script = _._script("a0", ($scope) => {
       },
       onUpdate: function () {
         ((document.getElementById("ref").textContent =
-          `x=${$scope[1]}, was=${this.cur}`),
-          (this.cur = $scope[1]));
+          `x=${$scope.b}, was=${this.cur}`),
+          (this.cur = $scope.b));
       },
     }),
-      _._on($scope[0], "click", function () {
-        $x($scope, $scope[1] + 1);
+      _._on($scope.a, "click", function () {
+        $x($scope, $scope.b + 1);
       }));
   }),
   $x = _._let(1, $x__script);

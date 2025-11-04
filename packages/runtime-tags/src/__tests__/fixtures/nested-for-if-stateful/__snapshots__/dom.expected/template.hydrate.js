@@ -1,6 +1,6 @@
-// size: 810 (min) 395 (brotli)
+// size: 795 (min) 383 (brotli)
 const $else_content__setup__script = _._script("a0", ($scope) =>
-    _._on($scope[0], "click", function () {
+    _._on($scope.a, "click", function () {
       $for_content__editing($scope._, !0);
     }),
   ),
@@ -8,7 +8,7 @@ const $else_content__setup__script = _._script("a0", ($scope) =>
     ($else_content__count._($scope), $else_content__setup__script($scope));
   },
   $else_content__count = _._if_closure(0, 1, ($scope) =>
-    _._text($scope[1], $scope._[2]),
+    _._text($scope.b, $scope._.c),
   ),
   $else_content = _._content_branch(
     "<button>Increment <!></button>",
@@ -16,11 +16,11 @@ const $else_content__setup__script = _._script("a0", ($scope) =>
     $else_content__setup,
   ),
   $if_content__counts__OR__count__OR__i__script = _._script("a1", ($scope) =>
-    _._on($scope[0], "click", function () {
+    _._on($scope.a, "click", function () {
       ($counts($scope._._, [
-        ...$scope._._[1].slice(0, $scope._[3]),
-        $scope._[2] + 1,
-        ...$scope._._[1].slice($scope._[3] + 1),
+        ...$scope._._.b.slice(0, $scope._.d),
+        $scope._.c + 1,
+        ...$scope._._.b.slice($scope._.d + 1),
       ]),
         $for_content__editing($scope._, !1));
     }),
@@ -36,7 +36,7 @@ const $else_content__setup__script = _._script("a0", ($scope) =>
     ($scope) => $scope._._,
   ),
   $if_content__count = _._if_closure(0, 0, ($scope) => {
-    (_._text($scope[1], $scope._[2] + 1),
+    (_._text($scope.b, $scope._.c + 1),
       $if_content__counts__OR__count__OR__i($scope));
   }),
   $if_content__i = _._if_closure(0, 0, $if_content__counts__OR__count__OR__i),
@@ -52,14 +52,14 @@ const $else_content__setup__script = _._script("a0", ($scope) =>
   ),
   $for_content__if = _._if(0, $if_content, $else_content),
   $for_content__editing = _._let(4, ($scope) =>
-    $for_content__if($scope, $scope[4] ? 0 : 1),
+    $for_content__if($scope, $scope.e ? 0 : 1),
   ),
   $for_content__setup = ($scope) => {
     $for_content__editing($scope, !1);
   },
   $for_content__$params = _._const(1, ($scope) => {
-    ($for_content__count($scope, $scope[1][0]),
-      $for_content__i($scope, $scope[1][1]));
+    ($for_content__count($scope, $scope.b[0]),
+      $for_content__i($scope, $scope.b[1]));
   }),
   $for_content__count = _._const(2, ($scope) => {
     ($if_content__count($scope), $else_content__count($scope));
@@ -74,6 +74,6 @@ const $else_content__setup__script = _._script("a0", ($scope) =>
   $for = _._for_of(0, $for_content),
   $counts__closure = _._closure($if_content__counts),
   $counts = _._let(1, ($scope) => {
-    ($for($scope, [$scope[1]]), $counts__closure($scope));
+    ($for($scope, [$scope.b]), $counts__closure($scope));
   });
 init();

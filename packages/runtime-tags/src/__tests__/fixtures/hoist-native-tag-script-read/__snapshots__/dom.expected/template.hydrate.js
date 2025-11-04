@@ -1,2 +1,2 @@
-// size: 52 (min) 56 (brotli)
-(_._script("a0", ($scope) => ($scope[0].innerHTML = "Hello World")), init());
+// size: 51 (min) 54 (brotli)
+(_._script("a0", ($scope) => ($scope.a.innerHTML = "Hello World")), init());

@@ -1,4 +1,4 @@
-// size: 685 (min) 276 (brotli)
+// size: 664 (min) 283 (brotli)
 const $Twice_content__value__OR__call = _._or(4, ($scope) =>
     _._return($scope, $_return2($scope)),
   ),
@@ -10,38 +10,38 @@ const $Twice_content__value__OR__call = _._or(4, ($scope) =>
   $Once_content__call = _._let(3, $Once_content__value__OR__call),
   $Once_content__value = _._const(2, $Once_content__value__OR__call),
   $clickOnceCount = _._let(8, ($scope) => {
-    ($Once_content__value($scope[0], $onClickOnce($scope)),
-      _._text($scope[3], $scope[8]));
+    ($Once_content__value($scope.a, $onClickOnce($scope)),
+      _._text($scope.d, $scope.i));
   }),
   $clickTwiceCount = _._let(10, ($scope) => {
-    ($Twice_content__value($scope[4], $onClickTwice($scope)),
-      _._text($scope[7], $scope[10]));
+    ($Twice_content__value($scope.e, $onClickTwice($scope)),
+      _._text($scope.h, $scope.k));
   }),
   $onClickOnce2__script = _._script("a4", ($scope) =>
-    _._on($scope[2], "click", $scope[9]),
+    _._on($scope.c, "click", $scope.j),
   );
 _._var_resume("a5", _._const(9, $onClickOnce2__script));
 const $onClickTwice2__script = _._script("a6", ($scope) =>
-  _._on($scope[6], "click", $scope[11]),
+  _._on($scope.g, "click", $scope.l),
 );
 function $_return2($scope) {
   return function () {
-    $scope[3] && ($Twice_content__call($scope, $scope[3] - 1), $scope[2]());
+    $scope.d && ($Twice_content__call($scope, $scope.d - 1), $scope.c());
   };
 }
 function $_return($scope) {
   return function () {
-    $scope[3] && ($Once_content__call($scope, $scope[3] - 1), $scope[2]());
+    $scope.d && ($Once_content__call($scope, $scope.d - 1), $scope.c());
   };
 }
 function $onClickOnce($scope) {
   return function () {
-    $clickOnceCount($scope, $scope[8] + 1);
+    $clickOnceCount($scope, $scope.i + 1);
   };
 }
 function $onClickTwice($scope) {
   return function () {
-    $clickTwiceCount($scope, $scope[10] + 1);
+    $clickTwiceCount($scope, $scope.k + 1);
   };
 }
 (_._var_resume("a7", _._const(11, $onClickTwice2__script)),

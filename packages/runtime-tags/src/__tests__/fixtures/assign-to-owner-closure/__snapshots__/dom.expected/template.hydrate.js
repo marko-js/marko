@@ -1,6 +1,6 @@
-// size: 163 (min) 128 (brotli)
+// size: 161 (min) 134 (brotli)
 const $if_content__setup = _._script("a0", ($scope) =>
-    _._on($scope[0], "click", function () {
+    _._on($scope.a, "click", function () {
       $hide($scope._, !0);
     }),
   ),
@@ -10,5 +10,5 @@ const $if_content__setup = _._script("a0", ($scope) =>
     $if_content__setup,
   ),
   $if = _._if(0, $if_content),
-  $hide = _._let(1, ($scope) => $if($scope, $scope[1] ? 1 : 0));
+  $hide = _._let(1, ($scope) => $if($scope, $scope.b ? 1 : 0));
 init();

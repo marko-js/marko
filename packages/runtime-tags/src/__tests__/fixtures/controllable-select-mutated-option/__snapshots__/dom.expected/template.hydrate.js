@@ -1,9 +1,9 @@
-// size: 646 (min) 316 (brotli)
+// size: 631 (min) 310 (brotli)
 const $for_content__opt = _._const(3, ($scope) => {
-    (_._attr($scope[0], "value", $scope[3]), _._text($scope[1], $scope[3]));
+    (_._attr($scope.a, "value", $scope.d), _._text($scope.b, $scope.d));
   }),
   $for_content__$params = _._const(2, ($scope) =>
-    $for_content__opt($scope, $scope[2][0]),
+    $for_content__opt($scope, $scope.c[0]),
   ),
   $for_content = _._content_branch(
     "<option> </option>",
@@ -13,35 +13,35 @@ const $for_content__opt = _._const(3, ($scope) => {
   ),
   $for = _._for_of(0, $for_content),
   $options__script = _._script("a1", ($scope) => {
-    (_._on($scope[2], "click", function () {
-      $options($scope, $scope[4].slice(1));
+    (_._on($scope.c, "click", function () {
+      $options($scope, $scope.e.slice(1));
     }),
-      _._on($scope[3], "click", function () {
+      _._on($scope.d, "click", function () {
         $options($scope, [
-          $scope[4]?.length ? $scope[4]?.[0] - 1 : 3,
-          ...$scope[4],
+          $scope.e?.length ? $scope.e?.[0] - 1 : 3,
+          ...$scope.e,
         ]);
       }));
   }),
   $options = _._let(4, ($scope) => {
-    ($options_($scope, $scope[4]?.[0]),
-      $for($scope, [$scope[4], (v) => v]),
+    ($options_($scope, $scope.e?.[0]),
+      $for($scope, [$scope.e, (v) => v]),
       $options__script($scope));
   }),
   $value = _._let(6, ($scope) => {
-    (_._attr_select_value($scope, 0, $scope[6], $valueChange($scope)),
-      _._text($scope[1], $scope[6]));
+    (_._attr_select_value($scope, "a", $scope.g, $valueChange($scope)),
+      _._text($scope.b, $scope.g));
   }),
-  $options_ = _._const(5, ($scope) => $value($scope, $scope[5]));
+  $options_ = _._const(5, ($scope) => $value($scope, $scope.f));
 function $valueChange($scope) {
   return (_new_value) => {
     $value($scope, _new_value);
   };
 }
 (_._script("a2", ($scope) => {
-  (_._attr_select_value_script($scope, 0),
-    _._on($scope[0], "change", console.log),
-    _._on($scope[0], "input", console.log));
+  (_._attr_select_value_script($scope, "a"),
+    _._on($scope.a, "change", console.log),
+    _._on($scope.a, "input", console.log));
 }),
   _._resume("a0", $valueChange),
   init());

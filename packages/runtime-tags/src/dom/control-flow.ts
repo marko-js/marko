@@ -1,12 +1,13 @@
 import { assertValidTagName } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
-import { normalizeDynamicRenderer } from "../common/helpers";
+import { decodeAccessor, normalizeDynamicRenderer } from "../common/helpers";
 import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
 import {
   type Accessor,
   AccessorPrefix,
   AccessorProp,
   type BranchScope,
+  type EncodedAccessor,
   NodeType,
   type Scope,
 } from "../common/types";
@@ -36,9 +37,10 @@ import {
   removeAndDestroyBranch,
   tempDetachBranch,
 } from "./scope";
-import { _var, type Signal, subscribeToScopeSet } from "./signals";
+import { type Signal, subscribeToScopeSet } from "./signals";
 
-export function _await(nodeAccessor: Accessor, renderer: Renderer) {
+export function _await(nodeAccessor: EncodedAccessor, renderer: Renderer) {
+  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const branchAccessor = AccessorPrefix.ConditionalScope + nodeAccessor;
   enableBranches();
@@ -172,14 +174,15 @@ export function _await(nodeAccessor: Accessor, renderer: Renderer) {
   };
 }
 
-export function _try(nodeAccessor: Accessor, content: Renderer) {
+export function _try(nodeAccessor: EncodedAccessor, content: Renderer) {
+  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const branchAccessor = AccessorPrefix.ConditionalScope + nodeAccessor;
 
   return (scope: Scope, input: { catch: unknown; placeholder: unknown }) => {
     if (!scope[branchAccessor]) {
       setConditionalRenderer(
         scope,
-        nodeAccessor,
+        nodeAccessor as string,
         content,
         createAndSetupBranch,
       );
@@ -230,14 +233,15 @@ export function renderCatch(scope: Scope, error: unknown) {
   }
 }
 
-export function _if(nodeAccessor: Accessor, ...branches: Renderer[]) {
+export function _if(nodeAccessor: EncodedAccessor, ...branches: Renderer[]) {
+  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const branchAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
   enableBranches();
   return (scope: Scope, newBranch: number) => {
     if (newBranch !== (scope[branchAccessor] as number)) {
       setConditionalRenderer(
         scope,
-        nodeAccessor,
+        nodeAccessor as string,
         branches[(scope[branchAccessor] = newBranch)],
         createAndSetupBranch,
       );
@@ -252,11 +256,12 @@ export function patchDynamicTag(
   _dynamic_tag = fn(_dynamic_tag);
 }
 export let _dynamic_tag = function dynamicTag(
-  nodeAccessor: Accessor,
+  nodeAccessor: EncodedAccessor,
   getContent?: ((scope: Scope) => Renderer) | 0,
   getTagVar?: (() => Signal<unknown>) | 0,
   inputIsArgs?: 1,
 ): Signal<Renderer | string | undefined> {
+  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const childScopeAccessor = AccessorPrefix.ConditionalScope + nodeAccessor;
   const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
   enableBranches();
@@ -271,13 +276,15 @@ export let _dynamic_tag = function dynamicTag(
     ) {
       setConditionalRenderer(
         scope,
-        nodeAccessor,
+        nodeAccessor as string,
         normalizedRenderer || (getContent ? getContent(scope) : undefined),
         createBranchWithTagNameOrRenderer,
       );
 
       if (getTagVar) {
-        _var(scope, childScopeAccessor, getTagVar());
+        scope[childScopeAccessor][AccessorProp.TagVariable] = (
+          value: unknown,
+        ) => getTagVar()(scope, value);
       }
 
       if (typeof normalizedRenderer === "string") {
@@ -285,7 +292,7 @@ export let _dynamic_tag = function dynamicTag(
           const content = getContent(scope);
           setConditionalRenderer(
             scope[childScopeAccessor],
-            MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0,
+            MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a",
             content,
             createAndSetupBranch,
           );
@@ -295,7 +302,7 @@ export let _dynamic_tag = function dynamicTag(
               content.___accessor,
               scope[childScopeAccessor][
                 AccessorPrefix.ConditionalScope +
-                  (MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0)
+                  (MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a")
               ],
             );
           }
@@ -315,18 +322,18 @@ export let _dynamic_tag = function dynamicTag(
       if (typeof normalizedRenderer === "string") {
         (getContent ? _attrs : _attrs_content)(
           childScope,
-          MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0,
+          MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a",
           (inputIsArgs ? args[0] : args) || {},
         );
 
         if (
           childScope[
             AccessorPrefix.EventAttributes +
-              (MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0)
+              (MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a")
           ] ||
           childScope[
             AccessorPrefix.ControlledHandler +
-              (MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0)
+              (MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a")
           ]
         ) {
           queueEffect(childScope, dynamicTagScript);
@@ -367,7 +374,7 @@ export function _resume_dynamic_tag() {
 }
 
 function dynamicTagScript(branch: Scope) {
-  _attrs_script(branch, MARKO_DEBUG ? `#${branch.___renderer}/0` : 0);
+  _attrs_script(branch, MARKO_DEBUG ? `#${branch.___renderer}/0` : "a");
 }
 
 export function setConditionalRenderer<T>(
@@ -456,11 +463,12 @@ export function _for_until(nodeAccessor: Accessor, renderer: Renderer) {
 }
 
 function loop<T extends unknown[] = unknown[]>(
-  nodeAccessor: Accessor,
+  nodeAccessor: EncodedAccessor,
   renderer: Renderer,
   forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
 ) {
   const params = renderer.___params;
+  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   enableBranches();
   return (scope: Scope, value: T) => {
     const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
@@ -534,7 +542,7 @@ function createBranchWithTagNameOrRenderer(
     parentNode,
   );
   if (typeof tagNameOrRenderer === "string") {
-    branch[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : 0] =
+    branch[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : "a"] =
       branch.___startNode =
       branch.___endNode =
         document.createElementNS(

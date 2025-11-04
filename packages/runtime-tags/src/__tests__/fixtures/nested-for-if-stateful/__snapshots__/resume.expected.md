@@ -309,7 +309,7 @@ buttonIndex = (buttonIndex + 1) % 3;
   <body>
     <!--M_[-->
     <button>
-      Increment 1
+      Increment 0
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
@@ -366,7 +366,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 INSERT html/body/button0
 REMOVE button after html/body/button0
-UPDATE html/body/button0/#text1 "" => "1"
+UPDATE html/body/button0/#text1 "" => "0"
 ```
 
 # Render
@@ -380,13 +380,13 @@ buttonIndex = (buttonIndex + 1) % 3;
   <body>
     <!--M_[-->
     <button>
-      Increment 1
+      Increment 0
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
     <!--M_[2-->
     <button>
-      Increment 1
+      Increment 0
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
@@ -437,7 +437,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 INSERT html/body/button1
 REMOVE button after html/body/button1
-UPDATE html/body/button1/#text1 "" => "1"
+UPDATE html/body/button1/#text1 "" => "0"
 ```
 
 # Render
@@ -451,19 +451,19 @@ buttonIndex = (buttonIndex + 1) % 3;
   <body>
     <!--M_[-->
     <button>
-      Increment 1
+      Increment 0
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
     <!--M_[2-->
     <button>
-      Increment 1
+      Increment 0
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
     <!--M_[4-->
     <button>
-      Increment 1
+      Increment 0
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
@@ -508,7 +508,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 ```
 INSERT html/body/button2
 REMOVE button after html/body/button2
-UPDATE html/body/button2/#text1 "" => "1"
+UPDATE html/body/button2/#text1 "" => "0"
 ```
 
 # Render
@@ -528,13 +528,13 @@ buttonIndex = (buttonIndex + 1) % 3;
     <!--M_|2 #text/0 3-->
     <!--M_[2-->
     <button>
-      Increment 1
+      Increment 0
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
     <!--M_[4-->
     <button>
-      Increment 1
+      Increment 0
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
@@ -605,7 +605,7 @@ buttonIndex = (buttonIndex + 1) % 3;
     <!--M_|4 #text/0 5-->
     <!--M_[4-->
     <button>
-      Increment 1
+      Increment 0
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->

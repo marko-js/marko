@@ -61,9 +61,9 @@ which should be the same as
 
 # Mutations
 ```
+UPDATE span1/#text "0" => "1"
 UPDATE button/#text "1" => "2"
 UPDATE span0/#text "0" => "1"
-UPDATE span1/#text "0" => "1"
 ```
 
 # Render
@@ -86,7 +86,7 @@ which should be the same as
 
 # Mutations
 ```
+UPDATE span1/#text "1" => "2"
 UPDATE button/#text "2" => "3"
 UPDATE span0/#text "1" => "2"
-UPDATE span1/#text "1" => "2"
 ```

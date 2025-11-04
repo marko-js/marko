@@ -1,8 +1,10 @@
 import { _el_read_error, _hoist_read_error } from "../common/errors";
+import { decodeAccessor } from "../common/helpers";
 import {
   type Accessor,
   AccessorPrefix,
   AccessorProp,
+  type EncodedAccessor,
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
@@ -15,19 +17,15 @@ export type Signal<T> = ((scope: Scope, value: T) => void) & {
   ___subscribe?(scope: Scope): void;
 };
 
-export function _let<T>(valueAccessor: Accessor, fn?: SignalFn) {
-  if (MARKO_DEBUG) {
-    // eslint-disable-next-line no-var
-    var id = +(valueAccessor as string).slice(
-      (valueAccessor as string).lastIndexOf("/") + 1,
-    );
-    valueAccessor = (valueAccessor as string).slice(
-      0,
-      (valueAccessor as string).lastIndexOf("/"),
-    );
-  }
-
+export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
+  const valueAccessor = MARKO_DEBUG
+    ? (id as string).slice(0, (id as string).lastIndexOf("/"))
+    : decodeAccessor(id as number);
   const valueChangeAccessor = AccessorPrefix.TagVariableChange + valueAccessor;
+
+  if (MARKO_DEBUG) {
+    id = +valueAccessor.slice(valueAccessor.lastIndexOf("/") + 1);
+  }
 
   return (scope: Scope, value: T, valueChange?: (v: T) => void) => {
     if (rendering) {
@@ -37,26 +35,27 @@ export function _let<T>(valueAccessor: Accessor, fn?: SignalFn) {
         scope.___creating
       ) {
         scope[valueAccessor] = value;
-        fn && fn(scope);
+        fn?.(scope);
       }
     } else if (scope[valueChangeAccessor]) {
       scope[valueChangeAccessor](value);
     } else if (scope[valueAccessor] !== (scope[valueAccessor] = value) && fn) {
       schedule();
-      queueRender(scope, fn, MARKO_DEBUG ? id : (valueAccessor as number));
+      queueRender(scope, fn, id as number);
     }
     return value;
   };
 }
 
 export function _const<T>(
-  valueAccessor: Accessor,
-  fn: SignalFn = () => {},
+  valueAccessor: EncodedAccessor,
+  fn?: SignalFn,
 ): Signal<T> {
+  if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
   return (scope, value) => {
     if (!(valueAccessor in scope) || scope[valueAccessor] !== value) {
       scope[valueAccessor] = value;
-      fn(scope);
+      fn?.(scope);
     }
   };
 }
@@ -69,21 +68,25 @@ export function _or(
 ): Signal<never> {
   return (scope) => {
     if (scope.___creating) {
-      if (scope[id] === undefined) {
+      if (id in scope) {
+        if (!--scope[id]) {
+          fn(scope);
+        }
+      } else {
         scope[id] = defaultPending;
-      } else if (!--scope[id]) {
-        fn(scope);
       }
     } else {
-      queueRender(scope, fn as any, id, 0, scope[scopeIdAccessor]);
+      queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
     }
   };
 }
 
 export function _for_closure(
-  ownerLoopNodeAccessor: Accessor,
+  ownerLoopNodeAccessor: EncodedAccessor,
   fn: SignalFn,
 ): SignalFn {
+  if (!MARKO_DEBUG)
+    ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor as number);
   const loopScopeAccessor =
     AccessorPrefix.LoopScopeArray + ownerLoopNodeAccessor;
   const loopScopeMapAccessor =
@@ -116,10 +119,14 @@ export function _for_closure(
 }
 
 export function _if_closure(
-  ownerConditionalNodeAccessor: Accessor,
+  ownerConditionalNodeAccessor: EncodedAccessor,
   branch: number,
   fn: SignalFn,
 ): SignalFn {
+  if (!MARKO_DEBUG)
+    ownerConditionalNodeAccessor = decodeAccessor(
+      ownerConditionalNodeAccessor as number,
+    );
   const scopeAccessor =
     AccessorPrefix.ConditionalScope + ownerConditionalNodeAccessor;
   const branchAccessor =
@@ -175,10 +182,11 @@ export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {
 }
 
 export function _closure_get(
-  valueAccessor: Accessor,
+  valueAccessor: EncodedAccessor,
   fn: SignalFn,
   getOwnerScope?: (scope: Scope) => Scope,
 ) {
+  if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
   const closureSignal = ((scope) => {
     scope[closureSignal.___signalIndexAccessor] = closureSignal.___index;
     fn(scope);
@@ -209,11 +217,12 @@ export function _child_setup(setup: Signal<never> & { _: Signal<Scope> }) {
 
 export function _var(
   scope: Scope,
-  childAccessor: Accessor,
+  childAccessor: EncodedAccessor,
   signal: Signal<unknown>,
 ) {
-  scope[childAccessor][AccessorProp.TagVariable] = (value: unknown) =>
-    signal(scope, value);
+  scope[MARKO_DEBUG ? childAccessor : decodeAccessor(childAccessor as number)][
+    AccessorProp.TagVariable
+  ] = (value: unknown) => signal(scope, value);
 }
 
 export const _return = (scope: Scope, value: unknown) =>
@@ -281,6 +290,8 @@ function* traverseAllHoisted(
 }
 
 export function _hoist(...path: Accessor[]) {
+  if (!MARKO_DEBUG)
+    path = path.map((p) => (typeof p === "string" ? p : decodeAccessor(p)));
   return (scope: Scope) => {
     const getOne = (...args: unknown[]) =>
       iterator()

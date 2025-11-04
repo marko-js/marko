@@ -1,9 +1,9 @@
-// size: 285 (min) 128 (brotli)
+// size: 284 (min) 132 (brotli)
 (_._enable_catch(),
   _._enable_catch(),
   _._enable_catch(),
   _._script("a0", ($scope) =>
-    _._on($scope[1], "click", function () {
+    _._on($scope.b, "click", function () {
       document.querySelector("button").textContent = "After";
     }),
   ),
