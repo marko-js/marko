@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.101
+
+### Patch Changes
+
+- [#2927](https://github.com/marko-js/marko/pull/2927) [`7598ad3`](https://github.com/marko-js/marko/commit/7598ad320a4c24256c46ae399040eb836ad4af01) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix analysis of exported functions.
+
 ## 6.0.100
 
 ### Patch Changes
