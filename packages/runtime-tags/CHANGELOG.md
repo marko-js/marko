@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.0.102
+
+### Patch Changes
+
+- [#2931](https://github.com/marko-js/marko/pull/2931) [`258306f`](https://github.com/marko-js/marko/commit/258306f6fd5b3cf1e3d0c06f99c61a3c473dc632) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue assigning to aliased tag variables.
+
+- [#2926](https://github.com/marko-js/marko/pull/2926) [`ca2d1dc`](https://github.com/marko-js/marko/commit/ca2d1dc1ca0c0d3320f73ad1ccf910483b72841b) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Update error cases for if tag
+
+- [#2930](https://github.com/marko-js/marko/pull/2930) [`f5f34c6`](https://github.com/marko-js/marko/commit/f5f34c63e7c14a182fb79be0e370fca7b8c36825) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add support for resuming dynamic tag native events.
+
 ## 6.0.101
 
 ### Patch Changes
