@@ -1,4 +1,5 @@
-// size: 223 (min) 162 (brotli)
+// size: 247 (min) 163 (brotli)
+_._resume_dynamic_tag();
 const $dynamicTag = _._dynamic_tag(0),
   $inputAs__OR__inputClass__OR__htmlInput__OR__content = _._or(
     9,

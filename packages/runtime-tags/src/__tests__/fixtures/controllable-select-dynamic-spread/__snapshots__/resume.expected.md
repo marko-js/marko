@@ -34,7 +34,8 @@
       M._.r = [_ =&gt; (_.b = [0, _.c = {
           "ConditionalScope:#text/0": _.a = {
             "ControlledType:#select/0": 3,
-            "ControlledValue:#select/0": "b"
+            "ControlledValue:#select/0": "b",
+            ___renderer: "select"
           },
           "ConditionalRenderer:#text/0": "select",
           tag: "select"
@@ -43,7 +44,7 @@
           "__tests__/template.marko_0/valueChange"
           ](_.c), _.b),
         "__tests__/template.marko_1",
-        3
+        3, "_dynamicTagScript", 2
       ];
       M._.w()
     </script>
@@ -88,7 +89,7 @@ select.dispatchEvent(new window.Event("input", {
     </select>
     <!--M_'1 #text/0 2-->
     <span>
-      b
+      c
       <!--M_*1 #text/1-->
     </span>
     <script>
@@ -96,7 +97,8 @@ select.dispatchEvent(new window.Event("input", {
       M._.r = [_ =&gt; (_.b = [0, _.c = {
           "ConditionalScope:#text/0": _.a = {
             "ControlledType:#select/0": 3,
-            "ControlledValue:#select/0": "b"
+            "ControlledValue:#select/0": "b",
+            ___renderer: "select"
           },
           "ConditionalRenderer:#text/0": "select",
           tag: "select"
@@ -105,10 +107,15 @@ select.dispatchEvent(new window.Event("input", {
           "__tests__/template.marko_0/valueChange"
           ](_.c), _.b),
         "__tests__/template.marko_1",
-        3
+        3, "_dynamicTagScript", 2
       ];
       M._.w()
     </script>
   </body>
 </html>
+```
+
+# Mutations
+```
+UPDATE html/body/span/#text "b" => "c"
 ```

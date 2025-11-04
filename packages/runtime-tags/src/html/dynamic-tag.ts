@@ -1,4 +1,5 @@
 import { normalizeDynamicRenderer } from "../common/helpers";
+import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
 import { type Accessor, AccessorPrefix, ResumeSymbol } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
 import type { ServerRenderer } from "./template";
@@ -8,7 +9,9 @@ import {
   _resume,
   _scope,
   _scope_id,
+  _script,
   _set_serialize_reason,
+  getScopeById,
   getState,
   withBranchId,
 } from "./writer";
@@ -111,6 +114,21 @@ export let _dynamic_tag = (
       throw new Error(
         `Body content is not supported for the \`<${renderer}>\` tag.`,
       );
+    }
+
+    const childScope = getScopeById(branchId);
+    if (
+      childScope &&
+      (childScope[
+        AccessorPrefix.EventAttributes + (MARKO_DEBUG ? `#${renderer}/0` : 0)
+      ] ||
+        childScope[
+          AccessorPrefix.ControlledHandler +
+            (MARKO_DEBUG ? `#${renderer}/0` : 0)
+        ])
+    ) {
+      childScope.___renderer = renderer;
+      _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
     }
 
     if (shouldResume) {

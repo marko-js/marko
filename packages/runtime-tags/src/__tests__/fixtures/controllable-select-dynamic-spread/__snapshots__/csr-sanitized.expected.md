@@ -53,6 +53,6 @@ select.dispatchEvent(new window.Event("input", {
   </option>
 </select>
 <span>
-  b
+  c
 </span>
 ```

@@ -1,0 +1,12 @@
+{
+  "vars": {
+    "props": {
+      "$_": "n",
+      "$init": "t",
+      "$$tagName_content": "m",
+      "$$dynamicTag": "o",
+      "$$tagName": "a",
+      "$$onClick": "r"
+    }
+  }
+}

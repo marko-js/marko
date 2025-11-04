@@ -1,5 +1,6 @@
 import { forIn, forOf, forTo, forUntil } from "../common/for";
 import { normalizeDynamicRenderer } from "../common/helpers";
+import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
 import {
   type Accessor,
   AccessorPrefix,
@@ -8,7 +9,7 @@ import {
   NodeType,
   type Scope,
 } from "../common/types";
-import { _attrs, _attrs_content } from "./dom";
+import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
   caughtError,
   pendingEffects,
@@ -25,7 +26,7 @@ import {
   type Renderer,
   setupBranch,
 } from "./renderer";
-import { enableBranches } from "./resume";
+import { _resume, enableBranches } from "./resume";
 import { schedule } from "./schedule";
 import {
   destroyBranch,
@@ -316,6 +317,19 @@ export let _dynamic_tag = function dynamicTag(
           MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0,
           (inputIsArgs ? args[0] : args) || {},
         );
+
+        if (
+          childScope[
+            AccessorPrefix.EventAttributes +
+              (MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0)
+          ] ||
+          childScope[
+            AccessorPrefix.ControlledHandler +
+              (MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0)
+          ]
+        ) {
+          queueEffect(childScope, dynamicTagScript);
+        }
       } else {
         for (const accessor in normalizedRenderer.___localClosures) {
           normalizedRenderer.___localClosures[accessor](
@@ -346,6 +360,14 @@ export let _dynamic_tag = function dynamicTag(
     }
   };
 };
+
+export function _resume_dynamic_tag() {
+  _resume(DYNAMIC_TAG_SCRIPT_REGISTER_ID, dynamicTagScript);
+}
+
+function dynamicTagScript(branch: Scope) {
+  _attrs_script(branch, MARKO_DEBUG ? `#${branch.___renderer}/0` : 0);
+}
 
 export function setConditionalRenderer<T>(
   scope: Scope,

@@ -59,6 +59,11 @@ select.dispatchEvent(new window.Event("input", {
   </option>
 </select>
 <span>
-  b
+  c
 </span>
+```
+
+# Mutations
+```
+UPDATE span/#text "b" => "c"
 ```
