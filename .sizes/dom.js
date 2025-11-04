@@ -1,4 +1,4 @@
-// size: 19323 (min) 7323 (brotli)
+// size: 19393 (min) 7355 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -1331,11 +1331,13 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
         let childScope = scope[childScopeAccessor],
           args = getInput?.();
         if ("string" == typeof normalizedRenderer)
-          (getContent ? _attrs : _attrs_content)(
+          ((getContent ? _attrs : _attrs_content)(
             childScope,
             0,
             (inputIsArgs ? args[0] : args) || {},
-          );
+          ),
+            (childScope.i0 || childScope.e0) &&
+              queueEffect(childScope, dynamicTagScript));
         else {
           for (let accessor in normalizedRenderer.F)
             normalizedRenderer.F[accessor](
@@ -1362,6 +1364,12 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
     }
   );
 };
+function _resume_dynamic_tag() {
+  _resume("d", dynamicTagScript);
+}
+function dynamicTagScript(branch) {
+  _attrs_script(branch, 0);
+}
 function setConditionalRenderer(
   scope,
   nodeAccessor,

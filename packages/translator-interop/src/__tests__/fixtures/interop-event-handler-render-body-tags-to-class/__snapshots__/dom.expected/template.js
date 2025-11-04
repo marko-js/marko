@@ -4,6 +4,7 @@ export const $walks = /* over(1), replace, over(2) */"b%c";
 import * as _ from "@marko/runtime-tags/debug/dom";
 import _myButton from "./components/my-button.marko";
 _._resume("__tests__/components/my-button.marko", _myButton);
+_._resume_dynamic_tag();
 const $mybutton_content__count = /* @__PURE__ */_._closure_get("count", $scope => _._text($scope["#text/0"], $scope._.count));
 const $mybutton_content__setup = $mybutton_content__count;
 const $mybutton_content = _._content_resume("__tests__/template.marko_1_content", " ", /* get, over(1) */" b", $mybutton_content__setup);

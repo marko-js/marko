@@ -12,6 +12,7 @@ export {
   _for_to,
   _for_until,
   _if,
+  _resume_dynamic_tag,
   _try,
 } from "./dom/control-flow";
 export {

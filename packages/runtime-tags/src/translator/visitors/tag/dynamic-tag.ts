@@ -62,6 +62,7 @@ import {
   signalHasStatements,
   writeHTMLResumeStatements,
 } from "../../util/signals";
+import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import {
   getTranslatedBodyContentProperty,
   propsToExpression,
@@ -74,6 +75,7 @@ import { getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
+const importedDynamicTagResume = new WeakSet<t.Program>();
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -422,9 +424,31 @@ export default {
           }
         }
 
+        enableDynamicTagResume(tag);
         addValue(section, tagExtra.referencedBindings, signal, tagExpression);
         tag.remove();
       }
     },
   },
 } satisfies TemplateVisitor<t.MarkoTag>;
+
+function enableDynamicTagResume(tag: t.NodePath<t.MarkoTag>) {
+  const program = getProgram().node;
+  if (
+    !importedDynamicTagResume.has(program) &&
+    analyzeTagNameType(tag, true) !== TagNameType.CustomTag
+  ) {
+    for (const attr of tag.node.attributes) {
+      if (
+        attr.type === "MarkoSpreadAttribute" ||
+        (attr.type === "MarkoAttribute" && isEventOrChangeHandler(attr.name))
+      ) {
+        importedDynamicTagResume.add(program);
+        program.body.push(
+          t.expressionStatement(callRuntime("_resume_dynamic_tag")),
+        );
+        return;
+      }
+    }
+  }
+}

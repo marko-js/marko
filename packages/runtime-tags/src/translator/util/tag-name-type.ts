@@ -27,7 +27,10 @@ export enum TagNameType {
 
 const MARKO_FILE_REG = /^<.*>$|\.marko$/;
 
-export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
+export default function analyzeTagNameType(
+  tag: t.NodePath<t.MarkoTag>,
+  allowDynamic?: boolean,
+) {
   const extra = (tag.node.extra ??= {});
 
   if (extra.tagNameType === undefined) {
@@ -39,35 +42,39 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
           : isNativeTag(tag)
             ? TagNameType.NativeTag
             : TagNameType.CustomTag;
-      extra.tagNameNullable = extra.tagNameNullable = false;
-    } else if (name.isIdentifier()) {
-      analyzeExpressionTagName(name, extra);
-      if (extra.tagNameType === TagNameType.NativeTag) {
-        extra.tagNameType = TagNameType.DynamicTag;
-      }
+      extra.tagNameNullable = extra.tagNameDynamic = false;
     } else if (name.isTemplateLiteral() && !name.node.expressions.length) {
       extra.tagNameType = TagNameType.NativeTag;
+      extra.tagNameNullable = extra.tagNameDynamic = false;
+    } else if (name.isIdentifier()) {
+      analyzeExpressionTagName(name, extra);
+      extra.tagNameDynamic = !extra.tagNameImported;
     } else {
-      extra.tagNameType = TagNameType.DynamicTag;
+      analyzeExpressionTagName(name, extra);
+      extra.tagNameDynamic = true;
     }
 
-    if (extra.tagNameType === undefined) {
-      extra.tagNameType = TagNameType.DynamicTag;
-    }
-
-    if (extra.tagNameType === TagNameType.CustomTag && !isCoreTag(tag)) {
+    if (
+      !extra.tagNameDynamic &&
+      extra.tagNameType === TagNameType.CustomTag &&
+      !isCoreTag(tag)
+    ) {
       const childFile = loadFileForTag(tag);
       if (!childFile) {
         extra.tagNameType = TagNameType.DynamicTag;
+        extra.tagNameDynamic = true;
       } else if (childFile.ast.program.extra!.featureType === "class") {
         extra.tagNameType = TagNameType.DynamicTag;
+        extra.tagNameDynamic = true;
         extra.featureType = "class";
         (getProgram().node.extra ??= {}).needsCompat = true;
       }
     }
   }
 
-  return extra.tagNameType;
+  return !allowDynamic && extra.tagNameDynamic
+    ? TagNameType.DynamicTag
+    : extra.tagNameType!;
 }
 
 function analyzeExpressionTagName(
@@ -78,7 +85,7 @@ function analyzeExpressionTagName(
   let path: (typeof pending)[0] | undefined;
   let type: TagNameType | undefined;
   let nullable = false;
-  let tagNameImported: string | undefined;
+  let tagNameImported: string | false | undefined;
 
   while ((path = pending.pop()) && type !== TagNameType.DynamicTag) {
     if (path.isConditionalExpression()) {
@@ -100,14 +107,15 @@ function analyzeExpressionTagName(
     } else if (path.isBinaryExpression()) {
       type =
         path.node.operator !== "+" ||
-        type !== undefined /* && type !== TagNameTypes.NativeTag*/
-          ? TagNameType.DynamicTag
-          : TagNameType.NativeTag;
+        type === undefined ||
+        type === TagNameType.NativeTag
+          ? TagNameType.NativeTag
+          : TagNameType.DynamicTag;
     } else if (path.isStringLiteral() || path.isTemplateLiteral()) {
       type =
-        type !== undefined /* && type !== TagNameTypes.NativeTag */
-          ? TagNameType.DynamicTag
-          : TagNameType.NativeTag;
+        type === undefined || type === TagNameType.NativeTag
+          ? TagNameType.NativeTag
+          : TagNameType.DynamicTag;
     } else if (path.isNullLiteral()) {
       nullable = true;
     } else if (path.isIdentifier()) {
@@ -131,15 +139,14 @@ function analyzeExpressionTagName(
         ) {
           const resolvedImport =
             resolveTagImport(name, decl.source.value) || decl.source.value;
-          if (
-            type === TagNameType.NativeTag ||
-            (tagNameImported && tagNameImported !== resolvedImport)
-          ) {
-            type = TagNameType.DynamicTag;
-            tagNameImported = undefined;
-          } else {
+          if (type === undefined) {
             type = TagNameType.CustomTag;
             tagNameImported = resolvedImport;
+          } else if (type === TagNameType.NativeTag) {
+            type = TagNameType.DynamicTag;
+            tagNameImported = undefined;
+          } else if (tagNameImported !== resolvedImport) {
+            tagNameImported = undefined;
           }
         } else {
           type = TagNameType.DynamicTag;
@@ -182,9 +189,8 @@ function analyzeExpressionTagName(
   }
 
   // DOM implementation requires non strings actually be a dynamic tag call.
-  extra.tagNameType = type;
+  extra.tagNameType = type ?? TagNameType.DynamicTag;
   extra.tagNameNullable = nullable;
-  extra.tagNameDynamic = true;
 
   if (type === TagNameType.CustomTag && tagNameImported) {
     extra.tagNameImported = tagNameImported;

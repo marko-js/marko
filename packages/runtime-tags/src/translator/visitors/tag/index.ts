@@ -101,9 +101,11 @@ export default {
         }
       }
 
+      const type = analyzeTagNameType(tag);
       if (
         extra.tagNameDynamic &&
         extra.tagNameNullable &&
+        type === TagNameType.NativeTag &&
         !tag.get("name").isIdentifier() &&
         isOutputHTML()
       ) {
@@ -118,7 +120,7 @@ export default {
         tag.set("name", tagNameId);
       }
 
-      switch (extra.tagNameType) {
+      switch (type) {
         case TagNameType.NativeTag:
           NativeTag.translate.enter(tag);
           break;
@@ -142,7 +144,7 @@ export default {
         return;
       }
 
-      switch (tag.node.extra!.tagNameType) {
+      switch (analyzeTagNameType(tag)) {
         case TagNameType.NativeTag:
           NativeTag.translate.exit(tag);
           break;

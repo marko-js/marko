@@ -4,6 +4,7 @@ export const $walks = /* over(1), replace, over(1), next(1), get, out(1) */"b%bD
 import _classCounter from "./components/class-counter.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 _._resume("__tests__/components/class-counter.marko", _classCounter);
+_._resume_dynamic_tag();
 const $count = /* @__PURE__ */_._let("count/2", $scope => _._text($scope["#text/1"], $scope.count));
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0");
 export function $setup($scope) {
