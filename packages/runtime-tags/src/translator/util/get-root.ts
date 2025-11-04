@@ -6,6 +6,8 @@ export type MarkoExprRootPath = t.NodePath<
   | t.MarkoSpreadAttribute
   | t.MarkoScriptlet
   | t.MarkoPlaceholder
+  | t.ExportNamedDeclaration
+  | t.ExportDefaultDeclaration
 >;
 
 export function getMarkoRoot(path: t.NodePath<t.Node>) {
@@ -101,6 +103,8 @@ export function isMarko(path: t.NodePath<any>): path is MarkoExprRootPath {
     case "MarkoSpreadAttribute":
     case "MarkoPlaceholder":
     case "MarkoScriptlet":
+    case "ExportNamedDeclaration":
+    case "ExportDefaultDeclaration":
       return true;
     default:
       return false;
