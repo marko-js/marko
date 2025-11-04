@@ -59,7 +59,7 @@ export default {
             ? node.key.name
             : "anonymous");
 
-    if (markoRoot.isMarkoScriptlet()) {
+    if (isStaticRoot(markoRoot)) {
       const refs = getStaticDeclRefs(fnExtra, fn);
       if (refs === true) {
         registerFunction(fnExtra, true);
@@ -98,7 +98,8 @@ function canIgnoreRegister(
     // bail within a placeholder
     markoRoot.isMarkoPlaceholder() ||
     // bail within a server only statement
-    (markoRoot.isMarkoScriptlet() && markoRoot.node.target === "server") ||
+    (markoRoot.isMarkoScriptlet() &&
+      (!markoRoot.node.static || markoRoot.node.target === "server")) ||
     // bail within the tag name
     (markoRoot.isMarkoTag() && markoRoot.node.name == exprRoot.node) ||
     (isMarkoAttribute(markoRoot) &&
@@ -124,11 +125,12 @@ function getStaticDeclRefs(
         const binding = decl.scope.getBinding(name);
         if (!binding) continue;
         for (const ref of binding.referencePaths) {
-          if (isInvokedFunction(ref)) continue;
+          if (isInvokedFunction(ref) || ref.parentPath!.type === "Program")
+            continue;
           const exprRoot = getExprRoot(ref);
           const markoRoot = getMarkoRoot(exprRoot);
           if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) continue;
-          if (markoRoot.isMarkoScriptlet()) {
+          if (isStaticRoot(markoRoot)) {
             if (getStaticDeclRefs(fnExtra, ref, refs) === true) {
               return true;
             }
@@ -204,4 +206,16 @@ function isMarkoAttribute(
   parentPath: t.NodePath<t.MarkoTag>;
 } {
   return path ? path.isMarkoAttribute() : false;
+}
+
+function isStaticRoot(path: t.NodePath<t.Node>) {
+  switch (path.type) {
+    case "MarkoScriptlet":
+      return (path.node as t.MarkoScriptlet).static;
+    case "ExportDefaultDeclaration":
+    case "ExportNamedDeclaration":
+      return true;
+    default:
+      return false;
+  }
 }

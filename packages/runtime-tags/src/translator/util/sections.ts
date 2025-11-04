@@ -269,6 +269,7 @@ export function getNodeContentType(
     case "ImportDeclaration":
     case "ExportAllDeclaration":
     case "ExportNamedDeclaration":
+    case "ExportDefaultDeclaration":
       return null;
     case "MarkoTag": {
       const tag = path as t.NodePath<t.MarkoTag>;
