@@ -1,0 +1,12 @@
+<const/{ foo: bar }={
+  foo: 1,
+  fooChange(v) {
+    $btn().textContent = v;
+  }
+}>
+
+<button/$btn onClick() {
+  bar = "After";
+}>
+  Before
+</button>

@@ -24,12 +24,13 @@ export default function translateVar(
       !binding ||
       !binding.upstreamAlias ||
       !binding.assignmentSections ||
+      binding.property === undefined ||
       id.node === tagVar
     ) {
       return;
     }
 
-    const changeName = binding.name + "Change";
+    const changeName = binding.property + "Change";
     const changeBinding = binding.upstreamAlias.propertyAliases.get(changeName);
     if (changeBinding && changeName !== changeBinding.name) {
       // add a new property to the destructure list when a change handler is implicitly added
