@@ -225,9 +225,17 @@ export function trackDomVarReferences(
   const section = getOrCreateSection(tag);
 
   if (babelBinding.constantViolations.length) {
-    throw babelBinding.constantViolations[0].buildCodeFrameError(
-      "Tag variables on native elements cannot be assigned to.",
-    );
+    for (const ref of babelBinding.constantViolations) {
+      throw ref.type === "MarkoTag"
+        ? ref
+            .get("var")
+            .buildCodeFrameError(
+              `Duplicate declaration ${JSON.stringify(binding.name)}`,
+            )
+        : ref.buildCodeFrameError(
+            "Tag variables on native elements cannot be assigned to.",
+          );
+    }
   }
 
   let registerId: string | undefined;
@@ -427,8 +435,8 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
 
   for (const ref of referencePaths) {
     const refSection = getOrCreateSection(ref);
-
     const markoRoot = getMarkoRoot(ref);
+
     if (
       markoRoot?.type === "MarkoAttribute" &&
       markoRoot.parentPath === babelBinding.path
@@ -447,6 +455,14 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
   }
 
   for (const ref of constantViolations) {
+    if (ref.type === "MarkoTag") {
+      throw ref
+        .get("var")
+        .buildCodeFrameError(
+          `Duplicate declaration ${JSON.stringify(binding.name)}`,
+        );
+    }
+
     if (isReferenceHoisted(babelBinding.path, ref)) {
       throw ref.buildCodeFrameError("Cannot assign to hoisted tag variable.");
     }
