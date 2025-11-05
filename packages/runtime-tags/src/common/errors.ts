@@ -57,6 +57,14 @@ export function assertExclusiveAttrs(
   }
 }
 
+export function assertValidTagName(tagName: string) {
+  if (!/^[a-z][a-z0-9._-]*$/i.test(tagName)) {
+    throw new Error(
+      `Invalid tag name: "${tagName}". Tag names must start with a letter and contain only letters, numbers, periods, hyphens, and underscores.`,
+    );
+  }
+}
+
 function throwErr(msg: string) {
   throw new Error(msg);
 }

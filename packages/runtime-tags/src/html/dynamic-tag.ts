@@ -1,3 +1,4 @@
+import { assertValidTagName } from "../common/errors";
 import { normalizeDynamicRenderer } from "../common/helpers";
 import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
 import { type Accessor, AccessorPrefix, ResumeSymbol } from "../common/types";
@@ -53,6 +54,10 @@ export let _dynamic_tag = (
   let result: unknown;
 
   if (typeof renderer === "string") {
+    if (MARKO_DEBUG) {
+      assertValidTagName(renderer);
+    }
+
     const input = ((inputIsArgs
       ? (inputOrArgs as unknown[])[0]
       : inputOrArgs) || {}) as Record<string, unknown>;

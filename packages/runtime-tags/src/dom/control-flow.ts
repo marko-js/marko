@@ -1,3 +1,4 @@
+import { assertValidTagName } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
 import { normalizeDynamicRenderer } from "../common/helpers";
 import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
@@ -522,6 +523,10 @@ function createBranchWithTagNameOrRenderer(
   parentScope: Scope,
   parentNode: ParentNode,
 ) {
+  if (MARKO_DEBUG && typeof tagNameOrRenderer === "string") {
+    assertValidTagName(tagNameOrRenderer);
+  }
+
   const branch = createBranch(
     $global,
     tagNameOrRenderer,
