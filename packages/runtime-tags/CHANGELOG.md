@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 6.0.103
+
+### Patch Changes
+
+- [#2932](https://github.com/marko-js/marko/pull/2932) [`c285cd1`](https://github.com/marko-js/marko/commit/c285cd123d98766fb11a225f845f73a82807d9f6) Thanks [@rturnq](https://github.com/rturnq)! - Use identifiers for scope accessors and encode them as integers in client templates
+
+- [#2933](https://github.com/marko-js/marko/pull/2933) [`0247892`](https://github.com/marko-js/marko/commit/0247892da85d73c671850e58d00ee3f8fc45b344) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve error messaging when exclusive change handlers are specified on native elements.
+
+- [#2933](https://github.com/marko-js/marko/pull/2933) [`d25a5a5`](https://github.com/marko-js/marko/commit/d25a5a57c53149b6dd17d8ebffed2461d7c282bf) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add dev mode validation for dynamic tag names.
+
+- [#2933](https://github.com/marko-js/marko/pull/2933) [`ac1c8dc`](https://github.com/marko-js/marko/commit/ac1c8dc67d152eb93d3e968731437381572a267e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve errors for duplicate declarations for tag variables.
+
 ## 6.0.102
 
 ### Patch Changes
