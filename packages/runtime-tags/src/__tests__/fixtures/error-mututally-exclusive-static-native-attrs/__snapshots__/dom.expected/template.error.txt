@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-mututally-exclusive-static-native-attrs/template.marko:1:2
+    > 1 | <input type="checkbox" checkedValue=1 checkedChange() {}>
+        |  ^^^^^ The attributes checkedChange and checkedValue are mutually exclusive.
+      2 |

@@ -1,3 +1,4 @@
+import { assertExclusiveAttrs } from "../common/errors";
 import {
   classValue,
   getEventHandlerName,
@@ -172,6 +173,10 @@ export function _attrs(
   let events: Record<string, unknown> | undefined;
   switch (tagName) {
     case "input":
+      if (MARKO_DEBUG) {
+        assertExclusiveAttrs(data);
+      }
+
       if (data.checkedChange) {
         result += _attr_input_checked(
           scopeId,
