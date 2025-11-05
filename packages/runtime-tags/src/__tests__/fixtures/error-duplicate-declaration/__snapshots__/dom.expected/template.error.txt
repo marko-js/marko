@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-duplicate-declaration/template.marko:2:10
+      1 | <define/Foo|bar|>
+    > 2 |   <const/bar = 1>
+        |          ^^^ Duplicate declaration "bar"
+      3 |   <script>
+      4 |     console.log(bar)
+      5 |   </>
