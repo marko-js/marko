@@ -1,4 +1,4 @@
-import type { BranchScope, Scope } from "../common/types";
+import { AccessorProp, type BranchScope, type Scope } from "../common/types";
 import { renderCatch } from "./control-flow";
 import { enableBranches } from "./resume";
 import type { Signal, SignalFn } from "./signals";
@@ -25,7 +25,7 @@ export function queueRender<T>(
   signal: Signal<T>,
   signalKey: number,
   value?: T,
-  scopeKey = scope.___id,
+  scopeKey = scope[AccessorProp.Id],
 ) {
   const key = scopeKey * scopeKeyOffset + signalKey;
   const existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
@@ -132,13 +132,15 @@ function runRenders() {
       pendingRenders[i] = item;
     }
 
-    if (!render.___scope.___closestBranch?.___destroyed) {
+    if (
+      !render.___scope[AccessorProp.ClosestBranch]?.[AccessorProp.Destroyed]
+    ) {
       runRender(render);
     }
   }
 
   for (const scope of pendingScopes) {
-    scope.___creating = 0;
+    scope[AccessorProp.Creating] = 0;
   }
 
   pendingScopes = [];
@@ -159,10 +161,10 @@ export let _enable_catch = () => {
     // if not, return false
     // if so, return true and push the fn to the pending async queue on the try branch
     while (branch) {
-      if (branch.___pendingAsyncCount) {
-        return (branch.___effects ||= []).push(fn, scope);
+      if (branch[AccessorProp.PendingAsyncCount]) {
+        return (branch[AccessorProp.Effects] ||= []).push(fn, scope);
       }
-      branch = branch.___parentBranch;
+      branch = branch[AccessorProp.ParentBranch];
     }
   };
   runEffects = (
@@ -176,9 +178,9 @@ export let _enable_catch = () => {
         for (; i < effects.length; ) {
           fn = effects[i++] as SignalFn;
           scope = effects[i++] as Scope;
-          branch = scope.___closestBranch;
+          branch = scope[AccessorProp.ClosestBranch];
           if (
-            !branch?.___destroyed &&
+            !branch?.[AccessorProp.Destroyed] &&
             !(checkPending && handlePendingTry(fn, scope, branch))
           ) {
             fn(scope);

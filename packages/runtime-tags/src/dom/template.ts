@@ -105,7 +105,7 @@ function mount(
   const args = this.___params;
   const effects = prepareEffects(() => {
     branch = createBranch(
-      $global as any as Scope["$global"],
+      $global as any as Scope[AccessorProp.Global],
       this,
       undefined,
       parentNode,
@@ -121,8 +121,8 @@ function mount(
   insertChildNodes(
     parentNode,
     nextSibling,
-    branch.___startNode,
-    branch.___endNode,
+    branch[AccessorProp.StartNode],
+    branch[AccessorProp.EndNode],
   );
   runEffects(effects);
 

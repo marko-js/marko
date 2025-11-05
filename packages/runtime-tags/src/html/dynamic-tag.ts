@@ -1,7 +1,12 @@
 import { assertValidTagName } from "../common/errors";
 import { normalizeDynamicRenderer } from "../common/helpers";
 import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
-import { type Accessor, AccessorPrefix, ResumeSymbol } from "../common/types";
+import {
+  type Accessor,
+  AccessorPrefix,
+  AccessorProp,
+  ResumeSymbol,
+} from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
 import type { ServerRenderer } from "./template";
 import {
@@ -132,7 +137,7 @@ export let _dynamic_tag = (
             (MARKO_DEBUG ? `#${renderer}/0` : "a")
         ])
     ) {
-      childScope.___renderer = renderer;
+      childScope[AccessorProp.Renderer] = renderer;
       _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
     }
 

@@ -1,4 +1,4 @@
-import type { BranchScope } from "../common/types";
+import { AccessorProp, type BranchScope } from "../common/types";
 import { insertBranchBefore, removeAndDestroyBranch } from "./scope";
 
 const WRONG_POS = 2147483647;
@@ -55,7 +55,9 @@ export function reconcile(
     if (newStart <= newEnd) {
       k = newEnd + 1;
       nextSibling =
-        k < newBranches.length ? newBranches[k].___startNode : afterReference;
+        k < newBranches.length
+          ? newBranches[k][AccessorProp.StartNode]
+          : afterReference;
       do {
         insertBranchBefore(newBranches[newStart++], parent, nextSibling);
       } while (newStart <= newEnd);
@@ -128,14 +130,18 @@ export function reconcile(
             pos = i + newStart;
             newBranch = newBranches[pos++];
             nextSibling =
-              pos < k ? newBranches[pos].___startNode : afterReference;
+              pos < k
+                ? newBranches[pos][AccessorProp.StartNode]
+                : afterReference;
             insertBranchBefore(newBranch, parent, nextSibling);
           } else {
             if (j < 0 || i !== seq[j]) {
               pos = i + newStart;
               newBranch = newBranches[pos++];
               nextSibling =
-                pos < k ? newBranches[pos].___startNode : afterReference;
+                pos < k
+                  ? newBranches[pos][AccessorProp.StartNode]
+                  : afterReference;
               insertBranchBefore(newBranch, parent, nextSibling);
             } else {
               --j;
@@ -149,7 +155,9 @@ export function reconcile(
             pos = i + newStart;
             newBranch = newBranches[pos++];
             nextSibling =
-              pos < k ? newBranches[pos].___startNode : afterReference;
+              pos < k
+                ? newBranches[pos][AccessorProp.StartNode]
+                : afterReference;
             insertBranchBefore(newBranch, parent, nextSibling);
           }
         }

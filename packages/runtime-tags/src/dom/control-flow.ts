@@ -57,12 +57,12 @@ export function _await(nodeAccessor: EncodedAccessor, renderer: Renderer) {
       placeholderShown.add(pendingEffects);
       if (
         !scope[promiseAccessor] &&
-        (tryWithPlaceholder.___pendingAsyncCount =
-          (tryWithPlaceholder.___pendingAsyncCount || 0) + 1) === 1
+        (tryWithPlaceholder[AccessorProp.PendingAsyncCount] =
+          (tryWithPlaceholder[AccessorProp.PendingAsyncCount] || 0) + 1) === 1
       ) {
         requestAnimationFrame(
           () =>
-            tryWithPlaceholder.___pendingAsyncCount &&
+            tryWithPlaceholder[AccessorProp.PendingAsyncCount] &&
             runEffects(
               prepareEffects(() =>
                 queueRender(
@@ -71,15 +71,16 @@ export function _await(nodeAccessor: EncodedAccessor, renderer: Renderer) {
                     insertBranchBefore(
                       (tryWithPlaceholder[AccessorProp.PlaceholderBranch] =
                         createAndSetupBranch(
-                          scope.$global,
+                          scope[AccessorProp.Global],
                           tryWithPlaceholder[
                             AccessorProp.PlaceholderContent
                           ] as Renderer,
                           tryWithPlaceholder[AccessorProp.Owner],
-                          tryWithPlaceholder.___startNode.parentNode!,
+                          tryWithPlaceholder[AccessorProp.StartNode]
+                            .parentNode!,
                         )),
-                      tryWithPlaceholder.___startNode.parentNode!,
-                      tryWithPlaceholder.___startNode,
+                      tryWithPlaceholder[AccessorProp.StartNode].parentNode!,
+                      tryWithPlaceholder[AccessorProp.StartNode],
                     );
                     tempDetachBranch(tryWithPlaceholder);
                   },
@@ -90,9 +91,9 @@ export function _await(nodeAccessor: EncodedAccessor, renderer: Renderer) {
         );
       }
     } else if (awaitBranch && !scope[promiseAccessor]) {
-      awaitBranch.___startNode.parentNode!.insertBefore(
+      awaitBranch[AccessorProp.StartNode].parentNode!.insertBefore(
         referenceNode,
-        awaitBranch.___startNode,
+        awaitBranch[AccessorProp.StartNode],
       );
       tempDetachBranch(awaitBranch);
     }
@@ -109,7 +110,7 @@ export function _await(nodeAccessor: EncodedAccessor, renderer: Renderer) {
                 // Since this is temp detached the parent node is a document fragment with all of the children in the branch.
                 if (!tryWithPlaceholder) {
                   referenceNode.replaceWith(
-                    awaitBranch.___startNode.parentNode!,
+                    awaitBranch[AccessorProp.StartNode].parentNode!,
                   );
                 }
               } else {
@@ -118,7 +119,7 @@ export function _await(nodeAccessor: EncodedAccessor, renderer: Renderer) {
                 insertBranchBefore(
                   (awaitBranch = scope[branchAccessor] =
                     createAndSetupBranch(
-                      scope.$global,
+                      scope[AccessorProp.Global],
                       renderer,
                       scope,
                       referenceNode.parentNode!,
@@ -134,24 +135,26 @@ export function _await(nodeAccessor: EncodedAccessor, renderer: Renderer) {
               if (tryWithPlaceholder) {
                 placeholderShown.add(pendingEffects);
 
-                if (!--tryWithPlaceholder.___pendingAsyncCount!) {
+                if (!--tryWithPlaceholder[AccessorProp.PendingAsyncCount]!) {
                   const placeholderBranch = tryWithPlaceholder[
                     AccessorProp.PlaceholderBranch
                   ] as BranchScope;
                   tryWithPlaceholder[AccessorProp.PlaceholderBranch] = 0;
                   if (placeholderBranch) {
                     // Since this is temp detached the parent node is a document fragment with all of the children in the branch.
-                    placeholderBranch.___startNode.parentNode!.insertBefore(
-                      tryWithPlaceholder.___startNode.parentNode!,
-                      placeholderBranch.___startNode,
+                    placeholderBranch[
+                      AccessorProp.StartNode
+                    ].parentNode!.insertBefore(
+                      tryWithPlaceholder[AccessorProp.StartNode].parentNode!,
+                      placeholderBranch[AccessorProp.StartNode],
                     );
                     removeAndDestroyBranch(placeholderBranch);
                   }
 
                   queueEffect(tryWithPlaceholder, (scope) => {
-                    const pendingEffects = scope.___effects;
+                    const pendingEffects = scope[AccessorProp.Effects];
                     if (pendingEffects) {
-                      scope.___effects = [];
+                      scope[AccessorProp.Effects] = [];
                       runEffects(pendingEffects, true);
                     }
                   });
@@ -164,7 +167,8 @@ export function _await(nodeAccessor: EncodedAccessor, renderer: Renderer) {
       },
       (error) => {
         if (thisPromise === scope[promiseAccessor]) {
-          if (tryWithPlaceholder) tryWithPlaceholder.___pendingAsyncCount = 0;
+          if (tryWithPlaceholder)
+            tryWithPlaceholder[AccessorProp.PendingAsyncCount] = 0;
           scope[promiseAccessor] = 0;
           schedule();
           queueRender(scope, renderCatch, -1, error);
@@ -209,7 +213,7 @@ export function renderCatch(scope: Scope, error: unknown) {
       AccessorProp.PlaceholderBranch
     ] as BranchScope;
     if (placeholderBranch) {
-      tryWithCatch.___pendingAsyncCount = 0;
+      tryWithCatch[AccessorProp.PendingAsyncCount] = 0;
       owner[
         AccessorPrefix.ConditionalScope +
           tryWithCatch[AccessorProp.BranchAccessor]
@@ -374,7 +378,10 @@ export function _resume_dynamic_tag() {
 }
 
 function dynamicTagScript(branch: Scope) {
-  _attrs_script(branch, MARKO_DEBUG ? `#${branch.___renderer}/0` : "a");
+  _attrs_script(
+    branch,
+    MARKO_DEBUG ? `#${branch[AccessorProp.Renderer]}/0` : "a",
+  );
 }
 
 export function setConditionalRenderer<T>(
@@ -382,7 +389,7 @@ export function setConditionalRenderer<T>(
   nodeAccessor: Accessor,
   newRenderer: T,
   createBranch: (
-    $global: Scope["$global"],
+    $global: Scope[AccessorProp.Global],
     renderer: NonNullable<T>,
     parentScope: Scope,
     parentNode: ParentNode,
@@ -394,10 +401,11 @@ export function setConditionalRenderer<T>(
     | undefined;
   const parentNode =
     referenceNode.nodeType > NodeType.Element
-      ? (prevBranch?.___startNode || referenceNode).parentNode!
+      ? (prevBranch?.[AccessorProp.StartNode] || referenceNode).parentNode!
       : (referenceNode as ParentNode);
   const newBranch = (scope[AccessorPrefix.ConditionalScope + nodeAccessor] =
-    newRenderer && createBranch(scope.$global, newRenderer, scope, parentNode));
+    newRenderer &&
+    createBranch(scope[AccessorProp.Global], newRenderer, scope, parentNode));
   if (referenceNode === parentNode) {
     if (prevBranch) {
       destroyBranch(prevBranch);
@@ -409,9 +417,16 @@ export function setConditionalRenderer<T>(
     }
   } else if (prevBranch) {
     if (newBranch) {
-      insertBranchBefore(newBranch, parentNode, prevBranch.___startNode);
+      insertBranchBefore(
+        newBranch,
+        parentNode,
+        prevBranch[AccessorProp.StartNode],
+      );
     } else {
-      parentNode.insertBefore(referenceNode, prevBranch.___startNode);
+      parentNode.insertBefore(
+        referenceNode,
+        prevBranch[AccessorProp.StartNode],
+      );
     }
 
     removeAndDestroyBranch(prevBranch);
@@ -482,7 +497,8 @@ function loop<T extends unknown[] = unknown[]>(
       : [];
     const parentNode = (
       referenceNode.nodeType > NodeType.Element
-        ? referenceNode.parentNode || oldArray[0].___startNode.parentNode
+        ? referenceNode.parentNode ||
+          oldArray[0][AccessorProp.StartNode].parentNode
         : referenceNode
     ) as Element;
     const newMap: Map<unknown, BranchScope> = (scope[
@@ -502,7 +518,12 @@ function loop<T extends unknown[] = unknown[]>(
       }
       const branch =
         oldMap?.get(key) ||
-        createAndSetupBranch(scope.$global, renderer, scope, parentNode);
+        createAndSetupBranch(
+          scope[AccessorProp.Global],
+          renderer,
+          scope,
+          parentNode,
+        );
       params?.(branch, args);
       newMap.set(key, branch);
       newArray.push(branch);
@@ -511,7 +532,8 @@ function loop<T extends unknown[] = unknown[]>(
     let afterReference: null | Node = null;
     if (referenceNode !== parentNode) {
       if (oldArray.length) {
-        afterReference = oldArray[oldArray.length - 1].___endNode.nextSibling;
+        afterReference =
+          oldArray[oldArray.length - 1][AccessorProp.EndNode].nextSibling;
         if (!newArray.length) {
           parentNode.insertBefore(referenceNode, afterReference);
         }
@@ -526,7 +548,7 @@ function loop<T extends unknown[] = unknown[]>(
 }
 
 function createBranchWithTagNameOrRenderer(
-  $global: Scope["$global"],
+  $global: Scope[AccessorProp.Global],
   tagNameOrRenderer: Renderer | string,
   parentScope: Scope,
   parentNode: ParentNode,
@@ -543,8 +565,8 @@ function createBranchWithTagNameOrRenderer(
   );
   if (typeof tagNameOrRenderer === "string") {
     branch[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : "a"] =
-      branch.___startNode =
-      branch.___endNode =
+      branch[AccessorProp.StartNode] =
+      branch[AccessorProp.EndNode] =
         document.createElementNS(
           tagNameOrRenderer === "svg"
             ? "http://www.w3.org/2000/svg"

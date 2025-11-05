@@ -1,46 +1,30 @@
 import type { Renderer as ClientRenderer } from "../dom/renderer";
+import type { AccessorProp } from "./accessor.debug";
 export type Falsy = undefined | null | false | 0 | "";
 export type CommentWalker = TreeWalker & Record<string, Comment>;
 export interface BranchScope extends Scope {
-  ___startNode: ChildNode;
-  ___endNode: ChildNode;
-  ___parentBranch: BranchScope | undefined;
-  ___destroyed: 1 | undefined;
-  ___abortScopes: Set<Scope> | undefined;
-  ___branchScopes: Set<BranchScope> | undefined;
-  ___renderer: ClientRenderer | string;
-  ___pendingAsyncCount: number | undefined;
-  ___effects: unknown[] | undefined;
+  [AccessorProp.StartNode]: ChildNode;
+  [AccessorProp.EndNode]: ChildNode;
+  [AccessorProp.ParentBranch]: BranchScope | undefined;
+  [AccessorProp.Destroyed]: 1 | undefined;
+  [AccessorProp.AbortScopes]: Set<Scope> | undefined;
+  [AccessorProp.BranchScopes]: Set<BranchScope> | undefined;
+  [AccessorProp.Renderer]: ClientRenderer | string;
+  [AccessorProp.PendingAsyncCount]: number | undefined;
+  [AccessorProp.Effects]: unknown[] | undefined;
 }
 export interface Scope {
-  $global: Record<string, unknown>;
-  _: Scope | undefined;
-  ___id: number;
-  ___args: unknown;
-  ___creating: 1 | 0 | undefined;
-  ___abortControllers:
+  [AccessorProp.Owner]: Scope | undefined;
+  [AccessorProp.Global]: Record<string, unknown>;
+  [AccessorProp.Id]: number;
+  [AccessorProp.Args]: unknown;
+  [AccessorProp.Creating]: 1 | 0 | undefined;
+  [AccessorProp.AbortControllers]:
     | Record<string | number, AbortController | void>
     | undefined;
-  ___closestBranch: BranchScope | undefined;
-
+  [AccessorProp.ClosestBranch]: BranchScope | undefined;
+  [x: `___${string}`]: never;
   [x: string | number]: any;
-}
-
-export enum ScopeProperties {
-  id = "H",
-  args = "I",
-  creating = "J",
-  abortControllers = "K",
-  closestBranch = "L",
-  startNode = "M",
-  endNode = "N",
-  parentBranch = "O",
-  destroyed = "P",
-  abortScopes = "Q",
-  branchScopes = "R",
-  renderer = "S",
-  pendingAsyncCount = "T",
-  effects = "U",
 }
 
 export enum ResumeSymbol {

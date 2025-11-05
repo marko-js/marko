@@ -32,7 +32,7 @@ export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
       if (
         ((scope[valueChangeAccessor] = valueChange) &&
           scope[valueAccessor] !== value) ||
-        scope.___creating
+        scope[AccessorProp.Creating]
       ) {
         scope[valueAccessor] = value;
         fn?.(scope);
@@ -64,10 +64,10 @@ export function _or(
   id: number,
   fn: SignalFn,
   defaultPending: number = 1,
-  scopeIdAccessor: Accessor = /*@__KEY__*/ "___id",
+  scopeIdAccessor: Accessor = AccessorProp.Id,
 ): Signal<never> {
   return (scope) => {
-    if (scope.___creating) {
+    if (scope[AccessorProp.Creating]) {
       if (id in scope) {
         if (!--scope[id]) {
           fn(scope);
@@ -96,21 +96,24 @@ export function _for_closure(
       loopScopeMapAccessor
     ]
       ? [...ownerScope[loopScopeMapAccessor].values()]
-      : []);
+      : []) as Scope[];
     const [firstScope] = scopes;
     if (firstScope) {
       queueRender(
         ownerScope,
         () => {
           for (const scope of scopes) {
-            if (!scope.___creating && !scope.___destroyed) {
+            if (
+              !scope[AccessorProp.Creating] &&
+              !scope[AccessorProp.Destroyed]
+            ) {
               fn(scope);
             }
           }
         },
         -1,
         0,
-        firstScope.___id,
+        firstScope[AccessorProp.Id],
       );
     }
   };
@@ -132,10 +135,10 @@ export function _if_closure(
   const branchAccessor =
     AccessorPrefix.ConditionalRenderer + ownerConditionalNodeAccessor;
   const ownerSignal = (scope: Scope) => {
-    const ifScope = scope[scopeAccessor];
+    const ifScope = scope[scopeAccessor] as Scope;
     if (
       ifScope &&
-      !ifScope.___creating &&
+      !ifScope[AccessorProp.Creating] &&
       (scope[branchAccessor] || 0) === branch
     ) {
       queueRender(ifScope, fn, -1);
@@ -169,7 +172,7 @@ export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {
   return (scope: Scope) => {
     if (scope[___scopeInstancesAccessor]) {
       for (const childScope of scope[___scopeInstancesAccessor] as Set<Scope>) {
-        if (!childScope.___creating) {
+        if (!childScope[AccessorProp.Creating]) {
           queueRender(
             childScope,
             closureSignals[childScope[___signalIndexAccessor]],
@@ -247,8 +250,8 @@ export const _var_change = MARKO_DEBUG
   : (scope: Scope, value: unknown) =>
       scope[AccessorProp.TagVariableChange]?.(value);
 
-const tagIdsByGlobal = new WeakMap<Scope["___global"], number>();
-export function _id({ $global }: Scope) {
+const tagIdsByGlobal = new WeakMap<Scope[AccessorProp.Global], number>();
+export function _id({ [AccessorProp.Global]: $global }: Scope) {
   const id = tagIdsByGlobal.get($global) || 0;
   tagIdsByGlobal.set($global, id + 1);
   return "c" + $global.runtimeId + $global.renderId + id.toString(36);

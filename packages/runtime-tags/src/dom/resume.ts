@@ -85,7 +85,9 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                       (startVisit = startVisit.previousSibling) as Comment,
                     )
                   );
-                  branch.___endNode = branch.___startNode = startVisit;
+                  branch[AccessorProp.EndNode] = branch[
+                    AccessorProp.StartNode
+                  ] = startVisit;
                   if (visitType === ResumeSymbol.BranchEndNativeTag) {
                     branch[MARKO_DEBUG ? getDebugKey(0, startVisit) : "a"] =
                       startVisit;
@@ -95,8 +97,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   if (parent !== startVisit.parentNode) {
                     parent.prepend(startVisit);
                   }
-                  branch.___startNode = startVisit;
-                  branch.___endNode =
+                  branch[AccessorProp.StartNode] = startVisit;
+                  branch[AccessorProp.EndNode] =
                     visit.previousSibling === startVisit
                       ? startVisit
                       : parent.insertBefore(new Text(), visit);
@@ -143,23 +145,24 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 }
               },
               ___scope(scope: Scope) {
-                scope.___closestBranch = scopeLookup[
+                scope[AccessorProp.ClosestBranch] = scopeLookup[
                   (scope[AccessorProp.ClosestBranchId] as number | undefined) ||
                     branchParents.get(scopeId)!
                 ] as BranchScope;
 
                 if (branchParents.has(scopeId)) {
-                  if (scope.___closestBranch) {
-                    (((scope as BranchScope).___parentBranch =
-                      scope.___closestBranch).___branchScopes ||=
-                      new Set()).add(scope as BranchScope);
+                  if (scope[AccessorProp.ClosestBranch]) {
+                    (((scope as BranchScope)[AccessorProp.ParentBranch] =
+                      scope[AccessorProp.ClosestBranch])[
+                      AccessorProp.BranchScopes
+                    ] ||= new Set()).add(scope as BranchScope);
                   }
-                  scope.___closestBranch = scope as BranchScope;
+                  scope[AccessorProp.ClosestBranch] = scope as BranchScope;
                 }
               },
             };
           })();
-        let $global: Scope["$global"] | undefined;
+        let $global: Scope[AccessorProp.Global] | undefined;
         let lastScopeId = 0;
         let lastEffect: string | undefined;
         let visits: RenderData["v"];
@@ -192,7 +195,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 
               if ((scopeId = +nextToken()) /* read scope id */) {
                 visitScope = scopeLookup[scopeId] ||= {
-                  ___id: scopeId,
+                  [AccessorProp.Id]: scopeId,
                 } as Scope;
               }
 
@@ -214,21 +217,21 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               } else if (typeof serialized === "number") {
                 (registeredValues[lastEffect!] as any)(
                   (scopeLookup[serialized] ||= {
-                    ___id: scopeId,
+                    [AccessorProp.Id]: scopeId,
                   } as Scope),
                 );
               } else {
                 for (const scope of serialized(serializeContext)) {
                   if (!$global) {
-                    $global = (scope || {}) as Scope["$global"];
+                    $global = (scope || {}) as Scope[AccessorProp.Global];
                     $global.runtimeId = runtimeId;
                     $global.renderId = renderId;
                   } else if (typeof scope === "number") {
                     lastScopeId += scope;
                   } else {
                     scopeId = ++lastScopeId;
-                    scope.$global = $global;
-                    scope.___id = scopeId;
+                    scope[AccessorProp.Global] = $global;
+                    scope[AccessorProp.Id] = scopeId;
                     if (scopeLookup[scopeId] !== scope) {
                       scopeLookup[scopeId] = Object.assign(
                         scope,
@@ -238,10 +241,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 
                     if (branchesEnabled) {
                       branches!.___scope(scope);
-                    }
-
-                    if (MARKO_DEBUG) {
-                      scope.___debugId = "server-" + scopeId;
                     }
                   }
                 }
