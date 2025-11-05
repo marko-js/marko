@@ -1,0 +1,10 @@
+<let/show=true>
+<let/checkedValue = "a"/>
+
+<input type="radio" checkedValue:=checkedValue value="a"/>
+<if=show>
+  <input type="radio" checkedValue:=checkedValue value="b"/>
+</>
+<input type="radio" checkedValue:=checkedValue value="c"/>
+<span>${checkedValue}</span>
+<button onClick(){ show = !show }>Toggle</>

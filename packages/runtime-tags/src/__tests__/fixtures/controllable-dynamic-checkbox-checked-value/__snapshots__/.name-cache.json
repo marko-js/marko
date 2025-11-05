@@ -1,0 +1,19 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "_",
+      "$$if_content__checkedValue__OR__checkedValueChange": "e",
+      "$$if_content__checkedValue": "r",
+      "$$if_content__$checkedValueChange": "c",
+      "$$if_content__setup__script": "a",
+      "$$if_content__setup": "i",
+      "$$if_content": "u",
+      "$$checkedValue__OR__checkedValueChange": "n",
+      "$$checkedValue": "o",
+      "$$if": "p",
+      "$$show__script": "s",
+      "$$show": "l"
+    }
+  }
+}
