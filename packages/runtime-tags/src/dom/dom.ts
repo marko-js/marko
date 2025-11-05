@@ -1,3 +1,4 @@
+import { assertExclusiveAttrs } from "../common/errors";
 import {
   classValue,
   getEventHandlerName,
@@ -123,6 +124,10 @@ export function _attrs(
     }
   }
 
+  if (MARKO_DEBUG) {
+    assertExclusiveAttrs(nextAttrs);
+  }
+
   attrsInternal(scope, nodeAccessor, nextAttrs);
 }
 
@@ -165,6 +170,10 @@ export function _attrs_partial(
 
   for (const key in nextAttrs) {
     if (!skip[key]) partial[key] = nextAttrs[key];
+  }
+
+  if (MARKO_DEBUG) {
+    assertExclusiveAttrs({ ...nextAttrs, ...skip });
   }
 
   attrsInternal(scope, nodeAccessor, partial);

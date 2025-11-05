@@ -7,6 +7,7 @@ import {
   getTagDef,
 } from "@marko/compiler/babel-utils";
 
+import { assertExclusiveAttrs } from "../../../common/errors";
 import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import evaluate from "../../util/evaluate";
@@ -125,7 +126,9 @@ export default {
         }
       }
 
-      assertExclusiveControllableGroups(tag, seen);
+      assertExclusiveAttrs(seen, (msg) => {
+        throw tag.get("name").buildCodeFrameError(msg);
+      });
 
       if (
         node.var ||
@@ -746,28 +749,6 @@ export default {
     },
   }),
 } satisfies TemplateVisitor<t.MarkoTag>;
-
-function assertExclusiveControllableGroups(
-  tag: t.NodePath<t.MarkoTag>,
-  attrs: Record<string, t.MarkoAttribute>,
-) {
-  const exclusiveGroups = [
-    attrs.open || attrs.openChange,
-    attrs.checked || attrs.checkedChange,
-    attrs.checkedValue || attrs.checkedValueChange,
-    attrs.valueChange,
-  ].filter(Boolean);
-
-  if (exclusiveGroups.length > 1) {
-    throw tag
-      .get("name")
-      .buildCodeFrameError(
-        `The attributes ${exclusiveGroups
-          .map((attr) => `"${attr.name}"`)
-          .join(", ")} are mutually exclusive.`,
-      );
-  }
-}
 
 type RelatedControllable = ReturnType<typeof getRelatedControllable>;
 function getRelatedControllable(

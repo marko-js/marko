@@ -21,3 +21,55 @@ export function _assert_hoist(value: unknown) {
     );
   }
 }
+
+export function assertExclusiveAttrs(
+  attrs: Record<string, unknown> | undefined,
+  onError = throwErr,
+) {
+  if (attrs) {
+    let exclusiveAttrs: undefined | string[];
+    if (attrs.checkedChange) {
+      (exclusiveAttrs ||= []).push("checkedChange");
+    }
+
+    if (attrs.checkedValue) {
+      (exclusiveAttrs ||= []).push("checkedValue");
+
+      if (attrs.checked) {
+        exclusiveAttrs.push("checked");
+      }
+    } else if (attrs.checkedValueChange) {
+      (exclusiveAttrs ||= []).push("checkedValueChange");
+      if (attrs.checked) {
+        exclusiveAttrs.push("checked");
+      }
+    }
+
+    if (attrs.valueChange) {
+      (exclusiveAttrs ||= []).push("valueChange");
+    }
+
+    if (exclusiveAttrs && exclusiveAttrs.length > 1) {
+      onError(
+        `The attributes ${joinWithAnd(exclusiveAttrs)} are mutually exclusive.`,
+      );
+    }
+  }
+}
+
+function throwErr(msg: string) {
+  throw new Error(msg);
+}
+
+function joinWithAnd(a: string[]) {
+  switch (a.length) {
+    case 0:
+      return "";
+    case 1:
+      return a[0];
+    case 2:
+      return `${a[0]} and ${a[1]}`;
+    default:
+      return `${a.slice(0, -1).join(", ")}, and ${a[a.length - 1]}`;
+  }
+}
