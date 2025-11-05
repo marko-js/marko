@@ -1,4 +1,4 @@
-import type { BranchScope, Scope } from "../common/types";
+import { AccessorProp, type BranchScope, type Scope } from "../common/types";
 import { $signalReset } from "./abort-signal";
 import { insertChildNodes, removeChildNodes } from "./dom";
 import { pendingScopes } from "./queue";
@@ -6,14 +6,14 @@ import { pendingScopes } from "./queue";
 let nextScopeId = 1e6; // Intentionally high to avoid conflict with server rendered ids.
 
 export function createScope(
-  $global: Scope["$global"],
+  $global: Scope[AccessorProp.Global],
   closestBranch?: BranchScope,
 ): Scope {
   const scope = {
-    ___id: nextScopeId++,
-    ___creating: 1,
-    ___closestBranch: closestBranch,
-    $global,
+    [AccessorProp.Id]: nextScopeId++,
+    [AccessorProp.Creating]: 1,
+    [AccessorProp.ClosestBranch]: closestBranch,
+    [AccessorProp.Global]: $global,
   } as Scope;
 
   pendingScopes.push(scope);
@@ -28,23 +28,25 @@ export function findBranchWithKey(
   scope: Scope,
   key: string,
 ): BranchScope | undefined {
-  let branch = scope.___closestBranch;
+  let branch = scope[AccessorProp.ClosestBranch];
   while (branch && !branch[key]) {
-    branch = branch.___parentBranch;
+    branch = branch[AccessorProp.ParentBranch];
   }
   return branch;
 }
 
 export function destroyBranch(branch: BranchScope) {
-  branch.___parentBranch?.___branchScopes?.delete(branch);
+  branch[AccessorProp.ParentBranch]?.[AccessorProp.BranchScopes]?.delete(
+    branch,
+  );
   destroyNestedBranches(branch);
 }
 
 function destroyNestedBranches(branch: BranchScope) {
-  branch.___destroyed = 1;
-  branch.___branchScopes?.forEach(destroyNestedBranches);
-  branch.___abortScopes?.forEach((scope) => {
-    for (const id in scope.___abortControllers) {
+  branch[AccessorProp.Destroyed] = 1;
+  branch[AccessorProp.BranchScopes]?.forEach(destroyNestedBranches);
+  branch[AccessorProp.AbortScopes]?.forEach((scope) => {
+    for (const id in scope[AccessorProp.AbortControllers]) {
       $signalReset(scope, id);
     }
   });
@@ -52,7 +54,10 @@ function destroyNestedBranches(branch: BranchScope) {
 
 export function removeAndDestroyBranch(branch: BranchScope) {
   destroyBranch(branch);
-  removeChildNodes(branch.___startNode, branch.___endNode);
+  removeChildNodes(
+    branch[AccessorProp.StartNode],
+    branch[AccessorProp.EndNode],
+  );
 }
 
 export function insertBranchBefore(
@@ -63,8 +68,8 @@ export function insertBranchBefore(
   insertChildNodes(
     parentNode,
     nextSibling,
-    branch.___startNode,
-    branch.___endNode,
+    branch[AccessorProp.StartNode],
+    branch[AccessorProp.EndNode],
   );
 }
 
@@ -75,7 +80,12 @@ export function tempDetachBranch(branch: BranchScope) {
   // that any new branches created with this parent node get the correct namespace.
   const fragment = new DocumentFragment() as any;
   fragment.namespaceURI = (
-    branch.___startNode.parentNode as Element
+    branch[AccessorProp.StartNode].parentNode as Element
   ).namespaceURI;
-  insertChildNodes(fragment, null, branch.___startNode, branch.___endNode);
+  insertChildNodes(
+    fragment,
+    null,
+    branch[AccessorProp.StartNode],
+    branch[AccessorProp.EndNode],
+  );
 }

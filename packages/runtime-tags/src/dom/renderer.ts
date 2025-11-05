@@ -27,23 +27,23 @@ export type Renderer = {
 type SetupFn = (scope: Scope) => void;
 
 export function createBranch(
-  $global: Scope["$global"],
+  $global: Scope[AccessorProp.Global],
   renderer: Renderer | string,
   parentScope: Scope | undefined,
   parentNode: ParentNode,
 ) {
   const branch = createScope($global) as BranchScope;
-  const parentBranch = parentScope?.___closestBranch;
+  const parentBranch = parentScope?.[AccessorProp.ClosestBranch];
   branch[AccessorProp.Owner] = (renderer as Renderer).___owner || parentScope;
-  branch.___closestBranch = branch;
+  branch[AccessorProp.ClosestBranch] = branch;
 
   if (parentBranch) {
-    branch.___parentBranch = parentBranch;
-    (parentBranch.___branchScopes ||= new Set()).add(branch);
+    branch[AccessorProp.ParentBranch] = parentBranch;
+    (parentBranch[AccessorProp.BranchScopes] ||= new Set()).add(branch);
   }
 
   if (MARKO_DEBUG) {
-    branch.___renderer = renderer;
+    branch[AccessorProp.Renderer] = renderer;
   }
 
   (renderer as Renderer | { ___clone?: Renderer["___clone"] }).___clone?.(
@@ -55,7 +55,7 @@ export function createBranch(
 }
 
 export function createAndSetupBranch(
-  $global: Scope["$global"],
+  $global: Scope[AccessorProp.Global],
   renderer: Renderer,
   parentScope: Scope | undefined,
   parentNode: ParentNode,
@@ -99,7 +99,8 @@ export function _content(
       }
     : (branch) => {
         walk(
-          (branch.___startNode = branch.___endNode = new Text()),
+          (branch[AccessorProp.StartNode] = branch[AccessorProp.EndNode] =
+            new Text()),
           walks,
           branch,
         );
@@ -175,7 +176,7 @@ function createCloneableHTML(
   return firstChild === lastChild && firstChild!.nodeType < NodeType.Comment
     ? (branch, walks) => {
         walk(
-          (branch.___startNode = branch.___endNode =
+          (branch[AccessorProp.StartNode] = branch[AccessorProp.EndNode] =
             firstChild.cloneNode(true) as ChildNode),
           walks,
           branch,
@@ -184,7 +185,7 @@ function createCloneableHTML(
     : (branch, walks) => {
         const clone = parent.cloneNode(true);
         walk(clone.firstChild!, walks, branch);
-        branch.___startNode = clone.firstChild!;
-        branch.___endNode = clone.lastChild!;
+        branch[AccessorProp.StartNode] = clone.firstChild!;
+        branch[AccessorProp.EndNode] = clone.lastChild!;
       };
 }

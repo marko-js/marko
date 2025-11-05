@@ -35,7 +35,7 @@
           "ConditionalScope:#text/0": _.a = {
             "ControlledType:#select/0": 3,
             "ControlledValue:#select/0": "b",
-            ___renderer: "select"
+            "#Renderer": "select"
           },
           "ConditionalRenderer:#text/0": "select",
           tag: "select"
@@ -98,7 +98,7 @@ select.dispatchEvent(new window.Event("input", {
           "ConditionalScope:#text/0": _.a = {
             "ControlledType:#select/0": 3,
             "ControlledValue:#select/0": "b",
-            ___renderer: "select"
+            "#Renderer": "select"
           },
           "ConditionalRenderer:#text/0": "select",
           tag: "select"

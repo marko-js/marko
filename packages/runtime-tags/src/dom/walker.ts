@@ -1,6 +1,7 @@
 import { decodeAccessor } from "../common/helpers";
 import {
   AccessorPrefix,
+  AccessorProp,
   type BranchScope,
   NodeType,
   type Scope,
@@ -86,7 +87,10 @@ function walkInternal(
           MARKO_DEBUG
             ? getDebugKey(currentScopeIndex++, "#childScope")
             : decodeAccessor(currentScopeIndex++)
-        ] = createScope(scope.$global, scope.___closestBranch)),
+        ] = createScope(
+          scope[AccessorProp.Global],
+          scope[AccessorProp.ClosestBranch],
+        )),
       )!;
       if (value === WalkCode.BeginChildWithVar) {
         scope[

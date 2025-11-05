@@ -18,7 +18,7 @@
           "EventAttributes:#span/0": _.a = {},
           "ConditionalScope:#span/0": _.c = {},
           "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content",
-          ___renderer: "span"
+          "#Renderer": "span"
         },
         "ConditionalRenderer:#text/0": "span",
         tagName: "span"
@@ -57,7 +57,7 @@ container.querySelector(".A").click();
           "EventAttributes:#span/0": _.a = {},
           "ConditionalScope:#span/0": _.c = {},
           "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content",
-          ___renderer: "span"
+          "#Renderer": "span"
         },
         "ConditionalRenderer:#text/0": "span",
         tagName: "span"
@@ -99,7 +99,7 @@ container.querySelector(".A").click();
           "EventAttributes:#span/0": _.a = {},
           "ConditionalScope:#span/0": _.c = {},
           "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content",
-          ___renderer: "span"
+          "#Renderer": "span"
         },
         "ConditionalRenderer:#text/0": "span",
         tagName: "span"

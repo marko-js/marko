@@ -17,12 +17,27 @@ export enum AccessorPrefix {
 }
 
 export enum AccessorProp {
-  Owner = "_", // TODO: should be a full name.
+  Global = "$global",
+  Owner = "_",
+  AbortControllers = "#AbortControllers",
+  AbortScopes = "#AbortScopes",
+  Args = "#Args",
   BranchAccessor = "#BranchAccessor",
+  BranchScopes = "#BranchScopes",
   CatchContent = "#CatchContent",
+  ClosestBranch = "#ClosestBranch",
+  ClosestBranchId = "#ClosestBranchId",
+  Creating = "#Creating",
+  Destroyed = "#Destroyed",
+  Effects = "#Effects",
+  EndNode = "#EndNode",
+  Id = "#Id",
+  ParentBranch = "#ParentBranch",
+  PendingAsyncCount = "#PendingAsyncCount",
   PlaceholderBranch = "#PlaceholderBranch",
   PlaceholderContent = "#PlaceholderContent",
+  Renderer = "#Renderer",
+  StartNode = "#StartNode",
   TagVariable = "#TagVariable",
   TagVariableChange = "#TagVariableChange",
-  ClosestBranchId = "#ClosestBranchId",
 }

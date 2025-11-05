@@ -3,7 +3,7 @@ import {
   RENDERER_REGISTER_ID,
   SET_SCOPE_REGISTER_ID,
 } from "../common/compat-meta";
-import type { BranchScope } from "../common/types";
+import { AccessorProp, type BranchScope } from "../common/types";
 import { patchDynamicTag } from "./control-flow";
 import { toInsertNode } from "./dom";
 import { prepareEffects, queueEffect, runEffects } from "./queue";
@@ -33,11 +33,11 @@ export const compat = {
     return renderer.___clone;
   },
   getStartNode(branch: any) {
-    return branch.___startNode;
+    return branch[AccessorProp.StartNode];
   },
   setScopeNodes(branch: any, startNode: Node, endNode: Node) {
-    branch.___startNode = startNode;
-    branch.___endNode = endNode;
+    branch[AccessorProp.StartNode] = startNode;
+    branch[AccessorProp.EndNode] = endNode;
   },
   runComponentEffects(this: any) {
     if (this.effects) {
@@ -70,8 +70,8 @@ export const compat = {
     const renderer = _content_branch(0, 0, 0, params);
     renderer.___clone = (branch) => {
       const cloned = clone();
-      branch.___startNode = cloned.startNode;
-      branch.___endNode = cloned.endNode;
+      branch[AccessorProp.StartNode] = cloned.startNode;
+      branch[AccessorProp.EndNode] = cloned.endNode;
     };
     return renderer;
   },
@@ -107,7 +107,10 @@ export const compat = {
     });
 
     if (created) {
-      return toInsertNode(branch.___startNode, branch.___endNode);
+      return toInsertNode(
+        branch[AccessorProp.StartNode],
+        branch[AccessorProp.EndNode],
+      );
     }
   },
 };
