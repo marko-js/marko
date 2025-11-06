@@ -5,7 +5,14 @@ import type {
   TemplateInput,
 } from "../common/types";
 import { _content_resume } from "./dynamic-tag";
-import { Boundary, Chunk, offTick, queueTick, State } from "./writer";
+import {
+  Boundary,
+  Chunk,
+  FlushStatus,
+  offTick,
+  queueTick,
+  State,
+} from "./writer";
 
 export type ServerRenderer = ((...args: unknown[]) => unknown) & {
   ___id?: string;
@@ -239,11 +246,14 @@ class ServerRendered implements RenderedTemplate {
 
       const { boundary } = head;
       (boundary.onNext = () => {
-        if (boundary.signal.aborted) {
-          boundary.onNext = NOOP;
-          reject(boundary.signal.reason);
-        } else if (!boundary.count && boundary.done) {
-          resolve(head.consume().flushHTML());
+        switch (!boundary.count && boundary.flush()) {
+          case FlushStatus.aborted:
+            boundary.onNext = NOOP;
+            reject(boundary.signal.reason);
+            break;
+          case FlushStatus.complete:
+            resolve(head.consume().flushHTML());
+            break;
         }
       })();
     }));
@@ -265,25 +275,23 @@ class ServerRendered implements RenderedTemplate {
 
     const { boundary } = head;
     const onNext = (boundary.onNext = (write?: boolean) => {
-      if (boundary.signal.aborted) {
+      const status = boundary.flush();
+      if (status === FlushStatus.aborted) {
         if (!tick) offTick(onNext);
         boundary.onNext = NOOP;
         onAbort(boundary.signal.reason);
-      } else {
-        const { done } = boundary;
-        if (done || write) {
-          const html = (head = head.consume()).flushHTML();
-          if (html) onWrite(html);
-          if (done) {
-            if (!tick) offTick(onNext);
-            onClose();
-          } else {
-            tick = true;
-          }
-        } else if (tick) {
-          tick = false;
-          queueTick(onNext);
+      } else if (write || status === FlushStatus.complete) {
+        const html = (head = head.consume()).flushHTML();
+        if (html) onWrite(html);
+        if (status === FlushStatus.complete) {
+          if (!tick) offTick(onNext);
+          onClose();
+        } else {
+          tick = true;
         }
+      } else if (tick) {
+        tick = false;
+        queueTick(onNext);
       }
     });
 
@@ -296,10 +304,12 @@ class ServerRendered implements RenderedTemplate {
     this.#head = null;
     if (!head) throw new Error("Cannot read from a consumed render result");
     const { boundary } = head;
-    if (!boundary.done) {
-      throw new Error("Cannot consume asynchronous render with 'toString'");
+    switch (boundary.flush()) {
+      case FlushStatus.aborted:
+        throw boundary.signal.reason;
+      case FlushStatus.continue:
+        throw new Error("Cannot consume asynchronous render with 'toString'");
     }
-    if (boundary.signal.aborted) throw boundary.signal.reason;
     return head.consume().flushHTML();
   }
 }

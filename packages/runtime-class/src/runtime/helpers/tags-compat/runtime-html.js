@@ -58,7 +58,8 @@ exports.p = function (htmlCompat) {
         chunk.append(tagsAPI[i]);
       }
 
-      if (!chunk.boundary.done) {
+      chunk.boundary.flush();
+      if (chunk.boundary.count) {
         throw new Error(
           "Cannot serialize promise across tags/class compat layer.",
         );
