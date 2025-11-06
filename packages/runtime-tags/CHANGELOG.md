@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.104
+
+### Patch Changes
+
+- [#2935](https://github.com/marko-js/marko/pull/2935) [`28df752`](https://github.com/marko-js/marko/commit/28df752dd94494225d0b172e49d5b7bb0f1ace80) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where content could be flushed after the serializer caused the stream to abort with an error.
+
 ## 6.0.103
 
 ### Patch Changes
