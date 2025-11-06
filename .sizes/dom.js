@@ -1,4 +1,4 @@
-// size: 19557 (min) 7455 (brotli)
+// size: 19435 (min) 7443 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -76,7 +76,7 @@ function normalizeDynamicRenderer(value) {
   if (value) {
     if ("string" == typeof value) return value;
     let normalized = value.content || value.default || value;
-    if ("f" in normalized) return normalized;
+    if ("e" in normalized) return normalized;
   }
 }
 var decodeAccessor = (num) =>
@@ -207,7 +207,6 @@ function init(runtimeId = "M") {
             lastEffect,
             visits,
             resumes,
-            scopeId,
             visit,
             visitText,
             visitType,
@@ -219,22 +218,24 @@ function init(runtimeId = "M") {
             walk2 = render.w,
             scopeLookup = (render.s = {}),
             serializeContext = { _: registeredValues },
-            branches =
+            visitBranches =
               branchesEnabled &&
               (() => {
-                let branchParents = new Map(),
-                  branchStarts = [],
+                let branchStarts = [],
                   orphanBranches = [],
                   endBranch = (singleNode) => {
                     let branchId,
                       branch,
+                      childBranch,
                       parent = visit.parentNode,
+                      endedBranches = [],
                       startVisit = visit,
-                      i = orphanBranches.length,
-                      claimed = 0;
+                      i = orphanBranches.length;
                     for (; (branchId = +lastToken); ) {
                       if (
-                        ((branch = scopeLookup[branchId] ||= {}), singleNode)
+                        (endedBranches.push((branch = scopeLookup[branchId])),
+                        (branch.G = branch),
+                        singleNode)
                       ) {
                         for (
                           ;
@@ -255,39 +256,27 @@ function init(runtimeId = "M") {
                             visit.previousSibling === startVisit
                               ? startVisit
                               : parent.insertBefore(new Text(), visit)));
-                      for (; i-- && orphanBranches[i] > branchId; )
-                        (branchParents.set(orphanBranches[i], branchId),
-                          claimed++);
-                      (orphanBranches.push(branchId),
-                        branchParents.set(branchId, 0),
-                        nextToken());
+                      for (; i && orphanBranches[--i].M > branchId; )
+                        (((childBranch = orphanBranches.pop()).N = branch),
+                          (branch.E ||= new Set()).add(childBranch));
+                      nextToken();
                     }
-                    orphanBranches.splice(i, claimed);
+                    orphanBranches.push(...endedBranches);
                   };
-                return {
-                  n() {
-                    "[" === visitType
-                      ? (endBranch(), branchStarts.push(visit))
-                      : ((visitScope["J" + nextToken()] = (
-                          (node) => () =>
-                            node
-                        )(
-                          (visitScope[lastToken] =
-                            ")" === visitType || "}" === visitType
-                              ? visit.parentNode
-                              : visit),
-                        )),
-                        nextToken(),
-                        endBranch("]" !== visitType && ")" !== visitType));
-                  },
-                  c(scope) {
-                    ((scope.G =
-                      scopeLookup[scope.H || branchParents.get(scopeId)]),
-                      branchParents.has(scopeId) &&
-                        (scope.G &&
-                          ((scope.N = scope.G).E ||= new Set()).add(scope),
-                        (scope.G = scope)));
-                  },
+                return () => {
+                  "[" === visitType
+                    ? (lastToken && endBranch(), branchStarts.push(visit))
+                    : ((visitScope["J" + nextToken()] = (
+                        (node) => () =>
+                          node
+                      )(
+                        (visitScope[lastToken] =
+                          ")" === visitType || "}" === visitType
+                            ? visit.parentNode
+                            : visit),
+                      )),
+                      nextToken(),
+                      endBranch("]" !== visitType && ")" !== visitType));
                 };
               })(),
             lastScopeId = 0,
@@ -301,41 +290,37 @@ function init(runtimeId = "M") {
           return (
             (render.w = () => {
               try {
-                for (visit of (walk2(), (isResuming = 1), (visits = render.v)))
-                  ((lastTokenIndex = render.i.length),
-                    (visitText = visit.data),
-                    (visitType = visitText[lastTokenIndex++]),
-                    (scopeId = +nextToken()) &&
-                      (visitScope = scopeLookup[scopeId] ||= { M: scopeId }),
-                    "*" === visitType
-                      ? (visitScope["J" + nextToken()] = (
-                          (node) => () =>
-                            node
-                        )((visitScope[lastToken] = visit.previousSibling)))
-                      : branchesEnabled && branches.n());
+                (walk2(), (isResuming = 1));
                 for (let serialized of (resumes = render.r || []))
                   if ("string" == typeof serialized) lastEffect = serialized;
                   else if ("number" == typeof serialized)
-                    registeredValues[lastEffect](
-                      (scopeLookup[serialized] ||= { M: scopeId }),
+                    queueEffect(
+                      (scopeLookup[serialized] ||= { M: serialized }),
+                      registeredValues[lastEffect],
                     );
                   else
                     for (let scope of serialized(serializeContext))
                       $global
                         ? "number" == typeof scope
                           ? (lastScopeId += scope)
-                          : ((scopeId = ++lastScopeId),
+                          : ((scopeLookup[(scope.M = ++lastScopeId)] = scope),
                             (scope.$ = $global),
-                            (scope.M = scopeId),
-                            scopeLookup[scopeId] !== scope &&
-                              (scopeLookup[scopeId] = Object.assign(
-                                scope,
-                                scopeLookup[scopeId],
-                              )),
-                            branchesEnabled && branches.c(scope))
+                            branchesEnabled && (scope.G = scopeLookup[scope.H]))
                         : (($global = scope || {}),
                           ($global.runtimeId = runtimeId),
                           ($global.renderId = renderId));
+                for (visit of (visits = render.v))
+                  ((lastTokenIndex = render.i.length),
+                    (visitText = visit.data),
+                    (visitType = visitText[lastTokenIndex++]),
+                    (visitScope = scopeLookup[+nextToken()]),
+                    "*" === visitType
+                      ? (visitScope["J" + nextToken()] = (
+                          (node) => () =>
+                            node
+                        )((visitScope[lastToken] = visit.previousSibling)))
+                      : branchesEnabled && visitBranches());
+                run();
               } finally {
                 isResuming = visits.length = resumes.length = 0;
               }
@@ -721,7 +706,7 @@ function subscribeToScopeSet(ownerScope, accessor, scope) {
 function _closure(...closureSignals) {
   let [{ j: ___scopeInstancesAccessor, k: ___signalIndexAccessor }] =
     closureSignals;
-  for (let i = closureSignals.length; i--; ) closureSignals[i].o = i;
+  for (let i = closureSignals.length; i--; ) closureSignals[i].n = i;
   return (scope) => {
     if (scope[___scopeInstancesAccessor])
       for (let childScope of scope[___scopeInstancesAccessor])
@@ -736,7 +721,7 @@ function _closure(...closureSignals) {
 function _closure_get(valueAccessor, fn, getOwnerScope) {
   valueAccessor = decodeAccessor(valueAccessor);
   let closureSignal = (scope) => {
-    ((scope[closureSignal.k] = closureSignal.o),
+    ((scope[closureSignal.k] = closureSignal.n),
       fn(scope),
       subscribeToScopeSet(
         getOwnerScope ? getOwnerScope(scope) : scope._,
@@ -813,11 +798,11 @@ function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global),
     parentBranch = parentScope?.G;
   return (
-    (branch._ = renderer.d || parentScope),
+    (branch._ = renderer.c || parentScope),
     (branch.G = branch),
     parentBranch &&
       ((branch.N = parentBranch), (parentBranch.E ||= new Set()).add(branch)),
-    renderer.g?.(branch, parentNode.namespaceURI),
+    renderer.f?.(branch, parentNode.namespaceURI),
     branch
   );
 }
@@ -828,7 +813,7 @@ function createAndSetupBranch($global, renderer, parentScope, parentNode) {
   );
 }
 function setupBranch(renderer, branch) {
-  return (renderer.h && queueRender(branch, renderer.h, -1), branch);
+  return (renderer.g && queueRender(branch, renderer.g, -1), branch);
 }
 function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
   ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
@@ -865,10 +850,10 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
         walk((branch.S = branch.L = new Text()), walks, branch);
       };
   return (owner) => ({
-    f: id,
-    g: clone,
-    d: owner,
-    h: setup,
+    e: id,
+    f: clone,
+    c: owner,
+    g: setup,
     a: params,
     b: dynamicScopesAccessor,
   });
@@ -894,7 +879,7 @@ function _content_closures(renderer, closureFns) {
     let instance = renderer(owner);
     return (
       (instance.l = closureSignals),
-      (instance.p = closureValues),
+      (instance.o = closureValues),
       instance
     );
   };
@@ -1068,13 +1053,13 @@ function attrsInternal(scope, nodeAccessor, nextAttrs) {
 function _attr_content(scope, nodeAccessor, value) {
   let content = (function (value) {
       let renderer = normalizeDynamicRenderer(value);
-      if (renderer && renderer.f) return renderer;
+      if (renderer && renderer.e) return renderer;
     })(value),
     rendererAccessor = "C" + nodeAccessor;
-  scope[rendererAccessor] !== (scope[rendererAccessor] = content?.f) &&
+  scope[rendererAccessor] !== (scope[rendererAccessor] = content?.e) &&
     (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
     content?.b &&
-      subscribeToScopeSet(content.d, content.b, scope["D" + nodeAccessor]));
+      subscribeToScopeSet(content.c, content.b, scope["D" + nodeAccessor]));
 }
 function _attrs_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
@@ -1312,7 +1297,7 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
       if (
         scope[rendererAccessor] !==
           (scope[rendererAccessor] =
-            normalizedRenderer?.f || normalizedRenderer) ||
+            normalizedRenderer?.e || normalizedRenderer) ||
         (getContent && !normalizedRenderer && !scope[childScopeAccessor])
       )
         if (
@@ -1337,7 +1322,7 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
             ),
               content.b &&
                 subscribeToScopeSet(
-                  content.d,
+                  content.c,
                   content.b,
                   scope[childScopeAccessor].Da,
                 ));
@@ -1345,7 +1330,7 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
         } else
           normalizedRenderer?.b &&
             subscribeToScopeSet(
-              normalizedRenderer.d,
+              normalizedRenderer.c,
               normalizedRenderer.b,
               scope[childScopeAccessor],
             );
@@ -1364,7 +1349,7 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
           for (let accessor in normalizedRenderer.l)
             normalizedRenderer.l[accessor](
               childScope,
-              normalizedRenderer.p[accessor],
+              normalizedRenderer.o[accessor],
             );
           if (normalizedRenderer.a)
             if (inputIsArgs)
@@ -1660,12 +1645,12 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.M) {
     existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
   if (existingRender) existingRender.m = value;
   else {
-    let render = { e: key, c: scope, q: signal, m: value },
+    let render = { d: key, h: scope, p: signal, m: value },
       i = pendingRenders.push(render) - 1;
     for (; i; ) {
       let parentIndex = (i - 1) >> 1,
         parent = pendingRenders[parentIndex];
-      if (key - parent.e >= 0) break;
+      if (key - parent.d >= 0) break;
       ((pendingRenders[i] = parent), (i = parentIndex));
     }
     (signalKey >= 0 && pendingRendersLookup.set(key, render),
@@ -1713,27 +1698,27 @@ function runRenders() {
     if (render !== item) {
       let i = 0,
         mid = pendingRenders.length >> 1,
-        key = (pendingRenders[0] = item).e;
+        key = (pendingRenders[0] = item).d;
       for (; i < mid; ) {
         let bestChild = 1 + (i << 1),
           right = bestChild + 1;
         if (
           (right < pendingRenders.length &&
-            pendingRenders[right].e - pendingRenders[bestChild].e < 0 &&
+            pendingRenders[right].d - pendingRenders[bestChild].d < 0 &&
             (bestChild = right),
-          pendingRenders[bestChild].e - key >= 0)
+          pendingRenders[bestChild].d - key >= 0)
         )
           break;
         ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
       }
       pendingRenders[i] = item;
     }
-    render.c.G?.J || runRender(render);
+    render.h.G?.J || runRender(render);
   }
   for (let scope of pendingScopes) scope.I = 0;
   pendingScopes = [];
 }
-var runRender = (render) => render.q(render.c, render.m),
+var runRender = (render) => render.p(render.h, render.m),
   _enable_catch = () => {
     ((_enable_catch = () => {}), enableBranches());
     let handlePendingTry = (fn, scope, branch) => {
@@ -1764,7 +1749,7 @@ var runRender = (render) => render.q(render.c, render.m),
         try {
           runRender2(render);
         } catch (error) {
-          renderCatch(render.c, error);
+          renderCatch(render.h, error);
         }
       })(runRender)));
   };
@@ -1796,7 +1781,7 @@ var classIdToBranch = new Map(),
     registerRenderer(fn) {
       _resume("$C_r", fn);
     },
-    isRenderer: (renderer) => renderer.g,
+    isRenderer: (renderer) => renderer.f,
     getStartNode: (branch) => branch.S,
     setScopeNodes(branch, startNode, endNode) {
       ((branch.S = startNode), (branch.L = endNode));
@@ -1821,7 +1806,7 @@ var classIdToBranch = new Map(),
     createRenderer(params, clone) {
       let renderer = _content_branch(0, 0, 0, params);
       return (
-        (renderer.g = (branch) => {
+        (renderer.f = (branch) => {
           let cloned = clone();
           ((branch.S = cloned.startNode), (branch.L = cloned.endNode));
         }),
@@ -1850,7 +1835,7 @@ var classIdToBranch = new Map(),
               createAndSetupBranch(
                 out.global,
                 renderer,
-                renderer.d,
+                renderer.c,
                 document.body,
               ))),
             renderer.a?.(branch, renderer._ ? args[0] : args));
@@ -1897,7 +1882,7 @@ function mount(input = {}, reference, position) {
         (branch.T = (newValue) => {
           curValue = newValue;
         }),
-        this.h?.(branch),
+        this.g?.(branch),
         args?.(branch, input));
     });
   return (
