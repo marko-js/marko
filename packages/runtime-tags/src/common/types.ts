@@ -23,6 +23,7 @@ export interface Scope {
     | Record<string | number, AbortController | void>
     | undefined;
   [AccessorProp.ClosestBranch]: BranchScope | undefined;
+  [AccessorProp.ClosestBranchId]: number | undefined;
   [x: `___${string}`]: never;
   [x: string | number]: any;
 }

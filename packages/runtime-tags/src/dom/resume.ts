@@ -8,6 +8,7 @@ import {
   ResumeSymbol,
   type Scope,
 } from "../common/types";
+import { queueEffect, run } from "./queue";
 import type { Signal } from "./signals";
 import { getDebugKey } from "./walker";
 
@@ -60,23 +61,25 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         const serializeContext: Record<string, unknown> = {
           _: registeredValues,
         };
-        const branches =
+        const visitBranches =
           branchesEnabled &&
           (() => {
-            const branchParents = new Map<number, number>();
             const branchStarts: Comment[] = [];
-            const orphanBranches: number[] = [];
+            const orphanBranches: BranchScope[] = [];
             const endBranch = (singleNode?: boolean) => {
               const parent = visit.parentNode!;
+              const endedBranches: BranchScope[] = [];
               let startVisit: ChildNode = visit;
               let i = orphanBranches.length;
-              let claimed = 0;
               let branchId: number;
               let branch: BranchScope;
+              let childBranch: BranchScope;
 
               while ((branchId = +lastToken)) {
-                branch = (scopeLookup[branchId] ||=
-                  {} as BranchScope) as BranchScope;
+                endedBranches.push(
+                  (branch = scopeLookup[branchId] as BranchScope),
+                );
+                branch[AccessorProp.ClosestBranch] = branch;
 
                 if (singleNode) {
                   while (
@@ -104,62 +107,45 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                       : parent.insertBefore(new Text(), visit);
                 }
 
-                while (i-- && orphanBranches[i] > branchId) {
-                  branchParents.set(orphanBranches[i], branchId);
-                  claimed++;
+                while (i && orphanBranches[--i][AccessorProp.Id] > branchId) {
+                  (childBranch = orphanBranches.pop()!)[
+                    AccessorProp.ParentBranch
+                  ] = branch;
+                  (branch[AccessorProp.BranchScopes] ||= new Set()).add(
+                    childBranch,
+                  );
                 }
-
-                orphanBranches.push(branchId);
-                branchParents.set(branchId, 0);
 
                 nextToken(); // read optional next branchId
               }
 
-              orphanBranches.splice(i, claimed);
+              orphanBranches.push(...endedBranches);
             };
 
-            return {
-              ___visit() {
-                if (visitType === ResumeSymbol.BranchStart) {
-                  endBranch();
-                  branchStarts.push(visit);
-                } else {
-                  visitScope[
-                    AccessorPrefix.Getter + nextToken() /* read accessor */
-                  ] = (
-                    (node) => () =>
-                      node
-                  )(
-                    (visitScope[lastToken] =
-                      visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
-                      visitType ===
-                        ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
-                        ? visit.parentNode
-                        : visit),
-                  );
-                  nextToken(); // read optional first branchId
-                  endBranch(
-                    visitType !== ResumeSymbol.BranchEnd &&
-                      visitType !== ResumeSymbol.BranchEndOnlyChildInParent,
-                  );
-                }
-              },
-              ___scope(scope: Scope) {
-                scope[AccessorProp.ClosestBranch] = scopeLookup[
-                  (scope[AccessorProp.ClosestBranchId] as number | undefined) ||
-                    branchParents.get(scopeId)!
-                ] as BranchScope;
-
-                if (branchParents.has(scopeId)) {
-                  if (scope[AccessorProp.ClosestBranch]) {
-                    (((scope as BranchScope)[AccessorProp.ParentBranch] =
-                      scope[AccessorProp.ClosestBranch])[
-                      AccessorProp.BranchScopes
-                    ] ||= new Set()).add(scope as BranchScope);
-                  }
-                  scope[AccessorProp.ClosestBranch] = scope as BranchScope;
-                }
-              },
+            return () => {
+              if (visitType === ResumeSymbol.BranchStart) {
+                lastToken && endBranch();
+                branchStarts.push(visit);
+              } else {
+                visitScope[
+                  AccessorPrefix.Getter + nextToken() /* read accessor */
+                ] = (
+                  (node) => () =>
+                    node
+                )(
+                  (visitScope[lastToken] =
+                    visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
+                    visitType ===
+                      ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
+                      ? visit.parentNode
+                      : visit),
+                );
+                nextToken(); // read optional first branchId
+                endBranch(
+                  visitType !== ResumeSymbol.BranchEnd &&
+                    visitType !== ResumeSymbol.BranchEndOnlyChildInParent,
+                );
+              }
             };
           })();
         let $global: Scope[AccessorProp.Global] | undefined;
@@ -167,7 +153,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         let lastEffect: string | undefined;
         let visits: RenderData["v"];
         let resumes: NonNullable<RenderData["r"]>;
-        let scopeId: number;
         let visit: Comment;
         let visitText: string;
         let visitType: ResumeSymbol;
@@ -188,37 +173,15 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             walk();
             isResuming = 1;
 
-            for (visit of (visits = render.v)) {
-              lastTokenIndex = render.i.length;
-              visitText = visit.data!;
-              visitType = visitText[lastTokenIndex++] as ResumeSymbol;
-
-              if ((scopeId = +nextToken()) /* read scope id */) {
-                visitScope = scopeLookup[scopeId] ||= {
-                  [AccessorProp.Id]: scopeId,
-                } as Scope;
-              }
-
-              // TODO: switch?
-              if (visitType === ResumeSymbol.Node) {
-                // TODO: could we use attr marker?
-                visitScope[AccessorPrefix.Getter + nextToken()] = (
-                  (node) => () =>
-                    node
-                )((visitScope[lastToken] = visit.previousSibling));
-              } else if (branchesEnabled) {
-                branches!.___visit();
-              }
-            }
-
             for (const serialized of (resumes = render.r || [])) {
               if (typeof serialized === "string") {
                 lastEffect = serialized;
               } else if (typeof serialized === "number") {
-                (registeredValues[lastEffect!] as any)(
+                queueEffect(
                   (scopeLookup[serialized] ||= {
-                    [AccessorProp.Id]: scopeId,
+                    [AccessorProp.Id]: serialized,
                   } as Scope),
+                  registeredValues[lastEffect!] as any,
                 );
               } else {
                 for (const scope of serialized(serializeContext)) {
@@ -229,23 +192,38 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   } else if (typeof scope === "number") {
                     lastScopeId += scope;
                   } else {
-                    scopeId = ++lastScopeId;
+                    scopeLookup[(scope[AccessorProp.Id] = ++lastScopeId)] =
+                      scope;
                     scope[AccessorProp.Global] = $global;
-                    scope[AccessorProp.Id] = scopeId;
-                    if (scopeLookup[scopeId] !== scope) {
-                      scopeLookup[scopeId] = Object.assign(
-                        scope,
-                        scopeLookup[scopeId],
-                      ) as Scope;
-                    }
-
                     if (branchesEnabled) {
-                      branches!.___scope(scope);
+                      scope[AccessorProp.ClosestBranch] = scopeLookup[
+                        scope[AccessorProp.ClosestBranchId]!
+                      ] as BranchScope;
                     }
                   }
                 }
               }
             }
+
+            for (visit of (visits = render.v)) {
+              lastTokenIndex = render.i.length;
+              visitText = visit.data!;
+              visitType = visitText[lastTokenIndex++] as ResumeSymbol;
+              visitScope = scopeLookup[+nextToken()] as Scope;
+
+              // TODO: switch?
+              if (visitType === ResumeSymbol.Node) {
+                // TODO: could we use attr marker?
+                visitScope[AccessorPrefix.Getter + nextToken()] = (
+                  (node) => () =>
+                    node
+                )((visitScope[lastToken] = visit.previousSibling));
+              } else if (branchesEnabled) {
+                visitBranches!();
+              }
+            }
+
+            run();
           } finally {
             isResuming = visits.length = resumes.length = 0;
           }
