@@ -19,6 +19,7 @@ import {
   $global,
   Boundary,
   Chunk,
+  FlushStatus,
   getChunk,
   getScopeId,
   isInResumedBranch,
@@ -92,7 +93,7 @@ export const compat = {
   },
   flushScript($global: any) {
     const boundary = new Boundary(this.ensureState($global));
-    if (!boundary.done) {
+    if (boundary.flush() === FlushStatus.continue) {
       throw new Error(
         "Cannot serialize promise across tags/class compat layer.",
       );

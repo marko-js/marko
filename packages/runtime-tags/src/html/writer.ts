@@ -939,6 +939,12 @@ export class State {
   }
 }
 
+export enum FlushStatus {
+  complete,
+  continue,
+  aborted,
+}
+
 export class Boundary extends AbortController {
   public onNext = NOOP;
   public count = 0;
@@ -965,9 +971,16 @@ export class Boundary extends AbortController {
     }
   }
 
-  get done() {
-    flushSerializer(this);
-    return !this.count;
+  flush() {
+    if (!this.signal.aborted) {
+      flushSerializer(this);
+    }
+
+    return this.count
+      ? FlushStatus.continue
+      : this.signal.aborted
+        ? FlushStatus.aborted
+        : FlushStatus.complete;
   }
 
   startAsync() {
