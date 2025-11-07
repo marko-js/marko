@@ -19,15 +19,15 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.j = [0, _.i = {
-          "ConditionalScope:#text/0": _.e = {
-            "ConditionalScope:#text/0": _.a = {
+          "BranchScopes:#text/0": _.e = {
+            "BranchScopes:#text/0": _.a = {
               setHtml: _.f = {}
             }
           },
-          "ConditionalScope:#text/2": _.b = {
+          "BranchScopes:#text/2": _.b = {
             setHtml2: _.g = {}
           },
-          "ConditionalScope:#text/3": _.c = {
+          "BranchScopes:#text/3": _.c = {
             setHtml3: _.h = {}
           },
           "#childScope/1": _.d = {}

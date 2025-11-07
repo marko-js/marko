@@ -48,71 +48,71 @@
             "ClosureScopes:1": _.q = new Set,
             "ClosureScopes:2": _.s = new Set,
             "ClosureScopes:4": _.w = new Set
-          }, 1, _.c = {
-            "ConditionalScope:#text/0": _.b = {},
+          }, 1, _.b = {
             "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-            "#scopeOffset/1": 5
-          }, _.b, 1, _.e = {
-            "ConditionalScope:#text/0": _.d = {},
+            "#scopeOffset/1": 5,
+            setHtml: _.c = {}
+          }, _.c, 1, _.d = {
             "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-            "#scopeOffset/1": 8
-          }, _.d, 2, _.t = {
+            "#scopeOffset/1": 8,
+            setHtml: _.e = {}
+          }, _.e, 2, _.t = {
             "ClosureScopes:3": _.r = new Set
-          }, 1, _.g = {
-            "ConditionalScope:#text/0": _.f = {},
+          }, 1, _.f = {
             "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-            "#scopeOffset/1": 14
-          }, _.f, 1, _.i = {
-            "ConditionalScope:#text/0": _.h = {},
+            "#scopeOffset/1": 14,
+            setHtml2: _.g = {}
+          }, _.g, 1, _.h = {
             "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-            "#scopeOffset/1": 17
-          }, _.h, 1, _.v = {
+            "#scopeOffset/1": 17,
+            setHtml2: _.i = {}
+          }, _.i, 1, _.v = {
             "ClosureScopes:3": _.u = new Set
-          }, 1, _.k = {
-            "ConditionalScope:#text/0": _.j = {},
+          }, 1, _.j = {
             "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-            "#scopeOffset/1": 22
-          }, _.j, 1, _.m = {
-            "ConditionalScope:#text/0": _.l = {},
+            "#scopeOffset/1": 22,
+            setHtml2: _.k = {}
+          }, _.k, 1, _.l = {
             "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-            "#scopeOffset/1": 25
-          }, _.l, 2, _.o = {
-            "ConditionalScope:#text/0": _.n = {},
+            "#scopeOffset/1": 25,
+            setHtml2: _.m = {}
+          }, _.m, 2, _.n = {
             "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-            "#scopeOffset/1": 29
-          }, _.n], _.a.$hoisted_setHtml = _._[
+            "#scopeOffset/1": 29,
+            setHtml3: _.o = {}
+          }, _.o], _.a.$hoisted_setHtml = _._[
             "__tests__/template.marko_0_$hoisted_setHtml/hoist"
-            ](_.a), _.c.setHtml = _._[
+            ](_.a), _.b.setHtml = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.b), _.b["#TagVariable"] = _._[
+            ](_.c), _.c["#TagVariable"] = _._[
             "__tests__/template.marko_1_setHtml/var"
-            ](_.c), _.e.setHtml = _._[
+            ](_.b), _.d.setHtml = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.d), _.d["#TagVariable"] = _._[
+            ](_.e), _.e["#TagVariable"] = _._[
             "__tests__/template.marko_1_setHtml/var"
-            ](_.e), _.g.setHtml2 = _._[
+            ](_.d), _.f.setHtml2 = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.f), _.f["#TagVariable"] = _._[
+            ](_.g), _.g["#TagVariable"] = _._[
             "__tests__/template.marko_3_setHtml2/var"
-            ](_.g), _.i.setHtml2 = _._[
+            ](_.f), _.h.setHtml2 = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.h), _.h["#TagVariable"] = _._[
+            ](_.i), _.i["#TagVariable"] = _._[
             "__tests__/template.marko_3_setHtml2/var"
-            ](_.i), _.k.setHtml2 = _._[
+            ](_.h), _.j.setHtml2 = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.j), _.j["#TagVariable"] = _._[
+            ](_.k), _.k["#TagVariable"] = _._[
             "__tests__/template.marko_3_setHtml2/var"
-            ](_.k), _.m.setHtml2 = _._[
+            ](_.j), _.l.setHtml2 = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.l), _.l["#TagVariable"] = _._[
+            ](_.m), _.m["#TagVariable"] = _._[
             "__tests__/template.marko_3_setHtml2/var"
-            ](_.m), _.o.setHtml3 = _._[
+            ](_.l), _.n.setHtml3 = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.n), _.n["#TagVariable"] = _._[
+            ](_.o), _.o["#TagVariable"] = _._[
             "__tests__/template.marko_4_setHtml3/var"
-            ](_.o), (_.q).add(_.c), _.q.add(_.e), (_.r).add(_.g), _.r.add(_
-          .i), (_.s).add(_.t), (_.u).add(_.k), _.u.add(_.m), _.s.add(_.v), (_
-            .w).add(_.o), _.p),
+            ](_.n), (_.q).add(_.b), _.q.add(_.d), (_.r).add(_.f), _.r.add(_
+          .h), (_.s).add(_.t), (_.u).add(_.j), _.u.add(_.l), _.s.add(_.v), (_
+            .w).add(_.n), _.p),
         "__tests__/template.marko_0",
         1,
         "__tests__/template.marko_0_$hoisted_setHtml",

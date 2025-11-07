@@ -20,18 +20,18 @@
     <!--M_*1 #button/2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/1": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           x: 1,
-          "ClosureScopes:x": _.d = new Set
-        }, _.e = {
+          "ClosureScopes:x": _.c = new Set
+        }, _.d = {
           _: _.a,
           "ClosureSignalIndex:x": 0
-        }, _.b, _.f = {
+        },
+        {}, _.e = {
           _: _.a,
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
-        }], (_.d).add(_.e), _.d.add(_.f), _.c),
+        }], (_.c).add(_.d), _.c.add(_.e), _.b),
         "__tests__/template.marko_0_x",
         1
       ];
@@ -71,18 +71,18 @@ container.querySelector("button").click();
     <!--M_*1 #button/2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/1": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           x: 1,
-          "ClosureScopes:x": _.d = new Set
-        }, _.e = {
+          "ClosureScopes:x": _.c = new Set
+        }, _.d = {
           _: _.a,
           "ClosureSignalIndex:x": 0
-        }, _.b, _.f = {
+        },
+        {}, _.e = {
           _: _.a,
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
-        }], (_.d).add(_.e), _.d.add(_.f), _.c),
+        }], (_.c).add(_.d), _.c.add(_.e), _.b),
         "__tests__/template.marko_0_x",
         1
       ];
@@ -128,18 +128,18 @@ container.querySelector("button").click();
     <!--M_*1 #button/2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/1": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           x: 1,
-          "ClosureScopes:x": _.d = new Set
-        }, _.e = {
+          "ClosureScopes:x": _.c = new Set
+        }, _.d = {
           _: _.a,
           "ClosureSignalIndex:x": 0
-        }, _.b, _.f = {
+        },
+        {}, _.e = {
           _: _.a,
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
-        }], (_.d).add(_.e), _.d.add(_.f), _.c),
+        }], (_.c).add(_.d), _.c.add(_.e), _.b),
         "__tests__/template.marko_0_x",
         1
       ];
@@ -181,18 +181,18 @@ container.querySelector("button").click();
     <!--M_*1 #button/2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/1": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           x: 1,
-          "ClosureScopes:x": _.d = new Set
-        }, _.e = {
+          "ClosureScopes:x": _.c = new Set
+        }, _.d = {
           _: _.a,
           "ClosureSignalIndex:x": 0
-        }, _.b, _.f = {
+        },
+        {}, _.e = {
           _: _.a,
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
-        }], (_.d).add(_.e), _.d.add(_.f), _.c),
+        }], (_.c).add(_.d), _.c.add(_.e), _.b),
         "__tests__/template.marko_0_x",
         1
       ];

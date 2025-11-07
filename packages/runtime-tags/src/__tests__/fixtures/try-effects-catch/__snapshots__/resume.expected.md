@@ -14,11 +14,9 @@
     <!--M_*1 #div/2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.c = {
-          "ConditionalScope:#text/1": _.a = {
-            "#BranchAccessor": "#text/1"
-          }
-        }, _.a], _.a["#CatchContent"] = _._[
+      M._.r = [_ =&gt; (_.b = [0, _.c = {}, _.a = {
+          "#BranchAccessor": "#text/1"
+        }], _.a["#CatchContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.c), _.b),
         "__tests__/template.marko_0",

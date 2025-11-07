@@ -8,12 +8,10 @@
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
+      M._.r = [_ =&gt; (_.a = [0, 1,
       {
-        "ConditionalScope:#text/0": _.a = {
-          "#BranchAccessor": "#text/0"
-        }
-      }, _.a])]
+        "#BranchAccessor": "#text/0"
+      }])]
     </script>
   </body>
 </html>

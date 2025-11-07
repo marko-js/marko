@@ -25,10 +25,12 @@ mounted
     <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/2": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           show: !0
-        }, _.b], _.b._ = _.a, _.c),
+        },
+        {
+          _: _.a
+        }]),
         "__tests__/template.marko_1",
         2,
         "__tests__/template.marko_0_show",
@@ -67,10 +69,12 @@ destroyed
     <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/2": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           show: !0
-        }, _.b], _.b._ = _.a, _.c),
+        },
+        {
+          _: _.a
+        }]),
         "__tests__/template.marko_1",
         2,
         "__tests__/template.marko_0_show",
@@ -125,10 +129,12 @@ mounted
     </p>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/2": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           show: !0
-        }, _.b], _.b._ = _.a, _.c),
+        },
+        {
+          _: _.a
+        }]),
         "__tests__/template.marko_1",
         2,
         "__tests__/template.marko_0_show",
@@ -171,10 +177,12 @@ destroyed
     <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/2": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           show: !0
-        }, _.b], _.b._ = _.a, _.c),
+        },
+        {
+          _: _.a
+        }]),
         "__tests__/template.marko_1",
         2,
         "__tests__/template.marko_0_show",

@@ -33,13 +33,13 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.g = [0, 1, _.b = {
-          "ConditionalScope:#div/0": _.c = {},
+          "BranchScopes:#div/0": _.c = {},
           "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content",
-          "ConditionalScope:#button/1": _.d = {},
+          "BranchScopes:#button/1": _.d = {},
           "ConditionalRenderer:#button/1": "__tests__/template.marko_1_content",
-          "ConditionalScope:#strong/4": _.e = {},
+          "BranchScopes:#strong/4": _.e = {},
           "ConditionalRenderer:#strong/4": "__tests__/tags/my-div.marko_1_content",
-          "ConditionalScope:#p/5": _.f = {},
+          "BranchScopes:#p/5": _.f = {},
           "ConditionalRenderer:#p/5": "__tests__/template.marko_1_content",
           input: _.a = {
             content: _.h = {}

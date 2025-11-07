@@ -26,15 +26,11 @@
     <!--M_*1 #button/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.g = [0, _.b = {
-          "LoopScopeMap:#text/0": new Map(_.a = [
-            [0, _.c = {}],
-            [1, _.d = {}],
-            [2, _.e = {}],
-            [3, _.f = {}]
-          ]),
+      M._.r = [_ =&gt; (_.f = [0, _.a = {
+          "BranchScopes:#text/0": [_.b = {}, _.c = {}, _.d = {}, _
+            .e = {}],
           count: 0
-        }, _.c, _.d, _.e, _.f], _.c._ = _.d._ = _.e._ = _.f._ = _.b, _.g),
+        }, _.b, _.c, _.d, _.e], _.b._ = _.c._ = _.d._ = _.e._ = _.a, _.f),
         "__tests__/template.marko_0_count",
         1
       ];
@@ -76,15 +72,11 @@ container.querySelector("button").click();
     <!--M_*1 #button/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.g = [0, _.b = {
-          "LoopScopeMap:#text/0": new Map(_.a = [
-            [0, _.c = {}],
-            [1, _.d = {}],
-            [2, _.e = {}],
-            [3, _.f = {}]
-          ]),
+      M._.r = [_ =&gt; (_.f = [0, _.a = {
+          "BranchScopes:#text/0": [_.b = {}, _.c = {}, _.d = {}, _
+            .e = {}],
           count: 0
-        }, _.c, _.d, _.e, _.f], _.c._ = _.d._ = _.e._ = _.f._ = _.b, _.g),
+        }, _.b, _.c, _.d, _.e], _.b._ = _.c._ = _.d._ = _.e._ = _.a, _.f),
         "__tests__/template.marko_0_count",
         1
       ];
@@ -134,15 +126,11 @@ container.querySelector("button").click();
     <!--M_*1 #button/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.g = [0, _.b = {
-          "LoopScopeMap:#text/0": new Map(_.a = [
-            [0, _.c = {}],
-            [1, _.d = {}],
-            [2, _.e = {}],
-            [3, _.f = {}]
-          ]),
+      M._.r = [_ =&gt; (_.f = [0, _.a = {
+          "BranchScopes:#text/0": [_.b = {}, _.c = {}, _.d = {}, _
+            .e = {}],
           count: 0
-        }, _.c, _.d, _.e, _.f], _.c._ = _.d._ = _.e._ = _.f._ = _.b, _.g),
+        }, _.b, _.c, _.d, _.e], _.b._ = _.c._ = _.d._ = _.e._ = _.a, _.f),
         "__tests__/template.marko_0_count",
         1
       ];
@@ -192,15 +180,11 @@ container.querySelector("button").click();
     <!--M_*1 #button/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.g = [0, _.b = {
-          "LoopScopeMap:#text/0": new Map(_.a = [
-            [0, _.c = {}],
-            [1, _.d = {}],
-            [2, _.e = {}],
-            [3, _.f = {}]
-          ]),
+      M._.r = [_ =&gt; (_.f = [0, _.a = {
+          "BranchScopes:#text/0": [_.b = {}, _.c = {}, _.d = {}, _
+            .e = {}],
           count: 0
-        }, _.c, _.d, _.e, _.f], _.c._ = _.d._ = _.e._ = _.f._ = _.b, _.g),
+        }, _.b, _.c, _.d, _.e], _.b._ = _.c._ = _.d._ = _.e._ = _.a, _.f),
         "__tests__/template.marko_0_count",
         1
       ];

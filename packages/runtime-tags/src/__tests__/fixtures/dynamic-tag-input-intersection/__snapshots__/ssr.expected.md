@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div class=foo><!--M_[-->default<!--M_]3 #div/0 4--></div><!--M_'2 #text/0 3--><span class=foo><!--M_[-->default<!--M_]6 #span/0 7--></span><!--M_'5 #text/0 6--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.g=[0,1,_.a={"ConditionalScope:#text/0":_.b={"ConditionalScope:#div/0":_.c={},"ConditionalRenderer:#div/0":"__tests__/tags/my-tag.marko_1_content"},"ConditionalRenderer:#text/0":"div",inputContent:_.h={},htmlInput:{}},_.b,_.c,_.d={"ConditionalScope:#text/0":_.e={"ConditionalScope:#span/0":_.f={},"ConditionalRenderer:#span/0":"__tests__/tags/my-tag.marko_1_content"},"ConditionalRenderer:#text/0":"span",inputAs:"span",htmlInput:{}},_.e,_.f],_.a.inputContent=_._["__tests__/template.marko_1_content"](_.h),_.d.inputContent=_._["__tests__/template.marko_2_content"](_.h),_.g),"__tests__/tags/my-tag.marko_0_inputContent",2,5];M._.w()</script>
+  <div class=foo><!--M_[-->default<!--M_]3 #div/0 4--></div><!--M_'2 #text/0 3--><span class=foo><!--M_[-->default<!--M_]6 #span/0 7--></span><!--M_'5 #text/0 6--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,1,_.a={"ConditionalRenderer:#text/0":"div",inputContent:_.d={},htmlInput:{}},{"ConditionalRenderer:#div/0":"__tests__/tags/my-tag.marko_1_content"},1,_.b={"ConditionalRenderer:#text/0":"span",inputAs:"span",htmlInput:{}},{"ConditionalRenderer:#span/0":"__tests__/tags/my-tag.marko_1_content"}],_.a.inputContent=_._["__tests__/template.marko_1_content"](_.d),_.b.inputContent=_._["__tests__/template.marko_2_content"](_.d),_.c),"__tests__/tags/my-tag.marko_0_inputContent",2,5];M._.w()</script>
 ```
 
 # Render End
@@ -26,29 +26,27 @@
     <!--M_'5 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.g = [0, 1, _.a = {
-          "ConditionalScope:#text/0": _.b = {
-            "ConditionalScope:#div/0": _.c = {},
-            "ConditionalRenderer:#div/0": "__tests__/tags/my-tag.marko_1_content"
-          },
+      M._.r = [_ =&gt; (_.c = [0, 1, _.a = {
           "ConditionalRenderer:#text/0": "div",
-          inputContent: _.h = {},
+          inputContent: _.d = {},
           htmlInput:
           {}
-        }, _.b, _.c, _.d = {
-          "ConditionalScope:#text/0": _.e = {
-            "ConditionalScope:#span/0": _.f = {},
-            "ConditionalRenderer:#span/0": "__tests__/tags/my-tag.marko_1_content"
-          },
+        },
+        {
+          "ConditionalRenderer:#div/0": "__tests__/tags/my-tag.marko_1_content"
+        }, 1, _.b = {
           "ConditionalRenderer:#text/0": "span",
           inputAs: "span",
           htmlInput:
           {}
-        }, _.e, _.f], _.a.inputContent = _._[
+        },
+        {
+          "ConditionalRenderer:#span/0": "__tests__/tags/my-tag.marko_1_content"
+        }], _.a.inputContent = _._[
           "__tests__/template.marko_1_content"
-          ](_.h), _.d.inputContent = _._[
+          ](_.d), _.b.inputContent = _._[
           "__tests__/template.marko_2_content"
-          ](_.h), _.g),
+          ](_.d), _.c),
         "__tests__/tags/my-tag.marko_0_inputContent",
         2, 5
       ];

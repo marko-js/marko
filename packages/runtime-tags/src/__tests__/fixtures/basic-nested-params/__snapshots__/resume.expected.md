@@ -20,23 +20,23 @@
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
+      M._.r = [_ =&gt; (_.d = [0, _.b = {
           x: 1,
           y: 2,
-          "#childScope/1": _.c = {
-            "ConditionalScope:#text/0": _.b = {
-              outer: 1,
-              "ClosureScopes:outer": _.e = new Set
-            },
+          "#childScope/1": _.a = {
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.c, _.b, 1, _.f = {
+        }, _.a, _.c = {
+          outer: 1,
           _: _.b,
+          "ClosureScopes:outer": _.e = new Set
+        }, 1, _.f = {
+          _: _.c,
           "ClosureSignalIndex:outer": 0,
           "#ClosestBranchId": 3
-        }], _.b._ = _.a, _.c.content = _._[
+        }], _.a.content = _._[
           "__tests__/template.marko_1_content"
-          ](_.a), (_.e).add(_.f), _.d),
+          ](_.b), (_.e).add(_.f), _.d),
         "__tests__/template.marko_0_x",
         1
       ];
@@ -76,23 +76,23 @@ container.querySelector("button").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
+      M._.r = [_ =&gt; (_.d = [0, _.b = {
           x: 1,
           y: 2,
-          "#childScope/1": _.c = {
-            "ConditionalScope:#text/0": _.b = {
-              outer: 1,
-              "ClosureScopes:outer": _.e = new Set
-            },
+          "#childScope/1": _.a = {
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.c, _.b, 1, _.f = {
+        }, _.a, _.c = {
+          outer: 1,
           _: _.b,
+          "ClosureScopes:outer": _.e = new Set
+        }, 1, _.f = {
+          _: _.c,
           "ClosureSignalIndex:outer": 0,
           "#ClosestBranchId": 3
-        }], _.b._ = _.a, _.c.content = _._[
+        }], _.a.content = _._[
           "__tests__/template.marko_1_content"
-          ](_.a), (_.e).add(_.f), _.d),
+          ](_.b), (_.e).add(_.f), _.d),
         "__tests__/template.marko_0_x",
         1
       ];
@@ -132,23 +132,23 @@ container.querySelector("button").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
+      M._.r = [_ =&gt; (_.d = [0, _.b = {
           x: 1,
           y: 2,
-          "#childScope/1": _.c = {
-            "ConditionalScope:#text/0": _.b = {
-              outer: 1,
-              "ClosureScopes:outer": _.e = new Set
-            },
+          "#childScope/1": _.a = {
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.c, _.b, 1, _.f = {
+        }, _.a, _.c = {
+          outer: 1,
           _: _.b,
+          "ClosureScopes:outer": _.e = new Set
+        }, 1, _.f = {
+          _: _.c,
           "ClosureSignalIndex:outer": 0,
           "#ClosestBranchId": 3
-        }], _.b._ = _.a, _.c.content = _._[
+        }], _.a.content = _._[
           "__tests__/template.marko_1_content"
-          ](_.a), (_.e).add(_.f), _.d),
+          ](_.b), (_.e).add(_.f), _.d),
         "__tests__/template.marko_0_x",
         1
       ];
@@ -188,23 +188,23 @@ container.querySelector("button").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
+      M._.r = [_ =&gt; (_.d = [0, _.b = {
           x: 1,
           y: 2,
-          "#childScope/1": _.c = {
-            "ConditionalScope:#text/0": _.b = {
-              outer: 1,
-              "ClosureScopes:outer": _.e = new Set
-            },
+          "#childScope/1": _.a = {
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.c, _.b, 1, _.f = {
+        }, _.a, _.c = {
+          outer: 1,
           _: _.b,
+          "ClosureScopes:outer": _.e = new Set
+        }, 1, _.f = {
+          _: _.c,
           "ClosureSignalIndex:outer": 0,
           "#ClosestBranchId": 3
-        }], _.b._ = _.a, _.c.content = _._[
+        }], _.a.content = _._[
           "__tests__/template.marko_1_content"
-          ](_.a), (_.e).add(_.f), _.d),
+          ](_.b), (_.e).add(_.f), _.d),
         "__tests__/template.marko_0_x",
         1
       ];

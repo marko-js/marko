@@ -20,19 +20,21 @@
     </ul>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.b = {
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
           "#scopeOffset/1": 3,
-          "LoopScopeMap:#ul/3": new Map(_.a = [
-            [0, _.d = {}],
-            [1, _.e = {}]
-          ]),
-          clear: _.c = {},
-          "#childScope/0": _.c
-        }, _.c, 1, _.d, _.e], _.b.clear = _._[
+          clear: _.b = {},
+          "#childScope/0": _.b
+        }, _.b, 1,
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        }], _.a.clear = _._[
           "__tests__/tags/store.marko_0/_return2"
-          ](_.c), _.c["#TagVariable"] = _._[
+          ](_.b), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_store/var"
-          ](_.b), _.f),
+          ](_.a), _.c),
         "__tests__/template.marko_0_clear",
         1
       ];
@@ -60,19 +62,21 @@ container.querySelector("button").click();
     </ul>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.b = {
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
           "#scopeOffset/1": 3,
-          "LoopScopeMap:#ul/3": new Map(_.a = [
-            [0, _.d = {}],
-            [1, _.e = {}]
-          ]),
-          clear: _.c = {},
-          "#childScope/0": _.c
-        }, _.c, 1, _.d, _.e], _.b.clear = _._[
+          clear: _.b = {},
+          "#childScope/0": _.b
+        }, _.b, 1,
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        }], _.a.clear = _._[
           "__tests__/tags/store.marko_0/_return2"
-          ](_.c), _.c["#TagVariable"] = _._[
+          ](_.b), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_store/var"
-          ](_.b), _.f),
+          ](_.a), _.c),
         "__tests__/template.marko_0_clear",
         1
       ];

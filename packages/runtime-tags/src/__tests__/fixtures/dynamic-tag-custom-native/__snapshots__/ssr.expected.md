@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button></button><!--M_*1 #button/0--><!--M_[--><div>Id is <!>dynamic<!--M_*2 #text/0--></div><!--M_]1 #text/1 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,{"ConditionalScope:#text/1":_.a={},"ConditionalRenderer:#text/1":"__tests__/tags/child.marko",tagName:_._["__tests__/tags/child.marko"]},_.a]),"__tests__/template.marko_0_tagName",1];M._.w()</script>
+  <button></button><!--M_*1 #button/0--><!--M_[--><div>Id is <!>dynamic<!--M_*2 #text/0--></div><!--M_]1 #text/1 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{"ConditionalRenderer:#text/1":"__tests__/tags/child.marko",tagName:_._["__tests__/tags/child.marko"]},{}]),"__tests__/template.marko_0_tagName",1];M._.w()</script>
 ```
 
 # Render End
@@ -20,14 +20,14 @@
     <!--M_]1 #text/1 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "ConditionalScope:#text/1": _.a = {},
           "ConditionalRenderer:#text/1": "__tests__/tags/child.marko",
           tagName: _._[
             "__tests__/tags/child.marko"
             ]
-        }, _.a]),
+        },
+        {}]),
         "__tests__/template.marko_0_tagName",
         1
       ];

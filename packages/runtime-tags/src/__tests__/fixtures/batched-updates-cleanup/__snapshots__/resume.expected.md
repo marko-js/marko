@@ -12,11 +12,13 @@
     <!--M_|1 #text/1 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/1": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           show: !0,
           message: "hi"
-        }, _.b], _.b._ = _.a, _.c),
+        },
+        {
+          _: _.a
+        }]),
         "__tests__/template.marko_0_show",
         1
       ];
@@ -40,11 +42,13 @@ container.querySelector("button").click();
     <!--M_|1 #text/1 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/1": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           show: !0,
           message: "hi"
-        }, _.b], _.b._ = _.a, _.c),
+        },
+        {
+          _: _.a
+        }]),
         "__tests__/template.marko_0_show",
         1
       ];

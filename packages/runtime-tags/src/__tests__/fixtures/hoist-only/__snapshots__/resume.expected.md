@@ -5,8 +5,8 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.c = {
-        "ConditionalScope:#text/0": _.b = {
-          "ConditionalScope:#text/0": _.a = {}
+        "BranchScopes:#text/0": _.b = {
+          "BranchScopes:#text/0": _.a = {}
         }
       }, , _.a], _.a._ = _.d[2] = _.b, _.b._ = _.c, _.c.hoist1 = _._[
         "__tests__/template.marko_0/hoist"

@@ -53,19 +53,23 @@
     <!--M_*1 #button/3-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
           "ControlledValue:#select/0": 1,
-          "LoopScopeMap:#select/0": new Map(_.b = [
-            [1, _.c = {}],
-            [2, _.d = {}],
-            [3, _.e = {}]
-          ]),
           options: [1, 2, 3],
           value: 1
-        }, _.c, _.d, _.e], _.a["ControlledHandler:#select/0"] = _._[
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 3
+        }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
-          ](_.a), _.f),
+          ](_.a), _.b),
         "__tests__/template.marko_0_options",
         1,
         "__tests__/template.marko_0",
@@ -130,19 +134,23 @@ container.querySelector(".remove").click();
     <!--M_*1 #button/3-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
           "ControlledValue:#select/0": 1,
-          "LoopScopeMap:#select/0": new Map(_.b = [
-            [1, _.c = {}],
-            [2, _.d = {}],
-            [3, _.e = {}]
-          ]),
           options: [1, 2, 3],
           value: 1
-        }, _.c, _.d, _.e], _.a["ControlledHandler:#select/0"] = _._[
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 3
+        }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
-          ](_.a), _.f),
+          ](_.a), _.b),
         "__tests__/template.marko_0_options",
         1,
         "__tests__/template.marko_0",
@@ -206,19 +214,23 @@ container.querySelector(".remove").click();
     <!--M_*1 #button/3-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
           "ControlledValue:#select/0": 1,
-          "LoopScopeMap:#select/0": new Map(_.b = [
-            [1, _.c = {}],
-            [2, _.d = {}],
-            [3, _.e = {}]
-          ]),
           options: [1, 2, 3],
           value: 1
-        }, _.c, _.d, _.e], _.a["ControlledHandler:#select/0"] = _._[
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 3
+        }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
-          ](_.a), _.f),
+          ](_.a), _.b),
         "__tests__/template.marko_0_options",
         1,
         "__tests__/template.marko_0",
@@ -275,19 +287,23 @@ container.querySelector(".remove").click();
     <!--M_*1 #button/3-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
           "ControlledValue:#select/0": 1,
-          "LoopScopeMap:#select/0": new Map(_.b = [
-            [1, _.c = {}],
-            [2, _.d = {}],
-            [3, _.e = {}]
-          ]),
           options: [1, 2, 3],
           value: 1
-        }, _.c, _.d, _.e], _.a["ControlledHandler:#select/0"] = _._[
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 3
+        }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
-          ](_.a), _.f),
+          ](_.a), _.b),
         "__tests__/template.marko_0_options",
         1,
         "__tests__/template.marko_0",
@@ -350,19 +366,23 @@ container.querySelector(".add").click();
     <!--M_*1 #button/3-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
           "ControlledValue:#select/0": 1,
-          "LoopScopeMap:#select/0": new Map(_.b = [
-            [1, _.c = {}],
-            [2, _.d = {}],
-            [3, _.e = {}]
-          ]),
           options: [1, 2, 3],
           value: 1
-        }, _.c, _.d, _.e], _.a["ControlledHandler:#select/0"] = _._[
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 3
+        }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
-          ](_.a), _.f),
+          ](_.a), _.b),
         "__tests__/template.marko_0_options",
         1,
         "__tests__/template.marko_0",
@@ -430,19 +450,23 @@ container.querySelector(".add").click();
     <!--M_*1 #button/3-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
           "ControlledValue:#select/0": 1,
-          "LoopScopeMap:#select/0": new Map(_.b = [
-            [1, _.c = {}],
-            [2, _.d = {}],
-            [3, _.e = {}]
-          ]),
           options: [1, 2, 3],
           value: 1
-        }, _.c, _.d, _.e], _.a["ControlledHandler:#select/0"] = _._[
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 3
+        }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
-          ](_.a), _.f),
+          ](_.a), _.b),
         "__tests__/template.marko_0_options",
         1,
         "__tests__/template.marko_0",
@@ -514,19 +538,23 @@ container.querySelector(".add").click();
     <!--M_*1 #button/3-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
           "ControlledValue:#select/0": 1,
-          "LoopScopeMap:#select/0": new Map(_.b = [
-            [1, _.c = {}],
-            [2, _.d = {}],
-            [3, _.e = {}]
-          ]),
           options: [1, 2, 3],
           value: 1
-        }, _.c, _.d, _.e], _.a["ControlledHandler:#select/0"] = _._[
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 3
+        }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
-          ](_.a), _.f),
+          ](_.a), _.b),
         "__tests__/template.marko_0_options",
         1,
         "__tests__/template.marko_0",

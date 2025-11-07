@@ -28,17 +28,17 @@
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "LoopScopeMap:#text/0": new Map(_.a = [
-            [0, _.b = {}]
-          ]),
           items: [
           {
             name: "Marko",
             description: "HTML Reimagined"
           }]
-        }, _.b]),
+        },
+        {
+          "#LoopKey": 0
+        }]),
         "__tests__/template.marko_0_items",
         1
       ];
@@ -85,17 +85,17 @@ container.querySelector("#add").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "LoopScopeMap:#text/0": new Map(_.a = [
-            [0, _.b = {}]
-          ]),
           items: [
           {
             name: "Marko",
             description: "HTML Reimagined"
           }]
-        }, _.b]),
+        },
+        {
+          "#LoopKey": 0
+        }]),
         "__tests__/template.marko_0_items",
         1
       ];
@@ -143,17 +143,17 @@ container.querySelector("#remove").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "LoopScopeMap:#text/0": new Map(_.a = [
-            [0, _.b = {}]
-          ]),
           items: [
           {
             name: "Marko",
             description: "HTML Reimagined"
           }]
-        }, _.b]),
+        },
+        {
+          "#LoopKey": 0
+        }]),
         "__tests__/template.marko_0_items",
         1
       ];
@@ -193,17 +193,17 @@ container.querySelector("#remove").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "LoopScopeMap:#text/0": new Map(_.a = [
-            [0, _.b = {}]
-          ]),
           items: [
           {
             name: "Marko",
             description: "HTML Reimagined"
           }]
-        }, _.b]),
+        },
+        {
+          "#LoopKey": 0
+        }]),
         "__tests__/template.marko_0_items",
         1
       ];
@@ -247,17 +247,17 @@ container.querySelector("#add").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "LoopScopeMap:#text/0": new Map(_.a = [
-            [0, _.b = {}]
-          ]),
           items: [
           {
             name: "Marko",
             description: "HTML Reimagined"
           }]
-        }, _.b]),
+        },
+        {
+          "#LoopKey": 0
+        }]),
         "__tests__/template.marko_0_items",
         1
       ];

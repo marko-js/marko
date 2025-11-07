@@ -27,11 +27,10 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.c = {
-          "ConditionalScope:#text/2": _.a = {},
           "ConditionalRenderer:#text/2": "__tests__/tags/custom-tag.marko",
           "#scopeOffset/3": 3,
           x: 1
-        }, _.a], _.a["#TagVariable"] = _._[
+        }, _.a = {}], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_y/var"
           ](_.c), _.b),
         "__tests__/template.marko_0_x",
@@ -80,11 +79,10 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.c = {
-          "ConditionalScope:#text/2": _.a = {},
           "ConditionalRenderer:#text/2": "__tests__/tags/custom-tag.marko",
           "#scopeOffset/3": 3,
           x: 1
-        }, _.a], _.a["#TagVariable"] = _._[
+        }, _.a = {}], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_y/var"
           ](_.c), _.b),
         "__tests__/template.marko_0_x",
@@ -135,11 +133,10 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.c = {
-          "ConditionalScope:#text/2": _.a = {},
           "ConditionalRenderer:#text/2": "__tests__/tags/custom-tag.marko",
           "#scopeOffset/3": 3,
           x: 1
-        }, _.a], _.a["#TagVariable"] = _._[
+        }, _.a = {}], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_y/var"
           ](_.c), _.b),
         "__tests__/template.marko_0_x",
@@ -190,11 +187,10 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.c = {
-          "ConditionalScope:#text/2": _.a = {},
           "ConditionalRenderer:#text/2": "__tests__/tags/custom-tag.marko",
           "#scopeOffset/3": 3,
           x: 1
-        }, _.a], _.a["#TagVariable"] = _._[
+        }, _.a = {}], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_y/var"
           ](_.c), _.b),
         "__tests__/template.marko_0_x",

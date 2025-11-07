@@ -20,13 +20,13 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/1": _.b = {
-            "ClosureSignalIndex:clickCount": 0,
-            "#BranchAccessor": "#text/1"
-          },
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
-        }, _.b], _.b._ = _.a, _.b["#CatchContent"] = _._[
+        }, _.b = {
+          _: _.a,
+          "ClosureSignalIndex:clickCount": 0,
+          "#BranchAccessor": "#text/1"
+        }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_1_clickCount",
@@ -69,13 +69,13 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/1": _.b = {
-            "ClosureSignalIndex:clickCount": 0,
-            "#BranchAccessor": "#text/1"
-          },
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
-        }, _.b], _.b._ = _.a, _.b["#CatchContent"] = _._[
+        }, _.b = {
+          _: _.a,
+          "ClosureSignalIndex:clickCount": 0,
+          "#BranchAccessor": "#text/1"
+        }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_1_clickCount",
@@ -110,13 +110,13 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/1": _.b = {
-            "ClosureSignalIndex:clickCount": 0,
-            "#BranchAccessor": "#text/1"
-          },
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
-        }, _.b], _.b._ = _.a, _.b["#CatchContent"] = _._[
+        }, _.b = {
+          _: _.a,
+          "ClosureSignalIndex:clickCount": 0,
+          "#BranchAccessor": "#text/1"
+        }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_1_clickCount",

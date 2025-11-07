@@ -12,15 +12,14 @@
     <!--M_|2 #text/0 3-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.d = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
           "#scopeOffset/3": 4,
           count: 1,
-          "#childScope/2": _.a = {
-            "ConditionalScope:#text/0": _.b = {}
-          }
-        }, _.a, _.b], _.a["#TagVariable"] = _._[
+          "#childScope/2": _.a = {}
+        }, _.a,
+        {}], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_x/var"
-          ](_.d), _.c),
+          ](_.c), _.b),
         "__tests__/template.marko_0_count",
         1
       ];
@@ -48,15 +47,14 @@ container.querySelector("button").click();
     <!--M_|2 #text/0 3-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.d = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
           "#scopeOffset/3": 4,
           count: 1,
-          "#childScope/2": _.a = {
-            "ConditionalScope:#text/0": _.b = {}
-          }
-        }, _.a, _.b], _.a["#TagVariable"] = _._[
+          "#childScope/2": _.a = {}
+        }, _.a,
+        {}], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_x/var"
-          ](_.d), _.c),
+          ](_.c), _.b),
         "__tests__/template.marko_0_count",
         1
       ];
@@ -90,15 +88,14 @@ container.querySelector("button").click();
     <!--M_|2 #text/0 3-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.d = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
           "#scopeOffset/3": 4,
           count: 1,
-          "#childScope/2": _.a = {
-            "ConditionalScope:#text/0": _.b = {}
-          }
-        }, _.a, _.b], _.a["#TagVariable"] = _._[
+          "#childScope/2": _.a = {}
+        }, _.a,
+        {}], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_x/var"
-          ](_.d), _.c),
+          ](_.c), _.b),
         "__tests__/template.marko_0_count",
         1
       ];
@@ -130,15 +127,14 @@ container.querySelector("button").click();
     <!--M_|2 #text/0 3-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.d = {
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
           "#scopeOffset/3": 4,
           count: 1,
-          "#childScope/2": _.a = {
-            "ConditionalScope:#text/0": _.b = {}
-          }
-        }, _.a, _.b], _.a["#TagVariable"] = _._[
+          "#childScope/2": _.a = {}
+        }, _.a,
+        {}], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_x/var"
-          ](_.d), _.c),
+          ](_.c), _.b),
         "__tests__/template.marko_0_count",
         1
       ];

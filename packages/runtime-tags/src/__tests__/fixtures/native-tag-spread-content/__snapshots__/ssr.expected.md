@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div>Hello</div><!--M_*2 #div/0--><button foo=1>Hello</button><!--M_*2 #button/1--><span>Overridden</span><!--M_*2 #span/2--><output></output><!--M_*2 #output/3--><strong>Custom content</strong><!--M_*2 #strong/4--><p>Hello</p><!--M_*2 #p/5--><em>Custom content</em><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.g=[0,1,_.b={"ConditionalScope:#div/0":_.c={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_content","ConditionalScope:#button/1":_.d={},"ConditionalRenderer:#button/1":"__tests__/template.marko_1_content","ConditionalScope:#strong/4":_.e={},"ConditionalRenderer:#strong/4":"__tests__/tags/my-div.marko_1_content","ConditionalScope:#p/5":_.f={},"ConditionalRenderer:#p/5":"__tests__/template.marko_1_content",input:_.a={content:_.h={}}},_.c,_.d,1,_.e,_.f],_.a.content=_._["__tests__/template.marko_1_content"](_.h),_.b.CustomContent_content=_._["__tests__/tags/my-div.marko_1_content"](_.b),_.g),"__tests__/tags/my-div.marko_0_input_CustomContent_content",2,"__tests__/tags/my-div.marko_0_input",2];M._.w()</script>
+  <div>Hello</div><!--M_*2 #div/0--><button foo=1>Hello</button><!--M_*2 #button/1--><span>Overridden</span><!--M_*2 #span/2--><output></output><!--M_*2 #output/3--><strong>Custom content</strong><!--M_*2 #strong/4--><p>Hello</p><!--M_*2 #p/5--><em>Custom content</em><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.g=[0,1,_.b={"BranchScopes:#div/0":_.c={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_content","BranchScopes:#button/1":_.d={},"ConditionalRenderer:#button/1":"__tests__/template.marko_1_content","BranchScopes:#strong/4":_.e={},"ConditionalRenderer:#strong/4":"__tests__/tags/my-div.marko_1_content","BranchScopes:#p/5":_.f={},"ConditionalRenderer:#p/5":"__tests__/template.marko_1_content",input:_.a={content:_.h={}}},_.c,_.d,1,_.e,_.f],_.a.content=_._["__tests__/template.marko_1_content"](_.h),_.b.CustomContent_content=_._["__tests__/tags/my-div.marko_1_content"](_.b),_.g),"__tests__/tags/my-div.marko_0_input_CustomContent_content",2,"__tests__/tags/my-div.marko_0_input",2];M._.w()</script>
 ```
 
 # Render End
@@ -38,13 +38,13 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.g = [0, 1, _.b = {
-          "ConditionalScope:#div/0": _.c = {},
+          "BranchScopes:#div/0": _.c = {},
           "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content",
-          "ConditionalScope:#button/1": _.d = {},
+          "BranchScopes:#button/1": _.d = {},
           "ConditionalRenderer:#button/1": "__tests__/template.marko_1_content",
-          "ConditionalScope:#strong/4": _.e = {},
+          "BranchScopes:#strong/4": _.e = {},
           "ConditionalRenderer:#strong/4": "__tests__/tags/my-div.marko_1_content",
-          "ConditionalScope:#p/5": _.f = {},
+          "BranchScopes:#p/5": _.f = {},
           "ConditionalRenderer:#p/5": "__tests__/template.marko_1_content",
           input: _.a = {
             content: _.h = {}

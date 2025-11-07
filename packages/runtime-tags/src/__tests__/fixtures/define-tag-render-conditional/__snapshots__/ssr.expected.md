@@ -1,6 +1,6 @@
 # Write
 ```html
-  <!--M_[--><div>Hello <!>1<!--M_*3 #text/0--></div><!--M_]1 #text/0 2--><button>1<!--M_*1 #text/2--></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,_.a={"ConditionalScope:#text/0":_.b={"#childScope/0":_.c={}},x:1},_.b,_.c],_.b._=_.a,_.d),"__tests__/template.marko_0_x",1];M._.w()</script>
+  <!--M_[--><div>Hello <!>1<!--M_*3 #text/0--></div><!--M_]1 #text/0 2--><button>1<!--M_*1 #text/2--></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={x:1},{_:_.a,"#childScope/0":_.b={}},_.b]),"__tests__/template.marko_0_x",1];M._.w()</script>
 ```
 
 # Render End
@@ -23,12 +23,13 @@
     <!--M_*1 #button/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "ConditionalScope:#text/0": _.b = {
-            "#childScope/0": _.c = {}
-          },
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
           x: 1
-        }, _.b, _.c], _.b._ = _.a, _.d),
+        },
+        {
+          _: _.a,
+          "#childScope/0": _.b = {}
+        }, _.b]),
         "__tests__/template.marko_0_x",
         1
       ];

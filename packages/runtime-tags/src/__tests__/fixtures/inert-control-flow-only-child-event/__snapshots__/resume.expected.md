@@ -22,19 +22,19 @@
     <!--M_*1 #select/0-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.b = {
-          "LoopScopeMap:#select/0": new Map(_.a = [
-            [0, _.c = {
-              i: 0
-            }],
-            [1, _.d = {
-              i: 1
-            }],
-            [2, _.e = {
-              i: 2
-            }]
-          ])
-        }, _.c, _.d, _.e], _.c._ = _.d._ = _.e._ = _.b, _.f),
+      M._.r = [_ =&gt; (_.b = [0, _.a = {},
+        {
+          i: 0,
+          _: _.a
+        },
+        {
+          i: 1,
+          _: _.a
+        },
+        {
+          i: 2,
+          _: _.a
+        }]),
         "__tests__/template.marko_0",
         1
       ];
@@ -76,19 +76,19 @@ select.dispatchEvent(new select.ownerDocument.defaultView.Event("change", {
     <!--M_*1 #select/0-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.f = [0, _.b = {
-          "LoopScopeMap:#select/0": new Map(_.a = [
-            [0, _.c = {
-              i: 0
-            }],
-            [1, _.d = {
-              i: 1
-            }],
-            [2, _.e = {
-              i: 2
-            }]
-          ])
-        }, _.c, _.d, _.e], _.c._ = _.d._ = _.e._ = _.b, _.f),
+      M._.r = [_ =&gt; (_.b = [0, _.a = {},
+        {
+          i: 0,
+          _: _.a
+        },
+        {
+          i: 1,
+          _: _.a
+        },
+        {
+          i: 2,
+          _: _.a
+        }]),
         "__tests__/template.marko_0",
         1
       ];
@@ -96,9 +96,4 @@ select.dispatchEvent(new select.ownerDocument.defaultView.Event("change", {
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-UPDATE html/body/select/option0[selected] "" => null
 ```

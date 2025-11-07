@@ -1,14 +1,14 @@
-// size: 737 (min) 317 (brotli)
+// size: 737 (min) 318 (brotli)
 const $dynamicTag = _._dynamic_tag(0),
   $dynamicTag2 = _._dynamic_tag(1),
   $input_content = _._const(4, ($scope) => {
     ($dynamicTag($scope, $scope.e), $dynamicTag2($scope, $scope.e));
   }),
-  $get$hoisted_el = _._hoist("Ja", "A4");
-_._content_resume("b0", "<p></p>", " b", 0, 0, "A4");
-const $get$hoisted_el2 = _._resume("b1", _._hoist("Ja", "A3"));
-_._resume("b2", _._hoist("Ja", "A3", "A2"));
-const $child_content2 = _._content("b3", "<div></div>", " b", 0, 0, "A3"),
+  $get$hoisted_el = _._hoist("Ka", "C4");
+_._content_resume("b0", "<p></p>", " b", 0, 0, "C4");
+const $get$hoisted_el2 = _._resume("b1", _._hoist("Ka", "C3"));
+_._resume("b2", _._hoist("Ka", "C3", "C2"));
+const $child_content2 = _._content("b3", "<div></div>", " b", 0, 0, "C3"),
   $inputshowChildnull_content__$hoisted_el__script = _._script(
     "b4",
     ($scope) => {
@@ -32,9 +32,9 @@ const $child_content2 = _._content("b3", "<div></div>", " b", 0, 0, "A3"),
       ));
   },
   0,
-  "A2",
+  "C2",
 ),
-  _._resume("b6", _._hoist("Ja", "A1")),
+  _._resume("b6", _._hoist("Ka", "C1")),
   _._script("b8", ($scope) => {
     for (const element of $scope.h) element().classList.add("outer");
   }),

@@ -17,13 +17,15 @@
     <!--M_*1 #input/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#div/0": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#input/1": 2,
           value: "Hello"
-        }, _.b], _.b._ = _.a, _.a["ControlledHandler:#input/1"] = _._[
+        },
+        {
+          _: _.a
+        }], _.a["ControlledHandler:#input/1"] = _._[
           "__tests__/template.marko_0/valueChange"
-          ](_.a), _.c),
+          ](_.a), _.b),
         "__tests__/template.marko_0",
         1
       ];
@@ -51,13 +53,15 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
     <!--M_*1 #input/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#div/0": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#input/1": 2,
           value: "Hello"
-        }, _.b], _.b._ = _.a, _.a["ControlledHandler:#input/1"] = _._[
+        },
+        {
+          _: _.a
+        }], _.a["ControlledHandler:#input/1"] = _._[
           "__tests__/template.marko_0/valueChange"
-          ](_.a), _.c),
+          ](_.a), _.b),
         "__tests__/template.marko_0",
         1
       ];
@@ -95,13 +99,15 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
     <!--M_*1 #input/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#div/0": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#input/1": 2,
           value: "Hello"
-        }, _.b], _.b._ = _.a, _.a["ControlledHandler:#input/1"] = _._[
+        },
+        {
+          _: _.a
+        }], _.a["ControlledHandler:#input/1"] = _._[
           "__tests__/template.marko_0/valueChange"
-          ](_.a), _.c),
+          ](_.a), _.b),
         "__tests__/template.marko_0",
         1
       ];
@@ -140,13 +146,15 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
     <!--M_*1 #input/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#div/0": _.b = {},
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#input/1": 2,
           value: "Hello"
-        }, _.b], _.b._ = _.a, _.a["ControlledHandler:#input/1"] = _._[
+        },
+        {
+          _: _.a
+        }], _.a["ControlledHandler:#input/1"] = _._[
           "__tests__/template.marko_0/valueChange"
-          ](_.a), _.c),
+          ](_.a), _.b),
         "__tests__/template.marko_0",
         1
       ];
