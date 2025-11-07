@@ -17,7 +17,7 @@ const $x__script = _._script("a1", ($scope) =>
   _._var_resume("b0", ($scope) => {}),
   _._script("b1", ($scope) =>
     _._on($scope.c, "click", function () {
-      _._var_change($scope.Da, 0);
+      _._var_change($scope.Aa, 0);
     }),
   ),
   init());

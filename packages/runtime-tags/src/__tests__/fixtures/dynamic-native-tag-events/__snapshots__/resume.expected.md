@@ -13,18 +13,17 @@
     <!--M_'1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.e = {
-        "ConditionalScope:#text/0": _.b = {
-          "EventAttributes:#span/0": _.a = {},
-          "ConditionalScope:#span/0": _.c = {},
-          "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content",
-          "#Renderer": "span"
-        },
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
         "ConditionalRenderer:#text/0": "span",
         tagName: "span"
-      }, _.b, _.c], _.a.click = _._[
+      },
+      {
+        "EventAttributes:#span/0": _.a = {},
+        "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content",
+        "#Renderer": "span"
+      }], _.a.click = _._[
         "__tests__/template.marko_0/onClick"
-        ](_.e), _.d), "_dynamicTagScript", 2];
+        ](_.c), _.b), "_dynamicTagScript", 2];
       M._.w()
     </script>
   </body>
@@ -52,18 +51,17 @@ container.querySelector(".A").click();
     <!--M_'1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.e = {
-        "ConditionalScope:#text/0": _.b = {
-          "EventAttributes:#span/0": _.a = {},
-          "ConditionalScope:#span/0": _.c = {},
-          "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content",
-          "#Renderer": "span"
-        },
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
         "ConditionalRenderer:#text/0": "span",
         tagName: "span"
-      }, _.b, _.c], _.a.click = _._[
+      },
+      {
+        "EventAttributes:#span/0": _.a = {},
+        "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content",
+        "#Renderer": "span"
+      }], _.a.click = _._[
         "__tests__/template.marko_0/onClick"
-        ](_.e), _.d), "_dynamicTagScript", 2];
+        ](_.c), _.b), "_dynamicTagScript", 2];
       M._.w()
     </script>
   </body>
@@ -94,18 +92,17 @@ container.querySelector(".A").click();
     <!--M_'1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.e = {
-        "ConditionalScope:#text/0": _.b = {
-          "EventAttributes:#span/0": _.a = {},
-          "ConditionalScope:#span/0": _.c = {},
-          "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content",
-          "#Renderer": "span"
-        },
+      M._.r = [_ =&gt; (_.b = [0, _.c = {
         "ConditionalRenderer:#text/0": "span",
         tagName: "span"
-      }, _.b, _.c], _.a.click = _._[
+      },
+      {
+        "EventAttributes:#span/0": _.a = {},
+        "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content",
+        "#Renderer": "span"
+      }], _.a.click = _._[
         "__tests__/template.marko_0/onClick"
-        ](_.e), _.d), "_dynamicTagScript", 2];
+        ](_.c), _.b), "_dynamicTagScript", 2];
       M._.w()
     </script>
   </body>

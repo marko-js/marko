@@ -32,16 +32,20 @@
     <!--M_*1 #button/2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.e = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "LoopScopeMap:#ul/0": new Map(_.a = [
-            [1, _.b = {}],
-            [2, _.c = {}],
-            [3, _.d = {}]
-          ]),
           open: !0,
           list: [1, 2, 3]
-        }, _.b, _.c, _.d]),
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 3
+        }]),
         "__tests__/template.marko_0_list",
         1,
         "__tests__/template.marko_0_open",
@@ -93,16 +97,20 @@ container.querySelector("#toggle").click();
     <!--M_*1 #button/2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.e = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "LoopScopeMap:#ul/0": new Map(_.a = [
-            [1, _.b = {}],
-            [2, _.c = {}],
-            [3, _.d = {}]
-          ]),
           open: !0,
           list: [1, 2, 3]
-        }, _.b, _.c, _.d]),
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 3
+        }]),
         "__tests__/template.marko_0_list",
         1,
         "__tests__/template.marko_0_open",
@@ -156,16 +164,20 @@ container.querySelector("#toggle").click();
     <!--M_*1 #button/2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.e = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "LoopScopeMap:#ul/0": new Map(_.a = [
-            [1, _.b = {}],
-            [2, _.c = {}],
-            [3, _.d = {}]
-          ]),
           open: !0,
           list: [1, 2, 3]
-        }, _.b, _.c, _.d]),
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 3
+        }]),
         "__tests__/template.marko_0_list",
         1,
         "__tests__/template.marko_0_open",
@@ -219,16 +231,20 @@ container.querySelector("#reverse").click();
     <!--M_*1 #button/2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.e = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "LoopScopeMap:#ul/0": new Map(_.a = [
-            [1, _.b = {}],
-            [2, _.c = {}],
-            [3, _.d = {}]
-          ]),
           open: !0,
           list: [1, 2, 3]
-        }, _.b, _.c, _.d]),
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 3
+        }]),
         "__tests__/template.marko_0_list",
         1,
         "__tests__/template.marko_0_open",

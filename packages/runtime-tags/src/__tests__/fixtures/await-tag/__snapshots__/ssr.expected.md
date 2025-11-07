@@ -1,16 +1,16 @@
 # Write
 ```html
-  <div><!--M_[-->Got: a <!>0<!--M_*2 #text/1--><!--M_]1 #text/0 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{count:0,"ClosureScopes:count":new Set}]),_=>(_.c=[_.e={_:_.b=_.a[1],"ClosureSignalIndex:count":0}],(_.d=_.b["ClosureScopes:count"]).add(_.e),_.b["ConditionalScope:#text/0"]=_.e,_.c)];M._.w()</script>
+  <div><!--M_[-->Got: a <!>0<!--M_*2 #text/1--><!--M_]1 #text/0 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{count:0,"ClosureScopes:count":new Set}]),_=>(_.c=[_.e={_:_.b=_.a[1],"ClosureSignalIndex:count":0}],(_.d=_.b["ClosureScopes:count"]).add(_.e),_.c)];M._.w()</script>
 ```
 
 # Write
 ```html
-  <script>M._.r.push(_=>(_.f=[_.g={_:_.b,"ClosureSignalIndex:count":2}],_.d.add(_.g),_.b["ConditionalScope:#text/2"]=_.g,_.f));M._.w()</script>
+  <script>M._.r.push(_=>(_.f=[_.g={_:_.b,"ClosureSignalIndex:count":2}],_.d.add(_.g),_.f));M._.w()</script>
 ```
 
 # Write
 ```html
-  <!--M_[-->Got: b <!>0<!--M_*4 #text/1--><!--M_]1 #text/1 4--><!--M_[-->Got: c <!>0<!--M_*3 #text/1--><!--M_]1 #text/2 3--><button>Inc</button><!--M_*1 #button/3--></div><script>M._.r.push(_=>(_.h=[_.i={_:_.b,"ClosureSignalIndex:count":1}],_.d.add(_.i),_.b["ConditionalScope:#text/1"]=_.i,_.h),"__tests__/template.marko_0_count",1);M._.w()</script>
+  <!--M_[-->Got: b <!>0<!--M_*4 #text/1--><!--M_]1 #text/1 4--><!--M_[-->Got: c <!>0<!--M_*3 #text/1--><!--M_]1 #text/2 3--><button>Inc</button><!--M_*1 #button/3--></div><script>M._.r.push(_=>(_.h=[_.i={_:_.b,"ClosureSignalIndex:count":1}],_.d.add(_.i),_.h),"__tests__/template.marko_0_count",1);M._.w()</script>
 ```
 
 # Render End
@@ -34,15 +34,14 @@
         }]), _ =&gt; (_.c = [_.e = {
           _: _.b = _.a[1],
           "ClosureSignalIndex:count": 0
-        }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.b[
-          "ConditionalScope:#text/0"] = _.e, _.c)];
+        }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.c)];
         M._.w()
       </script>
       <script>
         M._.r.push(_ =&gt; (_.f = [_.g = {
           _: _.b,
           "ClosureSignalIndex:count": 2
-        }], _.d.add(_.g), _.b["ConditionalScope:#text/2"] = _.g, _.f));
+        }], _.d.add(_.g), _.f));
         M._.w()
       </script>
       <!--M_[-->
@@ -66,7 +65,7 @@
       M._.r.push(_ =&gt; (_.h = [_.i = {
           _: _.b,
           "ClosureSignalIndex:count": 1
-        }], _.d.add(_.i), _.b["ConditionalScope:#text/1"] = _.i, _.h),
+        }], _.d.add(_.i), _.h),
         "__tests__/template.marko_0_count",
         1);
       M._.w()

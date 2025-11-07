@@ -21,15 +21,14 @@
     <!--M_*1 #button/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "ConditionalScope:#text/0": _.a = {
-            "ConditionalScope:#div/0": _.b = {},
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-          },
           "ConditionalRenderer:#text/0": "div",
           tagName: "div"
-        }, _.a, _.b,
+        },
+        {
+          "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
+        }, 1,
         {
           count: 0,
           "#ClosestBranchId": 3
@@ -76,15 +75,14 @@ container.querySelector("#count").click();
     <!--M_*1 #button/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "ConditionalScope:#text/0": _.a = {
-            "ConditionalScope:#div/0": _.b = {},
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-          },
           "ConditionalRenderer:#text/0": "div",
           tagName: "div"
-        }, _.a, _.b,
+        },
+        {
+          "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
+        }, 1,
         {
           count: 0,
           "#ClosestBranchId": 3
@@ -127,15 +125,14 @@ container.querySelector("#changeTag").click();
     <!--M_*1 #button/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "ConditionalScope:#text/0": _.a = {
-            "ConditionalScope:#div/0": _.b = {},
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-          },
           "ConditionalRenderer:#text/0": "div",
           tagName: "div"
-        }, _.a, _.b,
+        },
+        {
+          "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
+        }, 1,
         {
           count: 0,
           "#ClosestBranchId": 3
@@ -181,15 +178,14 @@ container.querySelector("#count").click();
     <!--M_*1 #button/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "ConditionalScope:#text/0": _.a = {
-            "ConditionalScope:#div/0": _.b = {},
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-          },
           "ConditionalRenderer:#text/0": "div",
           tagName: "div"
-        }, _.a, _.b,
+        },
+        {
+          "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
+        }, 1,
         {
           count: 0,
           "#ClosestBranchId": 3

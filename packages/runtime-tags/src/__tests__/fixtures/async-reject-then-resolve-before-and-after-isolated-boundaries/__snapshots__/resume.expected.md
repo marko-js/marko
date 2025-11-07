@@ -5,17 +5,14 @@
   <head>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.e = {
-        "ConditionalScope:#text/0": _.a = {
-          "#BranchAccessor": "#text/0"
-        },
-        "ConditionalScope:#text/1": _.b = {
-          "#BranchAccessor": "#text/1"
-        },
-        "ConditionalScope:#text/2": _.c = {
-          "#BranchAccessor": "#text/2"
-        }
-      }, _.a, _.b, _.c], _.a["#CatchContent"] = _._[
+      M._.r = [_ =&gt; (_.d = [0, 1, _.a = {
+        "#BranchAccessor": "#text/0",
+        "#CatchContent": _.e = {}
+      }, _.b = {
+        "#BranchAccessor": "#text/1"
+      }, _.c = {
+        "#BranchAccessor": "#text/2"
+      }], _.a["#CatchContent"] = _._[
         "__tests__/template.marko_2_content"
         ](_.e), _.b["#CatchContent"] = _._[
         "__tests__/template.marko_5_content"
@@ -57,8 +54,8 @@
     <!--M_!d-->
     <!--M_]1 #text/2 4-->
     <script>
-      M._.r.push(_ =&gt; (_.f = [2, _.g = {}], _.c["ConditionalScope:#text/0"] = _
-          .g, _.f),
+      M._.r.push(_ =&gt; (_.f = [2,
+        {}]),
         "__tests__/template.marko_9",
         7);
       M._.w()
@@ -87,17 +84,14 @@ container.querySelector("button").click();
   <head>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.e = {
-        "ConditionalScope:#text/0": _.a = {
-          "#BranchAccessor": "#text/0"
-        },
-        "ConditionalScope:#text/1": _.b = {
-          "#BranchAccessor": "#text/1"
-        },
-        "ConditionalScope:#text/2": _.c = {
-          "#BranchAccessor": "#text/2"
-        }
-      }, _.a, _.b, _.c], _.a["#CatchContent"] = _._[
+      M._.r = [_ =&gt; (_.d = [0, 1, _.a = {
+        "#BranchAccessor": "#text/0",
+        "#CatchContent": _.e = {}
+      }, _.b = {
+        "#BranchAccessor": "#text/1"
+      }, _.c = {
+        "#BranchAccessor": "#text/2"
+      }], _.a["#CatchContent"] = _._[
         "__tests__/template.marko_2_content"
         ](_.e), _.b["#CatchContent"] = _._[
         "__tests__/template.marko_5_content"
@@ -139,8 +133,8 @@ container.querySelector("button").click();
     <!--M_!d-->
     <!--M_]1 #text/2 4-->
     <script>
-      M._.r.push(_ =&gt; (_.f = [2, _.g = {}], _.c["ConditionalScope:#text/0"] = _
-          .g, _.f),
+      M._.r.push(_ =&gt; (_.f = [2,
+        {}]),
         "__tests__/template.marko_9",
         7);
       M._.w()

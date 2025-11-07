@@ -33,31 +33,36 @@
     <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.d = {
-            "LoopScopeMap:#text/0": new Map(_.a = [
-              [0, _.b = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.c = {},
-                count: 0,
-                i: 0
-              }],
-              [1, _.e = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.f = {},
-                count: 0,
-                i: 1
-              }],
-              [2, _.g = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.h = {},
-                count: 0,
-                i: 2
-              }]
-            ]),
-            counts: [0, 0, 0],
-            "ClosureScopes:counts": new Set
-          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
+      M._.r = [_ =&gt; (_.e = [0, _.a = {
+          counts: [0, 0, 0],
+          "ClosureScopes:counts": new Set
+        }, _.b = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 0,
+          _: _.a
+        },
+        {
+          _: _.b
+        }, _.c = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 1,
+          _: _.a,
+          "#LoopKey": 1
+        },
+        {
+          _: _.c
+        }, _.d = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 2,
+          _: _.a,
+          "#LoopKey": 2
+        },
+        {
+          _: _.d
+        }]),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -112,31 +117,36 @@ buttonIndex = (buttonIndex + 1) % 3;
     <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.d = {
-            "LoopScopeMap:#text/0": new Map(_.a = [
-              [0, _.b = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.c = {},
-                count: 0,
-                i: 0
-              }],
-              [1, _.e = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.f = {},
-                count: 0,
-                i: 1
-              }],
-              [2, _.g = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.h = {},
-                count: 0,
-                i: 2
-              }]
-            ]),
-            counts: [0, 0, 0],
-            "ClosureScopes:counts": new Set
-          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
+      M._.r = [_ =&gt; (_.e = [0, _.a = {
+          counts: [0, 0, 0],
+          "ClosureScopes:counts": new Set
+        }, _.b = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 0,
+          _: _.a
+        },
+        {
+          _: _.b
+        }, _.c = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 1,
+          _: _.a,
+          "#LoopKey": 1
+        },
+        {
+          _: _.c
+        }, _.d = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 2,
+          _: _.a,
+          "#LoopKey": 2
+        },
+        {
+          _: _.d
+        }]),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -186,31 +196,36 @@ buttonIndex = (buttonIndex + 1) % 3;
     <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.d = {
-            "LoopScopeMap:#text/0": new Map(_.a = [
-              [0, _.b = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.c = {},
-                count: 0,
-                i: 0
-              }],
-              [1, _.e = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.f = {},
-                count: 0,
-                i: 1
-              }],
-              [2, _.g = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.h = {},
-                count: 0,
-                i: 2
-              }]
-            ]),
-            counts: [0, 0, 0],
-            "ClosureScopes:counts": new Set
-          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
+      M._.r = [_ =&gt; (_.e = [0, _.a = {
+          counts: [0, 0, 0],
+          "ClosureScopes:counts": new Set
+        }, _.b = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 0,
+          _: _.a
+        },
+        {
+          _: _.b
+        }, _.c = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 1,
+          _: _.a,
+          "#LoopKey": 1
+        },
+        {
+          _: _.c
+        }, _.d = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 2,
+          _: _.a,
+          "#LoopKey": 2
+        },
+        {
+          _: _.d
+        }]),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -257,31 +272,36 @@ buttonIndex = (buttonIndex + 1) % 3;
     <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.d = {
-            "LoopScopeMap:#text/0": new Map(_.a = [
-              [0, _.b = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.c = {},
-                count: 0,
-                i: 0
-              }],
-              [1, _.e = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.f = {},
-                count: 0,
-                i: 1
-              }],
-              [2, _.g = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.h = {},
-                count: 0,
-                i: 2
-              }]
-            ]),
-            counts: [0, 0, 0],
-            "ClosureScopes:counts": new Set
-          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
+      M._.r = [_ =&gt; (_.e = [0, _.a = {
+          counts: [0, 0, 0],
+          "ClosureScopes:counts": new Set
+        }, _.b = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 0,
+          _: _.a
+        },
+        {
+          _: _.b
+        }, _.c = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 1,
+          _: _.a,
+          "#LoopKey": 1
+        },
+        {
+          _: _.c
+        }, _.d = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 2,
+          _: _.a,
+          "#LoopKey": 2
+        },
+        {
+          _: _.d
+        }]),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -328,31 +348,36 @@ buttonIndex = (buttonIndex + 1) % 3;
     <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.d = {
-            "LoopScopeMap:#text/0": new Map(_.a = [
-              [0, _.b = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.c = {},
-                count: 0,
-                i: 0
-              }],
-              [1, _.e = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.f = {},
-                count: 0,
-                i: 1
-              }],
-              [2, _.g = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.h = {},
-                count: 0,
-                i: 2
-              }]
-            ]),
-            counts: [0, 0, 0],
-            "ClosureScopes:counts": new Set
-          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
+      M._.r = [_ =&gt; (_.e = [0, _.a = {
+          counts: [0, 0, 0],
+          "ClosureScopes:counts": new Set
+        }, _.b = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 0,
+          _: _.a
+        },
+        {
+          _: _.b
+        }, _.c = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 1,
+          _: _.a,
+          "#LoopKey": 1
+        },
+        {
+          _: _.c
+        }, _.d = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 2,
+          _: _.a,
+          "#LoopKey": 2
+        },
+        {
+          _: _.d
+        }]),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -399,31 +424,36 @@ buttonIndex = (buttonIndex + 1) % 3;
     <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.d = {
-            "LoopScopeMap:#text/0": new Map(_.a = [
-              [0, _.b = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.c = {},
-                count: 0,
-                i: 0
-              }],
-              [1, _.e = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.f = {},
-                count: 0,
-                i: 1
-              }],
-              [2, _.g = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.h = {},
-                count: 0,
-                i: 2
-              }]
-            ]),
-            counts: [0, 0, 0],
-            "ClosureScopes:counts": new Set
-          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
+      M._.r = [_ =&gt; (_.e = [0, _.a = {
+          counts: [0, 0, 0],
+          "ClosureScopes:counts": new Set
+        }, _.b = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 0,
+          _: _.a
+        },
+        {
+          _: _.b
+        }, _.c = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 1,
+          _: _.a,
+          "#LoopKey": 1
+        },
+        {
+          _: _.c
+        }, _.d = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 2,
+          _: _.a,
+          "#LoopKey": 2
+        },
+        {
+          _: _.d
+        }]),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -470,31 +500,36 @@ buttonIndex = (buttonIndex + 1) % 3;
     <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.d = {
-            "LoopScopeMap:#text/0": new Map(_.a = [
-              [0, _.b = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.c = {},
-                count: 0,
-                i: 0
-              }],
-              [1, _.e = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.f = {},
-                count: 0,
-                i: 1
-              }],
-              [2, _.g = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.h = {},
-                count: 0,
-                i: 2
-              }]
-            ]),
-            counts: [0, 0, 0],
-            "ClosureScopes:counts": new Set
-          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
+      M._.r = [_ =&gt; (_.e = [0, _.a = {
+          counts: [0, 0, 0],
+          "ClosureScopes:counts": new Set
+        }, _.b = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 0,
+          _: _.a
+        },
+        {
+          _: _.b
+        }, _.c = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 1,
+          _: _.a,
+          "#LoopKey": 1
+        },
+        {
+          _: _.c
+        }, _.d = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 2,
+          _: _.a,
+          "#LoopKey": 2
+        },
+        {
+          _: _.d
+        }]),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -541,31 +576,36 @@ buttonIndex = (buttonIndex + 1) % 3;
     <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.d = {
-            "LoopScopeMap:#text/0": new Map(_.a = [
-              [0, _.b = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.c = {},
-                count: 0,
-                i: 0
-              }],
-              [1, _.e = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.f = {},
-                count: 0,
-                i: 1
-              }],
-              [2, _.g = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.h = {},
-                count: 0,
-                i: 2
-              }]
-            ]),
-            counts: [0, 0, 0],
-            "ClosureScopes:counts": new Set
-          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
+      M._.r = [_ =&gt; (_.e = [0, _.a = {
+          counts: [0, 0, 0],
+          "ClosureScopes:counts": new Set
+        }, _.b = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 0,
+          _: _.a
+        },
+        {
+          _: _.b
+        }, _.c = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 1,
+          _: _.a,
+          "#LoopKey": 1
+        },
+        {
+          _: _.c
+        }, _.d = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 2,
+          _: _.a,
+          "#LoopKey": 2
+        },
+        {
+          _: _.d
+        }]),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -612,31 +652,36 @@ buttonIndex = (buttonIndex + 1) % 3;
     <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.d = {
-            "LoopScopeMap:#text/0": new Map(_.a = [
-              [0, _.b = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.c = {},
-                count: 0,
-                i: 0
-              }],
-              [1, _.e = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.f = {},
-                count: 0,
-                i: 1
-              }],
-              [2, _.g = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.h = {},
-                count: 0,
-                i: 2
-              }]
-            ]),
-            counts: [0, 0, 0],
-            "ClosureScopes:counts": new Set
-          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
+      M._.r = [_ =&gt; (_.e = [0, _.a = {
+          counts: [0, 0, 0],
+          "ClosureScopes:counts": new Set
+        }, _.b = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 0,
+          _: _.a
+        },
+        {
+          _: _.b
+        }, _.c = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 1,
+          _: _.a,
+          "#LoopKey": 1
+        },
+        {
+          _: _.c
+        }, _.d = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 2,
+          _: _.a,
+          "#LoopKey": 2
+        },
+        {
+          _: _.d
+        }]),
         "__tests__/template.marko_3",
         3, 5, 7
       ];
@@ -683,31 +728,36 @@ buttonIndex = (buttonIndex + 1) % 3;
     <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.i = [0, _.d = {
-            "LoopScopeMap:#text/0": new Map(_.a = [
-              [0, _.b = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.c = {},
-                count: 0,
-                i: 0
-              }],
-              [1, _.e = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.f = {},
-                count: 0,
-                i: 1
-              }],
-              [2, _.g = {
-                "ConditionalRenderer:#text/0": 1,
-                "ConditionalScope:#text/0": _.h = {},
-                count: 0,
-                i: 2
-              }]
-            ]),
-            counts: [0, 0, 0],
-            "ClosureScopes:counts": new Set
-          }, , _.c, , _.f, , _.h], _.c._ = _.i[2] = _.b, _.b._ = _.e._ = _.g
-          ._ = _.d, _.f._ = _.i[4] = _.e, _.h._ = _.i[6] = _.g, _.i),
+      M._.r = [_ =&gt; (_.e = [0, _.a = {
+          counts: [0, 0, 0],
+          "ClosureScopes:counts": new Set
+        }, _.b = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 0,
+          _: _.a
+        },
+        {
+          _: _.b
+        }, _.c = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 1,
+          _: _.a,
+          "#LoopKey": 1
+        },
+        {
+          _: _.c
+        }, _.d = {
+          "ConditionalRenderer:#text/0": 1,
+          count: 0,
+          i: 2,
+          _: _.a,
+          "#LoopKey": 2
+        },
+        {
+          _: _.d
+        }]),
         "__tests__/template.marko_3",
         3, 5, 7
       ];

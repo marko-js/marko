@@ -13,7 +13,7 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/0": _.b = {}
+          "BranchScopes:#text/0": _.b = {}
         }, _.b], _.b._ = _.a, _.c),
         "__tests__/template.marko_0",
         1
@@ -42,7 +42,7 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ConditionalScope:#text/0": _.b = {}
+          "BranchScopes:#text/0": _.b = {}
         }, _.b], _.b._ = _.a, _.c),
         "__tests__/template.marko_0",
         1

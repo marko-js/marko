@@ -31,21 +31,21 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-            "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
-            "ConditionalScope:#text/1": _.b = {
-              "ControlledType:#input/0": 1,
-              "ControlledValue:#input/0": "a"
-            },
-            "ControlledType:#input/2": 1,
-            "ControlledValue:#input/2": "a",
-            show: !0,
-            checkedValue: "a"
-          }, _.b], _.b._ = _.a, _.a["ControlledHandler:#input/0"] = _.b[
-            "ControlledHandler:#input/0"] = _.a[
-          "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
-            "__tests__/template.marko_0/checkedValueChange2"
-            ](_.a), _.c),
+          "ControlledType:#input/0": 1,
+          "ControlledValue:#input/0": "a",
+          "ControlledType:#input/2": 1,
+          "ControlledValue:#input/2": "a",
+          show: !0,
+          checkedValue: "a"
+        }, _.b = {
+          "ControlledType:#input/0": 1,
+          "ControlledValue:#input/0": "a",
+          _: _.a
+        }], _.a["ControlledHandler:#input/0"] = _.a[
+          "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _.b[
+          "ControlledHandler:#input/0"] = _._[
+          "__tests__/template.marko_0/checkedValueChange2"
+          ](_.a), _.c),
         "__tests__/template.marko_1",
         2,
         "__tests__/template.marko_0_show",
@@ -96,21 +96,21 @@ container.querySelector(`input[value=b]`).click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-            "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
-            "ConditionalScope:#text/1": _.b = {
-              "ControlledType:#input/0": 1,
-              "ControlledValue:#input/0": "a"
-            },
-            "ControlledType:#input/2": 1,
-            "ControlledValue:#input/2": "a",
-            show: !0,
-            checkedValue: "a"
-          }, _.b], _.b._ = _.a, _.a["ControlledHandler:#input/0"] = _.b[
-            "ControlledHandler:#input/0"] = _.a[
-          "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
-            "__tests__/template.marko_0/checkedValueChange2"
-            ](_.a), _.c),
+          "ControlledType:#input/0": 1,
+          "ControlledValue:#input/0": "a",
+          "ControlledType:#input/2": 1,
+          "ControlledValue:#input/2": "a",
+          show: !0,
+          checkedValue: "a"
+        }, _.b = {
+          "ControlledType:#input/0": 1,
+          "ControlledValue:#input/0": "a",
+          _: _.a
+        }], _.a["ControlledHandler:#input/0"] = _.a[
+          "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _.b[
+          "ControlledHandler:#input/0"] = _._[
+          "__tests__/template.marko_0/checkedValueChange2"
+          ](_.a), _.c),
         "__tests__/template.marko_1",
         2,
         "__tests__/template.marko_0_show",
@@ -160,21 +160,21 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-            "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
-            "ConditionalScope:#text/1": _.b = {
-              "ControlledType:#input/0": 1,
-              "ControlledValue:#input/0": "a"
-            },
-            "ControlledType:#input/2": 1,
-            "ControlledValue:#input/2": "a",
-            show: !0,
-            checkedValue: "a"
-          }, _.b], _.b._ = _.a, _.a["ControlledHandler:#input/0"] = _.b[
-            "ControlledHandler:#input/0"] = _.a[
-          "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
-            "__tests__/template.marko_0/checkedValueChange2"
-            ](_.a), _.c),
+          "ControlledType:#input/0": 1,
+          "ControlledValue:#input/0": "a",
+          "ControlledType:#input/2": 1,
+          "ControlledValue:#input/2": "a",
+          show: !0,
+          checkedValue: "a"
+        }, _.b = {
+          "ControlledType:#input/0": 1,
+          "ControlledValue:#input/0": "a",
+          _: _.a
+        }], _.a["ControlledHandler:#input/0"] = _.a[
+          "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _.b[
+          "ControlledHandler:#input/0"] = _._[
+          "__tests__/template.marko_0/checkedValueChange2"
+          ](_.a), _.c),
         "__tests__/template.marko_1",
         2,
         "__tests__/template.marko_0_show",
@@ -230,21 +230,21 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-            "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
-            "ConditionalScope:#text/1": _.b = {
-              "ControlledType:#input/0": 1,
-              "ControlledValue:#input/0": "a"
-            },
-            "ControlledType:#input/2": 1,
-            "ControlledValue:#input/2": "a",
-            show: !0,
-            checkedValue: "a"
-          }, _.b], _.b._ = _.a, _.a["ControlledHandler:#input/0"] = _.b[
-            "ControlledHandler:#input/0"] = _.a[
-          "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
-            "__tests__/template.marko_0/checkedValueChange2"
-            ](_.a), _.c),
+          "ControlledType:#input/0": 1,
+          "ControlledValue:#input/0": "a",
+          "ControlledType:#input/2": 1,
+          "ControlledValue:#input/2": "a",
+          show: !0,
+          checkedValue: "a"
+        }, _.b = {
+          "ControlledType:#input/0": 1,
+          "ControlledValue:#input/0": "a",
+          _: _.a
+        }], _.a["ControlledHandler:#input/0"] = _.a[
+          "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _.b[
+          "ControlledHandler:#input/0"] = _._[
+          "__tests__/template.marko_0/checkedValueChange2"
+          ](_.a), _.c),
         "__tests__/template.marko_1",
         2,
         "__tests__/template.marko_0_show",
@@ -300,21 +300,21 @@ container.querySelector(`input[value=a]`).click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
-            "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
-            "ConditionalScope:#text/1": _.b = {
-              "ControlledType:#input/0": 1,
-              "ControlledValue:#input/0": "a"
-            },
-            "ControlledType:#input/2": 1,
-            "ControlledValue:#input/2": "a",
-            show: !0,
-            checkedValue: "a"
-          }, _.b], _.b._ = _.a, _.a["ControlledHandler:#input/0"] = _.b[
-            "ControlledHandler:#input/0"] = _.a[
-          "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
-            "__tests__/template.marko_0/checkedValueChange2"
-            ](_.a), _.c),
+          "ControlledType:#input/0": 1,
+          "ControlledValue:#input/0": "a",
+          "ControlledType:#input/2": 1,
+          "ControlledValue:#input/2": "a",
+          show: !0,
+          checkedValue: "a"
+        }, _.b = {
+          "ControlledType:#input/0": 1,
+          "ControlledValue:#input/0": "a",
+          _: _.a
+        }], _.a["ControlledHandler:#input/0"] = _.a[
+          "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _.b[
+          "ControlledHandler:#input/0"] = _._[
+          "__tests__/template.marko_0/checkedValueChange2"
+          ](_.a), _.c),
         "__tests__/template.marko_1",
         2,
         "__tests__/template.marko_0_show",

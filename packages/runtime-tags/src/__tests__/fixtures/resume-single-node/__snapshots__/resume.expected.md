@@ -15,14 +15,14 @@
     <!--M_*1 #button/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.b = {
-          "LoopScopeMap:#text/0": new Map(_.a = [
-            [0, _.c = {}]
-          ]),
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           itemId: 0,
           items: [0],
           items_length: 1
-        }, _.c], _.c._ = _.b, _.d),
+        },
+        {
+          _: _.a
+        }]),
         "__tests__/template.marko_0_itemId_items",
         1
       ];
@@ -68,14 +68,14 @@ container.querySelector("button").click();
     <!--M_*1 #button/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.b = {
-          "LoopScopeMap:#text/0": new Map(_.a = [
-            [0, _.c = {}]
-          ]),
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           itemId: 0,
           items: [0],
           items_length: 1
-        }, _.c], _.c._ = _.b, _.d),
+        },
+        {
+          _: _.a
+        }]),
         "__tests__/template.marko_0_itemId_items",
         1
       ];
@@ -130,14 +130,14 @@ container.querySelector("button").click();
     <!--M_*1 #button/1-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.b = {
-          "LoopScopeMap:#text/0": new Map(_.a = [
-            [0, _.c = {}]
-          ]),
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
           itemId: 0,
           items: [0],
           items_length: 1
-        }, _.c], _.c._ = _.b, _.d),
+        },
+        {
+          _: _.a
+        }]),
         "__tests__/template.marko_0_itemId_items",
         1
       ];

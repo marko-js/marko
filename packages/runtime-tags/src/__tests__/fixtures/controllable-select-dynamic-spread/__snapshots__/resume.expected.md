@@ -32,14 +32,13 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.c = {
-          "ConditionalScope:#text/0": _.a = {
-            "ControlledType:#select/0": 3,
-            "ControlledValue:#select/0": "b",
-            "#Renderer": "select"
-          },
           "ConditionalRenderer:#text/0": "select",
           tag: "select"
-        }, _.a,
+        }, _.a = {
+          "ControlledType:#select/0": 3,
+          "ControlledValue:#select/0": "b",
+          "#Renderer": "select"
+        },
         {}], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.c), _.b),
@@ -95,14 +94,13 @@ select.dispatchEvent(new window.Event("input", {
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.c = {
-          "ConditionalScope:#text/0": _.a = {
-            "ControlledType:#select/0": 3,
-            "ControlledValue:#select/0": "b",
-            "#Renderer": "select"
-          },
           "ConditionalRenderer:#text/0": "select",
           tag: "select"
-        }, _.a,
+        }, _.a = {
+          "ControlledType:#select/0": 3,
+          "ControlledValue:#select/0": "b",
+          "#Renderer": "select"
+        },
         {}], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.c), _.b),

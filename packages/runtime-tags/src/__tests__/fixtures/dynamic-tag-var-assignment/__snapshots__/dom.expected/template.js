@@ -8,7 +8,7 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $count);
 const $count = _._var_resume("__tests__/template.marko_0_count/var", $scope => {});
 const $setup__script = _._script("__tests__/template.marko_0", $scope => _._on($scope["#button/2"], "click", function () {
-  _._var_change($scope["ConditionalScope:#text/0"], 0, "count");
+  _._var_change($scope["BranchScopes:#text/0"], 0, "count");
 }));
 export function $setup($scope) {
   $dynamicTag($scope, getCounter());

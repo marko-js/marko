@@ -39,14 +39,17 @@
     <!--M_|1 #text/1 7 6 5-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.e = [0,
+      M._.r = [_ =&gt; (_.a = [0,
+        {}, 3,
         {
-          "LoopScopeMap:#text/1": new Map(_.a = [
-            [0, _.b = {}],
-            [1, _.c = {}],
-            [2, _.d = {}]
-          ])
-        }, 3, _.b, _.c, _.d]),
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        }]),
         "__tests__/template.marko_0",
         1
       ];
@@ -90,14 +93,17 @@
     <!--M_|1 #text/1 7 6 5-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.e = [0,
+      M._.r = [_ =&gt; (_.a = [0,
+        {}, 3,
         {
-          "LoopScopeMap:#text/1": new Map(_.a = [
-            [0, _.b = {}],
-            [1, _.c = {}],
-            [2, _.d = {}]
-          ])
-        }, 3, _.b, _.c, _.d]),
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        }]),
         "__tests__/template.marko_0",
         1
       ];

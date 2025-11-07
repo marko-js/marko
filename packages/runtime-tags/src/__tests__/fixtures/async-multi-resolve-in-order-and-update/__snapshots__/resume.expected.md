@@ -70,12 +70,12 @@
       <!--M_]1 #text/10 6-->
     </p>
     <script>
-      M._.r.push(_ =&gt; (_.b = [_.d = {}], (_.c = _.a[1])[
-          "ConditionalScope:#text/2"] = _.d, _.b), _ =&gt; (_.e = [_.f = {}], _
-          .c["ConditionalScope:#text/4"] = _.f, _.e), _ =&gt; (_.g = [_.h = {}],
-          _.c["ConditionalScope:#text/6"] = _.h, _.g), _ =&gt; (_.i = [_.j = {}],
-          _.c["ConditionalScope:#text/8"] = _.j, _.i), _ =&gt; (_.k = [_.l = {}],
-          _.c["ConditionalScope:#text/10"] = _.l, _.k),
+      M._.r.push(_ =&gt; (_.b = [
+        {}]), _ =&gt; (_.c = [
+        {}]), _ =&gt; (_.d = [
+        {}]), _ =&gt; (_.e = [
+        {}]), _ =&gt; (_.f = [
+        {}]),
         "__tests__/template.marko_0_n",
         1);
       M._.w()
@@ -153,12 +153,12 @@ container.querySelector("button").click();
       <!--M_]1 #text/10 6-->
     </p>
     <script>
-      M._.r.push(_ =&gt; (_.b = [_.d = {}], (_.c = _.a[1])[
-          "ConditionalScope:#text/2"] = _.d, _.b), _ =&gt; (_.e = [_.f = {}], _
-          .c["ConditionalScope:#text/4"] = _.f, _.e), _ =&gt; (_.g = [_.h = {}],
-          _.c["ConditionalScope:#text/6"] = _.h, _.g), _ =&gt; (_.i = [_.j = {}],
-          _.c["ConditionalScope:#text/8"] = _.j, _.i), _ =&gt; (_.k = [_.l = {}],
-          _.c["ConditionalScope:#text/10"] = _.l, _.k),
+      M._.r.push(_ =&gt; (_.b = [
+        {}]), _ =&gt; (_.c = [
+        {}]), _ =&gt; (_.d = [
+        {}]), _ =&gt; (_.e = [
+        {}]), _ =&gt; (_.f = [
+        {}]),
         "__tests__/template.marko_0_n",
         1);
       M._.w()
@@ -273,12 +273,12 @@ REMOVE #document-fragment/#text1 after html/body/p4/#comment2
       <!--M_*6 #text/0-->
     </p>
     <script>
-      M._.r.push(_ =&gt; (_.b = [_.d = {}], (_.c = _.a[1])[
-          "ConditionalScope:#text/2"] = _.d, _.b), _ =&gt; (_.e = [_.f = {}], _
-          .c["ConditionalScope:#text/4"] = _.f, _.e), _ =&gt; (_.g = [_.h = {}],
-          _.c["ConditionalScope:#text/6"] = _.h, _.g), _ =&gt; (_.i = [_.j = {}],
-          _.c["ConditionalScope:#text/8"] = _.j, _.i), _ =&gt; (_.k = [_.l = {}],
-          _.c["ConditionalScope:#text/10"] = _.l, _.k),
+      M._.r.push(_ =&gt; (_.b = [
+        {}]), _ =&gt; (_.c = [
+        {}]), _ =&gt; (_.d = [
+        {}]), _ =&gt; (_.e = [
+        {}]), _ =&gt; (_.f = [
+        {}]),
         "__tests__/template.marko_0_n",
         1);
       M._.w()

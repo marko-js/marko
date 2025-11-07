@@ -66,49 +66,67 @@
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.u = [0,
+      M._.r = [_ =&gt; (_.a = [0,
+        {
+          items: [
           {
-            "LoopScopeMap:#div/0": new Map(_.a = [
-              [0, _.f = {}],
-              [1, _.g = {}],
-              [2, _.h = {}]
-            ]),
-            "LoopScopeMap:#div/1": new Map(_.b = [
-              [0, _.i = {}],
-              [1, _.j = {}],
-              [2, _.k = {}]
-            ]),
-            "LoopScopeMap:#div/2": new Map(_.c = [
-              [0, _.l = {}],
-              [1, _.m = {}],
-              [2, _.n = {}]
-            ]),
-            "LoopScopeMap:#div/3": new Map(_.d = [
-              [0, _.o = {}],
-              [1, _.p = {}],
-              [2, _.q = {}]
-            ]),
-            "LoopScopeMap:#div/4": new Map(_.e = [
-              [0, _.r = {}],
-              [1, _.s = {}],
-              [2, _.t = {}]
-            ]),
-            items: [
-            {
-              id: 0,
-              text: "first"
-            },
-            {
-              id: 1,
-              text: "second"
-            },
-            {
-              id: 2,
-              text: "third"
-            }]
-          }, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m, _.n, _.o, _.p, _.q, _
-          .r, _.s, _.t
-        ]),
+            id: 0,
+            text: "first"
+          },
+          {
+            id: 1,
+            text: "second"
+          },
+          {
+            id: 2,
+            text: "third"
+          }]
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        }]),
         "__tests__/template.marko_0_items",
         1
       ];
@@ -190,49 +208,67 @@ container.querySelector("button").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.u = [0,
+      M._.r = [_ =&gt; (_.a = [0,
+        {
+          items: [
           {
-            "LoopScopeMap:#div/0": new Map(_.a = [
-              [0, _.f = {}],
-              [1, _.g = {}],
-              [2, _.h = {}]
-            ]),
-            "LoopScopeMap:#div/1": new Map(_.b = [
-              [0, _.i = {}],
-              [1, _.j = {}],
-              [2, _.k = {}]
-            ]),
-            "LoopScopeMap:#div/2": new Map(_.c = [
-              [0, _.l = {}],
-              [1, _.m = {}],
-              [2, _.n = {}]
-            ]),
-            "LoopScopeMap:#div/3": new Map(_.d = [
-              [0, _.o = {}],
-              [1, _.p = {}],
-              [2, _.q = {}]
-            ]),
-            "LoopScopeMap:#div/4": new Map(_.e = [
-              [0, _.r = {}],
-              [1, _.s = {}],
-              [2, _.t = {}]
-            ]),
-            items: [
-            {
-              id: 0,
-              text: "first"
-            },
-            {
-              id: 1,
-              text: "second"
-            },
-            {
-              id: 2,
-              text: "third"
-            }]
-          }, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m, _.n, _.o, _.p, _.q, _
-          .r, _.s, _.t
-        ]),
+            id: 0,
+            text: "first"
+          },
+          {
+            id: 1,
+            text: "second"
+          },
+          {
+            id: 2,
+            text: "third"
+          }]
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        }]),
         "__tests__/template.marko_0_items",
         1
       ];
@@ -324,49 +360,67 @@ container.querySelector("button").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.u = [0,
+      M._.r = [_ =&gt; (_.a = [0,
+        {
+          items: [
           {
-            "LoopScopeMap:#div/0": new Map(_.a = [
-              [0, _.f = {}],
-              [1, _.g = {}],
-              [2, _.h = {}]
-            ]),
-            "LoopScopeMap:#div/1": new Map(_.b = [
-              [0, _.i = {}],
-              [1, _.j = {}],
-              [2, _.k = {}]
-            ]),
-            "LoopScopeMap:#div/2": new Map(_.c = [
-              [0, _.l = {}],
-              [1, _.m = {}],
-              [2, _.n = {}]
-            ]),
-            "LoopScopeMap:#div/3": new Map(_.d = [
-              [0, _.o = {}],
-              [1, _.p = {}],
-              [2, _.q = {}]
-            ]),
-            "LoopScopeMap:#div/4": new Map(_.e = [
-              [0, _.r = {}],
-              [1, _.s = {}],
-              [2, _.t = {}]
-            ]),
-            items: [
-            {
-              id: 0,
-              text: "first"
-            },
-            {
-              id: 1,
-              text: "second"
-            },
-            {
-              id: 2,
-              text: "third"
-            }]
-          }, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m, _.n, _.o, _.p, _.q, _
-          .r, _.s, _.t
-        ]),
+            id: 0,
+            text: "first"
+          },
+          {
+            id: 1,
+            text: "second"
+          },
+          {
+            id: 2,
+            text: "third"
+          }]
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        }]),
         "__tests__/template.marko_0_items",
         1
       ];
@@ -454,49 +508,67 @@ container.querySelector("button").click();
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.u = [0,
+      M._.r = [_ =&gt; (_.a = [0,
+        {
+          items: [
           {
-            "LoopScopeMap:#div/0": new Map(_.a = [
-              [0, _.f = {}],
-              [1, _.g = {}],
-              [2, _.h = {}]
-            ]),
-            "LoopScopeMap:#div/1": new Map(_.b = [
-              [0, _.i = {}],
-              [1, _.j = {}],
-              [2, _.k = {}]
-            ]),
-            "LoopScopeMap:#div/2": new Map(_.c = [
-              [0, _.l = {}],
-              [1, _.m = {}],
-              [2, _.n = {}]
-            ]),
-            "LoopScopeMap:#div/3": new Map(_.d = [
-              [0, _.o = {}],
-              [1, _.p = {}],
-              [2, _.q = {}]
-            ]),
-            "LoopScopeMap:#div/4": new Map(_.e = [
-              [0, _.r = {}],
-              [1, _.s = {}],
-              [2, _.t = {}]
-            ]),
-            items: [
-            {
-              id: 0,
-              text: "first"
-            },
-            {
-              id: 1,
-              text: "second"
-            },
-            {
-              id: 2,
-              text: "third"
-            }]
-          }, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m, _.n, _.o, _.p, _.q, _
-          .r, _.s, _.t
-        ]),
+            id: 0,
+            text: "first"
+          },
+          {
+            id: 1,
+            text: "second"
+          },
+          {
+            id: 2,
+            text: "third"
+          }]
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        },
+        {
+          "#LoopKey": 0
+        },
+        {
+          "#LoopKey": 1
+        },
+        {
+          "#LoopKey": 2
+        }]),
         "__tests__/template.marko_0_items",
         1
       ];

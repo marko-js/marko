@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button></button><!--M_*1 #button/0--><ul><li>0<!--M_*2 #text/0--></li><li>1<!--M_*3 #text/0--></li><!--M_}1 #ul/1 3 2--></ul><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,{"LoopScopeMap:#ul/1":new Map(_.a=[[0,_.b={}],[1,_.c={}]]),items:[0,1]},_.b,_.c]),"__tests__/template.marko_0",1,"__tests__/template.marko_0_items",1];M._.w()</script>
+  <button></button><!--M_*1 #button/0--><ul><li>0<!--M_*2 #text/0--></li><li>1<!--M_*3 #text/0--></li><!--M_}1 #ul/1 3 2--></ul><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{items:[0,1]},{},{}]),"__tests__/template.marko_0",1,"__tests__/template.marko_0_items",1];M._.w()</script>
 ```
 
 # Render End
@@ -23,14 +23,12 @@
     </ul>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0,
+      M._.r = [_ =&gt; (_.a = [0,
         {
-          "LoopScopeMap:#ul/1": new Map(_.a = [
-            [0, _.b = {}],
-            [1, _.c = {}]
-          ]),
           items: [0, 1]
-        }, _.b, _.c]),
+        },
+        {},
+        {}]),
         "__tests__/template.marko_0",
         1,
         "__tests__/template.marko_0_items",

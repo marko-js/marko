@@ -19,18 +19,16 @@
     h
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.d = {
-        "ConditionalScope:#text/0": _.b = {
-          "ConditionalScope:#text/1": _.a = {
-            "#BranchAccessor": "#text/1"
-          },
-          "#BranchAccessor": "#text/0"
-        }
-      }, _.b, _.a], _.b["#PlaceholderContent"] = _._[
+      M._.r = [_ =&gt; (_.c = [0, 1, _.a = {
+        "#BranchAccessor": "#text/0",
+        "#PlaceholderContent": _.d = {}
+      }, _.b = {
+        "#BranchAccessor": "#text/1"
+      }], _.a["#PlaceholderContent"] = _._[
         "__tests__/template.marko_2_content"
-        ](_.d), _.a["#PlaceholderContent"] = _._[
+        ](_.d), _.b["#PlaceholderContent"] = _._[
         "__tests__/template.marko_5_content"
-        ](_.b), _.c)];
+        ](_.a), _.c)];
       REORDER_RUNTIME(M._);
       M._.w()
     </script>

@@ -24,16 +24,17 @@
     <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "ConditionalScope:#text/2": _.b = {},
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
           show: !0
-        }, _.b,
+        }, _.d = {
+          _: _.a
+        },
         {
-          input: _.c = {},
+          input: _.b = {},
           "#ClosestBranchId": 2
-        }], _.b._ = _.a, _.c.write = _._[
+        }], _.b.write = _._[
           "__tests__/template.marko_1/write"
-          ](_.b), _.d),
+          ](_.d), _.c),
         "__tests__/tags/child.marko_0_input",
         3,
         "__tests__/template.marko_0_show",
@@ -70,16 +71,17 @@ container.querySelector("button").click();
     <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "ConditionalScope:#text/2": _.b = {},
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
           show: !0
-        }, _.b,
+        }, _.d = {
+          _: _.a
+        },
         {
-          input: _.c = {},
+          input: _.b = {},
           "#ClosestBranchId": 2
-        }], _.b._ = _.a, _.c.write = _._[
+        }], _.b.write = _._[
           "__tests__/template.marko_1/write"
-          ](_.b), _.d),
+          ](_.d), _.c),
         "__tests__/tags/child.marko_0_input",
         3,
         "__tests__/template.marko_0_show",
@@ -131,16 +133,17 @@ container.querySelector("button").click();
     </p>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "ConditionalScope:#text/2": _.b = {},
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
           show: !0
-        }, _.b,
+        }, _.d = {
+          _: _.a
+        },
         {
-          input: _.c = {},
+          input: _.b = {},
           "#ClosestBranchId": 2
-        }], _.b._ = _.a, _.c.write = _._[
+        }], _.b.write = _._[
           "__tests__/template.marko_1/write"
-          ](_.b), _.d),
+          ](_.d), _.c),
         "__tests__/tags/child.marko_0_input",
         3,
         "__tests__/template.marko_0_show",
@@ -179,16 +182,17 @@ container.querySelector("button").click();
     <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "ConditionalScope:#text/2": _.b = {},
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
           show: !0
-        }, _.b,
+        }, _.d = {
+          _: _.a
+        },
         {
-          input: _.c = {},
+          input: _.b = {},
           "#ClosestBranchId": 2
-        }], _.b._ = _.a, _.c.write = _._[
+        }], _.b.write = _._[
           "__tests__/template.marko_1/write"
-          ](_.b), _.d),
+          ](_.d), _.c),
         "__tests__/tags/child.marko_0_input",
         3,
         "__tests__/template.marko_0_show",

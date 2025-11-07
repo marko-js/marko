@@ -5,14 +5,12 @@
   <head>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.d = {
-        "ConditionalScope:#text/0": _.a = {
-          "#BranchAccessor": "#text/0"
-        },
-        "ConditionalScope:#text/1": _.b = {
-          "#BranchAccessor": "#text/1"
-        }
-      }, _.a, _.b], _.a["#CatchContent"] = _._[
+      M._.r = [_ =&gt; (_.c = [0, 1, _.a = {
+        "#BranchAccessor": "#text/0",
+        "#CatchContent": _.d = {}
+      }, _.b = {
+        "#BranchAccessor": "#text/1"
+      }], _.a["#CatchContent"] = _._[
         "__tests__/template.marko_2_content"
         ](_.d), _.b["#CatchContent"] = _._[
         "__tests__/template.marko_5_content"

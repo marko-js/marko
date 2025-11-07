@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>Increment</button><!--M_*1 #button/0--><!--M_[--><!--M_|3 #text/0--><!--M_]2 #text/0 3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,_.a={count:0,a:"abc","#childScope/1":_.c={"ConditionalScope:#text/0":_.b={},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_content"}},_.c,_.b],_.b._=_.a,_.c.input_content=_._["__tests__/template.marko_1_content"](_.a),_.d),"__tests__/template.marko_0_count",1];M._.w()</script>
+  <button>Increment</button><!--M_*1 #button/0--><!--M_[--><!--M_|3 #text/0--><!--M_]2 #text/0 3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.b={count:0,a:"abc","#childScope/1":_.a={"ConditionalRenderer:#text/0":"__tests__/template.marko_1_content"}},_.a,{_:_.b}],_.a.input_content=_._["__tests__/template.marko_1_content"](_.b),_.c),"__tests__/template.marko_0_count",1];M._.w()</script>
 ```
 
 # Render End
@@ -17,16 +17,18 @@
     <!--M_]2 #text/0 3-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
+      M._.r = [_ =&gt; (_.c = [0, _.b = {
           count: 0,
           a: "abc",
-          "#childScope/1": _.c = {
-            "ConditionalScope:#text/0": _.b = {},
+          "#childScope/1": _.a = {
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.c, _.b], _.b._ = _.a, _.c.input_content = _._[
+        }, _.a,
+        {
+          _: _.b
+        }], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
-          ](_.a), _.d),
+          ](_.b), _.c),
         "__tests__/template.marko_0_count",
         1
       ];

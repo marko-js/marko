@@ -1,14 +1,14 @@
-// size: 380 (min) 192 (brotli)
+// size: 380 (min) 188 (brotli)
 (_._resume("a0", function ($scope) {
   return function (html) {
     $scope.a.innerHTML = html;
   };
 }),
-  _._resume("b0", _._hoist(2, "Ma", "Mc")),
+  _._resume("b0", _._hoist(2, "Aa", "Ac")),
   _._var_resume("b1", _._const(2)));
-const $get$hoisted_setHtml2 = _._hoist(2, "Mb");
+const $get$hoisted_setHtml2 = _._hoist(2, "Ab");
 _._var_resume("b2", _._const(2));
-const $get$hoisted_setHtml3 = _._hoist(2, "Ma");
+const $get$hoisted_setHtml3 = _._hoist(2, "Aa");
 (_._var_resume("b3", _._const(2)),
   _._script("b4", ($scope) => {
     {

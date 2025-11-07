@@ -18,10 +18,10 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.g = [0, _.h = {
-          "ConditionalScope:#text/0": _.b = {
-            "ConditionalScope:#text/0": _.c = {}
+          "BranchScopes:#text/0": _.b = {
+            "BranchScopes:#text/0": _.c = {}
           },
-          "ConditionalScope:#text/2": _.f = {},
+          "BranchScopes:#text/2": _.f = {},
           "#childScope/1": _.e = {
             input: _.a = {}
           }

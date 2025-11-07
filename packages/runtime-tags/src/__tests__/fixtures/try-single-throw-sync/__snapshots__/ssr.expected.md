@@ -1,6 +1,6 @@
 # Write
 ```html
-  Before<!--M_[-->ERROR!<!--M_]1 #text/0 2-->After<script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.c={"ConditionalScope:#text/0":_.a={"#BranchAccessor":"#text/0"}},_.a],_.a["#CatchContent"]=_._["__tests__/template.marko_2_content"](_.c),_.b)]</script>
+  Before<!--M_[-->ERROR!<!--M_]1 #text/0 2-->After<script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,1,_.a={"#BranchAccessor":"#text/0","#CatchContent":_.c={}}],_.a["#CatchContent"]=_._["__tests__/template.marko_2_content"](_.c),_.b)]</script>
 ```
 
 # Render End
@@ -15,11 +15,10 @@
     After
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.c = {
-        "ConditionalScope:#text/0": _.a = {
-          "#BranchAccessor": "#text/0"
-        }
-      }, _.a], _.a["#CatchContent"] = _._[
+      M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
+        "#BranchAccessor": "#text/0",
+        "#CatchContent": _.c = {}
+      }], _.a["#CatchContent"] = _._[
         "__tests__/template.marko_2_content"
         ](_.c), _.b)]
     </script>
