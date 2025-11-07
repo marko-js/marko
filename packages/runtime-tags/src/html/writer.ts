@@ -295,7 +295,7 @@ export function _for_of(
         cb(item, index);
         if (resumeMarker) {
           writeScope(branchId, {
-            [AccessorProp.LoopKey]: itemKey,
+            [AccessorProp.LoopKey]: item === index ? undefined : itemKey,
           });
         } else {
           loopScopes = push(loopScopes, writeScope(branchId, {}));
@@ -455,7 +455,7 @@ export function _for_to(
         cb(i);
         if (resumeMarker) {
           writeScope(branchId, {
-            [AccessorProp.LoopKey]: itemKey,
+            [AccessorProp.LoopKey]: itemKey === i ? undefined : itemKey,
           });
         } else {
           loopScopes = push(loopScopes, writeScope(branchId, {}));
@@ -537,7 +537,7 @@ export function _for_until(
         cb(i);
         if (resumeMarker) {
           writeScope(branchId, {
-            [AccessorProp.LoopKey]: itemKey,
+            [AccessorProp.LoopKey]: itemKey === i ? undefined : itemKey,
           });
         } else {
           loopScopes = push(loopScopes, writeScope(branchId, {}));

@@ -492,7 +492,7 @@ function loop<T extends unknown[] = unknown[]>(
     const oldScopesByKey: Map<unknown, BranchScope> =
       scope[scopesByKeyAccessor] ||
       oldScopes.reduce(
-        (map, scope) => map.set(scope[AccessorProp.LoopKey], scope),
+        (map, scope, i) => map.set(scope[AccessorProp.LoopKey] ?? i, scope),
         new Map<unknown, BranchScope>(),
       );
     const newScopes: BranchScope[] = (scope[scopesAccessor] = []);
@@ -502,7 +502,7 @@ function loop<T extends unknown[] = unknown[]>(
     const parentNode = (
       referenceNode.nodeType > NodeType.Element
         ? referenceNode.parentNode ||
-          oldScopes[0][AccessorProp.StartNode].parentNode
+          oldScopes[0]?.[AccessorProp.StartNode].parentNode
         : referenceNode
     ) as Element;
     forEach(value, (key, args) => {
@@ -516,7 +516,7 @@ function loop<T extends unknown[] = unknown[]>(
       }
 
       const branch =
-        oldScopesByKey?.get(key) ||
+        oldScopesByKey.get(key) ||
         createAndSetupBranch(
           scope[AccessorProp.Global],
           renderer,

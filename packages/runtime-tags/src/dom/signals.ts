@@ -93,7 +93,6 @@ export function _for_closure(
   const ownerSignal = (ownerScope: Scope) => {
     let scopes = ownerScope[scopeAccessor] as Opt<BranchScope>;
     if (scopes) {
-      scopes = toArray(scopes);
       queueRender(
         ownerScope,
         () => {
@@ -108,7 +107,7 @@ export function _for_closure(
         },
         -1,
         0,
-        scopes[0][AccessorProp.Id],
+        (scopes = toArray(scopes))[0][AccessorProp.Id],
       );
     }
   };
@@ -130,7 +129,7 @@ export function _if_closure(
   const branchAccessor =
     AccessorPrefix.ConditionalRenderer + ownerConditionalNodeAccessor;
   const ownerSignal = (scope: Scope) => {
-    const ifScope = scope[scopeAccessor] as Scope;
+    const ifScope = scope[scopeAccessor] as Scope | undefined;
     if (
       ifScope &&
       !ifScope[AccessorProp.Creating] &&
