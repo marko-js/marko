@@ -78,7 +78,7 @@ export const IfTag = {
       );
       const sectionAccessor: Section["sectionAccessor"] = {
         binding: nodeBinding,
-        prefix: getAccessorPrefix().ConditionalScope,
+        prefix: getAccessorPrefix().BranchScopes,
       };
       // TODO: remove all branches if none have body content.
 

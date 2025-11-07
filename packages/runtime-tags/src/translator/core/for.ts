@@ -117,7 +117,7 @@ export default {
     }
     bodySection.sectionAccessor = {
       binding: nodeBinding,
-      prefix: getAccessorPrefix().LoopScopeMap,
+      prefix: getAccessorPrefix().BranchScopes,
     };
 
     bodySection.upstreamExpression = tagExtra;

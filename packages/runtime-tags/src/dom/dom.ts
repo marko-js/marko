@@ -303,7 +303,7 @@ export function _attr_content(
       subscribeToScopeSet(
         content.___owner!,
         content.___accessor,
-        scope[AccessorPrefix.ConditionalScope + nodeAccessor],
+        scope[AccessorPrefix.BranchScopes + nodeAccessor],
       );
     }
   }

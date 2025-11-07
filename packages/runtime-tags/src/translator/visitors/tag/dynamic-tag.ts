@@ -377,7 +377,7 @@ export default {
               t.memberExpression(
                 getScopeExpression(tagVarSignal!.section, valueSection),
                 t.stringLiteral(
-                  getAccessorPrefix().ConditionalScope +
+                  getAccessorPrefix().BranchScopes +
                     getScopeAccessor(nodeBinding),
                 ),
                 true,

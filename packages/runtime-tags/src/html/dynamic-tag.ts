@@ -190,7 +190,6 @@ export let _dynamic_tag = (
   if (rendered) {
     if (shouldResume) {
       _scope(scopeId, {
-        [AccessorPrefix.ConditionalScope + accessor]: _scope(branchId, {}),
         [AccessorPrefix.ConditionalRenderer + accessor]:
           (renderer as ServerRenderer | undefined)?.___id || renderer,
       });
