@@ -1,8 +1,9 @@
 export enum AccessorPrefix {
+  BranchScopes = "BranchScopes:",
+  BranchScopesByKey = "BranchScopesByKey:",
   ClosureScopes = "ClosureScopes:",
   ClosureSignalIndex = "ClosureSignalIndex:",
   ConditionalRenderer = "ConditionalRenderer:",
-  ConditionalScope = "ConditionalScope:",
   ControlledHandler = "ControlledHandler:",
   ControlledType = "ControlledType:",
   ControlledValue = "ControlledValue:",
@@ -10,8 +11,6 @@ export enum AccessorPrefix {
   EventAttributes = "EventAttributes:",
   Getter = "Getter:",
   LifecycleAbortController = "LifecycleAbortController:",
-  LoopScopeArray = "LoopScopeArray:",
-  LoopScopeMap = "LoopScopeMap:",
   Promise = "Promise:",
   TagVariableChange = "TagVariableChange:",
 }
@@ -32,6 +31,7 @@ export enum AccessorProp {
   Effects = "#Effects",
   EndNode = "#EndNode",
   Id = "#Id",
+  LoopKey = "#LoopKey",
   ParentBranch = "#ParentBranch",
   PendingAsyncCount = "#PendingAsyncCount",
   PlaceholderBranch = "#PlaceholderBranch",

@@ -1,5 +1,6 @@
 import { decodeAccessor } from "../common/helpers";
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
+import { type Opt, push } from "../common/opt";
 import {
   AccessorPrefix,
   AccessorProp,
@@ -64,20 +65,24 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         const visitBranches =
           branchesEnabled &&
           (() => {
+            let curBranchScopes: Opt<BranchScope>;
+            const branchScopesStack: Opt<BranchScope>[] = [];
             const branchStarts: Comment[] = [];
             const orphanBranches: BranchScope[] = [];
-            const endBranch = (singleNode?: boolean) => {
+            const endBranch = (accessor?: string, singleNode?: boolean) => {
               const parent = visit.parentNode!;
-              const endedBranches: BranchScope[] = [];
               let startVisit: ChildNode = visit;
               let i = orphanBranches.length;
               let branchId: number;
               let branch: BranchScope;
               let childBranch: BranchScope;
+              let endedBranches: BranchScope[] | undefined;
 
               while ((branchId = +lastToken)) {
-                endedBranches.push(
-                  (branch = scopeLookup[branchId] as BranchScope),
+                (endedBranches ||= []).push(
+                  (branch = (scopeLookup[branchId] ||= {
+                    [AccessorProp.Id]: branchId,
+                  } as BranchScope) as BranchScope),
                 );
                 branch[AccessorProp.ClosestBranch] = branch;
 
@@ -96,6 +101,11 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                       startVisit;
                   }
                 } else {
+                  curBranchScopes = push(curBranchScopes, branch);
+                  if (accessor) {
+                    visitScope[accessor] = curBranchScopes;
+                    curBranchScopes = branchScopesStack.pop();
+                  }
                   startVisit = branchStarts.pop()!;
                   if (parent !== startVisit.parentNode) {
                     parent.prepend(startVisit);
@@ -116,19 +126,32 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   );
                 }
 
-                nextToken(); // read optional next branchId
+                nextToken(/* read optional next branchId */);
               }
 
-              orphanBranches.push(...endedBranches);
+              if (endedBranches) {
+                orphanBranches.push(...endedBranches);
+                if (singleNode) {
+                  visitScope[accessor!] =
+                    endedBranches.length > 1
+                      ? endedBranches.reverse()
+                      : endedBranches[0];
+                }
+              }
             };
 
             return () => {
               if (visitType === ResumeSymbol.BranchStart) {
-                lastToken && endBranch();
+                if (lastToken) {
+                  endBranch();
+                } else {
+                  branchScopesStack.push(curBranchScopes);
+                  curBranchScopes = undefined;
+                }
                 branchStarts.push(visit);
               } else {
                 visitScope[
-                  AccessorPrefix.Getter + nextToken() /* read accessor */
+                  AccessorPrefix.Getter + nextToken(/* read accessor */)
                 ] = (
                   (node) => () =>
                     node
@@ -140,10 +163,11 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                       ? visit.parentNode
                       : visit),
                 );
-                nextToken(); // read optional first branchId
                 endBranch(
+                  AccessorPrefix.BranchScopes + lastToken,
+                  (nextToken(/* read optional first branchId */),
                   visitType !== ResumeSymbol.BranchEnd &&
-                    visitType !== ResumeSymbol.BranchEndOnlyChildInParent,
+                    visitType !== ResumeSymbol.BranchEndOnlyChildInParent),
                 );
               }
             };
@@ -209,7 +233,9 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               lastTokenIndex = render.i.length;
               visitText = visit.data!;
               visitType = visitText[lastTokenIndex++] as ResumeSymbol;
-              visitScope = scopeLookup[+nextToken()] as Scope;
+              visitScope = scopeLookup[+(nextToken(/* read scope id */))] ||= {
+                [AccessorProp.Id]: +lastToken,
+              } as Scope;
 
               // TODO: switch?
               if (visitType === ResumeSymbol.Node) {

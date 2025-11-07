@@ -1,9 +1,11 @@
 import { _el_read_error, _hoist_read_error } from "../common/errors";
 import { decodeAccessor } from "../common/helpers";
+import { type Opt, toArray } from "../common/opt";
 import {
   type Accessor,
   AccessorPrefix,
   AccessorProp,
+  type BranchScope,
   type EncodedAccessor,
   type Scope,
 } from "../common/types";
@@ -87,22 +89,15 @@ export function _for_closure(
 ): SignalFn {
   if (!MARKO_DEBUG)
     ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor as number);
-  const loopScopeAccessor =
-    AccessorPrefix.LoopScopeArray + ownerLoopNodeAccessor;
-  const loopScopeMapAccessor =
-    AccessorPrefix.LoopScopeMap + ownerLoopNodeAccessor;
+  const scopeAccessor = AccessorPrefix.BranchScopes + ownerLoopNodeAccessor;
   const ownerSignal = (ownerScope: Scope) => {
-    const scopes = (ownerScope[loopScopeAccessor] ||= ownerScope[
-      loopScopeMapAccessor
-    ]
-      ? [...ownerScope[loopScopeMapAccessor].values()]
-      : []) as Scope[];
-    const [firstScope] = scopes;
-    if (firstScope) {
+    let scopes = ownerScope[scopeAccessor] as Opt<BranchScope>;
+    if (scopes) {
+      scopes = toArray(scopes);
       queueRender(
         ownerScope,
         () => {
-          for (const scope of scopes) {
+          for (const scope of scopes as BranchScope[]) {
             if (
               !scope[AccessorProp.Creating] &&
               !scope[AccessorProp.Destroyed]
@@ -113,7 +108,7 @@ export function _for_closure(
         },
         -1,
         0,
-        firstScope[AccessorProp.Id],
+        scopes[0][AccessorProp.Id],
       );
     }
   };
@@ -131,7 +126,7 @@ export function _if_closure(
       ownerConditionalNodeAccessor as number,
     );
   const scopeAccessor =
-    AccessorPrefix.ConditionalScope + ownerConditionalNodeAccessor;
+    AccessorPrefix.BranchScopes + ownerConditionalNodeAccessor;
   const branchAccessor =
     AccessorPrefix.ConditionalRenderer + ownerConditionalNodeAccessor;
   const ownerSignal = (scope: Scope) => {
