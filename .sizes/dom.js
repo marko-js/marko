@@ -1,4 +1,4 @@
-// size: 19680 (min) 7554 (brotli)
+// size: 19692 (min) 7538 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -1471,7 +1471,7 @@ function loop(nodeAccessor, renderer, forEach) {
         oldScopesByKey =
           scope[scopesByKeyAccessor] ||
           oldScopes.reduce(
-            (map, scope2) => map.set(scope2.N, scope2),
+            (map, scope2, i) => map.set("N" in scope2 ? scope2.N : i, scope2),
             new Map(),
           ),
         newScopes = (scope[scopesAccessor] = []),
