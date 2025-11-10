@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.107
+
+### Patch Changes
+
+- [#2943](https://github.com/marko-js/marko/pull/2943) [`f832f91`](https://github.com/marko-js/marko/commit/f832f91d7cc3afec2b054882b472d1b5eb11f1e6) Thanks [@rturnq](https://github.com/rturnq)! - Fix incorrect loop scope accessor in production builds
+
 ## 6.0.106
 
 ### Patch Changes
