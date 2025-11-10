@@ -162,7 +162,7 @@ export let _enable_catch = () => {
     // if so, return true and push the fn to the pending async queue on the try branch
     while (branch) {
       if (branch[AccessorProp.PendingAsyncCount]) {
-        return (branch[AccessorProp.Effects] ||= []).push(fn, scope);
+        return (branch[AccessorProp.PendingEffects] ||= []).push(fn, scope);
       }
       branch = branch[AccessorProp.ParentBranch];
     }

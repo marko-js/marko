@@ -342,9 +342,8 @@ export function _attrs_script(scope: Scope, nodeAccessor: Accessor) {
 export function _html(scope: Scope, value: unknown, accessor: Accessor) {
   const firstChild = scope[accessor] as ChildNode;
   const parentNode = firstChild.parentNode!;
-  const lastChild = (scope[
-    AccessorPrefix.DynamicPlaceholderLastChild + accessor
-  ] || firstChild) as ChildNode;
+  const lastChild = (scope[AccessorPrefix.DynamicHTMLLastChild + accessor] ||
+    firstChild) as ChildNode;
   const newContent = parseHTML(
     value || value === 0 ? value + "" : "",
     (parentNode as Element).namespaceURI!,
@@ -355,7 +354,7 @@ export function _html(scope: Scope, value: unknown, accessor: Accessor) {
     firstChild,
     (scope[accessor] =
       newContent.firstChild || newContent.appendChild(new Text())),
-    (scope[AccessorPrefix.DynamicPlaceholderLastChild + accessor] =
+    (scope[AccessorPrefix.DynamicHTMLLastChild + accessor] =
       newContent.lastChild!),
   );
   removeChildNodes(firstChild, lastChild);

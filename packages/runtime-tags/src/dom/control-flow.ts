@@ -153,9 +153,9 @@ export function _await(nodeAccessor: EncodedAccessor, renderer: Renderer) {
                   }
 
                   queueEffect(tryWithPlaceholder, (scope) => {
-                    const pendingEffects = scope[AccessorProp.Effects];
+                    const pendingEffects = scope[AccessorProp.PendingEffects];
                     if (pendingEffects) {
-                      scope[AccessorProp.Effects] = [];
+                      scope[AccessorProp.PendingEffects] = [];
                       runEffects(pendingEffects, true);
                     }
                   });
@@ -483,7 +483,7 @@ function loop<T extends unknown[] = unknown[]>(
 ) {
   const params = renderer.___params;
   const scopesAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
-  const scopesByKeyAccessor = AccessorPrefix.BranchScopesByKey + nodeAccessor;
+  const scopesByKeyAccessor = AccessorPrefix.BranchScopes + scopesAccessor;
   if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   enableBranches();
   return (scope: Scope, value: T) => {
