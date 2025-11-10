@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.106
+
+### Patch Changes
+
+- [#2941](https://github.com/marko-js/marko/pull/2941) [`31a199e`](https://github.com/marko-js/marko/commit/31a199e974a9a7986f1534c8b37b0d2bdae791ff) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix referencing $global in production client side renders.
+
 ## 6.0.105
 
 ### Patch Changes
