@@ -1458,11 +1458,11 @@ function _for_until(nodeAccessor, renderer) {
   );
 }
 function loop(nodeAccessor, renderer, forEach) {
+  nodeAccessor = decodeAccessor(nodeAccessor);
   let params = renderer.a,
     scopesAccessor = "A" + nodeAccessor,
     scopesByKeyAccessor = "A" + scopesAccessor;
   return (
-    (nodeAccessor = decodeAccessor(nodeAccessor)),
     enableBranches(),
     (scope, value) => {
       let referenceNode = scope[nodeAccessor],

@@ -48,12 +48,12 @@
         "brotli": 416
       },
       "runtime": {
-        "min": 7095,
-        "brotli": 3084
+        "min": 7094,
+        "brotli": 3086
       },
       "total": {
-        "min": 7852,
-        "brotli": 3500
+        "min": 7851,
+        "brotli": 3502
       }
     },
     {
