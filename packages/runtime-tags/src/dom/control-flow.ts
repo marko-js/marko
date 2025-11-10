@@ -481,10 +481,10 @@ function loop<T extends unknown[] = unknown[]>(
   renderer: Renderer,
   forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
 ) {
+  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const params = renderer.___params;
   const scopesAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
   const scopesByKeyAccessor = AccessorPrefix.BranchScopes + scopesAccessor;
-  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   enableBranches();
   return (scope: Scope, value: T) => {
     const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
