@@ -94,6 +94,6 @@ container.querySelectorAll("button").forEach(button => button.click());
 
 # Mutations
 ```
-UPDATE html/body/button1/#text "$0.00" => "$1.00"
 UPDATE html/body/button0/#text "$0.00" => "$1.00"
+UPDATE html/body/button1/#text "$0.00" => "$1.00"
 ```

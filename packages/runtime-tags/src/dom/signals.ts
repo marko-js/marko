@@ -26,7 +26,7 @@ export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
   const valueChangeAccessor = AccessorPrefix.TagVariableChange + valueAccessor;
 
   if (MARKO_DEBUG) {
-    id = +valueAccessor.slice(valueAccessor.lastIndexOf("/") + 1);
+    id = +(id as string).slice((id as string).lastIndexOf("/") + 1);
   }
 
   return (scope: Scope, value: T, valueChange?: (v: T) => void) => {

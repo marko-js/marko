@@ -29,6 +29,6 @@ INSERT div, span
 
 # Mutations
 ```
-UPDATE span/#text "‍" => "SPAN"
 UPDATE div/#text "‍" => "DIV"
+UPDATE span/#text "‍" => "SPAN"
 ```

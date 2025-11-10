@@ -1,0 +1,16 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "o",
+      "$$if_content__text": "r",
+      "$$if_content__setup": "_",
+      "$$if_content": "m",
+      "$$if": "c",
+      "$$hide__OR__text_length": "i",
+      "$$hide": "n",
+      "$$text": "a",
+      "$$text_length": "e"
+    }
+  }
+}
