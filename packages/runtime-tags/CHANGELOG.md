@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.105
+
+### Patch Changes
+
+- [#2937](https://github.com/marko-js/marko/pull/2937) [`498dd11`](https://github.com/marko-js/marko/commit/498dd11f4cf46ee3848a1915307888c2cad4811d) Thanks [@rturnq](https://github.com/rturnq)! - Unify loop/conditonal scopes and prevent serializing them if the associated markers are written
+
+- [#2940](https://github.com/marko-js/marko/pull/2940) [`cfbf7ed`](https://github.com/marko-js/marko/commit/cfbf7ed008ad4a195971faa5a016388fe6048d55) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix state execution order regression in dev mode.
+
 ## 6.0.104
 
 ### Patch Changes
