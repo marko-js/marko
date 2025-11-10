@@ -1,4 +1,4 @@
-// size: 19683 (min) 7532 (brotli)
+// size: 19683 (min) 7533 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -115,37 +115,37 @@ function stripSpacesAndPunctuation(str) {
 }
 var nextScopeId = 1e6;
 function createScope($global, closestBranch) {
-  let scope = { M: nextScopeId++, I: 1, G: closestBranch, $: $global };
+  let scope = { L: nextScopeId++, H: 1, F: closestBranch, $: $global };
   return (pendingScopes.push(scope), scope);
 }
 function skipScope() {
   return nextScopeId++;
 }
 function findBranchWithKey(scope, key) {
-  let branch = scope.G;
-  for (; branch && !branch[key]; ) branch = branch.O;
+  let branch = scope.F;
+  for (; branch && !branch[key]; ) branch = branch.N;
   return branch;
 }
 function destroyBranch(branch) {
-  (branch.O?.E?.delete(branch), destroyNestedBranches(branch));
+  (branch.N?.D?.delete(branch), destroyNestedBranches(branch));
 }
 function destroyNestedBranches(branch) {
-  ((branch.J = 1),
-    branch.E?.forEach(destroyNestedBranches),
+  ((branch.I = 1),
+    branch.D?.forEach(destroyNestedBranches),
     branch.B?.forEach((scope) => {
       for (let id in scope.A) $signalReset(scope, id);
     }));
 }
 function removeAndDestroyBranch(branch) {
-  (destroyBranch(branch), removeChildNodes(branch.T, branch.L));
+  (destroyBranch(branch), removeChildNodes(branch.S, branch.K));
 }
 function insertBranchBefore(branch, parentNode, nextSibling) {
-  insertChildNodes(parentNode, nextSibling, branch.T, branch.L);
+  insertChildNodes(parentNode, nextSibling, branch.S, branch.K);
 }
 function tempDetachBranch(branch) {
   let fragment = new DocumentFragment();
-  ((fragment.namespaceURI = branch.T.parentNode.namespaceURI),
-    insertChildNodes(fragment, null, branch.T, branch.L));
+  ((fragment.namespaceURI = branch.S.parentNode.namespaceURI),
+    insertChildNodes(fragment, null, branch.S, branch.K));
 }
 var walker = document.createTreeWalker(document);
 function walk(startNode, walkCodes, branch) {
@@ -166,7 +166,7 @@ function walkInternal(currentWalkIndex, walkCodes, scope) {
     ) {
       let node = walker.currentNode;
       ((scope[(id = decodeAccessor(currentScopeIndex++))] = node),
-        (scope["K" + id] = () => node));
+        (scope["J" + id] = () => node));
     } else if (37 === value || 49 === value)
       (walker.currentNode.replaceWith(
         (walker.currentNode = scope[decodeAccessor(currentScopeIndex++)] =
@@ -182,7 +182,7 @@ function walkInternal(currentWalkIndex, walkCodes, scope) {
           walkCodes,
           (scope[decodeAccessor(currentScopeIndex++)] = createScope(
             scope.$,
-            scope.G,
+            scope.F,
           )),
         )),
           48 === value &&
@@ -246,9 +246,9 @@ function init(runtimeId = "M") {
                     for (; (branchId = +lastToken); ) {
                       if (
                         ((endedBranches ||= []).push(
-                          (branch = scopeLookup[branchId] ||= { M: branchId }),
+                          (branch = scopeLookup[branchId] ||= { L: branchId }),
                         ),
-                        (branch.G = branch),
+                        (branch.F = branch),
                         singleNode)
                       ) {
                         for (
@@ -259,7 +259,7 @@ function init(runtimeId = "M") {
                           );
 
                         );
-                        ((branch.L = branch.T = startVisit),
+                        ((branch.K = branch.S = startVisit),
                           "'" === visitType && (branch.a = startVisit));
                       } else
                         ((curBranchScopes = push(curBranchScopes, branch)),
@@ -269,14 +269,14 @@ function init(runtimeId = "M") {
                           (startVisit = branchStarts.pop()),
                           parent !== startVisit.parentNode &&
                             parent.prepend(startVisit),
-                          (branch.T = startVisit),
-                          (branch.L =
+                          (branch.S = startVisit),
+                          (branch.K =
                             visit.previousSibling === startVisit
                               ? startVisit
                               : parent.insertBefore(new Text(), visit)));
-                      for (; i && orphanBranches[--i].M > branchId; )
-                        (((childBranch = orphanBranches.pop()).O = branch),
-                          (branch.E ||= new Set()).add(childBranch));
+                      for (; i && orphanBranches[--i].L > branchId; )
+                        (((childBranch = orphanBranches.pop()).N = branch),
+                          (branch.D ||= new Set()).add(childBranch));
                       nextToken();
                     }
                     endedBranches &&
@@ -294,7 +294,7 @@ function init(runtimeId = "M") {
                         : (branchScopesStack.push(curBranchScopes),
                           (curBranchScopes = void 0)),
                       branchStarts.push(visit))
-                    : ((visitScope["K" + nextToken()] = (
+                    : ((visitScope["J" + nextToken()] = (
                         (node) => () =>
                           node
                       )(
@@ -325,7 +325,7 @@ function init(runtimeId = "M") {
                   if ("string" == typeof serialized) lastEffect = serialized;
                   else if ("number" == typeof serialized)
                     queueEffect(
-                      (scopeLookup[serialized] ||= { M: serialized }),
+                      (scopeLookup[serialized] ||= { L: serialized }),
                       registeredValues[lastEffect],
                     );
                   else
@@ -333,9 +333,9 @@ function init(runtimeId = "M") {
                       $global
                         ? "number" == typeof scope
                           ? (lastScopeId += scope)
-                          : ((scopeLookup[(scope.M = ++lastScopeId)] = scope),
+                          : ((scopeLookup[(scope.L = ++lastScopeId)] = scope),
                             (scope.$ = $global),
-                            branchesEnabled && (scope.G = scopeLookup[scope.H]))
+                            branchesEnabled && (scope.F = scopeLookup[scope.G]))
                         : (($global = scope || {}),
                           ($global.runtimeId = runtimeId),
                           ($global.renderId = renderId));
@@ -344,9 +344,9 @@ function init(runtimeId = "M") {
                     (visitText = visit.data),
                     (visitType = visitText[lastTokenIndex++]),
                     (visitScope = scopeLookup[+nextToken()] ||=
-                      { M: +lastToken }),
+                      { L: +lastToken }),
                     "*" === visitType
-                      ? (visitScope["K" + nextToken()] = (
+                      ? (visitScope["J" + nextToken()] = (
                           (node) => () =>
                             node
                         )((visitScope[lastToken] = visit.previousSibling)))
@@ -373,7 +373,7 @@ function _var_resume(id, signal) {
   return (_resume(id, (scope) => (value) => signal(scope, value)), signal);
 }
 function _el(id, accessor) {
-  let getterAccessor = "K" + decodeAccessor(accessor);
+  let getterAccessor = "J" + decodeAccessor(accessor);
   return _resume(id, (scope) => () => scope[getterAccessor]());
 }
 function _attr_input_checked(scope, nodeAccessor, checked, checkedChange) {
@@ -388,7 +388,7 @@ function _attr_input_checked(scope, nodeAccessor, checked, checkedChange) {
 function _attr_input_checked_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
   syncControllable(el, "input", hasCheckboxChanged, () => {
-    let checkedChange = scope["F" + nodeAccessor];
+    let checkedChange = scope["E" + nodeAccessor];
     if (checkedChange) {
       let newValue = el.checked;
       ((el.checked = !newValue), checkedChange(newValue), run());
@@ -402,7 +402,7 @@ function _attr_input_checkedValue(
   checkedValueChange,
   value,
 ) {
-  ((scope["H" + nodeAccessor] = checkedValue),
+  ((scope["G" + nodeAccessor] = checkedValue),
     _attr(scope[nodeAccessor], "value", value),
     setCheckboxValue(
       scope,
@@ -417,9 +417,9 @@ function _attr_input_checkedValue(
 function _attr_input_checkedValue_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
   syncControllable(el, "input", hasCheckboxChanged, () => {
-    let checkedValueChange = scope["F" + nodeAccessor];
+    let checkedValueChange = scope["E" + nodeAccessor];
     if (checkedValueChange) {
-      let oldValue = scope["H" + nodeAccessor],
+      let oldValue = scope["G" + nodeAccessor],
         newValue = Array.isArray(oldValue)
           ? (function (arr, val, push2) {
               let index = arr.indexOf(val);
@@ -449,33 +449,33 @@ function _attr_input_checkedValue_script(scope, nodeAccessor) {
 function _attr_input_value(scope, nodeAccessor, value, valueChange) {
   let el = scope[nodeAccessor],
     normalizedValue = normalizeStrProp(value);
-  ((scope["F" + nodeAccessor] = valueChange),
+  ((scope["E" + nodeAccessor] = valueChange),
     valueChange
-      ? ((scope["G" + nodeAccessor] = 0),
-        (scope["H" + nodeAccessor] = value),
+      ? ((scope["F" + nodeAccessor] = 0),
+        (scope["G" + nodeAccessor] = value),
         el.isConnected
           ? setValueAndUpdateSelection(el, normalizedValue)
           : (el.defaultValue = normalizedValue))
-      : ((scope["G" + nodeAccessor] = 5), (el.defaultValue = normalizedValue)));
+      : ((scope["F" + nodeAccessor] = 5), (el.defaultValue = normalizedValue)));
 }
 function _attr_input_value_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
-  (isResuming && (scope["H" + nodeAccessor] = el.defaultValue),
+  (isResuming && (scope["G" + nodeAccessor] = el.defaultValue),
     syncControllable(el, "input", hasValueChanged, (ev) => {
-      let valueChange = scope["F" + nodeAccessor];
+      let valueChange = scope["E" + nodeAccessor];
       valueChange &&
         ((inputType = ev?.inputType),
         valueChange(el.value),
         run(),
-        setValueAndUpdateSelection(el, scope["H" + nodeAccessor]),
+        setValueAndUpdateSelection(el, scope["G" + nodeAccessor]),
         (inputType = ""));
     }));
 }
 function _attr_select_value(scope, nodeAccessor, value, valueChange) {
-  ((scope["F" + nodeAccessor] = valueChange),
+  ((scope["E" + nodeAccessor] = valueChange),
     valueChange
-      ? ((scope["G" + nodeAccessor] = 3), (scope["H" + nodeAccessor] = value))
-      : (scope["G" + nodeAccessor] = 5),
+      ? ((scope["F" + nodeAccessor] = 3), (scope["G" + nodeAccessor] = value))
+      : (scope["F" + nodeAccessor] = 5),
     pendingEffects.unshift(
       () => setSelectOptions(scope[nodeAccessor], value, valueChange),
       scope,
@@ -484,19 +484,19 @@ function _attr_select_value(scope, nodeAccessor, value, valueChange) {
 function _attr_select_value_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
     onChange = () => {
-      let valueChange = scope["F" + nodeAccessor];
+      let valueChange = scope["E" + nodeAccessor];
       if (valueChange) {
-        let newValue = Array.isArray(scope["H" + nodeAccessor])
+        let newValue = Array.isArray(scope["G" + nodeAccessor])
           ? Array.from(el.selectedOptions, toValueProp)
           : el.value;
-        (setSelectOptions(el, scope["H" + nodeAccessor], valueChange),
+        (setSelectOptions(el, scope["G" + nodeAccessor], valueChange),
           valueChange(newValue),
           run());
       }
     };
   (el._ ||
     new MutationObserver(() => {
-      let value = scope["H" + nodeAccessor];
+      let value = scope["G" + nodeAccessor];
       (Array.isArray(value)
         ? value.length !== el.selectedOptions.length ||
           value.some((value2, i) => value2 != el.selectedOptions[i].value)
@@ -521,20 +521,20 @@ function setSelectOptions(el, value, valueChange) {
   }
 }
 function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
-  ((scope["F" + nodeAccessor] = openChange),
-    (scope["G" + nodeAccessor] = openChange ? 4 : 5),
-    (scope[nodeAccessor].open = scope["H" + nodeAccessor] =
+  ((scope["E" + nodeAccessor] = openChange),
+    (scope["F" + nodeAccessor] = openChange ? 4 : 5),
+    (scope[nodeAccessor].open = scope["G" + nodeAccessor] =
       normalizeBoolProp(open)));
 }
 function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
-    hasChanged = () => el.open !== scope["H" + nodeAccessor];
+    hasChanged = () => el.open !== scope["G" + nodeAccessor];
   syncControllable(
     el,
     "DIALOG" === el.tagName ? "close" : "toggle",
     hasChanged,
     () => {
-      let openChange = scope["F" + nodeAccessor];
+      let openChange = scope["E" + nodeAccessor];
       if (openChange && hasChanged()) {
         let newValue = el.open;
         ((el.open = !newValue), openChange(newValue), run());
@@ -581,11 +581,11 @@ function setValueAndUpdateSelection(el, value) {
   }
 }
 function setCheckboxValue(scope, nodeAccessor, type, checked, checkedChange) {
-  ((scope["F" + nodeAccessor] = checkedChange),
+  ((scope["E" + nodeAccessor] = checkedChange),
     checkedChange
-      ? ((scope["G" + nodeAccessor] = type),
+      ? ((scope["F" + nodeAccessor] = type),
         (scope[nodeAccessor].checked = checked))
-      : ((scope["G" + nodeAccessor] = 5),
+      : ((scope["F" + nodeAccessor] = 5),
         (scope[nodeAccessor].defaultChecked = checked)));
 }
 var controllableDelegate = createDelegator();
@@ -653,12 +653,12 @@ function triggerMacroTask() {
 }
 function _let(id, fn) {
   let valueAccessor = decodeAccessor(id),
-    valueChangeAccessor = "N" + valueAccessor;
+    valueChangeAccessor = "M" + valueAccessor;
   return (scope, value, valueChange) => (
     rendering
       ? (((scope[valueChangeAccessor] = valueChange) &&
           scope[valueAccessor] !== value) ||
-          scope.I) &&
+          scope.H) &&
         ((scope[valueAccessor] = value), fn?.(scope))
       : scope[valueChangeAccessor]
         ? scope[valueChangeAccessor](value)
@@ -677,9 +677,9 @@ function _const(valueAccessor, fn) {
     }
   );
 }
-function _or(id, fn, defaultPending = 1, scopeIdAccessor = "M") {
+function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
   return (scope) => {
-    scope.I
+    scope.H
       ? id in scope
         ? --scope[id] || fn(scope)
         : (scope[id] = defaultPending)
@@ -695,11 +695,11 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
         queueRender(
           ownerScope,
           () => {
-            for (let scope of scopes) !scope.I && !scope.J && fn(scope);
+            for (let scope of scopes) !scope.H && !scope.I && fn(scope);
           },
           -1,
           0,
-          (scopes = toArray(scopes))[0].M,
+          (scopes = toArray(scopes))[0].L,
         );
     };
   return ((ownerSignal._ = fn), ownerSignal);
@@ -710,11 +710,11 @@ function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
       (ownerConditionalNodeAccessor = decodeAccessor(
         ownerConditionalNodeAccessor,
       )),
-    branchAccessor = "E" + ownerConditionalNodeAccessor,
+    branchAccessor = "D" + ownerConditionalNodeAccessor,
     ownerSignal = (scope) => {
       let ifScope = scope[scopeAccessor];
       ifScope &&
-        !ifScope.I &&
+        !ifScope.H &&
         (scope[branchAccessor] || 0) === branch &&
         queueRender(ifScope, fn, -1);
     };
@@ -735,7 +735,7 @@ function _closure(...closureSignals) {
   return (scope) => {
     if (scope[___scopeInstancesAccessor])
       for (let childScope of scope[___scopeInstancesAccessor])
-        childScope.I ||
+        childScope.H ||
           queueRender(
             childScope,
             closureSignals[childScope[___signalIndexAccessor]],
@@ -755,8 +755,8 @@ function _closure_get(valueAccessor, fn, getOwnerScope) {
       ));
   };
   return (
-    (closureSignal.j = "C" + valueAccessor),
-    (closureSignal.k = "D" + valueAccessor),
+    (closureSignal.j = "B" + valueAccessor),
+    (closureSignal.k = "C" + valueAccessor),
     closureSignal
   );
 }
@@ -769,13 +769,13 @@ function _child_setup(setup) {
   );
 }
 function _var(scope, childAccessor, signal) {
-  scope[decodeAccessor(childAccessor)].U = (value) => signal(scope, value);
+  scope[decodeAccessor(childAccessor)].T = (value) => signal(scope, value);
 }
-var _return = (scope, value) => scope.U?.(value);
+var _return = (scope, value) => scope.T?.(value);
 function _return_change(scope, changeHandler) {
-  changeHandler && (scope.V = changeHandler);
+  changeHandler && (scope.U = changeHandler);
 }
-var _var_change = (scope, value) => scope.V?.(value),
+var _var_change = (scope, value) => scope.U?.(value),
   tagIdsByGlobal = new WeakMap();
 function _id({ $: $global }) {
   let id = tagIdsByGlobal.get($global) || 0;
@@ -821,12 +821,12 @@ function _hoist(...path) {
 }
 function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global),
-    parentBranch = parentScope?.G;
+    parentBranch = parentScope?.F;
   return (
     (branch._ = renderer.c || parentScope),
-    (branch.G = branch),
+    (branch.F = branch),
     parentBranch &&
-      ((branch.O = parentBranch), (parentBranch.E ||= new Set()).add(branch)),
+      ((branch.N = parentBranch), (parentBranch.D ||= new Set()).add(branch)),
     renderer.f?.(branch, parentNode.namespaceURI),
     branch
   );
@@ -857,7 +857,7 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
             firstChild === lastChild && firstChild.nodeType < 8
               ? (branch, walks) => {
                   walk(
-                    (branch.T = branch.L = firstChild.cloneNode(!0)),
+                    (branch.S = branch.K = firstChild.cloneNode(!0)),
                     walks,
                     branch,
                   );
@@ -865,14 +865,14 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
               : (branch, walks) => {
                   let clone = parent.cloneNode(!0);
                   (walk(clone.firstChild, walks, branch),
-                    (branch.T = clone.firstChild),
-                    (branch.L = clone.lastChild));
+                    (branch.S = clone.firstChild),
+                    (branch.K = clone.lastChild));
                 }
           );
         })(template, ns))(branch, walks);
       }
     : (branch) => {
-        walk((branch.T = branch.L = new Text()), walks, branch);
+        walk((branch.S = branch.K = new Text()), walks, branch);
       };
   return (owner) => ({
     e: id,
@@ -1066,7 +1066,7 @@ function attrsInternal(scope, nodeAccessor, nextAttrs) {
         break;
       default:
         isEventHandler(name)
-          ? ((events ||= scope["J" + nodeAccessor] = {})[
+          ? ((events ||= scope["I" + nodeAccessor] = {})[
               getEventHandlerName(name)
             ] = value)
           : skip?.test(name) ||
@@ -1080,7 +1080,7 @@ function _attr_content(scope, nodeAccessor, value) {
       let renderer = normalizeDynamicRenderer(value);
       if (renderer && renderer.e) return renderer;
     })(value),
-    rendererAccessor = "E" + nodeAccessor;
+    rendererAccessor = "D" + nodeAccessor;
   scope[rendererAccessor] !== (scope[rendererAccessor] = content?.e) &&
     (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
     content?.b &&
@@ -1088,8 +1088,8 @@ function _attr_content(scope, nodeAccessor, value) {
 }
 function _attrs_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
-    events = scope["J" + nodeAccessor];
-  switch (scope["G" + nodeAccessor]) {
+    events = scope["I" + nodeAccessor];
+  switch (scope["F" + nodeAccessor]) {
     case 0:
       _attr_input_checked_script(scope, nodeAccessor);
       break;
@@ -1110,7 +1110,7 @@ function _attrs_script(scope, nodeAccessor) {
 function _html(scope, value, accessor) {
   let firstChild = scope[accessor],
     parentNode = firstChild.parentNode,
-    lastChild = scope["I" + accessor] || firstChild,
+    lastChild = scope["H" + accessor] || firstChild,
     newContent = parseHTML(
       value || 0 === value ? value + "" : "",
       parentNode.namespaceURI,
@@ -1120,7 +1120,7 @@ function _html(scope, value, accessor) {
     firstChild,
     (scope[accessor] =
       newContent.firstChild || newContent.appendChild(new Text())),
-    (scope["I" + accessor] = newContent.lastChild),
+    (scope["H" + accessor] = newContent.lastChild),
   ),
     removeChildNodes(firstChild, lastChild));
 }
@@ -1136,7 +1136,7 @@ function _lifecycle(scope, index, thisObj) {
     ? (Object.assign(instance, thisObj), instance.onUpdate?.())
     : ((scope[index] = thisObj),
       thisObj.onMount?.(),
-      ($signal(scope, "L" + index).onabort = () => thisObj.onDestroy?.()));
+      ($signal(scope, "K" + index).onabort = () => thisObj.onDestroy?.()));
 }
 function removeChildNodes(startNode, endNode) {
   let stop = endNode.nextSibling,
@@ -1161,35 +1161,35 @@ function toInsertNode(startNode, endNode) {
   return parent;
 }
 function _await(nodeAccessor, renderer) {
-  let promiseAccessor = "M" + (nodeAccessor = decodeAccessor(nodeAccessor)),
+  let promiseAccessor = "L" + (nodeAccessor = decodeAccessor(nodeAccessor)),
     branchAccessor = "A" + nodeAccessor;
   return (
     enableBranches(),
     (scope, promise) => {
       let referenceNode = scope[nodeAccessor],
-        tryWithPlaceholder = findBranchWithKey(scope, "R"),
+        tryWithPlaceholder = findBranchWithKey(scope, "Q"),
         awaitBranch = scope[branchAccessor];
       tryWithPlaceholder
         ? (placeholderShown.add(pendingEffects),
           !scope[promiseAccessor] &&
-            1 === (tryWithPlaceholder.P = (tryWithPlaceholder.P || 0) + 1) &&
+            1 === (tryWithPlaceholder.O = (tryWithPlaceholder.O || 0) + 1) &&
             requestAnimationFrame(
               () =>
-                tryWithPlaceholder.P &&
+                tryWithPlaceholder.O &&
                 runEffects(
                   prepareEffects(() =>
                     queueRender(
                       tryWithPlaceholder,
                       () => {
                         (insertBranchBefore(
-                          (tryWithPlaceholder.Q = createAndSetupBranch(
+                          (tryWithPlaceholder.P = createAndSetupBranch(
                             scope.$,
-                            tryWithPlaceholder.R,
+                            tryWithPlaceholder.Q,
                             tryWithPlaceholder._,
-                            tryWithPlaceholder.T.parentNode,
+                            tryWithPlaceholder.S.parentNode,
                           )),
-                          tryWithPlaceholder.T.parentNode,
-                          tryWithPlaceholder.T,
+                          tryWithPlaceholder.S.parentNode,
+                          tryWithPlaceholder.S,
                         ),
                           tempDetachBranch(tryWithPlaceholder));
                       },
@@ -1200,7 +1200,7 @@ function _await(nodeAccessor, renderer) {
             ))
         : awaitBranch &&
           !scope[promiseAccessor] &&
-          (awaitBranch.T.parentNode.insertBefore(referenceNode, awaitBranch.T),
+          (awaitBranch.S.parentNode.insertBefore(referenceNode, awaitBranch.S),
           tempDetachBranch(awaitBranch));
       let thisPromise = (scope[promiseAccessor] = promise.then(
         (data) => {
@@ -1213,7 +1213,7 @@ function _await(nodeAccessor, renderer) {
                 if (
                   (awaitBranch
                     ? tryWithPlaceholder ||
-                      referenceNode.replaceWith(awaitBranch.T.parentNode)
+                      referenceNode.replaceWith(awaitBranch.S.parentNode)
                     : (insertBranchBefore(
                         (awaitBranch = scope[branchAccessor] =
                           createAndSetupBranch(
@@ -1229,20 +1229,20 @@ function _await(nodeAccessor, renderer) {
                   renderer.a?.(awaitBranch, [data]),
                   tryWithPlaceholder &&
                     (placeholderShown.add(pendingEffects),
-                    !--tryWithPlaceholder.P))
+                    !--tryWithPlaceholder.O))
                 ) {
-                  let placeholderBranch = tryWithPlaceholder.Q;
-                  ((tryWithPlaceholder.Q = 0),
+                  let placeholderBranch = tryWithPlaceholder.P;
+                  ((tryWithPlaceholder.P = 0),
                     placeholderBranch &&
-                      (placeholderBranch.T.parentNode.insertBefore(
-                        tryWithPlaceholder.T.parentNode,
-                        placeholderBranch.T,
+                      (placeholderBranch.S.parentNode.insertBefore(
+                        tryWithPlaceholder.S.parentNode,
+                        placeholderBranch.S,
                       ),
                       removeAndDestroyBranch(placeholderBranch)),
                     queueEffect(tryWithPlaceholder, (scope2) => {
-                      let pendingEffects2 = scope2.K;
+                      let pendingEffects2 = scope2.J;
                       pendingEffects2 &&
-                        ((scope2.K = []), runEffects(pendingEffects2, !0));
+                        ((scope2.J = []), runEffects(pendingEffects2, !0));
                     }));
                 }
               },
@@ -1251,7 +1251,7 @@ function _await(nodeAccessor, renderer) {
         },
         (error) => {
           thisPromise === scope[promiseAccessor] &&
-            (tryWithPlaceholder && (tryWithPlaceholder.P = 0),
+            (tryWithPlaceholder && (tryWithPlaceholder.O = 0),
             (scope[promiseAccessor] = 0),
             schedule(),
             queueRender(scope, renderCatch, -1, error));
@@ -1272,33 +1272,33 @@ function _try(nodeAccessor, content) {
       );
     let branch = scope[branchAccessor];
     branch &&
-      ((branch.D = nodeAccessor),
-      (branch.F = normalizeDynamicRenderer(input.catch)),
-      (branch.R = normalizeDynamicRenderer(input.placeholder)));
+      ((branch.C = nodeAccessor),
+      (branch.E = normalizeDynamicRenderer(input.catch)),
+      (branch.Q = normalizeDynamicRenderer(input.placeholder)));
   };
 }
 function renderCatch(scope, error) {
-  let tryWithCatch = findBranchWithKey(scope, "F");
+  let tryWithCatch = findBranchWithKey(scope, "E");
   if (!tryWithCatch) throw error;
   {
     let owner = tryWithCatch._,
-      placeholderBranch = tryWithCatch.Q;
+      placeholderBranch = tryWithCatch.P;
     (placeholderBranch &&
-      ((tryWithCatch.P = 0),
-      (owner["A" + tryWithCatch.D] = placeholderBranch),
+      ((tryWithCatch.O = 0),
+      (owner["A" + tryWithCatch.C] = placeholderBranch),
       destroyBranch(tryWithCatch)),
       caughtError.add(pendingEffects),
       setConditionalRenderer(
         owner,
-        tryWithCatch.D,
-        tryWithCatch.F,
+        tryWithCatch.C,
+        tryWithCatch.E,
         createAndSetupBranch,
       ),
-      tryWithCatch.F.a?.(owner["A" + tryWithCatch.D], [error]));
+      tryWithCatch.E.a?.(owner["A" + tryWithCatch.C], [error]));
   }
 }
 function _if(nodeAccessor, ...branches) {
-  let branchAccessor = "E" + (nodeAccessor = decodeAccessor(nodeAccessor));
+  let branchAccessor = "D" + (nodeAccessor = decodeAccessor(nodeAccessor));
   return (
     enableBranches(),
     (scope, newBranch) => {
@@ -1314,7 +1314,7 @@ function _if(nodeAccessor, ...branches) {
 }
 var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
   let childScopeAccessor = "A" + (nodeAccessor = decodeAccessor(nodeAccessor)),
-    rendererAccessor = "E" + nodeAccessor;
+    rendererAccessor = "D" + nodeAccessor;
   return (
     enableBranches(),
     (scope, newRenderer, getInput) => {
@@ -1333,7 +1333,7 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
             createBranchWithTagNameOrRenderer,
           ),
           getTagVar &&
-            (scope[childScopeAccessor].U = (value) =>
+            (scope[childScopeAccessor].T = (value) =>
               getTagVar()(scope, value)),
           "string" == typeof normalizedRenderer)
         ) {
@@ -1368,7 +1368,7 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
             "a",
             (inputIsArgs ? args[0] : args) || {},
           ),
-            (childScope.Ja || childScope.Fa) &&
+            (childScope.Ia || childScope.Ea) &&
               queueEffect(childScope, dynamicTagScript));
         else {
           for (let accessor in normalizedRenderer.l)
@@ -1412,7 +1412,7 @@ function setConditionalRenderer(
     prevBranch = scope["A" + nodeAccessor],
     parentNode =
       referenceNode.nodeType > 1
-        ? (prevBranch?.T || referenceNode).parentNode
+        ? (prevBranch?.S || referenceNode).parentNode
         : referenceNode,
     newBranch = (scope["A" + nodeAccessor] =
       newRenderer && createBranch2(scope.$, newRenderer, scope, parentNode));
@@ -1422,8 +1422,8 @@ function setConditionalRenderer(
       newBranch && insertBranchBefore(newBranch, parentNode, null))
     : prevBranch
       ? (newBranch
-          ? insertBranchBefore(newBranch, parentNode, prevBranch.T)
-          : parentNode.insertBefore(referenceNode, prevBranch.T),
+          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
+          : parentNode.insertBefore(referenceNode, prevBranch.S),
         removeAndDestroyBranch(prevBranch))
       : newBranch &&
         (insertBranchBefore(newBranch, parentNode, referenceNode),
@@ -1460,7 +1460,7 @@ function _for_until(nodeAccessor, renderer) {
 function loop(nodeAccessor, renderer, forEach) {
   let params = renderer.a,
     scopesAccessor = "A" + nodeAccessor,
-    scopesByKeyAccessor = "B" + nodeAccessor;
+    scopesByKeyAccessor = "A" + scopesAccessor;
   return (
     (nodeAccessor = decodeAccessor(nodeAccessor)),
     enableBranches(),
@@ -1470,14 +1470,14 @@ function loop(nodeAccessor, renderer, forEach) {
         oldScopesByKey =
           scope[scopesByKeyAccessor] ||
           oldScopes.reduce(
-            (map, scope2, i) => map.set(scope2.N ?? i, scope2),
+            (map, scope2, i) => map.set(scope2.M ?? i, scope2),
             new Map(),
           ),
         newScopes = (scope[scopesAccessor] = []),
         newScopesByKey = (scope[scopesByKeyAccessor] = new Map()),
         parentNode =
           referenceNode.nodeType > 1
-            ? referenceNode.parentNode || oldScopes[0]?.T.parentNode
+            ? referenceNode.parentNode || oldScopes[0]?.S.parentNode
             : referenceNode;
       forEach(value, (key, args) => {
         let branch =
@@ -1490,7 +1490,7 @@ function loop(nodeAccessor, renderer, forEach) {
       let afterReference = null;
       (referenceNode !== parentNode &&
         (oldScopes.length
-          ? ((afterReference = oldScopes[oldScopes.length - 1].L.nextSibling),
+          ? ((afterReference = oldScopes[oldScopes.length - 1].K.nextSibling),
             newScopes.length ||
               parentNode.insertBefore(referenceNode, afterReference))
           : newScopes.length &&
@@ -1531,7 +1531,7 @@ function loop(nodeAccessor, renderer, forEach) {
             if (newStart <= newEnd) {
               ((k = newEnd + 1),
                 (nextSibling =
-                  k < newBranches.length ? newBranches[k].T : afterReference));
+                  k < newBranches.length ? newBranches[k].S : afterReference));
               do {
                 insertBranchBefore(
                   newBranches[newStart++],
@@ -1610,7 +1610,7 @@ function loop(nodeAccessor, renderer, forEach) {
                     ? ((pos = i + newStart),
                       (newBranch = newBranches[pos++]),
                       (nextSibling =
-                        pos < k ? newBranches[pos].T : afterReference),
+                        pos < k ? newBranches[pos].S : afterReference),
                       insertBranchBefore(newBranch, parent, nextSibling))
                     : --j;
               } else if (synced !== newLength)
@@ -1619,7 +1619,7 @@ function loop(nodeAccessor, renderer, forEach) {
                     ((pos = i + newStart),
                     (newBranch = newBranches[pos++]),
                     (nextSibling =
-                      pos < k ? newBranches[pos].T : afterReference),
+                      pos < k ? newBranches[pos].S : afterReference),
                     insertBranchBefore(newBranch, parent, nextSibling));
             }
           }
@@ -1642,8 +1642,8 @@ function createBranchWithTagNameOrRenderer(
   return (
     "string" == typeof tagNameOrRenderer
       ? (branch.a =
-          branch.T =
-          branch.L =
+          branch.S =
+          branch.K =
             document.createElementNS(
               "svg" === tagNameOrRenderer
                 ? "http://www.w3.org/2000/svg"
@@ -1670,7 +1670,7 @@ var rendering,
   pendingEffects = [],
   pendingScopes = [],
   scopeKeyOffset = 1e3;
-function queueRender(scope, signal, signalKey, value, scopeKey = scope.M) {
+function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let key = scopeKey * scopeKeyOffset + signalKey,
     existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
   if (existingRender) existingRender.m = value;
@@ -1743,9 +1743,9 @@ function runRenders() {
       }
       pendingRenders[i] = item;
     }
-    render.h.G?.J || runRender(render);
+    render.h.F?.I || runRender(render);
   }
-  for (let scope of pendingScopes) scope.I = 0;
+  for (let scope of pendingScopes) scope.H = 0;
   pendingScopes = [];
 }
 var runRender = (render) => render.p(render.h, render.m),
@@ -1753,8 +1753,8 @@ var runRender = (render) => render.p(render.h, render.m),
     ((_enable_catch = () => {}), enableBranches());
     let handlePendingTry = (fn, scope, branch) => {
       for (; branch; ) {
-        if (branch.P) return (branch.K ||= []).push(fn, scope);
-        branch = branch.O;
+        if (branch.O) return (branch.J ||= []).push(fn, scope);
+        branch = branch.N;
       }
     };
     ((runEffects = (
@@ -1768,8 +1768,8 @@ var runRender = (render) => render.p(render.h, render.m),
           for (; i < effects.length; )
             ((fn = effects[i++]),
               (scope = effects[i++]),
-              (branch = scope.G),
-              !branch?.J &&
+              (branch = scope.F),
+              !branch?.I &&
                 (!checkPending || !handlePendingTry(fn, scope, branch)) &&
                 fn(scope));
         } else runEffects2(effects);
@@ -1789,7 +1789,7 @@ function $signalReset(scope, id) {
 }
 function $signal(scope, id) {
   return (
-    scope.G && (scope.G.B ||= new Set()).add(scope),
+    scope.F && (scope.F.B ||= new Set()).add(scope),
     ((scope.A ||= {})[id] ||= new AbortController()).signal
   );
 }
@@ -1812,9 +1812,9 @@ var classIdToBranch = new Map(),
       _resume("$C_r", fn);
     },
     isRenderer: (renderer) => renderer.f,
-    getStartNode: (branch) => branch.T,
+    getStartNode: (branch) => branch.S,
     setScopeNodes(branch, startNode, endNode) {
-      ((branch.T = startNode), (branch.L = endNode));
+      ((branch.S = startNode), (branch.K = endNode));
     },
     runComponentEffects() {
       this.effects && runEffects(this.effects);
@@ -1838,7 +1838,7 @@ var classIdToBranch = new Map(),
       return (
         (renderer.f = (branch) => {
           let cloned = clone();
-          ((branch.T = cloned.startNode), (branch.L = cloned.endNode));
+          ((branch.S = cloned.startNode), (branch.K = cloned.endNode));
         }),
         renderer
       );
@@ -1872,7 +1872,7 @@ var classIdToBranch = new Map(),
         })),
         created)
       )
-        return toInsertNode(branch.T, branch.L);
+        return toInsertNode(branch.S, branch.K);
     },
   },
   _template = (id, template, walks, setup, inputSignal) => {
@@ -1909,14 +1909,14 @@ function mount(input = {}, reference, position) {
     args = this.a,
     effects = prepareEffects(() => {
       ((branch = createBranch($global, this, void 0, parentNode)),
-        (branch.U = (newValue) => {
+        (branch.T = (newValue) => {
           curValue = newValue;
         }),
         this.g?.(branch),
         args?.(branch, input));
     });
   return (
-    insertChildNodes(parentNode, nextSibling, branch.T, branch.L),
+    insertChildNodes(parentNode, nextSibling, branch.S, branch.K),
     runEffects(effects),
     {
       get value() {

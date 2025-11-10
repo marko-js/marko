@@ -11,13 +11,12 @@ export interface BranchScope extends Scope {
   [AccessorProp.BranchScopes]: Set<BranchScope> | undefined;
   [AccessorProp.Renderer]: ClientRenderer | string;
   [AccessorProp.PendingAsyncCount]: number | undefined;
-  [AccessorProp.Effects]: unknown[] | undefined;
+  [AccessorProp.PendingEffects]: unknown[] | undefined;
 }
 export interface Scope {
   [AccessorProp.Owner]: Scope | undefined;
   [AccessorProp.Global]: Record<string, unknown>;
   [AccessorProp.Id]: number;
-  [AccessorProp.Args]: unknown;
   [AccessorProp.Creating]: 1 | 0 | undefined;
   [AccessorProp.AbortControllers]:
     | Record<string | number, AbortController | void>
