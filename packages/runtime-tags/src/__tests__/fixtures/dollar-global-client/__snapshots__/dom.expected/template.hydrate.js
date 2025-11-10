@@ -1,6 +1,6 @@
-// size: 315 (min) 175 (brotli)
+// size: 303 (min) 175 (brotli)
 const $if_content2__setup = ($scope) => {
-    _._text($scope.a, $scope.$global.x);
+    _._text($scope.a, $scope.$.x);
   },
   $if_content2 = _._content_branch(
     "<span class=hidden> </span>",
@@ -8,7 +8,7 @@ const $if_content2__setup = ($scope) => {
     $if_content2__setup,
   ),
   $if_content__setup = ($scope) => {
-    _._text($scope.a, $scope.$global.x);
+    _._text($scope.a, $scope.$.x);
   },
   $if_content = _._content_branch("<span> </span>", "D l", $if_content__setup),
   $if = _._if(0, $if_content),
