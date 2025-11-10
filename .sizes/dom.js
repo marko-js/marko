@@ -1,4 +1,4 @@
-// size: 19692 (min) 7538 (brotli)
+// size: 19683 (min) 7532 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -232,7 +232,7 @@ function init(runtimeId = "M") {
               branchesEnabled &&
               (() => {
                 let curBranchScopes,
-                  brachScopesStack = [],
+                  branchScopesStack = [],
                   branchStarts = [],
                   orphanBranches = [],
                   endBranch = (accessor, singleNode) => {
@@ -265,7 +265,7 @@ function init(runtimeId = "M") {
                         ((curBranchScopes = push(curBranchScopes, branch)),
                           accessor &&
                             ((visitScope[accessor] = curBranchScopes),
-                            (curBranchScopes = brachScopesStack.pop())),
+                            (curBranchScopes = branchScopesStack.pop())),
                           (startVisit = branchStarts.pop()),
                           parent !== startVisit.parentNode &&
                             parent.prepend(startVisit),
@@ -291,7 +291,7 @@ function init(runtimeId = "M") {
                   "[" === visitType
                     ? (lastToken
                         ? endBranch()
-                        : (brachScopesStack.push(curBranchScopes),
+                        : (branchScopesStack.push(curBranchScopes),
                           (curBranchScopes = void 0)),
                       branchStarts.push(visit))
                     : ((visitScope["K" + nextToken()] = (
@@ -692,7 +692,6 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
     ownerSignal = (ownerScope) => {
       let scopes = ownerScope[scopeAccessor];
       scopes &&
-        ((scopes = toArray(scopes)),
         queueRender(
           ownerScope,
           () => {
@@ -700,8 +699,8 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
           },
           -1,
           0,
-          scopes[0].M,
-        ));
+          (scopes = toArray(scopes))[0].M,
+        );
     };
   return ((ownerSignal._ = fn), ownerSignal);
 }
@@ -1471,18 +1470,18 @@ function loop(nodeAccessor, renderer, forEach) {
         oldScopesByKey =
           scope[scopesByKeyAccessor] ||
           oldScopes.reduce(
-            (map, scope2, i) => map.set("N" in scope2 ? scope2.N : i, scope2),
+            (map, scope2, i) => map.set(scope2.N ?? i, scope2),
             new Map(),
           ),
         newScopes = (scope[scopesAccessor] = []),
         newScopesByKey = (scope[scopesByKeyAccessor] = new Map()),
         parentNode =
           referenceNode.nodeType > 1
-            ? referenceNode.parentNode || oldScopes[0].T.parentNode
+            ? referenceNode.parentNode || oldScopes[0]?.T.parentNode
             : referenceNode;
       forEach(value, (key, args) => {
         let branch =
-          oldScopesByKey?.get(key) ||
+          oldScopesByKey.get(key) ||
           createAndSetupBranch(scope.$, renderer, scope, parentNode);
         (params?.(branch, args),
           newScopesByKey.set(key, branch),
