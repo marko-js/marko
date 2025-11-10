@@ -117,9 +117,9 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/span1/#text "0" => "1"
 UPDATE html/body/button/#text "1" => "2"
 UPDATE html/body/span0/#text "0" => "1"
+UPDATE html/body/span1/#text "0" => "1"
 ```
 
 # Render
@@ -162,7 +162,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/span1/#text "1" => "2"
 UPDATE html/body/button/#text "2" => "3"
 UPDATE html/body/span0/#text "1" => "2"
+UPDATE html/body/span1/#text "1" => "2"
 ```

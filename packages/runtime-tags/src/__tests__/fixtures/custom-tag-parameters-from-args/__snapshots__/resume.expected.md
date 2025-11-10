@@ -104,8 +104,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/button/#text2 "10" => "11"
 UPDATE html/body/button/#text0 "1" => "2"
+UPDATE html/body/button/#text2 "10" => "11"
 UPDATE html/body/div/#text1 "1" => "2"
 UPDATE html/body/div/#text3 "10" => "11"
 ```
@@ -163,8 +163,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/button/#text2 "11" => "12"
 UPDATE html/body/button/#text0 "2" => "3"
+UPDATE html/body/button/#text2 "11" => "12"
 UPDATE html/body/div/#text1 "2" => "3"
 UPDATE html/body/div/#text3 "11" => "12"
 ```
@@ -222,8 +222,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/button/#text2 "12" => "13"
 UPDATE html/body/button/#text0 "3" => "4"
+UPDATE html/body/button/#text2 "12" => "13"
 UPDATE html/body/div/#text1 "3" => "4"
 UPDATE html/body/div/#text3 "12" => "13"
 ```

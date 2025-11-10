@@ -1,0 +1,13 @@
+<let/hide=true>
+<let/text="">
+<id/id>
+
+<div id=id>
+  <if=!hide && text.length>
+    <div>${text}</div>
+  </>
+</div>
+<script>
+  text = id;
+  hide = false;
+</script>

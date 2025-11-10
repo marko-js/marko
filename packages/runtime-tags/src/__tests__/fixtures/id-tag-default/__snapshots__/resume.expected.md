@@ -86,8 +86,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div2[id] "baz" => "cM_0"
 UPDATE html/body/div1[id] "sM_1" => "bar"
+UPDATE html/body/div2[id] "baz" => "cM_0"
 ```
 
 # Render
@@ -136,6 +136,6 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div2[id] "cM_0" => "baz"
 UPDATE html/body/div1[id] "bar" => "cM_1"
+UPDATE html/body/div2[id] "cM_0" => "baz"
 ```

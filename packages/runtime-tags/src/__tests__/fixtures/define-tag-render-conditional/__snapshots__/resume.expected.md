@@ -84,8 +84,8 @@ INSERT html/body/#comment0, html/body/div, html/body/#comment1
 REMOVE #comment after html/body/#comment1
 REMOVE div after html/body/#comment1
 REMOVE #text after html/body/#comment1
-UPDATE html/body/div/#text1 "" => "2"
 UPDATE html/body/button/#text "1" => "2"
+UPDATE html/body/div/#text1 "" => "2"
 ```
 
 # Render

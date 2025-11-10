@@ -77,6 +77,6 @@
 
 # Mutations
 ```
-UPDATE html/body/span/#text "‍" => "SPAN"
 UPDATE html/body/div/#text "‍" => "DIV"
+UPDATE html/body/span/#text "‍" => "SPAN"
 ```
