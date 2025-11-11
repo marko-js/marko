@@ -3,7 +3,6 @@ export const $walks = /* over(1), replace, over(1), replace, over(2) */"b%b%c";
 import { resolveAfter, rejectAfter } from "../../utils/resolve";
 import * as _ from "@marko/runtime-tags/debug/dom";
 _._enable_catch();
-_._enable_catch();
 const $await_content2__v = /* @__PURE__ */_._const("v", $scope => _._text($scope["#text/0"], $scope.v));
 const $await_content2__$params = /* @__PURE__ */_._const("$params3", $scope => $await_content2__v($scope, $scope.$params3[0]));
 const $catch_content2 = _._content_resume("__tests__/template.marko_5_content", "Rejected B", /* over(1) */"b");

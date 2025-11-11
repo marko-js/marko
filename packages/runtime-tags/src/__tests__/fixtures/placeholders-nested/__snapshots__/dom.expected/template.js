@@ -3,7 +3,6 @@ export const $walks = /* over(1), replace, over(2), replace, over(2) */"b%c%c";
 import { resolveAfter } from "../../utils/resolve";
 import * as _ from "@marko/runtime-tags/debug/dom";
 _._enable_catch();
-_._enable_catch();
 const $await_content3__data = /* @__PURE__ */_._const("data", $scope => _._text($scope["#text/0"], $scope.data));
 const $await_content3__$params = /* @__PURE__ */_._const("$params4", $scope => $await_content3__data($scope, $scope.$params4[0]));
 const $await_content2__data = /* @__PURE__ */_._const("data", $scope => _._text($scope["#text/0"], $scope.data));
