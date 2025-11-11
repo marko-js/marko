@@ -1,4 +1,4 @@
-// size: 19683 (min) 7533 (brotli)
+// size: 19686 (min) 7559 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -690,8 +690,8 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
   let scopeAccessor =
       "A" + (ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
     ownerSignal = (ownerScope) => {
-      let scopes = ownerScope[scopeAccessor];
-      scopes &&
+      let scopes = toArray(ownerScope[scopeAccessor]);
+      scopes.length &&
         queueRender(
           ownerScope,
           () => {
@@ -699,7 +699,7 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
           },
           -1,
           0,
-          (scopes = toArray(scopes))[0].L,
+          scopes[0].L,
         );
     };
   return ((ownerSignal._ = fn), ownerSignal);

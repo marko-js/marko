@@ -1,0 +1,11 @@
+<let/items=["hello"]>
+
+<div>
+  <for of=items>
+    <button onClick() {
+      el().textContent = items.join(", ");
+      items = [];
+    }>Test</button>
+  </for>
+  <div/el/>
+</div>

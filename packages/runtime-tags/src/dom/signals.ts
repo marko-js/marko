@@ -1,6 +1,6 @@
 import { _el_read_error, _hoist_read_error } from "../common/errors";
 import { decodeAccessor } from "../common/helpers";
-import { type Opt, toArray } from "../common/opt";
+import { toArray } from "../common/opt";
 import {
   type Accessor,
   AccessorPrefix,
@@ -91,8 +91,8 @@ export function _for_closure(
     ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor as number);
   const scopeAccessor = AccessorPrefix.BranchScopes + ownerLoopNodeAccessor;
   const ownerSignal = (ownerScope: Scope) => {
-    let scopes = ownerScope[scopeAccessor] as Opt<BranchScope>;
-    if (scopes) {
+    const scopes = toArray(ownerScope[scopeAccessor] as BranchScope);
+    if (scopes.length) {
       queueRender(
         ownerScope,
         () => {
@@ -107,7 +107,7 @@ export function _for_closure(
         },
         -1,
         0,
-        (scopes = toArray(scopes))[0][AccessorProp.Id],
+        scopes[0][AccessorProp.Id],
       );
     }
   };
