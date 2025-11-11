@@ -20,6 +20,7 @@ import {
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
+  getBranchRendererArgs,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
@@ -31,6 +32,7 @@ import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addValue,
   getSignal,
+  replaceNullishAndEmptyFunctionsWith0,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { toFirstExpressionOrBlock } from "../util/to-first-expression-or-block";
@@ -182,7 +184,9 @@ export default {
           return callRuntime(
             "_await",
             getScopeAccessorLiteral(nodeRef, true),
-            t.identifier(bodySection.name),
+            ...replaceNullishAndEmptyFunctionsWith0(
+              getBranchRendererArgs(bodySection),
+            ),
           );
         };
 

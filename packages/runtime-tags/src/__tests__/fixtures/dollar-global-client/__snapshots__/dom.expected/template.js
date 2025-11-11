@@ -4,13 +4,11 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 const $if_content2__setup = $scope => {
   _._text($scope["#text/0"], $scope.$global.x);
 };
-const $if_content2 = /* @__PURE__ */_._content_branch("<span class=hidden> </span>", /* next(1), get, out(1) */"D l", $if_content2__setup);
 const $if_content__setup = $scope => {
   _._text($scope["#text/0"], $scope.$global.x);
 };
-const $if_content = /* @__PURE__ */_._content_branch("<span> </span>", /* next(1), get, out(1) */"D l", $if_content__setup);
-const $if = /* @__PURE__ */_._if("#text/0", $if_content);
-const $if2 = /* @__PURE__ */_._if("#text/1", $if_content2);
+const $if = /* @__PURE__ */_._if("#text/0", "<span> </span>", /* next(1), get, out(1) */"D l", $if_content__setup);
+const $if2 = /* @__PURE__ */_._if("#text/1", "<span class=hidden> </span>", /* next(1), get, out(1) */"D l", $if_content2__setup);
 const $show__script = _._script("__tests__/template.marko_0_show", $scope => _._on($scope["#button/2"], "click", function () {
   $show($scope, !$scope.show);
 }));

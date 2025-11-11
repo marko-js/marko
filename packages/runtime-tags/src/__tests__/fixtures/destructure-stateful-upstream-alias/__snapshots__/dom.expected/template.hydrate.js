@@ -1,4 +1,4 @@
-// size: 484 (min) 261 (brotli)
+// size: 461 (min) 254 (brotli)
 const $list$1 = _._let(3, ($scope) =>
   _._return($scope, {
     list: $scope.d,
@@ -20,12 +20,6 @@ function $_return($scope) {
 const $for_content__item = _._const(2, ($scope) => _._text($scope.a, $scope.c)),
   $for_content__$params = _._const(1, ($scope) =>
     $for_content__item($scope, $scope.b[0]),
-  ),
-  $for_content = _._content_branch(
-    "<li> </li>",
-    "D l",
-    0,
-    $for_content__$params,
   );
 _._var_resume(
   "b0",
@@ -33,7 +27,7 @@ _._var_resume(
     ($list($scope, $scope.e.list), $clear($scope, $scope.e.clear));
   }),
 );
-const $for = _._for_of(3, $for_content),
+const $for = _._for_of(3, "<li> </li>", "D l", 0, $for_content__$params),
   $list = _._const(5, ($scope) => $for($scope, [$scope.f])),
   $clear__script = _._script("b1", ($scope) =>
     _._on($scope.c, "click", $scope.g),

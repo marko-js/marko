@@ -26,6 +26,7 @@ import {
 import { callRuntime } from "../util/runtime";
 import {
   ContentType,
+  getBranchRendererArgs,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
@@ -46,6 +47,7 @@ import {
 import {
   addValue,
   getSignal,
+  replaceNullishAndEmptyFunctionsWith0,
   setClosureSignalBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
@@ -279,7 +281,7 @@ export const IfTag = {
           const ifTagSection = getSection(ifTag);
           const ifTagExtra = branches[0][0].node.extra!;
           const nodeRef = getOptimizedOnlyChildNodeBinding(ifTag, ifTagSection);
-          const rendererIdentifiers: t.Identifier[] = [];
+
           let expr: t.Expression = t.numericLiteral(branches.length);
 
           for (let i = branches.length; i--; ) {
@@ -287,7 +289,6 @@ export const IfTag = {
             const [testAttr] = branchTag.node.attributes;
             const consequent = t.numericLiteral(branchBodySection ? i : -1);
             if (branchBodySection) {
-              rendererIdentifiers.push(t.identifier(branchBodySection.name));
               setClosureSignalBuilder(branchTag, (_closure, render) => {
                 return callRuntime(
                   "_if_closure",
@@ -306,10 +307,21 @@ export const IfTag = {
 
           const signal = getSignal(ifTagSection, nodeRef, "if");
           signal.build = () => {
+            const rendererArgs: (t.Expression | undefined)[] = [];
+            for (const [_, branchBodySection] of branches) {
+              if (branchBodySection) {
+                rendererArgs.push(
+                  ...getBranchRendererArgs(branchBodySection).slice(0, 3),
+                ); // Slice to 3 to ignore params
+              } else {
+                rendererArgs.push(undefined, undefined, undefined);
+              }
+            }
+
             return callRuntime(
               "_if",
               getScopeAccessorLiteral(nodeRef, true),
-              ...rendererIdentifiers.reverse(),
+              ...replaceNullishAndEmptyFunctionsWith0(rendererArgs),
             );
           };
           addValue(ifTagSection, ifTagExtra.referencedBindings, signal, expr);

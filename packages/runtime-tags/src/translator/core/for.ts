@@ -28,6 +28,7 @@ import {
 import { callRuntime } from "../util/runtime";
 import {
   ContentType,
+  getBranchRendererArgs,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
@@ -43,6 +44,7 @@ import {
 import {
   addValue,
   getSignal,
+  replaceNullishAndEmptyFunctionsWith0,
   setClosureSignalBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
@@ -278,7 +280,9 @@ export default {
           return callRuntime(
             forTypeToDOMRuntime(forType),
             getScopeAccessorLiteral(nodeRef, true),
-            t.identifier(bodySection.name),
+            ...replaceNullishAndEmptyFunctionsWith0(
+              getBranchRendererArgs(bodySection),
+            ),
           );
         };
 

@@ -198,6 +198,16 @@ const [_getScopeIdentifier] = createSectionState<t.Identifier>(
   () => t.identifier("undefined"),
 );
 
+export const [getBranchRendererArgs, setSectionRendererArgs] =
+  createSectionState<
+    [
+      template?: t.Expression,
+      walks?: t.Expression,
+      setup?: t.Expression,
+      params?: t.Expression,
+    ]
+  >("rendererExpression");
+
 export const getScopeIdentifier = (
   section: Section,
   ignoreDefault?: boolean,

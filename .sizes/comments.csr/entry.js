@@ -1,4 +1,4 @@
-// size: 757 (min) 416 (brotli)
+// size: 743 (min) 417 (brotli)
 const $if_content__setup = ($scope) => {
     ($scope.a,
       $if_content__comment_comments._($scope),
@@ -10,7 +10,6 @@ const $if_content__setup = ($scope) => {
   $if_content__id = _if_closure(4, 0, ($scope) =>
     $input_path($scope.a, $scope._.l),
   ),
-  $if_content = _content_branch("<ul></ul>", "/ b&", $if_content__setup),
   $for_content__id = _const(11, ($scope) => {
     (_attr($scope.a, "id", $scope.l), $if_content__id($scope));
   }),
@@ -33,7 +32,7 @@ const $if_content__setup = ($scope) => {
     ($for_content__input_path._($scope), $for_content__open($scope, !0));
   },
   $for_content__comment_text = _const(7, ($scope) => _text($scope.b, $scope.h)),
-  $for_content__if = _if(4, $if_content),
+  $for_content__if = _if(4, "<ul></ul>", "/ b&", $if_content__setup),
   $for_content__comment_comments = _const(8, ($scope) => {
     ($for_content__if($scope, $scope.i ? 0 : 1),
       $if_content__comment_comments($scope));
@@ -48,12 +47,10 @@ const $if_content__setup = ($scope) => {
   }),
   $for = _for_of(
     0,
-    _content_branch(
-      "<li><span> </span><button> </button><!></li>",
-      " E l D l%l",
-      $for_content__setup,
-      $for_content__$params,
-    ),
+    "<li><span> </span><button> </button><!></li>",
+    " E l D l%l",
+    $for_content__setup,
+    $for_content__$params,
   ),
   $input_comments = _const(3, ($scope) => $for($scope, [$scope.d])),
   $input_path = _const(4, $for_content__input_path);

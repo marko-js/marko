@@ -1,10 +1,9 @@
-// size: 303 (min) 182 (brotli)
+// size: 280 (min) 172 (brotli)
 const $if_content__count = _._if_closure(2, 0, ($scope) =>
     _._text($scope.a, $scope._.e),
   ),
   $if_content__setup = $if_content__count,
-  $if_content = _._content_branch("<span> </span>", "D l", $if_content__setup),
-  $if = _._if(2, $if_content),
+  $if = _._if(2, "<span> </span>", "D l", $if_content__setup),
   $show__script = _._script("a0", ($scope) =>
     _._on($scope.b, "click", function () {
       $show($scope, !$scope.d);

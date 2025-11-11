@@ -1,8 +1,7 @@
 export const $template = "<table><tbody></tbody></table><button>Toggle</button>";
 export const $walks = /* next(1), get, out(1), get, over(1) */"D l b";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $if_content = /* @__PURE__ */_._content_branch("<tr><td>Hi</td></tr>", /* over(1) */"b");
-const $if = /* @__PURE__ */_._if("#tbody/0", $if_content);
+const $if = /* @__PURE__ */_._if("#tbody/0", "<tr><td>Hi</td></tr>", /* over(1) */"b");
 const $show__script = _._script("__tests__/template.marko_0_show", $scope => _._on($scope["#button/1"], "click", function () {
   $show($scope, !$scope.show);
 }));

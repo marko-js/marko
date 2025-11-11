@@ -15,6 +15,7 @@ import {
   getSectionParentIsOwner,
   getSectionRegisterReasons,
   isDynamicClosure,
+  setSectionRendererArgs as setBranchRenderer,
 } from "../../util/sections";
 import {
   addStatement,
@@ -91,63 +92,65 @@ export default {
             !childSection.downstreamBinding ||
             bindingHasDownstreamExpressions(childSection.downstreamBinding)
           ) {
-            let renderer = getSectionParentIsOwner(childSection)
-              ? callRuntime(
-                  "_content_branch",
-                  ...replaceNullishAndEmptyFunctionsWith0([
-                    writes,
-                    walks,
-                    setup,
-                    tagParamsIdentifier,
-                  ]),
-                )
-              : callRuntime(
-                  getSectionRegisterReasons(childSection)
-                    ? "_content_resume"
-                    : "_content",
-                  t.stringLiteral(getResumeRegisterId(childSection, "content")),
-                  ...replaceNullishAndEmptyFunctionsWith0([
-                    writes,
-                    walks,
-                    setup,
-                    tagParamsIdentifier,
-                    childSection.hoisted || childSection.isHoistThrough
-                      ? getSectionInstancesAccessorLiteral(childSection)
-                      : undefined,
-                  ]),
-                );
+            if (getSectionParentIsOwner(childSection)) {
+              setBranchRenderer(childSection, [
+                writes,
+                walks,
+                setup,
+                tagParamsIdentifier,
+              ]);
+            } else {
+              let renderer = callRuntime(
+                getSectionRegisterReasons(childSection)
+                  ? "_content_resume"
+                  : "_content",
+                t.stringLiteral(getResumeRegisterId(childSection, "content")),
+                ...replaceNullishAndEmptyFunctionsWith0([
+                  writes,
+                  walks,
+                  setup,
+                  tagParamsIdentifier,
+                  childSection.hoisted || childSection.isHoistThrough
+                    ? getSectionInstancesAccessorLiteral(childSection)
+                    : undefined,
+                ]),
+              );
 
-            if (childSection.referencedLocalClosures) {
-              const objProps: t.ObjectExpression["properties"] = [];
-              forEach(childSection.referencedLocalClosures, (closure) => {
-                const closureSignal = getSignal(childSection, closure);
-                const key = toPropertyName(getScopeAccessor(closure, true));
-                if (signalHasStatements(closureSignal)) {
-                  const expr = getSignalFn(closureSignal);
-                  if (t.isFunction(expr) && t.isBlockStatement(expr.body)) {
-                    objProps.push(
-                      t.objectMethod("method", key, expr.params, expr.body),
-                    );
-                  } else {
-                    objProps.push(t.objectProperty(key, expr));
+              if (childSection.referencedLocalClosures) {
+                const objProps: t.ObjectExpression["properties"] = [];
+                forEach(childSection.referencedLocalClosures, (closure) => {
+                  const closureSignal = getSignal(childSection, closure);
+                  const key = toPropertyName(getScopeAccessor(closure, true));
+                  if (signalHasStatements(closureSignal)) {
+                    const expr = getSignalFn(closureSignal);
+                    if (t.isFunction(expr) && t.isBlockStatement(expr.body)) {
+                      objProps.push(
+                        t.objectMethod("method", key, expr.params, expr.body),
+                      );
+                    } else {
+                      objProps.push(t.objectProperty(key, expr));
+                    }
                   }
+                });
+
+                if (objProps.length) {
+                  renderer = callRuntime(
+                    "_content_closures",
+                    renderer,
+                    t.objectExpression(objProps),
+                  );
                 }
-              });
-
-              if (objProps.length) {
-                renderer = callRuntime(
-                  "_content_closures",
-                  renderer,
-                  t.objectExpression(objProps),
-                );
               }
-            }
 
-            program.node.body.push(
-              t.variableDeclaration("const", [
-                t.variableDeclarator(t.identifier(childSection.name), renderer),
-              ]),
-            );
+              program.node.body.push(
+                t.variableDeclaration("const", [
+                  t.variableDeclarator(
+                    t.identifier(childSection.name),
+                    renderer,
+                  ),
+                ]),
+              );
+            }
           }
 
           if (decls) {

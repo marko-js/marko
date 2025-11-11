@@ -1,4 +1,4 @@
-// size: 641 (min) 343 (brotli)
+// size: 618 (min) 345 (brotli)
 const $name__OR__write__script = _._script("a0", ($scope) => {
     ($scope.g(`mounted ${$scope.f}`),
       (_.$signal($scope, 0).onabort = () => {
@@ -25,13 +25,13 @@ const $name__OR__write__script = _._script("a0", ($scope) => {
   $for_content__$params = _._const(1, ($scope) =>
     $for_content__item($scope, $scope.b[0]),
   ),
-  $for_content = _._content_branch(
+  $for = _._for_of(
+    2,
     "<div> </div><span> </span><p> </p>",
     "/D lD lD l&",
     $for_content__setup,
     $for_content__$params,
   ),
-  $for = _._for_of(2, $for_content),
   $items__script = _._script("b1", ($scope) =>
     _._on($scope.a, "click", function () {
       $items($scope, $scope.d?.length ? $scope.d.slice(0, -1) : [1, 2, 3]);

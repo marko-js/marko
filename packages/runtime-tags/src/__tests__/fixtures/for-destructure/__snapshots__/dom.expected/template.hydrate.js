@@ -1,4 +1,4 @@
-// size: 442 (min) 237 (brotli)
+// size: 419 (min) 228 (brotli)
 const $for_content__name = _._const(4, ($scope) => _._text($scope.a, $scope.e)),
   $for_content__description = _._const(5, ($scope) =>
     _._text($scope.b, $scope.f),
@@ -10,13 +10,7 @@ const $for_content__name = _._const(4, ($scope) => _._text($scope.a, $scope.e)),
     ($for_content__name($scope, $scope.d.name),
       $for_content__description($scope, $scope.d.description));
   }),
-  $for_content = _._content_branch(
-    "<div><!>: <!></div>",
-    "D%c%l",
-    0,
-    $for_content__$params,
-  ),
-  $for = _._for_of(0, $for_content),
+  $for = _._for_of(0, "<div><!>: <!></div>", "D%c%l", 0, $for_content__$params),
   $items__script = _._script("a0", ($scope) => {
     (_._on($scope.b, "click", function () {
       $items($scope, [

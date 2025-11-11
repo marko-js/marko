@@ -24,7 +24,7 @@ export type Renderer = {
   ___localClosureValues?: Record<Accessor, unknown>;
 };
 
-type SetupFn = (scope: Scope) => void;
+export type SetupFn = (scope: Scope) => void;
 
 export function createBranch(
   $global: Scope[AccessorProp.Global],
@@ -75,7 +75,7 @@ export function setupBranch(renderer: Renderer, branch: BranchScope) {
 
 export function _content(
   id: string,
-  template: string | 0,
+  template?: string | 0,
   walks?: string | 0,
   setup?: { _: Signal<unknown> } | SetupFn | 0,
   params?: Signal<unknown> | 0,
@@ -146,15 +146,6 @@ export function _content_closures(
     instance.___localClosureValues = closureValues;
     return instance;
   };
-}
-
-export function _content_branch(
-  template: string | 0,
-  walks?: string | 0,
-  setup?: SetupFn | 0,
-  params?: Signal<unknown> | 0,
-) {
-  return _content("", template, walks, setup, params)();
 }
 
 const cloneCache: Partial<

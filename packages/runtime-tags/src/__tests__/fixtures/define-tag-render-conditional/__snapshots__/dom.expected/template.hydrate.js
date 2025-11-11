@@ -1,4 +1,4 @@
-// size: 304 (min) 217 (brotli)
+// size: 281 (min) 204 (brotli)
 const $MyTag_content__value = _._const(3, ($scope) =>
     _._text($scope.a, $scope.d),
   ),
@@ -6,12 +6,7 @@ const $MyTag_content__value = _._const(3, ($scope) =>
     $MyTag_content__value($scope.a, $scope._.e),
   ),
   $if_content__setup = $if_content__x,
-  $if_content = _._content_branch(
-    "<!><div>Hello <!></div><!>",
-    "b/Db%l&b",
-    $if_content__setup,
-  ),
-  $if = _._if(0, $if_content),
+  $if = _._if(0, "<!><div>Hello <!></div><!>", "b/Db%l&b", $if_content__setup),
   $show = _._let(3, ($scope) => $if($scope, $scope.d ? 0 : 1)),
   $x__script = _._script("a0", ($scope) =>
     _._on($scope.b, "click", function () {
