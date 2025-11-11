@@ -3,8 +3,6 @@ export const $walks = /* over(1), replace, over(1), replace, over(1), replace, o
 import { resolveAfter, rejectAfter } from "../../utils/resolve";
 import * as _ from "@marko/runtime-tags/debug/dom";
 _._enable_catch();
-_._enable_catch();
-_._enable_catch();
 const $await_content3__v = /* @__PURE__ */_._const("v", $scope => _._text($scope["#text/0"], $scope.v));
 const $await_content3__setup__script = _._script("__tests__/template.marko_9", $scope => _._on($scope["#button/1"], "click", function () {
   document.querySelector("button").textContent = "After";
