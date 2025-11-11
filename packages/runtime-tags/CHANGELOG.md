@@ -1,5 +1,16 @@
 # @marko/runtime-tags
 
+## 6.0.109
+
+### Patch Changes
+
+- [#2948](https://github.com/marko-js/marko/pull/2948) [`4a9d9dd`](https://github.com/marko-js/marko/commit/4a9d9dd563293c0856482f8465a92bf9b5645d87) Thanks [@rturnq](https://github.com/rturnq)! - perf: inline content branch calls
+
+- [#2949](https://github.com/marko-js/marko/pull/2949) [`6648a22`](https://github.com/marko-js/marko/commit/6648a2229084e3ae431c175fb283e41b9bb1dab5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow compiler import helper to be used outside of translate.
+
+- Updated dependencies [[`6648a22`](https://github.com/marko-js/marko/commit/6648a2229084e3ae431c175fb283e41b9bb1dab5)]:
+  - @marko/compiler@5.39.42
+
 ## 6.0.108
 
 ### Patch Changes

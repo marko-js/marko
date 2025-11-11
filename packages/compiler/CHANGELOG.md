@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.42
+
+### Patch Changes
+
+- [#2949](https://github.com/marko-js/marko/pull/2949) [`6648a22`](https://github.com/marko-js/marko/commit/6648a2229084e3ae431c175fb283e41b9bb1dab5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow compiler import helper to be used outside of translate.
+
 ## 5.39.41
 
 ### Patch Changes
