@@ -1,5 +1,5 @@
 export const $template = `<button> </button>${_child_template}<!>`;
-export const $walks = /* get, next(1), get, out(1), beginChildWithVar, _child_walks, endChild, over(1) */` D l0${_child_walks}&b`;
+export const $walks = /* get, next(1), get, out(1), <child/var>, over(1) */` D l0${_child_walks}&b`;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $input_value as _child_input_value, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 const $count__script = _._script("__tests__/template.marko_0_count", $scope => _._on($scope["#button/0"], "click", function () {

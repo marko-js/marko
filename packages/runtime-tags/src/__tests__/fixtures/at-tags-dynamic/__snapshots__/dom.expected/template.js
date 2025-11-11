@@ -1,5 +1,5 @@
 export const $template = `<!>${_hello_template}<!>`;
-export const $walks = /* over(1), beginChild, _hello_walks, endChild, over(1) */`b/${_hello_walks}&b`;
+export const $walks = /* over(1), <hello>, over(1) */`b/${_hello_walks}&b`;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _hello, $input_list_item as _hello_input_list_item, $input_col as _hello_input_col, $template as _hello_template, $walks as _hello_walks } from "./tags/hello/index.marko";
 const $row_content2 = _._content_resume("__tests__/template.marko_4_content", "Outside", /* over(1) */"b");

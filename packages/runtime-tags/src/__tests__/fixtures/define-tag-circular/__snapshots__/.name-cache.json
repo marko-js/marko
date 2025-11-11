@@ -1,0 +1,12 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$$Bar_content__setup": "_",
+      "$$if_content__setup": "a",
+      "$$if_content": "n",
+      "$$Foo_content__if": "o",
+      "$$Foo_content__tag_input_show": "c"
+    }
+  }
+}

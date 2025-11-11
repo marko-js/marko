@@ -1,5 +1,5 @@
 export const $template = `<!><!>${_thing_template}<!><!><!><!>`;
-export const $walks = /* over(1), replace, over(1), beginChild, _thing_walks, endChild, replace, over(1), replace, over(1), replace, over(2) */`b%b/${_thing_walks}&%b%b%c`;
+export const $walks = /* over(1), replace, over(1), <thing>, replace, over(1), replace, over(1), replace, over(2) */`b%b/${_thing_walks}&%b%b%c`;
 import Child from "./tags/child.marko";
 import { $setup as _thing, $input_value as _thing_input_value, $template as _thing_template, $walks as _thing_walks } from "./tags/thing.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";

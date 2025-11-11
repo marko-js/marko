@@ -13,7 +13,9 @@ const $content = input => {
         const $scope2_id = _._scope_id();
         const $childScope = _._peek_scope_id();
         _._set_serialize_reason({
-          /* input.comments, input.path */0: _._serialize_guard($scope0_reason, /* input.comments, input.path */0)
+          /* input.comments, input.path */0: _._serialize_guard($scope0_reason, /* input.comments, input.path */0),
+          /* input.comments */1: _._serialize_guard($scope0_reason, /* input.comments */1),
+          /* input.path */2: _._serialize_guard($scope0_reason, /* input.comments, input.path */0)
         });
         $content({
           comments: comment.comments,

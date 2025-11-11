@@ -202,13 +202,12 @@ export default {
             },
           );
 
-          const sectionMeta =
-            writer.getSectionMetaIdentifiers(definedBodySection);
-
-          if (sectionMeta.writes) {
-            write`${sectionMeta.writes}`;
-          }
-          walks.injectWalks(tag, sectionMeta.walks);
+          write`${() => writer.getSectionMetaIdentifiers(definedBodySection).writes || ""}`;
+          walks.injectWalks(
+            tag,
+            tag.get("name").toString(),
+            () => writer.getSectionMetaIdentifiers(definedBodySection).walks,
+          );
 
           tag.remove();
         }

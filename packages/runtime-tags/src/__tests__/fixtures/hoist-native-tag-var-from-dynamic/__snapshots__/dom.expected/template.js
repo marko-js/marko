@@ -1,5 +1,5 @@
 export const $template = `<!>${_child_template}<!><!><!>`;
-export const $walks = /* over(1), beginChild, _child_walks, endChild, replace, over(1), replace, over(2) */`b/${_child_walks}&%b%c`;
+export const $walks = /* over(1), <child>, replace, over(1), replace, over(2) */`b/${_child_walks}&%b%c`;
 import Child from "./tags/child.marko";
 import { $setup as _child, $input_content as _child_input_content, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
@@ -19,7 +19,7 @@ const $inputshowChildnull_content__setup = $scope => {
   _child_input_content($scope["#childScope/0"], $child_content2($scope));
   $inputshowChildnull_content__$hoisted_el($scope, $get$hoisted_el2($scope));
 };
-const $inputshowChildnull_content = _._content_resume("__tests__/template.marko_2_content", `<!>${_child_template}<!>`, /* over(1), beginChild, _child_walks, endChild, over(1) */`b/${_child_walks}&b`, $inputshowChildnull_content__setup, 0, "ClosureScopes:2");
+const $inputshowChildnull_content = _._content_resume("__tests__/template.marko_2_content", `<!>${_child_template}<!>`, /* over(1), <child>, over(1) */`b/${_child_walks}&b`, $inputshowChildnull_content__setup, 0, "ClosureScopes:2");
 const $get$hoisted_el4 = _._resume("__tests__/template.marko_0_$hoisted_el/hoist", _._hoist("Getter:#span/0", "ClosureScopes:1"));
 const $child_content = /* @__PURE__ */_._content("__tests__/template.marko_1_content", "<span></span>", /* get, over(1) */" b", 0, 0, "ClosureScopes:1");
 const $hoisted_el6__script = _._script("__tests__/template.marko_0_$hoisted_el3", $scope => {

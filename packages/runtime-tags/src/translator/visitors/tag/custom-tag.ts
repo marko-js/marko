@@ -145,7 +145,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     );
 
     write`${t.identifier(childExports.template)}`;
-    walks.injectWalks(tag, t.identifier(childExports.walks));
+    walks.injectWalks(tag, tagName, t.identifier(childExports.walks));
   } else {
     knownTagTranslateDOM(
       tag,
@@ -180,6 +180,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     write`${importNamed(file, relativePath, childExports.template, `${tagName}_template`)}`;
     walks.injectWalks(
       tag,
+      tagName,
       importNamed(file, relativePath, childExports.walks, `${tagName}_walks`),
     );
   }

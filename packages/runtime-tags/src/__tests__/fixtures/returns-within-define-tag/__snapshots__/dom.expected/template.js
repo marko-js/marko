@@ -1,5 +1,5 @@
 export const $template = "<!><button class=once> </button><button class=twice> </button>";
-export const $walks = /* over(1), beginChildWithVar, Once, endChild, get, next(1), get, out(1), beginChildWithVar, Twice, endChild, get, next(1), get, out(1) */"b0& D l0& D l";
+export const $walks = /* over(1), <Once/var>, get, next(1), get, out(1), <Twice/var>, get, next(1), get, out(1) */"b0& D l0& D l";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $Twice_content__value__OR__call = /* @__PURE__ */_._or(4, $scope => _._return($scope, $_return2($scope)));
 const $Twice_content__call = /* @__PURE__ */_._let("call/3", $Twice_content__value__OR__call);

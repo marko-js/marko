@@ -1,7 +1,7 @@
 const $Child_content__walks = /* next(1), get, out(1), next(1), get, out(1) */"D lD l",
   $Child_content__template = "<div> </div><div> </div>";
 export const $template = `${_child_template}${$Child_content__template}<!>`;
-export const $walks = /* beginChild, _child_walks, endChild, beginChild, $Child_content__walks, endChild, over(1) */`/${_child_walks}&/${$Child_content__walks}&b`;
+export const $walks = /* <child>, <Child>, over(1) */`/${_child_walks}&/${$Child_content__walks}&b`;
 import { $setup as _child, $input_a as _child_input_a, $input_b as _child_input_b, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $Child_content__input_a = /* @__PURE__ */_._const("input_a", $scope => _._text($scope["#text/0"], $scope.input_a));

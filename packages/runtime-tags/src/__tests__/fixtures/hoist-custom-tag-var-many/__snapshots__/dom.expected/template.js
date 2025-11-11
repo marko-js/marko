@@ -8,7 +8,7 @@ const $for_content4__setup = $scope => {
   _._var($scope, "#childScope/0", $for_content4__setHtml);
   _child($scope["#childScope/0"]);
 };
-const $for_content3__for = /* @__PURE__ */_._for_to("#ul/0", _child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $for_content4__setup);
+const $for_content3__for = /* @__PURE__ */_._for_to("#ul/0", _child_template, /* <child/var> */`0${_child_walks}&`, $for_content4__setup);
 const $for_content3__setup = $scope => {
   $for_content3__for($scope, [3, 0, 1]);
 };
@@ -24,8 +24,8 @@ const $for_content__setup = $scope => {
   _._var($scope, "#childScope/0", $for_content__setHtml);
   _child($scope["#childScope/0"]);
 };
-const $for = /* @__PURE__ */_._for_to("#text/0", _child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $for_content__setup);
-const $for2 = /* @__PURE__ */_._for_to("#text/1", _child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $for_content2__setup);
+const $for = /* @__PURE__ */_._for_to("#text/0", _child_template, /* <child/var> */`0${_child_walks}&`, $for_content__setup);
+const $for2 = /* @__PURE__ */_._for_to("#text/1", _child_template, /* <child/var> */`0${_child_walks}&`, $for_content2__setup);
 const $to = /* @__PURE__ */_._let("to/3", $scope => $for2($scope, [$scope.to, 0, 1]));
 const $for3 = /* @__PURE__ */_._for_to("#text/2", "<ul></ul>", /* get, over(1) */" b", $for_content3__setup);
 const $hoisted_setHtml4__script = _._script("__tests__/template.marko_0_$hoisted_setHtml3", $scope => {

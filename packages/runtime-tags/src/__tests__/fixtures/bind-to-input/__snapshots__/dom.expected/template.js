@@ -1,5 +1,5 @@
 export const $template = `${_counter_template}${_counter_template}`;
-export const $walks = /* beginChild, _counter_walks, endChild, beginChild, _counter_walks, endChild */`/${_counter_walks}&/${_counter_walks}&`;
+export const $walks = /* <counter>, <counter> */`/${_counter_walks}&/${_counter_walks}&`;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _counter, $input_content as _counter_input_content, $count as _counter_input_count, $countChange2 as _counter_input_countChange, $input_id as _counter_input_id, $template as _counter_template, $walks as _counter_walks } from "./tags/counter.marko";
 const $counter_content2__x = /* @__PURE__ */_._closure_get("x", $scope => _._text($scope["#text/0"], $scope._.x));

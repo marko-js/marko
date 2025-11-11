@@ -9,7 +9,7 @@ const $await_content__setup = $scope => {
   $await_content__input_level($scope);
 };
 const $await_content__input_level = /* @__PURE__ */_._closure_get("input_level", $scope => $input_level($scope["#childScope/0"], $scope._._._.input_level - 1), $scope => $scope._._._);
-const $try_content__await = /* @__PURE__ */_._await("#text/0", `<!>${$template}<!>`, /* over(1), beginChild, $walks, endChild, over(1) */`b/${$walks}&b`, $await_content__setup);
+const $try_content__await = /* @__PURE__ */_._await("#text/0", `<!>${$template}<!>`, /* over(1), <recurse>, over(1) */`b/${$walks}&b`, $await_content__setup);
 const $try_content__setup = $scope => {
   $try_content__await($scope, new Promise(setImmediate));
 };

@@ -20,6 +20,7 @@ import {
 import {
   addStatement,
   getResumeRegisterId,
+  getSetup,
   getSignal,
   getSignalFn,
   initValue,
@@ -36,8 +37,10 @@ import { scopeIdentifier } from ".";
 export default {
   translate: {
     exit(program) {
+      forEachSectionReverse(writer.getSectionMeta);
+
       const section = getSectionForBody(program)!;
-      const { walks, writes, setup, decls } = writer.getSectionMeta(section);
+      const { walks, writes, decls } = writer.getSectionMeta(section);
       const domExports = program.node.extra.domExports!;
       const templateIdentifier = t.identifier(domExports.template);
       const walksIdentifier = t.identifier(domExports.walks);
@@ -83,8 +86,8 @@ export default {
             tagParamsSignal && signalHasStatements(tagParamsSignal)
               ? tagParamsSignal.identifier
               : undefined;
-          const { walks, writes, setup, decls } =
-            writer.getSectionMeta(childSection);
+          const { walks, writes, decls } = writer.getSectionMeta(childSection);
+          const setup = getSetup(childSection);
 
           writeSignals(childSection);
 
@@ -154,7 +157,7 @@ export default {
           }
 
           if (decls) {
-            extraDecls = extraDecls ? [...extraDecls, ...decls] : decls;
+            extraDecls = extraDecls ? [...decls, ...extraDecls] : decls;
           }
         }
       });
@@ -162,7 +165,7 @@ export default {
       writeSignals(section);
       writeRegisteredFns();
 
-      if (!setup) {
+      if (!getSetup(section)) {
         program.node.body.unshift(
           t.exportNamedDeclaration(
             t.variableDeclaration("const", [

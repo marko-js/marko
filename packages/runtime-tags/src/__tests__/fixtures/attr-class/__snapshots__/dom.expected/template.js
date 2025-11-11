@@ -1,5 +1,5 @@
 export const $template = `<div class=a></div><div class="a b"></div><div class="a b c"></div>${_customTag_template}${_customTag_template}<!><!>`;
-export const $walks = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(2) */` d/${_customTag_walks}&/${_customTag_walks}&%c`;
+export const $walks = /* get, over(3), <custom-tag>, <custom-tag>, replace, over(2) */` d/${_customTag_walks}&/${_customTag_walks}&%c`;
 import CustomTag from "./tags/custom-tag.marko";
 const TestTag = CustomTag;
 import * as _ from "@marko/runtime-tags/debug/dom";

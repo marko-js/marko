@@ -1,7 +1,7 @@
 const $MyTag_content__walks = /* next(1), over(1), replace, over(2), replace, out(1), get, next(1), get, out(1) */"Db%c%l D l",
   $MyTag_content__template = "<div>Hello <!> <!></div><button> </button>";
 export const $template = `<!>${$MyTag_content__template}<!>`;
-export const $walks = /* over(1), beginChild, $MyTag_content__walks, endChild, over(1) */`b/${$MyTag_content__walks}&b`;
+export const $walks = /* over(1), <MyTag>, over(1) */`b/${$MyTag_content__walks}&b`;
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $MyTag_content__y__script = _._script("__tests__/template.marko_1_y", $scope => _._on($scope["#button/2"], "click", function () {
   $MyTag_content__y($scope, $scope.y + 1);
