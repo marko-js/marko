@@ -19,14 +19,11 @@ import {
 import { callRuntime } from "./runtime";
 import { getSerializeGuard } from "./serialize-guard";
 import type { SerializeReason } from "./serialize-reasons";
-import { getSetup } from "./signals";
 import { createSectionState } from "./state";
 import { getWalkString } from "./walks";
 
-const [getWrites] = createSectionState<(string | t.Expression)[]>(
-  "writes",
-  () => [""],
-);
+type Write = string | t.Expression | (() => undefined | string | t.Expression);
+const [getWrites] = createSectionState<Write[]>("writes", () => [""]);
 
 const [getTrailerWrites] = createSectionState<(string | t.Expression)[]>(
   "trailerWrites",
@@ -36,10 +33,7 @@ const [getTrailerWrites] = createSectionState<(string | t.Expression)[]>(
 export function writeTo(path: t.NodePath<any>, trailer?: boolean) {
   const section = getSection(path);
   const get = trailer ? getTrailerWrites : getWrites;
-  return (
-    strs: TemplateStringsArray,
-    ...exprs: Array<string | t.Expression>
-  ): void => {
+  return (strs: TemplateStringsArray, ...exprs: Write[]): void => {
     const exprsLen = exprs.length;
     const writes = get(section);
     appendLiteral(writes, strs[0]);
@@ -54,7 +48,7 @@ export function consumeHTML(path: t.NodePath<any>) {
   const section = getSection(path);
   const writes = getWrites(section);
   const trailers = getTrailerWrites(section);
-  const writeResult = normalizeStringExpression(writes);
+  const writeResult = normalizeStringExpression(writes.map(unwrapWrite));
   const trailerResult = normalizeStringExpression(trailers);
   writes.length = 0;
   writes[0] = "";
@@ -95,7 +89,6 @@ export function flushInto(
 }
 
 interface SectionMeta {
-  setup: t.Expression | undefined;
   walks: t.Expression | undefined;
   writes: t.Expression | undefined;
   decls: t.VariableDeclarator[] | undefined;
@@ -110,9 +103,12 @@ export const [getSectionMeta] = createSectionState<SectionMeta>(
       section.content?.endType === ContentType.Dynamic ? "<!>" : "";
     const writes = getWrites(section);
     const meta = {
-      setup: getSetup(section),
       walks: getWalkString(section),
-      writes: normalizeStringExpression([writePrefix, ...writes, writePostfix]),
+      writes: normalizeStringExpression([
+        writePrefix,
+        ...writes.map(unwrapWrite),
+        writePostfix,
+      ]),
       decls: undefined,
     };
     return meta;
@@ -166,4 +162,8 @@ export function markNode(
       )}`;
     }
   }
+}
+
+function unwrapWrite(write: Write) {
+  return typeof write === "function" ? write() || "" : write;
 }

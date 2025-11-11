@@ -1,5 +1,5 @@
 export const $template = `<!>${_child_template}<!><!><!><!>`;
-export const $walks = /* over(1), beginChildWithVar, _child_walks, endChild, dynamicTagWithVar, over(1), dynamicTagWithVar, over(1), dynamicTagWithVar, over(2) */`b0${_child_walks}&1b1b1c`;
+export const $walks = /* over(1), <child/var>, dynamicTagWithVar, over(1), dynamicTagWithVar, over(1), dynamicTagWithVar, over(2) */`b0${_child_walks}&1b1b1c`;
 import child from "./tags/child/index.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child/index.marko";

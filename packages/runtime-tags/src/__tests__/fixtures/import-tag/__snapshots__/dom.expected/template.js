@@ -1,5 +1,5 @@
 export const $template = `<!>${_Baz_template}${_Baz_template}${_Baz_template}<!>`;
-export const $walks = /* over(1), beginChild, _Baz_walks, endChild, beginChild, _Baz_walks, endChild, beginChild, _Baz_walks, endChild, replace, over(1) */`b/${_Baz_walks}&/${_Baz_walks}&/${_Baz_walks}&%b`;
+export const $walks = /* over(1), <Baz>, <Baz>, <baz>, replace, over(1) */`b/${_Baz_walks}&/${_Baz_walks}&/${_Baz_walks}&%b`;
 import "./foo";
 import { b as c } from "./bar";
 import Baz from "./tags/baz.marko";

@@ -1,7 +1,7 @@
 const $MyTag_content__walks = /* next(1), over(1), replace, over(2), replace, out(1) */"Db%c%l",
   $MyTag_content__template = "<div>Hello <!> <!></div>";
 export const $template = `<button> </button>${$MyTag_content__template}<!>`;
-export const $walks = /* get, next(1), get, out(1), beginChild, $MyTag_content__walks, endChild, over(1) */` D l/${$MyTag_content__walks}&b`;
+export const $walks = /* get, next(1), get, out(1), <MyTag>, over(1) */` D l/${$MyTag_content__walks}&b`;
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $MyTag_content__name = /* @__PURE__ */_._const("name", $scope => _._text($scope["#text/0"], $scope.name));
 const $MyTag_content__count = /* @__PURE__ */_._const("count", $scope => _._text($scope["#text/1"], $scope.count));

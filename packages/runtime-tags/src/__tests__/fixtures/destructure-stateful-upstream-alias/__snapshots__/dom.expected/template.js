@@ -1,5 +1,5 @@
 export const $template = `${_store_template}<button>Clear</button><ul></ul>`;
-export const $walks = /* beginChildWithVar, _store_walks, endChild, get, over(1), get, over(1) */`0${_store_walks}& b b`;
+export const $walks = /* <store/var>, get, over(1), get, over(1) */`0${_store_walks}& b b`;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _store, $input_value as _store_input_value, $template as _store_template, $walks as _store_walks } from "./tags/store.marko";
 const $for_content__item = /* @__PURE__ */_._const("item", $scope => _._text($scope["#text/0"], $scope.item));

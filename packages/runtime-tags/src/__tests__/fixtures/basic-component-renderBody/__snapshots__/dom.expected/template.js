@@ -1,5 +1,5 @@
 export const $template = _myButton_template;
-export const $walks = /* beginChild, _myButton_walks, endChild */`/${_myButton_walks}&`;
+export const $walks = /* <my-button> */`/${_myButton_walks}&`;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _myButton, $content as _myButton_input_content, $onClick as _myButton_input_onClick, $template as _myButton_template, $walks as _myButton_walks } from "./tags/my-button.marko";
 const $mybutton_content__clickCount = /* @__PURE__ */_._closure_get("clickCount", $scope => _._text($scope["#text/0"], $scope._.clickCount));

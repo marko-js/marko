@@ -1,5 +1,5 @@
 export const $template = _counter_template;
-export const $walks = /* beginChild, _counter_walks, endChild */`/${_counter_walks}&`;
+export const $walks = /* <counter> */`/${_counter_walks}&`;
 import { formatNumber } from "./helpers";
 import { $setup as _counter, $input as _counter_input, $template as _counter_template, $walks as _counter_walks } from "./tags/counter.marko";
 export function $setup($scope) {

@@ -10,10 +10,8 @@ import { createSectionState } from "./state";
 import { withLeadingComment } from "./with-comment";
 import { writeTo } from "./writer";
 
-const [getWalks] = createSectionState<(string | t.Expression)[]>(
-  "walks",
-  () => [""],
-);
+type Walk = string | t.Expression | (() => undefined | string | t.Expression);
+const [getWalks] = createSectionState<Walk[]>("walks", () => [""]);
 const [getWalkComment] = createSectionState<(string | t.Expression)[]>(
   "walkComment",
   () => [],
@@ -73,17 +71,14 @@ export function enterShallow(path: t.NodePath<any>) {
 
 export function injectWalks(
   tag: t.NodePath<t.MarkoTag>,
-  expr: t.Expression | undefined,
+  name: string,
+  expr: Walk,
 ) {
   const section = getSection(tag);
   const walks = getWalks(section);
   const walkComment = getWalkComment(section);
   visitInternal(section);
-  walkComment.push(
-    `${walkCodeToName[tag.node.var ? WalkCode.BeginChildWithVar : WalkCode.BeginChild]}`,
-    expr && t.isIdentifier(expr) ? expr.name : tag.get("name").toString(),
-    walkCodeToName[WalkCode.EndChild],
-  );
+  walkComment.push(`<${name}${tag.node.var ? "/var" : ""}>`);
   appendLiteral(
     walks,
     String.fromCharCode(
@@ -210,9 +205,13 @@ export function getWalkString(section: Section) {
 
   visitInternal(section);
   const walks = getWalks(section);
-  const walkLiteral = normalizeStringExpression(walks);
+  const walkLiteral = normalizeStringExpression(walks.map(unwrapWalk));
   if (walkLiteral && (walkLiteral as t.StringLiteral).value !== "") {
     withLeadingComment(walkLiteral, getWalkComment(section).join(", "));
   }
   return walkLiteral;
+}
+
+function unwrapWalk(walk: Walk) {
+  return typeof walk === "function" ? walk() || "" : walk;
 }

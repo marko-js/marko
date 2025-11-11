@@ -1,5 +1,5 @@
 export const $template = `<!>${_BazComp_template}${_BazComp_template}<!>`;
-export const $walks = /* over(1), beginChild, _BazComp_walks, endChild, beginChild, _BazComp_walks, endChild, over(1) */`b/${_BazComp_walks}&/${_BazComp_walks}&b`;
+export const $walks = /* over(1), <BazComp>, <BazComp>, over(1) */`b/${_BazComp_walks}&/${_BazComp_walks}&b`;
 import BazComp from "./tags/baz.marko";
 import { $setup as _BazComp, $template as _BazComp_template, $walks as _BazComp_walks } from "./tags/baz.marko";
 export function $setup($scope) {

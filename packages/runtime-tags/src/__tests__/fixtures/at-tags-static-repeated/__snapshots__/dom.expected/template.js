@@ -1,5 +1,5 @@
 export const $template = `<!>${_list_template}<!>`;
-export const $walks = /* over(1), beginChild, _list_walks, endChild, over(1) */`b/${_list_walks}&b`;
+export const $walks = /* over(1), <list>, over(1) */`b/${_list_walks}&b`;
 import { $setup as _list, $input_item as _list_input_item, $template as _list_template, $walks as _list_walks } from "./tags/list/index.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $item_content2 = /* @__PURE__ */_._content("__tests__/template.marko_2_content", "Again", /* over(1) */"b");

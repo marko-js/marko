@@ -409,7 +409,10 @@ export function trackHoistedReference(
   );
 }
 
-function isReferenceHoisted(bindingPath: t.NodePath, reference: t.NodePath) {
+export function isReferenceHoisted(
+  bindingPath: t.NodePath,
+  reference: t.NodePath,
+) {
   const tag = bindingPath.isMarkoTag()
     ? bindingPath
     : getMarkoRoot(bindingPath)?.parentPath;
@@ -1101,8 +1104,8 @@ export function finalizeReferences() {
     }
   }
 
+  forEachSection(finalizeParamSerializeReasonGroups);
   forEachSectionReverse((section) => {
-    finalizeParamSerializeReasonGroups(section);
     finalizeKnownTags(section);
     finalizeSerializeReason(section);
     // TODO: this duplication is needed when a known tag is circular. We should find a better way.

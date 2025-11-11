@@ -1,5 +1,5 @@
 export const $template = `<!>${_customTag_template}`;
-export const $walks = /* over(1), beginChild, _customTag_walks, endChild */`b/${_customTag_walks}&`;
+export const $walks = /* over(1), <custom-tag> */`b/${_customTag_walks}&`;
 import { $setup as _customTag, $thing2 as _customTag_input_thing, $template as _customTag_template, $walks as _customTag_walks } from "./tags/custom-tag/index.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $thing_content2 = /* @__PURE__ */_._content("__tests__/template.marko_2_content", "Goodbye", /* over(1) */"b");

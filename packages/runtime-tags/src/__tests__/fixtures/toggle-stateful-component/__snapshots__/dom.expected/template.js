@@ -7,7 +7,7 @@ const $if_content__setup = $scope => {
 };
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $if_content__onCount = /* @__PURE__ */_._if_closure("#div/0", 0, $scope => _counter_input_onCount($scope["#childScope/0"], $scope._.onCount));
-const $if = /* @__PURE__ */_._if("#div/0", `<div>${_counter_template}</div>`, /* next(1), beginChild, _counter_walks, endChild, out(1) */`D/${_counter_walks}&l`, $if_content__setup);
+const $if = /* @__PURE__ */_._if("#div/0", `<div>${_counter_template}</div>`, /* next(1), <counter>, out(1) */`D/${_counter_walks}&l`, $if_content__setup);
 const $show = /* @__PURE__ */_._let("show/1", $scope => $if($scope, $scope.show ? 0 : 1));
 const $onCount2 = /* @__PURE__ */_._const("onCount");
 export function $setup($scope) {

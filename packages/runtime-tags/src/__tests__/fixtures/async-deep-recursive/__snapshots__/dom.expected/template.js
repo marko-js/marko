@@ -1,5 +1,5 @@
 export const $template = `<!>${_recurse_template}<!>`;
-export const $walks = /* over(1), beginChild, _recurse_walks, endChild, over(1) */`b/${_recurse_walks}&b`;
+export const $walks = /* over(1), <recurse>, over(1) */`b/${_recurse_walks}&b`;
 import { $setup as _recurse, $input_level as _recurse_input_level, $template as _recurse_template, $walks as _recurse_walks } from "./tags/recurse.marko";
 export function $setup($scope) {
   _recurse($scope["#childScope/0"]);

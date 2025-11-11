@@ -1,7 +1,7 @@
 const $Foo_content2__walks = /* over(1), replace, over(2) */"b%c",
   $Foo_content2__template = "<!><!><!>";
 export const $template = `<button>Increment</button>${$Foo_content2__template}<!>`;
-export const $walks = /* get, over(1), beginChild, $Foo_content2__walks, endChild, over(1) */` b/${$Foo_content2__walks}&b`;
+export const $walks = /* get, over(1), <Foo>, over(1) */` b/${$Foo_content2__walks}&b`;
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $Foo_content2__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, 0, 1);
 const $Foo_content2__input_content__OR__input_value = /* @__PURE__ */_._or(5, $scope => $Foo_content2__dynamicTag($scope, $scope.input_content, () => [$scope.input_value]));

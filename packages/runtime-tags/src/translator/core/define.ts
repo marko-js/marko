@@ -7,6 +7,7 @@ import {
   BindingType,
   dropReferences,
   getAllTagReferenceNodes,
+  isReferenceHoisted,
   mergeReferences,
   setBindingDownstream,
   trackParamsReferences,
@@ -59,6 +60,12 @@ export default {
         const babelBinding = tag.scope.getBinding(tag.node.var.name)!;
         let allDirectReferences = true;
         for (const ref of babelBinding.referencePaths) {
+          if (isReferenceHoisted(babelBinding.path, ref)) {
+            throw ref.buildCodeFrameError(
+              "Hoisted values must be functions. The `<define>` tag variable may not be hoisted. Please move the `<define>` tag prior to any references or extract to a separate `.marko` file.",
+            );
+          }
+
           if (ref.parent.type === "MarkoTag" && ref.parent.name === ref.node) {
             (ref.parent.extra ??= {}).defineBodySection = bodySection;
             dropReferences(ref.parent.name);

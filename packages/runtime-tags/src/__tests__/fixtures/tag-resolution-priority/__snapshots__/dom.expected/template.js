@@ -1,5 +1,5 @@
 export const $template = `<div></div>${_foo_template}<!><!>`;
-export const $walks = /* over(1), beginChild, _foo_walks, endChild, replace, over(2) */`b/${_foo_walks}&%c`;
+export const $walks = /* over(1), <foo>, replace, over(2) */`b/${_foo_walks}&%c`;
 const div = "span";
 const foo = "div";
 const Bar = "div";

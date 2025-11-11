@@ -1,5 +1,5 @@
 export const $template = `${_child_template}<!>`;
-export const $walks = /* beginChild, _child_walks, endChild, over(1) */`/${_child_walks}&b`;
+export const $walks = /* <child>, over(1) */`/${_child_walks}&b`;
 import { $setup as _child, $content as _child_input_content, $name as _child_input_name, $template as _child_template, $walks as _child_walks } from "./tags/child/index.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $child_content = /* @__PURE__ */_._content("__tests__/template.marko_1_content", "This is the body content", /* over(1) */"b");

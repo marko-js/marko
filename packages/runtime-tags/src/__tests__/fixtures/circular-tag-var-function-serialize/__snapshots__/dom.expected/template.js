@@ -8,7 +8,7 @@ const $if_content__setup = $scope => {
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $if_content__setter = /* @__PURE__ */_._if_closure("#text/0", 0, $scope => _child_input_valueChange($scope["#childScope/0"], $valueChange($scope)));
 const $setter2 = /* @__PURE__ */_._const("setter");
-const $if = /* @__PURE__ */_._if("#text/0", _child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, $if_content__setup);
+const $if = /* @__PURE__ */_._if("#text/0", _child_template, /* <child> */`/${_child_walks}&`, $if_content__setup);
 export function $setup($scope) {
   /* value */0;
   $setter2($scope, $setter($scope));

@@ -1,5 +1,5 @@
 export const $template = `<div></div>${_child_template}`;
-export const $walks = /* get, over(1), beginChild, _child_walks, endChild */` b/${_child_walks}&`;
+export const $walks = /* get, over(1), <child> */` b/${_child_walks}&`;
 import { $setup as _child, $input as _child_input, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $getdiv = _._el("__tests__/template.marko_0/#div", "#div/0");

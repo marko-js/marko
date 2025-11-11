@@ -1,5 +1,5 @@
 export const $template = `<!>${_hello_template}<button>Toggle</button>`;
-export const $walks = /* over(1), beginChild, _hello_walks, endChild, get, over(1) */`b/${_hello_walks}& b`;
+export const $walks = /* over(1), <hello>, get, over(1) */`b/${_hello_walks}& b`;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _hello, $input_item as _hello_input_item, $template as _hello_template, $walks as _hello_walks } from "./tags/hello/index.marko";
 const $item_content__y = /* @__PURE__ */_._const("y", $scope => _._text($scope["#text/0"], $scope.y));

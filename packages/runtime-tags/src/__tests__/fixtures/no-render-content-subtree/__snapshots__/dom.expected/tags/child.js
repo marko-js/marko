@@ -1,5 +1,5 @@
 export const $template = _myConst_template;
-export const $walks = /* beginChildWithVar, _myConst_walks, endChild */`0${_myConst_walks}&`;
+export const $walks = /* <my-const/var> */`0${_myConst_walks}&`;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _myConst, $input_value as _myConst_input_value, $template as _myConst_template, $walks as _myConst_walks } from "./my-const.marko";
 const $input__OR__x__script = _._script("__tests__/tags/child.marko_0_input_x", $scope => ($scope.input.output().innerHTML = $scope.x));
