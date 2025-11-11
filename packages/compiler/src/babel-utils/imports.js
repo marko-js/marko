@@ -127,9 +127,6 @@ export function importStar(file, request, nameHint) {
 }
 
 function getImports(file) {
-  if (file.___compileStage !== "translate") {
-    throw new Error("Unable to add an import outside of translate");
-  }
   let imports = file.metadata.marko[IMPORTS_KEY];
 
   if (!imports) {
