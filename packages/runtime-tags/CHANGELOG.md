@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.108
+
+### Patch Changes
+
+- [#2946](https://github.com/marko-js/marko/pull/2946) [`956b82d`](https://github.com/marko-js/marko/commit/956b82d4bd053c8b0f7c8ee51e35bd467d97fe96) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression when a for loop closure removes all items.
+
 ## 6.0.107
 
 ### Patch Changes
