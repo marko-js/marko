@@ -1,10 +1,9 @@
-// size: 210 (min) 150 (brotli)
+// size: 187 (min) 137 (brotli)
 const $if_content__setup = _._script(
     "a0",
     ($scope) => ($scope._.a.textContent = "Hit"),
   ),
-  $if_content = _._content_branch(0, 0, $if_content__setup),
-  $if = _._if(3, $if_content),
+  $if = _._if(3, 0, 0, $if_content__setup),
   $count__script = _._script("a1", ($scope) =>
     _._on($scope.b, "click", function () {
       $count($scope, $scope.e + 1);

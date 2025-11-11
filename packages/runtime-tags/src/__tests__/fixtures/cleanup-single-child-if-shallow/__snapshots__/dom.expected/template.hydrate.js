@@ -1,4 +1,4 @@
-// size: 409 (min) 244 (brotli)
+// size: 386 (min) 236 (brotli)
 const $input__script = _._script("a0", ($scope) => {
     ($scope.b.write("mounted"),
       (_.$signal($scope, 0).onabort = () => {
@@ -11,12 +11,7 @@ const $input__script = _._script("a0", ($scope) => {
   $if_content__setup = ($scope) => {
     ($scope.a, $input($scope.a, { write: $write($scope) }));
   },
-  $if_content = _._content_branch(
-    "<div>child</div>",
-    "/b&",
-    $if_content__setup,
-  ),
-  $if = _._if(2, $if_content),
+  $if = _._if(2, "<div>child</div>", "/b&", $if_content__setup),
   $show__script = _._script("b1", ($scope) =>
     _._on($scope.a, "click", function () {
       $show($scope, !$scope.d);

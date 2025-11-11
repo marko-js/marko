@@ -1,4 +1,4 @@
-// size: 19686 (min) 7559 (brotli)
+// size: 19684 (min) 7547 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -909,9 +909,6 @@ function _content_closures(renderer, closureFns) {
     );
   };
 }
-function _content_branch(template, walks, setup, params) {
-  return _content("", template, walks, setup, params)();
-}
 var cloneCache = {};
 function _attr(element, name, value) {
   setAttribute(element, name, normalizeAttrValue(value));
@@ -1160,9 +1157,10 @@ function toInsertNode(startNode, endNode) {
   }
   return parent;
 }
-function _await(nodeAccessor, renderer) {
+function _await(nodeAccessor, template, walks, setup, params) {
   let promiseAccessor = "L" + (nodeAccessor = decodeAccessor(nodeAccessor)),
-    branchAccessor = "A" + nodeAccessor;
+    branchAccessor = "A" + nodeAccessor,
+    renderer = _content("", template, walks, setup)();
   return (
     enableBranches(),
     (scope, promise) => {
@@ -1226,7 +1224,7 @@ function _await(nodeAccessor, renderer) {
                         referenceNode,
                       ),
                       referenceNode.remove()),
-                  renderer.a?.(awaitBranch, [data]),
+                  params?.(awaitBranch, [data]),
                   tryWithPlaceholder &&
                     (placeholderShown.add(pendingEffects),
                     !--tryWithPlaceholder.O))
@@ -1260,14 +1258,15 @@ function _await(nodeAccessor, renderer) {
     }
   );
 }
-function _try(nodeAccessor, content) {
-  let branchAccessor = "A" + (nodeAccessor = decodeAccessor(nodeAccessor));
+function _try(nodeAccessor, template, walks, setup) {
+  let branchAccessor = "A" + (nodeAccessor = decodeAccessor(nodeAccessor)),
+    renderer = _content("", template, walks, setup)();
   return (scope, input) => {
     scope[branchAccessor] ||
       setConditionalRenderer(
         scope,
         nodeAccessor,
-        content,
+        renderer,
         createAndSetupBranch,
       );
     let branch = scope[branchAccessor];
@@ -1297,8 +1296,14 @@ function renderCatch(scope, error) {
       tryWithCatch.E.a?.(owner["A" + tryWithCatch.C], [error]));
   }
 }
-function _if(nodeAccessor, ...branches) {
-  let branchAccessor = "D" + (nodeAccessor = decodeAccessor(nodeAccessor));
+function _if(nodeAccessor, ...branchesArgs) {
+  let branchAccessor = "D" + (nodeAccessor = decodeAccessor(nodeAccessor)),
+    branches = [],
+    i = 0;
+  for (; i < branchesArgs.length; )
+    branches.push(
+      _content("", branchesArgs[i++], branchesArgs[i++], branchesArgs[i++])(),
+    );
   return (
     enableBranches(),
     (scope, newBranch) => {
@@ -1429,203 +1434,201 @@ function setConditionalRenderer(
         (insertBranchBefore(newBranch, parentNode, referenceNode),
         referenceNode.remove());
 }
-function _for_of(nodeAccessor, renderer) {
-  return loop(nodeAccessor, renderer, ([all, by = bySecondArg], cb) => {
+var _for_of = loop(([all, by = bySecondArg], cb) => {
     forOf(
       all,
       "string" == typeof by
         ? (item, i) => cb(item[by], [item, i])
         : (item, i) => cb(by(item, i), [item, i]),
     );
-  });
-}
-function _for_in(nodeAccessor, renderer) {
-  return loop(nodeAccessor, renderer, ([obj, by = byFirstArg], cb) =>
+  }),
+  _for_in = loop(([obj, by = byFirstArg], cb) =>
     forIn(obj, (key, value) => cb(by(key, value), [key, value])),
-  );
-}
-function _for_to(nodeAccessor, renderer) {
-  return loop(nodeAccessor, renderer, ([to, from, step, by = byFirstArg], cb) =>
+  ),
+  _for_to = loop(([to, from, step, by = byFirstArg], cb) =>
     forTo(to, from, step, (v) => cb(by(v), [v])),
+  ),
+  _for_until = loop(([until, from, step, by = byFirstArg], cb) =>
+    forUntil(until, from, step, (v) => cb(by(v), [v])),
   );
-}
-function _for_until(nodeAccessor, renderer) {
-  return loop(
-    nodeAccessor,
-    renderer,
-    ([until, from, step, by = byFirstArg], cb) =>
-      forUntil(until, from, step, (v) => cb(by(v), [v])),
-  );
-}
-function loop(nodeAccessor, renderer, forEach) {
-  nodeAccessor = decodeAccessor(nodeAccessor);
-  let params = renderer.a,
-    scopesAccessor = "A" + nodeAccessor,
-    scopesByKeyAccessor = "A" + scopesAccessor;
-  return (
-    enableBranches(),
-    (scope, value) => {
-      let referenceNode = scope[nodeAccessor],
-        oldScopes = toArray(scope[scopesAccessor]),
-        oldScopesByKey =
-          scope[scopesByKeyAccessor] ||
-          oldScopes.reduce(
-            (map, scope2, i) => map.set(scope2.M ?? i, scope2),
-            new Map(),
-          ),
-        newScopes = (scope[scopesAccessor] = []),
-        newScopesByKey = (scope[scopesByKeyAccessor] = new Map()),
-        parentNode =
-          referenceNode.nodeType > 1
-            ? referenceNode.parentNode || oldScopes[0]?.S.parentNode
-            : referenceNode;
-      forEach(value, (key, args) => {
-        let branch =
-          oldScopesByKey.get(key) ||
-          createAndSetupBranch(scope.$, renderer, scope, parentNode);
-        (params?.(branch, args),
-          newScopesByKey.set(key, branch),
-          newScopes.push(branch));
-      });
-      let afterReference = null;
-      (referenceNode !== parentNode &&
-        (oldScopes.length
-          ? ((afterReference = oldScopes[oldScopes.length - 1].K.nextSibling),
-            newScopes.length ||
-              parentNode.insertBefore(referenceNode, afterReference))
-          : newScopes.length &&
-            ((afterReference = referenceNode.nextSibling),
-            referenceNode.remove())),
-        (function (parent, oldBranches, newBranches, afterReference) {
-          let i,
-            j,
-            k,
-            nextSibling,
-            oldBranch,
-            newBranch,
-            oldStart = 0,
-            newStart = 0,
-            oldEnd = oldBranches.length - 1,
-            newEnd = newBranches.length - 1,
-            oldStartBranch = oldBranches[oldStart],
-            newStartBranch = newBranches[newStart],
-            oldEndBranch = oldBranches[oldEnd],
-            newEndBranch = newBranches[newEnd];
-          outer: {
-            for (; oldStartBranch === newStartBranch; ) {
-              if (
-                (++oldStart, ++newStart, oldStart > oldEnd || newStart > newEnd)
-              )
-                break outer;
-              ((oldStartBranch = oldBranches[oldStart]),
-                (newStartBranch = newBranches[newStart]));
-            }
-            for (; oldEndBranch === newEndBranch; ) {
-              if ((--oldEnd, --newEnd, oldStart > oldEnd || newStart > newEnd))
-                break outer;
-              ((oldEndBranch = oldBranches[oldEnd]),
-                (newEndBranch = newBranches[newEnd]));
-            }
-          }
-          if (oldStart > oldEnd) {
-            if (newStart <= newEnd) {
-              ((k = newEnd + 1),
-                (nextSibling =
-                  k < newBranches.length ? newBranches[k].S : afterReference));
-              do {
-                insertBranchBefore(
-                  newBranches[newStart++],
-                  parent,
-                  nextSibling,
-                );
-              } while (newStart <= newEnd);
-            }
-          } else if (newStart > newEnd)
-            do {
-              removeAndDestroyBranch(oldBranches[oldStart++]);
-            } while (oldStart <= oldEnd);
-          else {
-            let oldLength = oldEnd - oldStart + 1,
-              newLength = newEnd - newStart + 1,
-              aNullable = oldBranches,
-              sources = new Array(newLength);
-            for (i = 0; i < newLength; ++i) sources[i] = -1;
-            let pos = 0,
-              synced = 0,
-              keyIndex = new Map();
-            for (j = newStart; j <= newEnd; ++j)
-              keyIndex.set(newBranches[j], j);
-            for (i = oldStart; i <= oldEnd && synced < newLength; ++i)
-              ((oldBranch = oldBranches[i]),
-                (j = keyIndex.get(oldBranch)),
-                void 0 !== j &&
-                  ((pos = pos > j ? 2147483647 : j),
-                  ++synced,
-                  (newBranch = newBranches[j]),
-                  (sources[j - newStart] = i),
-                  (aNullable[i] = null)));
-            if (oldLength === oldBranches.length && 0 === synced) {
-              for (; newStart < newLength; ++newStart)
-                insertBranchBefore(
-                  newBranches[newStart],
-                  parent,
-                  afterReference,
-                );
-              for (; oldStart < oldLength; ++oldStart)
-                removeAndDestroyBranch(oldBranches[oldStart]);
-            } else {
-              for (i = oldLength - synced; i > 0; )
-                ((oldBranch = aNullable[oldStart++]),
-                  null !== oldBranch &&
-                    (removeAndDestroyBranch(oldBranch), i--));
-              if (2147483647 === pos) {
-                let seq = (function (a) {
-                  let u,
-                    v,
-                    p = a.slice(),
-                    result = [0];
-                  for (let i = 0, il = a.length; i < il; ++i) {
-                    if (-1 === a[i]) continue;
-                    let j = result[result.length - 1];
-                    if (a[j] < a[i]) ((p[i] = j), result.push(i));
-                    else {
-                      for (u = 0, v = result.length - 1; u < v; ) {
-                        let c = ((u + v) / 2) | 0;
-                        a[result[c]] < a[i] ? (u = c + 1) : (v = c);
-                      }
-                      a[i] < a[result[u]] &&
-                        (u > 0 && (p[i] = result[u - 1]), (result[u] = i));
-                    }
-                  }
-                  for (u = result.length, v = result[u - 1]; u-- > 0; )
-                    ((result[u] = v), (v = p[v]));
-                  return result;
-                })(sources);
-                for (
-                  j = seq.length - 1, k = newBranches.length, i = newLength - 1;
-                  i >= 0;
-                  --i
+function loop(forEach) {
+  return (nodeAccessor, template, walks, setup, params) => {
+    let scopesAccessor = "A" + (nodeAccessor = decodeAccessor(nodeAccessor)),
+      scopesByKeyAccessor = "A" + scopesAccessor,
+      renderer = _content("", template, walks, setup)();
+    return (
+      enableBranches(),
+      (scope, value) => {
+        let referenceNode = scope[nodeAccessor],
+          oldScopes = toArray(scope[scopesAccessor]),
+          oldScopesByKey =
+            scope[scopesByKeyAccessor] ||
+            oldScopes.reduce(
+              (map, scope2, i) => map.set(scope2.M ?? i, scope2),
+              new Map(),
+            ),
+          newScopes = (scope[scopesAccessor] = []),
+          newScopesByKey = (scope[scopesByKeyAccessor] = new Map()),
+          parentNode =
+            referenceNode.nodeType > 1
+              ? referenceNode.parentNode || oldScopes[0]?.S.parentNode
+              : referenceNode;
+        forEach(value, (key, args) => {
+          let branch =
+            oldScopesByKey.get(key) ||
+            createAndSetupBranch(scope.$, renderer, scope, parentNode);
+          (params?.(branch, args),
+            newScopesByKey.set(key, branch),
+            newScopes.push(branch));
+        });
+        let afterReference = null;
+        (referenceNode !== parentNode &&
+          (oldScopes.length
+            ? ((afterReference = oldScopes[oldScopes.length - 1].K.nextSibling),
+              newScopes.length ||
+                parentNode.insertBefore(referenceNode, afterReference))
+            : newScopes.length &&
+              ((afterReference = referenceNode.nextSibling),
+              referenceNode.remove())),
+          (function (parent, oldBranches, newBranches, afterReference) {
+            let i,
+              j,
+              k,
+              nextSibling,
+              oldBranch,
+              newBranch,
+              oldStart = 0,
+              newStart = 0,
+              oldEnd = oldBranches.length - 1,
+              newEnd = newBranches.length - 1,
+              oldStartBranch = oldBranches[oldStart],
+              newStartBranch = newBranches[newStart],
+              oldEndBranch = oldBranches[oldEnd],
+              newEndBranch = newBranches[newEnd];
+            outer: {
+              for (; oldStartBranch === newStartBranch; ) {
+                if (
+                  (++oldStart,
+                  ++newStart,
+                  oldStart > oldEnd || newStart > newEnd)
                 )
-                  -1 === sources[i] || j < 0 || i !== seq[j]
-                    ? ((pos = i + newStart),
+                  break outer;
+                ((oldStartBranch = oldBranches[oldStart]),
+                  (newStartBranch = newBranches[newStart]));
+              }
+              for (; oldEndBranch === newEndBranch; ) {
+                if (
+                  (--oldEnd, --newEnd, oldStart > oldEnd || newStart > newEnd)
+                )
+                  break outer;
+                ((oldEndBranch = oldBranches[oldEnd]),
+                  (newEndBranch = newBranches[newEnd]));
+              }
+            }
+            if (oldStart > oldEnd) {
+              if (newStart <= newEnd) {
+                ((k = newEnd + 1),
+                  (nextSibling =
+                    k < newBranches.length
+                      ? newBranches[k].S
+                      : afterReference));
+                do {
+                  insertBranchBefore(
+                    newBranches[newStart++],
+                    parent,
+                    nextSibling,
+                  );
+                } while (newStart <= newEnd);
+              }
+            } else if (newStart > newEnd)
+              do {
+                removeAndDestroyBranch(oldBranches[oldStart++]);
+              } while (oldStart <= oldEnd);
+            else {
+              let oldLength = oldEnd - oldStart + 1,
+                newLength = newEnd - newStart + 1,
+                aNullable = oldBranches,
+                sources = new Array(newLength);
+              for (i = 0; i < newLength; ++i) sources[i] = -1;
+              let pos = 0,
+                synced = 0,
+                keyIndex = new Map();
+              for (j = newStart; j <= newEnd; ++j)
+                keyIndex.set(newBranches[j], j);
+              for (i = oldStart; i <= oldEnd && synced < newLength; ++i)
+                ((oldBranch = oldBranches[i]),
+                  (j = keyIndex.get(oldBranch)),
+                  void 0 !== j &&
+                    ((pos = pos > j ? 2147483647 : j),
+                    ++synced,
+                    (newBranch = newBranches[j]),
+                    (sources[j - newStart] = i),
+                    (aNullable[i] = null)));
+              if (oldLength === oldBranches.length && 0 === synced) {
+                for (; newStart < newLength; ++newStart)
+                  insertBranchBefore(
+                    newBranches[newStart],
+                    parent,
+                    afterReference,
+                  );
+                for (; oldStart < oldLength; ++oldStart)
+                  removeAndDestroyBranch(oldBranches[oldStart]);
+              } else {
+                for (i = oldLength - synced; i > 0; )
+                  ((oldBranch = aNullable[oldStart++]),
+                    null !== oldBranch &&
+                      (removeAndDestroyBranch(oldBranch), i--));
+                if (2147483647 === pos) {
+                  let seq = (function (a) {
+                    let u,
+                      v,
+                      p = a.slice(),
+                      result = [0];
+                    for (let i = 0, il = a.length; i < il; ++i) {
+                      if (-1 === a[i]) continue;
+                      let j = result[result.length - 1];
+                      if (a[j] < a[i]) ((p[i] = j), result.push(i));
+                      else {
+                        for (u = 0, v = result.length - 1; u < v; ) {
+                          let c = ((u + v) / 2) | 0;
+                          a[result[c]] < a[i] ? (u = c + 1) : (v = c);
+                        }
+                        a[i] < a[result[u]] &&
+                          (u > 0 && (p[i] = result[u - 1]), (result[u] = i));
+                      }
+                    }
+                    for (u = result.length, v = result[u - 1]; u-- > 0; )
+                      ((result[u] = v), (v = p[v]));
+                    return result;
+                  })(sources);
+                  for (
+                    j = seq.length - 1,
+                      k = newBranches.length,
+                      i = newLength - 1;
+                    i >= 0;
+                    --i
+                  )
+                    -1 === sources[i] || j < 0 || i !== seq[j]
+                      ? ((pos = i + newStart),
+                        (newBranch = newBranches[pos++]),
+                        (nextSibling =
+                          pos < k ? newBranches[pos].S : afterReference),
+                        insertBranchBefore(newBranch, parent, nextSibling))
+                      : --j;
+                } else if (synced !== newLength)
+                  for (k = newBranches.length, i = newLength - 1; i >= 0; --i)
+                    -1 === sources[i] &&
+                      ((pos = i + newStart),
                       (newBranch = newBranches[pos++]),
                       (nextSibling =
                         pos < k ? newBranches[pos].S : afterReference),
-                      insertBranchBefore(newBranch, parent, nextSibling))
-                    : --j;
-              } else if (synced !== newLength)
-                for (k = newBranches.length, i = newLength - 1; i >= 0; --i)
-                  -1 === sources[i] &&
-                    ((pos = i + newStart),
-                    (newBranch = newBranches[pos++]),
-                    (nextSibling =
-                      pos < k ? newBranches[pos].S : afterReference),
-                    insertBranchBefore(newBranch, parent, nextSibling));
+                      insertBranchBefore(newBranch, parent, nextSibling));
+              }
             }
-          }
-        })(parentNode, oldScopes, newScopes, afterReference));
-    }
-  );
+          })(parentNode, oldScopes, newScopes, afterReference));
+      }
+    );
+  };
 }
 function createBranchWithTagNameOrRenderer(
   $global,
@@ -1834,7 +1837,7 @@ var classIdToBranch = new Map(),
           )
         : value,
     createRenderer(params, clone) {
-      let renderer = _content_branch(0, 0, 0, params);
+      let renderer = _content("", 0, 0, 0, params)();
       return (
         (renderer.f = (branch) => {
           let cloned = clone();

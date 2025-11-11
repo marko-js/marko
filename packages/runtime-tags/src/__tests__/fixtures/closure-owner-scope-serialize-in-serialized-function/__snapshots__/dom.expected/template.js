@@ -5,9 +5,8 @@ const $if_content__run__script = _._script("__tests__/template.marko_1_run", $sc
 const $if_content__run = /* @__PURE__ */_._const("run", $if_content__run__script);
 const $if_content__text = /* @__PURE__ */_._if_closure("#text/0", 0, $scope => $if_content__run($scope, $run($scope)));
 const $if_content__setup = $if_content__text;
-const $if_content = /* @__PURE__ */_._content_branch("<div></div>", /* get, over(1) */" b", $if_content__setup);
 const $text2 = /* @__PURE__ */_._const("text");
-const $if = /* @__PURE__ */_._if("#text/0", $if_content);
+const $if = /* @__PURE__ */_._if("#text/0", "<div></div>", /* get, over(1) */" b", $if_content__setup);
 export function $setup($scope) {
   $text2($scope, $text);
   $if($scope, 1 ? 0 : 1);

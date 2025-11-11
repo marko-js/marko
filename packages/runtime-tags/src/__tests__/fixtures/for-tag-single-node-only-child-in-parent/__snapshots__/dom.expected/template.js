@@ -1,8 +1,7 @@
 export const $template = "<div></div>";
 export const $walks = /* get, over(1) */" b";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $for_content = /* @__PURE__ */_._content_branch("<div></div>", /* over(1) */"b");
-const $for = /* @__PURE__ */_._for_of("#div/0", $for_content);
+const $for = /* @__PURE__ */_._for_of("#div/0", "<div></div>", /* over(1) */"b");
 const $children__script = _._script("__tests__/template.marko_0_children", $scope => {
   if ($scope.children?.length === 1) {
     $children($scope, [...$scope.children, 2]);

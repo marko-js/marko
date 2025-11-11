@@ -4,12 +4,11 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _store, $input_value as _store_input_value, $template as _store_template, $walks as _store_walks } from "./tags/store.marko";
 const $for_content__item = /* @__PURE__ */_._const("item", $scope => _._text($scope["#text/0"], $scope.item));
 const $for_content__$params = /* @__PURE__ */_._const("$params2", $scope => $for_content__item($scope, $scope.$params2[0]));
-const $for_content = /* @__PURE__ */_._content_branch("<li> </li>", /* next(1), get, out(1) */"D l", 0, $for_content__$params);
 const $store = _._var_resume("__tests__/template.marko_0_store/var", /* @__PURE__ */_._const("store", $scope => {
   $list($scope, $scope.store.list);
   $clear($scope, $scope.store.clear);
 }));
-const $for = /* @__PURE__ */_._for_of("#ul/3", $for_content);
+const $for = /* @__PURE__ */_._for_of("#ul/3", "<li> </li>", /* next(1), get, out(1) */"D l", 0, $for_content__$params);
 const $list = /* @__PURE__ */_._const("list", $scope => $for($scope, [$scope.list]));
 const $clear__script = _._script("__tests__/template.marko_0_clear", $scope => _._on($scope["#button/2"], "click", $scope.clear));
 const $clear = /* @__PURE__ */_._const("clear", $clear__script);

@@ -1,18 +1,12 @@
-// size: 303 (min) 175 (brotli)
+// size: 257 (min) 175 (brotli)
 const $if_content2__setup = ($scope) => {
     _._text($scope.a, $scope.$.x);
   },
-  $if_content2 = _._content_branch(
-    "<span class=hidden> </span>",
-    "D l",
-    $if_content2__setup,
-  ),
   $if_content__setup = ($scope) => {
     _._text($scope.a, $scope.$.x);
   },
-  $if_content = _._content_branch("<span> </span>", "D l", $if_content__setup),
-  $if = _._if(0, $if_content),
-  $if2 = _._if(1, $if_content2),
+  $if = _._if(0, "<span> </span>", "D l", $if_content__setup),
+  $if2 = _._if(1, "<span class=hidden> </span>", "D l", $if_content2__setup),
   $show__script = _._script("a0", ($scope) =>
     _._on($scope.c, "click", function () {
       $show($scope, !$scope.d);

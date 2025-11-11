@@ -9,7 +9,6 @@ const $if_content__setup = $scope => {
 };
 const $if_content__comment_comments = /* @__PURE__ */_._if_closure("#text/4", 0, $scope => $input_comments($scope["#childScope/0"], $scope._.comment_comments));
 const $if_content__id = /* @__PURE__ */_._if_closure("#text/4", 0, $scope => $input_path($scope["#childScope/0"], $scope._.id));
-const $if_content = /* @__PURE__ */_._content_branch($template, /* beginChild, $walks, endChild */`/${$walks}&`, $if_content__setup);
 const $for_content__id = /* @__PURE__ */_._const("id", $scope => {
   _._attr($scope["#li/0"], "id", $scope.id);
   $if_content__id($scope);
@@ -30,7 +29,7 @@ const $for_content__setup = $scope => {
   $for_content__open($scope, true);
 };
 const $for_content__comment_text = /* @__PURE__ */_._const("comment_text", $scope => _._text($scope["#text/1"], $scope.comment_text));
-const $for_content__if = /* @__PURE__ */_._if("#text/4", $if_content);
+const $for_content__if = /* @__PURE__ */_._if("#text/4", $template, /* beginChild, $walks, endChild */`/${$walks}&`, $if_content__setup);
 const $for_content__comment_comments = /* @__PURE__ */_._const("comment_comments", $scope => {
   $for_content__if($scope, $scope.comment_comments ? 0 : 1);
   $if_content__comment_comments($scope);
@@ -43,8 +42,7 @@ const $for_content__comment = /* @__PURE__ */_._const("comment", $scope => {
   $for_content__comment_text($scope, $scope.comment?.text);
   $for_content__comment_comments($scope, $scope.comment?.comments);
 });
-const $for_content = /* @__PURE__ */_._content_branch("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace, out(1) */" E l D l%l", $for_content__setup, $for_content__$params);
-const $for = /* @__PURE__ */_._for_of("#ul/0", $for_content);
+const $for = /* @__PURE__ */_._for_of("#ul/0", "<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace, out(1) */" E l D l%l", $for_content__setup, $for_content__$params);
 export const $input_comments = /* @__PURE__ */_._const("input_comments", $scope => $for($scope, [$scope.input_comments]));
 export const $input_path = /* @__PURE__ */_._const("input_path", $for_content__input_path);
 export const $input = /* @__PURE__ */_._const("input", $scope => {

@@ -11,8 +11,7 @@ const $try_content__setup = $scope => {
     throw new Error("ERROR!");
   })());
 };
-const $try_content = /* @__PURE__ */_._content_branch("b<!>", /* over(1), replace, over(1) */"b%b", $try_content__setup);
-const $try = /* @__PURE__ */_._try("#text/0", $try_content);
+const $try = /* @__PURE__ */_._try("#text/0", "b<!>", /* over(1), replace, over(1) */"b%b", $try_content__setup);
 export function $setup($scope) {
   $try($scope, {
     catch: _.attrTag({

@@ -9,19 +9,17 @@ const $if_content2__setup = $scope => {
   $if_content2__bar($scope);
   $if_content2__foo._($scope);
 };
-const $if_content2 = /* @__PURE__ */_._content_branch("<div> </div>", /* next(1), get, out(1) */"D l", $if_content2__setup);
 const $if_content__foo = /* @__PURE__ */_._const("foo");
 const $if_content__setup = $scope => {
   $if_content__input_b._($scope);
   $if_content__foo($scope, "foo");
 };
-const $if_content__if = /* @__PURE__ */_._if("#text/0", $if_content2);
+const $if_content__if = /* @__PURE__ */_._if("#text/0", "<div> </div>", /* next(1), get, out(1) */"D l", $if_content2__setup);
 const $if_content__input_b = /* @__PURE__ */_._if_closure("#text/0", 0, $scope => $if_content__if($scope, $scope._.input_b ? 0 : 1));
-const $if_content = /* @__PURE__ */_._content_branch("<!><!><!>", /* over(1), replace, over(2) */"b%c", $if_content__setup);
 const $bar2__closure = /* @__PURE__ */_._closure($if_content2__bar);
 const $bar2 = /* @__PURE__ */_._const("bar", $bar2__closure);
 export const $input_c = /* @__PURE__ */_._const("input_c", $scope => $bar2($scope, $bar($scope)));
-const $if = /* @__PURE__ */_._if("#text/0", $if_content);
+const $if = /* @__PURE__ */_._if("#text/0", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $if_content__setup);
 export const $input_a = /* @__PURE__ */_._const("input_a", $scope => $if($scope, $scope.input_a ? 0 : 1));
 export const $input = /* @__PURE__ */_._const("input", $scope => {
   $input_c($scope, $scope.input.c);

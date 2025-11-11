@@ -8,8 +8,7 @@ const $for_content__$temp = /* @__PURE__ */_._const("$temp", $scope => {
   $for_content__name($scope, $scope.$temp.name);
   $for_content__description($scope, $scope.$temp.description);
 });
-const $for_content = /* @__PURE__ */_._content_branch("<div><!>: <!></div>", /* next(1), replace, over(2), replace, out(1) */"D%c%l", 0, $for_content__$params);
-const $for = /* @__PURE__ */_._for_of("#text/0", $for_content);
+const $for = /* @__PURE__ */_._for_of("#text/0", "<div><!>: <!></div>", /* next(1), replace, over(2), replace, out(1) */"D%c%l", 0, $for_content__$params);
 const $items__script = _._script("__tests__/template.marko_0_items", $scope => {
   _._on($scope["#button/1"], "click", function () {
     $items($scope, [...$scope.items, {

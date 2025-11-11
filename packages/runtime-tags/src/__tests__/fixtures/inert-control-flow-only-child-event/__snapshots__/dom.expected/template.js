@@ -9,9 +9,8 @@ const $for_content__i = /* @__PURE__ */_._const("i", $scope => {
 });
 const $for_content__setup = $for_content__selected;
 const $for_content__$params = /* @__PURE__ */_._const("$params2", $scope => $for_content__i($scope, $scope.$params2[0]));
-const $for_content = /* @__PURE__ */_._content_branch("<option> </option>", /* get, next(1), get, out(1) */" D l", $for_content__setup, $for_content__$params);
 const $selected = /* @__PURE__ */_._let("selected/1", $for_content__selected);
-const $for = /* @__PURE__ */_._for_until("#select/0", $for_content);
+const $for = /* @__PURE__ */_._for_until("#select/0", "<option> </option>", /* get, next(1), get, out(1) */" D l", $for_content__setup, $for_content__$params);
 const $setup__script = _._script("__tests__/template.marko_0", $scope => _._on($scope["#select/0"], "change", function (e) {
   $selected($scope, e.target.value);
 }));

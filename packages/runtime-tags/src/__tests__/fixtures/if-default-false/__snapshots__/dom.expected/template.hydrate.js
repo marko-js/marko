@@ -1,6 +1,5 @@
-// size: 150 (min) 128 (brotli)
-const $if_content = _._content_branch("hi", "b"),
-  $if = _._if(1, $if_content),
+// size: 127 (min) 114 (brotli)
+const $if = _._if(1, "hi", "b"),
   $show__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", function () {
       $show($scope, !$scope.c);

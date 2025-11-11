@@ -13,8 +13,7 @@ const $try_content__setup = $scope => {
   })());
   $try_content__setup__script($scope);
 };
-const $try_content = /* @__PURE__ */_._content_branch(" ", /* get, over(1) */" b", $try_content__setup);
-const $try = /* @__PURE__ */_._try("#text/1", $try_content);
+const $try = /* @__PURE__ */_._try("#text/1", " ", /* get, over(1) */" b", $try_content__setup);
 const $setup__script = _._script("__tests__/template.marko_0", $scope => (_._el_read($scope["#div/2"]).textContent = "This is good"));
 export function $setup($scope) {
   $try($scope, {

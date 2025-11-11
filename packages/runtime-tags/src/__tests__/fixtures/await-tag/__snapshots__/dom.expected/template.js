@@ -6,17 +6,14 @@ const $await_content3__value = /* @__PURE__ */_._const("value", $scope => _._tex
 const $await_content3__count = /* @__PURE__ */_._closure_get("count", $scope => _._text($scope["#text/1"], $scope._.count));
 const $await_content3__setup = $await_content3__count;
 const $await_content3__$params = /* @__PURE__ */_._const("$params4", $scope => $await_content3__value($scope, $scope.$params4[0]));
-const $await_content3 = /* @__PURE__ */_._content_branch("Got: <!> <!>", /* over(1), replace, over(2), replace, over(1) */"b%c%b", $await_content3__setup, $await_content3__$params);
 const $await_content2__value = /* @__PURE__ */_._const("value", $scope => _._text($scope["#text/0"], $scope.value));
 const $await_content2__count = /* @__PURE__ */_._closure_get("count", $scope => _._text($scope["#text/1"], $scope._.count));
 const $await_content2__setup = $await_content2__count;
 const $await_content2__$params = /* @__PURE__ */_._const("$params3", $scope => $await_content2__value($scope, $scope.$params3[0]));
-const $await_content2 = /* @__PURE__ */_._content_branch("Got: <!> <!>", /* over(1), replace, over(2), replace, over(1) */"b%c%b", $await_content2__setup, $await_content2__$params);
 const $await_content__value = /* @__PURE__ */_._const("value", $scope => _._text($scope["#text/0"], $scope.value));
 const $await_content__count = /* @__PURE__ */_._closure_get("count", $scope => _._text($scope["#text/1"], $scope._.count));
 const $await_content__setup = $await_content__count;
 const $await_content__$params = /* @__PURE__ */_._const("$params2", $scope => $await_content__value($scope, $scope.$params2[0]));
-const $await_content = /* @__PURE__ */_._content_branch("Got: <!> <!>", /* over(1), replace, over(2), replace, over(1) */"b%c%b", $await_content__setup, $await_content__$params);
 const $count__closure = /* @__PURE__ */_._closure($await_content__count, $await_content2__count, $await_content3__count);
 const $count__script = _._script("__tests__/template.marko_0_count", $scope => _._on($scope["#button/3"], "click", function () {
   $count($scope, $scope.count + 1);
@@ -25,9 +22,9 @@ const $count = /* @__PURE__ */_._let("count/4", $scope => {
   $count__closure($scope);
   $count__script($scope);
 });
-const $await = /* @__PURE__ */_._await("#text/0", $await_content);
-const $await2 = /* @__PURE__ */_._await("#text/1", $await_content2);
-const $await3 = /* @__PURE__ */_._await("#text/2", $await_content3);
+const $await = /* @__PURE__ */_._await("#text/0", "Got: <!> <!>", /* over(1), replace, over(2), replace, over(1) */"b%c%b", $await_content__setup, $await_content__$params);
+const $await2 = /* @__PURE__ */_._await("#text/1", "Got: <!> <!>", /* over(1), replace, over(2), replace, over(1) */"b%c%b", $await_content2__setup, $await_content2__$params);
+const $await3 = /* @__PURE__ */_._await("#text/2", "Got: <!> <!>", /* over(1), replace, over(2), replace, over(1) */"b%c%b", $await_content3__setup, $await_content3__$params);
 export function $setup($scope) {
   $count($scope, 0);
   $await($scope, Promise.resolve("a"));

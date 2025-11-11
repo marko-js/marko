@@ -14,7 +14,6 @@ const $if_content__x__script = _._script("__tests__/template.marko_1_x", $scope 
 }));
 const $if_content__x = /* @__PURE__ */_._if_closure("#text/0", 0, $if_content__x__script);
 const $if_content__setup = $if_content__x;
-const $if_content = /* @__PURE__ */_._content_branch(0, 0, $if_content__setup);
 const $x__script = _._script("__tests__/template.marko_0_x", $scope => _._on($scope["#button/1"], "click", function () {
   $x($scope, $scope.x + 1);
 }));
@@ -22,7 +21,7 @@ const $x = /* @__PURE__ */_._let("x/3", $scope => {
   $if_content__x($scope);
   $x__script($scope);
 });
-const $if = /* @__PURE__ */_._if("#text/0", $if_content);
+const $if = /* @__PURE__ */_._if("#text/0", 0, 0, $if_content__setup);
 const $show__script = _._script("__tests__/template.marko_0_show", $scope => _._on($scope["#button/2"], "click", function () {
   $show($scope, !$scope.show);
 }));

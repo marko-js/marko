@@ -1,6 +1,5 @@
-// size: 216 (min) 155 (brotli)
-const $for_content = _._content_branch("Child", "b"),
-  $for = _._for_of(1, $for_content),
+// size: 193 (min) 139 (brotli)
+const $for = _._for_of(1, "Child", "b"),
   $children__script = _._script("a0", ($scope) => {
     1 === $scope.c?.length && $children($scope, [...$scope.c, 2]);
   }),

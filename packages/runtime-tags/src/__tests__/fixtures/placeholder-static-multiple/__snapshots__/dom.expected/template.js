@@ -3,8 +3,7 @@ export const $walks = /* get, over(1) */" b";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $if_content__mounted = /* @__PURE__ */_._if_closure("#div/0", 0, $scope => _._text($scope["#text/0"], $scope._.mounted && "C"));
 const $if_content__setup = $if_content__mounted;
-const $if_content = /* @__PURE__ */_._content_branch("AB<!>D", /* over(1), replace, over(2) */"b%c", $if_content__setup);
-const $if = /* @__PURE__ */_._if("#div/0", $if_content);
+const $if = /* @__PURE__ */_._if("#div/0", "AB<!>D", /* over(1), replace, over(2) */"b%c", $if_content__setup);
 const $mounted = /* @__PURE__ */_._let("mounted/1", $scope => {
   $if($scope, $scope.mounted ? 0 : 1);
   $if_content__mounted($scope);
