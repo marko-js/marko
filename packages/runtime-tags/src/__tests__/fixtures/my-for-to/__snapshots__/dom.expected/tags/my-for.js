@@ -7,8 +7,7 @@ const $for_content__input_content__OR__args = /* @__PURE__ */_._or(2, $scope => 
 const $for_content__input_content = /* @__PURE__ */_._for_closure("#text/0", $for_content__input_content__OR__args);
 const $for_content__$params = /* @__PURE__ */_._const("$params2", $for_content__input_content__OR__args);
 const $for_content__setup = $for_content__input_content;
-const $for_content = /* @__PURE__ */_._content_branch("<!><!><!>", /* over(1), replace, over(2) */"b%c", $for_content__setup, $for_content__$params);
-const $for = /* @__PURE__ */_._for_to("#text/0", $for_content);
+const $for = /* @__PURE__ */_._for_to("#text/0", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $for_content__setup, $for_content__$params);
 export const $input_to = /* @__PURE__ */_._const("input_to", $scope => $for($scope, [$scope.input_to, 0, 1]));
 export const $input = /* @__PURE__ */_._const("input", $scope => {
   $input_to($scope, $scope.input.to);

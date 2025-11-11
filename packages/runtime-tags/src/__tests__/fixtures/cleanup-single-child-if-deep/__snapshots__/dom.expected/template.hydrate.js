@@ -1,4 +1,4 @@
-// size: 1098 (min) 446 (brotli)
+// size: 1029 (min) 425 (brotli)
 const $name__OR__write__script = _._script("a0", ($scope) => {
     ($scope.e(`${$scope.d} mounted`),
       (_.$signal($scope, 0).onabort = () => {
@@ -20,7 +20,6 @@ const $name__OR__write__script = _._script("a0", ($scope) => {
     ($scope) => $write$1($scope.a, $scope._._._.i),
     ($scope) => $scope._._._,
   ),
-  $if_content3 = _._content_branch("<p> </p>", "/D l&", $if_content3__setup),
   $if_content2__setup = ($scope) => {
     ($scope.a,
       $name($scope.a, "Middle"),
@@ -32,16 +31,11 @@ const $name__OR__write__script = _._script("a0", ($scope) => {
     ($scope) => $write$1($scope.a, $scope._._.i),
     ($scope) => $scope._._,
   ),
-  $if_content2__if = _._if(1, $if_content3),
+  $if_content2__if = _._if(1, "<p> </p>", "/D l&", $if_content3__setup),
   $if_content2__showInner = _._closure_get(
     7,
     ($scope) => $if_content2__if($scope, $scope._._.h ? 0 : 1),
     ($scope) => $scope._._,
-  ),
-  $if_content2 = _._content_branch(
-    "<div><p> </p><!></div>",
-    "D/D l&%l",
-    $if_content2__setup,
   ),
   $if_content__setup = ($scope) => {
     ($scope.a,
@@ -52,16 +46,16 @@ const $name__OR__write__script = _._script("a0", ($scope) => {
   $if_content__write = _._if_closure(4, 0, ($scope) =>
     $write$1($scope.a, $scope._.i),
   ),
-  $if_content__if = _._if(1, $if_content2),
+  $if_content__if = _._if(
+    1,
+    "<div><p> </p><!></div>",
+    "D/D l&%l",
+    $if_content2__setup,
+  ),
   $if_content__showMiddle = _._if_closure(4, 0, ($scope) =>
     $if_content__if($scope, $scope._.g ? 0 : 1),
   ),
-  $if_content = _._content_branch(
-    "<div><p> </p><!></div>",
-    "D/D l&%l",
-    $if_content__setup,
-  ),
-  $if = _._if(4, $if_content),
+  $if = _._if(4, "<div><p> </p><!></div>", "D/D l&%l", $if_content__setup),
   $showOuter__script = _._script("b1", ($scope) =>
     _._on($scope.a, "click", function () {
       $showOuter($scope, !$scope.f);

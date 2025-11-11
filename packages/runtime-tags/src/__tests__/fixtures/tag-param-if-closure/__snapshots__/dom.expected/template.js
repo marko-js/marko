@@ -14,8 +14,7 @@ const $Foo_content2__input = /* @__PURE__ */_._const("input", $scope => {
 });
 const $if_content__a = /* @__PURE__ */_._closure_get("a", $scope => _._text($scope["#text/0"], $scope._._.a), $scope => $scope._._);
 const $if_content__setup = $if_content__a;
-const $if_content = /* @__PURE__ */_._content_branch(" ", /* get, over(1) */" b", $if_content__setup);
-const $Foo_content__if = /* @__PURE__ */_._if("#text/0", $if_content);
+const $Foo_content__if = /* @__PURE__ */_._if("#text/0", " ", /* get, over(1) */" b", $if_content__setup);
 const $Foo_content__v = /* @__PURE__ */_._const("v", $scope => $Foo_content__if($scope, $scope.v ? 0 : 1));
 const $Foo_content__$params = /* @__PURE__ */_._const("$params3", $scope => $Foo_content__v($scope, $scope.$params3[0]));
 const $Foo_content = _._content_resume("__tests__/template.marko_1_content", "<!><!><!>", /* over(1), replace, over(2) */"b%c", 0, $Foo_content__$params);

@@ -1,8 +1,7 @@
 export const $template = "<button></button><!><!>";
 export const $walks = /* get, over(1), replace, over(2) */" b%c";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $if_content = /* @__PURE__ */_._content_branch("hi", /* over(1) */"b");
-const $if = /* @__PURE__ */_._if("#text/1", $if_content);
+const $if = /* @__PURE__ */_._if("#text/1", "hi", /* over(1) */"b");
 const $show__script = _._script("__tests__/template.marko_0_show", $scope => _._on($scope["#button/0"], "click", function () {
   $show($scope, !$scope.show);
 }));

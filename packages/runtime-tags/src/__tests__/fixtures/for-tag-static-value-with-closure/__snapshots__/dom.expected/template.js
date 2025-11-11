@@ -5,7 +5,6 @@ const $for_content__index = /* @__PURE__ */_._const("index", $scope => _._text($
 const $for_content__count = /* @__PURE__ */_._for_closure("#text/0", $scope => _._text($scope["#text/1"], $scope._.count));
 const $for_content__setup = $for_content__count;
 const $for_content__$params = /* @__PURE__ */_._const("$params2", $scope => $for_content__index($scope, $scope.$params2[0]));
-const $for_content = /* @__PURE__ */_._content_branch("<!>-<!>", /* replace, over(2), replace, over(1) */"%c%b", $for_content__setup, $for_content__$params);
 const $count__script = _._script("__tests__/template.marko_0_count", $scope => _._on($scope["#button/1"], "click", function () {
   $count($scope, $scope.count + 1);
 }));
@@ -14,7 +13,7 @@ const $count = /* @__PURE__ */_._let("count/3", $scope => {
   $for_content__count($scope);
   $count__script($scope);
 });
-const $for = /* @__PURE__ */_._for_to("#text/0", $for_content);
+const $for = /* @__PURE__ */_._for_to("#text/0", "<!>-<!>", /* replace, over(2), replace, over(1) */"%c%b", $for_content__setup, $for_content__$params);
 export function $setup($scope) {
   $count($scope, 0);
   $for($scope, [3, 0, 1]);

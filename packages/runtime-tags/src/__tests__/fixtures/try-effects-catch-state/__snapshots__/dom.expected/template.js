@@ -18,10 +18,9 @@ const $try_content__clickCount = /* @__PURE__ */_._closure_get("clickCount", $sc
   $try_content__clickCount__script($scope);
 });
 const $try_content__setup = $try_content__clickCount;
-const $try_content = /* @__PURE__ */_._content_branch("<button>inc</button> -- <!>", /* get, over(2), replace, over(1) */" c%b", $try_content__setup);
 const $clickCount__closure = /* @__PURE__ */_._closure($try_content__clickCount);
 const $clickCount = /* @__PURE__ */_._let("clickCount/2", $clickCount__closure);
-const $try = /* @__PURE__ */_._try("#text/1", $try_content);
+const $try = /* @__PURE__ */_._try("#text/1", "<button>inc</button> -- <!>", /* get, over(2), replace, over(1) */" c%b", $try_content__setup);
 export function $setup($scope) {
   $clickCount($scope, 0);
   $try($scope, {

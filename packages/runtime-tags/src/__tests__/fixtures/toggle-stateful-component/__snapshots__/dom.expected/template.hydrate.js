@@ -1,4 +1,4 @@
-// size: 531 (min) 317 (brotli)
+// size: 508 (min) 305 (brotli)
 const $input_onCount__OR__clickCount__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", function () {
       $scope.e($clickCount($scope, $scope.f + 1));
@@ -31,12 +31,12 @@ const $input_onCount = _._const(4, $input_onCount__OR__clickCount),
   $if_content__onCount = _._if_closure(0, 0, ($scope) =>
     $input_onCount($scope.a, $scope._.c),
   ),
-  $if_content = _._content_branch(
+  $if = _._if(
+    0,
     "<div><button> </button></div>",
     "D/ D l&l",
     $if_content__setup,
   ),
-  $if = _._if(0, $if_content),
   $show = _._let(1, ($scope) => $if($scope, $scope.b ? 0 : 1));
 (_._resume("b0", function ($scope) {
   return function (count) {

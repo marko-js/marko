@@ -1,8 +1,7 @@
 export const $template = "<!><!><!>";
 export const $walks = /* over(1), replace, over(2) */"b%c";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $if_content = /* @__PURE__ */_._content_branch("<span></span>", /* over(1) */"b");
-const $if = /* @__PURE__ */_._if("#text/0", $if_content);
+const $if = /* @__PURE__ */_._if("#text/0", "<span></span>", /* over(1) */"b");
 export const $input_value = /* @__PURE__ */_._const("input_value", $scope => $if($scope, $scope.input_value ? 0 : 1));
 export function $setup($scope) {
   _._return($scope, 1);

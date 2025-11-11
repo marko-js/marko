@@ -1,4 +1,4 @@
-// size: 494 (min) 271 (brotli)
+// size: 448 (min) 259 (brotli)
 const $name = _._const(3, ($scope) => _._text($scope.a, $scope.d)),
   $for_content2__setup = ($scope) => {
     ($scope.a, $for_content2__outer._($scope));
@@ -11,13 +11,13 @@ const $name = _._const(3, ($scope) => _._text($scope.a, $scope.d)),
   $for_content2__$params = _._const(1, ($scope) =>
     $for_content2__inner($scope, $scope.b[0]),
   ),
-  $for_content2 = _._content_branch(
+  $for_content__for = _._for_of(
+    0,
     "<div> </div>",
     "/D l&",
     $for_content2__setup,
     $for_content2__$params,
   ),
-  $for_content__for = _._for_of(0, $for_content2),
   $for_content__items = _._for_closure(1, ($scope) =>
     $for_content__for($scope, [$scope._.c]),
   ),
@@ -26,13 +26,13 @@ const $name = _._const(3, ($scope) => _._text($scope.a, $scope.d)),
     $for_content__outer($scope, $scope.b[0]),
   ),
   $for_content__outer = _._const(2, $for_content2__outer),
-  $for_content = _._content_branch(
+  $for = _._for_of(
+    1,
     "<!><!><!>",
     "b%c",
     $for_content__setup,
     $for_content__$params,
   ),
-  $for = _._for_of(1, $for_content),
   $items__script = _._script("b0", ($scope) =>
     _._on($scope.a, "click", function () {
       $items($scope, [...$scope.c, $scope.c?.length]);

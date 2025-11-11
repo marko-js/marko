@@ -7,11 +7,7 @@ import { AccessorProp, type BranchScope } from "../common/types";
 import { patchDynamicTag } from "./control-flow";
 import { toInsertNode } from "./dom";
 import { prepareEffects, queueEffect, runEffects } from "./queue";
-import {
-  _content_branch,
-  createAndSetupBranch,
-  type Renderer,
-} from "./renderer";
+import { _content, createAndSetupBranch, type Renderer } from "./renderer";
 import { _resume, getRegisteredWithScope } from "./resume";
 import { destroyBranch } from "./scope";
 const classIdToBranch = new Map<string, BranchScope>();
@@ -67,7 +63,7 @@ export const compat = {
     params: NonNullable<Renderer["___params"]>,
     clone: () => { startNode: ChildNode; endNode: ChildNode },
   ) {
-    const renderer = _content_branch(0, 0, 0, params);
+    const renderer = _content("", 0, 0, 0, params)();
     renderer.___clone = (branch) => {
       const cloned = clone();
       branch[AccessorProp.StartNode] = cloned.startNode;

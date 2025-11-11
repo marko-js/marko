@@ -11,8 +11,7 @@ const $if_content__setup = $scope => {
   _.$signalReset($scope, 0);
   $if_content__setup__script($scope);
 };
-const $if_content = /* @__PURE__ */_._content_branch("<div>a</div><span>b</span><p>c</p>", /* over(3) */"d", $if_content__setup);
-const $if = /* @__PURE__ */_._if("#text/2", $if_content);
+const $if = /* @__PURE__ */_._if("#text/2", "<div>a</div><span>b</span><p>c</p>", /* over(3) */"d", $if_content__setup);
 const $show__script = _._script("__tests__/template.marko_0_show", $scope => _._on($scope["#button/0"], "click", function () {
   $show($scope, !$scope.show);
 }));

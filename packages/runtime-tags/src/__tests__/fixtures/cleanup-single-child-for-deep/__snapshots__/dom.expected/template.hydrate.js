@@ -1,4 +1,4 @@
-// size: 886 (min) 412 (brotli)
+// size: 840 (min) 399 (brotli)
 const $name__OR__write__script = _._script(
     "a0",
     ($scope) =>
@@ -37,12 +37,6 @@ const $name__OR__write__script = _._script(
   $for_content2__$params = _._const(1, ($scope) =>
     $for_content2__middleItem($scope, $scope.b[0]),
   ),
-  $for_content2 = _._content_branch(
-    "<div><div> </div></div>",
-    "D/D l&l",
-    $for_content2__setup,
-    $for_content2__$params,
-  ),
   $for_content__setup = ($scope) => {
     ($scope.a, $for_content__items._($scope), $for_content__write._($scope));
   },
@@ -52,20 +46,26 @@ const $name__OR__write__script = _._script(
   $for_content__outerItem = _._const(3, ($scope) => {
     ($name($scope.a, `${$scope.d}`), $for_content2__outerItem($scope));
   }),
-  $for_content__for = _._for_of(1, $for_content2),
+  $for_content__for = _._for_of(
+    1,
+    "<div><div> </div></div>",
+    "D/D l&l",
+    $for_content2__setup,
+    $for_content2__$params,
+  ),
   $for_content__items = _._for_closure(2, ($scope) =>
     $for_content__for($scope, [$scope._.d]),
   ),
   $for_content__$params = _._const(2, ($scope) =>
     $for_content__outerItem($scope, $scope.c[0]),
   ),
-  $for_content = _._content_branch(
+  $for = _._for_of(
+    2,
     "<div><div> </div><!></div>",
     "D/D l&%l",
     $for_content__setup,
     $for_content__$params,
   ),
-  $for = _._for_of(2, $for_content),
   $items__script = _._script("b1", ($scope) =>
     _._on($scope.a, "click", function () {
       $items($scope, $scope.d?.length ? $scope.d.slice(0, -1) : [1, 2, 3]);

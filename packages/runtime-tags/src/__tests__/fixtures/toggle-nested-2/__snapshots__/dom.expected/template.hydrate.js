@@ -1,4 +1,4 @@
-// size: 553 (min) 273 (brotli)
+// size: 507 (min) 245 (brotli)
 const $if_content2__count__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", function () {
       $count($scope._._, $scope._._.e + 1);
@@ -12,12 +12,12 @@ const $if_content2__count__script = _._script("a0", ($scope) =>
     ($scope) => $scope._._,
   ),
   $if_content2__setup = $if_content2__count,
-  $if_content2 = _._content_branch(
+  $if_content__if = _._if(
+    1,
     "<button id=count> </button>",
     " D l",
     $if_content2__setup,
   ),
-  $if_content__if = _._if(1, $if_content2),
   $if_content__inner__script = _._script("a1", ($scope) =>
     _._on($scope.a, "click", function () {
       $inner($scope._, !$scope._.d);
@@ -28,12 +28,12 @@ const $if_content2__count__script = _._script("a0", ($scope) =>
       $if_content__inner__script($scope));
   }),
   $if_content__setup = $if_content__inner,
-  $if_content = _._content_branch(
+  $if = _._if(
+    1,
     "<button id=inner></button><!><!>",
     " b%c",
     $if_content__setup,
   ),
-  $if = _._if(1, $if_content),
   $outer__script = _._script("a2", ($scope) =>
     _._on($scope.a, "click", function () {
       $outer($scope, !$scope.c);

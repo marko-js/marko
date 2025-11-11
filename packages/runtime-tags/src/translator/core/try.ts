@@ -22,6 +22,7 @@ import {
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
+  getBranchRendererArgs,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
@@ -33,6 +34,7 @@ import {
   addStatement,
   addValue,
   getSignal,
+  replaceNullishAndEmptyFunctionsWith0,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import {
@@ -168,7 +170,9 @@ export default {
           return callRuntime(
             "_try",
             getScopeAccessorLiteral(nodeRef, true),
-            t.identifier(bodySection.name),
+            ...replaceNullishAndEmptyFunctionsWith0(
+              getBranchRendererArgs(bodySection),
+            ),
           );
         };
 

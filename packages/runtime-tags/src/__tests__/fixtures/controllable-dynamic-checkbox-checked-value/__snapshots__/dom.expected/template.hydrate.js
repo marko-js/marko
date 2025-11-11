@@ -1,4 +1,4 @@
-// size: 670 (min) 285 (brotli)
+// size: 647 (min) 280 (brotli)
 const $if_content__checkedValue__OR__checkedValueChange = _._or(1, ($scope) =>
     _._attr_input_checkedValue($scope, "a", $scope._.g, $scope._.h, "b"),
   ),
@@ -20,12 +20,7 @@ const $if_content__checkedValue__OR__checkedValueChange = _._or(1, ($scope) =>
       $if_content__$checkedValueChange._($scope),
       $if_content__setup__script($scope));
   },
-  $if_content = _._content_branch(
-    "<input type=radio>",
-    " b",
-    $if_content__setup,
-  ),
-  $if = _._if(1, $if_content),
+  $if = _._if(1, "<input type=radio>", " b", $if_content__setup),
   $show__script = _._script("a2", ($scope) =>
     _._on($scope.e, "click", function () {
       $show($scope, !$scope.f);

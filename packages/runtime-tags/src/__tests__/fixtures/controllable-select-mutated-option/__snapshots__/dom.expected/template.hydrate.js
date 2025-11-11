@@ -1,17 +1,11 @@
-// size: 631 (min) 310 (brotli)
+// size: 608 (min) 298 (brotli)
 const $for_content__opt = _._const(3, ($scope) => {
     (_._attr($scope.a, "value", $scope.d), _._text($scope.b, $scope.d));
   }),
   $for_content__$params = _._const(2, ($scope) =>
     $for_content__opt($scope, $scope.c[0]),
   ),
-  $for_content = _._content_branch(
-    "<option> </option>",
-    " D l",
-    0,
-    $for_content__$params,
-  ),
-  $for = _._for_of(0, $for_content),
+  $for = _._for_of(0, "<option> </option>", " D l", 0, $for_content__$params),
   $options__script = _._script("a1", ($scope) => {
     (_._on($scope.c, "click", function () {
       $options($scope, $scope.e.slice(1));

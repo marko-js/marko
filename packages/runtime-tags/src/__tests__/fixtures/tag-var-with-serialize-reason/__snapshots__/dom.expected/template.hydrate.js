@@ -1,6 +1,5 @@
-// size: 233 (min) 161 (brotli)
-const $if_content = _._content_branch("<span></span>", "b"),
-  $if = _._if(0, $if_content),
+// size: 210 (min) 158 (brotli)
+const $if = _._if(0, "<span></span>", "b"),
   $input_value = _._const(3, ($scope) => $if($scope, $scope.d ? 0 : 1)),
   $count__script = _._script("b0", ($scope) =>
     _._on($scope.a, "click", function () {
