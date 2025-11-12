@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.0.110
+
+### Patch Changes
+
+- [#2951](https://github.com/marko-js/marko/pull/2951) [`1a2208e`](https://github.com/marko-js/marko/commit/1a2208e86aa8d67fd8d18b7ad3af9df95e833d87) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add compile error for hoisted define tag references.
+
+- [#2951](https://github.com/marko-js/marko/pull/2951) [`64d77e7`](https://github.com/marko-js/marko/commit/64d77e7668a25595286a8164eb1083edbdd17227) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid enabling the catch runtime multiple times.
+
+- [#2951](https://github.com/marko-js/marko/pull/2951) [`1a2208e`](https://github.com/marko-js/marko/commit/1a2208e86aa8d67fd8d18b7ad3af9df95e833d87) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with circular define tag references.
+
 ## 6.0.109
 
 ### Patch Changes
