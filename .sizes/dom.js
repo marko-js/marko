@@ -1,4 +1,4 @@
-// size: 19635 (min) 7527 (brotli)
+// size: 19644 (min) 7530 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -323,15 +323,15 @@ function init(runtimeId = "M") {
                   : visitText.length,
               ));
           return (
-            (render.w = () => {
+            (render.w = (effects = []) => {
               try {
                 (walk2(), (isResuming = 1));
                 for (let serialized of (resumes = render.r || []))
                   if ("string" == typeof serialized) lastEffect = serialized;
                   else if ("number" == typeof serialized)
-                    queueEffect(
-                      (scopeLookup[serialized] ||= { L: serialized }),
+                    effects.push(
                       registeredValues[lastEffect],
+                      (scopeLookup[serialized] ||= { L: serialized }),
                     );
                   else
                     for (let scope of serialized(serializeContext))
@@ -356,7 +356,7 @@ function init(runtimeId = "M") {
                             node
                         )((visitScope[lastToken] = visit.previousSibling)))
                       : branchesEnabled && visitBranches());
-                run();
+                runEffects(effects);
               } finally {
                 isResuming = visits.length = resumes.length = 0;
               }

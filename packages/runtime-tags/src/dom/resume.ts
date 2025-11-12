@@ -9,7 +9,7 @@ import {
   ResumeSymbol,
   type Scope,
 } from "../common/types";
-import { queueEffect, run } from "./queue";
+import { runEffects } from "./queue";
 import type { Signal } from "./signals";
 import { getDebugKey } from "./walker";
 
@@ -192,7 +192,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               : visitText.length,
           ));
 
-        render.w = () => {
+        render.w = (effects: unknown[] = []) => {
           try {
             walk();
             isResuming = 1;
@@ -201,11 +201,11 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               if (typeof serialized === "string") {
                 lastEffect = serialized;
               } else if (typeof serialized === "number") {
-                queueEffect(
+                effects.push(
+                  registeredValues[lastEffect!],
                   (scopeLookup[serialized] ||= {
                     [AccessorProp.Id]: serialized,
                   } as Scope),
-                  registeredValues[lastEffect!] as any,
                 );
               } else {
                 for (const scope of serialized(serializeContext)) {
@@ -249,7 +249,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               }
             }
 
-            run();
+            runEffects(effects);
           } finally {
             isResuming = visits.length = resumes.length = 0;
           }
