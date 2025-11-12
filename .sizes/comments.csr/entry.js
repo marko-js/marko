@@ -1,4 +1,4 @@
-// size: 743 (min) 417 (brotli)
+// size: 743 (min) 404 (brotli)
 const $if_content__setup = ($scope) => {
     ($scope.a,
       $if_content__comment_comments._($scope),

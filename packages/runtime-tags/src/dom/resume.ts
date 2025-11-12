@@ -64,19 +64,43 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         };
         const visitBranches =
           branchesEnabled &&
-          (() => {
-            let curBranchScopes: Opt<BranchScope>;
-            const branchScopesStack: Opt<BranchScope>[] = [];
-            const branchStarts: Comment[] = [];
-            const orphanBranches: BranchScope[] = [];
-            const endBranch = (accessor?: string, singleNode?: boolean) => {
-              const parent = visit.parentNode!;
-              let startVisit: ChildNode = visit;
-              let i = orphanBranches.length;
-              let branchId: number;
-              let branch: BranchScope;
-              let childBranch: BranchScope;
-              let endedBranches: BranchScope[] | undefined;
+          ((
+            branchScopesStack: Opt<BranchScope>[] = [],
+            branchStarts: Comment[] = [],
+            orphanBranches: BranchScope[] = [],
+            curBranchScopes?: Opt<BranchScope>,
+          ) => {
+            return (
+              branchId?: number,
+              branch?: BranchScope,
+              childBranch?: BranchScope,
+              endedBranches?: BranchScope[],
+              accessor?: string,
+              singleNode?: boolean,
+              parent = visit.parentNode!,
+              startVisit: ChildNode = visit,
+              i = orphanBranches.length,
+            ) => {
+              if (visitType !== ResumeSymbol.BranchStart) {
+                visitScope[
+                  AccessorPrefix.Getter + nextToken(/* read accessor */)
+                ] = (
+                  (node) => () =>
+                    node
+                )(
+                  (visitScope[lastToken] =
+                    visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
+                    visitType ===
+                      ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
+                      ? parent
+                      : visit),
+                );
+                accessor = AccessorPrefix.BranchScopes + lastToken;
+                singleNode =
+                  visitType !== ResumeSymbol.BranchEnd &&
+                  visitType !== ResumeSymbol.BranchEndOnlyChildInParent;
+                nextToken(/* read optional first branchId */);
+              }
 
               while ((branchId = +lastToken)) {
                 (endedBranches ||= []).push(
@@ -138,42 +162,17 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                       : endedBranches[0];
                 }
               }
-            };
 
-            return () => {
               if (visitType === ResumeSymbol.BranchStart) {
-                if (lastToken) {
-                  endBranch();
-                } else {
+                if (!endedBranches) {
                   branchScopesStack.push(curBranchScopes);
                   curBranchScopes = undefined;
                 }
                 branchStarts.push(visit);
-              } else {
-                visitScope[
-                  AccessorPrefix.Getter + nextToken(/* read accessor */)
-                ] = (
-                  (node) => () =>
-                    node
-                )(
-                  (visitScope[lastToken] =
-                    visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
-                    visitType ===
-                      ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
-                      ? visit.parentNode
-                      : visit),
-                );
-                endBranch(
-                  AccessorPrefix.BranchScopes + lastToken,
-                  (nextToken(/* read optional first branchId */),
-                  visitType !== ResumeSymbol.BranchEnd &&
-                    visitType !== ResumeSymbol.BranchEndOnlyChildInParent),
-                );
               }
             };
           })();
         let $global: Scope[AccessorProp.Global] | undefined;
-        let lastScopeId = 0;
         let lastEffect: string | undefined;
         let visits: RenderData["v"];
         let resumes: NonNullable<RenderData["r"]>;
@@ -183,6 +182,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         let visitScope: Scope;
         let lastToken: string | 0;
         let lastTokenIndex: number;
+        let lastScopeId = 0;
         const nextToken = () =>
           (lastToken = visitText.slice(
             lastTokenIndex,

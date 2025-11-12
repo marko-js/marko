@@ -1,4 +1,4 @@
-// size: 19684 (min) 7547 (brotli)
+// size: 19635 (min) 7527 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -230,85 +230,90 @@ function init(runtimeId = "M") {
             serializeContext = { _: registeredValues },
             visitBranches =
               branchesEnabled &&
-              (() => {
-                let curBranchScopes,
+              (
+                (
                   branchScopesStack = [],
                   branchStarts = [],
                   orphanBranches = [],
-                  endBranch = (accessor, singleNode) => {
-                    let branchId,
-                      branch,
-                      childBranch,
-                      endedBranches,
-                      parent = visit.parentNode,
-                      startVisit = visit,
-                      i = orphanBranches.length;
-                    for (; (branchId = +lastToken); ) {
-                      if (
-                        ((endedBranches ||= []).push(
-                          (branch = scopeLookup[branchId] ||= { L: branchId }),
-                        ),
-                        (branch.F = branch),
-                        singleNode)
-                      ) {
-                        for (
-                          ;
-                          startVisit.previousSibling &&
-                          ~visits.indexOf(
-                            (startVisit = startVisit.previousSibling),
-                          );
+                  curBranchScopes,
+                ) =>
+                (
+                  branchId,
+                  branch,
+                  childBranch,
+                  endedBranches,
+                  accessor,
+                  singleNode,
+                  parent = visit.parentNode,
+                  startVisit = visit,
+                  i = orphanBranches.length,
+                ) => {
+                  for (
+                    "[" !== visitType &&
+                    ((visitScope["J" + nextToken()] = (
+                      (node) => () =>
+                        node
+                    )(
+                      (visitScope[lastToken] =
+                        ")" === visitType || "}" === visitType
+                          ? parent
+                          : visit),
+                    )),
+                    (accessor = "A" + lastToken),
+                    (singleNode = "]" !== visitType && ")" !== visitType),
+                    nextToken());
+                    (branchId = +lastToken);
 
+                  ) {
+                    if (
+                      ((endedBranches ||= []).push(
+                        (branch = scopeLookup[branchId] ||= { L: branchId }),
+                      ),
+                      (branch.F = branch),
+                      singleNode)
+                    ) {
+                      for (
+                        ;
+                        startVisit.previousSibling &&
+                        ~visits.indexOf(
+                          (startVisit = startVisit.previousSibling),
                         );
-                        ((branch.K = branch.S = startVisit),
-                          "'" === visitType && (branch.a = startVisit));
-                      } else
-                        ((curBranchScopes = push(curBranchScopes, branch)),
-                          accessor &&
-                            ((visitScope[accessor] = curBranchScopes),
-                            (curBranchScopes = branchScopesStack.pop())),
-                          (startVisit = branchStarts.pop()),
-                          parent !== startVisit.parentNode &&
-                            parent.prepend(startVisit),
-                          (branch.S = startVisit),
-                          (branch.K =
-                            visit.previousSibling === startVisit
-                              ? startVisit
-                              : parent.insertBefore(new Text(), visit)));
-                      for (; i && orphanBranches[--i].L > branchId; )
-                        (((childBranch = orphanBranches.pop()).N = branch),
-                          (branch.D ||= new Set()).add(childBranch));
-                      nextToken();
-                    }
-                    endedBranches &&
-                      (orphanBranches.push(...endedBranches),
-                      singleNode &&
-                        (visitScope[accessor] =
-                          endedBranches.length > 1
-                            ? endedBranches.reverse()
-                            : endedBranches[0]));
-                  };
-                return () => {
-                  "[" === visitType
-                    ? (lastToken
-                        ? endBranch()
-                        : (branchScopesStack.push(curBranchScopes),
-                          (curBranchScopes = void 0)),
-                      branchStarts.push(visit))
-                    : ((visitScope["J" + nextToken()] = (
-                        (node) => () =>
-                          node
-                      )(
-                        (visitScope[lastToken] =
-                          ")" === visitType || "}" === visitType
-                            ? visit.parentNode
-                            : visit),
-                      )),
-                      endBranch(
-                        "A" + lastToken,
-                        (nextToken(), "]" !== visitType && ")" !== visitType),
-                      ));
-                };
-              })(),
+
+                      );
+                      ((branch.K = branch.S = startVisit),
+                        "'" === visitType && (branch.a = startVisit));
+                    } else
+                      ((curBranchScopes = push(curBranchScopes, branch)),
+                        accessor &&
+                          ((visitScope[accessor] = curBranchScopes),
+                          (curBranchScopes = branchScopesStack.pop())),
+                        parent !==
+                          (startVisit = branchStarts.pop()).parentNode &&
+                          parent.prepend(startVisit),
+                        (branch.S = startVisit),
+                        (branch.K =
+                          visit.previousSibling === startVisit
+                            ? startVisit
+                            : parent.insertBefore(new Text(), visit)));
+                    for (; i && orphanBranches[--i].L > branchId; )
+                      (((childBranch = orphanBranches.pop()).N = branch),
+                        (branch.D ||= new Set()).add(childBranch));
+                    nextToken();
+                  }
+                  (endedBranches &&
+                    (orphanBranches.push(...endedBranches),
+                    singleNode &&
+                      (visitScope[accessor] =
+                        endedBranches.length > 1
+                          ? endedBranches.reverse()
+                          : endedBranches[0])),
+                    "[" === visitType &&
+                      (endedBranches ||
+                        (branchScopesStack.push(curBranchScopes),
+                        (curBranchScopes = void 0)),
+                      branchStarts.push(visit)));
+                }
+              )(),
             lastScopeId = 0,
             nextToken = () =>
               (lastToken = visitText.slice(
