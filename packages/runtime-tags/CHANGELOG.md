@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.111
+
+### Patch Changes
+
+- [#2953](https://github.com/marko-js/marko/pull/2953) [`f79163d`](https://github.com/marko-js/marko/commit/f79163dc0e54e3295c0f7e7efddca2eda226328f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize resume visitor code for bundle size.
+
+- [#2953](https://github.com/marko-js/marko/pull/2953) [`3fbead1`](https://github.com/marko-js/marko/commit/3fbead1b58933f968a3aa6e821cf054095fd94eb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor resume runtime to avoid executing other render and effect code in the queue when resuming.
+
 ## 6.0.110
 
 ### Patch Changes
