@@ -1,0 +1,1 @@
+Tried to overwrite existing property "w" in $lifecycle onMount.

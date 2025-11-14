@@ -386,7 +386,7 @@ export function _lifecycle(
   scope: Scope,
   index: string | number,
   thisObj: Record<string, unknown> & {
-    onMount?: (this: unknown) => void;
+    onMount?: (this: unknown) => Record<string, unknown> | void;
     onUpdate?: (this: unknown) => void;
     onDestroy?: (this: unknown) => void;
   },
@@ -397,7 +397,21 @@ export function _lifecycle(
     instance.onUpdate?.();
   } else {
     scope[index] = thisObj;
-    thisObj.onMount?.();
+    let snapshot = undefined;
+    if (MARKO_DEBUG) {
+      snapshot = Object.assign({}, thisObj);
+    }
+    const newProps = thisObj.onMount?.();
+    Object.assign(thisObj, newProps);
+    if (MARKO_DEBUG) {
+      for (const [prop, prevVal] of Object.entries(snapshot!)) {
+        const nextVal = thisObj[prop];
+        if (Object.is(prevVal, nextVal)) continue;
+        throw new Error(
+          `Tried to overwrite existing property "${prop}" in ${index} onMount.`,
+        );
+      }
+    }
     $signal(scope, AccessorPrefix.LifecycleAbortController + index).onabort =
       () => thisObj.onDestroy?.();
   }
