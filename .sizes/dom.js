@@ -1,4 +1,4 @@
-// size: 19644 (min) 7530 (brotli)
+// size: 19674 (min) 7562 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -1134,11 +1134,13 @@ function normalizeString(value) {
 }
 function _lifecycle(scope, index, thisObj) {
   let instance = scope[index];
-  instance
-    ? (Object.assign(instance, thisObj), instance.onUpdate?.())
-    : ((scope[index] = thisObj),
-      thisObj.onMount?.(),
+  if (instance) (Object.assign(instance, thisObj), instance.onUpdate?.());
+  else {
+    scope[index] = thisObj;
+    let newProps = thisObj.onMount?.();
+    (Object.assign(thisObj, newProps),
       ($signal(scope, "K" + index).onabort = () => thisObj.onDestroy?.()));
+  }
 }
 function removeChildNodes(startNode, endNode) {
   let stop = endNode.nextSibling,
