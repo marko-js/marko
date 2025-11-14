@@ -1,0 +1,13 @@
+<html-script type="magic">
+  A
+</html-script>
+
+
+<html-script type="magic" nonce="override">
+  B
+</html-script>
+
+<const/spreadAttrs = { nonce: "override-spread" }>
+<html-script type="magic" ...spreadAttrs>
+  C
+</html-script>

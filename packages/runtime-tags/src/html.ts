@@ -12,6 +12,7 @@ export {
   _attr_input_checked,
   _attr_input_checkedValue,
   _attr_input_value,
+  _attr_nonce,
   _attr_option_value,
   _attr_select_value,
   _attr_style,

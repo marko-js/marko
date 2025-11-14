@@ -12,6 +12,7 @@ import {
   _attr_content,
   _html,
   _scope,
+  getChunk,
   getContext,
   withContext,
 } from "./writer";
@@ -156,6 +157,10 @@ export function _attr_details_or_dialog_open(
     );
   }
   return _attr("open", open);
+}
+
+export function _attr_nonce() {
+  return getChunk()!.boundary.state.nonceAttr;
 }
 
 export function _attr(name: string, value: unknown) {

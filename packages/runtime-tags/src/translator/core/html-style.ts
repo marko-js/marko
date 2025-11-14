@@ -184,8 +184,13 @@ export default {
 
       write`<style`;
 
-      const usedAttrs = getUsedAttrs(tag.node);
-      const { staticAttrs, skipExpression, spreadExpression } = usedAttrs;
+      const usedAttrs = getUsedAttrs(tag.node, isHTML);
+      const { hasNonce, staticAttrs, skipExpression, spreadExpression } =
+        usedAttrs;
+
+      if (isHTML && !hasNonce && !spreadExpression) {
+        write`${callRuntime("_attr_nonce")}`;
+      }
 
       for (const attr of staticAttrs) {
         const { name, value } = attr;
@@ -385,7 +390,7 @@ export default {
   ],
 } as Tag;
 
-function getUsedAttrs(tag: t.MarkoTag) {
+function getUsedAttrs(tag: t.MarkoTag, injectNonce: boolean) {
   const seen: Record<string, t.MarkoAttribute> = {};
   const { attributes } = tag;
   const maybeStaticAttrs = new Set<t.MarkoAttribute>();
@@ -393,6 +398,7 @@ function getUsedAttrs(tag: t.MarkoTag) {
   let skipExpression: undefined | t.Expression;
   let spreadProps: undefined | t.ObjectExpression["properties"];
   let skipProps: undefined | t.ObjectExpression["properties"];
+  let hasNonce = false;
   for (let i = attributes.length; i--; ) {
     const attr = attributes[i];
     const { value } = attr;
@@ -403,6 +409,10 @@ function getUsedAttrs(tag: t.MarkoTag) {
       spreadProps.push(t.spreadElement(value));
     } else if (!seen[attr.name]) {
       seen[attr.name] = attr;
+      if (attr.name === "nonce") {
+        hasNonce = true;
+      }
+
       if (spreadProps) {
         spreadProps.push(toObjectProperty(attr.name, attr.value));
       } else {
@@ -424,10 +434,20 @@ function getUsedAttrs(tag: t.MarkoTag) {
       skipExpression = t.objectExpression(skipProps);
     }
 
+    if (injectNonce && !hasNonce) {
+      spreadProps.unshift(
+        t.objectProperty(
+          t.identifier("nonce"),
+          t.memberExpression(callRuntime("$global"), t.identifier("cspNonce")),
+        ),
+      );
+    }
+
     spreadExpression = propsToExpression(spreadProps);
   }
 
   return {
+    hasNonce,
     staticAttrs,
     spreadExpression,
     skipExpression,

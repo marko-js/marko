@@ -1,0 +1,13 @@
+<html-style>
+  A {}
+</html-style>
+
+
+<html-style nonce="override">
+  B {}
+</html-style>
+
+<const/spreadAttrs = { nonce: "override-spread" }>
+<html-style ...spreadAttrs>
+  C {}
+</html-style>
