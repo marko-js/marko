@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.112
+
+### Patch Changes
+
+- [#2955](https://github.com/marko-js/marko/pull/2955) [`2cb7418`](https://github.com/marko-js/marko/commit/2cb7418850b5eb792b115710564d2cd4272f6856) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add cspNonce by default to html-script and html-style.
+
 ## 6.0.111
 
 ### Patch Changes
