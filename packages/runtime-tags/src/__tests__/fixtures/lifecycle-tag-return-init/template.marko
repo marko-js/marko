@@ -1,0 +1,13 @@
+<let/x=0/>
+<lifecycle
+  x=x
+  onMount() {
+    this.w = 1;
+    return { y: this.x, u: 5 };
+  }
+  onUpdate() {
+    document.getElementById("ref").textContent = JSON.stringify(this);
+  }
+/>
+<div#ref/>
+<button#increment onClick() { x++; }>Increment</button>
