@@ -1,4 +1,4 @@
-// size: 25854 (min) 9540 (brotli)
+// size: 25884 (min) 9533 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1675,11 +1675,13 @@ function normalizeAttrValue(value) {
 function _lifecycle(scope, thisObj, index = 0) {
   let accessor = "K" + index,
     instance = scope[accessor];
-  instance
-    ? (Object.assign(instance, thisObj), instance.onUpdate?.())
-    : ((scope[accessor] = thisObj),
-      thisObj.onMount?.(),
+  if (instance) (Object.assign(instance, thisObj), instance.onUpdate?.());
+  else {
+    scope[accessor] = thisObj;
+    let newProps = thisObj.onMount?.();
+    (Object.assign(thisObj, newProps),
       ($signal(scope, accessor).onabort = () => thisObj.onDestroy?.()));
+  }
 }
 function removeChildNodes(startNode, endNode) {
   let stop = endNode.nextSibling;
