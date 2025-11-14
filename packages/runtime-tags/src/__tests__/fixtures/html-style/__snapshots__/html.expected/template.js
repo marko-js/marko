@@ -2,7 +2,7 @@ import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   let count = 0;
-  _._html(`<style>
+  _._html(`<style${_._attr_nonce()}>
   .test {
     content: ${_._escape_style(count)}
   }
