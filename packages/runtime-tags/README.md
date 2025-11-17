@@ -1,6 +1,6 @@
 <div align="center">
 
-# [<img alt="Marko" src="https://raw.githubusercontent.com/marko-js/website-next/refs/heads/main/public/logo.svg" width="250">](https://markojs.com/)
+# [<img alt="Marko" src="https://raw.githubusercontent.com/marko-js/website/refs/heads/main/public/assets/logo.svg" width="250">](https://markojs.com/)
 
 **A declarative, HTML-based language that makes building web apps fun 🔥**
 
