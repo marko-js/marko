@@ -1,7 +1,10 @@
 /** File for types only, not actual implementation **/
 
-export type Input<T extends object> = T & {
-  onMount?(): unknown;
-  onUpdate?(): unknown;
-  onDestroy?(): unknown;
+export type Input<
+  T extends object,
+  R extends object = {},
+> = T & ThisType<T & R> & {
+  onMount?: () => R | void;
+  onUpdate?: () => void;
+  onDestroy?: () => void;
 };
