@@ -1,9 +1,9 @@
 # Render
 ```html
+<!--M_[-->
 <html>
   <head />
   <body>
-    <!--M_[-->
     Hello
     <!--M_]1 #text/0 2-->
     <script>
@@ -15,11 +15,4 @@
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-REMOVE html/body/#comment0 before html
-INSERT html/body/#comment0
-INSERT html/body/#text1
 ```
