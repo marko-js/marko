@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.113
+
+### Patch Changes
+
+- [#2961](https://github.com/marko-js/marko/pull/2961) [`a6ff06d`](https://github.com/marko-js/marko/commit/a6ff06da037b839758e445ebbc9294cd839c9c3f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid walking for comment markers when runtime is loaded, it should always be done by the inline script and was causing a race condition where a scope could be incorrectly duplicated.
+
 ## 6.0.112
 
 ### Patch Changes
