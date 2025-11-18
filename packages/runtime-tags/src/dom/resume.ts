@@ -35,6 +35,7 @@ type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
 const registeredValues: Record<string, unknown> = {};
 let branchesEnabled: undefined | 1;
+let isInit: undefined | 0 | 1;
 export function enableBranches() {
   branchesEnabled = 1;
 }
@@ -194,7 +195,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 
         render.w = (effects: unknown[] = []) => {
           try {
-            walk();
+            isInit || walk();
             isResuming = 1;
 
             for (const serialized of (resumes = render.r || [])) {
@@ -251,7 +252,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 
             runEffects(effects);
           } finally {
-            isResuming = visits.length = resumes.length = 0;
+            isInit = isResuming = visits.length = resumes.length = 0;
           }
         };
         return render;
@@ -261,6 +262,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
   if (renders) {
     initRuntime(renders);
     for (const renderId in renders) {
+      isInit = 1;
       resumeRender!(renderId).w();
     }
   } else {

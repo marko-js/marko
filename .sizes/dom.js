@@ -1,4 +1,4 @@
-// size: 19644 (min) 7530 (brotli)
+// size: 19659 (min) 7540 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -201,6 +201,7 @@ function walkInternal(currentWalkIndex, walkCodes, scope) {
     }
 }
 var branchesEnabled,
+  isInit,
   isResuming,
   registeredValues = {};
 function enableBranches() {
@@ -325,7 +326,7 @@ function init(runtimeId = "M") {
           return (
             (render.w = (effects = []) => {
               try {
-                (walk2(), (isResuming = 1));
+                (isInit || walk2(), (isResuming = 1));
                 for (let serialized of (resumes = render.r || []))
                   if ("string" == typeof serialized) lastEffect = serialized;
                   else if ("number" == typeof serialized)
@@ -358,7 +359,7 @@ function init(runtimeId = "M") {
                       : branchesEnabled && visitBranches());
                 runEffects(effects);
               } finally {
-                isResuming = visits.length = resumes.length = 0;
+                isInit = isResuming = visits.length = resumes.length = 0;
               }
             }),
             render
@@ -368,7 +369,7 @@ function init(runtimeId = "M") {
     };
   if (renders) {
     initRuntime(renders);
-    for (let renderId in renders) resumeRender(renderId).w();
+    for (let renderId in renders) ((isInit = 1), resumeRender(renderId).w());
   } else defineRuntime({ configurable: !0, set: initRuntime });
 }
 function _resume(id, obj) {
