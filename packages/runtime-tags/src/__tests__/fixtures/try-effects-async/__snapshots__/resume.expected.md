@@ -45,7 +45,7 @@
         1
       ];
       REORDER_RUNTIME(M._);
-      M._.j.c = _ =&gt;
+      M._.j[2] = _ =&gt;
       {
         _.push(
           "__tests__/template.marko_1_clickCount",
@@ -113,7 +113,7 @@ container.querySelector("button").click();
         1
       ];
       REORDER_RUNTIME(M._);
-      M._.j.c = _ =&gt;
+      M._.j[2] = _ =&gt;
       {
         _.push(
           "__tests__/template.marko_1_clickCount",
@@ -170,7 +170,7 @@ container.querySelector("button").click();
         1
       ];
       REORDER_RUNTIME(M._);
-      M._.j.c = _ =&gt;
+      M._.j[2] = _ =&gt;
       {
         _.push(
           "__tests__/template.marko_1_clickCount",
@@ -250,7 +250,7 @@ REMOVE #document-fragment/#text3 after html/body/#text
         1
       ];
       REORDER_RUNTIME(M._);
-      M._.j.c = _ =&gt;
+      M._.j[2] = _ =&gt;
       {
         _.push(
           "__tests__/template.marko_1_clickCount",
@@ -325,7 +325,7 @@ container.querySelector("button").click();
         1
       ];
       REORDER_RUNTIME(M._);
-      M._.j.c = _ =&gt;
+      M._.j[2] = _ =&gt;
       {
         _.push(
           "__tests__/template.marko_1_clickCount",
@@ -382,7 +382,7 @@ container.querySelector("button").click();
         1
       ];
       REORDER_RUNTIME(M._);
-      M._.j.c = _ =&gt;
+      M._.j[2] = _ =&gt;
       {
         _.push(
           "__tests__/template.marko_1_clickCount",
@@ -454,7 +454,7 @@ REMOVE #document-fragment/#text3 after html/body/#text
         1
       ];
       REORDER_RUNTIME(M._);
-      M._.j.c = _ =&gt;
+      M._.j[2] = _ =&gt;
       {
         _.push(
           "__tests__/template.marko_1_clickCount",

@@ -98,7 +98,7 @@ export let runEffects = ((effects) => {
   for (let i = 0; i < effects.length; ) {
     (effects[i++] as (scope: Scope) => void)(effects[i++] as Scope);
   }
-}) as (effects: unknown[], checkPending?: boolean) => void;
+}) as (effects: unknown[], checkPending?: boolean | 1) => void;
 
 function runRenders() {
   while (pendingRenders.length) {
@@ -157,11 +157,11 @@ export let _enable_catch = () => {
     scope: Scope,
     branch: BranchScope | undefined,
   ) => {
-    // walk up the branches to see if any have a ___pendingAsyncCount
+    // walk up the branches to see if any have an AwaitCounter with count (i) > 0
     // if not, return false
     // if so, return true and push the fn to the pending async queue on the try branch
     while (branch) {
-      if (branch[AccessorProp.PendingAsyncCount]) {
+      if (branch[AccessorProp.AwaitCounter]?.i) {
         return (branch[AccessorProp.PendingEffects] ||= []).push(fn, scope);
       }
       branch = branch[AccessorProp.ParentBranch];

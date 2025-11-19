@@ -18,6 +18,7 @@ import {
   register as serializerRegister,
   Serializer,
   setDebugInfo,
+  toAccess,
 } from "./serializer";
 import type { ServerRenderer } from "./template";
 
@@ -65,6 +66,9 @@ export function writeScript(script: string) {
 }
 
 export function _script(scopeId: number, registryId: string) {
+  if ($chunk.context?.[kIsAsync]) {
+    _resume_branch(scopeId);
+  }
   $chunk.boundary.state.needsMainRuntime = true;
   $chunk.writeEffect(scopeId, registryId);
 }
@@ -113,13 +117,29 @@ export function normalizeServerRender(value: unknown) {
 }
 
 const kPendingContexts = Symbol("Pending Contexts");
-export function withContext<T>(key: PropertyKey, value: unknown, cb: () => T) {
+export function withContext<T>(
+  key: PropertyKey,
+  value: unknown,
+  cb: () => T,
+): T;
+export function withContext<T, U>(
+  key: PropertyKey,
+  value: unknown,
+  cb: (value: U) => T,
+  cbValue: U,
+): T;
+export function withContext<T, U>(
+  key: PropertyKey,
+  value: unknown,
+  cb: (value?: U) => T,
+  cbValue?: U,
+): T {
   const ctx = ($chunk.context ||= { [kPendingContexts]: 0 } as any);
   const prev = ctx[key];
   ctx[kPendingContexts]++;
   ctx[key] = value;
   try {
-    return cb();
+    return cb(cbValue);
   } finally {
     ctx[kPendingContexts]--;
     ctx[key] = prev;
@@ -228,20 +248,25 @@ export function _hoist(scopeId: number, id: string) {
 }
 
 export function _resume_branch(scopeId: number) {
-  const branchId = $chunk.context?.[branchIdKey];
+  const branchId = $chunk.context?.[kBranchId];
   if (branchId !== undefined && branchId !== scopeId) {
     writeScope(scopeId, { [AccessorProp.ClosestBranchId]: branchId });
   }
 }
 
-const branchIdKey = Symbol();
+const kBranchId = Symbol("Branch Id");
+const kIsAsync = Symbol("Is Async");
 
 export function isInResumedBranch() {
-  return $chunk?.context?.[branchIdKey] !== undefined;
+  return $chunk?.context?.[kBranchId] !== undefined;
 }
 
 export function withBranchId<T>(branchId: number, cb: () => T): T {
-  return withContext(branchIdKey, branchId, cb);
+  return withContext(kBranchId, branchId, cb);
+}
+
+function withIsAsync<T, U>(cb: (value: U) => T, value: U): T {
+  return withContext(kIsAsync, true, cb, value);
 }
 
 export function _for_of(
@@ -762,7 +787,7 @@ export function _await<T>(
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
               );
-              content(value);
+              withIsAsync(content, value);
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(
                   ResumeSymbol.BranchEnd,
@@ -770,7 +795,7 @@ export function _await<T>(
                 ),
               );
             } else {
-              content(value);
+              withIsAsync(content, value);
             }
           });
           boundary.endAsync(chunk);
@@ -806,12 +831,12 @@ export function _try(
   if (catchContent) {
     tryCatch(
       placeholderContent
-        ? () => tryPlaceholder(content, placeholderContent)
+        ? () => tryPlaceholder(content, placeholderContent, branchId)
         : content,
       catchContent,
     );
   } else if (placeholderContent) {
-    tryPlaceholder(content, placeholderContent);
+    tryPlaceholder(content, placeholderContent, branchId);
   } else {
     content();
   }
@@ -830,7 +855,11 @@ export function _try(
   );
 }
 
-function tryPlaceholder(content: () => void, placeholder: () => void) {
+function tryPlaceholder(
+  content: () => void,
+  placeholder: () => void,
+  branchId: number,
+) {
   const chunk = $chunk;
   const { boundary } = chunk;
   const body = new Chunk(boundary, null, chunk.context);
@@ -840,9 +869,10 @@ function tryPlaceholder(content: () => void, placeholder: () => void) {
     return;
   }
 
-  chunk.next = $chunk = new Chunk(boundary, chunk.next, body.context);
+  chunk.next = $chunk = new Chunk(boundary, chunk.next, chunk.context);
   chunk.placeholderBody = body;
   chunk.placeholderRender = placeholder;
+  chunk.placeholderBranchId = branchId;
 }
 
 function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
@@ -1054,6 +1084,7 @@ export class Chunk {
   public reorderId: string | null = null;
   public placeholderBody: Chunk | null = null;
   public placeholderRender: (() => void) | null = null;
+  public placeholderBranchId: number | null = null;
   constructor(
     public boundary: Boundary,
     public next: Chunk | null,
@@ -1096,7 +1127,10 @@ export class Chunk {
 
       if (body.async) {
         const { state } = this.boundary;
-        const reorderId = (body.reorderId = state.nextReorderId());
+        const reorderId = (body.reorderId = this.placeholderBranchId
+          ? this.placeholderBranchId + ""
+          : state.nextReorderId());
+        this.placeholderBranchId = null;
         this.writeHTML(state.mark(Mark.Placeholder, reorderId));
         const after = this.render(this.placeholderRender!);
         if (after !== this) {
@@ -1272,8 +1306,7 @@ export class Chunk {
           reorderScripts &&
             runtimePrefix +
               RuntimeKey.Scripts +
-              "." +
-              reorderId +
+              toAccess(reorderId!) +
               "=_=>{" +
               reorderScripts +
               "}",

@@ -1,0 +1,9 @@
+import { resolveAfter } from "../../utils/resolve";
+let/show=1
+script -- show = 0
+div#outside -- Pass
+if=show
+  try
+    @placeholder -- loading...
+    await=resolveAfter(0, 1)
+      script -- document.querySelector('#outside')!.textContent = "Fail"

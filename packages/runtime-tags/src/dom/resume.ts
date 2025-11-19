@@ -4,6 +4,7 @@ import { type Opt, push } from "../common/opt";
 import {
   AccessorPrefix,
   AccessorProp,
+  type AwaitCounter,
   type BranchScope,
   type EncodedAccessor,
   ResumeSymbol,
@@ -15,11 +16,11 @@ import { getDebugKey } from "./walker";
 
 type Resumes = (number | Scope)[];
 type ResumeFn = (ctx: object) => Resumes;
-interface Renders {
+export interface Renders {
   (renderId: string): RenderData;
   [renderId: string]: RenderData;
 }
-interface RenderData {
+export interface RenderData {
   // RuntimeID + ResumeID
   i: string;
   // Marked nodes to visit
@@ -30,12 +31,26 @@ interface RenderData {
   s?: Record<string, Scope>;
   // Walk
   w(): void;
+  // Deserialize scopes and run scripts ("m" for marko)
+  m(): unknown[];
+
+  /* --- Used by inline runtime --- */
+
+  // Document
+  d: never;
+  // Walked node lookup
+  l: never;
+  // Reorder-runtime
+  x: never;
+  // Reordered scripts
+  j?: never;
+  // Await counter lookup
+  p?: Record<string | number, AwaitCounter>;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
 const registeredValues: Record<string, unknown> = {};
 let branchesEnabled: undefined | 1;
-let isInit: undefined | 0 | 1;
 export function enableBranches() {
   branchesEnabled = 1;
 }
@@ -193,68 +208,68 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               : visitText.length,
           ));
 
-        render.w = (effects: unknown[] = []) => {
-          try {
-            isInit || walk();
-            isResuming = 1;
-
-            for (const serialized of (resumes = render.r || [])) {
-              if (typeof serialized === "string") {
-                lastEffect = serialized;
-              } else if (typeof serialized === "number") {
-                effects.push(
-                  registeredValues[lastEffect!],
-                  (scopeLookup[serialized] ||= {
-                    [AccessorProp.Id]: serialized,
-                  } as Scope),
-                );
-              } else {
-                for (const scope of serialized(serializeContext)) {
-                  if (!$global) {
-                    $global = (scope || {}) as Scope[AccessorProp.Global];
-                    $global.runtimeId = runtimeId;
-                    $global.renderId = renderId;
-                  } else if (typeof scope === "number") {
-                    lastScopeId += scope;
-                  } else {
-                    scopeLookup[(scope[AccessorProp.Id] = ++lastScopeId)] =
-                      scope;
-                    scope[AccessorProp.Global] = $global;
-                    if (branchesEnabled) {
-                      scope[AccessorProp.ClosestBranch] = scopeLookup[
-                        scope[AccessorProp.ClosestBranchId]!
-                      ] as BranchScope;
-                    }
+        render.m = (effects: unknown[] = []) => {
+          for (const serialized of (resumes = render.r || [])) {
+            if (typeof serialized === "string") {
+              lastEffect = serialized;
+            } else if (typeof serialized === "number") {
+              effects.push(
+                registeredValues[lastEffect!],
+                (scopeLookup[serialized] ||= {
+                  [AccessorProp.Id]: serialized,
+                } as Scope),
+              );
+            } else {
+              for (const scope of serialized(serializeContext)) {
+                if (!$global) {
+                  $global = (scope || {}) as Scope[AccessorProp.Global];
+                  $global.runtimeId = runtimeId;
+                  $global.renderId = renderId;
+                } else if (typeof scope === "number") {
+                  lastScopeId += scope;
+                } else {
+                  scopeLookup[(scope[AccessorProp.Id] = ++lastScopeId)] = scope;
+                  scope[AccessorProp.Global] = $global;
+                  if (branchesEnabled) {
+                    scope[AccessorProp.ClosestBranch] = scopeLookup[
+                      scope[AccessorProp.ClosestBranchId]!
+                    ] as BranchScope;
                   }
                 }
               }
             }
-
-            for (visit of (visits = render.v)) {
-              lastTokenIndex = render.i.length;
-              visitText = visit.data!;
-              visitType = visitText[lastTokenIndex++] as ResumeSymbol;
-              visitScope = scopeLookup[+(nextToken(/* read scope id */))] ||= {
-                [AccessorProp.Id]: +lastToken,
-              } as Scope;
-
-              // TODO: switch?
-              if (visitType === ResumeSymbol.Node) {
-                // TODO: could we use attr marker?
-                visitScope[AccessorPrefix.Getter + nextToken()] = (
-                  (node) => () =>
-                    node
-                )((visitScope[lastToken] = visit.previousSibling));
-              } else if (branchesEnabled) {
-                visitBranches!();
-              }
-            }
-
-            runEffects(effects);
-          } finally {
-            isInit = isResuming = visits.length = resumes.length = 0;
           }
+
+          for (visit of (visits = render.v)) {
+            lastTokenIndex = render.i.length;
+            visitText = visit.data!;
+            visitType = visitText[lastTokenIndex++] as ResumeSymbol;
+            visitScope = scopeLookup[+(nextToken(/* read scope id */))] ||= {
+              [AccessorProp.Id]: +lastToken,
+            } as Scope;
+
+            // TODO: switch?
+            if (visitType === ResumeSymbol.Node) {
+              // TODO: could we use attr marker?
+              visitScope[AccessorPrefix.Getter + nextToken()] = (
+                (node) => () =>
+                  node
+              )((visitScope[lastToken] = visit.previousSibling));
+            } else if (branchesEnabled) {
+              visitBranches!();
+            }
+          }
+
+          visits.length = resumes.length = 0;
+
+          return effects;
         };
+
+        render.w = () => {
+          walk();
+          runResumeEffects(render);
+        };
+
         return render;
       }) as Renders),
     });
@@ -262,8 +277,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
   if (renders) {
     initRuntime(renders);
     for (const renderId in renders) {
-      isInit = 1;
-      resumeRender!(renderId).w();
+      runResumeEffects(resumeRender!(renderId));
     }
   } else {
     defineRuntime({
@@ -274,6 +288,15 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 }
 
 export let isResuming: undefined | 0 | 1;
+
+function runResumeEffects(render: RenderData) {
+  try {
+    isResuming = 1;
+    runEffects(render.m(), 1);
+  } finally {
+    isResuming = 0;
+  }
+}
 
 export function getRegisteredWithScope(id: string, scope?: Scope) {
   const val = registeredValues[id];
