@@ -69,10 +69,3 @@
   </body>
 </html>
 ```
-
-# Mutations
-```
-INSERT html/body/div/div/#text
-INSERT html/body/div/#text
-INSERT html/body/div/div/div/#text
-```

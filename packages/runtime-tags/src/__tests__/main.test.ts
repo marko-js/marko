@@ -189,24 +189,41 @@ describe("runtime-tags/translator", () => {
           );
         }
       };
-      let ssr = () => {
+
+      let serverRender = () => {
         const cached = (async () => {
-          const hooks: TestHooks = (() => {
-            try {
-              return require(resolve("hooks.ts"));
-            } catch {
-              return {};
-            }
-          })();
-
-          hooks.before?.();
-
           const serverTemplate = require(manualSSR ? serverFile : templateFile)
             .default as Template;
 
-          let buffer = "";
-          // let flushCount = 0;
+          const [input = {}, ...steps] = (
+            typeof config.steps === "function"
+              ? await config.steps()
+              : config.steps || []
+          ) as [Input, ...unknown[]];
 
+          const chunks: string[] = [];
+          for await (const data of serverTemplate.render(input)) {
+            chunks.push(data);
+          }
+
+          return { chunks, input, steps };
+        })();
+        serverRender = () => cached;
+        return cached;
+      };
+
+      const getHooks = (
+        browser?: ReturnType<typeof createBrowser>,
+      ): TestHooks => {
+        try {
+          return (browser ? browser.require : require)(resolve("hooks.ts"));
+        } catch {
+          return {};
+        }
+      };
+
+      let ssr = () => {
+        const cached = (async () => {
           const browser = createBrowser({
             dir: __dirname,
             extensions: register({
@@ -215,27 +232,31 @@ describe("runtime-tags/translator", () => {
               extensions: {},
             }),
           });
-          const document = browser.window.document;
-          const [input = {}] = (
-            typeof config.steps === "function"
-              ? await config.steps()
-              : config.steps || []
-          ) as [Input];
+          const { window } = browser;
+          const { document } = window;
+          const hooks = getHooks();
 
-          document.open();
+          hooks.before?.();
 
-          const tracker = createMutationTracker(browser.window, document);
+          const { chunks } = await serverRender();
 
-          for await (const data of serverTemplate.render(input)) {
+          const browserStream = browser.open();
+
+          const tracker = createMutationTracker(window, document);
+
+          for (const data of chunks) {
             const formattedHtml = indent(stripInlineRuntime(data));
             if (formattedHtml) {
               tracker.log(`# Write\n\`\`\`html\n${formattedHtml}\n\`\`\``);
             }
-
-            buffer += data;
+            browserStream.write(data);
           }
-          document.write(buffer);
-          document.close();
+
+          const flushRemaining = browserStream.close();
+          if (flushRemaining) {
+            await flushRemaining();
+          }
+
           tracker.logUpdate("End", true);
 
           tracker.cleanup();
@@ -258,13 +279,7 @@ describe("runtime-tags/translator", () => {
             }),
           });
 
-          const hooks: TestHooks = (() => {
-            try {
-              return browser.require(resolve("hooks.ts"));
-            } catch {
-              return {};
-            }
-          })();
+          const hooks = getHooks(browser);
 
           hooks.before?.();
 
@@ -325,24 +340,48 @@ describe("runtime-tags/translator", () => {
 
       let resume = () => {
         const cached = (async () => {
-          const { browser } = await ssr();
+          const browser = createBrowser({
+            dir: __dirname,
+            extensions: register({
+              ...domConfig,
+              modules: "cjs",
+              extensions: {},
+            }),
+          });
           const { window } = browser;
           const { document } = window;
-          const tracker = createMutationTracker(window, document);
-          const [input, ...steps] =
-            typeof config.steps === "function"
-              ? await config.steps()
-              : config.steps || [];
+          const serverHooks = getHooks();
+          const browserHooks = getHooks(browser);
 
-          // TODO: when this is removed, the resume test will fail if run by itself... why?
-          await new Promise((resolve) => setTimeout(resolve, 10));
+          serverHooks.before?.();
+          browserHooks.before?.();
+
+          const { chunks, input, steps } = await serverRender();
 
           const { run, init } = browser.require<
             typeof import("@marko/runtime-tags/dom")
           >("@marko/runtime-tags/dom");
 
           browser.require(manualResume ? resumeFile : templateFile);
-          init();
+
+          const browserStream = browser.open();
+
+          let tracker: ReturnType<typeof createMutationTracker>;
+
+          for (const data of chunks) {
+            browserStream.write(data);
+          }
+
+          const flushRemaining = browserStream.close();
+          if (flushRemaining) {
+            init();
+            await flushRemaining();
+            tracker = createMutationTracker(window, document);
+          } else {
+            tracker = createMutationTracker(window, document);
+            init();
+          }
+
           tracker.logUpdate(input);
 
           for (const update of steps) {
@@ -362,6 +401,9 @@ describe("runtime-tags/translator", () => {
           }
 
           tracker.cleanup();
+
+          serverHooks.after?.();
+          browserHooks.after?.();
 
           return { browser, tracker };
         })();

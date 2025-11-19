@@ -42,9 +42,3 @@
   </body>
 </html>
 ```
-
-# Mutations
-```
-INSERT html/body/#text8
-INSERT html/body/#text7
-```

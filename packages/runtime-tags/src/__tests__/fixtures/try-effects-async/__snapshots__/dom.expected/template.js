@@ -12,10 +12,7 @@ const $catch_content__$params = /* @__PURE__ */_._const("$params2", $scope => $c
 const $catch_content = _._content_resume("__tests__/template.marko_3_content", " ", /* get, over(1) */" b", 0, $catch_content__$params);
 const $placeholder_content = _._content_resume("__tests__/template.marko_2_content", "LOADING...", /* over(1) */"b");
 const $try_content__await = /* @__PURE__ */_._await("#text/0", "Async: <!>", /* over(1), replace, over(1) */"b%b", 0, $await_content__$params);
-const $try_content__clickCount__script = _._script("__tests__/template.marko_1_clickCount", $scope => {
-  debugger;
-  _._el_read($scope._["#div/1"]).textContent = $scope._.clickCount;
-});
+const $try_content__clickCount__script = _._script("__tests__/template.marko_1_clickCount", $scope => (_._el_read($scope._["#div/1"]).textContent = $scope._.clickCount));
 const $try_content__clickCount = /* @__PURE__ */_._closure_get("clickCount", $scope => {
   $try_content__await($scope, resolveAfter($scope._.clickCount, 1));
   $try_content__clickCount__script($scope);

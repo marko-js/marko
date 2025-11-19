@@ -1,4 +1,14 @@
-# Render End
+# Render ASYNC
+```html
+<button>
+  inc
+</button>
+<div />
+LOADING...
+```
+
+
+# Render ASYNC
 ```html
 <button>
   inc

@@ -59,12 +59,6 @@
 </html>
 ```
 
-# Mutations
-```
-INSERT html/body/div/#text2
-INSERT html/body/div/#text5
-INSERT html/body/div/#text8
-```
 
 # Render
 ```js
