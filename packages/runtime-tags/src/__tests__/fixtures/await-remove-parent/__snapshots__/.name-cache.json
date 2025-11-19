@@ -1,0 +1,17 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "e",
+      "$resolveAfter": "o",
+      "$$await_content__setup": "r",
+      "$$placeholder_content": "a",
+      "$$try_content__await": "m",
+      "$$try_content__setup": "i",
+      "$$if_content__try": "c",
+      "$$if_content__setup": "n",
+      "$$if": "s",
+      "$$show": "_"
+    }
+  }
+}

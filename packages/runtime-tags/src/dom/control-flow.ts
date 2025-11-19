@@ -4,9 +4,11 @@ import { decodeAccessor, normalizeDynamicRenderer } from "../common/helpers";
 import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
 import { toArray } from "../common/opt";
 import {
+  type $Global,
   type Accessor,
   AccessorPrefix,
   AccessorProp,
+  type AwaitCounter,
   type BranchScope,
   type EncodedAccessor,
   NodeType,
@@ -14,6 +16,7 @@ import {
 } from "../common/types";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
+  _enable_catch,
   caughtError,
   pendingEffects,
   placeholderShown,
@@ -31,7 +34,12 @@ import {
   setupBranch,
   type SetupFn,
 } from "./renderer";
-import { _resume, enableBranches } from "./resume";
+import {
+  _resume,
+  enableBranches,
+  type RenderData,
+  type Renders,
+} from "./resume";
 import { schedule } from "./schedule";
 import {
   destroyBranch,
@@ -53,26 +61,61 @@ export function _await(
   const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
   const renderer = _content("", template, walks, setup)();
-  enableBranches();
+  _enable_catch();
   return (scope: Scope, promise: Promise<unknown>) => {
     // TODO: !isPromise, render synchronously
-    const referenceNode = scope[nodeAccessor] as Text | Comment;
+
+    let awaitCounter: AwaitCounter | undefined;
+    let renderData: RenderData | undefined;
     const tryWithPlaceholder = findBranchWithKey(
       scope,
       AccessorProp.PlaceholderContent,
     );
-    let awaitBranch = scope[branchAccessor] as BranchScope | undefined;
 
     if (tryWithPlaceholder) {
+      renderData = (self as unknown as Record<string, Renders>)[
+        (tryWithPlaceholder[AccessorProp.Global] as $Global).runtimeId!
+      ]?.[(tryWithPlaceholder[AccessorProp.Global] as $Global).renderId!];
+      awaitCounter = tryWithPlaceholder[AccessorProp.AwaitCounter] ||=
+        renderData?.p?.[tryWithPlaceholder[AccessorProp.Id]];
+      if (!awaitCounter?.i) {
+        awaitCounter = tryWithPlaceholder[AccessorProp.AwaitCounter] = {
+          d: 1,
+          i: 0,
+          c() {
+            if (!--awaitCounter!.i) {
+              const placeholderBranch = tryWithPlaceholder[
+                AccessorProp.PlaceholderBranch
+              ] as BranchScope;
+              tryWithPlaceholder[AccessorProp.PlaceholderBranch] = 0;
+              if (placeholderBranch) {
+                // Since this is temp detached the parent node is a document fragment with all of the children in the branch.
+                placeholderBranch[
+                  AccessorProp.StartNode
+                ].parentNode!.insertBefore(
+                  tryWithPlaceholder[AccessorProp.StartNode].parentNode!,
+                  placeholderBranch[AccessorProp.StartNode],
+                );
+                removeAndDestroyBranch(placeholderBranch);
+              }
+
+              queueEffect(tryWithPlaceholder, (scope) => {
+                const pendingEffects = scope[AccessorProp.PendingEffects];
+                if (pendingEffects) {
+                  scope[AccessorProp.PendingEffects] = [];
+                  runEffects(pendingEffects, true);
+                }
+              });
+            }
+          },
+        };
+      }
+
       placeholderShown.add(pendingEffects);
-      if (
-        !scope[promiseAccessor] &&
-        (tryWithPlaceholder[AccessorProp.PendingAsyncCount] =
-          (tryWithPlaceholder[AccessorProp.PendingAsyncCount] || 0) + 1) === 1
-      ) {
+      if (!scope[promiseAccessor] && !awaitCounter.i++) {
         requestAnimationFrame(
           () =>
-            tryWithPlaceholder[AccessorProp.PendingAsyncCount] &&
+            awaitCounter!.i &&
             runEffects(
               prepareEffects(() =>
                 queueRender(
@@ -100,12 +143,14 @@ export function _await(
             ),
         );
       }
-    } else if (awaitBranch && !scope[promiseAccessor]) {
-      awaitBranch[AccessorProp.StartNode].parentNode!.insertBefore(
-        referenceNode,
-        awaitBranch[AccessorProp.StartNode],
+    } else if (scope[branchAccessor] && !scope[promiseAccessor]) {
+      (scope[branchAccessor] as BranchScope)[
+        AccessorProp.StartNode
+      ].parentNode!.insertBefore(
+        scope[nodeAccessor] as Node,
+        (scope[branchAccessor] as BranchScope)[AccessorProp.StartNode],
       );
-      tempDetachBranch(awaitBranch);
+      tempDetachBranch(scope[branchAccessor] as BranchScope);
     }
     const thisPromise = (scope[promiseAccessor] = promise.then(
       (data) => {
@@ -116,58 +161,54 @@ export function _await(
           queueRender(
             scope,
             () => {
-              if (awaitBranch) {
+              if (scope[branchAccessor]) {
                 // Since this is temp detached the parent node is a document fragment with all of the children in the branch.
                 if (!tryWithPlaceholder) {
-                  referenceNode.replaceWith(
-                    awaitBranch[AccessorProp.StartNode].parentNode!,
+                  (scope[nodeAccessor] as ChildNode).replaceWith(
+                    (scope[branchAccessor] as BranchScope)[
+                      AccessorProp.StartNode
+                    ].parentNode!,
                   );
                 }
               } else {
                 // TODO: this preserves the existing scope, but we need to defer closures executing in this existing scope while it is pending.
                 // Not ideal, but we could destroy and recreate the scope everytime the promise changes to avoid this.
                 insertBranchBefore(
-                  (awaitBranch = scope[branchAccessor] =
-                    createAndSetupBranch(
-                      scope[AccessorProp.Global],
-                      renderer,
-                      scope,
-                      referenceNode.parentNode!,
-                    )),
-                  referenceNode.parentNode!,
-                  referenceNode,
+                  (scope[branchAccessor] = createAndSetupBranch(
+                    scope[AccessorProp.Global],
+                    renderer,
+                    scope,
+                    (scope[nodeAccessor] as ChildNode).parentNode!,
+                  )),
+                  (scope[nodeAccessor] as ChildNode).parentNode!,
+                  scope[nodeAccessor] as ChildNode,
                 );
-                referenceNode.remove();
+                (scope[nodeAccessor] as ChildNode).remove();
               }
 
-              params?.(awaitBranch, [data]);
+              params?.(scope[branchAccessor] as BranchScope, [data]);
 
-              if (tryWithPlaceholder) {
+              if (awaitCounter) {
                 placeholderShown.add(pendingEffects);
-
-                if (!--tryWithPlaceholder[AccessorProp.PendingAsyncCount]!) {
-                  const placeholderBranch = tryWithPlaceholder[
-                    AccessorProp.PlaceholderBranch
-                  ] as BranchScope;
-                  tryWithPlaceholder[AccessorProp.PlaceholderBranch] = 0;
-                  if (placeholderBranch) {
-                    // Since this is temp detached the parent node is a document fragment with all of the children in the branch.
-                    placeholderBranch[
-                      AccessorProp.StartNode
-                    ].parentNode!.insertBefore(
-                      tryWithPlaceholder[AccessorProp.StartNode].parentNode!,
-                      placeholderBranch[AccessorProp.StartNode],
-                    );
-                    removeAndDestroyBranch(placeholderBranch);
-                  }
-
-                  queueEffect(tryWithPlaceholder, (scope) => {
-                    const pendingEffects = scope[AccessorProp.PendingEffects];
-                    if (pendingEffects) {
-                      scope[AccessorProp.PendingEffects] = [];
-                      runEffects(pendingEffects, true);
+                awaitCounter.c();
+                if (!awaitCounter.d) {
+                  const fnScopes = new Map<unknown, Set<Scope>>();
+                  const effects = renderData!.m();
+                  for (let i = 0; i < pendingEffects.length; ) {
+                    const fn = pendingEffects[i++] as any;
+                    let scopes = fnScopes.get(fn);
+                    if (!scopes) {
+                      fnScopes.set(fn, (scopes = new Set()));
                     }
-                  });
+                    scopes.add(pendingEffects[i++] as Scope);
+                  }
+                  for (let i = 0; i < effects.length; ) {
+                    const fn = effects[i++] as any;
+                    const scope = effects[i++] as Scope;
+                    if (!fnScopes.get(fn)?.has(scope)) {
+                      queueEffect(scope, fn);
+                    }
+                  }
                 }
               }
             },
@@ -177,8 +218,7 @@ export function _await(
       },
       (error) => {
         if (thisPromise === scope[promiseAccessor]) {
-          if (tryWithPlaceholder)
-            tryWithPlaceholder[AccessorProp.PendingAsyncCount] = 0;
+          if (awaitCounter) awaitCounter.i = 0;
           scope[promiseAccessor] = 0;
           schedule();
           queueRender(scope, renderCatch, -1, error);
@@ -229,7 +269,8 @@ export function renderCatch(scope: Scope, error: unknown) {
       AccessorProp.PlaceholderBranch
     ] as BranchScope;
     if (placeholderBranch) {
-      tryWithCatch[AccessorProp.PendingAsyncCount] = 0;
+      if (tryWithCatch[AccessorProp.AwaitCounter])
+        (tryWithCatch[AccessorProp.AwaitCounter] as AwaitCounter).i = 0;
       owner[
         AccessorPrefix.BranchScopes + tryWithCatch[AccessorProp.BranchAccessor]
       ] = placeholderBranch;

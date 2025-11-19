@@ -10,7 +10,7 @@ export interface BranchScope extends Scope {
   [AccessorProp.AbortScopes]: Set<Scope> | undefined;
   [AccessorProp.BranchScopes]: Set<BranchScope> | undefined;
   [AccessorProp.Renderer]: ClientRenderer | string;
-  [AccessorProp.PendingAsyncCount]: number | undefined;
+  [AccessorProp.AwaitCounter]: AwaitCounter | undefined;
   [AccessorProp.PendingEffects]: unknown[] | undefined;
 }
 export interface Scope {
@@ -35,6 +35,12 @@ export enum ResumeSymbol {
   BranchEndSingleNode = "|",
   BranchEndOnlyChildInParent = ")",
   BranchEndSingleNodeOnlyChildInParent = "}",
+}
+
+export interface AwaitCounter {
+  d?: 1;
+  i: number;
+  c: () => void;
 }
 
 export { AccessorPrefix, AccessorProp } from "./accessor.debug";

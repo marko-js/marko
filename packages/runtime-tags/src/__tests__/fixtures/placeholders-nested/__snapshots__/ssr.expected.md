@@ -1,6 +1,6 @@
 # Write
 ```html
-  a<!--M_[--><!--M_!^b-->_B_<!--M_!b--><!--M_]1 #text/0 2-->h<style M_>t{display:none}</style><t M_=b>b<!--M_#c-->d<!--M_[--><!--M_!^d-->_A_<!--M_!d--><!--M_]2 #text/1 3--></t><t M_=d>e<!--M_#e-->g</t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,1,_.a={"#BranchAccessor":"#text/0","#PlaceholderContent":_.d={}},_.b={"#BranchAccessor":"#text/1"}],_.a["#PlaceholderContent"]=_._["__tests__/template.marko_2_content"](_.d),_.b["#PlaceholderContent"]=_._["__tests__/template.marko_5_content"](_.a),_.c)];REORDER_RUNTIME(M._);M._.w()</script>
+  a<!--M_[--><!--M_!^2-->_B_<!--M_!2--><!--M_]1 #text/0 2-->h<style M_>t{display:none}</style><t M_=2>b<!--M_#b-->d<!--M_[--><!--M_!^3-->_A_<!--M_!3--><!--M_]2 #text/1 3--></t><t M_=3>e<!--M_#c-->g</t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,1,_.a={"#BranchAccessor":"#text/0","#PlaceholderContent":_.d={}},_.b={"#BranchAccessor":"#text/1"}],_.a["#PlaceholderContent"]=_._["__tests__/template.marko_2_content"](_.d),_.b["#PlaceholderContent"]=_._["__tests__/template.marko_5_content"](_.a),_.c)];REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Write
@@ -10,12 +10,12 @@
 
 # Write
 ```html
-  <t M_=c>c</t><script>M._.w()</script>
+  <t M_=b>c</t><script>M._.w()</script>
 ```
 
 # Write
 ```html
-  <t M_=e>f</t><script>M._.w()</script>
+  <t M_=c>f</t><script>M._.w()</script>
 ```
 
 # Render ASYNC
@@ -31,9 +31,9 @@
   <body>
     a
     <!--M_[-->
-    <!--M_!^b-->
+    <!--M_!^2-->
     _B_
-    <!--M_!b-->
+    <!--M_!2-->
     <!--M_]1 #text/0 2-->
     h
     <script>
@@ -102,9 +102,9 @@ INSERT html/body/script
   <body>
     a
     <!--M_[-->
-    <!--M_!^b-->
+    <!--M_!^2-->
     _B_
-    <!--M_!b-->
+    <!--M_!2-->
     <!--M_]1 #text/0 2-->
     h
     <script>
@@ -147,9 +147,9 @@ INSERT html/body/#text3
     <!--M_[-->
     bcd
     <!--M_[-->
-    <!--M_!^d-->
+    <!--M_!^3-->
     _A_
-    <!--M_!d-->
+    <!--M_!3-->
     <!--M_]2 #text/1 3-->
     <!--M_]1 #text/0 2-->
     h
