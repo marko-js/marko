@@ -1,8 +1,16 @@
 # Render
 ```html
-<!--M_!^b-->
 <html>
   <head>
+    <style
+      m_=""
+    >
+      t{display:none}
+    </style>
+  </head>
+  <body>
+    <!--M_[-->
+    <!--M_!^b-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, 1, _.a = {
@@ -20,14 +28,6 @@
         "__tests__/template.marko_8_content"
         ](_.e), _.d)]
     </script>
-    <style
-      m_=""
-    >
-      t{display:none}
-    </style>
-  </head>
-  <body>
-    <!--M_[-->
     <script>
       REORDER_RUNTIME(M._);
       M._.w()
@@ -64,24 +64,23 @@
 </html>
 ```
 
-# Mutations
-```
-REMOVE html/body/#comment0 before #comment
-INSERT html/body/#comment0
-INSERT html/body/#text0
-INSERT html/body/#text2
-INSERT html/body/#text3
-INSERT html/body/#text4
-```
 
 # Render
 ```js
 container.querySelector("button").click();
 ```
 ```html
-<!--M_!^b-->
 <html>
   <head>
+    <style
+      m_=""
+    >
+      t{display:none}
+    </style>
+  </head>
+  <body>
+    <!--M_[-->
+    <!--M_!^b-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, 1, _.a = {
@@ -99,14 +98,6 @@ container.querySelector("button").click();
         "__tests__/template.marko_8_content"
         ](_.e), _.d)]
     </script>
-    <style
-      m_=""
-    >
-      t{display:none}
-    </style>
-  </head>
-  <body>
-    <!--M_[-->
     <script>
       REORDER_RUNTIME(M._);
       M._.w()

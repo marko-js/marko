@@ -73,13 +73,3 @@
   </body>
 </html>
 ```
-
-# Mutations
-```
-REMOVE html/body/#comment0 before html
-INSERT html/body/#comment0
-INSERT html/body/#text
-INSERT html/body/div/div/#text
-INSERT html/body/div/#text
-INSERT html/body/div/div/div/#text
-```

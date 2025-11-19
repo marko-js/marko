@@ -1,4 +1,15 @@
-# Render End
+# Render ASYNC
+```html
+<button>
+  increment
+</button>
+<p>
+  1 * 2 = 
+</p>
+```
+
+
+# Render ASYNC
 ```html
 <button>
   increment

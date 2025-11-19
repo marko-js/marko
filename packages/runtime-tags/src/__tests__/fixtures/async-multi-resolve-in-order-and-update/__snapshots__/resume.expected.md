@@ -84,14 +84,6 @@
 </html>
 ```
 
-# Mutations
-```
-INSERT html/body/p0/#text4
-INSERT html/body/p1/#text4
-INSERT html/body/p2/#text4
-INSERT html/body/p3/#text4
-INSERT html/body/p4/#text4
-```
 
 # Render
 ```js

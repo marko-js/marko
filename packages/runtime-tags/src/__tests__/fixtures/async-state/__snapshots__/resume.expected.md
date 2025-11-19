@@ -46,11 +46,6 @@
 </html>
 ```
 
-# Mutations
-```
-INSERT html/body/#text2
-INSERT html/body/#text1
-```
 
 # Render
 ```js

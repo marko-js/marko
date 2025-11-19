@@ -8,7 +8,25 @@
   bcde
 ```
 
-# Render End
+# Render ASYNC
+```html
+<html>
+  <head />
+  <body>
+    a
+  </body>
+</html>
+```
+
+# Mutations
+```
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/#text
+```
+
+# Render ASYNC
 ```html
 <html>
   <head />
@@ -20,8 +38,5 @@
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/#text
+INSERT html/body/#text1
 ```
