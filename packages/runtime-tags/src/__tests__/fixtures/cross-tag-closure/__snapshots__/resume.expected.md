@@ -23,8 +23,7 @@
           ](_.a), _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_count/var"
           ](_.b), (_.d).add(_.e), _.c),
-        "__tests__/template.marko_1_count",
-        5
+        "__tests__/template.marko_1_count 5"
       ];
       M._.w()
     </script>
@@ -61,8 +60,7 @@ container.querySelector("button").click();
           ](_.a), _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_count/var"
           ](_.b), (_.d).add(_.e), _.c),
-        "__tests__/template.marko_1_count",
-        5
+        "__tests__/template.marko_1_count 5"
       ];
       M._.w()
     </script>
@@ -103,8 +101,7 @@ container.querySelector("button").click();
           ](_.a), _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_count/var"
           ](_.b), (_.d).add(_.e), _.c),
-        "__tests__/template.marko_1_count",
-        5
+        "__tests__/template.marko_1_count 5"
       ];
       M._.w()
     </script>
@@ -145,8 +142,7 @@ container.querySelector("button").click();
           ](_.a), _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_count/var"
           ](_.b), (_.d).add(_.e), _.c),
-        "__tests__/template.marko_1_count",
-        5
+        "__tests__/template.marko_1_count 5"
       ];
       M._.w()
     </script>

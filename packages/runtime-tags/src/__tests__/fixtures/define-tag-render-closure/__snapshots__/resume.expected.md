@@ -32,8 +32,7 @@
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
         }], (_.c).add(_.d), _.c.add(_.e), _.b),
-        "__tests__/template.marko_0_x",
-        1
+        "__tests__/template.marko_0_x 1"
       ];
       M._.w()
     </script>
@@ -83,8 +82,7 @@ container.querySelector("button").click();
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
         }], (_.c).add(_.d), _.c.add(_.e), _.b),
-        "__tests__/template.marko_0_x",
-        1
+        "__tests__/template.marko_0_x 1"
       ];
       M._.w()
     </script>
@@ -140,8 +138,7 @@ container.querySelector("button").click();
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
         }], (_.c).add(_.d), _.c.add(_.e), _.b),
-        "__tests__/template.marko_0_x",
-        1
+        "__tests__/template.marko_0_x 1"
       ];
       M._.w()
     </script>
@@ -193,8 +190,7 @@ container.querySelector("button").click();
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
         }], (_.c).add(_.d), _.c.add(_.e), _.b),
-        "__tests__/template.marko_0_x",
-        1
+        "__tests__/template.marko_0_x 1"
       ];
       M._.w()
     </script>

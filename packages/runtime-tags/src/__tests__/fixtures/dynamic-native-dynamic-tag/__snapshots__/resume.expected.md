@@ -24,8 +24,7 @@
         {
           "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content"
         }]),
-        "__tests__/template.marko_0_tagName",
-        1
+        "__tests__/template.marko_0_tagName 1"
       ];
       M._.w()
     </script>
@@ -65,8 +64,7 @@ container.querySelector("button").click();
         {
           "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content"
         }]),
-        "__tests__/template.marko_0_tagName",
-        1
+        "__tests__/template.marko_0_tagName 1"
       ];
       M._.w()
     </script>
@@ -109,8 +107,7 @@ container.querySelector("button").click();
         {
           "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content"
         }]),
-        "__tests__/template.marko_0_tagName",
-        1
+        "__tests__/template.marko_0_tagName 1"
       ];
       M._.w()
     </script>

@@ -27,8 +27,7 @@
           ](_.d), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_spanName/var"
           ](_.d), _.c),
-        "__tests__/tags/parent-el.marko_0",
-        2, 4
+        "__tests__/tags/parent-el.marko_0 2 4"
       ];
       M._.w()
     </script>
@@ -66,8 +65,7 @@
           ](_.d), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_spanName/var"
           ](_.d), _.c),
-        "__tests__/tags/parent-el.marko_0",
-        2, 4
+        "__tests__/tags/parent-el.marko_0 2 4"
       ];
       M._.w()
     </script>

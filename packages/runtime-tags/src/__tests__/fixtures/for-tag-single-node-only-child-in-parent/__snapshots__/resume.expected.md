@@ -18,8 +18,7 @@
         {
           "#LoopKey": 0
         }]),
-        "__tests__/template.marko_0_children",
-        1
+        "__tests__/template.marko_0_children 1"
       ];
       M._.w()
     </script>
@@ -49,8 +48,7 @@
         {
           "#LoopKey": 0
         }]),
-        "__tests__/template.marko_0_children",
-        1
+        "__tests__/template.marko_0_children 1"
       ];
       M._.w()
     </script>

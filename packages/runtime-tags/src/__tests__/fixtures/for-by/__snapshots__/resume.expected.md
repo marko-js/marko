@@ -127,8 +127,7 @@
         {
           "#LoopKey": 2
         }]),
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -269,8 +268,7 @@ container.querySelector("button").click();
         {
           "#LoopKey": 2
         }]),
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -421,8 +419,7 @@ container.querySelector("button").click();
         {
           "#LoopKey": 2
         }]),
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -569,8 +566,7 @@ container.querySelector("button").click();
         {
           "#LoopKey": 2
         }]),
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>

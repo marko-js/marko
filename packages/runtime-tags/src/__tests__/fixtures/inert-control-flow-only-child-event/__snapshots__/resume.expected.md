@@ -35,8 +35,7 @@
           i: 2,
           _: _.a
         }]),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -89,8 +88,7 @@ select.dispatchEvent(new select.ownerDocument.defaultView.Event("change", {
           i: 2,
           _: _.a
         }]),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

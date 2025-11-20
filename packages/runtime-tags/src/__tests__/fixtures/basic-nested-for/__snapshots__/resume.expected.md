@@ -55,8 +55,7 @@
           _: _.e,
           "#childScope/0": _.g = {}
         }, _.g]),
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -147,8 +146,7 @@ container.querySelector("button").click();
           _: _.e,
           "#childScope/0": _.g = {}
         }, _.g]),
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>

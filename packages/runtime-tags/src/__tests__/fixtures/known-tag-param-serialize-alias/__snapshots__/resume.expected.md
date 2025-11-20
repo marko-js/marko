@@ -16,10 +16,7 @@
         {
           input_a: "a"
         }]),
-        "__tests__/template.marko_1_input_a",
-        2,
-        "__tests__/template.marko_1_a",
-        2
+        "__tests__/template.marko_1_input_a 2 __tests__/template.marko_1_a 2"
       ];
       M._.w()
     </script>

@@ -24,8 +24,7 @@
         }], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.b), _.c),
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -67,8 +66,7 @@ container?.querySelector("button").click();
         }], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.b), _.c),
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>

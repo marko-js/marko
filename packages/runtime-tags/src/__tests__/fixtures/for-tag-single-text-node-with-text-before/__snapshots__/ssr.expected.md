@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div data-children=1>Before <!--M_[-->Child<!--M_]1 #text/1 2--></div><!--M_*1 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{children:[1]},{"#LoopKey":0}]),"__tests__/template.marko_0_children",1];M._.w()</script>
+  <div data-children=1>Before <!--M_[-->Child<!--M_]1 #text/1 2--></div><!--M_*1 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{children:[1]},{"#LoopKey":0}]),"__tests__/template.marko_0_children 1"];M._.w()</script>
 ```
 
 # Render End
@@ -26,8 +26,7 @@
         {
           "#LoopKey": 0
         }]),
-        "__tests__/template.marko_0_children",
-        1
+        "__tests__/template.marko_0_children 1"
       ];
       M._.w()
     </script>

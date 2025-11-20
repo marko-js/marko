@@ -17,8 +17,7 @@
         }], _.a.value = _.b.value = _._[
           "__tests__/template.marko_0/#div"
           ](_.d), _.c),
-        "__tests__/tags/child.marko_0_input",
-        2, 3
+        "__tests__/tags/child.marko_0_input 2 3"
       ];
       M._.w()
     </script>

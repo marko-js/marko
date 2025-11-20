@@ -26,10 +26,7 @@
         },
         {},
         {}]),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -76,10 +73,7 @@ container.querySelector("button").click();
         },
         {},
         {}]),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -129,10 +123,7 @@ container.querySelector("button").click();
         },
         {},
         {}]),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -185,10 +176,7 @@ container.querySelector("button").click();
         },
         {},
         {}]),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>

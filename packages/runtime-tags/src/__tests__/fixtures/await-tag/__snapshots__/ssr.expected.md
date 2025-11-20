@@ -10,7 +10,7 @@
 
 # Write
 ```html
-  <!--M_[-->Got: b <!>0<!--M_*4 #text/1--><!--M_]1 #text/1 4--><!--M_[-->Got: c <!>0<!--M_*3 #text/1--><!--M_]1 #text/2 3--><button>Inc</button><!--M_*1 #button/3--></div><script>M._.r.push(_=>(_.h=[_.i={_:_.b,"ClosureSignalIndex:count":1}],_.d.add(_.i),_.h),"__tests__/template.marko_0_count",1);M._.w()</script>
+  <!--M_[-->Got: b <!>0<!--M_*4 #text/1--><!--M_]1 #text/1 4--><!--M_[-->Got: c <!>0<!--M_*3 #text/1--><!--M_]1 #text/2 3--><button>Inc</button><!--M_*1 #button/3--></div><script>M._.r.push(_=>(_.h=[_.i={_:_.b,"ClosureSignalIndex:count":1}],_.d.add(_.i),_.h),"__tests__/template.marko_0_count 1");M._.w()</script>
 ```
 
 # Render ASYNC
@@ -151,8 +151,8 @@ INSERT html/body/div/script1
           _: _.b,
           "ClosureSignalIndex:count": 1
         }], _.d.add(_.i), _.h),
-        "__tests__/template.marko_0_count",
-        1);
+        "__tests__/template.marko_0_count 1"
+        );
       M._.w()
     </script>
   </body>

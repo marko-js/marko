@@ -63,8 +63,7 @@
         {
           _: _.d
         }]),
-        "__tests__/template.marko_3",
-        3, 5, 7
+        "__tests__/template.marko_3 3 5 7"
       ];
       M._.w()
     </script>
@@ -147,8 +146,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         {
           _: _.d
         }]),
-        "__tests__/template.marko_3",
-        3, 5, 7
+        "__tests__/template.marko_3 3 5 7"
       ];
       M._.w()
     </script>
@@ -226,8 +224,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         {
           _: _.d
         }]),
-        "__tests__/template.marko_3",
-        3, 5, 7
+        "__tests__/template.marko_3 3 5 7"
       ];
       M._.w()
     </script>
@@ -302,8 +299,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         {
           _: _.d
         }]),
-        "__tests__/template.marko_3",
-        3, 5, 7
+        "__tests__/template.marko_3 3 5 7"
       ];
       M._.w()
     </script>
@@ -378,8 +374,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         {
           _: _.d
         }]),
-        "__tests__/template.marko_3",
-        3, 5, 7
+        "__tests__/template.marko_3 3 5 7"
       ];
       M._.w()
     </script>
@@ -454,8 +449,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         {
           _: _.d
         }]),
-        "__tests__/template.marko_3",
-        3, 5, 7
+        "__tests__/template.marko_3 3 5 7"
       ];
       M._.w()
     </script>
@@ -530,8 +524,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         {
           _: _.d
         }]),
-        "__tests__/template.marko_3",
-        3, 5, 7
+        "__tests__/template.marko_3 3 5 7"
       ];
       M._.w()
     </script>
@@ -606,8 +599,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         {
           _: _.d
         }]),
-        "__tests__/template.marko_3",
-        3, 5, 7
+        "__tests__/template.marko_3 3 5 7"
       ];
       M._.w()
     </script>
@@ -682,8 +674,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         {
           _: _.d
         }]),
-        "__tests__/template.marko_3",
-        3, 5, 7
+        "__tests__/template.marko_3 3 5 7"
       ];
       M._.w()
     </script>
@@ -758,8 +749,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         {
           _: _.d
         }]),
-        "__tests__/template.marko_3",
-        3, 5, 7
+        "__tests__/template.marko_3 3 5 7"
       ];
       M._.w()
     </script>

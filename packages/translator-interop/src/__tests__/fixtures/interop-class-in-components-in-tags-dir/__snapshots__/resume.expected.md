@@ -11,7 +11,7 @@
       M.s.r = [_ =&gt; (_.a = [0, 1,
       {
         m5c: "s1"
-      }]), "$compat_setScope", 2];
+      }]), "$compat_setScope 2"];
       M.s.w();
       $MC = (window.$MC || []).concat(
       {

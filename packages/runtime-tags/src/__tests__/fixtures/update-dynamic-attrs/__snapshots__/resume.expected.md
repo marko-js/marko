@@ -30,10 +30,7 @@
           },
           a: 0
         }]),
-        "__tests__/template.marko_0_input_value_a",
-        1,
-        "__tests__/template.marko_0_input_value",
-        1
+        "__tests__/template.marko_0_input_value_a 1 __tests__/template.marko_0_input_value 1"
       ];
       M._.w()
     </script>

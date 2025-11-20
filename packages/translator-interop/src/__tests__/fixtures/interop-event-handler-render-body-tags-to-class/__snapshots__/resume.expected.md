@@ -27,7 +27,7 @@
       }], _.a["ConditionalRenderer:#text/0"] = _._.$compat_renderer(_.a[
         "ConditionalRenderer:#text/0"]), (_.c).add(_.d), _.b), _ =&gt; (_.e = [
         -3, _.a
-      ]), "$compat_setScope", 3];
+      ]), "$compat_setScope 3"];
       M._.w();
       $MC = (window.$MC || []).concat(
       {
@@ -62,7 +62,7 @@
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push("$compat_setScope", 2);
+      M._.r.push("$compat_setScope 2");
       M._.w()
     </script>
   </body>
@@ -118,7 +118,7 @@ container.querySelector("button").click();
       }], _.a["ConditionalRenderer:#text/0"] = _._.$compat_renderer(_.a[
         "ConditionalRenderer:#text/0"]), (_.c).add(_.d), _.b), _ =&gt; (_.e = [
         -3, _.a
-      ]), "$compat_setScope", 3];
+      ]), "$compat_setScope 3"];
       M._.w();
       $MC = (window.$MC || []).concat(
       {
@@ -153,7 +153,7 @@ container.querySelector("button").click();
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push("$compat_setScope", 2);
+      M._.r.push("$compat_setScope 2");
       M._.w()
     </script>
   </body>
@@ -197,7 +197,7 @@ container.querySelector("button").click();
       }], _.a["ConditionalRenderer:#text/0"] = _._.$compat_renderer(_.a[
         "ConditionalRenderer:#text/0"]), (_.c).add(_.d), _.b), _ =&gt; (_.e = [
         -3, _.a
-      ]), "$compat_setScope", 3];
+      ]), "$compat_setScope 3"];
       M._.w();
       $MC = (window.$MC || []).concat(
       {
@@ -232,7 +232,7 @@ container.querySelector("button").click();
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push("$compat_setScope", 2);
+      M._.r.push("$compat_setScope 2");
       M._.w()
     </script>
   </body>
@@ -276,7 +276,7 @@ container.querySelector("button").click();
       }], _.a["ConditionalRenderer:#text/0"] = _._.$compat_renderer(_.a[
         "ConditionalRenderer:#text/0"]), (_.c).add(_.d), _.b), _ =&gt; (_.e = [
         -3, _.a
-      ]), "$compat_setScope", 3];
+      ]), "$compat_setScope 3"];
       M._.w();
       $MC = (window.$MC || []).concat(
       {
@@ -311,7 +311,7 @@ container.querySelector("button").click();
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push("$compat_setScope", 2);
+      M._.r.push("$compat_setScope 2");
       M._.w()
     </script>
   </body>

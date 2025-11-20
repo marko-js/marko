@@ -31,8 +31,7 @@
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       REORDER_RUNTIME(M._);
       M._.w()
@@ -45,10 +44,8 @@
       M._.j.b = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_3",
-          4,
-          "__tests__/template.marko_3_value",
-          4)
+          "__tests__/template.marko_3 4 __tests__/template.marko_3_value 4"
+          )
       };
       M._.w()
     </script>
@@ -93,8 +90,7 @@
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       REORDER_RUNTIME(M._);
       M._.w()
@@ -107,10 +103,8 @@
       M._.j.b = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_3",
-          4,
-          "__tests__/template.marko_3_value",
-          4)
+          "__tests__/template.marko_3 4 __tests__/template.marko_3_value 4"
+          )
       };
       M._.w()
     </script>

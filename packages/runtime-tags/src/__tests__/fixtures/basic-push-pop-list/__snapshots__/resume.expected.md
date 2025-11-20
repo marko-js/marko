@@ -25,10 +25,7 @@
           id: 0,
           items: []
         }]),
-        "__tests__/template.marko_0_items",
-        1,
-        "__tests__/template.marko_0_id_items",
-        1
+        "__tests__/template.marko_0_items 1 __tests__/template.marko_0_id_items 1"
       ];
       M._.w()
     </script>
@@ -67,10 +64,7 @@ container.querySelector("#add").click();
           id: 0,
           items: []
         }]),
-        "__tests__/template.marko_0_items",
-        1,
-        "__tests__/template.marko_0_id_items",
-        1
+        "__tests__/template.marko_0_items 1 __tests__/template.marko_0_id_items 1"
       ];
       M._.w()
     </script>
@@ -114,10 +108,7 @@ container.querySelector("#add").click();
           id: 0,
           items: []
         }]),
-        "__tests__/template.marko_0_items",
-        1,
-        "__tests__/template.marko_0_id_items",
-        1
+        "__tests__/template.marko_0_items 1 __tests__/template.marko_0_id_items 1"
       ];
       M._.w()
     </script>
@@ -160,10 +151,7 @@ container.querySelector("#remove").click();
           id: 0,
           items: []
         }]),
-        "__tests__/template.marko_0_items",
-        1,
-        "__tests__/template.marko_0_id_items",
-        1
+        "__tests__/template.marko_0_items 1 __tests__/template.marko_0_id_items 1"
       ];
       M._.w()
     </script>
@@ -206,10 +194,7 @@ container.querySelector("#add").click();
           id: 0,
           items: []
         }]),
-        "__tests__/template.marko_0_items",
-        1,
-        "__tests__/template.marko_0_id_items",
-        1
+        "__tests__/template.marko_0_items 1 __tests__/template.marko_0_id_items 1"
       ];
       M._.w()
     </script>

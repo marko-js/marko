@@ -13,8 +13,7 @@
         }, _.b], _.a.valueChange = _.b.$valueChange = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.d), _.c),
-        "__tests__/tags/child.marko_0_input_$valueChange",
-        2
+        "__tests__/tags/child.marko_0_input_$valueChange 2"
       ];
       M._.w()
     </script>

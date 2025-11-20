@@ -46,12 +46,7 @@
           "ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/checkedValueChange2"
           ](_.a), _.c),
-        "__tests__/template.marko_1",
-        2,
-        "__tests__/template.marko_0_show",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_1 2 __tests__/template.marko_0_show 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -111,12 +106,7 @@ container.querySelector(`input[value=b]`).click();
           "ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/checkedValueChange2"
           ](_.a), _.c),
-        "__tests__/template.marko_1",
-        2,
-        "__tests__/template.marko_0_show",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_1 2 __tests__/template.marko_0_show 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -175,12 +165,7 @@ container.querySelector("button").click();
           "ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/checkedValueChange2"
           ](_.a), _.c),
-        "__tests__/template.marko_1",
-        2,
-        "__tests__/template.marko_0_show",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_1 2 __tests__/template.marko_0_show 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -245,12 +230,7 @@ container.querySelector("button").click();
           "ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/checkedValueChange2"
           ](_.a), _.c),
-        "__tests__/template.marko_1",
-        2,
-        "__tests__/template.marko_0_show",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_1 2 __tests__/template.marko_0_show 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -315,12 +295,7 @@ container.querySelector(`input[value=a]`).click();
           "ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/checkedValueChange2"
           ](_.a), _.c),
-        "__tests__/template.marko_1",
-        2,
-        "__tests__/template.marko_0_show",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_1 2 __tests__/template.marko_0_show 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

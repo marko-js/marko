@@ -161,10 +161,7 @@
         ], _.a.$hoisted_el3 = _._[
           "__tests__/template.marko_0_$hoisted_el3/hoist"
           ](_.a), _.F),
-        "__tests__/template.marko_0_$hoisted_el3",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_$hoisted_el3 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

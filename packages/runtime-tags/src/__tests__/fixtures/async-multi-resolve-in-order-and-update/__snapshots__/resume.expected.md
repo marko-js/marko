@@ -76,8 +76,8 @@
         {}]), _ =&gt; (_.e = [
         {}]), _ =&gt; (_.f = [
         {}]),
-        "__tests__/template.marko_0_n",
-        1);
+        "__tests__/template.marko_0_n 1"
+        );
       M._.w()
     </script>
   </body>
@@ -151,8 +151,8 @@ container.querySelector("button").click();
         {}]), _ =&gt; (_.e = [
         {}]), _ =&gt; (_.f = [
         {}]),
-        "__tests__/template.marko_0_n",
-        1);
+        "__tests__/template.marko_0_n 1"
+        );
       M._.w()
     </script>
   </body>
@@ -271,8 +271,8 @@ REMOVE #document-fragment/#text1 after html/body/p4/#comment2
         {}]), _ =&gt; (_.e = [
         {}]), _ =&gt; (_.f = [
         {}]),
-        "__tests__/template.marko_0_n",
-        1);
+        "__tests__/template.marko_0_n 1"
+        );
       M._.w()
     </script>
   </body>

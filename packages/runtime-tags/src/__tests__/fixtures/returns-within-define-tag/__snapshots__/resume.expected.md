@@ -45,10 +45,7 @@
           ](_.c), _.c["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickTwice/var"
           ](_.a), _.d),
-        "__tests__/template.marko_0_onClickTwice",
-        1,
-        "__tests__/template.marko_0_onClickOnce",
-        1
+        "__tests__/template.marko_0_onClickTwice 1 __tests__/template.marko_0_onClickOnce 1"
       ];
       M._.w()
     </script>
@@ -107,10 +104,7 @@ container.querySelector("button.once").click();
           ](_.c), _.c["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickTwice/var"
           ](_.a), _.d),
-        "__tests__/template.marko_0_onClickTwice",
-        1,
-        "__tests__/template.marko_0_onClickOnce",
-        1
+        "__tests__/template.marko_0_onClickTwice 1 __tests__/template.marko_0_onClickOnce 1"
       ];
       M._.w()
     </script>
@@ -173,10 +167,7 @@ container.querySelector("button.once").click();
           ](_.c), _.c["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickTwice/var"
           ](_.a), _.d),
-        "__tests__/template.marko_0_onClickTwice",
-        1,
-        "__tests__/template.marko_0_onClickOnce",
-        1
+        "__tests__/template.marko_0_onClickTwice 1 __tests__/template.marko_0_onClickOnce 1"
       ];
       M._.w()
     </script>
@@ -235,10 +226,7 @@ container.querySelector("button.twice").click();
           ](_.c), _.c["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickTwice/var"
           ](_.a), _.d),
-        "__tests__/template.marko_0_onClickTwice",
-        1,
-        "__tests__/template.marko_0_onClickOnce",
-        1
+        "__tests__/template.marko_0_onClickTwice 1 __tests__/template.marko_0_onClickOnce 1"
       ];
       M._.w()
     </script>
@@ -301,10 +289,7 @@ container.querySelector("button.twice").click();
           ](_.c), _.c["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickTwice/var"
           ](_.a), _.d),
-        "__tests__/template.marko_0_onClickTwice",
-        1,
-        "__tests__/template.marko_0_onClickOnce",
-        1
+        "__tests__/template.marko_0_onClickTwice 1 __tests__/template.marko_0_onClickOnce 1"
       ];
       M._.w()
     </script>
@@ -367,10 +352,7 @@ container.querySelector("button.twice").click();
           ](_.c), _.c["#TagVariable"] = _._[
           "__tests__/template.marko_0_onClickTwice/var"
           ](_.a), _.d),
-        "__tests__/template.marko_0_onClickTwice",
-        1,
-        "__tests__/template.marko_0_onClickOnce",
-        1
+        "__tests__/template.marko_0_onClickTwice 1 __tests__/template.marko_0_onClickOnce 1"
       ];
       M._.w()
     </script>

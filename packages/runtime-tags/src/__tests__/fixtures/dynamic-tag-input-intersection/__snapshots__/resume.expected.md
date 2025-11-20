@@ -42,8 +42,7 @@
           ](_.d), _.b.inputContent = _._[
           "__tests__/template.marko_2_content"
           ](_.d), _.c),
-        "__tests__/tags/my-tag.marko_0_inputContent",
-        2, 5
+        "__tests__/tags/my-tag.marko_0_inputContent 2 5"
       ];
       M._.w()
     </script>
@@ -97,8 +96,7 @@ INSERT html/body/span/#text1
           ](_.d), _.b.inputContent = _._[
           "__tests__/template.marko_2_content"
           ](_.d), _.c),
-        "__tests__/tags/my-tag.marko_0_inputContent",
-        2, 5
+        "__tests__/tags/my-tag.marko_0_inputContent 2 5"
       ];
       M._.w()
     </script>

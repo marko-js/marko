@@ -21,8 +21,7 @@
           _: _.a,
           "#LoopKey": 0
         }]),
-        "__tests__/template.marko_1_items",
-        2
+        "__tests__/template.marko_1_items 2"
       ];
       M._.w()
     </script>
@@ -56,8 +55,7 @@ container.querySelector("button").click();
           _: _.a,
           "#LoopKey": 0
         }]),
-        "__tests__/template.marko_1_items",
-        2
+        "__tests__/template.marko_1_items 2"
       ];
       M._.w()
     </script>

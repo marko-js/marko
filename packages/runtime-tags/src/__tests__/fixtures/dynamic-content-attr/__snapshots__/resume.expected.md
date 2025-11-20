@@ -22,8 +22,7 @@
         }, _.b], _.b._ = _.a, _.c.content = _._[
           "__tests__/template.marko_1_content"
           ](_.a), (_.e).add(_.b), _.d),
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -59,8 +58,7 @@ container.querySelector("button").click();
         }, _.b], _.b._ = _.a, _.c.content = _._[
           "__tests__/template.marko_1_content"
           ](_.a), (_.e).add(_.b), _.d),
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -100,8 +98,7 @@ container.querySelector("button").click();
         }, _.b], _.b._ = _.a, _.c.content = _._[
           "__tests__/template.marko_1_content"
           ](_.a), (_.e).add(_.b), _.d),
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>

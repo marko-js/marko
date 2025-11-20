@@ -37,10 +37,7 @@
           .a["TagVariableChange:otherState"] = _._[
             "__tests__/template.marko_0/valueChange"
             ](_.c), _.b),
-        "__tests__/tags/child.marko_0_otherState",
-        2,
-        "__tests__/tags/child.marko_0_state",
-        2
+        "__tests__/tags/child.marko_0_otherState 2 __tests__/tags/child.marko_0_state 2"
       ];
       M._.w()
     </script>
@@ -91,10 +88,7 @@ container.querySelectorAll("button").forEach(item => item.click());
           .a["TagVariableChange:otherState"] = _._[
             "__tests__/template.marko_0/valueChange"
             ](_.c), _.b),
-        "__tests__/tags/child.marko_0_otherState",
-        2,
-        "__tests__/tags/child.marko_0_state",
-        2
+        "__tests__/tags/child.marko_0_otherState 2 __tests__/tags/child.marko_0_state 2"
       ];
       M._.w()
     </script>
@@ -153,10 +147,7 @@ container.querySelectorAll("button").forEach(item => item.click());
           .a["TagVariableChange:otherState"] = _._[
             "__tests__/template.marko_0/valueChange"
             ](_.c), _.b),
-        "__tests__/tags/child.marko_0_otherState",
-        2,
-        "__tests__/tags/child.marko_0_state",
-        2
+        "__tests__/tags/child.marko_0_otherState 2 __tests__/tags/child.marko_0_state 2"
       ];
       M._.w()
     </script>
@@ -215,10 +206,7 @@ container.querySelectorAll("button").forEach(item => item.click());
           .a["TagVariableChange:otherState"] = _._[
             "__tests__/template.marko_0/valueChange"
             ](_.c), _.b),
-        "__tests__/tags/child.marko_0_otherState",
-        2,
-        "__tests__/tags/child.marko_0_state",
-        2
+        "__tests__/tags/child.marko_0_otherState 2 __tests__/tags/child.marko_0_state 2"
       ];
       M._.w()
     </script>

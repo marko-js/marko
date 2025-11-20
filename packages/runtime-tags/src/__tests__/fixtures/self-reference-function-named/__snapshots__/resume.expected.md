@@ -15,8 +15,7 @@
         {
           items: [0, 1, 2]
         }]),
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -45,8 +44,7 @@ container.querySelector("button").click();
         {
           items: [0, 1, 2]
         }]),
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -79,8 +77,7 @@ container.querySelector("button").click();
         {
           items: [0, 1, 2]
         }]),
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -113,8 +110,7 @@ container.querySelector("button").click();
         {
           items: [0, 1, 2]
         }]),
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>

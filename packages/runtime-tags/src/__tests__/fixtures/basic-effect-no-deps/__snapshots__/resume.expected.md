@@ -5,8 +5,7 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

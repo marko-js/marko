@@ -36,12 +36,7 @@
           _: _.b,
           "ClosureSignalIndex:count": 0
         }], (_.d).add(_.e), _.c),
-        "__tests__/template.marko_2_count",
-        3,
-        "__tests__/template.marko_1_inner",
-        2,
-        "__tests__/template.marko_0_outer",
-        1
+        "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
       M._.w()
     </script>
@@ -95,12 +90,7 @@ container.querySelector("#count").click();
           _: _.b,
           "ClosureSignalIndex:count": 0
         }], (_.d).add(_.e), _.c),
-        "__tests__/template.marko_2_count",
-        3,
-        "__tests__/template.marko_1_inner",
-        2,
-        "__tests__/template.marko_0_outer",
-        1
+        "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
       M._.w()
     </script>
@@ -154,12 +144,7 @@ container.querySelector("#count").click();
           _: _.b,
           "ClosureSignalIndex:count": 0
         }], (_.d).add(_.e), _.c),
-        "__tests__/template.marko_2_count",
-        3,
-        "__tests__/template.marko_1_inner",
-        2,
-        "__tests__/template.marko_0_outer",
-        1
+        "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
       M._.w()
     </script>
@@ -207,12 +192,7 @@ container.querySelector("#inner").click();
           _: _.b,
           "ClosureSignalIndex:count": 0
         }], (_.d).add(_.e), _.c),
-        "__tests__/template.marko_2_count",
-        3,
-        "__tests__/template.marko_1_inner",
-        2,
-        "__tests__/template.marko_0_outer",
-        1
+        "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
       M._.w()
     </script>
@@ -266,12 +246,7 @@ container.querySelector("#inner").click();
           _: _.b,
           "ClosureSignalIndex:count": 0
         }], (_.d).add(_.e), _.c),
-        "__tests__/template.marko_2_count",
-        3,
-        "__tests__/template.marko_1_inner",
-        2,
-        "__tests__/template.marko_0_outer",
-        1
+        "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
       M._.w()
     </script>
@@ -325,12 +300,7 @@ container.querySelector("#count").click();
           _: _.b,
           "ClosureSignalIndex:count": 0
         }], (_.d).add(_.e), _.c),
-        "__tests__/template.marko_2_count",
-        3,
-        "__tests__/template.marko_1_inner",
-        2,
-        "__tests__/template.marko_0_outer",
-        1
+        "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
       M._.w()
     </script>
@@ -371,12 +341,7 @@ container.querySelector("#outer").click();
           _: _.b,
           "ClosureSignalIndex:count": 0
         }], (_.d).add(_.e), _.c),
-        "__tests__/template.marko_2_count",
-        3,
-        "__tests__/template.marko_1_inner",
-        2,
-        "__tests__/template.marko_0_outer",
-        1
+        "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
       M._.w()
     </script>
@@ -432,12 +397,7 @@ container.querySelector("#outer").click();
           _: _.b,
           "ClosureSignalIndex:count": 0
         }], (_.d).add(_.e), _.c),
-        "__tests__/template.marko_2_count",
-        3,
-        "__tests__/template.marko_1_inner",
-        2,
-        "__tests__/template.marko_0_outer",
-        1
+        "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
       M._.w()
     </script>
@@ -490,12 +450,7 @@ container.querySelector("#count").click();
           _: _.b,
           "ClosureSignalIndex:count": 0
         }], (_.d).add(_.e), _.c),
-        "__tests__/template.marko_2_count",
-        3,
-        "__tests__/template.marko_1_inner",
-        2,
-        "__tests__/template.marko_0_outer",
-        1
+        "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
       M._.w()
     </script>

@@ -228,10 +228,7 @@
           ](_.cb), _.z.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
           ](_.db), _.eb),
-        "__tests__/template.marko_0_$hoisted_setHtml3",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_$hoisted_setHtml3 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

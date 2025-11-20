@@ -31,8 +31,7 @@
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.w()
@@ -83,8 +82,7 @@ container.querySelector("button").click();
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.w()
@@ -128,8 +126,7 @@ container.querySelector("button").click();
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.w()
@@ -188,8 +185,7 @@ REMOVE #document-fragment/#text2 after html/body/#text
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.w()
@@ -245,8 +241,7 @@ container.querySelector("button").click();
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.w()
@@ -290,8 +285,7 @@ container.querySelector("button").click();
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.w()
@@ -350,8 +344,7 @@ REMOVE #document-fragment/#text2 after html/body/#text
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.w()

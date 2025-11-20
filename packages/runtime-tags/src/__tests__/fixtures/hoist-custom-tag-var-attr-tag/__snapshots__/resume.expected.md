@@ -19,8 +19,7 @@
           ](_.a), _.b.setHtml = _._[
           "__tests__/tags/child.marko_0/_return"
           ](_.c), (_.e).add(_.b), _.d),
-        "__tests__/template.marko_0_$hoisted_setHtml",
-        1
+        "__tests__/template.marko_0_$hoisted_setHtml 1"
       ];
       M._.w()
     </script>

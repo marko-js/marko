@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div></div><!--M_*1 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.a={},{_:_.a}]),"__tests__/template.marko_1",2];M._.w()</script>
+  <div></div><!--M_*1 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.a={},{_:_.a}]),"__tests__/template.marko_1 2"];M._.w()</script>
 ```
 
 # Render End
@@ -16,8 +16,7 @@
         {
           _: _.a
         }]),
-        "__tests__/template.marko_1",
-        2
+        "__tests__/template.marko_1 2"
       ];
       M._.w()
     </script>

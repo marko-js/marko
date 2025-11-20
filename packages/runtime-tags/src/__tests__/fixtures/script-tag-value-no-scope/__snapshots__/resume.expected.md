@@ -12,8 +12,7 @@
       M._.r = [_ =&gt; (_.b = [0, _.a = {}], _.a.setText = _._[
           "__tests__/template.marko_0/setText"
           ](_.a), _.b),
-        "__tests__/template.marko_0_setText",
-        1
+        "__tests__/template.marko_0_setText 1"
       ];
       M._.w()
     </script>

@@ -33,10 +33,7 @@
           ](_.h), _.d.value = _._[
           "__tests__/template.marko_2/#div"
           ](_.c), _.g),
-        "__tests__/tags/child.marko_0_input",
-        4, 5,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/tags/child.marko_0_input 4 5 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

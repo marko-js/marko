@@ -30,8 +30,7 @@
         {
           baz: "baz"
         }]),
-        "__tests__/template.marko_0_bar_baz",
-        1
+        "__tests__/template.marko_0_bar_baz 1"
       ];
       M._.w()
     </script>
@@ -75,8 +74,7 @@ container.querySelector("button").click();
         {
           baz: "baz"
         }]),
-        "__tests__/template.marko_0_bar_baz",
-        1
+        "__tests__/template.marko_0_bar_baz 1"
       ];
       M._.w()
     </script>
@@ -125,8 +123,7 @@ container.querySelector("button").click();
         {
           baz: "baz"
         }]),
-        "__tests__/template.marko_0_bar_baz",
-        1
+        "__tests__/template.marko_0_bar_baz 1"
       ];
       M._.w()
     </script>

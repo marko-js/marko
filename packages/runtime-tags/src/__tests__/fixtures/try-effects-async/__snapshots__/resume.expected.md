@@ -41,15 +41,14 @@
           ](_.a), _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.j[2] = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_1_clickCount",
-          2)
+          "__tests__/template.marko_1_clickCount 2"
+          )
       };
       M._.w()
     </script>
@@ -109,15 +108,14 @@ container.querySelector("button").click();
           ](_.a), _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.j[2] = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_1_clickCount",
-          2)
+          "__tests__/template.marko_1_clickCount 2"
+          )
       };
       M._.w()
     </script>
@@ -166,15 +164,14 @@ container.querySelector("button").click();
           ](_.a), _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.j[2] = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_1_clickCount",
-          2)
+          "__tests__/template.marko_1_clickCount 2"
+          )
       };
       M._.w()
     </script>
@@ -246,15 +243,14 @@ REMOVE #document-fragment/#text3 after html/body/#text
           ](_.a), _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.j[2] = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_1_clickCount",
-          2)
+          "__tests__/template.marko_1_clickCount 2"
+          )
       };
       M._.w()
     </script>
@@ -321,15 +317,14 @@ container.querySelector("button").click();
           ](_.a), _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.j[2] = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_1_clickCount",
-          2)
+          "__tests__/template.marko_1_clickCount 2"
+          )
       };
       M._.w()
     </script>
@@ -378,15 +373,14 @@ container.querySelector("button").click();
           ](_.a), _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.j[2] = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_1_clickCount",
-          2)
+          "__tests__/template.marko_1_clickCount 2"
+          )
       };
       M._.w()
     </script>
@@ -450,15 +444,14 @@ REMOVE #document-fragment/#text3 after html/body/#text
           ](_.a), _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       REORDER_RUNTIME(M._);
       M._.j[2] = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_1_clickCount",
-          2)
+          "__tests__/template.marko_1_clickCount 2"
+          )
       };
       M._.w()
     </script>

@@ -30,10 +30,7 @@
           count: 0,
           multiplier: 1
         }]),
-        "__tests__/template.marko_0_count",
-        1,
-        "__tests__/template.marko_0_multiplier",
-        1
+        "__tests__/template.marko_0_count 1 __tests__/template.marko_0_multiplier 1"
       ];
       M._.w()
     </script>
@@ -77,10 +74,7 @@ container.querySelector("button#count").click();
           count: 0,
           multiplier: 1
         }]),
-        "__tests__/template.marko_0_count",
-        1,
-        "__tests__/template.marko_0_multiplier",
-        1
+        "__tests__/template.marko_0_count 1 __tests__/template.marko_0_multiplier 1"
       ];
       M._.w()
     </script>
@@ -128,10 +122,7 @@ container.querySelector("button#count").click();
           count: 0,
           multiplier: 1
         }]),
-        "__tests__/template.marko_0_count",
-        1,
-        "__tests__/template.marko_0_multiplier",
-        1
+        "__tests__/template.marko_0_count 1 __tests__/template.marko_0_multiplier 1"
       ];
       M._.w()
     </script>
@@ -179,10 +170,7 @@ container.querySelector("button#multiplier").click();
           count: 0,
           multiplier: 1
         }]),
-        "__tests__/template.marko_0_count",
-        1,
-        "__tests__/template.marko_0_multiplier",
-        1
+        "__tests__/template.marko_0_count 1 __tests__/template.marko_0_multiplier 1"
       ];
       M._.w()
     </script>

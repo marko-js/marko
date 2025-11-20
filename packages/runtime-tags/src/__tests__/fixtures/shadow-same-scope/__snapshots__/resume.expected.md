@@ -40,14 +40,7 @@
           $count2: 0,
           $count3: 0
         }]),
-        "__tests__/template.marko_0_$count3",
-        1,
-        "__tests__/template.marko_0_$count2",
-        1,
-        "__tests__/template.marko_0_$count",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_$count3 1 __tests__/template.marko_0_$count2 1 __tests__/template.marko_0_$count 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -101,14 +94,7 @@ container.querySelectorAll("button")[buttonNum++].click();
           $count2: 0,
           $count3: 0
         }]),
-        "__tests__/template.marko_0_$count3",
-        1,
-        "__tests__/template.marko_0_$count2",
-        1,
-        "__tests__/template.marko_0_$count",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_$count3 1 __tests__/template.marko_0_$count2 1 __tests__/template.marko_0_$count 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -166,14 +152,7 @@ container.querySelectorAll("button")[buttonNum++].click();
           $count2: 0,
           $count3: 0
         }]),
-        "__tests__/template.marko_0_$count3",
-        1,
-        "__tests__/template.marko_0_$count2",
-        1,
-        "__tests__/template.marko_0_$count",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_$count3 1 __tests__/template.marko_0_$count2 1 __tests__/template.marko_0_$count 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -231,14 +210,7 @@ container.querySelectorAll("button")[buttonNum++].click();
           $count2: 0,
           $count3: 0
         }]),
-        "__tests__/template.marko_0_$count3",
-        1,
-        "__tests__/template.marko_0_$count2",
-        1,
-        "__tests__/template.marko_0_$count",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_$count3 1 __tests__/template.marko_0_$count2 1 __tests__/template.marko_0_$count 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -296,14 +268,7 @@ container.querySelectorAll("button")[buttonNum++].click();
           $count2: 0,
           $count3: 0
         }]),
-        "__tests__/template.marko_0_$count3",
-        1,
-        "__tests__/template.marko_0_$count2",
-        1,
-        "__tests__/template.marko_0_$count",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_$count3 1 __tests__/template.marko_0_$count2 1 __tests__/template.marko_0_$count 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -361,14 +326,7 @@ buttonNum = 0;
           $count2: 0,
           $count3: 0
         }]),
-        "__tests__/template.marko_0_$count3",
-        1,
-        "__tests__/template.marko_0_$count2",
-        1,
-        "__tests__/template.marko_0_$count",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_$count3 1 __tests__/template.marko_0_$count2 1 __tests__/template.marko_0_$count 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>

@@ -35,10 +35,7 @@
           _._[
             "__tests__/template.marko_0/count2Change"
             ](_.c), _.b),
-        "__tests__/tags/2counters.marko_0_count2",
-        2,
-        "__tests__/tags/2counters.marko_0_count1",
-        2
+        "__tests__/tags/2counters.marko_0_count2 2 __tests__/tags/2counters.marko_0_count1 2"
       ];
       M._.w()
     </script>
@@ -87,10 +84,7 @@ container.querySelectorAll("button").forEach(item => item.click());
           _._[
             "__tests__/template.marko_0/count2Change"
             ](_.c), _.b),
-        "__tests__/tags/2counters.marko_0_count2",
-        2,
-        "__tests__/tags/2counters.marko_0_count1",
-        2
+        "__tests__/tags/2counters.marko_0_count2 2 __tests__/tags/2counters.marko_0_count1 2"
       ];
       M._.w()
     </script>
@@ -146,10 +140,7 @@ container.querySelectorAll("button").forEach(item => item.click());
           _._[
             "__tests__/template.marko_0/count2Change"
             ](_.c), _.b),
-        "__tests__/tags/2counters.marko_0_count2",
-        2,
-        "__tests__/tags/2counters.marko_0_count1",
-        2
+        "__tests__/tags/2counters.marko_0_count2 2 __tests__/tags/2counters.marko_0_count1 2"
       ];
       M._.w()
     </script>
@@ -205,10 +196,7 @@ container.querySelectorAll("button").forEach(item => item.click());
           _._[
             "__tests__/template.marko_0/count2Change"
             ](_.c), _.b),
-        "__tests__/tags/2counters.marko_0_count2",
-        2,
-        "__tests__/tags/2counters.marko_0_count1",
-        2
+        "__tests__/tags/2counters.marko_0_count2 2 __tests__/tags/2counters.marko_0_count1 2"
       ];
       M._.w()
     </script>

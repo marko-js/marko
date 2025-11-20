@@ -24,8 +24,7 @@
           val: 3
         },
         {}]),
-        "__tests__/template.marko_0_tagName",
-        1
+        "__tests__/template.marko_0_tagName 1"
       ];
       M._.w()
     </script>
@@ -65,8 +64,7 @@ container.querySelector("button").click();
           val: 3
         },
         {}]),
-        "__tests__/template.marko_0_tagName",
-        1
+        "__tests__/template.marko_0_tagName 1"
       ];
       M._.w()
     </script>
@@ -108,8 +106,7 @@ container.querySelector("button").click();
           val: 3
         },
         {}]),
-        "__tests__/template.marko_0_tagName",
-        1
+        "__tests__/template.marko_0_tagName 1"
       ];
       M._.w()
     </script>

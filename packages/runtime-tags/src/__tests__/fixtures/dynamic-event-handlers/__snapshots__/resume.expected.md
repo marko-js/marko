@@ -14,8 +14,7 @@
         {
           clickCount: 0
         }]),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       M._.w()
     </script>
@@ -43,8 +42,7 @@ container.querySelector("button").click();
         {
           clickCount: 0
         }]),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       M._.w()
     </script>
@@ -76,8 +74,7 @@ container.querySelector("button").click();
         {
           clickCount: 0
         }]),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       M._.w()
     </script>
@@ -109,8 +106,7 @@ container.querySelector("button").click();
         {
           clickCount: 0
         }]),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       M._.w()
     </script>

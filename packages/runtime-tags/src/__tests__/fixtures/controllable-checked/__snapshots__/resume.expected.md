@@ -19,8 +19,7 @@
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/checkedChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -54,8 +53,7 @@ container.querySelector("input").click();
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/checkedChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -92,8 +90,7 @@ container.querySelector("input").click();
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/checkedChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -131,8 +128,7 @@ container.querySelector("input").click();
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/checkedChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

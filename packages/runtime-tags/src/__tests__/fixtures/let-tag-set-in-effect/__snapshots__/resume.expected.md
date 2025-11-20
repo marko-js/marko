@@ -17,8 +17,7 @@
         {
           x: 1
         }]),
-        "__tests__/template.marko_0_x",
-        1
+        "__tests__/template.marko_0_x 1"
       ];
       M._.w()
     </script>
@@ -46,8 +45,7 @@
         {
           x: 1
         }]),
-        "__tests__/template.marko_0_x",
-        1
+        "__tests__/template.marko_0_x 1"
       ];
       M._.w()
     </script>
@@ -80,8 +78,7 @@ UPDATE html/body/span1/#text "0" => "1"
         {
           x: 1
         }]),
-        "__tests__/template.marko_0_x",
-        1
+        "__tests__/template.marko_0_x 1"
       ];
       M._.w()
     </script>

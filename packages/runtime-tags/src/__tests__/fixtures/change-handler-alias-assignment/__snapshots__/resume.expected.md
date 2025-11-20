@@ -12,8 +12,7 @@
       M._.r = [_ =&gt; (_.b = [0, _.a = {}], _.a.$fooChange = _._[
           "__tests__/template.marko_0/fooBar"
           ](_.a), _.b),
-        "__tests__/template.marko_0_$fooChange",
-        1
+        "__tests__/template.marko_0_$fooChange 1"
       ];
       M._.w()
     </script>
@@ -39,8 +38,7 @@ container.querySelector("button").click();
       M._.r = [_ =&gt; (_.b = [0, _.a = {}], _.a.$fooChange = _._[
           "__tests__/template.marko_0/fooBar"
           ](_.a), _.b),
-        "__tests__/template.marko_0_$fooChange",
-        1
+        "__tests__/template.marko_0_$fooChange 1"
       ];
       M._.w()
     </script>

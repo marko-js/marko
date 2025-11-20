@@ -18,8 +18,7 @@
         {
           input_value: 0
         }]),
-        "__tests__/template.marko_0_input_value",
-        1
+        "__tests__/template.marko_0_input_value 1"
       ];
       M._.w()
     </script>
@@ -47,8 +46,7 @@
         {
           input_value: 0
         }]),
-        "__tests__/template.marko_0_input_value",
-        1
+        "__tests__/template.marko_0_input_value 1"
       ];
       M._.w()
     </script>

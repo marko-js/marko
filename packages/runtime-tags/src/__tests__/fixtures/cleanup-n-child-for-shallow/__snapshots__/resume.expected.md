@@ -82,10 +82,7 @@ mounted 3
         }, _.d], _.a.write = _.b.write = _.c.write = _.d.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), _.e),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7,
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 __tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -180,10 +177,7 @@ destroyed 3
         }, _.d], _.a.write = _.b.write = _.c.write = _.d.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), _.e),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7,
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 __tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -265,10 +259,7 @@ destroyed 2
         }, _.d], _.a.write = _.b.write = _.c.write = _.d.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), _.e),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7,
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 __tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -338,10 +329,7 @@ destroyed 1
         }, _.d], _.a.write = _.b.write = _.c.write = _.d.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), _.e),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7,
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 __tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -442,10 +430,7 @@ mounted 3
         }, _.d], _.a.write = _.b.write = _.c.write = _.d.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), _.e),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7,
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 __tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>

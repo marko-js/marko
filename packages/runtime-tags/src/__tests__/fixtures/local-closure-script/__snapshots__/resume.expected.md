@@ -28,8 +28,7 @@
         {
           item: 3
         }]),
-        "__tests__/template.marko_1_item",
-        4, 6, 8
+        "__tests__/template.marko_1_item 4 6 8"
       ];
       M._.w()
     </script>

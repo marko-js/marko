@@ -25,9 +25,8 @@
           m5c: "s0-0",
           "ConditionalRenderer:#text/2": _._.$compat_renderBody,
           count: 0
-        }]), "$compat_setScope", 1,
-        "__tests__/components/tags-layout.marko_0_count",
-        1
+        }]),
+        "$compat_setScope 1 __tests__/components/tags-layout.marko_0_count 1"
       ];
       M.s.w();
       $MC = (window.$MC || []).concat(
@@ -103,9 +102,8 @@ container.querySelector("#tags").click();
           m5c: "s0-0",
           "ConditionalRenderer:#text/2": _._.$compat_renderBody,
           count: 0
-        }]), "$compat_setScope", 1,
-        "__tests__/components/tags-layout.marko_0_count",
-        1
+        }]),
+        "$compat_setScope 1 __tests__/components/tags-layout.marko_0_count 1"
       ];
       M.s.w();
       $MC = (window.$MC || []).concat(
@@ -161,9 +159,8 @@ container.querySelector("#class").click();
           m5c: "s0-0",
           "ConditionalRenderer:#text/2": _._.$compat_renderBody,
           count: 0
-        }]), "$compat_setScope", 1,
-        "__tests__/components/tags-layout.marko_0_count",
-        1
+        }]),
+        "$compat_setScope 1 __tests__/components/tags-layout.marko_0_count 1"
       ];
       M.s.w();
       $MC = (window.$MC || []).concat(
@@ -228,9 +225,8 @@ container.querySelector("#tags").click();
           m5c: "s0-0",
           "ConditionalRenderer:#text/2": _._.$compat_renderBody,
           count: 0
-        }]), "$compat_setScope", 1,
-        "__tests__/components/tags-layout.marko_0_count",
-        1
+        }]),
+        "$compat_setScope 1 __tests__/components/tags-layout.marko_0_count 1"
       ];
       M.s.w();
       $MC = (window.$MC || []).concat(
@@ -286,9 +282,8 @@ container.querySelector("#class").click();
           m5c: "s0-0",
           "ConditionalRenderer:#text/2": _._.$compat_renderBody,
           count: 0
-        }]), "$compat_setScope", 1,
-        "__tests__/components/tags-layout.marko_0_count",
-        1
+        }]),
+        "$compat_setScope 1 __tests__/components/tags-layout.marko_0_count 1"
       ];
       M.s.w();
       $MC = (window.$MC || []).concat(
@@ -353,9 +348,8 @@ container.querySelector("#tags").click();
           m5c: "s0-0",
           "ConditionalRenderer:#text/2": _._.$compat_renderBody,
           count: 0
-        }]), "$compat_setScope", 1,
-        "__tests__/components/tags-layout.marko_0_count",
-        1
+        }]),
+        "$compat_setScope 1 __tests__/components/tags-layout.marko_0_count 1"
       ];
       M.s.w();
       $MC = (window.$MC || []).concat(

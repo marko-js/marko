@@ -26,7 +26,7 @@ export interface RenderData {
   // Marked nodes to visit
   v: Comment[];
   // Resumes
-  r?: (string | number | ResumeFn)[];
+  r?: (string | ResumeFn)[];
   // Scope lookup (just needed for compat layer)
   s?: Record<string, Scope>;
   // Walk
@@ -189,36 +189,41 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             };
           })();
         let $global: Scope[AccessorProp.Global] | undefined;
-        let lastEffect: string | undefined;
+        let lastEffect: unknown;
         let visits: RenderData["v"];
         let resumes: NonNullable<RenderData["r"]>;
         let visit: Comment;
         let visitText: string;
         let visitType: ResumeSymbol;
         let visitScope: Scope;
-        let lastToken: string | 0;
+        let lastToken: string;
         let lastTokenIndex: number;
         let lastScopeId = 0;
         const nextToken = () =>
           (lastToken = visitText.slice(
             lastTokenIndex,
-            // eslint-disable-next-line no-cond-assign
-            (lastTokenIndex = visitText.indexOf(" ", lastTokenIndex) + 1)
-              ? lastTokenIndex - 1
-              : visitText.length,
+            (lastTokenIndex =
+              visitText.indexOf(" ", lastTokenIndex) + 1 ||
+              visitText.length + 1) - 1,
           ));
 
         render.m = (effects: unknown[] = []) => {
           for (const serialized of (resumes = render.r || [])) {
             if (typeof serialized === "string") {
-              lastEffect = serialized;
-            } else if (typeof serialized === "number") {
-              effects.push(
-                registeredValues[lastEffect!],
-                (scopeLookup[serialized] ||= {
-                  [AccessorProp.Id]: serialized,
-                } as Scope),
-              );
+              lastTokenIndex = 0;
+              visitText = serialized;
+              while (nextToken()) {
+                if (/\D/.test(lastToken)) {
+                  lastEffect = registeredValues[lastToken];
+                } else {
+                  effects.push(
+                    lastEffect,
+                    (scopeLookup[lastToken] ||= {
+                      [AccessorProp.Id]: +lastToken,
+                    } as Scope),
+                  );
+                }
+              }
             } else {
               for (const scope of serialized(serializeContext)) {
                 if (!$global) {

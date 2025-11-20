@@ -1,6 +1,6 @@
 # Write
 ```html
-  <ul><li id=c-0><span>Hello World</span><button>[-]<!--M_*3 #text/3--></button><!--M_*3 #button/2--><ul><li id=c-0-0><span>testing 123</span><button>[-]<!--M_*6 #text/3--></button><!--M_*6 #button/2--></li><!--M_*6 #li/0--></ul></li><!--M_*3 #li/0--><li id=c-1><span>Goodbye World</span><button>[-]<!--M_*7 #text/3--></button><!--M_*7 #button/2--></li><!--M_*7 #li/0--></ul><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,2,{open:!0},2,{open:!0},{open:!0}]),"__tests__/tags/comments.marko_1_open",6,3,7];M._.w()</script>
+  <ul><li id=c-0><span>Hello World</span><button>[-]<!--M_*3 #text/3--></button><!--M_*3 #button/2--><ul><li id=c-0-0><span>testing 123</span><button>[-]<!--M_*6 #text/3--></button><!--M_*6 #button/2--></li><!--M_*6 #li/0--></ul></li><!--M_*3 #li/0--><li id=c-1><span>Goodbye World</span><button>[-]<!--M_*7 #text/3--></button><!--M_*7 #button/2--></li><!--M_*7 #li/0--></ul><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,2,{open:!0},2,{open:!0},{open:!0}]),"__tests__/tags/comments.marko_1_open 6 3 7"];M._.w()</script>
 ```
 
 # Render End
@@ -63,8 +63,7 @@
         {
           open: !0
         }]),
-        "__tests__/tags/comments.marko_1_open",
-        6, 3, 7
+        "__tests__/tags/comments.marko_1_open 6 3 7"
       ];
       M._.w()
     </script>

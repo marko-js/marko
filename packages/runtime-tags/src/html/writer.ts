@@ -1101,13 +1101,10 @@ export class Chunk {
 
   writeEffect(scopeId: number, registryId: string) {
     if (this.lastEffect === registryId) {
-      this.effects += "," + scopeId;
+      this.effects += " " + scopeId;
     } else {
       this.lastEffect = registryId;
-      this.effects = concatEffects(
-        this.effects,
-        '"' + registryId + '",' + scopeId,
-      );
+      this.effects = concatEffects(this.effects, registryId + " " + scopeId);
     }
   }
 
@@ -1220,7 +1217,9 @@ export class Chunk {
 
     if (effects) {
       needsWalk = true;
-      state.resumes = state.resumes ? state.resumes + "," + effects : effects;
+      state.resumes = state.resumes
+        ? state.resumes + ',"' + effects + '"'
+        : '"' + effects + '"';
     }
 
     if (state.resumes) {
@@ -1297,7 +1296,7 @@ export class Chunk {
 
           reorderScripts = concatScripts(
             reorderScripts,
-            "_.push(" + reorderEffects + ")",
+            '_.push("' + reorderEffects + '")',
           );
         }
 
@@ -1392,7 +1391,7 @@ function flushSerializer(boundary: Boundary) {
       serializeData.push(scope);
     }
 
-    state.resumes = concatEffects(
+    state.resumes = concatSequence(
       state.resumes,
       serializer.stringify(serializeData, boundary),
     );
@@ -1409,6 +1408,10 @@ export function _trailers(html: string) {
 }
 
 function concatEffects(a: string, b: string) {
+  return a ? (b ? a + " " + b : a) : b;
+}
+
+function concatSequence(a: string, b: string) {
   return a ? (b ? a + "," + b : a) : b;
 }
 

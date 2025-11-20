@@ -19,8 +19,7 @@
           show: !0
         },
         {}]),
-        "__tests__/template.marko_0_show",
-        1
+        "__tests__/template.marko_0_show 1"
       ];
       M._.w()
     </script>
@@ -55,8 +54,7 @@ container.querySelector("button").click();
           show: !0
         },
         {}]),
-        "__tests__/template.marko_0_show",
-        1
+        "__tests__/template.marko_0_show 1"
       ];
       M._.w()
     </script>
@@ -95,8 +93,7 @@ container.querySelector("button").click();
           show: !0
         },
         {}]),
-        "__tests__/template.marko_0_show",
-        1
+        "__tests__/template.marko_0_show 1"
       ];
       M._.w()
     </script>
@@ -132,8 +129,7 @@ container.querySelector("button").click();
           show: !0
         },
         {}]),
-        "__tests__/template.marko_0_show",
-        1
+        "__tests__/template.marko_0_show 1"
       ];
       M._.w()
     </script>

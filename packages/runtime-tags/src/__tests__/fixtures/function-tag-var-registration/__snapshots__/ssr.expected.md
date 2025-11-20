@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div>3</div><button>before</button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{onClick:_._["__tests__/template.marko_0/updateText"]}]),"__tests__/template.marko_0_onClick",1];M._.w()</script>
+  <div>3</div><button>before</button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{onClick:_._["__tests__/template.marko_0/updateText"]}]),"__tests__/template.marko_0_onClick 1"];M._.w()</script>
 ```
 
 # Render End
@@ -23,8 +23,7 @@
             "__tests__/template.marko_0/updateText"
             ]
         }]),
-        "__tests__/template.marko_0_onClick",
-        1
+        "__tests__/template.marko_0_onClick 1"
       ];
       M._.w()
     </script>

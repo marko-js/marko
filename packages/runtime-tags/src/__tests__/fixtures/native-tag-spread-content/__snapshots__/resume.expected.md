@@ -49,10 +49,7 @@
           ](_.h), _.b.CustomContent_content = _._[
           "__tests__/tags/my-div.marko_1_content"
           ](_.b), _.g),
-        "__tests__/tags/my-div.marko_0_input_CustomContent_content",
-        2,
-        "__tests__/tags/my-div.marko_0_input",
-        2
+        "__tests__/tags/my-div.marko_0_input_CustomContent_content 2 __tests__/tags/my-div.marko_0_input 2"
       ];
       M._.w()
     </script>

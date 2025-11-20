@@ -15,8 +15,7 @@
             "__tests__/tags/getter.marko_0/getter"
             ]
         }]),
-        "__tests__/template.marko_0_get",
-        1
+        "__tests__/template.marko_0_get 1"
       ];
       M._.w()
     </script>

@@ -20,8 +20,7 @@
           ](_.b), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_setCount/var"
           ](_.a), _.c),
-        "__tests__/template.marko_0_setCount",
-        1
+        "__tests__/template.marko_0_setCount 1"
       ];
       M._.w()
     </script>
@@ -52,8 +51,7 @@
           ](_.b), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_setCount/var"
           ](_.a), _.c),
-        "__tests__/template.marko_0_setCount",
-        1
+        "__tests__/template.marko_0_setCount 1"
       ];
       M._.w()
     </script>

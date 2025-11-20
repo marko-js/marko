@@ -47,9 +47,9 @@
           "__tests__/components/class-counter.marko"
         ]
       });
-      M._.r.push("$compat_setScope", 2,
-        "__tests__/template.marko_0_count",
-        1);
+      M._.r.push(
+        "$compat_setScope 2 __tests__/template.marko_0_count 1"
+        );
       M._.w()
     </script>
   </body>
@@ -117,9 +117,9 @@ container.querySelector("#tags").click();
           "__tests__/components/class-counter.marko"
         ]
       });
-      M._.r.push("$compat_setScope", 2,
-        "__tests__/template.marko_0_count",
-        1);
+      M._.r.push(
+        "$compat_setScope 2 __tests__/template.marko_0_count 1"
+        );
       M._.w()
     </script>
   </body>
@@ -184,9 +184,9 @@ container.querySelector("#class").click();
           "__tests__/components/class-counter.marko"
         ]
       });
-      M._.r.push("$compat_setScope", 2,
-        "__tests__/template.marko_0_count",
-        1);
+      M._.r.push(
+        "$compat_setScope 2 __tests__/template.marko_0_count 1"
+        );
       M._.w()
     </script>
   </body>
@@ -250,9 +250,9 @@ container.querySelector("#tags").click();
           "__tests__/components/class-counter.marko"
         ]
       });
-      M._.r.push("$compat_setScope", 2,
-        "__tests__/template.marko_0_count",
-        1);
+      M._.r.push(
+        "$compat_setScope 2 __tests__/template.marko_0_count 1"
+        );
       M._.w()
     </script>
   </body>
@@ -317,9 +317,9 @@ container.querySelector("#class").click();
           "__tests__/components/class-counter.marko"
         ]
       });
-      M._.r.push("$compat_setScope", 2,
-        "__tests__/template.marko_0_count",
-        1);
+      M._.r.push(
+        "$compat_setScope 2 __tests__/template.marko_0_count 1"
+        );
       M._.w()
     </script>
   </body>
@@ -383,9 +383,9 @@ container.querySelector("#tags").click();
           "__tests__/components/class-counter.marko"
         ]
       });
-      M._.r.push("$compat_setScope", 2,
-        "__tests__/template.marko_0_count",
-        1);
+      M._.r.push(
+        "$compat_setScope 2 __tests__/template.marko_0_count 1"
+        );
       M._.w()
     </script>
   </body>

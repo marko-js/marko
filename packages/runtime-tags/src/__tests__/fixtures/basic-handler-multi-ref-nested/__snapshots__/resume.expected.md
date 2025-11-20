@@ -15,8 +15,7 @@
           a: [0],
           b: 1
         }]),
-        "__tests__/template.marko_0_a_b",
-        1
+        "__tests__/template.marko_0_a_b 1"
       ];
       M._.w()
     </script>
@@ -45,8 +44,7 @@ container.querySelector("button").click();
           a: [0],
           b: 1
         }]),
-        "__tests__/template.marko_0_a_b",
-        1
+        "__tests__/template.marko_0_a_b 1"
       ];
       M._.w()
     </script>

@@ -18,8 +18,7 @@
             "__tests__/template.marko_0/updateText"
             ]
         }]),
-        "__tests__/template.marko_0_onClick",
-        1
+        "__tests__/template.marko_0_onClick 1"
       ];
       M._.w()
     </script>
@@ -51,8 +50,7 @@ container.querySelector("button").click();
             "__tests__/template.marko_0/updateText"
             ]
         }]),
-        "__tests__/template.marko_0_onClick",
-        1
+        "__tests__/template.marko_0_onClick 1"
       ];
       M._.w()
     </script>

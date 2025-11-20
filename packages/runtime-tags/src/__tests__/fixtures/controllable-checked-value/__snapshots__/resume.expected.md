@@ -38,8 +38,7 @@
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
             "__tests__/template.marko_0/checkedValueChange2"
             ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -91,8 +90,7 @@ container.querySelectorAll(`input`)[1].click();
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
             "__tests__/template.marko_0/checkedValueChange2"
             ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -148,8 +146,7 @@ container.querySelectorAll(`input`)[2].click();
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
             "__tests__/template.marko_0/checkedValueChange2"
             ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -205,8 +202,7 @@ container.querySelectorAll(`input`)[0].click();
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
             "__tests__/template.marko_0/checkedValueChange2"
             ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

@@ -17,10 +17,7 @@
         }], _.a.resetCount = _._[
           "__tests__/template.marko_0/resetCount"
           ](_.a), _.b),
-        "__tests__/template.marko_0_resetCount",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_resetCount 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -51,10 +48,7 @@ container.querySelector("button").click();
         }], _.a.resetCount = _._[
           "__tests__/template.marko_0/resetCount"
           ](_.a), _.b),
-        "__tests__/template.marko_0_resetCount",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_resetCount 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -89,10 +83,7 @@ container.querySelector("button").click();
         }], _.a.resetCount = _._[
           "__tests__/template.marko_0/resetCount"
           ](_.a), _.b),
-        "__tests__/template.marko_0_resetCount",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_resetCount 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -127,10 +118,7 @@ container.querySelector("button").click();
         }], _.a.resetCount = _._[
           "__tests__/template.marko_0/resetCount"
           ](_.a), _.b),
-        "__tests__/template.marko_0_resetCount",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_resetCount 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>

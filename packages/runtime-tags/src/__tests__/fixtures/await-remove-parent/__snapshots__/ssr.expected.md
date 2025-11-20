@@ -1,11 +1,11 @@
 # Write
 ```html
-  <div id=outside>Pass</div><!--M_[--><!--M_[--><!--M_!^3-->loading...<!--M_!3--><!--M_]2 #text/0 3--><!--M_]1 #text/0 2--><style M_>t{display:none}</style><t M_=3><!--M_#b--></t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,{},_.c={},_.a={"#BranchAccessor":"#text/0"}],_.a["#PlaceholderContent"]=_._["__tests__/template.marko_3_content"](_.c),_.b),"__tests__/template.marko_0",1];REORDER_RUNTIME(M._);M._.w()</script>
+  <div id=outside>Pass</div><!--M_[--><!--M_[--><!--M_!^3-->loading...<!--M_!3--><!--M_]2 #text/0 3--><!--M_]1 #text/0 2--><style M_>t{display:none}</style><t M_=3><!--M_#b--></t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,{},_.c={},_.a={"#BranchAccessor":"#text/0"}],_.a["#PlaceholderContent"]=_._["__tests__/template.marko_3_content"](_.c),_.b),"__tests__/template.marko_0 1"];REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Write
 ```html
-  <t M_=b></t><script>M._.r.push(_=>(_.d=[1,{"#ClosestBranchId":2}]));M._.j.b=_=>{_.push("__tests__/template.marko_4",5)};M._.w()</script>
+  <t M_=b></t><script>M._.r.push(_=>(_.d=[1,{"#ClosestBranchId":2}]));M._.j.b=_=>{_.push("__tests__/template.marko_4 5")};M._.w()</script>
 ```
 
 # Render ASYNC
@@ -39,8 +39,7 @@
         }], _.a["#PlaceholderContent"] = _._[
           "__tests__/template.marko_3_content"
           ](_.c), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       REORDER_RUNTIME(M._);
       M._.w()
@@ -101,8 +100,7 @@ INSERT html/body/script
         }], _.a["#PlaceholderContent"] = _._[
           "__tests__/template.marko_3_content"
           ](_.c), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       REORDER_RUNTIME(M._);
       M._.w()
@@ -115,8 +113,8 @@ INSERT html/body/script
       M._.j.b = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_4",
-          5)
+          "__tests__/template.marko_4 5"
+          )
       };
       M._.w()
     </script>

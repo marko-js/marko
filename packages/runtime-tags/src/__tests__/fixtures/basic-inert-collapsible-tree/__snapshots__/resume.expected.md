@@ -59,8 +59,7 @@
         {
           open: !0
         }]),
-        "__tests__/tags/comments.marko_1_open",
-        6, 3, 7
+        "__tests__/tags/comments.marko_1_open 6 3 7"
       ];
       M._.w()
     </script>
@@ -133,8 +132,7 @@ container.querySelector(`#c-${id} > button`).click();
         {
           open: !0
         }]),
-        "__tests__/tags/comments.marko_1_open",
-        6, 3, 7
+        "__tests__/tags/comments.marko_1_open 6 3 7"
       ];
       M._.w()
     </script>
@@ -211,8 +209,7 @@ container.querySelector(`#c-${id} > button`).click();
         {
           open: !0
         }]),
-        "__tests__/tags/comments.marko_1_open",
-        6, 3, 7
+        "__tests__/tags/comments.marko_1_open 6 3 7"
       ];
       M._.w()
     </script>
@@ -290,8 +287,7 @@ container.querySelector(`#c-${id} > button`).click();
         {
           open: !0
         }]),
-        "__tests__/tags/comments.marko_1_open",
-        6, 3, 7
+        "__tests__/tags/comments.marko_1_open 6 3 7"
       ];
       M._.w()
     </script>
@@ -370,8 +366,7 @@ container.querySelector(`#c-${id} > button`).click();
         {
           open: !0
         }]),
-        "__tests__/tags/comments.marko_1_open",
-        6, 3, 7
+        "__tests__/tags/comments.marko_1_open 6 3 7"
       ];
       M._.w()
     </script>
