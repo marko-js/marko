@@ -198,7 +198,7 @@ const [_getScopeIdentifier] = createSectionState<t.Identifier>(
   () => t.identifier("undefined"),
 );
 
-export const [getBranchRendererArgs, setSectionRendererArgs] =
+export const [getBranchRendererArgs, setBranchRendererArgs] =
   createSectionState<
     [
       template?: t.Expression,

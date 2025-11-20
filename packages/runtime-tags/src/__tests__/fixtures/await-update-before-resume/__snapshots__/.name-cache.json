@@ -11,7 +11,8 @@
       "$$try_content__value": "n",
       "$$value__closure": "_",
       "$$value": "a",
-      "$$await_content__value__script": "m"
+      "$$await_content__value__script": "m",
+      "$$try_content__await_promise": "u"
     }
   }
 }

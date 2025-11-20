@@ -12,9 +12,13 @@ const $await_content__setup__script = _._script("__tests__/template.marko_3", $s
 const $await_content__setup = $await_content__setup__script;
 const $await_content__$params = /* @__PURE__ */_._const("$params2", $scope => $await_content__value($scope, $scope.$params2[0]));
 const $placeholder_content = _._content_resume("__tests__/template.marko_2_content", "loading...", /* over(1) */"b");
-const $try_content__await = /* @__PURE__ */_._await("#text/0", "<div id=inside> </div>", /* next(1), get, out(1) */"D l", $await_content__setup, $await_content__$params);
-const $try_content__value = /* @__PURE__ */_._closure_get("value", $scope => $try_content__await($scope, resolveAfter($scope._.value, 10)));
-const $try_content__setup = $try_content__value;
+const $await_content = /* @__PURE__ */_._await_content("#text/0", "<div id=inside> </div>", /* next(1), get, out(1) */"D l", $await_content__setup);
+const $try_content__await_promise = /* @__PURE__ */_._await_promise("#text/0", $await_content__$params);
+const $try_content__setup = $scope => {
+  $await_content($scope);
+  $try_content__value($scope);
+};
+const $try_content__value = /* @__PURE__ */_._closure_get("value", $scope => $try_content__await_promise($scope, resolveAfter($scope._.value, 10)));
 const $value__closure = /* @__PURE__ */_._closure($try_content__value);
 const $value = /* @__PURE__ */_._let("value/2", $scope => {
   _._text($scope["#text/0"], $scope.value);

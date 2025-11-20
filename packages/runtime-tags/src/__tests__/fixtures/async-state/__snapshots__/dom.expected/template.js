@@ -6,9 +6,13 @@ _._enable_catch();
 const $await_content__value = /* @__PURE__ */_._const("value", $scope => _._text($scope["#text/0"], $scope.value));
 const $await_content__$params = /* @__PURE__ */_._const("$params2", $scope => $await_content__value($scope, $scope.$params2[0]));
 const $placeholder_content = _._content_resume("__tests__/template.marko_2_content", "LOADING...", /* over(1) */"b");
-const $try_content__await = /* @__PURE__ */_._await("#text/0", " ", /* get, over(1) */" b", 0, $await_content__$params);
-const $try_content__clickCount = /* @__PURE__ */_._closure_get("clickCount", $scope => $try_content__await($scope, resolveAfter($scope._.clickCount, 1)));
-const $try_content__setup = $try_content__clickCount;
+const $await_content = /* @__PURE__ */_._await_content("#text/0", " ", /* get, over(1) */" b");
+const $try_content__await_promise = /* @__PURE__ */_._await_promise("#text/0", $await_content__$params);
+const $try_content__setup = $scope => {
+  $await_content($scope);
+  $try_content__clickCount($scope);
+};
+const $try_content__clickCount = /* @__PURE__ */_._closure_get("clickCount", $scope => $try_content__await_promise($scope, resolveAfter($scope._.clickCount, 1)));
 const $clickCount__closure = /* @__PURE__ */_._closure($try_content__clickCount);
 const $clickCount__script = _._script("__tests__/template.marko_0_clickCount", $scope => _._on($scope["#button/0"], "click", function () {
   $clickCount($scope, $scope.clickCount + 1);

@@ -1,13 +1,15 @@
-// size: 354 (min) 217 (brotli)
+// size: 389 (min) 228 (brotli)
 _._enable_catch();
 const $await_content__setup = _._script(
     "a0",
     ($scope) => (document.querySelector("#outside").textContent = "Fail"),
   ),
   $placeholder_content = _._content_resume("a1", "loading...", "b"),
-  $try_content__await = _._await(0, 0, 0, $await_content__setup),
+  $await_content = _._await_content(0, 0, 0, $await_content__setup),
+  $try_content__await_promise = _._await_promise(0),
   $try_content__setup = ($scope) => {
-    $try_content__await($scope, resolveAfter(0, 1));
+    ($await_content($scope),
+      $try_content__await_promise($scope, resolveAfter(0, 1)));
   },
   $if_content__try = _._try(0, "<!><!><!>", "b%c", $try_content__setup),
   $if_content__setup = ($scope) => {

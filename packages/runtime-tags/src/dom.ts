@@ -5,7 +5,8 @@ export { _call } from "./common/helpers";
 export { $signal, $signalReset } from "./dom/abort-signal";
 export { compat } from "./dom/compat";
 export {
-  _await,
+  _await_content,
+  _await_promise,
   _dynamic_tag,
   _for_in,
   _for_of,

@@ -1,4 +1,4 @@
-// size: 20005 (min) 7670 (brotli)
+// size: 20065 (min) 7690 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -1167,10 +1167,10 @@ function toInsertNode(startNode, endNode) {
   }
   return parent;
 }
-function _await(nodeAccessor, template, walks, setup, params) {
+function _await_promise(nodeAccessor, params) {
   let promiseAccessor = "L" + (nodeAccessor = decodeAccessor(nodeAccessor)),
     branchAccessor = "A" + nodeAccessor,
-    renderer = _content("", template, walks, setup)();
+    rendererAccessor = "D" + nodeAccessor;
   return (
     _enable_catch(),
     (scope, promise) => {
@@ -1259,7 +1259,7 @@ function _await(nodeAccessor, template, walks, setup, params) {
                     : (insertBranchBefore(
                         (scope[branchAccessor] = createAndSetupBranch(
                           scope.$,
-                          renderer,
+                          scope[rendererAccessor],
                           scope,
                           scope[nodeAccessor].parentNode,
                         )),
@@ -1301,6 +1301,13 @@ function _await(nodeAccessor, template, walks, setup, params) {
       ));
     }
   );
+}
+function _await_content(nodeAccessor, template, walks, setup) {
+  let rendererAccessor = "D" + decodeAccessor(nodeAccessor),
+    renderer = _content("", template, walks, setup)();
+  return (scope) => {
+    scope[rendererAccessor] = renderer;
+  };
 }
 function _try(nodeAccessor, template, walks, setup) {
   let branchAccessor = "A" + (nodeAccessor = decodeAccessor(nodeAccessor)),

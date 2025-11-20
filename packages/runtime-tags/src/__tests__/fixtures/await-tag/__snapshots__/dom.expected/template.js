@@ -22,13 +22,19 @@ const $count = /* @__PURE__ */_._let("count/4", $scope => {
   $count__closure($scope);
   $count__script($scope);
 });
-const $await = /* @__PURE__ */_._await("#text/0", "Got: <!> <!>", /* over(1), replace, over(2), replace, over(1) */"b%c%b", $await_content__setup, $await_content__$params);
-const $await2 = /* @__PURE__ */_._await("#text/1", "Got: <!> <!>", /* over(1), replace, over(2), replace, over(1) */"b%c%b", $await_content2__setup, $await_content2__$params);
-const $await3 = /* @__PURE__ */_._await("#text/2", "Got: <!> <!>", /* over(1), replace, over(2), replace, over(1) */"b%c%b", $await_content3__setup, $await_content3__$params);
+const $await_content = /* @__PURE__ */_._await_content("#text/0", "Got: <!> <!>", /* over(1), replace, over(2), replace, over(1) */"b%c%b", $await_content__setup);
+const $await_promise = /* @__PURE__ */_._await_promise("#text/0", $await_content__$params);
+const $await_content2 = /* @__PURE__ */_._await_content("#text/1", "Got: <!> <!>", /* over(1), replace, over(2), replace, over(1) */"b%c%b", $await_content2__setup);
+const $await_promise2 = /* @__PURE__ */_._await_promise("#text/1", $await_content2__$params);
+const $await_content3 = /* @__PURE__ */_._await_content("#text/2", "Got: <!> <!>", /* over(1), replace, over(2), replace, over(1) */"b%c%b", $await_content3__setup);
+const $await_promise3 = /* @__PURE__ */_._await_promise("#text/2", $await_content3__$params);
 export function $setup($scope) {
+  $await_content($scope);
+  $await_content2($scope);
+  $await_content3($scope);
   $count($scope, 0);
-  $await($scope, Promise.resolve("a"));
-  $await2($scope, resolveAfter("b", 2));
-  $await3($scope, resolveAfter("c", 1));
+  $await_promise($scope, Promise.resolve("a"));
+  $await_promise2($scope, resolveAfter("b", 2));
+  $await_promise3($scope, resolveAfter("c", 1));
 }
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);
