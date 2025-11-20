@@ -16,7 +16,8 @@ import runtimeInfo from "./runtime-info";
 import { toMemberExpression } from "./to-property-name";
 
 const pureDOMFunctions = new Set<string>([
-  "_await",
+  "_await_promise",
+  "_await_content",
   "_child_setup",
   "_if",
   "_if_closure",

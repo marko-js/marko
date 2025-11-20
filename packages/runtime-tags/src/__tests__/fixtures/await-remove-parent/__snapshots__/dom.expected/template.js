@@ -6,9 +6,11 @@ _._enable_catch();
 const $await_content__setup__script = _._script("__tests__/template.marko_4", $scope => (document.querySelector('#outside').textContent = "Fail"));
 const $await_content__setup = $await_content__setup__script;
 const $placeholder_content = _._content_resume("__tests__/template.marko_3_content", "loading...", /* over(1) */"b");
-const $try_content__await = /* @__PURE__ */_._await("#text/0", 0, 0, $await_content__setup);
+const $await_content = /* @__PURE__ */_._await_content("#text/0", 0, 0, $await_content__setup);
+const $try_content__await_promise = /* @__PURE__ */_._await_promise("#text/0");
 const $try_content__setup = $scope => {
-  $try_content__await($scope, resolveAfter(0, 1));
+  $await_content($scope);
+  $try_content__await_promise($scope, resolveAfter(0, 1));
 };
 const $if_content__try = /* @__PURE__ */_._try("#text/0", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $try_content__setup);
 const $if_content__setup = $scope => {

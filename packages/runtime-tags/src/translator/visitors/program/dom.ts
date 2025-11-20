@@ -15,7 +15,7 @@ import {
   getSectionParentIsOwner,
   getSectionRegisterReasons,
   isDynamicClosure,
-  setSectionRendererArgs as setBranchRenderer,
+  setBranchRendererArgs,
 } from "../../util/sections";
 import {
   addStatement,
@@ -96,7 +96,7 @@ export default {
             bindingHasDownstreamExpressions(childSection.downstreamBinding)
           ) {
             if (getSectionParentIsOwner(childSection)) {
-              setBranchRenderer(childSection, [
+              setBranchRendererArgs(childSection, [
                 writes,
                 walks,
                 setup,

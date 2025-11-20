@@ -50,17 +50,14 @@ import {
 } from "./scope";
 import { type Signal, subscribeToScopeSet } from "./signals";
 
-export function _await(
+export function _await_promise(
   nodeAccessor: EncodedAccessor,
-  template?: string | 0,
-  walks?: string | 0,
-  setup?: SetupFn | 0,
   params?: Signal<unknown>,
 ) {
   if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
-  const renderer = _content("", template, walks, setup)();
+  const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
   _enable_catch();
   return (scope: Scope, promise: Promise<unknown>) => {
     // TODO: !isPromise, render synchronously
@@ -176,7 +173,7 @@ export function _await(
                 insertBranchBefore(
                   (scope[branchAccessor] = createAndSetupBranch(
                     scope[AccessorProp.Global],
-                    renderer,
+                    scope[rendererAccessor],
                     scope,
                     (scope[nodeAccessor] as ChildNode).parentNode!,
                   )),
@@ -225,6 +222,21 @@ export function _await(
         }
       },
     ));
+  };
+}
+
+export function _await_content(
+  nodeAccessor: EncodedAccessor,
+  template?: string | 0,
+  walks?: string | 0,
+  setup?: SetupFn | 0,
+) {
+  const rendererAccessor =
+    AccessorPrefix.ConditionalRenderer +
+    (MARKO_DEBUG ? nodeAccessor : decodeAccessor(nodeAccessor as number));
+  const renderer = _content("", template, walks, setup)();
+  return (scope: Scope) => {
+    scope[rendererAccessor] = renderer;
   };
 }
 

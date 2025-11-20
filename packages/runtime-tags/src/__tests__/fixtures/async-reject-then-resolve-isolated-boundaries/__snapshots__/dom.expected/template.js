@@ -6,16 +6,20 @@ _._enable_catch();
 const $await_content2__v = /* @__PURE__ */_._const("v", $scope => _._text($scope["#text/0"], $scope.v));
 const $await_content2__$params = /* @__PURE__ */_._const("$params3", $scope => $await_content2__v($scope, $scope.$params3[0]));
 const $catch_content2 = _._content_resume("__tests__/template.marko_5_content", "Rejected B", /* over(1) */"b");
-const $try_content2__await = /* @__PURE__ */_._await("#text/0", "<div>Resolved B: <!></div>", /* next(1), over(1), replace, out(1) */"Db%l", 0, $await_content2__$params);
+const $await_content2 = /* @__PURE__ */_._await_content("#text/0", "<div>Resolved B: <!></div>", /* next(1), over(1), replace, out(1) */"Db%l");
+const $try_content2__await_promise = /* @__PURE__ */_._await_promise("#text/0", $await_content2__$params);
 const $try_content2__setup = $scope => {
-  $try_content2__await($scope, rejectAfter(new Error("rejected b"), 1));
+  $await_content2($scope);
+  $try_content2__await_promise($scope, rejectAfter(new Error("rejected b"), 1));
 };
 const $await_content__v = /* @__PURE__ */_._const("v", $scope => _._text($scope["#text/0"], $scope.v));
 const $await_content__$params = /* @__PURE__ */_._const("$params2", $scope => $await_content__v($scope, $scope.$params2[0]));
 const $catch_content = _._content_resume("__tests__/template.marko_2_content", "Rejected A", /* over(1) */"b");
-const $try_content__await = /* @__PURE__ */_._await("#text/0", "<div>Resolved A: <!></div>", /* next(1), over(1), replace, out(1) */"Db%l", 0, $await_content__$params);
+const $await_content = /* @__PURE__ */_._await_content("#text/0", "<div>Resolved A: <!></div>", /* next(1), over(1), replace, out(1) */"Db%l");
+const $try_content__await_promise = /* @__PURE__ */_._await_promise("#text/0", $await_content__$params);
 const $try_content__setup = $scope => {
-  $try_content__await($scope, resolveAfter("A Value", 2));
+  $await_content($scope);
+  $try_content__await_promise($scope, resolveAfter("A Value", 2));
 };
 const $try = /* @__PURE__ */_._try("#text/0", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $try_content__setup);
 const $try2 = /* @__PURE__ */_._try("#text/1", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $try_content2__setup);

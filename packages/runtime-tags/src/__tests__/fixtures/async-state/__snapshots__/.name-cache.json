@@ -12,7 +12,8 @@
       "$$clickCount_closure": "s",
       "$$clickCount__script": "a",
       "$$clickCount": "i",
-      "$$clickCount__closure": "l"
+      "$$clickCount__closure": "l",
+      "$$try_content__await_promise": "u"
     }
   }
 }

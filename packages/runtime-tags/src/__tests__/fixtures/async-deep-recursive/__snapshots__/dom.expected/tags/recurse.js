@@ -9,9 +9,11 @@ const $await_content__setup = $scope => {
   $await_content__input_level($scope);
 };
 const $await_content__input_level = /* @__PURE__ */_._closure_get("input_level", $scope => $input_level($scope["#childScope/0"], $scope._._._.input_level - 1), $scope => $scope._._._);
-const $try_content__await = /* @__PURE__ */_._await("#text/0", `<!>${$template}<!>`, /* over(1), <recurse>, over(1) */`b/${$walks}&b`, $await_content__setup);
+const $await_content = /* @__PURE__ */_._await_content("#text/0", `<!>${$template}<!>`, /* over(1), <recurse>, over(1) */`b/${$walks}&b`, $await_content__setup);
+const $try_content__await_promise = /* @__PURE__ */_._await_promise("#text/0");
 const $try_content__setup = $scope => {
-  $try_content__await($scope, new Promise(setImmediate));
+  $await_content($scope);
+  $try_content__await_promise($scope, new Promise(setImmediate));
 };
 const $if_content__input_level = /* @__PURE__ */_._if_closure("#text/0", 0, $scope => _._attr($scope["#div/0"], "data-level", $scope._.input_level));
 const $if_content__try = /* @__PURE__ */_._try("#text/1", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $try_content__setup);

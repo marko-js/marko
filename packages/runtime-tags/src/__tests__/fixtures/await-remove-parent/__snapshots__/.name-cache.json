@@ -11,7 +11,9 @@
       "$$if_content__try": "c",
       "$$if_content__setup": "n",
       "$$if": "s",
-      "$$show": "_"
+      "$$show": "_",
+      "$$await_content": "l",
+      "$$try_content__await_promise": "p"
     }
   }
 }

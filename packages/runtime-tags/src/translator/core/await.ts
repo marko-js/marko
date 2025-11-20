@@ -30,6 +30,7 @@ import {
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
 import {
+  addStatement,
   addValue,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
@@ -39,6 +40,7 @@ import { toFirstExpressionOrBlock } from "../util/to-first-expression-or-block";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
+import { scopeIdentifier } from "../visitors/program";
 
 const kDOMBinding = Symbol("await tag dom binding");
 
@@ -177,18 +179,39 @@ export default {
         const nodeRef = tagExtra[kDOMBinding]!;
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"))!;
-        const signal = getSignal(section, nodeRef, "await");
+        const signal = getSignal(section, nodeRef, "await_promise");
         const valueExpr = node.attributes[0].value;
 
         signal.build = () => {
+          const branchRenderArgs = getBranchRendererArgs(bodySection);
+          const branchParams = branchRenderArgs.pop();
+          (signal.prependStatements ||= []).push(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                t.identifier(bodySection.name),
+                callRuntime(
+                  "_await_content",
+                  getScopeAccessorLiteral(nodeRef, true),
+                  ...replaceNullishAndEmptyFunctionsWith0(branchRenderArgs),
+                ),
+              ),
+            ]),
+          );
           return callRuntime(
-            "_await",
+            "_await_promise",
             getScopeAccessorLiteral(nodeRef, true),
-            ...replaceNullishAndEmptyFunctionsWith0(
-              getBranchRendererArgs(bodySection),
-            ),
+            branchParams,
           );
         };
+
+        addStatement(
+          "render",
+          section,
+          undefined,
+          t.expressionStatement(
+            t.callExpression(t.identifier(bodySection.name), [scopeIdentifier]),
+          ),
+        );
 
         addValue(
           section,

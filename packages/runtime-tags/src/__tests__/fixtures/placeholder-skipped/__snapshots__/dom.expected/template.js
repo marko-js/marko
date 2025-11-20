@@ -7,13 +7,15 @@ const $await_content__data = /* @__PURE__ */_._const("data", $scope => _._text($
 const $await_content__$params = /* @__PURE__ */_._const("$params2", $scope => $await_content__data($scope, $scope.$params2[0]));
 const $placeholder_content = _._content_resume("__tests__/template.marko_2_content", "_A_", /* over(1) */"b");
 const $try = /* @__PURE__ */_._try("#text/0", "b", /* over(1) */"b");
-const $await = /* @__PURE__ */_._await("#text/1", " ", /* get, over(1) */" b", 0, $await_content__$params);
+const $await_content = /* @__PURE__ */_._await_content("#text/1", " ", /* get, over(1) */" b");
+const $await_promise = /* @__PURE__ */_._await_promise("#text/1", $await_content__$params);
 export function $setup($scope) {
+  $await_content($scope);
   $try($scope, {
     placeholder: _.attrTag({
       content: $placeholder_content($scope)
     })
   });
-  $await($scope, resolveAfter("d", 1));
+  $await_promise($scope, resolveAfter("d", 1));
 }
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

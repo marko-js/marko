@@ -26,7 +26,12 @@
       "$$await4": "v",
       "$$await5": "j",
       "$$n__script": "q",
-      "$$n": "y"
+      "$$n": "y",
+      "$$await_promise": "z",
+      "$$await_promise2": "A",
+      "$$await_promise3": "B",
+      "$$await_promise4": "C",
+      "$$await_promise5": "D"
     }
   }
 }

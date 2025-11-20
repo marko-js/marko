@@ -1,4 +1,4 @@
-// size: 720 (min) 223 (brotli)
+// size: 705 (min) 224 (brotli)
 const multiply = (multiplier, n) => resolveAfter(multiplier * n, n),
   $await_content5__result = _._const(2, ($scope) =>
     _._text($scope.a, $scope.c),
@@ -28,11 +28,11 @@ const multiply = (multiplier, n) => resolveAfter(multiplier * n, n),
   $await_content__$params = _._const(1, ($scope) =>
     $await_content__result($scope, $scope.b[0]),
   ),
-  $await = _._await(2, " ", " b", 0, $await_content__$params),
-  $await2 = _._await(4, " ", " b", 0, $await_content2__$params),
-  $await3 = _._await(6, " ", " b", 0, $await_content3__$params),
-  $await4 = _._await(8, " ", " b", 0, $await_content4__$params),
-  $await5 = _._await(10, " ", " b", 0, $await_content5__$params),
+  $await_promise = _._await_promise(2, $await_content__$params),
+  $await_promise2 = _._await_promise(4, $await_content2__$params),
+  $await_promise3 = _._await_promise(6, $await_content3__$params),
+  $await_promise4 = _._await_promise(8, $await_content4__$params),
+  $await_promise5 = _._await_promise(10, $await_content5__$params),
   $n__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", function () {
       $n($scope, $scope.l + 1);
@@ -44,11 +44,11 @@ const multiply = (multiplier, n) => resolveAfter(multiplier * n, n),
       _._text($scope.f, $scope.l),
       _._text($scope.h, $scope.l),
       _._text($scope.j, $scope.l),
-      $await($scope, multiply(1, $scope.l)),
-      $await2($scope, multiply(2, $scope.l)),
-      $await3($scope, multiply(3, $scope.l)),
-      $await4($scope, multiply(4, $scope.l)),
-      $await5($scope, multiply(5, $scope.l)),
+      $await_promise($scope, multiply(1, $scope.l)),
+      $await_promise2($scope, multiply(2, $scope.l)),
+      $await_promise3($scope, multiply(3, $scope.l)),
+      $await_promise4($scope, multiply(4, $scope.l)),
+      $await_promise5($scope, multiply(5, $scope.l)),
       $n__script($scope));
   });
 init();

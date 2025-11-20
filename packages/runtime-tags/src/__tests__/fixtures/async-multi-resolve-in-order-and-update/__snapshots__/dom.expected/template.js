@@ -13,11 +13,16 @@ const $await_content2__result = /* @__PURE__ */_._const("result", $scope => _._t
 const $await_content2__$params = /* @__PURE__ */_._const("$params3", $scope => $await_content2__result($scope, $scope.$params3[0]));
 const $await_content__result = /* @__PURE__ */_._const("result", $scope => _._text($scope["#text/0"], $scope.result));
 const $await_content__$params = /* @__PURE__ */_._const("$params2", $scope => $await_content__result($scope, $scope.$params2[0]));
-const $await = /* @__PURE__ */_._await("#text/2", " ", /* get, over(1) */" b", 0, $await_content__$params);
-const $await2 = /* @__PURE__ */_._await("#text/4", " ", /* get, over(1) */" b", 0, $await_content2__$params);
-const $await3 = /* @__PURE__ */_._await("#text/6", " ", /* get, over(1) */" b", 0, $await_content3__$params);
-const $await4 = /* @__PURE__ */_._await("#text/8", " ", /* get, over(1) */" b", 0, $await_content4__$params);
-const $await5 = /* @__PURE__ */_._await("#text/10", " ", /* get, over(1) */" b", 0, $await_content5__$params);
+const $await_content = /* @__PURE__ */_._await_content("#text/2", " ", /* get, over(1) */" b");
+const $await_promise = /* @__PURE__ */_._await_promise("#text/2", $await_content__$params);
+const $await_content2 = /* @__PURE__ */_._await_content("#text/4", " ", /* get, over(1) */" b");
+const $await_promise2 = /* @__PURE__ */_._await_promise("#text/4", $await_content2__$params);
+const $await_content3 = /* @__PURE__ */_._await_content("#text/6", " ", /* get, over(1) */" b");
+const $await_promise3 = /* @__PURE__ */_._await_promise("#text/6", $await_content3__$params);
+const $await_content4 = /* @__PURE__ */_._await_content("#text/8", " ", /* get, over(1) */" b");
+const $await_promise4 = /* @__PURE__ */_._await_promise("#text/8", $await_content4__$params);
+const $await_content5 = /* @__PURE__ */_._await_content("#text/10", " ", /* get, over(1) */" b");
+const $await_promise5 = /* @__PURE__ */_._await_promise("#text/10", $await_content5__$params);
 const $n__script = _._script("__tests__/template.marko_0_n", $scope => _._on($scope["#button/0"], "click", function () {
   $n($scope, $scope.n + 1);
 }));
@@ -27,14 +32,19 @@ const $n = /* @__PURE__ */_._let("n/11", $scope => {
   _._text($scope["#text/5"], $scope.n);
   _._text($scope["#text/7"], $scope.n);
   _._text($scope["#text/9"], $scope.n);
-  $await($scope, multiply(1, $scope.n));
-  $await2($scope, multiply(2, $scope.n));
-  $await3($scope, multiply(3, $scope.n));
-  $await4($scope, multiply(4, $scope.n));
-  $await5($scope, multiply(5, $scope.n));
+  $await_promise($scope, multiply(1, $scope.n));
+  $await_promise2($scope, multiply(2, $scope.n));
+  $await_promise3($scope, multiply(3, $scope.n));
+  $await_promise4($scope, multiply(4, $scope.n));
+  $await_promise5($scope, multiply(5, $scope.n));
   $n__script($scope);
 });
 export function $setup($scope) {
+  $await_content($scope);
+  $await_content2($scope);
+  $await_content3($scope);
+  $await_content4($scope);
+  $await_content5($scope);
   $n($scope, 2);
 }
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);
