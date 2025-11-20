@@ -1,4 +1,4 @@
-// size: 20065 (min) 7690 (brotli)
+// size: 20070 (min) 7733 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -318,19 +318,25 @@ function init(runtimeId = "M") {
             nextToken = () =>
               (lastToken = visitText.slice(
                 lastTokenIndex,
-                (lastTokenIndex = visitText.indexOf(" ", lastTokenIndex) + 1)
-                  ? lastTokenIndex - 1
-                  : visitText.length,
+                (lastTokenIndex =
+                  visitText.indexOf(" ", lastTokenIndex) + 1 ||
+                  visitText.length + 1) - 1,
               ));
           return (
             (render.m = (effects = []) => {
               for (let serialized of (resumes = render.r || []))
-                if ("string" == typeof serialized) lastEffect = serialized;
-                else if ("number" == typeof serialized)
-                  effects.push(
-                    registeredValues[lastEffect],
-                    (scopeLookup[serialized] ||= { L: serialized }),
-                  );
+                if ("string" == typeof serialized)
+                  for (
+                    lastTokenIndex = 0, visitText = serialized;
+                    nextToken();
+
+                  )
+                    /\D/.test(lastToken)
+                      ? (lastEffect = registeredValues[lastToken])
+                      : effects.push(
+                          lastEffect,
+                          (scopeLookup[lastToken] ||= { L: +lastToken }),
+                        );
                 else
                   for (let scope of serialized(serializeContext))
                     $global
