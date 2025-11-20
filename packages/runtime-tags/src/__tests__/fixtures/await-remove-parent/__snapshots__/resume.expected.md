@@ -23,8 +23,7 @@
         }], _.a["#PlaceholderContent"] = _._[
           "__tests__/template.marko_3_content"
           ](_.c), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       REORDER_RUNTIME(M._);
       M._.w()
@@ -37,8 +36,8 @@
       M._.j.b = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_4",
-          5)
+          "__tests__/template.marko_4 5"
+          )
       };
       M._.w()
     </script>

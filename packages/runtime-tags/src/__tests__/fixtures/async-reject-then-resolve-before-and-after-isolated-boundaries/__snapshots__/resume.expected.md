@@ -56,8 +56,8 @@
     <script>
       M._.r.push(_ =&gt; (_.f = [2,
         {}]),
-        "__tests__/template.marko_9",
-        7);
+        "__tests__/template.marko_9 7"
+        );
       M._.w()
     </script>
   </body>
@@ -126,8 +126,8 @@ container.querySelector("button").click();
     <script>
       M._.r.push(_ =&gt; (_.f = [2,
         {}]),
-        "__tests__/template.marko_9",
-        7);
+        "__tests__/template.marko_9 7"
+        );
       M._.w()
     </script>
   </body>

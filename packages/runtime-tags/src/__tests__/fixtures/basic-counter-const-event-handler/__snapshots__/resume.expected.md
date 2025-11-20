@@ -15,8 +15,7 @@
         }], _.a.increment = _._[
           "__tests__/template.marko_0/increment"
           ](_.a), _.b),
-        "__tests__/template.marko_0_increment",
-        1
+        "__tests__/template.marko_0_increment 1"
       ];
       M._.w()
     </script>
@@ -45,8 +44,7 @@ container.querySelector("button").click();
         }], _.a.increment = _._[
           "__tests__/template.marko_0/increment"
           ](_.a), _.b),
-        "__tests__/template.marko_0_increment",
-        1
+        "__tests__/template.marko_0_increment 1"
       ];
       M._.w()
     </script>
@@ -79,8 +77,7 @@ container.querySelector("button").click();
         }], _.a.increment = _._[
           "__tests__/template.marko_0/increment"
           ](_.a), _.b),
-        "__tests__/template.marko_0_increment",
-        1
+        "__tests__/template.marko_0_increment 1"
       ];
       M._.w()
     </script>
@@ -113,8 +110,7 @@ container.querySelector("button").click();
         }], _.a.increment = _._[
           "__tests__/template.marko_0/increment"
           ](_.a), _.b),
-        "__tests__/template.marko_0_increment",
-        1
+        "__tests__/template.marko_0_increment 1"
       ];
       M._.w()
     </script>

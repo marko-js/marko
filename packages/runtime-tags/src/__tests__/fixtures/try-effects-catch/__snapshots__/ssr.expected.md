@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div></div><!--M_*1 #div/0--><!--M_[-->ERROR!<!--M_]1 #text/1 2--><div></div><!--M_*1 #div/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.c={},_.a={"#BranchAccessor":"#text/1"}],_.a["#CatchContent"]=_._["__tests__/template.marko_2_content"](_.c),_.b),"__tests__/template.marko_0",1];M._.w()</script>
+  <div></div><!--M_*1 #div/0--><!--M_[-->ERROR!<!--M_]1 #text/1 2--><div></div><!--M_*1 #div/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.c={},_.a={"#BranchAccessor":"#text/1"}],_.a["#CatchContent"]=_._["__tests__/template.marko_2_content"](_.c),_.b),"__tests__/template.marko_0 1"];M._.w()</script>
 ```
 
 # Render End
@@ -22,8 +22,7 @@
         }], _.a["#CatchContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.c), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

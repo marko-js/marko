@@ -16,8 +16,7 @@
           ](_.a), _.a.setHtml = _._[
           "__tests__/tags/child.marko_0/_return"
           ](_.c), _.d),
-        "__tests__/tags/thing.marko_0_input_value",
-        2
+        "__tests__/tags/thing.marko_0_input_value 2"
       ];
       M._.w()
     </script>

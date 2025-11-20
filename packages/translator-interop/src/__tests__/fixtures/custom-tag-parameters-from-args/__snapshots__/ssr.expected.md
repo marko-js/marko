@@ -1,5 +1,5 @@
 # Write
-  <button class=inc>1<!--Ms*1 #text/1-->,<!>10<!--Ms*1 #text/2--></button><!--Ms*1 #button/0--><!--Ms[--><div>Counts: 1,10</div><!--Ms]1 #text/3 2--><script>WALKER_RUNTIME("M")("s");M.s.r=[_=>(_.a=[0,{"ConditionalRenderer:#text/3":_._.$compat_renderBody,input_content:_._.$compat_renderBody,x:1,y:10}]),"__tests__/components/custom-tag.marko_0_x_y",1];M.s.w()</script>
+  <button class=inc>1<!--Ms*1 #text/1-->,<!>10<!--Ms*1 #text/2--></button><!--Ms*1 #button/0--><!--Ms[--><div>Counts: 1,10</div><!--Ms]1 #text/3 2--><script>WALKER_RUNTIME("M")("s");M.s.r=[_=>(_.a=[0,{"ConditionalRenderer:#text/3":_._.$compat_renderBody,input_content:_._.$compat_renderBody,x:1,y:10}]),"__tests__/components/custom-tag.marko_0_x_y 1"];M.s.w()</script>
 
 # Render End
 ```html
@@ -31,8 +31,7 @@
           x: 1,
           y: 10
         }]),
-        "__tests__/components/custom-tag.marko_0_x_y",
-        1
+        "__tests__/components/custom-tag.marko_0_x_y 1"
       ];
       M.s.w()
     </script>

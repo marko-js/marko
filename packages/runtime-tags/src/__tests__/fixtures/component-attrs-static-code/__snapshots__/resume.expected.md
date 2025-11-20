@@ -34,8 +34,7 @@
           },
           count: 0
         }]),
-        "__tests__/tags/counter.marko_0_count",
-        2, 3
+        "__tests__/tags/counter.marko_0_count 2 3"
       ];
       M._.w()
     </script>
@@ -83,8 +82,7 @@ container.querySelectorAll("button").forEach(button => button.click());
           },
           count: 0
         }]),
-        "__tests__/tags/counter.marko_0_count",
-        2, 3
+        "__tests__/tags/counter.marko_0_count 2 3"
       ];
       M._.w()
     </script>

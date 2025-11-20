@@ -19,8 +19,7 @@
         }], _.a["#CatchContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.c), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

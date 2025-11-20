@@ -24,10 +24,7 @@ mounted
         {
           _: _.a
         }]),
-        "__tests__/template.marko_1",
-        2,
-        "__tests__/template.marko_0_show",
-        1
+        "__tests__/template.marko_1 2 __tests__/template.marko_0_show 1"
       ];
       M._.w()
     </script>
@@ -67,10 +64,7 @@ destroyed
         {
           _: _.a
         }]),
-        "__tests__/template.marko_1",
-        2,
-        "__tests__/template.marko_0_show",
-        1
+        "__tests__/template.marko_1 2 __tests__/template.marko_0_show 1"
       ];
       M._.w()
     </script>
@@ -117,10 +111,7 @@ mounted
         {
           _: _.a
         }]),
-        "__tests__/template.marko_1",
-        2,
-        "__tests__/template.marko_0_show",
-        1
+        "__tests__/template.marko_1 2 __tests__/template.marko_0_show 1"
       ];
       M._.w()
     </script>
@@ -165,10 +156,7 @@ destroyed
         {
           _: _.a
         }]),
-        "__tests__/template.marko_1",
-        2,
-        "__tests__/template.marko_0_show",
-        1
+        "__tests__/template.marko_1 2 __tests__/template.marko_0_show 1"
       ];
       M._.w()
     </script>

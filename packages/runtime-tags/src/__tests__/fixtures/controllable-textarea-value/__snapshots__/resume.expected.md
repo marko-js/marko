@@ -19,8 +19,7 @@
         }], _.a["ControlledHandler:#textarea/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -58,8 +57,7 @@ textarea.dispatchEvent(new window.Event("input", {
         }], _.a["ControlledHandler:#textarea/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -101,8 +99,7 @@ textarea.dispatchEvent(new window.Event("input", {
         }], _.a["ControlledHandler:#textarea/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -144,8 +141,7 @@ textarea.dispatchEvent(new window.Event("input", {
         }], _.a["ControlledHandler:#textarea/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

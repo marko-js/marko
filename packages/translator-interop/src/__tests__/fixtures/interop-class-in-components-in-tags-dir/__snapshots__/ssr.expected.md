@@ -1,5 +1,5 @@
 # Write
-  <!--M#s1--><h1>Hello world</h1><!--M/--><script>WALKER_RUNTIME("M")("s");M.s.r=[_=>(_.a=[0,1,{m5c:"s1"}]),"$compat_setScope",2];M.s.w();$MC=(window.$MC||[]).concat({"w":[["s1",0,{},{"f":1}]],"t":["__tests__/tags/components/hello-internal.marko"]})</script>
+  <!--M#s1--><h1>Hello world</h1><!--M/--><script>WALKER_RUNTIME("M")("s");M.s.r=[_=>(_.a=[0,1,{m5c:"s1"}]),"$compat_setScope 2"];M.s.w();$MC=(window.$MC||[]).concat({"w":[["s1",0,{},{"f":1}]],"t":["__tests__/tags/components/hello-internal.marko"]})</script>
 
 # Render End
 ```html
@@ -16,7 +16,7 @@
       M.s.r = [_ =&gt; (_.a = [0, 1,
       {
         m5c: "s1"
-      }]), "$compat_setScope", 2];
+      }]), "$compat_setScope 2"];
       M.s.w();
       $MC = (window.$MC || []).concat(
       {

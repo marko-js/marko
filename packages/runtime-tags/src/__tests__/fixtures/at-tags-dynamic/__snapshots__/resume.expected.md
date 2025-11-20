@@ -187,20 +187,7 @@
             ](_.s), _.m.content = _._[
             "__tests__/template.marko_4_content"
             ](_.s), _.r),
-        "__tests__/tags/hello/index.marko_1_item",
-        3, 5, 7,
-        "__tests__/tags/hello/index.marko_3_row",
-        11, 13,
-        "__tests__/tags/hello/index.marko_2_col",
-        9,
-        "__tests__/tags/hello/index.marko_3_row",
-        17, 19,
-        "__tests__/tags/hello/index.marko_2_col",
-        15,
-        "__tests__/tags/hello/index.marko_3_row",
-        23,
-        "__tests__/tags/hello/index.marko_2_col",
-        21
+        "__tests__/tags/hello/index.marko_1_item 3 5 7 __tests__/tags/hello/index.marko_3_row 11 13 __tests__/tags/hello/index.marko_2_col 9 __tests__/tags/hello/index.marko_3_row 17 19 __tests__/tags/hello/index.marko_2_col 15 __tests__/tags/hello/index.marko_3_row 23 __tests__/tags/hello/index.marko_2_col 21"
       ];
       M._.w()
     </script>

@@ -190,10 +190,7 @@
           .write = _.o.write = _.p.write = _._[
             "__tests__/template.marko_0/write"
             ](_.a), _.q),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25,
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 9 11 13 15 17 19 21 23 25 __tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>
@@ -368,10 +365,7 @@ destroyed 2.3
           .write = _.o.write = _.p.write = _._[
             "__tests__/template.marko_0/write"
             ](_.a), _.q),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25,
-        "__tests__/template.marko_0_items",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 9 11 13 15 17 19 21 23 25 __tests__/template.marko_0_items 1"
       ];
       M._.w()
     </script>

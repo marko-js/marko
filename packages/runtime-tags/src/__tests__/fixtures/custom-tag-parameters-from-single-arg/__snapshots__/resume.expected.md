@@ -28,8 +28,7 @@
         {}], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.c), _.b),
-        "__tests__/tags/custom-tag.marko_0_x",
-        2
+        "__tests__/tags/custom-tag.marko_0_x 2"
       ];
       M._.w()
     </script>
@@ -75,8 +74,7 @@ container.querySelector("button").click();
         {}], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.c), _.b),
-        "__tests__/tags/custom-tag.marko_0_x",
-        2
+        "__tests__/tags/custom-tag.marko_0_x 2"
       ];
       M._.w()
     </script>
@@ -123,8 +121,7 @@ container.querySelector("button").click();
         {}], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.c), _.b),
-        "__tests__/tags/custom-tag.marko_0_x",
-        2
+        "__tests__/tags/custom-tag.marko_0_x 2"
       ];
       M._.w()
     </script>
@@ -171,8 +168,7 @@ container.querySelector("button").click();
         {}], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.c), _.b),
-        "__tests__/tags/custom-tag.marko_0_x",
-        2
+        "__tests__/tags/custom-tag.marko_0_x 2"
       ];
       M._.w()
     </script>

@@ -28,10 +28,7 @@
         {
           x: 1
         }]),
-        "__tests__/template.marko_0_x_direction",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_x_direction 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -73,10 +70,7 @@ container.querySelector(".change").click();
         {
           x: 1
         }]),
-        "__tests__/template.marko_0_x_direction",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_x_direction 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -118,10 +112,7 @@ container.querySelector(".up").click();
         {
           x: 1
         }]),
-        "__tests__/template.marko_0_x_direction",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_x_direction 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -163,10 +154,7 @@ container.querySelector(".change").click();
         {
           x: 1
         }]),
-        "__tests__/template.marko_0_x_direction",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_x_direction 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -212,10 +200,7 @@ container.querySelector(".change").click();
         {
           x: 1
         }]),
-        "__tests__/template.marko_0_x_direction",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_x_direction 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -261,10 +246,7 @@ container.querySelector(".down").click();
         {
           x: 1
         }]),
-        "__tests__/template.marko_0_x_direction",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_x_direction 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -306,10 +288,7 @@ container.querySelector(".change").click();
         {
           x: 1
         }]),
-        "__tests__/template.marko_0_x_direction",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_x_direction 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -355,10 +334,7 @@ container.querySelector(".change").click();
         {
           x: 1
         }]),
-        "__tests__/template.marko_0_x_direction",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_x_direction 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

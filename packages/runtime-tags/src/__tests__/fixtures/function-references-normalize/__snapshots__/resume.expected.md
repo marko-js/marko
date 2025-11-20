@@ -19,8 +19,7 @@
         }], _.b.bar = _._[
           "__tests__/template.marko_0/baz"
           ](_.d), _.c),
-        "__tests__/template.marko_0_baz",
-        1
+        "__tests__/template.marko_0_baz 1"
       ];
       M._.w()
     </script>

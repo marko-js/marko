@@ -46,10 +46,7 @@
         {
           "#LoopKey": 3
         }]),
-        "__tests__/template.marko_0_list",
-        1,
-        "__tests__/template.marko_0_open",
-        1
+        "__tests__/template.marko_0_list 1 __tests__/template.marko_0_open 1"
       ];
       M._.w()
     </script>
@@ -111,10 +108,7 @@ container.querySelector("#toggle").click();
         {
           "#LoopKey": 3
         }]),
-        "__tests__/template.marko_0_list",
-        1,
-        "__tests__/template.marko_0_open",
-        1
+        "__tests__/template.marko_0_list 1 __tests__/template.marko_0_open 1"
       ];
       M._.w()
     </script>
@@ -178,10 +172,7 @@ container.querySelector("#toggle").click();
         {
           "#LoopKey": 3
         }]),
-        "__tests__/template.marko_0_list",
-        1,
-        "__tests__/template.marko_0_open",
-        1
+        "__tests__/template.marko_0_list 1 __tests__/template.marko_0_open 1"
       ];
       M._.w()
     </script>
@@ -245,10 +236,7 @@ container.querySelector("#reverse").click();
         {
           "#LoopKey": 3
         }]),
-        "__tests__/template.marko_0_list",
-        1,
-        "__tests__/template.marko_0_open",
-        1
+        "__tests__/template.marko_0_list 1 __tests__/template.marko_0_open 1"
       ];
       M._.w()
     </script>

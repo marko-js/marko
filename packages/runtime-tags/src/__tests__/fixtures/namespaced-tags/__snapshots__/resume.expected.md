@@ -79,12 +79,7 @@
         }, _.d = {
           _: _.a
         }], (_.c = new Set).add(_.d), _.b),
-        "__tests__/template.marko_0_Parent_Child",
-        1,
-        "__tests__/template.marko_0_Child",
-        1,
-        "__tests__/template.marko_0_Parent",
-        1
+        "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
       ];
       M._.w()
     </script>
@@ -185,12 +180,7 @@ container.querySelector(".toggle-parent").click();
         }, _.d = {
           _: _.a
         }], (_.c = new Set).add(_.d), _.b),
-        "__tests__/template.marko_0_Parent_Child",
-        1,
-        "__tests__/template.marko_0_Child",
-        1,
-        "__tests__/template.marko_0_Parent",
-        1
+        "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
       ];
       M._.w()
     </script>
@@ -289,12 +279,7 @@ container.querySelector(".toggle-parent").click();
         }, _.d = {
           _: _.a
         }], (_.c = new Set).add(_.d), _.b),
-        "__tests__/template.marko_0_Parent_Child",
-        1,
-        "__tests__/template.marko_0_Child",
-        1,
-        "__tests__/template.marko_0_Parent",
-        1
+        "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
       ];
       M._.w()
     </script>
@@ -393,12 +378,7 @@ container.querySelector(".toggle-parent").click();
         }, _.d = {
           _: _.a
         }], (_.c = new Set).add(_.d), _.b),
-        "__tests__/template.marko_0_Parent_Child",
-        1,
-        "__tests__/template.marko_0_Child",
-        1,
-        "__tests__/template.marko_0_Parent",
-        1
+        "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
       ];
       M._.w()
     </script>
@@ -483,12 +463,7 @@ container.querySelector(".toggle-child").click();
         }, _.d = {
           _: _.a
         }], (_.c = new Set).add(_.d), _.b),
-        "__tests__/template.marko_0_Parent_Child",
-        1,
-        "__tests__/template.marko_0_Child",
-        1,
-        "__tests__/template.marko_0_Parent",
-        1
+        "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
       ];
       M._.w()
     </script>
@@ -581,12 +556,7 @@ container.querySelector(".toggle-child").click();
         }, _.d = {
           _: _.a
         }], (_.c = new Set).add(_.d), _.b),
-        "__tests__/template.marko_0_Parent_Child",
-        1,
-        "__tests__/template.marko_0_Child",
-        1,
-        "__tests__/template.marko_0_Parent",
-        1
+        "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
       ];
       M._.w()
     </script>
@@ -675,12 +645,7 @@ container.querySelector(".toggle-child").click();
         }, _.d = {
           _: _.a
         }], (_.c = new Set).add(_.d), _.b),
-        "__tests__/template.marko_0_Parent_Child",
-        1,
-        "__tests__/template.marko_0_Child",
-        1,
-        "__tests__/template.marko_0_Parent",
-        1
+        "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
       ];
       M._.w()
     </script>

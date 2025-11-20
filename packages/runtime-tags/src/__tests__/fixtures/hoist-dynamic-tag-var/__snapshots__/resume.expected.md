@@ -61,12 +61,7 @@
           ](_.f), _.f["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
           ](_.e), _.j),
-        "__tests__/tags/thing.marko_0_input_value",
-        6,
-        "__tests__/template.marko_5",
-        13,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/tags/thing.marko_0_input_value 6 __tests__/template.marko_5 13 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

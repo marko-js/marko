@@ -1,6 +1,6 @@
 # Write
 ```html
-  <input value=a checked type=checkbox><!--M_*1 #input/0--><input value=b checked type=checkbox><!--M_*1 #input/1--><input value=c type=checkbox><!--M_*1 #input/2--><span>a,b<!--M_*1 #text/3--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":_.b=["a","b"],"ControlledType:#input/1":1,"ControlledValue:#input/1":_.b,"ControlledType:#input/2":1,"ControlledValue:#input/2":_.b,checkedValue:_.b}],_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a.$checkedValueChange=_._["__tests__/template.marko_0/checkedValueChange2"](_.a),_.c),"__tests__/template.marko_0",1];M._.w()</script>
+  <input value=a checked type=checkbox><!--M_*1 #input/0--><input value=b checked type=checkbox><!--M_*1 #input/1--><input value=c type=checkbox><!--M_*1 #input/2--><span>a,b<!--M_*1 #text/3--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":_.b=["a","b"],"ControlledType:#input/1":1,"ControlledValue:#input/1":_.b,"ControlledType:#input/2":1,"ControlledValue:#input/2":_.b,checkedValue:_.b}],_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a.$checkedValueChange=_._["__tests__/template.marko_0/checkedValueChange2"](_.a),_.c),"__tests__/template.marko_0 1"];M._.w()</script>
 ```
 
 # Render End
@@ -44,8 +44,7 @@
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
             "__tests__/template.marko_0/checkedValueChange2"
             ](_.a), _.c),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

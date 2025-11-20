@@ -90,14 +90,7 @@ Inner mounted
         }], _.a.write = _.b.write = _.d.write = _.f.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), (_.h).add(_.e), _.g),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7,
-        "__tests__/template.marko_0_showInner",
-        1,
-        "__tests__/template.marko_0_showMiddle",
-        1,
-        "__tests__/template.marko_0_showOuter",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 __tests__/template.marko_0_showInner 1 __tests__/template.marko_0_showMiddle 1 __tests__/template.marko_0_showOuter 1"
       ];
       M._.w()
     </script>
@@ -201,14 +194,7 @@ Inner destroyed
         }], _.a.write = _.b.write = _.d.write = _.f.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), (_.h).add(_.e), _.g),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7,
-        "__tests__/template.marko_0_showInner",
-        1,
-        "__tests__/template.marko_0_showMiddle",
-        1,
-        "__tests__/template.marko_0_showOuter",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 __tests__/template.marko_0_showInner 1 __tests__/template.marko_0_showMiddle 1 __tests__/template.marko_0_showOuter 1"
       ];
       M._.w()
     </script>
@@ -304,14 +290,7 @@ Middle destroyed
         }], _.a.write = _.b.write = _.d.write = _.f.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), (_.h).add(_.e), _.g),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7,
-        "__tests__/template.marko_0_showInner",
-        1,
-        "__tests__/template.marko_0_showMiddle",
-        1,
-        "__tests__/template.marko_0_showOuter",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 __tests__/template.marko_0_showInner 1 __tests__/template.marko_0_showMiddle 1 __tests__/template.marko_0_showOuter 1"
       ];
       M._.w()
     </script>
@@ -392,14 +371,7 @@ Outer destroyed
         }], _.a.write = _.b.write = _.d.write = _.f.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), (_.h).add(_.e), _.g),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7,
-        "__tests__/template.marko_0_showInner",
-        1,
-        "__tests__/template.marko_0_showMiddle",
-        1,
-        "__tests__/template.marko_0_showOuter",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 __tests__/template.marko_0_showInner 1 __tests__/template.marko_0_showMiddle 1 __tests__/template.marko_0_showOuter 1"
       ];
       M._.w()
     </script>
@@ -480,14 +452,7 @@ Outer destroyed
         }], _.a.write = _.b.write = _.d.write = _.f.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), (_.h).add(_.e), _.g),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7,
-        "__tests__/template.marko_0_showInner",
-        1,
-        "__tests__/template.marko_0_showMiddle",
-        1,
-        "__tests__/template.marko_0_showOuter",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 __tests__/template.marko_0_showInner 1 __tests__/template.marko_0_showMiddle 1 __tests__/template.marko_0_showOuter 1"
       ];
       M._.w()
     </script>
@@ -560,14 +525,7 @@ Outer destroyed
         }], _.a.write = _.b.write = _.d.write = _.f.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), (_.h).add(_.e), _.g),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7,
-        "__tests__/template.marko_0_showInner",
-        1,
-        "__tests__/template.marko_0_showMiddle",
-        1,
-        "__tests__/template.marko_0_showOuter",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 __tests__/template.marko_0_showInner 1 __tests__/template.marko_0_showMiddle 1 __tests__/template.marko_0_showOuter 1"
       ];
       M._.w()
     </script>
@@ -673,14 +631,7 @@ Inner mounted
         }], _.a.write = _.b.write = _.d.write = _.f.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), (_.h).add(_.e), _.g),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7,
-        "__tests__/template.marko_0_showInner",
-        1,
-        "__tests__/template.marko_0_showMiddle",
-        1,
-        "__tests__/template.marko_0_showOuter",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 __tests__/template.marko_0_showInner 1 __tests__/template.marko_0_showMiddle 1 __tests__/template.marko_0_showOuter 1"
       ];
       M._.w()
     </script>
@@ -783,14 +734,7 @@ Outer destroyed
         }], _.a.write = _.b.write = _.d.write = _.f.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), (_.h).add(_.e), _.g),
-        "__tests__/tags/child.marko_0_name_write",
-        3, 5, 7,
-        "__tests__/template.marko_0_showInner",
-        1,
-        "__tests__/template.marko_0_showMiddle",
-        1,
-        "__tests__/template.marko_0_showOuter",
-        1
+        "__tests__/tags/child.marko_0_name_write 3 5 7 __tests__/template.marko_0_showInner 1 __tests__/template.marko_0_showMiddle 1 __tests__/template.marko_0_showOuter 1"
       ];
       M._.w()
     </script>

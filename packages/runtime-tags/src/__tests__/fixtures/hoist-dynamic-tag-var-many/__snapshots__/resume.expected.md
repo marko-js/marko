@@ -385,10 +385,7 @@
           ](_.Z), _.Z["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
           ](_.Y), _.eb),
-        "__tests__/template.marko_0_$hoisted_setHtml3",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_$hoisted_setHtml3 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

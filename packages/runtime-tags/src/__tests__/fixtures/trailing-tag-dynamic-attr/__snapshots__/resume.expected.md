@@ -13,8 +13,7 @@
         {
           toggle: !1
         }]),
-        "__tests__/template.marko_0_toggle",
-        1
+        "__tests__/template.marko_0_toggle 1"
       ];
       M._.w()
     </script>
@@ -44,8 +43,7 @@ container.querySelector("button")?.click();
         {
           toggle: !1
         }]),
-        "__tests__/template.marko_0_toggle",
-        1
+        "__tests__/template.marko_0_toggle 1"
       ];
       M._.w()
     </script>
@@ -77,8 +75,7 @@ container.querySelector("button")?.click();
         {
           toggle: !1
         }]),
-        "__tests__/template.marko_0_toggle",
-        1
+        "__tests__/template.marko_0_toggle 1"
       ];
       M._.w()
     </script>

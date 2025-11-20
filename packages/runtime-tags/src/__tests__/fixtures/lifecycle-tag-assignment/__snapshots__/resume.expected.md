@@ -26,8 +26,7 @@
         {
           x: 0
         }]),
-        "__tests__/template.marko_0_x",
-        1
+        "__tests__/template.marko_0_x 1"
       ];
       M._.w()
     </script>
@@ -67,8 +66,7 @@ container.querySelector("#increment")?.click();
         {
           x: 0
         }]),
-        "__tests__/template.marko_0_x",
-        1
+        "__tests__/template.marko_0_x 1"
       ];
       M._.w()
     </script>
@@ -113,8 +111,7 @@ container.querySelector("#increment")?.click();
         {
           x: 0
         }]),
-        "__tests__/template.marko_0_x",
-        1
+        "__tests__/template.marko_0_x 1"
       ];
       M._.w()
     </script>
@@ -155,8 +152,7 @@ UPDATE html/body/div/span/#text "1" => "2"
         {
           x: 0
         }]),
-        "__tests__/template.marko_0_x",
-        1
+        "__tests__/template.marko_0_x 1"
       ];
       M._.w()
     </script>

@@ -43,12 +43,7 @@
           ](_.g), _.c.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
           ](_.h), _.j),
-        "__tests__/tags/thing.marko_0_input_value",
-        5,
-        "__tests__/template.marko_5",
-        10,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/tags/thing.marko_0_input_value 5 __tests__/template.marko_5 10 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

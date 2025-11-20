@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button id=multiplier>increase multiplier (<!>1<!--M_*1 #text/1-->)</button><!--M_*1 #button/0--><button id=count>increase count</button><!--M_*1 #button/2--><div>0<!--M_*1 #text/3--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{count:0,multiplier:1}]),"__tests__/template.marko_0_count",1,"__tests__/template.marko_0_multiplier",1];M._.w()</script>
+  <button id=multiplier>increase multiplier (<!>1<!--M_*1 #text/1-->)</button><!--M_*1 #button/0--><button id=count>increase count</button><!--M_*1 #button/2--><div>0<!--M_*1 #text/3--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{count:0,multiplier:1}]),"__tests__/template.marko_0_count 1 __tests__/template.marko_0_multiplier 1"];M._.w()</script>
 ```
 
 # Render End
@@ -35,10 +35,7 @@
           count: 0,
           multiplier: 1
         }]),
-        "__tests__/template.marko_0_count",
-        1,
-        "__tests__/template.marko_0_multiplier",
-        1
+        "__tests__/template.marko_0_count 1 __tests__/template.marko_0_multiplier 1"
       ];
       M._.w()
     </script>

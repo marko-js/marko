@@ -1,6 +1,6 @@
 # Write
 ```html
-  <script>WALKER_RUNTIME("M")("_");M._.r=["__tests__/template.marko_0",1];M._.w()</script>
+  <script>WALKER_RUNTIME("M")("_");M._.r=["__tests__/template.marko_0 1"];M._.w()</script>
 ```
 
 # Render End
@@ -10,8 +10,7 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

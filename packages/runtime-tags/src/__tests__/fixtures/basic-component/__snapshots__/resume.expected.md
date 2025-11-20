@@ -16,8 +16,7 @@
         {
           clickCount: 0
         }]),
-        "__tests__/tags/counter.marko_0_clickCount",
-        2
+        "__tests__/tags/counter.marko_0_clickCount 2"
       ];
       M._.w()
     </script>
@@ -47,8 +46,7 @@ container.querySelector("button").click();
         {
           clickCount: 0
         }]),
-        "__tests__/tags/counter.marko_0_clickCount",
-        2
+        "__tests__/tags/counter.marko_0_clickCount 2"
       ];
       M._.w()
     </script>

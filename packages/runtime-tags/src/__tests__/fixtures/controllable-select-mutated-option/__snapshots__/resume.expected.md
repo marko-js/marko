@@ -70,10 +70,7 @@
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0_options",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_options 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -151,10 +148,7 @@ container.querySelector(".remove").click();
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0_options",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_options 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -231,10 +225,7 @@ container.querySelector(".remove").click();
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0_options",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_options 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -304,10 +295,7 @@ container.querySelector(".remove").click();
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0_options",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_options 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -383,10 +371,7 @@ container.querySelector(".add").click();
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0_options",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_options 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -467,10 +452,7 @@ container.querySelector(".add").click();
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0_options",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_options 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -555,10 +537,7 @@ container.querySelector(".add").click();
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0_options",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_options 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

@@ -20,8 +20,7 @@
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -60,8 +59,7 @@ input.dispatchEvent(new window.Event("input", {
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -104,8 +102,7 @@ input.dispatchEvent(new window.Event("input", {
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -148,8 +145,7 @@ input.dispatchEvent(new window.Event("input", {
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

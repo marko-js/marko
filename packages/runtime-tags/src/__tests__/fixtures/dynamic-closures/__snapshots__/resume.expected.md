@@ -30,8 +30,7 @@
           _: _.b,
           "ClosureSignalIndex:c": 1
         }], (_.d).add(_.e), _.d.add(_.f), _.c),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -75,8 +74,7 @@ container.querySelector("button").click();
           _: _.b,
           "ClosureSignalIndex:c": 1
         }], (_.d).add(_.e), _.d.add(_.f), _.c),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

@@ -25,10 +25,7 @@
         {
           _: _.a
         }]),
-        "__tests__/template.marko_0_show",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_show 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -67,10 +64,7 @@ container.querySelector("button.inc").click();
         {
           _: _.a
         }]),
-        "__tests__/template.marko_0_show",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_show 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -109,10 +103,7 @@ container.querySelector("button.toggle").click();
         {
           _: _.a
         }]),
-        "__tests__/template.marko_0_show",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_show 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -153,10 +144,7 @@ container.querySelector("button.inc").click();
         {
           _: _.a
         }]),
-        "__tests__/template.marko_0_show",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_show 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -193,10 +181,7 @@ container.querySelector("button.toggle").click();
         {
           _: _.a
         }]),
-        "__tests__/template.marko_0_show",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_show 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -239,10 +224,7 @@ container.querySelector("button.inc").click();
         {
           _: _.a
         }]),
-        "__tests__/template.marko_0_show",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_show 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>

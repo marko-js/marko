@@ -28,12 +28,7 @@
           ](_.e), _.c.baz = _._[
           "__tests__/template.marko_0/c"
           ](_.e), _.d),
-        "__tests__/template.marko_0_c",
-        1,
-        "__tests__/template.marko_0_b",
-        1,
-        "__tests__/template.marko_0_a",
-        1
+        "__tests__/template.marko_0_c 1 __tests__/template.marko_0_b 1 __tests__/template.marko_0_a 1"
       ];
       M._.w()
     </script>

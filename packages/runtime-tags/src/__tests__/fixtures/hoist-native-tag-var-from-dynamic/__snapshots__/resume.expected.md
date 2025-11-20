@@ -55,14 +55,7 @@
             ](_.c), (_.e).add(_.f), _.e.add(_.g), (_.h).add(_.i), _.h.add(_
           .j), (_.k).add(_.b), (_.l).add(_.m), _.l.add(_.n), _.k.add(_.c), (_
             .o).add(_.p), _.d),
-        "__tests__/template.marko_2_$hoisted_el2",
-        6, 10,
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_$hoisted_el3",
-        1,
-        "__tests__/template.marko_0_$hoisted_el",
-        1
+        "__tests__/template.marko_2_$hoisted_el2 6 10 __tests__/template.marko_0 1 __tests__/template.marko_0_$hoisted_el3 1 __tests__/template.marko_0_$hoisted_el 1"
       ];
       M._.w()
     </script>

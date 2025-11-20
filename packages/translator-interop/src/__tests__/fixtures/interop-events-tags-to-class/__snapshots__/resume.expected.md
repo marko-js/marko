@@ -42,7 +42,7 @@
           "__tests__/components/class-counter.marko"
         ]
       });
-      M._.r.push("$compat_setScope", 2);
+      M._.r.push("$compat_setScope 2");
       M._.w()
     </script>
   </body>
@@ -104,7 +104,7 @@ container.querySelector("#class-api").click();
           "__tests__/components/class-counter.marko"
         ]
       });
-      M._.r.push("$compat_setScope", 2);
+      M._.r.push("$compat_setScope 2");
       M._.w()
     </script>
   </body>
@@ -164,7 +164,7 @@ container.querySelector("#class-api").click();
           "__tests__/components/class-counter.marko"
         ]
       });
-      M._.r.push("$compat_setScope", 2);
+      M._.r.push("$compat_setScope 2");
       M._.w()
     </script>
   </body>

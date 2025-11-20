@@ -24,8 +24,7 @@
             "ConditionalRenderer:#text/1": "__tests__/template.marko_1_content"
           }
         }, _.a]),
-        "__tests__/template.marko_0_selected",
-        1
+        "__tests__/template.marko_0_selected 1"
       ];
       M._.w()
     </script>
@@ -69,8 +68,7 @@ container.querySelector("button").click();
             "ConditionalRenderer:#text/1": "__tests__/template.marko_1_content"
           }
         }, _.a]),
-        "__tests__/template.marko_0_selected",
-        1
+        "__tests__/template.marko_0_selected 1"
       ];
       M._.w()
     </script>
@@ -114,8 +112,7 @@ container.querySelector("button").click();
             "ConditionalRenderer:#text/1": "__tests__/template.marko_1_content"
           }
         }, _.a]),
-        "__tests__/template.marko_0_selected",
-        1
+        "__tests__/template.marko_0_selected 1"
       ];
       M._.w()
     </script>
@@ -159,8 +156,7 @@ container.querySelector("button").click();
             "ConditionalRenderer:#text/1": "__tests__/template.marko_1_content"
           }
         }, _.a]),
-        "__tests__/template.marko_0_selected",
-        1
+        "__tests__/template.marko_0_selected 1"
       ];
       M._.w()
     </script>

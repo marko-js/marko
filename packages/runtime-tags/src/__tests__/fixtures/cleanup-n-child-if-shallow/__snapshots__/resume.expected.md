@@ -35,10 +35,7 @@
         }], _.b.write = _._[
           "__tests__/template.marko_1/write"
           ](_.d), _.c),
-        "__tests__/tags/child.marko_0_input",
-        3,
-        "__tests__/template.marko_0_show",
-        1
+        "__tests__/tags/child.marko_0_input 3 __tests__/template.marko_0_show 1"
       ];
       M._.w()
     </script>
@@ -82,10 +79,7 @@ container.querySelector("button").click();
         }], _.b.write = _._[
           "__tests__/template.marko_1/write"
           ](_.d), _.c),
-        "__tests__/tags/child.marko_0_input",
-        3,
-        "__tests__/template.marko_0_show",
-        1
+        "__tests__/tags/child.marko_0_input 3 __tests__/template.marko_0_show 1"
       ];
       M._.w()
     </script>
@@ -144,10 +138,7 @@ container.querySelector("button").click();
         }], _.b.write = _._[
           "__tests__/template.marko_1/write"
           ](_.d), _.c),
-        "__tests__/tags/child.marko_0_input",
-        3,
-        "__tests__/template.marko_0_show",
-        1
+        "__tests__/tags/child.marko_0_input 3 __tests__/template.marko_0_show 1"
       ];
       M._.w()
     </script>
@@ -193,10 +184,7 @@ container.querySelector("button").click();
         }], _.b.write = _._[
           "__tests__/template.marko_1/write"
           ](_.d), _.c),
-        "__tests__/tags/child.marko_0_input",
-        3,
-        "__tests__/template.marko_0_show",
-        1
+        "__tests__/tags/child.marko_0_input 3 __tests__/template.marko_0_show 1"
       ];
       M._.w()
     </script>

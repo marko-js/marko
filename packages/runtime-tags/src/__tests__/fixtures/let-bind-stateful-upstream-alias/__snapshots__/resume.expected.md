@@ -37,8 +37,7 @@
           ](_.b), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_store/var"
           ](_.a), _.c),
-        "__tests__/template.marko_0_store_clear",
-        1
+        "__tests__/template.marko_0_store_clear 1"
       ];
       M._.w()
     </script>
@@ -81,8 +80,7 @@ container.querySelector("button").click();
           ](_.b), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_store/var"
           ](_.a), _.c),
-        "__tests__/template.marko_0_store_clear",
-        1
+        "__tests__/template.marko_0_store_clear 1"
       ];
       M._.w()
     </script>

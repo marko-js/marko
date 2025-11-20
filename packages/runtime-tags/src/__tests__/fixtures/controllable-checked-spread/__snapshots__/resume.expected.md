@@ -24,8 +24,7 @@
           ._[
             "__tests__/template.marko_0/checkedChange"
             ](_.d), _.c),
-        "__tests__/tags/checkbox.marko_0_input",
-        2
+        "__tests__/tags/checkbox.marko_0_input 2"
       ];
       M._.w()
     </script>
@@ -64,8 +63,7 @@ container.querySelector("input").click();
           ._[
             "__tests__/template.marko_0/checkedChange"
             ](_.d), _.c),
-        "__tests__/tags/checkbox.marko_0_input",
-        2
+        "__tests__/tags/checkbox.marko_0_input 2"
       ];
       M._.w()
     </script>
@@ -107,8 +105,7 @@ container.querySelector("input").click();
           ._[
             "__tests__/template.marko_0/checkedChange"
             ](_.d), _.c),
-        "__tests__/tags/checkbox.marko_0_input",
-        2
+        "__tests__/tags/checkbox.marko_0_input 2"
       ];
       M._.w()
     </script>
@@ -151,8 +148,7 @@ container.querySelector("input").click();
           ._[
             "__tests__/template.marko_0/checkedChange"
             ](_.d), _.c),
-        "__tests__/tags/checkbox.marko_0_input",
-        2
+        "__tests__/tags/checkbox.marko_0_input 2"
       ];
       M._.w()
     </script>

@@ -35,8 +35,7 @@
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -90,8 +89,7 @@ select.dispatchEvent(new window.Event("input", {
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

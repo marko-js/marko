@@ -24,10 +24,7 @@
           "ControlledHandler:#input/2"] = _.a.$valueChange = _._[
           "__tests__/template.marko_0/valueChange2"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -65,10 +62,7 @@ container.querySelector("button").click();
           "ControlledHandler:#input/2"] = _.a.$valueChange = _._[
           "__tests__/template.marko_0/valueChange2"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -106,10 +100,7 @@ container.querySelector("button").click();
           "ControlledHandler:#input/2"] = _.a.$valueChange = _._[
           "__tests__/template.marko_0/valueChange2"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>

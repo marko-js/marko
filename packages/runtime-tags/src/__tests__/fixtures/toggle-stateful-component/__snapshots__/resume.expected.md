@@ -22,8 +22,7 @@
         }], _.a.onCount = _.b.input_onCount = _._[
           "__tests__/template.marko_0/onCount"
           ](_.a), _.c),
-        "__tests__/tags/counter.marko_0_input_onCount_clickCount",
-        3
+        "__tests__/tags/counter.marko_0_input_onCount_clickCount 3"
       ];
       M._.w()
     </script>
@@ -50,8 +49,7 @@ container.querySelector("button").click();
         }], _.a.onCount = _.b.input_onCount = _._[
           "__tests__/template.marko_0/onCount"
           ](_.a), _.c),
-        "__tests__/tags/counter.marko_0_input_onCount_clickCount",
-        3
+        "__tests__/tags/counter.marko_0_input_onCount_clickCount 3"
       ];
       M._.w()
     </script>

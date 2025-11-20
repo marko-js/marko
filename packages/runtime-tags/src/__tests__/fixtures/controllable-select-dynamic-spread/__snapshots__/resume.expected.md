@@ -42,8 +42,7 @@
         {}], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.c), _.b),
-        "__tests__/template.marko_1",
-        3, "_dynamicTagScript", 2
+        "__tests__/template.marko_1 3 _dynamicTagScript 2"
       ];
       M._.w()
     </script>
@@ -104,8 +103,7 @@ select.dispatchEvent(new window.Event("input", {
         {}], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.c), _.b),
-        "__tests__/template.marko_1",
-        3, "_dynamicTagScript", 2
+        "__tests__/template.marko_1 3 _dynamicTagScript 2"
       ];
       M._.w()
     </script>

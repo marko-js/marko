@@ -33,10 +33,7 @@
           count: 0,
           "#ClosestBranchId": 3
         }]),
-        "__tests__/tags/counter.marko_0_count",
-        4,
-        "__tests__/template.marko_0_tagName",
-        1
+        "__tests__/tags/counter.marko_0_count 4 __tests__/template.marko_0_tagName 1"
       ];
       M._.w()
     </script>
@@ -87,10 +84,7 @@ container.querySelector("#count").click();
           count: 0,
           "#ClosestBranchId": 3
         }]),
-        "__tests__/tags/counter.marko_0_count",
-        4,
-        "__tests__/template.marko_0_tagName",
-        1
+        "__tests__/tags/counter.marko_0_count 4 __tests__/template.marko_0_tagName 1"
       ];
       M._.w()
     </script>
@@ -137,10 +131,7 @@ container.querySelector("#changeTag").click();
           count: 0,
           "#ClosestBranchId": 3
         }]),
-        "__tests__/tags/counter.marko_0_count",
-        4,
-        "__tests__/template.marko_0_tagName",
-        1
+        "__tests__/tags/counter.marko_0_count 4 __tests__/template.marko_0_tagName 1"
       ];
       M._.w()
     </script>
@@ -190,10 +181,7 @@ container.querySelector("#count").click();
           count: 0,
           "#ClosestBranchId": 3
         }]),
-        "__tests__/tags/counter.marko_0_count",
-        4,
-        "__tests__/template.marko_0_tagName",
-        1
+        "__tests__/tags/counter.marko_0_count 4 __tests__/template.marko_0_tagName 1"
       ];
       M._.w()
     </script>

@@ -13,8 +13,7 @@
             "#childScope/0": _.b = {}
           }
         }, _.a, _.b]),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -38,8 +37,7 @@
             "#childScope/0": _.b = {}
           }
         }, _.a, _.b]),
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

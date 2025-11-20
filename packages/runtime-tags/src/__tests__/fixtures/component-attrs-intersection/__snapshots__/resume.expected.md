@@ -19,8 +19,7 @@
             {}
           }
         }, _.a]),
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -53,8 +52,7 @@ container.querySelector("button").click();
             {}
           }
         }, _.a]),
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>

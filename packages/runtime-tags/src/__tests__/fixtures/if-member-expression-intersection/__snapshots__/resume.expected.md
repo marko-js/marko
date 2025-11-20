@@ -28,8 +28,7 @@
           text_length: 0,
           id: "sM_2"
         }]),
-        "__tests__/tags/child.marko_0_id",
-        2, 3
+        "__tests__/tags/child.marko_0_id 2 3"
       ];
       M._.w()
     </script>
@@ -74,8 +73,7 @@
           text_length: 0,
           id: "sM_2"
         }]),
-        "__tests__/tags/child.marko_0_id",
-        2, 3
+        "__tests__/tags/child.marko_0_id 2 3"
       ];
       M._.w()
     </script>

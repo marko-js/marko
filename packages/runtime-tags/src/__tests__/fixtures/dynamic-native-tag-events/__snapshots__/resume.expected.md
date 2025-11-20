@@ -23,7 +23,7 @@
         "#Renderer": "span"
       }], _.a.click = _._[
         "__tests__/template.marko_0/onClick"
-        ](_.c), _.b), "_dynamicTagScript", 2];
+        ](_.c), _.b), "_dynamicTagScript 2"];
       M._.w()
     </script>
   </body>
@@ -61,7 +61,7 @@ container.querySelector(".A").click();
         "#Renderer": "span"
       }], _.a.click = _._[
         "__tests__/template.marko_0/onClick"
-        ](_.c), _.b), "_dynamicTagScript", 2];
+        ](_.c), _.b), "_dynamicTagScript 2"];
       M._.w()
     </script>
   </body>
@@ -102,7 +102,7 @@ container.querySelector(".A").click();
         "#Renderer": "span"
       }], _.a.click = _._[
         "__tests__/template.marko_0/onClick"
-        ](_.c), _.b), "_dynamicTagScript", 2];
+        ](_.c), _.b), "_dynamicTagScript 2"];
       M._.w()
     </script>
   </body>

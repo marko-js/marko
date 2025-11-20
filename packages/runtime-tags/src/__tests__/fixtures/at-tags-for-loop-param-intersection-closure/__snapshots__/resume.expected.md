@@ -34,8 +34,7 @@
           _: _.a,
           "ClosureSignalIndex:mult": 0
         }], (_.c).add(_.d), _.c.add(_.e), _.c.add(_.f), _.b),
-        "__tests__/template.marko_0_mult",
-        1
+        "__tests__/template.marko_0_mult 1"
       ];
       M._.w()
     </script>
@@ -83,8 +82,7 @@ container.querySelector("button").click();
           _: _.a,
           "ClosureSignalIndex:mult": 0
         }], (_.c).add(_.d), _.c.add(_.e), _.c.add(_.f), _.b),
-        "__tests__/template.marko_0_mult",
-        1
+        "__tests__/template.marko_0_mult 1"
       ];
       M._.w()
     </script>
@@ -139,8 +137,7 @@ container.querySelector("button").click();
           _: _.a,
           "ClosureSignalIndex:mult": 0
         }], (_.c).add(_.d), _.c.add(_.e), _.c.add(_.f), _.b),
-        "__tests__/template.marko_0_mult",
-        1
+        "__tests__/template.marko_0_mult 1"
       ];
       M._.w()
     </script>
@@ -195,8 +192,7 @@ container.querySelector("button").click();
           _: _.a,
           "ClosureSignalIndex:mult": 0
         }], (_.c).add(_.d), _.c.add(_.e), _.c.add(_.f), _.b),
-        "__tests__/template.marko_0_mult",
-        1
+        "__tests__/template.marko_0_mult 1"
       ];
       M._.w()
     </script>

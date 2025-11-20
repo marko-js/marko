@@ -113,10 +113,7 @@
             ](_.n), (_.q).add(_.b), _.q.add(_.d), (_.r).add(_.f), _.r.add(_
           .h), (_.s).add(_.t), (_.u).add(_.j), _.u.add(_.l), _.s.add(_.v), (_
             .w).add(_.n), _.p),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_$hoisted_setHtml",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_$hoisted_setHtml 1"
       ];
       M._.w()
     </script>

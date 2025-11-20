@@ -42,10 +42,8 @@
           baseCount: 0,
           _: _.a,
           "ClosureSignalIndex:multiplier": 0
-        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]), "$compat_setScope",
-        3,
-        "__tests__/template.marko_1_multiplier",
-        3
+        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]),
+        "$compat_setScope 3 __tests__/template.marko_1_multiplier 3"
       ];
       M._.w();
       $MC = (window.$MC || []).concat(
@@ -75,7 +73,7 @@
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push("$compat_setScope", 2);
+      M._.r.push("$compat_setScope 2");
       M._.w()
     </script>
   </body>
@@ -145,10 +143,8 @@ container.querySelector("#tags").click();
           baseCount: 0,
           _: _.a,
           "ClosureSignalIndex:multiplier": 0
-        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]), "$compat_setScope",
-        3,
-        "__tests__/template.marko_1_multiplier",
-        3
+        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]),
+        "$compat_setScope 3 __tests__/template.marko_1_multiplier 3"
       ];
       M._.w();
       $MC = (window.$MC || []).concat(
@@ -178,7 +174,7 @@ container.querySelector("#tags").click();
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push("$compat_setScope", 2);
+      M._.r.push("$compat_setScope 2");
       M._.w()
     </script>
   </body>
@@ -237,10 +233,8 @@ container.querySelector("#class").click();
           baseCount: 0,
           _: _.a,
           "ClosureSignalIndex:multiplier": 0
-        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]), "$compat_setScope",
-        3,
-        "__tests__/template.marko_1_multiplier",
-        3
+        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]),
+        "$compat_setScope 3 __tests__/template.marko_1_multiplier 3"
       ];
       M._.w();
       $MC = (window.$MC || []).concat(
@@ -270,7 +264,7 @@ container.querySelector("#class").click();
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push("$compat_setScope", 2);
+      M._.r.push("$compat_setScope 2");
       M._.w()
     </script>
   </body>
@@ -331,10 +325,8 @@ container.querySelector("#tags").click();
           baseCount: 0,
           _: _.a,
           "ClosureSignalIndex:multiplier": 0
-        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]), "$compat_setScope",
-        3,
-        "__tests__/template.marko_1_multiplier",
-        3
+        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]),
+        "$compat_setScope 3 __tests__/template.marko_1_multiplier 3"
       ];
       M._.w();
       $MC = (window.$MC || []).concat(
@@ -364,7 +356,7 @@ container.querySelector("#tags").click();
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push("$compat_setScope", 2);
+      M._.r.push("$compat_setScope 2");
       M._.w()
     </script>
   </body>
@@ -424,10 +416,8 @@ container.querySelector("#class").click();
           baseCount: 0,
           _: _.a,
           "ClosureSignalIndex:multiplier": 0
-        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]), "$compat_setScope",
-        3,
-        "__tests__/template.marko_1_multiplier",
-        3
+        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]),
+        "$compat_setScope 3 __tests__/template.marko_1_multiplier 3"
       ];
       M._.w();
       $MC = (window.$MC || []).concat(
@@ -457,7 +447,7 @@ container.querySelector("#class").click();
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push("$compat_setScope", 2);
+      M._.r.push("$compat_setScope 2");
       M._.w()
     </script>
   </body>
@@ -518,10 +508,8 @@ container.querySelector("#tags").click();
           baseCount: 0,
           _: _.a,
           "ClosureSignalIndex:multiplier": 0
-        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]), "$compat_setScope",
-        3,
-        "__tests__/template.marko_1_multiplier",
-        3
+        }], (_.c).add(_.d), _.b), _ =&gt; (_.e = [-3, _.a]),
+        "$compat_setScope 3 __tests__/template.marko_1_multiplier 3"
       ];
       M._.w();
       $MC = (window.$MC || []).concat(
@@ -551,7 +539,7 @@ container.querySelector("#tags").click();
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push("$compat_setScope", 2);
+      M._.r.push("$compat_setScope 2");
       M._.w()
     </script>
   </body>

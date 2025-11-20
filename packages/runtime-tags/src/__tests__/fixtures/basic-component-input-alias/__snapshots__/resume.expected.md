@@ -16,8 +16,7 @@
         }, _.a], _.a.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.c), _.b),
-        "__tests__/tags/my-button.marko_0_onClick",
-        2
+        "__tests__/tags/my-button.marko_0_onClick 2"
       ];
       M._.w()
     </script>
@@ -47,8 +46,7 @@ container.querySelector("button").click();
         }, _.a], _.a.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.c), _.b),
-        "__tests__/tags/my-button.marko_0_onClick",
-        2
+        "__tests__/tags/my-button.marko_0_onClick 2"
       ];
       M._.w()
     </script>
@@ -82,8 +80,7 @@ container.querySelector("button").click();
         }, _.a], _.a.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.c), _.b),
-        "__tests__/tags/my-button.marko_0_onClick",
-        2
+        "__tests__/tags/my-button.marko_0_onClick 2"
       ];
       M._.w()
     </script>

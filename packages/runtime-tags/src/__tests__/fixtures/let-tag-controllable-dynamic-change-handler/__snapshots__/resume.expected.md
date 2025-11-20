@@ -28,10 +28,7 @@
         }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
           "__tests__/template.marko_0/yChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_y",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
       ];
       M._.w()
     </script>
@@ -73,10 +70,7 @@ container.querySelector("#inc").click();
         }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
           "__tests__/template.marko_0/yChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_y",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
       ];
       M._.w()
     </script>
@@ -123,10 +117,7 @@ container.querySelector("#inc").click();
         }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
           "__tests__/template.marko_0/yChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_y",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
       ];
       M._.w()
     </script>
@@ -173,10 +164,7 @@ container.querySelector("#toggle").click();
         }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
           "__tests__/template.marko_0/yChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_y",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
       ];
       M._.w()
     </script>
@@ -218,10 +206,7 @@ container.querySelector("#inc").click();
         }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
           "__tests__/template.marko_0/yChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_y",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
       ];
       M._.w()
     </script>
@@ -267,10 +252,7 @@ container.querySelector("#inc").click();
         }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
           "__tests__/template.marko_0/yChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0",
-        1,
-        "__tests__/template.marko_0_y",
-        1
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
       ];
       M._.w()
     </script>

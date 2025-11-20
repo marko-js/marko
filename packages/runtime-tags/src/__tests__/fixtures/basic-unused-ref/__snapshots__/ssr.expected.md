@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div><button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{clickCount:0}]),"__tests__/template.marko_0_clickCount",1];M._.w()</script>
+  <div><button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{clickCount:0}]),"__tests__/template.marko_0_clickCount 1"];M._.w()</script>
 ```
 
 # Render End
@@ -21,8 +21,7 @@
         {
           clickCount: 0
         }]),
-        "__tests__/template.marko_0_clickCount",
-        1
+        "__tests__/template.marko_0_clickCount 1"
       ];
       M._.w()
     </script>

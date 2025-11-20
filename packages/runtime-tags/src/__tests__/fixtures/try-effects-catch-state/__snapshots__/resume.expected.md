@@ -29,8 +29,7 @@
         }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_1_clickCount",
-        2
+        "__tests__/template.marko_1_clickCount 2"
       ];
       M._.w()
     </script>
@@ -78,8 +77,7 @@ container.querySelector("button").click();
         }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_1_clickCount",
-        2
+        "__tests__/template.marko_1_clickCount 2"
       ];
       M._.w()
     </script>
@@ -119,8 +117,7 @@ container.querySelector("button").click();
         }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_1_clickCount",
-        2
+        "__tests__/template.marko_1_clickCount 2"
       ];
       M._.w()
     </script>

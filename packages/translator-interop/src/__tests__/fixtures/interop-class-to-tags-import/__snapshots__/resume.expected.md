@@ -22,9 +22,8 @@
         {
           m5c: "s0-1",
           count: 0
-        }]), "$compat_setScope", 1,
-        "__tests__/components/tags-counter.marko_0_count",
-        1
+        }]),
+        "$compat_setScope 1 __tests__/components/tags-counter.marko_0_count 1"
       ];
       M.s.w();
       $MC = (window.$MC || []).concat(
@@ -88,9 +87,8 @@ container.querySelector("#tags").click();
         {
           m5c: "s0-1",
           count: 0
-        }]), "$compat_setScope", 1,
-        "__tests__/components/tags-counter.marko_0_count",
-        1
+        }]),
+        "$compat_setScope 1 __tests__/components/tags-counter.marko_0_count 1"
       ];
       M.s.w();
       $MC = (window.$MC || []).concat(
@@ -143,9 +141,8 @@ container.querySelector("#class").click();
         {
           m5c: "s0-1",
           count: 0
-        }]), "$compat_setScope", 1,
-        "__tests__/components/tags-counter.marko_0_count",
-        1
+        }]),
+        "$compat_setScope 1 __tests__/components/tags-counter.marko_0_count 1"
       ];
       M.s.w();
       $MC = (window.$MC || []).concat(
@@ -199,9 +196,8 @@ container.querySelector("#tags").click();
         {
           m5c: "s0-1",
           count: 0
-        }]), "$compat_setScope", 1,
-        "__tests__/components/tags-counter.marko_0_count",
-        1
+        }]),
+        "$compat_setScope 1 __tests__/components/tags-counter.marko_0_count 1"
       ];
       M.s.w();
       $MC = (window.$MC || []).concat(
@@ -254,9 +250,8 @@ container.querySelector("#class").click();
         {
           m5c: "s0-1",
           count: 0
-        }]), "$compat_setScope", 1,
-        "__tests__/components/tags-counter.marko_0_count",
-        1
+        }]),
+        "$compat_setScope 1 __tests__/components/tags-counter.marko_0_count 1"
       ];
       M.s.w();
       $MC = (window.$MC || []).concat(
@@ -310,9 +305,8 @@ container.querySelector("#tags").click();
         {
           m5c: "s0-1",
           count: 0
-        }]), "$compat_setScope", 1,
-        "__tests__/components/tags-counter.marko_0_count",
-        1
+        }]),
+        "$compat_setScope 1 __tests__/components/tags-counter.marko_0_count 1"
       ];
       M.s.w();
       $MC = (window.$MC || []).concat(

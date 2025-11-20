@@ -92,8 +92,7 @@
             "ClosureSignalIndex:count": 1
           }], (_.c).add(_.d), _.c.add(_.e), _.c.add(_.f), _.c.add(_.g), _.c
           .add(_.h), _.c.add(_.i), _.b),
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -199,8 +198,7 @@ container.querySelector("button")?.click();
             "ClosureSignalIndex:count": 1
           }], (_.c).add(_.d), _.c.add(_.e), _.c.add(_.f), _.c.add(_.g), _.c
           .add(_.h), _.c.add(_.i), _.b),
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>
@@ -313,8 +311,7 @@ container.querySelector("button")?.click();
             "ClosureSignalIndex:count": 1
           }], (_.c).add(_.d), _.c.add(_.e), _.c.add(_.f), _.c.add(_.g), _.c
           .add(_.h), _.c.add(_.i), _.b),
-        "__tests__/template.marko_0_count",
-        1
+        "__tests__/template.marko_0_count 1"
       ];
       M._.w()
     </script>

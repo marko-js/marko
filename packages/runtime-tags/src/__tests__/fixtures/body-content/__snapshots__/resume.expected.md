@@ -26,8 +26,7 @@
         }], _.a.click = _.b.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.d), (_.f).add(_.g), _.e),
-        "__tests__/tags/FancyButton.marko_0_attrs",
-        2
+        "__tests__/tags/FancyButton.marko_0_attrs 2"
       ];
       M._.w()
     </script>
@@ -71,8 +70,7 @@ container.querySelector("button").click();
         }], _.a.click = _.b.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.d), (_.f).add(_.g), _.e),
-        "__tests__/tags/FancyButton.marko_0_attrs",
-        2
+        "__tests__/tags/FancyButton.marko_0_attrs 2"
       ];
       M._.w()
     </script>
@@ -116,8 +114,7 @@ container.querySelector("button").click();
         }], _.a.click = _.b.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.d), (_.f).add(_.g), _.e),
-        "__tests__/tags/FancyButton.marko_0_attrs",
-        2
+        "__tests__/tags/FancyButton.marko_0_attrs 2"
       ];
       M._.w()
     </script>
@@ -161,8 +158,7 @@ container.querySelector("button").click();
         }], _.a.click = _.b.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.d), (_.f).add(_.g), _.e),
-        "__tests__/tags/FancyButton.marko_0_attrs",
-        2
+        "__tests__/tags/FancyButton.marko_0_attrs 2"
       ];
       M._.w()
     </script>

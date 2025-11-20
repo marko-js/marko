@@ -1,6 +1,6 @@
 # Write
 ```html
-  <form><select><option value=1 selected>1<!--M_*2 #text/1--></option><!--M_*2 #option/0--><option value=2>2<!--M_*3 #text/1--></option><!--M_*3 #option/0--><option value=3>3<!--M_*4 #text/1--></option><!--M_*4 #option/0--><!--M_}1 #select/0 4 3 2--></select><button type=reset>reset</button></form><div>1<!--M_*1 #text/1--></div><button class=remove>Remove option</button><!--M_*1 #button/2--><button class=add>Add option</button><!--M_*1 #button/3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.a={"ControlledType:#select/0":3,"ControlledValue:#select/0":1,options:[1,2,3],value:1},{"#LoopKey":1},{"#LoopKey":2},{"#LoopKey":3}],_.a["ControlledHandler:#select/0"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",1];M._.w()</script>
+  <form><select><option value=1 selected>1<!--M_*2 #text/1--></option><!--M_*2 #option/0--><option value=2>2<!--M_*3 #text/1--></option><!--M_*3 #option/0--><option value=3>3<!--M_*4 #text/1--></option><!--M_*4 #option/0--><!--M_}1 #select/0 4 3 2--></select><button type=reset>reset</button></form><div>1<!--M_*1 #text/1--></div><button class=remove>Remove option</button><!--M_*1 #button/2--><button class=add>Add option</button><!--M_*1 #button/3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.a={"ControlledType:#select/0":3,"ControlledValue:#select/0":1,options:[1,2,3],value:1},{"#LoopKey":1},{"#LoopKey":2},{"#LoopKey":3}],_.a["ControlledHandler:#select/0"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),"__tests__/template.marko_0_options 1 __tests__/template.marko_0 1"];M._.w()</script>
 ```
 
 # Render End
@@ -75,10 +75,7 @@
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
-        "__tests__/template.marko_0_options",
-        1,
-        "__tests__/template.marko_0",
-        1
+        "__tests__/template.marko_0_options 1 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

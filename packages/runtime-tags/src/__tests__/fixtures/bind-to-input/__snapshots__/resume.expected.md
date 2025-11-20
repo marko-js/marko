@@ -38,8 +38,7 @@
         }], _.a.$countChange = _.a["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
           ](_.b), (_.e).add(_.f), _.e.add(_.g), _.d),
-        "__tests__/tags/counter.marko_0_x",
-        2, 4
+        "__tests__/tags/counter.marko_0_x 2 4"
       ];
       M._.w()
     </script>
@@ -91,8 +90,7 @@ container.querySelector("#controlled").click();
         }], _.a.$countChange = _.a["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
           ](_.b), (_.e).add(_.f), _.e.add(_.g), _.d),
-        "__tests__/tags/counter.marko_0_x",
-        2, 4
+        "__tests__/tags/counter.marko_0_x 2 4"
       ];
       M._.w()
     </script>
@@ -150,8 +148,7 @@ container.querySelector("#uncontrolled").click();
         }], _.a.$countChange = _.a["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
           ](_.b), (_.e).add(_.f), _.e.add(_.g), _.d),
-        "__tests__/tags/counter.marko_0_x",
-        2, 4
+        "__tests__/tags/counter.marko_0_x 2 4"
       ];
       M._.w()
     </script>
@@ -207,8 +204,7 @@ container.querySelector("#controlled").click();
         }], _.a.$countChange = _.a["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
           ](_.b), (_.e).add(_.f), _.e.add(_.g), _.d),
-        "__tests__/tags/counter.marko_0_x",
-        2, 4
+        "__tests__/tags/counter.marko_0_x 2 4"
       ];
       M._.w()
     </script>
@@ -266,8 +262,7 @@ container.querySelector("#uncontrolled").click();
         }], _.a.$countChange = _.a["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
           ](_.b), (_.e).add(_.f), _.e.add(_.g), _.d),
-        "__tests__/tags/counter.marko_0_x",
-        2, 4
+        "__tests__/tags/counter.marko_0_x 2 4"
       ];
       M._.w()
     </script>
@@ -323,8 +318,7 @@ container.querySelector("#controlled").click();
         }], _.a.$countChange = _.a["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
           ](_.b), (_.e).add(_.f), _.e.add(_.g), _.d),
-        "__tests__/tags/counter.marko_0_x",
-        2, 4
+        "__tests__/tags/counter.marko_0_x 2 4"
       ];
       M._.w()
     </script>
@@ -382,8 +376,7 @@ container.querySelector("#uncontrolled").click();
         }], _.a.$countChange = _.a["TagVariableChange:x"] = _._[
           "__tests__/template.marko_0/countChange"
           ](_.b), (_.e).add(_.f), _.e.add(_.g), _.d),
-        "__tests__/tags/counter.marko_0_x",
-        2, 4
+        "__tests__/tags/counter.marko_0_x 2 4"
       ];
       M._.w()
     </script>

@@ -1,6 +1,6 @@
 # Write
 ```html
-  <input disabled><!--M_*1 #input/0--><button>enable<!--M_*1 #text/2--></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{disabled:!0}]),"__tests__/template.marko_0_disabled",1];M._.w()</script>
+  <input disabled><!--M_*1 #input/0--><button>enable<!--M_*1 #text/2--></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{disabled:!0}]),"__tests__/template.marko_0_disabled 1"];M._.w()</script>
 ```
 
 # Render End
@@ -23,8 +23,7 @@
         {
           disabled: !0
         }]),
-        "__tests__/template.marko_0_disabled",
-        1
+        "__tests__/template.marko_0_disabled 1"
       ];
       M._.w()
     </script>
