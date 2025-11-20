@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.0.114
+
+### Patch Changes
+
+- [#2964](https://github.com/marko-js/marko/pull/2964) [`412e371`](https://github.com/marko-js/marko/commit/412e371cf24e23f992c19aee8c9706e2085f4f47) Thanks [@rturnq](https://github.com/rturnq)! - Unify inline placeholder and await placeholders
+
+- [#2966](https://github.com/marko-js/marko/pull/2966) [`8e1a65e`](https://github.com/marko-js/marko/commit/8e1a65efcc586226424ad05973516f88f2501c98) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow await tag params to be bundled separately from the await tag content.
+
+- [#2963](https://github.com/marko-js/marko/pull/2963) [`0c4154c`](https://github.com/marko-js/marko/commit/0c4154c93bd75f71b059a75f353052f79a7b6055) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Encode resume effects as a string to reduce HTML bytes and fix browser compatibility issue with large effect lists.
+
 ## 6.0.113
 
 ### Patch Changes
