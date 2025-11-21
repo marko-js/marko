@@ -1,10 +1,11 @@
 import { resolveAfter } from "../../utils/resolve";
 let/value=0
-script -- value = 1
+script -- await resolveAfter(1); value = 1
 div#outside -- ${value}
 try
   @placeholder -- loading...
-  await|value|=resolveAfter(value, 10)
+  await|value|=resolveAfter(value, 2)
     div#inside -- ${value}
-    script -- document.querySelector('#inside')!.textContent += ` effect ran ${value}`
-    script -- document.querySelector('#outside')!.textContent += ` effect ran`
+    script -- $log().textContent += `\nsetup effect ran`
+    script -- $log().textContent += `\neffect ran value=${value}`
+pre/$log

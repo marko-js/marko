@@ -5,6 +5,7 @@
 >
   0
 </div>
+<pre />
 ```
 
 
@@ -13,8 +14,10 @@
 <div
   id="outside"
 >
-  1
+  0
 </div>
+loading...
+<pre />
 ```
 
 
@@ -26,6 +29,7 @@
   1
 </div>
 loading...
+<pre />
 ```
 
 
@@ -34,11 +38,16 @@ loading...
 <div
   id="outside"
 >
-  1 effect ran
+  1
 </div>
 <div
   id="inside"
 >
-  1 effect ran 1
+  1
 </div>
+<pre>
+  
+effect ran value=1
+setup effect ran
+</pre>
 ```

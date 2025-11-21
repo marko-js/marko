@@ -4,7 +4,7 @@ import { enableBranches } from "./resume";
 import type { Signal, SignalFn } from "./signals";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
-type PendingRender = {
+export type PendingRender = {
   ___key: number;
   ___scope: Scope;
   ___signal: Signal<any>;
@@ -13,6 +13,7 @@ type PendingRender = {
 
 let pendingRenders: PendingRender[] = [];
 let pendingRendersLookup = new Map<number, PendingRender>();
+let asyncRendersLookup: typeof pendingRendersLookup | undefined | 0;
 export const caughtError = new WeakSet<unknown[]>();
 export const placeholderShown = new WeakSet<unknown[]>();
 export let pendingEffects: unknown[] = [];
@@ -28,28 +29,32 @@ export function queueRender<T>(
   scopeKey = scope[AccessorProp.Id],
 ) {
   const key = scopeKey * scopeKeyOffset + signalKey;
-  const existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
-  if (existingRender) {
-    existingRender.___value = value;
+  let render = signalKey >= 0 && pendingRendersLookup.get(key);
+  if (render) {
+    render.___value = value;
   } else {
-    const render: PendingRender = {
-      ___key: key,
-      ___scope: scope,
-      ___signal: signal,
-      ___value: value,
-    };
-    let i = pendingRenders.push(render) - 1;
-    while (i) {
-      const parentIndex = (i - 1) >> 1;
-      const parent = pendingRenders[parentIndex];
-      if (key - parent.___key >= 0) break;
-      pendingRenders[i] = parent;
-      i = parentIndex;
-    }
-
+    queuePendingRender(
+      (render = {
+        ___key: key,
+        ___scope: scope,
+        ___signal: signal,
+        ___value: value,
+      }),
+    );
     signalKey >= 0 && pendingRendersLookup.set(key, render);
-    pendingRenders[i] = render;
   }
+}
+
+export function queuePendingRender(render: PendingRender) {
+  let i = pendingRenders.push(render) - 1;
+  while (i) {
+    const parentIndex = (i - 1) >> 1;
+    const parent = pendingRenders[parentIndex];
+    if (render.___key - parent.___key >= 0) break;
+    pendingRenders[i] = parent;
+    i = parentIndex;
+  }
+  pendingRenders[i] = render;
 }
 
 export function queueEffect<S extends Scope, T extends ExecFn<S>>(
@@ -61,24 +66,26 @@ export function queueEffect<S extends Scope, T extends ExecFn<S>>(
 
 export function run() {
   const effects = pendingEffects;
+  asyncRendersLookup = new Map();
   try {
     rendering = 1;
     runRenders();
   } finally {
+    pendingRendersLookup = asyncRendersLookup;
+    asyncRendersLookup = rendering = 0;
     pendingRenders = [];
-    pendingRendersLookup = new Map();
     pendingEffects = [];
-    rendering = 0;
   }
   runEffects(effects);
 }
 
 export function prepareEffects(fn: () => void): unknown[] {
   const prevRenders = pendingRenders;
-  const prevRendersLookup = pendingRendersLookup;
   const prevEffects = pendingEffects;
+  const prevLookup = asyncRendersLookup;
   const preparedEffects = (pendingEffects = []);
   pendingRenders = [];
+  asyncRendersLookup = pendingRendersLookup;
   pendingRendersLookup = new Map();
 
   try {
@@ -87,8 +94,9 @@ export function prepareEffects(fn: () => void): unknown[] {
     runRenders();
   } finally {
     rendering = 0;
+    pendingRendersLookup = asyncRendersLookup;
+    asyncRendersLookup = prevLookup;
     pendingRenders = prevRenders;
-    pendingRendersLookup = prevRendersLookup;
     pendingEffects = prevEffects;
   }
   return preparedEffects;
@@ -193,6 +201,17 @@ export let _enable_catch = () => {
   )(runEffects);
   runRender = ((runRender) => (render: PendingRender) => {
     try {
+      let branch = render.___scope[AccessorProp.ClosestBranch];
+      while (branch) {
+        if (branch[AccessorProp.PendingRenders]) {
+          (asyncRendersLookup as typeof pendingRendersLookup).set(
+            render.___key,
+            render,
+          );
+          return branch[AccessorProp.PendingRenders].push(render);
+        }
+        branch = branch![AccessorProp.ParentBranch];
+      }
       runRender(render);
     } catch (error) {
       renderCatch(render.___scope, error);

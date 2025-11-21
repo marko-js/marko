@@ -26,7 +26,7 @@ INSERT html/body
 INSERT html/body/#text
 ```
 
-# Render ASYNC
+# Render End
 ```html
 <html>
   <head />

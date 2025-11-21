@@ -7,12 +7,12 @@
 </div>
 <!---->
 <!---->
-<!---->
+<pre />
 ```
 
 # Mutations
 ```
-INSERT div, #comment0, #text, #comment1, #comment2
+INSERT div, #comment0, #text, #comment1, pre
 ```
 
 # Render ASYNC
@@ -20,27 +20,10 @@ INSERT div, #comment0, #text, #comment1, #comment2
 <div
   id="outside"
 >
-  1
-</div>
-<!---->
-<!---->
-<!---->
-```
-
-# Mutations
-```
-UPDATE div/#text "0" => "1"
-```
-
-# Render ASYNC
-```html
-<div
-  id="outside"
->
-  1
+  0
 </div>
 loading...
-<!---->
+<pre />
 ```
 
 # Mutations
@@ -56,24 +39,43 @@ REMOVE #document-fragment/#comment1 after #text
 <div
   id="outside"
 >
-  1 effect ran
+  1
+</div>
+loading...
+<pre />
+```
+
+# Mutations
+```
+UPDATE div/#text "0" => "1"
+```
+
+# Render ASYNC
+```html
+<div
+  id="outside"
+>
+  1
 </div>
 <!---->
 <div
   id="inside"
 >
-  1 effect ran 1
+  1
 </div>
 <!---->
-<!---->
+<pre>
+  
+effect ran value=1
+setup effect ran
+</pre>
 ```
 
 # Mutations
 ```
 INSERT #comment0, div1, #comment1
 REMOVE #text after #comment1
-REMOVE #text in div1
-INSERT div1/#text
-REMOVE #text in div0
-INSERT div0/#text
+INSERT #text
+REMOVE #text in pre
+INSERT pre/#text
 ```

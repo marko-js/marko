@@ -8,7 +8,7 @@ LOADING...
 ```
 
 
-# Render ASYNC
+# Render End
 ```html
 <button>
   inc

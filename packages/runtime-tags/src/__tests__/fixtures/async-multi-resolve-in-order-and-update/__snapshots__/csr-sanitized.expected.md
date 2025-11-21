@@ -53,6 +53,29 @@ container.querySelector("button").click();
   increment
 </button>
 <p>
+  1 * 3 = 2
+</p>
+<p>
+  2 * 3 = 4
+</p>
+<p>
+  3 * 3 = 6
+</p>
+<p>
+  4 * 3 = 8
+</p>
+<p>
+  5 * 3 = 10
+</p>
+```
+
+
+# Render ASYNC
+```html
+<button>
+  increment
+</button>
+<p>
   1 * 3 = 
 </p>
 <p>

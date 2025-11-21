@@ -1,4 +1,5 @@
-import type { Renderer as ClientRenderer } from "../dom/renderer";
+import type { PendingRender } from "../dom/queue";
+import type { Renderer as ClientRenderer, Renderer } from "../dom/renderer";
 import type { AccessorProp } from "./accessor.debug";
 export type Falsy = undefined | null | false | 0 | "";
 export type CommentWalker = TreeWalker & Record<string, Comment>;
@@ -12,6 +13,9 @@ export interface BranchScope extends Scope {
   [AccessorProp.Renderer]: ClientRenderer | string;
   [AccessorProp.AwaitCounter]: AwaitCounter | undefined;
   [AccessorProp.PendingEffects]: unknown[] | undefined;
+  [AccessorProp.PlaceholderBranch]: BranchScope | undefined | 0;
+  [AccessorProp.PendingRenders]: PendingRender[] | 0 | undefined;
+  [AccessorProp.DetachedAwait]: Renderer | 0 | undefined;
 }
 export interface Scope {
   [AccessorProp.Owner]: Scope | undefined;
@@ -38,9 +42,9 @@ export enum ResumeSymbol {
 }
 
 export interface AwaitCounter {
-  d?: 1;
+  m?: () => unknown[];
   i: number;
-  c: () => void;
+  c: () => void | 1;
 }
 
 export { AccessorPrefix, AccessorProp } from "./accessor.debug";

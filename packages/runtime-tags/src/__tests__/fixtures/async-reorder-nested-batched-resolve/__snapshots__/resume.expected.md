@@ -10,6 +10,126 @@
   </head>
   <body>
     <!--M_[-->
+    <!--M_!^2-->
+    LOADING A1
+    <!--M_!2-->
+    <!--M_]1 #text/0 2-->
+    <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
+        "#BranchAccessor": "#text/0",
+        "#PlaceholderContent": _.c = {}
+      }], _.a["#PlaceholderContent"] = _._[
+        "__tests__/template.marko_4_content"
+        ](_.c), _.b)];
+      REORDER_RUNTIME(M._);
+      M._.w()
+    </script>
+  </body>
+</html>
+```
+
+# Mutations
+```
+INSERT html/body/#text1
+```
+
+# Render FLUSH
+```html
+<html>
+  <head>
+    <style
+      m_=""
+    >
+      t{display:none}
+    </style>
+  </head>
+  <body>
+    <!--M_[-->
+    <div
+      class="a"
+      level="1"
+    >
+      <!--M_[-->
+      <div
+        class="a"
+        level="2"
+      >
+        <!--M_[-->
+        <!--M_!^7-->
+        LOADING B1
+        <!--M_!7-->
+        <!--M_]6 #text/1 7-->
+      </div>
+      <!--M_]4 #text/1 5-->
+    </div>
+    <!--M_]1 #text/0 2-->
+    <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
+        "#BranchAccessor": "#text/0",
+        "#PlaceholderContent": _.c = {}
+      }], _.a["#PlaceholderContent"] = _._[
+        "__tests__/template.marko_4_content"
+        ](_.c), _.b)];
+      REORDER_RUNTIME(M._);
+      M._.w()
+    </script>
+    <script>
+      M._.r.push(_ =&gt; (_.e = [2, _.d = {
+        "#BranchAccessor": "#text/1",
+        "#PlaceholderContent": _.f = {}
+      }], _.d["#PlaceholderContent"] = _._[
+        "__tests__/template.marko_5_content"
+        ](_.f), _.e), _ =&gt; (_.h = [1, _.g = {
+        "#BranchAccessor": "#text/1",
+        "#PlaceholderContent": _.i = {}
+      }], _.g["#PlaceholderContent"] = _._[
+        "__tests__/template.marko_10_content"
+        ](_.i), _.h));
+      M._.w()
+    </script>
+  </body>
+</html>
+```
+
+# Mutations
+```
+INSERT t
+INSERT html/body/div
+INSERT html/body/div/#comment0
+INSERT html/body/div/div
+INSERT html/body/div/div/#comment0
+INSERT html/body/div/div/#comment1
+INSERT html/body/div/div/#text0
+INSERT html/body/div/div/#comment2
+INSERT html/body/div/div/#comment3
+INSERT html/body/div/#comment1
+INSERT t
+INSERT t/#comment
+REMOVE t after html/body/script0
+REMOVE #text after #comment
+REMOVE #comment after html/body/#comment0
+REMOVE #comment after html/body/#comment0
+INSERT html/body/div
+REMOVE t after html/body/script0
+INSERT html/body/div/div/#text1
+INSERT html/body/div/#text
+INSERT html/body/script1
+```
+
+# Render FLUSH
+```html
+<html>
+  <head>
+    <style
+      m_=""
+    >
+      t{display:none}
+    </style>
+  </head>
+  <body>
+    <!--M_[-->
     <div
       class="a"
       level="1"
@@ -72,4 +192,20 @@
     </script>
   </body>
 </html>
+```
+
+# Mutations
+```
+INSERT t
+INSERT html/body/div/div/div
+INSERT html/body/div/div/div/#comment0
+INSERT html/body/div/div/div/div
+INSERT html/body/div/div/div/#comment1
+REMOVE t after html/body/script1
+REMOVE #text after #comment
+REMOVE #comment after html/body/div/div/#comment0
+REMOVE #comment after html/body/div/div/#comment0
+INSERT html/body/div/div/div
+INSERT html/body/div/div/div/#text
+INSERT html/body/script2
 ```

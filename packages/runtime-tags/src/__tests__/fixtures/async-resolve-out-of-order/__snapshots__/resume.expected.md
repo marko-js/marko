@@ -3,7 +3,23 @@
 <html>
   <head />
   <body>
+    a
+  </body>
+</html>
+```
+
+
+# Render FLUSH
+```html
+<html>
+  <head />
+  <body>
     abcde
   </body>
 </html>
+```
+
+# Mutations
+```
+INSERT html/body/#text1
 ```

@@ -3,6 +3,15 @@
 <button>
   inc
 </button>
+LOADING...
+```
+
+
+# Render FLUSH
+```html
+<button>
+  inc
+</button>
 0
 ```
 

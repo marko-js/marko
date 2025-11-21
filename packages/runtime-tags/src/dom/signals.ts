@@ -182,6 +182,7 @@ export function _closure_get(
   valueAccessor: EncodedAccessor,
   fn: SignalFn,
   getOwnerScope?: (scope: Scope) => Scope,
+  resumeId?: string,
 ) {
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
   const closureSignal = ((scope) => {
@@ -201,6 +202,9 @@ export function _closure_get(
     AccessorPrefix.ClosureScopes + valueAccessor;
   closureSignal.___signalIndexAccessor =
     AccessorPrefix.ClosureSignalIndex + valueAccessor;
+
+  resumeId && _resume(resumeId, closureSignal);
+
   return closureSignal;
 }
 

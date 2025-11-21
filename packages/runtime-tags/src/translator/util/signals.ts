@@ -13,7 +13,7 @@ import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
 import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
-import { find, forEach, type Opt, push } from "./optional";
+import { find, forEach, type Opt, push, some } from "./optional";
 import {
   type AssignedBindingExtra,
   type Binding,
@@ -101,6 +101,10 @@ export function setClosureSignalBuilder(
 ) {
   _setClosureSignalBuilder(getSectionForBody(tag.get("body"))!, builder);
 }
+
+export const [getTryHasPlaceholder, setTryHasPlaceholder] = createSectionState<
+  true | undefined
+>("tryWithPlaceholder");
 
 const [getSerializedAccessors] = createSectionState<
   Map<string, { expression: t.Expression; reason: SerializeReason }>
@@ -240,27 +244,43 @@ export function getSignal(
       bindingUtil.find(section.referencedClosures, referencedBindings)
     ) {
       signal.build = () => {
-        const canonicalClosure = getCanonicalBinding(referencedBindings)!;
+        const closure = getCanonicalBinding(referencedBindings)!;
         const render = getSignalFn(signal);
         const closureSignalBuilder = getClosureSignalBuilder(section);
-        return !closureSignalBuilder ||
-          isDynamicClosure(section, canonicalClosure)
-          ? callRuntime(
-              "_closure_get",
-              getScopeAccessorLiteral(canonicalClosure, true),
-              render,
-              isImmediateOwner(section, canonicalClosure)
-                ? undefined
-                : t.arrowFunctionExpression(
-                    [scopeIdentifier],
-                    getScopeExpression(section, canonicalClosure.section),
-                  ),
-            )
-          : getClosureSignalBuilder(section)!(canonicalClosure, render);
+
+        if (closureSignalBuilder && !isDynamicClosure(section, closure)) {
+          return closureSignalBuilder(closure, render);
+        }
+
+        return callRuntime(
+          "_closure_get",
+          getScopeAccessorLiteral(closure, true),
+          render,
+          isImmediateOwner(section, closure)
+            ? undefined
+            : t.arrowFunctionExpression(
+                [scopeIdentifier],
+                getScopeExpression(section, closure.section),
+              ),
+          some(closure.closureSections, underTryPlaceholder)
+            ? t.stringLiteral(getResumeRegisterId(section, closure))
+            : undefined,
+        );
       };
     }
   }
   return signal;
+}
+
+function underTryPlaceholder(section: Section) {
+  let curSection = section.parent;
+  while (curSection) {
+    if (getTryHasPlaceholder(curSection)) {
+      return true;
+    }
+    curSection = curSection.parent;
+  }
+  return false;
 }
 
 export function initValue(binding: Binding, isLet = false) {
@@ -1017,9 +1037,29 @@ export function writeHTMLResumeStatements(
           t.numericLiteral(getDynamicClosureIndex(closure, section)),
           getAccessorPrefix().ClosureSignalIndex,
         );
-        addWriteScopeBuilder(section, (expr) =>
-          callRuntime("_subscribe", identifier, expr),
-        );
+
+        if (underTryPlaceholder(section)) {
+          const reason = getSerializeReason(section);
+          if (reason) {
+            getHTMLSectionStatements(section).push(
+              t.expressionStatement(
+                getExprIfSerialized(
+                  section,
+                  reason,
+                  callRuntime(
+                    "_script",
+                    getScopeIdIdentifier(section),
+                    t.stringLiteral(getResumeRegisterId(section, closure)),
+                  ),
+                ),
+              ),
+            );
+          }
+        } else {
+          addWriteScopeBuilder(section, (expr) =>
+            callRuntime("_subscribe", identifier, expr),
+          );
+        }
       }
     }
   });

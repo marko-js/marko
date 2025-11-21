@@ -24,6 +24,27 @@ INSERT #comment0, #comment1, div, #comment2, #comment3
 <div
   data-level="4"
 >
+  LOADING...
+</div>
+<!---->
+<!---->
+```
+
+# Mutations
+```
+INSERT div/#text
+REMOVE #document-fragment/#comment0 after div/#text
+REMOVE #document-fragment/#text after div/#text
+REMOVE #document-fragment/#comment1 after div/#text
+```
+
+# Render ASYNC
+```html
+<!---->
+<!---->
+<div
+  data-level="4"
+>
   <!---->
   <!---->
   <!---->
@@ -43,8 +64,8 @@ INSERT #comment0, #comment1, div, #comment2, #comment3
 
 # Mutations
 ```
-INSERT div/#comment1, div/#comment2, #text, div/#comment3, div/#comment4
-REMOVE #text after div/#comment4
+INSERT div/#comment0, div/#comment1, div/#comment2, #text, div/#comment3, div/#comment4, div/#comment5
+REMOVE #text after div/#comment5
 INSERT div/div
 REMOVE #text after div/div
 UPDATE div/div[data-level] null => "3"
@@ -147,6 +168,47 @@ REMOVE #text after div/div/div/#comment1
     <div
       data-level="2"
     >
+      LOADING...
+    </div>
+    <!---->
+    <!---->
+    <!---->
+  </div>
+  <!---->
+  <!---->
+  <!---->
+</div>
+<!---->
+<!---->
+```
+
+# Mutations
+```
+INSERT div/div/div/#text
+REMOVE #document-fragment/#comment0 after div/div/div/#text
+REMOVE #document-fragment/#text after div/div/div/#text
+REMOVE #document-fragment/#comment1 after div/div/div/#text
+```
+
+# Render ASYNC
+```html
+<!---->
+<!---->
+<div
+  data-level="4"
+>
+  <!---->
+  <!---->
+  <!---->
+  <div
+    data-level="3"
+  >
+    <!---->
+    <!---->
+    <!---->
+    <div
+      data-level="2"
+    >
       <!---->
       <!---->
       <!---->
@@ -174,8 +236,8 @@ REMOVE #text after div/div/div/#comment1
 
 # Mutations
 ```
-INSERT div/div/div/#comment1, div/div/div/#comment2, #text, div/div/div/#comment3, div/div/div/#comment4
-REMOVE #text after div/div/div/#comment4
+INSERT div/div/div/#comment0, div/div/div/#comment1, div/div/div/#comment2, #text, div/div/div/#comment3, div/div/div/#comment4, div/div/div/#comment5
+REMOVE #text after div/div/div/#comment5
 INSERT div/div/div/div
 REMOVE #text after div/div/div/div
 UPDATE div/div/div/div[data-level] null => "1"

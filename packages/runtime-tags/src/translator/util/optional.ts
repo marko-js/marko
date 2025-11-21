@@ -243,6 +243,13 @@ export function find<T>(
   }
 }
 
+export function some<T>(
+  data: Opt<T>,
+  cb: (item: T, index: number) => boolean,
+): boolean {
+  return data ? (Array.isArray(data) ? data.some(cb) : !!cb(data, 0)) : false;
+}
+
 export function toArray<T, R>(
   data: Opt<T>,
   cb: (item: T, index: number) => R,

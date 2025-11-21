@@ -1,7 +1,6 @@
 <div/el/>
 <const/setText(arg) {
   if (arg) {
-    debugger;
     throw new Error(`Expected no argument to be passed, but received "${typeof arg}".`);
   }
   el().textContent = typeof arg

@@ -44,7 +44,7 @@ INSERT html/body/#text2
 INSERT html/body/script
 ```
 
-# Render ASYNC
+# Render End
 ```html
 <html>
   <head />

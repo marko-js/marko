@@ -1,6 +1,7 @@
+import { resolveAfter } from "../../../utils/resolve";
 if=input.level
   div data-level=input.level
     try
       @placeholder -- LOADING...
-      await=new Promise(setImmediate)
+      await=resolveAfter(0, 1)
         recurse level=input.level - 1

@@ -1,0 +1,12 @@
+{
+  "vars": {
+    "props": {
+      "$_": "_",
+      "$init": "t",
+      "$$await_content__value": "e",
+      "$$value__closure": "o",
+      "$$value__script": "r",
+      "$$value": "a"
+    }
+  }
+}

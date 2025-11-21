@@ -88,7 +88,7 @@ REMOVE t after html/body/#comment7
 INSERT html/body/script
 ```
 
-# Render ASYNC
+# Render End
 ```html
 <html>
   <head>

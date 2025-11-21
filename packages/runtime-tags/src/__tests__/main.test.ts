@@ -11,7 +11,7 @@ import { isDeepStrictEqual } from "util";
 import * as translator from "../translator";
 import { bundle } from "./utils/bundle";
 import createBrowser from "./utils/create-browser";
-import { isThrows, isWait } from "./utils/resolve";
+import { isFlush, isThrows, isWait, resolveAfter } from "./utils/resolve";
 import { stripInlineRuntime } from "./utils/strip-inline-runtime";
 import createMutationTracker from "./utils/track-mutations";
 
@@ -240,7 +240,7 @@ describe("runtime-tags/translator", () => {
 
           const { chunks } = await serverRender();
 
-          const browserStream = browser.open();
+          const flushNext = browser.stream(chunks);
 
           const tracker = createMutationTracker(window, document);
 
@@ -249,12 +249,10 @@ describe("runtime-tags/translator", () => {
             if (formattedHtml) {
               tracker.log(`# Write\n\`\`\`html\n${formattedHtml}\n\`\`\``);
             }
-            browserStream.write(data);
           }
 
-          const flushRemaining = browserStream.close();
-          if (flushRemaining) {
-            await flushRemaining();
+          while (flushNext()) {
+            await 1;
           }
 
           tracker.logUpdate("End", true);
@@ -307,6 +305,8 @@ describe("runtime-tags/translator", () => {
           for (const update of steps) {
             if (isWait(update)) {
               await update();
+            } else if (isFlush(update)) {
+              continue;
             } else if (typeof update === "function") {
               tracker.beginUpdate();
               await update(document.documentElement);
@@ -364,39 +364,47 @@ describe("runtime-tags/translator", () => {
 
           browser.require(manualResume ? resumeFile : templateFile);
 
-          const browserStream = browser.open();
+          const flushNext = browser.stream(chunks);
 
-          let tracker: ReturnType<typeof createMutationTracker>;
+          let hasFlush = flushNext();
 
-          for (const data of chunks) {
-            browserStream.write(data);
-          }
+          const tracker = createMutationTracker(window, document);
 
-          const flushRemaining = browserStream.close();
-          if (flushRemaining) {
-            init();
-            await flushRemaining();
-            tracker = createMutationTracker(window, document);
-          } else {
-            tracker = createMutationTracker(window, document);
-            init();
-          }
+          init();
+          await runSteps();
 
-          tracker.logUpdate(input);
+          async function runSteps() {
+            tracker.logUpdate(input);
 
-          for (const update of steps) {
-            if (isWait(update)) {
-              await update();
-            } else if (typeof update === "function") {
+            for (const update of steps) {
+              if (isWait(update)) {
+                await update();
+              } else if (isFlush(update)) {
+                if (hasFlush) {
+                  tracker.beginUpdate();
+                  hasFlush = flushNext();
+                  run();
+                  await 1; // allow a microtask before we log the update in order to catch mutation observers
+                  tracker.logUpdate("FLUSH");
+                }
+              } else if (typeof update === "function") {
+                tracker.beginUpdate();
+                await update(document.documentElement);
+                run();
+                await 1; // allow a microtask before we log the update in order to catch mutation observers
+                tracker.logUpdate(update);
+              } else {
+                // if new input is detected, stop testing
+                // this will be covered by the client tests
+                break;
+              }
+            }
+
+            while (hasFlush) {
+              await resolveAfter(0, 1);
               tracker.beginUpdate();
-              await update(document.documentElement);
-              run();
-              await 1; // allow a microtask before we log the update in order to catch mutation observers
-              tracker.logUpdate(update);
-            } else {
-              // if new input is detected, stop testing
-              // this will be covered by the client tests
-              break;
+              hasFlush = flushNext();
+              tracker.logUpdate("FLUSH (auto)");
             }
           }
 
@@ -467,31 +475,83 @@ describe("runtime-tags/translator", () => {
             return;
           }
 
-          const resumeLogs = (await resume()).tracker.getRawLogs(true);
-          // when the steps for a test contains more than one input,
-          // the updates are not run for the resume test
-          // so we trim the csrLogs to match the number of resumeLogs
-          const isAsyncRender = isWait((config.steps as unknown[])?.[1]);
-          let csrLogs = [...(await csr()).tracker.getRawLogs(true)];
-          let skip = 0;
-          if (isAsyncRender) {
-            while (csrLogs[skip + 1]?.startsWith(`# Render ASYNC`)) {
-              skip++;
-            }
-            for (const resumeLog of resumeLogs.slice(1)) {
-              if (resumeLog.startsWith(`# Render ASYNC`)) {
-                skip--;
-              } else {
-                break;
+          const normalizeLog = (log: string) =>
+            log.replace(/[cs]M_[a-z0-9]+/g, "%id");
+
+          const resumeLogs = (await resume()).tracker
+            .getRawLogs(true)
+            .map(normalizeLog);
+          const csrLogs = (await csr()).tracker
+            .getRawLogs(true)
+            .map(normalizeLog);
+
+          let csrIndex = 0;
+          let resumeIndex = 0;
+
+          let actual = "";
+          let expected = "";
+
+          let prevResumLog = "";
+
+          while (resumeIndex < resumeLogs.length) {
+            const resumeLog = resumeLogs[resumeIndex++].replace(
+              /(# Render)[^\n]+/,
+              "$1",
+            );
+            if (resumeLog !== prevResumLog) {
+              while (csrIndex < csrLogs.length) {
+                const csrLog = csrLogs[csrIndex++].replace(
+                  /(# Render)[^\n]+/,
+                  "$1",
+                );
+                if (csrLog === resumeLog) {
+                  if (expected) {
+                    expected += "\n\n";
+                  }
+                  expected += csrLog;
+                  break;
+                }
               }
+
+              if (actual) {
+                actual += "\n\n";
+              }
+              actual += resumeLog;
             }
-            csrLogs[skip] = csrLogs[skip].replace(`# Render ASYNC`, `# Render`);
+            prevResumLog = resumeLog;
           }
-          csrLogs = csrLogs.slice(skip, resumeLogs.length + skip);
-          assert.strictEqual(
-            csrLogs.join("\n\n").replace(/[cs]M_[a-z0-9]+/g, "%id"),
-            resumeLogs.join("\n\n").replace(/[cs]M_[a-z0-9]+/g, "%id"),
-          );
+
+          if (!expected && actual) {
+            assert.strictEqual(csrLogs.join("\n\n"), resumeLogs.join("\n\n"));
+          } else {
+            assert.strictEqual(actual, expected);
+          }
+
+          // // when the steps for a test contains more than one input,
+          // // the updates are not run for the resume test
+          // // so we trim the csrLogs to match the number of resumeLogs
+          // const step1 = (config.steps as unknown[] | undefined)?.[1];
+          // const isAsyncRender = step1 && (isFlush(step1) || isWait(step1));
+          // let csrLogs = [...(await csr()).tracker.getRawLogs(true)];
+          // let skip = 0;
+          // if (isAsyncRender) {
+          //   while (csrLogs[skip + 1]?.startsWith(`# Render ASYNC`)) {
+          //     skip++;
+          //   }
+          //   for (const resumeLog of resumeLogs.slice(1)) {
+          //     if (resumeLog.startsWith(`# Render ASYNC`)) {
+          //       skip--;
+          //     } else {
+          //       break;
+          //     }
+          //   }
+          //   csrLogs[skip] = csrLogs[skip].replace(`# Render ASYNC`, `# Render`);
+          // }
+          // csrLogs = csrLogs.slice(skip, resumeLogs.length + skip);
+          // assert.strictEqual(
+          //   csrLogs.join("\n\n").replace(/[cs]M_[a-z0-9]+/g, "%id"),
+          //   resumeLogs.join("\n\n").replace(/[cs]M_[a-z0-9]+/g, "%id"),
+          // );
         });
       });
     });

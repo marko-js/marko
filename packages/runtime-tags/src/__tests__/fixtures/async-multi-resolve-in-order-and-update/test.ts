@@ -1,6 +1,8 @@
-import { wait } from "../../utils/resolve";
+import { flush, wait } from "../../utils/resolve";
 
-export const steps = [{}, wait(6), click, wait(6)];
+export const steps = [{}, flush, wait(3), click, wait(4)];
+
+export const skip_equivalent = true; // in-order streaming
 
 function click(container: Element) {
   container.querySelector("button")!.click();

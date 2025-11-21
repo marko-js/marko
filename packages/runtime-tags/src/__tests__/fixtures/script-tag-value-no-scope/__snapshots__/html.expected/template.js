@@ -3,7 +3,6 @@ export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   const setText = _._resume(function (arg) {
     if (arg) {
-      debugger;
       throw new Error(`Expected no argument to be passed, but received "${typeof arg}".`);
     }
     (el => el())(_._el_read_error).textContent = typeof arg;

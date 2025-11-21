@@ -21,9 +21,9 @@ INSERT #text1
 REMOVE #document-fragment/#text0 after #text1
 REMOVE #document-fragment/#text1 after #text1
 REMOVE #document-fragment/#text2 after #text1
-REMOVE #document-fragment/#text3 after #text1
-REMOVE #document-fragment/#text4 after #text1
-REMOVE #document-fragment/#text5 after #text1
+REMOVE #document-fragment/#text0 after #text1
+REMOVE #document-fragment/#text1 after #text1
+REMOVE #document-fragment/#text2 after #text1
 REMOVE #document-fragment/#comment after #text1
 ```
 
