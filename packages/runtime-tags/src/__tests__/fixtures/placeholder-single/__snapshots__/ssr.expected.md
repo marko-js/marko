@@ -109,7 +109,7 @@ INSERT html/body/script
 INSERT html/body/#text3
 ```
 
-# Render ASYNC
+# Render End
 ```html
 <html>
   <head>

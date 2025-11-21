@@ -1,0 +1,16 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "e",
+      "$resolveAfter": "o",
+      "$$await_content__value__script": "r",
+      "$$await_content__value": "c",
+      "$$await_content__$params": "n",
+      "$$try_content__await_promise": "s",
+      "$$try_content__value": "a",
+      "$$value__closure": "_",
+      "$$value": "m"
+    }
+  }
+}

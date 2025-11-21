@@ -1,4 +1,4 @@
-// size: 501 (min) 282 (brotli)
+// size: 501 (min) 284 (brotli)
 _._enable_catch();
 const $await_content__value = _._const(2, ($scope) =>
     _._text(

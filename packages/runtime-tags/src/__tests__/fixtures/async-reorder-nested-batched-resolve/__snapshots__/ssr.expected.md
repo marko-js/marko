@@ -146,7 +146,7 @@ REMOVE t after html/body/script0
 INSERT html/body/script1
 ```
 
-# Render ASYNC
+# Render End
 ```html
 <html>
   <head>

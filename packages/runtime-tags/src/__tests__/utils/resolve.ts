@@ -7,16 +7,24 @@ export function wait(timeout: number) {
   });
 }
 
+export const flush = Object.assign(() => {}, {
+  flush: true,
+});
+
 export function throws(fn: (...args: any[]) => void) {
   return Object.assign(fn, { throws: true });
 }
 
 export function isWait(value: any): value is ReturnType<typeof wait> {
-  return value?.wait;
+  return typeof value === "function" && value.wait;
+}
+
+export function isFlush(value: any): value is ReturnType<typeof flush> {
+  return typeof value === "function" && value.flush;
 }
 
 export function isThrows(value: any): value is ReturnType<typeof throws> {
-  return value?.throws;
+  return typeof value === "function" && value.throws;
 }
 
 export function resolveAfter<T>(value: T, timeout: number) {

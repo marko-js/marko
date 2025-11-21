@@ -57,28 +57,6 @@ REMOVE #text after div/#comment1
   class="a"
   level="1"
 >
-  LOADING A2
-</div>
-<!---->
-<!---->
-```
-
-# Mutations
-```
-INSERT div/#text
-REMOVE #document-fragment/#comment0 after div/#text
-REMOVE #document-fragment/#text after div/#text
-REMOVE #document-fragment/#comment1 after div/#text
-```
-
-# Render ASYNC
-```html
-<!---->
-<!---->
-<div
-  class="a"
-  level="1"
->
   <!---->
   <div
     class="a"
@@ -95,8 +73,9 @@ REMOVE #document-fragment/#comment1 after div/#text
 
 # Mutations
 ```
-INSERT div/#comment0, div/div, div/#comment1
-REMOVE #text after div/#comment1
+INSERT div/div
+REMOVE #text after div/div
+UPDATE div/div[class] null => "a"
 INSERT div/div/#comment0, div/div/#text, div/div/#comment1
 REMOVE #text after div/div/#comment1
 ```
@@ -185,42 +164,6 @@ REMOVE #text after div/div/div/#comment1
       class="b"
       level="3"
     >
-      LOADING B2
-    </div>
-    <!---->
-  </div>
-  <!---->
-</div>
-<!---->
-<!---->
-```
-
-# Mutations
-```
-INSERT div/div/div/#text
-REMOVE #document-fragment/#comment0 after div/div/div/#text
-REMOVE #document-fragment/#text after div/div/div/#text
-REMOVE #document-fragment/#comment1 after div/div/div/#text
-```
-
-# Render ASYNC
-```html
-<!---->
-<!---->
-<div
-  class="a"
-  level="1"
->
-  <!---->
-  <div
-    class="a"
-    level="2"
-  >
-    <!---->
-    <div
-      class="b"
-      level="3"
-    >
       <!---->
       <div
         class="b"
@@ -238,6 +181,7 @@ REMOVE #document-fragment/#comment1 after div/div/div/#text
 
 # Mutations
 ```
-INSERT div/div/div/#comment0, div/div/div/div, div/div/div/#comment1
-REMOVE #text after div/div/div/#comment1
+INSERT div/div/div/div
+REMOVE #text after div/div/div/div
+UPDATE div/div/div/div[class] null => "b"
 ```

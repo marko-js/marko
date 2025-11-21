@@ -9,7 +9,7 @@
 ```
 
 
-# Render ASYNC
+# Render End
 ```html
 <button>
   increment

@@ -188,7 +188,7 @@ INSERT html/body/#text1, html/body/#text2, html/body/#text3, html/body/#comment1
 INSERT html/body/script1
 ```
 
-# Render ASYNC
+# Render End
 ```html
 <html>
   <head>

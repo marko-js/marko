@@ -13,7 +13,7 @@ const $try_content4__setup = $scope => {
   $await_content4($scope);
   $try_content4__promiseB($scope);
 };
-const $try_content4__promiseB = /* @__PURE__ */_._closure_get("promiseB", $scope => $try_content4__await_promise($scope, $scope._._._.promiseB), $scope => $scope._._._);
+const $try_content4__promiseB = /* @__PURE__ */_._closure_get("promiseB", $scope => $try_content4__await_promise($scope, $scope._._._.promiseB), $scope => $scope._._._, "__tests__/template.marko_9_promiseB");
 const $await_content3__value = /* @__PURE__ */_._const("value", $scope => _._attr_class($scope["#div/0"], $scope.value));
 const $await_content3__try = /* @__PURE__ */_._try("#text/1", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $try_content4__setup);
 const $await_content3__setup = $scope => {
@@ -30,7 +30,7 @@ const $try_content3__setup = $scope => {
   $await_content3($scope);
   $try_content3__promiseB($scope);
 };
-const $try_content3__promiseB = /* @__PURE__ */_._closure_get("promiseB", $scope => $try_content3__await_promise($scope, $scope._.promiseB));
+const $try_content3__promiseB = /* @__PURE__ */_._closure_get("promiseB", $scope => $try_content3__await_promise($scope, $scope._.promiseB), 0, "__tests__/template.marko_7_promiseB");
 const $await_content2__value = /* @__PURE__ */_._const("value", $scope => _._attr_class($scope["#div/0"], $scope.value));
 const $await_content2__promiseB = /* @__PURE__ */_._const("promiseB");
 const $await_content2__try = /* @__PURE__ */_._try("#text/1", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $try_content3__setup);
@@ -51,7 +51,7 @@ const $try_content2__setup = $scope => {
   $await_content2($scope);
   $try_content2__promiseA($scope);
 };
-const $try_content2__promiseA = /* @__PURE__ */_._closure_get("promiseA", $scope => $try_content2__await_promise($scope, $scope._._._.promiseA), $scope => $scope._._._);
+const $try_content2__promiseA = /* @__PURE__ */_._closure_get("promiseA", $scope => $try_content2__await_promise($scope, $scope._._._.promiseA), $scope => $scope._._._, "__tests__/template.marko_3_promiseA");
 const $await_content__value = /* @__PURE__ */_._const("value", $scope => _._attr_class($scope["#div/0"], $scope.value));
 const $await_content__try = /* @__PURE__ */_._try("#text/1", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $try_content2__setup);
 const $await_content__setup = $scope => {
@@ -68,7 +68,7 @@ const $try_content__setup = $scope => {
   $await_content($scope);
   $try_content__promiseA($scope);
 };
-const $try_content__promiseA = /* @__PURE__ */_._closure_get("promiseA", $scope => $try_content__await_promise($scope, $scope._.promiseA));
+const $try_content__promiseA = /* @__PURE__ */_._closure_get("promiseA", $scope => $try_content__await_promise($scope, $scope._.promiseA), 0, "__tests__/template.marko_1_promiseA");
 const $promiseA = /* @__PURE__ */_._const("promiseA");
 const $try = /* @__PURE__ */_._try("#text/0", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $try_content__setup);
 export function $setup($scope) {

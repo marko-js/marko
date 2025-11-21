@@ -4,7 +4,7 @@
 # Render ASYNC
 
 
-# Render ASYNC
+# Render End
 ```html
 <div>
   Resolved A: A Value

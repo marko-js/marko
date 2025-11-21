@@ -98,7 +98,7 @@ INSERT html/body/div/script
 INSERT html/body/div/script1
 ```
 
-# Render ASYNC
+# Render End
 ```html
 <html>
   <head />

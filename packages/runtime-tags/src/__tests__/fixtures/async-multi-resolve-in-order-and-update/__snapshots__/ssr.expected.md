@@ -52,7 +52,7 @@ INSERT html/body/p/#text2
 INSERT html/body/p/script
 ```
 
-# Render ASYNC
+# Render End
 ```html
 <html>
   <head />

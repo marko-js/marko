@@ -66,7 +66,7 @@ INSERT html/body/#text1
 INSERT html/body/#text2
 ```
 
-# Render ASYNC
+# Render End
 ```html
 <html>
   <head />

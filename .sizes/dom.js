@@ -1,4 +1,4 @@
-// size: 20156 (min) 7726 (brotli)
+// size: 20366 (min) 7839 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -76,7 +76,7 @@ function normalizeDynamicRenderer(value) {
   if (value) {
     if ("string" == typeof value) return value;
     let normalized = value.content || value.default || value;
-    if ("g" in normalized) return normalized;
+    if ("f" in normalized) return normalized;
   }
 }
 var decodeAccessor = (num) =>
@@ -240,7 +240,6 @@ function init(runtimeId = "M") {
                 (
                   branchId,
                   branch,
-                  childBranch,
                   endedBranches,
                   accessor,
                   singleNode,
@@ -270,6 +269,8 @@ function init(runtimeId = "M") {
                         (branch = scopeLookup[branchId] ||= { L: branchId }),
                       ),
                       (branch.F = branch),
+                      (branch.O = render.p?.[branchId]) &&
+                        (branch.O.m = render.m),
                       singleNode)
                     ) {
                       for (
@@ -296,8 +297,8 @@ function init(runtimeId = "M") {
                             ? startVisit
                             : parent.insertBefore(new Text(), visit)));
                     for (; i && orphanBranches[--i].L > branchId; )
-                      (((childBranch = orphanBranches.pop()).N = branch),
-                        (branch.D ||= new Set()).add(childBranch));
+                      ((orphanBranches[i].N = branch),
+                        (branch.D ||= new Set()).add(orphanBranches.pop()));
                     nextToken();
                   }
                   (endedBranches &&
@@ -745,9 +746,9 @@ function subscribeToScopeSet(ownerScope, accessor, scope) {
     ));
 }
 function _closure(...closureSignals) {
-  let [{ l: ___scopeInstancesAccessor, n: ___signalIndexAccessor }] =
+  let [{ k: ___scopeInstancesAccessor, l: ___signalIndexAccessor }] =
     closureSignals;
-  for (let i = closureSignals.length; i--; ) closureSignals[i].t = i;
+  for (let i = closureSignals.length; i--; ) closureSignals[i].q = i;
   return (scope) => {
     if (scope[___scopeInstancesAccessor])
       for (let childScope of scope[___scopeInstancesAccessor])
@@ -759,20 +760,21 @@ function _closure(...closureSignals) {
           );
   };
 }
-function _closure_get(valueAccessor, fn, getOwnerScope) {
+function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
   valueAccessor = decodeAccessor(valueAccessor);
   let closureSignal = (scope) => {
-    ((scope[closureSignal.n] = closureSignal.t),
+    ((scope[closureSignal.l] = closureSignal.q),
       fn(scope),
       subscribeToScopeSet(
         getOwnerScope ? getOwnerScope(scope) : scope._,
-        closureSignal.l,
+        closureSignal.k,
         scope,
       ));
   };
   return (
-    (closureSignal.l = "B" + valueAccessor),
-    (closureSignal.n = "C" + valueAccessor),
+    (closureSignal.k = "B" + valueAccessor),
+    (closureSignal.l = "C" + valueAccessor),
+    resumeId && _resume(resumeId, closureSignal),
     closureSignal
   );
 }
@@ -891,12 +893,12 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
         walk((branch.S = branch.K = new Text()), walks, branch);
       };
   return (owner) => ({
-    g: id,
+    f: id,
     h: clone,
     e: owner,
     j: setup,
-    a: params,
-    b: dynamicScopesAccessor,
+    b: params,
+    d: dynamicScopesAccessor,
   });
 }
 function _content_resume(
@@ -919,8 +921,8 @@ function _content_closures(renderer, closureFns) {
   return (owner, closureValues) => {
     let instance = renderer(owner);
     return (
-      (instance.o = closureSignals),
-      (instance.u = closureValues),
+      (instance.n = closureSignals),
+      (instance.t = closureValues),
       instance
     );
   };
@@ -1097,13 +1099,13 @@ function attrsInternal(scope, nodeAccessor, nextAttrs) {
 function _attr_content(scope, nodeAccessor, value) {
   let content = (function (value) {
       let renderer = normalizeDynamicRenderer(value);
-      if (renderer && renderer.g) return renderer;
+      if (renderer && renderer.f) return renderer;
     })(value),
     rendererAccessor = "D" + nodeAccessor;
-  scope[rendererAccessor] !== (scope[rendererAccessor] = content?.g) &&
+  scope[rendererAccessor] !== (scope[rendererAccessor] = content?.f) &&
     (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
-    content?.b &&
-      subscribeToScopeSet(content.e, content.b, scope["A" + nodeAccessor]));
+    content?.d &&
+      subscribeToScopeSet(content.e, content.d, scope["A" + nodeAccessor]));
 }
 function _attrs_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
@@ -1181,132 +1183,127 @@ function toInsertNode(startNode, endNode) {
 }
 function _await_promise(nodeAccessor, params) {
   let promiseAccessor = "L" + (nodeAccessor = decodeAccessor(nodeAccessor)),
-    branchAccessor = "A" + nodeAccessor,
-    rendererAccessor = "D" + nodeAccessor;
+    branchAccessor = "A" + nodeAccessor;
   return (
     _enable_catch(),
     (scope, promise) => {
-      let awaitCounter,
-        renderData,
-        tryWithPlaceholder = findBranchWithKey(scope, "Q");
-      tryWithPlaceholder
-        ? ((renderData =
-            self[tryWithPlaceholder.$.runtimeId]?.[
-              tryWithPlaceholder.$.renderId
-            ]),
-          (awaitCounter = tryWithPlaceholder.O ||=
-            renderData?.p?.[tryWithPlaceholder.L]),
-          awaitCounter?.i ||
-            (awaitCounter = tryWithPlaceholder.O =
-              {
-                d: 1,
-                i: 0,
-                c() {
-                  if (!--awaitCounter.i) {
-                    let placeholderBranch = tryWithPlaceholder.P;
-                    ((tryWithPlaceholder.P = 0),
-                      placeholderBranch &&
-                        (placeholderBranch.S.parentNode.insertBefore(
-                          tryWithPlaceholder.S.parentNode,
-                          placeholderBranch.S,
-                        ),
-                        removeAndDestroyBranch(placeholderBranch)),
-                      queueEffect(tryWithPlaceholder, (scope2) => {
-                        let pendingEffects2 = scope2.J;
-                        pendingEffects2 &&
-                          ((scope2.J = []), runEffects(pendingEffects2, !0));
-                      }));
-                  }
-                },
-              }),
-          placeholderShown.add(pendingEffects),
-          !scope[promiseAccessor] &&
-            !awaitCounter.i++ &&
+      let awaitBranch = scope[branchAccessor],
+        tryBranch = findBranchWithKey(scope, "Q") || awaitBranch,
+        awaitCounter = tryBranch.O;
+      (awaitCounter?.i ||
+        (awaitCounter = tryBranch.O =
+          {
+            i: 0,
+            c() {
+              if (--awaitCounter.i) return 1;
+              if (tryBranch === scope[branchAccessor])
+                scope[nodeAccessor].parentNode &&
+                  scope[nodeAccessor].replaceWith(
+                    scope[branchAccessor].S.parentNode,
+                  );
+              else {
+                let placeholderBranch = tryBranch.P;
+                placeholderBranch &&
+                  ((tryBranch.P = 0),
+                  placeholderBranch.S.parentNode.insertBefore(
+                    tryBranch.S.parentNode,
+                    placeholderBranch.S,
+                  ),
+                  removeAndDestroyBranch(placeholderBranch));
+              }
+              queueEffect(tryBranch, (scope2) => {
+                let pendingEffects2 = scope2.J;
+                pendingEffects2 &&
+                  ((scope2.J = []), runEffects(pendingEffects2, 1));
+              });
+            },
+          }),
+        placeholderShown.add(pendingEffects),
+        scope[promiseAccessor] ||
+          (awaitBranch && (awaitBranch.W ||= []),
+          awaitCounter.i++ ||
             requestAnimationFrame(
               () =>
                 awaitCounter.i &&
                 runEffects(
                   prepareEffects(() =>
                     queueRender(
-                      tryWithPlaceholder,
+                      tryBranch === awaitBranch ? scope : tryBranch,
                       () => {
-                        (insertBranchBefore(
-                          (tryWithPlaceholder.P = createAndSetupBranch(
-                            scope.$,
-                            tryWithPlaceholder.Q,
-                            tryWithPlaceholder._,
-                            tryWithPlaceholder.S.parentNode,
-                          )),
-                          tryWithPlaceholder.S.parentNode,
-                          tryWithPlaceholder.S,
-                        ),
-                          tempDetachBranch(tryWithPlaceholder));
+                        tryBranch.Q
+                          ? (insertBranchBefore(
+                              (tryBranch.P = createAndSetupBranch(
+                                scope.$,
+                                tryBranch.Q,
+                                tryBranch._,
+                                tryBranch.S.parentNode,
+                              )),
+                              tryBranch.S.parentNode,
+                              tryBranch.S,
+                            ),
+                            tempDetachBranch(tryBranch))
+                          : awaitBranch.V ||
+                            (awaitBranch.S.parentNode.insertBefore(
+                              scope[nodeAccessor],
+                              awaitBranch.S,
+                            ),
+                            tempDetachBranch(tryBranch));
                       },
                       -1,
                     ),
                   ),
                 ),
-            ))
-        : scope[branchAccessor] &&
-          !scope[promiseAccessor] &&
-          (scope[branchAccessor].S.parentNode.insertBefore(
-            scope[nodeAccessor],
-            scope[branchAccessor].S,
-          ),
-          tempDetachBranch(scope[branchAccessor]));
+            )));
       let thisPromise = (scope[promiseAccessor] = promise.then(
         (data) => {
-          thisPromise === scope[promiseAccessor] &&
+          if (thisPromise === scope[promiseAccessor]) {
+            let referenceNode = scope[nodeAccessor];
             ((scope[promiseAccessor] = 0),
-            schedule(),
-            queueRender(
-              scope,
-              () => {
-                if (
-                  (scope[branchAccessor]
-                    ? tryWithPlaceholder ||
-                      scope[nodeAccessor].replaceWith(
-                        scope[branchAccessor].S.parentNode,
-                      )
-                    : (insertBranchBefore(
-                        (scope[branchAccessor] = createAndSetupBranch(
-                          scope.$,
-                          scope[rendererAccessor],
-                          scope,
-                          scope[nodeAccessor].parentNode,
-                        )),
-                        scope[nodeAccessor].parentNode,
-                        scope[nodeAccessor],
-                      ),
-                      scope[nodeAccessor].remove()),
-                  params?.(scope[branchAccessor], [data]),
-                  awaitCounter &&
-                    (placeholderShown.add(pendingEffects),
+              queueMicrotask(run),
+              queueRender(
+                scope,
+                () => {
+                  ((awaitBranch = scope[branchAccessor]).V &&
+                    (pendingScopes.push(awaitBranch),
+                    setupBranch(awaitBranch.V, awaitBranch),
+                    (awaitBranch.V = 0),
+                    insertBranchBefore(
+                      awaitBranch,
+                      scope[nodeAccessor].parentNode,
+                      scope[nodeAccessor],
+                    ),
+                    referenceNode.remove()),
+                    params?.(awaitBranch, [data]));
+                  let pendingRenders2 = awaitBranch.W;
+                  if (
+                    ((awaitBranch.W = 0),
+                    pendingRenders2?.forEach(queuePendingRender),
+                    placeholderShown.add(pendingEffects),
                     awaitCounter.c(),
-                    !awaitCounter.d))
-                ) {
-                  let fnScopes = new Map(),
-                    effects = renderData.m();
-                  for (let i = 0; i < pendingEffects.length; ) {
-                    let fn = pendingEffects[i++],
-                      scopes = fnScopes.get(fn);
-                    (scopes || fnScopes.set(fn, (scopes = new Set())),
-                      scopes.add(pendingEffects[i++]));
+                    awaitCounter.m)
+                  ) {
+                    let fnScopes = new Map(),
+                      effects = awaitCounter.m();
+                    for (let i = 0; i < pendingEffects.length; ) {
+                      let fn = pendingEffects[i++],
+                        scopes = fnScopes.get(fn);
+                      (scopes || fnScopes.set(fn, (scopes = new Set())),
+                        scopes.add(pendingEffects[i++]));
+                    }
+                    for (let i = 0; i < effects.length; ) {
+                      let fn = effects[i++],
+                        scope2 = effects[i++];
+                      fnScopes.get(fn)?.has(scope2) || queueEffect(scope2, fn);
+                    }
                   }
-                  for (let i = 0; i < effects.length; ) {
-                    let fn = effects[i++],
-                      scope2 = effects[i++];
-                    fnScopes.get(fn)?.has(scope2) || queueEffect(scope2, fn);
-                  }
-                }
-              },
-              -1,
-            ));
+                },
+                -1,
+              ));
+          }
         },
         (error) => {
           thisPromise === scope[promiseAccessor] &&
-            (awaitCounter && (awaitCounter.i = 0),
-            (scope[promiseAccessor] = 0),
+            ((awaitCounter.i = scope[promiseAccessor] = 0),
             schedule(),
             queueRender(scope, renderCatch, -1, error));
         },
@@ -1315,10 +1312,16 @@ function _await_promise(nodeAccessor, params) {
   );
 }
 function _await_content(nodeAccessor, template, walks, setup) {
-  let rendererAccessor = "D" + decodeAccessor(nodeAccessor),
+  let branchAccessor = "A" + (nodeAccessor = decodeAccessor(nodeAccessor)),
     renderer = _content("", template, walks, setup)();
   return (scope) => {
-    scope[rendererAccessor] = renderer;
+    (((scope[branchAccessor] = createBranch(
+      scope.$,
+      renderer,
+      scope,
+      scope[nodeAccessor].parentNode,
+    )).V = renderer),
+      pendingScopes.pop());
   };
 }
 function _try(nodeAccessor, template, walks, setup) {
@@ -1356,7 +1359,7 @@ function renderCatch(scope, error) {
         tryWithCatch.E,
         createAndSetupBranch,
       ),
-      tryWithCatch.E.a?.(owner["A" + tryWithCatch.C], [error]));
+      tryWithCatch.E.b?.(owner["A" + tryWithCatch.C], [error]));
   }
 }
 function _if(nodeAccessor, ...branchesArgs) {
@@ -1390,7 +1393,7 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
       if (
         scope[rendererAccessor] !==
           (scope[rendererAccessor] =
-            normalizedRenderer?.g || normalizedRenderer) ||
+            normalizedRenderer?.f || normalizedRenderer) ||
         (getContent && !normalizedRenderer && !scope[childScopeAccessor])
       )
         if (
@@ -1413,18 +1416,18 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
               content,
               createAndSetupBranch,
             ),
-              content.b &&
+              content.d &&
                 subscribeToScopeSet(
                   content.e,
-                  content.b,
+                  content.d,
                   scope[childScopeAccessor].Aa,
                 ));
           }
         } else
-          normalizedRenderer?.b &&
+          normalizedRenderer?.d &&
             subscribeToScopeSet(
               normalizedRenderer.e,
-              normalizedRenderer.b,
+              normalizedRenderer.d,
               scope[childScopeAccessor],
             );
       if (normalizedRenderer) {
@@ -1439,14 +1442,14 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
             (childScope.Ia || childScope.Ea) &&
               queueEffect(childScope, dynamicTagScript));
         else {
-          for (let accessor in normalizedRenderer.o)
-            normalizedRenderer.o[accessor](
+          for (let accessor in normalizedRenderer.n)
+            normalizedRenderer.n[accessor](
               childScope,
-              normalizedRenderer.u[accessor],
+              normalizedRenderer.t[accessor],
             );
-          if (normalizedRenderer.a)
+          if (normalizedRenderer.b)
             if (inputIsArgs)
-              normalizedRenderer.a(
+              normalizedRenderer.b(
                 childScope,
                 normalizedRenderer._ ? args[0] : args,
               );
@@ -1454,7 +1457,7 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
               let inputWithContent = getContent
                 ? { ...args, content: getContent(scope) }
                 : args || {};
-              normalizedRenderer.a(
+              normalizedRenderer.b(
                 childScope,
                 normalizedRenderer._ ? inputWithContent : [inputWithContent],
               );
@@ -1728,7 +1731,8 @@ function bySecondArg(_item, index) {
 function byFirstArg(name) {
   return name;
 }
-var rendering,
+var asyncRendersLookup,
+  rendering,
   pendingRenders = [],
   pendingRendersLookup = new Map(),
   caughtError = new WeakSet(),
@@ -1738,48 +1742,53 @@ var rendering,
   scopeKeyOffset = 1e3;
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let key = scopeKey * scopeKeyOffset + signalKey,
-    existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
-  if (existingRender) existingRender.q = value;
-  else {
-    let render = { f: key, k: scope, x: signal, q: value },
-      i = pendingRenders.push(render) - 1;
-    for (; i; ) {
-      let parentIndex = (i - 1) >> 1,
-        parent = pendingRenders[parentIndex];
-      if (key - parent.f >= 0) break;
-      ((pendingRenders[i] = parent), (i = parentIndex));
-    }
-    (signalKey >= 0 && pendingRendersLookup.set(key, render),
-      (pendingRenders[i] = render));
+    render = signalKey >= 0 && pendingRendersLookup.get(key);
+  render
+    ? (render.o = value)
+    : (queuePendingRender((render = { a: key, g: scope, u: signal, o: value })),
+      signalKey >= 0 && pendingRendersLookup.set(key, render));
+}
+function queuePendingRender(render) {
+  let i = pendingRenders.push(render) - 1;
+  for (; i; ) {
+    let parentIndex = (i - 1) >> 1,
+      parent = pendingRenders[parentIndex];
+    if (render.a - parent.a >= 0) break;
+    ((pendingRenders[i] = parent), (i = parentIndex));
   }
+  pendingRenders[i] = render;
 }
 function queueEffect(scope, fn) {
   pendingEffects.push(fn, scope);
 }
 function run() {
   let effects = pendingEffects;
+  asyncRendersLookup = new Map();
   try {
     ((rendering = 1), runRenders());
   } finally {
-    ((pendingRenders = []),
-      (pendingRendersLookup = new Map()),
-      (pendingEffects = []),
-      (rendering = 0));
+    ((pendingRendersLookup = asyncRendersLookup),
+      (asyncRendersLookup = rendering = 0),
+      (pendingRenders = []),
+      (pendingEffects = []));
   }
   runEffects(effects);
 }
 function prepareEffects(fn) {
   let prevRenders = pendingRenders,
-    prevRendersLookup = pendingRendersLookup,
     prevEffects = pendingEffects,
+    prevLookup = asyncRendersLookup,
     preparedEffects = (pendingEffects = []);
-  ((pendingRenders = []), (pendingRendersLookup = new Map()));
+  ((pendingRenders = []),
+    (asyncRendersLookup = pendingRendersLookup),
+    (pendingRendersLookup = new Map()));
   try {
     ((rendering = 1), fn(), runRenders());
   } finally {
     ((rendering = 0),
+      (pendingRendersLookup = asyncRendersLookup),
+      (asyncRendersLookup = prevLookup),
       (pendingRenders = prevRenders),
-      (pendingRendersLookup = prevRendersLookup),
       (pendingEffects = prevEffects));
   }
   return preparedEffects;
@@ -1794,27 +1803,27 @@ function runRenders() {
     if (render !== item) {
       let i = 0,
         mid = pendingRenders.length >> 1,
-        key = (pendingRenders[0] = item).f;
+        key = (pendingRenders[0] = item).a;
       for (; i < mid; ) {
         let bestChild = 1 + (i << 1),
           right = bestChild + 1;
         if (
           (right < pendingRenders.length &&
-            pendingRenders[right].f - pendingRenders[bestChild].f < 0 &&
+            pendingRenders[right].a - pendingRenders[bestChild].a < 0 &&
             (bestChild = right),
-          pendingRenders[bestChild].f - key >= 0)
+          pendingRenders[bestChild].a - key >= 0)
         )
           break;
         ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
       }
       pendingRenders[i] = item;
     }
-    render.k.F?.I || runRender(render);
+    render.g.F?.I || runRender(render);
   }
   for (let scope of pendingScopes) scope.H = 0;
   pendingScopes = [];
 }
-var runRender = (render) => render.x(render.k, render.q),
+var runRender = (render) => render.u(render.g, render.o),
   _enable_catch = () => {
     ((_enable_catch = () => {}), enableBranches());
     let handlePendingTry = (fn, scope, branch) => {
@@ -1843,9 +1852,18 @@ var runRender = (render) => render.x(render.k, render.q),
     )(runEffects)),
       (runRender = ((runRender2) => (render) => {
         try {
+          let branch = render.g.F;
+          for (; branch; ) {
+            if (branch.W)
+              return (
+                asyncRendersLookup.set(render.a, render),
+                branch.W.push(render)
+              );
+            branch = branch.N;
+          }
           runRender2(render);
         } catch (error) {
-          renderCatch(render.k, error);
+          renderCatch(render.g, error);
         }
       })(runRender)));
   };
@@ -1934,7 +1952,7 @@ var classIdToBranch = new Map(),
                 renderer.e,
                 document.body,
               ))),
-            renderer.a?.(branch, renderer._ ? args[0] : args));
+            renderer.b?.(branch, renderer._ ? args[0] : args));
         })),
         created)
       )
@@ -1972,7 +1990,7 @@ function mount(input = {}, reference, position) {
         (nextSibling = reference.nextSibling));
   }
   let curValue,
-    args = this.a,
+    args = this.b,
     effects = prepareEffects(() => {
       ((branch = createBranch($global, this, void 0, parentNode)),
         (branch.T = (newValue) => {

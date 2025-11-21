@@ -1,14 +1,9 @@
 import type { DOMWindow } from "jsdom";
 import { createBrowser } from "jsdom-context-require";
 
-import { resolveAfter } from "./resolve";
-
 export default function (options: Parameters<typeof createBrowser>[0]) {
   const browser = createBrowser(options) as ReturnType<typeof createBrowser> & {
-    open(): {
-      write(chunk: string): void;
-      close(): undefined | (() => Promise<void>);
-    };
+    stream(chunks: string[]): () => boolean;
   };
   const window = browser.window as unknown as DOMWindow & {
     MessageChannel: any;
@@ -29,70 +24,70 @@ export default function (options: Parameters<typeof createBrowser>[0]) {
         };
       }
     };
-  window.requestAnimationFrame = (fn) => window.setTimeout(fn) as any;
+  window.requestAnimationFrame = (() => {
+    let queue: FrameRequestCallback[] | undefined;
+    return function requestAnimationFrame(fn) {
+      if (queue) {
+        queue.push(fn);
+      } else {
+        queue = [fn];
+        setTimeout(() => {
+          const timestamp = performance.now();
+          const batch = queue!;
+          queue = undefined;
+          for (const fn of batch) {
+            fn(timestamp);
+          }
+        });
+      }
+      return 0;
+    };
+  })();
 
-  browser.open = () => {
-    const doc = window.document;
-    let chunkCount = 0;
-    let buffer = "";
+  browser.stream = (chunks) => {
+    const { document } = window;
+    document.open();
 
-    doc.open();
+    if (chunks.length > 1) {
+      const parsed = document.implementation.createHTMLDocument();
+      parsed.write(chunks.join("<!--%%FLUSH%%-->"));
+      parsed.doctype?.remove();
 
-    return {
-      write(chunk: string) {
-        if (buffer) {
-          buffer += "<!--%%FLUSH%%-->";
-        }
-        buffer += chunk;
-        chunkCount++;
-      },
-      close() {
-        if (chunkCount > 1) {
-          const parsed = doc.implementation.createHTMLDocument();
-          parsed.write(buffer);
-          parsed.doctype?.remove();
+      const walker = parsed.createTreeWalker(parsed);
+      const targetNodes = new WeakMap<Node, Node>([[parsed, document]]);
+      let node: Node | null;
 
-          const walker = parsed.createTreeWalker(parsed);
-          const targetNodes = new WeakMap<Node, Node>([[parsed, doc]]);
-          let node: Node | null;
-
-          function walkFlush() {
-            while ((node = walker.nextNode())) {
-              if (
-                node.nodeType === 8 /* Node.COMMENT_NODE */ &&
-                (node as Comment).data === "%%FLUSH%%"
-              ) {
-                return true;
-              }
-
-              const isScript = (node as Element).tagName === "SCRIPT";
-              const clone = doc.importNode(node, isScript);
-              targetNodes.set(node, clone);
-              (targetNodes.get(node.parentNode!) as ParentNode).appendChild(
-                clone,
-              );
-
-              if (isScript) {
-                walker.nextNode();
-              }
-            }
-            doc.close();
+      return () => {
+        while ((node = walker.nextNode())) {
+          if (
+            node.nodeType === 8 /* Node.COMMENT_NODE */ &&
+            (node as Comment).data === "%%FLUSH%%"
+          ) {
+            return true;
           }
 
-          if (walkFlush()) {
-            return async () => {
-              await resolveAfter(0, 1);
-              while (walkFlush()) {
-                await resolveAfter(0, 1);
-              }
-            };
+          const isScript = (node as Element).tagName === "SCRIPT";
+          const clone = document.importNode(node, isScript);
+          targetNodes.set(node, clone);
+          (targetNodes.get(node.parentNode!) as ParentNode).appendChild(clone);
+
+          if (isScript) {
+            walker.nextNode();
           }
         }
+        document.close();
+        return false;
+      };
+    }
 
-        doc.write(buffer);
-        doc.close();
-      },
+    return () => {
+      if (chunks.length) {
+        document.write(chunks[0]);
+      }
+      document.close();
+      return false;
     };
   };
+
   return browser;
 }

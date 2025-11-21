@@ -9,7 +9,6 @@ export function $setup($scope) {
 function $setText($scope) {
   return function (arg) {
     if (arg) {
-      debugger;
       throw new Error(`Expected no argument to be passed, but received "${typeof arg}".`);
     }
     _._el_read($scope["#div/0"]).textContent = typeof arg;

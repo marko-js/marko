@@ -89,7 +89,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             return (
               branchId?: number,
               branch?: BranchScope,
-              childBranch?: BranchScope,
               endedBranches?: BranchScope[],
               accessor?: string,
               singleNode?: boolean,
@@ -125,6 +124,11 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   } as BranchScope) as BranchScope),
                 );
                 branch[AccessorProp.ClosestBranch] = branch;
+                if (
+                  (branch[AccessorProp.AwaitCounter] = render.p?.[branchId])
+                ) {
+                  branch[AccessorProp.AwaitCounter].m = render.m;
+                }
 
                 if (singleNode) {
                   while (
@@ -157,12 +161,13 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                       : parent.insertBefore(new Text(), visit);
                 }
 
+                // TODO: when branch is part of a separate flush than it's parent, we
+                // may need to set branch parent to accessor when visitScope is a branch
+
                 while (i && orphanBranches[--i][AccessorProp.Id] > branchId) {
-                  (childBranch = orphanBranches.pop()!)[
-                    AccessorProp.ParentBranch
-                  ] = branch;
+                  orphanBranches[i][AccessorProp.ParentBranch] = branch;
                   (branch[AccessorProp.BranchScopes] ||= new Set()).add(
-                    childBranch,
+                    orphanBranches.pop()!,
                   );
                 }
 

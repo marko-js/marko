@@ -1,3 +1,5 @@
-import { wait } from "../../utils/resolve";
+import { flush, wait } from "../../utils/resolve";
 
-export const steps = [{}, wait(1)];
+export const steps = [{}, flush, wait(1)];
+
+export const skip_equivalent = true; // in-order streaming
