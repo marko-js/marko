@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.115
+
+### Patch Changes
+
+- [#2967](https://github.com/marko-js/marko/pull/2967) [`d3d25c8`](https://github.com/marko-js/marko/commit/d3d25c8ba3e5ac8d1aa35c8e6d3b87784c50cd92) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with duplicate attributes on native tags.
+
 ## 6.0.114
 
 ### Patch Changes
