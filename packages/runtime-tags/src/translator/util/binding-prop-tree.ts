@@ -1,25 +1,48 @@
 import { generateUid } from "./generate-uid";
+import { forEach } from "./optional";
 import { type Binding, BindingType } from "./references";
 
 export type BindingPropTree = {
   binding: Binding;
-  props: { [prop: string]: BindingPropTree } | undefined;
+  props: { [prop: string]: BindingPropTree } | undefined; // TODO: change to "known"
+  rest: BindingPropTree | undefined;
 };
 
 export function getBindingPropTree(binding: Binding) {
-  if (binding.type === BindingType.input) {
-    binding.export ??= generateUid(binding.name);
-  }
-
   const props: BindingPropTree = {
     binding,
     props: undefined,
+    rest: undefined,
   };
-  if (!(binding.aliases.size || binding.downstreamExpressions.size)) {
-    props.props = {};
-    for (const [property, alias] of binding.propertyAliases) {
-      props.props[property] = getBindingPropTree(alias);
+  if (!binding.downstreamExpressions.size) {
+    if (!binding.aliases.size) {
+      props.props = {};
+      for (const [property, alias] of binding.propertyAliases) {
+        props.props[property] = getBindingPropTree(alias);
+      }
+    } else if (binding.aliases.size === 1) {
+      const [restAlias] = binding.aliases;
+
+      if (restAlias.excludeProperties !== undefined) {
+        props.rest = getBindingPropTree(restAlias);
+        props.props = {};
+
+        if (restAlias.type === BindingType.input) {
+          restAlias.export ??= generateUid(restAlias.name);
+        }
+
+        forEach(restAlias.excludeProperties, (property) => {
+          const propAlias = binding.propertyAliases.get(property);
+          if (propAlias) {
+            props.props![property] = getBindingPropTree(propAlias);
+          }
+        });
+      }
     }
+  }
+
+  if (binding.type === BindingType.input) {
+    binding.export ??= generateUid(binding.name);
   }
 
   return props;

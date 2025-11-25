@@ -16,11 +16,11 @@ export function $setup($scope) {
     content: $startContent_content($scope)
   });
 }
-const $inputAs = /* @__PURE__ */_._const("inputAs", $inputAs__OR__inputClass__OR__htmlInput__OR__content);
-const $inputClass = /* @__PURE__ */_._const("inputClass", $inputAs__OR__inputClass__OR__htmlInput__OR__content);
-const $htmlInput = /* @__PURE__ */_._const("htmlInput", $inputAs__OR__inputClass__OR__htmlInput__OR__content);
+export const $inputAs = /* @__PURE__ */_._const("inputAs", $inputAs__OR__inputClass__OR__htmlInput__OR__content);
+export const $inputClass = /* @__PURE__ */_._const("inputClass", $inputAs__OR__inputClass__OR__htmlInput__OR__content);
+export const $htmlInput = /* @__PURE__ */_._const("htmlInput", $inputAs__OR__inputClass__OR__htmlInput__OR__content);
 const $inputContent__script = _._script("__tests__/tags/my-tag.marko_0_inputContent", $scope => $content($scope, $scope.inputContent));
-const $inputContent = /* @__PURE__ */_._const("inputContent", $inputContent__script);
+export const $inputContent = /* @__PURE__ */_._const("inputContent", $inputContent__script);
 export const $input = /* @__PURE__ */_._const("input", $scope => {
   (({
     as,

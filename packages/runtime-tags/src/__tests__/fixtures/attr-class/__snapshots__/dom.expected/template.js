@@ -33,10 +33,10 @@ export const $c = /* @__PURE__ */_._const("c", $c__OR__d);
 export const $d = /* @__PURE__ */_._const("d", $c__OR__d);
 export function $setup($scope) {
   _customTag($scope["#childScope/1"]);
-  _customTag_input_test($scope["#childScope/1"], void 0);
+  _customTag_input_test($scope["#childScope/1"]);
   _customTag($scope["#childScope/2"]);
   _customTag_input_class($scope["#childScope/2"], ["a", false, "b"]);
-  _customTag_input_test($scope["#childScope/2"], void 0);
+  _customTag_input_test($scope["#childScope/2"]);
 }
 export const $input = /* @__PURE__ */_._const("input", $scope => {
   $c($scope, $scope.input.c);

@@ -3,6 +3,7 @@ import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { buildForRuntimeCall, getForType } from "../core/for";
 import { scopeIdentifier, type TemplateExports } from "../visitors/program";
+import type { BindingPropTree } from "./binding-prop-tree";
 import { getSharedUid } from "./generate-uid";
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
@@ -13,7 +14,7 @@ import {
   type AttrTagLookup,
   getAttrTagIdentifier,
 } from "./nested-attribute-tags";
-import { toArray } from "./optional";
+import { forEach, toArray, toIter } from "./optional";
 import { getScopeAccessor } from "./references";
 import { callRuntime } from "./runtime";
 import {
@@ -30,18 +31,21 @@ type ContentKey = "renderBody" | "content";
 
 export function translateAttrs(
   tag: t.NodePath<t.MarkoTag>,
-  templateExports?: TemplateExports,
+  propTree?: BindingPropTree,
   statements: t.Statement[] = [],
   contentKey: ContentKey = "content",
 ) {
-  const seen = new Set<string>();
+  const templateExports =
+    propTree && !(propTree.rest && isOutputHTML()) ? propTree.props : undefined;
+  const excludeProperties = propTree?.binding.excludeProperties;
   const properties: t.ObjectExpression["properties"] = [];
   const attrTagLookup = tag.node.extra?.attributeTags;
+  const seen = new Set(toIter(excludeProperties));
 
   if (attrTagLookup) {
     for (const name in attrTagLookup) {
       const attrTagMeta = attrTagLookup[name];
-      if (usesExport(templateExports, attrTagMeta.name)) {
+      if (!seen.has(name) && usesExport(templateExports, attrTagMeta.name)) {
         seen.add(attrTagMeta.name);
         if (attrTagMeta.dynamic) {
           statements.push(
@@ -81,7 +85,7 @@ export function translateAttrs(
           } else {
             const translatedAttrTag = translateAttrs(
               child,
-              templateExports?.[attrTagMeta.name]?.props,
+              templateExports?.[attrTagMeta.name],
               statements,
               contentKey,
             );
@@ -145,11 +149,13 @@ export function translateAttrs(
   }
 
   const { attributes } = tag.node;
+  let hasSpread = false;
   for (let i = attributes.length; i--; ) {
     const attr = attributes[i];
     const { value } = attr;
     if (t.isMarkoSpreadAttribute(attr)) {
       properties.push(t.spreadElement(value));
+      hasSpread = true;
     } else if (!seen.has(attr.name) && usesExport(templateExports, attr.name)) {
       seen.add(attr.name);
       properties.push(toObjectProperty(attr.name, value));
@@ -157,6 +163,18 @@ export function translateAttrs(
   }
 
   properties.reverse();
+
+  if (hasSpread) {
+    forEach(excludeProperties, (key) => {
+      properties.push(
+        t.objectProperty(
+          t.identifier(key),
+          t.unaryExpression("void", t.numericLiteral(0)),
+        ),
+      );
+    });
+  }
+
   return { properties, statements };
 }
 
@@ -188,7 +206,7 @@ export function addDynamicAttrTagStatements(
       ) {
         const translatedAttrTag = translateAttrs(
           tag,
-          templateExports?.[attrTagMeta.name]?.props,
+          templateExports?.[attrTagMeta.name],
           statements,
           contentKey,
         );
