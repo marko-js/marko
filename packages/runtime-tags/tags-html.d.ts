@@ -3814,6 +3814,11 @@ declare global {
         extends SVGAttributes<SVGSVGElement>,
           SVGConditionalProcessingAttributes {
         /**
+         * @see https://www.w3.org/TR/xml-names/#ns-decl
+         */
+        xmlns?: AttrString;
+
+        /**
          * A list of four numbers `<min-x>`, `<min-y>`, `<width>` and `<height>`, separated by whitespace and/or a comma
          * @see https://www.w3.org/TR/SVG2/coords.html#ViewBoxAttribute
          */
