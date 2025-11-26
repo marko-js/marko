@@ -68,7 +68,7 @@ export function $setup($scope) {
   $ChildA_content__id($scope["#childScope/1"], "b");
   $ChildA_content__setup._($scope["#childScope/2"], $scope);
   $ChildA_content__id($scope["#childScope/2"], "c");
-  $ChildA_content__foo($scope["#childScope/2"], void 0);
+  $ChildA_content__foo($scope["#childScope/2"]);
   $ChildB_content__setup._($scope["#childScope/3"], $scope);
   $ChildB_content__foo($scope["#childScope/3"], {
     bar: 0
@@ -79,7 +79,7 @@ export function $setup($scope) {
   $ChildB_content__input_id($scope["#childScope/4"], "e");
   $ChildB_content__setup._($scope["#childScope/5"], $scope);
   $ChildB_content__input_id($scope["#childScope/5"], "f");
-  $ChildB_content__foo($scope["#childScope/5"], void 0);
+  $ChildB_content__foo($scope["#childScope/5"]);
   $count($scope, 0);
 }
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

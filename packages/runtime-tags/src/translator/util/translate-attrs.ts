@@ -3,12 +3,12 @@ import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { buildForRuntimeCall, getForType } from "../core/for";
 import { scopeIdentifier, type TemplateExports } from "../visitors/program";
+import type { BindingPropTree } from "./binding-prop-tree";
 import { getSharedUid } from "./generate-uid";
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
 import { isOutputHTML } from "./marko-config";
-// TODO: should this move here.
 import {
   type AttrTagLookup,
   getAttrTagIdentifier,
@@ -30,18 +30,20 @@ type ContentKey = "renderBody" | "content";
 
 export function translateAttrs(
   tag: t.NodePath<t.MarkoTag>,
-  templateExports?: TemplateExports,
+  propTree?: BindingPropTree,
+  skip?: Set<string>,
   statements: t.Statement[] = [],
   contentKey: ContentKey = "content",
 ) {
-  const seen = new Set<string>();
+  const templateExports =
+    propTree && !propTree.rest ? propTree.props : undefined;
   const properties: t.ObjectExpression["properties"] = [];
   const attrTagLookup = tag.node.extra?.attributeTags;
-
+  const seen = new Set(skip);
   if (attrTagLookup) {
     for (const name in attrTagLookup) {
       const attrTagMeta = attrTagLookup[name];
-      if (usesExport(templateExports, attrTagMeta.name)) {
+      if (!seen.has(name) && usesExport(templateExports, attrTagMeta.name)) {
         seen.add(attrTagMeta.name);
         if (attrTagMeta.dynamic) {
           statements.push(
@@ -81,7 +83,8 @@ export function translateAttrs(
           } else {
             const translatedAttrTag = translateAttrs(
               child,
-              templateExports?.[attrTagMeta.name]?.props,
+              templateExports?.[attrTagMeta.name],
+              undefined,
               statements,
               contentKey,
             );
@@ -157,6 +160,7 @@ export function translateAttrs(
   }
 
   properties.reverse();
+
   return { properties, statements };
 }
 
@@ -188,7 +192,8 @@ export function addDynamicAttrTagStatements(
       ) {
         const translatedAttrTag = translateAttrs(
           tag,
-          templateExports?.[attrTagMeta.name]?.props,
+          templateExports?.[attrTagMeta.name],
+          undefined,
           statements,
           contentKey,
         );

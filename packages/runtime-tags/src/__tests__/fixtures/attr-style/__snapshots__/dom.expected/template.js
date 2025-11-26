@@ -14,15 +14,15 @@ export const $input_color = /* @__PURE__ */_._const("input_color", $scope => {
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/4");
 export function $setup($scope) {
   _customTag($scope["#childScope/1"]);
-  _customTag_input_test($scope["#childScope/1"], void 0);
+  _customTag_input_test($scope["#childScope/1"]);
   _customTag($scope["#childScope/2"]);
   _customTag_input_style($scope["#childScope/2"], {
     width: "100px"
   });
-  _customTag_input_test($scope["#childScope/2"], void 0);
+  _customTag_input_test($scope["#childScope/2"]);
   _customTag($scope["#childScope/3"]);
   _customTag_input_style($scope["#childScope/3"], "color: green");
-  _customTag_input_test($scope["#childScope/3"], void 0);
+  _customTag_input_test($scope["#childScope/3"]);
   $dynamicTag($scope, TestTag, () => ({
     style: {
       color: "green"

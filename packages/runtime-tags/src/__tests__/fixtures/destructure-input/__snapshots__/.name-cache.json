@@ -1,0 +1,9 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "r",
+      "$$child_content__setup": "m"
+    }
+  }
+}

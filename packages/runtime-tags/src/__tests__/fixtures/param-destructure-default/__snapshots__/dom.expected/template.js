@@ -38,11 +38,11 @@ export function $setup($scope) {
     bar: 0
   });
   $ChildA_content__foo($scope["#childScope/1"], {});
-  $ChildA_content__foo($scope["#childScope/2"], void 0);
+  $ChildA_content__foo($scope["#childScope/2"]);
   $ChildB_content__foo($scope["#childScope/3"], {
     bar: 0
   });
   $ChildB_content__foo($scope["#childScope/4"], {});
-  $ChildB_content__foo($scope["#childScope/5"], void 0);
+  $ChildB_content__foo($scope["#childScope/5"]);
 }
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

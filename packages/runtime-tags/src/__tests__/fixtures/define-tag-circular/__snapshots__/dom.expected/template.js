@@ -5,7 +5,7 @@ const $Foo_content__walks = /* over(1), replace, over(2) */"b%c",
 export const $template = `<!>${$Foo_content__template}<!>`;
 export const $walks = /* over(1), <Foo>, over(1) */`b/${$Foo_content__walks}&b`;
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $Bar_content__setup = /* @__PURE__ */_._child_setup($scope => $Foo_content__tag_input_show($scope["#childScope/0"], void 0));
+const $Bar_content__setup = /* @__PURE__ */_._child_setup($scope => $Foo_content__tag_input_show($scope["#childScope/0"]));
 const $if_content__setup = $scope => {
   $Bar_content__setup._($scope["#childScope/0"], $scope);
 };

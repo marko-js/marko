@@ -22,7 +22,7 @@ export function $setup($scope) {
   _counter($scope["#childScope/1"]);
   _counter_input_content($scope["#childScope/1"], $counter_content2($scope));
   _counter_input_id($scope["#childScope/1"], "uncontrolled");
-  _counter_input_countChange($scope["#childScope/1"], void 0);
+  _counter_input_countChange($scope["#childScope/1"]);
   $x($scope, 0);
 }
 function $countChange($scope) {

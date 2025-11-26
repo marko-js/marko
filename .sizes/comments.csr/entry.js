@@ -1,4 +1,4 @@
-// size: 743 (min) 404 (brotli)
+// size: 735 (min) 398 (brotli)
 const $if_content__setup = ($scope) => {
     ($scope.a,
       $if_content__comment_comments._($scope),
@@ -63,8 +63,7 @@ _template(
   "/ b&",
   $setup,
   _const(2, ($scope) => {
-    const $comments_input_spread = $scope.c;
-    ($input_comments($scope.a, $comments_input_spread.comments),
-      $input_path($scope.a, $comments_input_spread.path));
+    ($input_comments($scope.a, $scope.c.comments),
+      $input_path($scope.a, $scope.c.path));
   }),
 ).mount();
