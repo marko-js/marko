@@ -1,0 +1,13 @@
+{
+  "vars": {
+    "props": {
+      "$_": "o",
+      "$init": "t",
+      "$$title_content__count": "r",
+      "$$title_content__setup": "m",
+      "$$count__closure": "c",
+      "$$count__script": "e",
+      "$$count": "n"
+    }
+  }
+}
