@@ -8,19 +8,11 @@ import {
 
 import { bodyToTextLiteral } from "../util/body-to-text-literal";
 import { isOutputHTML } from "../util/marko-config";
-import { type Binding, mergeReferences } from "../util/references";
+import { mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
 import * as writer from "../util/writer";
-
-const kNodeBinding = Symbol("comment tag binding");
-
-declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
-    [kNodeBinding]?: Binding;
-  }
-}
 
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
