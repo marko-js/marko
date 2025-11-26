@@ -218,6 +218,16 @@ export function fromIter<T>(data: Iterable<T>) {
   return many || one;
 }
 
+export function* toIter<T>(data: Opt<T>): Iterable<T> {
+  if (data !== undefined) {
+    if (Array.isArray(data)) {
+      yield* data;
+    } else {
+      yield data;
+    }
+  }
+}
+
 export function find<T>(
   data: Opt<T>,
   cb: (item: T, index: number) => boolean,

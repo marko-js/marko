@@ -1871,6 +1871,20 @@ function getMemberExpressionPropString(
   }
 }
 
+export function getObjectPropertyKeyString(
+  expr: t.ObjectProperty | t.ObjectMethod,
+) {
+  switch (expr.key.type) {
+    case "StringLiteral":
+      return expr.key.value;
+    case "NumericLiteral":
+      return "" + expr.key.value;
+    case "Identifier":
+      if (expr.computed) return;
+      return expr.key.name;
+  }
+}
+
 export interface ReferencedExtra extends t.NodeExtra {
   section: Section;
 }
