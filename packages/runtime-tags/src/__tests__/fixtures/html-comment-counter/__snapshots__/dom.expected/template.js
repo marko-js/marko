@@ -6,7 +6,7 @@ const $count__script = _._script("__tests__/template.marko_0_count", $scope => _
 }));
 const $count = /* @__PURE__ */_._let("count/3", $scope => {
   _._text($scope["#text/1"], $scope.count);
-  _._text($scope["#comment/2"], `${$scope.count} + ${$scope.count} = ${$scope.count + $scope.count}`);
+  _._text($scope["#comment/2"], `${_._to_text($scope.count)} + ${_._to_text($scope.count)} = ${_._to_text($scope.count + $scope.count)}`);
   $count__script($scope);
 });
 export function $setup($scope) {
