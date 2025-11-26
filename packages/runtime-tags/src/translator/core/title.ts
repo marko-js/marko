@@ -44,7 +44,7 @@ import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
-const kNodeBinding = Symbol("script tag node binding");
+const kNodeBinding = Symbol("title tag node binding");
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
@@ -184,7 +184,7 @@ export default {
 
       write`<title`;
 
-      const usedAttrs = getUsedAttrs(tag.node, isHTML);
+      const usedAttrs = getUsedAttrs(tag.node);
       const { staticAttrs, skipExpression, spreadExpression } = usedAttrs;
 
       for (const attr of staticAttrs) {
@@ -265,9 +265,9 @@ export default {
           addHTMLEffectCall(tagSection, tagExtra.referencedBindings);
 
           if (skipExpression) {
-            write`${callRuntime("_attrs_partial", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(tagSection), t.stringLiteral("script"))}`;
+            write`${callRuntime("_attrs_partial", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(tagSection), t.stringLiteral("title"))}`;
           } else {
-            write`${callRuntime("_attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(tagSection), t.stringLiteral("script"))}`;
+            write`${callRuntime("_attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(tagSection), t.stringLiteral("title"))}`;
           }
         } else {
           if (skipExpression) {
@@ -370,7 +370,7 @@ export default {
   },
 } as Tag;
 
-function getUsedAttrs(tag: t.MarkoTag, injectNonce: boolean) {
+function getUsedAttrs(tag: t.MarkoTag) {
   const seen: Record<string, t.MarkoAttribute> = {};
   const { attributes } = tag;
   const maybeStaticAttrs = new Set<t.MarkoAttribute>();
@@ -408,15 +408,6 @@ function getUsedAttrs(tag: t.MarkoTag, injectNonce: boolean) {
 
     if (skipProps) {
       skipExpression = t.objectExpression(skipProps);
-    }
-
-    if (injectNonce) {
-      spreadProps.unshift(
-        t.objectProperty(
-          t.identifier("nonce"),
-          t.memberExpression(callRuntime("$global"), t.identifier("cspNonce")),
-        ),
-      );
     }
 
     spreadExpression = propsToExpression(spreadProps);
