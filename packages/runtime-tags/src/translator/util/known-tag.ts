@@ -58,7 +58,11 @@ import {
   writeHTMLResumeStatements,
 } from "./signals";
 import { createSectionState } from "./state";
-import { toMemberExpression, toObjectProperty } from "./to-property-name";
+import {
+  toMemberExpression,
+  toObjectProperty,
+  toPropertyName,
+} from "./to-property-name";
 import {
   addDynamicAttrTagStatements,
   getTranslatedBodyContentProperty,
@@ -811,7 +815,7 @@ function writeAttrsToSignals(
     tagSection: Section;
     getBindingIdentifier: (
       binding: Binding,
-      preferedName?: string,
+      preferredName?: string,
     ) => t.Identifier;
     childScopeBinding: Binding;
     attrTagCallsByTag:
@@ -825,9 +829,14 @@ function writeAttrsToSignals(
         >;
   },
 ) {
+  let translatedAttrs: ReturnType<typeof translateAttrs> | undefined;
+  let seen: Set<string> | undefined;
+  let spreadId: t.Expression | undefined;
+
   if (propTree.props) {
-    const seen = new Set<string>();
     const attrTagLookup = analyzeAttributeTags(tag);
+    seen = new Set<string>();
+
     if (attrTagLookup) {
       const attrTags = tag.get("attributeTags");
       const statementsByGroup = new Map<
@@ -1002,15 +1011,21 @@ function writeAttrsToSignals(
 
     if (missing.size) {
       const referencedBindings = tag.node.extra?.referencedBindings;
-      let spreadId: t.Expression | undefined;
+
       if (spreadProps) {
-        const spreadExpr = propsToExpression(spreadProps);
+        const spreadExpr = propsToExpression(
+          propTree.rest
+            ? (translatedAttrs = translateAttrs(tag, propTree, seen)).properties
+            : spreadProps.reverse(),
+        );
 
         if (isSimpleReference(spreadExpr)) {
           spreadId = spreadExpr;
         } else {
           spreadId = generateUidIdentifier(`${importAlias}_spread`);
-          spreadProps.reverse();
+          if (translatedAttrs) {
+            translatedAttrs.properties = [t.spreadElement(spreadId)];
+          }
           addStatement("render", info.tagSection, referencedBindings, [
             t.variableDeclaration("const", [
               t.variableDeclarator(spreadId, spreadExpr),
@@ -1054,12 +1069,22 @@ function writeAttrsToSignals(
   }
 
   if (!propTree.props || propTree.rest) {
+    if (!translatedAttrs) {
+      if (propTree.rest) {
+        seen ||= new Set();
+        forEach(propTree.rest.binding.excludeProperties, (prop) =>
+          seen!.add(prop),
+        );
+      }
+
+      translatedAttrs = translateAttrs(tag, propTree.rest, seen);
+    }
+
     const referencedBindings = tag.node.extra?.referencedBindings;
     const tagInputIdentifier = info.getBindingIdentifier(
       propTree.rest?.binding || propTree.binding,
       propTree.rest ? importAlias + "_$rest" : importAlias,
     );
-    const translatedAttrs = translateAttrs(tag, propTree.rest);
 
     if (translatedAttrs.statements.length) {
       addStatement(
@@ -1071,6 +1096,31 @@ function writeAttrsToSignals(
     }
 
     let translatedProps = propsToExpression(translatedAttrs.properties);
+
+    if (propTree.rest && spreadId) {
+      const props: t.ObjectPattern["properties"] = [];
+      const restId = t.identifier(propTree.rest.binding.name);
+      forEach(propTree.rest.binding.excludeProperties, (name) => {
+        const propId = toPropertyName(name);
+        const shorthand =
+          propId.type === "Identifier" && t.isValidIdentifier(name);
+        props.push(
+          t.objectProperty(
+            propId,
+            shorthand ? propId : generateUidIdentifier(name),
+            false,
+            shorthand,
+          ),
+        );
+      });
+
+      props.push(t.restElement(restId));
+      translatedProps = t.callExpression(
+        t.arrowFunctionExpression([t.objectPattern(props)], restId),
+        [spreadId],
+      );
+    }
+
     if (isAttributeTag(tag)) {
       const attrTagName = getTagName(tag);
       const parentTag = tag.parentPath as t.NodePath<t.MarkoTag>;

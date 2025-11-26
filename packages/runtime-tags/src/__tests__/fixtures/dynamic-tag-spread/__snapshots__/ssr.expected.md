@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div><div id=foo>hi</div></div><div><div id=foo>hi</div></div>
+  <div><div id=foo>hi</div></div><div><div id=foo data-foo=bar>hi</div></div>
 ```
 
 # Render End
@@ -17,6 +17,7 @@
     </div>
     <div>
       <div
+        data-foo="bar"
         id="foo"
       >
         hi

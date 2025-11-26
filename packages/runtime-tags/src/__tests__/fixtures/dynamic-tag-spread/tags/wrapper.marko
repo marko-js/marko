@@ -1,5 +1,5 @@
-const/{ as: inputAs, ...htmlInput}=input
+const/{ as: inputAs, foo, ...htmlInput}=input
 
-<${inputAs || "div"} ...htmlInput>
+<${inputAs || "div"} ...htmlInput data-foo=foo>
   hi
 </>

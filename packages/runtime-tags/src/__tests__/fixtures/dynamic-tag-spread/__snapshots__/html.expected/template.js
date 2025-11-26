@@ -8,7 +8,10 @@ export default _._template("__tests__/template.marko", input => {
   });
   _._html("</div><div>");
   _wrapper({
-    id: "foo"
+    ...{
+      id: "foo"
+    },
+    foo: "bar"
   });
   _._html("</div>");
 });
