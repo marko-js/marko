@@ -1,5 +1,8 @@
 # Render
 ```html
+<title>
+  Count is 0
+</title>
 <button>
   +
 </button>
@@ -10,7 +13,7 @@
 
 # Mutations
 ```
-INSERT button, div
+INSERT title, button, div
 INSERT div/#text
 ```
 
@@ -19,6 +22,9 @@ INSERT div/#text
 container.querySelector("button").click();
 ```
 ```html
+<title>
+  Count is 1
+</title>
 <button>
   +
 </button>
@@ -29,6 +35,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
+REMOVE #text in title
+INSERT title/#text
 REMOVE #text in div
 INSERT div/#text
 ```
@@ -38,6 +46,9 @@ INSERT div/#text
 container.querySelector("button").click();
 ```
 ```html
+<title>
+  Count is 2
+</title>
 <button>
   +
 </button>
@@ -48,6 +59,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
+REMOVE #text in title
+INSERT title/#text
 REMOVE #text in div
 INSERT div/#text
 ```
@@ -57,6 +70,9 @@ INSERT div/#text
 container.querySelector("button").click();
 ```
 ```html
+<title>
+  Count is 3
+</title>
 <button>
   +
 </button>
@@ -67,6 +83,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
+REMOVE #text in title
+INSERT title/#text
 REMOVE #text in div
 INSERT div/#text
 ```

@@ -5,16 +5,17 @@
     <title>
       Count is 0
     </title>
+    <!--M_*1 #title/0-->
   </head>
   <body>
     <button>
       +
     </button>
-    <!--M_*1 #button/0-->
+    <!--M_*1 #button/1-->
     <div>
       Count is 0
     </div>
-    <!--M_*1 #div/1-->
+    <!--M_*1 #div/2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.a = [0,
@@ -44,16 +45,17 @@ container.querySelector("button").click();
     <title>
       Count is 1
     </title>
+    <!--M_*1 #title/0-->
   </head>
   <body>
     <button>
       +
     </button>
-    <!--M_*1 #button/0-->
+    <!--M_*1 #button/1-->
     <div>
       Count is 1
     </div>
-    <!--M_*1 #div/1-->
+    <!--M_*1 #div/2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.a = [0,
@@ -86,16 +88,17 @@ container.querySelector("button").click();
     <title>
       Count is 2
     </title>
+    <!--M_*1 #title/0-->
   </head>
   <body>
     <button>
       +
     </button>
-    <!--M_*1 #button/0-->
+    <!--M_*1 #button/1-->
     <div>
       Count is 2
     </div>
-    <!--M_*1 #div/1-->
+    <!--M_*1 #div/2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.a = [0,
@@ -128,16 +131,17 @@ container.querySelector("button").click();
     <title>
       Count is 3
     </title>
+    <!--M_*1 #title/0-->
   </head>
   <body>
     <button>
       +
     </button>
-    <!--M_*1 #button/0-->
+    <!--M_*1 #button/1-->
     <div>
       Count is 3
     </div>
-    <!--M_*1 #div/1-->
+    <!--M_*1 #div/2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.a = [0,

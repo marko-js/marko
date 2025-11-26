@@ -1,4 +1,4 @@
-// size: 20141 (min) 7710 (brotli)
+// size: 20109 (min) 7705 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -926,9 +926,6 @@ function _content_closures(renderer, closureFns) {
   };
 }
 var cloneCache = {};
-function _title(value) {
-  document.title = value;
-}
 function _to_text(value) {
   return value || 0 === value ? value + "" : "";
 }

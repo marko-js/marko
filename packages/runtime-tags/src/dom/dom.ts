@@ -32,10 +32,6 @@ import { parseHTML } from "./parse-html";
 import { createAndSetupBranch, type Renderer } from "./renderer";
 import { subscribeToScopeSet } from "./signals";
 
-export function _title(value: string) {
-  document.title = value;
-}
-
 export function _to_text(value: unknown) {
   return value || value === 0 ? value + "" : "";
 }

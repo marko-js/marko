@@ -289,6 +289,7 @@ export function getNodeContentType(
             return ContentType.Comment;
           case "html-script":
           case "html-style":
+          case "title":
             return ContentType.Tag;
           case "for":
           case "if":
@@ -485,6 +486,7 @@ function isNativeNode(tag: t.NodePath<t.MarkoTag>) {
       case "html-comment":
       case "html-script":
       case "html-style":
+      case "title":
         return true;
       default:
         return false;

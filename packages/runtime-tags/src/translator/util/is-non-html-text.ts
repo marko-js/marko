@@ -13,6 +13,7 @@ export function isNonHTMLText(
       case "html-comment":
       case "html-script":
       case "html-style":
+      case "title":
         return true;
     }
   }

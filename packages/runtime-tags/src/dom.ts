@@ -50,7 +50,6 @@ export {
   _lifecycle,
   _text,
   _text_content,
-  _title,
   _to_text,
 } from "./dom/dom";
 export { _on } from "./dom/event";

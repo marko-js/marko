@@ -1,6 +1,6 @@
 # Write
 ```html
-  <title>Count is 0</title><button>+</button><!--M_*1 #button/0--><div></div><!--M_*1 #div/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{count:0}]),"__tests__/template.marko_0_count 1"];M._.w()</script>
+  <title>Count is 0</title><!--M_*1 #title/0--><button>+</button><!--M_*1 #button/1--><div></div><!--M_*1 #div/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{count:0}]),"__tests__/template.marko_0_count 1"];M._.w()</script>
 ```
 
 # Render End
@@ -10,14 +10,15 @@
     <title>
       Count is 0
     </title>
+    <!--M_*1 #title/0-->
   </head>
   <body>
     <button>
       +
     </button>
-    <!--M_*1 #button/0-->
+    <!--M_*1 #button/1-->
     <div />
-    <!--M_*1 #div/1-->
+    <!--M_*1 #div/2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.a = [0,
@@ -38,6 +39,7 @@ INSERT html
 INSERT html/head
 INSERT html/head/title
 INSERT html/head/title/#text
+INSERT html/head/#comment
 INSERT html/body
 INSERT html/body/button
 INSERT html/body/button/#text

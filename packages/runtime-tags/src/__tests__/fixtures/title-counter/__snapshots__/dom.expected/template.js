@@ -1,16 +1,15 @@
-export const $template = "<button>+</button><div></div>";
-export const $walks = /* get, over(1), get, over(1) */" b b";
+export const $template = "<title></title><button>+</button><div></div>";
+export const $walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $title_content = _._content_resume("__tests__/template.marko_1_content");
 const $count__script = _._script("__tests__/template.marko_0_count", $scope => {
-  _._on($scope["#button/0"], "click", function () {
+  _._on($scope["#button/1"], "click", function () {
     $count($scope, $scope.count + 1);
   });
   $scope.count;
-  _._el_read($scope["#div/1"]).textContent = document.title;
+  _._el_read($scope["#div/2"]).textContent = document.title;
 });
-const $count = /* @__PURE__ */_._let("count/2", $scope => {
-  _._title(`Count is ${_._to_text($scope.count)}`);
+const $count = /* @__PURE__ */_._let("count/3", $scope => {
+  _._text_content($scope["#title/0"], `Count is ${_._to_text($scope.count)}`);
   $count__script($scope);
 });
 export function $setup($scope) {
