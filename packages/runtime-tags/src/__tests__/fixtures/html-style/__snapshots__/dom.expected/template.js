@@ -7,7 +7,7 @@ const $count__script = _._script("__tests__/template.marko_0_count", $scope => _
 const $count = /* @__PURE__ */_._let("count/1", $scope => {
   _._text_content($scope["#style/0"], `
   .test {
-    content: ${$scope.count}
+    content: ${_._to_text($scope.count)}
   }
 `);
   $count__script($scope);

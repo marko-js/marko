@@ -1,5 +1,7 @@
 import { types as t } from "@marko/compiler";
 
+import { callRuntime } from "./runtime";
+
 export function bodyToTextLiteral(body: t.MarkoTagBody) {
   const templateQuasis: t.TemplateElement[] = [];
   const templateExpressions: t.Expression[] = [];
@@ -11,7 +13,7 @@ export function bodyToTextLiteral(body: t.MarkoTagBody) {
     } else if (t.isMarkoPlaceholder(child)) {
       placeholderExtra ||= child.value.extra;
       templateQuasis.push(templateElement(currentQuasi, false));
-      templateExpressions.push(child.value);
+      templateExpressions.push(callRuntime("_to_text", child.value));
       currentQuasi = "";
     }
   }

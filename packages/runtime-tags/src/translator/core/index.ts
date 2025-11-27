@@ -23,6 +23,7 @@ import ServerTag from "./server";
 import StaticTag from "./static";
 import StyleTag from "./style";
 import TextAreaTag from "./textarea";
+import TitleTag from "./title";
 import TryTag from "./try";
 
 export default {
@@ -53,5 +54,6 @@ export default {
   "<static>": StaticTag,
   "<style>": StyleTag,
   "<textarea>": TextAreaTag,
+  "<title>": TitleTag,
   "<try>": TryTag,
 };

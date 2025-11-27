@@ -8,7 +8,7 @@ const $count = /* @__PURE__ */_._let("count/2", $scope => {
   _._text_content($scope["#script/0"], `
   {
     "imports": {
-      "${$scope.count}": "https://markojs.com",
+      "${_._to_text($scope.count)}": "https://markojs.com",
     }
   }
 `);

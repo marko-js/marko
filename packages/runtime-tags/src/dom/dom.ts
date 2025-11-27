@@ -32,6 +32,10 @@ import { parseHTML } from "./parse-html";
 import { createAndSetupBranch, type Renderer } from "./renderer";
 import { subscribeToScopeSet } from "./signals";
 
+export function _to_text(value: unknown) {
+  return value || value === 0 ? value + "" : "";
+}
+
 export function _attr(element: Element, name: string, value: unknown) {
   setAttribute(element, name, normalizeAttrValue(value));
 }

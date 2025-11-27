@@ -10,10 +10,10 @@ export const $input_x = /* @__PURE__ */_._const("input_x", $scope => {
 export function $setup($scope) {
   _._html($scope, "Hello HTML <span>hi</span>", "#text/4");
   _._text_content($scope["#script/5"], `
-    ${"'Hello <b> </script>'"}
+    ${_._to_text("'Hello <b> </script>'")}
   `);
   _._text_content($scope["#style/6"], `
-    ${".test { content: 'Hello <b> </style>' }"}
+    ${_._to_text(".test { content: 'Hello <b> </style>' }")}
   `);
 }
 export const $input = /* @__PURE__ */_._const("input", $scope => $input_x($scope, $scope.input.x));
