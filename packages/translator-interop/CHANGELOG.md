@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.57
+
+### Patch Changes
+
+- [#2973](https://github.com/marko-js/marko/pull/2973) [`abcd809`](https://github.com/marko-js/marko/commit/abcd80909115c19303513607740101380ccd1b7f) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix dynamic interpolations in `<title>` tag
+
+- Updated dependencies [[`abcd809`](https://github.com/marko-js/marko/commit/abcd80909115c19303513607740101380ccd1b7f), [`41753e6`](https://github.com/marko-js/marko/commit/41753e60393f77bc6ac4392319297c4670ae9da6), [`bf3dc6b`](https://github.com/marko-js/marko/commit/bf3dc6b1aa8ee8f5543d33b60fd64d1d6f5521d9)]:
+  - @marko/runtime-tags@6.0.116
+
 ## 0.2.56
 
 ### Patch Changes
