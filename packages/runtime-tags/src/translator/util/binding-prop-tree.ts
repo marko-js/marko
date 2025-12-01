@@ -1,6 +1,6 @@
 import { generateUid } from "./generate-uid";
-import { forEach } from "./optional";
-import { type Binding, BindingType } from "./references";
+import { forEach, type Opt } from "./optional";
+import { type Binding, BindingType, propsUtil } from "./references";
 
 export type BindingPropTree = {
   binding: Binding;
@@ -22,8 +22,7 @@ export function getBindingPropTree(binding: Binding) {
       }
     } else if (binding.aliases.size === 1) {
       const [restAlias] = binding.aliases;
-
-      if (restAlias.excludeProperties !== undefined) {
+      if (hasSupersetExcludeProperties(binding, restAlias.excludeProperties)) {
         props.rest = getBindingPropTree(restAlias);
         props.props = {};
 
@@ -46,4 +45,21 @@ export function getBindingPropTree(binding: Binding) {
   }
 
   return props;
+}
+
+function hasSupersetExcludeProperties(
+  binding: Binding,
+  excludeProperties: Opt<string>,
+) {
+  if (excludeProperties === undefined) {
+    return false;
+  }
+
+  for (const prop of binding.propertyAliases.keys()) {
+    if (!propsUtil.has(excludeProperties, prop)) {
+      return false;
+    }
+  }
+
+  return true;
 }

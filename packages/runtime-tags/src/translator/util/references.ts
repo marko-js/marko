@@ -1352,7 +1352,10 @@ export const bindingUtil = new Sorted(function compareBindings(
           : a.id - b.id);
 });
 
-const propsUtil = new Sorted(function compareProps(a: string, b: string) {
+export const propsUtil = new Sorted(function compareProps(
+  a: string,
+  b: string,
+) {
   return a < b ? -1 : a > b ? 1 : 0;
 });
 
