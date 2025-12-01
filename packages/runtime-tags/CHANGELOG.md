@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.117
+
+### Patch Changes
+
+- [#2976](https://github.com/marko-js/marko/pull/2976) [`36aa6fb`](https://github.com/marko-js/marko/commit/36aa6fbf9d7b052fc8acffa841cbae27f81783c0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where the ...rest alias optimization was applied incorrectly when there exists unrelated property aliases.
+
 ## 6.0.116
 
 ### Patch Changes
