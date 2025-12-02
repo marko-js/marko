@@ -3,12 +3,10 @@ require("../__util__/test-init");
 
 var autotest = require("mocha-autotest").default;
 var createBrowserWithMarko = require("../__util__/create-marko-jsdom-module");
-var ssrTemplate = require("./template.marko").default;
 var hydrateComponentPath = require.resolve("./template.component-browser.js");
 var browserHelpersPath = require.resolve("../__util__/BrowserHelpers");
 var testTargetHTML = '<div id="testsTarget"></div><div></div>';
 var browser = createBrowserWithMarko(__dirname, testTargetHTML);
-var BrowserHelpers = browser.require(browserHelpersPath);
 
 autotest("fixtures", {
   client: runClientTest,
@@ -20,6 +18,7 @@ function runClientTest(fixture) {
   let resolve = fixture.resolve;
   let context = fixture.context;
   test((done) => {
+    var BrowserHelpers = browser.require(browserHelpersPath);
     let helpers = new BrowserHelpers();
     let testFile = resolve("test.js");
     let testFunc = browser.require(testFile);
@@ -59,6 +58,7 @@ function runHydrateTest(fixture) {
   let resolve = fixture.resolve;
   let context = fixture.context;
   test((done) => {
+    var ssrTemplate = require("./template.marko").default;
     var components = context.rendered;
     if (!components)
       throw new Error("No components rendered by client version of test");

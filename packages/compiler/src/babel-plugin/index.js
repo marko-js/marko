@@ -375,11 +375,39 @@ function mergeVisitors(all) {
     if (all.length === 1) {
       all = all[0];
     } else {
-      return traverse.visitors.merge(all);
+      return traverse.visitors.merge(all.map(toExploded));
     }
   }
 
-  return traverse.visitors.explode(all);
+  return toExploded(all);
+}
+
+const explodeCache = new WeakMap();
+function toExploded(visitor) {
+  let cached = explodeCache.get(visitor);
+  if (!cached) {
+    cached = traverse.visitors.explode(cloneVisitor(visitor));
+    explodeCache.set(visitor, cached);
+  }
+
+  return cached;
+}
+
+function cloneVisitor(visitor) {
+  const clone = {};
+  for (const key in visitor) {
+    clone[key] = cloneVisit(visitor[key]);
+  }
+
+  return clone;
+}
+
+function cloneVisit(visit) {
+  if (!visit || typeof visit !== "object") {
+    return visit;
+  }
+
+  return { ...visit };
 }
 
 function traverseAll(file, visitors) {
