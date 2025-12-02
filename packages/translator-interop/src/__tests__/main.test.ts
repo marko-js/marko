@@ -40,8 +40,6 @@ type TestConfig = {
 
 describe("translator-interop", () => {
   before(() => {
-    uncachePackage("marko/translator");
-    uncachePackage("@marko/runtime-tags/translator");
     register({ ...htmlConfig, modules: "cjs" });
   });
 
@@ -337,16 +335,6 @@ describe("translator-interop", () => {
 
 async function compileCode(templateFile: string, config: compiler.Config) {
   return (await compiler.compileFile(templateFile, config)).code;
-}
-
-function uncachePackage(packageName: string) {
-  const resolved = require.resolve(packageName);
-  const root = path.dirname(resolved);
-  Object.keys(require.cache).forEach((key) => {
-    if (key.startsWith(root)) {
-      delete require.cache[key];
-    }
-  });
 }
 
 function trackErrors(window: DOMWindow) {
