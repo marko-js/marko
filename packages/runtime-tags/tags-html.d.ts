@@ -101,7 +101,11 @@ declare global {
       source: NativeTag<Marko.HTML.Source, HTMLSourceElement>;
       span: NativeTag<Marko.HTML.Span, HTMLSpanElement>;
       strong: NativeTag<Marko.HTML.Strong, HTMLElement>;
-      style: NativeTag<Marko.HTML.Style, HTMLStyleElement>;
+      style: NativeTag<
+        Marko.HTML.Style,
+        HTMLStyleElement,
+        Record<string, string>
+      >;
       sub: NativeTag<Marko.HTML.Sub, HTMLElement>;
       summary: NativeTag<Marko.HTML.Summary, HTMLElement>;
       sup: NativeTag<Marko.HTML.Sup, HTMLElement>;
