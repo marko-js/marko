@@ -17,6 +17,7 @@ import {
   trackDomVarReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
+import runtimeInfo from "../util/runtime-info";
 import { createScopeReadExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
 import {
@@ -150,7 +151,7 @@ export default {
   parseOptions: {
     text: true,
   },
-  attributes: {},
+  types: runtimeInfo.name + "/tags/html-comment.d.marko",
   autocomplete: [
     {
       description:

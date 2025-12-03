@@ -26,6 +26,7 @@ import {
   trackDomVarReferences,
 } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import runtimeInfo from "../util/runtime-info";
 import { createScopeReadExpression } from "../util/scope-read";
 import {
   getOrCreateSection,
@@ -371,15 +372,11 @@ export default {
       tag.remove();
     },
   },
-  "@disabled": "#html-disabled",
-  "@media": "#html-media",
-  "@nonce": "#html-nonce",
-  "@type": "#html-type",
-  "attribute-groups": ["html-attributes"],
   parseOptions: {
     text: true,
     preserveWhitespace: true,
   },
+  types: runtimeInfo.name + "/tags/html-style.d.marko",
   autocomplete: [
     {
       description:

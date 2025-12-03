@@ -89,7 +89,9 @@ export default {
   "<style>": {
     transformer: transformStyle,
     "parse-options": {
+      text: true,
       rawOpenTag: true,
+      preserveWhitespace: true,
     },
   },
   "<macro>": {
