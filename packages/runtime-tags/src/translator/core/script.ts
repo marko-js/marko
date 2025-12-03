@@ -148,7 +148,6 @@ export default {
     text: true,
     preserveWhitespace: true,
   },
-  attributes: {},
   autocomplete: [
     {
       description: "Use to create a side effects.",
