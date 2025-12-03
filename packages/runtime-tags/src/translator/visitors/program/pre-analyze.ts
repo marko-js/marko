@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 
+import { preAnalyze as preAnalyzeTextarea } from "../../core/textarea";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getMarkoRoot, isMarko } from "../../util/get-root";
 import withPreviousLocation from "../../util/with-previous-location";
@@ -78,6 +79,12 @@ function normalizeTag(state: State, tag: t.NodePath<t.MarkoTag>) {
       // <MyTag> --> <${MyTag}>
       state.crawl = true;
       node.name = withPreviousLocation(t.identifier(tagName), name);
+    } else {
+      switch (tagName) {
+        case "textarea":
+          preAnalyzeTextarea(tag);
+          break;
+      }
     }
   }
 
