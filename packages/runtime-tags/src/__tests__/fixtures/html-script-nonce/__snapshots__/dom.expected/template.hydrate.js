@@ -1,13 +1,13 @@
-// size: 202 (min) 151 (brotli)
+// size: 202 (min) 150 (brotli)
 const $if_content__setup = ($scope) => {
   _._attr_nonce($scope, "a");
 };
-_._script("a0", ($scope) => _._attrs_script($scope, "c"));
+_._script("a0", ($scope) => _._attrs_script($scope, "b"));
 const $if = _._if(
-    3,
+    2,
     "<script type=magic>\n    D\n  <\/script>",
     " b",
     $if_content__setup,
   ),
-  $mounted = _._let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
+  $mounted = _._let(4, ($scope) => $if($scope, $scope.e ? 0 : 1));
 (_._script("a1", ($scope) => $mounted($scope, !0)), init());

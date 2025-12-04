@@ -21,8 +21,8 @@
     >
       C
     </script>
-    <!--M_*1 #script/2-->
-    <!--M_|1 #text/3-->
+    <!--M_*1 #script/1-->
+    <!--M_|1 #text/2-->
     <script
       nonce="default-nonce"
     >
@@ -69,7 +69,7 @@
     >
       C
     </script>
-    <!--M_*1 #script/2-->
+    <!--M_*1 #script/1-->
     <script
       nonce="default-nonce"
       type="magic"
