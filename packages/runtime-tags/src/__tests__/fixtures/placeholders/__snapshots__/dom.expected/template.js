@@ -9,9 +9,11 @@ export const $input_x = /* @__PURE__ */_._const("input_x", $scope => {
 });
 export function $setup($scope) {
   _._html($scope, "Hello HTML <span>hi</span>", "#text/4");
+  _._attr_nonce($scope, "#script/5");
   _._text_content($scope["#script/5"], `
     ${_._to_text("'Hello <b> </script>'")}
   `);
+  _._attr_nonce($scope, "#style/6");
   _._text_content($scope["#style/6"], `
     ${_._to_text(".test { content: 'Hello <b> </style>' }")}
   `);

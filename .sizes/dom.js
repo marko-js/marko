@@ -1,4 +1,4 @@
-// size: 20109 (min) 7705 (brotli)
+// size: 20156 (min) 7726 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -963,6 +963,9 @@ function _attr_style_items(element, items) {
 }
 function _attr_style_item(element, name, value) {
   element.style.setProperty(name, value || 0 === value ? value + "" : "");
+}
+function _attr_nonce(scope, nodeAccessor) {
+  _attr(scope[nodeAccessor], "nonce", scope.$.cspNonce);
 }
 function _text(node, value) {
   let normalizedValue = normalizeString(value);

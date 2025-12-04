@@ -1,2 +1,11 @@
-export const steps = [{ $global: { cspNonce: "default-nonce" } }];
-export const skip_resume = true;
+import { wait } from "../../utils/resolve";
+
+export const steps = [
+  {
+    $global: {
+      cspNonce: "default-nonce",
+      serializedGlobals: { cspNonce: true },
+    },
+  },
+  wait(1),
+];

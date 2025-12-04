@@ -16,6 +16,7 @@ const $count = /* @__PURE__ */_._let("count/2", $scope => {
   $count__script($scope);
 });
 export function $setup($scope) {
+  _._attr_nonce($scope, "#script/0");
   $count($scope, 0);
 }
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

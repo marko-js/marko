@@ -11,3 +11,11 @@
 <html-script type="magic" ...spreadAttrs>
   C
 </html-script>
+
+<let/mounted=false>
+<script>mounted = true</script>
+<if=mounted>
+  <html-script type="magic">
+    D
+  </html-script>
+</if>
