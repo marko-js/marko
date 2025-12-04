@@ -1,2 +1,5 @@
-# Render `{"$global":{"cspNonce":"default-nonce"}}`
+# Render `{"$global":{"cspNonce":"default-nonce","serializedGlobals":{"cspNonce":true}}}`
 
+
+
+# Render ASYNC

@@ -38,6 +38,7 @@ export {
   _attr_class_item,
   _attr_class_items,
   _attr_content,
+  _attr_nonce,
   _attr_style,
   _attr_style_item,
   _attr_style_items,

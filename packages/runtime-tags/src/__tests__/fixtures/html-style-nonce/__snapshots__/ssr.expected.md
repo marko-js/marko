@@ -6,7 +6,7 @@
     B {}
   </style><style nonce=override-spread>
     C {}
-  </style><!--M_*1 #style/0--><script nonce=default-nonce>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{spreadAttrs:{nonce:"override-spread"}}]),"__tests__/template.marko_0_spreadAttrs 1"];M._.w()</script>
+  </style><!--M_*1 #style/2--><!--M_|1 #text/3--><script nonce=default-nonce>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[{cspNonce:"default-nonce"},{spreadAttrs:{nonce:"override-spread"}}]),"__tests__/template.marko_0 1 __tests__/template.marko_0_spreadAttrs 1"];M._.w()</script>
 ```
 
 # Render End
@@ -34,19 +34,23 @@
   C {}
 
     </style>
-    <!--M_*1 #style/0-->
+    <!--M_*1 #style/2-->
+    <!--M_|1 #text/3-->
     <script
       nonce="default-nonce"
     >
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
+      M._.r = [_ =&gt; (_.a = [
+        {
+          cspNonce: "default-nonce"
+        },
         {
           spreadAttrs:
           {
             nonce: "override-spread"
           }
         }]),
-        "__tests__/template.marko_0_spreadAttrs 1"
+        "__tests__/template.marko_0 1 __tests__/template.marko_0_spreadAttrs 1"
       ];
       M._.w()
     </script>
@@ -65,7 +69,8 @@ INSERT html/head/style1
 INSERT html/head/style1/#text
 INSERT html/head/style2
 INSERT html/head/style2/#text
-INSERT html/head/#comment
+INSERT html/head/#comment0
+INSERT html/head/#comment1
 INSERT html/head/script
 INSERT html/head/script/#text
 INSERT html/body

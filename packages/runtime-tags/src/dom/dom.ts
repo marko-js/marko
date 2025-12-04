@@ -9,6 +9,7 @@ import {
 import {
   type Accessor,
   AccessorPrefix,
+  AccessorProp,
   ControlledType,
   type Scope,
 } from "../common/types";
@@ -95,6 +96,10 @@ export function _attr_style_item(
   value: unknown,
 ) {
   element.style.setProperty(name, value || value === 0 ? value + "" : "");
+}
+
+export function _attr_nonce(scope: Scope, nodeAccessor: Accessor) {
+  _attr(scope[nodeAccessor], "nonce", scope[AccessorProp.Global].cspNonce);
 }
 
 export function _text(node: Text | Comment, value: unknown) {

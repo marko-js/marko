@@ -72,7 +72,6 @@ export default {
     let spreadReferenceNodes: t.Node[] | undefined;
     let exprExtras: Opt<t.NodeExtra>;
     let hasEventHandlers = false;
-    let hasDynamicAttributes = false;
 
     for (let i = attributes.length; i--; ) {
       const attr = attributes[i];
@@ -90,13 +89,12 @@ export default {
         if (isEventHandler(attr.name)) {
           valueExtra.isEffect = true;
           hasEventHandlers = true;
-        } else if (!evaluate(attr.value).confident) {
-          hasDynamicAttributes = true;
+        } else {
+          evaluate(attr.value);
         }
       } else if (t.isMarkoSpreadAttribute(attr)) {
         valueExtra.isEffect = true;
         hasEventHandlers = true;
-        hasDynamicAttributes = true;
       }
 
       if (spreadReferenceNodes) {
@@ -122,50 +120,37 @@ export default {
       }
     }
 
-    if (
-      node.var ||
-      hasEventHandlers ||
-      hasDynamicAttributes ||
-      hasBodyPlaceholders
-    ) {
-      const tagExtra = (node.extra ??= {});
-      const tagSection = getOrCreateSection(tag);
-      const nodeBinding = (tagExtra[kNodeBinding] = createBinding(
-        "#script",
-        BindingType.dom,
-        tagSection,
-      ));
-      if (hasEventHandlers) {
-        getProgram().node.extra.isInteractive = true;
-      }
-
-      if (spreadReferenceNodes) {
-        mergeReferences(tagSection, tag.node, spreadReferenceNodes);
-      }
-
-      if (hasBodyPlaceholders) {
-        exprExtras = push(
-          exprExtras,
-          bodyPlaceholderNodes.length === 1
-            ? (bodyPlaceholderNodes[0].extra ??= {})
-            : mergeReferences(
-                tagSection,
-                bodyPlaceholderNodes[0],
-                bodyPlaceholderNodes.slice(1),
-              ),
-        );
-      }
-
-      trackDomVarReferences(tag, nodeBinding);
-
-      addSerializeExpr(
-        tagSection,
-        !!(node.var || hasEventHandlers),
-        nodeBinding,
-      );
-
-      addSerializeExpr(tagSection, push(exprExtras, tagExtra), nodeBinding);
+    const tagExtra = (node.extra ??= {});
+    const tagSection = getOrCreateSection(tag);
+    const nodeBinding = (tagExtra[kNodeBinding] = createBinding(
+      "#script",
+      BindingType.dom,
+      tagSection,
+    ));
+    if (hasEventHandlers) {
+      getProgram().node.extra.isInteractive = true;
     }
+
+    if (spreadReferenceNodes) {
+      mergeReferences(tagSection, tag.node, spreadReferenceNodes);
+    }
+
+    if (hasBodyPlaceholders) {
+      exprExtras = push(
+        exprExtras,
+        bodyPlaceholderNodes.length === 1
+          ? (bodyPlaceholderNodes[0].extra ??= {})
+          : mergeReferences(
+              tagSection,
+              bodyPlaceholderNodes[0],
+              bodyPlaceholderNodes.slice(1),
+            ),
+      );
+    }
+
+    trackDomVarReferences(tag, nodeBinding);
+    addSerializeExpr(tagSection, !!(node.var || hasEventHandlers), nodeBinding);
+    addSerializeExpr(tagSection, push(exprExtras, tagExtra), nodeBinding);
   },
   translate: {
     enter(tag) {
@@ -189,8 +174,23 @@ export default {
       const { hasNonce, staticAttrs, skipExpression, spreadExpression } =
         usedAttrs;
 
-      if (isHTML && !hasNonce && !spreadExpression) {
-        write`${callRuntime("_attr_nonce")}`;
+      if (!hasNonce) {
+        if (isHTML) {
+          write`${callRuntime("_attr_nonce")}`;
+        } else {
+          addStatement(
+            "render",
+            tagSection,
+            undefined,
+            t.expressionStatement(
+              callRuntime(
+                "_attr_nonce",
+                scopeIdentifier,
+                getScopeAccessorLiteral(nodeBinding!),
+              ),
+            ),
+          );
+        }
       }
 
       for (const attr of staticAttrs) {
@@ -431,6 +431,7 @@ function getUsedAttrs(tag: t.MarkoTag, injectNonce: boolean) {
     }
 
     if (injectNonce && !hasNonce) {
+      hasNonce = true;
       spreadProps.unshift(
         t.objectProperty(
           t.identifier("nonce"),
