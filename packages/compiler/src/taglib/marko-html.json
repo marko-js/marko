@@ -873,7 +873,10 @@
   },
   "<title>": {
     "html": true,
-    "attribute-groups": ["html-attributes"]
+    "attribute-groups": ["html-attributes"],
+    "parse-options": {
+      "text": true
+    }
   },
   "<tr>": {
     "html": true,

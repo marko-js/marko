@@ -37,7 +37,7 @@ export const preferAPI = "tags";
 export const { transform, analyze, translate } = visitors;
 export const taglibs = [
   [
-    __dirname,
+    coreTagLib.taglibId,
     {
       ...coreTagLib,
       migrate: visitors.migrate,

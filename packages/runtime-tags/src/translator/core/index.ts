@@ -22,7 +22,6 @@ import ScriptTag from "./script";
 import ServerTag from "./server";
 import StaticTag from "./static";
 import StyleTag from "./style";
-import TitleTag from "./title";
 import TryTag from "./try";
 
 export default {
@@ -52,6 +51,5 @@ export default {
   "<server>": ServerTag,
   "<static>": StaticTag,
   "<style>": StyleTag,
-  "<title>": TitleTag,
   "<try>": TryTag,
 };
