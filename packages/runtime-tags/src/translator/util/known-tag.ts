@@ -65,7 +65,6 @@ import {
 } from "./to-property-name";
 import {
   addDynamicAttrTagStatements,
-  getTranslatedBodyContentProperty,
   propsToExpression,
   translateAttrs,
 } from "./translate-attrs";
@@ -284,43 +283,7 @@ export function knownTagTranslateHTML(
     return renderArgs;
   };
 
-  if (node.extra!.tagNameNullable) {
-    const contentProp = getTranslatedBodyContentProperty(properties);
-    let contentId: t.Identifier | undefined = undefined;
-
-    if (contentProp) {
-      const contentExpression = contentProp.value;
-      contentProp.value = contentId = generateUidIdentifier("content");
-      const [contentPath] = tag.insertBefore(
-        t.variableDeclaration("const", [
-          t.variableDeclarator(
-            contentId,
-            // TODO: only register if needed (child template analysis)
-            contentExpression,
-          ),
-        ]),
-      );
-      contentPath.skip();
-    }
-
-    let renderTagExpr: t.Expression = callExpression(
-      tagIdentifier,
-      ...getArgs(),
-    );
-
-    if (tagVar) {
-      translateVar(tag, t.unaryExpression("void", t.numericLiteral(0)), "let");
-      renderTagExpr = t.assignmentExpression("=", tagVar, renderTagExpr);
-    }
-
-    statements.push(
-      t.ifStatement(
-        tagIdentifier,
-        t.expressionStatement(renderTagExpr),
-        contentId && callStatement(contentId),
-      ),
-    );
-  } else if (tagVar) {
+  if (tagVar) {
     translateVar(tag, callExpression(tagIdentifier, ...getArgs()), "let");
   } else {
     statements.push(callStatement(tagIdentifier, ...getArgs()));

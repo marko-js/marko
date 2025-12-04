@@ -230,10 +230,6 @@ export default {
         const write = writer.writeTo(tag);
         const tagSection = getSection(tag);
 
-        if (tagExtra.tagNameNullable) {
-          writer.flushBefore(tag);
-        }
-
         translateDomVar(tag, nodeBinding);
 
         const visitAccessor =
@@ -436,15 +432,6 @@ export default {
           }
         }
 
-        // TODO: this is broken for DOM (and select in ssr) and so is currently disabled and always becomes a dynamic tag.
-        if (tagExtra.tagNameNullable) {
-          tag
-            .insertBefore(
-              t.ifStatement(tag.node.name, writer.consumeHTML(tag)!),
-            )[0]
-            .skip();
-        }
-
         if (writeAtStartOfBody) {
           write`${writeAtStartOfBody}`;
         }
@@ -468,10 +455,6 @@ export default {
 
         if (tagExtra[kTagContentAttr]) {
           writer.flushBefore(tag);
-        }
-
-        if (tagExtra.tagNameNullable) {
-          writer.flushInto(tag);
         }
 
         if (selectArgs) {
@@ -509,15 +492,6 @@ export default {
 
         if (!tagExtra[kSkipEndTag] && !openTagOnly && !selectArgs) {
           write`</${tag.node.name}>`;
-        }
-
-        // dynamic tag stuff
-        if (tagExtra.tagNameNullable) {
-          tag
-            .insertBefore(
-              t.ifStatement(tag.node.name, writer.consumeHTML(tag)!),
-            )[0]
-            .skip();
         }
 
         if (markerSerializeReason) {
