@@ -1,5 +1,30 @@
 # @marko/runtime-tags
 
+## 6.0.118
+
+### Patch Changes
+
+- [#2980](https://github.com/marko-js/marko/pull/2980) [`f9cf89f`](https://github.com/marko-js/marko/commit/f9cf89f37d16b1182d609e52be2519cd452cae5f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix types for html-\* tags.
+
+- [#2983](https://github.com/marko-js/marko/pull/2983) [`66ccfd8`](https://github.com/marko-js/marko/commit/66ccfd8e8f4ea277fb504464afca79b7ee6245d4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Rename \_to_text helper to \_escape_text on the server.
+
+- [#2983](https://github.com/marko-js/marko/pull/2983) [`3de60b9`](https://github.com/marko-js/marko/commit/3de60b9c82f4c31109ab6e1e9c6cfad23ca22e7e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove unused nullable tag name optimization.
+
+- [#2983](https://github.com/marko-js/marko/pull/2983) [`fdc46fb`](https://github.com/marko-js/marko/commit/fdc46fb3e762595a43fd1fa2f714af7f8819d341) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Move title tag logic into native tag translator.
+
+- [#2978](https://github.com/marko-js/marko/pull/2978) [`55fd324`](https://github.com/marko-js/marko/commit/55fd324c3f4ea00535856c7719f8b4c46f55de40) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update compiler to avoid mutating translator visitors.
+
+- [#2985](https://github.com/marko-js/marko/pull/2985) [`762377b`](https://github.com/marko-js/marko/commit/762377bacd5a237807d23f69f88ab51f5234a93e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor html-script and html-style to share logic with native tag translation.
+
+- [#2983](https://github.com/marko-js/marko/pull/2983) [`fdc46fb`](https://github.com/marko-js/marko/commit/fdc46fb3e762595a43fd1fa2f714af7f8819d341) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Normalize taglib ids to be consistent with register ids and across Marko 5/6.
+
+- [#2984](https://github.com/marko-js/marko/pull/2984) [`17c4ba7`](https://github.com/marko-js/marko/commit/17c4ba7edfa3f38b9fc653aafc4b244258299519) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support default nonce attribute on html-script and html-style when rendered client side if cspNonce is available/serialized to the client $global.
+
+- [#2981](https://github.com/marko-js/marko/pull/2981) [`6709f4c`](https://github.com/marko-js/marko/commit/6709f4cdbe9c49cf1d9dfa77813c5949f8400bba) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Move textarea normalization to be pre-analyze.
+
+- Updated dependencies [[`fdc46fb`](https://github.com/marko-js/marko/commit/fdc46fb3e762595a43fd1fa2f714af7f8819d341), [`55fd324`](https://github.com/marko-js/marko/commit/55fd324c3f4ea00535856c7719f8b4c46f55de40), [`fdc46fb`](https://github.com/marko-js/marko/commit/fdc46fb3e762595a43fd1fa2f714af7f8819d341)]:
+  - @marko/compiler@5.39.43
+
 ## 6.0.117
 
 ### Patch Changes
