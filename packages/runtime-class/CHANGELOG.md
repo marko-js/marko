@@ -1,5 +1,22 @@
 # Change Log
 
+## 5.37.63
+
+### Patch Changes
+
+- [#2983](https://github.com/marko-js/marko/pull/2983) [`fdc46fb`](https://github.com/marko-js/marko/commit/fdc46fb3e762595a43fd1fa2f714af7f8819d341) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Move body tag transform logic into translate.
+
+- [#2980](https://github.com/marko-js/marko/pull/2980) [`f9cf89f`](https://github.com/marko-js/marko/commit/f9cf89f37d16b1182d609e52be2519cd452cae5f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix types for html-\* tags.
+
+- [#2978](https://github.com/marko-js/marko/pull/2978) [`55fd324`](https://github.com/marko-js/marko/commit/55fd324c3f4ea00535856c7719f8b4c46f55de40) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update compiler to avoid mutating translator visitors.
+
+- [#2983](https://github.com/marko-js/marko/pull/2983) [`fdc46fb`](https://github.com/marko-js/marko/commit/fdc46fb3e762595a43fd1fa2f714af7f8819d341) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Normalize taglib ids to be consistent with register ids and across Marko 5/6.
+
+- [#2983](https://github.com/marko-js/marko/pull/2983) [`fdc46fb`](https://github.com/marko-js/marko/commit/fdc46fb3e762595a43fd1fa2f714af7f8819d341) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Merge migrate taglib into core taglib.
+
+- Updated dependencies [[`fdc46fb`](https://github.com/marko-js/marko/commit/fdc46fb3e762595a43fd1fa2f714af7f8819d341), [`55fd324`](https://github.com/marko-js/marko/commit/55fd324c3f4ea00535856c7719f8b4c46f55de40), [`fdc46fb`](https://github.com/marko-js/marko/commit/fdc46fb3e762595a43fd1fa2f714af7f8819d341)]:
+  - @marko/compiler@5.39.43
+
 ## 5.37.62
 
 ### Patch Changes

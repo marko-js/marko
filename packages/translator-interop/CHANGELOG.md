@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.58
+
+### Patch Changes
+
+- [#2978](https://github.com/marko-js/marko/pull/2978) [`55fd324`](https://github.com/marko-js/marko/commit/55fd324c3f4ea00535856c7719f8b4c46f55de40) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update compiler to avoid mutating translator visitors.
+
+- Updated dependencies [[`fdc46fb`](https://github.com/marko-js/marko/commit/fdc46fb3e762595a43fd1fa2f714af7f8819d341), [`f9cf89f`](https://github.com/marko-js/marko/commit/f9cf89f37d16b1182d609e52be2519cd452cae5f), [`66ccfd8`](https://github.com/marko-js/marko/commit/66ccfd8e8f4ea277fb504464afca79b7ee6245d4), [`3de60b9`](https://github.com/marko-js/marko/commit/3de60b9c82f4c31109ab6e1e9c6cfad23ca22e7e), [`fdc46fb`](https://github.com/marko-js/marko/commit/fdc46fb3e762595a43fd1fa2f714af7f8819d341), [`55fd324`](https://github.com/marko-js/marko/commit/55fd324c3f4ea00535856c7719f8b4c46f55de40), [`762377b`](https://github.com/marko-js/marko/commit/762377bacd5a237807d23f69f88ab51f5234a93e), [`fdc46fb`](https://github.com/marko-js/marko/commit/fdc46fb3e762595a43fd1fa2f714af7f8819d341), [`17c4ba7`](https://github.com/marko-js/marko/commit/17c4ba7edfa3f38b9fc653aafc4b244258299519), [`fdc46fb`](https://github.com/marko-js/marko/commit/fdc46fb3e762595a43fd1fa2f714af7f8819d341), [`6709f4c`](https://github.com/marko-js/marko/commit/6709f4cdbe9c49cf1d9dfa77813c5949f8400bba)]:
+  - marko@5.37.63
+  - @marko/runtime-tags@6.0.118
+
 ## 0.2.57
 
 ### Patch Changes
