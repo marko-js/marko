@@ -3,6 +3,7 @@ import * as translateElseIf from "./conditional/translate-else-if";
 import * as translateIf from "./conditional/translate-if";
 import * as parseMacro from "./macro/parse";
 import * as translateMacro from "./macro/translate";
+import migrate from "./migrate";
 import * as parseClass from "./parse-class";
 import * as parseExport from "./parse-export";
 import * as parseImport from "./parse-import";
@@ -18,7 +19,8 @@ import * as translateServerOnly from "./translate-server-only";
 import * as translateWhile from "./translate-while";
 
 export default {
-  "taglib-id": "marko-default-core",
+  taglibId: "marko-core",
+  migrate,
   "<import>": {
     "node-factory": parseImport,
     "parse-options": {
@@ -284,9 +286,6 @@ export default {
   "<_preferred-script-location>": {
     "code-generator": translateServerOnly,
     renderer: "marko/src/core-tags/components/preferred-script-location-tag.js",
-  },
-  "<body>": {
-    transformer: transformBody,
   },
   "<await>": {
     renderer: "marko/src/core-tags/core/await/renderer.js",

@@ -1,7 +1,6 @@
 import coreTaglib from "./core";
-import migrateTaglib from "./migrate";
 export const optionalTaglibs = ["marko-widgets", "@marko/compat-v4"];
 export default [
-  ["marko/core", coreTaglib],
-  ["marko/migrate", migrateTaglib],
+  ["marko-html-title", { "<title>": { parseOptions: { text: false } } }], // In Marko 5 the title tag parses as html even though only text is really allowed.
+  [coreTaglib.taglibId, coreTaglib],
 ];

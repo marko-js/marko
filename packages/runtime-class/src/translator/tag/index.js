@@ -57,7 +57,29 @@ export default {
         moveIgnoredAttrTags(path);
       }
 
-      if (isDynamicTag(path) || !(isMacroTag(path) || isNativeTag(path))) {
+      if (isNativeTag(path)) {
+        if (tagDef && tagDef.name === "body") {
+          path
+            .get("body")
+            .pushContainer("body", [
+              t.markoTag(
+                t.stringLiteral("init-components"),
+                [],
+                t.markoTagBody(),
+              ),
+              t.markoTag(
+                t.stringLiteral("await-reorderer"),
+                [],
+                t.markoTagBody(),
+              ),
+              t.markoTag(
+                t.stringLiteral("_preferred-script-location"),
+                [],
+                t.markoTagBody(),
+              ),
+            ]);
+        }
+      } else if (!isMacroTag(path)) {
         analyzeAttributeTags(path);
       }
 

@@ -19,9 +19,9 @@ const registeredTaglibs = [];
 const loadedTranslatorsTaglibs = new Map();
 let lookupCache = Object.create(null);
 
-register("marko/html", markoHTMLTaglib);
-register("marko/svg", markoSVGTaglib);
-register("marko/math", markoMathTaglib);
+register(markoHTMLTaglib["taglib-id"], markoHTMLTaglib);
+register(markoSVGTaglib["taglib-id"], markoSVGTaglib);
+register(markoMathTaglib["taglib-id"], markoMathTaglib);
 
 export function buildLookup(dirname, requestedTranslator, onError) {
   const translator = tryLoadTranslator(requestedTranslator);

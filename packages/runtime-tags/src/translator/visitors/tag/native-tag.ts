@@ -10,9 +10,11 @@ import {
 import { assertExclusiveAttrs } from "../../../common/errors";
 import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
+import { bodyToTextLiteral } from "../../util/body-to-text-literal";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getTagName } from "../../util/get-tag-name";
+import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
 import { type Opt, push } from "../../util/optional";
 import {
   type Binding,
@@ -81,13 +83,14 @@ export default {
       }
 
       const tagName = getTagName(tag)!;
+      const textOnly = isTextOnlyNativeTag(tag);
       const seen: Record<string, t.MarkoAttribute> = {};
       const { attributes } = tag.node;
       let hasDynamicAttributes = false;
       let hasEventHandlers = false;
       let relatedControllable: RelatedControllable;
       let spreadReferenceNodes: t.Node[] | undefined;
-      let attrExprExtras: Opt<t.NodeExtra>;
+      let exprExtras: Opt<t.NodeExtra>;
 
       for (let i = attributes.length; i--; ) {
         const attr = attributes[i];
@@ -123,7 +126,7 @@ export default {
           spreadReferenceNodes = [attr.value];
           relatedControllable = getRelatedControllable(tagName, seen);
         } else {
-          attrExprExtras = push(attrExprExtras, valueExtra);
+          exprExtras = push(exprExtras, valueExtra);
         }
       }
 
@@ -131,10 +134,25 @@ export default {
         throw tag.get("name").buildCodeFrameError(msg);
       });
 
+      let textPlaceholders: undefined | t.Node[];
+      if (textOnly) {
+        for (const child of tag.node.body.body) {
+          if (t.isMarkoPlaceholder(child)) {
+            (textPlaceholders ||= []).push(child.value);
+          } else if (!t.isMarkoText(child)) {
+            throw tag.hub.buildError(
+              child,
+              `Only text is allowed inside a \`<${tagName}>\`.`,
+            );
+          }
+        }
+      }
+
       if (
         node.var ||
         hasEventHandlers ||
         hasDynamicAttributes ||
+        textPlaceholders ||
         getRelatedControllable(tagName, seen)?.special
       ) {
         const tagExtra = (node.extra ??= {});
@@ -177,6 +195,19 @@ export default {
           );
         }
 
+        if (textPlaceholders) {
+          exprExtras = push(
+            exprExtras,
+            textPlaceholders.length === 1
+              ? (textPlaceholders[0].extra ??= {})
+              : mergeReferences(
+                  tagSection,
+                  textPlaceholders[0],
+                  textPlaceholders.slice(1),
+                ),
+          );
+        }
+
         addSerializeExpr(
           tagSection,
           !!(node.var || hasEventHandlers),
@@ -185,11 +216,7 @@ export default {
 
         trackDomVarReferences(tag, nodeBinding);
 
-        addSerializeExpr(
-          tagSection,
-          push(attrExprExtras, tagExtra),
-          nodeBinding,
-        );
+        addSerializeExpr(tagSection, push(exprExtras, tagExtra), nodeBinding);
       }
     },
   },
@@ -426,9 +453,18 @@ export default {
         const tagExtra = tag.node.extra!;
         const nodeBinding = tagExtra[kNativeTagBinding];
         const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
+        const textOnly = isTextOnlyNativeTag(tag);
         const selectArgs = htmlSelectArgs.get(tag.node);
         const tagName = getTagName(tag);
         const tagSection = getSection(tag);
+        const markerSerializeReason =
+          !tagExtra[kSkipEndTag] &&
+          nodeBinding &&
+          getSerializeReason(tagSection, nodeBinding);
+        const write = writer.writeTo(
+          tag,
+          !markerSerializeReason && (tagName === "html" || tagName === "body"),
+        );
 
         if (tagExtra[kTagContentAttr]) {
           writer.flushBefore(tag);
@@ -440,7 +476,7 @@ export default {
 
         if (selectArgs) {
           if (!tagExtra[kSkipEndTag]) {
-            writer.writeTo(tag)`</${tag.node.name}>`;
+            write`</${tag.node.name}>`;
           }
 
           writer.flushInto(tag);
@@ -459,21 +495,20 @@ export default {
               ),
             ),
           );
+        } else if (textOnly) {
+          for (const child of tag.node.body.body) {
+            if (t.isMarkoText(child)) {
+              write`${child.value}`;
+            } else if (t.isMarkoPlaceholder(child)) {
+              write`${callRuntime("_to_text", child.value)}`;
+            }
+          }
         } else {
           tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
         }
 
-        const markerSerializeReason =
-          !tagExtra[kSkipEndTag] &&
-          nodeBinding &&
-          getSerializeReason(tagSection, nodeBinding);
-
         if (!tagExtra[kSkipEndTag] && !openTagOnly && !selectArgs) {
-          writer.writeTo(
-            tag,
-            !markerSerializeReason &&
-              (tagName === "html" || tagName === "body"),
-          )`</${tag.node.name}>`;
+          write`</${tag.node.name}>`;
         }
 
         // dynamic tag stuff
@@ -734,10 +769,36 @@ export default {
         walks.enter(tag);
       },
       exit(tag) {
+        const tagExtra = tag.node.extra!;
+        const nodeBinding = tagExtra[kNativeTagBinding];
         const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
-        tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
+        const textOnly = isTextOnlyNativeTag(tag);
 
         if (!openTagOnly) {
+          if (textOnly) {
+            const textLiteral = bodyToTextLiteral(tag.node.body);
+            if (t.isStringLiteral(textLiteral)) {
+              writer.writeTo(tag)`${textLiteral}`;
+            } else {
+              addStatement(
+                "render",
+                getSection(tag),
+                textLiteral.extra?.referencedBindings,
+                t.expressionStatement(
+                  callRuntime(
+                    "_text_content",
+                    createScopeReadExpression(nodeBinding!),
+                    textLiteral,
+                  ),
+                ),
+              );
+            }
+          } else {
+            tag
+              .insertBefore(tag.node.body.body)
+              .forEach((child) => child.skip());
+          }
+
           writer.writeTo(tag)`</${tag.node.name}>`;
         }
 

@@ -14,5 +14,5 @@ export default function (path) {
     body = body[0].body;
   }
 
-  path.replaceWith(t.MarkoScriptlet(body, true));
+  path.replaceWith(t.markoScriptlet(body, true));
 }
