@@ -10,7 +10,7 @@ export function _escape(val: unknown) {
   return val ? escapeXMLStr(val + "") : val === 0 ? "0" : "&zwj;";
 }
 
-export function _to_text(val: unknown) {
+export function _escape_text(val: unknown) {
   return val ? escapeXMLStr(val + "") : val === 0 ? "0" : "";
 }
 
