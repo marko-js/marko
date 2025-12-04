@@ -43,7 +43,7 @@ export default function analyzeTagNameType(
             ? TagNameType.NativeTag
             : TagNameType.CustomTag;
       extra.tagNameNullable = extra.tagNameDynamic = false;
-    } else if (name.isTemplateLiteral() && !name.node.expressions.length) {
+    } else if (name.isTemplateLiteral() && name.node.quasis.length === 1) {
       extra.tagNameType = TagNameType.NativeTag;
       extra.tagNameNullable = extra.tagNameDynamic = false;
     } else if (name.isIdentifier()) {

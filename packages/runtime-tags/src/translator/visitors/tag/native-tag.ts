@@ -13,8 +13,10 @@ import { WalkCode } from "../../../common/types";
 import { bodyToTextLiteral } from "../../util/body-to-text-literal";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
+import { getAccessorProp } from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
 import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
+import { isOutputHTML } from "../../util/marko-config";
 import { type Opt, push } from "../../util/optional";
 import {
   type Binding,
@@ -38,7 +40,11 @@ import {
   getSerializeReason,
 } from "../../util/serialize-reasons";
 import { addHTMLEffectCall, addStatement } from "../../util/signals";
-import { toObjectProperty, toPropertyName } from "../../util/to-property-name";
+import {
+  toMemberExpression,
+  toObjectProperty,
+  toPropertyName,
+} from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
 import { translateDomVar } from "../../util/translate-var";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
@@ -82,10 +88,11 @@ export default {
           );
       }
 
-      const tagName = getTagName(tag)!;
+      const tagName = getCanonicalTagName(tag);
       const textOnly = isTextOnlyNativeTag(tag);
       const seen: Record<string, t.MarkoAttribute> = {};
       const { attributes } = tag.node;
+      let injectNonce = isInjectNonceTag(tagName);
       let hasDynamicAttributes = false;
       let hasEventHandlers = false;
       let relatedControllable: RelatedControllable;
@@ -104,6 +111,10 @@ export default {
           }
 
           seen[attr.name] = attr;
+
+          if (injectNonce && attr.name === "nonce") {
+            injectNonce = false;
+          }
 
           if (
             isEventHandler(attr.name) ||
@@ -150,18 +161,16 @@ export default {
 
       if (
         node.var ||
-        hasEventHandlers ||
         hasDynamicAttributes ||
+        hasEventHandlers ||
         textPlaceholders ||
+        injectNonce ||
         getRelatedControllable(tagName, seen)?.special
       ) {
         const tagExtra = (node.extra ??= {});
         const tagSection = getOrCreateSection(tag);
         const nodeBinding = (tagExtra[kNativeTagBinding] = createBinding(
-          "#" +
-            (node.name.type === "StringLiteral"
-              ? node.name.value
-              : t.toIdentifier(tag.get("name"))),
+          "#" + getCanonicalTagName(tag),
           BindingType.dom,
           tagSection,
         ));
@@ -223,7 +232,7 @@ export default {
   translate: translateByTarget({
     html: {
       enter(tag) {
-        const tagName = getTagName(tag)!;
+        const tagName = getCanonicalTagName(tag);
         const tagExtra = tag.node.extra!;
         const nodeBinding = tagExtra[kNativeTagBinding];
         const tagDef = getTagDef(tag);
@@ -235,11 +244,21 @@ export default {
         const visitAccessor =
           nodeBinding && getScopeAccessorLiteral(nodeBinding);
 
-        write`<${tag.node.name}`;
+        write`<${tagName}`;
 
         const usedAttrs = getUsedAttrs(tagName, tag.node);
-        const { staticAttrs, staticControllable, skipExpression } = usedAttrs;
+        const {
+          staticAttrs,
+          staticControllable,
+          staticContentAttr,
+          skipExpression,
+          injectNonce,
+        } = usedAttrs;
         let { spreadExpression } = usedAttrs;
+
+        if (injectNonce) {
+          write`${callRuntime("_attr_nonce")}`;
+        }
 
         if (staticControllable) {
           if (tagName !== "select" && tagName !== "textarea") {
@@ -358,11 +377,24 @@ export default {
         if (spreadExpression) {
           addHTMLEffectCall(tagSection, tagExtra.referencedBindings);
 
-          if (isOpenOnly || hasChildren || usedAttrs.staticContentAttr) {
+          if (isOpenOnly || hasChildren || staticContentAttr) {
             if (skipExpression) {
-              write`${callRuntime("_attrs_partial", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(tagSection), tag.node.name)}`;
+              write`${callRuntime(
+                "_attrs_partial",
+                spreadExpression,
+                skipExpression,
+                visitAccessor,
+                getScopeIdIdentifier(tagSection),
+                t.stringLiteral(tagName),
+              )}`;
             } else {
-              write`${callRuntime("_attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(tagSection), tag.node.name)}`;
+              write`${callRuntime(
+                "_attrs",
+                spreadExpression,
+                visitAccessor,
+                getScopeIdIdentifier(tagSection),
+                t.stringLiteral(tagName),
+              )}`;
             }
           }
         }
@@ -378,7 +410,7 @@ export default {
               break;
           }
         } else {
-          if (usedAttrs.staticContentAttr) {
+          if (staticContentAttr) {
             write`>`;
             tagExtra[kTagContentAttr] = true;
             (tag.node.body.body as t.Statement[]) = [
@@ -387,7 +419,7 @@ export default {
                   "_attr_content",
                   visitAccessor,
                   getScopeIdIdentifier(tagSection),
-                  usedAttrs.staticContentAttr.value,
+                  staticContentAttr.value,
                   getSerializeGuard(
                     tagSection,
                     nodeBinding && getSerializeReason(tagSection, nodeBinding),
@@ -412,7 +444,7 @@ export default {
                       skipExpression,
                       visitAccessor,
                       getScopeIdIdentifier(tagSection),
-                      tag.node.name,
+                      t.stringLiteral(tagName),
                       serializeReason,
                     ),
                   )
@@ -422,7 +454,7 @@ export default {
                       spreadExpression,
                       visitAccessor,
                       getScopeIdIdentifier(tagSection),
-                      tag.node.name,
+                      t.stringLiteral(tagName),
                       serializeReason,
                     ),
                   ),
@@ -442,7 +474,7 @@ export default {
         const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
         const textOnly = isTextOnlyNativeTag(tag);
         const selectArgs = htmlSelectArgs.get(tag.node);
-        const tagName = getTagName(tag);
+        const tagName = getCanonicalTagName(tag);
         const tagSection = getSection(tag);
         const markerSerializeReason =
           !tagExtra[kSkipEndTag] &&
@@ -459,7 +491,7 @@ export default {
 
         if (selectArgs) {
           if (!tagExtra[kSkipEndTag]) {
-            write`</${tag.node.name}>`;
+            write`</${tagName}>`;
           }
 
           writer.flushInto(tag);
@@ -483,7 +515,7 @@ export default {
             if (t.isMarkoText(child)) {
               write`${child.value}`;
             } else if (t.isMarkoPlaceholder(child)) {
-              write`${callRuntime("_escape_text", child.value)}`;
+              write`${callRuntime(getTextOnlyEscapeHelper(tagName), child.value)}`;
             }
           }
         } else {
@@ -491,7 +523,7 @@ export default {
         }
 
         if (!tagExtra[kSkipEndTag] && !openTagOnly && !selectArgs) {
-          write`</${tag.node.name}>`;
+          write`</${tagName}>`;
         }
 
         if (markerSerializeReason) {
@@ -503,7 +535,7 @@ export default {
     },
     dom: {
       enter(tag) {
-        const tagName = getTagName(tag)!;
+        const tagName = getCanonicalTagName(tag);
         const tagExtra = tag.node.extra!;
         const nodeBinding = tagExtra[kNativeTagBinding];
         const tagDef = getTagDef(tag);
@@ -516,14 +548,33 @@ export default {
           walks.visit(tag, WalkCode.Get);
         }
 
-        write`<${tag.node.name}`;
+        write`<${tagName}`;
 
-        const usedAttrs = getUsedAttrs(tagName, tag.node);
-        const { staticAttrs, staticControllable, skipExpression } = usedAttrs;
-        const { spreadExpression } = usedAttrs;
-
+        const {
+          staticAttrs,
+          staticControllable,
+          staticContentAttr,
+          skipExpression,
+          spreadExpression,
+          injectNonce,
+        } = getUsedAttrs(tagName, tag.node);
         const isOpenOnly = !!(tagDef && tagDef.parseOptions?.openTagOnly);
         const hasChildren = !!tag.node.body.body.length;
+
+        if (injectNonce) {
+          addStatement(
+            "render",
+            tagSection,
+            undefined,
+            t.expressionStatement(
+              callRuntime(
+                "_attr_nonce",
+                scopeIdentifier,
+                getScopeAccessorLiteral(nodeBinding!),
+              ),
+            ),
+          );
+        }
 
         if (staticControllable) {
           const { helper, attrs } = staticControllable;
@@ -663,7 +714,7 @@ export default {
           const canHaveAttrContent = !(
             isOpenOnly ||
             hasChildren ||
-            usedAttrs.staticContentAttr
+            staticContentAttr
           );
           if (skipExpression) {
             addStatement(
@@ -709,18 +760,17 @@ export default {
           );
         }
 
-        if (usedAttrs.staticContentAttr) {
-          const contentAttrValue = usedAttrs.staticContentAttr.value;
+        if (staticContentAttr) {
           addStatement(
             "render",
             tagSection,
-            contentAttrValue.extra?.referencedBindings,
+            staticContentAttr.value.extra?.referencedBindings,
             t.expressionStatement(
               callRuntime(
                 "_attr_content",
                 scopeIdentifier,
                 visitAccessor,
-                contentAttrValue,
+                staticContentAttr.value,
               ),
             ),
           );
@@ -773,7 +823,7 @@ export default {
               .forEach((child) => child.skip());
           }
 
-          writer.writeTo(tag)`</${tag.node.name}>`;
+          writer.writeTo(tag)`</${getCanonicalTagName(tag)}>`;
         }
 
         walks.exit(tag);
@@ -855,7 +905,7 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
   let skipProps: undefined | t.ObjectExpression["properties"];
   let staticControllable: RelatedControllable;
   let staticContentAttr: undefined | t.MarkoAttribute;
-
+  let injectNonce = isInjectNonceTag(tagName);
   for (let i = attributes.length; i--; ) {
     const attr = attributes[i];
     const { value } = attr;
@@ -879,6 +929,11 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
       !(seen[attr.name] || (attr.name === "content" && tag.body.body.length))
     ) {
       seen[attr.name] = attr;
+
+      if (injectNonce && attr.name === "nonce") {
+        injectNonce = false;
+      }
+
       if (spreadProps) {
         spreadProps.push(toObjectProperty(attr.name, attr.value));
       } else if (attr.name === "content" && tagName !== "meta") {
@@ -910,8 +965,6 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
   const staticAttrs = [...maybeStaticAttrs].reverse();
 
   if (spreadProps) {
-    spreadProps.reverse();
-
     if (staticControllable) {
       for (const attr of staticControllable.attrs) {
         if (attr) {
@@ -926,7 +979,22 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
       (skipProps ||= []).push(toObjectProperty(name, t.numericLiteral(1)));
     }
 
-    spreadExpression = propsToExpression(spreadProps);
+    if (injectNonce) {
+      injectNonce = false;
+      spreadProps.push(
+        t.objectProperty(
+          t.identifier("nonce"),
+          t.memberExpression(
+            isOutputHTML()
+              ? callRuntime("$global")
+              : toMemberExpression(scopeIdentifier, getAccessorProp().Global),
+            t.identifier("cspNonce"),
+          ),
+        ),
+      );
+    }
+
+    spreadExpression = propsToExpression(spreadProps.reverse());
   }
 
   if (skipProps) {
@@ -934,12 +1002,46 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
   }
 
   return {
+    injectNonce,
     staticAttrs,
     staticContentAttr,
     staticControllable,
     spreadExpression,
     skipExpression,
   };
+}
+
+function isInjectNonceTag(tagName: string) {
+  switch (tagName) {
+    case "script":
+    case "style":
+      return true;
+    default:
+      return false;
+  }
+}
+
+function getCanonicalTagName(tag: t.NodePath<t.MarkoTag>) {
+  const tagName = getTagName(tag)!;
+  switch (tagName) {
+    case "html-script":
+      return "script";
+    case "html-style":
+      return "style";
+    default:
+      return tagName;
+  }
+}
+
+function getTextOnlyEscapeHelper(tagName: string) {
+  switch (tagName) {
+    case "script":
+      return "_escape_script";
+    case "style":
+      return "_escape_style";
+    default:
+      return "_escape_text";
+  }
 }
 
 interface DelimitedAttrMeta {

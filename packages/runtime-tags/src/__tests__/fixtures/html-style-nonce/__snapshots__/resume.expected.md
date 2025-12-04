@@ -24,8 +24,8 @@
   C {}
 
     </style>
-    <!--M_*1 #style/2-->
-    <!--M_|1 #text/3-->
+    <!--M_*1 #style/1-->
+    <!--M_|1 #text/2-->
     <script
       nonce="default-nonce"
     >
@@ -75,7 +75,7 @@
   C {}
 
     </style>
-    <!--M_*1 #style/2-->
+    <!--M_*1 #style/1-->
     <style
       nonce="default-nonce"
     >

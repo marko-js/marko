@@ -13,9 +13,9 @@ export default _._template("__tests__/template.marko", input => {
     nonce: _.$global().cspNonce,
     type: "magic",
     ...spreadAttrs
-  }, "#script/2", $scope0_id, "script")}>
+  }, "#script/1", $scope0_id, "script")}>
   C
-</script>${_._el_resume($scope0_id, "#script/2")}`);
+</script>${_._el_resume($scope0_id, "#script/1")}`);
   _._if(() => {
     if (mounted) {
       const $scope1_id = _._scope_id();
@@ -25,7 +25,7 @@ export default _._template("__tests__/template.marko", input => {
       _._scope($scope1_id, {}, "__tests__/template.marko", "17:2");
       return 0;
     }
-  }, $scope0_id, "#text/3", 1, /* mounted */1, /* mounted */1, 0, 1);
+  }, $scope0_id, "#text/2", 1, /* mounted */1, /* mounted */1, 0, 1);
   _._script($scope0_id, "__tests__/template.marko_0");
   _._script($scope0_id, "__tests__/template.marko_0_spreadAttrs");
   _._scope($scope0_id, {

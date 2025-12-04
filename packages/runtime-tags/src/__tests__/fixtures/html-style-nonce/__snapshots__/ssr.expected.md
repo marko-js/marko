@@ -6,7 +6,7 @@
     B {}
   </style><style nonce=override-spread>
     C {}
-  </style><!--M_*1 #style/2--><!--M_|1 #text/3--><script nonce=default-nonce>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[{cspNonce:"default-nonce"},{spreadAttrs:{nonce:"override-spread"}}]),"__tests__/template.marko_0 1 __tests__/template.marko_0_spreadAttrs 1"];M._.w()</script>
+  </style><!--M_*1 #style/1--><!--M_|1 #text/2--><script nonce=default-nonce>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[{cspNonce:"default-nonce"},{spreadAttrs:{nonce:"override-spread"}}]),"__tests__/template.marko_0 1 __tests__/template.marko_0_spreadAttrs 1"];M._.w()</script>
 ```
 
 # Render End
@@ -34,8 +34,8 @@
   C {}
 
     </style>
-    <!--M_*1 #style/2-->
-    <!--M_|1 #text/3-->
+    <!--M_*1 #style/1-->
+    <!--M_|1 #text/2-->
     <script
       nonce="default-nonce"
     >

@@ -15,6 +15,9 @@ import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
 import { toMemberExpression } from "./to-property-name";
 
+export type DOMRuntimeHelpers = keyof typeof import("../../dom");
+export type HTMLRuntimeHelpers = keyof typeof import("../../html");
+
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
   "_await_content",
@@ -36,11 +39,9 @@ const pureDOMFunctions = new Set<string>([
   "_for_until",
   "_let",
   "_const",
-] satisfies (keyof typeof import("../../dom"))[]);
+] satisfies DOMRuntimeHelpers[]);
 
-export function importRuntime(
-  name: keyof typeof import("../../dom") | keyof typeof import("../../html"),
-) {
+export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {
   const { output } = getMarkoOpts();
   return toMemberExpression(
     importStar(getFile(), getRuntimePath(output), "_"),
@@ -49,7 +50,7 @@ export function importRuntime(
 }
 
 export function callRuntime(
-  name: keyof typeof import("../../dom") | keyof typeof import("../../html"),
+  name: DOMRuntimeHelpers | HTMLRuntimeHelpers,
   ...args: Array<Parameters<typeof t.callExpression>[1][number] | Falsy>
 ) {
   const callExpression = t.callExpression(
