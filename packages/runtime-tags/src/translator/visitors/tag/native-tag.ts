@@ -314,7 +314,7 @@ export default {
               valueChange,
             );
           } else if (value) {
-            writeAtStartOfBody = callRuntime("_to_text", value);
+            writeAtStartOfBody = callRuntime("_escape_text", value);
           }
         }
 
@@ -483,7 +483,7 @@ export default {
             if (t.isMarkoText(child)) {
               write`${child.value}`;
             } else if (t.isMarkoPlaceholder(child)) {
-              write`${callRuntime("_to_text", child.value)}`;
+              write`${callRuntime("_escape_text", child.value)}`;
             }
           }
         } else {
