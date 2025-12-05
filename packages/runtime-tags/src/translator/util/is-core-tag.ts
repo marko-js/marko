@@ -5,7 +5,6 @@ import { getTagName } from "./get-tag-name";
 import runtimeInfo from "./runtime-info";
 const { taglibId } = runtimeInfo;
 const htmlTaglibId = "marko-html";
-const interopTaglibId = "@marko/translator-interop-class-tags";
 
 export function isCoreTag(
   tag: t.NodePath,
@@ -15,7 +14,6 @@ export function isCoreTag(
     if (tagDef) {
       switch (tagDef.taglibId) {
         case taglibId:
-        case interopTaglibId:
           return true;
         case htmlTaglibId:
           switch (tagDef.name) {

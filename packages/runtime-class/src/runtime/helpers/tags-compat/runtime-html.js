@@ -148,7 +148,7 @@ exports.p = function (htmlCompat) {
     {},
   );
 
-  htmlCompat.patchDynamicTag(function getRenderer(scopeId, accessor, tag) {
+  htmlCompat.patchDynamicTag(function getRenderer(tag, scopeId, accessor) {
     if (!tag || isMarko6(tag._ || tag.content || tag)) {
       return tag;
     }

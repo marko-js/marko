@@ -1,5 +1,6 @@
 "use strict";
 
+var nodePath = require("path");
 var ok = require("assert").ok;
 var extend = require("raptor-util/extend");
 var taglibTypes = require("../loader/types");
@@ -51,6 +52,7 @@ class TaglibLookup {
     this.taglibsById = {};
 
     this._sortedTags = undefined;
+    this.manualTagsDirs = new Set();
   }
 
   hasTaglib(taglib) {
@@ -94,6 +96,14 @@ class TaglibLookup {
 
     if (hasOwnProperty.call(this.taglibsById, taglib.id)) {
       return;
+    }
+
+    if (
+      taglib.dirname &&
+      typeof taglib.tagsDir === "string" &&
+      /[/\\]tags[/\\]?$/.test(taglib.tagsDir)
+    ) {
+      this.manualTagsDirs.add(nodePath.resolve(taglib.dirname, taglib.tagsDir));
     }
 
     // console.log("TAGLIB:", taglib);
