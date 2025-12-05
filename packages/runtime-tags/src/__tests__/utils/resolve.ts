@@ -1,10 +1,45 @@
-const TIMEOUT_MULTIPLIER = 50;
-const promisesByResolveTime = new Map<number, Promise<any>>();
+declare global {
+  var __RESOLVE_STATE__: {
+    lastId: number;
+    promises: Map<number, Promise<number>>;
+  };
+}
 
-export function wait(timeout: number) {
-  return Object.assign(() => resolveAfter(`wait:${timeout}`, timeout), {
+const state = (globalThis.__RESOLVE_STATE__ ||= {
+  lastId: 0,
+  promises: new Map(),
+});
+
+export function resetResolveState() {
+  state.lastId = 0;
+  state.promises = new Map();
+}
+
+export const wait = Object.assign(
+  async () => {
+    let id: number;
+    let nextId: number | undefined;
+    do {
+      id = await getSharedPromise(nextId);
+      await new Promise((r) => setImmediate(r));
+      nextId = state.promises.size;
+    } while (id !== nextId);
+  },
+  {
     wait: true,
-  });
+  },
+);
+
+export function after(id: number) {
+  return Object.assign(
+    async () => {
+      await getSharedPromise(id);
+      await new Promise((r) => setImmediate(r));
+    },
+    {
+      wait: true,
+    },
+  );
 }
 
 export const flush = Object.assign(() => {}, {
@@ -15,11 +50,11 @@ export function throws(fn: (...args: any[]) => void) {
   return Object.assign(fn, { throws: true });
 }
 
-export function isWait(value: any): value is ReturnType<typeof wait> {
+export function isWait(value: any): value is typeof wait {
   return typeof value === "function" && value.wait;
 }
 
-export function isFlush(value: any): value is ReturnType<typeof flush> {
+export function isFlush(value: any): value is typeof flush {
   return typeof value === "function" && value.flush;
 }
 
@@ -27,16 +62,17 @@ export function isThrows(value: any): value is ReturnType<typeof throws> {
   return typeof value === "function" && value.throws;
 }
 
-export function resolveAfter<T>(value: T, timeout: number) {
-  const promise = getSharedPromise(timeout);
+export function resolveAfter<T>(value: T, id?: number) {
+  const promise = getSharedPromise(id);
   return Object.assign(
-    promise.then(() => value),
+    promise.then(() => {
+      return value;
+    }),
     { value },
   );
 }
-
-export function rejectAfter<T extends Error>(value: T, timeout: number) {
-  const promise = getSharedPromise(timeout);
+export function rejectAfter<T extends Error>(value: T, id?: number) {
+  const promise = getSharedPromise(id);
   return Object.assign(
     promise.then(() => {
       throw value;
@@ -45,25 +81,26 @@ export function rejectAfter<T extends Error>(value: T, timeout: number) {
   );
 }
 
-function getSharedPromise(timeout: number) {
-  const resolveTime = roundToNearestTimeBucket(
-    Date.now() + timeout * TIMEOUT_MULTIPLIER,
-  );
-  let resolvePromise = promisesByResolveTime.get(resolveTime);
-
-  if (!resolvePromise) {
-    resolvePromise = new Promise<undefined>((resolve) =>
-      setTimeout(() => {
-        promisesByResolveTime.delete(resolveTime);
-        resolve(undefined);
-      }, timeout * TIMEOUT_MULTIPLIER),
-    );
-    promisesByResolveTime.set(resolveTime, resolvePromise);
+function getSharedPromise(id: number = state.lastId + 1): Promise<number> {
+  if (id < 1) {
+    return Promise.resolve(0);
   }
 
-  return resolvePromise;
+  let promise = state.promises.get(id);
+  if (!promise) {
+    state.promises.set(id, (promise = getSharedPromise(id - 1).then(tick)));
+  }
+  return promise;
 }
 
-function roundToNearestTimeBucket(time: number) {
-  return Math.round(time / TIMEOUT_MULTIPLIER) * TIMEOUT_MULTIPLIER;
+function tick() {
+  return new Promise<number>((r) => {
+    setTimeout(() => {
+      setImmediate(() => {
+        setTimeout(() => {
+          r(++state.lastId);
+        });
+      });
+    });
+  });
 }

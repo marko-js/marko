@@ -1,13 +1,14 @@
-import { flush, wait } from "../../utils/resolve";
+import { after, flush } from "../../utils/resolve";
 
 export const steps = [
   {},
-  wait(1),
+  after(1),
   click,
-  wait(1),
+  after(2),
   click,
-  wait(1),
+  after(3),
   flush,
+  after(5),
   click,
 ];
 

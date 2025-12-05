@@ -1,7 +1,7 @@
 export const $template = "<button>increment</button><p>1 * <!> = <!></p><p>2 * <!> = <!></p><p>3 * <!> = <!></p><p>4 * <!> = <!></p><p>5 * <!> = <!></p>";
 export const $walks = /* get, over(1), next(1), over(1), replace, over(2), replace, out(1), next(1), over(1), replace, over(2), replace, out(1), next(1), over(1), replace, over(2), replace, out(1), next(1), over(1), replace, over(2), replace, out(1), next(1), over(1), replace, over(2), replace, out(1) */" bDb%c%lDb%c%lDb%c%lDb%c%lDb%c%l";
 import { resolveAfter } from "../../utils/resolve";
-const multiply = (multiplier, n) => resolveAfter(multiplier * n, n);
+const multiply = (multiplier, n) => resolveAfter(multiplier * n);
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $await_content5__result = /* @__PURE__ */_._const("result", $scope => _._text($scope["#text/0"], $scope.result));
 const $await_content5__$params = /* @__PURE__ */_._const("$params6", $scope => $await_content5__result($scope, $scope.$params6[0]));

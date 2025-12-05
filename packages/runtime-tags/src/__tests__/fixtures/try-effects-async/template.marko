@@ -8,7 +8,7 @@ import { resolveAfter } from "../../utils/resolve";
   <script>
     el().textContent = clickCount;
   </script>
-  <await|value|=resolveAfter(clickCount, 1)>
+  <await|value|=resolveAfter(clickCount)>
     Async: ${value > 1 ? (() => { throw new Error("ERROR!")})() : value}
   </await>
   <@placeholder>

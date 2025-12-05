@@ -2,18 +2,18 @@ import { resolveAfter } from "../../utils/resolve";
 -- a
 await|result1|=resolveAfter("b", 1)
   -- ${result1}
-  await|result2|=resolveAfter("c", 1)
+  await|result2|=resolveAfter("c", 2)
     -- ${result2}
-    await|result3|=resolveAfter("d", 1)
+    await|result3|=resolveAfter("d", 3)
       -- ${result3}
     -- e
   -- f
 -- g
 await|result4|=resolveAfter("h", 1)
   -- ${result4}
-  await|result5|=resolveAfter("i", 1)
+  await|result5|=resolveAfter("i", 2)
     -- ${result5}
-    await|result6|=resolveAfter("j", 1)
+    await|result6|=resolveAfter("j", 3)
       -- ${result6}
     -- k
   -- l

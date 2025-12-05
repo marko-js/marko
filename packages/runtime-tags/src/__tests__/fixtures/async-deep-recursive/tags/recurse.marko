@@ -1,7 +1,8 @@
 import { resolveAfter } from "../../../utils/resolve";
+
 if=input.level
   div data-level=input.level
     try
       @placeholder -- LOADING...
-      await=resolveAfter(0, 1)
+      await=resolveAfter(0)
         recurse level=input.level - 1

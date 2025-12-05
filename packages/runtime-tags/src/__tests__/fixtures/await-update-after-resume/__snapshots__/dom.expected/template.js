@@ -18,7 +18,7 @@ const $try_content__setup = $scope => {
   $await_content($scope);
   $try_content__value($scope);
 };
-const $try_content__value = /* @__PURE__ */_._closure_get("value", $scope => $try_content__await_promise($scope, resolveAfter($scope._.value, 1)));
+const $try_content__value = /* @__PURE__ */_._closure_get("value", $scope => $try_content__await_promise($scope, resolveAfter($scope._.value)));
 const $value__closure = /* @__PURE__ */_._closure($try_content__value);
 const $value = /* @__PURE__ */_._let("value/3", $scope => {
   _._text($scope["#text/0"], $scope.value);

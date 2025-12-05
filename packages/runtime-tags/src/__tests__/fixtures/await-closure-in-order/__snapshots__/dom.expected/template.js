@@ -19,6 +19,6 @@ const $await_promise = /* @__PURE__ */_._await_promise("#text/2");
 export function $setup($scope) {
   $await_content($scope);
   $value($scope, 1);
-  $await_promise($scope, resolveAfter(0, 3));
+  $await_promise($scope, resolveAfter(0, 4));
 }
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

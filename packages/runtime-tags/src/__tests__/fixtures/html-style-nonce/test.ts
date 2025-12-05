@@ -7,5 +7,5 @@ export const steps = [
       serializedGlobals: { cspNonce: true },
     },
   },
-  wait(1),
+  wait,
 ];

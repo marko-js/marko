@@ -1,5 +1,5 @@
-// size: 705 (min) 224 (brotli)
-const multiply = (multiplier, n) => resolveAfter(multiplier * n, n),
+// size: 703 (min) 222 (brotli)
+const multiply = (multiplier, n) => resolveAfter(multiplier * n),
   $await_content5__result = _._const(2, ($scope) =>
     _._text($scope.a, $scope.c),
   ),

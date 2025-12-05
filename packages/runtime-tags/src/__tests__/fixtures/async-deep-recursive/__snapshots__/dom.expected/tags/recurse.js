@@ -14,7 +14,7 @@ const $await_content = /* @__PURE__ */_._await_content("#text/0", `<!>${$templat
 const $try_content__await_promise = /* @__PURE__ */_._await_promise("#text/0");
 const $try_content__setup = $scope => {
   $await_content($scope);
-  $try_content__await_promise($scope, resolveAfter(0, 1));
+  $try_content__await_promise($scope, resolveAfter(0));
 };
 const $if_content__input_level = /* @__PURE__ */_._if_closure("#text/0", 0, $scope => _._attr($scope["#div/0"], "data-level", $scope._.input_level));
 const $if_content__try = /* @__PURE__ */_._try("#text/1", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $try_content__setup);

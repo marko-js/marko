@@ -12,7 +12,7 @@ const $try_content__setup = $scope => {
   $await_content($scope);
   $try_content__clickCount($scope);
 };
-const $try_content__clickCount = /* @__PURE__ */_._closure_get("clickCount", $scope => $try_content__await_promise($scope, resolveAfter($scope._.clickCount, 1)));
+const $try_content__clickCount = /* @__PURE__ */_._closure_get("clickCount", $scope => $try_content__await_promise($scope, resolveAfter($scope._.clickCount)));
 const $clickCount__closure = /* @__PURE__ */_._closure($try_content__clickCount);
 const $clickCount__script = _._script("__tests__/template.marko_0_clickCount", $scope => _._on($scope["#button/0"], "click", function () {
   $clickCount($scope, $scope.clickCount + 1);

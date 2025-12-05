@@ -11,7 +11,13 @@ import { isDeepStrictEqual } from "util";
 import * as translator from "../translator";
 import { bundle } from "./utils/bundle";
 import createBrowser from "./utils/create-browser";
-import { isFlush, isThrows, isWait, resolveAfter } from "./utils/resolve";
+import {
+  isFlush,
+  isThrows,
+  isWait,
+  resetResolveState,
+  resolveAfter,
+} from "./utils/resolve";
 import { stripInlineRuntime } from "./utils/strip-inline-runtime";
 import createMutationTracker from "./utils/track-mutations";
 
@@ -435,6 +441,10 @@ describe("runtime-tags/translator", () => {
       });
 
       describe("render", () => {
+        beforeEach(() => {
+          resetResolveState();
+        });
+
         (skipSSR ? it.skip : it)("ssr", async () => {
           await snapMD(async () => (await ssr()).tracker.getLogs());
         });
@@ -526,32 +536,6 @@ describe("runtime-tags/translator", () => {
           } else {
             assert.strictEqual(actual, expected);
           }
-
-          // // when the steps for a test contains more than one input,
-          // // the updates are not run for the resume test
-          // // so we trim the csrLogs to match the number of resumeLogs
-          // const step1 = (config.steps as unknown[] | undefined)?.[1];
-          // const isAsyncRender = step1 && (isFlush(step1) || isWait(step1));
-          // let csrLogs = [...(await csr()).tracker.getRawLogs(true)];
-          // let skip = 0;
-          // if (isAsyncRender) {
-          //   while (csrLogs[skip + 1]?.startsWith(`# Render ASYNC`)) {
-          //     skip++;
-          //   }
-          //   for (const resumeLog of resumeLogs.slice(1)) {
-          //     if (resumeLog.startsWith(`# Render ASYNC`)) {
-          //       skip--;
-          //     } else {
-          //       break;
-          //     }
-          //   }
-          //   csrLogs[skip] = csrLogs[skip].replace(`# Render ASYNC`, `# Render`);
-          // }
-          // csrLogs = csrLogs.slice(skip, resumeLogs.length + skip);
-          // assert.strictEqual(
-          //   csrLogs.join("\n\n").replace(/[cs]M_[a-z0-9]+/g, "%id"),
-          //   resumeLogs.join("\n\n").replace(/[cs]M_[a-z0-9]+/g, "%id"),
-          // );
         });
       });
     });

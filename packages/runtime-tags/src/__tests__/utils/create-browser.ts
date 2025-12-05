@@ -6,8 +6,10 @@ export default function (options: Parameters<typeof createBrowser>[0]) {
     stream(chunks: string[]): () => boolean;
   };
   const window = browser.window as unknown as DOMWindow & {
+    __RESOLVE_STATE__: typeof globalThis.__RESOLVE_STATE__;
     MessageChannel: any;
   };
+  window.__RESOLVE_STATE__ = globalThis.__RESOLVE_STATE__;
   window.MARKO_DEBUG = true;
   window.MessageChannel = (window as any).MessageChannel =
     class MessageChannel {
