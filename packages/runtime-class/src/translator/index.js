@@ -589,12 +589,14 @@ export function getRuntimeEntryFiles(output, optimize) {
           `${base}core-tags/core/await/renderer.js`,
           `${base}core-tags/core/await/reorderer-renderer.js`,
           `${base}runtime/helpers/skip-serialize.js`,
+          `${base}runtime/helpers/tags-compat/html${optimize ? "" : "-debug"}.mjs`,
         ]
       : [
           `${base}runtime/vdom/index.js`,
           `${base}runtime/vdom/hot-reload.js`,
           `${base}runtime/vdom/helpers/attrs.js`,
           `${base}runtime/vdom/helpers/const-element.js`,
+          `${base}runtime/helpers/tags-compat/dom${optimize ? "" : "-debug"}.mjs`,
         ]),
   ];
 }

@@ -1,5 +1,5 @@
 {
-  "main": "../src/translator/index.js",
+  "main": "../src/translator.js",
   "types": "index.d.ts",
-  "main:override": "../dist/translator/index.js"
+  "main:override": "../dist/translator.js"
 }

@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
-import { parseStatements } from "@marko/compiler/babel-utils";
+import { parseStatements, type Tag } from "@marko/compiler/babel-utils";
 export default {
-  parse(tag: t.NodePath<t.MarkoTag>) {
+  parse(tag) {
     const {
       node,
       hub: { file },
@@ -28,4 +28,4 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/syntax/#static-javascript",
     },
   ],
-};
+} as Tag;

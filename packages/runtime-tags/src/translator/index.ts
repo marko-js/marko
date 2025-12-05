@@ -54,6 +54,8 @@ export function getRuntimeEntryFiles(
   ];
 }
 
+export { createInteropTranslator } from "./interop";
+
 declare module "@marko/compiler/dist/types" {
   // This is extended by individual helpers.
   export interface ProgramExtra {}

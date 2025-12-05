@@ -75,6 +75,7 @@ export interface TagDefinition {
 }
 
 export interface TaglibLookup {
+  manualTagsDirs: Set<string>;
   getTagsSorted(): TagDefinition[];
   getTag(tagName: string): undefined | TagDefinition;
   getAttribute(

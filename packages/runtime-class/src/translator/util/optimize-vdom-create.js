@@ -78,7 +78,11 @@ const analyzeStaticVisitor = {
         !hasUserKey(path);
 
       const tagDef = getTagDef(path);
-      isStatic = isStatic && !tagDef.translator;
+      isStatic =
+        isStatic &&
+        (!tagDef.translator ||
+          tagDef.name === "script" ||
+          tagDef.name === "style");
 
       // check attributes
       isStatic =

@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures-interop/error-class-tags-dir/tags/hello.marko:1:1
+    > 1 | class {}
+        | ^^^^^ Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) `<class>`.
+      2 |
+      3 | <h1>Hello world</h1>

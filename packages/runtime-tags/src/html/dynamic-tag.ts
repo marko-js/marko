@@ -214,17 +214,19 @@ export function _content_resume(
   return _resume(_content(id, fn), id, scopeId);
 }
 
-export function patchDynamicTag(
-  patch: (
-    scopeId: number,
-    accessor: Accessor,
-    tag: unknown | string | ServerRenderer | BodyContentObject,
-  ) => unknown,
-) {
-  _dynamic_tag = (
-    (originalDynamicTag) =>
-    (scopeId, accessor, tag, input, content, inputIsArgs, resume) => {
-      const patched = patch(scopeId, accessor, tag);
+export const patchDynamicTag = (
+  (originalDynamicTag) =>
+  (patch: (tag: unknown, scopeId: number, accessor: Accessor) => unknown) => {
+    _dynamic_tag = (
+      scopeId,
+      accessor,
+      tag,
+      input,
+      content,
+      inputIsArgs,
+      resume,
+    ) => {
+      const patched = patch(tag, scopeId, accessor);
       if (patched !== tag) (patched as any).___id = tag;
       return originalDynamicTag(
         scopeId,
@@ -235,6 +237,6 @@ export function patchDynamicTag(
         inputIsArgs,
         resume,
       );
-    }
-  )(_dynamic_tag);
-}
+    };
+  }
+)(_dynamic_tag);
