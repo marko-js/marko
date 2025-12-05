@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.120
+
+### Patch Changes
+
+- [#2982](https://github.com/marko-js/marko/pull/2982) [`40413b7`](https://github.com/marko-js/marko/commit/40413b7da9d7920abda8e51f8b73fd2417b8e123) Thanks [@rturnq](https://github.com/rturnq)! - Handle updating closures in a pending await and delay running renders in pending scopes
+
+- [#2991](https://github.com/marko-js/marko/pull/2991) [`1085a19`](https://github.com/marko-js/marko/commit/1085a19fd26eeb7aac8ee209d852c8d536a2387d) Thanks [@rturnq](https://github.com/rturnq)! - Ensure parent branch is set on async branches
+
 ## 6.0.119
 
 ### Patch Changes
