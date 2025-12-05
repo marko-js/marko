@@ -1,4 +1,4 @@
-// size: 20366 (min) 7839 (brotli)
+// size: 20363 (min) 7810 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -113,7 +113,14 @@ function handleDelegated(ev) {
 function stripSpacesAndPunctuation(str) {
   return str.replace(/[^\p{L}\p{N}]/gu, "");
 }
-var nextScopeId = 1e6;
+var parsers = {};
+function parseHTML(html, ns) {
+  let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
+  return ((parser.innerHTML = html), parser.content || parser);
+}
+var isScheduled,
+  channel,
+  nextScopeId = 1e6;
 function createScope($global, closestBranch) {
   let scope = { L: nextScopeId++, H: 1, F: closestBranch, $: $global };
   return (pendingScopes.push(scope), scope);
@@ -146,6 +153,188 @@ function tempDetachBranch(branch) {
   let fragment = new DocumentFragment();
   ((fragment.namespaceURI = branch.S.parentNode.namespaceURI),
     insertChildNodes(fragment, null, branch.S, branch.K));
+}
+function schedule() {
+  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
+}
+function flushAndWaitFrame() {
+  (run(), requestAnimationFrame(triggerMacroTask));
+}
+function triggerMacroTask() {
+  (channel ||
+    ((channel = new MessageChannel()).port1.onmessage = () => {
+      ((isScheduled = 0), run());
+    }),
+    channel.port2.postMessage(0));
+}
+function _let(id, fn) {
+  let valueAccessor = decodeAccessor(id),
+    valueChangeAccessor = "M" + valueAccessor;
+  return (scope, value, valueChange) => (
+    rendering
+      ? (((scope[valueChangeAccessor] = valueChange) &&
+          scope[valueAccessor] !== value) ||
+          scope.H) &&
+        ((scope[valueAccessor] = value), fn?.(scope))
+      : scope[valueChangeAccessor]
+        ? scope[valueChangeAccessor](value)
+        : scope[valueAccessor] !== (scope[valueAccessor] = value) &&
+          fn &&
+          (schedule(), queueRender(scope, fn, id)),
+    value
+  );
+}
+function _const(valueAccessor, fn) {
+  return (
+    (valueAccessor = decodeAccessor(valueAccessor)),
+    (scope, value) => {
+      (!(valueAccessor in scope) || scope[valueAccessor] !== value) &&
+        ((scope[valueAccessor] = value), fn?.(scope));
+    }
+  );
+}
+function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
+  return (scope) => {
+    scope.H
+      ? id in scope
+        ? --scope[id] || fn(scope)
+        : (scope[id] = defaultPending)
+      : queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
+  };
+}
+function _for_closure(ownerLoopNodeAccessor, fn) {
+  let scopeAccessor =
+      "A" + (ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
+    ownerSignal = (ownerScope) => {
+      let scopes = toArray(ownerScope[scopeAccessor]);
+      scopes.length &&
+        queueRender(
+          ownerScope,
+          () => {
+            for (let scope of scopes) !scope.H && !scope.I && fn(scope);
+          },
+          -1,
+          0,
+          scopes[0].L,
+        );
+    };
+  return ((ownerSignal._ = fn), ownerSignal);
+}
+function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
+  let scopeAccessor =
+      "A" +
+      (ownerConditionalNodeAccessor = decodeAccessor(
+        ownerConditionalNodeAccessor,
+      )),
+    branchAccessor = "D" + ownerConditionalNodeAccessor,
+    ownerSignal = (scope) => {
+      let ifScope = scope[scopeAccessor];
+      ifScope &&
+        !ifScope.H &&
+        (scope[branchAccessor] || 0) === branch &&
+        queueRender(ifScope, fn, -1);
+    };
+  return ((ownerSignal._ = fn), ownerSignal);
+}
+function subscribeToScopeSet(ownerScope, accessor, scope) {
+  let subscribers = (ownerScope[accessor] ||= new Set());
+  subscribers.has(scope) ||
+    (subscribers.add(scope),
+    $signal(scope, -1).addEventListener("abort", () =>
+      ownerScope[accessor].delete(scope),
+    ));
+}
+function _closure(...closureSignals) {
+  let [{ k: ___scopeInstancesAccessor, l: ___signalIndexAccessor }] =
+    closureSignals;
+  for (let i = closureSignals.length; i--; ) closureSignals[i].q = i;
+  return (scope) => {
+    if (scope[___scopeInstancesAccessor])
+      for (let childScope of scope[___scopeInstancesAccessor])
+        childScope.H ||
+          queueRender(
+            childScope,
+            closureSignals[childScope[___signalIndexAccessor]],
+            -1,
+          );
+  };
+}
+function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
+  valueAccessor = decodeAccessor(valueAccessor);
+  let closureSignal = (scope) => {
+    ((scope[closureSignal.l] = closureSignal.q),
+      fn(scope),
+      subscribeToScopeSet(
+        getOwnerScope ? getOwnerScope(scope) : scope._,
+        closureSignal.k,
+        scope,
+      ));
+  };
+  return (
+    (closureSignal.k = "B" + valueAccessor),
+    (closureSignal.l = "C" + valueAccessor),
+    resumeId && _resume(resumeId, closureSignal),
+    closureSignal
+  );
+}
+function _child_setup(setup) {
+  return (
+    (setup._ = (scope, owner) => {
+      ((scope._ = owner), queueRender(scope, setup, -1));
+    }),
+    setup
+  );
+}
+function _var(scope, childAccessor, signal) {
+  scope[decodeAccessor(childAccessor)].T = (value) => signal(scope, value);
+}
+var _return = (scope, value) => scope.T?.(value);
+function _return_change(scope, changeHandler) {
+  changeHandler && (scope.U = changeHandler);
+}
+var _var_change = (scope, value) => scope.U?.(value),
+  tagIdsByGlobal = new WeakMap();
+function _id({ $: $global }) {
+  let id = tagIdsByGlobal.get($global) || 0;
+  return (
+    tagIdsByGlobal.set($global, id + 1),
+    "c" + $global.runtimeId + $global.renderId + id.toString(36)
+  );
+}
+function _script(id, fn) {
+  return (
+    _resume(id, fn),
+    (scope) => {
+      queueEffect(scope, fn);
+    }
+  );
+}
+function _el_read(value) {
+  return value;
+}
+function* traverseAllHoisted(scope, path, curIndex = path.length - 1) {
+  if (scope)
+    if (Symbol.iterator in scope)
+      for (let s of scope instanceof Map ? scope.values() : scope)
+        yield* traverseAllHoisted(s, path, curIndex);
+    else
+      curIndex
+        ? yield* traverseAllHoisted(scope[path[curIndex]], path, curIndex - 1)
+        : yield scope[path[0]];
+}
+function _hoist(...path) {
+  return (
+    (path = path.map((p) => ("string" == typeof p ? p : decodeAccessor(p)))),
+    (scope) => {
+      let getOne = (...args) =>
+          iterator()
+            .next()
+            .value?.(...args),
+        iterator = (getOne[Symbol.iterator] = () =>
+          traverseAllHoisted(scope, path));
+      return getOne;
+    }
+  );
 }
 var walker = document.createTreeWalker(document);
 function walk(startNode, walkCodes, branch) {
@@ -200,6 +389,99 @@ function walkInternal(currentWalkIndex, walkCodes, scope) {
       } else storedMultiplier = 10 * currentMultiplier + value - 117;
     }
 }
+function createBranch($global, renderer, parentScope, parentNode) {
+  let branch = createScope($global);
+  return (
+    (branch._ = renderer.e || parentScope),
+    setParentBranch(branch, parentScope?.F),
+    renderer.h?.(branch, parentNode.namespaceURI),
+    branch
+  );
+}
+function setParentBranch(branch, parentBranch) {
+  (parentBranch &&
+    ((branch.N = parentBranch), (parentBranch.D ||= new Set()).add(branch)),
+    (branch.F = branch));
+}
+function createAndSetupBranch($global, renderer, parentScope, parentNode) {
+  return setupBranch(
+    renderer,
+    createBranch($global, renderer, parentScope, parentNode),
+  );
+}
+function setupBranch(renderer, branch) {
+  return (renderer.j && queueRender(branch, renderer.j, -1), branch);
+}
+function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
+  ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
+    (setup = setup ? setup._ || setup : void 0),
+    (params ||= void 0));
+  let clone = template
+    ? (branch, ns) => {
+        ((cloneCache[ns] ||= {})[template] ||= (function (html, ns) {
+          let { firstChild: firstChild, lastChild: lastChild } = parseHTML(
+              html,
+              ns,
+            ),
+            parent = document.createElementNS(ns, "t");
+          return (
+            insertChildNodes(parent, null, firstChild, lastChild),
+            firstChild === lastChild && firstChild.nodeType < 8
+              ? (branch, walks) => {
+                  walk(
+                    (branch.S = branch.K = firstChild.cloneNode(!0)),
+                    walks,
+                    branch,
+                  );
+                }
+              : (branch, walks) => {
+                  let clone = parent.cloneNode(!0);
+                  (walk(clone.firstChild, walks, branch),
+                    (branch.S = clone.firstChild),
+                    (branch.K = clone.lastChild));
+                }
+          );
+        })(template, ns))(branch, walks);
+      }
+    : (branch) => {
+        walk((branch.S = branch.K = new Text()), walks, branch);
+      };
+  return (owner) => ({
+    f: id,
+    h: clone,
+    e: owner,
+    j: setup,
+    b: params,
+    d: dynamicScopesAccessor,
+  });
+}
+function _content_resume(
+  id,
+  template,
+  walks,
+  setup,
+  params,
+  dynamicScopesAccessor,
+) {
+  return _resume(
+    id,
+    _content(id, template, walks, setup, params, dynamicScopesAccessor),
+  );
+}
+function _content_closures(renderer, closureFns) {
+  let closureSignals = {};
+  for (let key in closureFns)
+    closureSignals[key] = _const(+key, closureFns[key]);
+  return (owner, closureValues) => {
+    let instance = renderer(owner);
+    return (
+      (instance.n = closureSignals),
+      (instance.t = closureValues),
+      instance
+    );
+  };
+}
+var cloneCache = {};
 var branchesEnabled,
   isResuming,
   registeredValues = {};
@@ -268,7 +550,7 @@ function init(runtimeId = "M") {
                       ((endedBranches ||= []).push(
                         (branch = scopeLookup[branchId] ||= { L: branchId }),
                       ),
-                      (branch.F = branch),
+                      setParentBranch(branch, branch.F),
                       (branch.O = render.p?.[branchId]) &&
                         (branch.O.m = render.m),
                       singleNode)
@@ -297,8 +579,7 @@ function init(runtimeId = "M") {
                             ? startVisit
                             : parent.insertBefore(new Text(), visit)));
                     for (; i && orphanBranches[--i].L > branchId; )
-                      ((orphanBranches[i].N = branch),
-                        (branch.D ||= new Set()).add(orphanBranches.pop()));
+                      setParentBranch(orphanBranches.pop(), branch);
                     nextToken();
                   }
                   (endedBranches &&
@@ -648,286 +929,6 @@ function normalizeBoolProp(value) {
 function toValueProp(it) {
   return it.value;
 }
-var isScheduled,
-  channel,
-  parsers = {};
-function parseHTML(html, ns) {
-  let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
-  return ((parser.innerHTML = html), parser.content || parser);
-}
-function schedule() {
-  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
-}
-function flushAndWaitFrame() {
-  (run(), requestAnimationFrame(triggerMacroTask));
-}
-function triggerMacroTask() {
-  (channel ||
-    ((channel = new MessageChannel()).port1.onmessage = () => {
-      ((isScheduled = 0), run());
-    }),
-    channel.port2.postMessage(0));
-}
-function _let(id, fn) {
-  let valueAccessor = decodeAccessor(id),
-    valueChangeAccessor = "M" + valueAccessor;
-  return (scope, value, valueChange) => (
-    rendering
-      ? (((scope[valueChangeAccessor] = valueChange) &&
-          scope[valueAccessor] !== value) ||
-          scope.H) &&
-        ((scope[valueAccessor] = value), fn?.(scope))
-      : scope[valueChangeAccessor]
-        ? scope[valueChangeAccessor](value)
-        : scope[valueAccessor] !== (scope[valueAccessor] = value) &&
-          fn &&
-          (schedule(), queueRender(scope, fn, id)),
-    value
-  );
-}
-function _const(valueAccessor, fn) {
-  return (
-    (valueAccessor = decodeAccessor(valueAccessor)),
-    (scope, value) => {
-      (!(valueAccessor in scope) || scope[valueAccessor] !== value) &&
-        ((scope[valueAccessor] = value), fn?.(scope));
-    }
-  );
-}
-function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
-  return (scope) => {
-    scope.H
-      ? id in scope
-        ? --scope[id] || fn(scope)
-        : (scope[id] = defaultPending)
-      : queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
-  };
-}
-function _for_closure(ownerLoopNodeAccessor, fn) {
-  let scopeAccessor =
-      "A" + (ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
-    ownerSignal = (ownerScope) => {
-      let scopes = toArray(ownerScope[scopeAccessor]);
-      scopes.length &&
-        queueRender(
-          ownerScope,
-          () => {
-            for (let scope of scopes) !scope.H && !scope.I && fn(scope);
-          },
-          -1,
-          0,
-          scopes[0].L,
-        );
-    };
-  return ((ownerSignal._ = fn), ownerSignal);
-}
-function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
-  let scopeAccessor =
-      "A" +
-      (ownerConditionalNodeAccessor = decodeAccessor(
-        ownerConditionalNodeAccessor,
-      )),
-    branchAccessor = "D" + ownerConditionalNodeAccessor,
-    ownerSignal = (scope) => {
-      let ifScope = scope[scopeAccessor];
-      ifScope &&
-        !ifScope.H &&
-        (scope[branchAccessor] || 0) === branch &&
-        queueRender(ifScope, fn, -1);
-    };
-  return ((ownerSignal._ = fn), ownerSignal);
-}
-function subscribeToScopeSet(ownerScope, accessor, scope) {
-  let subscribers = (ownerScope[accessor] ||= new Set());
-  subscribers.has(scope) ||
-    (subscribers.add(scope),
-    $signal(scope, -1).addEventListener("abort", () =>
-      ownerScope[accessor].delete(scope),
-    ));
-}
-function _closure(...closureSignals) {
-  let [{ k: ___scopeInstancesAccessor, l: ___signalIndexAccessor }] =
-    closureSignals;
-  for (let i = closureSignals.length; i--; ) closureSignals[i].q = i;
-  return (scope) => {
-    if (scope[___scopeInstancesAccessor])
-      for (let childScope of scope[___scopeInstancesAccessor])
-        childScope.H ||
-          queueRender(
-            childScope,
-            closureSignals[childScope[___signalIndexAccessor]],
-            -1,
-          );
-  };
-}
-function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
-  valueAccessor = decodeAccessor(valueAccessor);
-  let closureSignal = (scope) => {
-    ((scope[closureSignal.l] = closureSignal.q),
-      fn(scope),
-      subscribeToScopeSet(
-        getOwnerScope ? getOwnerScope(scope) : scope._,
-        closureSignal.k,
-        scope,
-      ));
-  };
-  return (
-    (closureSignal.k = "B" + valueAccessor),
-    (closureSignal.l = "C" + valueAccessor),
-    resumeId && _resume(resumeId, closureSignal),
-    closureSignal
-  );
-}
-function _child_setup(setup) {
-  return (
-    (setup._ = (scope, owner) => {
-      ((scope._ = owner), queueRender(scope, setup, -1));
-    }),
-    setup
-  );
-}
-function _var(scope, childAccessor, signal) {
-  scope[decodeAccessor(childAccessor)].T = (value) => signal(scope, value);
-}
-var _return = (scope, value) => scope.T?.(value);
-function _return_change(scope, changeHandler) {
-  changeHandler && (scope.U = changeHandler);
-}
-var _var_change = (scope, value) => scope.U?.(value),
-  tagIdsByGlobal = new WeakMap();
-function _id({ $: $global }) {
-  let id = tagIdsByGlobal.get($global) || 0;
-  return (
-    tagIdsByGlobal.set($global, id + 1),
-    "c" + $global.runtimeId + $global.renderId + id.toString(36)
-  );
-}
-function _script(id, fn) {
-  return (
-    _resume(id, fn),
-    (scope) => {
-      queueEffect(scope, fn);
-    }
-  );
-}
-function _el_read(value) {
-  return value;
-}
-function* traverseAllHoisted(scope, path, curIndex = path.length - 1) {
-  if (scope)
-    if (Symbol.iterator in scope)
-      for (let s of scope instanceof Map ? scope.values() : scope)
-        yield* traverseAllHoisted(s, path, curIndex);
-    else
-      curIndex
-        ? yield* traverseAllHoisted(scope[path[curIndex]], path, curIndex - 1)
-        : yield scope[path[0]];
-}
-function _hoist(...path) {
-  return (
-    (path = path.map((p) => ("string" == typeof p ? p : decodeAccessor(p)))),
-    (scope) => {
-      let getOne = (...args) =>
-          iterator()
-            .next()
-            .value?.(...args),
-        iterator = (getOne[Symbol.iterator] = () =>
-          traverseAllHoisted(scope, path));
-      return getOne;
-    }
-  );
-}
-function createBranch($global, renderer, parentScope, parentNode) {
-  let branch = createScope($global),
-    parentBranch = parentScope?.F;
-  return (
-    (branch._ = renderer.e || parentScope),
-    (branch.F = branch),
-    parentBranch &&
-      ((branch.N = parentBranch), (parentBranch.D ||= new Set()).add(branch)),
-    renderer.h?.(branch, parentNode.namespaceURI),
-    branch
-  );
-}
-function createAndSetupBranch($global, renderer, parentScope, parentNode) {
-  return setupBranch(
-    renderer,
-    createBranch($global, renderer, parentScope, parentNode),
-  );
-}
-function setupBranch(renderer, branch) {
-  return (renderer.j && queueRender(branch, renderer.j, -1), branch);
-}
-function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
-  ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
-    (setup = setup ? setup._ || setup : void 0),
-    (params ||= void 0));
-  let clone = template
-    ? (branch, ns) => {
-        ((cloneCache[ns] ||= {})[template] ||= (function (html, ns) {
-          let { firstChild: firstChild, lastChild: lastChild } = parseHTML(
-              html,
-              ns,
-            ),
-            parent = document.createElementNS(ns, "t");
-          return (
-            insertChildNodes(parent, null, firstChild, lastChild),
-            firstChild === lastChild && firstChild.nodeType < 8
-              ? (branch, walks) => {
-                  walk(
-                    (branch.S = branch.K = firstChild.cloneNode(!0)),
-                    walks,
-                    branch,
-                  );
-                }
-              : (branch, walks) => {
-                  let clone = parent.cloneNode(!0);
-                  (walk(clone.firstChild, walks, branch),
-                    (branch.S = clone.firstChild),
-                    (branch.K = clone.lastChild));
-                }
-          );
-        })(template, ns))(branch, walks);
-      }
-    : (branch) => {
-        walk((branch.S = branch.K = new Text()), walks, branch);
-      };
-  return (owner) => ({
-    f: id,
-    h: clone,
-    e: owner,
-    j: setup,
-    b: params,
-    d: dynamicScopesAccessor,
-  });
-}
-function _content_resume(
-  id,
-  template,
-  walks,
-  setup,
-  params,
-  dynamicScopesAccessor,
-) {
-  return _resume(
-    id,
-    _content(id, template, walks, setup, params, dynamicScopesAccessor),
-  );
-}
-function _content_closures(renderer, closureFns) {
-  let closureSignals = {};
-  for (let key in closureFns)
-    closureSignals[key] = _const(+key, closureFns[key]);
-  return (owner, closureValues) => {
-    let instance = renderer(owner);
-    return (
-      (instance.n = closureSignals),
-      (instance.t = closureValues),
-      instance
-    );
-  };
-}
-var cloneCache = {};
 function _to_text(value) {
   return value || 0 === value ? value + "" : "";
 }

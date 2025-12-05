@@ -1,0 +1,29 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "o",
+      "$resolveAfter": "e",
+      "$$await_content__setup__script": "a",
+      "$$await_content__setup": "r",
+      "$$placeholder_content": "n",
+      "$$await_content": "i",
+      "$$try_content__await_promise": "c",
+      "$$try_content__setup": "s",
+      "$$if_content__try": "m",
+      "$$if_content__setup": "_",
+      "$$if": "l",
+      "$$show": "u",
+      "$$await_content__show": "d",
+      "$$show__closure": "g",
+      "$$try_content__show": "p",
+      "$$await_content2__setup__script": "b",
+      "$$await_content2__setup": "f",
+      "$$await_content2": "w",
+      "$$try_content__await_promise2": "$",
+      "$$try_content__v": "k",
+      "$$v__closure": "x",
+      "$$v": "y"
+    }
+  }
+}

@@ -11,6 +11,7 @@ import {
   type Scope,
 } from "../common/types";
 import { runEffects } from "./queue";
+import { setParentBranch } from "./renderer";
 import type { Signal } from "./signals";
 import { getDebugKey } from "./walker";
 
@@ -123,7 +124,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                     [AccessorProp.Id]: branchId,
                   } as BranchScope) as BranchScope),
                 );
-                branch[AccessorProp.ClosestBranch] = branch;
+                setParentBranch(branch, branch[AccessorProp.ClosestBranch]);
                 if (
                   (branch[AccessorProp.AwaitCounter] = render.p?.[branchId])
                 ) {
@@ -161,14 +162,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                       : parent.insertBefore(new Text(), visit);
                 }
 
-                // TODO: when branch is part of a separate flush than it's parent, we
-                // may need to set branch parent to accessor when visitScope is a branch
-
                 while (i && orphanBranches[--i][AccessorProp.Id] > branchId) {
-                  orphanBranches[i][AccessorProp.ParentBranch] = branch;
-                  (branch[AccessorProp.BranchScopes] ||= new Set()).add(
-                    orphanBranches.pop()!,
-                  );
+                  setParentBranch(orphanBranches.pop()!, branch);
                 }
 
                 nextToken(/* read optional next branchId */);
