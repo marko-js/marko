@@ -89,7 +89,7 @@ export default {
       }
 
       const tagName = getCanonicalTagName(tag);
-      const textOnly = isTextOnlyNativeTag(tag);
+      const isTextOnly = isTextOnlyNativeTag(tag);
       const seen: Record<string, t.MarkoAttribute> = {};
       const { attributes } = tag.node;
       let injectNonce = isInjectNonceTag(tagName);
@@ -146,7 +146,7 @@ export default {
       });
 
       let textPlaceholders: undefined | t.Node[];
-      if (textOnly) {
+      if (isTextOnly) {
         for (const child of tag.node.body.body) {
           if (t.isMarkoPlaceholder(child)) {
             (textPlaceholders ||= []).push(child.value);
@@ -372,12 +372,13 @@ export default {
         }
 
         const isOpenOnly = !!(tagDef && tagDef.parseOptions?.openTagOnly);
+        const isTextOnly = isTextOnlyNativeTag(tag);
         const hasChildren = !!tag.node.body.body.length;
 
         if (spreadExpression) {
           addHTMLEffectCall(tagSection, tagExtra.referencedBindings);
 
-          if (isOpenOnly || hasChildren || staticContentAttr) {
+          if (isTextOnly || isOpenOnly || hasChildren || staticContentAttr) {
             if (skipExpression) {
               write`${callRuntime(
                 "_attrs_partial",
@@ -409,59 +410,59 @@ export default {
               write`>`;
               break;
           }
-        } else {
-          if (staticContentAttr) {
-            write`>`;
-            tagExtra[kTagContentAttr] = true;
-            (tag.node.body.body as t.Statement[]) = [
-              t.expressionStatement(
-                callRuntime(
-                  "_attr_content",
-                  visitAccessor,
-                  getScopeIdIdentifier(tagSection),
-                  staticContentAttr.value,
-                  getSerializeGuard(
-                    tagSection,
-                    nodeBinding && getSerializeReason(tagSection, nodeBinding),
-                    true,
-                  ),
+        } else if (isTextOnly) {
+          write`>`;
+        } else if (staticContentAttr) {
+          write`>`;
+          tagExtra[kTagContentAttr] = true;
+          (tag.node.body.body as t.Statement[]) = [
+            t.expressionStatement(
+              callRuntime(
+                "_attr_content",
+                visitAccessor,
+                getScopeIdIdentifier(tagSection),
+                staticContentAttr.value,
+                getSerializeGuard(
+                  tagSection,
+                  nodeBinding && getSerializeReason(tagSection, nodeBinding),
+                  true,
                 ),
               ),
-            ];
-          } else if (spreadExpression && !hasChildren) {
-            const serializeReason = getSerializeGuard(
-              tagSection,
-              nodeBinding && getSerializeReason(tagSection, nodeBinding),
-              true,
-            );
-            tagExtra[kTagContentAttr] = true;
-            (tag.node.body.body as t.Statement[]) = [
-              skipExpression
-                ? t.expressionStatement(
-                    callRuntime(
-                      "_attrs_partial_content",
-                      spreadExpression,
-                      skipExpression,
-                      visitAccessor,
-                      getScopeIdIdentifier(tagSection),
-                      t.stringLiteral(tagName),
-                      serializeReason,
-                    ),
-                  )
-                : t.expressionStatement(
-                    callRuntime(
-                      "_attrs_content",
-                      spreadExpression,
-                      visitAccessor,
-                      getScopeIdIdentifier(tagSection),
-                      t.stringLiteral(tagName),
-                      serializeReason,
-                    ),
+            ),
+          ];
+        } else if (spreadExpression && !hasChildren) {
+          const serializeReason = getSerializeGuard(
+            tagSection,
+            nodeBinding && getSerializeReason(tagSection, nodeBinding),
+            true,
+          );
+          tagExtra[kTagContentAttr] = true;
+          (tag.node.body.body as t.Statement[]) = [
+            skipExpression
+              ? t.expressionStatement(
+                  callRuntime(
+                    "_attrs_partial_content",
+                    spreadExpression,
+                    skipExpression,
+                    visitAccessor,
+                    getScopeIdIdentifier(tagSection),
+                    t.stringLiteral(tagName),
+                    serializeReason,
                   ),
-            ];
-          } else {
-            write`>`;
-          }
+                )
+              : t.expressionStatement(
+                  callRuntime(
+                    "_attrs_content",
+                    spreadExpression,
+                    visitAccessor,
+                    getScopeIdIdentifier(tagSection),
+                    t.stringLiteral(tagName),
+                    serializeReason,
+                  ),
+                ),
+          ];
+        } else {
+          write`>`;
         }
 
         if (writeAtStartOfBody) {
@@ -471,8 +472,8 @@ export default {
       exit(tag) {
         const tagExtra = tag.node.extra!;
         const nodeBinding = tagExtra[kNativeTagBinding];
-        const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
-        const textOnly = isTextOnlyNativeTag(tag);
+        const isOpenOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
+        const isTextOnly = isTextOnlyNativeTag(tag);
         const selectArgs = htmlSelectArgs.get(tag.node);
         const tagName = getCanonicalTagName(tag);
         const tagSection = getSection(tag);
@@ -510,7 +511,7 @@ export default {
               ),
             ),
           );
-        } else if (textOnly) {
+        } else if (isTextOnly) {
           for (const child of tag.node.body.body) {
             if (t.isMarkoText(child)) {
               write`${child.value}`;
@@ -522,7 +523,7 @@ export default {
           tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
         }
 
-        if (!tagExtra[kSkipEndTag] && !openTagOnly && !selectArgs) {
+        if (!tagExtra[kSkipEndTag] && !isOpenOnly && !selectArgs) {
           write`</${tagName}>`;
         }
 
@@ -559,6 +560,7 @@ export default {
           injectNonce,
         } = getUsedAttrs(tagName, tag.node);
         const isOpenOnly = !!(tagDef && tagDef.parseOptions?.openTagOnly);
+        const isTextOnly = isTextOnlyNativeTag(tag);
         const hasChildren = !!tag.node.body.body.length;
 
         if (injectNonce) {
@@ -712,6 +714,7 @@ export default {
 
         if (spreadExpression) {
           const canHaveAttrContent = !(
+            isTextOnly ||
             isOpenOnly ||
             hasChildren ||
             staticContentAttr
@@ -796,13 +799,14 @@ export default {
         const tagExtra = tag.node.extra!;
         const nodeBinding = tagExtra[kNativeTagBinding];
         const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
-        const textOnly = isTextOnlyNativeTag(tag);
+        const tagName = getCanonicalTagName(tag);
 
         if (!openTagOnly) {
-          if (textOnly) {
+          const write = writer.writeTo(tag);
+          if (tagName !== "textarea" && isTextOnlyNativeTag(tag)) {
             const textLiteral = bodyToTextLiteral(tag.node.body);
             if (t.isStringLiteral(textLiteral)) {
-              writer.writeTo(tag)`${textLiteral}`;
+              write`${textLiteral}`;
             } else {
               addStatement(
                 "render",
@@ -823,7 +827,7 @@ export default {
               .forEach((child) => child.skip());
           }
 
-          writer.writeTo(tag)`</${getCanonicalTagName(tag)}>`;
+          write`</${tagName}>`;
         }
 
         walks.exit(tag);
