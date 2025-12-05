@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.119
+
+### Patch Changes
+
+- [#2987](https://github.com/marko-js/marko/pull/2987) [`8cdeb6b`](https://github.com/marko-js/marko/commit/8cdeb6bb1d948ba2fb52299d9c543a59f29dc482) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression with text only tags (textarea/title) with a spread and no body content.
+
 ## 6.0.118
 
 ### Patch Changes
