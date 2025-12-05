@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+let/show=1
+button onClick() { show = 0 }
+div#one -- Fail
+div#two -- Fail
+if=show
+  try
+    @placeholder -- loading...
+    await=resolveAfter(0, 1)
+      -- ${show}
+      script -- $signal.onabort = () => document.querySelector('#one')!.textContent = "Pass"
+    await=resolveAfter(0, 1)
+      script -- $signal.onabort = () => document.querySelector('#two')!.textContent = "Pass"

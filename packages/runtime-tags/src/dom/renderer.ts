@@ -33,14 +33,8 @@ export function createBranch(
   parentNode: ParentNode,
 ) {
   const branch = createScope($global) as BranchScope;
-  const parentBranch = parentScope?.[AccessorProp.ClosestBranch];
   branch[AccessorProp.Owner] = (renderer as Renderer).___owner || parentScope;
-  branch[AccessorProp.ClosestBranch] = branch;
-
-  if (parentBranch) {
-    branch[AccessorProp.ParentBranch] = parentBranch;
-    (parentBranch[AccessorProp.BranchScopes] ||= new Set()).add(branch);
-  }
+  setParentBranch(branch, parentScope?.[AccessorProp.ClosestBranch]);
 
   if (MARKO_DEBUG) {
     branch[AccessorProp.Renderer] = renderer;
@@ -52,6 +46,17 @@ export function createBranch(
   );
 
   return branch;
+}
+
+export function setParentBranch(
+  branch: BranchScope,
+  parentBranch: BranchScope | undefined,
+) {
+  if (parentBranch) {
+    branch[AccessorProp.ParentBranch] = parentBranch;
+    (parentBranch[AccessorProp.BranchScopes] ||= new Set()).add(branch);
+  }
+  branch[AccessorProp.ClosestBranch] = branch;
 }
 
 export function createAndSetupBranch(
