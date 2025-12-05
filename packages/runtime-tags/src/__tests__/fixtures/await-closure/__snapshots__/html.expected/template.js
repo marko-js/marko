@@ -7,7 +7,7 @@ export default _._template("__tests__/template.marko", input => {
   _._html(`<button>${_._escape(value)}${_._el_resume($scope0_id, "#text/1")}</button>${_._el_resume($scope0_id, "#button/0")}`);
   _._try($scope0_id, "#text/2", _._content_resume("__tests__/template.marko_1_content", () => {
     const $scope1_id = _._scope_id();
-    _._await($scope1_id, "#text/0", resolveAfter(0, 3), () => {
+    _._await($scope1_id, "#text/0", resolveAfter(0, 4), () => {
       const $scope2_id = _._scope_id();
       _._script($scope2_id, "__tests__/template.marko_2_value");
       _._html(`<span>${_._escape(value)}${_._el_resume($scope2_id, "#text/0")}</span>`);

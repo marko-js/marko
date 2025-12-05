@@ -1,6 +1,6 @@
 import { flush, wait } from "../../utils/resolve";
 
-export const steps = [{}, flush, wait(1), click, wait(1), click, wait(1)];
+export const steps = [{}, flush, wait, click, wait, click, wait];
 
 function click(container: Element) {
   container.querySelector("button")!.click();

@@ -1,5 +1,5 @@
 import { resolveAfter } from "../../utils/resolve";
-const multiply = (multiplier, n) => resolveAfter(multiplier * n, n);
+const multiply = (multiplier, n) => resolveAfter(multiplier * n);
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();

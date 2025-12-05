@@ -4,7 +4,7 @@ export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   let value = 1;
   _._html(`<button>${_._escape(value)}${_._el_resume($scope0_id, "#text/1")}</button>${_._el_resume($scope0_id, "#button/0")}`);
-  _._await($scope0_id, "#text/2", resolveAfter(0, 3), () => {
+  _._await($scope0_id, "#text/2", resolveAfter(0, 4), () => {
     const $scope2_id = _._scope_id();
     _._html("<span>Hello</span>");
   }, 0);

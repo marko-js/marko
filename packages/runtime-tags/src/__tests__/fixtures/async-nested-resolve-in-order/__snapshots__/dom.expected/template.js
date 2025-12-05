@@ -9,7 +9,7 @@ const $await_content6 = /* @__PURE__ */_._await_content("#text/1", " ", /* get, 
 const $await_content5__await_promise = /* @__PURE__ */_._await_promise("#text/1", $await_content6__$params);
 const $await_content5__setup = $scope => {
   $await_content6($scope);
-  $await_content5__await_promise($scope, resolveAfter("j", 1));
+  $await_content5__await_promise($scope, resolveAfter("j", 3));
 };
 const $await_content5__$params = /* @__PURE__ */_._const("$params6", $scope => $await_content5__result($scope, $scope.$params6[0]));
 const $await_content4__result = /* @__PURE__ */_._const("result4", $scope => _._text($scope["#text/0"], $scope.result4));
@@ -17,7 +17,7 @@ const $await_content5 = /* @__PURE__ */_._await_content("#text/1", "<!><!>k", /*
 const $await_content4__await_promise = /* @__PURE__ */_._await_promise("#text/1", $await_content5__$params);
 const $await_content4__setup = $scope => {
   $await_content5($scope);
-  $await_content4__await_promise($scope, resolveAfter("i", 1));
+  $await_content4__await_promise($scope, resolveAfter("i", 2));
 };
 const $await_content4__$params = /* @__PURE__ */_._const("$params5", $scope => $await_content4__result($scope, $scope.$params5[0]));
 const $await_content3__result = /* @__PURE__ */_._const("result3", $scope => _._text($scope["#text/0"], $scope.result3));
@@ -27,7 +27,7 @@ const $await_content3 = /* @__PURE__ */_._await_content("#text/1", " ", /* get, 
 const $await_content2__await_promise = /* @__PURE__ */_._await_promise("#text/1", $await_content3__$params);
 const $await_content2__setup = $scope => {
   $await_content3($scope);
-  $await_content2__await_promise($scope, resolveAfter("d", 1));
+  $await_content2__await_promise($scope, resolveAfter("d", 3));
 };
 const $await_content2__$params = /* @__PURE__ */_._const("$params3", $scope => $await_content2__result($scope, $scope.$params3[0]));
 const $await_content__result = /* @__PURE__ */_._const("result1", $scope => _._text($scope["#text/0"], $scope.result1));
@@ -35,7 +35,7 @@ const $await_content2 = /* @__PURE__ */_._await_content("#text/1", "<!><!>e", /*
 const $await_content__await_promise = /* @__PURE__ */_._await_promise("#text/1", $await_content2__$params);
 const $await_content__setup = $scope => {
   $await_content2($scope);
-  $await_content__await_promise($scope, resolveAfter("c", 1));
+  $await_content__await_promise($scope, resolveAfter("c", 2));
 };
 const $await_content__$params = /* @__PURE__ */_._const("$params2", $scope => $await_content__result($scope, $scope.$params2[0]));
 const $await_content = /* @__PURE__ */_._await_content("#text/0", "<!><!>f", /* replace, over(1), replace, over(2) */"%b%c", $await_content__setup);

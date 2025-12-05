@@ -10,7 +10,7 @@ const $await_content = /* @__PURE__ */_._await_content("#text/0", "<span> </span
 const $try_content__await_promise = /* @__PURE__ */_._await_promise("#text/0");
 const $try_content__setup = $scope => {
   $await_content($scope);
-  $try_content__await_promise($scope, resolveAfter(0, 3));
+  $try_content__await_promise($scope, resolveAfter(0, 4));
 };
 const $value__closure = /* @__PURE__ */_._closure($await_content__value);
 const $value__script = _._script("__tests__/template.marko_0_value", $scope => _._on($scope["#button/0"], "click", function () {

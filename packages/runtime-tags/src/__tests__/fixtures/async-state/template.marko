@@ -4,7 +4,7 @@ import { resolveAfter } from "../../utils/resolve";
   clickCount++
 }>inc</button>
 <try>
-  <await|value|=resolveAfter(clickCount, 1)>
+  <await|value|=resolveAfter(clickCount)>
     ${value}
   </await>
   <@placeholder>
