@@ -1,5 +1,0 @@
-CompileError: 
-    at __tests__/template.marko:1:6
-    > 1 | <div/myDiv/>
-        |      ^^^^^ Tag does not support a variable.
-      2 |
