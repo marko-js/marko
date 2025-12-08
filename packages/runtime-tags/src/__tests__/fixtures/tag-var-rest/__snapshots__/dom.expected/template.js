@@ -8,7 +8,7 @@ const $obj = /* @__PURE__ */_._let("obj/6", $scope => {
     ...partialObj
   }) => $partialObj($scope, partialObj))($scope.obj);
   $a($scope, $scope.obj.a);
-  $partialObj_b($scope, $scope.obj.b);
+  $obj_b($scope, $scope.obj.b);
 });
 const $partialObj = /* @__PURE__ */_._const("partialObj", $scope => {
   _._text($scope["#text/1"], JSON.stringify($scope.partialObj));
@@ -16,7 +16,7 @@ const $partialObj = /* @__PURE__ */_._const("partialObj", $scope => {
 });
 const $partialObj_a = /* @__PURE__ */_._const("partialObj_a", $scope => _._text($scope["#text/4"], $scope.partialObj_a === undefined ? "removed a" : "didn't remove a"));
 const $a = /* @__PURE__ */_._const("a", $scope => _._text($scope["#text/2"], $scope.a));
-const $partialObj_b = /* @__PURE__ */_._const("partialObj_b", $scope => _._text($scope["#text/3"], $scope.partialObj_b));
+const $obj_b = /* @__PURE__ */_._const("obj_b", $scope => _._text($scope["#text/3"], $scope.obj_b));
 const $setup__script = _._script("__tests__/template.marko_0", $scope => _._on($scope["#button/5"], "click", function () {
   $obj($scope, {
     a: 4,

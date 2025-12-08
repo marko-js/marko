@@ -5,8 +5,10 @@ export function $setup($scope) {
   _comments($scope["#childScope/0"]);
 }
 import * as _ from "@marko/runtime-tags/debug/dom";
+export const $input_comments = /* @__PURE__ */_._const("input_comments", $scope => _comments_input_comments($scope["#childScope/0"], $scope.input_comments));
+export const $input_path = /* @__PURE__ */_._const("input_path", $scope => _comments_input_path($scope["#childScope/0"], $scope.input_path));
 export const $input = /* @__PURE__ */_._const("input", $scope => {
-  _comments_input_comments($scope["#childScope/0"], $scope.input.comments);
-  _comments_input_path($scope["#childScope/0"], $scope.input.path);
+  $input_comments($scope, $scope.input.comments);
+  $input_path($scope, $scope.input.path);
 });
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

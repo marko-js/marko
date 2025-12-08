@@ -5,7 +5,7 @@ const $obj = _._let(6, ($scope) => {
         $partialObj($scope, partialObj);
       })($scope.g),
       $a($scope, $scope.g.a),
-      $partialObj_b($scope, $scope.g.b));
+      $obj_b($scope, $scope.g.b));
   }),
   $partialObj = _._const(8, ($scope) => {
     (_._text($scope.b, JSON.stringify($scope.i)),
@@ -15,7 +15,7 @@ const $obj = _._let(6, ($scope) => {
     _._text($scope.e, void 0 === $scope.k ? "removed a" : "didn't remove a"),
   ),
   $a = _._const(7, ($scope) => _._text($scope.c, $scope.h)),
-  $partialObj_b = _._const(9, ($scope) => _._text($scope.d, $scope.j));
+  $obj_b = _._const(9, ($scope) => _._text($scope.d, $scope.j));
 (_._script("a0", ($scope) =>
   _._on($scope.f, "click", function () {
     $obj($scope, { a: 4, b: 5, d: 6 });

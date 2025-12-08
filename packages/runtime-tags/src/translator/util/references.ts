@@ -117,11 +117,7 @@ export type Intersection = Many<Binding>;
 interface ReferencedFunctionExtra extends t.FunctionExtra, ReferencedExtra {}
 interface Read {
   binding: Binding;
-  node:
-    | undefined
-    | t.Identifier
-    | t.MemberExpression
-    | t.OptionalMemberExpression;
+  extra: t.NodeExtra | undefined;
 }
 
 declare module "@marko/compiler/dist/types" {
@@ -135,6 +131,7 @@ declare module "@marko/compiler/dist/types" {
     read?: { binding: Binding; props: Opt<string> };
     pruned?: true;
     isEffect?: true;
+    spreadFrom?: Binding;
     [kIsInvoked]?: true;
   }
 
@@ -206,6 +203,19 @@ export function createBinding(
   setNextBindingId(id + 1);
   getBindings().add(binding);
   return binding;
+}
+
+export function getOrCreatePropertyAlias(binding: Binding, property: string) {
+  return (
+    binding.propertyAliases.get(property) ||
+    createBinding(
+      `${binding.name}_${property.replace(/[^a-zA-Z0-9_$]/g, "_")}`,
+      binding.type,
+      binding.section,
+      binding,
+      property,
+    )
+  );
 }
 
 export function trackDomVarReferences(
@@ -696,7 +706,6 @@ function trackReference(
     | t.NodePath<t.MemberExpression>
     | t.NodePath<t.OptionalMemberExpression> = referencePath;
   let reference = binding;
-  let propPath = binding.name;
 
   while (true) {
     const { parent } = root;
@@ -714,15 +723,6 @@ function trackReference(
       reference = reference.upstreamAlias;
     }
 
-    if (reference.propertyAliases.has(prop)) {
-      root = root.parentPath as
-        | t.NodePath<t.MemberExpression>
-        | t.NodePath<t.OptionalMemberExpression>;
-      reference = reference.propertyAliases.get(prop)!;
-      propPath = reference.name;
-      continue;
-    }
-
     if (isInvokedFunction(root.parentPath) && !isEventOrChangeHandler(prop)) {
       break;
     }
@@ -730,13 +730,8 @@ function trackReference(
     root = root.parentPath as
       | t.NodePath<t.MemberExpression>
       | t.NodePath<t.OptionalMemberExpression>;
-    reference = createBinding(
-      (propPath += `_${prop.replace(/[^a-zA-Z0-9_$]/g, "_")}`),
-      reference.type,
-      reference.section,
-      reference,
-      prop,
-    );
+
+    reference = getOrCreatePropertyAlias(reference, prop);
   }
 
   addReadToExpression(root, reference);
@@ -1375,6 +1370,29 @@ const [getFunctionReadsByExpression] = createProgramState(
   () => new Map<ReferencedExtra, Map<ReferencedFunctionExtra, OneMany<Read>>>(),
 );
 
+export function addRead(
+  exprExtra: ReferencedExtra,
+  readExtra: t.NodeExtra | undefined,
+  binding: Binding,
+  section: Section,
+) {
+  const readsByExpression = getReadsByExpression();
+  const read: Read = {
+    binding,
+    extra: readExtra,
+  };
+  exprExtra.section = section;
+  readsByExpression.set(
+    exprExtra,
+    push(readsByExpression.get(exprExtra), read),
+  );
+  return read;
+}
+
+export function dropRead(exprExtra: ReferencedExtra) {
+  getReadsByExpression().delete(exprExtra);
+}
+
 function addReadToExpression(
   root:
     | t.NodePath<t.Identifier>
@@ -1386,13 +1404,12 @@ function addReadToExpression(
   const fnRoot = getFnRoot(root);
   const exprRoot = getExprRoot(fnRoot || root);
   const exprExtra = (exprRoot.node.extra ??= {}) as ReferencedExtra;
-  const readsByExpression = getReadsByExpression();
-  const section = (exprExtra.section = getOrCreateSection(exprRoot));
-  const read: Read = { binding, node };
-  readsByExpression.set(
-    exprExtra,
-    push(readsByExpression.get(exprExtra), read),
-  );
+  const section = getOrCreateSection(exprRoot);
+  const read = addRead(exprExtra, (node.extra ??= {}), binding, section);
+
+  if (root.parent.type === "MarkoSpreadAttribute") {
+    exprExtra.spreadFrom = binding;
+  }
 
   if (fnRoot) {
     const fnReadsByExpr = getFunctionReadsByExpression();
@@ -1805,8 +1822,8 @@ function resolveReferencedBindings(
     const rootBindings = getRootBindings(reads);
     for (const read of reads) {
       let { binding } = read;
-      if (read.node) {
-        const readExtra = (read.node.extra ??= {});
+      const readExtra = read.extra;
+      if (readExtra) {
         if (readExtra.assignmentTo !== binding) {
           readExtra.section = expr.section;
           ({ binding } = readExtra.read ??= resolveExpressionReference(
@@ -1822,10 +1839,9 @@ function resolveReferencedBindings(
       }
     }
   } else if (reads) {
-    if (reads.node) {
-      const readExtra = (reads.node.extra ??= {});
-      readExtra.section = expr.section;
-      readExtra.read = createRead(reads.binding, undefined);
+    if (reads.extra) {
+      reads.extra.section = expr.section;
+      reads.extra.read = createRead(reads.binding, undefined);
     }
     if (reads.binding.type === BindingType.constant) {
       constantBindings = reads.binding;
