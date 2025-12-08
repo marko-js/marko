@@ -63,3 +63,17 @@ function hasSupersetExcludeProperties(
 
   return true;
 }
+
+export function getBindingPropTreeProp(
+  propTree: BindingPropTree,
+  name: string,
+) {
+  return propTree.props?.[name] || propTree.rest?.props?.[name];
+}
+
+export function getAllBindingPropTreePropKeys(propTree: BindingPropTree) {
+  const keys = propTree.props ? Object.keys(propTree.props) : [];
+  return propTree.rest?.props
+    ? keys.concat(Object.keys(propTree.rest.props))
+    : keys;
+}

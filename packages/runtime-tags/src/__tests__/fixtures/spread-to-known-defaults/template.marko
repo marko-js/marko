@@ -1,0 +1,11 @@
+import wrapTag from "<wrap>";
+static const Wrap = wrapTag
+<div#value-missing>
+  <wrap class="foo" />
+</div>
+<div#value-undefined>
+  <wrap value=undefined />
+</div>
+<div#dynamic-value-set>
+  <${Wrap} class="bar" value="abcd" />
+</div>

@@ -5,7 +5,7 @@ export type Compare<T> = (a: T, b: T) => number;
 export class Sorted<T> {
   constructor(public compare: Compare<T>) {}
   add<U extends NonNullable<T>>(data: Opt<U>, item: U): OneMany<U> {
-    return data
+    return data !== undefined
       ? Array.isArray(data)
         ? (addSorted(this.compare, data, item) as Many<U>)
         : joinRepeatable(this.compare, data, item)
@@ -13,9 +13,9 @@ export class Sorted<T> {
   }
 
   union<U extends NonNullable<T>>(a: Opt<U>, b: Opt<U>): Opt<U> {
-    if (a) {
+    if (a !== undefined) {
       if (Array.isArray(a)) {
-        if (b) {
+        if (b !== undefined) {
           if (Array.isArray(b)) {
             return unionSortedRepeatable(this.compare, a, b);
           } else {
@@ -26,7 +26,7 @@ export class Sorted<T> {
         return a;
       }
 
-      if (b) {
+      if (b !== undefined) {
         if (Array.isArray(b)) {
           return addSorted(this.compare, b, a) as Many<U>;
         }
@@ -40,7 +40,7 @@ export class Sorted<T> {
     return b;
   }
   find<U extends NonNullable<T>>(data: Opt<U>, item: U): U | undefined {
-    if (data) {
+    if (data !== undefined) {
       if (Array.isArray(data)) {
         return findSorted(this.compare, data, item);
       } else if (this.compare(data, item) === 0) {
@@ -52,7 +52,7 @@ export class Sorted<T> {
     return this.findIndex(data, item) !== -1;
   }
   findIndex<U extends NonNullable<T>>(data: Opt<U>, item: U) {
-    if (data) {
+    if (data !== undefined) {
       if (Array.isArray(data)) {
         return findIndexSorted(this.compare, data, item);
       } else if (this.compare(data, item) === 0) {
@@ -67,7 +67,7 @@ export class Sorted<T> {
     cb: (item: U) => K,
   ): Map<K, OneMany<U>> {
     const group = new Map<K, OneMany<U>>();
-    if (data) {
+    if (data !== undefined) {
       if (Array.isArray(data)) {
         for (const item of data) {
           const key = cb(item);
@@ -80,7 +80,7 @@ export class Sorted<T> {
     return group;
   }
   isSuperset<U extends NonNullable<T>>(superset: Opt<U>, subset: Opt<U>) {
-    if (!subset) {
+    if (subset === undefined) {
       return true;
     }
 
@@ -108,7 +108,7 @@ export class Sorted<T> {
 }
 
 export function push<T>(data: Opt<T>, item: T): OneMany<T> {
-  if (data) {
+  if (data !== undefined) {
     if (Array.isArray(data)) {
       data.push(item);
       return data;
@@ -121,8 +121,8 @@ export function push<T>(data: Opt<T>, item: T): OneMany<T> {
 }
 
 export function concat<T>(a: Opt<T>, b: Opt<T>): Opt<T> {
-  if (a) {
-    if (b) {
+  if (a !== undefined) {
+    if (b !== undefined) {
       if (Array.isArray(a)) {
         return a.concat(b) as Many<T>;
       } else if (Array.isArray(b)) {
@@ -137,11 +137,11 @@ export function concat<T>(a: Opt<T>, b: Opt<T>): Opt<T> {
 }
 
 export function size<T>(data: Opt<T>) {
-  return data ? (Array.isArray(data) ? data.length : 1) : 0;
+  return data !== undefined ? (Array.isArray(data) ? data.length : 1) : 0;
 }
 
 export function filter<T>(data: Opt<T>, cb: (item: T) => boolean): Opt<T> {
-  if (data) {
+  if (data !== undefined) {
     if (Array.isArray(data)) {
       const len = data.length;
       let result: Opt<T>;
@@ -182,15 +182,13 @@ export function filter<T>(data: Opt<T>, cb: (item: T) => boolean): Opt<T> {
       return data;
     }
   }
-
-  return undefined;
 }
 
 export function forEach<T>(
   data: Opt<T>,
   cb: (item: T, index: number) => void,
 ): void {
-  if (data) {
+  if (data !== undefined) {
     if (Array.isArray(data)) {
       let i = 0;
       for (const item of data) {
@@ -228,11 +226,19 @@ export function* toIter<T>(data: Opt<T>): Iterable<T> {
   }
 }
 
+export function includes<T>(data: Opt<T>, item: T): boolean {
+  return data !== undefined
+    ? Array.isArray(data)
+      ? data.includes(item)
+      : data === item
+    : false;
+}
+
 export function find<T>(
   data: Opt<T>,
   cb: (item: T, index: number) => boolean,
 ): Opt<T> {
-  if (data) {
+  if (data !== undefined) {
     if (Array.isArray(data)) {
       return data.find(cb);
     }
@@ -247,14 +253,22 @@ export function some<T>(
   data: Opt<T>,
   cb: (item: T, index: number) => boolean,
 ): boolean {
-  return data ? (Array.isArray(data) ? data.some(cb) : !!cb(data, 0)) : false;
+  return data !== undefined
+    ? Array.isArray(data)
+      ? data.some(cb)
+      : !!cb(data, 0)
+    : false;
 }
 
 export function toArray<T, R>(
   data: Opt<T>,
   cb: (item: T, index: number) => R,
 ): R[] {
-  return data ? (Array.isArray(data) ? data.map(cb) : [cb(data, 0)]) : [];
+  return data !== undefined
+    ? Array.isArray(data)
+      ? data.map(cb)
+      : [cb(data, 0)]
+    : [];
 }
 
 export function mapToString<T>(
@@ -262,7 +276,7 @@ export function mapToString<T>(
   sep: string,
   cb: (item: T, index: number) => string,
 ): string {
-  if (data) {
+  if (data !== undefined) {
     if (Array.isArray(data)) {
       let str = "";
       let curSep = "";
@@ -282,7 +296,7 @@ export function filterMap<T, R>(
   data: Opt<T>,
   cb: (item: T) => undefined | R,
 ): Opt<R> {
-  if (data) {
+  if (data !== undefined) {
     if (Array.isArray(data)) {
       const len = data.length;
       let result: Opt<R>;
@@ -291,19 +305,19 @@ export function filterMap<T, R>(
       while (i < len) {
         let item = cb(data[i++]);
 
-        if (item) {
+        if (item !== undefined) {
           result = item;
 
           while (i < len) {
             item = cb(data[i++]);
 
-            if (item) {
+            if (item !== undefined) {
               result = [result, item];
 
               while (i < len) {
                 item = cb(data[i++]);
 
-                if (item) {
+                if (item !== undefined) {
                   result.push(item);
                 }
               }
@@ -317,9 +331,9 @@ export function filterMap<T, R>(
       }
 
       return result;
-    } else {
-      return cb(data);
     }
+
+    return cb(data);
   }
 }
 
