@@ -18,6 +18,7 @@ import throwAggregateError from "../util/merge-errors";
 const noop = () => {};
 const emptyRange = (part) => part.start === part.end;
 const isAttrTag = (tag) => tag.name.value?.[0] === "@";
+const isStatementTag = (tag) => tag.tagDef?.parseOptions?.statement;
 const toBabelPosition = ({ line, character }) => ({
   // Babel lines start at 1 and use "column" instead of "character".
   line: line + 1,
@@ -28,6 +29,7 @@ export function parseMarko(file) {
   const { code } = file;
   const { htmlParseOptions = {} } = file.markoOpts;
   const { watchFiles } = file.metadata.marko;
+  const parseVisits = [];
   let currentTag = file.path;
   let currentBody = currentTag;
   let currentAttr = undefined;
@@ -183,7 +185,7 @@ export function parseMarko(file) {
           }
           break;
         case "MarkoTag":
-          if (isAttrTag(prev)) {
+          if (isStatementTag(prev) || isAttrTag(prev)) {
             value = value.replace(/^[\n\r]\s*/, "");
           }
           break;
@@ -207,7 +209,7 @@ export function parseMarko(file) {
             }
             break;
           case "MarkoTag":
-            if (isAttrTag(next)) {
+            if (isStatementTag(next) || isAttrTag(next)) {
               value = value.replace(/[\n\r]\s*$/, "");
             }
 
@@ -558,7 +560,7 @@ export function parseMarko(file) {
       if (parserPlugin) {
         const { hook } = parserPlugin;
         if (parserPlugin.path) watchFiles.push(parserPlugin.path);
-        (hook.default || hook)(currentTag, t);
+        parseVisits.push(hook.default || hook, currentTag);
       }
 
       const parentTag = isAttrTag(node)
@@ -636,6 +638,10 @@ export function parseMarko(file) {
 
   parser.parse(code);
   onNext();
+
+  for (let i = 0; i < parseVisits.length; ) {
+    parseVisits[i++](parseVisits[i++]);
+  }
 
   const { ast } = file;
   const { program } = ast;

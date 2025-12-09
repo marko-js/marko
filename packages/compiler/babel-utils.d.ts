@@ -23,6 +23,10 @@ export interface PluginDefinition<T = any> {
   path?: string;
   hook: Plugin<T>;
 }
+export interface ParsePluginDefinition<T = any> {
+  path?: string;
+  hook: ParsePlugin<T>;
+}
 export interface TagDefinition {
   dir: string;
   filePath: string;
@@ -57,7 +61,7 @@ export interface TagDefinition {
   openTagOnly: boolean;
   analyzer?: PluginDefinition<t.MarkoTag>;
   translator?: PluginDefinition<t.MarkoTag>;
-  parser?: PluginDefinition<t.MarkoTag>;
+  parser?: ParsePluginDefinition<t.MarkoTag>;
   transformers?: PluginDefinition<t.MarkoTag>[];
   migrators?: PluginDefinition<t.MarkoTag>[];
   parseOptions?: {
@@ -127,9 +131,9 @@ export interface Tag {
   openTagOnly?: boolean;
   analyze?: Plugin<t.MarkoTag>;
   translate?: Plugin<t.MarkoTag>;
-  parse?: Plugin<t.MarkoTag>;
-  transform?: Plugin<t.MarkoTag>[];
-  migrate?: Plugin<t.MarkoTag>[];
+  parse?: ParsePlugin<t.MarkoTag>;
+  transform?: Plugin<t.MarkoTag> | Plugin<t.MarkoTag>[];
+  migrate?: Plugin<t.MarkoTag> | Plugin<t.MarkoTag>[];
   parseOptions?: {
     rootOnly?: boolean;
     rawOpenTag?: boolean;
@@ -147,14 +151,20 @@ export type FunctionPlugin<T = any> = (
   path: t.NodePath<T>,
   types: typeof t,
 ) => void;
-export type EnterExitPlugin<T = any> = {
+export interface EnterExitPlugin<T = any> {
   enter?(path: t.NodePath<T>, types: typeof t): void;
   exit?(path: t.NodePath<T>, types: typeof t): void;
-};
+}
 
-export type ModulePlugin<T = any> = {
+export interface ModulePlugin<T = any> {
   default: EnterExitPlugin<T> | FunctionPlugin<T>;
-};
+}
+
+export interface ModuleFunctionPlugin<T = any> {
+  default: FunctionPlugin<T>;
+}
+
+export type ParsePlugin<T = any> = ModuleFunctionPlugin<T> | FunctionPlugin<T>;
 
 export type Plugin<T = any> =
   | ModulePlugin<T>
