@@ -273,14 +273,10 @@ function getMarkoFile(code, fileOpts, markoOpts) {
       }
     }
 
-    if (markoOpts.stripTypes) {
-      stripTypes(file);
-      if (!isMigrate) {
-        file.path.scope.crawl();
-      }
-    }
-
     if (isMigrate) {
+      if (markoOpts.stripTypes) {
+        stripTypes(file);
+      }
       return file;
     }
 
@@ -298,6 +294,12 @@ function getMarkoFile(code, fileOpts, markoOpts) {
       rootTransformers.push(translator.transform);
     }
     traverseAll(file, rootTransformers);
+
+    if (markoOpts.stripTypes) {
+      stripTypes(file);
+    }
+
+    file.path.scope.crawl();
 
     for (const taglibId in taglibLookup.taglibsById) {
       const { filePath } = taglibLookup.taglibsById[taglibId];

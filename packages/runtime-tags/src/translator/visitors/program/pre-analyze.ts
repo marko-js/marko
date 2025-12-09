@@ -6,9 +6,6 @@ import { getMarkoRoot, isMarko } from "../../util/get-root";
 import withPreviousLocation from "../../util/with-previous-location";
 
 type StringOrIdPath = t.NodePath<t.StringLiteral> | t.NodePath<t.Identifier>;
-interface State {
-  crawl: boolean;
-}
 
 const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
 const BINDING_CHANGE_HANDLER = new WeakMap<
@@ -17,15 +14,10 @@ const BINDING_CHANGE_HANDLER = new WeakMap<
 >();
 
 export function preAnalyze(program: t.NodePath<t.Program>) {
-  const state: State = { crawl: false };
-  normalizeBody(state, program.get("body"));
-  if (state.crawl) {
-    program.scope.crawl();
-  }
+  normalizeBody(program.get("body"));
 }
 
 function normalizeBody(
-  state: State,
   body:
     | undefined
     | t.NodePath<
@@ -37,22 +29,21 @@ function normalizeBody(
   if (body?.length) {
     for (const child of body) {
       if (child.isMarkoTag()) {
-        normalizeTag(state, child);
+        normalizeTag(child);
       }
     }
   }
 }
 
-function normalizeTag(state: State, tag: t.NodePath<t.MarkoTag>) {
+function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   const { name, attributes } = node;
-  normalizeBody(state, tag.get("body").get("body"));
-  normalizeBody(state, tag.get("attributeTags"));
+  normalizeBody(tag.get("body").get("body"));
+  normalizeBody(tag.get("attributeTags"));
 
   if (node.var) {
     const insertions = getAssignmentInsertions(node.var);
     if (insertions) {
-      state.crawl = true;
       tag.insertAfter(insertions);
     }
   }
@@ -64,7 +55,6 @@ function normalizeTag(state: State, tag: t.NodePath<t.MarkoTag>) {
     }
 
     if (insertions) {
-      state.crawl = true;
       node.body.body = [...insertions, ...node.body.body];
     }
   }
@@ -77,7 +67,6 @@ function normalizeTag(state: State, tag: t.NodePath<t.MarkoTag>) {
     ) {
       // Convert tags which have an associated binding to an identifier.
       // <MyTag> --> <${MyTag}>
-      state.crawl = true;
       node.name = withPreviousLocation(t.identifier(tagName), name);
     } else {
       switch (tagName) {
@@ -92,7 +81,6 @@ function normalizeTag(state: State, tag: t.NodePath<t.MarkoTag>) {
     const attr = attributes[i];
     if (t.isMarkoAttribute(attr) && attr.bound) {
       // Inject change handler functions from the binding shorthand.
-      state.crawl = true;
       attr.bound = false;
       attributes.splice(++i, 0, getChangeHandler(tag, attr));
     }
@@ -176,8 +164,6 @@ function getChangeHandler(
     } else {
       markoRoot.unshiftContainer("body", changeHandlerConst);
     }
-
-    markoRoot.scope.crawl();
 
     return t.markoAttribute(
       changeAttrName,
