@@ -1,5 +1,18 @@
 # @marko/runtime-tags
 
+## 6.0.121
+
+### Patch Changes
+
+- [#2996](https://github.com/marko-js/marko/pull/2996) [`1a65ff3`](https://github.com/marko-js/marko/commit/1a65ff3f4ed31b1e3fab37328962950db28a68e6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Move strip types logic to be after transform phase.
+
+- [#2994](https://github.com/marko-js/marko/pull/2994) [`1bf2788`](https://github.com/marko-js/marko/commit/1bf2788042fd3e6928303c5782909612a59c5206) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where variables from pruned server/client statements were becoming implicit globals (now injects local undefined variables).
+
+- [#2996](https://github.com/marko-js/marko/pull/2996) [`2a23dec`](https://github.com/marko-js/marko/commit/2a23decc64b3dbfea024241b1301dba7f6d69679) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Run parse hooks after the main parse phase is complete.
+
+- Updated dependencies [[`1a65ff3`](https://github.com/marko-js/marko/commit/1a65ff3f4ed31b1e3fab37328962950db28a68e6), [`1bf2788`](https://github.com/marko-js/marko/commit/1bf2788042fd3e6928303c5782909612a59c5206), [`2a23dec`](https://github.com/marko-js/marko/commit/2a23decc64b3dbfea024241b1301dba7f6d69679)]:
+  - @marko/compiler@5.39.44
+
 ## 6.0.120
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.39.44
+
+### Patch Changes
+
+- [#2996](https://github.com/marko-js/marko/pull/2996) [`1a65ff3`](https://github.com/marko-js/marko/commit/1a65ff3f4ed31b1e3fab37328962950db28a68e6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Move strip types logic to be after transform phase.
+
+- [#2994](https://github.com/marko-js/marko/pull/2994) [`1bf2788`](https://github.com/marko-js/marko/commit/1bf2788042fd3e6928303c5782909612a59c5206) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure MarkoScriptlet's are visited for outer binding identifiers.
+
+- [#2996](https://github.com/marko-js/marko/pull/2996) [`2a23dec`](https://github.com/marko-js/marko/commit/2a23decc64b3dbfea024241b1301dba7f6d69679) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Run parse hooks after the main parse phase is complete.
+
 ## 5.39.43
 
 ### Patch Changes
