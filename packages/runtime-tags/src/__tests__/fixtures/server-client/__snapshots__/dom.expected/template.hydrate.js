@@ -1,2 +1,2 @@
-// size: 43 (min) 47 (brotli)
-("undefined" == typeof server_x || server_x, init());
+// size: 4 (min) 8 (brotli)
+init();

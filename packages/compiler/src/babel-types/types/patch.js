@@ -19,6 +19,7 @@ const {
 getBindingIdentifiers.keys.Program = ["params"];
 getBindingIdentifiers.keys.MarkoTag = ["var"];
 getBindingIdentifiers.keys.MarkoTagBody = ["params"];
+getBindingIdentifiers.keys.MarkoScriptlet = ["body"];
 
 MARKO_TYPES.forEach((typeName) => {
   definitionUtils.default(typeName, definitions[typeName]);
