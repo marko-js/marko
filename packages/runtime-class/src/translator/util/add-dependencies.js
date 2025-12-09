@@ -140,6 +140,23 @@ export const entryBuilder = {
             resolveRelativeToEntry(entryFile, file, value),
           );
         }
+      } else if (
+        t.isMarkoScriptlet(child) &&
+        child.static &&
+        child.target !== "server"
+      ) {
+        for (const stmt of child.body) {
+          if (t.isImportDeclaration(stmt)) {
+            const { value } = stmt.source;
+            if (child.target === "client" || state.shouldIncludeImport(value)) {
+              addImport(
+                imports,
+                body,
+                resolveRelativeToEntry(entryFile, file, value),
+              );
+            }
+          }
+        }
       }
     }
 

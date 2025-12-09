@@ -1,4 +1,4 @@
-import type { types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
 import { isOutputHTML } from "../util/marko-config";
@@ -31,7 +31,25 @@ export default {
       const isHTML = isOutputHTML();
 
       if (node.target && node.target !== (isHTML ? "server" : "client")) {
-        scriptlet.remove();
+        const ids = Object.keys(scriptlet.getOuterBindingIdentifiers());
+        const decl =
+          ids.length &&
+          t.variableDeclaration(
+            "var",
+            ids.map((key) => t.variableDeclarator(t.identifier(key))),
+          );
+        if (decl) {
+          if (isHTML) {
+            // handled in program exit for html currently.
+            scriptlet.node.target = null;
+            scriptlet.node.body = [decl];
+          } else {
+            scriptlet.replaceWith(decl);
+          }
+        } else {
+          scriptlet.remove();
+        }
+
         return;
       }
 

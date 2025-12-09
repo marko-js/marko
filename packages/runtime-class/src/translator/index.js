@@ -599,9 +599,8 @@ export function getRuntimeEntryFiles(output, optimize) {
   ];
 }
 
-function isRenderContent(path) {
-  const { node } = path;
-  return t.MARKO_TYPES.includes(node.type) && !node.static;
+function isRenderContent({ node }) {
+  return /^Marko/.test(node.type) && !node.static;
 }
 
 function resolveRelativeTagEntry(file, tagDef) {

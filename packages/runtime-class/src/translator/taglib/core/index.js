@@ -5,9 +5,11 @@ import * as parseMacro from "./macro/parse";
 import * as translateMacro from "./macro/translate";
 import migrate from "./migrate";
 import * as parseClass from "./parse-class";
+import * as parseClient from "./parse-client";
 import * as parseExport from "./parse-export";
 import * as parseImport from "./parse-import";
 import * as parseModuleCode from "./parse-module-code";
+import * as parseServer from "./parse-server";
 import * as parseStatic from "./parse-static";
 import * as transformBody from "./transform-body";
 import * as transformStyle from "./transform-style";
@@ -54,6 +56,20 @@ export default {
           "https://markojs.com/docs/syntax/#importing-external-files",
       },
     ],
+  },
+  "<client>": {
+    "node-factory": parseClient,
+    "parse-options": {
+      statement: true,
+      rawOpenTag: true,
+    },
+  },
+  "<server>": {
+    "node-factory": parseServer,
+    "parse-options": {
+      statement: true,
+      rawOpenTag: true,
+    },
   },
   "<class>": {
     "node-factory": parseClass,
