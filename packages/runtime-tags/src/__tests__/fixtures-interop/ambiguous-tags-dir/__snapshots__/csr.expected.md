@@ -7,5 +7,5 @@
 
 # Mutations
 ```
-INSERT #text0, #text1, #text2, h1, #text3, #text4, #text5
+INSERT h1
 ```

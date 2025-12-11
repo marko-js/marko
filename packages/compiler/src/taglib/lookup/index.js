@@ -52,7 +52,8 @@ class TaglibLookup {
     this.taglibsById = {};
 
     this._sortedTags = undefined;
-    this.manualTagsDirs = new Set();
+    this.exclusiveTagDiscoveryDirs = undefined;
+    this.manualTagsDirs = undefined;
   }
 
   hasTaglib(taglib) {
@@ -103,7 +104,9 @@ class TaglibLookup {
       typeof taglib.tagsDir === "string" &&
       /[/\\]tags[/\\]?$/.test(taglib.tagsDir)
     ) {
-      this.manualTagsDirs.add(nodePath.resolve(taglib.dirname, taglib.tagsDir));
+      (this.manualTagsDirs || (this.manualTagsDirs = new Set())).add(
+        nodePath.resolve(taglib.dirname, taglib.tagsDir),
+      );
     }
 
     // console.log("TAGLIB:", taglib);

@@ -39,6 +39,7 @@ class Taglib {
     this.patternAttributes = [];
     this.imports = null;
     this.importsLookup = null;
+    this.tagsDir = undefined;
   }
 
   addAttribute(attribute) {

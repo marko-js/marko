@@ -22,50 +22,49 @@ type FeatureState = {
   feature?: Feature;
 };
 
-const DEFAULT_FEATURE_TYPE = FeatureType.Class;
-
 export function isTagsAPI(file = getFile()) {
   const program = file.path;
-  let featureType = program.node.extra?.featureType;
+  const programExtra = (program.node.extra ??= {});
+  let { featureType } = programExtra;
 
   if (!featureType) {
+    const lookup = getTaglibLookup(file);
     const tagsDir = getTagsDir(file.opts.filename);
-    const programExtra = (program.node.extra ??= {});
-
-    if (tagsDir) {
-      featureType = programExtra.featureType = getTaglibLookup(
-        file,
-      ).manualTagsDirs.has(tagsDir)
-        ? FeatureType.Class
-        : FeatureType.Tags;
-    } else {
-      const state = {} as FeatureState;
-      scanBody(state, program.get("body"));
-      featureType = programExtra.featureType =
-        state.feature?.type || DEFAULT_FEATURE_TYPE;
+    const state = {} as FeatureState;
+    if (tagsDir && !lookup.manualTagsDirs?.has(tagsDir)) {
+      addFeature(
+        state,
+        FeatureType.Tags,
+        "Template file within a tags directory",
+        program,
+      );
     }
+
+    scanBody(state, program.get("body"));
+    featureType = programExtra.featureType =
+      state.feature?.type ||
+      (lookup.exclusiveTagDiscoveryDirs === "tags"
+        ? FeatureType.Tags
+        : FeatureType.Class);
   }
 
   return featureType === FeatureType.Tags;
 }
 
-const PATH_SEPARATOR_REGEX = /\/|\\/;
-const TAGS_LENGTH = "tags".length;
-const COMPONENTS_LENGTH = "components".length;
 function getTagsDir(filename: string) {
-  const pathSeparator = PATH_SEPARATOR_REGEX.exec(filename)?.[0];
+  const pathSeparator = /\/|\\/.exec(filename)?.[0];
   if (pathSeparator) {
     let previousIndex = filename.length - 1;
     while (previousIndex > 0) {
       const index = filename.lastIndexOf(pathSeparator, previousIndex);
       switch (previousIndex - index) {
-        case TAGS_LENGTH: {
+        case 4 /** "tags".length */: {
           if (filename.startsWith("tags", index + 1)) {
             return filename.slice(0, index + 5);
           }
           break;
         }
-        case COMPONENTS_LENGTH: {
+        case 10 /** "components".length */: {
           if (filename.startsWith("components", index + 1)) {
             return false;
           }
@@ -97,6 +96,10 @@ function scanBody(
         case "MarkoComment":
           if (/^\s*use tags\s*$/.test((child.node as t.MarkoComment).value)) {
             addFeature(state, FeatureType.Tags, "<!-- use tags -->", child);
+          } else if (
+            /^\s*use class\s*$/.test((child.node as t.MarkoComment).value)
+          ) {
+            addFeature(state, FeatureType.Class, "<!-- use class -->", child);
           }
           break;
         case "MarkoScriptlet":
@@ -148,10 +151,21 @@ function scanTag(state: FeatureState, tag: t.NodePath<t.MarkoTag>) {
   }
 
   const tagDef = getTagDef(tag);
-  if (tagDef?.taglibId === runtimeInfo.taglibId) {
-    const feature = getFeatureTypeFromCoreTagName(tagDef.name);
-    if (feature) {
-      addFeature(state, feature, `<${tagDef.name}> tag`, tag.get("name"));
+
+  if (tagDef) {
+    if (tagDef.name === "style") {
+      if (
+        /^style(?:(?:\.[^.\s\\/:*?"<>|({]+)+)?\s*\{/.test(
+          tag.node.rawValue || "",
+        )
+      ) {
+        addFeature(state, FeatureType.Class, `style block`, tag.get("name"));
+      }
+    } else if (tagDef.taglibId === runtimeInfo.taglibId) {
+      const feature = getFeatureTypeFromCoreTagName(tagDef.name);
+      if (feature) {
+        addFeature(state, feature, `<${tagDef.name}> tag`, tag.get("name"));
+      }
     }
   }
 
@@ -197,7 +211,7 @@ function addFeature(
     if (state.feature.type !== type) {
       throw buildAggregateError(
         path.hub.file,
-        'Cannot mix "tags api" and "class api" features',
+        "Cannot mix Tags API and Class API features in the same file",
         [state.feature.name, state.feature.path],
         [name, path],
       );
