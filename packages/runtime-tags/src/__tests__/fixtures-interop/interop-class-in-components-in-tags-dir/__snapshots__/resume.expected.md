@@ -7,16 +7,17 @@
       Hello world
     </h1>
     <script>
-      WALKER_RUNTIME("M")("s");
-      M.s.r = [_ =&gt; (_.a = [0, 1,
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0, 2,
       {
-        m5c: "s1"
-      }]), "$compat_setScope 2"];
-      M.s.w();
+        m5c: "_0"
+      }])];
+      M._.w();
       $MC = (window.$MC || []).concat(
       {
+        "p": "_",
         "w": [
-          ["s1", 0,
+          ["_0", 0,
           {},
           {
             "f": 1
@@ -25,7 +26,9 @@
         "t": [
           "__tests__/tags/components/hello-internal.marko"
         ]
-      })
+      });
+      M._.r.push("$compat_setScope 3");
+      M._.w()
     </script>
   </body>
 </html>

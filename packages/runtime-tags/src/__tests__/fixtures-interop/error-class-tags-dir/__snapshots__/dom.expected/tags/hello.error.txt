@@ -1,6 +1,10 @@
+Cannot mix Tags API and Class API features in the same file:
 
-    at packages/runtime-tags/src/__tests__/fixtures-interop/error-class-tags-dir/tags/hello.marko:1:1
-    > 1 | class {}
-        | ^^^^^ Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) `<class>`.
-      2 |
-      3 | <h1>Hello world</h1>
+Template file within a tags directory at packages/runtime-tags/src/__tests__/fixtures-interop/error-class-tags-dir/tags/hello.marko:
+
+
+<class> tag at packages/runtime-tags/src/__tests__/fixtures-interop/error-class-tags-dir/tags/hello.marko(1,1):
+> 1 | class {}
+    | ^^^^^
+  2 |
+  3 | <h1>Hello world</h1>

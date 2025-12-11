@@ -51,27 +51,13 @@ function getAllDependencyNames(pkg) {
 }
 
 function find(dirname, registeredTaglibs, tagDiscoveryDirs) {
-  var found = findCache[dirname];
-  if (found) {
-    return found;
+  var cached = findCache[dirname];
+  if (cached) {
+    return cached.taglibs;
   }
 
-  found = [];
-
-  var added = {};
-
-  var helper = {
-    addTaglib: function (taglib) {
-      if (added[taglib.id]) {
-        return;
-      }
-
-      added[taglib.id] = true;
-      found.push(taglib);
-    },
-    foundTaglibPackages: {},
-  };
-
+  var taglibs = [];
+  var added = new Set();
   var rootDirname = markoModules.cwd; // Don't search up past this directory
   var rootPkg = getModuleRootPackage(dirname);
   if (rootPkg) {
@@ -80,27 +66,41 @@ function find(dirname, registeredTaglibs, tagDiscoveryDirs) {
 
   // First walk up the directory tree looking for marko.json files or components/ directories
   let curDirname = dirname;
+  // exclusiveTagDiscoveryDirs is used for the interop to detect if `tags` directories are used exclusively when finding tags
+  let exclusiveTagDiscoveryDirs = undefined;
 
   while (true) {
     if (!excludedDirs[curDirname]) {
       let taglibPath = nodePath.join(curDirname, "marko.json");
       let taglib;
+      let manualTagsDir;
 
       if (existsSync(taglibPath)) {
         taglib = taglibLoader.loadTaglibFromFile(taglibPath);
-        helper.addTaglib(taglib);
+        manualTagsDir = taglib.tagsDir;
+        addTaglib(taglib);
       }
 
-      if (!taglib || taglib.tagsDir === undefined) {
+      if (manualTagsDir === undefined) {
         for (const tagDiscoveryDir of tagDiscoveryDirs) {
           const componentsPath = nodePath.join(curDirname, tagDiscoveryDir);
 
           if (existsSync(componentsPath) && !excludedDirs[componentsPath]) {
-            helper.addTaglib(
+            if (exclusiveTagDiscoveryDirs !== false) {
+              if (exclusiveTagDiscoveryDirs === undefined) {
+                exclusiveTagDiscoveryDirs = tagDiscoveryDir;
+              } else if (exclusiveTagDiscoveryDirs !== tagDiscoveryDir) {
+                exclusiveTagDiscoveryDirs = false;
+              }
+            }
+
+            addTaglib(
               taglibLoader.loadTaglibFromDir(curDirname, tagDiscoveryDir),
             );
           }
         }
+      } else if (manualTagsDir) {
+        exclusiveTagDiscoveryDirs = false;
       }
     }
 
@@ -120,25 +120,40 @@ function find(dirname, registeredTaglibs, tagDiscoveryDirs) {
     getAllDependencyNames(rootPkg).forEach((name) => {
       if (!excludedPackages[name]) {
         let taglibPath = markoModules.tryResolve(
-          nodePath.join(name, "marko.json"),
+          name + "/marko.json",
           rootPkg.__dirname,
         );
         if (taglibPath) {
           var taglib = taglibLoader.loadTaglibFromFile(taglibPath, true);
-          helper.addTaglib(taglib);
+          addTaglib(taglib);
         }
       }
     });
   }
 
   for (let i = registeredTaglibs.length; i--; ) {
-    helper.addTaglib(registeredTaglibs[i]);
+    addTaglib(registeredTaglibs[i]);
   }
 
-  findCache[dirname] = found;
+  findCache[dirname] = { exclusiveTagDiscoveryDirs, taglibs };
+  return taglibs;
 
-  return found;
+  function addTaglib(taglib) {
+    if (!added.has(taglib.id)) {
+      added.add(taglib.id);
+      taglibs.push(taglib);
+    }
+  }
 }
+
+find._withMeta = function findWithMeta(
+  dirname,
+  registeredTaglibs,
+  tagDiscoveryDirs,
+) {
+  find(dirname, registeredTaglibs, tagDiscoveryDirs);
+  return findCache[dirname];
+};
 
 function clearCache() {
   findCache = {};

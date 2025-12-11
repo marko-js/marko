@@ -32,6 +32,7 @@ export function buildLookup(dirname, requestedTranslator, onError) {
   }
 
   let taglibsForDir = loadedTranslatorsTaglibs.get(translator);
+  let exclusiveTagDiscoveryDirs = undefined;
 
   if (!taglibsForDir) {
     loadedTranslatorsTaglibs.set(
@@ -45,11 +46,13 @@ export function buildLookup(dirname, requestedTranslator, onError) {
   }
 
   runAndCatchErrors(() => {
-    taglibsForDir = finder.find(
+    const foundMeta = finder.find._withMeta(
       dirname,
       taglibsForDir,
       translator.tagDiscoveryDirs,
     );
+    taglibsForDir = foundMeta.taglibs;
+    exclusiveTagDiscoveryDirs = foundMeta.exclusiveTagDiscoveryDirs;
   }, onError);
 
   const cacheKey = taglibsForDir
@@ -60,6 +63,7 @@ export function buildLookup(dirname, requestedTranslator, onError) {
 
   if (!lookup) {
     lookup = lookupCache[cacheKey] = new Lookup();
+    lookup.exclusiveTagDiscoveryDirs = exclusiveTagDiscoveryDirs;
     for (let i = taglibsForDir.length; i--; ) {
       const taglib = taglibsForDir[i];
       lookup.addTaglib(taglib);
