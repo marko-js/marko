@@ -41,11 +41,13 @@ export function isTagsAPI(file = getFile()) {
     }
 
     scanBody(state, program.get("body"));
-    featureType = programExtra.featureType =
-      state.feature?.type ||
-      (lookup.exclusiveTagDiscoveryDirs === "tags"
-        ? FeatureType.Tags
-        : FeatureType.Class);
+    featureType =
+      file.metadata.marko.api =
+      programExtra.featureType =
+        state.feature?.type ||
+        (lookup.exclusiveTagDiscoveryDirs === "tags"
+          ? FeatureType.Tags
+          : FeatureType.Class);
   }
 
   return featureType === FeatureType.Tags;

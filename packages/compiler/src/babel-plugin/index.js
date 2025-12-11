@@ -221,6 +221,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
       tags: [],
       watchFiles: [],
       diagnostics: [],
+      api: translator.preferAPI,
     });
 
     parseMarko(file);
