@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.39.45
+
+### Patch Changes
+
+- [#3001](https://github.com/marko-js/marko/pull/3001) [`792dd1d`](https://github.com/marko-js/marko/commit/792dd1d5d193554889f7ba6e734c1730b947cf2d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose Marko target api on compiled meta data.
+
+- [#2999](https://github.com/marko-js/marko/pull/2999) [`d2f437b`](https://github.com/marko-js/marko/commit/d2f437bf7118c3160a4f4c9cf977b8396d9fc8db) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add support for "use class" comment to opt into to class api when exclusive `tags` folders prefer tags api.
+
+- [#2999](https://github.com/marko-js/marko/pull/2999) [`d2f437b`](https://github.com/marko-js/marko/commit/d2f437bf7118c3160a4f4c9cf977b8396d9fc8db) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add exclusive `tags` folder discovery as a "prefer tags api" heuristic in interop mode.
+
 ## 5.39.44
 
 ### Patch Changes
