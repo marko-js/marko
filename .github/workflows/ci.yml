@@ -6,9 +6,6 @@ on:
   push:
     branches: [main, v3, v4]
 
-permissions:
-  id-token: write
-
 concurrency:
   group: "${{ github.workflow }}-${{ github.event_name == 'pull_request_target' && github.head_ref || github.ref }}"
   cancel-in-progress: true
@@ -57,6 +54,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build, test]
     if: ${{ github.repository_owner == 'marko-js' && github.event_name == 'push' }}
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -77,9 +77,6 @@ jobs:
           title: "[ci] release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Release Alias
         if: ${{ contains(steps.changesets.outputs.publishedPackages, '"@marko/runtime-tags"') }}
         run: npm run @ci:release-alias
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
