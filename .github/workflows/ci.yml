@@ -56,7 +56,8 @@ jobs:
     if: ${{ github.repository_owner == 'marko-js' && github.event_name == 'push' }}
     permissions:
       id-token: write
-      contents: read
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
