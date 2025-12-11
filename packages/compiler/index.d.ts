@@ -29,6 +29,7 @@ export interface MarkoMeta {
   deps: Array<string | Dep | VirtualDep>;
   analyzedTags?: [string, ...string[]];
   diagnostics: Diagnostic[];
+  api: undefined | string;
 }
 
 export interface CompileResult {
