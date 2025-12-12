@@ -45,10 +45,12 @@ exports.p = function (htmlCompat) {
 
     if (componentDefs) {
       scripts = ___getInitComponentsCodeForDefs($global, componentDefs);
-      htmlCompat.ensureState($global).walkOnNextFlush = true;
+      if (scripts) {
+        htmlCompat.ensureState($global).walkOnNextFlush = true;
 
-      if (!tagsAPI.length) {
-        scripts = concatScripts(htmlCompat.flushScript($global), scripts);
+        if (!tagsAPI.length) {
+          scripts = concatScripts(htmlCompat.flushScript($global), scripts);
+        }
       }
     }
 
