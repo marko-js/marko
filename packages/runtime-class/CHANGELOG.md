@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.38.2
+
+### Patch Changes
+
+- [#3002](https://github.com/marko-js/marko/pull/3002) [`ced7b65`](https://github.com/marko-js/marko/commit/ced7b65aa95bbf77165e7b65389225d3ec4be8d8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where tags api walk was being output even when class api hydrated no components in interop mode.
+
 ## 5.38.1
 
 ### Patch Changes
