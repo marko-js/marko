@@ -44,16 +44,16 @@
     {
       "name": "comments",
       "user": {
-        "min": 735,
-        "brotli": 398
+        "min": 801,
+        "brotli": 426
       },
       "runtime": {
         "min": 7140,
         "brotli": 3125
       },
       "total": {
-        "min": 7875,
-        "brotli": 3523
+        "min": 7941,
+        "brotli": 3551
       }
     },
     {

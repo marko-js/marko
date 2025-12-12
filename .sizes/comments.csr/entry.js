@@ -1,14 +1,14 @@
-// size: 735 (min) 398 (brotli)
+// size: 801 (min) 426 (brotli)
 const $if_content__setup = ($scope) => {
     ($scope.a,
       $if_content__comment_comments._($scope),
       $if_content__id._($scope));
   },
   $if_content__comment_comments = _if_closure(4, 0, ($scope) =>
-    $input_comments($scope.a, $scope._.i),
+    $input_comments$1($scope.a, $scope._.i),
   ),
   $if_content__id = _if_closure(4, 0, ($scope) =>
-    $input_path($scope.a, $scope._.l),
+    $input_path$1($scope.a, $scope._.l),
   ),
   $for_content__id = _const(11, ($scope) => {
     (_attr($scope.a, "id", $scope.l), $if_content__id($scope));
@@ -52,18 +52,22 @@ const $if_content__setup = ($scope) => {
     $for_content__setup,
     $for_content__$params,
   ),
-  $input_comments = _const(3, ($scope) => $for($scope, [$scope.d])),
-  $input_path = _const(4, $for_content__input_path);
+  $input_comments$1 = _const(3, ($scope) => $for($scope, [$scope.d])),
+  $input_path$1 = _const(4, $for_content__input_path);
 function $setup($scope) {
-  $scope.a;
+  ($scope.a, $input_comments$1($scope.a), $input_path$1($scope.a));
 }
+const $input_comments = _const(3, ($scope) =>
+    $input_comments$1($scope.a, $scope.d),
+  ),
+  $input_path = _const(4, ($scope) => $input_path$1($scope.a, $scope.e));
 _template(
   "b",
   "<ul></ul>",
   "/ b&",
   $setup,
   _const(2, ($scope) => {
-    ($input_comments($scope.a, $scope.c.comments),
-      $input_path($scope.a, $scope.c.path));
+    ($input_comments($scope, $scope.c.comments),
+      $input_path($scope, $scope.c.path));
   }),
 ).mount();

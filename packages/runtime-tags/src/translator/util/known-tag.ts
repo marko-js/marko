@@ -17,17 +17,21 @@ import {
 } from "./nested-attribute-tags";
 import { filterMap, forEach, fromIter, type Opt } from "./optional";
 import {
+  addRead,
   type Binding,
   BindingType,
   bindingUtil,
   createBinding,
+  dropRead,
   dropReferences,
   getAllTagReferenceNodes,
   getDebugNames,
+  getOrCreatePropertyAlias,
   getScopeAccessorLiteral,
   type InputBinding,
   mergeReferences,
   type ParamBinding,
+  type ReferencedExtra,
   setBindingDownstream,
   trackParamsReferences,
   trackVarReferences,
@@ -584,11 +588,9 @@ function analyzeAttrs(
         bindings = bindingUtil.add(bindings, templateExportAttr.binding);
       }
 
-      if (bindings) {
-        forEach(bindings, (binding) => {
-          setBindingDownstream(binding, groupExtra);
-        });
-      }
+      forEach(bindings, (binding) => {
+        setBindingDownstream(binding, groupExtra);
+      });
 
       for (const name of group) {
         known[attrTagLookup[name].name] = groupKnownValue;
@@ -604,8 +606,9 @@ function analyzeAttrs(
     }
   }
 
-  const { attributes } = tag.node;
+  let knownSpreadBinding: Binding | undefined;
   let spreadReferenceNodes: t.Node[] | undefined;
+  const { attributes } = tag.node;
   for (let i = attributes.length; i--; ) {
     const attr = attributes[i];
     if (t.isMarkoAttribute(attr)) {
@@ -616,17 +619,29 @@ function analyzeAttrs(
         continue;
       }
 
+      const attrExtra = (attr.value.extra ??= {}) as ReferencedExtra;
       seen.add(attr.name);
-      setBindingDownstream(
-        templateExportAttr.binding,
-        (attr.value.extra ??= {}),
-      );
+      setBindingDownstream(templateExportAttr.binding, attrExtra);
+
+      if (knownSpreadBinding) {
+        addRead(
+          attrExtra,
+          undefined,
+          getOrCreatePropertyAlias(knownSpreadBinding, attr.name),
+        );
+      }
     }
 
     if (spreadReferenceNodes) {
       spreadReferenceNodes.push(attr.value);
     } else if (t.isMarkoSpreadAttribute(attr)) {
-      spreadReferenceNodes = [attr.value];
+      if (!propTree.rest) {
+        knownSpreadBinding = getSingleSpreadBinding(attributes);
+        dropRead(attr.value.extra as ReferencedExtra);
+      }
+      if (!knownSpreadBinding) {
+        spreadReferenceNodes = [attr.value];
+      }
     } else {
       const attrValueExtra = (attr.value.extra ??= {});
       known[attr.name] = { value: attrValueExtra };
@@ -634,41 +649,70 @@ function analyzeAttrs(
     }
   }
 
-  if (spreadReferenceNodes) {
-    const extra = (inputExpr.value = mergeReferences(
-      section,
-      tag.node,
-      spreadReferenceNodes,
-    ));
-    let spreadBinding = propTree.binding;
-    if (seen.size) {
-      spreadBinding = createBinding(
-        generateUid(`${getTagName(tag)}_attrs`),
-        spreadBinding.type,
-        spreadBinding.section,
-        spreadBinding,
-        undefined,
-        fromIter(seen),
-        spreadReferenceNodes[0].loc,
-        true,
-      );
-    }
+  if (knownSpreadBinding) {
+    for (const prop in propTree.props) {
+      if (!seen.has(prop)) {
+        const propBinding = getOrCreatePropertyAlias(knownSpreadBinding, prop);
+        const propExtra: ReferencedExtra = { section };
 
-    setBindingDownstream(spreadBinding, extra);
+        known[prop] = { value: propExtra };
+        rootAttrExprs.add(propExtra);
+        addRead(propExtra, propExtra, propBinding);
+        setBindingDownstream(propBinding, propExtra);
+      }
+    }
+  } else if (spreadReferenceNodes) {
+    setBindingDownstream(
+      seen.size
+        ? createBinding(
+            generateUid(`${getTagName(tag)}_attrs`),
+            propTree.binding.type,
+            propTree.binding.section,
+            propTree.binding,
+            undefined,
+            fromIter(seen),
+            spreadReferenceNodes[0].loc,
+            true,
+          )
+        : propTree.binding,
+      (inputExpr.value = mergeReferences(
+        section,
+        tag.node,
+        spreadReferenceNodes,
+      )),
+    );
   }
 
   if (propTree.rest) {
-    const extra = (inputExpr.value = mergeReferences(
-      section,
-      tag.node,
-      unknownReferences.flat(),
-    ));
-    setBindingDownstream(propTree.binding, extra);
+    setBindingDownstream(
+      propTree.binding,
+      (inputExpr.value = mergeReferences(
+        section,
+        tag.node,
+        unknownReferences.flat(),
+      )),
+    );
   } else {
     unknownReferences.forEach(dropReferences);
   }
 
   return inputExpr;
+}
+
+function getSingleSpreadBinding(
+  attributes: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
+) {
+  let binding: Binding | undefined;
+  for (let i = attributes.length; i--; ) {
+    const attr = attributes[i];
+    if (
+      attr.type === "MarkoSpreadAttribute" &&
+      (binding || !(binding = attr.value.extra?.spreadFrom))
+    ) {
+      return;
+    }
+  }
+  return binding;
 }
 
 function writeParamsToSignals(
@@ -927,26 +971,36 @@ function writeAttrsToSignals(
       }
     }
 
-    const { attributes } = tag.node;
-    const staticAttrs: t.MarkoAttribute[] = [];
+    let knownSpreadBinding: Binding | undefined;
     let spreadProps: t.ObjectExpression["properties"] | undefined;
+    const staticAttrs: t.MarkoAttribute[] = [];
+    const knownSpreadDefaultAttrs = new Set<t.MarkoAttribute>();
+    const { attributes } = tag.node;
     for (let i = attributes.length; i--; ) {
       const attr = attributes[i];
       if (t.isMarkoAttribute(attr)) {
-        const childAttrExports = propTree.props[attr.name];
-        if (!childAttrExports || seen.has(attr.name)) continue;
-
-        if (spreadProps) {
-          spreadProps.push(toObjectProperty(attr.name, attr.value));
+        if (
+          !propTree.props[attr.name] ||
+          seen.has(attr.name) ||
+          spreadProps?.push(toObjectProperty(attr.name, attr.value))
+        ) {
           continue;
         }
 
         seen.add(attr.name);
         staticAttrs.push(attr);
+        if (knownSpreadBinding) {
+          knownSpreadDefaultAttrs.add(attr);
+        }
       } else if (spreadProps) {
         spreadProps.push(t.spreadElement(attr.value));
       } else {
-        spreadProps = [t.spreadElement(attr.value)];
+        if (!propTree.rest) {
+          knownSpreadBinding = getSingleSpreadBinding(attributes);
+        }
+        if (!knownSpreadBinding) {
+          spreadProps = [t.spreadElement(attr.value)];
+        }
       }
     }
 
@@ -963,7 +1017,16 @@ function writeAttrsToSignals(
         t.expressionStatement(
           t.callExpression(attrExportIdentifier, [
             createScopeReadExpression(info.childScopeBinding, info.tagSection),
-            attr.value,
+            knownSpreadDefaultAttrs.has(attr)
+              ? t.logicalExpression(
+                  "??",
+                  createScopeReadExpression(
+                    knownSpreadBinding!.propertyAliases.get(attr.name)!,
+                    info.tagSection,
+                  ),
+                  attr.value,
+                )
+              : attr.value,
           ]),
         ),
       );
@@ -975,7 +1038,30 @@ function writeAttrsToSignals(
     if (missing.size) {
       const referencedBindings = tag.node.extra?.referencedBindings;
 
-      if (spreadProps) {
+      if (knownSpreadBinding) {
+        for (const prop of missing) {
+          const childAttrExports = propTree.props[prop];
+          const attrExportIdentifier = info.getBindingIdentifier(
+            childAttrExports.binding,
+            `${importAlias}_${prop}`,
+          );
+          const propBinding = knownSpreadBinding!.propertyAliases.get(prop)!;
+          addStatement(
+            "render",
+            info.tagSection,
+            propBinding,
+            t.expressionStatement(
+              t.callExpression(attrExportIdentifier, [
+                createScopeReadExpression(
+                  info.childScopeBinding,
+                  info.tagSection,
+                ),
+                createScopeReadExpression(propBinding, info.tagSection),
+              ]),
+            ),
+          );
+        }
+      } else if (spreadProps) {
         const spreadExpr = propsToExpression(
           propTree.rest
             ? (translatedAttrs = translateAttrs(tag, propTree, seen)).properties
