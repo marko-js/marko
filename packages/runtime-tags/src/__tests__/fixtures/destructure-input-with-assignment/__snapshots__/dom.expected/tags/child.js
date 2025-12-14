@@ -1,0 +1,20 @@
+export const $template = "<div></div>";
+export const $walks = /* get, over(1) */" b";
+export const $setup = () => {};
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $valueChange__script = _._script("__tests__/tags/child.marko_0_$valueChange", $scope => $scope.$valueChange(2));
+export const $valueChange = /* @__PURE__ */_._const("$valueChange", $valueChange__script);
+const $rest__script = _._script("__tests__/tags/child.marko_0_rest", $scope => _._attrs_script($scope, "#div/0"));
+export const $rest = /* @__PURE__ */_._const("rest", $scope => {
+  _._attrs_content($scope, "#div/0", $scope.rest);
+  $rest__script($scope);
+});
+export const $input = /* @__PURE__ */_._const("input", $scope => {
+  (({
+    value,
+    valueChange,
+    ...rest
+  }) => $rest($scope, rest))($scope.input);
+  $valueChange($scope, $scope.input.valueChange);
+});
+export default /* @__PURE__ */_._template("__tests__/tags/child.marko", $template, $walks, $setup, $input);

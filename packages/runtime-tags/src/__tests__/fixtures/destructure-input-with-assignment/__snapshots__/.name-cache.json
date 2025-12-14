@@ -1,0 +1,19 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "e",
+      "$$valueChange2__script": "a",
+      "$$valueChange2": "r",
+      "$$rest__script": "o",
+      "$$rest": "_",
+      "$$input": "n",
+      "$$child_content__value": "s",
+      "$$child_content__setup": "c",
+      "$$child_content": "m",
+      "$$value__closure": "u",
+      "$$value": "i",
+      "$$valueChange": "l"
+    }
+  }
+}

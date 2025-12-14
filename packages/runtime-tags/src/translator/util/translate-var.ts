@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { forEachIdentifierPath } from "./for-each-identifier";
-import type { Binding } from "./references";
+import { type Binding, propsUtil } from "./references";
 import { callRuntime } from "./runtime";
 import { getScopeIdIdentifier, getSection } from "./sections";
 
@@ -35,13 +35,26 @@ export default function translateVar(
     if (changeBinding && changeName !== changeBinding.name) {
       // add a new property to the destructure list when a change handler is implicitly added
       // eg by assigning to a destructured property.
-      getDestructurePattern(id)?.pushContainer(
-        "properties",
-        t.objectProperty(
-          t.identifier(changeName),
-          t.identifier(changeBinding.name),
-        ),
-      );
+      const pattern = getDestructurePattern(id);
+      if (pattern) {
+        pattern.unshiftContainer(
+          "properties",
+          t.objectProperty(
+            t.identifier(changeName),
+            t.identifier(changeBinding.name),
+          ),
+        );
+        const lastProperty = pattern.get("properties").at(-1);
+        if (lastProperty?.node.type === "RestElement") {
+          const restBinding = lastProperty.node.argument.extra?.binding;
+          if (restBinding) {
+            restBinding.excludeProperties = propsUtil.add(
+              restBinding.excludeProperties,
+              changeName,
+            );
+          }
+        }
+      }
     }
   });
 
