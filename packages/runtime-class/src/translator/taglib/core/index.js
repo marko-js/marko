@@ -404,6 +404,9 @@ export default {
       rawOpenTag: true,
     },
   },
+  "<script>": {
+    types: "marko/src/core-tags/core/script.d.marko",
+  },
   "<*>": {
     "@key": {
       type: "string",
