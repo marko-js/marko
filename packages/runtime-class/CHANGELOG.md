@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.38.3
+
+### Patch Changes
+
+- [#3005](https://github.com/marko-js/marko/pull/3005) [`afaefb6`](https://github.com/marko-js/marko/commit/afaefb6791acd3e9768793e7615908b25382b7fb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix script tag types for class/tags interop.
+
 ## 5.38.2
 
 ### Patch Changes
