@@ -132,28 +132,7 @@ function scanTag(state: FeatureState, tag: t.NodePath<t.MarkoTag>) {
     );
   }
 
-  for (const attr of tag.get("attributes")) {
-    if (attr.isMarkoAttribute()) {
-      if (attr.node.arguments?.length) {
-        addFeature(
-          state,
-          FeatureType.Class,
-          "Attribute arguments",
-          (attr.get("arguments") as t.NodePath<t.Expression>[])[0],
-        );
-        break;
-      } else if (attr.node.modifier) {
-        addFeature(state, FeatureType.Class, "Attribute modifier", attr);
-        break;
-      } else if (attr.node.bound) {
-        addFeature(state, FeatureType.Tags, "Bound attribute", attr);
-        break;
-      }
-    }
-  }
-
   const tagDef = getTagDef(tag);
-
   if (tagDef) {
     if (tagDef.name === "style") {
       if (
@@ -167,6 +146,28 @@ function scanTag(state: FeatureState, tag: t.NodePath<t.MarkoTag>) {
       const feature = getFeatureTypeFromCoreTagName(tagDef.name);
       if (feature) {
         addFeature(state, feature, `<${tagDef.name}> tag`, tag.get("name"));
+      }
+    }
+  }
+
+  if (!tagDef?.parseOptions?.rawOpenTag) {
+    for (const attr of tag.get("attributes")) {
+      if (attr.isMarkoAttribute()) {
+        if (attr.node.arguments?.length) {
+          addFeature(
+            state,
+            FeatureType.Class,
+            "Attribute arguments",
+            (attr.get("arguments") as t.NodePath<t.Expression>[])[0],
+          );
+          break;
+        } else if (attr.node.modifier) {
+          addFeature(state, FeatureType.Class, "Attribute modifier", attr);
+          break;
+        } else if (attr.node.bound) {
+          addFeature(state, FeatureType.Tags, "Bound attribute", attr);
+          break;
+        }
       }
     }
   }
