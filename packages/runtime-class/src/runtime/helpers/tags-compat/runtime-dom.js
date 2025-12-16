@@ -2,6 +2,7 @@ const { ___componentLookup } = require("@internal/components-util");
 const {
   ___getComponentsContext,
 } = require("../../components/ComponentsContext");
+const ComponentDef = require("../../components/ComponentDef");
 const defineComponent = require("../../components/defineComponent");
 const { r: registerComponent } = require("../../components/registry");
 const createRenderer = require("../../components/renderer");
@@ -44,6 +45,14 @@ exports.p = function (domCompat) {
     }
 
     this.___setCustomEventsOriginal(customEvents, scopeId);
+  };
+
+  const defDeserialize = ComponentDef.___deserialize;
+  ComponentDef.___deserialize = function (o, types, global, registry) {
+    if (typeof o[2] === "number") {
+      o[2] = self[global.runtimeId][global.renderId].s[o[2]].m5i;
+    }
+    return defDeserialize(o, types, global, registry);
   };
 
   const TagsCompatId = "tags-compat";

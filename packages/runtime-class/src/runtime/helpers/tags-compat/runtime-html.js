@@ -43,7 +43,7 @@ exports.p = function (htmlCompat) {
       writers.classAPI = [];
     }
 
-    if (componentDefs) {
+    if (componentDefs?.length) {
       scripts = ___getInitComponentsCodeForDefs($global, componentDefs);
       if (scripts) {
         htmlCompat.ensureState($global).walkOnNextFlush = true;
@@ -198,11 +198,15 @@ exports.p = function (htmlCompat) {
 
         const componentDef = componentsContext.___components[0];
         if (componentDef) {
-          htmlCompat.writeSetScopeForComponent(branchId, componentDef.id);
+          const rawInput = componentDef.___component.___input;
+          const { toJSON: _, ...serializeInput } = rawInput;
           componentDef.___component.___customEvents = customEvents;
-          if (componentDef.___component.___input.toJSON) {
-            componentDef.___component.___input.toJSON = undefined;
-          }
+          rawInput.toJSON = () => branchId;
+          htmlCompat.writeSetScopeForComponent(
+            branchId,
+            componentDef.id,
+            serializeInput,
+          );
         }
       } else {
         renderBody5(out, input, ...args);
