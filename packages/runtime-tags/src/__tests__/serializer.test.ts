@@ -124,8 +124,10 @@ describe("serializer", () => {
   describe("date", () => {
     it("epoch", () =>
       assertStringify(new Date(0), `new Date("1970-01-01T00:00:00.000Z")`));
-    it("now", () =>
-      assertStringify(new Date(), `new Date("${new Date().toISOString()}")`));
+    it("now", () => {
+      const date = new Date();
+      assertStringify(date, `new Date("${date.toISOString()}")`);
+    });
   });
 
   describe("map", () => {
