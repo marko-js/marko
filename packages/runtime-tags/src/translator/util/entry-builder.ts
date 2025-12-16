@@ -71,12 +71,13 @@ export default {
       imports: [],
       init: false,
     });
+    const programExtra = file.path.node.extra;
     const { analyzedTags } = file.metadata.marko;
     state.imports.push(
       resolveRelativePath(entryFile, file.opts.filename as string),
     );
 
-    if (file.path.node.extra.isInteractive) {
+    if (programExtra.isInteractive || programExtra.needsCompat) {
       state.init = true;
     }
 
