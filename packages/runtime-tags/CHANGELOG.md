@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.123
+
+### Patch Changes
+
+- [#3007](https://github.com/marko-js/marko/pull/3007) [`3769e43`](https://github.com/marko-js/marko/commit/3769e43c4317c7a832f8f74a55f740b30f1005f1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid interop feature checking attributes for "rawOpenTag" tags (style, import, etc).
+
+- [#3009](https://github.com/marko-js/marko/pull/3009) [`e7a0b33`](https://github.com/marko-js/marko/commit/e7a0b337adf505f8467ab302c0c9bf75e0f168f4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Serialize input passed from tags api to class api component via the Marko 6 serializer.
+
 ## 6.0.122
 
 ### Patch Changes
