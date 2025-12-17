@@ -22,19 +22,15 @@
     <!--M_*1 #select/0-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {},
-        {
-          i: 0,
-          _: _.a
-        },
-        {
-          i: 1,
-          _: _.a
-        },
-        {
-          i: 2,
-          _: _.a
-        }]),
+      M._.r = [_ =&gt; (_.e = [0, _.a = {
+          "BranchScopes:#select/0": [_.b = {
+            i: 0
+          }, _.c = {
+            i: 1
+          }, _.d = {
+            i: 2
+          }]
+        }, _.b, _.c, _.d], _.b._ = _.c._ = _.d._ = _.a, _.e),
         "__tests__/template.marko_0 1"
       ];
       M._.w()
@@ -75,23 +71,24 @@ select.dispatchEvent(new select.ownerDocument.defaultView.Event("change", {
     <!--M_*1 #select/0-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {},
-        {
-          i: 0,
-          _: _.a
-        },
-        {
-          i: 1,
-          _: _.a
-        },
-        {
-          i: 2,
-          _: _.a
-        }]),
+      M._.r = [_ =&gt; (_.e = [0, _.a = {
+          "BranchScopes:#select/0": [_.b = {
+            i: 0
+          }, _.c = {
+            i: 1
+          }, _.d = {
+            i: 2
+          }]
+        }, _.b, _.c, _.d], _.b._ = _.c._ = _.d._ = _.a, _.e),
         "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
   </body>
 </html>
+```
+
+# Mutations
+```
+UPDATE html/body/select/option0[selected] "" => null
 ```
