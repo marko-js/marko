@@ -3,8 +3,8 @@ export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   let bar = 0;
   const {
-    foo,
-    fooChange: $fooChange
+    fooChange: $fooChange,
+    foo
   } = {
     foo: 1,
     fooChange: _._resume(function (v) {
