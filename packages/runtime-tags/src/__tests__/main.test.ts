@@ -459,6 +459,10 @@ describe("runtime-tags/translator", () => {
       });
 
       describe("sanitized", () => {
+        beforeEach(() => {
+          resetResolveState();
+        });
+
         (skipSSR ? it.skip : it)("ssr-sanitized", async () => {
           await snapMD(async () => (await ssr()).tracker.getLogs(true));
         });
