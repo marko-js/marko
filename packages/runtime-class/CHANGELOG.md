@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.38.5
+
+### Patch Changes
+
+- [#3010](https://github.com/marko-js/marko/pull/3010) [`d293abe`](https://github.com/marko-js/marko/commit/d293abe8bff16440c624f955beb93f7398601be7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure tags api runtime loaded when going through tags api compat layer.
+
+- Updated dependencies [[`d293abe`](https://github.com/marko-js/marko/commit/d293abe8bff16440c624f955beb93f7398601be7)]:
+  - @marko/runtime-tags@6.0.124
+
 ## 5.38.4
 
 ### Patch Changes
