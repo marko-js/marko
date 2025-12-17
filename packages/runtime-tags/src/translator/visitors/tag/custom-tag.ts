@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import {
   assertAttributesOrSingleArg,
   getProgram,
+  getTagDef,
   getTagTemplate,
   importDefault,
   importNamed,
@@ -196,7 +197,9 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
   let relativePath: string | undefined;
 
   if (t.isStringLiteral(node.name)) {
-    const template = getTagTemplate(tag);
+    const template =
+      (node.extra?.featureType === "class" && getTagDef(tag)?.renderer) ||
+      getTagTemplate(tag);
     relativePath = template && resolveRelativePath(file, template);
   } else if (node.extra?.tagNameImported) {
     relativePath = node.extra.tagNameImported;
