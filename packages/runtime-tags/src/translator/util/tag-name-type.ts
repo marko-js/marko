@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import type { MarkoTagExtra } from "@marko/compiler/babel-types";
 import {
   getProgram,
+  getTagDef,
   isNativeTag,
   loadFileForTag,
   resolveTagImport,
@@ -60,14 +61,17 @@ export default function analyzeTagNameType(
       !isCoreTag(tag)
     ) {
       const childFile = loadFileForTag(tag);
-      if (!childFile) {
-        extra.tagNameType = TagNameType.DynamicTag;
-        extra.tagNameDynamic = true;
-      } else if (childFile.ast.program.extra!.featureType === "class") {
+      if (
+        getTagDef(tag)?.renderer ||
+        childFile?.ast.program.extra!.featureType === "class"
+      ) {
         extra.tagNameType = TagNameType.DynamicTag;
         extra.tagNameDynamic = true;
         extra.featureType = "class";
         (getProgram().node.extra ??= {}).needsCompat = true;
+      } else if (!childFile) {
+        extra.tagNameType = TagNameType.DynamicTag;
+        extra.tagNameDynamic = true;
       }
     }
   }
