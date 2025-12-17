@@ -67,8 +67,8 @@ export const compat = {
     };
   },
   patchDynamicTag,
-  writeSetScopeForComponent(branchId: number, m5c: string) {
-    _scope(branchId, { m5c });
+  writeSetScopeForComponent(branchId: number, m5c: string, m5i: unknown) {
+    _scope(branchId, { m5c, m5i });
     _script(branchId, SET_SCOPE_REGISTER_ID);
   },
   toJSON(state: State) {

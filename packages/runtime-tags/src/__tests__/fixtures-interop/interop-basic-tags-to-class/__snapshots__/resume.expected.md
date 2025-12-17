@@ -27,7 +27,11 @@
         count: 0
       },
       {
-        m5c: "_0"
+        m5c: "_0",
+        m5i:
+        {
+          count: 0
+        }
       }], _.a["ConditionalRenderer:#text/2"] = _._.$compat_renderer(_.a[
         "ConditionalRenderer:#text/2"]), _.b)];
       M._.w();
@@ -35,10 +39,7 @@
       {
         "p": "_",
         "w": [
-          ["_0", 0,
-          {
-            "count": 0
-          },
+          ["_0", 0, 2,
           {
             "f": 1
           }]
@@ -97,7 +98,11 @@ container.querySelector("#tags").click();
         count: 0
       },
       {
-        m5c: "_0"
+        m5c: "_0",
+        m5i:
+        {
+          count: 0
+        }
       }], _.a["ConditionalRenderer:#text/2"] = _._.$compat_renderer(_.a[
         "ConditionalRenderer:#text/2"]), _.b)];
       M._.w();
@@ -105,10 +110,7 @@ container.querySelector("#tags").click();
       {
         "p": "_",
         "w": [
-          ["_0", 0,
-          {
-            "count": 0
-          },
+          ["_0", 0, 2,
           {
             "f": 1
           }]
@@ -164,7 +166,11 @@ container.querySelector("#class").click();
         count: 0
       },
       {
-        m5c: "_0"
+        m5c: "_0",
+        m5i:
+        {
+          count: 0
+        }
       }], _.a["ConditionalRenderer:#text/2"] = _._.$compat_renderer(_.a[
         "ConditionalRenderer:#text/2"]), _.b)];
       M._.w();
@@ -172,10 +178,7 @@ container.querySelector("#class").click();
       {
         "p": "_",
         "w": [
-          ["_0", 0,
-          {
-            "count": 0
-          },
+          ["_0", 0, 2,
           {
             "f": 1
           }]
@@ -230,7 +233,11 @@ container.querySelector("#tags").click();
         count: 0
       },
       {
-        m5c: "_0"
+        m5c: "_0",
+        m5i:
+        {
+          count: 0
+        }
       }], _.a["ConditionalRenderer:#text/2"] = _._.$compat_renderer(_.a[
         "ConditionalRenderer:#text/2"]), _.b)];
       M._.w();
@@ -238,10 +245,7 @@ container.querySelector("#tags").click();
       {
         "p": "_",
         "w": [
-          ["_0", 0,
-          {
-            "count": 0
-          },
+          ["_0", 0, 2,
           {
             "f": 1
           }]
@@ -297,7 +301,11 @@ container.querySelector("#class").click();
         count: 0
       },
       {
-        m5c: "_0"
+        m5c: "_0",
+        m5i:
+        {
+          count: 0
+        }
       }], _.a["ConditionalRenderer:#text/2"] = _._.$compat_renderer(_.a[
         "ConditionalRenderer:#text/2"]), _.b)];
       M._.w();
@@ -305,10 +313,7 @@ container.querySelector("#class").click();
       {
         "p": "_",
         "w": [
-          ["_0", 0,
-          {
-            "count": 0
-          },
+          ["_0", 0, 2,
           {
             "f": 1
           }]
@@ -363,7 +368,11 @@ container.querySelector("#tags").click();
         count: 0
       },
       {
-        m5c: "_0"
+        m5c: "_0",
+        m5i:
+        {
+          count: 0
+        }
       }], _.a["ConditionalRenderer:#text/2"] = _._.$compat_renderer(_.a[
         "ConditionalRenderer:#text/2"]), _.b)];
       M._.w();
@@ -371,10 +380,7 @@ container.querySelector("#tags").click();
       {
         "p": "_",
         "w": [
-          ["_0", 0,
-          {
-            "count": 0
-          },
+          ["_0", 0, 2,
           {
             "f": 1
           }]
