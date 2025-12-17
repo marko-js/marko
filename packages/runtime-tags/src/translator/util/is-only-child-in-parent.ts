@@ -29,7 +29,9 @@ export function getOnlyChildParentTagName(
     parentTag &&
     getTagDef(parentTag)?.html &&
     parentTag.node.name.type === "StringLiteral" &&
-    (tag.parent as t.MarkoTagBody).body.length === branchSize
+    (tag.parent as t.MarkoTagBody).body.filter(
+      (node) => node.type !== "MarkoComment",
+    ).length === branchSize
       ? parentTag.node.name.value
       : false);
 }
