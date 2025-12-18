@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.126
+
+### Patch Changes
+
+- [#3015](https://github.com/marko-js/marko/pull/3015) [`c1f5de7`](https://github.com/marko-js/marko/commit/c1f5de7c0739b5d96a068e5ecc21a7f5140c2f35) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support "renderer" templates in class/tags interop.
+
 ## 6.0.125
 
 ### Patch Changes
