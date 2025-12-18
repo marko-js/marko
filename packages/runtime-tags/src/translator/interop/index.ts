@@ -4,9 +4,9 @@ import {
   loadFileForImport,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
-import * as translate6 from "@marko/runtime-tags/translator";
 import path from "path";
 
+import * as translate6 from "..";
 import { isTagsAPI } from "./feature-detection";
 
 type TagDef = Record<string, unknown>;
