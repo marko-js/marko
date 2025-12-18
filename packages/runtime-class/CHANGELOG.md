@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.38.8
+
+### Patch Changes
+
+- [#3017](https://github.com/marko-js/marko/pull/3017) [`4344a0c`](https://github.com/marko-js/marko/commit/4344a0c67df1955c6b3778e36cefbf1621fa2913) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve legacy renderer dependency scanning.
+
 ## 5.38.7
 
 ### Patch Changes
