@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.38.6
+
+### Patch Changes
+
+- [#3014](https://github.com/marko-js/marko/pull/3014) [`560d6a0`](https://github.com/marko-js/marko/commit/560d6a0bc9c78b3d584cc7199f5ab45ff679ff56) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix tags api runtime import from interop translator.
+
+- Updated dependencies [[`7ec9683`](https://github.com/marko-js/marko/commit/7ec9683b16a5206bfb8218e9512c5db1487bfb6f), [`19815e9`](https://github.com/marko-js/marko/commit/19815e95bc716cbf03e594f764efbe53221e3bdd), [`560d6a0`](https://github.com/marko-js/marko/commit/560d6a0bc9c78b3d584cc7199f5ab45ff679ff56)]:
+  - @marko/runtime-tags@6.0.125
+
 ## 5.38.5
 
 ### Patch Changes

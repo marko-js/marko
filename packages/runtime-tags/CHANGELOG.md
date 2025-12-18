@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.0.125
+
+### Patch Changes
+
+- [#3012](https://github.com/marko-js/marko/pull/3012) [`7ec9683`](https://github.com/marko-js/marko/commit/7ec9683b16a5206bfb8218e9512c5db1487bfb6f) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Ignore comments for only child conditional optimization
+
+- [#3004](https://github.com/marko-js/marko/pull/3004) [`19815e9`](https://github.com/marko-js/marko/commit/19815e95bc716cbf03e594f764efbe53221e3bdd) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix object destructures with spreads and change handlers
+
+- [#3014](https://github.com/marko-js/marko/pull/3014) [`560d6a0`](https://github.com/marko-js/marko/commit/560d6a0bc9c78b3d584cc7199f5ab45ff679ff56) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix tags api runtime import from interop translator.
+
 ## 6.0.124
 
 ### Patch Changes
