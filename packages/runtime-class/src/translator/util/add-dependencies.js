@@ -267,53 +267,55 @@ function importPath(path) {
 }
 
 function tryGetTemplateImports(file, rendererRelativePath) {
-  const resolvedRendererPath = path.join(
-    file.opts.filename,
-    "..",
+  const resolvedRendererPath = tryResolveFrom(
     rendererRelativePath,
+    file.opts.filename,
   );
   let templateImports;
 
-  try {
-    for (const statement of parseStatements(
-      file,
-      file.markoOpts.fileSystem.readFileSync(resolvedRendererPath, "utf-8"),
-    )) {
-      if (statement.type === "ImportDeclaration") {
-        addTemplateImport(statement.source.value);
-      } else {
-        t.traverseFast(statement, (node) => {
-          if (
-            node.type === "CallExpression" &&
-            (node.callee.name === "require" ||
-              (node.callee.type === "MemberExpression" &&
-                node.callee.object.type === "Identifier" &&
-                node.callee.object.name === "require" &&
-                node.callee.property.type === "Identifier" &&
-                node.callee.property.name === "resolve")) &&
-            node.arguments.length === 1 &&
-            node.arguments[0].type === "StringLiteral"
-          ) {
-            addTemplateImport(node.arguments[0].value);
+  if (resolvedRendererPath) {
+    if (resolvedRendererPath.endsWith(".marko")) {
+      addTemplateImport(resolvedRendererPath);
+    } else if (resolvedRendererPath.endsWith(".js")) {
+      try {
+        for (const statement of parseStatements(
+          file,
+          file.markoOpts.fileSystem.readFileSync(resolvedRendererPath, "utf-8"),
+        )) {
+          if (statement.type === "ImportDeclaration") {
+            addTemplateImport(statement.source.value);
+          } else {
+            t.traverseFast(statement, (node) => {
+              if (
+                node.type === "CallExpression" &&
+                (node.callee.name === "require" ||
+                  (node.callee.type === "MemberExpression" &&
+                    node.callee.object.type === "Identifier" &&
+                    node.callee.object.name === "require" &&
+                    node.callee.property.type === "Identifier" &&
+                    node.callee.property.name === "resolve")) &&
+                node.arguments.length === 1 &&
+                node.arguments[0].type === "StringLiteral"
+              ) {
+                addTemplateImport(node.arguments[0].value);
+              }
+            });
           }
-        });
+        }
+      } catch {
+        // Ignore
       }
     }
-  } catch {
-    // Ignore
   }
 
   return templateImports;
 
   function addTemplateImport(request) {
     if (request.endsWith(".marko")) {
-      const resolvedTemplatePath =
-        request[0] === "."
-          ? path.resolve(resolvedRendererPath, "..", request)
-          : markoModules.tryResolve(
-              request,
-              path.dirname(resolvedRendererPath),
-            );
+      const resolvedTemplatePath = tryResolveFrom(
+        request,
+        resolvedRendererPath,
+      );
       if (resolvedTemplatePath) {
         if (templateImports) {
           templateImports.push(resolvedTemplatePath);
@@ -323,6 +325,14 @@ function tryGetTemplateImports(file, rendererRelativePath) {
       }
     }
   }
+}
+
+function tryResolveFrom(request, from) {
+  return request[0] === "."
+    ? path.resolve(from, "..", request)
+    : /^(?:[/\\]|[a-zA-Z]:)/.test(request)
+      ? request
+      : markoModules.tryResolve(request, path.dirname(from));
 }
 
 function toTestFn(val) {
