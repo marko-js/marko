@@ -1,9 +1,5 @@
-export const steps = [{}, selectLast];
+export const steps = [{}, click, click];
 
-function selectLast(container: Element) {
-  const select = container.querySelector<HTMLSelectElement>("select")!;
-  select.value = select.options[2].value;
-  select.dispatchEvent(
-    new select.ownerDocument.defaultView!.Event("change", { bubbles: true }),
-  );
+function click(container: Element) {
+  container.querySelector<HTMLDivElement>("#target")!.click();
 }

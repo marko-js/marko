@@ -5,10 +5,11 @@ const $for_content__num__script = _._script("__tests__/template.marko_1_num", $s
   $num($scope._, $scope._.num + 1);
 }));
 const $for_content__num = /* @__PURE__ */_._for_closure("#text/0", $for_content__num__script);
-const $for_content__i = /* @__PURE__ */_._const("i", $scope => _._text($scope["#text/1"], $scope.i));
-const $for_content__setup = $for_content__num;
-const $for_content__$params = /* @__PURE__ */_._const("$params2", $scope => $for_content__i($scope, $scope.$params2[0]));
-const $for = /* @__PURE__ */_._for_to("#text/0", "<button> </button>", /* get, next(1), get, out(1) */" D l", $for_content__setup, $for_content__$params);
+const $for_content__setup = $scope => {
+  _._text($scope["#text/1"], $scope["#LoopKey"]);
+  $for_content__num._($scope);
+};
+const $for = /* @__PURE__ */_._for_to("#text/0", "<button> </button>", /* get, next(1), get, out(1) */" D l", $for_content__setup);
 const $num = /* @__PURE__ */_._let("num/1", $scope => {
   $for($scope, [$scope.num, 0, 1]);
   $for_content__num($scope);

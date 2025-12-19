@@ -1,4 +1,4 @@
-// size: 726 (min) 362 (brotli)
+// size: 664 (min) 350 (brotli)
 const $else_content__setup__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", function () {
       $for_content__editing($scope._, !0);
@@ -10,35 +10,30 @@ const $else_content__setup__script = _._script("a0", ($scope) =>
   $else_content__count = _._if_closure(0, 1, ($scope) =>
     _._text($scope.b, $scope._.c),
   ),
-  $if_content__counts__OR__count__OR__i__script = _._script("a1", ($scope) =>
+  $if_content__counts__OR__count__script = _._script("a1", ($scope) =>
     _._on($scope.a, "click", function () {
       ($counts($scope._._, [
-        ...$scope._._.b.slice(0, $scope._.d),
+        ...$scope._._.b.slice(0, $scope._.M),
         $scope._.c + 1,
-        ...$scope._._.b.slice($scope._.d + 1),
+        ...$scope._._.b.slice($scope._.M + 1),
       ]),
         $for_content__editing($scope._, !1));
     }),
   ),
-  $if_content__counts__OR__count__OR__i = _._or(
+  $if_content__counts__OR__count = _._or(
     2,
-    $if_content__counts__OR__count__OR__i__script,
-    2,
+    $if_content__counts__OR__count__script,
   ),
   $if_content__counts = _._closure_get(
     1,
-    $if_content__counts__OR__count__OR__i,
+    $if_content__counts__OR__count,
     ($scope) => $scope._._,
   ),
   $if_content__count = _._if_closure(0, 0, ($scope) => {
-    (_._text($scope.b, $scope._.c + 1),
-      $if_content__counts__OR__count__OR__i($scope));
+    (_._text($scope.b, $scope._.c + 1), $if_content__counts__OR__count($scope));
   }),
-  $if_content__i = _._if_closure(0, 0, $if_content__counts__OR__count__OR__i),
   $if_content__setup = ($scope) => {
-    ($if_content__counts($scope),
-      $if_content__count._($scope),
-      $if_content__i._($scope));
+    ($if_content__counts($scope), $if_content__count._($scope));
   },
   $for_content__if = _._if(
     0,
@@ -55,14 +50,12 @@ const $else_content__setup__script = _._script("a0", ($scope) =>
   $for_content__setup = ($scope) => {
     $for_content__editing($scope, !1);
   },
-  $for_content__$params = _._const(1, ($scope) => {
-    ($for_content__count($scope, $scope.b[0]),
-      $for_content__i($scope, $scope.b[1]));
-  }),
+  $for_content__$params = _._const(1, ($scope) =>
+    $for_content__count($scope, $scope.b[0]),
+  ),
   $for_content__count = _._const(2, ($scope) => {
     ($if_content__count($scope), $else_content__count($scope));
   }),
-  $for_content__i = _._const(3, $if_content__i),
   $for = _._for_of(
     0,
     "<!><!><!>",

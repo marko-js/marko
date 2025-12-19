@@ -1,12 +1,13 @@
-// size: 168 (min) 130 (brotli)
-const $for_content__selected__OR__i = _._or(4, ($scope) =>
-    _._attr($scope.a, "selected", $scope._.b === $scope.d),
+// size: 164 (min) 126 (brotli)
+const $for_content__selected = _._for_closure(0, ($scope) =>
+    _._attr($scope.a, "data-selected", $scope._.b === $scope.M),
   ),
-  $for_content__selected = _._for_closure(0, $for_content__selected__OR__i),
-  $selected = _._let(1, $for_content__selected);
-(_._script("a0", ($scope) =>
-  _._on($scope.a, "change", function (e) {
-    $selected($scope, e.target.value);
-  }),
-),
-  init());
+  $selected__script = _._script("a0", ($scope) =>
+    _._on($scope.a, "click", function () {
+      $selected($scope, $scope.b + 1);
+    }),
+  ),
+  $selected = _._let(1, ($scope) => {
+    ($for_content__selected($scope), $selected__script($scope));
+  });
+init();

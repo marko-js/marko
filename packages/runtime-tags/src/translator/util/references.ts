@@ -72,7 +72,7 @@ export enum BindingType {
   local,
   derived,
   hoist,
-  // todo: constant
+  constant,
 }
 
 export interface Sources {
@@ -97,6 +97,7 @@ export interface Binding {
   upstreamAlias: Binding | undefined;
   downstreamExpressions: Set<ReferencedExtra>;
   scopeOffset: Binding | undefined;
+  scopeAccessor: string | undefined;
   export: string | undefined;
   declared: boolean;
   nullable: boolean;
@@ -181,6 +182,7 @@ export function createBinding(
     upstreamAlias,
     downstreamExpressions: new Set(),
     scopeOffset: undefined,
+    scopeAccessor: undefined,
     export: undefined,
     nullable: excludeProperties === undefined,
   };
@@ -845,8 +847,9 @@ export function finalizeReferences() {
   const intersectionsBySection = new Map<Section, Intersection[]>();
   for (const [expr, reads] of readsByExpression) {
     if (isReferencedExtra(expr)) {
-      const referencedBindings = (expr.referencedBindings =
-        resolveReferencedBindings(expr, reads, intersectionsBySection));
+      const { referencedBindings, constantBindings } =
+        resolveReferencedBindings(expr, reads, intersectionsBySection);
+      expr.referencedBindings = referencedBindings;
 
       if (referencedBindings) {
         forEach(referencedBindings, (binding) => {
@@ -867,6 +870,12 @@ export function finalizeReferences() {
             }
           }
         }
+      }
+
+      if (constantBindings) {
+        forEach(constantBindings, (binding) => {
+          binding.downstreamExpressions.add(expr);
+        });
       }
     }
   }
@@ -1458,14 +1467,20 @@ export function getScopeAccessorLiteral(
   includeId?: boolean,
 ) {
   const canonicalBinding = getCanonicalBinding(binding)!;
-  if (isOptimize()) {
+  if (canonicalBinding.type === BindingType.constant) {
+    return t.stringLiteral(
+      canonicalBinding.scopeAccessor ?? canonicalBinding.name,
+    );
+  } else if (isOptimize()) {
     return encoded
       ? t.numericLiteral(canonicalBinding.id)
       : t.stringLiteral(decodeAccessor(canonicalBinding.id));
   } else if (includeId || canonicalBinding.type === BindingType.dom) {
     return t.stringLiteral(`${canonicalBinding.name}/${canonicalBinding.id}`);
   }
-  return t.stringLiteral(canonicalBinding.name);
+  return t.stringLiteral(
+    canonicalBinding.scopeAccessor ?? canonicalBinding.name,
+  );
 }
 
 export function getScopeAccessor(
@@ -1474,14 +1489,16 @@ export function getScopeAccessor(
   includeId?: boolean,
 ) {
   const canonicalBinding = getCanonicalBinding(binding)!;
-  if (isOptimize()) {
+  if (canonicalBinding.type === BindingType.constant) {
+    return canonicalBinding.scopeAccessor ?? canonicalBinding.name;
+  } else if (isOptimize()) {
     return encoded
       ? canonicalBinding.id + ""
       : decodeAccessor(canonicalBinding.id);
   } else if (includeId || canonicalBinding.type === BindingType.dom) {
     return `${canonicalBinding.name}/${canonicalBinding.id}`;
   }
-  return canonicalBinding.name;
+  return canonicalBinding.scopeAccessor ?? canonicalBinding.name;
 }
 
 export function getDebugScopeAccess(binding: Binding) {
@@ -1658,6 +1675,15 @@ export function getReadReplacement(
   }
 }
 
+export function hasNonConstantPropertyAlias(ref: Binding) {
+  for (const alias of ref.propertyAliases.values()) {
+    if (alias.type !== BindingType.constant) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function pruneBinding(bindings: Set<Binding>, binding: Binding) {
   let shouldPrune = !binding.downstreamExpressions.size;
 
@@ -1676,7 +1702,7 @@ function pruneBinding(bindings: Set<Binding>, binding: Binding) {
   for (const alias of binding.aliases) {
     if (pruneBinding(bindings, alias)) {
       binding.aliases.delete(alias);
-    } else {
+    } else if (alias.type !== BindingType.constant) {
       shouldPrune = false;
     }
   }
@@ -1684,7 +1710,7 @@ function pruneBinding(bindings: Set<Binding>, binding: Binding) {
   for (const [key, alias] of binding.propertyAliases) {
     if (pruneBinding(bindings, alias)) {
       binding.propertyAliases.delete(key);
-    } else {
+    } else if (alias.type !== BindingType.constant) {
       shouldPrune = false;
     }
   }
@@ -1773,6 +1799,8 @@ function resolveReferencedBindings(
   intersectionsBySection: Map<Section, Intersection[]>,
 ) {
   let referencedBindings: ReferencedBindings;
+  let constantBindings: ReferencedBindings;
+
   if (Array.isArray(reads)) {
     const rootBindings = getRootBindings(reads);
     for (const read of reads) {
@@ -1787,7 +1815,11 @@ function resolveReferencedBindings(
           ));
         }
       }
-      referencedBindings = bindingUtil.add(referencedBindings, binding);
+      if (binding.type === BindingType.constant) {
+        constantBindings = bindingUtil.add(constantBindings, binding);
+      } else {
+        referencedBindings = bindingUtil.add(referencedBindings, binding);
+      }
     }
   } else if (reads) {
     if (reads.node) {
@@ -1795,7 +1827,11 @@ function resolveReferencedBindings(
       readExtra.section = expr.section;
       readExtra.read = createRead(reads.binding, undefined);
     }
-    referencedBindings = reads.binding;
+    if (reads.binding.type === BindingType.constant) {
+      constantBindings = reads.binding;
+    } else {
+      referencedBindings = reads.binding;
+    }
   }
 
   if (Array.isArray(referencedBindings)) {
@@ -1816,7 +1852,32 @@ function resolveReferencedBindings(
       );
     }
   }
-  return referencedBindings;
+
+  if (referencedBindings && constantBindings) {
+    // Resolve canonical intersection based on the expressions section.
+    // This ensures referential equality between reference binding groups.
+    const intersections = intersectionsBySection.get(expr.section) || [];
+    const combined = concat(
+      referencedBindings,
+      constantBindings,
+    ) as Intersection;
+    const intersection = findSorted(
+      compareIntersections,
+      intersections,
+      combined,
+    );
+    if (!intersection) {
+      intersectionsBySection.set(
+        expr.section,
+        addSorted(compareIntersections, intersections, combined),
+      );
+    }
+  }
+
+  return {
+    referencedBindings,
+    constantBindings,
+  };
 }
 
 function resolveExpressionReference(

@@ -1,5 +1,5 @@
 let/selected=0
-select onChange(e) { selected = e.target.value }
+div#target onClick() { selected++ }
   for|i| until=3
-    option selected=selected === i
+    span data-selected=selected === i
       -- ${i}

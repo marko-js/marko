@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div><div class=by-string>first<!--M_*2 #text/0-->second<!--M_*3 #text/0-->third<!--M_*4 #text/0--><!--M_}1 #div/0 4 3 2--></div><div class=by-function>first<!--M_*5 #text/0-->second<!--M_*6 #text/0-->third<!--M_*7 #text/0--><!--M_}1 #div/1 7 6 5--></div><div class=by-unknown-string>first<!--M_*8 #text/0-->second<!--M_*9 #text/0-->third<!--M_*10 #text/0--><!--M_}1 #div/2 10 9 8--></div><div class=by-unknown-function>first<!--M_*11 #text/0-->second<!--M_*12 #text/0-->third<!--M_*13 #text/0--><!--M_}1 #div/3 13 12 11--></div><div class=by-unknown-missing>first<!--M_*14 #text/0-->second<!--M_*15 #text/0-->third<!--M_*16 #text/0--><!--M_}1 #div/4 16 15 14--></div><button>Rotate</button><!--M_*1 #button/5--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}]},{"#LoopKey":0},{"#LoopKey":1},{"#LoopKey":2},{"#LoopKey":0},{"#LoopKey":1},{"#LoopKey":2},{"#LoopKey":0},{"#LoopKey":1},{"#LoopKey":2},{"#LoopKey":0},{"#LoopKey":1},{"#LoopKey":2},{"#LoopKey":0},{"#LoopKey":1},{"#LoopKey":2}]),"__tests__/template.marko_0_items 1"];M._.w()</script>
+  <div><div class=by-string>first<!--M_*2 #text/0-->second<!--M_*3 #text/0-->third<!--M_*4 #text/0--><!--M_}1 #div/0 4 3 2--></div><div class=by-function>first<!--M_*5 #text/0-->second<!--M_*6 #text/0-->third<!--M_*7 #text/0--><!--M_}1 #div/1 7 6 5--></div><div class=by-unknown-string>first<!--M_*8 #text/0-->second<!--M_*9 #text/0-->third<!--M_*10 #text/0--><!--M_}1 #div/2 10 9 8--></div><div class=by-unknown-function>first<!--M_*11 #text/0-->second<!--M_*12 #text/0-->third<!--M_*13 #text/0--><!--M_}1 #div/3 13 12 11--></div><div class=by-unknown-missing>first<!--M_*14 #text/0-->second<!--M_*15 #text/0-->third<!--M_*16 #text/0--><!--M_}1 #div/4 16 15 14--></div><button>Rotate</button><!--M_*1 #button/5--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}]},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{}]),"__tests__/template.marko_0_items 1"];M._.w()</script>
 ```
 
 # Render End
@@ -87,51 +87,21 @@
             text: "third"
           }]
         },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        }]),
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()

@@ -28,6 +28,7 @@ import {
   getScopeAccessor,
   getScopeAccessorLiteral,
   getSectionInstancesAccessorLiteral,
+  hasNonConstantPropertyAlias,
   intersectionMeta,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
@@ -190,6 +191,13 @@ export function getSignal(
   referencedBindings: ReferencedBindings,
   name: string = generateSignalName(referencedBindings),
 ) {
+  if (
+    !Array.isArray(referencedBindings) &&
+    referencedBindings?.type === BindingType.constant
+  ) {
+    return getSignal(section, undefined);
+  }
+
   const signals = getSignals(section);
   let signal = signals.get(referencedBindings)!;
   if (!signal) {
@@ -304,11 +312,15 @@ export function initValue(binding: Binding, isLet = false) {
   };
 
   for (const alias of binding.aliases) {
-    initValue(alias);
+    if (alias.type !== BindingType.constant) {
+      initValue(alias);
+    }
   }
 
   for (const alias of binding.propertyAliases.values()) {
-    initValue(alias);
+    if (alias.type !== BindingType.constant) {
+      initValue(alias);
+    }
   }
 
   return signal;
@@ -333,7 +345,7 @@ export function signalHasStatements(signal: Signal): boolean {
         (binding.section === signal.section &&
           (binding.hoists.size ||
             binding.aliases.size ||
-            binding.propertyAliases.size)))
+            hasNonConstantPropertyAlias(binding))))
     ) {
       return true;
     }
@@ -403,20 +415,22 @@ export function getSignalFn(signal: Signal): t.Expression {
     }
 
     for (const [key, alias] of binding.propertyAliases) {
-      const aliasSignal = getSignal(alias.section, alias);
-      signal.render.push(
-        t.expressionStatement(
-          t.callExpression(aliasSignal.identifier, [
-            scopeIdentifier,
-            toMemberExpression(
-              createScopeReadExpression(binding),
-              key,
-              binding.nullable,
-            ),
-            ...getTranslatedExtraArgs(aliasSignal),
-          ]),
-        ),
-      );
+      if (alias.type !== BindingType.constant) {
+        const aliasSignal = getSignal(alias.section, alias);
+        signal.render.push(
+          t.expressionStatement(
+            t.callExpression(aliasSignal.identifier, [
+              scopeIdentifier,
+              toMemberExpression(
+                createScopeReadExpression(binding),
+                key,
+                binding.nullable,
+              ),
+              ...getTranslatedExtraArgs(aliasSignal),
+            ]),
+          ),
+        );
+      }
     }
 
     if (assertsHoists) {
@@ -562,16 +576,18 @@ function getTranslatedExtraArgs(signal: { extraArgs?: t.Expression[] }) {
 export function subscribe(references: ReferencedBindings, subscriber: Signal) {
   if (references) {
     forEach(references, (binding) => {
-      const source =
-        (binding.property === undefined &&
-          binding.excludeProperties === undefined &&
-          binding.upstreamAlias) ||
-        binding;
-      const providerSignal = getSignal(subscriber.section, source);
-      providerSignal.intersection = push(
-        providerSignal.intersection,
-        subscriber,
-      );
+      if (binding.type !== BindingType.constant) {
+        const source =
+          (binding.property === undefined &&
+            binding.excludeProperties === undefined &&
+            binding.upstreamAlias) ||
+          binding;
+        const providerSignal = getSignal(subscriber.section, source);
+        providerSignal.intersection = push(
+          providerSignal.intersection,
+          subscriber,
+        );
+      }
     });
   }
 }
@@ -692,7 +708,7 @@ function addRenderReferences(
 export function addValue(
   targetSection: Section,
   referencedBindings: ReferencedBindings,
-  signal: Signal["values"][number]["signal"],
+  signal: Signal,
   value: t.Expression,
 ) {
   const parentSignal = getSignal(targetSection, referencedBindings);

@@ -8,7 +8,7 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
-import { getAccessorPrefix } from "../util/get-accessor-char";
+import { getAccessorPrefix, getAccessorProp } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import {
@@ -71,7 +71,8 @@ export default {
     assertNoArgs(tag);
     assertNoSpreadAttrs(tag);
 
-    switch (getForType(tag.node)) {
+    const forType = getForType(tag.node);
+    switch (forType) {
       case "of":
         allowAttrs = ["of"];
         break;
@@ -116,6 +117,14 @@ export default {
 
     if (paramsBinding) {
       setBindingDownstream(paramsBinding, tagExtra);
+
+      const keyBinding = paramsBinding.propertyAliases.get(
+        forType === "of" ? "1" : "0",
+      );
+      if (keyBinding) {
+        keyBinding.type = BindingType.constant;
+        keyBinding.scopeAccessor = getAccessorProp().LoopKey;
+      }
     }
     bodySection.sectionAccessor = {
       binding: nodeBinding,

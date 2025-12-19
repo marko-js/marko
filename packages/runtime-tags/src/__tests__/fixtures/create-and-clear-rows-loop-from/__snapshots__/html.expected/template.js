@@ -5,7 +5,7 @@ export default _._template("__tests__/template.marko", input => {
   _._html("<div>");
   _._for_to(input.to, input.from, input.step, n => {
     const $scope1_id = _._scope_id();
-    _._html(`${_._escape(n)}${_._el_resume($scope1_id, "#text/0", _._serialize_guard($scope0_reason, /* input.from, input.to, input.step */3))}, `);
+    _._html(`${_._escape(n)}, `);
     _._serialize_if($scope0_reason, /* input.from, input.to, input.step */3) && _._scope($scope1_id, {}, "__tests__/template.marko", "2:4");
   }, 0, $scope0_id, "#div/0", _._serialize_guard($scope0_reason, /* input.from, input.to, input.step */3), _._serialize_guard($scope0_reason, /* input.from, input.to, input.step */3), _._serialize_guard($scope0_reason, /* input.from, input.to, input.step */3), "</div>");
   _._serialize_if($scope0_reason, /* input.from, input.to, input.step */3) && _._scope($scope0_id, {

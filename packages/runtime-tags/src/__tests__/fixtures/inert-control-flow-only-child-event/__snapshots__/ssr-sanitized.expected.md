@@ -1,16 +1,18 @@
 # Render End
 ```html
-<select>
-  <option
-    selected=""
+<div
+  id="target"
+>
+  <span
+    data-selected=""
   >
     0
-  </option>
-  <option>
+  </span>
+  <span>
     1
-  </option>
-  <option>
+  </span>
+  <span>
     2
-  </option>
-</select>
+  </span>
+</div>
 ```

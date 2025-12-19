@@ -605,6 +605,7 @@ function loop<T extends unknown[] = unknown[]>(
             scope,
             parentNode,
           );
+        branch[AccessorProp.LoopKey] = key;
         params?.(branch, args);
         newScopesByKey.set(key, branch);
         newScopes.push(branch);
