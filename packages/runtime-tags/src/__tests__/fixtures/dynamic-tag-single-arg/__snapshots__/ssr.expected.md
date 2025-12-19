@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>Count: <!>1<!--M_*1 #text/1--></button><!--M_*1 #button/0--><!--M_[--><div>1<!--M_*2 #text/0--></div><!--M_]1 #text/2 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1},{}]),"__tests__/template.marko_0_x 1"];M._.w()</script>
+  <button>Count: <!>1<!--M_*1 #text/1--></button><!--M_*1 #button/0--><!--M_[--><div>1<!--M_*2 #text/0--></div><!--M_]1 #text/2 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1}]),"__tests__/template.marko_0_x 1"];M._.w()</script>
 ```
 
 # Render End
@@ -27,8 +27,7 @@
         {
           "ConditionalRenderer:#text/2": "__tests__/tags/custom-tag.marko",
           x: 1
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_x 1"
       ];
       M._.w()

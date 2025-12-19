@@ -29,8 +29,7 @@
           input_content: _.c = {},
           input_name: "hello",
           x: 1
-        },
-        {}], _.a.input_content = _._[
+        }], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.c), _.b),
         "__tests__/tags/custom-tag.marko_0_x 2"
@@ -80,8 +79,7 @@ container.querySelector("button").click();
           input_content: _.c = {},
           input_name: "hello",
           x: 1
-        },
-        {}], _.a.input_content = _._[
+        }], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.c), _.b),
         "__tests__/tags/custom-tag.marko_0_x 2"
@@ -132,8 +130,7 @@ container.querySelector("button").click();
           input_content: _.c = {},
           input_name: "hello",
           x: 1
-        },
-        {}], _.a.input_content = _._[
+        }], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.c), _.b),
         "__tests__/tags/custom-tag.marko_0_x 2"
@@ -184,8 +181,7 @@ container.querySelector("button").click();
           input_content: _.c = {},
           input_name: "hello",
           x: 1
-        },
-        {}], _.a.input_content = _._[
+        }], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.c), _.b),
         "__tests__/tags/custom-tag.marko_0_x 2"

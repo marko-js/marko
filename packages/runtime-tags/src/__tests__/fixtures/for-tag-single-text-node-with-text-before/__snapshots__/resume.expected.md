@@ -17,8 +17,7 @@
       M._.r = [_ =&gt; (_.a = [0,
         {
           children: [1]
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_children 1"
       ];
       M._.w()
@@ -51,8 +50,7 @@ INSERT html/body/div/#text2
       M._.r = [_ =&gt; (_.a = [0,
         {
           children: [1]
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_children 1"
       ];
       M._.w()

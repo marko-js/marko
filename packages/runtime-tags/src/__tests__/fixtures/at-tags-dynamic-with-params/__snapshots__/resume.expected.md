@@ -21,8 +21,7 @@
           "#childScope/0": _.a = {
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.a,
-        {}]),
+        }, _.a]),
         "__tests__/template.marko_0_x 1"
       ];
       M._.w()
@@ -59,8 +58,7 @@ container.querySelector("button").click();
           "#childScope/0": _.a = {
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.a,
-        {}]),
+        }, _.a]),
         "__tests__/template.marko_0_x 1"
       ];
       M._.w()
@@ -102,8 +100,7 @@ container.querySelector("button").click();
           "#childScope/0": _.a = {
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.a,
-        {}]),
+        }, _.a]),
         "__tests__/template.marko_0_x 1"
       ];
       M._.w()
@@ -140,8 +137,7 @@ container.querySelector("button").click();
           "#childScope/0": _.a = {
             "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
-        }, _.a,
-        {}]),
+        }, _.a]),
         "__tests__/template.marko_0_x 1"
       ];
       M._.w()

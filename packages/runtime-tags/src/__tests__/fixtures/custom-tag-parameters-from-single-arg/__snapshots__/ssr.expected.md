@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button class=inc>1<!--M_*2 #text/1--></button><!--M_*2 #button/0--><!--M_[--><div>Count: <!>1<!--M_*3 #text/0--></div><!--M_]2 #text/2 3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,1,_.a={"ConditionalRenderer:#text/2":"__tests__/template.marko_1_content",input_content:_.c={},x:1},{}],_.a.input_content=_._["__tests__/template.marko_1_content"](_.c),_.b),"__tests__/tags/custom-tag.marko_0_x 2"];M._.w()</script>
+  <button class=inc>1<!--M_*2 #text/1--></button><!--M_*2 #button/0--><!--M_[--><div>Count: <!>1<!--M_*3 #text/0--></div><!--M_]2 #text/2 3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,1,_.a={"ConditionalRenderer:#text/2":"__tests__/template.marko_1_content",input_content:_.c={},x:1}],_.a.input_content=_._["__tests__/template.marko_1_content"](_.c),_.b),"__tests__/tags/custom-tag.marko_0_x 2"];M._.w()</script>
 ```
 
 # Render End
@@ -29,8 +29,7 @@
           "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
           input_content: _.c = {},
           x: 1
-        },
-        {}], _.a.input_content = _._[
+        }], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.c), _.b),
         "__tests__/tags/custom-tag.marko_0_x 2"

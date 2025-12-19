@@ -23,11 +23,15 @@ import {
 import type { ServerRenderer } from "./template";
 
 export type PartialScope = Record<Accessor, unknown>;
-type ScopeInternals = PartialScope & { [K_SCOPE_ID]?: number };
+type ScopeInternals = PartialScope & {
+  [K_SCOPE_ID]?: number;
+  [K_SCOPE_REFERENCED]?: 1;
+};
 
 let $chunk: Chunk;
 const NOOP = () => {};
 const K_SCOPE_ID = Symbol("Scope ID");
+const K_SCOPE_REFERENCED = Symbol("Scope Referenced");
 
 enum Mark {
   Placeholder = "!^",
@@ -325,7 +329,7 @@ export function _for_of(
           branchScope[AccessorProp.LoopKey] = itemKey;
         }
         if (!resumeMarker) {
-          loopScopes = push(loopScopes, branchScope);
+          loopScopes = push(loopScopes, referenceScope(branchScope));
         }
       });
     });
@@ -406,7 +410,7 @@ export function _for_in(
           branchScope[AccessorProp.LoopKey] = itemKey;
         }
         if (!resumeMarker) {
-          loopScopes = push(loopScopes, branchScope);
+          loopScopes = push(loopScopes, referenceScope(branchScope));
         }
       });
     });
@@ -489,7 +493,7 @@ export function _for_to(
           branchScope[AccessorProp.LoopKey] = itemKey;
         }
         if (!resumeMarker) {
-          loopScopes = push(loopScopes, branchScope);
+          loopScopes = push(loopScopes, referenceScope(branchScope));
         }
       });
     });
@@ -573,7 +577,7 @@ export function _for_until(
           branchScope[AccessorProp.LoopKey] = itemKey;
         }
         if (!resumeMarker) {
-          loopScopes = push(loopScopes, branchScope);
+          loopScopes = push(loopScopes, referenceScope(branchScope));
         }
       });
     });
@@ -628,7 +632,7 @@ export function _if(
       [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex || undefined, // we convert 0 to undefined since the runtime defaults branch to 0.
       [AccessorPrefix.BranchScopes + accessor]: resumeMarker
         ? undefined
-        : writeScope(branchId, {}),
+        : referenceScope(writeScope(branchId, {})),
     });
   }
 
@@ -676,6 +680,15 @@ function writeBranchEnd(
   } else {
     $chunk.writeHTML(endTag);
   }
+}
+
+function scopeHasReference(scope: PartialScope) {
+  return !!(scope as ScopeInternals)[K_SCOPE_REFERENCED];
+}
+
+function referenceScope(scope: ScopeInternals) {
+  scope[K_SCOPE_REFERENCED] = 1;
+  return scope;
 }
 
 let writeScope = (scopeId: number, partialScope: PartialScope) => {
@@ -740,8 +753,7 @@ export function _scope_with_id(scopeId: number) {
     scope = { [K_SCOPE_ID]: scopeId };
     state.scopes.set(scopeId, scope);
   }
-
-  return scope;
+  return referenceScope(scope);
 }
 
 export function $global() {
@@ -1380,6 +1392,7 @@ function flushSerializer(boundary: Boundary) {
   const { writeScopes, serializer } = state;
   const { flushed } = serializer;
   if (writeScopes || flushed) {
+    let shouldSerialize = false;
     const serializeData: [
       $global?: ReturnType<typeof getFilteredGlobals>,
       ...(number | PartialScope)[],
@@ -1389,21 +1402,30 @@ function flushSerializer(boundary: Boundary) {
     if (!state.hasGlobals) {
       state.hasGlobals = true;
       serializeData.push(getFilteredGlobals(state.$global));
+      shouldSerialize = true;
     }
 
     for (const key in writeScopes) {
       const scope = writeScopes[key as unknown as number];
-      const scopeId = getScopeId(scope)!;
-      const scopeIdDelta = scopeId - lastSerializedScopeId;
-      lastSerializedScopeId = scopeId + 1;
-      if (scopeIdDelta) serializeData.push(scopeIdDelta);
-      serializeData.push(scope);
+      if (
+        scopeHasReference(scope) ||
+        Object.getOwnPropertyNames(scope).length
+      ) {
+        const scopeId = getScopeId(scope)!;
+        const scopeIdDelta = scopeId - lastSerializedScopeId;
+        lastSerializedScopeId = scopeId + 1;
+        if (scopeIdDelta) serializeData.push(scopeIdDelta);
+        serializeData.push(scope);
+        shouldSerialize = true;
+      }
     }
 
-    state.resumes = concatSequence(
-      state.resumes,
-      serializer.stringify(serializeData, boundary),
-    );
+    if (shouldSerialize) {
+      state.resumes = concatSequence(
+        state.resumes,
+        serializer.stringify(serializeData, boundary),
+      );
+    }
     state.lastSerializedScopeId = lastSerializedScopeId;
     state.writeScopes = null;
     if (flushed) {
@@ -1510,5 +1532,5 @@ export function _subscribe(
   scope: ScopeInternals,
 ) {
   $chunk.boundary.state.serializer.writeCall(scope, subscribers, "add");
-  return scope;
+  referenceScope(scope);
 }

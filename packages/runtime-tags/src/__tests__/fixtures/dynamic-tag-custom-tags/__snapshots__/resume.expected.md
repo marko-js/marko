@@ -22,8 +22,7 @@
             "__tests__/tags/child1.marko"
             ],
           val: 3
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_tagName 1"
       ];
       M._.w()
@@ -62,8 +61,7 @@ container.querySelector("button").click();
             "__tests__/tags/child1.marko"
             ],
           val: 3
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_tagName 1"
       ];
       M._.w()
@@ -104,8 +102,7 @@ container.querySelector("button").click();
             "__tests__/tags/child1.marko"
             ],
           val: 3
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_tagName 1"
       ];
       M._.w()

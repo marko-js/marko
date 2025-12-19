@@ -83,8 +83,6 @@ INSERT html/body/#text1
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1,
-      {}]));
       M._.w()
     </script>
   </body>
@@ -149,8 +147,6 @@ container.querySelector("button").click();
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1,
-      {}]));
       M._.w()
     </script>
   </body>
@@ -193,8 +189,6 @@ container.querySelector("button").click();
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1,
-      {}]));
       M._.w()
     </script>
   </body>
@@ -252,8 +246,6 @@ REMOVE #document-fragment/#text2 after html/body/#text
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1,
-      {}]));
       M._.w()
     </script>
   </body>
@@ -308,8 +300,6 @@ container.querySelector("button").click();
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1,
-      {}]));
       M._.w()
     </script>
   </body>
@@ -352,8 +342,6 @@ container.querySelector("button").click();
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1,
-      {}]));
       M._.w()
     </script>
   </body>
@@ -411,8 +399,6 @@ REMOVE #document-fragment/#text2 after html/body/#text
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1,
-      {}]));
       M._.w()
     </script>
   </body>

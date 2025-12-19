@@ -24,9 +24,7 @@
           "#scopeOffset/1": 3,
           clear: _.b = {},
           "#childScope/0": _.b
-        }, _.b, 1,
-        {},
-        {}], _.a.clear = _._[
+        }, _.b], _.a.clear = _._[
           "__tests__/tags/store.marko_0/_return2"
           ](_.b), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_store/var"
@@ -61,9 +59,7 @@ container.querySelector("button").click();
           "#scopeOffset/1": 3,
           clear: _.b = {},
           "#childScope/0": _.b
-        }, _.b, 1,
-        {},
-        {}], _.a.clear = _._[
+        }, _.b], _.a.clear = _._[
           "__tests__/tags/store.marko_0/_return2"
           ](_.b), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_0_store/var"

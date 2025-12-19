@@ -35,8 +35,7 @@
             name: "Marko",
             description: "HTML Reimagined"
           }]
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()
@@ -89,8 +88,7 @@ container.querySelector("#add").click();
             name: "Marko",
             description: "HTML Reimagined"
           }]
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()
@@ -144,8 +142,7 @@ container.querySelector("#remove").click();
             name: "Marko",
             description: "HTML Reimagined"
           }]
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()
@@ -191,8 +188,7 @@ container.querySelector("#remove").click();
             name: "Marko",
             description: "HTML Reimagined"
           }]
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()
@@ -242,8 +238,7 @@ container.querySelector("#add").click();
             name: "Marko",
             description: "HTML Reimagined"
           }]
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()
