@@ -1,4 +1,4 @@
-// size: 20363 (min) 7810 (brotli)
+// size: 20361 (min) 7856 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -509,6 +509,7 @@ function init(runtimeId = "M") {
               renders2[renderId] || renders2(renderId)),
             walk2 = render.w,
             scopeLookup = (render.s = {}),
+            getScope = (id) => (scopeLookup[id] ||= { L: +id }),
             serializeContext = { _: registeredValues },
             visitBranches =
               branchesEnabled &&
@@ -548,7 +549,7 @@ function init(runtimeId = "M") {
                   ) {
                     if (
                       ((endedBranches ||= []).push(
-                        (branch = scopeLookup[branchId] ||= { L: branchId }),
+                        (branch = getScope(branchId)),
                       ),
                       setParentBranch(branch, branch.F),
                       (branch.O = render.p?.[branchId]) &&
@@ -615,10 +616,7 @@ function init(runtimeId = "M") {
                   )
                     /\D/.test(lastToken)
                       ? (lastEffect = registeredValues[lastToken])
-                      : effects.push(
-                          lastEffect,
-                          (scopeLookup[lastToken] ||= { L: +lastToken }),
-                        );
+                      : effects.push(lastEffect, getScope(lastToken));
                 else
                   for (let scope of serialized(serializeContext))
                     $global
@@ -626,7 +624,7 @@ function init(runtimeId = "M") {
                         ? (lastScopeId += scope)
                         : ((scopeLookup[(scope.L = ++lastScopeId)] = scope),
                           (scope.$ = $global),
-                          branchesEnabled && (scope.F = scopeLookup[scope.G]))
+                          branchesEnabled && (scope.F = getScope(scope.G)))
                       : (($global = scope || {}),
                         ($global.runtimeId = runtimeId),
                         ($global.renderId = renderId));
@@ -634,8 +632,7 @@ function init(runtimeId = "M") {
                 ((lastTokenIndex = render.i.length),
                   (visitText = visit.data),
                   (visitType = visitText[lastTokenIndex++]),
-                  (visitScope = scopeLookup[+nextToken()] ||=
-                    { L: +lastToken }),
+                  (visitScope = getScope(nextToken())),
                   "*" === visitType
                     ? (visitScope["J" + nextToken()] = (
                         (node) => () =>
@@ -1544,7 +1541,8 @@ function loop(forEach) {
           let branch =
             oldScopesByKey.get(key) ||
             createAndSetupBranch(scope.$, renderer, scope, parentNode);
-          (params?.(branch, args),
+          ((branch.M = key),
+            params?.(branch, args),
             newScopesByKey.set(key, branch),
             newScopes.push(branch));
         });

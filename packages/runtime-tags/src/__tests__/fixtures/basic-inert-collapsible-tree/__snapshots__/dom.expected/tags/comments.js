@@ -13,9 +13,7 @@ const $for_content__id = /* @__PURE__ */_._const("id", $scope => {
   _._attr($scope["#li/0"], "id", $scope.id);
   $if_content__id($scope);
 });
-const $for_content__input_path__OR__i = /* @__PURE__ */_._or(10, $scope => $for_content__id($scope, `${$scope._.input_path || "c"}-${$scope.i}`));
-const $for_content__input_path = /* @__PURE__ */_._for_closure("#ul/0", $for_content__input_path__OR__i);
-const $for_content__i = /* @__PURE__ */_._const("i", $for_content__input_path__OR__i);
+const $for_content__input_path = /* @__PURE__ */_._for_closure("#ul/0", $scope => $for_content__id($scope, `${$scope._.input_path || "c"}-${$scope["#LoopKey"]}`));
 const $for_content__open__script = _._script("__tests__/tags/comments.marko_1_open", $scope => _._on($scope["#button/2"], "click", function () {
   $for_content__open($scope, !$scope.open);
 }));
@@ -34,10 +32,7 @@ const $for_content__comment_comments = /* @__PURE__ */_._const("comment_comments
   $for_content__if($scope, $scope.comment_comments ? 0 : 1);
   $if_content__comment_comments($scope);
 });
-const $for_content__$params = /* @__PURE__ */_._const("$params2", $scope => {
-  $for_content__comment($scope, $scope.$params2[0]);
-  $for_content__i($scope, $scope.$params2[1]);
-});
+const $for_content__$params = /* @__PURE__ */_._const("$params2", $scope => $for_content__comment($scope, $scope.$params2[0]));
 const $for_content__comment = /* @__PURE__ */_._const("comment", $scope => {
   $for_content__comment_text($scope, $scope.comment?.text);
   $for_content__comment_comments($scope, $scope.comment?.comments);

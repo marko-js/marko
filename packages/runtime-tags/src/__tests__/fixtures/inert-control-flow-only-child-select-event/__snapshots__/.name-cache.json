@@ -1,0 +1,16 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "o",
+      "$$for_content__selected__OR__i": "r",
+      "$$for_content__selected": "e",
+      "$$selected": "a",
+      "$$for_content__i": "n",
+      "$$for_content__setup": "_",
+      "$$for_content__$params": "c",
+      "$$for_content": "m",
+      "$$for": "i"
+    }
+  }
+}

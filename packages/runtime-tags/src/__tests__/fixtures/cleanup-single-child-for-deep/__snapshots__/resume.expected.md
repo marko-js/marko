@@ -95,96 +95,84 @@
             "#childScope/0": _.b = {
               name: "1",
               "#ClosestBranchId": 2
-            },
-            "#LoopKey": 0
+            }
           }, _.b,
           {
             _: _.c,
             "#childScope/0": _.d = {
               name: "1.1",
               "#ClosestBranchId": 4
-            },
-            "#LoopKey": 0
+            }
           }, _.d,
           {
             _: _.c,
             "#childScope/0": _.e = {
               name: "1.2",
               "#ClosestBranchId": 6
-            },
-            "#LoopKey": 1
+            }
           }, _.e,
           {
             _: _.c,
             "#childScope/0": _.f = {
               name: "1.3",
               "#ClosestBranchId": 8
-            },
-            "#LoopKey": 2
+            }
           }, _.f, _.h = {
             outerItem: 2,
             _: _.a,
             "#childScope/0": _.g = {
               name: "2",
               "#ClosestBranchId": 10
-            },
-            "#LoopKey": 1
+            }
           }, _.g,
           {
             _: _.h,
             "#childScope/0": _.i = {
               name: "2.1",
               "#ClosestBranchId": 12
-            },
-            "#LoopKey": 0
+            }
           }, _.i,
           {
             _: _.h,
             "#childScope/0": _.j = {
               name: "2.2",
               "#ClosestBranchId": 14
-            },
-            "#LoopKey": 1
+            }
           }, _.j,
           {
             _: _.h,
             "#childScope/0": _.k = {
               name: "2.3",
               "#ClosestBranchId": 16
-            },
-            "#LoopKey": 2
+            }
           }, _.k, _.m = {
             outerItem: 3,
             _: _.a,
             "#childScope/0": _.l = {
               name: "3",
               "#ClosestBranchId": 18
-            },
-            "#LoopKey": 2
+            }
           }, _.l,
           {
             _: _.m,
             "#childScope/0": _.n = {
               name: "3.1",
               "#ClosestBranchId": 20
-            },
-            "#LoopKey": 0
+            }
           }, _.n,
           {
             _: _.m,
             "#childScope/0": _.o = {
               name: "3.2",
               "#ClosestBranchId": 22
-            },
-            "#LoopKey": 1
+            }
           }, _.o,
           {
             _: _.m,
             "#childScope/0": _.p = {
               name: "3.3",
               "#ClosestBranchId": 24
-            },
-            "#LoopKey": 2
+            }
           }, _.p], _.a.write = _.b.write = _.d.write = _.e.write = _.f.write =
           _.g.write = _.i.write = _.j.write = _.k.write = _.l.write = _.n
           .write = _.o.write = _.p.write = _._[
@@ -270,96 +258,84 @@ destroyed 2.3
             "#childScope/0": _.b = {
               name: "1",
               "#ClosestBranchId": 2
-            },
-            "#LoopKey": 0
+            }
           }, _.b,
           {
             _: _.c,
             "#childScope/0": _.d = {
               name: "1.1",
               "#ClosestBranchId": 4
-            },
-            "#LoopKey": 0
+            }
           }, _.d,
           {
             _: _.c,
             "#childScope/0": _.e = {
               name: "1.2",
               "#ClosestBranchId": 6
-            },
-            "#LoopKey": 1
+            }
           }, _.e,
           {
             _: _.c,
             "#childScope/0": _.f = {
               name: "1.3",
               "#ClosestBranchId": 8
-            },
-            "#LoopKey": 2
+            }
           }, _.f, _.h = {
             outerItem: 2,
             _: _.a,
             "#childScope/0": _.g = {
               name: "2",
               "#ClosestBranchId": 10
-            },
-            "#LoopKey": 1
+            }
           }, _.g,
           {
             _: _.h,
             "#childScope/0": _.i = {
               name: "2.1",
               "#ClosestBranchId": 12
-            },
-            "#LoopKey": 0
+            }
           }, _.i,
           {
             _: _.h,
             "#childScope/0": _.j = {
               name: "2.2",
               "#ClosestBranchId": 14
-            },
-            "#LoopKey": 1
+            }
           }, _.j,
           {
             _: _.h,
             "#childScope/0": _.k = {
               name: "2.3",
               "#ClosestBranchId": 16
-            },
-            "#LoopKey": 2
+            }
           }, _.k, _.m = {
             outerItem: 3,
             _: _.a,
             "#childScope/0": _.l = {
               name: "3",
               "#ClosestBranchId": 18
-            },
-            "#LoopKey": 2
+            }
           }, _.l,
           {
             _: _.m,
             "#childScope/0": _.n = {
               name: "3.1",
               "#ClosestBranchId": 20
-            },
-            "#LoopKey": 0
+            }
           }, _.n,
           {
             _: _.m,
             "#childScope/0": _.o = {
               name: "3.2",
               "#ClosestBranchId": 22
-            },
-            "#LoopKey": 1
+            }
           }, _.o,
           {
             _: _.m,
             "#childScope/0": _.p = {
               name: "3.3",
               "#ClosestBranchId": 24
-            },
-            "#LoopKey": 2
+            }
           }, _.p], _.a.write = _.b.write = _.d.write = _.e.write = _.f.write =
           _.g.write = _.i.write = _.j.write = _.k.write = _.l.write = _.n
           .write = _.o.write = _.p.write = _._[

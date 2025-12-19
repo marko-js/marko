@@ -18,8 +18,7 @@
           items: ["hello"]
         },
         {
-          _: _.a,
-          "#LoopKey": 0
+          _: _.a
         }]),
         "__tests__/template.marko_1_items 2"
       ];
@@ -52,8 +51,7 @@ container.querySelector("button").click();
           items: ["hello"]
         },
         {
-          _: _.a,
-          "#LoopKey": 0
+          _: _.a
         }]),
         "__tests__/template.marko_1_items 2"
       ];

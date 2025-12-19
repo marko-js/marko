@@ -5,7 +5,6 @@
   <body>
     <button>
       0
-      <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
     <!--M_|1 #text/0 2-->
@@ -36,7 +35,6 @@ container.querySelector("button").click();
   <body>
     <button>
       0
-      <!--M_*2 #text/1-->
     </button>
     <button>
       1
@@ -62,6 +60,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/button1
+UPDATE html/body/button1/#text " " => "1"
 ```
 
 # Render
@@ -74,7 +73,6 @@ container.querySelector("button").click();
   <body>
     <button>
       0
-      <!--M_*2 #text/1-->
     </button>
     <button>
       1
@@ -103,6 +101,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/button2
+UPDATE html/body/button2/#text " " => "2"
 ```
 
 # Render
@@ -115,7 +114,6 @@ container.querySelector("button").click();
   <body>
     <button>
       0
-      <!--M_*2 #text/1-->
     </button>
     <button>
       1
@@ -147,6 +145,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/button3
+UPDATE html/body/button3/#text " " => "3"
 ```
 
 # Render
@@ -159,7 +158,6 @@ container.querySelector("button").click();
   <body>
     <button>
       0
-      <!--M_*2 #text/1-->
     </button>
     <button>
       1
@@ -194,6 +192,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/button4
+UPDATE html/body/button4/#text " " => "4"
 ```
 
 # Render
@@ -206,7 +205,6 @@ container.querySelector("button").click();
   <body>
     <button>
       0
-      <!--M_*2 #text/1-->
     </button>
     <button>
       1
@@ -244,4 +242,5 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/button5
+UPDATE html/body/button5/#text " " => "5"
 ```

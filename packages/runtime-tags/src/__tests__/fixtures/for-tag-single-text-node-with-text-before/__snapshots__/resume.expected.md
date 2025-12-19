@@ -18,9 +18,7 @@
         {
           children: [1]
         },
-        {
-          "#LoopKey": 0
-        }]),
+        {}]),
         "__tests__/template.marko_0_children 1"
       ];
       M._.w()
@@ -54,9 +52,7 @@ INSERT html/body/div/#text2
         {
           children: [1]
         },
-        {
-          "#LoopKey": 0
-        }]),
+        {}]),
         "__tests__/template.marko_0_children 1"
       ];
       M._.w()

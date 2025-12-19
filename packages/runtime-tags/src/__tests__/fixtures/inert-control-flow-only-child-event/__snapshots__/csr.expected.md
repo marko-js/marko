@@ -1,50 +1,79 @@
 # Render
 ```html
-<select>
-  <option
-    selected=""
+<div
+  id="target"
+>
+  <span
+    data-selected=""
   >
     0
-  </option>
-  <option>
+  </span>
+  <span>
     1
-  </option>
-  <option>
+  </span>
+  <span>
     2
-  </option>
-</select>
+  </span>
+</div>
 ```
 
 # Mutations
 ```
-INSERT select
+INSERT div
 ```
 
 # Render
 ```js
-const select = container.querySelector("select");
-select.value = select.options[2].value;
-select.dispatchEvent(new select.ownerDocument.defaultView.Event("change", {
-  bubbles: true
-}));
+container.querySelector("#target").click();
 ```
 ```html
-<select>
-  <option>
+<div
+  id="target"
+>
+  <span>
     0
-  </option>
-  <option>
-    1
-  </option>
-  <option
-    selected=""
+  </span>
+  <span
+    data-selected=""
   >
+    1
+  </span>
+  <span>
     2
-  </option>
-</select>
+  </span>
+</div>
 ```
 
 # Mutations
 ```
-UPDATE select/option0[selected] "" => null
+UPDATE div/span0[data-selected] "" => null
+UPDATE div/span1[data-selected] null => ""
+```
+
+# Render
+```js
+container.querySelector("#target").click();
+```
+```html
+<div
+  id="target"
+>
+  <span>
+    0
+  </span>
+  <span>
+    1
+  </span>
+  <span
+    data-selected=""
+  >
+    2
+  </span>
+</div>
+```
+
+# Mutations
+```
+UPDATE div/span1[data-selected] "" => null
+UPDATE div/span2[data-selected] null => ""
 ```

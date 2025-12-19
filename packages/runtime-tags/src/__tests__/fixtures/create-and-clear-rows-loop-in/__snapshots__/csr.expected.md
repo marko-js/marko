@@ -81,4 +81,10 @@ REMOVE #text after div/p2
 INSERT div/p3
 INSERT div/p4
 INSERT div/p5
+UPDATE div/p0/#text0 "" => "1"
+UPDATE div/p1/#text0 "" => "2"
+UPDATE div/p2/#text0 "" => "3"
+UPDATE div/p3/#text " " => "1"
+UPDATE div/p4/#text " " => "2"
+UPDATE div/p5/#text " " => "3"
 ```

@@ -4,7 +4,7 @@ export default _._template("__tests__/template.marko", input => {
   let num = 0;
   _._for_to(num, 0, 1, i => {
     const $scope1_id = _._scope_id();
-    _._html(`<button>${_._escape(i)}${_._el_resume($scope1_id, "#text/1")}</button>${_._el_resume($scope1_id, "#button/0")}`);
+    _._html(`<button>${_._escape(i)}</button>${_._el_resume($scope1_id, "#button/0")}`);
     _._script($scope1_id, "__tests__/template.marko_1_num");
     _._scope($scope1_id, {
       _: _._scope_with_id($scope0_id)

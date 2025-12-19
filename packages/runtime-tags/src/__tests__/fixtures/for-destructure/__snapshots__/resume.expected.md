@@ -36,9 +36,7 @@
             description: "HTML Reimagined"
           }]
         },
-        {
-          "#LoopKey": 0
-        }]),
+        {}]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()
@@ -92,9 +90,7 @@ container.querySelector("#add").click();
             description: "HTML Reimagined"
           }]
         },
-        {
-          "#LoopKey": 0
-        }]),
+        {}]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()
@@ -149,9 +145,7 @@ container.querySelector("#remove").click();
             description: "HTML Reimagined"
           }]
         },
-        {
-          "#LoopKey": 0
-        }]),
+        {}]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()
@@ -198,9 +192,7 @@ container.querySelector("#remove").click();
             description: "HTML Reimagined"
           }]
         },
-        {
-          "#LoopKey": 0
-        }]),
+        {}]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()
@@ -251,9 +243,7 @@ container.querySelector("#add").click();
             description: "HTML Reimagined"
           }]
         },
-        {
-          "#LoopKey": 0
-        }]),
+        {}]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()

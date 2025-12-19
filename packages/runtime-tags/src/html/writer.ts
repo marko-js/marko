@@ -282,6 +282,7 @@ export function _for_of(
   singleNode?: 1,
 ): void {
   const { state } = $chunk.boundary;
+  const resumeKeys = serializeMarker !== 0;
   const resumeMarker =
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
   let flushBranchIds = "";
@@ -319,12 +320,12 @@ export function _for_of(
 
       withBranchId(branchId, () => {
         cb(item, index);
-        if (resumeMarker) {
-          writeScope(branchId, {
-            [AccessorProp.LoopKey]: item === index ? undefined : itemKey,
-          });
-        } else {
-          loopScopes = push(loopScopes, writeScope(branchId, {}));
+        const branchScope = writeScope(branchId, {});
+        if (resumeKeys && itemKey !== index) {
+          branchScope[AccessorProp.LoopKey] = itemKey;
+        }
+        if (!resumeMarker) {
+          loopScopes = push(loopScopes, branchScope);
         }
       });
     });
@@ -362,6 +363,7 @@ export function _for_in(
   singleNode?: 1,
 ): void {
   const { state } = $chunk.boundary;
+  const resumeKeys = serializeMarker !== 0;
   const resumeMarker =
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
   let flushBranchIds = "";
@@ -399,12 +401,12 @@ export function _for_in(
 
       withBranchId(branchId, () => {
         cb(key, value);
-        if (resumeMarker) {
-          writeScope(branchId, {
-            [AccessorProp.LoopKey]: itemKey,
-          });
-        } else {
-          loopScopes = push(loopScopes, writeScope(branchId, {}));
+        const branchScope = writeScope(branchId, {});
+        if (resumeKeys) {
+          branchScope[AccessorProp.LoopKey] = itemKey;
+        }
+        if (!resumeMarker) {
+          loopScopes = push(loopScopes, branchScope);
         }
       });
     });
@@ -444,6 +446,7 @@ export function _for_to(
   singleNode?: 1,
 ): void {
   const { state } = $chunk.boundary;
+  const resumeKeys = serializeMarker !== 0;
   const resumeMarker =
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
   let flushBranchIds = "";
@@ -481,12 +484,12 @@ export function _for_to(
 
       withBranchId(branchId, () => {
         cb(i);
-        if (resumeMarker) {
-          writeScope(branchId, {
-            [AccessorProp.LoopKey]: itemKey === i ? undefined : itemKey,
-          });
-        } else {
-          loopScopes = push(loopScopes, writeScope(branchId, {}));
+        const branchScope = writeScope(branchId, {});
+        if (resumeKeys && itemKey !== i) {
+          branchScope[AccessorProp.LoopKey] = itemKey;
+        }
+        if (!resumeMarker) {
+          loopScopes = push(loopScopes, branchScope);
         }
       });
     });
@@ -526,6 +529,7 @@ export function _for_until(
   singleNode?: 1,
 ): void {
   const { state } = $chunk.boundary;
+  const resumeKeys = serializeMarker !== 0;
   const resumeMarker =
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
   let flushBranchIds = "";
@@ -564,12 +568,12 @@ export function _for_until(
 
       withBranchId(branchId, () => {
         cb(i);
-        if (resumeMarker) {
-          writeScope(branchId, {
-            [AccessorProp.LoopKey]: itemKey === i ? undefined : itemKey,
-          });
-        } else {
-          loopScopes = push(loopScopes, writeScope(branchId, {}));
+        const branchScope = writeScope(branchId, {});
+        if (resumeKeys && itemKey !== i) {
+          branchScope[AccessorProp.LoopKey] = itemKey;
+        }
+        if (!resumeMarker) {
+          loopScopes = push(loopScopes, branchScope);
         }
       });
     });

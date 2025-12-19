@@ -82,51 +82,21 @@
             text: "third"
           }]
         },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        }]),
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()
@@ -223,51 +193,21 @@ container.querySelector("button").click();
             text: "third"
           }]
         },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        }]),
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()
@@ -374,51 +314,21 @@ container.querySelector("button").click();
             text: "third"
           }]
         },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        }]),
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()
@@ -521,51 +431,21 @@ container.querySelector("button").click();
             text: "third"
           }]
         },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        },
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        },
-        {
-          "#LoopKey": 2
-        }]),
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}]),
         "__tests__/template.marko_0_items 1"
       ];
       M._.w()

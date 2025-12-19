@@ -30,6 +30,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT button1
+UPDATE button1/#text " " => "1"
 ```
 
 # Render
@@ -53,6 +54,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT button2
+UPDATE button2/#text " " => "2"
 ```
 
 # Render
@@ -79,6 +81,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT button3
+UPDATE button3/#text " " => "3"
 ```
 
 # Render
@@ -108,6 +111,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT button4
+UPDATE button4/#text " " => "4"
 ```
 
 # Render
@@ -140,4 +144,5 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT button5
+UPDATE button5/#text " " => "5"
 ```

@@ -15,7 +15,7 @@ const $content = input => {
         _._set_serialize_reason({
           /* input.comments, input.path */0: _._serialize_guard($scope0_reason, /* input.comments, input.path */0),
           /* input.comments */1: _._serialize_guard($scope0_reason, /* input.comments */1),
-          /* input.path */2: _._serialize_guard($scope0_reason, /* input.comments, input.path */0)
+          /* input.path */2: _._serialize_guard($scope0_reason, /* input.path */2)
         });
         $content({
           comments: comment.comments,
@@ -32,13 +32,13 @@ const $content = input => {
     _._script($scope1_id, "__tests__/tags/comments.marko_1_open");
     _._scope($scope1_id, {
       comment_comments: _._serialize_if($scope0_reason, /* input.comments */1) && comment?.comments,
-      i: _._serialize_if($scope0_reason, /* input.path */2) && i,
+      "#LoopKey": _._serialize_if($scope0_reason, /* input.path */2) && i,
       id: _._serialize_if($scope0_reason, /* input.comments */1) && id,
       open,
       _: _._serialize_if($scope0_reason, /* input.comments, input.path */0) && _._scope_with_id($scope0_id)
     }, "__tests__/tags/comments.marko", "2:4", {
       comment_comments: ["comment.comments", "2:8"],
-      i: "2:17",
+      "#LoopKey": "2:17",
       id: "3:12",
       open: "4:10"
     });

@@ -24,7 +24,9 @@
       "$$for": "x",
       "$$counts_closure": "D",
       "$$counts": "C",
-      "$$counts__closure": "I"
+      "$$counts__closure": "I",
+      "$$if_content__counts__OR__count__script": "M",
+      "$$if_content__counts__OR__count": "j"
     }
   }
 }

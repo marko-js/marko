@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>0<!--M_*2 #text/1--></button><!--M_*2 #button/0--><!--M_|1 #text/0 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.a={num:0},{_:_.a}]),"__tests__/template.marko_1_num 2"];M._.w()</script>
+  <button>0</button><!--M_*2 #button/0--><!--M_|1 #text/0 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.a={num:0},{_:_.a}]),"__tests__/template.marko_1_num 2"];M._.w()</script>
 ```
 
 # Render End
@@ -10,7 +10,6 @@
   <body>
     <button>
       0
-      <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
     <!--M_|1 #text/0 2-->
@@ -37,7 +36,6 @@ INSERT html/head
 INSERT html/body
 INSERT html/body/button
 INSERT html/body/button/#text
-INSERT html/body/button/#comment
 INSERT html/body/#comment0
 INSERT html/body/#comment1
 INSERT html/body/script

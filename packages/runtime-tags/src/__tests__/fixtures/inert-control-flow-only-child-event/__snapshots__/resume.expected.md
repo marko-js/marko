@@ -3,35 +3,38 @@
 <html>
   <head />
   <body>
-    <select>
-      <option
-        selected=""
+    <div
+      id="target"
+    >
+      <span
+        data-selected=""
       >
         0
-      </option>
-      <!--M_*2 #option/0-->
-      <option>
+      </span>
+      <!--M_*2 #span/0-->
+      <span>
         1
-      </option>
-      <!--M_*3 #option/0-->
-      <option>
+      </span>
+      <!--M_*3 #span/0-->
+      <span>
         2
-      </option>
-      <!--M_*4 #option/0-->
-    </select>
-    <!--M_*1 #select/0-->
+      </span>
+      <!--M_*4 #span/0-->
+    </div>
+    <!--M_*1 #div/0-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.e = [0, _.a = {
-          "BranchScopes:#select/0": [_.b = {
-            i: 0
+          "BranchScopes:#div/0": [_.b = {
+            "#LoopKey": 0
           }, _.c = {
-            i: 1
+            "#LoopKey": 1
           }, _.d = {
-            i: 2
-          }]
+            "#LoopKey": 2
+          }],
+          selected: 0
         }, _.b, _.c, _.d], _.b._ = _.c._ = _.d._ = _.a, _.e),
-        "__tests__/template.marko_0 1"
+        "__tests__/template.marko_0_selected 1"
       ];
       M._.w()
     </script>
@@ -42,45 +45,44 @@
 
 # Render
 ```js
-const select = container.querySelector("select");
-select.value = select.options[2].value;
-select.dispatchEvent(new select.ownerDocument.defaultView.Event("change", {
-  bubbles: true
-}));
+container.querySelector("#target").click();
 ```
 ```html
 <html>
   <head />
   <body>
-    <select>
-      <option>
+    <div
+      id="target"
+    >
+      <span>
         0
-      </option>
-      <!--M_*2 #option/0-->
-      <option>
-        1
-      </option>
-      <!--M_*3 #option/0-->
-      <option
-        selected=""
+      </span>
+      <!--M_*2 #span/0-->
+      <span
+        data-selected=""
       >
+        1
+      </span>
+      <!--M_*3 #span/0-->
+      <span>
         2
-      </option>
-      <!--M_*4 #option/0-->
-    </select>
-    <!--M_*1 #select/0-->
+      </span>
+      <!--M_*4 #span/0-->
+    </div>
+    <!--M_*1 #div/0-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.e = [0, _.a = {
-          "BranchScopes:#select/0": [_.b = {
-            i: 0
+          "BranchScopes:#div/0": [_.b = {
+            "#LoopKey": 0
           }, _.c = {
-            i: 1
+            "#LoopKey": 1
           }, _.d = {
-            i: 2
-          }]
+            "#LoopKey": 2
+          }],
+          selected: 0
         }, _.b, _.c, _.d], _.b._ = _.c._ = _.d._ = _.a, _.e),
-        "__tests__/template.marko_0 1"
+        "__tests__/template.marko_0_selected 1"
       ];
       M._.w()
     </script>
@@ -90,5 +92,59 @@ select.dispatchEvent(new select.ownerDocument.defaultView.Event("change", {
 
 # Mutations
 ```
-UPDATE html/body/select/option0[selected] "" => null
+UPDATE html/body/div/span0[data-selected] "" => null
+UPDATE html/body/div/span1[data-selected] null => ""
+```
+
+# Render
+```js
+container.querySelector("#target").click();
+```
+```html
+<html>
+  <head />
+  <body>
+    <div
+      id="target"
+    >
+      <span>
+        0
+      </span>
+      <!--M_*2 #span/0-->
+      <span>
+        1
+      </span>
+      <!--M_*3 #span/0-->
+      <span
+        data-selected=""
+      >
+        2
+      </span>
+      <!--M_*4 #span/0-->
+    </div>
+    <!--M_*1 #div/0-->
+    <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.e = [0, _.a = {
+          "BranchScopes:#div/0": [_.b = {
+            "#LoopKey": 0
+          }, _.c = {
+            "#LoopKey": 1
+          }, _.d = {
+            "#LoopKey": 2
+          }],
+          selected: 0
+        }, _.b, _.c, _.d], _.b._ = _.c._ = _.d._ = _.a, _.e),
+        "__tests__/template.marko_0_selected 1"
+      ];
+      M._.w()
+    </script>
+  </body>
+</html>
+```
+
+# Mutations
+```
+UPDATE html/body/div/span1[data-selected] "" => null
+UPDATE html/body/div/span2[data-selected] null => ""
 ```

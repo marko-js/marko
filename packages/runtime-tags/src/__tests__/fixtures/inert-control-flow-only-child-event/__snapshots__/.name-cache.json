@@ -10,7 +10,8 @@
       "$$for_content__setup": "_",
       "$$for_content__$params": "c",
       "$$for_content": "m",
-      "$$for": "i"
+      "$$for": "i",
+      "$$selected__script": "s"
     }
   }
 }

@@ -39,7 +39,7 @@
         }, _.b = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 0,
+          "#LoopKey": 0,
           _: _.a
         },
         {
@@ -47,18 +47,16 @@
         }, _.c = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 1,
-          _: _.a,
-          "#LoopKey": 1
+          "#LoopKey": 1,
+          _: _.a
         },
         {
           _: _.c
         }, _.d = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 2,
-          _: _.a,
-          "#LoopKey": 2
+          "#LoopKey": 2,
+          _: _.a
         },
         {
           _: _.d
@@ -122,7 +120,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.b = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 0,
+          "#LoopKey": 0,
           _: _.a
         },
         {
@@ -130,18 +128,16 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.c = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 1,
-          _: _.a,
-          "#LoopKey": 1
+          "#LoopKey": 1,
+          _: _.a
         },
         {
           _: _.c
         }, _.d = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 2,
-          _: _.a,
-          "#LoopKey": 2
+          "#LoopKey": 2,
+          _: _.a
         },
         {
           _: _.d
@@ -200,7 +196,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.b = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 0,
+          "#LoopKey": 0,
           _: _.a
         },
         {
@@ -208,18 +204,16 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.c = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 1,
-          _: _.a,
-          "#LoopKey": 1
+          "#LoopKey": 1,
+          _: _.a
         },
         {
           _: _.c
         }, _.d = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 2,
-          _: _.a,
-          "#LoopKey": 2
+          "#LoopKey": 2,
+          _: _.a
         },
         {
           _: _.d
@@ -275,7 +269,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.b = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 0,
+          "#LoopKey": 0,
           _: _.a
         },
         {
@@ -283,18 +277,16 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.c = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 1,
-          _: _.a,
-          "#LoopKey": 1
+          "#LoopKey": 1,
+          _: _.a
         },
         {
           _: _.c
         }, _.d = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 2,
-          _: _.a,
-          "#LoopKey": 2
+          "#LoopKey": 2,
+          _: _.a
         },
         {
           _: _.d
@@ -350,7 +342,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.b = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 0,
+          "#LoopKey": 0,
           _: _.a
         },
         {
@@ -358,18 +350,16 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.c = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 1,
-          _: _.a,
-          "#LoopKey": 1
+          "#LoopKey": 1,
+          _: _.a
         },
         {
           _: _.c
         }, _.d = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 2,
-          _: _.a,
-          "#LoopKey": 2
+          "#LoopKey": 2,
+          _: _.a
         },
         {
           _: _.d
@@ -425,7 +415,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.b = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 0,
+          "#LoopKey": 0,
           _: _.a
         },
         {
@@ -433,18 +423,16 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.c = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 1,
-          _: _.a,
-          "#LoopKey": 1
+          "#LoopKey": 1,
+          _: _.a
         },
         {
           _: _.c
         }, _.d = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 2,
-          _: _.a,
-          "#LoopKey": 2
+          "#LoopKey": 2,
+          _: _.a
         },
         {
           _: _.d
@@ -500,7 +488,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.b = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 0,
+          "#LoopKey": 0,
           _: _.a
         },
         {
@@ -508,18 +496,16 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.c = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 1,
-          _: _.a,
-          "#LoopKey": 1
+          "#LoopKey": 1,
+          _: _.a
         },
         {
           _: _.c
         }, _.d = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 2,
-          _: _.a,
-          "#LoopKey": 2
+          "#LoopKey": 2,
+          _: _.a
         },
         {
           _: _.d
@@ -575,7 +561,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.b = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 0,
+          "#LoopKey": 0,
           _: _.a
         },
         {
@@ -583,18 +569,16 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.c = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 1,
-          _: _.a,
-          "#LoopKey": 1
+          "#LoopKey": 1,
+          _: _.a
         },
         {
           _: _.c
         }, _.d = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 2,
-          _: _.a,
-          "#LoopKey": 2
+          "#LoopKey": 2,
+          _: _.a
         },
         {
           _: _.d
@@ -650,7 +634,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.b = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 0,
+          "#LoopKey": 0,
           _: _.a
         },
         {
@@ -658,18 +642,16 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.c = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 1,
-          _: _.a,
-          "#LoopKey": 1
+          "#LoopKey": 1,
+          _: _.a
         },
         {
           _: _.c
         }, _.d = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 2,
-          _: _.a,
-          "#LoopKey": 2
+          "#LoopKey": 2,
+          _: _.a
         },
         {
           _: _.d
@@ -725,7 +707,7 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.b = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 0,
+          "#LoopKey": 0,
           _: _.a
         },
         {
@@ -733,18 +715,16 @@ buttonIndex = (buttonIndex + 1) % 3;
         }, _.c = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 1,
-          _: _.a,
-          "#LoopKey": 1
+          "#LoopKey": 1,
+          _: _.a
         },
         {
           _: _.c
         }, _.d = {
           "ConditionalRenderer:#text/0": 1,
           count: 0,
-          i: 2,
-          _: _.a,
-          "#LoopKey": 2
+          "#LoopKey": 2,
+          _: _.a
         },
         {
           _: _.d

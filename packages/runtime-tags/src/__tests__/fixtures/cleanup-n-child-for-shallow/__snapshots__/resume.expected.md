@@ -63,22 +63,19 @@ mounted 3
           "#childScope/0": _.b = {
             name: 1,
             "#ClosestBranchId": 2
-          },
-          "#LoopKey": 0
+          }
         }, _.b,
         {
           "#childScope/0": _.c = {
             name: 2,
             "#ClosestBranchId": 4
-          },
-          "#LoopKey": 1
+          }
         }, _.c,
         {
           "#childScope/0": _.d = {
             name: 3,
             "#ClosestBranchId": 6
-          },
-          "#LoopKey": 2
+          }
         }, _.d], _.a.write = _.b.write = _.c.write = _.d.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), _.e),
@@ -158,22 +155,19 @@ destroyed 3
           "#childScope/0": _.b = {
             name: 1,
             "#ClosestBranchId": 2
-          },
-          "#LoopKey": 0
+          }
         }, _.b,
         {
           "#childScope/0": _.c = {
             name: 2,
             "#ClosestBranchId": 4
-          },
-          "#LoopKey": 1
+          }
         }, _.c,
         {
           "#childScope/0": _.d = {
             name: 3,
             "#ClosestBranchId": 6
-          },
-          "#LoopKey": 2
+          }
         }, _.d], _.a.write = _.b.write = _.c.write = _.d.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), _.e),
@@ -240,22 +234,19 @@ destroyed 2
           "#childScope/0": _.b = {
             name: 1,
             "#ClosestBranchId": 2
-          },
-          "#LoopKey": 0
+          }
         }, _.b,
         {
           "#childScope/0": _.c = {
             name: 2,
             "#ClosestBranchId": 4
-          },
-          "#LoopKey": 1
+          }
         }, _.c,
         {
           "#childScope/0": _.d = {
             name: 3,
             "#ClosestBranchId": 6
-          },
-          "#LoopKey": 2
+          }
         }, _.d], _.a.write = _.b.write = _.c.write = _.d.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), _.e),
@@ -310,22 +301,19 @@ destroyed 1
           "#childScope/0": _.b = {
             name: 1,
             "#ClosestBranchId": 2
-          },
-          "#LoopKey": 0
+          }
         }, _.b,
         {
           "#childScope/0": _.c = {
             name: 2,
             "#ClosestBranchId": 4
-          },
-          "#LoopKey": 1
+          }
         }, _.c,
         {
           "#childScope/0": _.d = {
             name: 3,
             "#ClosestBranchId": 6
-          },
-          "#LoopKey": 2
+          }
         }, _.d], _.a.write = _.b.write = _.c.write = _.d.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), _.e),
@@ -411,22 +399,19 @@ mounted 3
           "#childScope/0": _.b = {
             name: 1,
             "#ClosestBranchId": 2
-          },
-          "#LoopKey": 0
+          }
         }, _.b,
         {
           "#childScope/0": _.c = {
             name: 2,
             "#ClosestBranchId": 4
-          },
-          "#LoopKey": 1
+          }
         }, _.c,
         {
           "#childScope/0": _.d = {
             name: 3,
             "#ClosestBranchId": 6
-          },
-          "#LoopKey": 2
+          }
         }, _.d], _.a.write = _.b.write = _.c.write = _.d.write = _._[
           "__tests__/template.marko_0/write"
           ](_.a), _.e),

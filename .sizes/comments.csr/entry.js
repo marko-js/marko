@@ -1,4 +1,4 @@
-// size: 735 (min) 398 (brotli)
+// size: 695 (min) 376 (brotli)
 const $if_content__setup = ($scope) => {
     ($scope.a,
       $if_content__comment_comments._($scope),
@@ -13,11 +13,9 @@ const $if_content__setup = ($scope) => {
   $for_content__id = _const(11, ($scope) => {
     (_attr($scope.a, "id", $scope.l), $if_content__id($scope));
   }),
-  $for_content__input_path__OR__i = _or(10, ($scope) =>
-    $for_content__id($scope, `${$scope._.e || "c"}-${$scope.j}`),
+  $for_content__input_path = _for_closure(0, ($scope) =>
+    $for_content__id($scope, `${$scope._.e || "c"}-${$scope.M}`),
   ),
-  $for_content__input_path = _for_closure(0, $for_content__input_path__OR__i),
-  $for_content__i = _const(9, $for_content__input_path__OR__i),
   $for_content__open__script = _script("a0", ($scope) =>
     _on($scope.c, "click", function () {
       $for_content__open($scope, !$scope.m);
@@ -37,10 +35,9 @@ const $if_content__setup = ($scope) => {
     ($for_content__if($scope, $scope.i ? 0 : 1),
       $if_content__comment_comments($scope));
   }),
-  $for_content__$params = _const(5, ($scope) => {
-    ($for_content__comment($scope, $scope.f[0]),
-      $for_content__i($scope, $scope.f[1]));
-  }),
+  $for_content__$params = _const(5, ($scope) =>
+    $for_content__comment($scope, $scope.f[0]),
+  ),
   $for_content__comment = _const(6, ($scope) => {
     ($for_content__comment_text($scope, $scope.g?.text),
       $for_content__comment_comments($scope, $scope.g?.comments));

@@ -15,9 +15,7 @@
         {
           children: [1]
         },
-        {
-          "#LoopKey": 0
-        }]),
+        {}]),
         "__tests__/template.marko_0_children 1"
       ];
       M._.w()
@@ -45,9 +43,7 @@
         {
           children: [1]
         },
-        {
-          "#LoopKey": 0
-        }]),
+        {}]),
         "__tests__/template.marko_0_children 1"
       ];
       M._.w()

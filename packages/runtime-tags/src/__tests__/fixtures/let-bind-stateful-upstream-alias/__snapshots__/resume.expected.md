@@ -25,12 +25,8 @@
           store_clear: _.b = {},
           "#childScope/0": _.b
         }, _.b, 1,
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        }], _.a["TagVariableChange:list"] = _._[
+        {},
+        {}], _.a["TagVariableChange:list"] = _._[
           "__tests__/tags/store.marko_0/_return"
           ](_.b), _.a.store_clear = _._[
           "__tests__/tags/store.marko_0/_return2"
@@ -68,12 +64,8 @@ container.querySelector("button").click();
           store_clear: _.b = {},
           "#childScope/0": _.b
         }, _.b, 1,
-        {
-          "#LoopKey": 0
-        },
-        {
-          "#LoopKey": 1
-        }], _.a["TagVariableChange:list"] = _._[
+        {},
+        {}], _.a["TagVariableChange:list"] = _._[
           "__tests__/tags/store.marko_0/_return"
           ](_.b), _.a.store_clear = _._[
           "__tests__/tags/store.marko_0/_return2"
