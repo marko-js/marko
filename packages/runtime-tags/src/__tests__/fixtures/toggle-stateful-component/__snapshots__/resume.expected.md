@@ -15,8 +15,7 @@
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {},
-        {}, _.b = {
+      M._.r = [_ =&gt; (_.c = [0, _.a = {}, 1, _.b = {
           clickCount: 0,
           "#ClosestBranchId": 2
         }], _.a.onCount = _.b.input_onCount = _._[
@@ -42,8 +41,7 @@ container.querySelector("button").click();
     <div />
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {},
-        {}, _.b = {
+      M._.r = [_ =&gt; (_.c = [0, _.a = {}, 1, _.b = {
           clickCount: 0,
           "#ClosestBranchId": 2
         }], _.a.onCount = _.b.input_onCount = _._[

@@ -26,8 +26,7 @@
         }, _.d = {
           _: _.a,
           "ClosureSignalIndex:x": 0
-        },
-        {}, _.e = {
+        }, 1, _.e = {
           _: _.a,
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
@@ -76,8 +75,7 @@ container.querySelector("button").click();
         }, _.d = {
           _: _.a,
           "ClosureSignalIndex:x": 0
-        },
-        {}, _.e = {
+        }, 1, _.e = {
           _: _.a,
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
@@ -132,8 +130,7 @@ container.querySelector("button").click();
         }, _.d = {
           _: _.a,
           "ClosureSignalIndex:x": 0
-        },
-        {}, _.e = {
+        }, 1, _.e = {
           _: _.a,
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
@@ -184,8 +181,7 @@ container.querySelector("button").click();
         }, _.d = {
           _: _.a,
           "ClosureSignalIndex:x": 0
-        },
-        {}, _.e = {
+        }, 1, _.e = {
           _: _.a,
           "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3

@@ -16,8 +16,7 @@
           "#scopeOffset/3": 4,
           count: 1,
           "#childScope/2": _.a = {}
-        }, _.a,
-        {}], _.a["#TagVariable"] = _._[
+        }, _.a], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_x/var"
           ](_.c), _.b),
         "__tests__/template.marko_0_count 1"
@@ -50,8 +49,7 @@ container.querySelector("button").click();
           "#scopeOffset/3": 4,
           count: 1,
           "#childScope/2": _.a = {}
-        }, _.a,
-        {}], _.a["#TagVariable"] = _._[
+        }, _.a], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_x/var"
           ](_.c), _.b),
         "__tests__/template.marko_0_count 1"
@@ -90,8 +88,7 @@ container.querySelector("button").click();
           "#scopeOffset/3": 4,
           count: 1,
           "#childScope/2": _.a = {}
-        }, _.a,
-        {}], _.a["#TagVariable"] = _._[
+        }, _.a], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_x/var"
           ](_.c), _.b),
         "__tests__/template.marko_0_count 1"
@@ -128,8 +125,7 @@ container.querySelector("button").click();
           "#scopeOffset/3": 4,
           count: 1,
           "#childScope/2": _.a = {}
-        }, _.a,
-        {}], _.a["#TagVariable"] = _._[
+        }, _.a], _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_x/var"
           ](_.c), _.b),
         "__tests__/template.marko_0_count 1"

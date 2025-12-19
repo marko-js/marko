@@ -76,6 +76,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           renders[renderId] || renders(renderId));
         const walk = render.w;
         const scopeLookup: Record<string | number, Scope> = (render.s = {});
+        const getScope = (id: string | number) =>
+          (scopeLookup[id] ||= { [AccessorProp.Id]: +id } as Scope);
         const serializeContext: Record<string, unknown> = {
           _: registeredValues,
         };
@@ -120,9 +122,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 
               while ((branchId = +lastToken)) {
                 (endedBranches ||= []).push(
-                  (branch = (scopeLookup[branchId] ||= {
-                    [AccessorProp.Id]: branchId,
-                  } as BranchScope) as BranchScope),
+                  (branch = getScope(branchId) as BranchScope),
                 );
                 setParentBranch(branch, branch[AccessorProp.ClosestBranch]);
                 if (
@@ -216,12 +216,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 if (/\D/.test(lastToken)) {
                   lastEffect = registeredValues[lastToken];
                 } else {
-                  effects.push(
-                    lastEffect,
-                    (scopeLookup[lastToken] ||= {
-                      [AccessorProp.Id]: +lastToken,
-                    } as Scope),
-                  );
+                  effects.push(lastEffect, getScope(lastToken));
                 }
               }
             } else {
@@ -236,9 +231,9 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   scopeLookup[(scope[AccessorProp.Id] = ++lastScopeId)] = scope;
                   scope[AccessorProp.Global] = $global;
                   if (branchesEnabled) {
-                    scope[AccessorProp.ClosestBranch] = scopeLookup[
-                      scope[AccessorProp.ClosestBranchId]!
-                    ] as BranchScope;
+                    scope[AccessorProp.ClosestBranch] = getScope(
+                      scope[AccessorProp.ClosestBranchId]!,
+                    ) as BranchScope;
                   }
                 }
               }
@@ -249,9 +244,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             lastTokenIndex = render.i.length;
             visitText = visit.data!;
             visitType = visitText[lastTokenIndex++] as ResumeSymbol;
-            visitScope = scopeLookup[+(nextToken(/* read scope id */))] ||= {
-              [AccessorProp.Id]: +lastToken,
-            } as Scope;
+            visitScope = getScope(nextToken(/* read scope id */));
 
             // TODO: switch?
             if (visitType === ResumeSymbol.Node) {

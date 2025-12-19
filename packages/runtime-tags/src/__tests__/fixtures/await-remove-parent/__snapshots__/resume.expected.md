@@ -23,8 +23,7 @@
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-        {}, _.c = {}, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, 1, _.c = {}, _.a = {
           "#BranchAccessor": "#text/0"
         }], _.a["#PlaceholderContent"] = _._[
           "__tests__/template.marko_3_content"
@@ -63,8 +62,7 @@ INSERT html/body/#text2
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-        {}, _.c = {}, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, 1, _.c = {}, _.a = {
           "#BranchAccessor": "#text/0"
         }], _.a["#PlaceholderContent"] = _._[
           "__tests__/template.marko_3_content"
@@ -111,8 +109,7 @@ REMOVE #text after html/body/#comment
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-        {}, _.c = {}, _.a = {
+      M._.r = [_ =&gt; (_.b = [0, 1, _.c = {}, _.a = {
           "#BranchAccessor": "#text/0"
         }], _.a["#PlaceholderContent"] = _._[
           "__tests__/template.marko_3_content"

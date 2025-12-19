@@ -24,8 +24,7 @@
           "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
           input_content: _.c = {},
           x: 1
-        },
-        {}], _.a.input_content = _._[
+        }], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.c), _.b),
         "__tests__/tags/custom-tag.marko_0_x 2"
@@ -70,8 +69,7 @@ container.querySelector("button").click();
           "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
           input_content: _.c = {},
           x: 1
-        },
-        {}], _.a.input_content = _._[
+        }], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.c), _.b),
         "__tests__/tags/custom-tag.marko_0_x 2"
@@ -117,8 +115,7 @@ container.querySelector("button").click();
           "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
           input_content: _.c = {},
           x: 1
-        },
-        {}], _.a.input_content = _._[
+        }], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.c), _.b),
         "__tests__/tags/custom-tag.marko_0_x 2"
@@ -164,8 +161,7 @@ container.querySelector("button").click();
           "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
           input_content: _.c = {},
           x: 1
-        },
-        {}], _.a.input_content = _._[
+        }], _.a.input_content = _._[
           "__tests__/template.marko_1_content"
           ](_.c), _.b),
         "__tests__/tags/custom-tag.marko_0_x 2"

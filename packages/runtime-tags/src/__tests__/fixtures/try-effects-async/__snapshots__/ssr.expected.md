@@ -5,7 +5,7 @@
 
 # Write
 ```html
-  <t M_=c><!--M_[-->Async: <!>0<!--M_*4 #text/0--><!--M_]2 #text/0 4--></t><script>M._.r.push(_=>(_.e=[1,{}]));M._.w()</script>
+  <t M_=c><!--M_[-->Async: <!>0<!--M_*4 #text/0--><!--M_]2 #text/0 4--></t><script>M._.w()</script>
 ```
 
 # Render ASYNC
@@ -141,8 +141,6 @@ INSERT html/body/script
       M._.w()
     </script>
     <script>
-      M._.r.push(_ =&gt; (_.e = [1,
-      {}]));
       M._.w()
     </script>
   </body>

@@ -133,8 +133,7 @@ INSERT html/body/script1
     <!--M_!d-->
     <!--M_]1 #text/2 4-->
     <script>
-      M._.r.push(_ =&gt; (_.f = [2,
-        {}]),
+      M._.r.push(
         "__tests__/template.marko_9 7"
         );
       M._.w()
@@ -233,8 +232,7 @@ container.querySelector("button").click();
     <!--M_!d-->
     <!--M_]1 #text/2 4-->
     <script>
-      M._.r.push(_ =&gt; (_.f = [2,
-        {}]),
+      M._.r.push(
         "__tests__/template.marko_9 7"
         );
       M._.w()

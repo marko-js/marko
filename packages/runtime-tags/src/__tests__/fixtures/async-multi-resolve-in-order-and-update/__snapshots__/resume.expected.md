@@ -98,12 +98,7 @@
       <!--M_]1 #text/10 6-->
     </p>
     <script>
-      M._.r.push(_ =&gt; (_.b = [
-        {}]), _ =&gt; (_.c = [
-        {}]), _ =&gt; (_.d = [
-        {}]), _ =&gt; (_.e = [
-        {}]), _ =&gt; (_.f = [
-        {}]),
+      M._.r.push(
         "__tests__/template.marko_0_n 1"
         );
       M._.w()
@@ -241,12 +236,7 @@ container.querySelector("button").click();
       <!--M_]1 #text/10 6-->
     </p>
     <script>
-      M._.r.push(_ =&gt; (_.b = [
-        {}]), _ =&gt; (_.c = [
-        {}]), _ =&gt; (_.d = [
-        {}]), _ =&gt; (_.e = [
-        {}]), _ =&gt; (_.f = [
-        {}]),
+      M._.r.push(
         "__tests__/template.marko_0_n 1"
         );
       M._.w()
@@ -321,12 +311,7 @@ UPDATE html/body/p4/#text1 "2" => "3"
       <!--M_]1 #text/10 6-->
     </p>
     <script>
-      M._.r.push(_ =&gt; (_.b = [
-        {}]), _ =&gt; (_.c = [
-        {}]), _ =&gt; (_.d = [
-        {}]), _ =&gt; (_.e = [
-        {}]), _ =&gt; (_.f = [
-        {}]),
+      M._.r.push(
         "__tests__/template.marko_0_n 1"
         );
       M._.w()
@@ -436,12 +421,7 @@ REMOVE #document-fragment/#text1 after html/body/p4/#comment2
       <!--M_*6 #text/0-->
     </p>
     <script>
-      M._.r.push(_ =&gt; (_.b = [
-        {}]), _ =&gt; (_.c = [
-        {}]), _ =&gt; (_.d = [
-        {}]), _ =&gt; (_.e = [
-        {}]), _ =&gt; (_.f = [
-        {}]),
+      M._.r.push(
         "__tests__/template.marko_0_n 1"
         );
       M._.w()

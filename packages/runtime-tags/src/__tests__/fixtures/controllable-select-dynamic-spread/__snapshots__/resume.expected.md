@@ -38,8 +38,7 @@
           "ControlledType:#select/0": 3,
           "ControlledValue:#select/0": "b",
           "#Renderer": "select"
-        },
-        {}], _.a["ControlledHandler:#select/0"] = _._[
+        }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.c), _.b),
         "__tests__/template.marko_1 3 _dynamicTagScript 2"
@@ -99,8 +98,7 @@ select.dispatchEvent(new window.Event("input", {
           "ControlledType:#select/0": 3,
           "ControlledValue:#select/0": "b",
           "#Renderer": "select"
-        },
-        {}], _.a["ControlledHandler:#select/0"] = _._[
+        }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.c), _.b),
         "__tests__/template.marko_1 3 _dynamicTagScript 2"

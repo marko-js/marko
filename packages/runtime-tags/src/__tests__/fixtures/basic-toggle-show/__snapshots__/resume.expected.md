@@ -17,8 +17,7 @@
       M._.r = [_ =&gt; (_.a = [0,
         {
           show: !0
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_show 1"
       ];
       M._.w()
@@ -52,8 +51,7 @@ container.querySelector("button").click();
       M._.r = [_ =&gt; (_.a = [0,
         {
           show: !0
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_show 1"
       ];
       M._.w()
@@ -91,8 +89,7 @@ container.querySelector("button").click();
       M._.r = [_ =&gt; (_.a = [0,
         {
           show: !0
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_show 1"
       ];
       M._.w()
@@ -127,8 +124,7 @@ container.querySelector("button").click();
       M._.r = [_ =&gt; (_.a = [0,
         {
           show: !0
-        },
-        {}]),
+        }]),
         "__tests__/template.marko_0_show 1"
       ];
       M._.w()

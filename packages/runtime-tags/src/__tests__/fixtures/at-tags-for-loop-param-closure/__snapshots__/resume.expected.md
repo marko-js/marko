@@ -11,10 +11,7 @@
     <!--M_*8 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0, 3,
-      {}, 1,
-      {}, 1,
-      {}])]
+      M._.r = [_ =&gt; (_.a = [0])]
     </script>
   </body>
 </html>
