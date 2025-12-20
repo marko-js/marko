@@ -1532,5 +1532,5 @@ export function _subscribe(
   scope: ScopeInternals,
 ) {
   $chunk.boundary.state.serializer.writeCall(scope, subscribers, "add");
-  referenceScope(scope);
+  return referenceScope(scope);
 }
