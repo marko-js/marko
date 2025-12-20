@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.128
+
+### Patch Changes
+
+- [#3022](https://github.com/marko-js/marko/pull/3022) [`907c87c`](https://github.com/marko-js/marko/commit/907c87ca06c8657007c12cfc8ed752142a216443) Thanks [@rturnq](https://github.com/rturnq)! - Fix multiple dynamic closures losing scope in server render
+
 ## 6.0.127
 
 ### Patch Changes
