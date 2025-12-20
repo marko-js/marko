@@ -36,7 +36,10 @@
       "types": "./register.d.ts",
       "default": "./src/register.js"
     },
-    "./modules": "./modules.js",
+    "./modules": {
+      "types": "./modules.d.ts",
+      "default": "./modules.js"
+    },
     "./babel-types": "./babel-types.d.ts",
     "./dist/types": "./dist/types.d.ts",
     "./package": "./package.json",

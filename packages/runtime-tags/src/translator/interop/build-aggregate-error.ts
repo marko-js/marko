@@ -1,7 +1,7 @@
 import { codeFrameColumns } from "@babel/code-frame";
 import type { types as t } from "@marko/compiler";
+import * as markoModules from "@marko/compiler/modules";
 import path from "path";
-const CWD = process.cwd();
 
 export function buildAggregateError(
   file: t.BabelFile,
@@ -9,7 +9,10 @@ export function buildAggregateError(
   ...paths: [string, t.NodePath][]
 ) {
   const err = new SyntaxError();
-  const fileName = path.relative(CWD, file.opts.filename as string);
+  const fileName = path.relative(
+    markoModules.cwd,
+    file.opts.filename as string,
+  );
   const finalMsg = `${rootMsg}:\n\n${paths
     .map(
       ([msg, path]: [string, t.NodePath]) =>
