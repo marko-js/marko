@@ -1,5 +1,14 @@
 # @marko/runtime-tags
 
+## 6.0.129
+
+### Patch Changes
+
+- [#3024](https://github.com/marko-js/marko/pull/3024) [`f634f38`](https://github.com/marko-js/marko/commit/f634f38d6dfffd72c23b4ec7e7bf5596ebd0b5de) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Use compiler modules api to read CWD in interop code.
+
+- Updated dependencies [[`f634f38`](https://github.com/marko-js/marko/commit/f634f38d6dfffd72c23b4ec7e7bf5596ebd0b5de)]:
+  - @marko/compiler@5.39.46
+
 ## 6.0.128
 
 ### Patch Changes
