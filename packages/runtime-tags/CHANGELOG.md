@@ -1,5 +1,19 @@
 # @marko/runtime-tags
 
+## 6.0.127
+
+### Patch Changes
+
+- [#3021](https://github.com/marko-js/marko/pull/3021) [`b2eb4e9`](https://github.com/marko-js/marko/commit/b2eb4e9925d890c721b5065659babd54dec02dbe) Thanks [@rturnq](https://github.com/rturnq)! - Optimize pure const signals which cache downstream as plain functions
+
+- [#2993](https://github.com/marko-js/marko/pull/2993) [`897a00d`](https://github.com/marko-js/marko/commit/897a00dcfe1fe1532a84aab0eff6ebd41e293ec0) Thanks [@rturnq](https://github.com/rturnq)! - Optimize spreads through a wrapper tag to a known tag into direct calls
+
+- [#3019](https://github.com/marko-js/marko/pull/3019) [`d694b03`](https://github.com/marko-js/marko/commit/d694b03c936f6d8b102e469b5bf9f56e54ad23fd) Thanks [@rturnq](https://github.com/rturnq)! - Optimize serialization to only send non-empty or referenced scopes
+
+- [#3019](https://github.com/marko-js/marko/pull/3019) [`e153684`](https://github.com/marko-js/marko/commit/e1536842785d989f69007c20c0e73474d6a8b9f5) Thanks [@rturnq](https://github.com/rturnq)! - Fix branch scope serialization for only child if and for tags
+
+- [#3019](https://github.com/marko-js/marko/pull/3019) [`299a0e1`](https://github.com/marko-js/marko/commit/299a0e120d1f1363173e19a48e448157fe77172e) Thanks [@rturnq](https://github.com/rturnq)! - Optimize loop key references as constants
+
 ## 6.0.126
 
 ### Patch Changes
