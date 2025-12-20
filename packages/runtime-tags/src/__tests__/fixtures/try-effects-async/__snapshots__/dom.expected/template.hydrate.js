@@ -1,23 +1,18 @@
-// size: 499 (min) 285 (brotli)
+// size: 449 (min) 243 (brotli)
 _._enable_catch();
-const $await_content__value = _._const(2, ($scope) =>
+const $await_content__$params = ($scope, $params3) =>
+  (($scope, value) =>
     _._text(
       $scope.a,
-      $scope.c > 1
+      value > 1
         ? (() => {
             throw new Error("ERROR!");
           })()
-        : $scope.c,
-    ),
-  ),
-  $await_content__$params = _._const(1, ($scope) =>
-    $await_content__value($scope, $scope.b[0]),
-  ),
-  $catch_content__err = _._const(2, ($scope) => _._text($scope.a, $scope.c)),
-  $catch_content__$params = _._const(1, ($scope) =>
-    $catch_content__err($scope, $scope.b[0]),
-  );
-(_._content_resume("a0", " ", " b", 0, $catch_content__$params),
+        : value,
+    ))($scope, $params3[0]);
+(_._content_resume("a0", " ", " b", 0, ($scope, $params2) =>
+  (($scope, err) => _._text($scope.a, err))($scope, $params2[0]),
+),
   _._content_resume("a1", "LOADING...", "b"));
 const $try_content__await_promise = _._await_promise(
     0,

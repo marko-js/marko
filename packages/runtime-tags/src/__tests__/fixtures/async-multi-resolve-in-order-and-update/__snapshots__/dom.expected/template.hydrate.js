@@ -1,33 +1,15 @@
-// size: 703 (min) 222 (brotli)
+// size: 593 (min) 202 (brotli)
 const multiply = (multiplier, n) => resolveAfter(multiplier * n),
-  $await_content5__result = _._const(2, ($scope) =>
-    _._text($scope.a, $scope.c),
-  ),
-  $await_content5__$params = _._const(1, ($scope) =>
-    $await_content5__result($scope, $scope.b[0]),
-  ),
-  $await_content4__result = _._const(2, ($scope) =>
-    _._text($scope.a, $scope.c),
-  ),
-  $await_content4__$params = _._const(1, ($scope) =>
-    $await_content4__result($scope, $scope.b[0]),
-  ),
-  $await_content3__result = _._const(2, ($scope) =>
-    _._text($scope.a, $scope.c),
-  ),
-  $await_content3__$params = _._const(1, ($scope) =>
-    $await_content3__result($scope, $scope.b[0]),
-  ),
-  $await_content2__result = _._const(2, ($scope) =>
-    _._text($scope.a, $scope.c),
-  ),
-  $await_content2__$params = _._const(1, ($scope) =>
-    $await_content2__result($scope, $scope.b[0]),
-  ),
-  $await_content__result = _._const(2, ($scope) => _._text($scope.a, $scope.c)),
-  $await_content__$params = _._const(1, ($scope) =>
-    $await_content__result($scope, $scope.b[0]),
-  ),
+  $await_content5__$params = ($scope, $params6) =>
+    (($scope, result) => _._text($scope.a, result))($scope, $params6[0]),
+  $await_content4__$params = ($scope, $params5) =>
+    (($scope, result) => _._text($scope.a, result))($scope, $params5[0]),
+  $await_content3__$params = ($scope, $params4) =>
+    (($scope, result) => _._text($scope.a, result))($scope, $params4[0]),
+  $await_content2__$params = ($scope, $params3) =>
+    (($scope, result) => _._text($scope.a, result))($scope, $params3[0]),
+  $await_content__$params = ($scope, $params2) =>
+    (($scope, result) => _._text($scope.a, result))($scope, $params2[0]),
   $await_promise = _._await_promise(2, $await_content__$params),
   $await_promise2 = _._await_promise(4, $await_content2__$params),
   $await_promise3 = _._await_promise(6, $await_content3__$params),

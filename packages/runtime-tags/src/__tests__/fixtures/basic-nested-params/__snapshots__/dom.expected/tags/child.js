@@ -6,8 +6,8 @@ const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, 0, 1);
 const $content__OR__value = /* @__PURE__ */_._or(5, $scope => $dynamicTag($scope, $scope.content, () => [$scope.value]));
 export const $content = /* @__PURE__ */_._const("content", $content__OR__value);
 export const $value = /* @__PURE__ */_._const("value", $content__OR__value);
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $content($scope, $scope.input.content);
-  $value($scope, $scope.input.value);
-});
+export const $input = ($scope, input) => {
+  $content($scope, input.content);
+  $value($scope, input.value);
+};
 export default /* @__PURE__ */_._template("__tests__/tags/child.marko", $template, $walks, $setup, $input);

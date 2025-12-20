@@ -1,4 +1,4 @@
-// size: 259 (min) 177 (brotli)
+// size: 247 (min) 172 (brotli)
 const $input_extra__OR__x = _._or(6, ($scope) =>
     _._return($scope, $scope.f + $scope.e),
   ),
@@ -12,10 +12,13 @@ const $input_extra__OR__x = _._or(6, ($scope) =>
       $input_extra__OR__x($scope),
       $x__script($scope));
   }),
-  $message = _._const(6, ($scope) => _._text($scope.c, $scope.g)),
   $name__OR__data = _._or(
     5,
-    ($scope) => $message($scope, `${$scope.d} ${$scope.e}`),
+    ($scope) =>
+      (($scope, message) => _._text($scope.c, message))(
+        $scope,
+        `${$scope.d} ${$scope.e}`,
+      ),
     1,
     1,
   );

@@ -22,10 +22,10 @@ const $count2 = /* @__PURE__ */_._let("count2/13", $scope => {
 const $input_count2__OR__input_count2Change = /* @__PURE__ */_._or(11, $scope => $count2($scope, $scope.input_count2, $scope.input_count2Change));
 export const $input_count2 = /* @__PURE__ */_._const("input_count2", $input_count2__OR__input_count2Change);
 export const $input_count2Change = /* @__PURE__ */_._const("input_count2Change", $input_count2__OR__input_count2Change);
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $input_count($scope, $scope.input.count1);
-  $input_count1Change($scope, $scope.input.count1Change);
-  $input_count2($scope, $scope.input.count2);
-  $input_count2Change($scope, $scope.input.count2Change);
-});
+export const $input = ($scope, input) => {
+  $input_count($scope, input.count1);
+  $input_count1Change($scope, input.count1Change);
+  $input_count2($scope, input.count2);
+  $input_count2Change($scope, input.count2Change);
+};
 export default /* @__PURE__ */_._template("__tests__/tags/2counters.marko", $template, $walks, $setup, $input);

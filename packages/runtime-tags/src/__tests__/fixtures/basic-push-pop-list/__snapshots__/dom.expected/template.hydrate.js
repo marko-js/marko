@@ -1,8 +1,6 @@
-// size: 328 (min) 209 (brotli)
-const $for_content__item = _._const(2, ($scope) => _._text($scope.a, $scope.c)),
-  $for_content__$params = _._const(1, ($scope) =>
-    $for_content__item($scope, $scope.b[0]),
-  ),
+// size: 306 (min) 189 (brotli)
+const $for_content__$params = ($scope, $params2) =>
+    (($scope, item) => _._text($scope.a, item))($scope, $params2[0]),
   $id__OR__items__script = _._script("a0", ($scope) =>
     _._on($scope.b, "click", function () {
       const nextId = $scope.d + 1;

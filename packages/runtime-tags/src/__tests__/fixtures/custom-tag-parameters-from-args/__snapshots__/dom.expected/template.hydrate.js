@@ -1,4 +1,4 @@
-// size: 428 (min) 258 (brotli)
+// size: 392 (min) 243 (brotli)
 const $x__OR__y__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", function () {
       ($x($scope, $scope.h + 1), $y($scope, $scope.i + 1));
@@ -20,22 +20,19 @@ const $x__OR__y__script = _._script("a0", ($scope) =>
     (_._text($scope.c, $scope.i),
       $x__OR__y($scope),
       $input_content__OR__x__OR__y($scope));
-  }),
-  $customtag_content__count = _._const(3, ($scope) =>
-    _._text($scope.a, $scope.d),
-  ),
-  $customtag_content__count2 = _._const(4, ($scope) =>
-    _._text($scope.b, $scope.e),
-  ),
-  $customtag_content__$params = _._const(2, ($scope) => {
-    ($customtag_content__count($scope, $scope.c[0]),
-      $customtag_content__count2($scope, $scope.c[1]));
   });
 (_._content_resume(
   "b0",
   "<div>Counts: <!>,<!></div>",
   "Db%c%l",
   0,
-  $customtag_content__$params,
+  ($scope, $params2) => {
+    ((($scope, count) => {
+      _._text($scope.a, count);
+    })($scope, $params2[0]),
+      (($scope, count2) => {
+        _._text($scope.b, count2);
+      })($scope, $params2[1]));
+  },
 ),
   init());

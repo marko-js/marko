@@ -22,5 +22,5 @@ export const $x = /* @__PURE__ */_._const("x", $scope => {
   }
   _customTag_input_thing($scope["#childScope/0"], $thing);
 });
-export const $input = /* @__PURE__ */_._const("input", $scope => $x($scope, $scope.input.x));
+export const $input = ($scope, input) => $x($scope, input.x);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

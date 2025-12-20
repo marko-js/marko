@@ -575,6 +575,8 @@ export default {
                 getScopeAccessorLiteral(nodeBinding!),
               ),
             ),
+            undefined,
+            true,
           );
         }
 
@@ -670,7 +672,14 @@ export default {
                 }
 
                 if (stmt) {
-                  addStatement("render", tagSection, valueReferences, stmt);
+                  addStatement(
+                    "render",
+                    tagSection,
+                    valueReferences,
+                    stmt,
+                    undefined,
+                    !!meta.dynamicItems,
+                  );
                 }
               }
               break;
@@ -705,6 +714,8 @@ export default {
                       value,
                     ),
                   ),
+                  undefined,
+                  true,
                 );
               }
 
@@ -776,6 +787,8 @@ export default {
                 staticContentAttr.value,
               ),
             ),
+            undefined,
+            true,
           );
         }
 
@@ -819,6 +832,8 @@ export default {
                     textLiteral,
                   ),
                 ),
+                undefined,
+                true,
               );
             }
           } else {

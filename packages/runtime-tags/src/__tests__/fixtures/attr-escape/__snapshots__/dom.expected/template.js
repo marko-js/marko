@@ -12,8 +12,8 @@ export const $input_bar = /* @__PURE__ */_._const("input_bar", $scope => {
   _._attr($scope["#div/0"], "bar", `a ${$scope.input_bar} b`);
   $input_foo__OR__input_bar($scope);
 });
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $input_foo($scope, $scope.input.foo);
-  $input_bar($scope, $scope.input.bar);
-});
+export const $input = ($scope, input) => {
+  $input_foo($scope, input.foo);
+  $input_bar($scope, input.bar);
+};
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

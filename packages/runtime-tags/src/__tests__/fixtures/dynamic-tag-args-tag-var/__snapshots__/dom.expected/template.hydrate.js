@@ -1,4 +1,4 @@
-// size: 334 (min) 222 (brotli)
+// size: 324 (min) 211 (brotli)
 const $setup = () => {},
   $input = _._const(2, ($scope) => {
     (_._text($scope.a, $scope.c), _._return($scope, $scope.c));
@@ -17,8 +17,5 @@ const tags = [
       $dynamicTag($scope, tags[0], () => [$scope.f]),
       $x__script($scope));
   }),
-  $y = _._var_resume(
-    "b1",
-    _._const(6, ($scope) => _._text($scope.e, $scope.g)),
-  );
+  $y = _._var_resume("b1", ($scope, y) => _._text($scope.e, y));
 init();

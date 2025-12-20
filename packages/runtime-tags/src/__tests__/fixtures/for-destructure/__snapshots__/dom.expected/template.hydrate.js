@@ -1,15 +1,14 @@
-// size: 419 (min) 228 (brotli)
-const $for_content__name = _._const(4, ($scope) => _._text($scope.a, $scope.e)),
-  $for_content__description = _._const(5, ($scope) =>
-    _._text($scope.b, $scope.f),
-  ),
-  $for_content__$params = _._const(2, ($scope) =>
-    $for_content__$temp($scope, $scope.c?.[0]),
-  ),
-  $for_content__$temp = _._const(3, ($scope) => {
-    ($for_content__name($scope, $scope.d.name),
-      $for_content__description($scope, $scope.d.description));
-  }),
+// size: 377 (min) 219 (brotli)
+const $for_content__$params = ($scope, $params2) =>
+    $for_content__$temp($scope, $params2?.[0]),
+  $for_content__$temp = ($scope, $temp) => {
+    ((($scope, name) => {
+      _._text($scope.a, name);
+    })($scope, $temp.name),
+      (($scope, description) => {
+        _._text($scope.b, description);
+      })($scope, $temp.description));
+  },
   $for = _._for_of(0, "<div><!>: <!></div>", "D%c%l", 0, $for_content__$params),
   $items__script = _._script("a0", ($scope) => {
     (_._on($scope.b, "click", function () {

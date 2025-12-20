@@ -1,8 +1,8 @@
 export const $template = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
 export const $walks = /* next(1), replace, over(1), get, over(1), get, out(1) */"D%b b l";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $for_content__item = /* @__PURE__ */_._const("item", $scope => _._text($scope["#text/0"], $scope.item));
-const $for_content__$params = /* @__PURE__ */_._const("$params2", $scope => $for_content__item($scope, $scope.$params2[0]));
+const $for_content__item = ($scope, item) => _._text($scope["#text/0"], item);
+const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $id__OR__items__script = _._script("__tests__/template.marko_0_id_items", $scope => _._on($scope["#button/1"], "click", function () {
   // TODO: nested writes ([...items, id++]) don't work
   const nextId = $scope.id + 1;

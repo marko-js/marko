@@ -8,11 +8,11 @@ const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", $inputAsdiv_content
 const $inputAs__OR__htmlInput = /* @__PURE__ */_._or(5, $scope => $dynamicTag($scope, $scope.inputAs || "div", () => $scope.htmlInput));
 export const $inputAs = /* @__PURE__ */_._const("inputAs", $inputAs__OR__htmlInput);
 export const $htmlInput = /* @__PURE__ */_._const("htmlInput", $inputAs__OR__htmlInput);
-export const $input = /* @__PURE__ */_._const("input", $scope => {
+export const $input = ($scope, input) => {
   (({
     as,
     ...htmlInput
-  }) => $htmlInput($scope, htmlInput))($scope.input);
-  $inputAs($scope, $scope.input.as);
-});
+  }) => $htmlInput($scope, htmlInput))(input);
+  $inputAs($scope, input.as);
+};
 export default /* @__PURE__ */_._template("__tests__/tags/wrapper.marko", $template, $walks, $setup, $input);

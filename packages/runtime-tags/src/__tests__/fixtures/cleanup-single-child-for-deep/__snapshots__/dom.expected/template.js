@@ -11,7 +11,7 @@ const $for_content2__write = /* @__PURE__ */_._closure_get("write", $scope => _c
 const $for_content2__outerItem__OR__middleItem = /* @__PURE__ */_._or(3, $scope => _child_input_name($scope["#childScope/0"], `${$scope._.outerItem}.${$scope.middleItem}`));
 const $for_content2__outerItem = /* @__PURE__ */_._for_closure("#text/1", $for_content2__outerItem__OR__middleItem);
 const $for_content2__middleItem = /* @__PURE__ */_._const("middleItem", $for_content2__outerItem__OR__middleItem);
-const $for_content2__$params = /* @__PURE__ */_._const("$params3", $scope => $for_content2__middleItem($scope, $scope.$params3[0]));
+const $for_content2__$params = ($scope, $params3) => $for_content2__middleItem($scope, $params3[0]);
 const $for_content__setup = $scope => {
   _child($scope["#childScope/0"]);
   $for_content__items._($scope);
@@ -24,7 +24,7 @@ const $for_content__outerItem = /* @__PURE__ */_._const("outerItem", $scope => {
 });
 const $for_content__for = /* @__PURE__ */_._for_of("#text/1", `<div>${_child_template}</div>`, /* next(1), <child>, out(1) */`D/${_child_walks}&l`, $for_content2__setup, $for_content2__$params);
 const $for_content__items = /* @__PURE__ */_._for_closure("#text/2", $scope => $for_content__for($scope, [$scope._.items]));
-const $for_content__$params = /* @__PURE__ */_._const("$params2", $scope => $for_content__outerItem($scope, $scope.$params2[0]));
+const $for_content__$params = ($scope, $params2) => $for_content__outerItem($scope, $params2[0]);
 const $for = /* @__PURE__ */_._for_of("#text/2", `<div>${_child_template}<!></div>`, /* next(1), <child>, replace, out(1) */`D/${_child_walks}&%l`, $for_content__setup, $for_content__$params);
 const $items__script = _._script("__tests__/template.marko_0_items", $scope => _._on($scope["#button/0"], "click", function () {
   $items($scope, $scope.items?.length ? $scope.items.slice(0, -1) : [1, 2, 3]);

@@ -9,10 +9,10 @@ const $bar = /* @__PURE__ */_._let("bar/3", $scope => {
   _._text($scope["#text/2"], $scope.bar);
   $bar__OR__fooChange($scope);
 });
-const $pattern2 = /* @__PURE__ */_._const("$pattern", $scope => {
-  $foo2($scope, $scope.$pattern.foo);
-  $fooChange2($scope, $scope.$pattern.fooChange);
-});
+const $pattern2 = ($scope, $pattern) => {
+  $foo2($scope, $pattern.foo);
+  $fooChange2($scope, $pattern.fooChange);
+};
 export function $setup($scope) {
   $bar($scope, 0);
   $pattern2($scope, {
@@ -20,7 +20,7 @@ export function $setup($scope) {
     fooChange: $foo($scope)
   });
 }
-const $foo2 = /* @__PURE__ */_._const("foo", $scope => _._text($scope["#text/1"], $scope.foo));
+const $foo2 = ($scope, foo) => _._text($scope["#text/1"], foo);
 const $fooChange2 = /* @__PURE__ */_._const("$fooChange", $bar__OR__fooChange);
 function $foo($scope) {
   return function (v) {

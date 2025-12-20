@@ -35,5 +35,5 @@ export function $setup($scope) {
     })
   }));
 }
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_color($scope, $scope.input.color));
+export const $input = ($scope, input) => $input_color($scope, input.color);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

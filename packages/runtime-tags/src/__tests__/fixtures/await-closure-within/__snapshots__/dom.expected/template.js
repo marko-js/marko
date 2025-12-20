@@ -15,9 +15,7 @@ const $await_content__value = /* @__PURE__ */_._let("value/3", $scope => {
   $if_content__value($scope);
   $await_content__value__script($scope);
 });
-const $await_content__setup = $scope => {
-  $await_content__value($scope, 1);
-};
+const $await_content__setup = $scope => $await_content__value($scope, 1);
 const $placeholder_content = _._content_resume("__tests__/template.marko_2_content", "loading...", /* over(1) */"b");
 const $await_content = /* @__PURE__ */_._await_content("#text/0", "<button> </button><!><!>", /* get, next(1), get, out(1), replace, over(2) */" D l%c", $await_content__setup);
 const $try_content__await_promise = /* @__PURE__ */_._await_promise("#text/0");

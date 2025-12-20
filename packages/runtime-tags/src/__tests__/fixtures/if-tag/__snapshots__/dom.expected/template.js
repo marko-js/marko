@@ -14,10 +14,10 @@ const $if3 = /* @__PURE__ */_._if("#div/2", "A", /* over(1) */"b", 0, "B", /* ov
 const $input_x__OR__input_y = /* @__PURE__ */_._or(10, $scope => $if3($scope, $scope.input_x ? 0 : $scope.input_y ? 1 : 2));
 export const $input_x = /* @__PURE__ */_._const("input_x", $input_x__OR__input_y);
 export const $input_y = /* @__PURE__ */_._const("input_y", $input_x__OR__input_y);
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $input_a($scope, $scope.input.a);
-  $input_b($scope, $scope.input.b);
-  $input_x($scope, $scope.input.x);
-  $input_y($scope, $scope.input.y);
-});
+export const $input = ($scope, input) => {
+  $input_a($scope, input.a);
+  $input_b($scope, input.b);
+  $input_x($scope, input.x);
+  $input_y($scope, input.y);
+};
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -1,4 +1,4 @@
-// size: 545 (min) 298 (brotli)
+// size: 509 (min) 297 (brotli)
 const $list$1 = _._let(3, ($scope) =>
   _._return($scope, {
     list: $scope.d,
@@ -17,18 +17,13 @@ function $_return($scope) {
   };
 }
 (_._resume("a1", $_return2), _._resume("a0", $_return));
-const $for_content__item = _._const(2, ($scope) => _._text($scope.a, $scope.c)),
-  $for_content__$params = _._const(1, ($scope) =>
-    $for_content__item($scope, $scope.b[0]),
-  );
-_._var_resume(
-  "b0",
-  _._const(4, ($scope) => {
-    ($store_list($scope, $scope.e?.list),
-      $store_listChange($scope, $scope.e?.listChange),
-      $store_clear($scope, $scope.e?.clear));
-  }),
-);
+const $for_content__$params = ($scope, $params2) =>
+  (($scope, item) => _._text($scope.a, item))($scope, $params2[0]);
+_._var_resume("b0", ($scope, store) => {
+  ($store_list($scope, store?.list),
+    $store_listChange($scope, store?.listChange),
+    $store_clear($scope, store?.clear));
+});
 const $for = _._for_of(3, "<li> </li>", "D l", 0, $for_content__$params),
   $list = _._let(9, ($scope) => $for($scope, [$scope.j])),
   $store_list__OR__store_listChange = _._or(

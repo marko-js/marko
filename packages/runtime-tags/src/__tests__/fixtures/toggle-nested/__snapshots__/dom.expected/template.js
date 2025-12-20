@@ -15,12 +15,12 @@ const $if_content__setup = $scope => {
   $if_content__value2._($scope);
 };
 const $if = /* @__PURE__ */_._if("#div/0", "<!><!><!><!>", /* over(1), replace, over(1), replace, over(2) */"b%b%c", $if_content__setup);
-export const $show = /* @__PURE__ */_._const("show", $scope => $if($scope, $scope.show ? 0 : 1));
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $show($scope, $scope.input.show);
-  $value($scope, $scope.input.value1);
-  $value2($scope, $scope.input.value2);
-});
+export const $show = ($scope, show) => $if($scope, show ? 0 : 1);
+export const $input = ($scope, input) => {
+  $show($scope, input.show);
+  $value($scope, input.value1);
+  $value2($scope, input.value2);
+};
 const $value__closure = /* @__PURE__ */_._closure($if_content2__value);
 export const $value = /* @__PURE__ */_._const("value1", $scope => {
   $if_content__value($scope);

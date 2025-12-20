@@ -15,5 +15,5 @@ export function $setup($scope) {
   _child($scope["#childScope/2"]);
   $count($scope, 1);
 }
-const $x = _._var_resume("__tests__/template.marko_0_x/var", $scope => {});
+const $x = _._var_resume("__tests__/template.marko_0_x/var", ($scope, x) => {});
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

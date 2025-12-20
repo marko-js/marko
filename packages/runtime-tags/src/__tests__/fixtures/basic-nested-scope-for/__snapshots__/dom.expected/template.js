@@ -15,7 +15,7 @@ const $for_content__num = /* @__PURE__ */_._const("num", $scope => {
 });
 const $for_content__selected = /* @__PURE__ */_._for_closure("#text/0", $for_content__selected__OR__num);
 const $for_content__setup = $for_content__selected;
-const $for_content__$params = /* @__PURE__ */_._const("$params2", $scope => $for_content__num($scope, $scope.$params2[0]));
+const $for_content__$params = ($scope, $params2) => $for_content__num($scope, $params2[0]);
 const $selected = /* @__PURE__ */_._let("selected/1", $for_content__selected);
 const $for = /* @__PURE__ */_._for_of("#text/0", "<button> </button>", /* get, next(1), get, out(1) */" D l", $for_content__setup, $for_content__$params);
 export function $setup($scope) {

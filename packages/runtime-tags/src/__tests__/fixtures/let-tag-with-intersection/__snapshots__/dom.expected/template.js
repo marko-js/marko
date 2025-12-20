@@ -1,7 +1,7 @@
 export const $template = "<button> </button><!> <!> <!>";
 export const $walks = /* get, next(1), get, out(1), replace, over(2), replace, over(2), replace, over(1) */" D l%c%c%b";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $a = /* @__PURE__ */_._const("a", $scope => _._text($scope["#text/4"], $scope.a));
+const $a = ($scope, a) => _._text($scope["#text/4"], a);
 const $y__OR__z = /* @__PURE__ */_._or(8, $scope => $a($scope, $scope.y + $scope.z));
 const $y = /* @__PURE__ */_._const("y", $scope => {
   _._text($scope["#text/2"], $scope.y);

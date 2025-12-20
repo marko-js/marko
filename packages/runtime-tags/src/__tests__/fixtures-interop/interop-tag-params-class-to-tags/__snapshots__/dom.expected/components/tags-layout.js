@@ -15,5 +15,5 @@ export function $setup($scope) {
   $count($scope, 0);
 }
 export const $input_content = /* @__PURE__ */_._const("input_content", $input_content__OR__count);
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_content($scope, $scope.input.content));
+export const $input = ($scope, input) => $input_content($scope, input.content);
 export default /* @__PURE__ */_._template("__tests__/components/tags-layout.marko", $template, $walks, $setup, $input);

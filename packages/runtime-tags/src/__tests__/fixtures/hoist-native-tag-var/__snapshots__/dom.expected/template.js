@@ -43,5 +43,5 @@ export function $setup($scope) {
   $hoisted_el3($scope, $get$hoisted_el2($scope));
   $setup__script($scope);
 }
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_show($scope, $scope.input.show));
+export const $input = ($scope, input) => $input_show($scope, input.show);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

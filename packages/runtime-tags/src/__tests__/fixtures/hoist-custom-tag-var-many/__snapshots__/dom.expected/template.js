@@ -9,9 +9,7 @@ const $for_content4__setup = $scope => {
   _child($scope["#childScope/0"]);
 };
 const $for_content3__for = /* @__PURE__ */_._for_to("#ul/0", _child_template, /* <child/var> */`0${_child_walks}&`, $for_content4__setup);
-const $for_content3__setup = $scope => {
-  $for_content3__for($scope, [3, 0, 1]);
-};
+const $for_content3__setup = $scope => $for_content3__for($scope, [3, 0, 1]);
 const $get$hoisted_setHtml2 = _._hoist("setHtml2", "BranchScopes:#text/1");
 const $for_content2__setHtml = _._var_resume("__tests__/template.marko_2_setHtml2/var", /* @__PURE__ */_._const("setHtml2", $scope => _._assert_hoist($scope.setHtml2)));
 const $for_content2__setup = $scope => {

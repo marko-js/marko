@@ -19,8 +19,8 @@ export const $name = /* @__PURE__ */_._const("name", $scope => {
   $name__OR__write($scope);
 });
 export const $write = /* @__PURE__ */_._const("write", $name__OR__write);
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $name($scope, $scope.input.name);
-  $write($scope, $scope.input.write);
-});
+export const $input = ($scope, input) => {
+  $name($scope, input.name);
+  $write($scope, input.write);
+};
 export default /* @__PURE__ */_._template("__tests__/tags/child.marko", $template, $walks, $setup, $input);

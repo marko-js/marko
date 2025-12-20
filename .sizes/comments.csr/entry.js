@@ -1,4 +1,4 @@
-// size: 745 (min) 396 (brotli)
+// size: 701 (min) 372 (brotli)
 const $if_content__setup = ($scope) => {
     ($scope.a,
       $if_content__comment_comments._($scope),
@@ -29,19 +29,19 @@ const $if_content__setup = ($scope) => {
   $for_content__setup = ($scope) => {
     ($for_content__input_path._($scope), $for_content__open($scope, !0));
   },
-  $for_content__comment_text = _const(7, ($scope) => _text($scope.b, $scope.h)),
   $for_content__if = _if(4, "<ul></ul>", "/ b&", $if_content__setup),
   $for_content__comment_comments = _const(8, ($scope) => {
     ($for_content__if($scope, $scope.i ? 0 : 1),
       $if_content__comment_comments($scope));
   }),
-  $for_content__$params = _const(5, ($scope) =>
-    $for_content__comment($scope, $scope.f[0]),
-  ),
-  $for_content__comment = _const(6, ($scope) => {
-    ($for_content__comment_text($scope, $scope.g?.text),
-      $for_content__comment_comments($scope, $scope.g?.comments));
-  }),
+  $for_content__$params = ($scope, $params2) =>
+    $for_content__comment($scope, $params2[0]),
+  $for_content__comment = ($scope, comment) => {
+    ((($scope, comment_text) => {
+      _text($scope.b, comment_text);
+    })($scope, comment?.text),
+      $for_content__comment_comments($scope, comment?.comments));
+  },
   $for = _for_of(
     0,
     "<li><span> </span><button> </button><!></li>",
@@ -49,22 +49,17 @@ const $if_content__setup = ($scope) => {
     $for_content__setup,
     $for_content__$params,
   ),
-  $input_comments$1 = _const(3, ($scope) => $for($scope, [$scope.d])),
+  $input_comments$1 = ($scope, input_comments) =>
+    $for($scope, [input_comments]),
   $input_path$1 = _const(4, $for_content__input_path);
 function $setup($scope) {
   $scope.a;
 }
-const $input_comments = _const(3, ($scope) =>
-    $input_comments$1($scope.a, $scope.d),
-  ),
-  $input_path = _const(4, ($scope) => $input_path$1($scope.a, $scope.e));
-_template(
-  "b",
-  "<ul></ul>",
-  "/ b&",
-  $setup,
-  _const(2, ($scope) => {
-    ($input_comments($scope, $scope.c.comments),
-      $input_path($scope, $scope.c.path));
-  }),
-).mount();
+_template("b", "<ul></ul>", "/ b&", $setup, ($scope, input) => {
+  ((($scope, input_comments) => {
+    $input_comments$1($scope.a, input_comments);
+  })($scope, input.comments),
+    (($scope, input_path) => {
+      $input_path$1($scope.a, input_path);
+    })($scope, input.path));
+}).mount();

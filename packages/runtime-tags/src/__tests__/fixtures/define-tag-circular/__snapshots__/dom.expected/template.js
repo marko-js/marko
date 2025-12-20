@@ -10,9 +10,9 @@ const $if_content__setup = $scope => {
   $Bar_content__setup._($scope["#childScope/0"], $scope);
 };
 const $Foo_content__if = /* @__PURE__ */_._if("#text/0", `<!>${$Bar_content__template}<!>`, /* over(1), <Bar>, over(1) */`b/${$Bar_content__walks}&b`, $if_content__setup);
-const $Foo_content__tag_input_show = /* @__PURE__ */_._const("show", $scope => $Foo_content__if($scope, $scope.show ? 0 : 1));
-const $Foo_content__$params = /* @__PURE__ */_._const("$params2", $scope => $Foo_content__$temp($scope, $scope.$params2?.[0]));
-const $Foo_content__$temp = /* @__PURE__ */_._const("$temp", $scope => $Foo_content__tag_input_show($scope, $scope.$temp.show));
+const $Foo_content__tag_input_show = ($scope, show) => $Foo_content__if($scope, show ? 0 : 1);
+const $Foo_content__$params = ($scope, $params2) => $Foo_content__$temp($scope, $params2?.[0]);
+const $Foo_content__$temp = ($scope, $temp) => $Foo_content__tag_input_show($scope, $temp.show);
 export function $setup($scope) {
   $Foo_content__tag_input_show($scope["#childScope/0"], true);
 }

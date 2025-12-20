@@ -184,11 +184,8 @@ export default {
   },
 } satisfies TemplateVisitor<t.Program>;
 
-function replaceNode(node: t.Node, container: t.Node | t.Node[]) {
-  return (
-    replaceBindingReadNode(node) ||
-    replaceRegisteredFunctionNode(node, container)
-  );
+function replaceNode(node: t.Node) {
+  return replaceBindingReadNode(node) || replaceRegisteredFunctionNode(node);
 }
 
 function replaceBindingReadNode(node: t.Node) {
@@ -235,10 +232,7 @@ function replaceBindingReadNode(node: t.Node) {
   }
 }
 
-export function replaceRegisteredFunctionNode(
-  node: t.Node,
-  container: t.Node[] | t.Node,
-) {
+export function replaceRegisteredFunctionNode(node: t.Node) {
   switch (node.type) {
     case "ClassMethod": {
       const replacement = getRegisteredFnExpression(node);
@@ -252,25 +246,6 @@ export function replaceRegisteredFunctionNode(
       const replacement = getRegisteredFnExpression(node);
       return replacement && t.objectProperty(node.key, replacement);
     }
-    case "FunctionDeclaration": {
-      const { extra } = node;
-      if (isRegisteredFnExtra(extra)) {
-        let registeredFnDeclarations = registeredFnDeclarationsByBody.get(
-          container as t.FunctionDeclaration["body"]["body"],
-        );
-        if (!registeredFnDeclarations) {
-          registeredFnDeclarationsByBody.set(
-            container as t.FunctionDeclaration["body"]["body"],
-            (registeredFnDeclarations = []),
-          );
-        }
-        registeredFnDeclarations.push({
-          id: node.id!.name,
-          registerId: extra.registerId,
-        });
-      }
-      break;
-    }
     case "ArrowFunctionExpression":
     case "FunctionExpression": {
       return getRegisteredFnExpression(node);
@@ -282,21 +257,21 @@ export function replaceRegisteredFunctionNode(
   }
 }
 
-const registeredFnDeclarationsByBody: WeakMap<
-  t.Program["body"] | t.BlockStatement["body"],
-  {
-    id: string;
-    registerId: string;
-  }[]
-> = new WeakMap();
-
 function addRegisteredDeclarations(body: t.Statement[]) {
-  const registeredFnDeclarations = registeredFnDeclarationsByBody.get(body);
-  if (registeredFnDeclarations) {
-    for (const { id, registerId } of registeredFnDeclarations) {
+  const len = body.length;
+  for (let i = 0; i < len; i++) {
+    const child = body[i];
+    if (
+      child.type === "FunctionDeclaration" &&
+      isRegisteredFnExtra(child.extra)
+    ) {
       body.push(
         t.expressionStatement(
-          callRuntime("_resume", t.identifier(id), t.stringLiteral(registerId)),
+          callRuntime(
+            "_resume",
+            t.identifier(child.id!.name!),
+            t.stringLiteral(child.extra!.registerId),
+          ),
         ),
       );
     }

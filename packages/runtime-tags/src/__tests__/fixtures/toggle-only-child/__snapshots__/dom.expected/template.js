@@ -9,10 +9,10 @@ const $value = /* @__PURE__ */_._let("value/5", $scope => {
   $if($scope, $scope.value ? 0 : 1);
   $if_content__value($scope);
 });
-export const $input_value = /* @__PURE__ */_._const("input_value", $scope => $value($scope, $scope.input_value));
+export const $input_value = ($scope, input_value) => $value($scope, input_value);
 const $setup__script = _._script("__tests__/template.marko_0", $scope => _._attr_input_value_script($scope, "#input/1"));
 export const $setup = $setup__script;
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_value($scope, $scope.input.value));
+export const $input = ($scope, input) => $input_value($scope, input.value);
 function $valueChange($scope) {
   return _new_value => {
     $value($scope, _new_value);

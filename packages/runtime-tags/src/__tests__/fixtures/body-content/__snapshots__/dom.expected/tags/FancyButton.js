@@ -8,12 +8,12 @@ export const $attrs = /* @__PURE__ */_._const("attrs", $scope => {
   $attrs__script($scope);
 });
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/1");
-export const $content = /* @__PURE__ */_._const("content", $scope => $dynamicTag($scope, $scope.content));
-export const $input = /* @__PURE__ */_._const("input", $scope => {
+export const $content = ($scope, content) => $dynamicTag($scope, content);
+export const $input = ($scope, input) => {
   (({
     content,
     ...attrs
-  }) => $attrs($scope, attrs))($scope.input);
-  $content($scope, $scope.input.content);
-});
+  }) => $attrs($scope, attrs))(input);
+  $content($scope, input.content);
+};
 export default /* @__PURE__ */_._template("__tests__/tags/FancyButton.marko", $template, $walks, $setup, $input);

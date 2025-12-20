@@ -23,5 +23,5 @@ export function $setup($scope) {
   $y($scope, 10);
 }
 export const $input_content = /* @__PURE__ */_._const("input_content", $input_content__OR__x__OR__y);
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_content($scope, $scope.input.content));
+export const $input = ($scope, input) => $input_content($scope, input.content);
 export default /* @__PURE__ */_._template("__tests__/components/custom-tag.marko", $template, $walks, $setup, $input);

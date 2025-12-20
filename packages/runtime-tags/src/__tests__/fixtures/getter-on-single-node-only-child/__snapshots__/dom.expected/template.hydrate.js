@@ -1,8 +1,6 @@
-// size: 292 (min) 197 (brotli)
-const $for_content__item = _._const(2, ($scope) => _._text($scope.a, $scope.c)),
-  $for_content__$params = _._const(1, ($scope) =>
-    $for_content__item($scope, $scope.b[0]),
-  ),
+// size: 270 (min) 184 (brotli)
+const $for_content__$params = ($scope, $params2) =>
+    (($scope, item) => _._text($scope.a, item))($scope, $params2[0]),
   $getul = _._el("a0", 1),
   $for = _._for_of(1, "<li> </li>", "D l", 0, $for_content__$params),
   $items__script = _._script("a1", ($scope) =>

@@ -10,5 +10,5 @@ export const $input_foo = /* @__PURE__ */_._const("input_foo", $scope => _child_
   foo: $scope.input_foo,
   output: $getdiv($scope)
 }));
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_foo($scope, $scope.input.foo));
+export const $input = ($scope, input) => $input_foo($scope, input.foo);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -14,5 +14,5 @@ export function $setup($scope) {
   $x($scope, 0);
 }
 export const $input_extra = /* @__PURE__ */_._const("input_extra", $input_extra__OR__x);
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_extra($scope, $scope.input.extra));
+export const $input = ($scope, input) => $input_extra($scope, input.extra);
 export default /* @__PURE__ */_._template("__tests__/tags/child.marko", $template, $walks, $setup, $input);

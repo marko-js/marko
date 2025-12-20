@@ -9,17 +9,17 @@ const $if_content__setup = $scope => {
   $if_content__input_test_style._($scope);
   $if_content__input_test_content._($scope);
 };
-export const $input_style = /* @__PURE__ */_._const("input_style", $scope => _._attr_style($scope["#div/0"], $scope.input_style));
+export const $input_style = ($scope, input_style) => _._attr_style($scope["#div/0"], input_style);
 const $if = /* @__PURE__ */_._if("#text/1", "<div id=test><!></div>", /* get, next(1), replace, out(1) */" D%l", $if_content__setup);
-export const $input_test = /* @__PURE__ */_._const("input_test", $scope => {
-  $input_test_style($scope, $scope.input_test?.style);
-  $input_test_content($scope, $scope.input_test?.content);
-  $if($scope, $scope.input_test ? 0 : 1);
-});
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $input_style($scope, $scope.input.style);
-  $input_test($scope, $scope.input.test);
-});
+export const $input_test = ($scope, input_test) => {
+  $input_test_style($scope, input_test?.style);
+  $input_test_content($scope, input_test?.content);
+  $if($scope, input_test ? 0 : 1);
+};
+export const $input = ($scope, input) => {
+  $input_style($scope, input.style);
+  $input_test($scope, input.test);
+};
 const $input_test_style = /* @__PURE__ */_._const("input_test_style", $if_content__input_test_style);
 const $input_test_content = /* @__PURE__ */_._const("input_test_content", $if_content__input_test_content);
 export default /* @__PURE__ */_._template("__tests__/tags/custom-tag.marko", $template, $walks, $setup, $input);

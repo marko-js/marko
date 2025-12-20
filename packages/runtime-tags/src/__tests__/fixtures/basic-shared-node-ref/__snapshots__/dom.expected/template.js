@@ -1,8 +1,8 @@
 export const $template = "<ul></ul><button id=toggle>Toggle</button><button id=reverse>Reverse</button>";
 export const $walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $for_content__x = /* @__PURE__ */_._const("x", $scope => _._text($scope["#text/0"], $scope.x));
-const $for_content__$params = /* @__PURE__ */_._const("$params2", $scope => $for_content__x($scope, $scope.$params2[0]));
+const $for_content__x = ($scope, x) => _._text($scope["#text/0"], x);
+const $for_content__$params = ($scope, $params2) => $for_content__x($scope, $params2[0]);
 const $open__script = _._script("__tests__/template.marko_0_open", $scope => _._on($scope["#button/1"], "click", function () {
   $open($scope, !$scope.open);
 }));

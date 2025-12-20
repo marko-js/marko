@@ -808,6 +808,8 @@ function writeParamsToSignals(
               arg,
             ]),
           ),
+          undefined,
+          true,
         );
       }
 
@@ -974,6 +976,8 @@ function writeAttrsToSignals(
               ]),
             ]),
           ),
+          undefined,
+          true,
         );
       }
     }
@@ -1024,6 +1028,8 @@ function writeAttrsToSignals(
             attr.value,
           ]),
         ),
+        undefined,
+        true,
       );
     }
 
@@ -1052,6 +1058,8 @@ function writeAttrsToSignals(
                 createScopeReadExpression(propBinding, info.tagSection),
               ]),
             ),
+            undefined,
+            true,
           );
         }
       } else {

@@ -1,4 +1,4 @@
-// size: 525 (min) 245 (brotli)
+// size: 507 (min) 236 (brotli)
 const $state__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", function () {
       $state($scope, $scope.l + 1);
@@ -24,13 +24,12 @@ const $state__script = _._script("a0", ($scope) =>
   $otherState = _._let(12, ($scope) => {
     (_._text($scope.f, $scope.m), $otherState__script($scope));
   }),
-  $input = _._const(7, ($scope) => {
-    ($input_value($scope, $scope.h.value),
-      $input_valueChange($scope, $scope.h.valueChange),
-      $otherState($scope, $scope.h.value, $scope.h.valueChange));
-  }),
   $source = _._let(2, ($scope) => {
-    ($input($scope.a, { value: $scope.c, valueChange: $valueChange($scope) }),
+    ((($scope, input) => {
+      ($input_value($scope, input.value),
+        $input_valueChange($scope, input.valueChange),
+        $otherState($scope, input.value, input.valueChange));
+    })($scope.a, { value: $scope.c, valueChange: $valueChange($scope) }),
       _._text($scope.b, $scope.c));
   });
 function $valueChange($scope) {

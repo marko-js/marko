@@ -12,7 +12,7 @@ export function $setup($scope) {
   $count($scope, 0);
 }
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/2");
-export const $input_stuff_content = /* @__PURE__ */_._const("input_stuff_content", $scope => $dynamicTag($scope, $scope.input_stuff_content));
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_stuff($scope, $scope.input.stuff));
-export const $input_stuff = /* @__PURE__ */_._const("input_stuff", $scope => $input_stuff_content($scope, $scope.input_stuff?.content));
+export const $input_stuff_content = ($scope, input_stuff_content) => $dynamicTag($scope, input_stuff_content);
+export const $input = ($scope, input) => $input_stuff($scope, input.stuff);
+export const $input_stuff = ($scope, input_stuff) => $input_stuff_content($scope, input_stuff?.content);
 export default /* @__PURE__ */_._template("__tests__/components/tags-layout.marko", $template, $walks, $setup, $input);

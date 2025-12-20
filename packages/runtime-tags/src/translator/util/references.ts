@@ -54,7 +54,11 @@ import {
   type SerializeReason,
 } from "./serialize-reasons";
 import { finalizeTagDownstreams } from "./set-tag-sections-downstream";
-import { getRegisterUID } from "./signals";
+import {
+  getRegisterUID,
+  getSignalValueIdentifier,
+  type Signal,
+} from "./signals";
 import { getBindingGetterIdentifier } from "./signals";
 import { createProgramState } from "./state";
 import { toMemberExpression } from "./to-property-name";
@@ -1581,6 +1585,7 @@ export function getSectionInstancesAccessorLiteral(section: Section) {
 
 export function getReadReplacement(
   node: t.Identifier | t.MemberExpression | t.OptionalMemberExpression,
+  signal?: Signal,
 ) {
   const { extra } = node;
   if (!extra || extra.assignment) return;
@@ -1592,7 +1597,12 @@ export function getReadReplacement(
 
     if (read.props === undefined) {
       if (isOutputDOM()) {
-        if (readBinding.type === BindingType.dom) {
+        if (
+          signal?.referencedBindings === readBinding &&
+          !signal.hasSideEffect
+        ) {
+          replacement = getSignalValueIdentifier(signal);
+        } else if (readBinding.type === BindingType.dom) {
           if (
             !extra[kIsInvoked] &&
             readBinding.section.domGetterBindings.has(readBinding)
@@ -1631,14 +1641,23 @@ export function getReadReplacement(
           : [read.props]
         : [];
       let curNode = node;
-      let curBinding: Binding | undefined = read.binding;
+      let curBinding: Binding | undefined = readBinding;
       let replaceMember:
         | t.MemberExpression
         | t.OptionalMemberExpression
         | undefined;
-      replacement = isOutputDOM()
-        ? createScopeReadExpression(read.binding, extra.section)
-        : t.identifier(read.binding.name);
+      if (isOutputDOM()) {
+        if (
+          signal?.referencedBindings === readBinding &&
+          !signal.hasSideEffect
+        ) {
+          replacement = getSignalValueIdentifier(signal);
+        } else {
+          replacement = createScopeReadExpression(readBinding, extra.section);
+        }
+      } else {
+        replacement = t.identifier(readBinding.name);
+      }
 
       while (
         props.length &&
@@ -1668,7 +1687,7 @@ export function getReadReplacement(
 
       if (replaceMember) {
         if (
-          read.binding.nullable &&
+          readBinding.nullable &&
           replaceMember.object.type !== replacement.type
         ) {
           replaceMember.type = "OptionalMemberExpression";
@@ -1933,7 +1952,7 @@ function isSupersetSources(a: Binding, b: Binding) {
   );
 }
 
-function createRead(binding: Binding, props: Opt<string>) {
+export function createRead(binding: Binding, props: Opt<string>) {
   return { binding, props };
 }
 

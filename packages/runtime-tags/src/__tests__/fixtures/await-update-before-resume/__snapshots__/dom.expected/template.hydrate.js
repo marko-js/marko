@@ -1,4 +1,4 @@
-// size: 454 (min) 232 (brotli)
+// size: 444 (min) 229 (brotli)
 _._enable_catch();
 const $await_content__value__script = _._script(
     "a0",
@@ -8,9 +8,8 @@ const $await_content__value__script = _._script(
     (_._text($scope.a, $scope.c), $await_content__value__script($scope));
   });
 _._script("a1", ($scope) => ($scope._._.c.textContent += "\nsetup effect ran"));
-const $await_content__$params = _._const(1, ($scope) =>
-  $await_content__value($scope, $scope.b[0]),
-);
+const $await_content__$params = ($scope, $params2) =>
+  $await_content__value($scope, $params2[0]);
 _._content_resume("a2", "loading...", "b");
 const $try_content__await_promise = _._await_promise(
     0,

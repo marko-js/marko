@@ -38,8 +38,8 @@ export function $setup($scope) {
   _customTag_input_class($scope["#childScope/2"], ["a", false, "b"]);
   _customTag_input_test($scope["#childScope/2"]);
 }
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $c($scope, $scope.input.c);
-  $d($scope, $scope.input.d);
-});
+export const $input = ($scope, input) => {
+  $c($scope, input.c);
+  $d($scope, input.d);
+};
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

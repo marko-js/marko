@@ -8,13 +8,13 @@ const $rest = /* @__PURE__ */_._const("rest", $scope => {
   $rest__script($scope);
 });
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/1");
-const $content = /* @__PURE__ */_._const("content", $scope => $dynamicTag($scope, $scope.content));
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  _._text($scope["#text/2"], Object.keys($scope.input));
+const $content = ($scope, content) => $dynamicTag($scope, content);
+export const $input = ($scope, input) => {
+  _._text($scope["#text/2"], Object.keys(input));
   (({
     content,
     ...rest
-  }) => $rest($scope, rest))($scope.input);
-  $content($scope, $scope.input.content);
-});
+  }) => $rest($scope, rest))(input);
+  $content($scope, input.content);
+};
 export default /* @__PURE__ */_._template("__tests__/tags/child.marko", $template, $walks, $setup, $input);

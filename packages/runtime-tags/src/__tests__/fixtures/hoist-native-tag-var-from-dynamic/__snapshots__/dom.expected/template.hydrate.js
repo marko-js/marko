@@ -1,9 +1,6 @@
-// size: 737 (min) 318 (brotli)
+// size: 723 (min) 310 (brotli)
 const $dynamicTag = _._dynamic_tag(0),
   $dynamicTag2 = _._dynamic_tag(1),
-  $input_content = _._const(4, ($scope) => {
-    ($dynamicTag($scope, $scope.e), $dynamicTag2($scope, $scope.e));
-  }),
   $get$hoisted_el = _._hoist("Ja", "B4");
 _._content_resume("b0", "<p></p>", " b", 0, 0, "B4");
 const $get$hoisted_el2 = _._resume("b1", _._hoist("Ja", "B3"));
@@ -25,7 +22,10 @@ const $child_content2 = _._content("b3", "<div></div>", " b", 0, 0, "B3"),
   "b/b%b%c&b",
   ($scope) => {
     ($scope.a,
-      $input_content($scope.a, $child_content2($scope)),
+      (($scope, input_content) => {
+        ($dynamicTag($scope, input_content),
+          $dynamicTag2($scope, input_content));
+      })($scope.a, $child_content2($scope)),
       $inputshowChildnull_content__$hoisted_el(
         $scope,
         $get$hoisted_el2($scope),

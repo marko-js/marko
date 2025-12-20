@@ -12,13 +12,13 @@ const $x = /* @__PURE__ */_._let("x/9", $scope => {
 const $countChange__OR__count = /* @__PURE__ */_._or(8, $scope => $x($scope, $scope.count, $scope.$countChange));
 export const $countChange2 = /* @__PURE__ */_._const("$countChange", $countChange__OR__count);
 export const $count = /* @__PURE__ */_._const("count", $countChange__OR__count);
-export const $input_id = /* @__PURE__ */_._const("input_id", $scope => _._attr($scope["#button/0"], "id", $scope.input_id));
+export const $input_id = ($scope, input_id) => _._attr($scope["#button/0"], "id", input_id);
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/1");
-export const $input_content = /* @__PURE__ */_._const("input_content", $scope => $dynamicTag($scope, $scope.input_content));
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $input_id($scope, $scope.input.id);
-  $input_content($scope, $scope.input.content);
-  $countChange2($scope, $scope.input.countChange);
-  $count($scope, $scope.input.count);
-});
+export const $input_content = ($scope, input_content) => $dynamicTag($scope, input_content);
+export const $input = ($scope, input) => {
+  $input_id($scope, input.id);
+  $input_content($scope, input.content);
+  $countChange2($scope, input.countChange);
+  $count($scope, input.count);
+};
 export default /* @__PURE__ */_._template("__tests__/tags/counter.marko", $template, $walks, $setup, $input);

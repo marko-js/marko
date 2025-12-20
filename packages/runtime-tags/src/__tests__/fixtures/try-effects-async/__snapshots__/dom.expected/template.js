@@ -3,12 +3,12 @@ export const $walks = /* get, over(1), get, over(1), replace, over(2) */" b b%c"
 import { resolveAfter } from "../../utils/resolve";
 import * as _ from "@marko/runtime-tags/debug/dom";
 _._enable_catch();
-const $await_content__value = /* @__PURE__ */_._const("value", $scope => _._text($scope["#text/0"], $scope.value > 1 ? (() => {
+const $await_content__value = ($scope, value) => _._text($scope["#text/0"], value > 1 ? (() => {
   throw new Error("ERROR!");
-})() : $scope.value));
-const $await_content__$params = /* @__PURE__ */_._const("$params3", $scope => $await_content__value($scope, $scope.$params3[0]));
-const $catch_content__err = /* @__PURE__ */_._const("err", $scope => _._text($scope["#text/0"], $scope.err));
-const $catch_content__$params = /* @__PURE__ */_._const("$params2", $scope => $catch_content__err($scope, $scope.$params2[0]));
+})() : value);
+const $await_content__$params = ($scope, $params3) => $await_content__value($scope, $params3[0]);
+const $catch_content__err = ($scope, err) => _._text($scope["#text/0"], err);
+const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
 const $catch_content = _._content_resume("__tests__/template.marko_3_content", " ", /* get, over(1) */" b", 0, $catch_content__$params);
 const $placeholder_content = _._content_resume("__tests__/template.marko_2_content", "LOADING...", /* over(1) */"b");
 const $await_content = /* @__PURE__ */_._await_content("#text/0", "Async: <!>", /* over(1), replace, over(1) */"b%b");

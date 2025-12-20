@@ -34,7 +34,7 @@ export const $input_show = /* @__PURE__ */_._const("input_show", $scope => {
 const $if2 = /* @__PURE__ */_._if("#text/2", _child_template, /* <child/var> */`0${_child_walks}&`, $if_content3__setup);
 const $if3 = /* @__PURE__ */_._if("#text/3", _child_template, /* <child/var> */`0${_child_walks}&`, $if_content4__setup);
 const $if4 = /* @__PURE__ */_._if("#text/4", 0, 0, $if_content5__setup);
-const $hoisted_setHtml4 = /* @__PURE__ */_._const("$hoisted_setHtml", $scope => _thing_input_value($scope["#childScope/1"], $scope.$hoisted_setHtml));
+const $hoisted_setHtml4 = ($scope, $hoisted_setHtml) => _thing_input_value($scope["#childScope/1"], $hoisted_setHtml);
 const $setup__script = _._script("__tests__/template.marko_0", $scope => {
   $get$hoisted_setHtml3($scope)("Hello world");
   $get$hoisted_setHtml2($scope)("Hello world");
@@ -47,5 +47,5 @@ export function $setup($scope) {
   $hoisted_setHtml4($scope, $get$hoisted_setHtml3($scope));
   $setup__script($scope);
 }
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_show($scope, $scope.input.show));
+export const $input = ($scope, input) => $input_show($scope, input.show);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

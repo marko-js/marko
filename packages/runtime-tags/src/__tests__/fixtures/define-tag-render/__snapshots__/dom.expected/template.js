@@ -12,9 +12,9 @@ const $MyTag_content__y = /* @__PURE__ */_._let("y/7", $scope => {
   $MyTag_content__y__script($scope);
 });
 const $MyTag_content__setup = /* @__PURE__ */_._child_setup($scope => $MyTag_content__y($scope, 1));
-const $MyTag_content__name = /* @__PURE__ */_._const("name", $scope => _._text($scope["#text/0"], $scope.name));
-const $MyTag_content__$params = /* @__PURE__ */_._const("$params2", $scope => $MyTag_content__$temp($scope, $scope.$params2?.[0]));
-const $MyTag_content__$temp = /* @__PURE__ */_._const("$temp", $scope => $MyTag_content__name($scope, $scope.$temp.name));
+const $MyTag_content__name = ($scope, name) => _._text($scope["#text/0"], name);
+const $MyTag_content__$params = ($scope, $params2) => $MyTag_content__$temp($scope, $params2?.[0]);
+const $MyTag_content__$temp = ($scope, $temp) => $MyTag_content__name($scope, $temp.name);
 export function $setup($scope) {
   $MyTag_content__setup._($scope["#childScope/0"], $scope);
   $MyTag_content__name($scope["#childScope/0"], "Ryan");

@@ -5,14 +5,14 @@ const $Twice_content__value__OR__call = /* @__PURE__ */_._or(4, $scope => _._ret
 const $Twice_content__call = /* @__PURE__ */_._let("call/3", $Twice_content__value__OR__call);
 const $Twice_content__setup = /* @__PURE__ */_._child_setup($scope => $Twice_content__call($scope, 2));
 const $Twice_content__value = /* @__PURE__ */_._const("value", $Twice_content__value__OR__call);
-const $Twice_content__$params = /* @__PURE__ */_._const("$params3", $scope => $Twice_content__$temp($scope, $scope.$params3?.[0]));
-const $Twice_content__$temp = /* @__PURE__ */_._const("$temp2", $scope => $Twice_content__value($scope, $scope.$temp2.value));
+const $Twice_content__$params = ($scope, $params3) => $Twice_content__$temp($scope, $params3?.[0]);
+const $Twice_content__$temp = ($scope, $temp2) => $Twice_content__value($scope, $temp2.value);
 const $Once_content__value__OR__call = /* @__PURE__ */_._or(4, $scope => _._return($scope, $_return($scope)));
 const $Once_content__call = /* @__PURE__ */_._let("call/3", $Once_content__value__OR__call);
 const $Once_content__setup = /* @__PURE__ */_._child_setup($scope => $Once_content__call($scope, 1));
 const $Once_content__value = /* @__PURE__ */_._const("value", $Once_content__value__OR__call);
-const $Once_content__$params = /* @__PURE__ */_._const("$params2", $scope => $Once_content__$temp($scope, $scope.$params2?.[0]));
-const $Once_content__$temp = /* @__PURE__ */_._const("$temp", $scope => $Once_content__value($scope, $scope.$temp.value));
+const $Once_content__$params = ($scope, $params2) => $Once_content__$temp($scope, $params2?.[0]);
+const $Once_content__$temp = ($scope, $temp) => $Once_content__value($scope, $temp.value);
 const $clickOnceCount = /* @__PURE__ */_._let("clickOnceCount/8", $scope => {
   $Once_content__value($scope["#childScope/0"], $onClickOnce($scope));
   _._text($scope["#text/3"], $scope.clickOnceCount);
