@@ -1,7 +1,9 @@
-// size: 268 (min) 168 (brotli)
-const $multipliedCount = _._const(7, ($scope) => _._text($scope.d, $scope.h)),
-  $count__OR__multiplier = _._or(6, ($scope) =>
-    $multipliedCount($scope, $scope.e * $scope.f),
+// size: 256 (min) 149 (brotli)
+const $count__OR__multiplier = _._or(6, ($scope) =>
+    (($scope, multipliedCount) => _._text($scope.d, multipliedCount))(
+      $scope,
+      $scope.e * $scope.f,
+    ),
   ),
   $count__script = _._script("a0", ($scope) =>
     _._on($scope.c, "click", function () {

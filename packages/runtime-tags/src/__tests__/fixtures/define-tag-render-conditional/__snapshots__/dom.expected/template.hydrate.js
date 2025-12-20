@@ -1,9 +1,6 @@
-// size: 281 (min) 204 (brotli)
-const $MyTag_content__value = _._const(3, ($scope) =>
-    _._text($scope.a, $scope.d),
-  ),
-  $if_content__x = _._if_closure(0, 0, ($scope) =>
-    $MyTag_content__value($scope.a, $scope._.e),
+// size: 269 (min) 201 (brotli)
+const $if_content__x = _._if_closure(0, 0, ($scope) =>
+    (($scope, value) => _._text($scope.a, value))($scope.a, $scope._.e),
   ),
   $if_content__setup = $if_content__x,
   $if = _._if(0, "<!><div>Hello <!></div><!>", "b/Db%l&b", $if_content__setup),

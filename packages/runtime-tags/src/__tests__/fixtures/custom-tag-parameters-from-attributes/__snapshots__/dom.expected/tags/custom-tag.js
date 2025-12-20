@@ -19,8 +19,8 @@ export function $setup($scope) {
 }
 export const $input_content = /* @__PURE__ */_._const("input_content", $input_content__OR__input_name__OR__x);
 export const $input_name = /* @__PURE__ */_._const("input_name", $input_content__OR__input_name__OR__x);
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $input_content($scope, $scope.input.content);
-  $input_name($scope, $scope.input.name);
-});
+export const $input = ($scope, input) => {
+  $input_content($scope, input.content);
+  $input_name($scope, input.name);
+};
 export default /* @__PURE__ */_._template("__tests__/tags/custom-tag.marko", $template, $walks, $setup, $input);

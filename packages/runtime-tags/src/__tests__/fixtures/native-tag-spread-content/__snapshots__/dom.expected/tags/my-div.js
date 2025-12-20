@@ -29,10 +29,10 @@ export const $input = /* @__PURE__ */_._const("input", $scope => {
   $input__OR__CustomContent_content($scope);
   $input__script($scope);
 });
-const $CustomContent = /* @__PURE__ */_._const("CustomContent", $scope => {
-  _._attr_content($scope, "#em/6", $scope.CustomContent);
-  $CustomContent_content2($scope, $scope.CustomContent?.content);
-});
+const $CustomContent = ($scope, CustomContent) => {
+  _._attr_content($scope, "#em/6", CustomContent);
+  $CustomContent_content2($scope, CustomContent?.content);
+};
 export function $setup($scope) {
   _._attr_content($scope, "#output/3", undefined);
   $CustomContent($scope, {

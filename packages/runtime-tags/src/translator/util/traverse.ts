@@ -9,30 +9,27 @@ type VisitKeys<T> = (string | number) &
       }[keyof T]
     : never);
 
-export function traverseReplace<T, K extends VisitKeys<T>>(
+export function traverseReplace<T, K extends VisitKeys<T>, S>(
   container: T,
   key: K,
-  enter: (
-    node: t.Node,
-    container: t.Node | t.Node[],
-    key: string | number,
-  ) => t.Node | void,
+  enter: (node: t.Node, state?: S) => t.Node | void,
+  state?: S,
 ): void {
   const node = container[key] as VisitValue;
   if (node) {
     if (Array.isArray(node)) {
       for (let i = node.length; i--; ) {
-        traverseReplace(node, i, enter);
+        traverseReplace(node, i, enter, state);
       }
     } else {
       const keys = (t as any).VISITOR_KEYS[node.type] as VisitKeys<
         typeof node
       >[];
       for (let i = keys.length; i--; ) {
-        traverseReplace(node, keys[i], enter);
+        traverseReplace(node, keys[i], enter, state);
       }
 
-      const replacement = enter(node, container as t.Node | t.Node[], key);
+      const replacement = enter(node, state);
       if (replacement) container[key] = replacement as any;
     }
   }

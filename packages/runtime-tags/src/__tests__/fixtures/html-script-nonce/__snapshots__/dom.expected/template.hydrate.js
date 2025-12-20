@@ -1,7 +1,5 @@
-// size: 202 (min) 150 (brotli)
-const $if_content__setup = ($scope) => {
-  _._attr_nonce($scope, "a");
-};
+// size: 200 (min) 143 (brotli)
+const $if_content__setup = ($scope) => _._attr_nonce($scope, "a");
 _._script("a0", ($scope) => _._attrs_script($scope, "b"));
 const $if = _._if(
     2,

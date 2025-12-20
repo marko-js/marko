@@ -4,11 +4,11 @@ import { $setup as _comments, $input_comments as _comments_input_comments, $inpu
 export function $setup($scope) {
   _comments($scope["#childScope/0"]);
 }
+export const $input_comments = ($scope, input_comments) => _comments_input_comments($scope["#childScope/0"], input_comments);
+export const $input_path = ($scope, input_path) => _comments_input_path($scope["#childScope/0"], input_path);
+export const $input = ($scope, input) => {
+  $input_comments($scope, input.comments);
+  $input_path($scope, input.path);
+};
 import * as _ from "@marko/runtime-tags/debug/dom";
-export const $input_comments = /* @__PURE__ */_._const("input_comments", $scope => _comments_input_comments($scope["#childScope/0"], $scope.input_comments));
-export const $input_path = /* @__PURE__ */_._const("input_path", $scope => _comments_input_path($scope["#childScope/0"], $scope.input_path));
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $input_comments($scope, $scope.input.comments);
-  $input_path($scope, $scope.input.path);
-});
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

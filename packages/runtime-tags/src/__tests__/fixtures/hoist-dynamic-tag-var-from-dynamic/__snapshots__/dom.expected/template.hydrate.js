@@ -1,4 +1,4 @@
-// size: 825 (min) 349 (brotli)
+// size: 807 (min) 354 (brotli)
 function $setup$1($scope) {
   _._return($scope, $_return($scope));
 }
@@ -11,9 +11,6 @@ _._resume("a0", $_return);
 var Child = _._template("a", "<div></div>", " b", $setup$1);
 const $dynamicTag = _._dynamic_tag(0),
   $dynamicTag2 = _._dynamic_tag(1),
-  $input_content = _._const(4, ($scope) => {
-    ($dynamicTag($scope, $scope.e), $dynamicTag2($scope, $scope.e));
-  }),
   $get$hoisted_setHtml = _._hoist(2, "B4"),
   $inputshowsectionnull_content__dynamicTag = _._dynamic_tag(
     0,
@@ -25,9 +22,7 @@ _._content_resume(
   "c1",
   "<!><!><!>",
   "b1c",
-  ($scope) => {
-    $inputshowsectionnull_content__dynamicTag($scope, Child);
-  },
+  ($scope) => $inputshowsectionnull_content__dynamicTag($scope, Child),
   0,
   "B4",
 );
@@ -38,9 +33,8 @@ const $get$hoisted_setHtml2 = _._hoist(2, "B3", "B2"),
     () => $thing_content2__setHtml,
   ),
   $thing_content2__setHtml = _._var_resume("c2", _._const(2)),
-  $thing_content2__setup = ($scope) => {
-    $thing_content2__dynamicTag($scope, Child);
-  },
+  $thing_content2__setup = ($scope) =>
+    $thing_content2__dynamicTag($scope, Child),
   $thing_content2 = _._content(
     "c3",
     "<!><!><!>",
@@ -54,7 +48,11 @@ const $get$hoisted_setHtml2 = _._hoist(2, "B3", "B2"),
   "<!><!><!><!><!><!>",
   "b/b%b%c&b",
   ($scope) => {
-    ($scope.a, $input_content($scope.a, $thing_content2($scope)));
+    ($scope.a,
+      (($scope, input_content) => {
+        ($dynamicTag($scope, input_content),
+          $dynamicTag2($scope, input_content));
+      })($scope.a, $thing_content2($scope)));
   },
   0,
   "B2",

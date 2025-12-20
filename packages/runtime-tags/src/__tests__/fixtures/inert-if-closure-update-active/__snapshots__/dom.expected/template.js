@@ -12,6 +12,6 @@ export function $setup($scope) {
   $setup__script($scope);
 }
 const $if = /* @__PURE__ */_._if("#text/0", " ", /* get, over(1) */" b", $if_content__setup);
-export const $input_show = /* @__PURE__ */_._const("input_show", $scope => $if($scope, $scope.input_show ? 0 : 1));
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_show($scope, $scope.input.show));
+export const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
+export const $input = ($scope, input) => $input_show($scope, input.show);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -9,7 +9,7 @@ export function $setup($scope) {
   _._var($scope, "#childScope/0", $x);
   _myConst($scope["#childScope/0"]);
 }
-const $input_foo = /* @__PURE__ */_._const("input_foo", $scope => _myConst_input_value($scope["#childScope/0"], $scope.input_foo));
+const $input_foo = ($scope, input_foo) => _myConst_input_value($scope["#childScope/0"], input_foo);
 export const $input = /* @__PURE__ */_._const("input", $scope => {
   $input_foo($scope, $scope.input.foo);
   $input__OR__x($scope);

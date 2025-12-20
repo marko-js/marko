@@ -1,6 +1,7 @@
-// size: 271 (min) 159 (brotli)
-const $a = _._const(9, ($scope) => _._text($scope.e, $scope.j)),
-  $y__OR__z = _._or(8, ($scope) => $a($scope, $scope.g + $scope.h)),
+// size: 259 (min) 154 (brotli)
+const $y__OR__z = _._or(8, ($scope) =>
+    (($scope, a) => _._text($scope.e, a))($scope, $scope.g + $scope.h),
+  ),
   $y = _._const(6, ($scope) => {
     (_._text($scope.c, $scope.g), $y__OR__z($scope));
   }),

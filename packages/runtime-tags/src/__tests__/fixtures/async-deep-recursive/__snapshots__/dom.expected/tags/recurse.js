@@ -33,5 +33,5 @@ export const $input_level = /* @__PURE__ */_._const("input_level", $scope => {
   $if_content__input_level($scope);
   $input_level__closure($scope);
 });
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_level($scope, $scope.input.level));
+export const $input = ($scope, input) => $input_level($scope, input.level);
 export default /* @__PURE__ */_._template("__tests__/tags/recurse.marko", $template, $walks, $setup, $input);

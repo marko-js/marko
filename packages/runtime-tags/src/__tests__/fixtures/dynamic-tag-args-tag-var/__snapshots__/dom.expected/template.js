@@ -15,5 +15,5 @@ const $x = /* @__PURE__ */_._let("x/5", $scope => {
 export function $setup($scope) {
   $x($scope, 1);
 }
-const $y = _._var_resume("__tests__/template.marko_0_y/var", /* @__PURE__ */_._const("y", $scope => _._text($scope["#text/4"], $scope.y)));
+const $y = _._var_resume("__tests__/template.marko_0_y/var", ($scope, y) => _._text($scope["#text/4"], y));
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

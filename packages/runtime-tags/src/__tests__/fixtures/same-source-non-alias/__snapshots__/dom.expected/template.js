@@ -6,7 +6,7 @@ function createWrapper(a) {
   };
 }
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $pattern2 = /* @__PURE__ */_._const("$pattern", $scope => $a($scope, $scope.$pattern.a));
+const $pattern2 = ($scope, $pattern) => $a($scope, $pattern.a);
 const $count__script = _._script("__tests__/template.marko_0_count", $scope => _._on($scope["#button/0"], "click", function () {
   $count($scope, $scope.count + 1);
 }));
@@ -17,11 +17,9 @@ const $count = /* @__PURE__ */_._let("count/3", $scope => {
 export function $setup($scope) {
   $count($scope, 0);
 }
-const $a = /* @__PURE__ */_._const("a", $scope => {
-  _._text($scope["#text/1"], $scope.a);
-  $b($scope, $scope.a);
-});
-const $b = $scope => {
-  _._text($scope["#text/2"], $scope.a);
+const $a = ($scope, a) => {
+  _._text($scope["#text/1"], a);
+  $b($scope, a);
 };
+const $b = ($scope, a) => _._text($scope["#text/2"], a);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

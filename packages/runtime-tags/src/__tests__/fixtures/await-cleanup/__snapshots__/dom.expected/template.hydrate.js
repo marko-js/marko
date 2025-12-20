@@ -1,4 +1,4 @@
-// size: 772 (min) 368 (brotli)
+// size: 770 (min) 370 (brotli)
 _._enable_catch();
 const $await_content2__setup__script = _._script(
     "a0",
@@ -38,11 +38,10 @@ const $await_content2__setup__script = _._script(
       $try_content__await_promise2($scope, resolveAfter(0, 1)));
   },
   $if_content__try = _._try(0, "<!><!><!><!>", "b%b%c", $try_content__setup),
-  $if_content__setup = ($scope) => {
+  $if_content__setup = ($scope) =>
     $if_content__try($scope, {
       placeholder: _.attrTag({ content: $placeholder_content($scope) }),
-    });
-  },
+    }),
   $if = _._if(1, "<!><!><!>", "b%c", $if_content__setup),
   $show__closure = _._closure($await_content__show),
   $show = _._let(2, ($scope) => {

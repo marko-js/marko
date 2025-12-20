@@ -7,8 +7,8 @@ const $list = /* @__PURE__ */_._let("list/3", $scope => _._return($scope, {
   listChange: $_return($scope),
   clear: $_return2($scope)
 }));
-export const $input_value = /* @__PURE__ */_._const("input_value", $scope => $list($scope, $scope.input_value));
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_value($scope, $scope.input.value));
+export const $input_value = ($scope, input_value) => $list($scope, input_value);
+export const $input = ($scope, input) => $input_value($scope, input.value);
 function $_return2($scope) {
   return function () {
     $list($scope, []);

@@ -7,5 +7,5 @@ export function $setup($scope) {
   $dummy($scope, {});
 }
 export const $value = /* @__PURE__ */_._const("value", $value__OR__dummy);
-export const $input = /* @__PURE__ */_._const("input", $scope => $value($scope, $scope.input.value));
+export const $input = ($scope, input) => $value($scope, input.value);
 export default /* @__PURE__ */_._template("__tests__/tags/display-intersection.marko", $template, $walks, $setup, $input);

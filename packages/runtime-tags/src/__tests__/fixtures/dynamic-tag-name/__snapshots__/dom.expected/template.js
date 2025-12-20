@@ -125,14 +125,14 @@ export function $setup($scope) {
   $dynamicTag18($scope, foo + 'div');
   $dynamicTag19($scope, "d" + "iv");
 }
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $content($scope, $scope.input.content);
-  $x($scope, $scope.input.x);
-  $show($scope, $scope.input.show);
-  $showTagA($scope, $scope.input.showTagA);
-  $isLarge($scope, $scope.input.isLarge);
-  $tag($scope, $scope.input.tag);
-  $level($scope, $scope.input.level);
-  $other($scope, $scope.input.other);
-});
+export const $input = ($scope, input) => {
+  $content($scope, input.content);
+  $x($scope, input.x);
+  $show($scope, input.show);
+  $showTagA($scope, input.showTagA);
+  $isLarge($scope, input.isLarge);
+  $tag($scope, input.tag);
+  $level($scope, input.level);
+  $other($scope, input.other);
+};
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -1,7 +1,7 @@
 export const $template = "<button>Before</button>";
 export const $walks = /* get, over(1) */" b";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $pattern2 = /* @__PURE__ */_._const("$pattern", $scope => $fooChange2($scope, $scope.$pattern.fooChange));
+const $pattern2 = ($scope, $pattern) => $fooChange2($scope, $pattern.fooChange);
 const $fooChange2__script = _._script("__tests__/template.marko_0_$fooChange", $scope => _._on($scope["#button/0"], "click", function () {
   $scope.$fooChange("After");
 }));

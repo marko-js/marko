@@ -6,10 +6,10 @@ const $input_value__OR__setter = /* @__PURE__ */_._or(5, $scope => _._return($sc
 const $setter2 = /* @__PURE__ */_._const("setter", $input_value__OR__setter);
 export const $input_valueChange = /* @__PURE__ */_._const("input_valueChange", $scope => $setter2($scope, $setter($scope)));
 export const $input_value = /* @__PURE__ */_._const("input_value", $input_value__OR__setter);
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $input_valueChange($scope, $scope.input.valueChange);
-  $input_value($scope, $scope.input.value);
-});
+export const $input = ($scope, input) => {
+  $input_valueChange($scope, input.valueChange);
+  $input_value($scope, input.value);
+};
 function $setter($scope) {
   return function () {
     $scope.input_valueChange(1);

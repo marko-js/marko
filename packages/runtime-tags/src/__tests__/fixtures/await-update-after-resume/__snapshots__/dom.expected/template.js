@@ -10,7 +10,7 @@ const $await_content__value = /* @__PURE__ */_._const("value", $scope => {
 });
 const $await_content__setup__script = _._script("__tests__/template.marko_3", $scope => (_._el_read($scope._._["#pre/2"]).textContent += `\nsetup effect ran`));
 const $await_content__setup = $await_content__setup__script;
-const $await_content__$params = /* @__PURE__ */_._const("$params2", $scope => $await_content__value($scope, $scope.$params2[0]));
+const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $placeholder_content = _._content_resume("__tests__/template.marko_2_content", "loading...", /* over(1) */"b");
 const $await_content = /* @__PURE__ */_._await_content("#text/0", "<div id=inside> </div>", /* next(1), get, out(1) */"D l", $await_content__setup);
 const $try_content__await_promise = /* @__PURE__ */_._await_promise("#text/0", $await_content__$params);

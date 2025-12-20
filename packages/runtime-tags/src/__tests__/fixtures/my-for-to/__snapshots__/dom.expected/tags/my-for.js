@@ -8,10 +8,10 @@ const $for_content__input_content = /* @__PURE__ */_._for_closure("#text/0", $fo
 const $for_content__$params = /* @__PURE__ */_._const("$params2", $for_content__input_content__OR__args);
 const $for_content__setup = $for_content__input_content;
 const $for = /* @__PURE__ */_._for_to("#text/0", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $for_content__setup, $for_content__$params);
-export const $input_to = /* @__PURE__ */_._const("input_to", $scope => $for($scope, [$scope.input_to, 0, 1]));
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $input_to($scope, $scope.input.to);
-  $input_content($scope, $scope.input.content);
-});
+export const $input_to = ($scope, input_to) => $for($scope, [input_to, 0, 1]);
+export const $input = ($scope, input) => {
+  $input_to($scope, input.to);
+  $input_content($scope, input.content);
+};
 export const $input_content = /* @__PURE__ */_._const("input_content", $for_content__input_content);
 export default /* @__PURE__ */_._template("__tests__/tags/my-for.marko", $template, $walks, $setup, $input);

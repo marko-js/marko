@@ -12,13 +12,13 @@ const $inputAs__OR__foo__OR__htmlInput = /* @__PURE__ */_._or(6, $scope => $dyna
 export const $inputAs = /* @__PURE__ */_._const("inputAs", $inputAs__OR__foo__OR__htmlInput);
 export const $foo = /* @__PURE__ */_._const("foo", $inputAs__OR__foo__OR__htmlInput);
 export const $htmlInput = /* @__PURE__ */_._const("htmlInput", $inputAs__OR__foo__OR__htmlInput);
-export const $input = /* @__PURE__ */_._const("input", $scope => {
+export const $input = ($scope, input) => {
   (({
     as,
     foo,
     ...htmlInput
-  }) => $htmlInput($scope, htmlInput))($scope.input);
-  $inputAs($scope, $scope.input.as);
-  $foo($scope, $scope.input.foo);
-});
+  }) => $htmlInput($scope, htmlInput))(input);
+  $inputAs($scope, input.as);
+  $foo($scope, input.foo);
+};
 export default /* @__PURE__ */_._template("__tests__/tags/wrapper.marko", $template, $walks, $setup, $input);

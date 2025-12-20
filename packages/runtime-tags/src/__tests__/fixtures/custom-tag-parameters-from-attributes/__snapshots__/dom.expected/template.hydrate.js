@@ -1,4 +1,4 @@
-// size: 403 (min) 239 (brotli)
+// size: 357 (min) 221 (brotli)
 const $dynamicTag = _._dynamic_tag(2),
   $input_content__OR__input_name__OR__x = _._or(
     8,
@@ -19,24 +19,19 @@ const $dynamicTag = _._dynamic_tag(2),
       $input_content__OR__input_name__OR__x($scope),
       $x__script($scope));
   }),
-  $customtag_content__name = _._const(5, ($scope) =>
-    _._text($scope.a, $scope.f),
-  ),
-  $customtag_content__count = _._const(4, ($scope) =>
-    _._text($scope.b, $scope.e),
-  ),
-  $customtag_content__$params = _._const(2, ($scope) =>
-    $customtag_content__$temp($scope, $scope.c?.[0]),
-  ),
-  $customtag_content__$temp = _._const(3, ($scope) => {
-    ($customtag_content__count($scope, $scope.d.count),
-      $customtag_content__name($scope, $scope.d.name));
-  });
+  $customtag_content__$temp = ($scope, $temp) => {
+    ((($scope, count) => {
+      _._text($scope.b, count);
+    })($scope, $temp.count),
+      (($scope, name) => {
+        _._text($scope.a, name);
+      })($scope, $temp.name));
+  };
 (_._content_resume(
   "b0",
   "<div>Count (<!>): <!></div>",
   "Db%c%l",
   0,
-  $customtag_content__$params,
+  ($scope, $params2) => $customtag_content__$temp($scope, $params2?.[0]),
 ),
   init());

@@ -6,6 +6,7 @@ import { forEach } from "./optional";
 import {
   type Binding,
   BindingType,
+  createRead,
   getScopeAccessor,
   type ReferencedBindings,
 } from "./references";
@@ -78,11 +79,18 @@ export function createScopeReadExpression(
   section?: Section | undefined,
 ) {
   const propName = toPropertyName(getScopeAccessor(reference));
-  return t.memberExpression(
+  const scope =
     section && reference.type !== BindingType.local
       ? getScopeExpression(section, reference.section)
-      : scopeIdentifier,
+      : scopeIdentifier;
+  const expr = t.memberExpression(
+    scope,
     propName,
     propName.type !== "Identifier",
   );
+
+  if (scope === scopeIdentifier) {
+    (expr.extra ??= {}).read = createRead(reference, undefined);
+  }
+  return expr;
 }

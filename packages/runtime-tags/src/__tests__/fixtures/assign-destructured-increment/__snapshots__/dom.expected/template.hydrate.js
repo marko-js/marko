@@ -1,10 +1,9 @@
-// size: 317 (min) 198 (brotli)
-const $pattern2 = _._const(4, ($scope) => {
-    ($foo2($scope, $scope.e.foo), $fooChange2($scope, $scope.e.fooChange));
-  }),
-  $bar = _._let(3, ($scope) => {
+// size: 303 (min) 186 (brotli)
+const $bar = _._let(3, ($scope) => {
     (_._text($scope.c, $scope.d),
-      $pattern2($scope, { foo: $scope.d, fooChange: $foo($scope) }));
+      (($scope, $pattern) => {
+        ($foo2($scope, $pattern.foo), $fooChange2($scope, $pattern.fooChange));
+      })($scope, { foo: $scope.d, fooChange: $foo($scope) }));
   }),
   $foo__OR__fooChange__script = _._script("a1", ($scope) =>
     _._on($scope.a, "click", function () {

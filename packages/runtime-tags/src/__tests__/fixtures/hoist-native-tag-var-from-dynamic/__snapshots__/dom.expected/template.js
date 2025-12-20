@@ -51,9 +51,9 @@ export function $setup($scope) {
 }
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/1", $inputshowChildnull_content);
 const $dynamicTag2 = /* @__PURE__ */_._dynamic_tag("#text/2", $inputshowsectionnull_content);
-export const $input_show = /* @__PURE__ */_._const("input_show", $scope => {
-  $dynamicTag($scope, $scope.input_show ? Child : null);
-  $dynamicTag2($scope, $scope.input_show ? 'section' : null);
-});
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_show($scope, $scope.input.show));
+export const $input_show = ($scope, input_show) => {
+  $dynamicTag($scope, input_show ? Child : null);
+  $dynamicTag2($scope, input_show ? 'section' : null);
+};
+export const $input = ($scope, input) => $input_show($scope, input.show);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

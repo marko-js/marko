@@ -1,6 +1,6 @@
-// size: 269 (min) 195 (brotli)
+// size: 259 (min) 184 (brotli)
 const $setup = () => {},
-  $input = _._const(2, ($scope) => _._text($scope.a, JSON.stringify($scope.c)));
+  $input = ($scope, input) => _._text($scope.a, JSON.stringify(input));
 const tags = [_._template("a", "<div> </div>", "D l", $setup, $input)],
   $dynamicTag = _._dynamic_tag(2, 0, 0, 1),
   $x__script = _._script("b0", ($scope) =>

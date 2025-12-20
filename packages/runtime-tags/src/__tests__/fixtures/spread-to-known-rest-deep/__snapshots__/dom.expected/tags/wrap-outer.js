@@ -5,11 +5,11 @@ export function $setup($scope) {
   _wrap($scope["#childScope/0"]);
   _wrap_input_value($scope["#childScope/0"], "abcd");
 }
-import * as _ from "@marko/runtime-tags/debug/dom";
-export const $rest_class = /* @__PURE__ */_._const("rest_class", $scope => _wrap_input_class($scope["#childScope/0"], $scope.rest_class));
-export const $input = /* @__PURE__ */_._const("input", $scope => (({
+export const $rest_class = ($scope, rest_class) => _wrap_input_class($scope["#childScope/0"], rest_class);
+export const $input = ($scope, input) => (({
   value,
   ...rest
-}) => $rest($scope, rest))($scope.input));
-export const $rest = /* @__PURE__ */_._const("rest", $scope => $rest_class($scope, $scope.rest.class));
+}) => $rest($scope, rest))(input);
+export const $rest = ($scope, rest) => $rest_class($scope, rest.class);
+import * as _ from "@marko/runtime-tags/debug/dom";
 export default /* @__PURE__ */_._template("__tests__/tags/wrap-outer.marko", $template, $walks, $setup, $input);

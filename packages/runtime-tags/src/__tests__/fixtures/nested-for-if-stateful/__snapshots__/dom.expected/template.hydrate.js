@@ -1,4 +1,4 @@
-// size: 664 (min) 350 (brotli)
+// size: 652 (min) 341 (brotli)
 const $else_content__setup__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", function () {
       $for_content__editing($scope._, !0);
@@ -47,12 +47,9 @@ const $else_content__setup__script = _._script("a0", ($scope) =>
   $for_content__editing = _._let(4, ($scope) =>
     $for_content__if($scope, $scope.e ? 0 : 1),
   ),
-  $for_content__setup = ($scope) => {
-    $for_content__editing($scope, !1);
-  },
-  $for_content__$params = _._const(1, ($scope) =>
-    $for_content__count($scope, $scope.b[0]),
-  ),
+  $for_content__setup = ($scope) => $for_content__editing($scope, !1),
+  $for_content__$params = ($scope, $params2) =>
+    $for_content__count($scope, $params2[0]),
   $for_content__count = _._const(2, ($scope) => {
     ($if_content__count($scope), $else_content__count($scope));
   }),

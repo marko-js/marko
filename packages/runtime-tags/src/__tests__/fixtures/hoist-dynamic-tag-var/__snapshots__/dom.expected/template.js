@@ -8,21 +8,15 @@ const $if_content5__setup = $if_content5__setup__script;
 const $get$hoisted_setHtml = _._hoist("setHtml3", "BranchScopes:#text/3");
 const $if_content4__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $if_content4__setHtml);
 const $if_content4__setHtml = _._var_resume("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_._const("setHtml3", $scope => _._assert_hoist($scope.setHtml3)));
-const $if_content4__setup = $scope => {
-  $if_content4__dynamicTag($scope, 1 && Child);
-};
+const $if_content4__setup = $scope => $if_content4__dynamicTag($scope, 1 && Child);
 const $get$hoisted_setHtml2 = _._hoist("setHtml2", "BranchScopes:#text/2");
 const $if_content3__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $if_content3__setHtml);
 const $if_content3__setHtml = _._var_resume("__tests__/template.marko_3_setHtml2/var", /* @__PURE__ */_._const("setHtml2", $scope => _._assert_hoist($scope.setHtml2)));
-const $if_content3__setup = $scope => {
-  $if_content3__dynamicTag($scope, 1 && Child);
-};
+const $if_content3__setup = $scope => $if_content3__dynamicTag($scope, 1 && Child);
 const $get$hoisted_setHtml3 = _._resume("__tests__/template.marko_0_$hoisted_setHtml/hoist", _._hoist("setHtml", "BranchScopes:#text/0", "BranchScopes:#text/0"));
 const $if_content2__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $if_content2__setHtml);
 const $if_content2__setHtml = _._var_resume("__tests__/template.marko_2_setHtml/var", /* @__PURE__ */_._const("setHtml", $scope => _._assert_hoist($scope.setHtml)));
-const $if_content2__setup = $scope => {
-  $if_content2__dynamicTag($scope, 1 && Child);
-};
+const $if_content2__setup = $scope => $if_content2__dynamicTag($scope, 1 && Child);
 const $if_content__if = /* @__PURE__ */_._if("#text/0", "<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $if_content2__setup);
 const $if_content__input_show = /* @__PURE__ */_._if_closure("#text/0", 0, $scope => $if_content__if($scope, $scope._.input_show ? 0 : 1));
 const $if_content__setup = $if_content__input_show;
@@ -34,7 +28,7 @@ export const $input_show = /* @__PURE__ */_._const("input_show", $scope => {
 const $if2 = /* @__PURE__ */_._if("#text/2", "<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $if_content3__setup);
 const $if3 = /* @__PURE__ */_._if("#text/3", "<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $if_content4__setup);
 const $if4 = /* @__PURE__ */_._if("#text/4", 0, 0, $if_content5__setup);
-const $hoisted_setHtml4 = /* @__PURE__ */_._const("$hoisted_setHtml", $scope => _thing_input_value($scope["#childScope/1"], $scope.$hoisted_setHtml));
+const $hoisted_setHtml4 = ($scope, $hoisted_setHtml) => _thing_input_value($scope["#childScope/1"], $hoisted_setHtml);
 const $setup__script = _._script("__tests__/template.marko_0", $scope => {
   $get$hoisted_setHtml3($scope)("Hello world");
   $get$hoisted_setHtml2($scope)("Hello world");
@@ -47,5 +41,5 @@ export function $setup($scope) {
   $hoisted_setHtml4($scope, $get$hoisted_setHtml3($scope));
   $setup__script($scope);
 }
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_show($scope, $scope.input.show));
+export const $input = ($scope, input) => $input_show($scope, input.show);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

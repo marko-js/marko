@@ -5,7 +5,7 @@ import {
   getTemplateId,
 } from "@marko/compiler/babel-utils";
 
-import type { AccessorPrefix, AccessorProp } from "../../common/types";
+import { type AccessorPrefix, AccessorProp } from "../../common/types";
 import { getSectionReturnValueIdentifier } from "../core/return";
 import { scopeIdentifier } from "../visitors/program";
 import { forEachIdentifier } from "./for-each-identifier";
@@ -76,6 +76,7 @@ export type Signal = {
   effect: t.Statement[];
   effectReferencedBindings: ReferencedBindings;
   hasDynamicSubscribers?: true;
+  hasSideEffect?: true;
   export: boolean;
   extraArgs?: t.Expression[];
   prependStatements?: t.Statement[];
@@ -300,7 +301,11 @@ export function initValue(binding: Binding, isLet = false) {
       binding.upstreamAlias &&
       binding.property === undefined &&
       binding.excludeProperties === undefined;
-    if (isDirectAlias || !signalHasStatements(signal)) {
+    if (
+      isDirectAlias ||
+      !signal.hasSideEffect ||
+      !signalHasStatements(signal)
+    ) {
       return fn;
     }
 
@@ -519,10 +524,20 @@ export function getSignalFn(signal: Signal): t.Expression {
 
   if (signal.effect.length) {
     const effectIdentifier = t.identifier(`${signal.identifier.name}__script`);
+    signal.hasSideEffect = true;
     signal.render.push(
       t.expressionStatement(
         t.callExpression(effectIdentifier, [scopeIdentifier]),
       ),
+    );
+  }
+
+  if (!signal.hasSideEffect) {
+    return t.arrowFunctionExpression(
+      isValue
+        ? [scopeIdentifier, getSignalValueIdentifier(signal)]
+        : [scopeIdentifier],
+      toFirstExpressionOrBlock(signal.render),
     );
   }
 
@@ -532,15 +547,11 @@ export function getSignalFn(signal: Signal): t.Expression {
       const { expression } = render;
       if (expression.type === "CallExpression") {
         const args = expression.arguments;
-        if (
-          args.length === 1 &&
-          args[0].type === "Identifier" &&
-          args[0].name === scopeIdentifier.name
-        ) {
+        if (args.length === 1 && args[0] === scopeIdentifier) {
           if (
             expression.callee.type === "MemberExpression" &&
             expression.callee.property.type === "Identifier" &&
-            expression.callee.property.name === "_"
+            expression.callee.property.name === getAccessorProp().Owner
           ) {
             // Special case closure reads of `IDENTIFIER._`.
             return expression.callee.object;
@@ -571,6 +582,13 @@ function getTranslatedExtraArgs(signal: { extraArgs?: t.Expression[] }) {
   }
 
   return emptyExtraArgs;
+}
+
+export function getSignalValueIdentifier(signal: Signal) {
+  const canonicalBinding = getCanonicalBinding(
+    signal.referencedBindings as Binding,
+  );
+  return t.identifier(canonicalBinding.name);
 }
 
 export function subscribe(references: ReferencedBindings, subscriber: Signal) {
@@ -663,6 +681,7 @@ export function addStatement(
   referencedBindings: ReferencedBindings,
   statement: t.Statement | t.Statement[],
   usedReferences?: ReferencedBindings[] | false,
+  isPure?: boolean,
 ): void {
   const signal = getSignal(targetSection, referencedBindings);
   const statements = (signal[type] ??= []);
@@ -682,6 +701,10 @@ export function addStatement(
     } else {
       add(signal, referencedBindings);
     }
+  }
+
+  if (!isPure || type === "effect") {
+    signal.hasSideEffect = true;
   }
 }
 
@@ -717,6 +740,10 @@ export function addValue(
     signal,
     value,
   });
+
+  if (value.extra?.referencedBindingsInFunction) {
+    parentSignal.hasSideEffect = true;
+  }
 }
 
 export function getResumeRegisterId(
@@ -792,7 +819,21 @@ export function writeSignals(section: Section) {
     }
 
     forEach(signal.intersection, writeSignal);
-    traverseReplace(signal, "render", replaceRenderNode);
+
+    if (!signal.hasSideEffect) {
+      const binding = signal.referencedBindings;
+      if (
+        binding &&
+        (signal.intersection ||
+          Array.isArray(binding) ||
+          binding.type === BindingType.let ||
+          binding.closureSections ||
+          binding.hoists.size ||
+          binding.section !== signal.section)
+      ) {
+        signal.hasSideEffect = true;
+      }
+    }
 
     let effectDeclarator: t.VariableDeclarator | undefined;
     if (signal.effect.length) {
@@ -860,6 +901,8 @@ export function writeSignals(section: Section) {
         signalDeclaration = t.exportNamedDeclaration(signalDeclaration);
       }
     }
+
+    traverseReplace(signal, "render", replaceRenderNode, signal);
 
     const signalStatements = signal.prependStatements || [];
 
@@ -1276,10 +1319,10 @@ export function getSetup(section: Section) {
     : getSignals(section).get(undefined)?.identifier;
 }
 
-function replaceRenderNode(node: t.Node) {
+function replaceRenderNode(node: t.Node, signal?: Signal) {
   return (
     replaceAssignedNode(node) ||
-    replaceBindingReadNode(node) ||
+    replaceBindingReadNode(node, signal) ||
     replaceRegisteredFunctionNode(node)
   );
 }
@@ -1288,12 +1331,12 @@ function replaceEffectNode(node: t.Node) {
   return replaceAssignedNode(node) || replaceBindingReadNode(node);
 }
 
-function replaceBindingReadNode(node: t.Node) {
+function replaceBindingReadNode(node: t.Node, signal?: Signal) {
   switch (node.type) {
     case "Identifier":
     case "MemberExpression":
     case "OptionalMemberExpression": {
-      return getReadReplacement(node);
+      return getReadReplacement(node, signal);
     }
     case "CallExpression": {
       const { extra } = node.callee;

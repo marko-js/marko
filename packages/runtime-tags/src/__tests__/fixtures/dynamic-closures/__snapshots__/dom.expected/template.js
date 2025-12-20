@@ -11,9 +11,7 @@ const $if_content2__setup = $scope => {
 const $if_content2__b = /* @__PURE__ */_._closure_get("b", $scope => _._text($scope["#text/1"], $scope._._.b), $scope => $scope._._);
 const $if_content2__c = /* @__PURE__ */_._closure_get("c", $scope => _._text($scope["#text/2"], $scope._._.c), $scope => $scope._._);
 const $if_content__if = /* @__PURE__ */_._if("#text/0", "<!> <!> <!>", /* replace, over(2), replace, over(2), replace, over(1) */"%c%c%b", $if_content2__setup);
-const $if_content__setup = $scope => {
-  $if_content__if($scope, Math.random() ? 0 : 1);
-};
+const $if_content__setup = $scope => $if_content__if($scope, Math.random() ? 0 : 1);
 const $customtag_content__setup = $scope => {
   _._text($scope["#text/0"], a);
   $customtag_content__b($scope);

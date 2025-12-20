@@ -1,7 +1,7 @@
-// size: 455 (min) 228 (brotli)
+// size: 411 (min) 221 (brotli)
 const $setup$1 = () => {},
-  $value$1 = _._const(3, ($scope) => _._text($scope.a, $scope.d)),
-  $input$1 = _._const(2, ($scope) => $value$1($scope, $scope.c.value));
+  $input$1 = ($scope, input) =>
+    (($scope, value) => _._text($scope.a, value))($scope, input.value);
 var child1 = _._template(
   "a",
   "<div>Child 1 has <!></div>",
@@ -10,8 +10,8 @@ var child1 = _._template(
   $input$1,
 );
 const $setup = () => {},
-  $value = _._const(3, ($scope) => _._text($scope.a, $scope.d)),
-  $input = _._const(2, ($scope) => $value($scope, $scope.c.value));
+  $input = ($scope, input) =>
+    (($scope, value) => _._text($scope.a, value))($scope, input.value);
 var child2 = _._template(
   "b",
   "<div>Child 2 has <!></div>",

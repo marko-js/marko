@@ -1,7 +1,7 @@
-// size: 290 (min) 196 (brotli)
+// size: 268 (min) 188 (brotli)
 const $setup = () => {},
-  $id = _._const(3, ($scope) => _._text($scope.a, $scope.d)),
-  $input = _._const(2, ($scope) => $id($scope, $scope.c.id));
+  $input = ($scope, input) =>
+    (($scope, id) => _._text($scope.a, id))($scope, input.id);
 var child = _._template("a", "<div>Id is <!></div>", "Db%l", $setup, $input);
 const $dynamicTag = _._dynamic_tag(1),
   $tagName__script = _._script("b0", ($scope) =>

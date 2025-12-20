@@ -1,10 +1,10 @@
 export const $template = "<button><!>:<!></button>";
 export const $walks = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $pattern2 = /* @__PURE__ */_._const("$pattern", $scope => {
-  $foo2($scope, $scope.$pattern.foo);
-  $fooChange2($scope, $scope.$pattern.fooChange);
-});
+const $pattern2 = ($scope, $pattern) => {
+  $foo2($scope, $pattern.foo);
+  $fooChange2($scope, $pattern.fooChange);
+};
 const $bar = /* @__PURE__ */_._let("bar/3", $scope => {
   _._text($scope["#text/2"], $scope.bar);
   $pattern2($scope, {

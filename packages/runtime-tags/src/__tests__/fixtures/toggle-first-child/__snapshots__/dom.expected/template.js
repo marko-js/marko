@@ -9,5 +9,5 @@ export const $value = /* @__PURE__ */_._const("value", $scope => {
   $if($scope, $scope.value ? 0 : 1);
   $if_content__value($scope);
 });
-export const $input = /* @__PURE__ */_._const("input", $scope => $value($scope, $scope.input.value));
+export const $input = ($scope, input) => $value($scope, input.value);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -11,6 +11,6 @@ const $count = /* @__PURE__ */_._let("count/5", $scope => {
 export function $setup($scope) {
   $count($scope, 0);
 }
-export const $input_count = /* @__PURE__ */_._const("input_count", $scope => _._attr($scope["#button/0"], "data-parent", $scope.input_count));
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_count($scope, $scope.input.count));
+export const $input_count = ($scope, input_count) => _._attr($scope["#button/0"], "data-parent", input_count);
+export const $input = ($scope, input) => $input_count($scope, input.count);
 export default /* @__PURE__ */_._template("__tests__/components/tags-counter.marko", $template, $walks, $setup, $input);

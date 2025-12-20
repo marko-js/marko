@@ -42,7 +42,6 @@ export type ParamSerializeReasonGroups = [
   ...ParamSerializeReasonGroup[],
 ];
 
-export let cleanIdentifier: t.Identifier;
 export let scopeIdentifier: t.Identifier;
 export function isScopeIdentifier(node: t.Node): node is t.Identifier {
   return node === scopeIdentifier;
@@ -118,9 +117,6 @@ export default {
     enter(program) {
       scopeIdentifier = isOutputDOM()
         ? generateUidIdentifier("scope")
-        : (null as any as t.Identifier);
-      cleanIdentifier = isOutputDOM()
-        ? generateUidIdentifier("clean")
         : (null as any as t.Identifier);
       if (getMarkoOpts().output === "hydrate") {
         const entryFile = program.hub.file;

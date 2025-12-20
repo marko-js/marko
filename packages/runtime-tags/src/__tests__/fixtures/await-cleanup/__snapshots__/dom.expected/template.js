@@ -27,13 +27,11 @@ const $try_content__setup = $scope => {
   $try_content__await_promise2($scope, resolveAfter(0, 1));
 };
 const $if_content__try = /* @__PURE__ */_._try("#text/0", "<!><!><!><!>", /* over(1), replace, over(1), replace, over(2) */"b%b%c", $try_content__setup);
-const $if_content__setup = $scope => {
-  $if_content__try($scope, {
-    placeholder: _.attrTag({
-      content: $placeholder_content($scope)
-    })
-  });
-};
+const $if_content__setup = $scope => $if_content__try($scope, {
+  placeholder: _.attrTag({
+    content: $placeholder_content($scope)
+  })
+});
 const $if = /* @__PURE__ */_._if("#text/1", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $if_content__setup);
 const $show__closure = /* @__PURE__ */_._closure($await_content__show);
 const $show = /* @__PURE__ */_._let("show/2", $scope => {

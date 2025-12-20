@@ -20,12 +20,12 @@ const $bar2__closure = /* @__PURE__ */_._closure($if_content2__bar);
 const $bar2 = /* @__PURE__ */_._const("bar", $bar2__closure);
 export const $input_c = /* @__PURE__ */_._const("input_c", $scope => $bar2($scope, $bar($scope)));
 const $if = /* @__PURE__ */_._if("#text/0", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $if_content__setup);
-export const $input_a = /* @__PURE__ */_._const("input_a", $scope => $if($scope, $scope.input_a ? 0 : 1));
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $input_c($scope, $scope.input.c);
-  $input_a($scope, $scope.input.a);
-  $input_b($scope, $scope.input.b);
-});
+export const $input_a = ($scope, input_a) => $if($scope, input_a ? 0 : 1);
+export const $input = ($scope, input) => {
+  $input_c($scope, input.c);
+  $input_a($scope, input.a);
+  $input_b($scope, input.b);
+};
 export const $input_b = /* @__PURE__ */_._const("input_b", $if_content__input_b);
 function $bar($scope) {
   return function (test) {

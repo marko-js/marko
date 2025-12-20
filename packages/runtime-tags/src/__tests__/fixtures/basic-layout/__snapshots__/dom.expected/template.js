@@ -9,7 +9,7 @@ export function $setup($scope) {
   _layout($scope["#childScope/0"]);
   _layout_input_content($scope["#childScope/0"], $layout_content($scope));
 }
-export const $input = /* @__PURE__ */_._const("input", $scope => $name($scope, $scope.input.name));
+export const $input = ($scope, input) => $name($scope, input.name);
 const $name__closure = /* @__PURE__ */_._closure($layout_content__name);
 export const $name = /* @__PURE__ */_._const("name", $name__closure);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

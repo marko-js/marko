@@ -1,5 +1,5 @@
-// size: 290 (min) 192 (brotli)
-const $input = _._const(2, ($scope) => _._text($scope.a, $scope.c));
+// size: 280 (min) 195 (brotli)
+const $input = ($scope, input) => _._text($scope.a, input);
 function $setup($scope) {
   _._return($scope, "hello from other");
 }

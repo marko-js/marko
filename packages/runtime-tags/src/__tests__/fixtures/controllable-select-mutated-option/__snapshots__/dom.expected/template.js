@@ -1,11 +1,11 @@
 export const $template = "<form><select></select><button type=reset>reset</button></form><div> </div><button class=remove>Remove option</button><button class=add>Add option</button>";
 export const $walks = /* next(1), get, out(1), next(1), get, out(1), get, over(1), get, over(1) */"D lD l b b";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $for_content__opt = /* @__PURE__ */_._const("opt", $scope => {
-  _._attr($scope["#option/0"], "value", $scope.opt);
-  _._text($scope["#text/1"], $scope.opt);
-});
-const $for_content__$params = /* @__PURE__ */_._const("$params2", $scope => $for_content__opt($scope, $scope.$params2[0]));
+const $for_content__opt = ($scope, opt) => {
+  _._attr($scope["#option/0"], "value", opt);
+  _._text($scope["#text/1"], opt);
+};
+const $for_content__$params = ($scope, $params2) => $for_content__opt($scope, $params2[0]);
 const $for = /* @__PURE__ */_._for_of("#select/0", "<option> </option>", /* get, next(1), get, out(1) */" D l", 0, $for_content__$params);
 const $options__script = _._script("__tests__/template.marko_0_options", $scope => {
   _._on($scope["#button/2"], "click", function () {

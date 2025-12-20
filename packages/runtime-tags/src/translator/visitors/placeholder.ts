@@ -152,6 +152,8 @@ export default {
                     getScopeAccessorLiteral(nodeBinding!),
                   ),
             ),
+            undefined,
+            true,
           );
         }
       }

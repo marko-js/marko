@@ -7,9 +7,9 @@ const $b = /* @__PURE__ */_._let("b/6", $scope => {
   _._text($scope["#text/2"], $scope.b);
   $b__script($scope);
 });
-export const $a = /* @__PURE__ */_._const("a", $scope => {
-  _._text($scope["#text/1"], $scope.a);
-  $b($scope, $scope.a * 2);
-});
-export const $input = /* @__PURE__ */_._const("input", $scope => $a($scope, $scope.input.a));
+export const $a = ($scope, a) => {
+  _._text($scope["#text/1"], a);
+  $b($scope, a * 2);
+};
+export const $input = ($scope, input) => $a($scope, input.a);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

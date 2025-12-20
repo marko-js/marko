@@ -1,4 +1,4 @@
-// size: 840 (min) 399 (brotli)
+// size: 820 (min) 399 (brotli)
 const $name__OR__write__script = _._script(
     "a0",
     ($scope) =>
@@ -34,9 +34,8 @@ const $name__OR__write__script = _._script(
     2,
     $for_content2__outerItem__OR__middleItem,
   ),
-  $for_content2__$params = _._const(1, ($scope) =>
-    $for_content2__middleItem($scope, $scope.b[0]),
-  ),
+  $for_content2__$params = ($scope, $params3) =>
+    $for_content2__middleItem($scope, $params3[0]),
   $for_content__setup = ($scope) => {
     ($scope.a, $for_content__items._($scope), $for_content__write._($scope));
   },
@@ -56,9 +55,8 @@ const $name__OR__write__script = _._script(
   $for_content__items = _._for_closure(2, ($scope) =>
     $for_content__for($scope, [$scope._.d]),
   ),
-  $for_content__$params = _._const(2, ($scope) =>
-    $for_content__outerItem($scope, $scope.c[0]),
-  ),
+  $for_content__$params = ($scope, $params2) =>
+    $for_content__outerItem($scope, $params2[0]),
   $for = _._for_of(
     2,
     "<div><div> </div><!></div>",

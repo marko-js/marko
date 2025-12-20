@@ -5,8 +5,8 @@ const $ChildA_content__walks = /* get, next(1), replace, over(2), replace, out(1
 export const $template = `<!>${$ChildA_content__template}${$ChildA_content__template}${$ChildA_content__template}${$ChildB_content__template}${$ChildB_content__template}${$ChildB_content__template}<button>Increment default</button>`;
 export const $walks = /* over(1), <ChildA>, <ChildA>, <ChildA>, <ChildB>, <ChildB>, <ChildB>, get, over(1) */`b/${$ChildA_content__walks}&/${$ChildA_content__walks}&/${$ChildA_content__walks}&/${$ChildB_content__walks}&/${$ChildB_content__walks}&/${$ChildB_content__walks}& b`;
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $ChildB_content__$pattern = /* @__PURE__ */_._const("$pattern2", $scope => $ChildB_content__$bar($scope, $scope.$pattern2.bar));
-const $ChildB_content__bar = /* @__PURE__ */_._const("bar", $scope => _._text($scope["#text/1"], $scope.bar));
+const $ChildB_content__$pattern = ($scope, $pattern2) => $ChildB_content__$bar($scope, $pattern2.bar);
+const $ChildB_content__bar = ($scope, bar) => _._text($scope["#text/1"], bar);
 const $ChildB_content__count__OR__bar = /* @__PURE__ */_._or(11, $scope => $ChildB_content__bar($scope, void 0 !== $scope.$bar2 ? $scope.$bar2 : $scope._.count + 1));
 const $ChildB_content__$bar = /* @__PURE__ */_._const("$bar2", $ChildB_content__count__OR__bar);
 const $ChildB_content__count__OR__foo = /* @__PURE__ */_._or(10, $scope => $ChildB_content__$pattern($scope, void 0 !== $scope.foo ? $scope.foo : {
@@ -20,15 +20,15 @@ const $ChildB_content__foo = /* @__PURE__ */_._const("foo", $scope => {
   _._text($scope["#text/2"], typeof $scope.foo);
   $ChildB_content__count__OR__foo($scope);
 });
-const $ChildB_content__input_id = /* @__PURE__ */_._const("input_id", $scope => _._attr($scope["#div/0"], "id", $scope.input_id));
+const $ChildB_content__input_id = ($scope, input_id) => _._attr($scope["#div/0"], "id", input_id);
 const $ChildB_content__setup = /* @__PURE__ */_._child_setup($ChildB_content__count);
-const $ChildB_content__$params = /* @__PURE__ */_._const("$params3", $scope => $ChildB_content__input($scope, $scope.$params3[0]));
-const $ChildB_content__input = /* @__PURE__ */_._const("input", $scope => {
-  $ChildB_content__input_id($scope, $scope.input.id);
-  $ChildB_content__foo($scope, $scope.input.foo);
-});
-const $ChildA_content__$pattern = /* @__PURE__ */_._const("$pattern", $scope => $ChildA_content__$bar($scope, $scope.$pattern.bar));
-const $ChildA_content__bar = /* @__PURE__ */_._const("bar", $scope => _._text($scope["#text/1"], $scope.bar));
+const $ChildB_content__$params = ($scope, $params3) => $ChildB_content__input($scope, $params3[0]);
+const $ChildB_content__input = ($scope, input) => {
+  $ChildB_content__input_id($scope, input.id);
+  $ChildB_content__foo($scope, input.foo);
+};
+const $ChildA_content__$pattern = ($scope, $pattern) => $ChildA_content__$bar($scope, $pattern.bar);
+const $ChildA_content__bar = ($scope, bar) => _._text($scope["#text/1"], bar);
 const $ChildA_content__count__OR__bar = /* @__PURE__ */_._or(11, $scope => $ChildA_content__bar($scope, void 0 !== $scope.$bar ? $scope.$bar : $scope._.count + 1));
 const $ChildA_content__$bar = /* @__PURE__ */_._const("$bar", $ChildA_content__count__OR__bar);
 const $ChildA_content__count__OR__foo = /* @__PURE__ */_._or(10, $scope => $ChildA_content__$pattern($scope, void 0 !== $scope.foo ? $scope.foo : {
@@ -42,13 +42,13 @@ const $ChildA_content__foo = /* @__PURE__ */_._const("foo", $scope => {
   _._text($scope["#text/2"], typeof $scope.foo);
   $ChildA_content__count__OR__foo($scope);
 });
-const $ChildA_content__id = /* @__PURE__ */_._const("id", $scope => _._attr($scope["#div/0"], "id", $scope.id));
+const $ChildA_content__id = ($scope, id) => _._attr($scope["#div/0"], "id", id);
 const $ChildA_content__setup = /* @__PURE__ */_._child_setup($ChildA_content__count);
-const $ChildA_content__$params = /* @__PURE__ */_._const("$params2", $scope => $ChildA_content__$temp($scope, $scope.$params2?.[0]));
-const $ChildA_content__$temp = /* @__PURE__ */_._const("$temp", $scope => {
-  $ChildA_content__id($scope, $scope.$temp.id);
-  $ChildA_content__foo($scope, $scope.$temp.foo);
-});
+const $ChildA_content__$params = ($scope, $params2) => $ChildA_content__$temp($scope, $params2?.[0]);
+const $ChildA_content__$temp = ($scope, $temp) => {
+  $ChildA_content__id($scope, $temp.id);
+  $ChildA_content__foo($scope, $temp.foo);
+};
 const $count__closure = /* @__PURE__ */_._closure($ChildA_content__count, $ChildB_content__count);
 const $count__script = _._script("__tests__/template.marko_0_count", $scope => _._on($scope["#button/6"], "click", function () {
   $count($scope, $scope.count + 1);

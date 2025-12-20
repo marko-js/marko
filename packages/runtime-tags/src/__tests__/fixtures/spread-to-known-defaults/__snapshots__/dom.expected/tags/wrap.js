@@ -6,8 +6,8 @@ export function $setup($scope) {
   _child_input_value($scope["#childScope/0"], "override");
   _child($scope["#childScope/1"]);
 }
+const $input_class = ($scope, input_class) => _child_input_class($scope["#childScope/0"], input_class);
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $input_class = /* @__PURE__ */_._const("input_class", $scope => _child_input_class($scope["#childScope/0"], $scope.input_class));
 export const $input = /* @__PURE__ */_._const("input", $scope => {
   const $child_input_spread = {
     value: "default",

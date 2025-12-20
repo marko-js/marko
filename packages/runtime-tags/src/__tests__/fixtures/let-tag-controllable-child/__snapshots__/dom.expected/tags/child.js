@@ -23,9 +23,9 @@ const $otherState = /* @__PURE__ */_._let("otherState/12", $scope => {
   _._text($scope["#text/5"], $scope.otherState);
   $otherState__script($scope);
 });
-export const $input = /* @__PURE__ */_._const("input", $scope => {
-  $input_value($scope, $scope.input.value);
-  $input_valueChange($scope, $scope.input.valueChange);
-  $otherState($scope, $scope.input["value"], $scope.input["value" + "Change"]);
-});
+export const $input = ($scope, input) => {
+  $input_value($scope, input.value);
+  $input_valueChange($scope, input.valueChange);
+  $otherState($scope, input["value"], input["value" + "Change"]);
+};
 export default /* @__PURE__ */_._template("__tests__/tags/child.marko", $template, $walks, $setup, $input);

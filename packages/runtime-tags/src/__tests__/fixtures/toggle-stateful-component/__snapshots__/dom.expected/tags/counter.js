@@ -15,5 +15,5 @@ export function $setup($scope) {
   $clickCount($scope, 0);
 }
 export const $input_onCount = /* @__PURE__ */_._const("input_onCount", $input_onCount__OR__clickCount);
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_onCount($scope, $scope.input.onCount));
+export const $input = ($scope, input) => $input_onCount($scope, input.onCount);
 export default /* @__PURE__ */_._template("__tests__/tags/counter.marko", $template, $walks, $setup, $input);

@@ -10,7 +10,7 @@ const $inputAs__OR__inputClass__OR__htmlInput__OR__content = /* @__PURE__ */_._o
   content: $scope.content
 })), 3);
 const $content = /* @__PURE__ */_._let("content/8", $inputAs__OR__inputClass__OR__htmlInput__OR__content);
-const $startContent = /* @__PURE__ */_._const("startContent", $scope => $content($scope, $scope.startContent));
+const $startContent = ($scope, startContent) => $content($scope, startContent);
 export function $setup($scope) {
   $startContent($scope, {
     content: $startContent_content($scope)
@@ -21,15 +21,15 @@ export const $inputClass = /* @__PURE__ */_._const("inputClass", $inputAs__OR__i
 export const $htmlInput = /* @__PURE__ */_._const("htmlInput", $inputAs__OR__inputClass__OR__htmlInput__OR__content);
 const $inputContent__script = _._script("__tests__/tags/my-tag.marko_0_inputContent", $scope => $content($scope, $scope.inputContent));
 export const $inputContent = /* @__PURE__ */_._const("inputContent", $inputContent__script);
-export const $input = /* @__PURE__ */_._const("input", $scope => {
+export const $input = ($scope, input) => {
   (({
     as,
     class: $class,
     content,
     ...htmlInput
-  }) => $htmlInput($scope, htmlInput))($scope.input);
-  $inputAs($scope, $scope.input.as);
-  $inputClass($scope, $scope.input.class);
-  $inputContent($scope, $scope.input.content);
-});
+  }) => $htmlInput($scope, htmlInput))(input);
+  $inputAs($scope, input.as);
+  $inputClass($scope, input.class);
+  $inputContent($scope, input.content);
+};
 export default /* @__PURE__ */_._template("__tests__/tags/my-tag.marko", $template, $walks, $setup, $input);

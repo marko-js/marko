@@ -12,6 +12,6 @@ export function $setup($scope) {
   $count($scope, 0);
 }
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/2");
-export const $input_content = /* @__PURE__ */_._const("input_content", $scope => $dynamicTag($scope, $scope.input_content));
-export const $input = /* @__PURE__ */_._const("input", $scope => $input_content($scope, $scope.input.content));
+export const $input_content = ($scope, input_content) => $dynamicTag($scope, input_content);
+export const $input = ($scope, input) => $input_content($scope, input.content);
 export default /* @__PURE__ */_._template("__tests__/components/tags-layout.marko", $template, $walks, $setup, $input);
