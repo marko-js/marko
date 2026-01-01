@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.38.9
+
+### Patch Changes
+
+- [#3028](https://github.com/marko-js/marko/pull/3028) [`72a614d`](https://github.com/marko-js/marko/commit/72a614d9494f1b65060310b7abc0c54d1fd4767b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with var's inside scriptlets having incorrect scoping.
+
+- Updated dependencies [[`72a614d`](https://github.com/marko-js/marko/commit/72a614d9494f1b65060310b7abc0c54d1fd4767b)]:
+  - @marko/compiler@5.39.47
+
 ## 5.38.8
 
 ### Patch Changes
