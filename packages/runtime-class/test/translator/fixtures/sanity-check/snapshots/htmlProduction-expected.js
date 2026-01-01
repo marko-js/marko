@@ -33,11 +33,11 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   var b = thing;
   let c = thing;
   out.w(`<div${_marko_attr("b", b)}${_marko_attr("c", c)}>`);
-  {
+  (() => {
     var d = thing;
     let e = thing;
     out.w(`<div${_marko_attr("d", d)}${_marko_attr("e", e)}></div>`);
-  }
+  })();
   out.w(`</div><div></div><div${_marko_attr("id", _componentDef.elId("1"))}></div><div${_marko_attr("class", _marko_class_merge(["a", {
     b: c,
     d

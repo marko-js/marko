@@ -149,7 +149,7 @@ const MarkoDefinitions = {
   },
 
   MarkoTagBody: {
-    aliases: ["Marko", "BlockParent", "Scope"],
+    aliases: ["Marko", "BlockParent", "FunctionParent", "Scope"],
     builder: ["body", "params"],
     visitor: ["typeParameters", "params", "body"],
     fields: {

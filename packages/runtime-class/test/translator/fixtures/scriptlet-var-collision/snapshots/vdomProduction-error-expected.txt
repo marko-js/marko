@@ -1,0 +1,9 @@
+CompileError: 
+    at __tests__/template.marko:3:9
+      1 | $ const x = 1;
+      2 | <div>
+    > 3 |   $ var x = 2;
+        |         ^ Duplicate declaration "x"
+      4 |   ${x}
+      5 | </div>
+      6 |
