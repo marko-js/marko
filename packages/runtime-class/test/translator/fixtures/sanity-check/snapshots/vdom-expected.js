@@ -47,14 +47,14 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     "b": b,
     "c": c
   }, "4", _component, null, 0);
-  {
+  (() => {
     var d = thing;
     let e = thing;
     out.e("div", {
       "d": d,
       "e": e
     }, "5", _component, 0, 0);
-  }
+  })();
   out.ee();
   out.e("div", null, "6", _component, 0, 0, {
     "onclick": _componentDef.d("click", "handleClick", false, [a, b, ...d])

@@ -47,11 +47,11 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   var b = thing;
   let c = thing;
   out.w(`<div${(0, _attr.default)("b", b)}${(0, _attr.default)("c", c)}>`);
-  {
+  (() => {
     var d = thing;
     let e = thing;
     out.w(`<div${(0, _attr.default)("d", d)}${(0, _attr.default)("e", e)}></div>`);
-  }
+  })();
   out.w("</div>");
   out.w("<div></div>");
   out.w(`<div${(0, _attr.default)("id", _componentDef.elId("1"))}></div>`);

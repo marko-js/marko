@@ -2,18 +2,19 @@ import { t as _t } from "marko/src/runtime/html/index.js";
 const _marko_componentType = "__tests__/template.marko",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
-import _marko_attr from "marko/src/runtime/html/helpers/attr.js";
+import { x as _marko_escapeXml } from "marko/src/runtime/html/helpers/escape-xml.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
-  var b = thing;
-  let c = thing;
-  out.w(`<div${_marko_attr("b", b)}${_marko_attr("c", c)}>`);
+  const x = 1;
+  out.w("<div>");
   (() => {
-    var d = thing;
-    let e = thing;
-    out.w(`<div${_marko_attr("d", d)}${_marko_attr("e", e)}></div>`);
+    var x = 2;
+    out.w(_marko_escapeXml(x));
   })();
+  out.w("</div>");
+  out.w("<div>");
+  out.w(_marko_escapeXml(x));
   out.w("</div>");
 }, {
   t: _marko_componentType,

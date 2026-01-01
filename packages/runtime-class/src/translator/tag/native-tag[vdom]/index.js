@@ -65,18 +65,33 @@ export default function (path, isNullable) {
   }
 
   let needsBlock;
+  let needsIIFE;
   for (const childNode of body) {
     if (t.isVariableDeclaration(childNode)) {
       if (childNode.kind === "const" || childNode.kind === "let") {
         needsBlock = true;
-        break;
+      } else {
+        needsIIFE = true;
       }
+
+      break;
     }
   }
 
   path.replaceWithMultiple(
     [writeStartNode]
-      .concat(needsBlock ? t.blockStatement(body) : body)
+      .concat(
+        needsIIFE
+          ? t.expressionStatement(
+              t.callExpression(
+                t.arrowFunctionExpression([], t.blockStatement(body)),
+                [],
+              ),
+            )
+          : needsBlock
+            ? t.blockStatement(body)
+            : body,
+      )
       .concat(writeEndNode),
   );
 }
