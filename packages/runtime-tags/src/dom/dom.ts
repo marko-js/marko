@@ -124,6 +124,10 @@ export function _attrs(
   nextAttrs: Record<string, unknown>,
 ) {
   const el = scope[nodeAccessor] as Element;
+  // Guard against undefined element (can happen in await tags before element is created)
+  if (!el) {
+    return;
+  }
   for (let i = el.attributes.length; i--; ) {
     const { name } = el.attributes.item(i)!;
     if (
@@ -168,6 +172,10 @@ export function _attrs_partial(
   skip: Record<string, 1>,
 ) {
   const el = scope[nodeAccessor] as Element;
+  // Guard against undefined element (can happen in await tags before element is created)
+  if (!el) {
+    return;
+  }
   const partial: Partial<typeof nextAttrs> = {};
 
   for (let i = el.attributes.length; i--; ) {
