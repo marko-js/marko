@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.38.10
+
+### Patch Changes
+
+- [#3030](https://github.com/marko-js/marko/pull/3030) [`4ec6b5c`](https://github.com/marko-js/marko/commit/4ec6b5c96a84e8b6fadfd6cd5381a229371509be) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure that compiling the hydrate output with lasso-marko and a lasso-page tag always initializes components.
+
 ## 5.38.9
 
 ### Patch Changes
