@@ -163,6 +163,8 @@ export const entryBuilder = {
     for (const tag of fileMeta.tags) {
       if (tag.endsWith(".marko")) {
         visitChild(tag);
+      } else if (/^@lasso\/marko-taglib\//.test(tag)) {
+        state.hasComponents = true;
       } else {
         const importedTemplates = tryGetTemplateImports(file, tag);
         if (importedTemplates) {
