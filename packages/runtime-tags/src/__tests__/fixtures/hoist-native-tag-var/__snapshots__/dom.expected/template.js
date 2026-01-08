@@ -20,9 +20,9 @@ export const $input_show = /* @__PURE__ */_._const("input_show", $scope => {
   $if_content__input_show($scope);
 });
 const $if2 = /* @__PURE__ */_._if("#text/2", "<div></div>", /* get, over(1) */" b");
-const $hoisted_el3 = /* @__PURE__ */_._const("$hoisted_el", $scope => _child_input($scope["#childScope/1"], {
-  value: $scope.$hoisted_el
-}));
+const $hoisted_el3 = ($scope, $hoisted_el) => _child_input($scope["#childScope/1"], {
+  value: $hoisted_el
+});
 const $setup__script = _._script("__tests__/template.marko_0", $scope => {
   {
     const first = $get$hoisted_el2($scope)();

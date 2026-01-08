@@ -644,7 +644,9 @@ function analyzeAttrs(
     } else if (t.isMarkoSpreadAttribute(attr)) {
       knownSpreadBinding = getSingleKnownSpreadBinding(attributes);
       if (knownSpreadBinding) {
-        dropRead(attr.value.extra as ReferencedExtra);
+        if (!propTree.rest || propTree.rest.props) {
+          dropRead(attr.value.extra as ReferencedExtra);
+        }
       } else {
         spreadReferenceNodes = [attr.value];
       }
@@ -689,14 +691,16 @@ function analyzeAttrs(
   }
 
   if (propTree.rest) {
-    setBindingDownstream(
-      propTree.binding,
-      (inputExpr.value = mergeReferences(
-        section,
-        tag.node,
-        unknownReferences.flat(),
-      )),
-    );
+    const restExtra = (inputExpr.value = mergeReferences(
+      section,
+      tag.node,
+      unknownReferences.flat(),
+    ));
+    setBindingDownstream(propTree.binding, restExtra);
+
+    if (knownSpreadBinding && !propTree.rest.props) {
+      addRead(restExtra, undefined, knownSpreadBinding, section);
+    }
   } else {
     unknownReferences.forEach(dropReferences);
   }
@@ -1226,6 +1230,8 @@ function writeAttrsToSignals(
           translatedProps,
         ]),
       ),
+      undefined,
+      true,
     );
   }
 }
