@@ -43,7 +43,10 @@ export function translateAttrs(
   if (attrTagLookup) {
     for (const name in attrTagLookup) {
       const attrTagMeta = attrTagLookup[name];
-      if (!seen.has(name) && usesExport(templateExports, attrTagMeta.name)) {
+      if (
+        !seen.has(attrTagMeta.name) &&
+        usesExport(templateExports, attrTagMeta.name)
+      ) {
         seen.add(attrTagMeta.name);
         if (attrTagMeta.dynamic) {
           statements.push(
@@ -71,6 +74,9 @@ export function translateAttrs(
       if (child.isMarkoTag()) {
         if (isAttributeTag(child)) {
           const attrTagMeta = attrTagLookup[getTagName(child)];
+
+          if (skip?.has(attrTagMeta.name)) continue;
+
           if (attrTagMeta.dynamic) {
             i = addDynamicAttrTagStatements(
               attrTags,
