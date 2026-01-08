@@ -15,7 +15,12 @@ import {
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
-import { getOrCreateSection, getSection, startSection } from "../util/sections";
+import {
+  getOrCreateSection,
+  getSection,
+  getSectionForBody,
+  startSection,
+} from "../util/sections";
 import { setTagDownstream } from "../util/set-tag-sections-downstream";
 import {
   addStatement,
@@ -55,7 +60,7 @@ export default {
     setTagDownstream(tag, varBinding);
 
     if (bodySection) {
-      // TODO: support member expressions
+      // TODO: support destructure
       if (t.isIdentifier(tag.node.var)) {
         const babelBinding = tag.scope.getBinding(tag.node.var.name)!;
         let allDirectReferences = true;
@@ -126,16 +131,19 @@ export default {
           }
 
           if (hasDirectReferences) {
-            const signal = getSignal(node.body.extra!.section!, undefined);
-            signal.build = () => {
-              if (signalHasStatements(signal)) {
-                return callRuntime("_child_setup", getSignalFn(signal));
-              }
-            };
+            const bodySection = getSectionForBody(tag.get("body"));
+            if (bodySection) {
+              const signal = getSignal(bodySection, undefined);
+              signal.build = () => {
+                if (signalHasStatements(signal)) {
+                  return callRuntime("_child_setup", getSignalFn(signal));
+                }
+              };
 
-            if (allDirectReferences) {
-              tag.remove();
-              return;
+              if (allDirectReferences) {
+                tag.remove();
+                return;
+              }
             }
           }
         }
