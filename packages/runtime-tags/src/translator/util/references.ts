@@ -2037,6 +2037,7 @@ export function getAllSerializeReasonsForExtra(
     if (extra === getProgram().node.extra?.returnValueExpr) {
       reason = true;
     } else {
+      serializeReasonCache.set(extra, false);
       forEach(extra.downstream, (binding) => {
         reason = mergeSerializeReasons(
           reason as SerializeReason,
@@ -2044,7 +2045,10 @@ export function getAllSerializeReasonsForExtra(
         );
       });
     }
-    serializeReasonCache.set(extra, reason || false);
+
+    if (reason) {
+      serializeReasonCache.set(extra, reason);
+    }
   }
 
   return reason;
@@ -2060,6 +2064,10 @@ export function getAllSerializeReasonsForBinding(
     reason = getSerializeReason(binding.section, binding);
 
     if (reason !== true) {
+      if (!reason) {
+        serializeReasonCache.set(binding, false);
+      }
+
       for (const expr of binding.downstreamExpressions) {
         reason =
           expr.isEffect ||
@@ -2088,7 +2096,9 @@ export function getAllSerializeReasonsForBinding(
       }
     }
 
-    serializeReasonCache.set(binding, reason || false);
+    if (reason) {
+      serializeReasonCache.set(binding, reason);
+    }
   }
 
   return reason;
