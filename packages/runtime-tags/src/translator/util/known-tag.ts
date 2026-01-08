@@ -664,7 +664,6 @@ function analyzeAttrs(
         known[prop] = { value: propExtra };
         rootAttrExprs.add(propExtra);
         addRead(propExtra, propExtra, propBinding, section);
-        setBindingDownstream(propBinding, propExtra);
       }
     }
   } else if (spreadReferenceNodes) {

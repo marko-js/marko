@@ -1,0 +1,11 @@
+<define/Foo|input|>
+  ${input.foo || "fallback"}
+</define>
+
+<define/Bar|input|>
+  <Foo ...input/>
+</define>
+
+<Bar>
+  Unused
+</Bar>
