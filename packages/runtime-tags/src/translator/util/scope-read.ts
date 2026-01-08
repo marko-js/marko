@@ -76,21 +76,21 @@ export function getScopeExpression(section: Section, targetSection: Section) {
 
 export function createScopeReadExpression(
   reference: Binding,
-  section?: Section | undefined,
+  section = reference.section,
 ) {
   const propName = toPropertyName(getScopeAccessor(reference));
-  const scope =
-    section && reference.type !== BindingType.local
-      ? getScopeExpression(section, reference.section)
-      : scopeIdentifier;
   const expr = t.memberExpression(
-    scope,
+    reference.type === BindingType.local
+      ? scopeIdentifier
+      : getScopeExpression(section, reference.section),
     propName,
     propName.type !== "Identifier",
   );
 
-  if (scope === scopeIdentifier) {
-    (expr.extra ??= {}).read = createRead(reference, undefined);
+  if (section === reference.section && reference.type !== BindingType.dom) {
+    const exprExtra = (expr.extra ??= {});
+    exprExtra.read = createRead(reference, undefined);
+    exprExtra.section = section;
   }
   return expr;
 }

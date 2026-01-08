@@ -60,7 +60,7 @@ import {
 import { traverseReplace } from "./traverse";
 import { withLeadingComment } from "./with-comment";
 
-export type Signal = {
+export interface Signal {
   identifier: t.Identifier;
   referencedBindings: ReferencedBindings;
   section: Section;
@@ -75,16 +75,15 @@ export type Signal = {
   renderReferencedBindings: ReferencedBindings;
   effect: t.Statement[];
   effectReferencedBindings: ReferencedBindings;
-  hasDynamicSubscribers?: true;
-  hasSideEffect?: true;
+  hasDynamicSubscribers: boolean;
+  hasSideEffect: boolean;
   export: boolean;
-  extraArgs?: t.Expression[];
-  prependStatements?: t.Statement[];
-  buildAssignment?: (
-    valueSection: Section,
-    value: t.Expression,
-  ) => t.Expression | undefined;
-};
+  extraArgs: t.Expression[] | undefined;
+  prependStatements: t.Statement[] | undefined;
+  buildAssignment:
+    | ((valueSection: Section, value: t.Expression) => t.Expression | undefined)
+    | undefined;
+}
 
 type closureSignalBuilder = (
   closure: Binding,
@@ -224,10 +223,22 @@ export function getSignal(
         renderReferencedBindings: undefined,
         effect: [],
         effectReferencedBindings: undefined,
-        subscribers: [],
         build: undefined,
         export: !!exportName,
-      } as Signal),
+        hasSideEffect: !!(
+          referencedBindings &&
+          (Array.isArray(referencedBindings) ||
+            referencedBindings.type === BindingType.dom ||
+            referencedBindings.type === BindingType.let ||
+            referencedBindings.section !== section ||
+            referencedBindings.closureSections ||
+            referencedBindings.hoists.size)
+        ),
+        hasDynamicSubscribers: false,
+        extraArgs: undefined,
+        prependStatements: undefined,
+        buildAssignment: undefined,
+      }),
     );
 
     if (isOutputHTML()) {
@@ -524,7 +535,6 @@ export function getSignalFn(signal: Signal): t.Expression {
 
   if (signal.effect.length) {
     const effectIdentifier = t.identifier(`${signal.identifier.name}__script`);
-    signal.hasSideEffect = true;
     signal.render.push(
       t.expressionStatement(
         t.callExpression(effectIdentifier, [scopeIdentifier]),
@@ -601,6 +611,7 @@ export function subscribe(references: ReferencedBindings, subscriber: Signal) {
             binding.upstreamAlias) ||
           binding;
         const providerSignal = getSignal(subscriber.section, source);
+        providerSignal.hasSideEffect = true;
         providerSignal.intersection = push(
           providerSignal.intersection,
           subscriber,
@@ -819,21 +830,6 @@ export function writeSignals(section: Section) {
     }
 
     forEach(signal.intersection, writeSignal);
-
-    if (!signal.hasSideEffect) {
-      const binding = signal.referencedBindings;
-      if (
-        binding &&
-        (signal.intersection ||
-          Array.isArray(binding) ||
-          binding.type === BindingType.let ||
-          binding.closureSections ||
-          binding.hoists.size ||
-          binding.section !== signal.section)
-      ) {
-        signal.hasSideEffect = true;
-      }
-    }
 
     let effectDeclarator: t.VariableDeclarator | undefined;
     if (signal.effect.length) {

@@ -260,7 +260,9 @@ export function trackDomVarReferences(
     const refSection = getOrCreateSection(ref);
     setReferencesScope(ref);
     if (isSameOrChildSection(binding.section, refSection)) {
-      (ref.node.extra ??= {}).read = createRead(binding, undefined);
+      const refExtra = (ref.node.extra ??= {});
+      refExtra.read = createRead(binding, undefined);
+      refExtra.section = refSection;
 
       if (!isInvokedFunction(ref)) {
         section.domGetterBindings.set(
