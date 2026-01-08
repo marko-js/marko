@@ -1,5 +1,19 @@
 # @marko/runtime-tags
 
+## 6.0.130
+
+### Patch Changes
+
+- [#3035](https://github.com/marko-js/marko/pull/3035) [`35e25b0`](https://github.com/marko-js/marko/commit/35e25b04faab0c6782b12f037450eec95270e189) Thanks [@rturnq](https://github.com/rturnq)! - Fix known rest attribute tag duplication
+
+- [#3032](https://github.com/marko-js/marko/pull/3032) [`f424e4e`](https://github.com/marko-js/marko/commit/f424e4e8a86b57eb83f03160f2bc39cd2aed6a5b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix cases where compiler was not storing section information with scope reads.
+
+- [#3035](https://github.com/marko-js/marko/pull/3035) [`291dea8`](https://github.com/marko-js/marko/commit/291dea8d085c3c04127d42df3d786be878c7e29e) Thanks [@rturnq](https://github.com/rturnq)! - Fix known spreads with rest dropping source reference
+
+- [#3034](https://github.com/marko-js/marko/pull/3034) [`1ed1b4b`](https://github.com/marko-js/marko/commit/1ed1b4bc7c3da6774f901dd55149d1f30cc333f7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix circular downstream reference issue when spreading to a dynamic tag.
+
+- [#3034](https://github.com/marko-js/marko/pull/3034) [`ec12e53`](https://github.com/marko-js/marko/commit/ec12e53bd583cbf468eb6ed9bae1d83375ddd8c6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue when rendering a define tag with no body content.
+
 ## 6.0.129
 
 ### Patch Changes
