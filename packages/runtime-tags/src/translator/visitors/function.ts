@@ -105,7 +105,8 @@ function canIgnoreRegister(
     (isMarkoAttribute(markoRoot) &&
       ((analyzeTagNameType(markoRoot.parentPath) === TagNameType.NativeTag &&
         // TODO: all native tag functions should avoid registration but right now change handlers require it.
-        /^on[A-Z-]/.test(markoRoot.node.name)) ||
+        /^on[A-Z-]/.test(markoRoot.node.name) &&
+        !hasSpreadAttributeAfter(markoRoot)) ||
         isCoreTagName(markoRoot.parentPath, "script") ||
         isCoreTagName(markoRoot.parentPath, "lifecycle") ||
         isCoreTagName(markoRoot.parentPath, "for")))
@@ -168,6 +169,15 @@ function shouldAlwaysRegister(markoRoot: MarkoExprRootPath) {
         return true;
       }
       break;
+  }
+
+  return false;
+}
+
+function hasSpreadAttributeAfter(attr: t.NodePath<t.MarkoAttribute>) {
+  const attrs = (attr.parent as t.MarkoTag).attributes;
+  for (let i = (attr.key as number) + 1; i < attrs.length; i++) {
+    if (attrs[i].type === "MarkoSpreadAttribute") return true;
   }
 
   return false;
