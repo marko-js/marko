@@ -77,7 +77,9 @@ export const compat = {
       if (!compatRegistered) {
         const registered = getRegistered(this);
         if (registered) {
-          const scopeId = getScopeId(registered.scope as Scope);
+          const scopeId = registered.scope
+            ? getScopeId(registered.scope as Scope)
+            : undefined;
           if (scopeId !== undefined) {
             writeScopeToState(state, scopeId, {});
           }
