@@ -19,6 +19,7 @@ import {
   find,
   findSorted,
   forEach,
+  includes,
   type Many,
   mapToString,
   type OneMany,
@@ -93,18 +94,19 @@ export interface Binding {
   closureSections: Opt<Section>;
   assignmentSections: Opt<Section>;
   sources: undefined | Sources;
+  reads: Set<ReferencedExtra>;
   aliases: Set<Binding>;
   hoists: Map<Section, Binding>;
   property: string | undefined;
   propertyAliases: Map<string, Binding>;
   excludeProperties: Opt<string>;
   upstreamAlias: Binding | undefined;
-  downstreamExpressions: Set<ReferencedExtra>;
   scopeOffset: Binding | undefined;
   scopeAccessor: string | undefined;
   export: string | undefined;
   declared: boolean;
   nullable: boolean;
+  pruned: boolean | undefined;
 }
 
 export interface InputBinding extends Binding {
@@ -177,15 +179,16 @@ export function createBinding(
     assignmentSections: undefined,
     excludeProperties,
     sources: undefined,
+    reads: new Set(),
     aliases: new Set(),
     hoists: new Map(),
     propertyAliases: new Map(),
     upstreamAlias,
-    downstreamExpressions: new Set(),
     scopeOffset: undefined,
     scopeAccessor: undefined,
     export: undefined,
     nullable: excludeProperties === undefined,
+    pruned: undefined,
   };
 
   if (property) {
@@ -555,6 +558,7 @@ function trackAssignment(
             true,
           );
         idExtra.assignmentTo = changeBinding;
+        changeBinding.pruned = false;
         addReadToExpression(id, changeBinding);
       }
     }
@@ -618,7 +622,7 @@ function createBindingsAndTrackReferences(
             scope,
             section,
             patternBinding,
-            property,
+            undefined,
             excludeProperties,
           );
         } else {
@@ -743,17 +747,57 @@ function trackReference(
   addReadToExpression(root, reference);
 }
 
-const [getMergedReferences] = createProgramState(
-  () => new Map<t.Node, (t.Node | undefined)[]>(),
-);
 export function mergeReferences<T extends t.Node>(
   section: Section,
   target: T,
   nodes: (t.Node | undefined)[],
 ): NonNullable<T["extra"]> & ReferencedExtra {
-  const targetExtra = (target.extra ??= {});
+  const targetExtra = (target.extra ??= {}) as ReferencedExtra;
+  const readsByExpression = getReadsByExpression();
+  const fnReadsByExpression = getFunctionReadsByExpression();
+  let reads = readsByExpression.get(targetExtra);
+  let exprFnReads = fnReadsByExpression.get(targetExtra);
+  let { isEffect } = targetExtra;
+
+  for (const node of nodes) {
+    if (!node) continue;
+    const extra = (node.extra ??= {});
+    extra.merged = targetExtra;
+    if (isReferencedExtra(extra)) {
+      const additionalReads = readsByExpression.get(extra);
+      const additionalExprFnReads = fnReadsByExpression.get(extra);
+      isEffect ||= extra.isEffect;
+      if (additionalReads) {
+        forEach(additionalReads, (read) => {
+          read.binding.reads.delete(extra);
+          read.binding.reads.add(targetExtra);
+        });
+
+        reads = concat(reads, additionalReads);
+        readsByExpression.delete(extra);
+      }
+
+      if (additionalExprFnReads) {
+        if (exprFnReads) {
+          for (const [key, value] of additionalExprFnReads) {
+            exprFnReads.set(key, value);
+          }
+        } else {
+          fnReadsByExpression.set(
+            targetExtra,
+            (exprFnReads = new Map(additionalExprFnReads)),
+          );
+        }
+      }
+    } else if (extra?.pruned) {
+      throw new Error("Cannot merged a dropped reference.");
+    }
+  }
+
+  readsByExpression.set(targetExtra, reads);
+  targetExtra.isEffect = isEffect;
   targetExtra.section = section;
-  getMergedReferences().set(target, nodes);
+
   return targetExtra as NonNullable<T["extra"]> & ReferencedExtra;
 }
 
@@ -803,60 +847,24 @@ export function finalizeReferences() {
   const bindings = getBindings();
   const readsByExpression = getReadsByExpression();
   const fnReadsByExpression = getFunctionReadsByExpression();
-  const mergedReferences = getMergedReferences();
-
-  if (mergedReferences.size) {
-    for (const [target, nodes] of mergedReferences) {
-      const targetExtra = target.extra as ReferencedExtra;
-      let reads = readsByExpression.get(targetExtra);
-      let exprFnReads = fnReadsByExpression.get(targetExtra);
-      let { isEffect } = targetExtra;
-      for (const node of nodes) {
-        const extra = node?.extra;
-        if (extra) {
-          setCanonicalExtra(extra, targetExtra);
-          if (isReferencedExtra(extra)) {
-            const additionalReads = readsByExpression.get(extra);
-            const additionalExprFnReads = fnReadsByExpression.get(extra);
-            isEffect ||= extra.isEffect;
-            if (additionalReads) {
-              reads = concat(reads, additionalReads);
-              readsByExpression.delete(extra);
-            }
-
-            if (additionalExprFnReads) {
-              if (exprFnReads) {
-                for (const [key, value] of additionalExprFnReads) {
-                  exprFnReads.set(key, value);
-                }
-              } else {
-                fnReadsByExpression.set(
-                  targetExtra,
-                  (exprFnReads = new Map(additionalExprFnReads)),
-                );
-              }
-            }
-          }
-        }
-      }
-
-      readsByExpression.set(targetExtra, reads);
-      targetExtra.isEffect = isEffect;
-    }
-  }
-
   const intersectionsBySection = new Map<Section, Intersection[]>();
+
   for (const [expr, reads] of readsByExpression) {
     if (isReferencedExtra(expr)) {
       const { referencedBindings, constantBindings } =
         resolveReferencedBindings(expr, reads, intersectionsBySection);
       expr.referencedBindings = referencedBindings;
 
-      if (referencedBindings) {
+      if (expr.isEffect) {
         forEach(referencedBindings, (binding) => {
-          binding.downstreamExpressions.add(expr);
+          addSerializeReason(binding.section, true, binding);
         });
+        forEach(constantBindings, (binding) => {
+          addSerializeReason(binding.section, true, binding);
+        });
+      }
 
+      if (referencedBindings) {
         const exprFnReads = fnReadsByExpression.get(expr);
         if (exprFnReads) {
           for (const [fn, fnReads] of exprFnReads) {
@@ -872,18 +880,14 @@ export function finalizeReferences() {
           }
         }
       }
-
-      if (constantBindings) {
-        forEach(constantBindings, (binding) => {
-          binding.downstreamExpressions.add(expr);
-        });
-      }
     }
   }
 
   for (const binding of bindings) {
-    if (binding.type !== BindingType.dom && !binding.upstreamAlias) {
-      pruneBinding(bindings, binding);
+    if (binding.type !== BindingType.dom) {
+      if (pruneBinding(binding)) {
+        bindings.delete(binding);
+      }
     }
   }
 
@@ -910,11 +914,8 @@ export function finalizeReferences() {
       section.bindings,
       getCanonicalBinding(binding),
     );
-    for (const {
-      referencedBindings,
-      isEffect,
-      section,
-    } of binding.downstreamExpressions) {
+
+    for (const { isEffect, section } of binding.reads) {
       if (section !== binding.section) {
         const canonicalUpstreamAlias = getCanonicalBinding(binding)!;
         canonicalUpstreamAlias.closureSections = sectionUtil.add(
@@ -939,11 +940,6 @@ export function finalizeReferences() {
             !!isEffect || canonicalUpstreamAlias.sources,
           );
         }
-      }
-      if (isEffect) {
-        forEach(referencedBindings, (binding) =>
-          addSerializeReason(binding.section, true, binding),
-        );
       }
     }
   }
@@ -1089,7 +1085,7 @@ export function finalizeReferences() {
   finalizeFunctionRegistry();
   const referencedExprs = new Set<ReferencedExtra>();
   for (const binding of bindings) {
-    for (const expr of binding.downstreamExpressions) {
+    for (const expr of binding.reads) {
       referencedExprs.add(expr);
     }
   }
@@ -1160,7 +1156,6 @@ export function finalizeReferences() {
     );
   }
 
-  mergedReferences.clear();
   readsByExpression.clear();
   fnReadsByExpression.clear();
 }
@@ -1378,15 +1373,13 @@ const [getFunctionReadsByExpression] = createProgramState(
 
 export function addRead(
   exprExtra: ReferencedExtra,
-  readExtra: t.NodeExtra | undefined,
+  extra: t.NodeExtra | undefined,
   binding: Binding,
   section: Section,
 ) {
   const readsByExpression = getReadsByExpression();
-  const read: Read = {
-    binding,
-    extra: readExtra,
-  };
+  const read: Read = { binding, extra };
+  binding.reads.add(exprExtra);
   exprExtra.section = section;
   readsByExpression.set(
     exprExtra,
@@ -1395,8 +1388,30 @@ export function addRead(
   return read;
 }
 
-export function dropRead(exprExtra: ReferencedExtra) {
-  getReadsByExpression().delete(exprExtra);
+export function dropNodes(node: t.Node | t.Node[]) {
+  if (Array.isArray(node)) {
+    for (const item of node) {
+      dropExtra((item.extra ??= {}) as ReferencedExtra);
+    }
+  } else {
+    dropExtra((node.extra ??= {}) as ReferencedExtra);
+  }
+}
+
+function dropExtra(exprExtra: ReferencedExtra) {
+  if (exprExtra.merged) {
+    throw new Error("Cannot drop a merged reference");
+  }
+
+  const readsByExpr = getReadsByExpression();
+  const reads = readsByExpr.get(exprExtra);
+  exprExtra.pruned = true;
+  if (reads) {
+    readsByExpr.delete(exprExtra);
+    forEach(reads, (read) => {
+      read.binding.reads.delete(exprExtra);
+    });
+  }
 }
 
 function addReadToExpression(
@@ -1426,16 +1441,6 @@ function addReadToExpression(
     const fnExtra = (fnRoot.node.extra ??= {}) as ReferencedFunctionExtra;
     fnExtra.section = section;
     exprFnReads.set(fnExtra, push(exprFnReads.get(fnExtra), read));
-  }
-}
-
-export function dropReferences(node: t.Node | t.Node[]) {
-  if (Array.isArray(node)) {
-    for (const item of node) {
-      (item.extra ??= {}).pruned = true;
-    }
-  } else {
-    (node.extra ??= {}).pruned = true;
   }
 }
 
@@ -1722,14 +1727,28 @@ export function hasNonConstantPropertyAlias(ref: Binding) {
   return false;
 }
 
-function pruneBinding(bindings: Set<Binding>, binding: Binding) {
-  let shouldPrune = !binding.downstreamExpressions.size;
+export function pruneBinding(binding: Binding) {
+  if (binding.pruned !== undefined) {
+    return binding.pruned;
+  }
+
+  for (const read of binding.reads) {
+    let upstream = binding.upstreamAlias;
+    while (upstream && !upstream.reads.has(read)) {
+      upstream = upstream.upstreamAlias;
+    }
+    if (upstream) {
+      binding.reads.delete(read);
+    }
+  }
+
+  let shouldPrune = !binding.reads.size;
 
   if (binding.hoists.size) {
     // TODO hoists do not currently know their downstream expressions and so cannot be pruned like aliases.
     shouldPrune = false;
     // for (const [hoistSection, hoistAlias] of binding.hoists) {
-    //   if (pruneBinding(bindings, hoistAlias)) {
+    //   if (pruneBinding(hoistAlias)) {
     //     binding.hoists.delete(hoistSection);
     //   } else {
     //     shouldPrune = false;
@@ -1738,7 +1757,7 @@ function pruneBinding(bindings: Set<Binding>, binding: Binding) {
   }
 
   for (const alias of binding.aliases) {
-    if (pruneBinding(bindings, alias)) {
+    if (pruneBinding(alias)) {
       binding.aliases.delete(alias);
     } else if (alias.type !== BindingType.constant) {
       shouldPrune = false;
@@ -1746,17 +1765,14 @@ function pruneBinding(bindings: Set<Binding>, binding: Binding) {
   }
 
   for (const [key, alias] of binding.propertyAliases) {
-    if (pruneBinding(bindings, alias)) {
+    if (pruneBinding(alias)) {
       binding.propertyAliases.delete(key);
     } else if (alias.type !== BindingType.constant) {
       shouldPrune = false;
     }
   }
 
-  if (shouldPrune) {
-    bindings.delete(binding);
-  }
-
+  binding.pruned = shouldPrune;
   return shouldPrune;
 }
 
@@ -2031,6 +2047,7 @@ const serializeReasonCache = new WeakMap<
 export function getAllSerializeReasonsForExtra(
   extra: t.NodeExtra,
 ): undefined | SerializeReason {
+  if (extra.isEffect) return true;
   let reason = serializeReasonCache.get(extra);
   if (reason === false) return;
   if (reason === undefined) {
@@ -2041,7 +2058,7 @@ export function getAllSerializeReasonsForExtra(
       forEach(extra.downstream, (binding) => {
         reason = mergeSerializeReasons(
           reason as SerializeReason,
-          getAllSerializeReasonsForBinding(binding),
+          getAllSerializeReasonsForBinding(binding, true),
         );
       });
     }
@@ -2056,39 +2073,40 @@ export function getAllSerializeReasonsForExtra(
 
 export function getAllSerializeReasonsForBinding(
   binding: Binding,
+  properties?: Opt<string> | true,
 ): undefined | SerializeReason {
   let reason = serializeReasonCache.get(binding);
-  if (reason === false) return;
 
   if (reason === undefined) {
     reason = getSerializeReason(binding.section, binding);
 
     if (reason !== true) {
-      if (!reason) {
-        serializeReasonCache.set(binding, false);
-      }
+      serializeReasonCache.set(binding, reason || false);
 
-      for (const expr of binding.downstreamExpressions) {
-        reason =
-          expr.isEffect ||
-          mergeSerializeReasons(reason, getAllSerializeReasonsForExtra(expr));
-        if (reason === true) break;
+      if (properties !== true && binding.upstreamAlias) {
+        reason = mergeSerializeReasons(
+          reason,
+          getAllSerializeReasonsForBinding(
+            binding.upstreamAlias,
+            binding.property,
+          ),
+        );
       }
 
       if (reason !== true) {
-        for (const alias of binding.aliases) {
+        for (const expr of binding.reads) {
           reason = mergeSerializeReasons(
             reason,
-            getAllSerializeReasonsForBinding(alias),
+            getAllSerializeReasonsForExtra(expr),
           );
           if (reason === true) break;
         }
 
         if (reason !== true) {
-          for (const propBinding of binding.propertyAliases.values()) {
+          for (const alias of binding.aliases) {
             reason = mergeSerializeReasons(
               reason,
-              getAllSerializeReasonsForBinding(propBinding),
+              getAllSerializeReasonsForBinding(alias, properties),
             );
             if (reason === true) break;
           }
@@ -2101,11 +2119,63 @@ export function getAllSerializeReasonsForBinding(
     }
   }
 
-  return reason;
-}
+  if (reason === false) {
+    reason = undefined;
+  }
 
-function setCanonicalExtra(extra: t.NodeExtra, merged: t.NodeExtra) {
-  extra.merged = merged;
+  if (properties !== undefined) {
+    if (properties === true) {
+      if (reason !== true) {
+        for (const propBinding of binding.propertyAliases.values()) {
+          reason = mergeSerializeReasons(
+            reason,
+            getAllSerializeReasonsForBinding(propBinding, true),
+          );
+          if (reason === true) break;
+        }
+      }
+    } else {
+      let property: string;
+      let rest: Opt<string>;
+
+      if (Array.isArray(properties)) {
+        property = properties[0];
+        rest =
+          properties.length === 2
+            ? properties[1]
+            : (properties.slice(1) as Opt<string>);
+      } else {
+        property = properties;
+      }
+
+      if (includes(binding.excludeProperties, property)) {
+        reason = undefined;
+      } else {
+        const propBinding = binding.propertyAliases.get(property);
+        if (propBinding) {
+          reason = mergeSerializeReasons(
+            reason,
+            getAllSerializeReasonsForBinding(propBinding, rest),
+          );
+        }
+
+        if (reason !== true) {
+          for (const alias of binding.aliases) {
+            const propBinding = alias.propertyAliases.get(property);
+            if (propBinding) {
+              reason = mergeSerializeReasons(
+                reason,
+                getAllSerializeReasonsForBinding(propBinding, rest),
+              );
+              if (reason === true) break;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return reason;
 }
 
 function addNumericPropertiesUntil(props: Opt<string>, len: number) {

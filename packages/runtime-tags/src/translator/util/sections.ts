@@ -15,6 +15,7 @@ import {
   find,
   findIndexSorted,
   findSorted,
+  type Opt,
   Sorted,
 } from "./optional";
 import {
@@ -22,6 +23,7 @@ import {
   bindingUtil,
   compareReferences,
   getAllSerializeReasonsForBinding,
+  getDebugNames,
   type InputBinding,
   type ParamBinding,
   type ReferencedBindings,
@@ -69,7 +71,7 @@ export interface Section {
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
-  downstreamBinding: Binding | undefined | false;
+  downstreamBinding: { binding: Binding; properties: Opt<string> } | undefined;
   hasAbortSignal: boolean;
   isBranch: boolean;
   content: null | {
@@ -329,7 +331,10 @@ export function getSectionRegisterReasons(section: Section) {
 
   const { downstreamBinding } = section;
   if (downstreamBinding) {
-    return getAllSerializeReasonsForBinding(downstreamBinding);
+    return getAllSerializeReasonsForBinding(
+      downstreamBinding.binding,
+      downstreamBinding.properties,
+    );
   } else if (downstreamBinding === false) {
     return false;
   }
@@ -431,7 +436,10 @@ function ensureParamReasonGroup(
   reason: ParamSerializeReasonGroup["reason"],
 ) {
   const { paramReasonGroups } = section;
-  const group: ParamSerializeReasonGroup = { id: Symbol(), reason };
+  const group: ParamSerializeReasonGroup = {
+    id: Symbol(getDebugNames(reason)),
+    reason,
+  };
 
   if (paramReasonGroups) {
     const found = findSorted(compareParamGroups, paramReasonGroups, group);

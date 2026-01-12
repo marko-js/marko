@@ -1,6 +1,6 @@
 // size: 250 (min) 159 (brotli)
 const $x__script = _._script("a0", ($scope) => {
-    (_._lifecycle($scope, 2, {
+    (_._lifecycle($scope, 3, {
       onMount: function () {
         this.onUpdate();
       },

@@ -1,0 +1,18 @@
+<define/Child|input|>
+  <select class=input.class>
+    <for|option| of=input.option>
+      <option ...option />
+    </for>
+  </select>
+</>
+
+<define/Wrap|{ class: _class, ...rest }|>
+  <Child class=_class ...rest />
+</>
+
+<Wrap class="foo">
+  <@option value=1>One</>
+  <@option value=2>Two</>
+  <@option value=3>Three</>
+</Wrap>
+

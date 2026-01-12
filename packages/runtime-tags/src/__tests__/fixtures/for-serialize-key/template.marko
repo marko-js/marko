@@ -1,0 +1,11 @@
+<div#el/>
+<div>
+  <for|_, index| of=["hello"]>
+    <button
+      onClick() {
+        document.getElementById("el").innerHTML = index === undefined ? 'index missing' : index
+      }>
+      Click
+    </button>
+  </for>
+</div>

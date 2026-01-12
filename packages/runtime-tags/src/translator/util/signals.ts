@@ -955,7 +955,7 @@ function writeHoists(section: Section) {
         t.variableDeclaration("const", [
           t.variableDeclarator(
             hoistIdentifier,
-            hoistedBinding.downstreamExpressions.size
+            hoistedBinding.reads.size
               ? callRuntime(
                   "_resume", // TODO: add _hoist_resume runtime
                   t.stringLiteral(
@@ -972,7 +972,7 @@ function writeHoists(section: Section) {
         ]),
       );
 
-      if (hoistedBinding.downstreamExpressions.size) {
+      if (hoistedBinding.reads.size) {
         addValue(
           hoistedBinding.section,
           undefined,

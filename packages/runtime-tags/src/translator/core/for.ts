@@ -17,7 +17,7 @@ import {
 } from "../util/is-only-child-in-parent";
 import {
   BindingType,
-  dropReferences,
+  dropNodes,
   getAllTagReferenceNodes,
   getScopeAccessorLiteral,
   kBranchSerializeReason,
@@ -102,7 +102,7 @@ export default {
     const bodySection = startSection(tagBody);
 
     if (!bodySection) {
-      dropReferences(getAllTagReferenceNodes(tag.node));
+      dropNodes(getAllTagReferenceNodes(tag.node));
       return;
     }
 

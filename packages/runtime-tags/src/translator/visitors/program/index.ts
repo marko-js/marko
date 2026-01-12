@@ -5,7 +5,6 @@ import {
 } from "@marko/compiler/babel-utils";
 import path from "path";
 
-import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import {
   type BindingPropTree,
   getBindingPropTree,
@@ -108,7 +107,7 @@ export default {
       finalizeReferences();
       const programExtra = program.node.extra!;
       const paramsBinding = programExtra.binding;
-      if (paramsBinding && bindingHasDownstreamExpressions(paramsBinding)) {
+      if (paramsBinding && !paramsBinding.pruned) {
         programExtra.domExports!.params = getBindingPropTree(paramsBinding);
       }
     },

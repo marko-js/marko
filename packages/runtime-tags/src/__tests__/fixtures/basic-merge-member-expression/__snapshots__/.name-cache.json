@@ -3,7 +3,8 @@
     "props": {
       "$_": "s",
       "$init": "a",
-      "$$foo": "t"
+      "$$foo": "t",
+      "$$foo_class": "c"
     }
   }
 }

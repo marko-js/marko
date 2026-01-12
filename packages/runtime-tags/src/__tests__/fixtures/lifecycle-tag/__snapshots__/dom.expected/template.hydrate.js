@@ -1,6 +1,6 @@
 // size: 263 (min) 140 (brotli)
 const $x__script = _._script("a0", ($scope) => {
-    (_._lifecycle($scope, 2, {
+    (_._lifecycle($scope, 3, {
       onMount: function () {
         document.getElementById("ref").textContent = "Mount " + $scope.b;
       },

@@ -6,15 +6,14 @@ import { getParentTag } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
 import { isConditionTag } from "./is-core-tag";
 
-export type AttrTagLookup = Record<
-  string,
-  {
-    name: string;
-    dynamic: boolean;
-    repeated: boolean;
-    group: AttrTagNames;
-  }
->;
+export interface AttrTagMeta {
+  name: string;
+  dynamic: boolean;
+  repeated: boolean;
+  group: AttrTagNames;
+}
+
+export type AttrTagLookup = Record<string, AttrTagMeta>;
 
 export type AttrTagGroup = AttrTagLookup[string]["group"];
 

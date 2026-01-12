@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { importDefault } from "@marko/compiler/babel-utils";
 
-import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
+import { bindingHasProperty } from "../../util/binding-has-prop";
 import getStyleFile from "../../util/get-style-file";
 import { forEach } from "../../util/optional";
 import {
@@ -48,7 +48,7 @@ export default {
       const setupIdentifier = t.identifier(domExports.setup);
       const inputBinding = program.node.params[0].extra?.binding;
       const programInputSignal =
-        inputBinding && bindingHasDownstreamExpressions(inputBinding)
+        inputBinding && !inputBinding.pruned
           ? initValue(inputBinding)
           : undefined;
       let extraDecls = decls;
@@ -96,7 +96,10 @@ export default {
 
           if (
             !childSection.downstreamBinding ||
-            bindingHasDownstreamExpressions(childSection.downstreamBinding)
+            bindingHasProperty(
+              childSection.downstreamBinding.binding,
+              childSection.downstreamBinding.properties,
+            )
           ) {
             if (getSectionParentIsOwner(childSection)) {
               setBranchRendererArgs(childSection, [

@@ -5,7 +5,7 @@ import { isOutputHTML } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
   BindingType,
-  dropReferences,
+  dropNodes,
   getAllTagReferenceNodes,
   isReferenceHoisted,
   mergeReferences,
@@ -51,7 +51,7 @@ export default {
     const varBinding = trackVarReferences(tag, BindingType.derived);
 
     if (!varBinding) {
-      dropReferences(getAllTagReferenceNodes(tag.node));
+      dropNodes(getAllTagReferenceNodes(tag.node));
       return;
     }
 
@@ -73,13 +73,13 @@ export default {
 
           if (ref.parent.type === "MarkoTag" && ref.parent.name === ref.node) {
             (ref.parent.extra ??= {}).defineBodySection = bodySection;
-            dropReferences(ref.parent.name);
+            dropNodes(ref.parent.name);
           } else {
             allDirectReferences = false;
           }
         }
         if (allDirectReferences) {
-          dropReferences(getAllTagReferenceNodes(tag.node));
+          dropNodes(getAllTagReferenceNodes(tag.node));
           return;
         }
       }
