@@ -10,7 +10,7 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import { dropReferences, getAllTagReferenceNodes } from "../util/references";
+import { dropNodes, getAllTagReferenceNodes } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
@@ -90,7 +90,7 @@ export default {
     }
 
     if (!seenValueAttr) {
-      dropReferences(getAllTagReferenceNodes(node));
+      dropNodes(getAllTagReferenceNodes(node));
     }
   },
   translate: {

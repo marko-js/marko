@@ -22,7 +22,7 @@ import {
   type Binding,
   BindingType,
   createBinding,
-  dropReferences,
+  dropNodes,
   getScopeAccessorLiteral,
   mergeReferences,
   trackDomVarReferences,
@@ -106,7 +106,7 @@ export default {
         if (t.isMarkoAttribute(attr)) {
           if (seen[attr.name]) {
             // drop references for duplicated attributes.
-            dropReferences(attr.value);
+            dropNodes(attr.value);
             continue;
           }
 

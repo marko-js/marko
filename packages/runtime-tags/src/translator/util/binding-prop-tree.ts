@@ -1,6 +1,11 @@
 import { generateUid } from "./generate-uid";
-import { forEach, type Opt } from "./optional";
-import { type Binding, BindingType, propsUtil } from "./references";
+import { forEach, includes, type Opt } from "./optional";
+import {
+  type Binding,
+  BindingType,
+  propsUtil,
+  pruneBinding,
+} from "./references";
 
 export type BindingPropTree = {
   binding: Binding;
@@ -9,16 +14,21 @@ export type BindingPropTree = {
 };
 
 export function getBindingPropTree(binding: Binding) {
+  if (pruneBinding(binding)) {
+    return undefined;
+  }
+
   const props: BindingPropTree = {
     binding,
     props: undefined,
     rest: undefined,
   };
-  if (!binding.downstreamExpressions.size) {
+
+  if (!binding.reads.size) {
     if (!binding.aliases.size) {
       props.props = {};
       for (const [property, alias] of binding.propertyAliases) {
-        props.props[property] = getBindingPropTree(alias);
+        props.props[property] = getBindingPropTree(alias)!;
       }
     } else if (binding.aliases.size === 1) {
       const [restAlias] = binding.aliases;
@@ -33,7 +43,7 @@ export function getBindingPropTree(binding: Binding) {
         forEach(restAlias.excludeProperties, (property) => {
           const propAlias = binding.propertyAliases.get(property);
           if (propAlias) {
-            props.props![property] = getBindingPropTree(propAlias);
+            props.props![property] = getBindingPropTree(propAlias)!;
           }
         });
       }
@@ -64,16 +74,30 @@ function hasSupersetExcludeProperties(
   return true;
 }
 
-export function getBindingPropTreeProp(
-  propTree: BindingPropTree,
+export function getKnownFromPropTree(
+  propTree: BindingPropTree | true,
   name: string,
-) {
-  return propTree.props?.[name] || propTree.rest?.props?.[name];
+): BindingPropTree | true | undefined {
+  return propTree === true
+    ? true
+    : propTree.props
+      ? propTree.props[name] ||
+        (propTree.rest ? getKnownFromPropTree(propTree.rest, name) : undefined)
+      : includes(propTree.binding.excludeProperties, name)
+        ? undefined
+        : true;
 }
 
-export function getAllBindingPropTreePropKeys(propTree: BindingPropTree) {
+export function getAllKnownPropNames(propTree: BindingPropTree) {
   const keys = propTree.props ? Object.keys(propTree.props) : [];
-  return propTree.rest?.props
-    ? keys.concat(Object.keys(propTree.rest.props))
-    : keys;
+  if (propTree.rest?.props) {
+    for (const key of Object.keys(propTree.rest.props)) {
+      keys.push(key);
+    }
+  }
+  return keys;
+}
+
+export function hasAllKnownProps(propTree: BindingPropTree) {
+  return propTree.props && (!propTree.rest || !!propTree.rest.props);
 }

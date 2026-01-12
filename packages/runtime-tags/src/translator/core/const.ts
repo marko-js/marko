@@ -10,6 +10,7 @@ import evaluate from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
+  dropNodes,
   setBindingDownstream,
   trackVarReferences,
 } from "../util/references";
@@ -60,7 +61,7 @@ export default {
       : undefined;
 
     if (upstreamAlias) {
-      valueExtra.pruned = true;
+      dropNodes(valueAttr.value);
     }
 
     const binding = trackVarReferences(tag, BindingType.derived, upstreamAlias);

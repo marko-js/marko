@@ -8,11 +8,13 @@ _._resume_dynamic_tag();
 export function $setup($scope) {
   _child($scope["#childScope/0"]);
 }
-const $input_class = ($scope, input_class) => _child_input_class($scope["#childScope/0"], input_class);
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/1");
-export const $input = ($scope, input) => {
-  _child_input_$rest($scope["#childScope/0"], input);
-  $input_class($scope, input.class);
-  $dynamicTag($scope, Child, () => input);
-};
+export const $input = /* @__PURE__ */_._const("input", $scope => {
+  _child_input_class($scope["#childScope/0"], $scope.input.class);
+  _child_input_$rest($scope["#childScope/0"], (({
+    class: $class,
+    ...rest
+  }) => rest)($scope.input));
+  $dynamicTag($scope, Child, () => $scope.input);
+});
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -9,7 +9,7 @@ export default _._template("__tests__/template.marko", input => {
     value: value,
     valueChange: _._resume(_new_value => {
       value = _new_value;
-    }, "__tests__/template.marko_0/valueChange2", $scope0_id),
+    }, "__tests__/template.marko_0/valueChange", $scope0_id),
     content: _._content_resume("__tests__/template.marko_1_content", () => {
       const $scope1_id = _._scope_id();
       _._html(`${_._escape(value)}${_._el_resume($scope1_id, "#text/0")}`);

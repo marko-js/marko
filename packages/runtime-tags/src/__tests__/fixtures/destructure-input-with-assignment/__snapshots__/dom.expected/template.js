@@ -9,7 +9,7 @@ const $value__closure = /* @__PURE__ */_._closure($child_content__value);
 const $value = /* @__PURE__ */_._let("value/1", $scope => {
   _child_input($scope["#childScope/0"], {
     value: $scope.value,
-    valueChange: $valueChange2($scope),
+    valueChange: $valueChange($scope),
     content: $child_content($scope)
   });
   $value__closure($scope);
@@ -18,10 +18,10 @@ export function $setup($scope) {
   _child($scope["#childScope/0"]);
   $value($scope, 1);
 }
-function $valueChange2($scope) {
+function $valueChange($scope) {
   return _new_value => {
     $value($scope, _new_value);
   };
 }
-_._resume("__tests__/template.marko_0/valueChange2", $valueChange2);
+_._resume("__tests__/template.marko_0/valueChange", $valueChange);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

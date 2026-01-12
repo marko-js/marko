@@ -46,7 +46,7 @@ export default {
         const sectionDynamicSubscribers = new Set<Section>();
         forEach(section.hoisted, (binding) => {
           for (const hoistedBinding of binding.hoists.values()) {
-            if (hoistedBinding.downstreamExpressions.size) {
+            if (hoistedBinding.reads.size) {
               getHTMLSectionStatements(hoistedBinding.section).push(
                 t.variableDeclaration("const", [
                   t.variableDeclarator(

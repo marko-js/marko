@@ -3,7 +3,7 @@ const $Baz_content__walks = /* over(1) */"b",
 export const $template = `<!><!><!>${$Baz_content__template}<!>`;
 export const $walks = /* over(1), replace, over(1), replace, over(1), <Baz>, over(1) */`b%b%b/${$Baz_content__walks}&b`;
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $Baz_content2 = /* @__PURE__ */_._content("__tests__/template.marko_4_content", "<div>Baz Fallback</div>", /* over(1) */"b");
+const $Baz_content2 = _._content_resume("__tests__/template.marko_4_content", "<div>Baz Fallback</div>", /* over(1) */"b");
 const $Bar_content = _._content_resume("__tests__/template.marko_2_content", "<div>Bar Fallback</div>", /* over(1) */"b");
 const $Foo_content = _._content_resume("__tests__/template.marko_1_content", "<div>Foo Fallback</div>", /* over(1) */"b");
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", $Foo_content);

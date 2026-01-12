@@ -2,8 +2,11 @@ import { types as t } from "@marko/compiler";
 import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { buildForRuntimeCall, getForType } from "../core/for";
-import { scopeIdentifier, type TemplateExports } from "../visitors/program";
-import type { BindingPropTree } from "./binding-prop-tree";
+import { scopeIdentifier } from "../visitors/program";
+import {
+  type BindingPropTree,
+  getKnownFromPropTree,
+} from "./binding-prop-tree";
 import { getSharedUid } from "./generate-uid";
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
@@ -30,13 +33,11 @@ type ContentKey = "renderBody" | "content";
 
 export function translateAttrs(
   tag: t.NodePath<t.MarkoTag>,
-  propTree?: BindingPropTree,
+  propTree: BindingPropTree | true = true,
   skip?: Set<string>,
   statements: t.Statement[] = [],
   contentKey: ContentKey = "content",
 ) {
-  const templateExports =
-    propTree && !propTree.rest ? propTree.props : undefined;
   const properties: t.ObjectExpression["properties"] = [];
   const attrTagLookup = tag.node.extra?.attributeTags;
   const seen = new Set(skip);
@@ -45,7 +46,7 @@ export function translateAttrs(
       const attrTagMeta = attrTagLookup[name];
       if (
         !seen.has(attrTagMeta.name) &&
-        usesExport(templateExports, attrTagMeta.name)
+        getKnownFromPropTree(propTree, attrTagMeta.name)
       ) {
         seen.add(attrTagMeta.name);
         if (attrTagMeta.dynamic) {
@@ -83,13 +84,13 @@ export function translateAttrs(
               i,
               attrTagLookup,
               statements,
-              templateExports,
+              propTree,
               contentKey,
             );
           } else {
             const translatedAttrTag = translateAttrs(
               child,
-              templateExports?.[attrTagMeta.name],
+              getKnownFromPropTree(propTree, attrTagMeta.name),
               undefined,
               statements,
               contentKey,
@@ -132,7 +133,7 @@ export function translateAttrs(
             i,
             attrTagLookup,
             statements,
-            templateExports,
+            propTree,
             contentKey,
           );
         }
@@ -140,7 +141,7 @@ export function translateAttrs(
     }
   }
 
-  if (!seen.has(contentKey) && usesExport(templateExports, contentKey)) {
+  if (!seen.has(contentKey) && getKnownFromPropTree(propTree, contentKey)) {
     const contentExpression = buildContent(tag.get("body"));
     if (contentExpression) {
       const contentProp = t.objectProperty(
@@ -159,7 +160,10 @@ export function translateAttrs(
     const { value } = attr;
     if (t.isMarkoSpreadAttribute(attr)) {
       properties.push(t.spreadElement(value));
-    } else if (!seen.has(attr.name) && usesExport(templateExports, attr.name)) {
+    } else if (
+      !seen.has(attr.name) &&
+      getKnownFromPropTree(propTree, attr.name)
+    ) {
       seen.add(attr.name);
       properties.push(toObjectProperty(attr.name, value));
     }
@@ -185,20 +189,18 @@ export function addDynamicAttrTagStatements(
   index: number,
   attrTagLookup: AttrTagLookup,
   statements: t.Statement[],
-  templateExports: TemplateExports,
+  propTree: BindingPropTree | true,
   contentKey: ContentKey = "content",
 ): number {
   const tag = attrTags[index];
   if (tag.isMarkoTag()) {
     if (isAttributeTag(tag)) {
       const attrTagMeta = attrTagLookup[getTagName(tag)];
-      if (
-        usesExport(templateExports, attrTagMeta.name) &&
-        attrTagMeta.dynamic
-      ) {
+      const attrTagExport = getKnownFromPropTree(propTree, attrTagMeta.name);
+      if (attrTagExport && attrTagMeta.dynamic) {
         const translatedAttrTag = translateAttrs(
           tag,
-          templateExports?.[attrTagMeta.name],
+          attrTagExport,
           undefined,
           statements,
           contentKey,
@@ -240,7 +242,7 @@ export function addDynamicAttrTagStatements(
             index,
             attrTagLookup,
             statements,
-            templateExports,
+            propTree,
             contentKey,
           );
 
@@ -250,7 +252,7 @@ export function addDynamicAttrTagStatements(
             index,
             attrTagLookup,
             statements,
-            templateExports,
+            propTree,
             contentKey,
           );
         }
@@ -274,7 +276,7 @@ function translateForAttrTag(
   index: number,
   attrTagLookup: AttrTagLookup,
   statements: t.Statement[],
-  templateExports: TemplateExports,
+  propTree: BindingPropTree | true,
   contentKey: ContentKey,
 ) {
   const forTag = attrTags[index] as t.NodePath<t.MarkoTag>;
@@ -283,7 +285,7 @@ function translateForAttrTag(
     forTag,
     attrTagLookup,
     bodyStatements,
-    templateExports,
+    propTree,
     contentKey,
   );
   statements.push(
@@ -303,7 +305,7 @@ function translateIfAttrTag(
   index: number,
   attrTagLookup: AttrTagLookup,
   statements: t.Statement[],
-  templateExports: TemplateExports,
+  propTree: BindingPropTree | true,
   contentKey: ContentKey,
 ) {
   const ifTag = attrTags[index] as t.NodePath<t.MarkoTag>;
@@ -318,7 +320,7 @@ function translateIfAttrTag(
     ifTag,
     attrTagLookup,
     consequentStatements,
-    templateExports,
+    propTree,
     contentKey,
   );
 
@@ -335,7 +337,7 @@ function translateIfAttrTag(
             nextTag,
             attrTagLookup,
             alternateStatements,
-            templateExports,
+            propTree,
             contentKey,
           );
 
@@ -365,7 +367,7 @@ function addAllAttrTagsAsDynamic(
   tag: t.NodePath<t.MarkoTag>,
   attrTagLookup: AttrTagLookup,
   statements: t.Statement[],
-  templateExports: TemplateExports,
+  propTree: BindingPropTree | true,
   contentKey: ContentKey,
 ) {
   const attrTags = tag.node.body.attributeTags
@@ -379,14 +381,10 @@ function addAllAttrTagsAsDynamic(
       i,
       attrTagLookup,
       statements,
-      templateExports,
+      propTree,
       contentKey,
     );
   }
-}
-
-function usesExport(templateExports: TemplateExports, name: string) {
-  return !templateExports || !!templateExports[name];
 }
 
 function findObjectProperty(

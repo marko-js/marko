@@ -53,6 +53,7 @@ export default {
     ));
 
     binding.downstreamExpressions.add(tagExtra);
+    tagExtra.isEffect = true;
 
     if (node.attributes.length === 0) {
       throw tag
@@ -70,7 +71,6 @@ export default {
             "The [`<lifecycle>` tag](https://markojs.com/docs/reference/core-tag#lifecycle) does not support [`...spread` attributes](https://markojs.com/docs/reference/language#spread-attributes).",
           );
       }
-      (attr.value.extra ??= {}).isEffect = true;
     }
 
     getProgram().node.extra.isInteractive = true;

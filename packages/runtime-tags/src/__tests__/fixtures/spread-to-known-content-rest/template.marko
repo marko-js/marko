@@ -1,0 +1,18 @@
+import wrapTag from "<wrap>";
+static const Wrap = wrapTag
+
+<div#content-missing>
+  <wrap class="foo" />
+</div>
+
+<div#content-undefined>
+  <wrap class="foo" content=undefined />
+</div>
+
+<div#content-set>
+  <wrap class="foo">Hello World</wrap>
+</div>
+
+<div#dynamic>
+  <${Wrap} class="bar">Hello World</>
+</div>
