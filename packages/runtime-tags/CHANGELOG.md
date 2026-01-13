@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.131
+
+### Patch Changes
+
+- [#3036](https://github.com/marko-js/marko/pull/3036) [`68738ea`](https://github.com/marko-js/marko/commit/68738ea8959f09eebeaa856165ffc5beeccb452b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with registering default event handlers before a spread on a native tag.
+
 ## 6.0.130
 
 ### Patch Changes
