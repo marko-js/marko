@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.132
+
+### Patch Changes
+
+- [#3040](https://github.com/marko-js/marko/pull/3040) [`8b1ca06`](https://github.com/marko-js/marko/commit/8b1ca06c60e56e0b8cb8c5695b0bde1058880694) Thanks [@rturnq](https://github.com/rturnq)! - Fix for index when using by
+
+- [#3040](https://github.com/marko-js/marko/pull/3040) [`21e5182`](https://github.com/marko-js/marko/commit/21e51825cb5a92ac4d30dfc6495145f9774c5f2f) Thanks [@rturnq](https://github.com/rturnq)! - Fix know property spreads and rest
+
 ## 6.0.131
 
 ### Patch Changes
