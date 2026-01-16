@@ -1,0 +1,17 @@
+<let/messages=["hello"]>
+<let/last>
+<div>
+  <for|message, index| of=messages by=(f) => f>
+    <button
+      onClick() {
+        messages = messages.toSpliced(index, 1);
+        last = index;
+      }>
+      $!{message}
+    </button>
+  </for>
+</div>
+
+<if=last !== undefined>
+  <div>${last}</div>
+</if>

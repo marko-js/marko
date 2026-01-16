@@ -121,7 +121,8 @@ export default {
       const keyBinding = paramsBinding.propertyAliases.get(
         forType === "of" ? "1" : "0",
       );
-      if (keyBinding) {
+
+      if (keyBinding && !getKnownAttrValues(tag.node).by) {
         keyBinding.type = BindingType.constant;
         keyBinding.scopeAccessor = getAccessorProp().LoopKey;
       }
