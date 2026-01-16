@@ -2,7 +2,7 @@ export const $template = "<div>x=<span> </span>, was=<!></div><button id=increme
 export const $walks = /* next(1), over(1), next(1), get, out(1), over(1), replace, out(1), get, over(1) */"DbD lb%l b";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $x__script = _._script("__tests__/template.marko_0_x", $scope => {
-  _._lifecycle($scope, "$lifecycle", {
+  _._lifecycle($scope, {
     onMount: function () {
       this.cur = $scope.x;
     },

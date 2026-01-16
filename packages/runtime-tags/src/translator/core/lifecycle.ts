@@ -8,29 +8,17 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent } from "../util/assert";
-import { generateUid } from "../util/generate-uid";
 import { isOutputDOM } from "../util/marko-config";
-import {
-  type Binding,
-  BindingType,
-  createBinding,
-  getAllTagReferenceNodes,
-  getScopeAccessorLiteral,
-  mergeReferences,
-} from "../util/references";
+import { getAllTagReferenceNodes, mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
+import { createSectionState } from "../util/state";
 import { propsToExpression, translateAttrs } from "../util/translate-attrs";
 import { scopeIdentifier } from "../visitors/program";
 
-const kRef = Symbol("lifecycle attrs reference");
-declare module "@marko/compiler/dist/types" {
-  export interface MarkoTagExtra {
-    [kRef]?: Binding;
-  }
-}
+const [getIndex, setIndex] = createSectionState("lifecycleIndex", () => 0);
 
 export default {
   analyze(tag) {
@@ -46,13 +34,6 @@ export default {
       tag.node,
       getAllTagReferenceNodes(tag.node),
     );
-    const binding = (tagExtra[kRef] = createBinding(
-      generateUid("lifecycle"),
-      BindingType.derived,
-      section,
-    ));
-
-    binding.downstreamExpressions.add(tagExtra);
     tagExtra.isEffect = true;
 
     if (node.attributes.length === 0) {
@@ -78,21 +59,21 @@ export default {
   translate: {
     exit(tag) {
       const { node } = tag;
-
       const section = getSection(tag);
       const tagExtra = node.extra!;
       const { referencedBindings } = tagExtra;
-      const lifecycleAttrsRef = tagExtra[kRef]!;
 
       if (isOutputDOM()) {
         const translatedAttrs = translateAttrs(tag);
+        const index = getIndex(section);
+        setIndex(section, index + 1);
         translatedAttrs.statements.push(
           t.expressionStatement(
             callRuntime(
               "_lifecycle",
               scopeIdentifier,
-              getScopeAccessorLiteral(lifecycleAttrsRef, true),
               propsToExpression(translatedAttrs.properties),
+              index > 0 ? t.numericLiteral(index) : undefined,
             ),
           ),
         );

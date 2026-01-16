@@ -1,7 +1,7 @@
 export const $template = "<!><!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
 export const $walks = /* over(1), replace, over(2), get, over(1), get, over(1) */"b%c b b";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $if_content__x__script = _._script("__tests__/template.marko_1_x", $scope => _._lifecycle($scope, "$lifecycle", {
+const $if_content__x__script = _._script("__tests__/template.marko_1_x", $scope => _._lifecycle($scope, {
   onMount: function () {
     document.getElementById("ref").textContent = "Mount " + $scope._.x;
   },

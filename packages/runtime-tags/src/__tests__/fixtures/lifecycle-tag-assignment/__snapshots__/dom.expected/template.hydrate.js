@@ -1,6 +1,6 @@
-// size: 247 (min) 149 (brotli)
+// size: 245 (min) 163 (brotli)
 const $x__script = _._script("a0", ($scope) => {
-    (_._lifecycle($scope, 4, {
+    (_._lifecycle($scope, {
       onMount: function () {
         this.cur = $scope.d;
       },
