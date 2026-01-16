@@ -393,22 +393,22 @@ function normalizeString(value: unknown) {
 }
 export function _lifecycle(
   scope: Scope,
-  index: string | number,
   thisObj: Record<string, unknown> & {
     onMount?: (this: unknown) => void;
     onUpdate?: (this: unknown) => void;
     onDestroy?: (this: unknown) => void;
   },
+  index: number = 0,
 ) {
-  const instance = scope[index] as typeof thisObj;
+  const accessor = AccessorPrefix.Lifecycle + index;
+  const instance = scope[accessor] as typeof thisObj;
   if (instance) {
     Object.assign(instance, thisObj);
     instance.onUpdate?.();
   } else {
-    scope[index] = thisObj;
+    scope[accessor] = thisObj;
     thisObj.onMount?.();
-    $signal(scope, AccessorPrefix.LifecycleAbortController + index).onabort =
-      () => thisObj.onDestroy?.();
+    $signal(scope, accessor).onabort = () => thisObj.onDestroy?.();
   }
 }
 

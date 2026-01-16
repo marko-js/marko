@@ -9,7 +9,7 @@ export enum AccessorPrefix {
   DynamicHTMLLastChild = "DynamicHTMLLastChild:",
   EventAttributes = "EventAttributes:",
   Getter = "Getter:",
-  LifecycleAbortController = "LifecycleAbortController:",
+  Lifecycle = "Lifecycle:",
   Promise = "Promise:",
   TagVariableChange = "TagVariableChange:",
 }

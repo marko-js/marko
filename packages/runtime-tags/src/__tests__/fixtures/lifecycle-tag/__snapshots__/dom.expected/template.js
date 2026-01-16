@@ -2,7 +2,7 @@ export const $template = "<div id=ref></div><button id=increment>Increment</butt
 export const $walks = /* over(1), get, over(1) */"b b";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $x__script = _._script("__tests__/template.marko_0_x", $scope => {
-  _._lifecycle($scope, "$lifecycle", {
+  _._lifecycle($scope, {
     onMount: function () {
       document.getElementById("ref").textContent = "Mount " + $scope.x;
     },
