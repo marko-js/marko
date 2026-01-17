@@ -1,0 +1,13 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "o",
+      "$$input__script": "n",
+      "$$input": "a",
+      "$$myselect_content": "e",
+      "$$value": "r",
+      "$$valueChange": "i"
+    }
+  }
+}
