@@ -1,4 +1,4 @@
-// size: 20367 (min) 7823 (brotli)
+// size: 20367 (min) 7821 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -746,7 +746,7 @@ function _attr_input_value(scope, nodeAccessor, value, valueChange) {
     normalizedValue = normalizeStrProp(value);
   ((scope["E" + nodeAccessor] = valueChange),
     valueChange
-      ? ((scope["F" + nodeAccessor] = 0),
+      ? ((scope["F" + nodeAccessor] = 2),
         (scope["G" + nodeAccessor] = value),
         el.isConnected
           ? setValueAndUpdateSelection(el, normalizedValue)

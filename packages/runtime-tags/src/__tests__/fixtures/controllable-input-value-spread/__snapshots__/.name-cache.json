@@ -1,0 +1,12 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "r",
+      "$$input__script": "a",
+      "$$input": "e",
+      "$$value": "m",
+      "$$valueChange": "o"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "e",
+      "$$checkedValue__OR__checkedValueChange": "_",
+      "$$checkedValue": "r",
+      "$$input__script": "a",
+      "$$input": "c"
+    }
+  }
+}

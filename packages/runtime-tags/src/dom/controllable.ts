@@ -111,7 +111,7 @@ export function _attr_input_value(
 
   if (valueChange) {
     scope[AccessorPrefix.ControlledType + nodeAccessor] =
-      ControlledType.InputChecked;
+      ControlledType.InputValue;
     scope[AccessorPrefix.ControlledValue + nodeAccessor] = value;
 
     if (el.isConnected) {
