@@ -35,6 +35,7 @@ import {
   getCommonSection,
   getDirectClosures,
   getOrCreateSection,
+  getSectionForBody,
   getSectionRegisterReasons,
   isDynamicClosure,
   isSameOrChildSection,
@@ -325,32 +326,24 @@ export function trackVarReferences(
 export function trackParamsReferences(
   body: t.NodePath<t.MarkoTagBody | t.Program>,
   type: BindingType,
-  upstreamAlias?: Binding["upstreamAlias"],
 ) {
   const params = body.node.params;
   if (body.node.body.length && params.length) {
-    const canonicalUpstreamAlias =
-      upstreamAlias && getCanonicalBinding(upstreamAlias);
-    let section: Section;
-    if (canonicalUpstreamAlias) {
-      section = canonicalUpstreamAlias.section;
-      type = canonicalUpstreamAlias.type;
-    } else {
-      section = getOrCreateSection(body);
-    }
-    const paramsBinding =
-      canonicalUpstreamAlias ||
-      ((body.node.extra ??= {}).binding = createBinding(
-        generateUid("params"),
-        type,
-        section,
-        undefined,
-        undefined,
-        undefined,
-        params[0].loc,
-      ));
+    const section = getOrCreateSection(body);
+    const paramsBinding = ((body.node.extra ??= {}).binding = createBinding(
+      generateUid("params"),
+      type,
+      section,
+      undefined,
+      undefined,
+      undefined,
+      params[0].loc,
+    ));
 
-    section.params = paramsBinding as ParamBinding;
+    const bodySection = getSectionForBody(body);
+    if (bodySection) {
+      bodySection.params = paramsBinding as typeof bodySection.params;
+    }
 
     for (let i = 0; i < params.length; i++) {
       const param = params[i];
