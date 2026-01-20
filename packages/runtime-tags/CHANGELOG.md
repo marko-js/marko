@@ -1,5 +1,18 @@
 # @marko/runtime-tags
 
+## 6.0.133
+
+### Patch Changes
+
+- [#3044](https://github.com/marko-js/marko/pull/3044) [`d581cd9`](https://github.com/marko-js/marko/commit/d581cd9ebb2705c62a658dfcb677fca5fffd3d1b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with local attribute tag params overwriting parent section params binding.
+
+- [#3044](https://github.com/marko-js/marko/pull/3044) [`2a43f7e`](https://github.com/marko-js/marko/commit/2a43f7e4147553779133a94c88f8c965fc8dd19f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve logic around building up analyzed watch files.
+
+- [#3042](https://github.com/marko-js/marko/pull/3042) [`22326da`](https://github.com/marko-js/marko/commit/22326da0a2ef04199143b828272d677036aea74c) Thanks [@rturnq](https://github.com/rturnq)! - Fix controllable text inputs when spreading value and valueChange
+
+- Updated dependencies [[`2a43f7e`](https://github.com/marko-js/marko/commit/2a43f7e4147553779133a94c88f8c965fc8dd19f)]:
+  - @marko/compiler@5.39.48
+
 ## 6.0.132
 
 ### Patch Changes

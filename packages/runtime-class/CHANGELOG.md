@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.38.11
+
+### Patch Changes
+
+- [#3044](https://github.com/marko-js/marko/pull/3044) [`2a43f7e`](https://github.com/marko-js/marko/commit/2a43f7e4147553779133a94c88f8c965fc8dd19f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve logic around building up analyzed watch files.
+
+- Updated dependencies [[`d581cd9`](https://github.com/marko-js/marko/commit/d581cd9ebb2705c62a658dfcb677fca5fffd3d1b), [`2a43f7e`](https://github.com/marko-js/marko/commit/2a43f7e4147553779133a94c88f8c965fc8dd19f), [`22326da`](https://github.com/marko-js/marko/commit/22326da0a2ef04199143b828272d677036aea74c)]:
+  - @marko/runtime-tags@6.0.133
+  - @marko/compiler@5.39.48
+
 ## 5.38.10
 
 ### Patch Changes
