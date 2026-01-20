@@ -164,7 +164,7 @@ export function getOrCreateSection(path: t.NodePath<any>) {
         !cur.node.attributeTags &&
         !isNativeNode(cur.parentPath as t.NodePath<t.MarkoTag>))
     ) {
-      return ((path.node.extra ??= {}).section = startSection(cur)!);
+      return startSection(cur)!;
     }
 
     cur = cur.parentPath!;
