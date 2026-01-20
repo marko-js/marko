@@ -255,35 +255,17 @@ export function loadFileForTag(tag) {
   const filename = def && def.template;
 
   if (filename) {
-    const markoMeta = file.metadata.marko;
-    const relativeFileName = resolveRelativePath(file, filename);
-    const { analyzedTags } = markoMeta;
-    if (analyzedTags) {
-      analyzedTags.add(relativeFileName);
-    } else {
-      markoMeta.analyzedTags = new Set([relativeFileName]);
-    }
-
     return resolveMarkoFile(file, filename);
   }
 }
 
 export function loadFileForImport(file, request) {
   const relativeRequest = resolveTagImport(file.path, request);
-
   if (relativeRequest) {
     const filename =
       relativeRequest[0] === "."
         ? resolve(file.opts.filename, "..", relativeRequest)
         : markoModules.resolve(relativeRequest, dirname(file.opts.filename));
-    const markoMeta = file.metadata.marko;
-    const { analyzedTags } = markoMeta;
-    if (analyzedTags) {
-      analyzedTags.add(relativeRequest);
-    } else {
-      markoMeta.analyzedTags = new Set([relativeRequest]);
-    }
-
     return resolveMarkoFile(file, filename);
   }
 }
@@ -298,11 +280,14 @@ function resolveMarkoFile(file, filename) {
   }
 
   try {
-    return file.___getMarkoFile(
+    const childFile = file.___getMarkoFile(
       file.markoOpts.fileSystem.readFileSync(filename).toString("utf-8"),
       createNewFileOpts(file.opts, filename),
       file.markoOpts,
     );
+
+    (file.metadata.marko.analyzedTags ||= new Set()).add(filename);
+    return childFile;
   } catch (_) {
     // ignore
   }
