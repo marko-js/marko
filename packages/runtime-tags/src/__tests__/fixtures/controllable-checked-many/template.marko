@@ -1,0 +1,14 @@
+<let/states=[false, false, false]>
+<for|state, i| of=states>
+  <let/checked=state valueChange(value) {
+    if (i === undefined) {
+      throw new Error('LoopKey is undefined');
+    }
+    
+    const newStates = [...states];
+    newStates[i] = value
+    states = newStates;
+  }>
+  <input type="checkbox" checked:=checked>
+</>
+<div>${states.join(',')}</div>

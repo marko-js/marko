@@ -1,0 +1,19 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "r",
+      "$$for_content__checked": "o",
+      "$$for_content__states__OR__state": "_",
+      "$$for_content__states": "c",
+      "$$states": "e",
+      "$$checkedChange": "n",
+      "$$valueChange": "a",
+      "$$for_content__state": "i",
+      "$$for_content__setup__script": "u",
+      "$$for_content__setup": "m",
+      "$$for_content__$params": "s",
+      "$$for": "f"
+    }
+  }
+}
