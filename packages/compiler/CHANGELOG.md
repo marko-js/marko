@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.48
+
+### Patch Changes
+
+- [#3044](https://github.com/marko-js/marko/pull/3044) [`2a43f7e`](https://github.com/marko-js/marko/commit/2a43f7e4147553779133a94c88f8c965fc8dd19f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve logic around building up analyzed watch files.
+
 ## 5.39.47
 
 ### Patch Changes
