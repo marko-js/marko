@@ -114,9 +114,7 @@ export const analyze = {
       }
 
       if (tagDef.translator && tagDef.translator.path) {
-        if (!meta.watchFiles.includes(tagDef.translator.path)) {
-          meta.watchFiles.push(tagDef.translator.path);
-        }
+        meta.watchFiles.push(tagDef.translator.path);
       }
     }
 

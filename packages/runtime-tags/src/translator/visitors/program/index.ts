@@ -120,7 +120,7 @@ export default {
       if (getMarkoOpts().output === "hydrate") {
         const entryFile = program.hub.file;
         const visitedFiles = new Set([
-          resolveRelativePath(entryFile, entryFile.opts.filename as string),
+          resolveRelativePath(entryFile, entryFile.opts.filename),
         ]);
         entryBuilder.visit(entryFile, entryFile, function visitChild(resolved) {
           if (!visitedFiles.has(resolved)) {
