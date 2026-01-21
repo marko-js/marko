@@ -160,14 +160,16 @@ const [getNextBindingId, setNextBindingId] = createProgramState(() => 0);
 export function createBinding(
   name: string,
   type: Binding["type"],
-  section: Section,
+  refSection: Section,
   upstreamAlias?: Binding["upstreamAlias"],
   property?: string,
   excludeProperties?: Opt<string>,
   loc: t.SourceLocation | null = null,
-  declared = false,
+  refDeclared = false,
 ): Binding {
   const id = getNextBindingId();
+  const section = upstreamAlias ? upstreamAlias.section : refSection;
+  const declared = refDeclared && refSection === section;
   const binding: Binding = {
     id,
     name,
@@ -291,6 +293,7 @@ export function trackVarReferences(
 ) {
   const tagVar = tag.node.var;
   if (tagVar) {
+    const section = getOrCreateSection(tag);
     let canonicalUpstreamAlias =
       upstreamAlias && getCanonicalBinding(upstreamAlias);
     if (canonicalUpstreamAlias) {
@@ -302,7 +305,7 @@ export function trackVarReferences(
         tagVar,
         canonicalUpstreamAlias.type,
         tag.scope,
-        canonicalUpstreamAlias.section,
+        section,
         canonicalUpstreamAlias,
         undefined,
         excludeProperties,
@@ -314,7 +317,7 @@ export function trackVarReferences(
       tagVar,
       type,
       tag.scope,
-      getOrCreateSection(tag),
+      section,
       undefined,
       undefined,
       undefined,
