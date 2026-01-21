@@ -43,6 +43,7 @@ import {
   isDynamicClosure,
   isImmediateOwner,
   type Section,
+  sectionUtil,
 } from "./sections";
 import { getExprIfSerialized } from "./serialize-guard";
 import { getSerializeReason, type SerializeReason } from "./serialize-reasons";
@@ -191,11 +192,20 @@ export function getSignal(
   referencedBindings: ReferencedBindings,
   name: string = generateSignalName(referencedBindings),
 ) {
-  if (
-    !Array.isArray(referencedBindings) &&
-    referencedBindings?.type === BindingType.constant
-  ) {
-    return getSignal(section, undefined);
+  if (referencedBindings && !Array.isArray(referencedBindings)) {
+    if (referencedBindings.type === BindingType.constant) {
+      return getSignal(section, undefined);
+    }
+
+    if (
+      referencedBindings.type !== BindingType.local &&
+      referencedBindings.section !== section
+    ) {
+      const canonicalReference = getCanonicalBinding(referencedBindings);
+      if (canonicalReference !== referencedBindings) {
+        return getSignal(section, canonicalReference);
+      }
+    }
   }
 
   const signals = getSignals(section);
@@ -261,10 +271,10 @@ export function getSignal(
       };
     } else if (
       referencedBindings.section !== section &&
-      bindingUtil.find(section.referencedClosures, referencedBindings)
+      sectionUtil.has(referencedBindings.closureSections, section)
     ) {
       signal.build = () => {
-        const closure = getCanonicalBinding(referencedBindings)!;
+        const closure = referencedBindings;
         const render = getSignalFn(signal);
         const closureSignalBuilder = getClosureSignalBuilder(section);
 
@@ -489,7 +499,7 @@ export function getSignalFn(signal: Signal): t.Expression {
     );
   });
 
-  if (isValue && binding.sources && binding.type !== BindingType.local) {
+  if (isValue && binding.sources) {
     let dynamicClosureArgs: t.Expression[] | undefined;
     let dynamicClosureSignalIdentifier: t.Identifier | undefined;
     forEach(binding.closureSections, (closureSection) => {

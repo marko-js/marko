@@ -910,21 +910,20 @@ export function finalizeReferences() {
 
     for (const { isEffect, section } of binding.reads) {
       if (section !== binding.section) {
-        const canonicalUpstreamAlias = getCanonicalBinding(binding)!;
-        canonicalUpstreamAlias.closureSections = sectionUtil.add(
-          canonicalUpstreamAlias.closureSections,
-          section,
-        );
-
         if (binding.type === BindingType.local) {
           section.referencedLocalClosures = bindingUtil.add(
             section.referencedLocalClosures,
             binding,
           );
         } else {
+          const canonicalUpstreamAlias = getCanonicalBinding(binding);
+          canonicalUpstreamAlias.closureSections = sectionUtil.add(
+            canonicalUpstreamAlias.closureSections,
+            section,
+          );
           section.referencedClosures = bindingUtil.add(
             section.referencedClosures,
-            binding,
+            canonicalUpstreamAlias,
           );
 
           addOwnerSerializeReason(
