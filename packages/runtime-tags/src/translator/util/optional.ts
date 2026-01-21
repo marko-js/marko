@@ -99,8 +99,8 @@ export class Sorted<T> {
     }
 
     for (let i = subLen; i--; ) {
-      const supIndex = this.findIndex(superset, subset[i]);
-      if (supIndex === -1 || supLen - supIndex <= i) return false;
+      const found = findIndexSorted(this.compare, superset, subset[i]);
+      if (found === -1 || supLen - found <= i) return false;
     }
 
     return true;
