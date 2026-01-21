@@ -1,0 +1,11 @@
+<const/value=undefined>
+<define/Child|input|>
+    <div ...input/>
+</define>
+
+<Child>
+  <if=value>
+      <const/{ text }=value>
+      <span class=value.class>${text}</span>
+  </if>
+</>

@@ -1,0 +1,13 @@
+{
+  "vars": {
+    "props": {
+      "$_": "_",
+      "$init": "t",
+      "$$if_content__value_class": "r",
+      "$$if_content__text": "s",
+      "$$if_content__setup": "a",
+      "$$Child_content__if": "o",
+      "$$Child_content__setup": "e"
+    }
+  }
+}
