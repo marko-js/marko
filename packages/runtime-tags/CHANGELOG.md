@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.135
+
+### Patch Changes
+
+- [#3051](https://github.com/marko-js/marko/pull/3051) [`e31adc0`](https://github.com/marko-js/marko/commit/e31adc0511d856bf9bf506acf0d489767be29cbe) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix aliases in another section incorrectly causing a binding to be seen as declared / non nullable.
+
+- [#3049](https://github.com/marko-js/marko/pull/3049) [`255769d`](https://github.com/marko-js/marko/commit/255769d1023d3c468947228fc690fde82feb650e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue assigning to unused binding.
+
 ## 6.0.134
 
 ### Patch Changes
