@@ -8,8 +8,8 @@ const $Child_content__input_a = ($scope, input_a) => _._text($scope["#text/0"], 
 const $Child_content__input_b = ($scope, input_b) => _._text($scope["#text/1"], input_b);
 const $Child_content__$params = ($scope, $params2) => $Child_content__input($scope, $params2[0]);
 const $Child_content__input = ($scope, input) => {
-  $Child_content__input_a($scope, input?.a);
-  $Child_content__input_b($scope, input?.b);
+  $Child_content__input_a($scope, input.a);
+  $Child_content__input_b($scope, input.b);
 };
 export function $setup($scope) {
   _child($scope["#childScope/0"]);

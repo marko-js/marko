@@ -30,8 +30,8 @@ const $Child_content__for = /* @__PURE__ */_._for_of("#select/0", "<option></opt
 const $Child_content__input_option = ($scope, input_option) => $Child_content__for($scope, [input_option]);
 const $Child_content__$params = ($scope, $params2) => $Child_content__input($scope, $params2[0]);
 const $Child_content__input = ($scope, input) => {
-  $Child_content__input_class($scope, input?.class);
-  $Child_content__input_option($scope, input?.option);
+  $Child_content__input_class($scope, input.class);
+  $Child_content__input_option($scope, input.option);
 };
 export function $setup($scope) {
   $Wrap_content__rest_option($scope["#childScope/0"], (_.attrTags(_.attrTags(_.attrTag({
