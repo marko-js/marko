@@ -55,8 +55,7 @@ export default {
       return;
     }
 
-    // TODO: should determine if var bindings are nullable based on attrs.
-    trackParamsReferences(tagBody, BindingType.param);
+    const paramsBinding = trackParamsReferences(tagBody, BindingType.param);
     setTagDownstream(tag, varBinding);
 
     if (bodySection) {
@@ -64,6 +63,7 @@ export default {
       if (t.isIdentifier(tag.node.var)) {
         const babelBinding = tag.scope.getBinding(tag.node.var.name)!;
         let allDirectReferences = true;
+        let allHaveInput = true;
         for (const ref of babelBinding.referencePaths) {
           if (isReferenceHoisted(babelBinding.path, ref)) {
             throw ref.buildCodeFrameError(
@@ -73,12 +73,19 @@ export default {
 
           if (ref.parent.type === "MarkoTag" && ref.parent.name === ref.node) {
             (ref.parent.extra ??= {}).defineBodySection = bodySection;
+            allHaveInput &&= !ref.parent.arguments?.length;
             dropNodes(ref.parent.name);
           } else {
+            allHaveInput = false;
             allDirectReferences = false;
           }
         }
         if (allDirectReferences) {
+          const inputAlias =
+            allHaveInput && paramsBinding?.propertyAliases.get("0");
+          if (inputAlias) {
+            inputAlias.nullable = false;
+          }
           dropNodes(getAllTagReferenceNodes(tag.node));
           return;
         }

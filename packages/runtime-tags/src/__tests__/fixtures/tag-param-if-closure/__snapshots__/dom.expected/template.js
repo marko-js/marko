@@ -9,8 +9,8 @@ const $Foo_content2__input_content = /* @__PURE__ */_._const("input_content", $F
 const $Foo_content2__input_value = /* @__PURE__ */_._const("input_value", $Foo_content2__input_content__OR__input_value);
 const $Foo_content2__$params = ($scope, $params2) => $Foo_content2__input($scope, $params2[0]);
 const $Foo_content2__input = ($scope, input) => {
-  $Foo_content2__input_content($scope, input?.content);
-  $Foo_content2__input_value($scope, input?.value);
+  $Foo_content2__input_content($scope, input.content);
+  $Foo_content2__input_value($scope, input.value);
 };
 const $if_content__a = /* @__PURE__ */_._closure_get("a", $scope => _._text($scope["#text/0"], $scope._._.a), $scope => $scope._._);
 const $if_content__setup = $if_content__a;
