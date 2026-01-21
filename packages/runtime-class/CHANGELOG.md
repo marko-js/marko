@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.38.12
+
+### Patch Changes
+
+- [#3048](https://github.com/marko-js/marko/pull/3048) [`e0acbe3`](https://github.com/marko-js/marko/commit/e0acbe36ee4e0c885077a837e58a69b855cd3a5e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure canonical signal used for closure references.
+
+- Updated dependencies [[`22724da`](https://github.com/marko-js/marko/commit/22724da052a7ab921ca1995c3347adc48184e23e), [`e0acbe3`](https://github.com/marko-js/marko/commit/e0acbe36ee4e0c885077a837e58a69b855cd3a5e)]:
+  - @marko/runtime-tags@6.0.134
+
 ## 5.38.11
 
 ### Patch Changes
