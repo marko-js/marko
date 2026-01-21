@@ -1409,8 +1409,8 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
       switch (node.left.type) {
         case "Identifier": {
           const { extra } = node.left;
-          if (isAssignedBindingExtra(extra)) {
-            return (
+          return (
+            (isAssignedBindingExtra(extra) &&
               getBuildAssignment(extra)?.(
                 extra.section,
                 node.operator === "="
@@ -1426,12 +1426,10 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
                       ),
                       node.right,
                     ),
-              ) ||
-              (extra?.assignment &&
-                withLeadingComment(node.right, getDebugName(extra.assignment)))
-            );
-          }
-          break;
+              )) ||
+            (extra?.assignment &&
+              withLeadingComment(node.right, getDebugName(extra.assignment)))
+          );
         }
         case "ArrayPattern":
         case "ObjectPattern": {
@@ -1460,7 +1458,7 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
               (params ||= []).push(t.identifier(id.name));
             }
           });
-          if (assignments) {
+          if (assignments || params) {
             const resultId = generateUid("result");
             return t.callExpression(
               t.arrowFunctionExpression(
@@ -1471,7 +1469,7 @@ function replaceAssignedNode(node: t.Node): t.Node | undefined {
                     node.left,
                     t.identifier(resultId),
                   ),
-                  ...assignments,
+                  ...(assignments || []),
                   t.identifier(resultId),
                 ]),
               ),
