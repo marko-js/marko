@@ -1,0 +1,9 @@
+static const identity = fn => fn;
+<let/value="initial">
+<button onClick=identity((_, el) => {
+  let bar;
+  ({ value, bar } = { value: "updated", bar: "bar" });
+  el.textContent = bar;
+})>
+  Click
+</button>
