@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.136
+
+### Patch Changes
+
+- [#3053](https://github.com/marko-js/marko/pull/3053) [`6df8ff8`](https://github.com/marko-js/marko/commit/6df8ff8d2f01f97cf5131a3c5a53d558ee325111) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix serializing nested destructures of a rest binding.
+
+- [#3052](https://github.com/marko-js/marko/pull/3052) [`f47a62e`](https://github.com/marko-js/marko/commit/f47a62e824edc683c0788fb3f24fcda4d569a5f5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where assignments to tag variables which did not otherwise get a section were being incorrectly removed.
+
 ## 6.0.135
 
 ### Patch Changes
