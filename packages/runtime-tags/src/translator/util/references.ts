@@ -529,6 +529,7 @@ function trackAssignment(
     if (id.node.name === binding.name) {
       const idExtra = (id.node.extra ??= {}) as AssignedBindingExtra;
       idExtra.assignment = binding;
+      idExtra.section = section;
       binding.assignmentSections = sectionUtil.add(
         binding.assignmentSections,
         section,

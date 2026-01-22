@@ -1,0 +1,7 @@
+static const identity = fn => fn;
+<let/value="initial">
+<button onClick=identity(() => {
+  value = "updated";
+})>
+  Click ${value}
+</button>
