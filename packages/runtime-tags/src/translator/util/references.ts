@@ -169,7 +169,8 @@ export function createBinding(
 ): Binding {
   const id = getNextBindingId();
   const section = upstreamAlias ? upstreamAlias.section : refSection;
-  const declared = refDeclared && refSection === section;
+  const sameSection = refSection === section;
+  const declared = sameSection && refDeclared;
   const binding: Binding = {
     id,
     name,
@@ -190,7 +191,7 @@ export function createBinding(
     scopeOffset: undefined,
     scopeAccessor: undefined,
     export: undefined,
-    nullable: excludeProperties === undefined,
+    nullable: !sameSection || excludeProperties === undefined,
     pruned: undefined,
   };
 

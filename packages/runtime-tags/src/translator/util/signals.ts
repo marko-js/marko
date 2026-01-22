@@ -422,7 +422,15 @@ export function getSignalFn(signal: Signal): t.Expression {
                     ...getTranslatedExtraArgs(aliasSignal),
                   ]),
                 ),
-                [createScopeReadExpression(binding)],
+                [
+                  binding.nullable
+                    ? t.logicalExpression(
+                        "||",
+                        createScopeReadExpression(binding),
+                        t.objectExpression([]),
+                      )
+                    : createScopeReadExpression(binding),
+                ],
               ),
             ),
           );

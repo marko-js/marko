@@ -1,0 +1,7 @@
+<const/{ value }=input>
+
+<if=value>
+  <const/{ foo, ...rest }=value>
+  -- ${foo}
+  <span ...rest/>
+</>
