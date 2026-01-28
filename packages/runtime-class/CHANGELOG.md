@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.38.15
+
+### Patch Changes
+
+- [#3055](https://github.com/marko-js/marko/pull/3055) [`f86e980`](https://github.com/marko-js/marko/commit/f86e980c6941a4e06136aa20d8bd2fe7a632611a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve await tag types.
+
+- Updated dependencies [[`f86e980`](https://github.com/marko-js/marko/commit/f86e980c6941a4e06136aa20d8bd2fe7a632611a)]:
+  - @marko/runtime-tags@6.0.137
+
 ## 5.38.14
 
 ### Patch Changes
