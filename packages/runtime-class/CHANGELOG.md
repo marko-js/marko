@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.38.16
+
+### Patch Changes
+
+- [#3057](https://github.com/marko-js/marko/pull/3057) [`8d77da5`](https://github.com/marko-js/marko/commit/8d77da552454518a69aa2f5720fe179883571b99) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Dynamic native tag compat fixes.
+
+- Updated dependencies [[`8d77da5`](https://github.com/marko-js/marko/commit/8d77da552454518a69aa2f5720fe179883571b99)]:
+  - @marko/runtime-tags@6.0.138
+
 ## 5.38.15
 
 ### Patch Changes
