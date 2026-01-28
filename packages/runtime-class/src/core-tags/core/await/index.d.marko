@@ -1,4 +1,4 @@
-export interface Input<T> {
+export type Input<T> = {
   value: readonly [T];
   then?: Marko.AttrTag<{ renderBody: Marko.Body<[Awaited<T>]> }>;
   catch?: Marko.AttrTag<{ renderBody: Marko.Body<[unknown]> }>;
@@ -7,4 +7,7 @@ export interface Input<T> {
   name?: string;
   timeout?: number;
   "show-after"?: string;
+} | {
+  value: T;
+  renderBody: Marko.Body<[Awaited<T>]>
 }
