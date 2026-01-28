@@ -11,8 +11,9 @@ const dynamicTag5 = require("../dynamic-tag");
 
 exports.p = function (htmlCompat) {
   const writersByGlobal = new WeakMap();
-  const isMarko6 = (fn) => htmlCompat.isTagsAPI(fn);
-  const isMarko5 = (fn) => !isMarko6(fn);
+  const isMarko6 = (fn) => typeof fn !== "function" || htmlCompat.isTagsAPI(fn);
+  const isMarko5 = (fn) =>
+    typeof fn !== "function" || !htmlCompat.isTagsAPI(fn);
   const writeClassAPIResultToTagsAPI = ({ out }) => {
     const { writer } = out._state;
     htmlCompat.write(writer._content);
