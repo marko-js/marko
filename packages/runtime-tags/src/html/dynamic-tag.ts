@@ -127,7 +127,7 @@ export let _dynamic_tag = (
     }
 
     const childScope = getScopeById(branchId);
-    if (
+    const needsScript =
       childScope &&
       (childScope[
         AccessorPrefix.EventAttributes + (MARKO_DEBUG ? `#${renderer}/0` : "a")
@@ -135,13 +135,14 @@ export let _dynamic_tag = (
         childScope[
           AccessorPrefix.ControlledHandler +
             (MARKO_DEBUG ? `#${renderer}/0` : "a")
-        ])
-    ) {
+        ]);
+
+    if (needsScript) {
       childScope[AccessorProp.Renderer] = renderer;
       _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
     }
 
-    if (shouldResume) {
+    if (shouldResume || needsScript) {
       _html(
         state.mark(
           ResumeSymbol.BranchEndNativeTag,
