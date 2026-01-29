@@ -11,6 +11,7 @@ export default _._template("__tests__/tags/my-tag.marko", input => {
   const startContent = {
     content: _._content("__tests__/tags/my-tag.marko_1_content", () => {
       const $scope1_id = _._scope_id();
+      _._scope_reason();
       _._html("default");
     })
   };

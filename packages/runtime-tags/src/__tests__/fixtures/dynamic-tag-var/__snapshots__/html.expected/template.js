@@ -1,6 +1,7 @@
 import child from "./tags/child/index.marko";
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   let data1 = child({});
   const $inputshowchild_scope = _._peek_scope_id();

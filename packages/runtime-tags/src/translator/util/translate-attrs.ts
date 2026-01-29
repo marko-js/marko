@@ -445,6 +445,10 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
             ),
           ]) as any,
         );
+      } else {
+        body.node.body.unshift(
+          t.expressionStatement(callRuntime("_scope_reason")) as any,
+        );
       }
 
       return callRuntime(

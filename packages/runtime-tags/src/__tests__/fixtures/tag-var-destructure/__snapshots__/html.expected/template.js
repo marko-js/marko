@@ -1,6 +1,7 @@
 function noop(_) {}
 import * as _2 from "@marko/runtime-tags/debug/html";
 export default _2._template("__tests__/template.marko", input => {
+  _2._scope_reason();
   const $scope0_id = _2._scope_id();
   let a = 0;
   let b = 0;

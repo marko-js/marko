@@ -48,6 +48,7 @@ export default _._template("__tests__/template.marko", input => {
     other: other
   }, _._content_resume("__tests__/template.marko_1_content", () => {
     const $scope1_id = _._scope_id();
+    _._scope_reason();
     _._html("Body content");
   }, $scope0_id), 0, _._serialize_guard($scope0_reason, /* input.showTagA, input.other */3));
   _._dynamic_tag($scope0_id, "#text/8", tag || tagA, {

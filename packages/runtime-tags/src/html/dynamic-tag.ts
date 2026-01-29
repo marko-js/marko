@@ -111,9 +111,9 @@ export let _dynamic_tag = (
             branchId,
             MARKO_DEBUG ? `#${renderer}/0` : "a",
             renderContent,
-            [],
+            undefined,
             0,
-            1,
+            undefined,
             serializeReason,
           );
         }
@@ -160,7 +160,9 @@ export let _dynamic_tag = (
     const render = () => {
       if (renderer) {
         try {
-          _set_serialize_reason(shouldResume ? 1 : 0);
+          _set_serialize_reason(
+            shouldResume && inputOrArgs !== undefined ? 1 : 0,
+          );
           return inputIsArgs
             ? renderer(...(inputOrArgs as unknown[]))
             : renderer(

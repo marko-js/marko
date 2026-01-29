@@ -11,6 +11,7 @@ export default _._template("__tests__/template.marko", input => {
   const $inputshowsectionnull_content__subscribers = new Set();
   _thing({
     content: _._content("__tests__/template.marko_1_content", () => {
+      _._scope_reason();
       const $scope1_id = _._scope_id();
       let setHtml = _child({});
       _._subscribe($thing_content__subscribers, _._scope($scope1_id, {
@@ -24,8 +25,10 @@ export default _._template("__tests__/template.marko", input => {
   _._dynamic_tag($scope0_id, "#text/1", input.show ? Thing : null, {}, _._content_resume("__tests__/template.marko_2_content", () => {
     const $scope2_id = _._scope_id();
     const $thing_content2__subscribers = new Set();
+    _._scope_reason();
     _thing({
       content: _._content("__tests__/template.marko_3_content", () => {
+        _._scope_reason();
         const $scope3_id = _._scope_id();
         let setHtml2 = _child({});
         _._subscribe($thing_content2__subscribers, _._scope($scope3_id, {
@@ -42,6 +45,7 @@ export default _._template("__tests__/template.marko", input => {
   }, $scope0_id), 0, _._serialize_guard($scope0_reason, /* input.show */0));
   _._dynamic_tag($scope0_id, "#text/2", input.show ? 'section' : null, {}, _._content_resume("__tests__/template.marko_4_content", () => {
     const $scope4_id = _._scope_id();
+    _._scope_reason();
     let setHtml3 = _child({});
     _._subscribe($inputshowsectionnull_content__subscribers, _._scope($scope4_id, {
       setHtml3

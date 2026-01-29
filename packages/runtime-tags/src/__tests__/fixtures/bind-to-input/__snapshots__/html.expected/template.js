@@ -1,6 +1,7 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 import _counter from "./tags/counter.marko";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   const $x__closures = new Set();
   let x = 0;
@@ -15,6 +16,7 @@ export default _._template("__tests__/template.marko", input => {
     }, "__tests__/template.marko_0/countChange", $scope0_id),
     id: "controlled",
     content: _._content("__tests__/template.marko_1_content", () => {
+      _._scope_reason();
       const $scope1_id = _._scope_id();
       _._html(`${_._escape(x)}${_._el_resume($scope1_id, "#text/0")}`);
       _._subscribe($x__closures, _._scope($scope1_id, {
@@ -32,6 +34,7 @@ export default _._template("__tests__/template.marko", input => {
     count: x,
     id: "uncontrolled",
     content: _._content("__tests__/template.marko_2_content", () => {
+      _._scope_reason();
       const $scope2_id = _._scope_id();
       _._html(`${_._escape(x)}${_._el_resume($scope2_id, "#text/0")}`);
       _._subscribe($x__closures, _._scope($scope2_id, {

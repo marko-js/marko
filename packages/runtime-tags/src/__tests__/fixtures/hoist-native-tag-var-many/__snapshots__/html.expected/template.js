@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   const $hoisted_el3 = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_el3/hoist");
   _._for_to(5, 0, 1, () => {

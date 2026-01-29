@@ -32,6 +32,7 @@ const $content = input => {
       }, $scope1_id), {
         placeholder: _.attrTag({
           content: _._content_resume("__tests__/tags/recurse.marko_4_content", () => {
+            _._scope_reason();
             const $scope4_id = _._scope_id();
             _._html("LOADING...");
           }, $scope1_id)

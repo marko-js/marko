@@ -8,6 +8,7 @@ export default _._template("__tests__/tags/wrapper.marko", input => {
   } = input;
   _._dynamic_tag($scope0_id, "#text/0", inputAs || "div", htmlInput, _._content_resume("__tests__/tags/wrapper.marko_1_content", () => {
     const $scope1_id = _._scope_id();
+    _._scope_reason();
     _._html("hi");
   }, $scope0_id), 0, _._serialize_guard($scope0_reason, /* input.as, htmlInput */0));
   _._serialize_if($scope0_reason, /* input.as, htmlInput */0) && _._scope($scope0_id, {

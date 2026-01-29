@@ -1,0 +1,16 @@
+{
+  "vars": {
+    "props": {
+      "$_": "o",
+      "$init": "t",
+      "$$Message_content__input_before__OR__input_after": "n",
+      "$$Message_content__input_before": "e",
+      "$$Message_content__input_after": "r",
+      "$$Wrap_content__dynamicTag": "a",
+      "$$Wrap_content__as__OR__onClick__OR__content": "m",
+      "$$Wrap_content__onClick": "_",
+      "$$x": "c",
+      "$$onClick": "s"
+    }
+  }
+}

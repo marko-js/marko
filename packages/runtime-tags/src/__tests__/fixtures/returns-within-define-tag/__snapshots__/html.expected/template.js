@@ -1,11 +1,13 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   const Once = {
     content: _._content("__tests__/template.marko_1_content", ({
       value
     }) => {
       const $scope1_id = _._scope_id();
+      _._scope_reason();
       let call = 1;
       const $return = _._resume(function () {
         if (call) {
@@ -38,6 +40,7 @@ export default _._template("__tests__/template.marko", input => {
       value
     }) => {
       const $scope2_id = _._scope_id();
+      _._scope_reason();
       let call = 2;
       const $return2 = _._resume(function () {
         if (call) {

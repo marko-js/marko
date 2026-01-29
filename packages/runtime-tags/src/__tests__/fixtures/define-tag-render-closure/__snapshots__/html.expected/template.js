@@ -1,11 +1,13 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   const $x__closures = new Set();
   let x = 1;
   const MyTag = {
     content: _._content("__tests__/template.marko_1_content", () => {
       const $scope1_id = _._scope_id();
+      _._scope_reason();
       _._html(`<div>${_._escape(x)}${_._el_resume($scope1_id, "#text/0")}</div>`);
       _._subscribe($x__closures, _._scope($scope1_id, {
         _: _._scope_with_id($scope0_id),

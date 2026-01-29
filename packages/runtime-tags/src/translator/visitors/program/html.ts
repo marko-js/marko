@@ -142,6 +142,8 @@ export default {
             ),
           ]),
         );
+      } else {
+        renderContent.push(t.expressionStatement(callRuntime("_scope_reason")));
       }
 
       for (const child of program.get("body")) {

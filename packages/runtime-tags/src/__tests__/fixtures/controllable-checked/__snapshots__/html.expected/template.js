@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   let checked = false;
   _._html(`<input${_._attr_input_checked($scope0_id, "#input/0", checked, _._resume(_new_checked => {

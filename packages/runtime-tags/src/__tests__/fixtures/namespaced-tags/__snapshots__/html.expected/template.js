@@ -10,6 +10,7 @@ export default _._template("__tests__/template.marko", input => {
     href: "#bar"
   }, _._content_resume("__tests__/template.marko_2_content", () => {
     const $scope2_id = _._scope_id();
+    _._scope_reason();
     _._html("Hi");
   }, $scope0_id));
   _._html(`</svg><math>${_._unescaped(input.value)}${_._el_resume($scope0_id, "#text/3", _._serialize_guard($scope0_reason, /* input.value */0))}`);
@@ -17,6 +18,7 @@ export default _._template("__tests__/template.marko", input => {
     href: "#bar"
   }, _._content_resume("__tests__/template.marko_3_content", () => {
     const $scope3_id = _._scope_id();
+    _._scope_reason();
     _._html("Hi");
   }, $scope0_id));
   _._html("</math>");
