@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.139
+
+### Patch Changes
+
+- [#3059](https://github.com/marko-js/marko/pull/3059) [`40d0b52`](https://github.com/marko-js/marko/commit/40d0b528a616fae251a99d70cb2df54aee08d94b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where serialize reason was not cleared across renders leading to over serialization.
+
+- [#3059](https://github.com/marko-js/marko/pull/3059) [`40d0b52`](https://github.com/marko-js/marko/commit/40d0b528a616fae251a99d70cb2df54aee08d94b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid giving dynamic native tag content a params serialize reason.
+
 ## 6.0.138
 
 ### Patch Changes
