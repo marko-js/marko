@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   const Child = {
     content: _._content("__tests__/template.marko_1_content", input => {
@@ -47,18 +48,21 @@ export default _._template("__tests__/template.marko", input => {
     option: _.attrTags(_.attrTags(_.attrTag({
       value: 1,
       content: _._content_resume("__tests__/template.marko_4_content", () => {
+        _._scope_reason();
         const $scope4_id = _._scope_id();
         _._html("One");
       }, $scope0_id)
     }), {
       value: 2,
       content: _._content_resume("__tests__/template.marko_5_content", () => {
+        _._scope_reason();
         const $scope5_id = _._scope_id();
         _._html("Two");
       }, $scope0_id)
     }), {
       value: 3,
       content: _._content_resume("__tests__/template.marko_6_content", () => {
+        _._scope_reason();
         const $scope6_id = _._scope_id();
         _._html("Three");
       }, $scope0_id)

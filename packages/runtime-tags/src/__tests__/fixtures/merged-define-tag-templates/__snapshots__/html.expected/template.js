@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   const A = {
     content: _._content("__tests__/template.marko_1_content", ({

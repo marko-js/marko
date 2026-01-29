@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/tags/counter.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   let count = 0;
   _._html(`<button>${_._escape(input.format(count))}${_._el_resume($scope0_id, "#text/1")}</button>${_._el_resume($scope0_id, "#button/0")}`);

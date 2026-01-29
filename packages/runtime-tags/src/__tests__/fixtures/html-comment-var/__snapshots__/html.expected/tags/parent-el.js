@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/tags/parent-el.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   let tagName = undefined;
   _._html(`<!--Body Text-->${_._el_resume($scope0_id, "#comment/0")}`);

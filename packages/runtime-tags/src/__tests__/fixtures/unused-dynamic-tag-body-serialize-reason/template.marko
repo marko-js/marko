@@ -1,0 +1,9 @@
+define/Wrap|{ as, onClick, content }|
+  ${as} onClick=onClick content=content
+
+define/Message|input|
+  -- ${input.before + input.after}
+
+let/x=1
+Wrap as="div" onClick() { console.log(x++); }
+  Message before="hello" after="world"

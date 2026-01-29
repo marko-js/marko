@@ -2,6 +2,7 @@ import { resolveAfter } from "../../utils/resolve";
 const multiply = (multiplier, n) => resolveAfter(multiplier * n);
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   let n = 2;
   _._html(`<button>increment</button>${_._el_resume($scope0_id, "#button/0")}<p>1 * <!>${_._escape(n)}${_._el_resume($scope0_id, "#text/1")} = `);

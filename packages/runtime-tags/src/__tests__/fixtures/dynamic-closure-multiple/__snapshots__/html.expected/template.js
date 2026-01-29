@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   const $a__closures = new Set();
   const $b__closures = new Set();
@@ -8,6 +9,7 @@ export default _._template("__tests__/template.marko", input => {
   _._html(`<button></button>${_._el_resume($scope0_id, "#button/0")}`);
   _._try($scope0_id, "#text/1", _._content_resume("__tests__/template.marko_1_content", () => {
     const $scope1_id = _._scope_id();
+    _._scope_reason();
     if (true) {
       const $scope2_id = _._scope_id();
       _._html(`<div>${_._escape(a)}${_._el_resume($scope2_id, "#text/0")}</div><div>${_._escape(b)}${_._el_resume($scope2_id, "#text/1")}</div>`);

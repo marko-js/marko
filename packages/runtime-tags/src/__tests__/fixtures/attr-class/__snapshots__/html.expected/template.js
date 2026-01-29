@@ -38,6 +38,7 @@ export default _._template("__tests__/template.marko", input => {
         d
       }],
       content: _._content_resume("__tests__/template.marko_1_content", () => {
+        _._scope_reason();
         const $scope1_id = _._scope_id();
         _._html("Hello");
       }, $scope0_id)

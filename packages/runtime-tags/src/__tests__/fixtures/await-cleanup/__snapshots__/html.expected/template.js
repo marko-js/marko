@@ -1,6 +1,7 @@
 import { resolveAfter } from "../../utils/resolve";
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   const $show__closures = new Set();
   let show = 1;
@@ -10,6 +11,7 @@ export default _._template("__tests__/template.marko", input => {
       const $scope1_id = _._scope_id();
       _._try($scope1_id, "#text/0", _._content_resume("__tests__/template.marko_2_content", () => {
         const $scope2_id = _._scope_id();
+        _._scope_reason();
         _._await($scope2_id, "#text/0", resolveAfter(0, 1), () => {
           const $scope3_id = _._scope_id();
           _._script($scope3_id, "__tests__/template.marko_3_show");
@@ -32,6 +34,7 @@ export default _._template("__tests__/template.marko", input => {
       }, $scope1_id), {
         placeholder: _.attrTag({
           content: _._content_resume("__tests__/template.marko_4_content", () => {
+            _._scope_reason();
             const $scope4_id = _._scope_id();
             _._html("loading...");
           }, $scope1_id)

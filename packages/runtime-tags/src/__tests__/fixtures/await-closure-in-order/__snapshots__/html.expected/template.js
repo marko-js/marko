@@ -1,6 +1,7 @@
 import { resolveAfter } from "../../utils/resolve";
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   let value = 1;
   _._html(`<button>${_._escape(value)}${_._el_resume($scope0_id, "#text/1")}</button>${_._el_resume($scope0_id, "#button/0")}`);

@@ -1,6 +1,7 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 import _myFor from "./tags/my-for.marko";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   _myFor({
     to: 5,

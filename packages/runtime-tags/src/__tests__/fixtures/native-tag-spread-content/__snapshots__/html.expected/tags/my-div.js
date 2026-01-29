@@ -1,5 +1,6 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/tags/my-div.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   _._html("<div");
   _._attrs_content(input, "#div/0", $scope0_id, "div");
@@ -14,6 +15,7 @@ export default _._template("__tests__/tags/my-div.marko", input => {
   const CustomContent = {
     content: _._content_resume("__tests__/tags/my-div.marko_1_content", () => {
       const $scope1_id = _._scope_id();
+      _._scope_reason();
       _._html("Custom content");
     }, $scope0_id)
   };

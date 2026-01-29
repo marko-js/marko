@@ -1,10 +1,12 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   const value = undefined;
   const Child = {
     content: _._content("__tests__/template.marko_3_content", input => {
       const $scope3_id = _._scope_id();
+      _._scope_reason();
       _._html("<div");
       _._attrs_content(input, "#div/0", $scope3_id, "div");
       _._html(`</div>${_._el_resume($scope3_id, "#div/0")}`);
@@ -18,6 +20,7 @@ export default _._template("__tests__/template.marko", input => {
   };
   Child.content({
     content: _._content_resume("__tests__/template.marko_1_content", () => {
+      _._scope_reason();
       const $scope1_id = _._scope_id();
       if (value) {
         const $scope2_id = _._scope_id();

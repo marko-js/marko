@@ -2,6 +2,7 @@ import _myLet from "./tags/my-let.marko";
 import * as _ from "@marko/runtime-tags/debug/html";
 import _myTag from "./tags/my-tag.marko";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   const $count__closures = new Set();
   const $childScope = _._peek_scope_id();
@@ -11,6 +12,7 @@ export default _._template("__tests__/template.marko", input => {
   _._var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_count/var");
   _myTag({
     content: _._content("__tests__/template.marko_1_content", () => {
+      _._scope_reason();
       const $scope1_id = _._scope_id();
       _._html(`<button>${_._escape(count)}${_._el_resume($scope1_id, "#text/1")}</button>${_._el_resume($scope1_id, "#button/0")}`);
       _._script($scope1_id, "__tests__/template.marko_1_count");

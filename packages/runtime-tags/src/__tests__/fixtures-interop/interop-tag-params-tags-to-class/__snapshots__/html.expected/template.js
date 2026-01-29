@@ -3,6 +3,7 @@ import * as _ from "@marko/runtime-tags/debug/html";
 import _classLayout from "./components/class-layout.marko";
 _s(_classLayout, "__tests__/components/class-layout.marko");
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   const $multiplier__closures = new Set();
   let multiplier = 1;

@@ -17,6 +17,7 @@ export default _._template("__tests__/template.marko", input => {
     $thing = _.attrTag({
       x: 1,
       content: _._content("__tests__/template.marko_1_content", () => {
+        _._scope_reason();
         const $scope1_id = _._scope_id();
         _._html("Hello");
       })
@@ -25,6 +26,7 @@ export default _._template("__tests__/template.marko", input => {
     $thing = _.attrTag({
       x: 2,
       content: _._content("__tests__/template.marko_2_content", () => {
+        _._scope_reason();
         const $scope2_id = _._scope_id();
         _._html("Goodbye");
       })

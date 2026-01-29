@@ -2,6 +2,7 @@ import child1 from "./tags/child1.marko";
 import child2 from "./tags/child2.marko";
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
+  _._scope_reason();
   const $scope0_id = _._scope_id();
   let tagName = child1;
   let val = 3;
