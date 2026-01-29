@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.38.17
+
+### Patch Changes
+
+- [#3059](https://github.com/marko-js/marko/pull/3059) [`40d0b52`](https://github.com/marko-js/marko/commit/40d0b528a616fae251a99d70cb2df54aee08d94b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where serialize reason was not cleared across renders leading to over serialization.
+
+- Updated dependencies [[`40d0b52`](https://github.com/marko-js/marko/commit/40d0b528a616fae251a99d70cb2df54aee08d94b), [`40d0b52`](https://github.com/marko-js/marko/commit/40d0b528a616fae251a99d70cb2df54aee08d94b)]:
+  - @marko/runtime-tags@6.0.139
+
 ## 5.38.16
 
 ### Patch Changes
