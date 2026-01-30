@@ -1,0 +1,17 @@
+{
+  "vars": {
+    "props": {
+      "$_": "r",
+      "$init": "m",
+      "$$for_content__item__script": "t",
+      "$$for_content__item": "_",
+      "$$for_content__$params": "o",
+      "$$for": "e",
+      "$$Mathrandomspandiv_content__foo": "n",
+      "$$for_content__dynamicTag": "s",
+      "$$for_content__$temp": "a",
+      "$$Mathrandomspandiv_content__input_foo": "c",
+      "$$_classspandiv_content__input_foo": "i"
+    }
+  }
+}
