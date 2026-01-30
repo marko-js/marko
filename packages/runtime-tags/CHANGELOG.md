@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.0.140
+
+### Patch Changes
+
+- [#3064](https://github.com/marko-js/marko/pull/3064) [`f55f571`](https://github.com/marko-js/marko/commit/f55f571a30bf70c358efcb7fad5e9c9bdc5ed686) Thanks [@rturnq](https://github.com/rturnq)! - Unify hoisted custom tag vars with native tag refs
+
+- [#3064](https://github.com/marko-js/marko/pull/3064) [`15efc9e`](https://github.com/marko-js/marko/commit/15efc9eab869b6e5140bd951324004c781843d38) Thanks [@rturnq](https://github.com/rturnq)! - Fix loop key serializing when used in a function
+
+- [#3064](https://github.com/marko-js/marko/pull/3064) [`aeec614`](https://github.com/marko-js/marko/commit/aeec614c5b3c3fc3ab34ccbdc7f1fcc3a47b7198) Thanks [@rturnq](https://github.com/rturnq)! - Exclude change handlers from rest bindings
+
 ## 6.0.139
 
 ### Patch Changes
