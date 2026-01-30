@@ -1,5 +1,4 @@
 import markoModules from "@marko/compiler/modules";
-import { getRootPackage } from "lasso-package-root";
 import path from "path";
 
 import tryLoadTranslator from "../util/try-load-translator";

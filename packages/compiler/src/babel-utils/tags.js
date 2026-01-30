@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 import markoModules from "@marko/compiler/modules";
-import { getRootDir } from "lasso-package-root";
 import { basename, dirname, join, relative, resolve } from "path";
 
 import { Hash } from "../util/quick-hash";
@@ -296,10 +295,11 @@ function resolveMarkoFile(file, filename) {
 const idCache = new WeakMap();
 const templateIdHashOpts = { outputLength: 5 };
 export function getTemplateId(opts, request, child) {
-  const id = relative(root, request).replace(/[^a-zA-Z0-9_$./-]/g, "/");
-  const optimize = typeof opts === "object" ? opts.optimize : opts;
+  if (!child && opts.getTemplateId) return opts.getTemplateId(request);
 
-  if (optimize) {
+  const id = relative(root, request).replace(/[^a-zA-Z0-9_$./-]/g, "/");
+
+  if (opts.optimize) {
     const optimizeKnownTemplates =
       typeof opts === "object" && opts.optimizeKnownTemplates;
     const knownTemplatesSize = optimizeKnownTemplates?.length || 0;
