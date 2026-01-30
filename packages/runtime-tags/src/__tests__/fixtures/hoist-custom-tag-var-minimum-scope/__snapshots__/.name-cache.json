@@ -1,0 +1,11 @@
+{
+  "vars": {
+    "props": {
+      "$_": "r",
+      "$init": "t",
+      "$$ref_getter": "e",
+      "$$for_content__ref_getter": "n",
+      "$$for_content2__ref_getter": "s"
+    }
+  }
+}

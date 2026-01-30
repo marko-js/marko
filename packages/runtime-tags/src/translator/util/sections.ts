@@ -62,7 +62,6 @@ export interface Section {
   referencedClosures: ReferencedBindings;
   referencedHoists: ReferencedBindings;
   bindings: ReferencedBindings;
-  domGetterBindings: Map<Binding, string>;
   hoisted: ReferencedBindings;
   hoistedTo: ReferencedBindings;
   serializeReason: undefined | SerializeReason;
@@ -134,7 +133,6 @@ export function startSection(
       referencedClosures: undefined,
       referencedHoists: undefined,
       bindings: undefined,
-      domGetterBindings: new Map(),
       hoisted: undefined,
       hoistedTo: undefined,
       isHoistThrough: undefined,
@@ -340,14 +338,6 @@ export function getSectionRegisterReasons(section: Section) {
   }
 
   return true;
-}
-
-export function isSectionWithHoists(section: Section) {
-  return !!(
-    section.hoisted ||
-    section.isHoistThrough ||
-    section.referencedHoists
-  );
 }
 
 export function isImmediateOwner(section: Section, binding: Binding) {

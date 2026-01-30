@@ -9,7 +9,10 @@
       "$$for_content4__setHtml": "_",
       "$$for_content4__setup": "m",
       "$$get_$hoisted_setHtml2": "e",
-      "$$get_$hoisted_setHtml3": "i"
+      "$$get_$hoisted_setHtml3": "i",
+      "$$setHtml3_getter": "a",
+      "$$setHtml2_getter": "c",
+      "$$setHtml_getter": "u"
     }
   }
 }

@@ -46,7 +46,6 @@ import {
   toPropertyName,
 } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
-import { translateDomVar } from "../../util/translate-var";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
@@ -173,6 +172,11 @@ export default {
           "#" + getCanonicalTagName(tag),
           BindingType.dom,
           tagSection,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          !!node.var,
         ));
 
         if (hasEventHandlers) {
@@ -238,9 +242,6 @@ export default {
         const tagDef = getTagDef(tag);
         const write = writer.writeTo(tag);
         const tagSection = getSection(tag);
-
-        translateDomVar(tag, nodeBinding);
-
         const visitAccessor =
           nodeBinding && getScopeAccessorLiteral(nodeBinding);
 

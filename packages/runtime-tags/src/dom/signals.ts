@@ -269,37 +269,43 @@ export function _el_read<T>(value: T): T {
   return value;
 }
 
-function* traverseAllHoisted(
-  scope: Scope | Iterable<Scope>,
+type Hoistable<T> = () => T;
+type Hoisted<T> = Hoistable<T> & Iterable<T>;
+
+function* traverse<T>(
+  scope: Scope,
   path: Accessor[],
-  curIndex: number = path.length - 1,
-): IterableIterator<(...args: unknown[]) => unknown> {
+  i: number = path.length - 1,
+): IterableIterator<T> {
   if (MARKO_DEBUG && rendering) {
     _hoist_read_error();
   }
   if (scope) {
     if (Symbol.iterator in scope) {
-      for (const s of scope instanceof Map ? scope.values() : scope) {
-        yield* traverseAllHoisted(s, path, curIndex);
+      for (const childScope of scope.values() as Iterable<Scope>) {
+        yield* traverse(childScope, path, i);
       }
-    } else if (curIndex) {
-      yield* traverseAllHoisted(scope[path[curIndex]], path, curIndex - 1);
     } else {
-      yield scope[path[0]];
+      const item = scope[path[i]];
+      if (i) {
+        yield* traverse(item, path, i - 1);
+      } else {
+        yield typeof item === "function" ? item() : item;
+      }
     }
   }
 }
 
-export function _hoist(...path: Accessor[]) {
+export function _hoist<T>(...path: Accessor[]) {
   if (!MARKO_DEBUG)
     path = path.map((p) => (typeof p === "string" ? p : decodeAccessor(p)));
   return (scope: Scope) => {
-    const getOne = (...args: unknown[]) =>
-      iterator()
-        .next()
-        .value?.(...args);
-    const iterator = ((getOne as any)[Symbol.iterator] = () =>
-      traverseAllHoisted(scope, path));
-    return getOne;
+    const fn: Hoisted<T> = () => traverse(scope, path).next().value;
+    fn[Symbol.iterator] = () => traverse(scope, path);
+    return fn;
   };
+}
+
+export function _hoist_resume<T>(id: string, ...path: Accessor[]) {
+  return _resume(id, _hoist<T>(...path));
 }

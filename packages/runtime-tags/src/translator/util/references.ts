@@ -57,11 +57,10 @@ import {
 } from "./serialize-reasons";
 import { finalizeTagDownstreams } from "./set-tag-sections-downstream";
 import {
-  getRegisterUID,
+  getBindingGetterIdentifier,
   getSignalValueIdentifier,
   type Signal,
 } from "./signals";
-import { getBindingGetterIdentifier } from "./signals";
 import { createProgramState } from "./state";
 import { toMemberExpression } from "./to-property-name";
 import withPreviousLocation from "./with-previous-location";
@@ -77,7 +76,6 @@ export enum BindingType {
   param,
   local,
   derived,
-  hoist,
   constant,
 }
 
@@ -89,6 +87,7 @@ export interface Sources {
 export interface Binding {
   id: number;
   name: string;
+  originalName: string | undefined;
   type: BindingType;
   loc: t.SourceLocation | null;
   section: Section;
@@ -97,7 +96,8 @@ export interface Binding {
   sources: undefined | Sources;
   reads: Set<ReferencedExtra>;
   aliases: Set<Binding>;
-  hoists: Map<Section, Binding>;
+  hoists: Opt<Section>;
+  getters: Map<Getter["hoisted"], boolean>;
   property: string | undefined;
   propertyAliases: Map<string, Binding>;
   excludeProperties: Opt<string>;
@@ -122,20 +122,35 @@ export type ReferencedBindings = Opt<Binding>;
 export type Intersection = Many<Binding>;
 
 interface ReferencedFunctionExtra extends t.FunctionExtra, ReferencedExtra {}
+
+export interface Getter {
+  hoisted: Section | false;
+  invoked: boolean;
+}
+
 interface Read {
   binding: Binding;
-  extra: t.NodeExtra | undefined;
+  extra: t.NodeExtra;
+  getter: Getter | undefined;
+}
+
+interface ExtraRead {
+  binding: Binding;
+  props: Opt<string>;
+  getter: Getter | undefined;
 }
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     section?: Section;
     referencedBindings?: ReferencedBindings;
+    constantBindings?: ReferencedBindings;
+    hoistedBindings?: ReferencedBindings;
     downstream?: Opt<Binding>;
     binding?: Binding;
     assignment?: Binding;
     assignmentTo?: Binding;
-    read?: { binding: Binding; props: Opt<string> };
+    read?: ExtraRead;
     pruned?: true;
     isEffect?: true;
     spreadFrom?: Binding;
@@ -145,6 +160,8 @@ declare module "@marko/compiler/dist/types" {
   export interface FunctionExtra {
     referencesScope?: boolean;
     referencedBindingsInFunction?: ReferencedBindings;
+    constantBindingsInFunction?: ReferencedBindings;
+    hoistedBindingsInFunction?: ReferencedBindings;
     name?: string;
     registerId?: string;
     registerReason?: SerializeReason;
@@ -174,6 +191,7 @@ export function createBinding(
   const binding: Binding = {
     id,
     name,
+    originalName: undefined,
     type,
     loc,
     section,
@@ -185,7 +203,8 @@ export function createBinding(
     sources: undefined,
     reads: new Set(),
     aliases: new Set(),
-    hoists: new Map(),
+    hoists: undefined,
+    getters: new Map(),
     propertyAliases: new Map(),
     upstreamAlias,
     scopeOffset: undefined,
@@ -248,6 +267,8 @@ export function trackDomVarReferences(
   const babelBinding = tag.scope.getBinding(tagVar.name)!;
   const section = getOrCreateSection(tag);
 
+  binding.originalName = tagVar.name;
+
   if (babelBinding.constantViolations.length) {
     for (const ref of babelBinding.constantViolations) {
       throw ref.type === "MarkoTag"
@@ -262,25 +283,27 @@ export function trackDomVarReferences(
     }
   }
 
-  let registerId: string | undefined;
   for (const ref of babelBinding.referencePaths as t.NodePath<t.Identifier>[]) {
     const refSection = getOrCreateSection(ref);
+    const invoked = isInvokedFunction(ref);
+    const hoisted = isReferenceHoisted(babelBinding.path, ref)
+      ? getCommonSection(refSection, binding.section)
+      : false;
+
     setReferencesScope(ref);
-    if (isSameOrChildSection(binding.section, refSection)) {
-      const refExtra = (ref.node.extra ??= {});
-      refExtra.read = createRead(binding, undefined);
-      refExtra.section = refSection;
+    addReadToExpression(
+      ref,
+      binding,
+      !invoked || (hoisted && hoisted !== binding.section)
+        ? {
+            hoisted,
+            invoked,
+          }
+        : undefined,
+    );
 
-      if (!isInvokedFunction(ref)) {
-        section.domGetterBindings.set(
-          binding,
-          (registerId ??= getRegisterUID(section, binding.name)),
-        );
-      }
-
+    if (refSection !== binding.section) {
       addOwnerSerializeReason(refSection, section, true);
-    } else {
-      trackHoistedReference(ref, binding);
     }
   }
 
@@ -378,55 +401,6 @@ export function trackParamsReferences(
   }
 }
 
-export function trackHoistedReference(
-  referencePath: t.NodePath<t.Identifier>,
-  binding: Binding,
-) {
-  const section = binding.section;
-  const referenceSection = getOrCreateSection(referencePath);
-  const hoistSection = getCommonSection(referenceSection, section);
-  const extra = (referencePath.node.extra ??= {});
-
-  let hoistedBinding = binding.hoists.get(hoistSection);
-  if (!hoistedBinding) {
-    binding.hoists.set(
-      hoistSection,
-      (hoistedBinding = createBinding(
-        generateUid("hoisted_" + referencePath.node.name),
-        BindingType.hoist,
-        hoistSection,
-        undefined,
-        undefined,
-        undefined,
-        binding.loc,
-        true,
-      )),
-    );
-
-    section.hoisted = bindingUtil.add(section.hoisted, binding);
-    hoistSection.hoistedTo = bindingUtil.add(hoistSection.hoistedTo, binding);
-
-    let currentSection = section.parent;
-    while (currentSection && currentSection !== hoistSection) {
-      currentSection.isHoistThrough = true;
-      currentSection = currentSection.parent;
-    }
-  }
-
-  if (isInvokedFunction(referencePath)) {
-    extra.read = createRead(hoistedBinding, undefined);
-    extra.section = referenceSection;
-    extra[kIsInvoked] = true;
-  } else {
-    trackReference(referencePath, hoistedBinding);
-  }
-
-  referenceSection.referencedHoists = bindingUtil.add(
-    referenceSection.referencedHoists,
-    hoistedBinding,
-  );
-}
-
 export function isReferenceHoisted(
   bindingPath: t.NodePath,
   reference: t.NodePath,
@@ -455,7 +429,7 @@ export function isReferenceHoisted(
 function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
   const { referencePaths, constantViolations } = babelBinding;
 
-  for (const ref of referencePaths) {
+  for (const ref of referencePaths as t.NodePath<t.Identifier>[]) {
     const refSection = getOrCreateSection(ref);
     const markoRoot = getMarkoRoot(ref);
 
@@ -467,12 +441,19 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
         `Tag variable circular references are not supported.`,
       );
     } else if (isReferenceHoisted(babelBinding.path, ref)) {
-      trackHoistedReference(ref as t.NodePath<t.Identifier>, binding);
+      const invoked = isInvokedFunction(ref);
+      if (invoked) {
+        setReferencesScope(ref);
+      }
+      addReadToExpression(ref, binding, {
+        hoisted: getCommonSection(refSection, binding.section),
+        invoked,
+      });
     } else if (
       binding.type !== BindingType.local ||
       refSection !== binding.section
     ) {
-      trackReference(ref as t.NodePath<t.Identifier>, binding);
+      trackReference(ref, binding);
     }
   }
 
@@ -557,7 +538,7 @@ function trackAssignment(
           );
         idExtra.assignmentTo = changeBinding;
         changeBinding.pruned = false;
-        addReadToExpression(id, changeBinding);
+        addReadToExpression(id, changeBinding, undefined);
       }
     }
   });
@@ -742,7 +723,7 @@ function trackReference(
     reference = getOrCreatePropertyAlias(reference, prop);
   }
 
-  addReadToExpression(root, reference);
+  addReadToExpression(root, reference, undefined);
 }
 
 export function mergeReferences<T extends t.Node>(
@@ -849,32 +830,39 @@ export function finalizeReferences() {
 
   for (const [expr, reads] of readsByExpression) {
     if (isReferencedExtra(expr)) {
-      const { referencedBindings, constantBindings } =
-        resolveReferencedBindings(expr, reads, intersectionsBySection);
-      expr.referencedBindings = referencedBindings;
+      const exprBindings = resolveReferencedBindings(
+        expr,
+        reads,
+        intersectionsBySection,
+      );
+      expr.referencedBindings = exprBindings.referencedBindings;
+      expr.constantBindings = exprBindings.constantBindings;
+      expr.hoistedBindings = expr.section.referencedHoists =
+        exprBindings.hoistedBindings;
 
       if (expr.isEffect) {
-        forEach(referencedBindings, (binding) => {
+        forEach(exprBindings.referencedBindings, (binding) => {
           addSerializeReason(binding.section, true, binding);
         });
-        forEach(constantBindings, (binding) => {
+        forEach(exprBindings.constantBindings, (binding) => {
           addSerializeReason(binding.section, true, binding);
         });
       }
 
-      if (referencedBindings) {
+      if (exprBindings.allBindings) {
         const exprFnReads = fnReadsByExpression.get(expr);
         if (exprFnReads) {
           for (const [fn, fnReads] of exprFnReads) {
-            if (fn === expr) {
-              expr.referencedBindingsInFunction = referencedBindings;
-            } else {
-              fn.referencedBindingsInFunction =
-                resolveReferencedBindingsInFunction(
-                  referencedBindings,
-                  fnReads,
-                );
-            }
+            const fnBindings =
+              fn === expr
+                ? exprBindings
+                : resolveReferencedBindingsInFunction(
+                    exprBindings.allBindings,
+                    fnReads,
+                  );
+            fn.referencedBindingsInFunction = fnBindings.referencedBindings;
+            fn.constantBindingsInFunction = fnBindings.constantBindings;
+            fn.hoistedBindingsInFunction = fnBindings.hoistedBindings;
           }
         }
       }
@@ -895,9 +883,6 @@ export function finalizeReferences() {
     const { name, section } = binding;
     if (binding.type !== BindingType.dom) {
       resolveBindingSources(binding);
-      if (binding.hoists.size) {
-        addSerializeReason(binding.section, true, binding);
-      }
 
       forEach(binding.assignmentSections, (assignedSection) =>
         addOwnerSerializeReason(assignedSection, section, true),
@@ -908,19 +893,50 @@ export function finalizeReferences() {
       }
     }
 
+    if (binding.hoists) {
+      let highestHoistSection!: Section;
+
+      forEach(binding.hoists, (hoistSection) => {
+        if (
+          !highestHoistSection ||
+          hoistSection.depth < highestHoistSection.depth
+        ) {
+          highestHoistSection = hoistSection;
+        }
+
+        hoistSection.hoistedTo = bindingUtil.add(
+          hoistSection.hoistedTo,
+          binding,
+        );
+
+        addSerializeReason(binding.section, true, binding);
+      });
+
+      binding.section.hoisted = bindingUtil.add(
+        binding.section.hoisted,
+        binding,
+      );
+
+      let currentSection = binding.section.parent;
+      while (currentSection && currentSection !== highestHoistSection) {
+        currentSection.isHoistThrough = true;
+        currentSection = currentSection.parent;
+      }
+    }
+
     section.bindings = bindingUtil.add(
       section.bindings,
       getCanonicalBinding(binding),
     );
 
     for (const { isEffect, section } of binding.reads) {
-      if (section !== binding.section) {
+      if (section.depth > binding.section.depth) {
         if (binding.type === BindingType.local) {
           section.referencedLocalClosures = bindingUtil.add(
             section.referencedLocalClosures,
             binding,
           );
-        } else {
+        } else if (binding.type !== BindingType.dom) {
           const canonicalUpstreamAlias = getCanonicalBinding(binding);
           canonicalUpstreamAlias.closureSections = sectionUtil.add(
             canonicalUpstreamAlias.closureSections,
@@ -1093,6 +1109,17 @@ export function finalizeReferences() {
       for (const fn of exprFnReads.keys()) {
         if (fn.registerReason) {
           forEach(fn.referencedBindingsInFunction, (binding) => {
+            addSerializeReason(binding.section, fn.registerReason, binding);
+            if (binding.section !== fn.section) {
+              addOwnerSerializeReason(
+                fn.section,
+                binding.section,
+                fn.registerReason,
+              );
+            }
+          });
+
+          forEach(fn.constantBindingsInFunction, (binding) => {
             addSerializeReason(binding.section, fn.registerReason, binding);
             if (binding.section !== fn.section) {
               addOwnerSerializeReason(
@@ -1370,12 +1397,13 @@ const [getFunctionReadsByExpression] = createProgramState(
 
 export function addRead(
   exprExtra: ReferencedExtra,
-  extra: t.NodeExtra | undefined,
+  extra: t.NodeExtra,
   binding: Binding,
   section: Section,
+  getter: Getter | undefined,
 ) {
   const readsByExpression = getReadsByExpression();
-  const read: Read = { binding, extra };
+  const read: Read = { binding, extra, getter };
   binding.reads.add(exprExtra);
   exprExtra.section = section;
   readsByExpression.set(
@@ -1417,13 +1445,20 @@ function addReadToExpression(
     | t.NodePath<t.MemberExpression>
     | t.NodePath<t.OptionalMemberExpression>,
   binding: Binding,
+  getter: Getter | undefined,
 ) {
   const { node } = root;
   const fnRoot = getFnRoot(root);
   const exprRoot = getExprRoot(fnRoot || root);
-  const exprExtra = (exprRoot.node.extra ??= {}) as ReferencedExtra;
   const section = getOrCreateSection(exprRoot);
-  const read = addRead(exprExtra, (node.extra ??= {}), binding, section);
+  const exprExtra = (exprRoot.node.extra ??= { section }) as ReferencedExtra;
+  const read = addRead(
+    exprExtra,
+    (node.extra ??= {}),
+    binding,
+    section,
+    getter,
+  );
 
   if (root.parent.type === "MarkoSpreadAttribute") {
     exprExtra.spreadFrom = binding;
@@ -1600,41 +1635,47 @@ export function getReadReplacement(
     let replacement: t.Expression | undefined;
 
     if (read.props === undefined) {
+      if (read.getter?.invoked) {
+        return;
+      }
+
       if (isOutputDOM()) {
         if (
           signal?.referencedBindings === readBinding &&
           !signal.hasSideEffect
         ) {
           replacement = getSignalValueIdentifier(signal);
+        } else if (read.getter?.hoisted) {
+          replacement = t.callExpression(
+            getBindingGetterIdentifier(readBinding, read.getter.hoisted),
+            [getScopeExpression(extra.section!, read.getter.hoisted)],
+          );
         } else if (readBinding.type === BindingType.dom) {
-          if (
-            !extra[kIsInvoked] &&
-            readBinding.section.domGetterBindings.has(readBinding)
-          ) {
+          if (read.getter) {
             replacement = t.callExpression(
-              getBindingGetterIdentifier(readBinding),
+              getBindingGetterIdentifier(readBinding, readBinding.section),
               [getScopeExpression(extra.section!, readBinding.section)],
             );
           }
-        } else if (
-          readBinding.type === BindingType.hoist &&
-          extra[kIsInvoked]
-        ) {
-          replacement = t.callExpression(
-            getBindingGetterIdentifier(readBinding),
-            [getScopeExpression(extra.section!, readBinding.section)],
-          );
         } else {
           replacement = createScopeReadExpression(readBinding, extra.section);
         }
       } else {
         if (node.type !== "Identifier") {
           replacement = t.identifier(readBinding.name);
-        } else if (
-          readBinding.name !== node.name &&
-          readBinding.type !== BindingType.dom &&
-          (readBinding.type !== BindingType.hoist || !extra[kIsInvoked])
-        ) {
+        } else if (read.getter?.hoisted) {
+          replacement = getBindingGetterIdentifier(
+            readBinding,
+            read.getter.hoisted,
+          );
+        } else if (readBinding.type === BindingType.dom) {
+          if (readBinding.getters.has(readBinding.section)) {
+            replacement = getBindingGetterIdentifier(
+              readBinding,
+              readBinding.section,
+            );
+          }
+        } else if (readBinding.name !== node.name) {
           node.name = readBinding.name;
         }
       }
@@ -1741,18 +1782,6 @@ export function pruneBinding(binding: Binding) {
 
   let shouldPrune = !binding.reads.size;
 
-  if (binding.hoists.size) {
-    // TODO hoists do not currently know their downstream expressions and so cannot be pruned like aliases.
-    shouldPrune = false;
-    // for (const [hoistSection, hoistAlias] of binding.hoists) {
-    //   if (pruneBinding(hoistAlias)) {
-    //     binding.hoists.delete(hoistSection);
-    //   } else {
-    //     shouldPrune = false;
-    //   }
-    // }
-  }
-
   for (const alias of binding.aliases) {
     if (pruneBinding(alias)) {
       binding.aliases.delete(alias);
@@ -1777,20 +1806,46 @@ function resolveReferencedBindingsInFunction(
   refs: OneMany<Binding>,
   reads: Opt<Read>,
 ) {
+  let referencedBindings: ReferencedBindings;
+  let constantBindings: ReferencedBindings;
+  let hoistedBindings: ReferencedBindings;
+
   if (reads) {
     if (Array.isArray(reads)) {
-      let referencedBindings: ReferencedBindings;
       for (const read of reads) {
-        referencedBindings = bindingUtil.add(
-          referencedBindings,
-          findClosestReference(read.binding, refs)!,
-        );
+        const { getter, binding } = read;
+        if (getter) {
+          if (getter.hoisted && bindingUtil.find(refs, binding)) {
+            hoistedBindings = bindingUtil.add(hoistedBindings, binding);
+          }
+        } else if (binding.type === BindingType.constant) {
+          if (bindingUtil.find(refs, binding)) {
+            constantBindings = bindingUtil.add(constantBindings, binding);
+          }
+        } else if (binding.type !== BindingType.dom) {
+          referencedBindings = bindingUtil.add(
+            referencedBindings,
+            findClosestReference(read.binding, refs)!,
+          );
+        }
       }
-      return referencedBindings;
     } else {
-      return findClosestReference(reads.binding, refs)!;
+      const { getter, binding } = reads;
+      if (getter) {
+        if (getter.hoisted && bindingUtil.find(refs, binding)) {
+          hoistedBindings = binding;
+        }
+      } else if (binding.type === BindingType.constant) {
+        if (bindingUtil.find(refs, binding)) {
+          constantBindings = binding;
+        }
+      } else if (binding.type !== BindingType.dom) {
+        referencedBindings = findClosestReference(binding, refs);
+      }
     }
   }
+
+  return { referencedBindings, constantBindings, hoistedBindings };
 }
 
 function findClosestReference(
@@ -1844,44 +1899,75 @@ function getRootBindings(reads: Many<Read>): OneMany<Binding> {
   return rootRefs;
 }
 
+function addBindingGetter(binding: Binding, { invoked, hoisted }: Getter) {
+  if (!invoked || !binding.getters.has(hoisted)) {
+    if (hoisted === binding.section) {
+      binding.getters.delete(false);
+    }
+    if (hoisted || !binding.getters.has(binding.section)) {
+      binding.getters.set(hoisted, !invoked);
+    }
+  }
+}
+
 function resolveReferencedBindings(
-  expr: { section: Section },
+  expr: { section: Section; isEffect?: boolean },
   reads: Opt<Read>,
   intersectionsBySection: Map<Section, Intersection[]>,
 ) {
   let referencedBindings: ReferencedBindings;
   let constantBindings: ReferencedBindings;
+  let hoistedBindings: ReferencedBindings;
+  let allBindings: ReferencedBindings;
 
   if (Array.isArray(reads)) {
     const rootBindings = getRootBindings(reads);
     for (const read of reads) {
       let { binding } = read;
-      const readExtra = read.extra;
-      if (readExtra) {
-        if (readExtra.assignmentTo !== binding) {
-          readExtra.section = expr.section;
-          ({ binding } = readExtra.read ??= resolveExpressionReference(
+      const { extra, getter } = read;
+
+      if (getter) {
+        extra.section = expr.section;
+        extra.read = createRead(binding, undefined, getter);
+        addBindingGetter(binding, getter);
+        if (getter.hoisted) {
+          binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
+          hoistedBindings = bindingUtil.add(hoistedBindings, binding);
+        }
+      } else {
+        if (extra.assignmentTo !== binding) {
+          extra.section = expr.section;
+          ({ binding } = extra.read ??= resolveExpressionReference(
             rootBindings,
             binding,
           ));
         }
+        if (binding.type === BindingType.constant) {
+          constantBindings = bindingUtil.add(constantBindings, binding);
+        } else if (binding.type !== BindingType.dom) {
+          referencedBindings = bindingUtil.add(referencedBindings, binding);
+        }
       }
-      if (binding.type === BindingType.constant) {
-        constantBindings = bindingUtil.add(constantBindings, binding);
-      } else {
-        referencedBindings = bindingUtil.add(referencedBindings, binding);
-      }
+      allBindings = bindingUtil.add(allBindings, binding);
     }
   } else if (reads) {
-    if (reads.extra) {
-      reads.extra.section = expr.section;
-      reads.extra.read = createRead(reads.binding, undefined);
+    const { binding, extra, getter } = reads;
+
+    if (getter) {
+      addBindingGetter(binding, getter);
+      if (getter.hoisted) {
+        binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
+        hoistedBindings = bindingUtil.add(hoistedBindings, binding);
+      }
+    } else if (binding.type === BindingType.constant) {
+      constantBindings = binding;
+    } else if (binding.type !== BindingType.dom) {
+      referencedBindings = binding;
     }
-    if (reads.binding.type === BindingType.constant) {
-      constantBindings = reads.binding;
-    } else {
-      referencedBindings = reads.binding;
-    }
+
+    extra.section = expr.section;
+    extra.read = createRead(binding, undefined, getter);
+    allBindings = binding;
   }
 
   if (Array.isArray(referencedBindings)) {
@@ -1927,6 +2013,8 @@ function resolveReferencedBindings(
   return {
     referencedBindings,
     constantBindings,
+    hoistedBindings,
+    allBindings,
   };
 }
 
@@ -1938,7 +2026,7 @@ function resolveExpressionReference(
     readBinding.upstreamAlias &&
     findClosestReference(readBinding.upstreamAlias, rootBindings);
   if (!upstreamRoot) {
-    return createRead(readBinding, undefined);
+    return createRead(readBinding, undefined, undefined);
   }
 
   let curBinding = readBinding;
@@ -1955,7 +2043,7 @@ function resolveExpressionReference(
     props.reverse();
   }
 
-  return createRead(upstreamRoot, props);
+  return createRead(upstreamRoot, props, undefined);
 }
 
 function isSupersetSources(a: Binding, b: Binding) {
@@ -1967,8 +2055,12 @@ function isSupersetSources(a: Binding, b: Binding) {
   );
 }
 
-export function createRead(binding: Binding, props: Opt<string>) {
-  return { binding, props };
+export function createRead(
+  binding: Binding,
+  props: Opt<string>,
+  getter: Getter | undefined,
+): ExtraRead {
+  return { binding, props, getter };
 }
 
 function getMemberExpressionPropString(

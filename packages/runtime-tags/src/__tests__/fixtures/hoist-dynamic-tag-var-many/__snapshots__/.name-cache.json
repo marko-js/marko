@@ -6,7 +6,10 @@
       "$$get$hoisted_setHtml2": "o",
       "$$get$hoisted_setHtml3": "s",
       "$$get_$hoisted_setHtml2": "m",
-      "$$get_$hoisted_setHtml3": "n"
+      "$$get_$hoisted_setHtml3": "n",
+      "$$setHtml3_getter": "e",
+      "$$setHtml2_getter": "_",
+      "$$setHtml_getter": "a"
     }
   }
 }

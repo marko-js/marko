@@ -111,6 +111,8 @@
 # Mutations
 ```
 INSERT #comment0, div0, div1, div2, div3, div4, div5, hr0, div6, div7, div8, div9, hr1, ul0, ul1, ul2, ul3, #comment1
+INSERT div0/#text
+INSERT div6/#text
 INSERT ul0/li0/#text
 INSERT ul0/li1/#text
 INSERT ul0/li2/#text
@@ -127,6 +129,4 @@ INSERT ul3/li0/#text
 INSERT ul3/li1/#text
 INSERT ul3/li2/#text
 INSERT ul3/li3/#text
-INSERT div0/#text
-INSERT div6/#text
 ```

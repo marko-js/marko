@@ -17,22 +17,22 @@
     <!--M_*6 #div/0-->
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.g = [0, _.h = {
-          "BranchScopes:#text/0": _.b = {
-            "BranchScopes:#text/0": _.c = {}
+      M._.r = [_ =&gt; (_.f = [0, _.g = {
+          "BranchScopes:#text/0": _.a = {
+            "BranchScopes:#text/0": _.b = {}
           },
-          "BranchScopes:#text/2": _.f = {},
-          "#childScope/1": _.e = {
-            input: _.a = {}
-          }
-        }, _.b, _.c,
+          "BranchScopes:#text/2": _.e = {}
+        }, _.a, _.b,
+        {
+          input: _.c = {}
+        },
         {
           input: _.d = {}
-        }, _.e, _.f], _.a.value = _._[
-          "__tests__/template.marko_0_$hoisted_el/hoist"
-          ](_.h), _.d.value = _._[
-          "__tests__/template.marko_2/#div"
-          ](_.c), _.g),
+        }, _.e], _.d.value = _._[
+          "__tests__/template.marko_0_#div/hoist"
+          ](_.g), _.c.value = _._[
+          "__tests__/template.marko_2_#div"
+          ](_.b), _.f),
         "__tests__/tags/child.marko_0_input 4 5 __tests__/template.marko_0 1"
       ];
       M._.w()

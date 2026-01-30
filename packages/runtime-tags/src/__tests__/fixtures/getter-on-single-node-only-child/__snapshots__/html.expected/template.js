@@ -2,7 +2,7 @@ import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   _._scope_reason();
   const $scope0_id = _._scope_id();
-  const $ul = _._el($scope0_id, "__tests__/template.marko_0/#ul");
+  const $ul = _._el($scope0_id, "__tests__/template.marko_0_#ul");
   let items = [0, 1];
   _._html(`<button></button>${_._el_resume($scope0_id, "#button/0")}<ul>`);
   _._for_of(items, item => {

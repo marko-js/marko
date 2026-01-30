@@ -12,7 +12,7 @@ import {
 } from "../common/types";
 import { runEffects } from "./queue";
 import { setParentBranch } from "./renderer";
-import type { Signal } from "./signals";
+import { _el_read, type Signal } from "./signals";
 import { getDebugKey } from "./walker";
 
 type Resumes = (number | Scope)[];
@@ -100,19 +100,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               i = orphanBranches.length,
             ) => {
               if (visitType !== ResumeSymbol.BranchStart) {
-                visitScope[
-                  AccessorPrefix.Getter + nextToken(/* read accessor */)
-                ] = (
-                  (node) => () =>
-                    node
-                )(
-                  (visitScope[lastToken] =
-                    visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
-                    visitType ===
-                      ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
-                      ? parent
-                      : visit),
-                );
+                visitScope[nextToken(/* read accessor */)] =
+                  visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
+                  visitType ===
+                    ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
+                    ? parent
+                    : visit;
                 accessor = AccessorPrefix.BranchScopes + lastToken;
                 singleNode =
                   visitType !== ResumeSymbol.BranchEnd &&
@@ -248,11 +241,8 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 
             // TODO: switch?
             if (visitType === ResumeSymbol.Node) {
-              // TODO: could we use attr marker?
-              visitScope[AccessorPrefix.Getter + nextToken()] = (
-                (node) => () =>
-                  node
-              )((visitScope[lastToken] = visit.previousSibling));
+              visitScope[nextToken(/* read accessor */)] =
+                visit.previousSibling;
             } else if (branchesEnabled) {
               visitBranches!();
             }
@@ -314,10 +304,10 @@ export function _var_resume<T extends Signal<unknown>>(
 }
 
 export function _el(id: string, accessor: EncodedAccessor) {
-  const getterAccessor =
-    AccessorPrefix.Getter +
-    (MARKO_DEBUG ? accessor : decodeAccessor(accessor as number));
-  return _resume(id, (scope: Scope) => () => {
-    return scope[getterAccessor]();
-  });
+  if (MARKO_DEBUG) {
+    return _resume(id, (scope: Scope) => () => _el_read(scope[accessor]));
+  } else {
+    accessor = decodeAccessor(accessor as number);
+    return _resume(id, (scope: Scope) => () => scope[accessor]);
+  }
 }

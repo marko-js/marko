@@ -9,10 +9,9 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
-          setHtml: _.c = {},
-          "#childScope/0": _.b = {}
-        }, _.b, _.c], _.b.input_value = _._[
-          "__tests__/template.marko_0_$hoisted_setHtml/hoist"
+          setHtml: _.c = {}
+        }, _.b = {}, _.c], _.b.input_value = _._[
+          "__tests__/template.marko_0_setHtml/hoist"
           ](_.a), _.a.setHtml = _._[
           "__tests__/tags/child.marko_0/_return"
           ](_.c), _.d),

@@ -9,7 +9,8 @@
       "$$getul": "n",
       "$$for": "a",
       "$$items__script": "c",
-      "$$items": "i"
+      "$$items": "i",
+      "$$ul_getter": "m"
     }
   }
 }

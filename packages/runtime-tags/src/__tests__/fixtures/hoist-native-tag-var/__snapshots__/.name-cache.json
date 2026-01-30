@@ -7,7 +7,9 @@
       "$$get$hoisted_el": "s",
       "$$get$hoisted_el2": "i",
       "$$get_$hoisted_el": "e",
-      "$$get_$hoisted_el2": "l"
+      "$$get_$hoisted_el2": "l",
+      "$$el2_getter": "a",
+      "$$el_getter": "m"
     }
   }
 }

@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div></div><!--M_*2 #div/0--><div></div><!--M_*3 #div/0--><div></div><!--M_*4 #div/0--><div></div><!--M_*5 #div/0--><div></div><!--M_*6 #div/0--><div></div><!--M_*7 #div/0--><hr><div></div><!--M_*8 #div/0--><div></div><!--M_*9 #div/0--><div></div><!--M_*10 #div/0--><div></div><!--M_*11 #div/0--><hr><ul><li data-index=0></li><!--M_*13 #li/0--><li data-index=1></li><!--M_*14 #li/0--><li data-index=2></li><!--M_*15 #li/0--><li data-index=3></li><!--M_*16 #li/0--></ul><ul><li data-index=4></li><!--M_*18 #li/0--><li data-index=5></li><!--M_*19 #li/0--><li data-index=6></li><!--M_*20 #li/0--><li data-index=7></li><!--M_*21 #li/0--></ul><ul><li data-index=8></li><!--M_*23 #li/0--><li data-index=9></li><!--M_*24 #li/0--><li data-index=10></li><!--M_*25 #li/0--><li data-index=11></li><!--M_*26 #li/0--></ul><ul><li data-index=12></li><!--M_*28 #li/0--><li data-index=13></li><!--M_*29 #li/0--><li data-index=14></li><!--M_*30 #li/0--><li data-index=15></li><!--M_*31 #li/0--></ul><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.F=[0,_.a={"BranchScopes:#text/0":[_.b={},_.c={},_.d={},_.e={},_.f={},_.g={}],"BranchScopes:#text/1":[_.h={},_.i={},_.j={},_.k={}],"BranchScopes:#text/2":[_.l={"BranchScopes:#ul/0":[_.m={},_.n={},_.o={},_.p={}]},_.q={"BranchScopes:#ul/0":[_.r={},_.s={},_.t={},_.u={}]},_.v={"BranchScopes:#ul/0":[_.w={},_.x={},_.y={},_.z={}]},_.A={"BranchScopes:#ul/0":[_.B={},_.C={},_.D={},_.E={}]}]},_.b,_.c,_.d,_.e,_.f,_.g,_.h,_.i,_.j,_.k,_.l,_.m,_.n,_.o,_.p,_.q,_.r,_.s,_.t,_.u,_.v,_.w,_.x,_.y,_.z,_.A,_.B,_.C,_.D,_.E],_.a.$hoisted_el3=_._["__tests__/template.marko_0_$hoisted_el3/hoist"](_.a),_.F),"__tests__/template.marko_0_$hoisted_el3 1 __tests__/template.marko_0 1"];M._.w()</script>
+  <div></div><!--M_*2 #div/0--><div></div><!--M_*3 #div/0--><div></div><!--M_*4 #div/0--><div></div><!--M_*5 #div/0--><div></div><!--M_*6 #div/0--><div></div><!--M_*7 #div/0--><hr><div></div><!--M_*8 #div/0--><div></div><!--M_*9 #div/0--><div></div><!--M_*10 #div/0--><div></div><!--M_*11 #div/0--><hr><ul><li data-index=0></li><!--M_*13 #li/0--><li data-index=1></li><!--M_*14 #li/0--><li data-index=2></li><!--M_*15 #li/0--><li data-index=3></li><!--M_*16 #li/0--></ul><ul><li data-index=4></li><!--M_*18 #li/0--><li data-index=5></li><!--M_*19 #li/0--><li data-index=6></li><!--M_*20 #li/0--><li data-index=7></li><!--M_*21 #li/0--></ul><ul><li data-index=8></li><!--M_*23 #li/0--><li data-index=9></li><!--M_*24 #li/0--><li data-index=10></li><!--M_*25 #li/0--><li data-index=11></li><!--M_*26 #li/0--></ul><ul><li data-index=12></li><!--M_*28 #li/0--><li data-index=13></li><!--M_*29 #li/0--><li data-index=14></li><!--M_*30 #li/0--><li data-index=15></li><!--M_*31 #li/0--></ul><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.E=[0,{"BranchScopes:#text/0":[_.a={},_.b={},_.c={},_.d={},_.e={},_.f={}],"BranchScopes:#text/1":[_.g={},_.h={},_.i={},_.j={}],"BranchScopes:#text/2":[_.k={"BranchScopes:#ul/0":[_.l={},_.m={},_.n={},_.o={}]},_.p={"BranchScopes:#ul/0":[_.q={},_.r={},_.s={},_.t={}]},_.u={"BranchScopes:#ul/0":[_.v={},_.w={},_.x={},_.y={}]},_.z={"BranchScopes:#ul/0":[_.A={},_.B={},_.C={},_.D={}]}]},_.a,_.b,_.c,_.d,_.e,_.f,_.g,_.h,_.i,_.j,_.k,_.l,_.m,_.n,_.o,_.p,_.q,_.r,_.s,_.t,_.u,_.v,_.w,_.x,_.y,_.z,_.A,_.B,_.C,_.D]),"__tests__/template.marko_0 1"];M._.w()</script>
 ```
 
 # Render End
@@ -104,33 +104,32 @@
     </ul>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.F = [0, _.a = {
-            "BranchScopes:#text/0": [_.b = {}, _.c = {}, _.d = {}, _.e = {},
-              _.f = {},
-              _.g = {}
+      M._.r = [_ =&gt; (_.E = [0,
+          {
+            "BranchScopes:#text/0": [_.a = {}, _.b = {}, _.c = {}, _.d = {},
+              _.e = {},
+              _.f = {}
             ],
-            "BranchScopes:#text/1": [_.h = {}, _.i = {}, _.j = {}, _
-              .k = {}],
-            "BranchScopes:#text/2": [_.l = {
-              "BranchScopes:#ul/0": [_.m = {}, _.n = {}, _.o = {}, _
-              .p = {}]
-            }, _.q = {
-              "BranchScopes:#ul/0": [_.r = {}, _.s = {}, _.t = {}, _
-              .u = {}]
-            }, _.v = {
-              "BranchScopes:#ul/0": [_.w = {}, _.x = {}, _.y = {}, _
-              .z = {}]
-            }, _.A = {
-              "BranchScopes:#ul/0": [_.B = {}, _.C = {}, _.D = {}, _
-              .E = {}]
+            "BranchScopes:#text/1": [_.g = {}, _.h = {}, _.i = {}, _
+              .j = {}],
+            "BranchScopes:#text/2": [_.k = {
+              "BranchScopes:#ul/0": [_.l = {}, _.m = {}, _.n = {}, _
+              .o = {}]
+            }, _.p = {
+              "BranchScopes:#ul/0": [_.q = {}, _.r = {}, _.s = {}, _
+              .t = {}]
+            }, _.u = {
+              "BranchScopes:#ul/0": [_.v = {}, _.w = {}, _.x = {}, _
+              .y = {}]
+            }, _.z = {
+              "BranchScopes:#ul/0": [_.A = {}, _.B = {}, _.C = {}, _
+              .D = {}]
             }]
-          }, _.b, _.c, _.d, _.e, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m, _
-          .n, _.o, _.p, _.q, _.r, _.s, _.t, _.u, _.v, _.w, _.x, _.y, _.z, _
-          .A, _.B, _.C, _.D, _.E
-        ], _.a.$hoisted_el3 = _._[
-          "__tests__/template.marko_0_$hoisted_el3/hoist"
-          ](_.a), _.F),
-        "__tests__/template.marko_0_$hoisted_el3 1 __tests__/template.marko_0 1"
+          }, _.a, _.b, _.c, _.d, _.e, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _
+          .m, _.n, _.o, _.p, _.q, _.r, _.s, _.t, _.u, _.v, _.w, _.x, _.y, _
+          .z, _.A, _.B, _.C, _.D
+        ]),
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>

@@ -690,7 +690,7 @@ function analyzeAttrs(
             knownSpread.binding,
             attr.name,
           );
-          addRead(attrExtra, undefined, propBinding, section);
+          addRead(attrExtra, {}, propBinding, section, undefined);
         }
       }
     } else if (spreadReferenceNodes) {
@@ -716,7 +716,7 @@ function analyzeAttrs(
 
       known[prop] = { value: propExtra };
       rootAttrExprs.add(propExtra);
-      addRead(propExtra, propExtra, propBinding, section);
+      addRead(propExtra, propExtra, propBinding, section, undefined);
       setBindingDownstream(
         templateExportAttr === true
           ? propTree.rest!.binding

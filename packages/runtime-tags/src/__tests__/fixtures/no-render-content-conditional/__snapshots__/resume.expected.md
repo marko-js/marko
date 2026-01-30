@@ -18,7 +18,7 @@
           },
           x: "bar"
         }], _.a.output = _._[
-          "__tests__/template.marko_0/#div"
+          "__tests__/template.marko_0_#div"
           ](_.c), _.b),
         "__tests__/tags/child.marko_0_input_x 2"
       ];

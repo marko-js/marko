@@ -20,7 +20,10 @@
       "$$get_$hoisted_setHtml": "v",
       "$$get_$hoisted_setHtml2": "y",
       "$$inputshowsectionnull_content__$hoisted_setHtml": "p",
-      "$$thing_content2__$hoisted_setHtml": "H"
+      "$$thing_content2__$hoisted_setHtml": "H",
+      "$$setHtml3_getter": "B",
+      "$$setHtml2_getter": "h",
+      "$$setHtml_getter": "k"
     }
   }
 }

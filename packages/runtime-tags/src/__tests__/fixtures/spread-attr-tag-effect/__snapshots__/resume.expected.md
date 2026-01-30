@@ -1,7 +1,12 @@
 # Render
 ```html
 <html>
-  <head>
+  <head />
+  <body>
+    <div>
+      content
+    </div>
+    <!--M_*3 #div/0-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, 2,
@@ -20,7 +25,11 @@
       ];
       M._.w()
     </script>
-  </head>
-  <body />
+  </body>
 </html>
+```
+
+# Mutations
+```
+INSERT html/body/div/#text
 ```

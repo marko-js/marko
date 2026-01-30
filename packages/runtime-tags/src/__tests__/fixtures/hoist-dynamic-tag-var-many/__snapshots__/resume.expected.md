@@ -156,7 +156,8 @@
     </ul>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.eb = [0, _.$ = {
+      M._.r = [_ =&gt; (_.db = [0,
+          {
             "BranchScopes:#text/0": [_.a = {
               "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
               "#scopeOffset/1": 4,
@@ -199,7 +200,7 @@
               "#scopeOffset/1": 31,
               setHtml2: _.t = {}
             }],
-            "BranchScopes:#text/2": [_.ab = {
+            "BranchScopes:#text/2": [_.$ = {
               "BranchScopes:#ul/0": [_.u = {
                 "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
                 "#scopeOffset/1": 35,
@@ -217,7 +218,7 @@
                 "#scopeOffset/1": 44,
                 setHtml3: _.B = {}
               }]
-            }, _.bb = {
+            }, _.ab = {
               "BranchScopes:#ul/0": [_.C = {
                 "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
                 "#scopeOffset/1": 48,
@@ -235,7 +236,7 @@
                 "#scopeOffset/1": 57,
                 setHtml3: _.J = {}
               }]
-            }, _.cb = {
+            }, _.bb = {
               "BranchScopes:#ul/0": [_.K = {
                 "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
                 "#scopeOffset/1": 61,
@@ -253,7 +254,7 @@
                 "#scopeOffset/1": 70,
                 setHtml3: _.R = {}
               }]
-            }, _.db = {
+            }, _.cb = {
               "BranchScopes:#ul/0": [_.S = {
                 "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
                 "#scopeOffset/1": 74,
@@ -274,13 +275,11 @@
             }]
           }, _.a, _.b, 1, _.c, _.d, 1, _.e, _.f, 1, _.g, _.h, 1, _.i, _.j,
           1, _.k, _.l, 1, _.m, _.n, 1, _.o, _.p, 1, _.q, _.r, 1, _.s, _.t,
-          1, _.ab, _.u, _.v, 1, _.w, _.x, 1, _.y, _.z, 1, _.A, _.B, 1, _.bb,
-          _.C, _.D, 1, _.E, _.F, 1, _.G, _.H, 1, _.I, _.J, 1, _.cb, _.K, _
-          .L, 1, _.M, _.N, 1, _.O, _.P, 1, _.Q, _.R, 1, _.db, _.S, _.T, 1, _
+          1, _.$, _.u, _.v, 1, _.w, _.x, 1, _.y, _.z, 1, _.A, _.B, 1, _.ab,
+          _.C, _.D, 1, _.E, _.F, 1, _.G, _.H, 1, _.I, _.J, 1, _.bb, _.K, _
+          .L, 1, _.M, _.N, 1, _.O, _.P, 1, _.Q, _.R, 1, _.cb, _.S, _.T, 1, _
           .U, _.V, 1, _.W, _.X, 1, _.Y, _.Z
-        ], _.$.$hoisted_setHtml3 = _._[
-          "__tests__/template.marko_0_$hoisted_setHtml3/hoist"
-          ](_.$), _.a.setHtml = _._[
+        ], _.a.setHtml = _._[
           "__tests__/tags/child.marko_0/_return"
           ](_.b), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_1_setHtml/var"
@@ -384,8 +383,8 @@
           "__tests__/tags/child.marko_0/_return"
           ](_.Z), _.Z["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.Y), _.eb),
-        "__tests__/template.marko_0_$hoisted_setHtml3 1 __tests__/template.marko_0 1"
+          ](_.Y), _.db),
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -423,6 +422,8 @@ INSERT html/body/ul3/#text0
 INSERT html/body/ul3/#text1
 INSERT html/body/ul3/#text2
 INSERT html/body/ul3/#text3
+INSERT html/body/div0/#text
+INSERT html/body/div6/#text
 INSERT html/body/ul0/div0/#text
 INSERT html/body/ul0/div1/#text
 INSERT html/body/ul0/div2/#text
@@ -439,6 +440,4 @@ INSERT html/body/ul3/div0/#text
 INSERT html/body/ul3/div1/#text
 INSERT html/body/ul3/div2/#text
 INSERT html/body/ul3/div3/#text
-INSERT html/body/div0/#text
-INSERT html/body/div6/#text
 ```

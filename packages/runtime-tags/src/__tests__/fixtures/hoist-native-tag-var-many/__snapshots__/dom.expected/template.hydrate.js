@@ -1,21 +1,19 @@
-// size: 288 (min) 186 (brotli)
-_._resume("a0", _._hoist("Ja", "Aa", "Ac"));
-const $get$hoisted_el2 = _._hoist("Ja", "Ab"),
-  $get$hoisted_el3 = _._hoist("Ja", "Aa");
+// size: 254 (min) 173 (brotli)
+const $el3_getter = _._hoist_resume("a0", 0, "Aa", "Ac"),
+  $el2_getter = _._hoist(0, "Ab"),
+  $el_getter = _._hoist(0, "Aa");
 (_._script("a1", ($scope) => {
   {
+    const el = $el_getter($scope)();
+    el && (el.innerHTML = "First Only");
+  }
+  {
+    const el = $el2_getter($scope)();
+    el && (el.innerHTML = "First Only");
+  }
+  {
     let i = 0;
-    for (const el of $scope.e) el().innerHTML = `All (${i++})`;
+    for (const el of $el3_getter($scope)) el.innerHTML = `All (${i++})`;
   }
 }),
-  _._script("a2", ($scope) => {
-    {
-      const first = $get$hoisted_el3($scope)();
-      first && (first.innerHTML = "First Only");
-    }
-    {
-      const first = $get$hoisted_el2($scope)();
-      first && (first.innerHTML = "First Only");
-    }
-  }),
   init());

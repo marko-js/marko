@@ -2,7 +2,7 @@ import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   _._scope_reason();
   const $scope0_id = _._scope_id();
-  const $hoisted_el3 = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_el3/hoist");
+  const $el3_getter = _._hoist($scope0_id, "__tests__/template.marko_0_#li/hoist");
   _._for_to(5, 0, 1, () => {
     const $scope1_id = _._scope_id();
     _._html(`<div></div>${_._el_resume($scope1_id, "#div/0")}`);
@@ -27,12 +27,6 @@ export default _._template("__tests__/template.marko", input => {
     _._html("</ul>");
     _._scope($scope3_id, {}, "__tests__/template.marko", "28:2");
   }, 0, $scope0_id, "#text/2", 1, 0, 0, 0, 1);
-  _._script($scope0_id, "__tests__/template.marko_0_$hoisted_el3");
   _._script($scope0_id, "__tests__/template.marko_0");
-  _._scope($scope0_id, {
-    $hoisted_el3
-  }, "__tests__/template.marko", 0, {
-    $hoisted_el3: 0
-  });
   _._resume_branch($scope0_id);
 });

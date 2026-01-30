@@ -89,7 +89,7 @@ export function createScopeReadExpression(
 
   if (section === reference.section && reference.type !== BindingType.dom) {
     const exprExtra = (expr.extra ??= {});
-    exprExtra.read = createRead(reference, undefined);
+    exprExtra.read = createRead(reference, undefined, undefined);
     exprExtra.section = section;
   }
   return expr;

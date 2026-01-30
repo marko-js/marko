@@ -1,2 +1,2 @@
-// size: 28 (min) 32 (brotli)
-_._resume("a0", _._hoist(3));
+// size: 24 (min) 28 (brotli)
+_._hoist_resume("a0", 3);

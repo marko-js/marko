@@ -2,9 +2,9 @@ import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();
-  const $hoisted_hoist = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_hoist/hoist");
+  const $hoist1_getter = _._hoist($scope0_id, "__tests__/template.marko_0_hoist1/hoist");
   const $input_value__closures = new Set();
-  const x = $hoisted_hoist;
+  const x = $hoist1_getter;
   const hoist1 = _._resume(() => input.value, "__tests__/template.marko_0/hoist", $scope0_id);
   _._if(() => {
     if (1) {
@@ -14,8 +14,8 @@ export default _._template("__tests__/template.marko", input => {
       _._if(() => {
         if (1) {
           const $scope2_id = _._scope_id();
-          const $hoisted_hoist2 = _._hoist($scope2_id, "__tests__/template.marko_2_$hoisted_hoist2/hoist");
-          const z = $hoisted_hoist2;
+          const $if_content2__hoist3_getter = _._hoist($scope2_id, "__tests__/template.marko_2_hoist3/hoist");
+          const z = $if_content2__hoist3_getter;
           const hoist3 = _._resume(() => input.value, "__tests__/template.marko_2/hoist2", $scope2_id);
           _._subscribe($input_value__closures, _._scope($scope2_id, {
             hoist3,

@@ -1,10 +1,14 @@
-# Render `{"show":true}`
-
+# Render
 ```html
-<div />
+<div>
+  mounted
+</div>
 ```
 
 # Mutations
 ```
 INSERT div
+INSERT #text
+REMOVE #text in div
+INSERT div/#text
 ```

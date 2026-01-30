@@ -1,28 +1,28 @@
 <if=input.show>
   <if=input.show>
-    <div/el />
-    <child=el />
+    <div/$el />
+    <child=$el />
   </if>
 </if>
 
-<child=el/>
+<child=$el/>
 
 <script>
-  const first = el!()
-  if (first) {
-    first.innerHTML = 'Hello World';
+  const el = $el()
+  if (el) {
+    el.innerHTML = 'Hello World';
   }
 </script>
 
 <hr />
 
 <if=true>
-  <div/el2 />
+  <div/$el2 />
 </if>
 
 <script>
-  const first = el2!()
-  if (first) {
-    first.innerHTML = 'Hello World';
+  const el = $el2()
+  if (el) {
+    el.innerHTML = 'Hello World';
   }
 </script>

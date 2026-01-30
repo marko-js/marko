@@ -1,5 +1,6 @@
-# Render `{"show":true}`
-
+# Render
 ```html
-<div />
+<div>
+  mounted
+</div>
 ```

@@ -1,16 +1,14 @@
-// size: 751 (min) 333 (brotli)
+// size: 732 (min) 329 (brotli)
 const $dynamicTag = _._dynamic_tag(0),
   $dynamicTag2 = _._dynamic_tag(1);
 function $setup($scope) {
   _._return($scope, $_return($scope));
 }
 function $_return($scope) {
-  return function (html) {
-    $scope.a.innerHTML = html;
-  };
+  return () => (html) => ($scope.a.innerHTML = html);
 }
 _._resume("a0", $_return);
-const $get$hoisted_setHtml = _._hoist(2, "B4"),
+const $setHtml3_getter = _._hoist(2, "B4"),
   $inputshowsectionnull_content__setHtml = _._var_resume("c0", _._const(2));
 _._content_resume(
   "c1",
@@ -23,7 +21,7 @@ _._content_resume(
   0,
   "B4",
 );
-const $get$hoisted_setHtml2 = _._hoist(2, "B3", "B2"),
+const $setHtml2_getter = _._hoist(2, "B3", "B2"),
   $thing_content2__setHtml = _._var_resume("c2", _._const(2)),
   $thing_content2__setup = ($scope) => {
     (_._var($scope, 0, $thing_content2__setHtml), $setup($scope.a));
@@ -36,7 +34,7 @@ const $get$hoisted_setHtml2 = _._hoist(2, "B3", "B2"),
     0,
     "B3",
   );
-(_._content_resume(
+_._content_resume(
   "c4",
   "<!><!><!><!><!><!>",
   "b/b%b%c&b",
@@ -49,14 +47,12 @@ const $get$hoisted_setHtml2 = _._hoist(2, "B3", "B2"),
   },
   0,
   "B2",
-),
-  _._resume("c5", _._hoist(2, "B1")),
-  _._var_resume("c6", _._const(2)),
+);
+const $setHtml_getter = _._hoist_resume("c5", 2, "B1");
+(_._var_resume("c6", _._const(2)),
   _._script("c8", ($scope) => {
-    for (const fn of $scope.g) fn("Hoist from custom tag");
-  }),
-  _._script("c9", ($scope) => {
-    ($get$hoisted_setHtml2($scope)("Hoist from dynamic tag"),
-      $get$hoisted_setHtml($scope)("Hoist from dynamic tag"));
+    for (const fn of $setHtml_getter($scope)) fn("Hoist from custom tag");
+    ($setHtml2_getter($scope)()("Hoist from dynamic tag"),
+      $setHtml3_getter($scope)()("Hoist from dynamic tag"));
   }),
   init());

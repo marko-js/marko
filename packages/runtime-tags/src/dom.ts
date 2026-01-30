@@ -65,6 +65,7 @@ export {
   _el_read,
   _for_closure,
   _hoist,
+  _hoist_resume,
   _id,
   _if_closure,
   _let,

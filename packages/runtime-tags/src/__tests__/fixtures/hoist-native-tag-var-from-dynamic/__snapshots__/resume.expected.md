@@ -36,26 +36,20 @@
     </section>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.d = [0, _.a = {
-            "ClosureScopes:1": _.e = new Set,
-            "ClosureScopes:2": _.k = new Set,
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
+            "ClosureScopes:1": _.c = new Set,
+            "ClosureScopes:2": _.i = new Set,
             "ClosureScopes:4": _.o = new Set
-          }, 1, _.f = {}, _.g = {}, 1, _.b = {
-            "ClosureScopes:3": _.h = new Set
-          }, 1, _.i = {}, _.j = {}, _.c = {
-            "ClosureScopes:3": _.l = new Set
-          }, 1, _.m = {}, _.n = {}, 1, _.p = {}], _.a.$hoisted_el = _._[
-            "__tests__/template.marko_0_$hoisted_el/hoist"
-            ](_.a), _.a.$hoisted_el3 = _._[
-            "__tests__/template.marko_0_$hoisted_el3/hoist"
-            ](_.a), _.b.$hoisted_el2 = _._[
-            "__tests__/template.marko_2_$hoisted_el2/hoist"
-            ](_.b), _.c.$hoisted_el2 = _._[
-            "__tests__/template.marko_2_$hoisted_el2/hoist"
-            ](_.c), (_.e).add(_.f), _.e.add(_.g), (_.h).add(_.i), _.h.add(_
-          .j), (_.k).add(_.b), (_.l).add(_.m), _.l.add(_.n), _.k.add(_.c), (_
-            .o).add(_.p), _.d),
-        "__tests__/template.marko_2_$hoisted_el2 6 10 __tests__/template.marko_0 1 __tests__/template.marko_0_$hoisted_el3 1 __tests__/template.marko_0_$hoisted_el 1"
+          }, 1, _.d = {}, _.e = {}, 1, _.j = {
+            _: _.a,
+            "ClosureScopes:3": _.f = new Set
+          }, 1, _.g = {}, _.h = {}, _.n = {
+            _: _.a,
+            "ClosureScopes:3": _.k = new Set
+          }, 1, _.l = {}, _.m = {}, 1, _.p = {}], (_.c).add(_.d), _.c.add(_
+          .e), (_.f).add(_.g), _.f.add(_.h), (_.i).add(_.j), (_.k).add(_.l), _
+          .k.add(_.m), _.i.add(_.n), (_.o).add(_.p), _.b),
+        "__tests__/template.marko_2 6 10 __tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -69,11 +63,11 @@ UPDATE html/body/div0[class] null => "inner outer"
 UPDATE html/body/div1[class] null => "inner outer"
 UPDATE html/body/div2[class] null => "inner outer"
 UPDATE html/body/div3[class] null => "inner outer"
-INSERT html/body/section/p/#text
+INSERT html/body/span0/#text
+INSERT html/body/span1/#text
 UPDATE html/body/div0[class] "inner" => "inner outer"
 UPDATE html/body/div1[class] "inner" => "inner outer"
 UPDATE html/body/div2[class] "inner" => "inner outer"
 UPDATE html/body/div3[class] "inner" => "inner outer"
-INSERT html/body/span0/#text
-INSERT html/body/span1/#text
+INSERT html/body/section/p/#text
 ```
