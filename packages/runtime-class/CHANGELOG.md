@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.38.18
+
+### Patch Changes
+
+- [#3061](https://github.com/marko-js/marko/pull/3061) [`0134076`](https://github.com/marko-js/marko/commit/0134076c0e11173a5e9c377aefb0d9709a3a6415) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add ability for generated template ids to be overwritten via compiler config.
+
+- [#3062](https://github.com/marko-js/marko/pull/3062) [`9c2a6d9`](https://github.com/marko-js/marko/commit/9c2a6d905eaf04e6d080766832b48ee8b68d3107) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Align class api native tag types with tags api.
+
+- Updated dependencies [[`0134076`](https://github.com/marko-js/marko/commit/0134076c0e11173a5e9c377aefb0d9709a3a6415)]:
+  - @marko/compiler@5.39.49
+
 ## 5.38.17
 
 ### Patch Changes

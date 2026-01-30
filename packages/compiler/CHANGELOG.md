@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.49
+
+### Patch Changes
+
+- [#3061](https://github.com/marko-js/marko/pull/3061) [`0134076`](https://github.com/marko-js/marko/commit/0134076c0e11173a5e9c377aefb0d9709a3a6415) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add ability for generated template ids to be overwritten via compiler config.
+
 ## 5.39.48
 
 ### Patch Changes
