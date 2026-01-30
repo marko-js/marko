@@ -1,0 +1,11 @@
+<pre#root/$root />
+<pre#outer/$outer />
+<pre#inner/$inner />
+<script>$root().innerHTML += `${[...ref].length}; ${ref()}\n\t`</script>
+<for|i| to=2>
+  <script>$outer().innerHTML += `${[...ref].length}; ${ref()}\n\t`</script>
+  <for|j| to=2>
+    <script>$inner().innerHTML += `${[...ref].length}; ${ref()}\n\t`</script>
+    <child/ref=`${i},${j}` />
+  </for>
+</for>

@@ -1,5 +1,12 @@
 # Render
+```html
+<div>
+  content
+</div>
+```
+
 # Mutations
 ```
-INSERT #text
+INSERT div
+INSERT div/#text
 ```

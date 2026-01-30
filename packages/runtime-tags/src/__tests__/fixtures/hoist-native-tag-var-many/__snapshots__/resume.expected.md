@@ -135,33 +135,32 @@
     </ul>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.F = [0, _.a = {
-            "BranchScopes:#text/0": [_.b = {}, _.c = {}, _.d = {}, _.e = {},
-              _.f = {},
-              _.g = {}
+      M._.r = [_ =&gt; (_.E = [0,
+          {
+            "BranchScopes:#text/0": [_.a = {}, _.b = {}, _.c = {}, _.d = {},
+              _.e = {},
+              _.f = {}
             ],
-            "BranchScopes:#text/1": [_.h = {}, _.i = {}, _.j = {}, _
-              .k = {}],
-            "BranchScopes:#text/2": [_.l = {
-              "BranchScopes:#ul/0": [_.m = {}, _.n = {}, _.o = {}, _
-              .p = {}]
-            }, _.q = {
-              "BranchScopes:#ul/0": [_.r = {}, _.s = {}, _.t = {}, _
-              .u = {}]
-            }, _.v = {
-              "BranchScopes:#ul/0": [_.w = {}, _.x = {}, _.y = {}, _
-              .z = {}]
-            }, _.A = {
-              "BranchScopes:#ul/0": [_.B = {}, _.C = {}, _.D = {}, _
-              .E = {}]
+            "BranchScopes:#text/1": [_.g = {}, _.h = {}, _.i = {}, _
+              .j = {}],
+            "BranchScopes:#text/2": [_.k = {
+              "BranchScopes:#ul/0": [_.l = {}, _.m = {}, _.n = {}, _
+              .o = {}]
+            }, _.p = {
+              "BranchScopes:#ul/0": [_.q = {}, _.r = {}, _.s = {}, _
+              .t = {}]
+            }, _.u = {
+              "BranchScopes:#ul/0": [_.v = {}, _.w = {}, _.x = {}, _
+              .y = {}]
+            }, _.z = {
+              "BranchScopes:#ul/0": [_.A = {}, _.B = {}, _.C = {}, _
+              .D = {}]
             }]
-          }, _.b, _.c, _.d, _.e, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m, _
-          .n, _.o, _.p, _.q, _.r, _.s, _.t, _.u, _.v, _.w, _.x, _.y, _.z, _
-          .A, _.B, _.C, _.D, _.E
-        ], _.a.$hoisted_el3 = _._[
-          "__tests__/template.marko_0_$hoisted_el3/hoist"
-          ](_.a), _.F),
-        "__tests__/template.marko_0_$hoisted_el3 1 __tests__/template.marko_0 1"
+          }, _.a, _.b, _.c, _.d, _.e, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _
+          .m, _.n, _.o, _.p, _.q, _.r, _.s, _.t, _.u, _.v, _.w, _.x, _.y, _
+          .z, _.A, _.B, _.C, _.D
+        ]),
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -171,6 +170,8 @@
 
 # Mutations
 ```
+INSERT html/body/div0/#text
+INSERT html/body/div6/#text
 INSERT html/body/ul0/li0/#text
 INSERT html/body/ul0/li1/#text
 INSERT html/body/ul0/li2/#text
@@ -187,6 +188,4 @@ INSERT html/body/ul3/li0/#text
 INSERT html/body/ul3/li1/#text
 INSERT html/body/ul3/li2/#text
 INSERT html/body/ul3/li3/#text
-INSERT html/body/div0/#text
-INSERT html/body/div6/#text
 ```

@@ -1,0 +1,11 @@
+<pre#root/$root />
+<pre#outer/$outer />
+<pre#inner/$inner />
+<script>$root().innerHTML += `${[...$el].length}; ${$el().className}\n\t`</script>
+<for|i| to=2>
+  <script>$outer().innerHTML += `${[...$el].length}; ${$el().className}\n\t`</script>
+  <for|j| to=2>
+    <script>$inner().innerHTML += `${[...$el].length}; ${$el().className}\n\t`</script>
+    <div/$el class=`${i}, ${j}` />
+  </for>
+</for>

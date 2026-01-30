@@ -3,17 +3,17 @@ import _child from "./tags/child.marko";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();
-  const $hoisted_el = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_el/hoist");
+  const $el_getter = _._hoist($scope0_id, "__tests__/template.marko_0_#div/hoist");
   _._if(() => {
     if (input.show) {
       const $scope1_id = _._scope_id();
       _._if(() => {
         if (input.show) {
           const $scope2_id = _._scope_id();
-          const el = _._el($scope2_id, "__tests__/template.marko_2/#div");
+          const $el = _._el($scope2_id, "__tests__/template.marko_2_#div");
           _._html(`<div></div>${_._el_resume($scope2_id, "#div/0")}`);
           _child({
-            value: el
+            value: $el
           });
           _._scope($scope2_id, {}, "__tests__/template.marko", "2:4");
           return 0;
@@ -25,9 +25,8 @@ export default _._template("__tests__/template.marko", input => {
       return 0;
     }
   }, $scope0_id, "#text/0", 1, _._serialize_guard($scope0_reason, /* input.show */0), _._serialize_guard($scope0_reason, /* input.show */0));
-  const $childScope = _._peek_scope_id();
   _child({
-    value: $hoisted_el
+    value: $el_getter
   });
   _._html("<hr>");
   _._if(() => {
@@ -39,9 +38,8 @@ export default _._template("__tests__/template.marko", input => {
     }
   }, $scope0_id, "#text/2", 1, 0, _._serialize_guard($scope0_reason, /* input.show */0), 0, 1);
   _._script($scope0_id, "__tests__/template.marko_0");
-  _._scope($scope0_id, {
-    input_show: _._serialize_if($scope0_reason, /* input.show */0) && input.show,
-    "#childScope/1": _._existing_scope($childScope)
+  _._serialize_if($scope0_reason, /* input.show */0) && _._scope($scope0_id, {
+    input_show: input.show
   }, "__tests__/template.marko", 0, {
     input_show: ["input.show"]
   });

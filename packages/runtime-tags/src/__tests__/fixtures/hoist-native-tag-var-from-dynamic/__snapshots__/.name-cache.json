@@ -13,7 +13,12 @@
       "$$inputshowChildnull_content__$hoisted_el": "m",
       "$$get_$hoisted_el": "e",
       "$$get_$hoisted_el2": "b",
-      "$$inputshowsectionnull_content__setup": "d"
+      "$$inputshowsectionnull_content__setup": "d",
+      "$$el3_getter": "f",
+      "$$inputshowChildnull_content__$el2_getter": "u",
+      "$$el2_getter": "B",
+      "$$inputshowChildnull_content__setup__script": "g",
+      "$$el_getter": "p"
     }
   }
 }

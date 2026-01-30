@@ -25,7 +25,6 @@ import {
   getSerializeReason,
 } from "../util/serialize-reasons";
 import { addStatement } from "../util/signals";
-import { translateDomVar } from "../util/translate-var";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 
@@ -74,6 +73,11 @@ export default {
         "#comment",
         BindingType.dom,
         tagSection,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        !!tagVar,
       ));
 
       trackDomVarReferences(tag, nodeBinding);
@@ -86,10 +90,6 @@ export default {
     enter(tag) {
       const tagExtra = tag.node.extra!;
       const nodeBinding = tagExtra[kNodeBinding];
-
-      if (isOutputHTML()) {
-        translateDomVar(tag, nodeBinding);
-      }
 
       if (nodeBinding) {
         walks.visit(tag, WalkCode.Get);

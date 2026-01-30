@@ -1,0 +1,9 @@
+{
+  "vars": {
+    "props": {
+      "$_": "r",
+      "$init": "n",
+      "$$api_getter": "t"
+    }
+  }
+}

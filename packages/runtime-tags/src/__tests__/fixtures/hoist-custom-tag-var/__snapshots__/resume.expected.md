@@ -19,9 +19,9 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.j = [0, _.i = {
-          "BranchScopes:#text/0": _.e = {
+          "BranchScopes:#text/0": _.d = {
             "BranchScopes:#text/0": _.a = {
-              setHtml: _.f = {}
+              setHtml: _.e = {}
             }
           },
           "BranchScopes:#text/2": _.b = {
@@ -29,16 +29,15 @@
           },
           "BranchScopes:#text/3": _.c = {
             setHtml3: _.h = {}
-          },
-          "#childScope/1": _.d = {}
-        }, _.e, _.a, _.f, _.d, _.b, _.g, _.c, _.h,
+          }
+        }, _.d, _.a, _.e, _.f = {}, _.b, _.g, _.c, _.h,
         {
           _: _.i
-        }], _.d.input_value = _._[
-          "__tests__/template.marko_0_$hoisted_setHtml/hoist"
+        }], _.f.input_value = _._[
+          "__tests__/template.marko_0_setHtml/hoist"
           ](_.i), _.a.setHtml = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.f), _.b.setHtml2 = _._[
+          ](_.e), _.b.setHtml2 = _._[
           "__tests__/tags/child.marko_0/_return"
           ](_.g), _.c.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"

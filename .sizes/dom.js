@@ -1,4 +1,4 @@
-// size: 20367 (min) 7821 (brotli)
+// size: 20335 (min) 7796 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -312,29 +312,29 @@ function _script(id, fn) {
 function _el_read(value) {
   return value;
 }
-function* traverseAllHoisted(scope, path, curIndex = path.length - 1) {
+function* traverse(scope, path, i = path.length - 1) {
   if (scope)
     if (Symbol.iterator in scope)
-      for (let s of scope instanceof Map ? scope.values() : scope)
-        yield* traverseAllHoisted(s, path, curIndex);
-    else
-      curIndex
-        ? yield* traverseAllHoisted(scope[path[curIndex]], path, curIndex - 1)
-        : yield scope[path[0]];
+      for (let childScope of scope.values())
+        yield* traverse(childScope, path, i);
+    else {
+      let item = scope[path[i]];
+      i
+        ? yield* traverse(item, path, i - 1)
+        : yield "function" == typeof item ? item() : item;
+    }
 }
 function _hoist(...path) {
   return (
     (path = path.map((p) => ("string" == typeof p ? p : decodeAccessor(p)))),
     (scope) => {
-      let getOne = (...args) =>
-          iterator()
-            .next()
-            .value?.(...args),
-        iterator = (getOne[Symbol.iterator] = () =>
-          traverseAllHoisted(scope, path));
-      return getOne;
+      let fn = () => traverse(scope, path).next().value;
+      return ((fn[Symbol.iterator] = () => traverse(scope, path)), fn);
     }
   );
+}
+function _hoist_resume(id, ...path) {
+  return _resume(id, _hoist(...path));
 }
 var walker = document.createTreeWalker(document);
 function walk(startNode, walkCodes, branch) {
@@ -342,7 +342,6 @@ function walk(startNode, walkCodes, branch) {
 }
 function walkInternal(currentWalkIndex, walkCodes, scope) {
   let value,
-    id,
     storedMultiplier = 0,
     currentMultiplier = 0,
     currentScopeIndex = 0;
@@ -354,8 +353,7 @@ function walkInternal(currentWalkIndex, walkCodes, scope) {
       32 === value)
     ) {
       let node = walker.currentNode;
-      ((scope[(id = decodeAccessor(currentScopeIndex++))] = node),
-        (scope["J" + id] = () => node));
+      scope[decodeAccessor(currentScopeIndex++)] = node;
     } else if (37 === value || 49 === value)
       (walker.currentNode.replaceWith(
         (walker.currentNode = scope[decodeAccessor(currentScopeIndex++)] =
@@ -532,15 +530,8 @@ function init(runtimeId = "M") {
                 ) => {
                   for (
                     "[" !== visitType &&
-                    ((visitScope["J" + nextToken()] = (
-                      (node) => () =>
-                        node
-                    )(
-                      (visitScope[lastToken] =
-                        ")" === visitType || "}" === visitType
-                          ? parent
-                          : visit),
-                    )),
+                    ((visitScope[nextToken()] =
+                      ")" === visitType || "}" === visitType ? parent : visit),
                     (accessor = "A" + lastToken),
                     (singleNode = "]" !== visitType && ")" !== visitType),
                     nextToken());
@@ -634,10 +625,7 @@ function init(runtimeId = "M") {
                   (visitType = visitText[lastTokenIndex++]),
                   (visitScope = getScope(nextToken())),
                   "*" === visitType
-                    ? (visitScope["J" + nextToken()] = (
-                        (node) => () =>
-                          node
-                      )((visitScope[lastToken] = visit.previousSibling)))
+                    ? (visitScope[nextToken()] = visit.previousSibling)
                     : branchesEnabled && visitBranches());
               return ((visits.length = resumes.length = 0), effects);
             }),
@@ -668,8 +656,10 @@ function _var_resume(id, signal) {
   return (_resume(id, (scope) => (value) => signal(scope, value)), signal);
 }
 function _el(id, accessor) {
-  let getterAccessor = "J" + decodeAccessor(accessor);
-  return _resume(id, (scope) => () => scope[getterAccessor]());
+  return (
+    (accessor = decodeAccessor(accessor)),
+    _resume(id, (scope) => () => scope[accessor])
+  );
 }
 function _attr_input_checked(scope, nodeAccessor, checked, checkedChange) {
   setCheckboxValue(

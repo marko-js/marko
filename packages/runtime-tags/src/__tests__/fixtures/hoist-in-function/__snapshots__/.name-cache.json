@@ -3,7 +3,8 @@
     "props": {
       "$_": "m",
       "$init": "o",
-      "$$get$hoisted_x": "r"
+      "$$get$hoisted_x": "r",
+      "$$x_getter": "t"
     }
   }
 }

@@ -1,12 +1,12 @@
 import Child from '<child>';
 
 <child>
-  <span/el></span>
+  <span/$el></span>
 </child>
 
 <script>
-  for (const element of el) {
-    element().innerHTML = 'Hoist from custom tag';
+  for (const el of $el) {
+    el.innerHTML = 'Hoist from custom tag';
   }
 </script>
 
@@ -14,30 +14,30 @@ import Child from '<child>';
 
 <${input.show ? Child : null}>
   <child>
-    <div/el2 />
+    <div/$el2 />
   </child>
   
   <script>
-    for (const element of el2) {
-       element().classList.add('inner');
+    for (const el of $el2) {
+       el.classList.add('inner');
     }
   </script>
 </>
 <script>
-  for (const element of el2) {
-    element().classList.add('outer');
+  for (const el of $el2) {
+    el.classList.add('outer');
   }
 </script>
 
 
 
 <${input.show ? 'section' : null}>
-  <p/el3 />
+  <p/$el3 />
 </>
 
 <script>
-  const element = el3()
-  if (element) {
-    element.innerHTML = 'Hoist from dynamic tag';
+  const el = $el3()
+  if (el) {
+    el.innerHTML = 'Hoist from dynamic tag';
   }
 </script>

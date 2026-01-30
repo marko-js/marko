@@ -1,6 +1,5 @@
 import { decodeAccessor } from "../common/helpers";
 import {
-  AccessorPrefix,
   AccessorProp,
   type BranchScope,
   NodeType,
@@ -37,7 +36,6 @@ function walkInternal(
   scope: Scope,
 ) {
   let value: number;
-  let id: string | number;
   let storedMultiplier = 0;
   let currentMultiplier = 0;
   let currentScopeIndex = 0;
@@ -50,11 +48,10 @@ function walkInternal(
     if (value === WalkCode.Get) {
       const node = walker.currentNode;
       scope[
-        (id = MARKO_DEBUG
+        MARKO_DEBUG
           ? getDebugKey(currentScopeIndex++, node)
-          : decodeAccessor(currentScopeIndex++))
+          : decodeAccessor(currentScopeIndex++)
       ] = node;
-      scope[AccessorPrefix.Getter + id] = () => node;
     } else if (
       value === WalkCode.Replace ||
       value === WalkCode.DynamicTagWithVar

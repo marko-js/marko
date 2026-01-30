@@ -3,7 +3,8 @@
     "props": {
       "$_": "t",
       "$init": "m",
-      "$$getbutton": "o"
+      "$$getbutton": "o",
+      "$$btn_getter": "r"
     }
   }
 }

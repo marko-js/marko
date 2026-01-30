@@ -5,7 +5,7 @@ import _thing from "./tags/thing.marko";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();
-  const $hoisted_setHtml = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml/hoist");
+  const $setHtml_getter = _._hoist($scope0_id, "__tests__/template.marko_0_setHtml/hoist");
   const $thing_content__subscribers = new Set();
   const $inputshowThingnull_content__subscribers = new Set();
   const $inputshowsectionnull_content__subscribers = new Set();
@@ -61,13 +61,9 @@ export default _._template("__tests__/template.marko", input => {
     _._assert_hoist(setHtml3);
   }, $scope0_id), 0, _._serialize_guard($scope0_reason, /* input.show */0));
   _._script($scope0_id, "__tests__/template.marko_0");
-  _._script($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml");
   _._scope($scope0_id, {
-    $hoisted_setHtml,
     "ClosureScopes:1": $thing_content__subscribers,
     "ClosureScopes:2": $inputshowThingnull_content__subscribers,
     "ClosureScopes:4": $inputshowsectionnull_content__subscribers
-  }, "__tests__/template.marko", 0, {
-    $hoisted_setHtml: "5:18"
-  });
+  }, "__tests__/template.marko", 0);
 });

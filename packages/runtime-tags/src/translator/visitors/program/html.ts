@@ -5,7 +5,6 @@ import {
   getSharedUid,
   usedSharedUid,
 } from "../../util/generate-uid";
-import { getDeclaredBindingExpression } from "../../util/get-defined-binding-expression";
 import isStatic from "../../util/is-static";
 import { forEach } from "../../util/optional";
 import {
@@ -24,9 +23,9 @@ import {
 import { isReasonDynamic } from "../../util/serialize-reasons";
 import {
   addWriteScopeBuilder,
+  getBindingGetterIdentifier,
   getHTMLSectionStatements,
   getResumeRegisterId,
-  setBindingSerializedValue,
   setSerializedValue,
   writeHTMLResumeStatements,
 } from "../../util/signals";
@@ -43,74 +42,82 @@ export default {
   translate: {
     enter() {
       forEachSection((section) => {
-        const sectionDynamicSubscribers = new Set<Section>();
-        forEach(section.hoisted, (binding) => {
-          for (const hoistedBinding of binding.hoists.values()) {
-            if (hoistedBinding.reads.size) {
-              getHTMLSectionStatements(hoistedBinding.section).push(
+        forEach(section.bindings, (binding) => {
+          for (const [hoistSection, hasReference] of binding.getters) {
+            if (hasReference) {
+              getHTMLSectionStatements(hoistSection || section).push(
                 t.variableDeclaration("const", [
-                  t.variableDeclarator(
-                    t.identifier(hoistedBinding.name),
-                    callRuntime(
-                      "_hoist",
-                      getScopeIdIdentifier(hoistedBinding.section),
-                      t.stringLiteral(
-                        getResumeRegisterId(
-                          hoistedBinding.section,
-                          hoistedBinding,
-                          "hoist",
+                  hoistSection
+                    ? t.variableDeclarator(
+                        getBindingGetterIdentifier(binding, hoistSection),
+                        callRuntime(
+                          "_hoist",
+                          getScopeIdIdentifier(hoistSection),
+                          t.stringLiteral(
+                            getResumeRegisterId(hoistSection, binding, "hoist"),
+                          ),
+                        ),
+                      )
+                    : t.variableDeclarator(
+                        t.identifier(binding.originalName!),
+                        callRuntime(
+                          "_el",
+                          getScopeIdIdentifier(section),
+                          t.stringLiteral(
+                            getResumeRegisterId(section, binding),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
                 ]),
               );
             }
-
-            let currentSection: Section | undefined = section;
-            while (
-              currentSection &&
-              currentSection !== hoistedBinding.section
-            ) {
-              const parentSection: Section = currentSection.parent!;
-              if (
-                !currentSection.sectionAccessor &&
-                !sectionDynamicSubscribers.has(currentSection)
-              ) {
-                const subscribersIdentifier = generateUidIdentifier(
-                  `${currentSection.name}__subscribers`,
-                );
-
-                sectionDynamicSubscribers.add(currentSection);
-
-                getHTMLSectionStatements(parentSection).push(
-                  t.variableDeclaration("const", [
-                    t.variableDeclarator(
-                      subscribersIdentifier,
-                      t.newExpression(t.identifier("Set"), []),
-                    ),
-                  ]),
-                );
-
-                addWriteScopeBuilder(currentSection, (expr) =>
-                  callRuntime("_subscribe", subscribersIdentifier, expr),
-                );
-                setSerializedValue(
-                  parentSection,
-                  getSectionInstancesAccessor(currentSection)!,
-                  subscribersIdentifier,
-                );
-              }
-              currentSection = parentSection!;
-            }
           }
+        });
 
-          if (binding.hoists.size && binding.type !== BindingType.dom) {
-            setBindingSerializedValue(
-              section,
-              binding,
-              getDeclaredBindingExpression(binding),
-            );
+        const sectionDynamicSubscribers = new Set<Section>();
+        forEach(section.hoisted, (binding) => {
+          let highestHoistSection!: Section;
+          forEach(binding.hoists, (hoistSection) => {
+            if (
+              !highestHoistSection ||
+              hoistSection.depth < highestHoistSection.depth
+            ) {
+              highestHoistSection = hoistSection;
+            }
+          });
+
+          let currentSection: Section | undefined = section;
+          while (currentSection && currentSection !== highestHoistSection) {
+            const parentSection: Section = currentSection.parent!;
+            if (
+              !currentSection.sectionAccessor &&
+              !sectionDynamicSubscribers.has(currentSection)
+            ) {
+              const subscribersIdentifier = generateUidIdentifier(
+                `${currentSection.name}__subscribers`,
+              );
+
+              sectionDynamicSubscribers.add(currentSection);
+
+              getHTMLSectionStatements(parentSection).push(
+                t.variableDeclaration("const", [
+                  t.variableDeclarator(
+                    subscribersIdentifier,
+                    t.newExpression(t.identifier("Set"), []),
+                  ),
+                ]),
+              );
+
+              addWriteScopeBuilder(currentSection, (expr) =>
+                callRuntime("_subscribe", subscribersIdentifier, expr),
+              );
+              setSerializedValue(
+                parentSection,
+                getSectionInstancesAccessor(currentSection)!,
+                subscribersIdentifier,
+              );
+            }
+            currentSection = parentSection!;
           }
         });
       });
@@ -210,10 +217,10 @@ function replaceBindingReadNode(node: t.Node) {
       break;
     }
     case "CallExpression": {
-      const binding = node.callee.extra?.read?.binding;
+      const read = node.callee.extra?.read;
       if (
-        binding &&
-        (binding.type === BindingType.hoist || binding.type === BindingType.dom)
+        read &&
+        (read.getter !== undefined || read.binding.type === BindingType.dom)
       ) {
         return t.callExpression(
           t.arrowFunctionExpression(
@@ -222,7 +229,7 @@ function replaceBindingReadNode(node: t.Node) {
           ),
           [
             importRuntime(
-              binding.type === BindingType.dom
+              read.binding.type === BindingType.dom
                 ? "_el_read_error"
                 : "_hoist_read_error",
             ),

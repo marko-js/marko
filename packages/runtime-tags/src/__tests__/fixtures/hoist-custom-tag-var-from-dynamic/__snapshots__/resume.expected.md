@@ -30,48 +30,47 @@
     </section>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.p = [0, _.a = {
-            "ClosureScopes:1": _.q = new Set,
-            "ClosureScopes:2": _.s = new Set,
-            "ClosureScopes:4": _.w = new Set
-          }, 1, _.b = {
-            setHtml: _.c = {}
-          }, _.c, _.d = {
-            setHtml: _.e = {}
-          }, _.e, 1, _.t = {
-            "ClosureScopes:3": _.r = new Set
-          }, 1, _.f = {
-            setHtml2: _.g = {}
-          }, _.g, _.h = {
-            setHtml2: _.i = {}
-          }, _.i, _.v = {
-            "ClosureScopes:3": _.u = new Set
-          }, 1, _.j = {
-            setHtml2: _.k = {}
-          }, _.k, _.l = {
-            setHtml2: _.m = {}
-          }, _.m, 1, _.n = {
-            setHtml3: _.o = {}
-          }, _.o], _.a.$hoisted_setHtml = _._[
-            "__tests__/template.marko_0_$hoisted_setHtml/hoist"
-            ](_.a), _.b.setHtml = _._[
+      M._.r = [_ =&gt; (_.o = [0,
+          {
+            "ClosureScopes:1": _.p = new Set,
+            "ClosureScopes:2": _.r = new Set,
+            "ClosureScopes:4": _.v = new Set
+          }, 1, _.a = {
+            setHtml: _.b = {}
+          }, _.b, _.c = {
+            setHtml: _.d = {}
+          }, _.d, 1, _.s = {
+            "ClosureScopes:3": _.q = new Set
+          }, 1, _.e = {
+            setHtml2: _.f = {}
+          }, _.f, _.g = {
+            setHtml2: _.h = {}
+          }, _.h, _.u = {
+            "ClosureScopes:3": _.t = new Set
+          }, 1, _.i = {
+            setHtml2: _.j = {}
+          }, _.j, _.k = {
+            setHtml2: _.l = {}
+          }, _.l, 1, _.m = {
+            setHtml3: _.n = {}
+          }, _.n], _.a.setHtml = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.c), _.d.setHtml = _._[
+            ](_.b), _.c.setHtml = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.e), _.f.setHtml2 = _._[
+            ](_.d), _.e.setHtml2 = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.g), _.h.setHtml2 = _._[
+            ](_.f), _.g.setHtml2 = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.i), _.j.setHtml2 = _._[
+            ](_.h), _.i.setHtml2 = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.k), _.l.setHtml2 = _._[
+            ](_.j), _.k.setHtml2 = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.m), _.n.setHtml3 = _._[
+            ](_.l), _.m.setHtml3 = _._[
             "__tests__/tags/child.marko_0/_return"
-            ](_.o), (_.q).add(_.b), _.q.add(_.d), (_.r).add(_.f), _.r.add(_
-          .h), (_.s).add(_.t), (_.u).add(_.j), _.u.add(_.l), _.s.add(_.v), (_
-            .w).add(_.n), _.p),
-        "__tests__/template.marko_0 1 __tests__/template.marko_0_$hoisted_setHtml 1"
+            ](_.n), (_.p).add(_.a), _.p.add(_.c), (_.q).add(_.e), _.q.add(_
+          .g), (_.r).add(_.s), (_.t).add(_.i), _.t.add(_.k), _.r.add(_.u), (_
+            .v).add(_.m), _.o),
+        "__tests__/template.marko_0 1"
       ];
       M._.w()
     </script>
@@ -81,8 +80,8 @@
 
 # Mutations
 ```
-INSERT html/body/div2/#text
-INSERT html/body/section/div/#text
 INSERT html/body/div0/#text
 INSERT html/body/div1/#text
+INSERT html/body/div2/#text
+INSERT html/body/section/div/#text
 ```

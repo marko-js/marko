@@ -4,7 +4,7 @@ import _thing from "./tags/thing.marko";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_reason = _._scope_reason();
   const $scope0_id = _._scope_id();
-  const $hoisted_setHtml = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml/hoist");
+  const $setHtml_getter = _._hoist($scope0_id, "__tests__/template.marko_0_setHtml/hoist");
   _._if(() => {
     if (input.show) {
       const $scope1_id = _._scope_id();
@@ -29,9 +29,8 @@ export default _._template("__tests__/template.marko", input => {
       return 0;
     }
   }, $scope0_id, "#text/0", 1, _._serialize_guard($scope0_reason, /* input.show */0), _._serialize_guard($scope0_reason, /* input.show */0));
-  const $childScope = _._peek_scope_id();
   _thing({
-    value: $hoisted_setHtml
+    value: $setHtml_getter
   });
   _._if(() => {
     if (true) {
@@ -71,9 +70,8 @@ export default _._template("__tests__/template.marko", input => {
     }, "__tests__/template.marko", "28:2");
   }
   _._script($scope0_id, "__tests__/template.marko_0");
-  _._scope($scope0_id, {
-    input_show: _._serialize_if($scope0_reason, /* input.show */0) && input.show,
-    "#childScope/1": _._existing_scope($childScope)
+  _._serialize_if($scope0_reason, /* input.show */0) && _._scope($scope0_id, {
+    input_show: input.show
   }, "__tests__/template.marko", 0, {
     input_show: ["input.show"]
   });

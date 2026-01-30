@@ -4,7 +4,8 @@
       "$_": "r",
       "$init": "o",
       "$$_return": "t",
-      "$$what_content__setHtml": "n"
+      "$$what_content__setHtml": "n",
+      "$$setHtml_getter": "m"
     }
   }
 }

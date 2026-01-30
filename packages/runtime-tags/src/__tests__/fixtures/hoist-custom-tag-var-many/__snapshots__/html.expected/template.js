@@ -3,7 +3,7 @@ import _child from "./tags/child.marko";
 export default _._template("__tests__/template.marko", input => {
   _._scope_reason();
   const $scope0_id = _._scope_id();
-  const $hoisted_setHtml3 = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml3/hoist");
+  const $setHtml3_getter = _._hoist($scope0_id, "__tests__/template.marko_0_setHtml3/hoist");
   _._for_to(5, 0, 1, () => {
     const $scope1_id = _._scope_id();
     let setHtml = _child({});
@@ -43,12 +43,6 @@ export default _._template("__tests__/template.marko", input => {
     _._html("</ul>");
     _._scope($scope3_id, {}, "__tests__/template.marko", "22:2");
   }, 0, $scope0_id, "#text/2", 1, 0, 0, 0, 1);
-  _._script($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml3");
   _._script($scope0_id, "__tests__/template.marko_0");
-  _._scope($scope0_id, {
-    $hoisted_setHtml3
-  }, "__tests__/template.marko", 0, {
-    $hoisted_setHtml3: "25:12"
-  });
   _._resume_branch($scope0_id);
 });

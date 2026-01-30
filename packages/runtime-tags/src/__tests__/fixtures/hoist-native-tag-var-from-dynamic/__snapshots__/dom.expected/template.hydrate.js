@@ -1,22 +1,16 @@
-// size: 723 (min) 310 (brotli)
+// size: 636 (min) 290 (brotli)
 const $dynamicTag = _._dynamic_tag(0),
   $dynamicTag2 = _._dynamic_tag(1),
-  $get$hoisted_el = _._hoist("Ja", "B4");
+  $el3_getter = _._hoist(0, "B4");
 _._content_resume("b0", "<p></p>", " b", 0, 0, "B4");
-const $get$hoisted_el2 = _._resume("b1", _._hoist("Ja", "B3"));
-_._resume("b2", _._hoist("Ja", "B3", "B2"));
-const $child_content2 = _._content("b3", "<div></div>", " b", 0, 0, "B3"),
-  $inputshowChildnull_content__$hoisted_el__script = _._script(
-    "b4",
-    ($scope) => {
-      for (const element of $scope.b) element().classList.add("inner");
-    },
-  ),
-  $inputshowChildnull_content__$hoisted_el = _._const(
-    1,
-    $inputshowChildnull_content__$hoisted_el__script,
-  );
-(_._content_resume(
+const $inputshowChildnull_content__$el2_getter = _._hoist_resume("b1", 0, "B3"),
+  $el2_getter = _._hoist_resume("b2", 0, "B3", "B2"),
+  $child_content2 = _._content("b3", "<div></div>", " b", 0, 0, "B3"),
+  $inputshowChildnull_content__setup__script = _._script("b4", ($scope) => {
+    for (const el of $inputshowChildnull_content__$el2_getter($scope))
+      el.classList.add("inner");
+  });
+_._content_resume(
   "b5",
   "<!><!><!><!><!><!>",
   "b/b%b%c&b",
@@ -26,26 +20,18 @@ const $child_content2 = _._content("b3", "<div></div>", " b", 0, 0, "B3"),
         ($dynamicTag($scope, input_content),
           $dynamicTag2($scope, input_content));
       })($scope.a, $child_content2($scope)),
-      $inputshowChildnull_content__$hoisted_el(
-        $scope,
-        $get$hoisted_el2($scope),
-      ));
+      $inputshowChildnull_content__setup__script($scope));
   },
   0,
   "B2",
-),
-  _._resume("b6", _._hoist("Ja", "B1")),
-  _._script("b8", ($scope) => {
-    for (const element of $scope.h) element().classList.add("outer");
-  }),
-  _._script("b9", ($scope) => {
-    for (const element of $scope.g)
-      element().innerHTML = "Hoist from custom tag";
-  }),
-  _._script("b10", ($scope) => {
-    {
-      const element = $get$hoisted_el($scope)();
-      element && (element.innerHTML = "Hoist from dynamic tag");
-    }
-  }),
+);
+const $el_getter = _._hoist_resume("b6", 0, "B1");
+(_._script("b8", ($scope) => {
+  for (const el of $el_getter($scope)) el.innerHTML = "Hoist from custom tag";
+  for (const el of $el2_getter($scope)) el.classList.add("outer");
+  {
+    const el = $el3_getter($scope)();
+    el && (el.innerHTML = "Hoist from dynamic tag");
+  }
+}),
   init());
