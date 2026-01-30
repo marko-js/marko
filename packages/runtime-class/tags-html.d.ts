@@ -382,36 +382,36 @@ declare global {
          * Fires after printing the document.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-afterprint
          */
-        onAfterprint?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-afterprint"?: this["onAfterprint"];
+        onAfterPrint?: AttrEventHandler<Event, HTMLBodyElement>;
+        "on-afterprint"?: this["onAfterPrint"];
 
         /**
          * Fires before printing the document.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforeprint
          */
-        onBeforeprint?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-beforeprint"?: this["onBeforeprint"];
+        onBeforePrint?: AttrEventHandler<Event, HTMLBodyElement>;
+        "on-beforeprint"?: this["onBeforePrint"];
 
         /**
          * Fired when the page is about to be unloaded, in case the page would like to show a warning prompt.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforeunload
          */
-        onBeforeunload?: AttrEventHandler<BeforeUnloadEvent, HTMLBodyElement>;
-        "on-beforeunload"?: this["onBeforeunload"];
+        onBeforeUnload?: AttrEventHandler<BeforeUnloadEvent, HTMLBodyElement>;
+        "on-beforeunload"?: this["onBeforeUnload"];
 
         /**
          * Fired when the fragment part of the document's URL changes.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-hashchange
          */
-        onHashchange?: AttrEventHandler<HashChangeEvent, HTMLBodyElement>;
-        "on-hashchange"?: this["onHashchange"];
+        onHashChange?: AttrEventHandler<HashChangeEvent, HTMLBodyElement>;
+        "on-hashchange"?: this["onHashChange"];
 
         /**
          * Fired when the user's preferred languages change.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-languagechange
          */
-        onLanguagechange?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-languagechange"?: this["onLanguagechange"];
+        onLanguageChange?: AttrEventHandler<Event, HTMLBodyElement>;
+        "on-languagechange"?: this["onLanguageChange"];
 
         /**
          * Fired when the window receives a message.
@@ -424,8 +424,8 @@ declare global {
          * Fired when the window receives an error message.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-messageerror
          */
-        onMessageerror?: AttrEventHandler<MessageEvent, HTMLBodyElement>;
-        "on-messageerror"?: this["onMessageerror"];
+        onMessageError?: AttrEventHandler<MessageEvent, HTMLBodyElement>;
+        "on-messageerror"?: this["onMessageError"];
 
         /**
          * Fired when the network connection is lost.
@@ -445,29 +445,29 @@ declare global {
          * Fired when the page's session history entry stops being the active entry.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-pagehide
          */
-        onPagehide?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
-        "on-pagehide"?: this["onPagehide"];
+        onPageHide?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
+        "on-pagehide"?: this["onPageHide"];
 
         /**
          * Fired when the page's session history entry becomes the active entry.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-pageshow
          */
-        onPageshow?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
-        "on-pageshow"?: this["onPageshow"];
+        onPageShow?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
+        "on-pageshow"?: this["onPageShow"];
 
         /**
          * Fired when the window's session history is popped.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-popstate
          */
-        onPopstate?: AttrEventHandler<PopStateEvent, HTMLBodyElement>;
-        "on-popstate"?: this["onPopstate"];
+        onPopState?: AttrEventHandler<PopStateEvent, HTMLBodyElement>;
+        "on-popstate"?: this["onPopState"];
 
         /**
          * Fires when a previously-unhandled promise rejection becomes handled.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-rejectionhandled
          */
-        onRejectionhandled?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-rejectionhandled"?: this["onRejectionhandled"];
+        onRejectionHandled?: AttrEventHandler<Event, HTMLBodyElement>;
+        "on-rejectionhandled"?: this["onRejectionHandled"];
 
         /**
          * Fired when the corresponding localStorage or sessionStorage storage areas change.
@@ -696,6 +696,13 @@ declare global {
          * @see https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-details-open
          */
         open?: AttrBoolean;
+
+        // NON STANDARD
+        /**
+         * Called whenever a the `open` attribute has changed.
+         * When `openChange` is a function, `open` becomes controlled.
+         */
+        openChange?: AttrMissing | ((open: boolean) => void);
       }
       interface Dfn extends HTMLAttributes<HTMLElement> {}
       interface Dialog extends HTMLAttributes<HTMLDialogElement> {
@@ -704,6 +711,13 @@ declare global {
          * @see https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-dialog-open
          */
         open?: AttrBoolean;
+
+        // NON STANDARD
+        /**
+         * Called whenever a the `open` attribute has changed.
+         * When `openChange` is a function, `open` becomes controlled.
+         */
+        openChange?: AttrMissing | ((open: boolean) => void);
       }
       interface Div extends HTMLAttributes<HTMLDivElement> {}
       interface DL extends HTMLAttributes<HTMLDListElement> {}
@@ -831,8 +845,8 @@ declare global {
          * Fired at a form element when it is constructing the entry list
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-formdata
          */
-        onFormdata?: AttrEventHandler<FormDataEvent, HTMLFormElement>;
-        "on-formdata"?: this["onFormdata"];
+        onFormData?: AttrEventHandler<FormDataEvent, HTMLFormElement>;
+        "on-formdata"?: this["onFormData"];
 
         /**
          * Fired when a form is submitted, either by user interaction or through a script.
@@ -1279,6 +1293,41 @@ declare global {
          * @see https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-width
          */
         width?: AttrStringOrNumber;
+
+        // NON STANDARD
+
+        /**
+         * Called whenever a the `checked` property of an `input` has changed.
+         * When `checkedChange` is a function, `checked` becomes controlled.
+         * This means the `checked` property is synchronized instead of the `checked` attribute.
+         */
+        checkedChange?: AttrMissing | ((checked: boolean) => void);
+
+        /**
+         * Used to synchronize the `checked` attribute with a `value` attribute used across related `input type="checkbox"` and `input type="radio"` controls.
+         * When `checkedValue` is a string, the `checked` attribute will be set to a boolean that is `true` if the `checkedValue` is the same as the `value`.
+         * When `checkedValue` is an array of strings, the `checked` attribute will be set to a boolean that is `true` if the `checkedValue` array includes the `value`.
+         * If the `checkedValue` is falsy then `checked` is always `false`.
+         */
+        checkedValue?: AttrMissing | string | string[];
+        /**
+         * Called whenever a `input type="checkbox"` or `input type="radio"` using the `checkedValue` attribute has changed.
+         * When `checkedValueChange` is a function, `checked` becomes controlled.
+         * This means the `checked` property is synchronized instead of the `checked` attribute.
+         */
+        checkedValueChange?:
+          | AttrMissing
+          | ((
+              /** Note this is hack that allows you to work with the value as both a string and a string[] without needing generics */
+              checkedValue: string & string[],
+            ) => void);
+
+        /**
+         * Called whenever a the `value` property of an `input` has changed.
+         * When `valueChange` is a function, `value` becomes controlled. This means
+         * This means the `value` property is synchronized instead of the `value` attribute.
+         */
+        valueChange?: AttrMissing | ((value: string) => void);
       }
 
       interface Ins extends HTMLAttributes<HTMLModElement> {
@@ -1841,6 +1890,26 @@ declare global {
          * @see https://html.spec.whatwg.org/multipage/form-elements.html#attr-select-size
          */
         size?: AttrStringOrNumber;
+
+        // NON STANDARD
+
+        /**
+         * When the `value` is a string, nested `<option>` tags with a matching `value` attribute become `selected`.
+         * When the `value` is an array of strings, nested `<option>` tags with a `value` contained within the array are `selected.
+         */
+        value?: AttrMissing | string | string[];
+
+        /**
+         * Called whenever a the `value` property of the `select` has changed.
+         * When `valueChange` is a function, `value` becomes controlled. This means
+         * This means the `value` property is synchronized instead of the `value` attribute.
+         */
+        valueChange?:
+          | AttrMissing
+          | ((
+              /** Note this is hack that allows you to work with the value as both a string and a string[] without needing generics */
+              value: string & string[],
+            ) => void);
       }
 
       interface Slot extends HTMLAttributes<HTMLSlotElement> {
@@ -2089,16 +2158,25 @@ declare global {
         rows?: AttrStringOrNumber;
 
         /**
-         * (Non-standard). Represents the current value of the <textarea> element.
-         */
-        value?: AttrString;
-
-        /**
          * Controls the line wrapping behavior of the <textarea> element.
          * "hard" inserts line breaks in the submitted value, "soft" doesn't, and "off" disables wrapping.
          * @see https://html.spec.whatwg.org/multipage/form-elements.html#attr-textarea-wrap
          */
         wrap?: AttrMissing | "hard" | "soft" | "off";
+
+        // NON STANDARD
+
+        /**
+         * Represents the current value of the `textarea` element.
+         */
+        value?: AttrMissing | string;
+
+        /**
+         * Called whenever a the `value` property of the `textarea` has changed.
+         * When `valueChange` is a function, `value` becomes controlled. This means
+         * This means the `value` property is synchronized instead of the `value` attribute.
+         */
+        valueChange?: AttrMissing | ((value: string) => void);
       }
 
       interface TFoot extends HTMLAttributes<HTMLTableSectionElement> {
