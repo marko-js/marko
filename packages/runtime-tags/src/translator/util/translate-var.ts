@@ -4,7 +4,7 @@ import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUidIdentifier } from "./generate-uid";
 import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
 import { toArray } from "./optional";
-import { getCanonicalBinding, propsUtil } from "./references";
+import { getCanonicalBinding } from "./references";
 import { getOrCreateSection } from "./sections";
 import { getSerializeReason } from "./serialize-reasons";
 import { toPropertyName } from "./to-property-name";
@@ -49,16 +49,6 @@ export default function translateVar(
               t.identifier(changeBinding.name),
             ),
           );
-          const lastProperty = pattern.get("properties").at(-1);
-          if (lastProperty?.node.type === "RestElement") {
-            const restBinding = lastProperty.node.argument.extra?.binding;
-            if (restBinding) {
-              restBinding.excludeProperties = propsUtil.add(
-                restBinding.excludeProperties,
-                changeName,
-              );
-            }
-          }
         }
       }
     }

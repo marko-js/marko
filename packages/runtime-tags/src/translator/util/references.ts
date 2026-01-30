@@ -630,6 +630,13 @@ function createBindingsAndTrackReferences(
               key,
               undefined,
             );
+
+            if (hasRest && prop.value.extra?.binding?.assignmentSections) {
+              excludeProperties = propsUtil.add(
+                excludeProperties,
+                `${key}Change`,
+              );
+            }
           }
         }
       }
