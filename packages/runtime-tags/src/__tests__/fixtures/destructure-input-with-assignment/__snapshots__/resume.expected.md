@@ -12,19 +12,19 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.e = [0, _.a = {
           value: 1,
-          "ClosureScopes:value": _.f = new Set,
-          "#childScope/0": _.c = {
-            "BranchScopes:#div/0": _.b = {
-              "ClosureSignalIndex:value": 0
-            },
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content",
-            rest: _.d = {}
-          }
-        }, _.c, _.b], _.b._ = _.a, _.c.$valueChange = _._[
+          "ClosureScopes:value": _.f = new Set
+        }, _.b = {
+          "BranchScopes:#div/0": _.d = {
+            _: _.a,
+            "ClosureSignalIndex:value": 0
+          },
+          "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content",
+          rest: _.c = {}
+        }, _.d], _.b.$valueChange = _._[
           "__tests__/template.marko_0/valueChange"
-          ](_.a), _.d.content = _._[
+          ](_.a), _.c.content = _._[
           "__tests__/template.marko_1_content"
-          ](_.a), (_.f).add(_.b), _.e),
+          ](_.a), (_.f).add(_.d), _.e),
         "__tests__/tags/child.marko_0_rest 2 __tests__/tags/child.marko_0_$valueChange 2"
       ];
       M._.w()
@@ -48,19 +48,19 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.e = [0, _.a = {
           value: 1,
-          "ClosureScopes:value": _.f = new Set,
-          "#childScope/0": _.c = {
-            "BranchScopes:#div/0": _.b = {
-              "ClosureSignalIndex:value": 0
-            },
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content",
-            rest: _.d = {}
-          }
-        }, _.c, _.b], _.b._ = _.a, _.c.$valueChange = _._[
+          "ClosureScopes:value": _.f = new Set
+        }, _.b = {
+          "BranchScopes:#div/0": _.d = {
+            _: _.a,
+            "ClosureSignalIndex:value": 0
+          },
+          "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content",
+          rest: _.c = {}
+        }, _.d], _.b.$valueChange = _._[
           "__tests__/template.marko_0/valueChange"
-          ](_.a), _.d.content = _._[
+          ](_.a), _.c.content = _._[
           "__tests__/template.marko_1_content"
-          ](_.a), (_.f).add(_.b), _.e),
+          ](_.a), (_.f).add(_.d), _.e),
         "__tests__/tags/child.marko_0_rest 2 __tests__/tags/child.marko_0_$valueChange 2"
       ];
       M._.w()

@@ -5,9 +5,7 @@ export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   const $value__closures = new Set();
   let value = 1;
-  const $childScope = _._peek_scope_id();
   _child({
-    value: value,
     valueChange: _._resume(_new_value => {
       value = _new_value;
     }, "__tests__/template.marko_0/valueChange", $scope0_id),
@@ -24,8 +22,7 @@ export default _._template("__tests__/template.marko", input => {
   });
   _._scope($scope0_id, {
     value,
-    "ClosureScopes:value": $value__closures,
-    "#childScope/0": _._existing_scope($childScope)
+    "ClosureScopes:value": $value__closures
   }, "__tests__/template.marko", 0, {
     value: "1:5"
   });
