@@ -167,7 +167,7 @@ describe("translator-interop", () => {
 
           document.open();
 
-          const tracker = createMutationTracker(browser.window, document);
+          const tracker = createMutationTracker(browser, document);
 
           for await (const chunk of serverTemplate.render(input)) {
             buffer += chunk;
@@ -209,7 +209,7 @@ describe("translator-interop", () => {
           const container = Object.assign(document.createElement("div"), {
             TEST_ROOT: true,
           });
-          const tracker = createMutationTracker(browser.window, container);
+          const tracker = createMutationTracker(browser, container);
 
           document.body.appendChild(container);
 
@@ -259,7 +259,7 @@ describe("translator-interop", () => {
           const { window } = browser;
           const { document } = window;
           const throwErrors = trackErrors(window);
-          const tracker = createMutationTracker(window, document);
+          const tracker = createMutationTracker(browser, document);
           const [input, ...steps] =
             typeof config.steps === "function"
               ? await config.steps()

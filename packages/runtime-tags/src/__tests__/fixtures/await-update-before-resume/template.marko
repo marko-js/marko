@@ -6,6 +6,5 @@ try
   @placeholder -- loading...
   await|value|=resolveAfter(value, 3)
     div#inside -- ${value}
-    script -- $log().textContent += `\nsetup effect ran`
-    script -- $log().textContent += `\neffect ran value=${value}`
-pre/$log
+    script -- console.log(`\nsetup effect ran`);
+    script -- console.log(`\neffect ran value=${value}`);

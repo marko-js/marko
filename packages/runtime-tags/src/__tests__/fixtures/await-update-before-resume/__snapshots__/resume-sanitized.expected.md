@@ -6,7 +6,6 @@
   0
 </div>
 loading...
-<pre />
 ```
 
 
@@ -18,7 +17,6 @@ loading...
   1
 </div>
 loading...
-<pre />
 ```
 
 
@@ -30,7 +28,6 @@ loading...
   1
 </div>
 loading...
-<pre />
 ```
 
 
@@ -46,9 +43,9 @@ loading...
 >
   1
 </div>
-<pre>
-  
-effect ran value=1
-setup effect ran
-</pre>
+```
+# Console
+```
+LOG "\neffect ran value=1"
+LOG "\nsetup effect ran"
 ```

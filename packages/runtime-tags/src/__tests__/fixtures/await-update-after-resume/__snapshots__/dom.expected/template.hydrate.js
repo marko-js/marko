@@ -1,13 +1,12 @@
-// size: 442 (min) 228 (brotli)
+// size: 422 (min) 225 (brotli)
 _._enable_catch();
-const $await_content__value__script = _._script(
-    "a0",
-    ($scope) => ($scope._._.c.textContent += `\neffect ran value=${$scope.c}`),
+const $await_content__value__script = _._script("a0", ($scope) =>
+    console.log(`effect ran value=${$scope.c}`),
   ),
   $await_content__value = _._const(2, ($scope) => {
     (_._text($scope.a, $scope.c), $await_content__value__script($scope));
   });
-_._script("a1", ($scope) => ($scope._._.c.textContent += "\nsetup effect ran"));
+_._script("a1", ($scope) => console.log("setup effect ran"));
 const $await_content__$params = ($scope, $params2) =>
   $await_content__value($scope, $params2[0]);
 _._content_resume("a2", "loading...", "b");
@@ -15,12 +14,12 @@ const $try_content__await_promise = _._await_promise(
     0,
     $await_content__$params,
   ),
-  $try_content__value = _._closure_get(3, ($scope) =>
-    $try_content__await_promise($scope, resolveAfter($scope._.d)),
+  $try_content__value = _._closure_get(2, ($scope) =>
+    $try_content__await_promise($scope, resolveAfter($scope._.c)),
   ),
   $value__closure = _._closure($try_content__value),
-  $value = _._let(3, ($scope) => {
-    (_._text($scope.a, $scope.d), $value__closure($scope));
+  $value = _._let(2, ($scope) => {
+    (_._text($scope.a, $scope.c), $value__closure($scope));
   });
 (_._script("a3", ($scope) =>
   (async () => {

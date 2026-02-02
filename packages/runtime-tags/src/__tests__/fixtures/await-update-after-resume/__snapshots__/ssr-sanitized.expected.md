@@ -6,7 +6,6 @@
   0
 </div>
 loading...
-<pre />
 ```
 
 
@@ -22,5 +21,4 @@ loading...
 >
   0
 </div>
-<pre />
 ```

@@ -1,14 +1,14 @@
-export const $template = "<div id=outside> </div><!><pre></pre>";
-export const $walks = /* next(1), get, out(1), replace, over(1), get, over(1) */"D l%b b";
+export const $template = "<div id=outside> </div><!><!>";
+export const $walks = /* next(1), get, out(1), replace, over(2) */"D l%c";
 import { resolveAfter } from "../../utils/resolve";
 import * as _ from "@marko/runtime-tags/debug/dom";
 _._enable_catch();
-const $await_content__value__script = _._script("__tests__/template.marko_3_value", $scope => (_._el_read($scope._._["#pre/2"]).textContent += `\neffect ran value=${$scope.value}`));
+const $await_content__value__script = _._script("__tests__/template.marko_3_value", $scope => console.log(`\neffect ran value=${$scope.value}`));
 const $await_content__value = /* @__PURE__ */_._const("value", $scope => {
   _._text($scope["#text/0"], $scope.value);
   $await_content__value__script($scope);
 });
-const $await_content__setup__script = _._script("__tests__/template.marko_3", $scope => (_._el_read($scope._._["#pre/2"]).textContent += `\nsetup effect ran`));
+const $await_content__setup__script = _._script("__tests__/template.marko_3", $scope => console.log(`\nsetup effect ran`));
 const $await_content__setup = $await_content__setup__script;
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $placeholder_content = _._content_resume("__tests__/template.marko_2_content", "loading...", /* over(1) */"b");
@@ -20,7 +20,7 @@ const $try_content__setup = $scope => {
 };
 const $try_content__value = /* @__PURE__ */_._closure_get("value", $scope => $try_content__await_promise($scope, resolveAfter($scope._.value, 3)));
 const $value__closure = /* @__PURE__ */_._closure($try_content__value);
-const $value = /* @__PURE__ */_._let("value/3", $scope => {
+const $value = /* @__PURE__ */_._let("value/2", $scope => {
   _._text($scope["#text/0"], $scope.value);
   $value__closure($scope);
 });

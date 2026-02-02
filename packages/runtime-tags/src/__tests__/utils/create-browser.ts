@@ -1,8 +1,11 @@
-import type { DOMWindow } from "jsdom";
+import { type DOMWindow, VirtualConsole } from "jsdom";
 import { createBrowser } from "jsdom-context-require";
 
 export default function (options: Parameters<typeof createBrowser>[0]) {
-  const browser = createBrowser(options) as ReturnType<typeof createBrowser> & {
+  const browser = createBrowser({
+    ...options,
+    virtualConsole: new VirtualConsole(),
+  }) as ReturnType<typeof createBrowser> & {
     stream(chunks: string[]): () => boolean;
   };
   const window = browser.window as unknown as DOMWindow & {
