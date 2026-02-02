@@ -1,4 +1,7 @@
 # Render
-```html
-{"identifier":true,"tag var":true,"static var":true}
+# Console
+```
+LOG "identifier"
+LOG "static var"
+LOG "tag var"
 ```

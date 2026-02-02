@@ -5,7 +5,6 @@
 >
   0
 </div>
-<pre />
 ```
 
 
@@ -17,7 +16,6 @@
   0
 </div>
 loading...
-<pre />
 ```
 
 
@@ -33,13 +31,12 @@ loading...
 >
   0
 </div>
-<pre>
-  
-effect ran value=0
-setup effect ran
-</pre>
 ```
-
+# Console
+```
+LOG "effect ran value=0"
+LOG "setup effect ran"
+```
 
 # Render ASYNC
 ```html
@@ -53,11 +50,6 @@ setup effect ran
 >
   0
 </div>
-<pre>
-  
-effect ran value=0
-setup effect ran
-</pre>
 ```
 
 
@@ -69,11 +61,6 @@ setup effect ran
   1
 </div>
 loading...
-<pre>
-  
-effect ran value=0
-setup effect ran
-</pre>
 ```
 
 
@@ -89,10 +76,8 @@ setup effect ran
 >
   1
 </div>
-<pre>
-  
-effect ran value=0
-setup effect ran
-effect ran value=1
-</pre>
+```
+# Console
+```
+LOG "effect ran value=1"
 ```

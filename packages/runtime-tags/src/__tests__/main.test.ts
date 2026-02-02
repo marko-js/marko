@@ -10,6 +10,7 @@ import { isDeepStrictEqual } from "util";
 
 import * as translator from "../translator";
 import { bundle } from "./utils/bundle";
+import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 import createBrowser from "./utils/create-browser";
 import {
   isFlush,
@@ -208,11 +209,19 @@ describe("runtime-tags/translator", () => {
           ) as [Input, ...unknown[]];
 
           const chunks: string[] = [];
-          for await (const data of serverTemplate.render(input)) {
-            chunks.push(data);
+          const logs: ConsoleRecord[][] = [];
+          const capture = captureConsole();
+          try {
+            for await (const data of serverTemplate.render(input)) {
+              chunks.push(data);
+              logs.push(capture.records());
+            }
+            logs.push(capture.records());
+          } finally {
+            capture.cleanup();
           }
 
-          return { chunks, input, steps };
+          return { chunks, logs, input, steps };
         })();
         serverRender = () => cached;
         return cached;
@@ -244,16 +253,23 @@ describe("runtime-tags/translator", () => {
 
           hooks.before?.();
 
-          const { chunks } = await serverRender();
+          const { chunks, logs } = await serverRender();
 
           const flushNext = browser.stream(chunks);
 
-          const tracker = createMutationTracker(window, document);
+          const tracker = createMutationTracker(browser, document);
 
           for (const data of chunks) {
             const formattedHtml = indent(stripInlineRuntime(data));
+
             if (formattedHtml) {
               tracker.log(`# Write\n\`\`\`html\n${formattedHtml}\n\`\`\``);
+            }
+          }
+
+          for (const group of logs) {
+            for (const { type, args } of group) {
+              window.console[type](...args);
             }
           }
 
@@ -301,7 +317,7 @@ describe("runtime-tags/translator", () => {
             manualCSR ? browserFile : templateFile,
           ).default;
           const container = document.createElement("div");
-          const tracker = createMutationTracker(browser.window, container);
+          const tracker = createMutationTracker(browser, container);
 
           document.body.appendChild(container);
 
@@ -362,7 +378,7 @@ describe("runtime-tags/translator", () => {
           serverHooks.before?.();
           browserHooks.before?.();
 
-          const { chunks, input, steps } = await serverRender();
+          const { chunks, logs, input, steps } = await serverRender();
 
           const { run, init } = browser.require<
             typeof import("@marko/runtime-tags/dom")
@@ -374,7 +390,13 @@ describe("runtime-tags/translator", () => {
 
           let hasFlush = flushNext();
 
-          const tracker = createMutationTracker(window, document);
+          const tracker = createMutationTracker(browser, document);
+
+          for (const group of logs) {
+            for (const { type, args } of group) {
+              window.console[type](...args);
+            }
+          }
 
           init();
           await runSteps();

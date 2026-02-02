@@ -1,10 +1,7 @@
 # Render
-```html
-{"identifier":true,"tag var":true,"static var":true}
+# Console
 ```
-
-
-# Render ASYNC
-```html
-{"identifier":false,"tag var":false,"static var":false}
+LOG "identifier"
+LOG "tag var"
+LOG "static var"
 ```

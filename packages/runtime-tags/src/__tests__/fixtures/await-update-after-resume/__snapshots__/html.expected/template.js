@@ -15,8 +15,7 @@ export default _._template("__tests__/template.marko", input => {
       _._script($scope3_id, "__tests__/template.marko_3_value");
       _._script($scope3_id, "__tests__/template.marko_3");
       _._scope($scope3_id, {
-        value,
-        _: _._scope_with_id($scope1_id)
+        value
       }, "__tests__/template.marko", "7:3", {
         value: "7:9"
       });
@@ -35,7 +34,6 @@ export default _._template("__tests__/template.marko", input => {
       }, $scope0_id)
     })
   });
-  _._html(`<pre></pre>${_._el_resume($scope0_id, "#pre/2")}`);
   _._script($scope0_id, "__tests__/template.marko_0");
   _._scope($scope0_id, {
     "ClosureScopes:value": $value__closures

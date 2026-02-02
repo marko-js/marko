@@ -1,26 +1,33 @@
 import { js_beautify } from "js-beautify";
-import type { JSDOM } from "jsdom";
+import type { JSDOM, VirtualConsole } from "jsdom";
 import format, { plugins } from "pretty-format";
 
+import {
+  captureConsole,
+  type ConsoleRecord,
+  formatConsoleRecord,
+} from "./capture-console";
 import { getNodePath } from "./get-node-info";
 import { stripInlineRuntime } from "./strip-inline-runtime";
 
 const { DOMElement, DOMCollection } = plugins;
 
 export default function createMutationTracker(
-  window: JSDOM["window"],
+  browser: { window: JSDOM["window"]; virtualConsole: VirtualConsole },
   container: ParentNode = window.document,
 ) {
   let cleaned = false;
   let pendingRecords: undefined | MutationRecord[];
+  const { window, virtualConsole } = browser;
   const logs: string[] = [];
   const sanitizedLogs: string[] = [];
   const errors: Set<Error> = new Set();
+  const consoleCapture = captureConsole(virtualConsole);
   const observer = new window.MutationObserver((records) => {
     if (pendingRecords) {
       pendingRecords = [...pendingRecords, ...records];
     } else {
-      logRecords("ASYNC", records);
+      logRecords("ASYNC", records, consoleCapture.records());
     }
   });
   observer.observe(container, {
@@ -62,9 +69,10 @@ export default function createMutationTracker(
       }
 
       const records = [...(pendingRecords || []), ...observer.takeRecords()];
+      const consoleRecords = consoleCapture.records();
       pendingRecords = undefined;
-      if (records.length || !optional) {
-        logRecords(update, records);
+      if (records.length || consoleRecords.length || !optional) {
+        logRecords(update, records, consoleRecords);
       }
     },
     getRawLogs(sanitized?: boolean) {
@@ -77,18 +85,27 @@ export default function createMutationTracker(
       window.removeEventListener("error", handleError);
       window.removeEventListener("unhandledrejection", handleRejection);
       observer.disconnect();
+      consoleCapture.cleanup();
       throwErrors();
       cleaned = true;
     },
   };
 
-  function logRecords(update: unknown, records: MutationRecord[]) {
+  function logRecords(
+    update: unknown,
+    mutationRecords: MutationRecord[],
+    consoleRecords: ConsoleRecord[],
+  ) {
     if (cleaned) {
       throw new Error(`log called after cleanup`);
     }
 
-    logs.push(getStatusString(container, records, update));
-    sanitizedLogs.push(getStatusString(container, records, update, true));
+    logs.push(
+      getStatusString(container, mutationRecords, consoleRecords, update),
+    );
+    sanitizedLogs.push(
+      getStatusString(container, mutationRecords, consoleRecords, update, true),
+    );
   }
 
   function throwErrors() {
@@ -236,7 +253,8 @@ function getUpdateString(update: unknown) {
 
 function getStatusString(
   container: ParentNode,
-  records: MutationRecord[],
+  mutationRecords: MutationRecord[],
+  consoleRecords: ConsoleRecord[],
   update: unknown,
   sanitized?: boolean,
 ) {
@@ -254,10 +272,14 @@ function getStatusString(
     .trim();
   const formattedMutations =
     !sanitized &&
-    records
+    mutationRecords
       .map((record) => formatMutationRecord(record, container))
       .filter(Boolean)
       .join("\n");
+  const formattedConsole = consoleRecords
+    .map(formatConsoleRecord)
+    .filter(Boolean)
+    .join("\n");
 
   let result = `# Render${updateString}\n`;
 
@@ -268,6 +290,11 @@ function getStatusString(
 
   if (formattedMutations) {
     result += `# Mutations\n\`\`\`\n${formattedMutations}\n\`\`\``;
+    if (formattedConsole) result += "\n";
+  }
+
+  if (formattedConsole) {
+    result += `# Console\n\`\`\`\n${formattedConsole}\n\`\`\``;
   }
 
   return result;

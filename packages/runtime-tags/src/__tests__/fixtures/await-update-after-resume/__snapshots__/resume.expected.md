@@ -20,8 +20,6 @@
     loading...
     <!--M_!2-->
     <!--M_]1 #text/1 2-->
-    <pre />
-    <!--M_*1 #pre/2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -74,12 +72,6 @@ INSERT html/body/#text1
     </div>
     <!--M_]2 #text/0 4-->
     <!--M_]1 #text/1 2-->
-    <pre>
-      
-effect ran value=0
-setup effect ran
-    </pre>
-    <!--M_*1 #pre/2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -99,8 +91,7 @@ setup effect ran
     <script>
       M._.r.push(_ =&gt; (_.e = [1,
       {
-        value: 0,
-        _: _.b
+        value: 0
       }]));
       M._.j.b = _ =&gt;
       {
@@ -128,10 +119,12 @@ REMOVE #comment after html/body/#comment0
 REMOVE #comment after html/body/#comment0
 INSERT html/body/#comment1, html/body/div1, html/body/#comment2
 INSERT html/body/#text0
-INSERT #text
-REMOVE #text in html/body/pre
-INSERT html/body/pre/#text
 INSERT html/body/script1
+```
+# Console
+```
+LOG "effect ran value=0"
+LOG "setup effect ran"
 ```
 
 # Render ASYNC
@@ -161,12 +154,6 @@ INSERT html/body/script1
     </div>
     <!--M_]2 #text/0 4-->
     <!--M_]1 #text/1 2-->
-    <pre>
-      
-effect ran value=0
-setup effect ran
-    </pre>
-    <!--M_*1 #pre/2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -186,8 +173,7 @@ setup effect ran
     <script>
       M._.r.push(_ =&gt; (_.e = [1,
       {
-        value: 0,
-        _: _.b
+        value: 0
       }]));
       M._.j.b = _ =&gt;
       {
@@ -225,12 +211,6 @@ UPDATE html/body/div0/#text "0" => "1"
     </div>
     loading...
     <!--M_]1 #text/1 2-->
-    <pre>
-      
-effect ran value=0
-setup effect ran
-    </pre>
-    <!--M_*1 #pre/2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -250,8 +230,7 @@ setup effect ran
     <script>
       M._.r.push(_ =&gt; (_.e = [1,
       {
-        value: 0,
-        _: _.b
+        value: 0
       }]));
       M._.j.b = _ =&gt;
       {
@@ -303,13 +282,6 @@ REMOVE #document-fragment/#text1 after html/body/#text
     </div>
     <!--M_]2 #text/0 4-->
     <!--M_]1 #text/1 2-->
-    <pre>
-      
-effect ran value=0
-setup effect ran
-effect ran value=1
-    </pre>
-    <!--M_*1 #pre/2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -329,8 +301,7 @@ effect ran value=1
     <script>
       M._.r.push(_ =&gt; (_.e = [1,
       {
-        value: 0,
-        _: _.b
+        value: 0
       }]));
       M._.j.b = _ =&gt;
       {
@@ -348,6 +319,8 @@ effect ran value=1
 ```
 INSERT html/body/#comment0, html/body/#comment1, html/body/div1, html/body/#text0, html/body/#comment2, html/body/#text1
 REMOVE #text after html/body/#text1
-REMOVE #text in html/body/pre
-INSERT html/body/pre/#text
+```
+# Console
+```
+LOG "effect ran value=1"
 ```

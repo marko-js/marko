@@ -7,12 +7,12 @@
 </div>
 <!---->
 <!---->
-<pre />
+<!---->
 ```
 
 # Mutations
 ```
-INSERT div, #comment0, #text, #comment1, pre
+INSERT div, #comment0, #text, #comment1, #comment2
 ```
 
 # Render ASYNC
@@ -23,7 +23,7 @@ INSERT div, #comment0, #text, #comment1, pre
   0
 </div>
 loading...
-<pre />
+<!---->
 ```
 
 # Mutations
@@ -42,7 +42,7 @@ REMOVE #document-fragment/#comment1 after #text
   1
 </div>
 loading...
-<pre />
+<!---->
 ```
 
 # Mutations
@@ -64,18 +64,16 @@ UPDATE div/#text "0" => "1"
   1
 </div>
 <!---->
-<pre>
-  
-effect ran value=1
-setup effect ran
-</pre>
+<!---->
 ```
 
 # Mutations
 ```
 INSERT #comment0, div1, #comment1
 REMOVE #text after #comment1
-INSERT #text
-REMOVE #text in pre
-INSERT pre/#text
+```
+# Console
+```
+LOG "\neffect ran value=1"
+LOG "\nsetup effect ran"
 ```
