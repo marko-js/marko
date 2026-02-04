@@ -14,8 +14,8 @@ const $if_content__last = _._if_closure(1, 0, ($scope) =>
     $for_content__messages__OR__index__script,
   ),
   $for_content__messages = _._for_closure(0, $for_content__messages__OR__index),
-  $for_content__index = _._const(4, $for_content__messages__OR__index),
   $for_content__setup = $for_content__messages,
+  $for_content__index = _._const(4, $for_content__messages__OR__index),
   $for_content__$params = ($scope, $params2) => {
     ((($scope, message) => {
       _._html($scope, message, "b");

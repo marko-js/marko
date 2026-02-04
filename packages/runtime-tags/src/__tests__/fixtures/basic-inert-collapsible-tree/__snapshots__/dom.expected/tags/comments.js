@@ -2,12 +2,12 @@ export const $template = "<ul></ul>";
 export const $walks = /* get, over(1) */" b";
 export const $setup = () => {};
 import * as _ from "@marko/runtime-tags/debug/dom";
+const $if_content__comment_comments = /* @__PURE__ */_._if_closure("#text/4", 0, $scope => $input_comments($scope["#childScope/0"], $scope._.comment_comments));
 const $if_content__setup = $scope => {
-  $setup($scope["#childScope/0"]);
   $if_content__comment_comments._($scope);
   $if_content__id._($scope);
+  $setup($scope["#childScope/0"]);
 };
-const $if_content__comment_comments = /* @__PURE__ */_._if_closure("#text/4", 0, $scope => $input_comments($scope["#childScope/0"], $scope._.comment_comments));
 const $if_content__id = /* @__PURE__ */_._if_closure("#text/4", 0, $scope => $input_path($scope["#childScope/0"], $scope._.id));
 const $for_content__id = /* @__PURE__ */_._const("id", $scope => {
   _._attr($scope["#li/0"], "id", $scope.id);

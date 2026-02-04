@@ -1,4 +1,4 @@
-// size: 1115 (min) 453 (brotli)
+// size: 1115 (min) 458 (brotli)
 const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   $name__OR__write__script = _._script("a0", ($scope) => {
     ($scope.g(`${$scope.f} mounted`),
@@ -16,39 +16,30 @@ const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
       $name__OR__write($scope));
   }),
   $write$1 = _._const(6, $name__OR__write),
-  $if_content3__setup = ($scope) => {
-    ($scope.a, $name($scope.a, "Inner"), $if_content3__write($scope));
-  },
   $if_content3__write = _._closure_get(
     8,
     ($scope) => $write$1($scope.a, $scope._._._.i),
     ($scope) => $scope._._._,
   ),
-  $if_content2__setup = ($scope) => {
-    ($scope.a,
-      $name($scope.a, "Middle"),
-      $if_content2__showInner($scope),
-      $if_content2__write($scope));
+  $if_content3__setup = ($scope) => {
+    ($if_content3__write($scope), $scope.a, $name($scope.a, "Inner"));
   },
-  $if_content2__write = _._closure_get(
-    8,
-    ($scope) => $write$1($scope.a, $scope._._.i),
-    ($scope) => $scope._._,
-  ),
   $if_content2__if = _._if(1, $template, "/D%lD%lD%l&", $if_content3__setup),
   $if_content2__showInner = _._closure_get(
     7,
     ($scope) => $if_content2__if($scope, $scope._._.h ? 0 : 1),
     ($scope) => $scope._._,
   ),
-  $if_content__setup = ($scope) => {
-    ($scope.a,
-      $name($scope.a, "Outer"),
-      $if_content__showMiddle._($scope),
-      $if_content__write._($scope));
+  $if_content2__setup = ($scope) => {
+    ($if_content2__showInner($scope),
+      $if_content2__write($scope),
+      $scope.a,
+      $name($scope.a, "Middle"));
   },
-  $if_content__write = _._if_closure(4, 0, ($scope) =>
-    $write$1($scope.a, $scope._.i),
+  $if_content2__write = _._closure_get(
+    8,
+    ($scope) => $write$1($scope.a, $scope._._.i),
+    ($scope) => $scope._._,
   ),
   $if_content__if = _._if(
     1,
@@ -58,6 +49,15 @@ const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   ),
   $if_content__showMiddle = _._if_closure(4, 0, ($scope) =>
     $if_content__if($scope, $scope._.g ? 0 : 1),
+  ),
+  $if_content__setup = ($scope) => {
+    ($if_content__showMiddle._($scope),
+      $if_content__write._($scope),
+      $scope.a,
+      $name($scope.a, "Outer"));
+  },
+  $if_content__write = _._if_closure(4, 0, ($scope) =>
+    $write$1($scope.a, $scope._.i),
   ),
   $if = _._if(
     4,

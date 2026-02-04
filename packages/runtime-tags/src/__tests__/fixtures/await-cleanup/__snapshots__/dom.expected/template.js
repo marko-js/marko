@@ -12,8 +12,8 @@ const $placeholder_content = _._content_resume("__tests__/template.marko_4_conte
 const $await_content__show = /* @__PURE__ */_._closure_get("show", $scope => _._text($scope["#text/0"], $scope._._._.show), $scope => $scope._._._, "__tests__/template.marko_3_show");
 const $await_content__setup__script = _._script("__tests__/template.marko_3", $scope => (_.$signal($scope, 0).onabort = () => document.querySelector('#one').textContent = "Pass"));
 const $await_content__setup = $scope => {
-  _.$signalReset($scope, 0);
   $await_content__show($scope);
+  _.$signalReset($scope, 0);
   $await_content__setup__script($scope);
 };
 const $await_content = /* @__PURE__ */_._await_content("#text/0", " ", /* get, over(1) */" b", $await_content__setup);

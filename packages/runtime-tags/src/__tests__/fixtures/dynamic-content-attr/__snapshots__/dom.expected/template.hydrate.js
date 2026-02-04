@@ -1,10 +1,10 @@
-// size: 292 (min) 187 (brotli)
+// size: 292 (min) 188 (brotli)
 let sideEffect = 3;
 const $MyThing_content__count = _._closure_get(1, ($scope) =>
   _._text($scope.a, $scope._.b),
 );
 _._content_resume("a0", "<!> <!>", "%c%b", ($scope) => {
-  (_._text($scope.b, sideEffect++), $MyThing_content__count($scope));
+  ($MyThing_content__count($scope), _._text($scope.b, sideEffect++));
 });
 const $count__OR__MyThing = _._or(3, ($scope) =>
     _._attr_content($scope, "a", ($scope.b, $scope.c)),

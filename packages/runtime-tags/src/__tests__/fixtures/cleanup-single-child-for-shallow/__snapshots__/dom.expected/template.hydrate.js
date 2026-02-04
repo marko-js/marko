@@ -1,4 +1,4 @@
-// size: 534 (min) 306 (brotli)
+// size: 534 (min) 309 (brotli)
 const $name__OR__write__script = _._script("a0", ($scope) => {
     ($scope.e(`mounted ${$scope.d}`),
       (_.$signal($scope, 0).onabort = () => {
@@ -12,12 +12,12 @@ const $name__OR__write__script = _._script("a0", ($scope) => {
     (_._text($scope.a, $scope.d), $name__OR__write($scope));
   }),
   $write$1 = _._const(4, $name__OR__write),
-  $for_content__setup = ($scope) => {
-    ($scope.a, $for_content__write._($scope));
-  },
   $for_content__write = _._for_closure(2, ($scope) =>
     $write$1($scope.a, $scope._.e),
   ),
+  $for_content__setup = ($scope) => {
+    ($for_content__write._($scope), $scope.a);
+  },
   $for_content__$params = ($scope, $params2) =>
     (($scope, item) => $name($scope.a, item))($scope, $params2[0]),
   $for = _._for_of(

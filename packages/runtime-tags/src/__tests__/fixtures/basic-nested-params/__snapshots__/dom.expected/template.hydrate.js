@@ -1,4 +1,4 @@
-// size: 505 (min) 292 (brotli)
+// size: 505 (min) 293 (brotli)
 const $dynamicTag = _._dynamic_tag(0, 0, 0, 1),
   $content__OR__value = _._or(5, ($scope) =>
     $dynamicTag($scope, $scope.d, () => [$scope.e]),
@@ -27,9 +27,9 @@ _._content_resume(
   "<div><!></div>",
   "/D%l&",
   ($scope) => {
-    ($scope.a,
-      $content($scope.a, $child_content2($scope)),
-      $child_content__y($scope));
+    ($child_content__y($scope),
+      $scope.a,
+      $content($scope.a, $child_content2($scope)));
   },
   ($scope, $params2) => $child_content__outer($scope, $params2[0]),
 );

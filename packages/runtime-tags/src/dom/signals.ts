@@ -186,6 +186,17 @@ export function _closure_get(
 ) {
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
   const closureSignal = ((scope) => {
+    if (MARKO_DEBUG) {
+      if (
+        !(
+          valueAccessor in
+          (getOwnerScope ? getOwnerScope(scope) : scope[AccessorProp.Owner]!)
+        )
+      ) {
+        throwUninitialized(valueAccessor as string);
+      }
+    }
+
     scope[closureSignal.___signalIndexAccessor] = closureSignal.___index;
     fn(scope);
     subscribeToScopeSet(
@@ -308,4 +319,17 @@ export function _hoist<T>(...path: Accessor[]) {
 
 export function _hoist_resume<T>(id: string, ...path: Accessor[]) {
   return _resume(id, _hoist<T>(...path));
+}
+
+function throwUninitialized(name: string) {
+  try {
+    // @ts-expect-error create a browser uninitialized variable error, and then update the message.
+    __UNINITIALIZED__;
+    let __UNINITIALIZED__;
+  } catch (err: any) {
+    err.message = err.message.replaceAll("__UNINITIALIZED__", name);
+    throw err;
+  }
+
+  throw new ReferenceError(`Cannot access '${name}' before initialization`);
 }

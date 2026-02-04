@@ -1,4 +1,4 @@
-// size: 528 (min) 306 (brotli)
+// size: 528 (min) 307 (brotli)
 const $for_content__checked = _._let(6, ($scope) =>
     _._attr_input_checked($scope, "a", $scope.g, $checkedChange($scope)),
   ),
@@ -6,13 +6,13 @@ const $for_content__checked = _._let(6, ($scope) =>
     $for_content__checked($scope, $scope.c, $valueChange($scope)),
   ),
   $for_content__states = _._for_closure(0, $for_content__states__OR__state),
-  $for_content__state = _._const(2, $for_content__states__OR__state),
   $for_content__setup__script = _._script("a2", ($scope) =>
     _._attr_input_checked_script($scope, "a"),
   ),
   $for_content__setup = ($scope) => {
     ($for_content__states._($scope), $for_content__setup__script($scope));
   },
+  $for_content__state = _._const(2, $for_content__states__OR__state),
   $for_content__$params = ($scope, $params2) =>
     $for_content__state($scope, $params2[0]),
   $for = _._for_of(

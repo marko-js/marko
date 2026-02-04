@@ -297,12 +297,12 @@ Inner mounted
 ```
 INSERT div
 REMOVE #text after div
-UPDATE div/p/#text " " => "Outer"
 INSERT div/div
 REMOVE #text after div/div
-UPDATE div/div/p0/#text " " => "Middle"
+UPDATE div/p/#text " " => "Outer"
 INSERT div/div/p1
 REMOVE #text after div/div/p1
+UPDATE div/div/p0/#text " " => "Middle"
 UPDATE div/div/p1/#text " " => "Inner"
 REMOVE #text in pre
 INSERT #text

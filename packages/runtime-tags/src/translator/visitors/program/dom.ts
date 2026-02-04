@@ -37,26 +37,8 @@ import { scopeIdentifier } from ".";
 
 export default {
   translate: {
-    exit(program) {
-      forEachSectionReverse(writer.getSectionMeta);
-
+    enter(program) {
       const section = getSectionForBody(program)!;
-      const { walks, writes, decls } = writer.getSectionMeta(section);
-      const domExports = program.node.extra.domExports!;
-      const templateIdentifier = t.identifier(domExports.template);
-      const walksIdentifier = t.identifier(domExports.walks);
-      const setupIdentifier = t.identifier(domExports.setup);
-      const inputBinding = program.node.params[0].extra?.binding;
-      const programInputSignal =
-        inputBinding && !inputBinding.pruned
-          ? initValue(inputBinding)
-          : undefined;
-      let extraDecls = decls;
-      const styleFile = getStyleFile(program.hub.file);
-      if (styleFile) {
-        importDefault(program.hub.file, styleFile);
-      }
-
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
           forEach(childSection.referencedClosures, (closure) => {
@@ -82,7 +64,31 @@ export default {
               }
             }
           });
+        }
+      });
+    },
+    exit(program) {
+      forEachSectionReverse(writer.getSectionMeta);
 
+      const section = getSectionForBody(program)!;
+      const { walks, writes, decls } = writer.getSectionMeta(section);
+      const domExports = program.node.extra.domExports!;
+      const templateIdentifier = t.identifier(domExports.template);
+      const walksIdentifier = t.identifier(domExports.walks);
+      const setupIdentifier = t.identifier(domExports.setup);
+      const inputBinding = program.node.params[0].extra?.binding;
+      const programInputSignal =
+        inputBinding && !inputBinding.pruned
+          ? initValue(inputBinding)
+          : undefined;
+      let extraDecls = decls;
+      const styleFile = getStyleFile(program.hub.file);
+      if (styleFile) {
+        importDefault(program.hub.file, styleFile);
+      }
+
+      forEachSectionReverse((childSection) => {
+        if (childSection !== section) {
           const tagParamsSignal =
             childSection.params && initValue(childSection.params);
           const tagParamsIdentifier =

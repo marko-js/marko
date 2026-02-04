@@ -4,11 +4,11 @@ export const $setup = () => {};
 import { $setup as _child, $foo as _child_input_foo, $template as _child_template, $walks as _child_walks } from "./child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 _._resume_dynamic_tag();
-const $_classspandiv_content__setup = $scope => {
-  _child($scope["#childScope/0"]);
-  $_classspandiv_content__input_foo($scope);
-};
 const $_classspandiv_content__input_foo = /* @__PURE__ */_._closure_get("input_foo", $scope => _child_input_foo($scope["#childScope/0"], $scope._.input_foo));
+const $_classspandiv_content__setup = $scope => {
+  $_classspandiv_content__input_foo($scope);
+  _child($scope["#childScope/0"]);
+};
 const $_classspandiv_content = _._content_resume("__tests__/tags/wrap.marko_1_content", `<!>${_child_template}<!>`, /* over(1), <child>, over(1) */`b/${_child_walks}&b`, $_classspandiv_content__setup);
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", $_classspandiv_content);
 const $_class__OR__rest = /* @__PURE__ */_._or(6, $scope => $dynamicTag($scope, $scope._class ? 'span' : 'div', () => ({

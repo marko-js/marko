@@ -3,13 +3,13 @@ export const $walks = /* get, over(1), replace, over(1), get, over(1), next(1), 
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $if_content__checkedValue__OR__checkedValueChange = /* @__PURE__ */_._or(1, $scope => _._attr_input_checkedValue($scope, "#input/0", $scope._.checkedValue, $scope._.$checkedValueChange, "b"));
 const $if_content__checkedValue = /* @__PURE__ */_._if_closure("#text/1", 0, $if_content__checkedValue__OR__checkedValueChange);
-const $if_content__$checkedValueChange = /* @__PURE__ */_._if_closure("#text/1", 0, $if_content__checkedValue__OR__checkedValueChange);
 const $if_content__setup__script = _._script("__tests__/template.marko_1", $scope => _._attr_input_checkedValue_script($scope, "#input/0"));
 const $if_content__setup = $scope => {
   $if_content__checkedValue._($scope);
   $if_content__$checkedValueChange._($scope);
   $if_content__setup__script($scope);
 };
+const $if_content__$checkedValueChange = /* @__PURE__ */_._if_closure("#text/1", 0, $if_content__checkedValue__OR__checkedValueChange);
 const $if = /* @__PURE__ */_._if("#text/1", "<input type=radio>", /* get, over(1) */" b", $if_content__setup);
 const $show__script = _._script("__tests__/template.marko_0_show", $scope => _._on($scope["#button/4"], "click", function () {
   $show($scope, !$scope.show);

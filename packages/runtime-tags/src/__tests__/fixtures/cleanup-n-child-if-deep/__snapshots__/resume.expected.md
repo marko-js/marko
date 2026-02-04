@@ -643,16 +643,16 @@ Inner mounted
 ```
 INSERT html/body/div
 REMOVE #comment after html/body/div
+INSERT html/body/div/div1
+REMOVE #text after html/body/div/div1
 UPDATE html/body/div/div0/#text0 "" => "Outer"
 UPDATE html/body/div/span/#text0 "" => "Outer"
 UPDATE html/body/div/p/#text0 "" => "Outer"
-INSERT html/body/div/div1
-REMOVE #text after html/body/div/div1
+INSERT html/body/div/div1/div1, html/body/div/div1/span1, html/body/div/div1/p1
+REMOVE #text after html/body/div/div1/p1
 UPDATE html/body/div/div1/div0/#text0 "" => "Middle"
 UPDATE html/body/div/div1/span0/#text0 "" => "Middle"
 UPDATE html/body/div/div1/p0/#text0 "" => "Middle"
-INSERT html/body/div/div1/div1, html/body/div/div1/span1, html/body/div/div1/p1
-REMOVE #text after html/body/div/div1/p1
 UPDATE html/body/div/div1/div1/#text0 "" => "Inner"
 UPDATE html/body/div/div1/span1/#text0 "" => "Inner"
 UPDATE html/body/div/div1/p1/#text0 "" => "Inner"

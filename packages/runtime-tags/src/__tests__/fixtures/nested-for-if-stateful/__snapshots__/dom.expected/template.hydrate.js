@@ -1,5 +1,8 @@
-// size: 652 (min) 341 (brotli)
-const $else_content__setup__script = _._script("a0", ($scope) =>
+// size: 652 (min) 347 (brotli)
+const $else_content__count = _._if_closure(0, 1, ($scope) =>
+    _._text($scope.b, $scope._.c),
+  ),
+  $else_content__setup__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", function () {
       $for_content__editing($scope._, !0);
     }),
@@ -7,9 +10,6 @@ const $else_content__setup__script = _._script("a0", ($scope) =>
   $else_content__setup = ($scope) => {
     ($else_content__count._($scope), $else_content__setup__script($scope));
   },
-  $else_content__count = _._if_closure(0, 1, ($scope) =>
-    _._text($scope.b, $scope._.c),
-  ),
   $if_content__counts__OR__count__script = _._script("a1", ($scope) =>
     _._on($scope.a, "click", function () {
       ($counts($scope._._, [
@@ -29,12 +29,12 @@ const $else_content__setup__script = _._script("a0", ($scope) =>
     $if_content__counts__OR__count,
     ($scope) => $scope._._,
   ),
-  $if_content__count = _._if_closure(0, 0, ($scope) => {
-    (_._text($scope.b, $scope._.c + 1), $if_content__counts__OR__count($scope));
-  }),
   $if_content__setup = ($scope) => {
     ($if_content__counts($scope), $if_content__count._($scope));
   },
+  $if_content__count = _._if_closure(0, 0, ($scope) => {
+    (_._text($scope.b, $scope._.c + 1), $if_content__counts__OR__count($scope));
+  }),
   $for_content__if = _._if(
     0,
     "<button>Confirm <!></button>",
