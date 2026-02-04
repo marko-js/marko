@@ -303,6 +303,7 @@ export function trackDomVarReferences(
     );
 
     if (refSection !== binding.section) {
+      setReadsOwner(refSection, section);
       addOwnerSerializeReason(refSection, section, true);
     }
   }
@@ -891,9 +892,10 @@ export function finalizeReferences() {
     if (binding.type !== BindingType.dom) {
       resolveBindingSources(binding);
 
-      forEach(binding.assignmentSections, (assignedSection) =>
-        addOwnerSerializeReason(assignedSection, section, true),
-      );
+      forEach(binding.assignmentSections, (assignedSection) => {
+        setReadsOwner(assignedSection, section);
+        addOwnerSerializeReason(assignedSection, section, true);
+      });
 
       if (find(section.bindings, ({ name }) => name === binding.name)) {
         binding.name = generateUid(name);
@@ -954,6 +956,7 @@ export function finalizeReferences() {
             canonicalUpstreamAlias,
           );
 
+          setReadsOwner(section, canonicalUpstreamAlias.section);
           addOwnerSerializeReason(
             section,
             canonicalUpstreamAlias.section,
@@ -970,6 +973,7 @@ export function finalizeReferences() {
     }
 
     forEach(section.referencedHoists, (hoistedBinding) => {
+      setReadsOwner(section, hoistedBinding.section);
       addOwnerSerializeReason(section, hoistedBinding.section, true);
     });
 
@@ -2280,4 +2284,12 @@ function addNumericPropertiesUntil(props: Opt<string>, len: number) {
     result = propsUtil.add(result, i + "");
   }
   return result;
+}
+
+function setReadsOwner(from: Section, to: Section) {
+  let cur = from;
+  while (cur !== to && cur.parent) {
+    cur.readsOwner = true;
+    cur = cur.parent;
+  }
 }

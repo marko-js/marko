@@ -10,7 +10,10 @@ import {
 import { WalkCode } from "../../../common/types";
 import { getBindingPropTree } from "../../util/binding-prop-tree";
 import { generateUidIdentifier } from "../../util/generate-uid";
-import { getAccessorPrefix } from "../../util/get-accessor-char";
+import {
+  getAccessorPrefix,
+  getAccessorProp,
+} from "../../util/get-accessor-char";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import {
   knownTagAnalyze,
@@ -63,6 +66,7 @@ import {
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
+import { toMemberExpression } from "../../util/to-property-name";
 import {
   getTranslatedBodyContentProperty,
   propsToExpression,
@@ -179,8 +183,8 @@ export default {
           knownTagTranslateDOM(
             tag,
             propTree,
-            (binding, preferedName) =>
-              getSignal(definedBodySection, binding, preferedName).identifier,
+            (binding, preferredName) =>
+              getSignal(definedBodySection, binding, preferredName).identifier,
             (section, childBinding) => {
               const signal = getSignal(definedBodySection, undefined);
               if (signalHasStatements(signal)) {
@@ -195,6 +199,22 @@ export default {
                         createScopeReadExpression(childBinding, section),
                         getScopeExpression(section, definedBodySection.parent!),
                       ],
+                    ),
+                  ),
+                );
+              } else if (definedBodySection.readsOwner) {
+                addStatement(
+                  "render",
+                  section,
+                  undefined,
+                  t.expressionStatement(
+                    t.assignmentExpression(
+                      "=",
+                      toMemberExpression(
+                        createScopeReadExpression(childBinding, section),
+                        getAccessorProp().Owner,
+                      ),
+                      getScopeExpression(section, definedBodySection.parent!),
                     ),
                   ),
                 );
