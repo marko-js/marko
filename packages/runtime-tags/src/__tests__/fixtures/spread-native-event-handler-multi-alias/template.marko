@@ -1,0 +1,14 @@
+<div#el/>
+<define/MyButton|input|>
+  <button ...input onClick() {
+    document.getElementById("el").textContent += "[onClick(child)]";
+    input.onClick();
+  }/> 
+</define>
+
+<MyButton
+  on-click() { throw new Error("Should never be called.") }
+  onClick() { document.getElementById("el").textContent += "[onClick(parent)]"; }
+>
+  Click Me
+</>
