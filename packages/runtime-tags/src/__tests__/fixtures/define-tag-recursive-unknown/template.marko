@@ -1,0 +1,7 @@
+define/Foo|input|
+  if=input.bar
+    ${0 || Foo} message=input.bar
+  else
+    -- ${JSON.stringify(input.message)}
+
+Foo bar="hi"
