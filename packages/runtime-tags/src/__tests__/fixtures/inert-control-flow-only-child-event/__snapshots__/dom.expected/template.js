@@ -3,8 +3,8 @@ export const $walks = /* get, over(1) */" b";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $for_content__selected = /* @__PURE__ */_._for_closure("#div/0", $scope => _._attr($scope["#span/0"], "data-selected", $scope._.selected === $scope["#LoopKey"]));
 const $for_content__setup = $scope => {
-  _._text($scope["#text/1"], $scope["#LoopKey"]);
   $for_content__selected._($scope);
+  _._text($scope["#text/1"], $scope["#LoopKey"]);
 };
 const $selected__script = _._script("__tests__/template.marko_0_selected", $scope => _._on($scope["#div/0"], "click", function () {
   $selected($scope, $scope.selected + 1);

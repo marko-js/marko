@@ -1,4 +1,4 @@
-// size: 770 (min) 370 (brotli)
+// size: 770 (min) 371 (brotli)
 _._enable_catch();
 const $await_content2__setup__script = _._script(
     "a0",
@@ -23,8 +23,8 @@ const $await_content2__setup__script = _._script(
         (document.querySelector("#one").textContent = "Pass")),
   ),
   $await_content__setup = ($scope) => {
-    (_.$signalReset($scope, 0),
-      $await_content__show($scope),
+    ($await_content__show($scope),
+      _.$signalReset($scope, 0),
       $await_content__setup__script($scope));
   },
   $await_content = _._await_content(0, " ", " b", $await_content__setup),

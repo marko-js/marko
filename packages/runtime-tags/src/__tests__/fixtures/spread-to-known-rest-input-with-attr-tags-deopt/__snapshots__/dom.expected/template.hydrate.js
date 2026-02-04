@@ -1,4 +1,4 @@
-// size: 470 (min) 277 (brotli)
+// size: 470 (min) 272 (brotli)
 const $for_content__item__script = _._script("a0", ($scope) =>
     _._attrs_script($scope, "a"),
   ),
@@ -22,7 +22,7 @@ const $_classspandiv_content__input_foo = _._closure_get(3, ($scope) =>
   (($scope, foo) => $for($scope, [foo]))($scope.a, $scope._.d),
 );
 (_._content_resume("b0", "<!><!><!><!><!>", "b/b%c&b", ($scope) => {
-  ($scope.a, $_classspandiv_content__input_foo($scope));
+  ($_classspandiv_content__input_foo($scope), $scope.a);
 }),
   _._content_resume("c0", "Two", "b"),
   _._content_resume("c1", "One", "b"),

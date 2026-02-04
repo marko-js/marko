@@ -140,6 +140,8 @@ export default {
       }
       if (isOutputHTML()) {
         programHTML.translate.enter();
+      } else {
+        programDOM.translate.enter(program);
       }
     },
     exit(program) {

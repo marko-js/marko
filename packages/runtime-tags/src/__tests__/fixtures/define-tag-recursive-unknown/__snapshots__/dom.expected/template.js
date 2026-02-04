@@ -10,11 +10,11 @@ const $if_content__Foo__OR__input_bar = /* @__PURE__ */_._or(1, $scope => $if_co
   message: $scope._.input_bar
 })));
 const $if_content__Foo = /* @__PURE__ */_._closure_get("Foo", $if_content__Foo__OR__input_bar, $scope => $scope._._);
-const $if_content__input_bar = /* @__PURE__ */_._if_closure("#text/0", 0, $if_content__Foo__OR__input_bar);
 const $if_content__setup = $scope => {
   $if_content__Foo($scope);
   $if_content__input_bar._($scope);
 };
+const $if_content__input_bar = /* @__PURE__ */_._if_closure("#text/0", 0, $if_content__Foo__OR__input_bar);
 const $Foo_content__if = /* @__PURE__ */_._if("#text/0", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $if_content__setup, " ", /* get, over(1) */" b", $else_content__setup);
 const $Foo_content__input_bar = /* @__PURE__ */_._const("input_bar", $scope => {
   $Foo_content__if($scope, $scope.input_bar ? 0 : 1);

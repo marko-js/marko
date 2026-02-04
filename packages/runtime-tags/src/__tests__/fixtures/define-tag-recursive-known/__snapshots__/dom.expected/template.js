@@ -7,8 +7,8 @@ const $else_content__input_message = /* @__PURE__ */_._if_closure("#text/0", 1, 
 const $else_content__setup = $else_content__input_message;
 const $if_content__input_bar = /* @__PURE__ */_._if_closure("#text/0", 0, $scope => $Foo_content__tag_input_message($scope["#childScope/0"], $scope._.input_bar));
 const $if_content__setup = $scope => {
-  $Foo_content__tag_input_bar($scope["#childScope/0"]);
   $if_content__input_bar._($scope);
+  $Foo_content__tag_input_bar($scope["#childScope/0"]);
 };
 const $Foo_content__tag_input_message = /* @__PURE__ */_._const("input_message", $else_content__input_message);
 const $Foo_content__if = /* @__PURE__ */_._if("#text/0", `<!>${$Foo_content__template}<!>`, /* over(1), <Foo>, over(1) */`b/${$Foo_content__walks}&b`, $if_content__setup, " ", /* get, over(1) */" b", $else_content__setup);

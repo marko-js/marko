@@ -2,11 +2,11 @@ export const $template = "<button>Toggle</button><div></div><!><!>";
 export const $walks = /* get, over(1), get, over(1), replace, over(2) */" b b%c";
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $write as _child_input_write, $name as _child_input_name, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
-const $for_content__setup = $scope => {
-  _child($scope["#childScope/0"]);
-  $for_content__write._($scope);
-};
 const $for_content__write = /* @__PURE__ */_._for_closure("#text/2", $scope => _child_input_write($scope["#childScope/0"], $scope._.write));
+const $for_content__setup = $scope => {
+  $for_content__write._($scope);
+  _child($scope["#childScope/0"]);
+};
 const $for_content__item = ($scope, item) => _child_input_name($scope["#childScope/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for = /* @__PURE__ */_._for_of("#text/2", _child_template, /* <child> */`/${_child_walks}&`, $for_content__setup, $for_content__$params);

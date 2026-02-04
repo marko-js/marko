@@ -9,9 +9,9 @@ const $for_content__messages__OR__index__script = _._script("__tests__/template.
 }));
 const $for_content__messages__OR__index = /* @__PURE__ */_._or(5, $for_content__messages__OR__index__script);
 const $for_content__messages = /* @__PURE__ */_._for_closure("#div/0", $for_content__messages__OR__index);
+const $for_content__setup = $for_content__messages;
 const $for_content__index = /* @__PURE__ */_._const("index", $for_content__messages__OR__index);
 const $for_content__message = ($scope, message) => _._html($scope, message, "#text/1");
-const $for_content__setup = $for_content__messages;
 const $for_content__$params = ($scope, $params2) => {
   $for_content__message($scope, $params2[0]);
   $for_content__index($scope, $params2[1]);

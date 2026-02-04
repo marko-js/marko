@@ -3,21 +3,21 @@ export const $walks = /* get, over(1), <custom-tag>, get, over(1) */` b/${_custo
 const a = 1;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _customTag, $input_content as _customTag_input_content, $template as _customTag_template, $walks as _customTag_walks } from "./tags/custom-tag.marko";
+const $if_content2__b = /* @__PURE__ */_._closure_get("b", $scope => _._text($scope["#text/1"], $scope._._.b), $scope => $scope._._);
 const $if_content2__setup = $scope => {
-  _._text($scope["#text/0"], a);
   $if_content2__b($scope);
   $if_content2__c($scope);
+  _._text($scope["#text/0"], a);
 };
-const $if_content2__b = /* @__PURE__ */_._closure_get("b", $scope => _._text($scope["#text/1"], $scope._._.b), $scope => $scope._._);
 const $if_content2__c = /* @__PURE__ */_._closure_get("c", $scope => _._text($scope["#text/2"], $scope._._.c), $scope => $scope._._);
 const $if_content__if = /* @__PURE__ */_._if("#text/0", "<!> <!> <!>", /* replace, over(2), replace, over(2), replace, over(1) */"%c%c%b", $if_content2__setup);
 const $if_content__setup = $scope => $if_content__if($scope, Math.random() ? 0 : 1);
+const $customtag_content__b = /* @__PURE__ */_._closure_get("b", $scope => _._text($scope["#text/1"], $scope._.b));
 const $customtag_content__setup = $scope => {
-  _._text($scope["#text/0"], a);
   $customtag_content__b($scope);
   $customtag_content__c($scope);
+  _._text($scope["#text/0"], a);
 };
-const $customtag_content__b = /* @__PURE__ */_._closure_get("b", $scope => _._text($scope["#text/1"], $scope._.b));
 const $customtag_content__c = /* @__PURE__ */_._closure_get("c", $scope => _._text($scope["#text/2"], $scope._.c));
 const $customtag_content = /* @__PURE__ */_._content("__tests__/template.marko_1_content", "<!> <!> <!>", /* replace, over(2), replace, over(2), replace, over(1) */"%c%c%b", $customtag_content__setup);
 const $b = /* @__PURE__ */_._const("b");

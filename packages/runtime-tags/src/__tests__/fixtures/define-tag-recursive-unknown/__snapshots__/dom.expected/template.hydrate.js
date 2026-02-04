@@ -1,4 +1,4 @@
-// size: 406 (min) 257 (brotli)
+// size: 406 (min) 259 (brotli)
 const $else_content__input_message = _._if_closure(0, 1, ($scope) =>
     _._text($scope.a, JSON.stringify($scope._.e)),
   ),
@@ -14,10 +14,10 @@ const $else_content__input_message = _._if_closure(0, 1, ($scope) =>
     $if_content__Foo__OR__input_bar,
     ($scope) => $scope._._,
   ),
-  $if_content__input_bar = _._if_closure(0, 0, $if_content__Foo__OR__input_bar),
   $if_content__setup = ($scope) => {
     ($if_content__Foo($scope), $if_content__input_bar._($scope));
   },
+  $if_content__input_bar = _._if_closure(0, 0, $if_content__Foo__OR__input_bar),
   $Foo_content__if = _._if(
     0,
     "<!><!><!>",

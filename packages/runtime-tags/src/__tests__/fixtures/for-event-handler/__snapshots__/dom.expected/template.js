@@ -6,8 +6,8 @@ const $for_content__num__script = _._script("__tests__/template.marko_1_num", $s
 }));
 const $for_content__num = /* @__PURE__ */_._for_closure("#text/0", $for_content__num__script);
 const $for_content__setup = $scope => {
-  _._text($scope["#text/1"], $scope["#LoopKey"]);
   $for_content__num._($scope);
+  _._text($scope["#text/1"], $scope["#LoopKey"]);
 };
 const $for = /* @__PURE__ */_._for_to("#text/0", "<button> </button>", /* get, next(1), get, out(1) */" D l", $for_content__setup);
 const $num = /* @__PURE__ */_._let("num/1", $scope => {

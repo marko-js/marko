@@ -2,12 +2,12 @@ export const $template = "<button>Push</button><!><!>";
 export const $walks = /* get, over(1), replace, over(2) */" b%c";
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $name as _child_input_name, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
-const $for_content2__setup = $scope => {
-  _child($scope["#childScope/0"]);
-  $for_content2__outer._($scope);
-};
 const $for_content2__outer__OR__inner = /* @__PURE__ */_._or(3, $scope => _child_input_name($scope["#childScope/0"], `${$scope._.outer}.${$scope.inner}`));
 const $for_content2__outer = /* @__PURE__ */_._for_closure("#text/0", $for_content2__outer__OR__inner);
+const $for_content2__setup = $scope => {
+  $for_content2__outer._($scope);
+  _child($scope["#childScope/0"]);
+};
 const $for_content2__inner = /* @__PURE__ */_._const("inner", $for_content2__outer__OR__inner);
 const $for_content2__$params = ($scope, $params3) => $for_content2__inner($scope, $params3[0]);
 const $for_content__for = /* @__PURE__ */_._for_of("#text/0", _child_template, /* <child> */`/${_child_walks}&`, $for_content2__setup, $for_content2__$params);

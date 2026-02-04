@@ -1,14 +1,14 @@
-// size: 416 (min) 274 (brotli)
-const $for_content2__setup = ($scope) => {
-    ($scope.a, $for_content2__outer._($scope));
-  },
-  $for_content2__outer__OR__inner = _._or(3, ($scope) =>
+// size: 416 (min) 265 (brotli)
+const $for_content2__outer__OR__inner = _._or(3, ($scope) =>
     (($scope, name) => _._text($scope.a, name))(
       $scope.a,
       `${$scope._.c}.${$scope.c}`,
     ),
   ),
   $for_content2__outer = _._for_closure(0, $for_content2__outer__OR__inner),
+  $for_content2__setup = ($scope) => {
+    ($for_content2__outer._($scope), $scope.a);
+  },
   $for_content2__inner = _._const(2, $for_content2__outer__OR__inner),
   $for_content2__$params = ($scope, $params3) =>
     $for_content2__inner($scope, $params3[0]),

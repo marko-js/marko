@@ -583,12 +583,12 @@ Inner mounted
 ```
 INSERT html/body/div
 REMOVE #comment after html/body/div
-UPDATE html/body/div/p/#text " " => "Outer"
 INSERT html/body/div/div
 REMOVE #text after html/body/div/div
-UPDATE html/body/div/div/p0/#text " " => "Middle"
+UPDATE html/body/div/p/#text " " => "Outer"
 INSERT html/body/div/div/p1
 REMOVE #text after html/body/div/div/p1
+UPDATE html/body/div/div/p0/#text " " => "Middle"
 UPDATE html/body/div/div/p1/#text " " => "Inner"
 REMOVE #text in html/body/pre
 INSERT #text

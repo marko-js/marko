@@ -1,0 +1,13 @@
+{
+  "vars": {
+    "props": {
+      "$_": "r",
+      "$init": "o",
+      "$$Child_content__setup": "t",
+      "$$setHtml_getter": "m",
+      "$$Child_content__setHtml__script": "e",
+      "$$Child_content__setHtml": "n",
+      "$$setHtml__closure": "s"
+    }
+  }
+}
