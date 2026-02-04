@@ -567,6 +567,10 @@ export function getSignalFn(signal: Signal): t.Expression {
     );
   }
 
+  if (isValue && getSerializeReason(section, binding)) {
+    signal.hasSideEffect = true;
+  }
+
   if (!signal.hasSideEffect) {
     return t.arrowFunctionExpression(
       isValue
