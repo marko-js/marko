@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.38.19
+
+### Patch Changes
+
+- [#3067](https://github.com/marko-js/marko/pull/3067) [`772c84d`](https://github.com/marko-js/marko/commit/772c84dc7562933536bab80d0e285866ccf72444) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with multiple native tag event handler aliases being passed to an element via a spread. Eg `<button ...input onClick() {...}>` where `input` contains `on-click` as a attribute.
+
+- [#3068](https://github.com/marko-js/marko/pull/3068) [`51c2a72`](https://github.com/marko-js/marko/commit/51c2a72ba63c4795299a1d737a9f56b4ad7c9ebb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with known define tags with closures and no other interactivity in the define tag setup.
+
+- Updated dependencies [[`f0b39d0`](https://github.com/marko-js/marko/commit/f0b39d008c48ef2fa2862076143b1154af2f95b7), [`772c84d`](https://github.com/marko-js/marko/commit/772c84dc7562933536bab80d0e285866ccf72444), [`51c2a72`](https://github.com/marko-js/marko/commit/51c2a72ba63c4795299a1d737a9f56b4ad7c9ebb), [`12b1b33`](https://github.com/marko-js/marko/commit/12b1b336ff512c22697133ae744ef92283bbb240), [`620e483`](https://github.com/marko-js/marko/commit/620e483cdddab0bd69f2fc55bdf8eba9459b29e4)]:
+  - @marko/runtime-tags@6.0.141
+
 ## 5.38.18
 
 ### Patch Changes
