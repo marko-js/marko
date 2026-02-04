@@ -1,0 +1,10 @@
+<div/$el/>
+<define/MyButton|input|>
+  <button onClick() {
+    $el().textContent += `[onClick(${input.message})]`;
+  }/> 
+</define>
+
+<MyButton message="hello">
+  Click Me
+</>

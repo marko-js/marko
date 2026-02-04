@@ -72,6 +72,7 @@ export interface Section {
   upstreamExpression: t.NodeExtra | undefined;
   downstreamBinding: { binding: Binding; properties: Opt<string> } | undefined;
   hasAbortSignal: boolean;
+  readsOwner: boolean;
   isBranch: boolean;
   content: null | {
     startType: ContentType;
@@ -144,6 +145,7 @@ export function startSection(
       upstreamExpression: undefined,
       downstreamBinding: undefined,
       hasAbortSignal: false,
+      readsOwner: false,
       isBranch: false,
     };
     sections.push(section);

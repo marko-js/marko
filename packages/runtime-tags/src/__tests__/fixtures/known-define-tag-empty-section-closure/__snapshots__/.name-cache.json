@@ -1,0 +1,15 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "o",
+      "$$if_content__setup$1": "_",
+      "$$Tag_content__if": "i",
+      "$$count": "m",
+      "$$setup": "r",
+      "$$if_content__setup": "a",
+      "$$if": "b",
+      "$$m": "s"
+    }
+  }
+}
