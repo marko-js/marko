@@ -838,6 +838,7 @@ export function getRegisterUID(section: Section, name: string) {
 
 export function writeSignals(section: Section) {
   const seen = new Set<Signal>();
+  const written = new Set<Signal>();
   writeGetters(section);
 
   for (const signal of getSignals(section).values()) {
@@ -934,7 +935,11 @@ export function writeSignals(section: Section) {
       signalStatements.push(signalDeclaration);
     }
     getProgram().node.body.push(...signalStatements);
+
+    written.add(signal);
   }
+
+  return written;
 }
 
 function writeGetters(section: Section) {
@@ -1312,8 +1317,8 @@ export function writeHTMLResumeStatements(
 
 export function getSetup(section: Section) {
   return section.hoistedTo
-    ? getSignal(section, undefined).identifier
-    : getSignals(section).get(undefined)?.identifier;
+    ? getSignal(section, undefined)
+    : getSignals(section).get(undefined);
 }
 
 function replaceRenderNode(node: t.Node, signal?: Signal) {

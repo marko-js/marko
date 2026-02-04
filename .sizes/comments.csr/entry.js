@@ -1,12 +1,12 @@
-// size: 701 (min) 372 (brotli)
-const $if_content__setup = ($scope) => {
-    ($scope.a,
-      $if_content__comment_comments._($scope),
-      $if_content__id._($scope));
-  },
-  $if_content__comment_comments = _if_closure(4, 0, ($scope) =>
+// size: 701 (min) 382 (brotli)
+const $if_content__comment_comments = _if_closure(4, 0, ($scope) =>
     $input_comments$1($scope.a, $scope._.i),
   ),
+  $if_content__setup = ($scope) => {
+    ($if_content__comment_comments._($scope),
+      $if_content__id._($scope),
+      $scope.a);
+  },
   $if_content__id = _if_closure(4, 0, ($scope) =>
     $input_path$1($scope.a, $scope._.l),
   ),

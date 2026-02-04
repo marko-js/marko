@@ -1,0 +1,19 @@
+{
+  "vars": {
+    "props": {
+      "$_": "_",
+      "$$else_content__input_message": "s",
+      "$$else_content__setup": "e",
+      "$$if_content__dynamicTag": "t",
+      "$$if_content__input_bar": "o",
+      "$$if_content__setup": "a",
+      "$$Foo_content__if": "c",
+      "$$Foo_content__input_bar": "m",
+      "$$Foo_content__tag_input_message": "r",
+      "$$Foo_content__input": "i",
+      "$$Foo_getter": "n",
+      "$$if_content__Foo__OR__input_bar": "g",
+      "$$if_content__Foo": "b"
+    }
+  }
+}

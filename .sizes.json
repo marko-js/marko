@@ -45,7 +45,7 @@
       "name": "comments",
       "user": {
         "min": 701,
-        "brotli": 372
+        "brotli": 382
       },
       "runtime": {
         "min": 7040,
@@ -53,7 +53,7 @@
       },
       "total": {
         "min": 7741,
-        "brotli": 3442
+        "brotli": 3452
       }
     },
     {

@@ -91,8 +91,9 @@ export default {
               : undefined;
           const { walks, writes, decls } = writer.getSectionMeta(childSection);
           const setup = getSetup(childSection);
-
-          writeSignals(childSection);
+          const written = writeSignals(childSection);
+          const setupIdentifier =
+            setup && written.has(setup) ? setup.identifier : undefined;
 
           if (
             !childSection.downstreamBinding ||
@@ -105,7 +106,7 @@ export default {
               setBranchRendererArgs(childSection, [
                 writes,
                 walks,
-                setup,
+                setupIdentifier,
                 tagParamsIdentifier,
               ]);
             } else {
@@ -117,7 +118,7 @@ export default {
                 ...replaceNullishAndEmptyFunctionsWith0([
                   writes,
                   walks,
-                  setup,
+                  setupIdentifier,
                   tagParamsIdentifier,
                   childSection.hoisted || childSection.isHoistThrough
                     ? getSectionInstancesAccessorLiteral(childSection)
