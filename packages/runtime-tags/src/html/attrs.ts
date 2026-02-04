@@ -292,8 +292,9 @@ export function _attrs_partial(
   tagName: string,
 ) {
   const partial: Partial<typeof data> = {};
-  for (const key in data) {
-    if (!skip[key]) partial[key] = data[key];
+  for (const name in data) {
+    const key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
+    if (!skip[key]) partial[key] = data[name];
   }
 
   return _attrs(partial, nodeAccessor, scopeId, tagName);

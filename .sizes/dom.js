@@ -1,4 +1,4 @@
-// size: 20335 (min) 7796 (brotli)
+// size: 20362 (min) 7811 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -994,7 +994,10 @@ function _attrs_partial(scope, nodeAccessor, nextAttrs, skip) {
       (!nextAttrs || !(name in nextAttrs)) &&
       el.removeAttribute(name);
   }
-  for (let key in nextAttrs) skip[key] || (partial[key] = nextAttrs[key]);
+  for (let name in nextAttrs) {
+    let key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
+    skip[key] || (partial[key] = nextAttrs[name]);
+  }
   attrsInternal(scope, nodeAccessor, partial);
 }
 function _attrs_partial_content(scope, nodeAccessor, nextAttrs, skip) {

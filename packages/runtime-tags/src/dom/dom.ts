@@ -177,8 +177,9 @@ export function _attrs_partial(
     }
   }
 
-  for (const key in nextAttrs) {
-    if (!skip[key]) partial[key] = nextAttrs[key];
+  for (const name in nextAttrs) {
+    const key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
+    if (!skip[key]) partial[key] = nextAttrs[name];
   }
 
   if (MARKO_DEBUG) {

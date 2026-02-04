@@ -919,10 +919,10 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
   const seen: Record<string, t.MarkoAttribute> = {};
   const { attributes } = tag;
   const maybeStaticAttrs = new Set<t.MarkoAttribute>();
+  const skipProps = new Set<string>();
   let spreadExpression: undefined | t.Expression;
   let skipExpression: undefined | t.Expression;
   let spreadProps: undefined | t.ObjectExpression["properties"];
-  let skipProps: undefined | t.ObjectExpression["properties"];
   let staticControllable: RelatedControllable;
   let staticContentAttr: undefined | t.MarkoAttribute;
   let injectNonce = isInjectNonceTag(tagName);
@@ -988,15 +988,17 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
     if (staticControllable) {
       for (const attr of staticControllable.attrs) {
         if (attr) {
-          (skipProps ||= []).push(
-            toObjectProperty(attr.name, t.numericLiteral(1)),
-          );
+          skipProps.add(attr.name);
         }
       }
     }
 
     for (const { name } of staticAttrs) {
-      (skipProps ||= []).push(toObjectProperty(name, t.numericLiteral(1)));
+      if (isEventHandler(name)) {
+        skipProps.add(`on-${getEventHandlerName(name)}`);
+      } else {
+        skipProps.add(name);
+      }
     }
 
     if (injectNonce) {
@@ -1017,8 +1019,12 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
     spreadExpression = propsToExpression(spreadProps.reverse());
   }
 
-  if (skipProps) {
-    skipExpression = t.objectExpression(skipProps);
+  if (skipProps.size) {
+    skipExpression = t.objectExpression(
+      Array.from(skipProps, (name) =>
+        toObjectProperty(name, t.numericLiteral(1)),
+      ),
+    );
   }
 
   return {
