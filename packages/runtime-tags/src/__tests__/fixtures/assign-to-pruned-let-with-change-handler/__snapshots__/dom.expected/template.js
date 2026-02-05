@@ -4,7 +4,7 @@ import * as _2 from "@marko/runtime-tags/debug/dom";
 const $liveCount = /* @__PURE__ */_2._let("liveCount/2", $scope => _2._text($scope["#text/1"], $scope.liveCount));
 const $count = /* @__PURE__ */_2._let("count/3");
 const $setup__script = _2._script("__tests__/template.marko_0", $scope => _2._on($scope["#button/0"], "click", function (_, el) {
-  el.textContent = "" + $count($scope, 1);
+  el.textContent = "" + ($count($scope, 1));
 }));
 export function $setup($scope) {
   $liveCount($scope, 0);

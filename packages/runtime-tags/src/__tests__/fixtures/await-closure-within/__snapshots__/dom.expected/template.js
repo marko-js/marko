@@ -11,7 +11,7 @@ const $await_content__value__script = _._script("__tests__/template.marko_3_valu
 }));
 const $await_content__value = /* @__PURE__ */_._let("value/3", $scope => {
   _._text($scope["#text/1"], $scope.value);
-  $await_content__if($scope, $scope.value > 0 ? 0 : 1);
+  $await_content__if($scope, ($scope.value > 0) ? 0 : 1);
   $if_content__value($scope);
   $await_content__value__script($scope);
 });

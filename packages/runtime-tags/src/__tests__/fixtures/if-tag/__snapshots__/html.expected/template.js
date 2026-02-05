@@ -11,7 +11,7 @@ export default _._template("__tests__/template.marko", input => {
     }
   }, $scope0_id, "#text/0", _._serialize_guard($scope0_reason, /* input.a, input.b */0), _._serialize_guard($scope0_reason, /* input.a, input.b */0), _._serialize_guard($scope0_reason, /* input.a, input.b */0));
   _._if(() => {
-    if (input.a, input.b) {
+    if (((input.a, input.b))) {
       const $scope2_id = _._scope_id();
       _._html("World");
       _._serialize_if($scope0_reason, /* input.a, input.b */0) && _._scope($scope2_id, {}, "__tests__/template.marko", "5:2");

@@ -65,20 +65,20 @@
     "prepare": "node -r ~ts scripts/types"
   },
   "dependencies": {
-    "@babel/code-frame": "^7.27.1",
-    "@babel/core": "^7.28.0",
-    "@babel/generator": "^7.28.0",
-    "@babel/parser": "^7.28.0",
-    "@babel/plugin-syntax-typescript": "^7.27.1",
-    "@babel/plugin-transform-modules-commonjs": "^7.27.1",
-    "@babel/plugin-transform-typescript": "^7.28.0",
-    "@babel/runtime": "^7.28.2",
-    "@babel/traverse": "^7.28.0",
-    "@babel/types": "^7.28.2",
+    "@babel/code-frame": "^7.29.0",
+    "@babel/core": "^7.29.0",
+    "@babel/generator": "^7.29.1",
+    "@babel/parser": "^7.29.0",
+    "@babel/plugin-syntax-typescript": "^7.28.6",
+    "@babel/plugin-transform-modules-commonjs": "^7.28.6",
+    "@babel/plugin-transform-typescript": "^7.28.6",
+    "@babel/runtime": "^7.28.6",
+    "@babel/traverse": "^7.29.0",
+    "@babel/types": "^7.29.0",
     "@luxass/strip-json-comments": "^1.4.0",
     "complain": "^1.6.1",
     "he": "^1.2.0",
-    "htmljs-parser": "^5.7.3",
+    "htmljs-parser": "^5.7.4",
     "jsesc": "^3.1.0",
     "kleur": "^4.1.5",
     "lasso-package-root": "^1.0.1",
@@ -90,7 +90,7 @@
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
-    "marko": "^5.38.18"
+    "marko": "^5.38.19"
   },
   "engines": {
     "node": "18 || 20 || >=22"

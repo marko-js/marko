@@ -11,7 +11,7 @@ export default _._template("__tests__/template.marko", input => {
       let value = 1;
       _._html(`<button>${_._escape(value)}${_._el_resume($scope3_id, "#text/1")}</button>${_._el_resume($scope3_id, "#button/0")}`);
       _._if(() => {
-        if (value > 0) {
+        if ((value > 0)) {
           const $scope4_id = _._scope_id();
           _._html(`<span>${_._escape(value)}${_._el_resume($scope4_id, "#text/0")}</span>`);
           _._scope($scope4_id, {

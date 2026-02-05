@@ -4,7 +4,7 @@ export const $setup = () => {};
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $input__OR__valueChange__script = _._script("__tests__/tags/child.marko_0_input_$valueChange", $scope => {
   $scope.input;
-  if (_._call($scope.$valueChange, 2) !== 2) {
+  if ((_._call($scope.$valueChange, 2)) !== 2) {
     // Assignments always return their value.
     throw new Error(`Expected value to be 2`);
   }

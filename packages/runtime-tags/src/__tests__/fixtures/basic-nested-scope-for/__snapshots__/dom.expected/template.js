@@ -2,8 +2,8 @@ export const $template = "<!><!><!>";
 export const $walks = /* over(1), replace, over(2) */"b%c";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $for_content__selected__OR__num = /* @__PURE__ */_._or(4, $scope => {
-  _._attr($scope["#button/0"], "data-selected", $scope._.selected === $scope.num);
-  _._attr($scope["#button/0"], "data-multiple", $scope.num % $scope._.selected === 0);
+  _._attr($scope["#button/0"], "data-selected", ($scope._.selected === $scope.num));
+  _._attr($scope["#button/0"], "data-multiple", ($scope.num % $scope._.selected === 0));
 });
 const $for_content__selected = /* @__PURE__ */_._for_closure("#text/0", $for_content__selected__OR__num);
 const $for_content__setup = $for_content__selected;

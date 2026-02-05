@@ -536,7 +536,6 @@ function init(runtimeId = "M") {
                     (singleNode = "]" !== visitType && ")" !== visitType),
                     nextToken());
                     (branchId = +lastToken);
-
                   ) {
                     if (
                       ((endedBranches ||= []).push(
@@ -553,7 +552,6 @@ function init(runtimeId = "M") {
                         ~visits.indexOf(
                           (startVisit = startVisit.previousSibling),
                         );
-
                       );
                       ((branch.K = branch.S = startVisit),
                         "'" === visitType && (branch.a = startVisit));
@@ -603,7 +601,6 @@ function init(runtimeId = "M") {
                   for (
                     lastTokenIndex = 0, visitText = serialized;
                     nextToken();
-
                   )
                     /\D/.test(lastToken)
                       ? (lastEffect = registeredValues[lastToken])

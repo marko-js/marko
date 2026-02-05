@@ -74,15 +74,15 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
           out.w("<div></div>");
         }
       });
-      return out => {
+      return (out => {
         out.w("<div></div>");
-      };
+      });
     }, {
       "c": 1
     }));
-    return out => {
+    return (out => {
       out.w("<div></div>");
-    };
+    });
   }, {
     "x": 1,
     ...thing,

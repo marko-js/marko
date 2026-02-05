@@ -19,7 +19,7 @@ const $getMessage2 = /* @__PURE__ */_._const("getMessage", $if_content__getMessa
 export const $input_message = /* @__PURE__ */_._const("input_message", $scope => $getMessage2($scope, $getMessage($scope)));
 export const $input = ($scope, input) => $input_message($scope, input.message);
 function $getMessage($scope) {
-  return () => $scope.input_message;
+  return (() => $scope.input_message);
 }
 _._resume("__tests__/template.marko_0/getMessage", $getMessage);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

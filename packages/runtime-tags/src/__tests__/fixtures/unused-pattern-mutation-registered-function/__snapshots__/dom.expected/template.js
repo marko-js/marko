@@ -4,13 +4,13 @@ const identity = fn => fn;
 import * as _2 from "@marko/runtime-tags/debug/dom";
 const $setup__script = _2._script("__tests__/template.marko_0", $scope => _2._on($scope["#button/0"], "click", identity((_, el) => {
   let bar;
-  (($result, value) => ({
+  ((($result, value) => ({
     value,
     bar
   } = $result, $result))({
     value: "updated",
     bar: "bar"
-  });
+  }));
   el.textContent = bar;
 })));
 export function $setup($scope) {

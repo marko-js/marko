@@ -1,0 +1,3 @@
+Error: Invalid tag file: __tests__/components/some-tag/marko-tag.json. Neither a renderer or a template was found for tag. {
+  "@a": "string"
+}

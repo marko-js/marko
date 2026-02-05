@@ -22,9 +22,9 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
         out.t("Footer content", _component);
       }
     });
-    return out => {
+    return (out => {
       out.t("Body content", _component);
-    };
+    });
   }), null, null, null, _componentDef, "0");
 }, {
   t: _marko_componentType,

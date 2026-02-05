@@ -2,7 +2,7 @@ function getStringBy() {
   return "id";
 }
 function getFunctionBy() {
-  return item => item.id;
+  return (item => item.id);
 }
 function getMissingBy() {
   return undefined;

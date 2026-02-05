@@ -1,4 +1,6 @@
 /* eslint-disable no-import-assign */
+import "../generator/patch";
+
 import * as babelTypes from "@babel/types";
 import * as definitionUtils from "@babel/types/lib/definitions/utils";
 import * as generatedValidators from "@babel/types/lib/validators/generated";

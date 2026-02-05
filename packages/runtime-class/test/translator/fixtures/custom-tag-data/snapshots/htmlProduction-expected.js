@@ -8,7 +8,7 @@ import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   _marko_tag(_customTagData, {
-    "name": "Frank".toUpperCase(),
+    "name": ("Frank".toUpperCase()),
     "age": 32
   }, out, _componentDef, "0");
 }, {

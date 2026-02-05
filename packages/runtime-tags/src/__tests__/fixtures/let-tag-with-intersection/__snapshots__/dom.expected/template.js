@@ -11,7 +11,7 @@ const $z = /* @__PURE__ */_._const("z", $scope => {
   _._text($scope["#text/3"], $scope.z);
   $y__OR__z($scope);
 });
-const $x__script = _._script("__tests__/template.marko_0_x", $scope => _._on($scope["#button/0"], "click", () => $x($scope, $scope.x + 1) - 1));
+const $x__script = _._script("__tests__/template.marko_0_x", $scope => _._on($scope["#button/0"], "click", (() => $x($scope, $scope.x + 1) - 1)));
 const $x = /* @__PURE__ */_._let("x/5", $scope => {
   _._text($scope["#text/1"], $scope.x);
   $y($scope, $scope.x + 1);

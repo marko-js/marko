@@ -64,17 +64,20 @@ export default (api, markoOpts) => {
   return {
     name: "marko",
     manipulateOptions(opts) {
+      const { parserOpts } = opts;
       // We need to allow these for now since we are not parsing the entire file
       // These types of syntax errors will be picked up by the bundler / runtime anyways.
-      opts.parserOpts.allowAwaitOutsideFunction =
-        opts.parserOpts.allowImportExportEverywhere =
-        opts.parserOpts.allowReturnOutsideFunction =
-        opts.parserOpts.allowSuperOutsideMethod =
-        opts.parserOpts.allowUndeclaredExports =
-        opts.parserOpts.allowNewTargetOutsideFunction =
+      parserOpts.allowAwaitOutsideFunction =
+        parserOpts.allowImportExportEverywhere =
+        parserOpts.allowReturnOutsideFunction =
+        parserOpts.allowSuperOutsideMethod =
+        parserOpts.allowUndeclaredExports =
+        parserOpts.allowNewTargetOutsideFunction =
+        parserOpts.createParenthesizedExpressions =
+        parserOpts.createImportExpressions =
           true;
 
-      opts.parserOpts.plugins.push("objectRestSpread", "classProperties", [
+      parserOpts.plugins.push("objectRestSpread", "classProperties", [
         "typescript",
         {
           disallowAmbiguousJSXLike: false,

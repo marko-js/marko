@@ -2501,8 +2501,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/linking.html#AElement
        */
       interface A
-        extends SVGAttributes<SVGAElement>,
-          SVGConditionalProcessingAttributes {
+        extends SVGAttributes<SVGAElement>, SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/linking.html#AElementHrefAttribute
          */
@@ -2552,7 +2551,8 @@ declare global {
        * @see https://svgwg.org/specs/animations/#AnimateElement
        */
       interface Animate
-        extends Omit<SVGAttributes<SVGAnimateElement>, "fill">,
+        extends
+          Omit<SVGAttributes<SVGAnimateElement>, "fill">,
           SVGAnimationAdditionAttributes,
           SVGAnimationTargetElementAttributes,
           SVGAnimationAttributeTargetAttributes,
@@ -2563,7 +2563,8 @@ declare global {
        * @see https://svgwg.org/specs/animations/#AnimateMotionElement
        */
       interface AnimateMotion
-        extends Omit<SVGAttributes<SVGAnimateMotionElement>, "fill">,
+        extends
+          Omit<SVGAttributes<SVGAnimateMotionElement>, "fill">,
           SVGAnimationAdditionAttributes,
           SVGAnimationTargetElementAttributes,
           SVGAnimationTimingAttributes,
@@ -2594,7 +2595,8 @@ declare global {
        * @see https://svgwg.org/specs/animations/#AnimateTransformElement
        */
       interface AnimateTransform
-        extends Omit<SVGAttributes<SVGAnimateTransformElement>, "fill">,
+        extends
+          Omit<SVGAttributes<SVGAnimateTransformElement>, "fill">,
           SVGAnimationAdditionAttributes,
           SVGAnimationTargetElementAttributes,
           SVGAnimationAttributeTargetAttributes,
@@ -2616,7 +2618,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/shapes.html#CircleElement
        */
       interface Circle
-        extends SVGAttributes<SVGCircleElement>,
+        extends
+          SVGAttributes<SVGCircleElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -2643,7 +2646,8 @@ declare global {
        * @see https://www.w3.org/TR/css-masking-1/#elementdef-clippath
        */
       interface ClipPath
-        extends SVGAttributes<SVGClipPathElement>,
+        extends
+          SVGAttributes<SVGClipPathElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute
@@ -2670,8 +2674,7 @@ declare global {
        * @see https://svgwg.org/specs/animations/#DiscardElement
        */
       interface Discard
-        extends SVGAttributes<SVGElement>,
-          SVGConditionalProcessingAttributes {
+        extends SVGAttributes<SVGElement>, SVGConditionalProcessingAttributes {
         /**
          * @see https://svgwg.org/specs/animations/#DiscardElementBeginAttribute
          */
@@ -2687,7 +2690,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/shapes.html#EllipseElement
        */
       interface Ellipse
-        extends SVGAttributes<SVGEllipseElement>,
+        extends
+          SVGAttributes<SVGEllipseElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -2719,8 +2723,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feblend
        */
       interface FEBlend
-        extends SVGAttributes<SVGFEBlendElement>,
-          SVGFilterPrimitiveAttributes {
+        extends SVGAttributes<SVGFEBlendElement>, SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
          */
@@ -2758,7 +2761,8 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fecolormatrix
        */
       interface FEColorMatrix
-        extends SVGAttributes<SVGFEColorMatrixElement>,
+        extends
+          SVGAttributes<SVGFEColorMatrixElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2786,7 +2790,8 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fecomponenttransfer
        */
       interface FEComponentTransfer
-        extends SVGAttributes<SVGFEComponentTransferElement>,
+        extends
+          SVGAttributes<SVGFEComponentTransferElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2798,7 +2803,8 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fecomposite
        */
       interface FEComposite
-        extends SVGAttributes<SVGFECompositeElement>,
+        extends
+          SVGAttributes<SVGFECompositeElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2848,7 +2854,8 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feconvolvematrix
        */
       interface FEConvolveMatrix
-        extends SVGAttributes<SVGFEConvolveMatrixElement>,
+        extends
+          SVGAttributes<SVGFEConvolveMatrixElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2906,7 +2913,8 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fediffuselighting
        */
       interface FEDiffuseLighting
-        extends SVGAttributes<SVGFEDiffuseLightingElement>,
+        extends
+          SVGAttributes<SVGFEDiffuseLightingElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2933,7 +2941,8 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fedisplacementmap
        */
       interface FEDisplacementMap
-        extends SVGAttributes<SVGFEDisplacementMapElement>,
+        extends
+          SVGAttributes<SVGFEDisplacementMapElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2965,7 +2974,8 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fedistantlight
        */
       interface FEDistantLight
-        extends SVGAttributes<SVGFEDistantLightElement>,
+        extends
+          SVGAttributes<SVGFEDistantLightElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2987,7 +2997,8 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fedropshadow
        */
       interface FEDropShadow
-        extends SVGAttributes<SVGFEDropShadowElement>,
+        extends
+          SVGAttributes<SVGFEDropShadowElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -3014,42 +3025,48 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feflood
        */
       interface FEFlood
-        extends SVGAttributes<SVGFEFloodElement>,
+        extends
+          SVGAttributes<SVGFEFloodElement>,
           SVGFilterPrimitiveAttributes {}
 
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fefunca
        */
       interface FEFuncA
-        extends SVGAttributes<SVGFEFuncAElement>,
+        extends
+          SVGAttributes<SVGFEFuncAElement>,
           SVGTransferFunctionElementAttributes {}
 
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fefuncb
        */
       interface FEFuncB
-        extends SVGAttributes<SVGFEFuncBElement>,
+        extends
+          SVGAttributes<SVGFEFuncBElement>,
           SVGTransferFunctionElementAttributes {}
 
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fefuncg
        */
       interface FEFuncG
-        extends SVGAttributes<SVGFEFuncGElement>,
+        extends
+          SVGAttributes<SVGFEFuncGElement>,
           SVGTransferFunctionElementAttributes {}
 
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fefuncr
        */
       interface FEFuncR
-        extends SVGAttributes<SVGFEFuncRElement>,
+        extends
+          SVGAttributes<SVGFEFuncRElement>,
           SVGTransferFunctionElementAttributes {}
 
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fegaussianblur
        */
       interface FEGaussianBlur
-        extends SVGAttributes<SVGFEGaussianBlurElement>,
+        extends
+          SVGAttributes<SVGFEGaussianBlurElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -3071,8 +3088,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feimage
        */
       interface FEImage
-        extends SVGAttributes<SVGFEImageElement>,
-          SVGFilterPrimitiveAttributes {
+        extends SVGAttributes<SVGFEImageElement>, SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute
          */
@@ -3093,7 +3109,8 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-femerge
        */
       interface FEMerge
-        extends SVGAttributes<SVGFEMergeElement>,
+        extends
+          SVGAttributes<SVGFEMergeElement>,
           SVGFilterPrimitiveAttributes {}
 
       /**
@@ -3120,7 +3137,8 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feoffset
        */
       interface FEOffset
-        extends SVGAttributes<SVGFEOffsetElement>,
+        extends
+          SVGAttributes<SVGFEOffsetElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -3162,7 +3180,8 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fespecularlighting
        */
       interface FESpecularLighting
-        extends SVGAttributes<SVGFESpecularLightingElement>,
+        extends
+          SVGAttributes<SVGFESpecularLightingElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -3239,8 +3258,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fetile
        */
       interface FETile
-        extends SVGAttributes<SVGFETileElement>,
-          SVGFilterPrimitiveAttributes {
+        extends SVGAttributes<SVGFETileElement>, SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
          */
@@ -3251,7 +3269,8 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feturbulence
        */
       interface FETurbulence
-        extends SVGAttributes<SVGFETurbulenceElement>,
+        extends
+          SVGAttributes<SVGFETurbulenceElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feturbulence-basefrequency
@@ -3323,7 +3342,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/embedded.html#ForeignObjectElement
        */
       interface ForeignObject
-        extends SVGAttributes<SVGForeignObjectElement>,
+        extends
+          SVGAttributes<SVGForeignObjectElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/geometry.html#XProperty
@@ -3350,14 +3370,16 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/struct.html#GElement
        */
       interface G
-        extends SVGAttributes<SVGGElement>,
+        extends
+          SVGAttributes<SVGGElement>,
           SVGConditionalProcessingAttributes {}
 
       /**
        * @see https://www.w3.org/TR/SVG2/embedded.html#ImageElement
        */
       interface Image
-        extends SVGAttributes<SVGImageElement>,
+        extends
+          SVGAttributes<SVGImageElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/coords.html#PreserveAspectRatioAttribute
@@ -3399,7 +3421,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/shapes.html#LineElement
        */
       interface Line
-        extends SVGAttributes<SVGLineElement>,
+        extends
+          SVGAttributes<SVGLineElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -3526,7 +3549,8 @@ declare global {
        * @see https://www.w3.org/TR/css-masking-1/#elementdef-mask
        */
       interface Mask
-        extends SVGAttributes<SVGMaskElement>,
+        extends
+          SVGAttributes<SVGMaskElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/css-masking-1/#element-attrdef-mask-x
@@ -3568,7 +3592,8 @@ declare global {
        * @see https://svgwg.org/specs/animations/#MPathElement
        */
       interface MPath
-        extends SVGAttributes<SVGMPathElement>,
+        extends
+          SVGAttributes<SVGMPathElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://svgwg.org/specs/animations/#MPathElementHrefAttribute
@@ -3580,7 +3605,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/paths.html#PathElement
        */
       interface Path
-        extends SVGAttributes<SVGPathElement>,
+        extends
+          SVGAttributes<SVGPathElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -3655,7 +3681,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/shapes.html#PolygonElement
        */
       interface Polygon
-        extends SVGAttributes<SVGPolygonElement>,
+        extends
+          SVGAttributes<SVGPolygonElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -3672,7 +3699,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/shapes.html#PolylineElement
        */
       interface Polyline
-        extends SVGAttributes<SVGPolylineElement>,
+        extends
+          SVGAttributes<SVGPolylineElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -3744,7 +3772,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/shapes.html#RectElement
        */
       interface Rect
-        extends SVGAttributes<SVGRectElement>,
+        extends
+          SVGAttributes<SVGRectElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -3786,7 +3815,8 @@ declare global {
        * @see https://svgwg.org/specs/animations/#SetElement
        */
       interface Set
-        extends Omit<SVGAttributes<SVGSetElement>, "fill">,
+        extends
+          Omit<SVGAttributes<SVGSetElement>, "fill">,
           SVGAnimationTargetElementAttributes,
           SVGAnimationAttributeTargetAttributes,
           SVGAnimationTimingAttributes,
@@ -3811,7 +3841,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/struct.html#SVGElement
        */
       interface SVG
-        extends SVGAttributes<SVGSVGElement>,
+        extends
+          SVGAttributes<SVGSVGElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/xml-names/#ns-decl
@@ -3859,7 +3890,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/struct.html#SwitchElement
        */
       interface Switch
-        extends SVGAttributes<SVGSwitchElement>,
+        extends
+          SVGAttributes<SVGSwitchElement>,
           SVGConditionalProcessingAttributes {}
 
       /**
@@ -3923,7 +3955,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/text.html#TextElement
        */
       interface Text
-        extends SVGAttributes<SVGTextElement>,
+        extends
+          SVGAttributes<SVGTextElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/text.html#TextElementLengthAdjustAttribute
@@ -3965,7 +3998,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/text.html#TextPathElement
        */
       interface TextPath
-        extends SVGAttributes<SVGTextPathElement>,
+        extends
+          SVGAttributes<SVGTextPathElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/text.html#TextElementLengthAdjustAttribute
@@ -4017,7 +4051,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/text.html#TextElement
        */
       interface TSpan
-        extends SVGAttributes<SVGTSpanElement>,
+        extends
+          SVGAttributes<SVGTSpanElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/text.html#TextElementLengthAdjustAttribute
@@ -4059,7 +4094,8 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/struct.html#UseElement
        */
       interface Use
-        extends SVGAttributes<SVGUseElement>,
+        extends
+          SVGAttributes<SVGUseElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/struct.html#UseElementHrefAttribute
@@ -4108,8 +4144,9 @@ declare global {
       }
     }
 
-    interface HTMLAttributes<T extends Element = Element>
-      extends CommonAttributes<T> {
+    interface HTMLAttributes<
+      T extends Element = Element,
+    > extends CommonAttributes<T> {
       /**
        * Specifies a keyboard shortcut to activate or focus on an element.
        * @see https://html.spec.whatwg.org/multipage/interaction.html#the-accesskey-attribute
@@ -4343,8 +4380,9 @@ declare global {
       [data: `data-${string}`]: AttrStringOrNumber | boolean;
     }
 
-    interface SVGAttributes<T extends Element = Element>
-      extends CommonAttributes<T> {
+    interface SVGAttributes<
+      T extends Element = Element,
+    > extends CommonAttributes<T> {
       /**
        * @see https://www.w3.org/TR/SVG2/struct.html#IDAttribute
        */
