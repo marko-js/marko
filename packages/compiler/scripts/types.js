@@ -1,5 +1,3 @@
-import "../src/babel-types/types/patch";
-
 import fs from "fs";
 
 import babelTraverseCode from "./types/babel-traverse";

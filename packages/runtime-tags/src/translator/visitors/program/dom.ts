@@ -76,7 +76,7 @@ export default {
       const templateIdentifier = t.identifier(domExports.template);
       const walksIdentifier = t.identifier(domExports.walks);
       const setupIdentifier = t.identifier(domExports.setup);
-      const inputBinding = program.node.params[0].extra?.binding;
+      const inputBinding = program.node.params![0].extra?.binding;
       const programInputSignal =
         inputBinding && !inputBinding.pruned
           ? initValue(inputBinding)

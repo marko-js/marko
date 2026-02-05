@@ -1,5 +1,5 @@
-import { codeFrameColumns } from "@babel/code-frame";
 import type { types as t } from "@marko/compiler";
+import { codeFrameColumns } from "@marko/compiler/internal/babel";
 import * as markoModules from "@marko/compiler/modules";
 import path from "path";
 

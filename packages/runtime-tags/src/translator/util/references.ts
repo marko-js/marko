@@ -355,7 +355,7 @@ export function trackParamsReferences(
   body: t.NodePath<t.MarkoTagBody | t.Program>,
   type: BindingType,
 ) {
-  const params = body.node.params;
+  const params = body.node.params!;
   if (body.node.body.length && params.length) {
     const section = getOrCreateSection(body);
     const paramsBinding = ((body.node.extra ??= {}).binding = createBinding(

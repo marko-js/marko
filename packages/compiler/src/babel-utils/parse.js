@@ -1,5 +1,8 @@
-import * as babelParser from "@babel/parser";
 import { types as t } from "@marko/compiler";
+import {
+  parse as babelParse,
+  parseExpression as babelParseExpression,
+} from "@marko/compiler/internal/babel";
 
 import { getLoc, getLocRange } from "./loc";
 
@@ -135,9 +138,9 @@ function tryParse(
 
     try {
       if (isExpression) {
-        return babelParser.parseExpression(code, parserOpts);
+        return babelParseExpression(code, parserOpts);
       } else {
-        const { program } = babelParser.parse(code, parserOpts);
+        const { program } = babelParse(code, parserOpts);
         if (program.innerComments) {
           const lastNode = t.emptyStatement();
           lastNode.trailingComments = program.innerComments;
@@ -166,10 +169,10 @@ function tryParse(
     }
   } else {
     return isExpression
-      ? t.cloneDeepWithoutLoc(babelParser.parseExpression(code, parserOpts))
-      : babelParser
-          .parse(code, parserOpts)
-          .program.body.map((node) => t.cloneDeepWithoutLoc(node));
+      ? t.cloneDeepWithoutLoc(babelParseExpression(code, parserOpts))
+      : babelParse(code, parserOpts).program.body.map((node) =>
+          t.cloneDeepWithoutLoc(node),
+        );
   }
 }
 

@@ -1,0 +1,705 @@
+diff --git a/node_modules/@babel/types/lib/asserts/generated/index.js b/node_modules/@babel/types/lib/asserts/generated/index.js
+index 27d00bd..2311d99 100644
+--- a/node_modules/@babel/types/lib/asserts/generated/index.js
++++ b/node_modules/@babel/types/lib/asserts/generated/index.js
+@@ -1248,4 +1248,6 @@ function assertModuleDeclaration(node, opts) {
+   assert("ModuleDeclaration", node, opts);
+ }
+ 
++Object.assign(exports, require("./marko.js"));
++
+ //# sourceMappingURL=index.js.map
+diff --git a/node_modules/@babel/types/lib/asserts/generated/marko.js b/node_modules/@babel/types/lib/asserts/generated/marko.js
+new file mode 100644
+index 0000000..8efd0a9
+--- /dev/null
++++ b/node_modules/@babel/types/lib/asserts/generated/marko.js
+@@ -0,0 +1,75 @@
++const is = require("../../validators/is.js").default;
++
++exports.assertMarkoParseError = assertMarkoParseError;
++function assertMarkoParseError(node, opts) {
++  assert("MarkoParseError", node, opts);
++}
++
++exports.assertMarkoDocumentType = assertMarkoDocumentType;
++function assertMarkoDocumentType(node, opts) {
++  assert("MarkoDocumentType", node, opts);
++}
++
++exports.assertMarkoDeclaration = assertMarkoDeclaration;
++function assertMarkoDeclaration(node, opts) {
++  assert("MarkoDeclaration", node, opts);
++}
++
++exports.assertMarkoCDATA = assertMarkoCDATA;
++function assertMarkoCDATA(node, opts) {
++  assert("MarkoCDATA", node, opts);
++}
++
++exports.assertMarkoComment = assertMarkoComment;
++function assertMarkoComment(node, opts) {
++  assert("MarkoComment", node, opts);
++}
++
++exports.assertMarkoText = assertMarkoText;
++function assertMarkoText(node, opts) {
++  assert("MarkoText", node, opts);
++}
++
++exports.assertMarkoPlaceholder = assertMarkoPlaceholder;
++function assertMarkoPlaceholder(node, opts) {
++  assert("MarkoPlaceholder", node, opts);
++}
++
++exports.assertMarkoScriptlet = assertMarkoScriptlet;
++function assertMarkoScriptlet(node, opts) {
++  assert("MarkoScriptlet", node, opts);
++}
++
++exports.assertMarkoClass = assertMarkoClass;
++function assertMarkoClass(node, opts) {
++  assert("MarkoClass", node, opts);
++}
++
++exports.assertMarkoAttribute = assertMarkoAttribute;
++function assertMarkoAttribute(node, opts) {
++  assert("MarkoAttribute", node, opts);
++}
++
++exports.assertMarkoSpreadAttribute = assertMarkoSpreadAttribute;
++function assertMarkoSpreadAttribute(node, opts) {
++  assert("MarkoSpreadAttribute", node, opts);
++}
++
++exports.assertMarkoTagBody = assertMarkoTagBody;
++function assertMarkoTagBody(node, opts) {
++  assert("MarkoTagBody", node, opts);
++}
++
++exports.assertMarkoTag = assertMarkoTag;
++function assertMarkoTag(node, opts) {
++  assert("MarkoTag", node, opts);
++}
++
++function assert(type, node, opts) {
++  if (!is(type, node, opts)) {
++    throw new Error(
++      `Expected type "${type}" with option ${JSON.stringify(opts)}, ` +
++        `but instead got "${node.type}".`,
++    );
++  }
++}
+diff --git a/node_modules/@babel/types/lib/builders/generated/index.js b/node_modules/@babel/types/lib/builders/generated/index.js
+index ce6a687..f17eede 100644
+--- a/node_modules/@babel/types/lib/builders/generated/index.js
++++ b/node_modules/@babel/types/lib/builders/generated/index.js
+@@ -26,4 +26,6 @@ Object.keys(_uppercase).forEach(function (key) {
+   });
+ });
+ 
++Object.assign(exports, require("./marko.js"));
++
+ //# sourceMappingURL=index.js.map
+diff --git a/node_modules/@babel/types/lib/builders/generated/lowercase.js b/node_modules/@babel/types/lib/builders/generated/lowercase.js
+index 0a13bcd..b2afd60 100644
+--- a/node_modules/@babel/types/lib/builders/generated/lowercase.js
++++ b/node_modules/@babel/types/lib/builders/generated/lowercase.js
+@@ -633,7 +633,8 @@ function program(body, directives = [], sourceType = "script", interpreter = nul
+     body,
+     directives,
+     sourceType,
+-    interpreter
++    interpreter,
++    params: undefined,
+   };
+   const defs = NODE_FIELDS.Program;
+   validate(defs.body, node, "body", body, 1);
+diff --git a/node_modules/@babel/types/lib/builders/generated/marko.js b/node_modules/@babel/types/lib/builders/generated/marko.js
+new file mode 100644
+index 0000000..945bf28
+--- /dev/null
++++ b/node_modules/@babel/types/lib/builders/generated/marko.js
+@@ -0,0 +1,131 @@
++exports.markoParseError = exports.MarkoParseError = markoParseError;
++function markoParseError(source, label, errorLoc) {
++  return {
++    type: "MarkoParseError",
++    source,
++    label,
++    errorLoc,
++  };
++}
++
++exports.markoDocumentType = exports.MarkoDocumentType = markoDocumentType;
++function markoDocumentType(value) {
++  return {
++    type: "MarkoDocumentType",
++    value,
++  };
++}
++
++exports.markoDeclaration = exports.MarkoDeclaration = markoDeclaration;
++function markoDeclaration(value) {
++  return {
++    type: "MarkoDeclaration",
++    value,
++  };
++}
++
++exports.markoCDATA = exports.MarkoCDATA = markoCDATA;
++function markoCDATA(value) {
++  return {
++    type: "MarkoCDATA",
++    value,
++  };
++}
++
++exports.markoComment = exports.MarkoComment = markoComment;
++function markoComment(value) {
++  return {
++    type: "MarkoComment",
++    value,
++  };
++}
++
++exports.markoText = exports.MarkoText = markoText;
++function markoText(value) {
++  return {
++    type: "MarkoText",
++    value,
++  };
++}
++
++exports.markoPlaceholder = exports.MarkoPlaceholder = markoPlaceholder;
++function markoPlaceholder(value, escape = false) {
++  return {
++    type: "MarkoPlaceholder",
++    value,
++    escape,
++  };
++}
++
++exports.markoScriptlet = exports.MarkoScriptlet = markoScriptlet;
++function markoScriptlet(body, _static = false, target) {
++  return {
++    type: "MarkoScriptlet",
++    body,
++    static: _static,
++    target,
++  };
++}
++
++exports.markoClass = exports.MarkoClass = markoClass;
++function markoClass(body) {
++  return {
++    type: "MarkoClass",
++    body,
++  };
++}
++
++exports.markoAttribute = exports.MarkoAttribute = markoAttribute;
++function markoAttribute(name, value, modifier, _arguments, _default, bound) {
++  return {
++    type: "MarkoAttribute",
++    name,
++    value,
++    modifier,
++    arguments: _arguments,
++    default: _default,
++    bound,
++  };
++}
++
++exports.markoSpreadAttribute = exports.MarkoSpreadAttribute =
++  markoSpreadAttribute;
++function markoSpreadAttribute(value) {
++  return {
++    type: "MarkoSpreadAttribute",
++    value,
++  };
++}
++
++exports.markoTagBody = exports.MarkoTagBody = markoTagBody;
++function markoTagBody(body = [], params = []) {
++  return {
++    type: "MarkoTagBody",
++    body,
++    params,
++    typeParameters: undefined,
++    attributeTags: false,
++  };
++}
++
++exports.markoTag = exports.MarkoTag = markoTag;
++function markoTag(
++  name,
++  attributes = [],
++  body,
++  _arguments,
++  _var,
++  attributeTags = [],
++) {
++  return {
++    type: "MarkoTag",
++    name,
++    attributes,
++    body,
++    arguments: _arguments,
++    typeArguments: undefined,
++    rawValue: undefined,
++    var: _var,
++    attributeTags,
++  };
++}
+diff --git a/node_modules/@babel/types/lib/constants/generated/index.js b/node_modules/@babel/types/lib/constants/generated/index.js
+index 92cd58b..afdc273 100644
+--- a/node_modules/@babel/types/lib/constants/generated/index.js
++++ b/node_modules/@babel/types/lib/constants/generated/index.js
+@@ -56,5 +56,6 @@ const TSTYPEELEMENT_TYPES = exports.TSTYPEELEMENT_TYPES = _index.FLIPPED_ALIAS_K
+ const TSTYPE_TYPES = exports.TSTYPE_TYPES = _index.FLIPPED_ALIAS_KEYS["TSType"];
+ const TSBASETYPE_TYPES = exports.TSBASETYPE_TYPES = _index.FLIPPED_ALIAS_KEYS["TSBaseType"];
+ const MODULEDECLARATION_TYPES = exports.MODULEDECLARATION_TYPES = IMPORTOREXPORTDECLARATION_TYPES;
++exports.MARKO_TYPES = _index.FLIPPED_ALIAS_KEYS["Marko"];
+ 
+ //# sourceMappingURL=index.js.map
+diff --git a/node_modules/@babel/types/lib/definitions/core.js b/node_modules/@babel/types/lib/definitions/core.js
+index a642fbe..03b01c8 100644
+--- a/node_modules/@babel/types/lib/definitions/core.js
++++ b/node_modules/@babel/types/lib/definitions/core.js
+@@ -592,7 +592,11 @@ defineType("Program", {
+       validate: (0, _utils.arrayOfType)("Directive"),
+       default: []
+     },
+-    body: (0, _utils.validateArrayOfType)("Statement")
++    body: (0, _utils.validateArrayOfType)("Statement"),
++    params: {
++      validate: (0, _utils.arrayOfType)("FunctionParameter"),
++      optional: true
++    }
+   },
+   aliases: ["Scopable", "BlockParent", "Block"]
+ });
+diff --git a/node_modules/@babel/types/lib/definitions/index.js b/node_modules/@babel/types/lib/definitions/index.js
+index 3dff037..0f8f53b 100644
+--- a/node_modules/@babel/types/lib/definitions/index.js
++++ b/node_modules/@babel/types/lib/definitions/index.js
+@@ -82,6 +82,7 @@ require("./jsx.js");
+ require("./misc.js");
+ require("./experimental.js");
+ require("./typescript.js");
++require("./marko.js");
+ var _utils = require("./utils.js");
+ var _placeholders = require("./placeholders.js");
+ var _deprecatedAliases = require("./deprecated-aliases.js");
+diff --git a/node_modules/@babel/types/lib/definitions/marko.js b/node_modules/@babel/types/lib/definitions/marko.js
+new file mode 100644
+index 0000000..e14efd5
+--- /dev/null
++++ b/node_modules/@babel/types/lib/definitions/marko.js
+@@ -0,0 +1,247 @@
++"use strict";
++
++const {
++  defineAliasedType,
++  assertNodeType,
++  assertValueType,
++  assertOneOf,
++  assertEach,
++  arrayOfType,
++  chain,
++} = require("@babel/types/lib/definitions/utils.js");
++const defineType = defineAliasedType("Marko");
++
++defineType("MarkoParseError", {
++  aliases: ["Marko", "Expression", "Statement"],
++  builder: ["source", "label", "errorLoc"],
++  fields: {
++    source: {
++      validate: assertValueType("string"),
++    },
++    label: {
++      validate: assertValueType("string"),
++    },
++    errorLoc: {
++      optional: true,
++      validate: assertValueType("object"),
++    },
++  },
++});
++defineType("MarkoDocumentType", {
++  aliases: ["Marko", "Statement"],
++  builder: ["value"],
++  fields: {
++    value: {
++      validate: assertValueType("string"),
++    },
++  },
++});
++
++defineType("MarkoDeclaration", {
++  aliases: ["Marko", "Statement"],
++  builder: ["value"],
++  fields: {
++    value: {
++      validate: assertValueType("string"),
++    },
++  },
++});
++
++defineType("MarkoCDATA", {
++  aliases: ["Marko", "Statement"],
++  builder: ["value"],
++  fields: {
++    value: {
++      validate: assertValueType("string"),
++    },
++  },
++});
++
++defineType("MarkoComment", {
++  aliases: ["Marko", "Statement"],
++  builder: ["value"],
++  fields: {
++    value: {
++      validate: assertValueType("string"),
++    },
++  },
++});
++
++defineType("MarkoText", {
++  aliases: ["Marko", "Statement"],
++  builder: ["value"],
++  fields: {
++    value: {
++      validate: assertValueType("string"),
++    },
++  },
++});
++
++defineType("MarkoPlaceholder", {
++  aliases: ["Marko", "Statement"],
++  builder: ["value", "escape"],
++  visitor: ["value"],
++  fields: {
++    value: {
++      validate: assertNodeType("Expression"),
++    },
++    escape: {
++      validate: assertValueType("boolean"),
++      default: true,
++    },
++  },
++});
++
++defineType("MarkoScriptlet", {
++  aliases: ["Marko", "Statement"],
++  builder: ["body", "static", "target"],
++  visitor: ["body"],
++  fields: {
++    body: {
++      validate: arrayOfType("Statement"),
++    },
++    static: {
++      validate: assertValueType("boolean"),
++      default: false,
++    },
++    target: {
++      validate: assertOneOf("server", "client"),
++      optional: true,
++    },
++  },
++});
++
++defineType("MarkoClass", {
++  aliases: ["Marko", "Statement", "Class"],
++  builder: ["body"],
++  visitor: ["body"],
++  fields: {
++    body: {
++      validate: assertNodeType("ClassBody"),
++    },
++  },
++});
++
++defineType("MarkoAttribute", {
++  aliases: ["Marko"],
++  builder: ["name", "value", "modifier", "arguments", "default", "bound"],
++  visitor: ["value", "arguments"],
++  fields: {
++    name: {
++      validate: assertValueType("string"),
++    },
++    value: {
++      validate: assertNodeType("Expression"),
++    },
++    modifier: {
++      validate: assertValueType("string"),
++      optional: true,
++    },
++    arguments: {
++      validate: chain(
++        assertValueType("array"),
++        assertEach(assertNodeType("Expression", "SpreadElement")),
++      ),
++      optional: true,
++    },
++    default: {
++      validate: assertValueType("boolean"),
++      optional: true,
++    },
++    bound: {
++      validate: assertValueType("boolean"),
++      optional: true,
++    },
++  },
++});
++
++defineType("MarkoSpreadAttribute", {
++  aliases: ["Marko"],
++  builder: ["value"],
++  visitor: ["value"],
++  fields: {
++    value: {
++      validate: assertNodeType("Expression"),
++    },
++  },
++});
++
++defineType("MarkoTagBody", {
++  aliases: ["Marko", "BlockParent", "FunctionParent", "Scope"],
++  builder: ["body", "params"],
++  visitor: ["typeParameters", "params", "body"],
++  fields: {
++    params: {
++      validate: arrayOfType("FunctionParameter"),
++      default: [],
++    },
++    typeParameters: {
++      validate: assertNodeType("TSTypeParameterDeclaration"),
++      optional: true,
++    },
++    body: {
++      validate: arrayOfType(
++        "MarkoTag",
++        "MarkoCDATA",
++        "MarkoText",
++        "MarkoPlaceholder",
++        "MarkoScriptlet",
++        "MarkoComment",
++      ),
++      default: [],
++    },
++    attributeTags: {
++      validate: assertValueType("boolean"),
++      default: false,
++    },
++  },
++});
++
++defineType("MarkoTag", {
++  aliases: ["Marko", "Statement"],
++  builder: ["name", "attributes", "body", "arguments", "var", "attributeTags"],
++  visitor: [
++    "name",
++    "typeArguments",
++    "arguments",
++    "attributes",
++    "attributeTags",
++    "var",
++    "body",
++  ],
++  fields: {
++    name: {
++      validate: assertNodeType("Expression"),
++    },
++    attributes: {
++      validate: arrayOfType("MarkoAttribute", "MarkoSpreadAttribute"),
++      default: [],
++    },
++    body: {
++      validate: assertNodeType("MarkoTagBody"),
++    },
++    arguments: {
++      validate: chain(
++        assertValueType("array"),
++        assertEach(assertNodeType("Expression", "SpreadElement")),
++      ),
++      optional: true,
++    },
++    typeArguments: {
++      validate: assertNodeType("TSTypeParameterInstantiation"),
++      optional: true,
++    },
++    rawValue: {
++      validate: assertValueType("string"),
++      optional: true,
++    },
++    var: {
++      validate: assertNodeType("LVal"),
++      optional: true,
++    },
++    attributeTags: {
++      validate: arrayOfType("MarkoTag", "MarkoScriptlet", "MarkoComment"),
++      default: [],
++    },
++  },
++});
+diff --git a/node_modules/@babel/types/lib/retrievers/getBindingIdentifiers.js b/node_modules/@babel/types/lib/retrievers/getBindingIdentifiers.js
+index e4fb8a0..80c412b 100644
+--- a/node_modules/@babel/types/lib/retrievers/getBindingIdentifiers.js
++++ b/node_modules/@babel/types/lib/retrievers/getBindingIdentifiers.js
+@@ -56,6 +56,10 @@ function getBindingIdentifiers(node, duplicates, outerOnly, newBindingsOnly) {
+   return ids;
+ }
+ const keys = {
++  Program: ["params"],
++  MarkoTag: ["var"],
++  MarkoTagBody: ["params"],
++  MarkoScriptlet: ["body"],
+   DeclareClass: ["id"],
+   DeclareFunction: ["id"],
+   DeclareModule: ["id"],
+diff --git a/node_modules/@babel/types/lib/validators/generated/index.js b/node_modules/@babel/types/lib/validators/generated/index.js
+index a26bea2..b80c768 100644
+--- a/node_modules/@babel/types/lib/validators/generated/index.js
++++ b/node_modules/@babel/types/lib/validators/generated/index.js
+@@ -1791,6 +1791,7 @@ function isScopable(node, opts) {
+     case "ClassPrivateMethod":
+     case "StaticBlock":
+     case "TSModuleBlock":
++    case "MarkoTagBody":
+       break;
+     case "Placeholder":
+       if (node.expectedNode === "BlockStatement") break;
+@@ -1819,6 +1820,7 @@ function isBlockParent(node, opts) {
+     case "ClassPrivateMethod":
+     case "StaticBlock":
+     case "TSModuleBlock":
++    case "MarkoTagBody":
+       break;
+     case "Placeholder":
+       if (node.expectedNode === "BlockStatement") break;
+@@ -2032,6 +2034,7 @@ function isFunctionParent(node, opts) {
+     case "ClassPrivateMethod":
+     case "StaticBlock":
+     case "TSModuleBlock":
++    case "MarkoTagBody":
+       break;
+     default:
+       return false;
+@@ -2794,4 +2797,6 @@ function isModuleDeclaration(node, opts) {
+   return isImportOrExportDeclaration(node, opts);
+ }
+ 
++Object.assign(exports, require("./marko.js"));
++
+ //# sourceMappingURL=index.js.map
+diff --git a/node_modules/@babel/types/lib/validators/generated/marko.js b/node_modules/@babel/types/lib/validators/generated/marko.js
+new file mode 100644
+index 0000000..166fab7
+--- /dev/null
++++ b/node_modules/@babel/types/lib/validators/generated/marko.js
+@@ -0,0 +1,87 @@
++"use strict";
++
++const shallowEqual = require("../../utils/shallowEqual.js").default;
++
++exports.isMarkoParseError = isMarkoParseError;
++function isMarkoParseError(node, opts) {
++  if (!node || node.type !== "MarkoParseError") return false;
++  return opts == null || shallowEqual(node, opts);
++}
++
++exports.isMarkoDocumentType = isMarkoDocumentType;
++function isMarkoDocumentType(node, opts) {
++  if (!node || node.type !== "MarkoDocumentType") return false;
++  return opts == null || shallowEqual(node, opts);
++}
++
++exports.isMarkoDeclaration = isMarkoDeclaration;
++function isMarkoDeclaration(node, opts) {
++  if (!node || node.type !== "MarkoDeclaration") return false;
++  return opts == null || shallowEqual(node, opts);
++}
++
++exports.isMarkoCDATA = isMarkoCDATA;
++function isMarkoCDATA(node, opts) {
++  if (!node || node.type !== "MarkoCDATA") return false;
++  return opts == null || shallowEqual(node, opts);
++}
++
++exports.isMarkoComment = isMarkoComment;
++function isMarkoComment(node, opts) {
++  if (!node || node.type !== "MarkoComment") return false;
++  return opts == null || shallowEqual(node, opts);
++}
++
++exports.isMarkoText = isMarkoText;
++function isMarkoText(node, opts) {
++  if (!node || node.type !== "MarkoText") return false;
++  return opts == null || shallowEqual(node, opts);
++}
++
++exports.isMarkoPlaceholder = isMarkoPlaceholder;
++function isMarkoPlaceholder(node, opts) {
++  if (!node || node.type !== "MarkoPlaceholder") return false;
++  return opts == null || shallowEqual(node, opts);
++}
++
++exports.isMarkoScriptlet = isMarkoScriptlet;
++function isMarkoScriptlet(node, opts) {
++  if (!node || node.type !== "MarkoScriptlet") return false;
++  return opts == null || shallowEqual(node, opts);
++}
++
++exports.isMarkoClass = isMarkoClass;
++function isMarkoClass(node, opts) {
++  if (!node || node.type !== "MarkoClass") return false;
++  return opts == null || shallowEqual(node, opts);
++}
++
++exports.isMarkoAttribute = isMarkoAttribute;
++function isMarkoAttribute(node, opts) {
++  if (!node || node.type !== "MarkoAttribute") return false;
++  return opts == null || shallowEqual(node, opts);
++}
++
++exports.isMarkoSpreadAttribute = isMarkoSpreadAttribute;
++function isMarkoSpreadAttribute(node, opts) {
++  if (!node || node.type !== "MarkoSpreadAttribute") return false;
++  return opts == null || shallowEqual(node, opts);
++}
++
++exports.isMarkoTagBody = isMarkoTagBody;
++function isMarkoTagBody(node, opts) {
++  if (!node || node.type !== "MarkoTagBody") return false;
++  return opts == null || shallowEqual(node, opts);
++}
++
++exports.isMarkoTag = isMarkoTag;
++function isMarkoTag(node, opts) {
++  if (!node || node.type !== "MarkoTag") return false;
++  return opts == null || shallowEqual(node, opts);
++}
++
++exports.isMarko = isMarko;
++function isMarko(node, opts) {
++  if (!node || !node.type.startsWith("Marko")) return false;
++  return opts == null || shallowEqual(node, opts);
++}
+diff --git a/node_modules/@babel/types/lib/validators/isReferenced.js b/node_modules/@babel/types/lib/validators/isReferenced.js
+index b2718d7..a2ecdfb 100644
+--- a/node_modules/@babel/types/lib/validators/isReferenced.js
++++ b/node_modules/@babel/types/lib/validators/isReferenced.js
+@@ -89,6 +89,10 @@ function isReferenced(node, parent, grandparent) {
+         return !!parent.computed;
+       }
+       return true;
++    case "MarkoTag":
++      return parent.var !== node;
++    case "MarkoTagBody":
++      return false;
+   }
+   return true;
+ }

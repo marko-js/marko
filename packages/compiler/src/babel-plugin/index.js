@@ -1,8 +1,10 @@
-import tsTransformPlugin from "@babel/plugin-transform-typescript";
-import traverse from "@babel/traverse";
+import {
+  pluginTransformTypeScript,
+  traverse,
+  types as t,
+} from "@marko/compiler/internal/babel";
 import path from "path";
 
-import * as t from "../babel-types";
 import { diagnosticError } from "../babel-utils/diagnostics";
 import { getFileInternal, setFileInternal } from "../babel-utils/get-file";
 import { getTemplateId } from "../babel-utils/tags";
@@ -49,7 +51,7 @@ export default (api, markoOpts) => {
   }
 
   if (markoOpts.stripTypes) {
-    stripTypesVisitor ||= tsTransformPlugin(api, {
+    stripTypesVisitor ||= pluginTransformTypeScript(api, {
       isTSX: false,
       allowNamespaces: true,
       allowDeclareFields: true,

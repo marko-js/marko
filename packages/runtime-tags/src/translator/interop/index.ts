@@ -1,9 +1,9 @@
-import generate from "@babel/generator";
 import { type Config, taglib, types as t } from "@marko/compiler";
 import {
   loadFileForImport,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
+import { generator } from "@marko/compiler/internal/babel";
 import path from "path";
 
 import * as translate6 from "..";
@@ -73,7 +73,7 @@ export function createInteropTranslator(translate5: any) {
                 [t.importDefaultSpecifier(t.identifier(`init${name}`))],
                 t.stringLiteral(
                   resolveVirtualDependency!(filename, {
-                    code: generate(t.program(statements) as any, generatorOpts)
+                    code: generator(t.program(statements) as any, generatorOpts)
                       .code,
                     virtualPath: `${baseName}.hydrate-${name}.js`,
                   })!,

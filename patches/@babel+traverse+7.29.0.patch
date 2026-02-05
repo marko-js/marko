@@ -1,0 +1,122 @@
+diff --git a/node_modules/@babel/traverse/lib/scope/index.js b/node_modules/@babel/traverse/lib/scope/index.js
+index a607471..50580ac 100644
+--- a/node_modules/@babel/traverse/lib/scope/index.js
++++ b/node_modules/@babel/traverse/lib/scope/index.js
+@@ -299,7 +299,37 @@ const collectorVisitor = {
+   },
+   TSTypeAnnotation(path) {
+     path.skip();
+-  }
++  },
++  MarkoTagBody(body) {
++    for (const param of body.get("params")) {
++      body.scope.registerBinding("param", param);
++    }
++  },
++  MarkoTag(tag, state) {
++    const tagVar = tag.get("var");
++    if (tagVar.node) {
++      tag.scope.registerBinding("local", tagVar, tag);
++      for (const name in tagVar.getBindingIdentifiers()) {
++        let curScope = tag.scope;
++        const binding = curScope.getBinding(name);
++
++        while ((curScope = curScope.parent)) {
++          const hoistableTagVars =
++            state.hoistableTagVarsByScope.get(curScope);
++
++          if (hoistableTagVars) {
++            hoistableTagVars[name] = hoistableTagVars[name]
++              ? true
++              : binding;
++          } else {
++            state.hoistableTagVarsByScope.set(curScope, {
++              [name]: binding,
++            });
++          }
++        }
++      }
++    }
++  },
+ };
+ let scopeVisitor;
+ let uid = 0;
+@@ -676,7 +706,8 @@ class Scope {
+     const state = {
+       references: [],
+       constantViolations: [],
+-      assignments: []
++      assignments: [],
++      hoistableTagVarsByScope: new Map(),
+     };
+     this.crawling = true;
+     scopeVisitor || (scopeVisitor = _index.default.visitors.merge([{
+@@ -684,6 +715,11 @@ class Scope {
+         resetScope(path.scope);
+       }
+     }, collectorVisitor]));
++
++    if (path.type === "Program" && path.node.params?.length) {
++      this.registerBinding("param", path);
++    }
++
+     if (path.type !== "Program") {
+       const typeVisitors = scopeVisitor[path.type];
+       if (typeVisitors) {
+@@ -692,8 +728,44 @@ class Scope {
+         }
+       }
+     }
++
+     path.traverse(scopeVisitor, state);
+     this.crawling = false;
++
++    if (state.references.length) {
++      const movedBindings = new Map();
++      for (const ref of state.references) {
++        const { name } = ref.node;
++        let curScope = ref.scope;
++        if (curScope.hasBinding(name)) continue;
++
++        do {
++          const hoistableBinding =
++            state.hoistableTagVarsByScope.get(curScope)?.[name];
++
++          if (hoistableBinding) {
++            if (hoistableBinding === true) {
++              throw ref.buildCodeFrameError(
++                "Ambiguous reference, variable was defined in multiple places and was not shadowed.",
++              );
++            }
++
++            const movedBinding = movedBindings.get(hoistableBinding);
++            if (
++              !movedBinding ||
++              getMarkoScopeDepth(movedBinding) > getMarkoScopeDepth(curScope)
++            ) {
++              movedBindings.set(hoistableBinding, curScope);
++            }
++          }
++        } while ((curScope = curScope.parent));
++      }
++
++      for (const [binding, scope] of movedBindings) {
++        binding.scope.moveBindingTo(binding.identifier.name, scope);
++      }
++    }
++
+     for (const path of state.assignments) {
+       const ids = path.getAssignmentIdentifiers();
+       for (const name of Object.keys(ids)) {
+@@ -1015,4 +1087,11 @@ Object.defineProperties(Scope.prototype, {
+   }
+ });
+ 
++function getMarkoScopeDepth(scope) {
++  let depth = 0;
++  let cur = scope;
++  while ((cur = cur.parent)) depth++;
++  return depth;
++}
++
+ //# sourceMappingURL=index.js.map

@@ -1,7 +1,12 @@
-export * as types from "./babel-types";
-import * as babel from "@babel/core";
-import cjsPlugin from "@babel/plugin-transform-modules-commonjs";
 import { DiagnosticType } from "@marko/compiler/babel-utils";
+import {
+  loadPartialConfig,
+  loadPartialConfigAsync,
+  pluginTransformModulesCommonjs,
+  transformAsync,
+  transformSync,
+  types,
+} from "@marko/compiler/internal/babel";
 import markoModules from "@marko/compiler/modules";
 import path from "path";
 
@@ -12,7 +17,7 @@ import { buildCodeFrameError } from "./util/build-code-frame";
 import throwAggregateError from "./util/merge-errors";
 import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
-export { taglib };
+export { taglib, types };
 
 export let globalConfig = { ...defaultConfig };
 export function configure(newConfig) {
@@ -22,14 +27,14 @@ export function configure(newConfig) {
 export async function compile(src, filename, config) {
   const markoConfig = loadMarkoConfig(config);
   const babelConfig = await loadBabelConfig(filename, markoConfig);
-  const babelResult = await babel.transformAsync(src, babelConfig);
+  const babelResult = await transformAsync(src, babelConfig);
   return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
 }
 
 export function compileSync(src, filename, config) {
   const markoConfig = loadMarkoConfig(config);
   const babelConfig = loadBabelConfigSync(filename, markoConfig);
-  const babelResult = babel.transformSync(src, babelConfig);
+  const babelResult = transformSync(src, babelConfig);
   return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
 }
 
@@ -72,14 +77,14 @@ function loadMarkoConfig(config) {
 async function loadBabelConfig(filename, config) {
   const baseBabelConfig = getBaseBabelConfig(filename, config);
   return isTranslatedOutput(config.output)
-    ? (await babel.loadPartialConfigAsync(baseBabelConfig)).options
+    ? (await loadPartialConfigAsync(baseBabelConfig)).options
     : baseBabelConfig;
 }
 
 function loadBabelConfigSync(filename, config) {
   const baseBabelConfig = getBaseBabelConfig(filename, config);
   return isTranslatedOutput(config.output)
-    ? babel.loadPartialConfigSync(baseBabelConfig).options
+    ? loadPartialConfig(baseBabelConfig).options
     : baseBabelConfig;
 }
 
@@ -108,7 +113,10 @@ function getBaseBabelConfig(filename, { babelConfig, ...markoConfig }) {
 
   if (isTranslated) {
     if (markoConfig.modules === "cjs") {
-      baseBabelConfig.plugins.push([cjsPlugin, { loose: true }]);
+      baseBabelConfig.plugins.push([
+        pluginTransformModulesCommonjs,
+        { loose: true },
+      ]);
     }
   }
 

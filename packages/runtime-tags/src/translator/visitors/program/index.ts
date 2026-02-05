@@ -78,7 +78,7 @@ export default {
       trackParamsReferences(program, BindingType.input);
 
       const programExtra = (program.node.extra ??= {});
-      const inputBinding = program.node.params[0].extra?.binding;
+      const inputBinding = program.node.params![0].extra?.binding;
       if (inputBinding) {
         inputBinding.nullable = false;
       }
