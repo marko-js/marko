@@ -14,9 +14,9 @@ export function $setup($scope) {
   $source($scope, 1);
 }
 function $valueChange($scope) {
-  return (_new_source => {
+  return _new_source => {
     $source($scope, _new_source);
-  });
+  };
 }
 _._resume("__tests__/template.marko_0/valueChange", $valueChange);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

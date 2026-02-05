@@ -14,9 +14,9 @@ export function $setup($scope) {
   $x($scope, 1);
 }
 function $valueChange($scope) {
-  return (_new_x => {
+  return _new_x => {
     $x($scope, _new_x);
-  });
+  };
 }
 _._resume("__tests__/tags/counter.marko_0/valueChange", $valueChange);
 export default /* @__PURE__ */_._template("__tests__/tags/counter.marko", $template, $walks, $setup);

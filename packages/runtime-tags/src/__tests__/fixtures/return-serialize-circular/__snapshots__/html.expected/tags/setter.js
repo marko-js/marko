@@ -5,7 +5,7 @@ export default _._template("__tests__/tags/setter.marko", input => {
   const setter = _._resume(function () {
     input.valueChange(1);
   }, "__tests__/tags/setter.marko_0/setter", $scope0_id);
-  const $return = ((input.value, setter));
+  const $return = (input.value, setter);
   _._scope($scope0_id, {
     input_valueChange: input.valueChange,
     input_value: _._serialize_if($scope0_reason, /* input.valueChange */0) && input.value,

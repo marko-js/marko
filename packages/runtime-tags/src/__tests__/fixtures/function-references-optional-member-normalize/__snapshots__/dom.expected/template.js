@@ -26,13 +26,13 @@ export function $setup($scope) {
   $foo($scope, undefined);
 }
 function $a($scope) {
-  return (() => $scope.foo?.bar);
+  return () => $scope.foo?.bar;
 }
 function $b($scope) {
-  return (() => $scope.foo?.bar.baz);
+  return () => $scope.foo?.bar.baz;
 }
 function $c($scope) {
-  return (() => $scope.foo_bar?.baz);
+  return () => $scope.foo_bar?.baz;
 }
 _._resume("__tests__/template.marko_0/a", $a);
 _._resume("__tests__/template.marko_0/b", $b);

@@ -108,15 +108,15 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
           out.n(_marko_node4, _component);
         }
       });
-      return (out => {
+      return out => {
         out.n(_marko_node5, _component);
-      });
+      };
     }, {
       "c": 1
     }));
-    return (out => {
+    return out => {
       out.n(_marko_node6, _component);
-    });
+    };
   }, {
     "x": 1,
     ...thing,

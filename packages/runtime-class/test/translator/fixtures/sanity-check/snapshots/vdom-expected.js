@@ -91,15 +91,15 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
           out.e("div", null, "15", _component, 0, 0);
         }
       });
-      return (out => {
+      return out => {
         out.e("div", null, "16", _component, 0, 0);
-      });
+      };
     }, {
       "c": 1
     }));
-    return (out => {
+    return out => {
       out.e("div", null, "17", _component, 0, 0);
-    });
+    };
   }, {
     "x": 1,
     ...thing,

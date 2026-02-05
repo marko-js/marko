@@ -8,7 +8,7 @@ const $MyThing_content__setup = $scope => {
   _._text($scope["#text/1"], sideEffect++);
 };
 const $MyThing_content = _._content_resume("__tests__/template.marko_1_content", "<!> <!>", /* replace, over(2), replace, over(1) */"%c%b", $MyThing_content__setup);
-const $count__OR__MyThing = /* @__PURE__ */_._or(3, $scope => _._attr_content($scope, "#button/0", (($scope.count, $scope.MyThing))));
+const $count__OR__MyThing = /* @__PURE__ */_._or(3, $scope => _._attr_content($scope, "#button/0", ($scope.count, $scope.MyThing)));
 const $count__closure = /* @__PURE__ */_._closure($MyThing_content__count);
 const $count__script = _._script("__tests__/template.marko_0_count", $scope => _._on($scope["#button/0"], "click", function () {
   $count($scope, $scope.count + 1);
