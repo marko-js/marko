@@ -126,8 +126,7 @@ declare global {
 
     namespace CSS {
       export interface Properties
-        extends csstype.PropertiesHyphen,
-          csstype.Properties {}
+        extends csstype.PropertiesHyphen, csstype.Properties {}
     }
 
     namespace HTML {
@@ -2425,8 +2424,9 @@ declare global {
       "no-update-body-if"?: AttrBoolean;
     }
 
-    interface HTMLAttributes<T extends Element = Element>
-      extends AriaAttributes {
+    interface HTMLAttributes<
+      T extends Element = Element,
+    > extends AriaAttributes {
       /**
        * Specifies a keyboard shortcut to activate or focus on an element.
        * @see https://html.spec.whatwg.org/multipage/interaction.html#the-accesskey-attribute

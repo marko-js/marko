@@ -9,7 +9,7 @@ var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml.js");
 var _typeParam2 = _interopRequireDefault(require("./components/type-param.marko"));
 var _typeArgAndParam2 = _interopRequireDefault(require("./components/type-arg-and-param.marko"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _interopRequireDefault(e) { return (e && e.__esModule ? e : { default: e }); }
 const _marko_componentType = "__tests__/template.marko",
   _marko_template = (0, _index.t)(_marko_componentType);
 var _default = exports.default = _marko_template;

@@ -10,7 +10,7 @@ const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   const x = "hello!";
   out.be("div", {
-    "class": _marko_class_merge(window.x)
+    "class": _marko_class_merge((window).x)
   }, "0", _component, null, 1);
   out.t("Hello", _component);
   out.ee();

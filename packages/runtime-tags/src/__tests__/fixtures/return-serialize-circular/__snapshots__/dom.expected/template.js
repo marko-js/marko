@@ -15,9 +15,9 @@ export function $setup($scope) {
 const $setCount__script = _._script("__tests__/template.marko_0_setCount", $scope => $scope.setCount());
 const $setCount = _._var_resume("__tests__/template.marko_0_setCount/var", /* @__PURE__ */_._const("setCount", $setCount__script));
 function $valueChange($scope) {
-  return _new_count => {
+  return (_new_count => {
     $count($scope, _new_count);
-  };
+  });
 }
 _._resume("__tests__/template.marko_0/valueChange", $valueChange);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

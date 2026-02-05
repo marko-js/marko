@@ -10,7 +10,7 @@ const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   out.e("div", {
     "class": _marko_class_merge(input.className),
-    "foo": 'a' + input.foo + 'b',
+    "foo": ('a' + input.foo + 'b'),
     "bar": `a ${input.foo} b`
   }, "0", _component, 0, 0);
 }, {

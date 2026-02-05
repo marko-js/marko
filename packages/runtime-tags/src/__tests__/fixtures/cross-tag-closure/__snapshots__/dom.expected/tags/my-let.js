@@ -8,9 +8,9 @@ export function $setup($scope) {
 }
 export const $input = ($scope, input) => $input_value($scope, input.value);
 function $valueChange($scope) {
-  return _new_value => {
+  return (_new_value => {
     $value($scope, _new_value);
-  };
+  });
 }
 _._resume("__tests__/tags/my-let.marko_0/valueChange", $valueChange);
 export default /* @__PURE__ */_._template("__tests__/tags/my-let.marko", $template, $walks, $setup, $input);

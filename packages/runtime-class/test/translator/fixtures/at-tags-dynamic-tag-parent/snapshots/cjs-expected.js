@@ -6,7 +6,7 @@ var _index = require("marko/src/runtime/html/index.js");
 var _attrTag = require("marko/src/runtime/helpers/attr-tag.js");
 var _dynamicTag = _interopRequireDefault(require("marko/src/runtime/helpers/dynamic-tag.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _interopRequireDefault(e) { return (e && e.__esModule ? e : { default: e }); }
 const _marko_componentType = "__tests__/template.marko",
   _marko_template = (0, _index.t)(_marko_componentType);
 var _default = exports.default = _marko_template;
@@ -25,9 +25,9 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
         out.w("Footer content");
       }
     });
-    return out => {
+    return (out => {
       out.w("Body content");
-    };
+    });
   }), null, null, null, _componentDef, "0");
 }, {
   t: _marko_componentType,

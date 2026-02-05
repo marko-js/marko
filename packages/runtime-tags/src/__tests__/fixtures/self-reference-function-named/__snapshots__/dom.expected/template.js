@@ -7,7 +7,7 @@ const $items__script = _._script("__tests__/template.marko_0_items", $scope => _
 }));
 const $items = /* @__PURE__ */_._let("items/2", $scope => {
   $sum($scope, function sum(i = 0) {
-    return i >= $scope.items?.length ? 0 : $scope.items[i] + sum(i + 1);
+    return (i >= $scope.items?.length ? 0 : $scope.items[i] + sum(i + 1));
   });
   $items__script($scope);
 });

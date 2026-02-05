@@ -8,7 +8,7 @@ import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   const x = "hello!";
-  out.w(`<div${_marko_attr("class", _marko_class_merge(window.x))}>`);
+  out.w(`<div${_marko_attr("class", _marko_class_merge((window).x))}>`);
   out.w("Hello");
   out.w("</div>");
 }, {

@@ -10,7 +10,7 @@ _marko_registerComponent(_marko_componentType, () => _marko_template);
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   _marko_tag(_customTagData, {
-    "name": "Frank".toUpperCase(),
+    "name": ("Frank".toUpperCase()),
     "age": 32
   }, out, _componentDef, "0");
 }, {

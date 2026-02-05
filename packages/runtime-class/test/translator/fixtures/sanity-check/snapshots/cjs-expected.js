@@ -16,7 +16,7 @@ var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml.js");
 var _mergeAttrs = _interopRequireDefault(require("marko/src/runtime/html/helpers/merge-attrs.js"));
 var _attrs = _interopRequireDefault(require("marko/src/runtime/html/helpers/attrs.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _interopRequireDefault(e) { return (e && e.__esModule ? e : { default: e }); }
 const _marko_componentType = "__tests__/template.marko",
   _marko_template = (0, _index.t)(_marko_componentType);
 var _default = exports.default = _marko_template;
@@ -79,15 +79,15 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
           out.w("<div></div>");
         }
       });
-      return out => {
+      return (out => {
         out.w("<div></div>");
-      };
+      });
     }, {
       "c": 1
     }));
-    return out => {
+    return (out => {
       out.w("<div></div>");
-    };
+    });
   }, {
     "x": 1,
     ...thing,

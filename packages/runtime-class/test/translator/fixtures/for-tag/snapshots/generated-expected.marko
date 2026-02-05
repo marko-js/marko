@@ -1,14 +1,18 @@
 <!-- without keys -->
 <for|val, i| of=arr>
   <div>
-    ${i}: ${val}
+    ${i}
+    : 
+    ${val}
   </div>
   <div/>
   <div/>
 </for>
 <for|key, val| in=obj>
   <div>
-    ${key}: ${val}
+    ${key}
+    : 
+    ${val}
   </div>
   <div/>
   <div/>
@@ -23,19 +27,25 @@
 <!-- with keys -->
 <for|val, i| of=arr>
   <div key=i>
-    ${i}: ${val}
+    ${i}
+    : 
+    ${val}
   </div>
   <div/>
   <div key=`other-${i}`/>
 </for>
 <for|val, i, list| of=arr>
   <div key=i>
-    ${list.length}: ${val}
+    ${list.length}
+    : 
+    ${val}
   </div>
 </for>
 <for|key, val| in=obj>
   <div key=key>
-    ${key}: ${val}
+    ${key}
+    : 
+    ${val}
   </div>
   <div/>
   <div key=`other-${key}`/>

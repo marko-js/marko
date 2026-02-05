@@ -30,10 +30,10 @@ export const $input_value = /* @__PURE__ */_._const("input_value", $scope => {
 });
 export const $input = ($scope, input) => $input_value($scope, input.value);
 function $hoist2($scope) {
-  return () => $scope._._.input_value;
+  return (() => $scope._._.input_value);
 }
 function $hoist($scope) {
-  return () => $scope.input_value;
+  return (() => $scope.input_value);
 }
 _._resume("__tests__/template.marko_2/hoist2", $hoist2);
 _._resume("__tests__/template.marko_0/hoist", $hoist);

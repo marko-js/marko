@@ -13,7 +13,7 @@ export function $setup($scope) {
   });
 }
 function $baz($scope) {
-  return () => $scope.foo?.bar;
+  return (() => $scope.foo?.bar);
 }
 _._resume("__tests__/template.marko_0/baz", $baz);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

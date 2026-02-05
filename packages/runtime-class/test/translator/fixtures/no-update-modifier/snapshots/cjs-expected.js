@@ -6,7 +6,7 @@ var _index = require("marko/src/runtime/html/index.js");
 var _dataMarko = _interopRequireDefault(require("marko/src/runtime/html/helpers/data-marko.js"));
 var _attr = _interopRequireDefault(require("marko/src/runtime/html/helpers/attr.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
-function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+function _interopRequireDefault(e) { return (e && e.__esModule ? e : { default: e }); }
 const _marko_componentType = "__tests__/template.marko",
   _marko_template = (0, _index.t)(_marko_componentType);
 var _default = exports.default = _marko_template;

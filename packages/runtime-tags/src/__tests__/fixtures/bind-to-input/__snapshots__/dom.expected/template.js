@@ -26,9 +26,9 @@ export function $setup($scope) {
   $x($scope, 0);
 }
 function $countChange($scope) {
-  return _new_x => {
+  return (_new_x => {
     $x($scope, _new_x);
-  };
+  });
 }
 _._resume("__tests__/template.marko_0/countChange", $countChange);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

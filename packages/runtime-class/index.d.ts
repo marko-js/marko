@@ -60,8 +60,9 @@ declare global {
       destroy(): void;
     };
 
-    export interface Out<Component = unknown>
-      extends Marko.RenderedTemplate<Component> {
+    export interface Out<
+      Component = unknown,
+    > extends Marko.RenderedTemplate<Component> {
       /** The underlying ReadableStream Marko is writing into. */
       stream: unknown;
       /** A mutable global object for the current render. */
@@ -127,9 +128,10 @@ declare global {
     export type BodyParameters<B> =
       B extends Body<infer Params, any> ? Params : never;
 
-    export class Component<Input = unknown, State = unknown>
-      implements Emitter
-    {
+    export class Component<
+      Input = unknown,
+      State = unknown,
+    > implements Emitter {
       /** A unique id for this instance. */
       public readonly id: string;
       /** The top level element rendered by this instance. */

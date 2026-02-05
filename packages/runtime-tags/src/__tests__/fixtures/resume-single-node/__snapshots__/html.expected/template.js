@@ -8,7 +8,7 @@ export default _._template("__tests__/template.marko", input => {
     const $scope1_id = _._scope_id();
     _._html("<div>a</div>");
     _._if(() => {
-      if (items.length > 1) {
+      if ((items.length > 1)) {
         const $scope2_id = _._scope_id();
         _._html("<div>b</div>");
         _._scope($scope2_id, {}, "__tests__/template.marko", "6:4");

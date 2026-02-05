@@ -9,7 +9,7 @@ const $d = /* @__PURE__ */_2._let("d/9", $scope => _2._text($scope["#text/4"], $
 const $e = /* @__PURE__ */_2._let("e/10", $scope => _2._text($scope["#text/5"], JSON.stringify($scope.e)));
 const $setup__script = _2._script("__tests__/template.marko_0", $scope => _2._on($scope["#button/0"], "click", function () {
   let local;
-  (($result2, $a2, $b2, unused, $c2) => ({
+  ((($result2, $a2, $b2, unused, $c2) => ({
     a: $a2,
     _b: {
       _b: $b2
@@ -24,7 +24,7 @@ const $setup__script = _2._script("__tests__/template.marko_0", $scope => _2._on
     },
     local: 3,
     c: 4
-  });
+  }));
   noop((($result, $d2, $e2) => ([{
     arr: [local, $d2,, ...$e2]
   }] = $result, $d($scope, $d2), $e($scope, $e2), $result))([{

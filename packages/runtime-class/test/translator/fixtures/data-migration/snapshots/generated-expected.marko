@@ -1,18 +1,22 @@
 <test|data| class=input.class>
-  Hello ${data.name}
+  Hello 
+  ${data.name}
 </test>
 <div>
-  Hello ${input.name}
+  Hello 
+  ${input.name}
   <span>
     $ () => {
       data;
       const data = "foo";
       console.log(data);
     };
-    Hello ${input}
+    Hello 
+    ${input}
   </span>
   <if(true)>
     $ const data = "bar";
-    Hello ${data}
+    Hello 
+    ${data}
   </if>
 </div>
