@@ -9,9 +9,9 @@ import {
   parseTypeParams,
   parseVar,
 } from "@marko/compiler/babel-utils";
+import { types as t } from "@marko/compiler/internal/babel";
 import { createParser, TagType } from "htmljs-parser";
 
-import * as t from "../babel-types";
 import { buildCodeFrameError } from "../util/build-code-frame";
 import throwAggregateError from "../util/merge-errors";
 

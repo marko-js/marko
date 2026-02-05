@@ -1,4 +1,4 @@
-import { File } from "@babel/core";
+import { File } from "@marko/compiler/internal/babel";
 
 import { buildCodeFrameError } from "../util/build-code-frame";
 

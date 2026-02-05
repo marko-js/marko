@@ -1,0 +1,397 @@
+diff --git a/node_modules/@babel/generator/lib/generators/marko.js b/node_modules/@babel/generator/lib/generators/marko.js
+new file mode 100644
+index 0000000..17b45ea
+--- /dev/null
++++ b/node_modules/@babel/generator/lib/generators/marko.js
+@@ -0,0 +1,377 @@
++"use strict";
++
++const svgElements = new Set([
++  'circle',
++  'ellipse',
++  'line',
++  'path',
++  'polygon',
++  'polyline',
++  'rect',
++  'stop',
++  'use'
++]);
++
++const voidElements = new Set([
++  'area',
++  'base',
++  'br',
++  'col',
++  'command',
++  'embed',
++  'hr',
++  'img',
++  'input',
++  'keygen',
++  'link',
++  'meta',
++  'param',
++  'source',
++  'track',
++  'wbr'
++]);
++
++exports.MarkoParseError = function MarkoParseError(node) {
++  this.token(node.source);
++}
++exports.MarkoDocumentType = function MarkoDocumentType(node) {
++  this.token("<!");
++  this.token(node.value);
++  this.token(">");
++}
++exports.MarkoDeclaration = function MarkoDeclaration(node) {
++  this.token("<?");
++  this.token(node.value);
++  this.token("?>");
++}
++exports.MarkoCDATA = function MarkoCDATA(node) {
++  this.token("<![CDATA[");
++  this.token(node.value);
++  this.token("]]>");
++}
++exports.MarkoComment = function MarkoComment(node) {
++  this.token("<!--");
++  this.token(node.value);
++  this.token("-->");
++}
++exports.MarkoPlaceholder = function MarkoPlaceholder(node, parent) {
++  const isRootLevel = parent.type === "Program";
++
++  if (isRootLevel) {
++    this.token("-- ");
++  }
++  this.token(node.escape ? "${" : "$!{");
++  this.print(node.value, true, true);
++  this.token("}");
++}
++exports.MarkoScriptlet = function MarkoScriptlet(node) {
++  this.token(`${node.static ? (node.target ?? "static") : "$"} `);
++
++  if (
++    node.body.length === 1 &&
++    !statementCouldHaveUnenclosedNewline(node.body[0])
++  ) {
++    // TODO should determine if node has unenclosed newlines.
++    this.print(node.body[0], false, true);
++  } else {
++    this.token("{");
++    this.printSequence(node.body, true, true);
++    this.token("}");
++  }
++}
++exports.MarkoClass = function MarkoClass(node) {
++  this.token("class");
++  this.token(" ");
++  this.print(node.body, true, true);
++}
++exports.MarkoAttribute = function MarkoAttribute(node) {
++  const value = node.value;
++
++  if (!node.default) {
++    this.token(node.name);
++
++    if (node.modifier) {
++      this.token(":");
++      this.token(node.modifier);
++    }
++
++    if (node.arguments && node.arguments.length) {
++      this.token("(");
++      this.printList(node.arguments);
++      this.token(")");
++    }
++  }
++
++  if (
++    node.default ||
++    !(node.value.type === "BooleanLiteral" && node.value.value)
++  ) {
++    if (
++      value.type === "FunctionExpression" &&
++      !(value.id || value.async || value.generator)
++    ) {
++      this.token("(");
++      this.printList(value.params);
++      this.token(")");
++      this.printBlock(value.body);
++    } else {
++      this.token(node.bound ? ":=" : "=");
++      printWithParansIfNeeded.call(this, value);
++    }
++  }
++}
++exports.MarkoSpreadAttribute = function MarkoSpreadAttribute(node) {
++  this.token("...");
++  printWithParansIfNeeded.call(this, node.value);
++}
++exports.MarkoText = function MarkoText(node, parent) {
++  const { value } = node;
++
++  const isMultiLine = /[\r\n]/g.test(value);
++  const isRootLevel = parent.type === "Program";
++
++  if (isRootLevel) {
++    if (isMultiLine) {
++      this.token("---\n");
++    } else {
++      this.token("-- ");
++    }
++  }
++
++  this.word(value);
++
++  if (isMultiLine && isRootLevel) {
++    this.token("\n---");
++  }
++}
++exports.MarkoTagBody = function MarkoTagBody(node) {
++  this.printSequence(node.body);
++}
++exports.MarkoTag = function MarkoTag(node) {
++  const isDynamicTag = node.name.type !== "StringLiteral";
++  const tagName = !isDynamicTag && node.name.value;
++  const rawValue = node.rawValue;
++  let bodyOverride;
++
++  if (
++    tagName === "style" &&
++    /^style(?:\.[^\s]+)?\s*\{[\s\S]*}$/.test(rawValue)
++  ) {
++    this.token(rawValue);
++    return;
++  }
++
++  this.token("<");
++
++  if (rawValue) {
++    this.token(rawValue);
++  } else {
++    if (isDynamicTag) {
++      this.token("${");
++      this.print(node.name, true, true);
++      this.token("}");
++    } else {
++      this.token(tagName);
++    }
++
++    if (node.typeArguments) {
++      this.token("<");
++      this.printList(node.typeArguments.params);
++      this.token(">");
++    }
++
++    if (node.var) {
++      this.token("/");
++      this.print(node.var, true, true);
++
++      if (node.var.typeAnnotation) {
++        this.print(node.var.typeAnnotation, true, true);
++      }
++    }
++
++    if (node.arguments && node.arguments.length) {
++      this.token("(");
++      this.printList(node.arguments);
++      this.token(")");
++    }
++
++    if (node.body.params.length) {
++      if (node.body.typeParameters) {
++        if (!node.typeArguments) {
++          this.token(" ");
++        }
++        this.token("<");
++        this.printList(node.body.typeParameters.params);
++        this.token(">");
++      }
++      this.token("|");
++      this.printList(node.body.params);
++      this.token("|");
++    }
++
++    let { attributes } = node;
++    if (attributes.length) {
++      if (tagName === "script") {
++        for (let i = attributes.length; i--; ) {
++          const attr = attributes[i];
++          if (
++            attr.name === "value" &&
++            (attr.value.type === "ArrowFunctionExpression" ||
++              attr.value.type === "FunctionExpression") &&
++            !(
++              attr.value.generator ||
++              attr.value.returnType ||
++              attr.value.typeParameters
++            )
++          ) {
++            bodyOverride = attributes[i].value.body.body;
++            attributes = toSpliced(attributes, i);
++            break;
++          }
++        }
++      }
++
++      if (!(attributes && attributes[0] && attributes[0].default)) {
++        this.token(" ");
++      }
++
++      this.printJoin(attributes, undefined, undefined, spaceSeparator);
++    }
++  }
++
++  if (voidElements.has(tagName)) {
++    this.token(">");
++  } else if (
++    !(bodyOverride || node.body.body.length || node.attributeTags.length) ||
++    svgElements.has(tagName)
++  ) {
++    this.token("/>");
++  } else {
++    this.token(">");
++    this.printSequence(
++      bodyOverride || zipAttributeTagsAndBody(node),
++      true,
++      true,
++    );
++    this.token("</");
++    if (!isDynamicTag) {
++      this.token(tagName);
++    }
++    this.token(">");
++  }
++}
++
++function spaceSeparator() {
++  this.token(" ");
++}
++
++function printWithParansIfNeeded(value) {
++  const needsParans = expressionCouldHaveUnenclosedWhitespace(value);
++
++  if (needsParans) {
++    this.token("(");
++  }
++
++  this.print(value, true, true);
++
++  if (needsParans) {
++    this.token(")");
++  }
++}
++
++function expressionCouldHaveUnenclosedWhitespace(node) {
++  switch (node.type) {
++    case "ArrowFunctionExpression":
++    case "AssignmentExpression":
++    case "BinaryExpression":
++    case "ConditionalExpression":
++    case "FunctionExpression":
++    case "LogicalExpression":
++    case "NewExpression":
++      return true;
++    default:
++      return false;
++  }
++}
++
++function statementCouldHaveUnenclosedNewline(node) {
++  if (node.leadingComments?.length || node.trailingComments?.length) {
++    return true;
++  }
++
++  switch (node.type) {
++    case "VariableDeclaration":
++      return node.declarations.length > 1;
++    default:
++      return false;
++  }
++}
++
++function zipAttributeTagsAndBody(tag) {
++  const {
++    attributeTags,
++    body: { body },
++  } = tag;
++  const bodyLen = body.length;
++  const attributeTagsLen = attributeTags.length;
++  if (!attributeTagsLen) return body;
++  if (!bodyLen) return attributeTags;
++
++  const result = [];
++  let i = 0;
++  let j = 0;
++
++  while (i < bodyLen && j < attributeTagsLen) {
++    const bodyNode = body[i];
++    const attributeTag = attributeTags[j];
++
++    if (bodyNode.loc != null && attributeTag.loc != null) {
++      if (compareStartLoc(bodyNode, attributeTag) < 0) {
++        result.push(bodyNode);
++        i++;
++      } else {
++        result.push(attributeTag);
++        j++;
++      }
++    } else if (j < attributeTagsLen) {
++      result.push(attributeTag);
++      j++;
++    } else {
++      result.push(bodyNode);
++      i++;
++    }
++  }
++
++  while (j < attributeTagsLen) {
++    result.push(attributeTags[j++]);
++  }
++
++  while (i < bodyLen) {
++    result.push(body[i++]);
++  }
++
++  return result;
++}
++
++function compareStartLoc(a, b) {
++  return (
++    a.loc.start.line - b.loc.start.line ||
++    a.loc.start.column - b.loc.start.column
++  );
++}
++
++function toSpliced(arr, index) {
++  const len = arr.length;
++  const result = new Array(len - 1);
++  let i = 0;
++
++  for (; i < index; i++) {
++    result[i] = arr[i];
++  }
++
++  for (i++; i < len; i++) {
++    result[i - 1] = arr[i];
++  }
++
++  return result;
++}
+diff --git a/node_modules/@babel/generator/lib/nodes.js b/node_modules/@babel/generator/lib/nodes.js
+index 8754a38..4321759 100644
+--- a/node_modules/@babel/generator/lib/nodes.js
++++ b/node_modules/@babel/generator/lib/nodes.js
+@@ -16,4 +16,9 @@ for (const key of Object.keys(deprecatedGeneratorFunctions)) {
+   generatorInfosMap.set(key, [deprecatedGeneratorFunctions[key], index++, undefined]);
+ }
+ 
++var markoFunctions = require("./generators/marko.js");
++for (const key of Object.keys(markoFunctions)) {
++  generatorInfosMap.set(key, [markoFunctions[key], index++, undefined]);
++}
++
+ //# sourceMappingURL=nodes.js.map

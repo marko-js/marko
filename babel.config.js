@@ -6,12 +6,11 @@ module.exports = (api) => ({
       {
         loose: true,
         targets: {
-          node: "18",
+          node: "20",
         },
       },
     ],
   ],
-  plugins: ["@babel/transform-runtime"],
   overrides: [
     {
       test: "./packages/runtime-class/src/**/*",

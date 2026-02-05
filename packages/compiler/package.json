@@ -40,6 +40,7 @@
       "types": "./modules.d.ts",
       "default": "./modules.js"
     },
+    "./internal/babel": "./internal/babel/index.ts",
     "./babel-types": "./babel-types.d.ts",
     "./dist/types": "./dist/types.d.ts",
     "./package": "./package.json",
@@ -50,6 +51,7 @@
   "types": "index.d.ts",
   "files": [
     "dist",
+    "internal",
     "config.js",
     "config.d.ts",
     "modules.js",
@@ -61,20 +63,10 @@
     "register.d.ts"
   ],
   "scripts": {
-    "build": "babel ./src --out-dir ./dist --copy-files --config-file ../../babel.config.js --env-name=production",
-    "prepare": "node -r ~ts scripts/types"
+    "build": "babel ./src --out-dir ./dist --copy-files --config-file ../../babel.config.js --env-name=production && node -r ~ts scripts/build-babel",
+    "build-babel-types": "node -r ~ts scripts/types"
   },
   "dependencies": {
-    "@babel/code-frame": "^7.29.0",
-    "@babel/core": "^7.29.0",
-    "@babel/generator": "^7.29.1",
-    "@babel/parser": "^7.29.0",
-    "@babel/plugin-syntax-typescript": "^7.28.6",
-    "@babel/plugin-transform-modules-commonjs": "^7.28.6",
-    "@babel/plugin-transform-typescript": "^7.28.6",
-    "@babel/runtime": "^7.28.6",
-    "@babel/traverse": "^7.29.0",
-    "@babel/types": "^7.29.0",
     "@luxass/strip-json-comments": "^1.4.0",
     "complain": "^1.6.1",
     "he": "^1.2.0",
@@ -116,6 +108,7 @@
       "default": "./dist/register.js"
     },
     "./modules": "./modules.js",
+    "./internal/babel": "./dist/babel.js",
     "./babel-types": "./babel-types.d.ts",
     "./dist/types": "./dist/types.d.ts",
     "./package": "./package.json",

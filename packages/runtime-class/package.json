@@ -69,7 +69,6 @@
     "build": "babel ./src --out-dir ./dist --extensions .js --copy-files --config-file ../../babel.config.js --env-name=production"
   },
   "dependencies": {
-    "@babel/runtime": "^7.28.6",
     "@marko/compiler": "^5.39.50",
     "@marko/runtime-tags": "^6.0.142",
     "app-module-path": "^2.2.0",
