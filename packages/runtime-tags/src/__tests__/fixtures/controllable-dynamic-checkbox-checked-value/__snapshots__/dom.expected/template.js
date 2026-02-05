@@ -39,9 +39,9 @@ export function $setup($scope) {
   $setup__script($scope);
 }
 function $checkedValueChange2($scope) {
-  return (_new_checkedValue => {
+  return _new_checkedValue => {
     $checkedValue($scope, _new_checkedValue);
-  });
+  };
 }
 _._resume("__tests__/template.marko_0/checkedValueChange2", $checkedValueChange2);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

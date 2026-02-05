@@ -23,9 +23,9 @@ export function $setup($scope) {
   $setup__script($scope);
 }
 function $valueChange2($scope) {
-  return (_new_count => {
+  return _new_count => {
     $count($scope, _new_count);
-  });
+  };
 }
 _._resume("__tests__/template.marko_0/valueChange2", $valueChange2);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

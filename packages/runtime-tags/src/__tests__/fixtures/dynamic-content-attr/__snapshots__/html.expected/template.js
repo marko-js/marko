@@ -18,7 +18,7 @@ export default _._template("__tests__/template.marko", input => {
     }, $scope0_id)
   };
   _._html("<button>");
-  _._attr_content("#button/0", $scope0_id, ((count, MyThing)));
+  _._attr_content("#button/0", $scope0_id, (count, MyThing));
   _._html(`</button>${_._el_resume($scope0_id, "#button/0")}`);
   _._script($scope0_id, "__tests__/template.marko_0_count");
   _._scope($scope0_id, {

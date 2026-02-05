@@ -10,7 +10,7 @@ var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/rende
 var _attrTag = require("marko/src/runtime/helpers/attr-tag.js");
 var _dynamicTag = _interopRequireDefault(require("marko/src/runtime/helpers/dynamic-tag.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
-function _interopRequireDefault(e) { return (e && e.__esModule ? e : { default: e }); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 const _marko_componentType = "__tests__/template.marko",
   _marko_template = (0, _index.t)(_marko_componentType);
 var _default = exports.default = _marko_template;

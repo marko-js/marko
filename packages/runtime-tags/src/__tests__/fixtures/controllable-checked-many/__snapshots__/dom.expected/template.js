@@ -21,9 +21,9 @@ export function $setup($scope) {
   $states($scope, [false, false, false]);
 }
 function $checkedChange($scope) {
-  return (_new_checked => {
+  return _new_checked => {
     $for_content__checked($scope, _new_checked);
-  });
+  };
 }
 function $valueChange($scope) {
   return function (value) {

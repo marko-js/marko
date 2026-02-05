@@ -6,7 +6,7 @@ const $if = /* @__PURE__ */_._if("#text/0", "Hello", /* over(1) */"b");
 const $if2 = /* @__PURE__ */_._if("#text/1", "World", /* over(1) */"b");
 const $input_a__OR__input_b = /* @__PURE__ */_._or(7, $scope => {
   $if($scope, $scope.input_a + $scope.input_b ? 0 : 1);
-  $if2($scope, (($scope.input_a, $scope.input_b)) ? 0 : 1);
+  $if2($scope, ($scope.input_a, $scope.input_b) ? 0 : 1);
 });
 export const $input_a = /* @__PURE__ */_._const("input_a", $input_a__OR__input_b);
 export const $input_b = /* @__PURE__ */_._const("input_b", $input_a__OR__input_b);

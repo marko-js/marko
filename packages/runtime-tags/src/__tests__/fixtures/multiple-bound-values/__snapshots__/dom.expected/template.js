@@ -18,14 +18,14 @@ export function $setup($scope) {
   $count2($scope, 0);
 }
 function $count2Change($scope) {
-  return (_new_count2 => {
+  return _new_count2 => {
     $count2($scope, _new_count2);
-  });
+  };
 }
 function $count1Change($scope) {
-  return (_new_count1 => {
+  return _new_count1 => {
     $count($scope, _new_count1);
-  });
+  };
 }
 _._resume("__tests__/template.marko_0/count2Change", $count2Change);
 _._resume("__tests__/template.marko_0/count1Change", $count1Change);

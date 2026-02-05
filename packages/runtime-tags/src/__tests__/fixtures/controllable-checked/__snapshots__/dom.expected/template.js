@@ -11,9 +11,9 @@ export function $setup($scope) {
   $setup__script($scope);
 }
 function $checkedChange($scope) {
-  return (_new_checked => {
+  return _new_checked => {
     $checked($scope, _new_checked);
-  });
+  };
 }
 _._resume("__tests__/template.marko_0/checkedChange", $checkedChange);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

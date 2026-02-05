@@ -3,7 +3,7 @@ export const $walks = /* next(1), get, out(1), next(1), get, out(1), get, over(1
 function sum(a, b) {
   return a + b;
 }
-const add1 = v => ((0, sum))(1, v);
+const add1 = v => (0, sum)(1, v);
 function updateText(ev) {
   ev.target.textContent = "after";
 }

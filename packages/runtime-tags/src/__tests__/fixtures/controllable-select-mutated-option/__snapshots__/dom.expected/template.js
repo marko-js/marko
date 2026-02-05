@@ -35,9 +35,9 @@ export function $setup($scope) {
   $setup__script($scope);
 }
 function $valueChange($scope) {
-  return (_new_value => {
+  return _new_value => {
     $value($scope, _new_value);
-  });
+  };
 }
 _._resume("__tests__/template.marko_0/valueChange", $valueChange);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

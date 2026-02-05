@@ -14,9 +14,9 @@ const $setup__script = _._script("__tests__/template.marko_0", $scope => _._attr
 export const $setup = $setup__script;
 export const $input = ($scope, input) => $input_value($scope, input.value);
 function $valueChange($scope) {
-  return (_new_value => {
+  return _new_value => {
     $value($scope, _new_value);
-  });
+  };
 }
 _._resume("__tests__/template.marko_0/valueChange", $valueChange);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);
