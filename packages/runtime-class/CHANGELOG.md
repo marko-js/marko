@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.38.20
+
+### Patch Changes
+
+- [#3071](https://github.com/marko-js/marko/pull/3071) [`c5d31de`](https://github.com/marko-js/marko/commit/c5d31de1b55b26ffb746b7a03b01f2ce26ba0981) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix babel ast patching logic to work with latest babel.
+
+- Updated dependencies [[`c5d31de`](https://github.com/marko-js/marko/commit/c5d31de1b55b26ffb746b7a03b01f2ce26ba0981)]:
+  - @marko/runtime-tags@6.0.142
+  - @marko/compiler@5.39.50
+
 ## 5.38.19
 
 ### Patch Changes
