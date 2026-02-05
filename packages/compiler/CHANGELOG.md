@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.51
+
+### Patch Changes
+
+- [#3073](https://github.com/marko-js/marko/pull/3073) [`1aabdc3`](https://github.com/marko-js/marko/commit/1aabdc30bb7fa3b82e76a5b4724f469133f14c85) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove direct dependency on babel, refactor to use internal copy.
+
 ## 5.39.50
 
 ### Patch Changes
