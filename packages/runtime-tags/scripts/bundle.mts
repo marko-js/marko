@@ -28,6 +28,7 @@ await Promise.all(
       output: {
         format: "cjs",
         sourcemap: false,
+        minify: "dce-only",
         dir: "dist/translator",
         intro: "'use strict';",
       },
@@ -65,6 +66,7 @@ await Promise.all(
             output: {
               format,
               sourcemap: false,
+              minify: "dce-only",
               file: `${env}/${name}.${format === "esm" ? "mjs" : "js"}`,
               intro: format === "cjs" ? "'use strict';" : undefined,
             },
