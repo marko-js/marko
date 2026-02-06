@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.55
+
+### Patch Changes
+
+- [#3081](https://github.com/marko-js/marko/pull/3081) [`a6bfcdc`](https://github.com/marko-js/marko/commit/a6bfcdce1174e37b76cce297e859646fdecd7adc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression that prevented loading @marko/compiler in the browser.
+
 ## 5.39.54
 
 ### Patch Changes
