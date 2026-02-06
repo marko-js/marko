@@ -1,5 +1,14 @@
 # @marko/runtime-tags
 
+## 6.0.144
+
+### Patch Changes
+
+- [#3077](https://github.com/marko-js/marko/pull/3077) [`020dfd4`](https://github.com/marko-js/marko/commit/020dfd4bbb780aa83f2233097217d0cb27b3e26a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure browserslist is an optional dependency with bundled babel.
+
+- Updated dependencies [[`020dfd4`](https://github.com/marko-js/marko/commit/020dfd4bbb780aa83f2233097217d0cb27b3e26a)]:
+  - @marko/compiler@5.39.53
+
 ## 6.0.143
 
 ### Patch Changes
