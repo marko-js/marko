@@ -108,7 +108,10 @@
       "default": "./dist/register.js"
     },
     "./modules": "./modules.js",
-    "./internal/babel": "./dist/babel.js",
+    "./internal/babel": {
+      "browser": "./dist/babel.web.js",
+      "default": "./dist/babel.js"
+    },
     "./babel-types": "./babel-types.d.ts",
     "./dist/types": "./dist/types.d.ts",
     "./package": "./package.json",

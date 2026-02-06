@@ -2,15 +2,20 @@ import path from "node:path";
 
 import { build } from "rolldown";
 
-await build({
-  cwd: path.join(import.meta.dirname, ".."),
-  input: "internal/babel/index.ts",
-  platform: "node",
-  external: ["browserslist"],
-  output: {
-    format: "cjs",
-    sourcemap: false,
-    file: "dist/babel.js",
-    intro: "'use strict';",
-  },
-});
+await Promise.all(
+  (["browser", "node"] as const).map((platform) =>
+    build({
+      platform,
+      input: "internal/babel/index.ts",
+      cwd: path.join(import.meta.dirname, ".."),
+      external: ["browserslist", "path", "assert", "fs"],
+      output: {
+        sourcemap: false,
+        minify: "dce-only",
+        format: "cjs",
+        intro: "'use strict';",
+        file: platform === "node" ? "dist/babel.js" : "dist/babel.web.js",
+      },
+    }),
+  ),
+);
