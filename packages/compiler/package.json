@@ -63,7 +63,7 @@
     "register.d.ts"
   ],
   "scripts": {
-    "build": "babel ./src --out-dir ./dist --copy-files --config-file ../../babel.config.js --env-name=production && node -r ~ts scripts/build-babel",
+    "build": "babel ./src --out-dir ./dist --copy-files --config-file ../../babel.config.js --env-name=production && node scripts/bundle-babel.mts",
     "build-babel-types": "node -r ~ts scripts/types"
   },
   "dependencies": {

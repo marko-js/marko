@@ -78,6 +78,7 @@
     "prettier": "^3.8.1",
     "prettier-plugin-packagejson": "^3.0.0",
     "pretty-format": "^30.2.0",
+    "rolldown": "^1.0.0-rc.3",
     "rollup": "^4.57.1",
     "table": "^6.9.0",
     "through": "^2.3.8",
