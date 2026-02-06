@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.54
+
+### Patch Changes
+
+- [#3079](https://github.com/marko-js/marko/pull/3079) [`06842e9`](https://github.com/marko-js/marko/commit/06842e9bd39ccf3b9b5fc25f4de33e9c399f954b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Bundle babel with rolldown instead of esbuild (produces smaller bundle).
+
 ## 5.39.53
 
 ### Patch Changes
