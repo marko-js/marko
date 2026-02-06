@@ -1,0 +1,13 @@
+diff --git a/node_modules/@babel/helper-compilation-targets/lib/index.js b/node_modules/@babel/helper-compilation-targets/lib/index.js
+index 567565a..9d8d7d9 100644
+--- a/node_modules/@babel/helper-compilation-targets/lib/index.js
++++ b/node_modules/@babel/helper-compilation-targets/lib/index.js
+@@ -41,7 +41,7 @@ Object.defineProperty(exports, "unreleasedLabels", {
+     return _targets.unreleasedLabels;
+   }
+ });
+-var _browserslist = require("browserslist");
++var _browserslist = (() => { try { return require("browserslist") } catch {} })();
+ var _helperValidatorOption = require("@babel/helper-validator-option");
+ var _lruCache = require("lru-cache");
+ var _utils = require("./utils.js");
