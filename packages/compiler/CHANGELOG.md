@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.52
+
+### Patch Changes
+
+- [#3075](https://github.com/marko-js/marko/pull/3075) [`fe579b5`](https://github.com/marko-js/marko/commit/fe579b53fb5b3341654268a68546d48a39bde57a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add stub types for babel packages in internal compiler api.
+
 ## 5.39.51
 
 ### Patch Changes

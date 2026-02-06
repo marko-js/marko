@@ -1,6 +1,6 @@
 {
   "name": "@marko/compiler",
-  "version": "5.39.51",
+  "version": "5.39.52",
   "description": "Marko template to JS compiler.",
   "keywords": [
     "babel",
