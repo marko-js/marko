@@ -426,6 +426,28 @@ export const translate = {
         );
       }
 
+      let inputName = "input";
+
+      if (meta.implicitSplitComponent && isHTML) {
+        inputName = path.scope.generateUid(inputName);
+        renderBlock.unshiftContainer(
+          "body",
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              t.identifier("input"),
+              t.callExpression(
+                importDefault(
+                  file,
+                  "marko/src/runtime/helpers/skip-serialize.js",
+                  "marko_skip_serialize",
+                ),
+                [t.identifier(inputName)],
+              ),
+            ),
+          ]),
+        );
+      }
+
       let rendererAssignment = t.assignmentExpression(
         "=",
         templateRendererMember,
@@ -433,7 +455,7 @@ export const translate = {
           t.functionExpression(
             null,
             [
-              t.identifier("input"),
+              t.identifier(inputName),
               t.identifier("out"),
               file._componentDefIdentifier,
               file._componentInstanceIdentifier,
@@ -463,22 +485,6 @@ export const translate = {
       }
 
       path.pushContainer("body", t.expressionStatement(rendererAssignment));
-
-      if (meta.implicitSplitComponent && isHTML) {
-        renderBlock.unshiftContainer(
-          "body",
-          t.expressionStatement(
-            t.callExpression(
-              importDefault(
-                file,
-                "marko/src/runtime/helpers/skip-serialize.js",
-                "marko_skip_serialize",
-              ),
-              [t.identifier("input")],
-            ),
-          ),
-        );
-      }
 
       renderBlock.remove();
 
