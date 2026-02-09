@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.38.23
+
+### Patch Changes
+
+- [#3083](https://github.com/marko-js/marko/pull/3083) [`d24a959`](https://github.com/marko-js/marko/commit/d24a959a9546e129d7c449b726ea40655ff356d7) Thanks [@LuLaValva](https://github.com/LuLaValva)! - toJSON fix for implicit split components
+
 ## 5.38.22
 
 ### Patch Changes
