@@ -6,8 +6,9 @@ import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag.js";
 import _marko_props from "marko/src/runtime/html/helpers/data-marko.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
-  _marko_skip_serialize(input);
+import _marko_skip_serialize from "marko/src/runtime/helpers/skip-serialize.js";
+_marko_template._ = _marko_renderer(function (_input, out, _componentDef, _component, state, $global) {
+  const input = _marko_skip_serialize(_input);
   out.w(`<button${_marko_props(out, _componentDef, {
     "onclick": _componentDef.d("click", "emit", false, ["click"])
   })}>`);
@@ -18,4 +19,3 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   s: true,
   d: true
 }, _marko_component);
-import _marko_skip_serialize from "marko/src/runtime/helpers/skip-serialize.js";

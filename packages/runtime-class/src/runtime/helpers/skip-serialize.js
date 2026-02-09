@@ -7,7 +7,11 @@ var toJSONDescriptor = {
   },
 };
 module.exports = function (input) {
-  if (!input.toJSON) {
-    Object.defineProperty(input, "toJSON", toJSONDescriptor);
+  if (input.toJSON) {
+    return input;
+  } else {
+    const newInput = { ...input };
+    Object.defineProperty(newInput, "toJSON", toJSONDescriptor);
+    return newInput;
   }
 };
