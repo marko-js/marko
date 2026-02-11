@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.38.24
+
+### Patch Changes
+
+- [#3085](https://github.com/marko-js/marko/pull/3085) [`69db62e`](https://github.com/marko-js/marko/commit/69db62ebf32038b2979d7dc629b7fc0b513fc97c) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add dialog closedby type
+
+- Updated dependencies [[`69db62e`](https://github.com/marko-js/marko/commit/69db62ebf32038b2979d7dc629b7fc0b513fc97c)]:
+  - @marko/runtime-tags@6.0.145
+
 ## 5.38.23
 
 ### Patch Changes
