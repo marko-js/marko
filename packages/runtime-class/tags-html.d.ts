@@ -706,6 +706,12 @@ declare global {
       interface Dfn extends HTMLAttributes<HTMLElement> {}
       interface Dialog extends HTMLAttributes<HTMLDialogElement> {
         /**
+         * Specifies the types of user actions that can be used to close the `<dialog>` element.
+         * @see https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-dialog-closedby
+         */
+        closedby?: AttrMissing | "any" | "closerequest" | "none";
+
+        /**
          * Specifies whether the `<dialog>` element is open.
          * @see https://html.spec.whatwg.org/multipage/interactive-elements.html#attr-dialog-open
          */
