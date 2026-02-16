@@ -298,7 +298,7 @@ declare global {
          * Specifies the MIME type of the linked resource.
          * @see https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-type
          */
-        type?: AttrString;
+        type?: AttrMimeType;
 
         /** @deprecated */
         charset?: AttrString;
@@ -386,7 +386,7 @@ declare global {
         nohref?: AttrString;
 
         /** @deprecated */
-        type?: AttrString;
+        type?: AttrMimeType;
       }
       interface Article extends HTMLAttributes<HTMLElement> {}
       interface Aside extends HTMLAttributes<HTMLElement> {}
@@ -844,7 +844,7 @@ declare global {
          * Specifies the MIME type of the embedded content.
          * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-embed-type
          */
-        type?: AttrString;
+        type?: AttrMimeType;
 
         /**
          * Specifies the width of the embedded content.
@@ -896,7 +896,8 @@ declare global {
           | AttrMissing
           | "application/x-www-form-urlencoded"
           | "multipart/form-data"
-          | "text/plain";
+          | "text/plain"
+          | (string & {});
         /**
          * Specifies the HTTP method used to submit the form to the server.
          * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-method
@@ -1176,7 +1177,7 @@ declare global {
          * A comma-separated list of file types that a file input should accept.
          * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-accept
          */
-        accept?: AttrString;
+        accept?: AttrAccept;
 
         /**
          * The alternate text for an image input, displayed if the image cannot be loaded.
@@ -1474,7 +1475,7 @@ declare global {
         value?: AttrStringOrNumber;
 
         /** @deprecated */
-        type?: AttrString;
+        type?: AttrMimeType;
       }
       // TODO break into multiple interfaces based on rel?
       interface Link extends HTMLAttributes<HTMLLinkElement> {
@@ -1600,7 +1601,7 @@ declare global {
          * Specifies the MIME type of the linked resource.
          * @see https://html.spec.whatwg.org/multipage/links.html#attr-link-type
          */
-        type?: AttrString;
+        type?: AttrMimeType;
 
         // DEPRECATED
 
@@ -1736,7 +1737,7 @@ declare global {
          * Specifies the MIME type of the resource.
          * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-object-type
          */
-        type?: AttrString;
+        type?: AttrMimeType;
 
         /**
          * Specifies a client-side image map to be used with the object element.
@@ -1759,7 +1760,7 @@ declare global {
         /** @deprecated */
         codebase?: AttrString;
         /** @deprecated */
-        codetype?: AttrString;
+        codetype?: AttrMimeType;
         /** @deprecated */
         declare?: AttrBoolean;
         /** @deprecated */
@@ -2033,7 +2034,7 @@ declare global {
          * Helps the browser decide if it can play the resource or not.
          * @see https://html.spec.whatwg.org/multipage/embedded-content.html#attr-source-type
          */
-        type?: AttrString;
+        type?: AttrMimeType;
 
         /**
          * Specifies the URL of the media resource for the <source> element.
@@ -2095,7 +2096,7 @@ declare global {
         /** @deprecated */
         scoped?: AttrBoolean;
         /** @deprecated */
-        type?: AttrMissing | "text/css";
+        type?: AttrMimeType;
       }
       interface Sub extends HTMLAttributes<HTMLElement> {}
       interface Summary extends HTMLAttributes<HTMLElement> {}
@@ -5946,6 +5947,52 @@ type AttrSrc =
   | "https://"
   | "data:"
   | "blob:"
+  | (string & {});
+/**
+ * MIME type for type, codetype, and enctype attributes. Use (string & {}) so
+ * any MIME type is accepted while suggesting common values in autocomplete.
+ */
+type AttrMimeType =
+  | AttrMissing
+  | "text/html"
+  | "text/css"
+  | "text/javascript"
+  | "application/javascript"
+  | "application/json"
+  | "application/pdf"
+  | "text/plain"
+  | "application/x-www-form-urlencoded"
+  | "multipart/form-data"
+  | "image/png"
+  | "image/jpeg"
+  | "image/gif"
+  | "image/svg+xml"
+  | "image/webp"
+  | "video/mp4"
+  | "video/webm"
+  | "audio/mpeg"
+  | "audio/webm"
+  | "font/woff"
+  | "font/woff2"
+  | (string & {});
+/**
+ * File type hint for input accept. Use (string & {}) so any value is accepted
+ * while suggesting common MIME wildcards and extensions in autocomplete.
+ */
+type AttrAccept =
+  | AttrMissing
+  | "image/*"
+  | "audio/*"
+  | "video/*"
+  | "application/pdf"
+  | ".pdf"
+  | ".doc"
+  | ".docx"
+  | ".jpg"
+  | ".jpeg"
+  | ".png"
+  | ".gif"
+  | ".webp"
   | (string & {});
 type AttrString = AttrMissing | string;
 type AttrStringOrNumber = AttrString | number;
