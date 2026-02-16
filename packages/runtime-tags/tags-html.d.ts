@@ -5930,7 +5930,6 @@ type AttrHref =
   | "#"
   | "mailto:"
   | "tel:"
-  | "javascript:"
   | "/"
   | "./"
   | "https://"
