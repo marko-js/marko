@@ -93,7 +93,7 @@ function getChangeHandler(
 ): t.MarkoAttribute {
   const attrName = attr.name;
   const changeAttrName = attrName + "Change";
-  if (t.isParenthesizedExpression(attr.value)) {
+  while (t.isParenthesizedExpression(attr.value)) {
     attr.value = attr.value.expression;
   }
 
