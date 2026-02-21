@@ -1,9 +1,14 @@
-<let/state:=input.value/>
+<let/state:=input.value>
 <button onClick() { state++; }>
   ${input.value}|${state}
 </button>
 
-<let/otherState:=input["value"]/>
+<let/otherState:=input["value"]>
 <button onClick() { otherState++; }>
   ${input.value}|${otherState}
+</button>
+
+<let/thirdState:=(input.value)>
+<button onClick() { thirdState++; }>
+  ${input.value}|${thirdState}
 </button>

@@ -93,6 +93,9 @@ function getChangeHandler(
 ): t.MarkoAttribute {
   const attrName = attr.name;
   const changeAttrName = attrName + "Change";
+  if (t.isParenthesizedExpression(attr.value)) {
+    attr.value = attr.value.expression;
+  }
 
   if (t.isIdentifier(attr.value)) {
     const binding = tag.scope.getBinding(attr.value.name);
