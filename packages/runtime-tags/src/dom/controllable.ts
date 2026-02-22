@@ -56,8 +56,8 @@ export function _attr_input_checkedValue(
     nodeAccessor,
     ControlledType.InputCheckedValue,
     Array.isArray(checkedValue)
-      ? checkedValue.includes(value)
-      : checkedValue === value,
+      ? checkedValue.some((v) => v == value)
+      : checkedValue == value,
     checkedValueChange,
   );
 }

@@ -136,7 +136,9 @@ export function _attr_input_checkedValue(
     );
   }
 
-  return (multiple ? checkedValue.includes(value) : checkedValue === value)
+  return (
+    multiple ? checkedValue.some((v) => v == value) : checkedValue == value
+  )
     ? valueAttr + " checked"
     : valueAttr;
 }

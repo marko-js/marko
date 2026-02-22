@@ -1,4 +1,4 @@
-// size: 20362 (min) 7811 (brotli)
+// size: 20363 (min) 7839 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -691,8 +691,8 @@ function _attr_input_checkedValue(
       nodeAccessor,
       1,
       Array.isArray(checkedValue)
-        ? checkedValue.includes(value)
-        : checkedValue === value,
+        ? checkedValue.some((v) => v == value)
+        : checkedValue == value,
       checkedValueChange,
     ));
 }

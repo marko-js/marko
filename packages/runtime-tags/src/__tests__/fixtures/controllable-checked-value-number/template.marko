@@ -1,0 +1,7 @@
+<let/checked=0/>
+
+<input type="radio" value=0 checkedValue=checked+"" checkedValueChange(v) { checked = +v }>
+<input type="radio" value="1" checkedValue=checked checkedValueChange(v) { checked = +v }>
+<input type="radio" value=2 checkedValue=checked checkedValueChange(v) { checked = +v }>
+
+<span>${checked}</span>
