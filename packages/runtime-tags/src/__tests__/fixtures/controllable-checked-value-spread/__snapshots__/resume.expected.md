@@ -28,7 +28,6 @@
       M._.r = [_ =&gt; (_.h = [0, _.a = {
           "#childScope/0": _.b = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             input: _.c = {
               checkedValue: "a",
               value: "a"
@@ -36,7 +35,6 @@
           },
           "#childScope/1": _.d = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             input: _.e = {
               checkedValue: "a",
               value: "b"
@@ -44,7 +42,6 @@
           },
           "#childScope/2": _.f = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             input: _.g = {
               checkedValue: "a",
               value: "c"
@@ -98,7 +95,6 @@ container.querySelectorAll(`input`)[1].click();
       M._.r = [_ =&gt; (_.h = [0, _.a = {
           "#childScope/0": _.b = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             input: _.c = {
               checkedValue: "a",
               value: "a"
@@ -106,7 +102,6 @@ container.querySelectorAll(`input`)[1].click();
           },
           "#childScope/1": _.d = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             input: _.e = {
               checkedValue: "a",
               value: "b"
@@ -114,7 +109,6 @@ container.querySelectorAll(`input`)[1].click();
           },
           "#childScope/2": _.f = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             input: _.g = {
               checkedValue: "a",
               value: "c"
@@ -172,7 +166,6 @@ container.querySelectorAll(`input`)[2].click();
       M._.r = [_ =&gt; (_.h = [0, _.a = {
           "#childScope/0": _.b = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             input: _.c = {
               checkedValue: "a",
               value: "a"
@@ -180,7 +173,6 @@ container.querySelectorAll(`input`)[2].click();
           },
           "#childScope/1": _.d = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             input: _.e = {
               checkedValue: "a",
               value: "b"
@@ -188,7 +180,6 @@ container.querySelectorAll(`input`)[2].click();
           },
           "#childScope/2": _.f = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             input: _.g = {
               checkedValue: "a",
               value: "c"
@@ -246,7 +237,6 @@ container.querySelectorAll(`input`)[0].click();
       M._.r = [_ =&gt; (_.h = [0, _.a = {
           "#childScope/0": _.b = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             input: _.c = {
               checkedValue: "a",
               value: "a"
@@ -254,7 +244,6 @@ container.querySelectorAll(`input`)[0].click();
           },
           "#childScope/1": _.d = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             input: _.e = {
               checkedValue: "a",
               value: "b"
@@ -262,7 +251,6 @@ container.querySelectorAll(`input`)[0].click();
           },
           "#childScope/2": _.f = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             input: _.g = {
               checkedValue: "a",
               value: "c"

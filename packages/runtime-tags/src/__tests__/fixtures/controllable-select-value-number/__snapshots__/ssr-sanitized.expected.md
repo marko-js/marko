@@ -1,0 +1,21 @@
+# Render End
+```html
+<select>
+  <option
+    value="0"
+  />
+  <option
+    selected=""
+    value="1"
+  />
+  <option
+    value="2"
+  />
+</select>
+<span>
+  1
+</span>
+<button>
+  Reset
+</button>
+```

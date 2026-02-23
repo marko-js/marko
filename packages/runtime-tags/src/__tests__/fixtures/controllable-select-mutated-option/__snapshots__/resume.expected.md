@@ -55,7 +55,6 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
-          "ControlledValue:#select/0": 1,
           options: [1, 2, 3],
           value: 1
         },
@@ -133,7 +132,6 @@ container.querySelector(".remove").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
-          "ControlledValue:#select/0": 1,
           options: [1, 2, 3],
           value: 1
         },
@@ -210,7 +208,6 @@ container.querySelector(".remove").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
-          "ControlledValue:#select/0": 1,
           options: [1, 2, 3],
           value: 1
         },
@@ -280,7 +277,6 @@ container.querySelector(".remove").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
-          "ControlledValue:#select/0": 1,
           options: [1, 2, 3],
           value: 1
         },
@@ -356,7 +352,6 @@ container.querySelector(".add").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
-          "ControlledValue:#select/0": 1,
           options: [1, 2, 3],
           value: 1
         },
@@ -437,7 +432,6 @@ container.querySelector(".add").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
-          "ControlledValue:#select/0": 1,
           options: [1, 2, 3],
           value: 1
         },
@@ -522,7 +516,6 @@ container.querySelector(".add").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
-          "ControlledValue:#select/0": 1,
           options: [1, 2, 3],
           value: 1
         },

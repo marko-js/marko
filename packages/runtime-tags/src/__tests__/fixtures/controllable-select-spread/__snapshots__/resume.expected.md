@@ -31,7 +31,6 @@
       M._.r = [_ =&gt; (_.c = [0, _.d = {
           "#childScope/0": _.a = {
             "ControlledType:#select/0": 3,
-            "ControlledValue:#select/0": "b",
             "BranchScopes:#select/0":
             {},
             "ConditionalRenderer:#select/0": "__tests__/template.marko_1_content",
@@ -94,7 +93,6 @@ select.dispatchEvent(new window.Event("input", {
       M._.r = [_ =&gt; (_.c = [0, _.d = {
           "#childScope/0": _.a = {
             "ControlledType:#select/0": 3,
-            "ControlledValue:#select/0": "b",
             "BranchScopes:#select/0":
             {},
             "ConditionalRenderer:#select/0": "__tests__/template.marko_1_content",

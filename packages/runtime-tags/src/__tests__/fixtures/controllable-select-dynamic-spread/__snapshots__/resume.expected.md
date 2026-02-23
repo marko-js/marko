@@ -36,7 +36,6 @@
           tag: "select"
         }, _.a = {
           "ControlledType:#select/0": 3,
-          "ControlledValue:#select/0": "b",
           "#Renderer": "select"
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
@@ -96,7 +95,6 @@ select.dispatchEvent(new window.Event("input", {
           tag: "select"
         }, _.a = {
           "ControlledType:#select/0": 3,
-          "ControlledValue:#select/0": "b",
           "#Renderer": "select"
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"

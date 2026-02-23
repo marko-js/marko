@@ -1,6 +1,6 @@
 # Write
 ```html
-  <select><option value=a>A</option><option value=b selected>B</option><option value=c>C</option></select><!--M_*1 #select/0--><span>b<!--M_*1 #text/1--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.a={"ControlledType:#select/0":3,"ControlledValue:#select/0":"b",value:"b"}],_.a["ControlledHandler:#select/0"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),"__tests__/template.marko_0 1"];M._.w()</script>
+  <select><option value=a>A</option><option value=b selected>B</option><option value=c>C</option></select><!--M_*1 #select/0--><span>b<!--M_*1 #text/1--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.a={"ControlledType:#select/0":3,value:"b"}],_.a["ControlledHandler:#select/0"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),"__tests__/template.marko_0 1"];M._.w()</script>
 ```
 
 # Render End
@@ -35,7 +35,6 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
           "ControlledType:#select/0": 3,
-          "ControlledValue:#select/0": "b",
           value: "b"
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"

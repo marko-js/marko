@@ -32,14 +32,11 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
           "ControlledType:#input/0": 1,
-          "ControlledValue:#input/0": "a",
           "ControlledType:#input/2": 1,
-          "ControlledValue:#input/2": "a",
           show: !0,
           checkedValue: "a"
         }, _.b = {
           "ControlledType:#input/0": 1,
-          "ControlledValue:#input/0": "a",
           _: _.a
         }], _.a["ControlledHandler:#input/0"] = _.a[
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _.b[
@@ -92,14 +89,11 @@ container.querySelector(`input[value=b]`).click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
           "ControlledType:#input/0": 1,
-          "ControlledValue:#input/0": "a",
           "ControlledType:#input/2": 1,
-          "ControlledValue:#input/2": "a",
           show: !0,
           checkedValue: "a"
         }, _.b = {
           "ControlledType:#input/0": 1,
-          "ControlledValue:#input/0": "a",
           _: _.a
         }], _.a["ControlledHandler:#input/0"] = _.a[
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _.b[
@@ -151,14 +145,11 @@ container.querySelector("button").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
           "ControlledType:#input/0": 1,
-          "ControlledValue:#input/0": "a",
           "ControlledType:#input/2": 1,
-          "ControlledValue:#input/2": "a",
           show: !0,
           checkedValue: "a"
         }, _.b = {
           "ControlledType:#input/0": 1,
-          "ControlledValue:#input/0": "a",
           _: _.a
         }], _.a["ControlledHandler:#input/0"] = _.a[
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _.b[
@@ -216,14 +207,11 @@ container.querySelector("button").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
           "ControlledType:#input/0": 1,
-          "ControlledValue:#input/0": "a",
           "ControlledType:#input/2": 1,
-          "ControlledValue:#input/2": "a",
           show: !0,
           checkedValue: "a"
         }, _.b = {
           "ControlledType:#input/0": 1,
-          "ControlledValue:#input/0": "a",
           _: _.a
         }], _.a["ControlledHandler:#input/0"] = _.a[
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _.b[
@@ -281,14 +269,11 @@ container.querySelector(`input[value=a]`).click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
           "ControlledType:#input/0": 1,
-          "ControlledValue:#input/0": "a",
           "ControlledType:#input/2": 1,
-          "ControlledValue:#input/2": "a",
           show: !0,
           checkedValue: "a"
         }, _.b = {
           "ControlledType:#input/0": 1,
-          "ControlledValue:#input/0": "a",
           _: _.a
         }], _.a["ControlledHandler:#input/0"] = _.a[
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _.b[

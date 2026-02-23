@@ -26,17 +26,10 @@ export function _attr_style(value: unknown) {
 }
 
 export function _attr_option_value(value: unknown) {
-  const selectedValue = getContext(kSelectedValue);
-
-  return (
-    _attr("value", value) +
-    (!isVoid(value) &&
-    (Array.isArray(selectedValue)
-      ? selectedValue.includes(value)
-      : selectedValue === value)
-      ? " selected"
-      : "")
-  );
+  const valueAttr = _attr("value", value);
+  return normalizedValueMatches(getContext(kSelectedValue), value)
+    ? valueAttr + " selected"
+    : valueAttr;
 }
 
 const kSelectedValue = Symbol("selectedValue");
@@ -52,7 +45,7 @@ export function _attr_select_value(
       ControlledType.SelectValue,
       scopeId,
       nodeAccessor,
-      value,
+      undefined,
       valueChange,
     );
   }
@@ -114,7 +107,7 @@ export function _attr_input_checked(
       checkedChange,
     );
   }
-  return _attr("checked", checked);
+  return normalizeBoolAttrValue(checked) ? " checked" : "";
 }
 
 export function _attr_input_checkedValue(
@@ -124,21 +117,34 @@ export function _attr_input_checkedValue(
   checkedValueChange: unknown,
   value: unknown,
 ) {
-  const multiple = Array.isArray(checkedValue);
   const valueAttr = _attr("value", value);
   if (checkedValueChange) {
     writeControlledScope(
       ControlledType.InputCheckedValue,
       scopeId,
       nodeAccessor,
-      checkedValue,
+      getCheckedValueRef(checkedValue),
       checkedValueChange,
     );
   }
 
-  return (multiple ? checkedValue.includes(value) : checkedValue === value)
+  return normalizedValueMatches(checkedValue, value)
     ? valueAttr + " checked"
     : valueAttr;
+}
+
+const checkedValuesRefs = new WeakMap<unknown[], []>();
+function getCheckedValueRef(checkedValue: unknown) {
+  if (Array.isArray(checkedValue)) {
+    let ref = checkedValuesRefs.get(checkedValue);
+
+    if (!ref) {
+      ref = [];
+      checkedValuesRefs.set(checkedValue, ref);
+    }
+
+    return ref;
+  }
 }
 
 export function _attr_details_or_dialog_open(
@@ -147,16 +153,18 @@ export function _attr_details_or_dialog_open(
   open: unknown,
   openChange: unknown,
 ) {
+  const normalizedOpen = normalizeBoolAttrValue(open);
   if (openChange) {
     writeControlledScope(
       ControlledType.DetailsOrDialogOpen,
       scopeId,
       nodeAccessor,
-      open,
+      normalizedOpen,
       openChange,
     );
   }
-  return _attr("open", open);
+
+  return normalizedOpen ? " open" : "";
 }
 
 export function _attr_nonce() {
@@ -386,4 +394,29 @@ export function escapeDoubleQuotedAttrValue(value: string) {
 
 function replaceUnsafeDoubleQuoteAttrChar(match: string) {
   return match === '"' ? "&#34;" : "&amp;";
+}
+
+function normalizedValueMatches(a: unknown, b: unknown) {
+  const value = normalizeStrAttrValue(b);
+  if (Array.isArray(a)) {
+    for (const item of a) {
+      if (normalizeStrAttrValue(item) === value) {
+        return true;
+      }
+    }
+  } else if (normalizeStrAttrValue(a) === value) {
+    return true;
+  }
+
+  return false;
+}
+
+function normalizeStrAttrValue(value: unknown) {
+  return (value && value !== true) || value === 0 ? value + "" : "";
+}
+
+function normalizeBoolAttrValue(value: unknown) {
+  if (value != null && value !== false) {
+    return true;
+  }
 }

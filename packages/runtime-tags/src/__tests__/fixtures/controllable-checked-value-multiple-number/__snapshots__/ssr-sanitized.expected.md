@@ -1,0 +1,22 @@
+# Render End
+```html
+<input
+  type="checkbox"
+  value="0"
+/>
+<input
+  checked=""
+  type="checkbox"
+  value="1"
+/>
+<input
+  type="checkbox"
+  value="2"
+/>
+<span>
+  1
+</span>
+<button>
+  Reset
+</button>
+```

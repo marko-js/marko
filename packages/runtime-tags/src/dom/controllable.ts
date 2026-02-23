@@ -49,15 +49,20 @@ export function _attr_input_checkedValue(
   checkedValueChange: unknown,
   value: unknown,
 ) {
-  scope[AccessorPrefix.ControlledValue + nodeAccessor] = checkedValue;
-  _attr(scope[nodeAccessor] as HTMLInputElement, "value", value);
+  const multiple = Array.isArray(checkedValue);
+  const normalizedValue = normalizeStrProp(value);
+  const normalizedCheckedValue = multiple
+    ? checkedValue.map(normalizeStrProp)
+    : normalizeStrProp(checkedValue);
+  scope[AccessorPrefix.ControlledValue + nodeAccessor] = normalizedCheckedValue;
+  _attr(scope[nodeAccessor] as HTMLInputElement, "value", normalizedValue);
   setCheckboxValue(
     scope,
     nodeAccessor,
     ControlledType.InputCheckedValue,
-    Array.isArray(checkedValue)
-      ? checkedValue.includes(value)
-      : checkedValue === value,
+    multiple
+      ? normalizedCheckedValue.includes(normalizedValue)
+      : normalizedValue === normalizedCheckedValue,
     checkedValueChange,
   );
 }
@@ -66,6 +71,16 @@ export function _attr_input_checkedValue_script(
   nodeAccessor: Accessor,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
+  if (isResuming && el.defaultChecked) {
+    if (scope[AccessorPrefix.ControlledValue + nodeAccessor]) {
+      (scope[AccessorPrefix.ControlledValue + nodeAccessor] as string[]).push(
+        el.value,
+      );
+    } else {
+      scope[AccessorPrefix.ControlledValue + nodeAccessor] = el.value;
+    }
+  }
+
   syncControllable(el, "input", hasCheckboxChanged, () => {
     const checkedValueChange = scope[
       AccessorPrefix.ControlledHandler + nodeAccessor
@@ -112,7 +127,7 @@ export function _attr_input_value(
   if (valueChange) {
     scope[AccessorPrefix.ControlledType + nodeAccessor] =
       ControlledType.InputValue;
-    scope[AccessorPrefix.ControlledValue + nodeAccessor] = value;
+    scope[AccessorPrefix.ControlledValue + nodeAccessor] = normalizedValue;
 
     if (el.isConnected) {
       setValueAndUpdateSelection(el, normalizedValue);
@@ -157,12 +172,15 @@ export function _attr_select_value(
   value: unknown,
   valueChange: unknown,
 ) {
+  const normalizedValue = Array.isArray(value)
+    ? value.map(normalizeStrProp)
+    : normalizeStrProp(value);
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = valueChange;
 
   if (valueChange) {
     scope[AccessorPrefix.ControlledType + nodeAccessor] =
       ControlledType.SelectValue;
-    scope[AccessorPrefix.ControlledValue + nodeAccessor] = value;
+    scope[AccessorPrefix.ControlledValue + nodeAccessor] = normalizedValue;
   } else {
     scope[AccessorPrefix.ControlledType + nodeAccessor] = ControlledType.None;
   }
@@ -171,7 +189,7 @@ export function _attr_select_value(
     () =>
       setSelectOptions(
         scope[nodeAccessor] as HTMLSelectElement,
-        value,
+        normalizedValue,
         valueChange,
       ),
     scope,
@@ -187,20 +205,36 @@ export function _attr_select_value_script(
       AccessorPrefix.ControlledHandler + nodeAccessor
     ] as undefined | ((value: unknown) => unknown);
     if (valueChange) {
-      const newValue = Array.isArray(
-        scope[AccessorPrefix.ControlledValue + nodeAccessor],
-      )
+      const oldValue = scope[AccessorPrefix.ControlledValue + nodeAccessor] as
+        | string
+        | string[];
+      const newValue = Array.isArray(oldValue)
         ? Array.from(el.selectedOptions, toValueProp)
         : el.value;
-      setSelectOptions(
-        el,
-        scope[AccessorPrefix.ControlledValue + nodeAccessor],
-        valueChange,
-      );
+      setSelectOptions(el, oldValue, valueChange);
       valueChange(newValue);
       run();
     }
   };
+
+  if (isResuming) {
+    if (el.multiple) {
+      scope[AccessorPrefix.ControlledValue + nodeAccessor] = [];
+      for (const opt of el.options) {
+        if (opt.defaultSelected) {
+          scope[AccessorPrefix.ControlledValue + nodeAccessor].push(opt.value);
+        }
+      }
+    } else {
+      scope[AccessorPrefix.ControlledValue + nodeAccessor] = "";
+      for (const opt of el.options) {
+        if (opt.defaultSelected) {
+          scope[AccessorPrefix.ControlledValue + nodeAccessor] = opt.value;
+          break;
+        }
+      }
+    }
+  }
 
   if (!(el as any)._) {
     new MutationObserver(() => {
@@ -209,7 +243,7 @@ export function _attr_select_value_script(
         Array.isArray(value)
           ? value.length !== el.selectedOptions.length ||
             value.some((value, i) => value != el.selectedOptions[i].value)
-          : el.value != value
+          : el.value !== value
       ) {
         onChange();
       }
@@ -224,7 +258,7 @@ export function _attr_select_value_script(
 
 function setSelectOptions(
   el: HTMLSelectElement,
-  value: unknown,
+  value: string | string[],
   valueChange?: unknown,
 ) {
   if (Array.isArray(value)) {
@@ -237,12 +271,11 @@ function setSelectOptions(
       }
     }
   } else {
-    const normalizedValue = normalizeStrProp(value);
     if (valueChange) {
-      el.value = normalizedValue;
+      el.value = value;
     } else {
       for (const opt of el.options) {
-        opt.defaultSelected = opt.value === normalizedValue;
+        opt.defaultSelected = opt.value === value;
       }
     }
   }
@@ -255,13 +288,9 @@ export function _attr_details_or_dialog_open(
   openChange: unknown,
 ) {
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = openChange;
-  if (openChange) {
-    scope[AccessorPrefix.ControlledType + nodeAccessor] =
-      ControlledType.DetailsOrDialogOpen;
-  } else {
-    scope[AccessorPrefix.ControlledType + nodeAccessor] = ControlledType.None;
-  }
-
+  scope[AccessorPrefix.ControlledType + nodeAccessor] = openChange
+    ? ControlledType.DetailsOrDialogOpen
+    : ControlledType.None;
   (scope[nodeAccessor] as HTMLDetailsElement).open = scope[
     AccessorPrefix.ControlledValue + nodeAccessor
   ] = normalizeBoolProp(open);
@@ -272,7 +301,7 @@ export function _attr_details_or_dialog_open_script(
 ) {
   const el = scope[nodeAccessor] as HTMLDetailsElement;
   const hasChanged = () =>
-    el.open !== scope[AccessorPrefix.ControlledValue + nodeAccessor];
+    el.open === !scope[AccessorPrefix.ControlledValue + nodeAccessor];
   syncControllable(
     el,
     el.tagName === "DIALOG" ? "close" : "toggle",
@@ -335,7 +364,7 @@ function syncControllable<T extends Element>(
   if (!(el as any)._) {
     controllableDelegate(el, event, handleChange);
     if ((el as any).form) {
-      controllableDelegate((el as any).form!, "reset", handleFormReset);
+      controllableDelegate((el as any).form, "reset", handleFormReset);
     }
 
     if (isResuming && hasChanged(el)) {
