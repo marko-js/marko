@@ -6,6 +6,9 @@
 <button>
   1|1
 </button>
+<button>
+  1|1
+</button>
 source=1
 ```
 
@@ -15,6 +18,9 @@ source=1
 container.querySelectorAll("button").forEach(item => item.click());
 ```
 ```html
+<button>
+  2|2
+</button>
 <button>
   2|2
 </button>
@@ -36,6 +42,9 @@ container.querySelectorAll("button").forEach(item => item.click());
 <button>
   3|3
 </button>
+<button>
+  3|3
+</button>
 source=3
 ```
 
@@ -45,6 +54,9 @@ source=3
 container.querySelectorAll("button").forEach(item => item.click());
 ```
 ```html
+<button>
+  4|4
+</button>
 <button>
   4|4
 </button>

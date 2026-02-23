@@ -75,7 +75,6 @@ export default (api, markoOpts) => {
         parserOpts.allowSuperOutsideMethod =
         parserOpts.allowUndeclaredExports =
         parserOpts.allowNewTargetOutsideFunction =
-        parserOpts.createParenthesizedExpressions =
         parserOpts.createImportExpressions =
           true;
 

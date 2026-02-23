@@ -13,7 +13,7 @@ var _default = exports.default = _marko_template;
 const _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
   (0, _renderTag.default)(_customTagDataTag.default, {
-    "name": ("Frank".toUpperCase()),
+    "name": "Frank".toUpperCase(),
     "age": 32
   }, out, _componentDef, "0");
 }, {
