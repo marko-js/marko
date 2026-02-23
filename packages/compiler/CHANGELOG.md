@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.39.56
+
+### Patch Changes
+
+- [#3097](https://github.com/marko-js/marko/pull/3097) [`f774948`](https://github.com/marko-js/marko/commit/f774948773e89c4f7e4564fa2eb1c0cc7569bbfa) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Revert a recent change to preserve parenthesized expressions in the compiler.
+  This caused a regression through some analysis which did not account for parenthesized expressions.
+
+- [#3096](https://github.com/marko-js/marko/pull/3096) [`3efe00f`](https://github.com/marko-js/marko/commit/3efe00f53244a3d9c2558e6926dcea601b9ff838) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Normalize controllable values following the same rules as DOM normalization before triggering change handlers.
+
 ## 5.39.55
 
 ### Patch Changes
