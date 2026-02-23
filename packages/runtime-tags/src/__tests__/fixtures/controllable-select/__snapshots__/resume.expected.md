@@ -29,8 +29,7 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#select/0": 3,
-          value: "b"
+          "ControlledType:#select/0": 3
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
@@ -82,8 +81,7 @@ select.dispatchEvent(new window.Event("input", {
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#select/0": 3,
-          value: "b"
+          "ControlledType:#select/0": 3
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),

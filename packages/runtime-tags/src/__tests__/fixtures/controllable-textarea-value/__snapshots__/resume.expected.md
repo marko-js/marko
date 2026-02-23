@@ -14,8 +14,7 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#textarea/0": 2,
-          value: "hello"
+          "ControlledType:#textarea/0": 2
         }], _.a["ControlledHandler:#textarea/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
@@ -52,8 +51,7 @@ textarea.dispatchEvent(new window.Event("input", {
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#textarea/0": 2,
-          value: "hello"
+          "ControlledType:#textarea/0": 2
         }], _.a["ControlledHandler:#textarea/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
@@ -94,8 +92,7 @@ textarea.dispatchEvent(new window.Event("input", {
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#textarea/0": 2,
-          value: "hello"
+          "ControlledType:#textarea/0": 2
         }], _.a["ControlledHandler:#textarea/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
@@ -136,8 +133,7 @@ textarea.dispatchEvent(new window.Event("input", {
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#textarea/0": 2,
-          value: "hello"
+          "ControlledType:#textarea/0": 2
         }], _.a["ControlledHandler:#textarea/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),

@@ -15,8 +15,7 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#input/0": 2,
-          value: "hello"
+          "ControlledType:#input/0": 2
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
@@ -54,8 +53,7 @@ input.dispatchEvent(new window.Event("input", {
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#input/0": 2,
-          value: "hello"
+          "ControlledType:#input/0": 2
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
@@ -97,8 +95,7 @@ input.dispatchEvent(new window.Event("input", {
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#input/0": 2,
-          value: "hello"
+          "ControlledType:#input/0": 2
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
@@ -140,8 +137,7 @@ input.dispatchEvent(new window.Event("input", {
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#input/0": 2,
-          value: "hello"
+          "ControlledType:#input/0": 2
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),

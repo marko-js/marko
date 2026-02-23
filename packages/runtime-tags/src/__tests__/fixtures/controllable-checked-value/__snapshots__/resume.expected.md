@@ -28,8 +28,7 @@
       M._.r = [_ =&gt; (_.b = [0, _.a = {
             "ControlledType:#input/0": 1,
             "ControlledType:#input/1": 1,
-            "ControlledType:#input/2": 1,
-            checkedValue: "a"
+            "ControlledType:#input/2": 1
           }], _.a["ControlledHandler:#input/0"] = _.a[
             "ControlledHandler:#input/1"] = _.a[
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
@@ -77,8 +76,7 @@ container.querySelectorAll(`input`)[1].click();
       M._.r = [_ =&gt; (_.b = [0, _.a = {
             "ControlledType:#input/0": 1,
             "ControlledType:#input/1": 1,
-            "ControlledType:#input/2": 1,
-            checkedValue: "a"
+            "ControlledType:#input/2": 1
           }], _.a["ControlledHandler:#input/0"] = _.a[
             "ControlledHandler:#input/1"] = _.a[
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
@@ -130,8 +128,7 @@ container.querySelectorAll(`input`)[2].click();
       M._.r = [_ =&gt; (_.b = [0, _.a = {
             "ControlledType:#input/0": 1,
             "ControlledType:#input/1": 1,
-            "ControlledType:#input/2": 1,
-            checkedValue: "a"
+            "ControlledType:#input/2": 1
           }], _.a["ControlledHandler:#input/0"] = _.a[
             "ControlledHandler:#input/1"] = _.a[
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
@@ -183,8 +180,7 @@ container.querySelectorAll(`input`)[0].click();
       M._.r = [_ =&gt; (_.b = [0, _.a = {
             "ControlledType:#input/0": 1,
             "ControlledType:#input/1": 1,
-            "ControlledType:#input/2": 1,
-            checkedValue: "a"
+            "ControlledType:#input/2": 1
           }], _.a["ControlledHandler:#input/0"] = _.a[
             "ControlledHandler:#input/1"] = _.a[
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[

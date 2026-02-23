@@ -10,10 +10,6 @@ export default _._template("__tests__/template.marko", input => {
   });
   _._html(`${_._el_resume($scope0_id, "#select/0")}<span>${_._escape(selected)}${_._el_resume($scope0_id, "#text/1")}</span><button>Reset</button>${_._el_resume($scope0_id, "#button/2")}`);
   _._script($scope0_id, "__tests__/template.marko_0");
-  _._scope($scope0_id, {
-    selected
-  }, "__tests__/template.marko", 0, {
-    selected: "1:6"
-  });
+  _._scope($scope0_id, {}, "__tests__/template.marko", 0);
   _._resume_branch($scope0_id);
 });

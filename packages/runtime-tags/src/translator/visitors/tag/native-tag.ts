@@ -115,10 +115,7 @@ export default {
             injectNonce = false;
           }
 
-          if (
-            isEventHandler(attr.name) ||
-            isNativeTagChangeHandler(attr.name)
-          ) {
+          if (isEventHandler(attr.name)) {
             valueExtra.isEffect = true;
             hasEventHandlers = true;
           } else if (!evaluate(attr.value).confident) {
@@ -1170,10 +1167,6 @@ function trackDelimitedAttrObjectProperties(
   if (dynamicProps) {
     (meta.dynamicItems ||= []).push(t.objectExpression(dynamicProps));
   }
-}
-
-function isNativeTagChangeHandler(propName: string) {
-  return /^(?:value|checked(?:Value)?|open)Change$/.test(propName);
 }
 
 function buildUndefined() {

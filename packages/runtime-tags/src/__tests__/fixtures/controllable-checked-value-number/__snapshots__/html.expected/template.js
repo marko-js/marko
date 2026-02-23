@@ -11,10 +11,6 @@ export default _._template("__tests__/template.marko", input => {
     checked = +v;
   }, "__tests__/template.marko_0/checkedValueChange3", $scope0_id), 2)} type=radio>${_._el_resume($scope0_id, "#input/2")}<span>${_._escape(checked)}${_._el_resume($scope0_id, "#text/3")}</span>`);
   _._script($scope0_id, "__tests__/template.marko_0");
-  _._scope($scope0_id, {
-    checked
-  }, "__tests__/template.marko", 0, {
-    checked: "1:6"
-  });
+  _._scope($scope0_id, {}, "__tests__/template.marko", 0);
   _._resume_branch($scope0_id);
 });

@@ -27,8 +27,7 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#select/0": 3,
-          selected: 1
+          "ControlledType:#select/0": 3
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
@@ -73,8 +72,7 @@ selectIndex(container, 0);
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#select/0": 3,
-          selected: 1
+          "ControlledType:#select/0": 3
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
@@ -123,8 +121,7 @@ selectIndex(container, 1);
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#select/0": 3,
-          selected: 1
+          "ControlledType:#select/0": 3
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
@@ -173,8 +170,7 @@ selectIndex(container, 2);
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#select/0": 3,
-          selected: 1
+          "ControlledType:#select/0": 3
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),
@@ -223,8 +219,7 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#select/0": 3,
-          selected: 1
+          "ControlledType:#select/0": 3
         }], _.a["ControlledHandler:#select/0"] = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.a), _.b),

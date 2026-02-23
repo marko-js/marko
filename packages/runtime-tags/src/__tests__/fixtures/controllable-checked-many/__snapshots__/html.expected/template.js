@@ -12,7 +12,6 @@ export default _._template("__tests__/template.marko", input => {
     _._script($scope1_id, "__tests__/template.marko_1");
     _._scope($scope1_id, {
       "#LoopKey": i,
-      checked,
       _: _._scope_with_id($scope0_id),
       "TagVariableChange:checked": _._resume(function (value) {
         if (i === undefined) {
@@ -23,8 +22,7 @@ export default _._template("__tests__/template.marko", input => {
         states = newStates;
       }, "__tests__/template.marko_1/valueChange", $scope1_id) || void 0
     }, "__tests__/template.marko", "2:2", {
-      "#LoopKey": "2:13",
-      checked: "3:8"
+      "#LoopKey": "2:13"
     });
   }, 0, $scope0_id, "#text/0", /* states */1, /* states */1, /* states */1, 0, 1);
   _._html(`<div>${_._escape(states.join(','))}${_._el_resume($scope0_id, "#text/1")}</div>`);
