@@ -6,12 +6,15 @@
 <button>
   1|1
 </button>
+<button>
+  1|1
+</button>
 source=1
 ```
 
 # Mutations
 ```
-INSERT button0, button1, #text0, #text1
+INSERT button0, button1, button2, #text0, #text1
 ```
 
 # Render
@@ -19,6 +22,9 @@ INSERT button0, button1, #text0, #text1
 container.querySelectorAll("button").forEach(item => item.click());
 ```
 ```html
+<button>
+  2|2
+</button>
 <button>
   2|2
 </button>
@@ -32,9 +38,11 @@ source=2
 ```
 UPDATE button0/#text0 "1" => "2"
 UPDATE button1/#text0 "1" => "2"
+UPDATE button2/#text0 "1" => "2"
 UPDATE button1/#text2 "1" => "2"
 UPDATE #text1 "1" => "2"
 UPDATE button0/#text2 "1" => "2"
+UPDATE button2/#text2 "1" => "2"
 ```
 
 # Render
@@ -42,6 +50,9 @@ UPDATE button0/#text2 "1" => "2"
 container.querySelectorAll("button").forEach(item => item.click());
 ```
 ```html
+<button>
+  3|3
+</button>
 <button>
   3|3
 </button>
@@ -55,9 +66,11 @@ source=3
 ```
 UPDATE button0/#text0 "2" => "3"
 UPDATE button1/#text0 "2" => "3"
+UPDATE button2/#text0 "2" => "3"
 UPDATE button1/#text2 "2" => "3"
 UPDATE #text1 "2" => "3"
 UPDATE button0/#text2 "2" => "3"
+UPDATE button2/#text2 "2" => "3"
 ```
 
 # Render
@@ -71,6 +84,9 @@ container.querySelectorAll("button").forEach(item => item.click());
 <button>
   4|4
 </button>
+<button>
+  4|4
+</button>
 source=4
 ```
 
@@ -78,7 +94,9 @@ source=4
 ```
 UPDATE button0/#text0 "3" => "4"
 UPDATE button1/#text0 "3" => "4"
+UPDATE button2/#text0 "3" => "4"
 UPDATE button1/#text2 "3" => "4"
 UPDATE #text1 "3" => "4"
 UPDATE button0/#text2 "3" => "4"
+UPDATE button2/#text2 "3" => "4"
 ```

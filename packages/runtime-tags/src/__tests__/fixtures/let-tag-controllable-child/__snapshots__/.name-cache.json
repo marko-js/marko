@@ -12,7 +12,9 @@
       "$$otherState": "u",
       "$$input": "l",
       "$$source": "i",
-      "$$valueChange": "m"
+      "$$valueChange": "m",
+      "$$thirdState__script": "s",
+      "$$thirdState": "f"
     }
   }
 }

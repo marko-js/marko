@@ -12,7 +12,7 @@ const _marko_componentType = "__tests__/template.marko",
 var _default = exports.default = _marko_template;
 const _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
-  out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)(input.className))}${(0, _attr.default)("foo", ('a' + input.foo + 'b'))} bar="a ${_attr.default.d(input.foo)} b"></div>`);
+  out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)(input.className))}${(0, _attr.default)("foo", 'a' + input.foo + 'b')} bar="a ${_attr.default.d(input.foo)} b"></div>`);
 }, {
   t: _marko_componentType,
   i: true,
