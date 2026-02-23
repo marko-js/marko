@@ -240,7 +240,7 @@ declare global {
          * Specifies the URL of the linked resource.
          * @see https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-href
          */
-        href?: AttrString;
+        href?: AttrHref;
 
         /**
          * Specifies the language of the linked resource.
@@ -298,7 +298,7 @@ declare global {
          * Specifies the MIME type of the linked resource.
          * @see https://html.spec.whatwg.org/multipage/links.html#attr-hyperlink-type
          */
-        type?: AttrString;
+        type?: AttrMimeType;
 
         /** @deprecated */
         charset?: AttrString;
@@ -386,7 +386,7 @@ declare global {
         nohref?: AttrString;
 
         /** @deprecated */
-        type?: AttrString;
+        type?: AttrMimeType;
       }
       interface Article extends HTMLAttributes<HTMLElement> {}
       interface Aside extends HTMLAttributes<HTMLElement> {}
@@ -449,7 +449,7 @@ declare global {
          * Specifies the URL of the audio resource.
          * @see https://html.spec.whatwg.org/multipage/media.html#attr-media-src
          */
-        src?: AttrString;
+        src?: AttrSrc;
       }
 
       interface B extends HTMLAttributes<HTMLElement> {}
@@ -458,7 +458,7 @@ declare global {
          * Specifies the base URL for resolving relative URLs within the document.
          * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-base-href
          */
-        href?: AttrString;
+        href?: AttrHref;
 
         /**
          * Specifies the default browsing context for links and forms in the document.
@@ -473,7 +473,7 @@ declare global {
          * Specifies the URL of the source document or quoted content.
          * @see https://html.spec.whatwg.org/multipage/grouping-content.html#attr-blockquote-cite
          */
-        cite?: AttrString;
+        cite?: AttrHref;
       }
       interface Body extends HTMLAttributes<HTMLBodyElement> {
         /**
@@ -780,7 +780,7 @@ declare global {
          * Specifies the URL of the source of the quote or change.
          * @see https://html.spec.whatwg.org/multipage/edits.html#attr-mod-cite
          */
-        cite?: AttrString;
+        cite?: AttrHref;
 
         /**
          * Specifies the date and time of the quote or change.
@@ -838,13 +838,13 @@ declare global {
          * Specifies the URL of the resource to embed.
          * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-embed-src
          */
-        src?: AttrString;
+        src?: AttrSrc;
 
         /**
          * Specifies the MIME type of the embedded content.
          * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-embed-type
          */
-        type?: AttrString;
+        type?: AttrMimeType;
 
         /**
          * Specifies the width of the embedded content.
@@ -882,7 +882,7 @@ declare global {
          * Specifies the URL which the form data will be submitted to.
          * @see https://html.spec.whatwg.org/multipage/forms.html#attr-fs-action
          */
-        action?: AttrString;
+        action?: AttrHref;
         /**
          * Controls whether the browser should automatically complete form input values.
          * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
@@ -896,7 +896,8 @@ declare global {
           | AttrMissing
           | "application/x-www-form-urlencoded"
           | "multipart/form-data"
-          | "text/plain";
+          | "text/plain"
+          | (string & {});
         /**
          * Specifies the HTTP method used to submit the form to the server.
          * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-method
@@ -1054,7 +1055,7 @@ declare global {
          * The URL of the page to embed in the iframe.
          * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-src
          */
-        src?: AttrString;
+        src?: AttrSrc;
         /**
          * A document to render inside the iframe.
          * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-srcdoc
@@ -1138,7 +1139,7 @@ declare global {
          * The URL of the image to display.
          * @see https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-src
          */
-        src?: AttrString;
+        src?: AttrSrc;
 
         /**
          * A string containing URL and size descriptor pairs for responsive images.
@@ -1176,7 +1177,7 @@ declare global {
          * A comma-separated list of file types that a file input should accept.
          * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-accept
          */
-        accept?: AttrString;
+        accept?: AttrAccept;
 
         /**
          * The alternate text for an image input, displayed if the image cannot be loaded.
@@ -1349,7 +1350,7 @@ declare global {
          * The URL of the image file.
          * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-src
          */
-        src?: AttrString;
+        src?: AttrSrc;
 
         /**
          * Specifies the allowed number intervals for the input value.
@@ -1439,7 +1440,7 @@ declare global {
          * A URI for a resource that explains the reason for the insertion.
          * @see https://html.spec.whatwg.org/multipage/edits.html#attr-mod-cite
          */
-        cite?: AttrString;
+        cite?: AttrHref;
 
         /**
          * The date and time when the element's contents were inserted, in the format "YYYY-MM-DDThh:mm:ssZ".
@@ -1474,7 +1475,7 @@ declare global {
         value?: AttrStringOrNumber;
 
         /** @deprecated */
-        type?: AttrString;
+        type?: AttrMimeType;
       }
       // TODO break into multiple interfaces based on rel?
       interface Link extends HTMLAttributes<HTMLLinkElement> {
@@ -1525,7 +1526,7 @@ declare global {
          * Specifies the URL of the linked resource.
          * @see https://html.spec.whatwg.org/multipage/links.html#attr-link-href
          */
-        href?: AttrString;
+        href?: AttrHref;
 
         /**
          * Specifies the language of the linked resource.
@@ -1600,7 +1601,7 @@ declare global {
          * Specifies the MIME type of the linked resource.
          * @see https://html.spec.whatwg.org/multipage/links.html#attr-link-type
          */
-        type?: AttrString;
+        type?: AttrMimeType;
 
         // DEPRECATED
 
@@ -1736,7 +1737,7 @@ declare global {
          * Specifies the MIME type of the resource.
          * @see https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-object-type
          */
-        type?: AttrString;
+        type?: AttrMimeType;
 
         /**
          * Specifies a client-side image map to be used with the object element.
@@ -1759,7 +1760,7 @@ declare global {
         /** @deprecated */
         codebase?: AttrString;
         /** @deprecated */
-        codetype?: AttrString;
+        codetype?: AttrMimeType;
         /** @deprecated */
         declare?: AttrBoolean;
         /** @deprecated */
@@ -1871,7 +1872,7 @@ declare global {
          * Specifies the URL of the source document or message that the quotation came from.
          * @see https://html.spec.whatwg.org/multipage/text-level-semantics.html#attr-q-cite
          */
-        cite?: AttrString;
+        cite?: AttrHref;
       }
 
       interface RP extends HTMLAttributes<HTMLElement> {}
@@ -1932,7 +1933,7 @@ declare global {
          * Specifies the URL of the script.
          * @see https://html.spec.whatwg.org/multipage/scripting.html#attr-script-src
          */
-        src?: AttrString;
+        src?: AttrSrc;
 
         /**
          * Specifies the type of the script.
@@ -2033,13 +2034,13 @@ declare global {
          * Helps the browser decide if it can play the resource or not.
          * @see https://html.spec.whatwg.org/multipage/embedded-content.html#attr-source-type
          */
-        type?: AttrString;
+        type?: AttrMimeType;
 
         /**
          * Specifies the URL of the media resource for the <source> element.
          * @see https://html.spec.whatwg.org/multipage/embedded-content.html#attr-source-src
          */
-        src?: AttrString;
+        src?: AttrSrc;
 
         /**
          * Specifies a list of image sources for the <source> element when used inside a <picture> element.
@@ -2095,7 +2096,7 @@ declare global {
         /** @deprecated */
         scoped?: AttrBoolean;
         /** @deprecated */
-        type?: AttrMissing | "text/css";
+        type?: AttrMimeType;
       }
       interface Sub extends HTMLAttributes<HTMLElement> {}
       interface Summary extends HTMLAttributes<HTMLElement> {}
@@ -2389,7 +2390,7 @@ declare global {
           | "chapters"
           | "metadata";
         label?: AttrString;
-        src?: AttrString;
+        src?: AttrSrc;
         srclang?: AttrString;
       }
       interface U extends HTMLAttributes<HTMLElement> {}
@@ -2477,7 +2478,7 @@ declare global {
          * Specifies the URL of an image to be shown while the video is downloading or until the user plays the video.
          * @see https://html.spec.whatwg.org/multipage/media.html#attr-video-poster
          */
-        poster?: AttrString;
+        poster?: AttrSrc;
 
         /**
          * Specifies how much of the video should be preloaded when the page loads.
@@ -2488,7 +2489,7 @@ declare global {
          * Specifies the URL of the video file to be embedded.
          * @see https://html.spec.whatwg.org/multipage/media.html#attr-media-src
          */
-        src?: AttrString;
+        src?: AttrSrc;
         /**
          * Specifies the width of the video's display area.
          * @see https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-width
@@ -2511,7 +2512,7 @@ declare global {
         /**
          * @see https://www.w3.org/TR/SVG2/linking.html#AElementHrefAttribute
          */
-        href?: AttrString;
+        href?: AttrHref;
 
         /**
          * @see https://www.w3.org/TR/SVG2/linking.html#AElementTargetAttribute
@@ -2689,7 +2690,7 @@ declare global {
         /**
          * @see https://svgwg.org/specs/animations/#DiscardElementHrefAttribute
          */
-        href?: AttrString;
+        href?: AttrHref;
       }
 
       /**
@@ -3395,7 +3396,7 @@ declare global {
         /**
          * @see https://www.w3.org/TR/SVG2/embedded.html#ImageElementHrefAttribute
          */
-        href?: AttrString;
+        href?: AttrHref;
 
         /**
          * @see https://www.w3.org/TR/SVG2/embedded.html#ImageElementCrossoriginAttribute
@@ -3498,7 +3499,7 @@ declare global {
         /**
          * @see https://www.w3.org/TR/SVG2/pservers.html#LinearGradientElementHrefAttribute
          */
-        href?: AttrString;
+        href?: AttrHref;
       }
 
       /**
@@ -3604,7 +3605,7 @@ declare global {
         /**
          * @see https://svgwg.org/specs/animations/#MPathElementHrefAttribute
          */
-        href?: AttrString;
+        href?: AttrHref;
       }
 
       /**
@@ -3680,7 +3681,7 @@ declare global {
         /**
          * @see https://www.w3.org/TR/SVG2/pservers.html#PatternElementHrefAttribute
          */
-        href?: AttrString;
+        href?: AttrHref;
       }
 
       /**
@@ -3771,7 +3772,7 @@ declare global {
         /**
          * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElementHrefAttribute
          */
-        href?: AttrString;
+        href?: AttrHref;
       }
 
       /**
@@ -4025,7 +4026,7 @@ declare global {
         /**
          * @see https://www.w3.org/TR/SVG2/text.html#TextPathElementHrefAttribute
          */
-        href?: AttrString;
+        href?: AttrHref;
 
         /**
          * @see https://www.w3.org/TR/SVG2/text.html#TextPathElementStartOffsetAttribute
@@ -4106,7 +4107,7 @@ declare global {
         /**
          * @see https://www.w3.org/TR/SVG2/struct.html#UseElementHrefAttribute
          */
-        href?: AttrString;
+        href?: AttrHref;
 
         /**
          * @see https://www.w3.org/TR/SVG2/geometry.html#XProperty
@@ -4580,7 +4581,7 @@ interface SVGAnimationTargetElementAttributes {
   /**
    * @see https://svgwg.org/specs/animations/#HrefAttribute
    */
-  href?: AttrString;
+  href?: AttrHref;
 }
 
 interface SVGAnimationAttributeTargetAttributes {
@@ -5921,6 +5922,78 @@ type AttrReferrerPolicy =
   | "strict-origin-when-cross-origin"
   | "strict-origin"
   | "unsafe-url";
+/**
+ * URL for links, form actions, and citations. Use (string & {}) so any URL is
+ * accepted while suggesting common prefixes in autocomplete.
+ */
+type AttrHref =
+  | AttrMissing
+  | "#"
+  | "mailto:"
+  | "tel:"
+  | "/"
+  | "./"
+  | "https://"
+  | "data:"
+  | (string & {});
+/**
+ * URL for embeddable resources (img, script, iframe, etc.). Use (string & {})
+ * so any URL is accepted while suggesting common prefixes in autocomplete.
+ */
+type AttrSrc =
+  | AttrMissing
+  | "/"
+  | "./"
+  | "https://"
+  | "data:"
+  | "blob:"
+  | (string & {});
+/**
+ * MIME type for type, codetype, and enctype attributes. Use (string & {}) so
+ * any MIME type is accepted while suggesting common values in autocomplete.
+ */
+type AttrMimeType =
+  | AttrMissing
+  | "text/html"
+  | "text/css"
+  | "text/javascript"
+  | "application/javascript"
+  | "application/json"
+  | "application/pdf"
+  | "text/plain"
+  | "application/x-www-form-urlencoded"
+  | "multipart/form-data"
+  | "image/png"
+  | "image/jpeg"
+  | "image/gif"
+  | "image/svg+xml"
+  | "image/webp"
+  | "video/mp4"
+  | "video/webm"
+  | "audio/mpeg"
+  | "audio/webm"
+  | "font/woff"
+  | "font/woff2"
+  | (string & {});
+/**
+ * File type hint for input accept. Use (string & {}) so any value is accepted
+ * while suggesting common MIME wildcards and extensions in autocomplete.
+ */
+type AttrAccept =
+  | AttrMissing
+  | "image/*"
+  | "audio/*"
+  | "video/*"
+  | "application/pdf"
+  | ".pdf"
+  | ".doc"
+  | ".docx"
+  | ".jpg"
+  | ".jpeg"
+  | ".png"
+  | ".gif"
+  | ".webp"
+  | (string & {});
 type AttrString = AttrMissing | string;
 type AttrStringOrNumber = AttrString | number;
 type AttrBoolean = AttrMissing | boolean;
