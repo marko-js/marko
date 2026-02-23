@@ -1,0 +1,19 @@
+# Render End
+```html
+<input
+  checked=""
+  type="radio"
+  value="0"
+/>
+<input
+  type="radio"
+  value="1"
+/>
+<input
+  type="radio"
+  value="2"
+/>
+<span>
+  0
+</span>
+```

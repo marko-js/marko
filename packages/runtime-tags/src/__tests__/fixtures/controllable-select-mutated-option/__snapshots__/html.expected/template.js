@@ -18,11 +18,9 @@ export default _._template("__tests__/template.marko", input => {
   _._script($scope0_id, "__tests__/template.marko_0_options");
   _._script($scope0_id, "__tests__/template.marko_0");
   _._scope($scope0_id, {
-    options,
-    value
+    options
   }, "__tests__/template.marko", 0, {
-    options: "1:6",
-    value: "2:6"
+    options: "1:6"
   });
   _._resume_branch($scope0_id);
 });

@@ -1,4 +1,4 @@
-// size: 20362 (min) 7811 (brotli)
+// size: 20678 (min) 7935 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -684,49 +684,59 @@ function _attr_input_checkedValue(
   checkedValueChange,
   value,
 ) {
-  ((scope["G" + nodeAccessor] = checkedValue),
-    _attr(scope[nodeAccessor], "value", value),
+  let multiple = Array.isArray(checkedValue),
+    normalizedValue = normalizeStrProp(value),
+    normalizedCheckedValue = multiple
+      ? checkedValue.map(normalizeStrProp)
+      : normalizeStrProp(checkedValue);
+  ((scope["G" + nodeAccessor] = normalizedCheckedValue),
+    _attr(scope[nodeAccessor], "value", normalizedValue),
     setCheckboxValue(
       scope,
       nodeAccessor,
       1,
-      Array.isArray(checkedValue)
-        ? checkedValue.includes(value)
-        : checkedValue === value,
+      multiple
+        ? normalizedCheckedValue.includes(normalizedValue)
+        : normalizedValue === normalizedCheckedValue,
       checkedValueChange,
     ));
 }
 function _attr_input_checkedValue_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
-  syncControllable(el, "input", hasCheckboxChanged, () => {
-    let checkedValueChange = scope["E" + nodeAccessor];
-    if (checkedValueChange) {
-      let oldValue = scope["G" + nodeAccessor],
-        newValue = Array.isArray(oldValue)
-          ? (function (arr, val, push2) {
-              let index = arr.indexOf(val);
-              return (
-                (push2
-                  ? !~index && [...arr, val]
-                  : ~index &&
-                    arr.slice(0, index).concat(arr.slice(index + 1))) || arr
-              );
-            })(oldValue, el.value, el.checked)
-          : el.checked
-            ? el.value
-            : void 0;
-      if (el.name && "r" === el.type[0])
-        for (let radio of el
-          .getRootNode()
-          .querySelectorAll(`[type=radio][name=${CSS.escape(el.name)}]`))
-          radio.form === el.form &&
-            (radio.checked = Array.isArray(oldValue)
-              ? oldValue.includes(radio.value)
-              : oldValue === radio.value);
-      else el.checked = !el.checked;
-      (checkedValueChange(newValue), run());
-    }
-  });
+  (isResuming &&
+    el.defaultChecked &&
+    (scope["G" + nodeAccessor]
+      ? scope["G" + nodeAccessor].push(el.value)
+      : (scope["G" + nodeAccessor] = el.value)),
+    syncControllable(el, "input", hasCheckboxChanged, () => {
+      let checkedValueChange = scope["E" + nodeAccessor];
+      if (checkedValueChange) {
+        let oldValue = scope["G" + nodeAccessor],
+          newValue = Array.isArray(oldValue)
+            ? (function (arr, val, push2) {
+                let index = arr.indexOf(val);
+                return (
+                  (push2
+                    ? !~index && [...arr, val]
+                    : ~index &&
+                      arr.slice(0, index).concat(arr.slice(index + 1))) || arr
+                );
+              })(oldValue, el.value, el.checked)
+            : el.checked
+              ? el.value
+              : void 0;
+        if (el.name && "r" === el.type[0])
+          for (let radio of el
+            .getRootNode()
+            .querySelectorAll(`[type=radio][name=${CSS.escape(el.name)}]`))
+            radio.form === el.form &&
+              (radio.checked = Array.isArray(oldValue)
+                ? oldValue.includes(radio.value)
+                : oldValue === radio.value);
+        else el.checked = !el.checked;
+        (checkedValueChange(newValue), run());
+      }
+    }));
 }
 function _attr_input_value(scope, nodeAccessor, value, valueChange) {
   let el = scope[nodeAccessor],
@@ -734,7 +744,7 @@ function _attr_input_value(scope, nodeAccessor, value, valueChange) {
   ((scope["E" + nodeAccessor] = valueChange),
     valueChange
       ? ((scope["F" + nodeAccessor] = 2),
-        (scope["G" + nodeAccessor] = value),
+        (scope["G" + nodeAccessor] = normalizedValue),
         el.isConnected
           ? setValueAndUpdateSelection(el, normalizedValue)
           : (el.defaultValue = normalizedValue))
@@ -754,12 +764,16 @@ function _attr_input_value_script(scope, nodeAccessor) {
     }));
 }
 function _attr_select_value(scope, nodeAccessor, value, valueChange) {
+  let normalizedValue = Array.isArray(value)
+    ? value.map(normalizeStrProp)
+    : normalizeStrProp(value);
   ((scope["E" + nodeAccessor] = valueChange),
     valueChange
-      ? ((scope["F" + nodeAccessor] = 3), (scope["G" + nodeAccessor] = value))
+      ? ((scope["F" + nodeAccessor] = 3),
+        (scope["G" + nodeAccessor] = normalizedValue))
       : (scope["F" + nodeAccessor] = 5),
     pendingEffects.unshift(
-      () => setSelectOptions(scope[nodeAccessor], value, valueChange),
+      () => setSelectOptions(scope[nodeAccessor], normalizedValue, valueChange),
       scope,
     ));
 }
@@ -768,21 +782,35 @@ function _attr_select_value_script(scope, nodeAccessor) {
     onChange = () => {
       let valueChange = scope["E" + nodeAccessor];
       if (valueChange) {
-        let newValue = Array.isArray(scope["G" + nodeAccessor])
-          ? Array.from(el.selectedOptions, toValueProp)
-          : el.value;
-        (setSelectOptions(el, scope["G" + nodeAccessor], valueChange),
+        let oldValue = scope["G" + nodeAccessor],
+          newValue = Array.isArray(oldValue)
+            ? Array.from(el.selectedOptions, toValueProp)
+            : el.value;
+        (setSelectOptions(el, oldValue, valueChange),
           valueChange(newValue),
           run());
       }
     };
+  if (isResuming)
+    if (el.multiple) {
+      scope["G" + nodeAccessor] = [];
+      for (let opt of el.options)
+        opt.defaultSelected && scope["G" + nodeAccessor].push(opt.value);
+    } else {
+      scope["G" + nodeAccessor] = "";
+      for (let opt of el.options)
+        if (opt.defaultSelected) {
+          scope["G" + nodeAccessor] = opt.value;
+          break;
+        }
+    }
   (el._ ||
     new MutationObserver(() => {
       let value = scope["G" + nodeAccessor];
       (Array.isArray(value)
         ? value.length !== el.selectedOptions.length ||
           value.some((value2, i) => value2 != el.selectedOptions[i].value)
-        : el.value != value) && onChange();
+        : el.value !== value) && onChange();
     }).observe(el, { childList: !0, subtree: !0 }),
     syncControllable(el, "input", hasSelectChanged, onChange));
 }
@@ -794,13 +822,8 @@ function setSelectOptions(el, value, valueChange) {
         ? (opt.selected = selected)
         : (opt.defaultSelected = selected);
     }
-  else {
-    let normalizedValue = normalizeStrProp(value);
-    if (valueChange) el.value = normalizedValue;
-    else
-      for (let opt of el.options)
-        opt.defaultSelected = opt.value === normalizedValue;
-  }
+  else if (valueChange) el.value = value;
+  else for (let opt of el.options) opt.defaultSelected = opt.value === value;
 }
 function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
   ((scope["E" + nodeAccessor] = openChange),
@@ -810,7 +833,7 @@ function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
 }
 function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
-    hasChanged = () => el.open !== scope["G" + nodeAccessor];
+    hasChanged = () => el.open === !scope["G" + nodeAccessor];
   syncControllable(
     el,
     "DIALOG" === el.tagName ? "close" : "toggle",

@@ -1,0 +1,11 @@
+<let/checked=[1]/>
+
+<input type="checkbox" value=0 checkedValue=checked checkedValueChange(v) { checked = v.map(it => Number(it)) }>
+<input type="checkbox" value="1" checkedValue=checked checkedValueChange(v) { checked = v.map(it => Number(it)) }>
+<input type="checkbox" value=2 checkedValue=checked checkedValueChange(v) { checked = v.map(it => Number(it)) }>
+
+<span>${checked}</span>
+
+<button onClick() { checked = [1] }>
+  Reset
+</button>

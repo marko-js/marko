@@ -1314,7 +1314,7 @@ declare global {
          * When `checkedValue` is an array of strings, the `checked` attribute will be set to a boolean that is `true` if the `checkedValue` array includes the `value`.
          * If the `checkedValue` is falsy then `checked` is always `false`.
          */
-        checkedValue?: AttrMissing | string | string[];
+        checkedValue?: AttrStringOrNumber | string[] | number[];
         /**
          * Called whenever a `input type="checkbox"` or `input type="radio"` using the `checkedValue` attribute has changed.
          * When `checkedValueChange` is a function, `checked` becomes controlled.
@@ -1902,7 +1902,7 @@ declare global {
          * When the `value` is a string, nested `<option>` tags with a matching `value` attribute become `selected`.
          * When the `value` is an array of strings, nested `<option>` tags with a `value` contained within the array are `selected.
          */
-        value?: AttrMissing | string | string[];
+        value?: AttrStringOrNumber | string[] | number[];
 
         /**
          * Called whenever a the `value` property of the `select` has changed.

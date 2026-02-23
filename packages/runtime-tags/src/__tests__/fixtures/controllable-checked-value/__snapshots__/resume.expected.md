@@ -27,12 +27,8 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             "ControlledType:#input/1": 1,
-            "ControlledValue:#input/1": "a",
-            "ControlledType:#input/2": 1,
-            "ControlledValue:#input/2": "a",
-            checkedValue: "a"
+            "ControlledType:#input/2": 1
           }], _.a["ControlledHandler:#input/0"] = _.a[
             "ControlledHandler:#input/1"] = _.a[
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
@@ -79,12 +75,8 @@ container.querySelectorAll(`input`)[1].click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             "ControlledType:#input/1": 1,
-            "ControlledValue:#input/1": "a",
-            "ControlledType:#input/2": 1,
-            "ControlledValue:#input/2": "a",
-            checkedValue: "a"
+            "ControlledType:#input/2": 1
           }], _.a["ControlledHandler:#input/0"] = _.a[
             "ControlledHandler:#input/1"] = _.a[
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
@@ -135,12 +127,8 @@ container.querySelectorAll(`input`)[2].click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             "ControlledType:#input/1": 1,
-            "ControlledValue:#input/1": "a",
-            "ControlledType:#input/2": 1,
-            "ControlledValue:#input/2": "a",
-            checkedValue: "a"
+            "ControlledType:#input/2": 1
           }], _.a["ControlledHandler:#input/0"] = _.a[
             "ControlledHandler:#input/1"] = _.a[
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[
@@ -191,12 +179,8 @@ container.querySelectorAll(`input`)[0].click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.a = {
             "ControlledType:#input/0": 1,
-            "ControlledValue:#input/0": "a",
             "ControlledType:#input/1": 1,
-            "ControlledValue:#input/1": "a",
-            "ControlledType:#input/2": 1,
-            "ControlledValue:#input/2": "a",
-            checkedValue: "a"
+            "ControlledType:#input/2": 1
           }], _.a["ControlledHandler:#input/0"] = _.a[
             "ControlledHandler:#input/1"] = _.a[
           "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _._[

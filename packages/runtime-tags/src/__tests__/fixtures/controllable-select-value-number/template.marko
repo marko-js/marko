@@ -1,0 +1,13 @@
+<let/selected=1/>
+
+<select value=selected valueChange(v) { selected = +v }>
+  <option value=0/>
+  <option value="1"/>
+  <option value=2/>
+</select>
+
+<span>${selected}</span>
+
+<button onClick() { selected = 1 }>
+  Reset
+</button>

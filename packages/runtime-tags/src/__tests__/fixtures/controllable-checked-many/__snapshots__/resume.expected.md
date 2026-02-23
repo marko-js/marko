@@ -27,17 +27,14 @@
         }, _.a = {
           "ControlledType:#input/0": 0,
           "#LoopKey": 0,
-          checked: !1,
           _: _.b
         }, _.c = {
           "ControlledType:#input/0": 0,
           "#LoopKey": 1,
-          checked: !1,
           _: _.b
         }, _.d = {
           "ControlledType:#input/0": 0,
           "#LoopKey": 2,
-          checked: !1,
           _: _.b
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_1/checkedChange"
@@ -94,17 +91,14 @@ container.querySelectorAll("input").item(0).click();
         }, _.a = {
           "ControlledType:#input/0": 0,
           "#LoopKey": 0,
-          checked: !1,
           _: _.b
         }, _.c = {
           "ControlledType:#input/0": 0,
           "#LoopKey": 1,
-          checked: !1,
           _: _.b
         }, _.d = {
           "ControlledType:#input/0": 0,
           "#LoopKey": 2,
-          checked: !1,
           _: _.b
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_1/checkedChange"
@@ -166,17 +160,14 @@ container.querySelectorAll("input").item(1).click();
         }, _.a = {
           "ControlledType:#input/0": 0,
           "#LoopKey": 0,
-          checked: !1,
           _: _.b
         }, _.c = {
           "ControlledType:#input/0": 0,
           "#LoopKey": 1,
-          checked: !1,
           _: _.b
         }, _.d = {
           "ControlledType:#input/0": 0,
           "#LoopKey": 2,
-          checked: !1,
           _: _.b
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_1/checkedChange"
@@ -237,17 +228,14 @@ container.querySelectorAll("input").item(1).click();
         }, _.a = {
           "ControlledType:#input/0": 0,
           "#LoopKey": 0,
-          checked: !1,
           _: _.b
         }, _.c = {
           "ControlledType:#input/0": 0,
           "#LoopKey": 1,
-          checked: !1,
           _: _.b
         }, _.d = {
           "ControlledType:#input/0": 0,
           "#LoopKey": 2,
-          checked: !1,
           _: _.b
         }], _.a["ControlledHandler:#input/0"] = _._[
           "__tests__/template.marko_1/checkedChange"
