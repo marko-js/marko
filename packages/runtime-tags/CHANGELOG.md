@@ -1,5 +1,29 @@
 # @marko/runtime-tags
 
+## 6.0.146
+
+### Patch Changes
+
+- [#3096](https://github.com/marko-js/marko/pull/3096) [`3efe00f`](https://github.com/marko-js/marko/commit/3efe00f53244a3d9c2558e6926dcea601b9ff838) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support `number` and `number[]` types for `select` and `checkedValue`.
+
+- [#3096](https://github.com/marko-js/marko/pull/3096) [`3efe00f`](https://github.com/marko-js/marko/commit/3efe00f53244a3d9c2558e6926dcea601b9ff838) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Serialize controlled values in less cases.
+
+- [#3087](https://github.com/marko-js/marko/pull/3087) [`7bbb9cf`](https://github.com/marko-js/marko/commit/7bbb9cf2c8ad591bffebec41536779fe71d68d14) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Types for <id> tag
+
+- [#3094](https://github.com/marko-js/marko/pull/3094) [`10613af`](https://github.com/marko-js/marko/commit/10613af90c4c5762ff3dca7f73b92849c480da9c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue when multiple classes used in an inline optimized native tag class attribute.
+
+- [#3090](https://github.com/marko-js/marko/pull/3090) [`09a4092`](https://github.com/marko-js/marko/commit/09a4092bd6b0575debf34be21f6fdd5a5a37e213) Thanks [@LuLaValva](https://github.com/LuLaValva)! - improve autocomplete for string attributes
+
+- [#3096](https://github.com/marko-js/marko/pull/3096) [`3efe00f`](https://github.com/marko-js/marko/commit/3efe00f53244a3d9c2558e6926dcea601b9ff838) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid serializing due to native tag change handlers.
+
+- [#3097](https://github.com/marko-js/marko/pull/3097) [`f774948`](https://github.com/marko-js/marko/commit/f774948773e89c4f7e4564fa2eb1c0cc7569bbfa) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Revert a recent change to preserve parenthesized expressions in the compiler.
+  This caused a regression through some analysis which did not account for parenthesized expressions.
+
+- [#3096](https://github.com/marko-js/marko/pull/3096) [`3efe00f`](https://github.com/marko-js/marko/commit/3efe00f53244a3d9c2558e6926dcea601b9ff838) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Normalize controllable values following the same rules as DOM normalization before triggering change handlers.
+
+- Updated dependencies [[`f774948`](https://github.com/marko-js/marko/commit/f774948773e89c4f7e4564fa2eb1c0cc7569bbfa), [`3efe00f`](https://github.com/marko-js/marko/commit/3efe00f53244a3d9c2558e6926dcea601b9ff838)]:
+  - @marko/compiler@5.39.56
+
 ## 6.0.145
 
 ### Patch Changes
