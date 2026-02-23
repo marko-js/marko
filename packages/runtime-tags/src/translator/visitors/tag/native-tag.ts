@@ -1142,7 +1142,11 @@ function trackDelimitedAttrObjectProperties(
       key = prop.key.name;
     } else {
       const keyEval = evaluate(prop.key as t.Expression);
-      if (keyEval.confident) {
+      if (
+        keyEval.confident &&
+        typeof keyEval.computed === "string" &&
+        !/\s/.test(keyEval.computed)
+      ) {
         key = keyEval.computed + "";
       } else {
         (dynamicProps ||= []).push(prop);
