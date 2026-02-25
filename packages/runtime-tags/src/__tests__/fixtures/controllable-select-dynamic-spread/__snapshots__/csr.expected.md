@@ -27,6 +27,7 @@
 # Mutations
 ```
 INSERT #comment, select, span
+UPDATE select/option1[selected] null => ""
 ```
 
 # Render
@@ -47,6 +48,7 @@ select.dispatchEvent(new window.Event("input", {
     A
   </option>
   <option
+    default-selected=""
     value="b"
   >
     B

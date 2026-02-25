@@ -35,6 +35,7 @@ container.querySelectorAll(`input`)[1].click();
   value="a"
 />
 <input
+  default-checked=""
   type="checkbox"
   value="b"
 />
@@ -63,6 +64,7 @@ container.querySelectorAll(`input`)[2].click();
   value="a"
 />
 <input
+  default-checked=""
   type="checkbox"
   value="b"
 />
@@ -87,10 +89,12 @@ container.querySelectorAll(`input`)[0].click();
 ```
 ```html
 <input
+  default-checked=""
   type="checkbox"
   value="a"
 />
 <input
+  default-checked=""
   type="checkbox"
   value="b"
 />
