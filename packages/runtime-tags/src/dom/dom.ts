@@ -95,7 +95,7 @@ export function _attr_style_item(
   name: string,
   value: unknown,
 ) {
-  element.style.setProperty(name, value || value === 0 ? value + "" : "");
+  element.style.setProperty(name, _to_text(value));
 }
 
 export function _attr_nonce(scope: Scope, nodeAccessor: Accessor) {
@@ -355,7 +355,7 @@ export function _html(scope: Scope, value: unknown, accessor: Accessor) {
   const lastChild = (scope[AccessorPrefix.DynamicHTMLLastChild + accessor] ||
     firstChild) as ChildNode;
   const newContent = parseHTML(
-    value || value === 0 ? value + "" : "",
+    _to_text(value),
     (parentNode as Element).namespaceURI!,
   );
 

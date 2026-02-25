@@ -1,4 +1,4 @@
-// size: 20678 (min) 7935 (brotli)
+// size: 20656 (min) 7894 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -972,7 +972,7 @@ function _attr_style_items(element, items) {
   for (let key in items) _attr_style_item(element, key, items[key]);
 }
 function _attr_style_item(element, name, value) {
-  element.style.setProperty(name, value || 0 === value ? value + "" : "");
+  element.style.setProperty(name, _to_text(value));
 }
 function _attr_nonce(scope, nodeAccessor) {
   _attr(scope[nodeAccessor], "nonce", scope.$.cspNonce);
@@ -1143,10 +1143,7 @@ function _html(scope, value, accessor) {
   let firstChild = scope[accessor],
     parentNode = firstChild.parentNode,
     lastChild = scope["H" + accessor] || firstChild,
-    newContent = parseHTML(
-      value || 0 === value ? value + "" : "",
-      parentNode.namespaceURI,
-    );
+    newContent = parseHTML(_to_text(value), parentNode.namespaceURI);
   (insertChildNodes(
     parentNode,
     firstChild,
