@@ -161,7 +161,7 @@ export default {
         hasEventHandlers ||
         textPlaceholders ||
         injectNonce ||
-        getRelatedControllable(tagName, seen)?.special
+        isDynamicControllable(getRelatedControllable(tagName, seen))
       ) {
         const tagExtra = (node.extra ??= {});
         const tagSection = getOrCreateSection(tag);
@@ -259,6 +259,7 @@ export default {
         }
 
         if (staticControllable) {
+          const hasChangeHandler = !!staticControllable.attrs[1];
           if (tagName !== "select" && tagName !== "textarea") {
             write`${callRuntime(
               staticControllable.helper,
@@ -268,7 +269,7 @@ export default {
             )}`;
           }
 
-          if (!(staticControllable.special && !staticControllable.attrs[1])) {
+          if (hasChangeHandler) {
             addHTMLEffectCall(tagSection, undefined);
           }
         }
@@ -579,27 +580,42 @@ export default {
         }
 
         if (staticControllable) {
-          const { helper, attrs } = staticControllable;
-          const firstAttr = attrs.find(Boolean)!;
+          const hasChangeHandler = !!staticControllable.attrs[1];
+          const firstAttr = staticControllable.attrs.find(Boolean)!;
           const referencedBindings = firstAttr.value.extra?.referencedBindings;
-          const values = attrs.map((attr) => attr?.value);
+          const values = (
+            hasChangeHandler
+              ? staticControllable.attrs
+              : staticControllable.attrs.toSpliced(1, 1)
+          ).map((attr) => attr?.value);
 
           addStatement(
             "render",
             tagSection,
             referencedBindings,
             t.expressionStatement(
-              callRuntime(helper, scopeIdentifier, visitAccessor, ...values),
+              callRuntime(
+                hasChangeHandler
+                  ? staticControllable.helper
+                  : `${staticControllable.helper}_default`,
+                scopeIdentifier,
+                visitAccessor,
+                ...values,
+              ),
             ),
           );
 
-          if (!(staticControllable.special && !attrs[1])) {
+          if (hasChangeHandler) {
             addStatement(
               "effect",
               tagSection,
               undefined,
               t.expressionStatement(
-                callRuntime(`${helper}_script`, scopeIdentifier, visitAccessor),
+                callRuntime(
+                  `${staticControllable.helper}_script`,
+                  scopeIdentifier,
+                  visitAccessor,
+                ),
               ),
             );
           }
@@ -963,10 +979,7 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
 
   if (!spreadProps) {
     staticControllable = getRelatedControllable(tagName, seen);
-
-    if (staticControllable?.special === false && !staticControllable.attrs[1]) {
-      // If there's no change handler and this controllable is not a special attribute then we can just write it
-      // as a normal attribute.
+    if (!isDynamicControllable(staticControllable)) {
       staticControllable = undefined;
     }
   }
@@ -1167,6 +1180,24 @@ function trackDelimitedAttrObjectProperties(
   if (dynamicProps) {
     (meta.dynamicItems ||= []).push(t.objectExpression(dynamicProps));
   }
+}
+
+function isDynamicControllable(controllable: RelatedControllable) {
+  // We can treat an otherwise controllable attr as a normal attribute if:
+  // * It does not have a possible change handler.
+  // * It is not "special" (eg checkedValue)
+  // * It can never be updated (no referenced bindings).
+  if (controllable) {
+    return (
+      controllable.special ||
+      !!(
+        controllable.attrs[1] ||
+        controllable.attrs.find(Boolean)!.value!.extra?.referencedBindings
+      )
+    );
+  }
+
+  return false;
 }
 
 function buildUndefined() {

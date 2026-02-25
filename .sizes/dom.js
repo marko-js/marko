@@ -1,4 +1,4 @@
-// size: 20840 (min) 7975 (brotli)
+// size: 21189 (min) 8006 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -660,14 +660,23 @@ function _el(id, accessor) {
 }
 var inputType = "",
   controllableDelegate = createDelegator();
+function _attr_input_checked_default(scope, nodeAccessor, checked) {
+  let el = scope[nodeAccessor],
+    normalizedChecked = normalizeBoolProp(checked);
+  if (el.defaultChecked !== normalizedChecked) {
+    let restoreValue = scope.H ? normalizedChecked : el.checked;
+    ((el.defaultChecked = normalizedChecked),
+      restoreValue !== normalizedChecked && (el.checked = restoreValue));
+  }
+}
 function _attr_input_checked(scope, nodeAccessor, checked, checkedChange) {
-  setCheckboxValue(
-    scope,
-    nodeAccessor,
-    0,
-    normalizeBoolProp(checked),
-    checkedChange,
-  );
+  let el = scope[nodeAccessor],
+    normalizedChecked = normalizeBoolProp(checked);
+  ((scope["E" + nodeAccessor] = checkedChange),
+    (scope["F" + nodeAccessor] = checkedChange ? 0 : 5),
+    checkedChange && !scope.H
+      ? (el.checked = normalizedChecked)
+      : _attr_input_checked_default(scope, nodeAccessor, normalizedChecked));
 }
 function _attr_input_checked_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
@@ -679,11 +688,10 @@ function _attr_input_checked_script(scope, nodeAccessor) {
     }
   });
 }
-function _attr_input_checkedValue(
+function _attr_input_checkedValue_default(
   scope,
   nodeAccessor,
   checkedValue,
-  checkedValueChange,
   value,
 ) {
   let multiple = Array.isArray(checkedValue),
@@ -691,17 +699,41 @@ function _attr_input_checkedValue(
     normalizedCheckedValue = multiple
       ? checkedValue.map(normalizeStrProp)
       : normalizeStrProp(checkedValue);
-  ((scope["G" + nodeAccessor] = normalizedCheckedValue),
-    _attr(scope[nodeAccessor], "value", normalizedValue),
-    setCheckboxValue(
+  (_attr(scope[nodeAccessor], "value", normalizedValue),
+    _attr_input_checked_default(
       scope,
       nodeAccessor,
-      1,
       multiple
         ? normalizedCheckedValue.includes(normalizedValue)
         : normalizedValue === normalizedCheckedValue,
-      checkedValueChange,
     ));
+}
+function _attr_input_checkedValue(
+  scope,
+  nodeAccessor,
+  checkedValue,
+  checkedValueChange,
+  value,
+) {
+  let el = scope[nodeAccessor],
+    multiple = Array.isArray(checkedValue),
+    normalizedValue = normalizeStrProp(value),
+    normalizedCheckedValue = (scope["G" + nodeAccessor] = multiple
+      ? checkedValue.map(normalizeStrProp)
+      : normalizeStrProp(checkedValue));
+  (_attr(el, "value", normalizedValue),
+    (scope["E" + nodeAccessor] = checkedValueChange),
+    (scope["F" + nodeAccessor] = checkedValueChange ? 1 : 5),
+    checkedValueChange && !scope.H
+      ? (el.checked = multiple
+          ? normalizedCheckedValue.includes(normalizedValue)
+          : normalizedValue === normalizedCheckedValue)
+      : _attr_input_checkedValue_default(
+          scope,
+          nodeAccessor,
+          normalizedCheckedValue,
+          normalizedValue,
+        ));
 }
 function _attr_input_checkedValue_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
@@ -740,34 +772,23 @@ function _attr_input_checkedValue_script(scope, nodeAccessor) {
       }
     }));
 }
-function setCheckboxValue(scope, nodeAccessor, type, checked, checkedChange) {
-  let el = scope[nodeAccessor];
-  if (
-    ((scope["E" + nodeAccessor] = checkedChange),
-    (scope["F" + nodeAccessor] = checkedChange ? type : 5),
-    checkedChange && !scope.H)
-  )
-    el.checked = checked;
-  else if (checked !== el.defaultChecked) {
-    let restoreValue = scope.H ? checked : el.checked;
-    ((el.defaultChecked = checked),
-      restoreValue !== checked && (el.checked = restoreValue));
+function _attr_input_value_default(scope, nodeAccessor, value) {
+  let el = scope[nodeAccessor],
+    normalizedValue = normalizeStrProp(value);
+  if (el.defaultValue !== normalizedValue) {
+    let restoreValue = scope.H ? normalizedValue : el.value;
+    ((el.defaultValue = normalizedValue), setInputValue(el, restoreValue));
   }
 }
 function _attr_input_value(scope, nodeAccessor, value, valueChange) {
   let el = scope[nodeAccessor],
     normalizedValue = normalizeStrProp(value);
-  if (
-    ((scope["E" + nodeAccessor] = valueChange),
+  ((scope["E" + nodeAccessor] = valueChange),
     (scope["G" + nodeAccessor] = normalizedValue),
     (scope["F" + nodeAccessor] = valueChange ? 2 : 5),
-    valueChange && !scope.H)
-  )
-    setInputValue(el, normalizedValue);
-  else if (el.defaultValue !== normalizedValue) {
-    let restoreValue = scope.H ? normalizedValue : el.value;
-    ((el.defaultValue = normalizedValue), setInputValue(el, restoreValue));
-  }
+    valueChange && !scope.H
+      ? setInputValue(el, normalizedValue)
+      : _attr_input_value_default(scope, nodeAccessor, normalizedValue));
 }
 function _attr_input_value_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
@@ -819,7 +840,7 @@ function setInputValue(el, value) {
     ~updatedPosition && el.setSelectionRange(updatedPosition, updatedPosition);
   }
 }
-function _attr_select_value(scope, nodeAccessor, value, valueChange) {
+function _attr_select_value_default(scope, nodeAccessor, value) {
   let restoreValue,
     el = scope[nodeAccessor],
     existing = !scope.H,
@@ -827,24 +848,33 @@ function _attr_select_value(scope, nodeAccessor, value, valueChange) {
     normalizedValue = multiple
       ? value.map(normalizeStrProp)
       : normalizeStrProp(value);
+  pendingEffects.unshift(() => {
+    for (let opt of el.options) {
+      let selected = multiple
+        ? normalizedValue.includes(opt.value)
+        : opt.value === normalizedValue;
+      opt.defaultSelected !== selected &&
+        (existing && (restoreValue ??= getSelectValue(el, multiple)),
+        (opt.defaultSelected = selected));
+    }
+    void 0 !== restoreValue && setSelectValue(el, restoreValue, multiple);
+  }, scope);
+}
+function _attr_select_value(scope, nodeAccessor, value, valueChange) {
+  let el = scope[nodeAccessor],
+    existing = !scope.H,
+    multiple = Array.isArray(value),
+    normalizedValue = (scope["G" + nodeAccessor] = multiple
+      ? value.map(normalizeStrProp)
+      : normalizeStrProp(value));
   ((scope["E" + nodeAccessor] = valueChange),
-    (scope["G" + nodeAccessor] = normalizedValue),
     (scope["F" + nodeAccessor] = valueChange ? 3 : 5),
-    pendingEffects.unshift(() => {
-      if (valueChange && existing)
-        setSelectValue(el, normalizedValue, multiple);
-      else {
-        for (let opt of el.options) {
-          let selected = multiple
-            ? normalizedValue.includes(opt.value)
-            : opt.value === normalizedValue;
-          opt.defaultSelected !== selected &&
-            (existing && (restoreValue ??= getSelectValue(el, multiple)),
-            (opt.defaultSelected = selected));
-        }
-        void 0 !== restoreValue && setSelectValue(el, restoreValue, multiple);
-      }
-    }, scope));
+    valueChange && existing
+      ? pendingEffects.unshift(
+          () => setSelectValue(el, normalizedValue, multiple),
+          scope,
+        )
+      : _attr_select_value_default(scope, nodeAccessor, normalizedValue));
 }
 function _attr_select_value_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
@@ -890,12 +920,16 @@ function getSelectValue(el, multiple) {
     ? Array.from(el.selectedOptions, (opt) => opt.value)
     : el.value;
 }
+function _attr_details_or_dialog_open_default(scope, nodeAccessor, open) {
+  scope.H && (scope[nodeAccessor].open = normalizeBoolProp(open));
+}
 function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
   ((scope["E" + nodeAccessor] = openChange),
     (scope["F" + nodeAccessor] = openChange ? 4 : 5),
-    (openChange || scope.H) &&
-      (scope[nodeAccessor].open = scope["G" + nodeAccessor] =
-        normalizeBoolProp(open)));
+    openChange
+      ? (scope[nodeAccessor].open = scope["G" + nodeAccessor] =
+          normalizeBoolProp(open))
+      : _attr_details_or_dialog_open_default(scope, nodeAccessor, open));
 }
 function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],

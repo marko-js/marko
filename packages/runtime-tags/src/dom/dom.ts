@@ -26,7 +26,6 @@ import {
   _attr_input_value_script,
   _attr_select_value,
   _attr_select_value_script,
-  _attr_textarea_value,
 } from "./controllable";
 import { _on } from "./event";
 import { parseHTML } from "./parse-html";
@@ -252,7 +251,7 @@ function attrsInternal(
       break;
     case "TEXTAREA":
       if ("value" in nextAttrs || "valueChange" in nextAttrs) {
-        _attr_textarea_value(
+        _attr_input_value(
           scope,
           nodeAccessor,
           nextAttrs.value,
