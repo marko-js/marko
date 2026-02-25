@@ -9,7 +9,7 @@ const $await_content2__setup = $scope => {
   $await_content2__setup__script($scope);
 };
 const $placeholder_content = _._content_resume("__tests__/template.marko_4_content", "loading...", /* over(1) */"b");
-const $await_content__show = /* @__PURE__ */_._closure_get("show", $scope => _._text($scope["#text/0"], $scope._._._.show), $scope => $scope._._._, "__tests__/template.marko_3_show");
+const $await_content__show = /* @__PURE__ */_._closure_get("show", $scope => _._text($scope["#text/0"], $scope._._._.show), $scope => $scope._._._, "__tests__/template.marko_3_show/pending");
 const $await_content__setup__script = _._script("__tests__/template.marko_3", $scope => (_.$signal($scope, 0).onabort = () => document.querySelector('#one').textContent = "Pass"));
 const $await_content__setup = $scope => {
   $await_content__show($scope);

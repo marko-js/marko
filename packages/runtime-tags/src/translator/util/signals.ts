@@ -300,7 +300,7 @@ export function getSignal(
                 getScopeExpression(section, closure.section),
               ),
           some(closure.closureSections, underTryPlaceholder)
-            ? t.stringLiteral(getResumeRegisterId(section, closure))
+            ? t.stringLiteral(getResumeRegisterId(section, closure, "pending"))
             : undefined,
         );
       };
@@ -1114,7 +1114,9 @@ export function writeHTMLResumeStatements(
                   callRuntime(
                     "_script",
                     getScopeIdIdentifier(section),
-                    t.stringLiteral(getResumeRegisterId(section, closure)),
+                    t.stringLiteral(
+                      getResumeRegisterId(section, closure, "pending"),
+                    ),
                   ),
                 ),
               ),

@@ -13,7 +13,7 @@ const $content = input => {
         const $scope2_reason = _._scope_reason();
         _._await($scope2_id, "#text/0", resolveAfter(0), () => {
           const $scope3_id = _._scope_id();
-          _._serialize_if($scope0_reason, /* input.level */0) && _._script($scope3_id, "__tests__/tags/recurse.marko_3_input_level");
+          _._serialize_if($scope0_reason, /* input.level */0) && _._script($scope3_id, "__tests__/tags/recurse.marko_3_input_level/pending");
           const $childScope = _._peek_scope_id();
           _._set_serialize_reason(_._serialize_guard($scope0_reason, /* input.level */0));
           $content({

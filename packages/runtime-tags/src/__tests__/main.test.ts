@@ -411,7 +411,6 @@ describe("runtime-tags/translator", () => {
                 if (hasFlush) {
                   tracker.beginUpdate();
                   hasFlush = flushNext();
-                  run();
                   await 1; // allow a microtask before we log the update in order to catch mutation observers
                   tracker.logUpdate("FLUSH");
                 }
