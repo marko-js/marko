@@ -1,0 +1,81 @@
+# Render
+```html
+<select>
+  <option />
+  <option
+    selected=""
+    value="a"
+  />
+</select>
+<select>
+  <option
+    selected=""
+  />
+  <option
+    value="b"
+  />
+</select>
+<select>
+  <option
+    selected=""
+  />
+  <option
+    value="b"
+  />
+</select>
+<select>
+  <option
+    selected=""
+  />
+  <option
+    value="b"
+  />
+</select>
+<button>
+  Update
+</button>
+```
+
+
+# Render
+```js
+container.querySelector("button").click();
+```
+```html
+<select>
+  <option />
+  <option
+    selected=""
+    value="a"
+  />
+</select>
+<select>
+  <option
+    selected=""
+  />
+  <option
+    value="b"
+  />
+</select>
+<select>
+  <option
+    selected=""
+  />
+  <option
+    default-selected=""
+    value="b"
+  />
+</select>
+<select>
+  <option
+    selected=""
+  />
+  <option
+    default-selected=""
+    value="b"
+  />
+</select>
+<button>
+  Update
+</button>
+```

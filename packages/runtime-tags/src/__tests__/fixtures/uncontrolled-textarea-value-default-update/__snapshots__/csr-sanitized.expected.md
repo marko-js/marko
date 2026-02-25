@@ -1,0 +1,61 @@
+# Render
+```html
+<textarea>
+  a
+</textarea>
+<textarea>
+  a
+</textarea>
+<textarea>
+  a
+</textarea>
+<textarea>
+  a
+</textarea>
+<textarea>
+  a
+</textarea>
+<textarea>
+  a
+</textarea>
+<button>
+  Update
+</button>
+```
+
+
+# Render
+```js
+container.querySelector("button").click();
+```
+```html
+<textarea>
+  a
+</textarea>
+<textarea>
+  a
+</textarea>
+<textarea
+  default-value="b"
+>
+  a
+</textarea>
+<textarea
+  default-value="b"
+>
+  a
+</textarea>
+<textarea
+  default-value="b"
+>
+  a
+</textarea>
+<textarea
+  default-value="b"
+>
+  a
+</textarea>
+<button>
+  Update
+</button>
+```

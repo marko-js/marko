@@ -1,6 +1,6 @@
 # Write
 ```html
-  <input class=foo value=abcd>
+  <input value=abcd class=foo>
 ```
 
 # Render End

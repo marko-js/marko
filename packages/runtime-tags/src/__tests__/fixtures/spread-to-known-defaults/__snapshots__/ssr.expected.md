@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div id=value-missing><input class=foo value=override><input class=foo value=default></div><div id=value-undefined><input value=override><input></div><div id=dynamic-value-set><input class=bar value=override><input class=bar value=abcd></div>
+  <div id=value-missing><input value=override class=foo><input value=default class=foo></div><div id=value-undefined><input value=override><input></div><div id=dynamic-value-set><input value=override class=bar><input value=abcd class=bar></div>
 ```
 
 # Render End

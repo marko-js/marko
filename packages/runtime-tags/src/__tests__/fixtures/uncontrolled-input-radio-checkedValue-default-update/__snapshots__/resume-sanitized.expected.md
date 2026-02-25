@@ -1,0 +1,53 @@
+# Render
+```html
+<input
+  checked=""
+  type="radio"
+  value="a"
+/>
+<input
+  type="radio"
+  value="b"
+/>
+<input
+  type="radio"
+  value="b"
+/>
+<input
+  type="radio"
+  value="b"
+/>
+<button>
+  Update
+</button>
+```
+
+
+# Render
+```js
+container.querySelector("button").click();
+```
+```html
+<input
+  checked=""
+  type="radio"
+  value="a"
+/>
+<input
+  type="radio"
+  value="b"
+/>
+<input
+  default-checked=""
+  type="radio"
+  value="b"
+/>
+<input
+  default-checked=""
+  type="radio"
+  value="b"
+/>
+<button>
+  Update
+</button>
+```
