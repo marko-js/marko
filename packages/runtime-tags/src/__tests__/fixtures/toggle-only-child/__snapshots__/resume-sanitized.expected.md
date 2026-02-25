@@ -22,7 +22,9 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
 ```
 ```html
 <div />
-<input />
+<input
+  default-value="Hello"
+/>
 ```
 
 
@@ -41,6 +43,7 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
   </span>
 </div>
 <input
+  default-value="Hello"
   value="World"
 />
 ```
@@ -61,6 +64,7 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
   </span>
 </div>
 <input
+  default-value="Hello"
   value="!"
 />
 ```

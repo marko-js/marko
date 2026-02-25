@@ -129,6 +129,7 @@ container.querySelectorAll(`input`)[1].click();
     />
     <!--M_*1 #input/0-->
     <input
+      default-checked=""
       type="checkbox"
       value="1"
     />
@@ -190,6 +191,7 @@ container.querySelectorAll(`input`)[2].click();
     />
     <!--M_*1 #input/0-->
     <input
+      default-checked=""
       type="checkbox"
       value="1"
     />

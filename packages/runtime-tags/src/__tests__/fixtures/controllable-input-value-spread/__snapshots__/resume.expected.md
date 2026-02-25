@@ -48,6 +48,7 @@ input.dispatchEvent(new window.Event("input", {
   <head />
   <body>
     <input
+      default-value="hello"
       type="text"
       value="w"
     />
@@ -96,6 +97,7 @@ input.dispatchEvent(new window.Event("input", {
   <head />
   <body>
     <input
+      default-value="hello"
       type="text"
       value="wor"
     />
@@ -144,6 +146,7 @@ input.dispatchEvent(new window.Event("input", {
   <head />
   <body>
     <input
+      default-value="hello"
       type="text"
       value="world"
     />

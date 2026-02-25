@@ -20,7 +20,9 @@ textarea.dispatchEvent(new window.Event("input", {
 }));
 ```
 ```html
-<textarea>
+<textarea
+  default-value="hello"
+>
   w
 </textarea>
 ```
@@ -36,7 +38,9 @@ textarea.dispatchEvent(new window.Event("input", {
 }));
 ```
 ```html
-<textarea>
+<textarea
+  default-value="hello"
+>
   wor
 </textarea>
 ```
@@ -52,7 +56,9 @@ textarea.dispatchEvent(new window.Event("input", {
 }));
 ```
 ```html
-<textarea>
+<textarea
+  default-value="hello"
+>
   world
 </textarea>
 ```

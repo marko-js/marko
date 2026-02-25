@@ -24,7 +24,9 @@ textarea.dispatchEvent(new window.Event("input", {
 <html>
   <head />
   <body>
-    <textarea>
+    <textarea
+      default-value="hello"
+    >
       w
     </textarea>
   </body>
@@ -45,7 +47,9 @@ textarea.dispatchEvent(new window.Event("input", {
 <html>
   <head />
   <body>
-    <textarea>
+    <textarea
+      default-value="hello"
+    >
       wor
     </textarea>
   </body>
@@ -66,7 +70,9 @@ textarea.dispatchEvent(new window.Event("input", {
 <html>
   <head />
   <body>
-    <textarea>
+    <textarea
+      default-value="hello"
+    >
       world
     </textarea>
   </body>

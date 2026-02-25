@@ -62,6 +62,7 @@ select.dispatchEvent(new window.Event("input", {
         A
       </option>
       <option
+        default-selected=""
         value="b"
       >
         B

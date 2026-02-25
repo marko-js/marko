@@ -195,19 +195,33 @@ function normalizeTree(
 
     if (isInputElement(target) && isInputElement(source)) {
       if (target.type === "checkbox" || target.type === "radio") {
+        if (source.defaultChecked && !source.checked) {
+          target.setAttribute("default-checked", "");
+        }
         if (source.checked) {
           target.setAttribute("checked", "");
         } else {
           target.removeAttribute("checked");
         }
-      } else if (source.value) {
-        target.setAttribute("value", source.value);
       } else {
-        target.removeAttribute("value");
+        if (source.defaultValue && source.defaultValue !== source.value) {
+          target.setAttribute("default-value", source.defaultValue);
+        }
+        if (source.value) {
+          target.setAttribute("value", source.value);
+        } else {
+          target.removeAttribute("value");
+        }
       }
     } else if (isTextAreaElement(target) && isTextAreaElement(source)) {
+      if (source.defaultValue && source.defaultValue !== source.value) {
+        target.setAttribute("default-value", source.defaultValue);
+      }
       target.textContent = source.value;
     } else if (isOptionElement(target) && isOptionElement(source)) {
+      if (source.defaultSelected && !source.selected) {
+        target.setAttribute("default-selected", "");
+      }
       if (source.selected) {
         target.setAttribute("selected", "");
       } else {

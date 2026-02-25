@@ -75,6 +75,7 @@ container.querySelector("input").click();
   <head />
   <body>
     <input
+      default-checked=""
       type="checkbox"
       value="a"
     />
@@ -224,6 +225,7 @@ container.querySelector("input").click();
   <head />
   <body>
     <input
+      default-checked=""
       type="checkbox"
       value="a"
     />
