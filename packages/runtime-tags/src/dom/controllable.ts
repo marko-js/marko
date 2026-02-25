@@ -55,7 +55,7 @@ export function _attr_input_checked_script(
   nodeAccessor: Accessor,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
-  syncControllable(el, "input", hasCheckboxChanged, () => {
+  syncControllableFormInput(el, hasCheckboxChanged, () => {
     const checkedChange = scope[
       AccessorPrefix.ControlledHandler + nodeAccessor
     ] as undefined | ((value: unknown) => unknown);
@@ -138,7 +138,7 @@ export function _attr_input_checkedValue_script(
     }
   }
 
-  syncControllable(el, "input", hasCheckboxChanged, () => {
+  syncControllableFormInput(el, hasCheckboxChanged, () => {
     const checkedValueChange = scope[
       AccessorPrefix.ControlledHandler + nodeAccessor
     ] as undefined | ((value: unknown) => unknown);
@@ -211,7 +211,7 @@ export function _attr_input_value_script(scope: Scope, nodeAccessor: Accessor) {
   if (isResuming) {
     scope[AccessorPrefix.ControlledValue + nodeAccessor] = el.defaultValue;
   }
-  syncControllable(el, "input", hasValueChanged, (ev?: Event) => {
+  syncControllableFormInput(el, hasValueChanged, (ev?: Event) => {
     const valueChange = scope[
       AccessorPrefix.ControlledHandler + nodeAccessor
     ] as undefined | ((value: unknown) => unknown);
@@ -336,24 +336,18 @@ export function _attr_select_value_script(
     }
   }
 
-  if (!(el as any)._) {
-    new MutationObserver(() => {
-      const value = scope[AccessorPrefix.ControlledValue + nodeAccessor];
-      if (
-        Array.isArray(value)
-          ? value.length !== el.selectedOptions.length ||
-            value.some((value, i) => value != el.selectedOptions[i].value)
-          : el.value !== value
-      ) {
-        onChange();
-      }
-    }).observe(el, {
-      childList: true,
-      subtree: true,
-    });
-  }
-
-  syncControllable(el, "input", hasSelectChanged, onChange);
+  syncControllableFormInput(el, hasSelectChanged, onChange);
+  new MutationObserver(() => {
+    const value = scope[AccessorPrefix.ControlledValue + nodeAccessor];
+    if (
+      Array.isArray(value)
+        ? value.length !== el.selectedOptions.length ||
+          value.some((value, i) => value != el.selectedOptions[i].value)
+        : el.value !== value
+    ) {
+      onChange();
+    }
+  }).observe(el, { childList: true, subtree: true });
 }
 function setSelectValue(
   el: HTMLSelectElement,
@@ -389,17 +383,17 @@ export function _attr_details_or_dialog_open(
   open: unknown,
   openChange: unknown,
 ) {
+  const normalizedOpen = (scope[AccessorPrefix.ControlledValue + nodeAccessor] =
+    normalizeBoolProp(open));
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = openChange;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = openChange
     ? ControlledType.DetailsOrDialogOpen
     : ControlledType.None;
 
-  if (openChange) {
-    (scope[nodeAccessor] as HTMLDetailsElement).open = scope[
-      AccessorPrefix.ControlledValue + nodeAccessor
-    ] = normalizeBoolProp(open);
+  if (openChange && !scope[AccessorProp.Creating]) {
+    (scope[nodeAccessor] as HTMLDetailsElement).open = normalizedOpen;
   } else {
-    _attr_details_or_dialog_open_default(scope, nodeAccessor, open);
+    _attr_details_or_dialog_open_default(scope, nodeAccessor, normalizedOpen);
   }
 }
 export function _attr_details_or_dialog_open_script(
@@ -407,44 +401,39 @@ export function _attr_details_or_dialog_open_script(
   nodeAccessor: Accessor,
 ) {
   const el = scope[nodeAccessor] as HTMLDetailsElement;
-  const hasChanged = () =>
-    el.open === !scope[AccessorPrefix.ControlledValue + nodeAccessor];
-  syncControllable(
-    el,
-    el.tagName === "DIALOG" ? "close" : "toggle",
-    hasChanged,
-    () => {
-      const openChange = scope[
-        AccessorPrefix.ControlledHandler + nodeAccessor
-      ] as undefined | ((value: unknown) => unknown);
-      if (openChange && hasChanged()) {
-        const newValue = el.open;
-        el.open = !newValue;
-        openChange(newValue);
-        run();
-      }
-    },
-  );
+  new MutationObserver(() => {
+    const openChange = scope[
+      AccessorPrefix.ControlledHandler + nodeAccessor
+    ] as undefined | ((value: unknown) => unknown);
+
+    if (
+      openChange &&
+      el.open === !scope[AccessorPrefix.ControlledValue + nodeAccessor]
+    ) {
+      const newValue = el.open;
+      el.open = !newValue;
+      openChange(newValue);
+      run();
+    }
+  }).observe(el, { attributes: true, attributeFilter: ["open"] });
 }
 
-function syncControllable<T extends Element>(
+function syncControllableFormInput<
+  T extends HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement,
+>(
   el: T,
-  event: "input" | "close" | "toggle",
   hasChanged: (el: T) => boolean | undefined,
   onChange: (ev?: Event) => void,
 ) {
-  if (!(el as any)._) {
-    controllableDelegate(el, event, handleChange);
-    if ((el as any).form) {
-      controllableDelegate((el as any).form, "reset", handleFormReset);
-    }
-
-    if (isResuming && hasChanged(el)) {
-      queueMicrotask(onChange);
-    }
+  (el as any)._ = onChange;
+  controllableDelegate(el, "input", handleChange);
+  if ((el as any).form) {
+    controllableDelegate((el as any).form, "reset", handleFormReset);
   }
 
-  (el as any)._ = onChange;
+  if (isResuming && hasChanged(el)) {
+    queueMicrotask(onChange);
+  }
 }
 
 function handleChange(ev: Event) {

@@ -11,8 +11,8 @@
 
 # Render
 ```js
-container.querySelector("summary").click();
-await new Promise(r => setTimeout(r, 0));
+const details = container.querySelector("details");
+details.open = !details.open;
 ```
 ```html
 <details
@@ -28,8 +28,8 @@ await new Promise(r => setTimeout(r, 0));
 
 # Render
 ```js
-container.querySelector("summary").click();
-await new Promise(r => setTimeout(r, 0));
+const details = container.querySelector("details");
+details.open = !details.open;
 ```
 ```html
 <details>
@@ -43,8 +43,8 @@ await new Promise(r => setTimeout(r, 0));
 
 # Render
 ```js
-container.querySelector("summary").click();
-await new Promise(r => setTimeout(r, 0));
+const details = container.querySelector("details");
+details.open = !details.open;
 ```
 ```html
 <details
