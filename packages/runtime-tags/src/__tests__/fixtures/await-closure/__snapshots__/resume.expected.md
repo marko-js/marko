@@ -191,7 +191,7 @@ UPDATE html/body/button/#text "2" => "3"
       M._.j.b = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_2_value 4"
+          "__tests__/template.marko_2_value/pending 4"
           )
       };
       M._.w()
@@ -270,7 +270,7 @@ container.querySelector("button").click();
       M._.j.b = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_2_value 4"
+          "__tests__/template.marko_2_value/pending 4"
           )
       };
       M._.w()

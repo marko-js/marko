@@ -5,7 +5,7 @@
 
 # Write
 ```html
-  <t M_=b><!--M_[-->1<!--M_*5 #text/0--><!--M_]3 #text/0 5--></t><t M_=c></t><script>M._.r.push(_=>(_.e=[1,{"#ClosestBranchId":2,_:_.c,"ClosureSignalIndex:show":0}]),_=>(_.f=[{"#ClosestBranchId":2}]));M._.j.b=_=>{_.push("__tests__/template.marko_3_show 5 __tests__/template.marko_3 5")};M._.j.c=_=>{_.push("__tests__/template.marko_5 6")};M._.w()</script>
+  <t M_=b><!--M_[-->1<!--M_*5 #text/0--><!--M_]3 #text/0 5--></t><t M_=c></t><script>M._.r.push(_=>(_.e=[1,{"#ClosestBranchId":2,_:_.c,"ClosureSignalIndex:show":0}]),_=>(_.f=[{"#ClosestBranchId":2}]));M._.j.b=_=>{_.push("__tests__/template.marko_3_show/pending 5 __tests__/template.marko_3 5")};M._.j.c=_=>{_.push("__tests__/template.marko_5 6")};M._.w()</script>
 ```
 
 # Render ASYNC
@@ -151,7 +151,7 @@ INSERT html/body/script
       M._.j.b = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_3_show 5 __tests__/template.marko_3 5"
+          "__tests__/template.marko_3_show/pending 5 __tests__/template.marko_3 5"
           )
       };
       M._.j.c = _ =&gt;

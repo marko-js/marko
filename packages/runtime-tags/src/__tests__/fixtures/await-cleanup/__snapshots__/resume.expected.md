@@ -118,7 +118,7 @@ INSERT html/body/#text2
       M._.j.b = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_3_show 5 __tests__/template.marko_3 5"
+          "__tests__/template.marko_3_show/pending 5 __tests__/template.marko_3 5"
           )
       };
       M._.j.c = _ =&gt;
@@ -209,7 +209,7 @@ container.querySelector("button").click();
       M._.j.b = _ =&gt;
       {
         _.push(
-          "__tests__/template.marko_3_show 5 __tests__/template.marko_3 5"
+          "__tests__/template.marko_3_show/pending 5 __tests__/template.marko_3 5"
           )
       };
       M._.j.c = _ =&gt;

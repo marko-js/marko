@@ -14,7 +14,7 @@ export default _._template("__tests__/template.marko", input => {
         _._scope_reason();
         _._await($scope2_id, "#text/0", resolveAfter(0, 1), () => {
           const $scope3_id = _._scope_id();
-          _._script($scope3_id, "__tests__/template.marko_3_show");
+          _._script($scope3_id, "__tests__/template.marko_3_show/pending");
           _._html(`${_._escape(show)}${_._el_resume($scope3_id, "#text/0")}`);
           _._script($scope3_id, "__tests__/template.marko_3");
           _._scope($scope3_id, {
