@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.148
+
+### Patch Changes
+
+- [#3100](https://github.com/marko-js/marko/pull/3100) [`c1abbbd`](https://github.com/marko-js/marko/commit/c1abbbd76d7f65c947c748ea6f2cd40467db3660) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with pending await closures.
+
 ## 6.0.147
 
 ### Patch Changes
