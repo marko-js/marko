@@ -14,19 +14,41 @@ import { isResuming } from "./resume";
 let inputType = "";
 const controllableDelegate = createDelegator();
 
+export function _attr_input_checked_default(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  checked: boolean,
+) {
+  const el = scope[nodeAccessor] as HTMLInputElement;
+  const normalizedChecked = normalizeBoolProp(checked);
+  if (el.defaultChecked !== normalizedChecked) {
+    const restoreValue = scope[AccessorProp.Creating]
+      ? normalizedChecked
+      : el.checked;
+    el.defaultChecked = normalizedChecked;
+    if (restoreValue !== normalizedChecked) {
+      el.checked = restoreValue;
+    }
+  }
+}
 export function _attr_input_checked(
   scope: Scope,
   nodeAccessor: Accessor,
   checked: unknown,
   checkedChange: unknown,
 ) {
-  setCheckboxValue(
-    scope,
-    nodeAccessor,
-    ControlledType.InputChecked,
-    normalizeBoolProp(checked),
-    checkedChange,
-  );
+  const el = scope[nodeAccessor] as HTMLInputElement;
+  const normalizedChecked = normalizeBoolProp(checked);
+  scope[AccessorPrefix.ControlledHandler + nodeAccessor] = checkedChange;
+  scope[AccessorPrefix.ControlledType + nodeAccessor] = checkedChange
+    ? ControlledType.InputChecked
+    : ControlledType.None;
+
+  if (checkedChange && !scope[AccessorProp.Creating]) {
+    el.checked = normalizedChecked;
+  } else {
+    _attr_input_checked_default(scope, nodeAccessor, normalizedChecked);
+  }
 }
 export function _attr_input_checked_script(
   scope: Scope,
@@ -46,11 +68,10 @@ export function _attr_input_checked_script(
   });
 }
 
-export function _attr_input_checkedValue(
+export function _attr_input_checkedValue_default(
   scope: Scope,
   nodeAccessor: Accessor,
   checkedValue: unknown,
-  checkedValueChange: unknown,
   value: unknown,
 ) {
   const multiple = Array.isArray(checkedValue);
@@ -58,17 +79,49 @@ export function _attr_input_checkedValue(
   const normalizedCheckedValue = multiple
     ? checkedValue.map(normalizeStrProp)
     : normalizeStrProp(checkedValue);
-  scope[AccessorPrefix.ControlledValue + nodeAccessor] = normalizedCheckedValue;
+
   _attr(scope[nodeAccessor] as HTMLInputElement, "value", normalizedValue);
-  setCheckboxValue(
+  _attr_input_checked_default(
     scope,
     nodeAccessor,
-    ControlledType.InputCheckedValue,
     multiple
       ? normalizedCheckedValue.includes(normalizedValue)
       : normalizedValue === normalizedCheckedValue,
-    checkedValueChange,
   );
+}
+export function _attr_input_checkedValue(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  checkedValue: unknown,
+  checkedValueChange: unknown,
+  value: unknown,
+) {
+  const el = scope[nodeAccessor] as HTMLInputElement;
+  const multiple = Array.isArray(checkedValue);
+  const normalizedValue = normalizeStrProp(value);
+  const normalizedCheckedValue = (scope[
+    AccessorPrefix.ControlledValue + nodeAccessor
+  ] = multiple
+    ? checkedValue.map(normalizeStrProp)
+    : normalizeStrProp(checkedValue));
+  _attr(el, "value", normalizedValue);
+  scope[AccessorPrefix.ControlledHandler + nodeAccessor] = checkedValueChange;
+  scope[AccessorPrefix.ControlledType + nodeAccessor] = checkedValueChange
+    ? ControlledType.InputCheckedValue
+    : ControlledType.None;
+
+  if (checkedValueChange && !scope[AccessorProp.Creating]) {
+    el.checked = multiple
+      ? normalizedCheckedValue.includes(normalizedValue)
+      : normalizedValue === normalizedCheckedValue;
+  } else {
+    _attr_input_checkedValue_default(
+      scope,
+      nodeAccessor,
+      normalizedCheckedValue,
+      normalizedValue,
+    );
+  }
 }
 export function _attr_input_checkedValue_script(
   scope: Scope,
@@ -117,30 +170,22 @@ export function _attr_input_checkedValue_script(
     }
   });
 }
-function setCheckboxValue(
+
+export function _attr_input_value_default(
   scope: Scope,
   nodeAccessor: Accessor,
-  type: ControlledType,
-  checked: boolean,
-  checkedChange: unknown,
+  value: unknown,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
-  scope[AccessorPrefix.ControlledHandler + nodeAccessor] = checkedChange;
-  scope[AccessorPrefix.ControlledType + nodeAccessor] = checkedChange
-    ? type
-    : ControlledType.None;
-
-  if (checkedChange && !scope[AccessorProp.Creating]) {
-    el.checked = checked;
-  } else if (checked !== el.defaultChecked) {
-    const restoreValue = scope[AccessorProp.Creating] ? checked : el.checked;
-    el.defaultChecked = checked;
-    if (restoreValue !== checked) {
-      el.checked = restoreValue;
-    }
+  const normalizedValue = normalizeStrProp(value);
+  if (el.defaultValue !== normalizedValue) {
+    const restoreValue = scope[AccessorProp.Creating]
+      ? normalizedValue
+      : el.value;
+    el.defaultValue = normalizedValue;
+    setInputValue(el, restoreValue);
   }
 }
-
 export function _attr_input_value(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -157,12 +202,8 @@ export function _attr_input_value(
 
   if (valueChange && !scope[AccessorProp.Creating]) {
     setInputValue(el, normalizedValue);
-  } else if (el.defaultValue !== normalizedValue) {
-    const restoreValue = scope[AccessorProp.Creating]
-      ? normalizedValue
-      : el.value;
-    el.defaultValue = normalizedValue;
-    setInputValue(el, restoreValue);
+  } else {
+    _attr_input_value_default(scope, nodeAccessor, normalizedValue);
   }
 }
 export function _attr_input_value_script(scope: Scope, nodeAccessor: Accessor) {
@@ -198,16 +239,10 @@ function setInputValue(el: HTMLInputElement, value: string) {
   }
 }
 
-export {
-  _attr_input_value as _attr_textarea_value,
-  _attr_input_value_script as _attr_textarea_value_script,
-};
-
-export function _attr_select_value(
+export function _attr_select_value_default(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
-  valueChange: unknown,
 ) {
   let restoreValue: undefined | string | string[];
   const el = scope[nodeAccessor] as HTMLSelectElement;
@@ -216,33 +251,50 @@ export function _attr_select_value(
   const normalizedValue = multiple
     ? value.map(normalizeStrProp)
     : normalizeStrProp(value);
+
+  pendingEffects.unshift(() => {
+    for (const opt of el.options) {
+      const selected = multiple
+        ? normalizedValue.includes(opt.value)
+        : opt.value === normalizedValue;
+      if (opt.defaultSelected !== selected) {
+        if (existing) {
+          restoreValue ??= getSelectValue(el, multiple);
+        }
+        opt.defaultSelected = selected;
+      }
+    }
+
+    if (restoreValue !== undefined) {
+      setSelectValue(el, restoreValue, multiple);
+    }
+  }, scope);
+}
+export function _attr_select_value(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  value: unknown,
+  valueChange: unknown,
+) {
+  const el = scope[nodeAccessor] as HTMLSelectElement;
+  const existing = !scope[AccessorProp.Creating];
+  const multiple = Array.isArray(value);
+  const normalizedValue = (scope[
+    AccessorPrefix.ControlledValue + nodeAccessor
+  ] = multiple ? value.map(normalizeStrProp) : normalizeStrProp(value));
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = valueChange;
-  scope[AccessorPrefix.ControlledValue + nodeAccessor] = normalizedValue;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = valueChange
     ? ControlledType.SelectValue
     : ControlledType.None;
 
-  pendingEffects.unshift(() => {
-    if (valueChange && existing) {
-      setSelectValue(el, normalizedValue, multiple);
-    } else {
-      for (const opt of el.options) {
-        const selected = multiple
-          ? normalizedValue.includes(opt.value)
-          : opt.value === normalizedValue;
-        if (opt.defaultSelected !== selected) {
-          if (existing) {
-            restoreValue ??= getSelectValue(el, multiple);
-          }
-          opt.defaultSelected = selected;
-        }
-      }
-
-      if (restoreValue !== undefined) {
-        setSelectValue(el, restoreValue, multiple);
-      }
-    }
-  }, scope);
+  if (valueChange && existing) {
+    pendingEffects.unshift(
+      () => setSelectValue(el, normalizedValue, multiple),
+      scope,
+    );
+  } else {
+    _attr_select_value_default(scope, nodeAccessor, normalizedValue);
+  }
 }
 export function _attr_select_value_script(
   scope: Scope,
@@ -322,6 +374,15 @@ function getSelectValue(el: HTMLSelectElement, multiple: boolean) {
     : el.value;
 }
 
+export function _attr_details_or_dialog_open_default(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  open: unknown,
+) {
+  if (scope[AccessorProp.Creating]) {
+    (scope[nodeAccessor] as HTMLDetailsElement).open = normalizeBoolProp(open);
+  }
+}
 export function _attr_details_or_dialog_open(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -333,10 +394,12 @@ export function _attr_details_or_dialog_open(
     ? ControlledType.DetailsOrDialogOpen
     : ControlledType.None;
 
-  if (openChange || scope[AccessorProp.Creating]) {
+  if (openChange) {
     (scope[nodeAccessor] as HTMLDetailsElement).open = scope[
       AccessorPrefix.ControlledValue + nodeAccessor
     ] = normalizeBoolProp(open);
+  } else {
+    _attr_details_or_dialog_open_default(scope, nodeAccessor, open);
   }
 }
 export function _attr_details_or_dialog_open_script(
