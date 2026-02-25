@@ -70,6 +70,7 @@ select.dispatchEvent(new window.Event("input", {
       </option>
       <!--M_*3 #option/0-->
       <option
+        default-selected=""
         value="b"
       >
         B

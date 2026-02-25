@@ -21,6 +21,7 @@ input.dispatchEvent(new window.Event("input", {
 ```
 ```html
 <input
+  default-value="hello"
   type="text"
   value="w"
 />
@@ -41,6 +42,7 @@ input.dispatchEvent(new window.Event("input", {
 ```
 ```html
 <input
+  default-value="hello"
   type="text"
   value="wor"
 />
@@ -61,6 +63,7 @@ input.dispatchEvent(new window.Event("input", {
 ```
 ```html
 <input
+  default-value="hello"
   type="text"
   value="world"
 />

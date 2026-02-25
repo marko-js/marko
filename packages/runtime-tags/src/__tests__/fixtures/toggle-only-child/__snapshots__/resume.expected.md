@@ -48,7 +48,9 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
   <head />
   <body>
     <div />
-    <input />
+    <input
+      default-value="Hello"
+    />
     <!--M_*1 #input/1-->
     <script>
       WALKER_RUNTIME("M")("_");
@@ -92,6 +94,7 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
       </span>
     </div>
     <input
+      default-value="Hello"
       value="World"
     />
     <!--M_*1 #input/1-->
@@ -138,6 +141,7 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
       </span>
     </div>
     <input
+      default-value="Hello"
       value="!"
     />
     <!--M_*1 #input/1-->

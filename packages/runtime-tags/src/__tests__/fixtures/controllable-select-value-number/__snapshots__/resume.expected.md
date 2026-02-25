@@ -54,6 +54,7 @@ selectIndex(container, 0);
         value="0"
       />
       <option
+        default-selected=""
         value="1"
       />
       <option
@@ -151,6 +152,7 @@ selectIndex(container, 2);
         value="0"
       />
       <option
+        default-selected=""
         value="1"
       />
       <option

@@ -54,6 +54,7 @@ container.querySelectorAll(`input`)[1].click();
   <head />
   <body>
     <input
+      default-checked=""
       type="radio"
       value="0"
     />
@@ -108,6 +109,7 @@ container.querySelectorAll(`input`)[2].click();
   <head />
   <body>
     <input
+      default-checked=""
       type="radio"
       value="0"
     />

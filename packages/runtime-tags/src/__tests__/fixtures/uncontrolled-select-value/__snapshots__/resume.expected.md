@@ -45,6 +45,7 @@ select.dispatchEvent(new select.ownerDocument.defaultView.Event("change", {
         A
       </option>
       <option
+        default-selected=""
         value="b"
       >
         B

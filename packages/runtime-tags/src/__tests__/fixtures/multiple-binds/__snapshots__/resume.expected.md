@@ -43,10 +43,12 @@ container.querySelector("button").click();
   <body>
     <button>
       <input
+        default-value="0"
         value="1"
       />
       <!--M_*1 #input/1-->
       <input
+        default-value="0"
         value="1"
       />
       <!--M_*1 #input/2-->
@@ -81,10 +83,12 @@ container.querySelector("button").click();
   <body>
     <button>
       <input
+        default-value="0"
         value="2"
       />
       <!--M_*1 #input/1-->
       <input
+        default-value="0"
         value="2"
       />
       <!--M_*1 #input/2-->
