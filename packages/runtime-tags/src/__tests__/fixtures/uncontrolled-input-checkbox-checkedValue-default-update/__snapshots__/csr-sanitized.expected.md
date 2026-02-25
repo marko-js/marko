@@ -1,0 +1,53 @@
+# Render
+```html
+<input
+  checked=""
+  type="checkbox"
+  value="a"
+/>
+<input
+  type="checkbox"
+  value="b"
+/>
+<input
+  type="checkbox"
+  value="b"
+/>
+<input
+  type="checkbox"
+  value="b"
+/>
+<button>
+  Update
+</button>
+```
+
+
+# Render
+```js
+container.querySelector("button").click();
+```
+```html
+<input
+  checked=""
+  type="checkbox"
+  value="a"
+/>
+<input
+  type="checkbox"
+  value="b"
+/>
+<input
+  default-checked=""
+  type="checkbox"
+  value="b"
+/>
+<input
+  default-checked=""
+  type="checkbox"
+  value="b"
+/>
+<button>
+  Update
+</button>
+```

@@ -1,0 +1,9 @@
+static const initialValue = ["a"];
+<let/value = initialValue/>
+<input type="checkbox" checkedValue=initialValue value="a">
+<input type="checkbox" checkedValue=initialValue value="b">
+<input type="checkbox" checkedValue=value value="b">
+<input type="checkbox" checkedValue=value value="b" checkedValueChange=undefined>
+<button onClick() { value = ["a", "b"] }>
+  Update
+</button>

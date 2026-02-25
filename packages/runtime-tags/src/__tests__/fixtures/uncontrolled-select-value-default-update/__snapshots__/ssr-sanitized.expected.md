@@ -1,0 +1,37 @@
+# Render End
+```html
+<select>
+  <option />
+  <option
+    selected=""
+    value="a"
+  />
+</select>
+<select>
+  <option
+    selected=""
+  />
+  <option
+    value="b"
+  />
+</select>
+<select>
+  <option
+    selected=""
+  />
+  <option
+    value="b"
+  />
+</select>
+<select>
+  <option
+    selected=""
+  />
+  <option
+    value="b"
+  />
+</select>
+<button>
+  Update
+</button>
+```
