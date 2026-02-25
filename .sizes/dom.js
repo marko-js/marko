@@ -1,4 +1,4 @@
-// size: 21189 (min) 8006 (brotli)
+// size: 21181 (min) 7993 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -680,7 +680,7 @@ function _attr_input_checked(scope, nodeAccessor, checked, checkedChange) {
 }
 function _attr_input_checked_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
-  syncControllable(el, "input", hasCheckboxChanged, () => {
+  syncControllableFormInput(el, hasCheckboxChanged, () => {
     let checkedChange = scope["E" + nodeAccessor];
     if (checkedChange) {
       let newValue = el.checked;
@@ -742,7 +742,7 @@ function _attr_input_checkedValue_script(scope, nodeAccessor) {
     (scope["G" + nodeAccessor]
       ? scope["G" + nodeAccessor].push(el.value)
       : (scope["G" + nodeAccessor] = el.value)),
-    syncControllable(el, "input", hasCheckboxChanged, () => {
+    syncControllableFormInput(el, hasCheckboxChanged, () => {
       let checkedValueChange = scope["E" + nodeAccessor];
       if (checkedValueChange) {
         let oldValue = scope["G" + nodeAccessor],
@@ -793,7 +793,7 @@ function _attr_input_value(scope, nodeAccessor, value, valueChange) {
 function _attr_input_value_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
   (isResuming && (scope["G" + nodeAccessor] = el.defaultValue),
-    syncControllable(el, "input", hasValueChanged, (ev) => {
+    syncControllableFormInput(el, hasValueChanged, (ev) => {
       let valueChange = scope["E" + nodeAccessor];
       valueChange &&
         ((inputType = ev?.inputType),
@@ -900,15 +900,14 @@ function _attr_select_value_script(scope, nodeAccessor) {
           break;
         }
     }
-  (el._ ||
+  (syncControllableFormInput(el, hasSelectChanged, onChange),
     new MutationObserver(() => {
       let value = scope["G" + nodeAccessor];
       (Array.isArray(value)
         ? value.length !== el.selectedOptions.length ||
           value.some((value2, i) => value2 != el.selectedOptions[i].value)
         : el.value !== value) && onChange();
-    }).observe(el, { childList: !0, subtree: !0 }),
-    syncControllable(el, "input", hasSelectChanged, onChange));
+    }).observe(el, { childList: !0, subtree: !0 }));
 }
 function setSelectValue(el, value, multiple) {
   if (multiple)
@@ -924,35 +923,32 @@ function _attr_details_or_dialog_open_default(scope, nodeAccessor, open) {
   scope.H && (scope[nodeAccessor].open = normalizeBoolProp(open));
 }
 function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
+  let normalizedOpen = (scope["G" + nodeAccessor] = normalizeBoolProp(open));
   ((scope["E" + nodeAccessor] = openChange),
     (scope["F" + nodeAccessor] = openChange ? 4 : 5),
-    openChange
-      ? (scope[nodeAccessor].open = scope["G" + nodeAccessor] =
-          normalizeBoolProp(open))
-      : _attr_details_or_dialog_open_default(scope, nodeAccessor, open));
+    openChange && !scope.H
+      ? (scope[nodeAccessor].open = normalizedOpen)
+      : _attr_details_or_dialog_open_default(
+          scope,
+          nodeAccessor,
+          normalizedOpen,
+        ));
 }
 function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
-  let el = scope[nodeAccessor],
-    hasChanged = () => el.open === !scope["G" + nodeAccessor];
-  syncControllable(
-    el,
-    "DIALOG" === el.tagName ? "close" : "toggle",
-    hasChanged,
-    () => {
-      let openChange = scope["E" + nodeAccessor];
-      if (openChange && hasChanged()) {
-        let newValue = el.open;
-        ((el.open = !newValue), openChange(newValue), run());
-      }
-    },
-  );
+  let el = scope[nodeAccessor];
+  new MutationObserver(() => {
+    let openChange = scope["E" + nodeAccessor];
+    if (openChange && el.open === !scope["G" + nodeAccessor]) {
+      let newValue = el.open;
+      ((el.open = !newValue), openChange(newValue), run());
+    }
+  }).observe(el, { attributes: !0, attributeFilter: ["open"] });
 }
-function syncControllable(el, event, hasChanged, onChange) {
-  (el._ ||
-    (controllableDelegate(el, event, handleChange),
+function syncControllableFormInput(el, hasChanged, onChange) {
+  ((el._ = onChange),
+    controllableDelegate(el, "input", handleChange),
     el.form && controllableDelegate(el.form, "reset", handleFormReset),
-    isResuming && hasChanged(el) && queueMicrotask(onChange)),
-    (el._ = onChange));
+    isResuming && hasChanged(el) && queueMicrotask(onChange));
 }
 function handleChange(ev) {
   ev.target._?.(ev);

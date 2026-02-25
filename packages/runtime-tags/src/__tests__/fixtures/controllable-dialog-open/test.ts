@@ -1,7 +1,6 @@
-export const steps = [{}, close];
+export const steps = [{}, toggle, toggle, toggle];
 
-async function close(container: Element) {
+function toggle(container: Element) {
   const dialog = container.querySelector<HTMLDialogElement>("dialog")!;
-  dialog.open = false;
-  dialog.dispatchEvent(new dialog.ownerDocument.defaultView!.Event("close"));
+  dialog.open = !dialog.open;
 }

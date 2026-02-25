@@ -1,6 +1,6 @@
 export const steps = [{}, toggle, toggle, toggle];
 
-async function toggle(container: Element) {
-  container.querySelector("summary")!.click();
-  await new Promise((r) => setTimeout(r, 0));
+function toggle(container: Element) {
+  const details = container.querySelector<HTMLDetailsElement>("details")!;
+  details.open = !details.open;
 }

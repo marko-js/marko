@@ -29,8 +29,8 @@
 
 # Render
 ```js
-container.querySelector("summary").click();
-await new Promise(r => setTimeout(r, 0));
+const details = container.querySelector("details");
+details.open = !details.open;
 ```
 ```html
 <html>
@@ -71,8 +71,8 @@ UPDATE html/body/span/#text "false" => "true"
 
 # Render
 ```js
-container.querySelector("summary").click();
-await new Promise(r => setTimeout(r, 0));
+const details = container.querySelector("details");
+details.open = !details.open;
 ```
 ```html
 <html>
@@ -111,8 +111,8 @@ UPDATE html/body/span/#text "true" => "false"
 
 # Render
 ```js
-container.querySelector("summary").click();
-await new Promise(r => setTimeout(r, 0));
+const details = container.querySelector("details");
+details.open = !details.open;
 ```
 ```html
 <html>
