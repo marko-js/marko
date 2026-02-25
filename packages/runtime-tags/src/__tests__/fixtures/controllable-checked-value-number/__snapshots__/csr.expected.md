@@ -29,6 +29,7 @@ container.querySelectorAll(`input`)[1].click();
 ```
 ```html
 <input
+  default-checked=""
   type="radio"
   value="0"
 />
@@ -57,6 +58,7 @@ container.querySelectorAll(`input`)[2].click();
 ```
 ```html
 <input
+  default-checked=""
   type="radio"
   value="0"
 />

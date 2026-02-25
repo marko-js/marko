@@ -112,6 +112,7 @@ container.querySelector(`input[value=a]`).click();
   value="a"
 />
 <input
+  default-checked=""
   type="radio"
   value="b"
 />

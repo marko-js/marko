@@ -32,6 +32,7 @@ container.querySelector(`input[value=b]`).click();
 ```
 ```html
 <input
+  default-checked=""
   type="radio"
   value="a"
 />
@@ -63,6 +64,7 @@ container.querySelector("button").click();
 ```
 ```html
 <input
+  default-checked=""
   type="radio"
   value="a"
 />
@@ -90,6 +92,7 @@ container.querySelector("button").click();
 ```
 ```html
 <input
+  default-checked=""
   type="radio"
   value="a"
 />
@@ -115,6 +118,7 @@ container.querySelector("button").click();
 INSERT input1
 REMOVE #text after input1
 UPDATE input1[value] null => "b"
+UPDATE input1[checked] null => ""
 ```
 
 # Render
@@ -128,6 +132,7 @@ container.querySelector(`input[value=a]`).click();
   value="a"
 />
 <input
+  default-checked=""
   type="radio"
   value="b"
 />

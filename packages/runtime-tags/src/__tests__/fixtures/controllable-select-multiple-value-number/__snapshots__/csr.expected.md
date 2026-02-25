@@ -25,6 +25,7 @@
 # Mutations
 ```
 INSERT select, span, button
+UPDATE select/option1[selected] null => ""
 ```
 
 # Render

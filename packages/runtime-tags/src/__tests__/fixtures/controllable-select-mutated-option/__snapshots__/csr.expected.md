@@ -43,6 +43,7 @@
 # Mutations
 ```
 INSERT form, div, button0, button1
+UPDATE form/select/option0[selected] null => ""
 ```
 
 # Render

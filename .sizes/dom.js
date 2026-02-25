@@ -1,4 +1,4 @@
-// size: 20656 (min) 7894 (brotli)
+// size: 20840 (min) 7975 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -658,6 +658,8 @@ function _el(id, accessor) {
     _resume(id, (scope) => () => scope[accessor])
   );
 }
+var inputType = "",
+  controllableDelegate = createDelegator();
 function _attr_input_checked(scope, nodeAccessor, checked, checkedChange) {
   setCheckboxValue(
     scope,
@@ -738,17 +740,34 @@ function _attr_input_checkedValue_script(scope, nodeAccessor) {
       }
     }));
 }
+function setCheckboxValue(scope, nodeAccessor, type, checked, checkedChange) {
+  let el = scope[nodeAccessor];
+  if (
+    ((scope["E" + nodeAccessor] = checkedChange),
+    (scope["F" + nodeAccessor] = checkedChange ? type : 5),
+    checkedChange && !scope.H)
+  )
+    el.checked = checked;
+  else if (checked !== el.defaultChecked) {
+    let restoreValue = scope.H ? checked : el.checked;
+    ((el.defaultChecked = checked),
+      restoreValue !== checked && (el.checked = restoreValue));
+  }
+}
 function _attr_input_value(scope, nodeAccessor, value, valueChange) {
   let el = scope[nodeAccessor],
     normalizedValue = normalizeStrProp(value);
-  ((scope["E" + nodeAccessor] = valueChange),
-    valueChange
-      ? ((scope["F" + nodeAccessor] = 2),
-        (scope["G" + nodeAccessor] = normalizedValue),
-        el.isConnected
-          ? setValueAndUpdateSelection(el, normalizedValue)
-          : (el.defaultValue = normalizedValue))
-      : ((scope["F" + nodeAccessor] = 5), (el.defaultValue = normalizedValue)));
+  if (
+    ((scope["E" + nodeAccessor] = valueChange),
+    (scope["G" + nodeAccessor] = normalizedValue),
+    (scope["F" + nodeAccessor] = valueChange ? 2 : 5),
+    valueChange && !scope.H)
+  )
+    setInputValue(el, normalizedValue);
+  else if (el.defaultValue !== normalizedValue) {
+    let restoreValue = scope.H ? normalizedValue : el.value;
+    ((el.defaultValue = normalizedValue), setInputValue(el, restoreValue));
+  }
 }
 function _attr_input_value_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
@@ -759,96 +778,11 @@ function _attr_input_value_script(scope, nodeAccessor) {
         ((inputType = ev?.inputType),
         valueChange(el.value),
         run(),
-        setValueAndUpdateSelection(el, scope["G" + nodeAccessor]),
+        setInputValue(el, scope["G" + nodeAccessor]),
         (inputType = ""));
     }));
 }
-function _attr_select_value(scope, nodeAccessor, value, valueChange) {
-  let normalizedValue = Array.isArray(value)
-    ? value.map(normalizeStrProp)
-    : normalizeStrProp(value);
-  ((scope["E" + nodeAccessor] = valueChange),
-    valueChange
-      ? ((scope["F" + nodeAccessor] = 3),
-        (scope["G" + nodeAccessor] = normalizedValue))
-      : (scope["F" + nodeAccessor] = 5),
-    pendingEffects.unshift(
-      () => setSelectOptions(scope[nodeAccessor], normalizedValue, valueChange),
-      scope,
-    ));
-}
-function _attr_select_value_script(scope, nodeAccessor) {
-  let el = scope[nodeAccessor],
-    onChange = () => {
-      let valueChange = scope["E" + nodeAccessor];
-      if (valueChange) {
-        let oldValue = scope["G" + nodeAccessor],
-          newValue = Array.isArray(oldValue)
-            ? Array.from(el.selectedOptions, toValueProp)
-            : el.value;
-        (setSelectOptions(el, oldValue, valueChange),
-          valueChange(newValue),
-          run());
-      }
-    };
-  if (isResuming)
-    if (el.multiple) {
-      scope["G" + nodeAccessor] = [];
-      for (let opt of el.options)
-        opt.defaultSelected && scope["G" + nodeAccessor].push(opt.value);
-    } else {
-      scope["G" + nodeAccessor] = "";
-      for (let opt of el.options)
-        if (opt.defaultSelected) {
-          scope["G" + nodeAccessor] = opt.value;
-          break;
-        }
-    }
-  (el._ ||
-    new MutationObserver(() => {
-      let value = scope["G" + nodeAccessor];
-      (Array.isArray(value)
-        ? value.length !== el.selectedOptions.length ||
-          value.some((value2, i) => value2 != el.selectedOptions[i].value)
-        : el.value !== value) && onChange();
-    }).observe(el, { childList: !0, subtree: !0 }),
-    syncControllable(el, "input", hasSelectChanged, onChange));
-}
-function setSelectOptions(el, value, valueChange) {
-  if (Array.isArray(value))
-    for (let opt of el.options) {
-      let selected = value.includes(opt.value);
-      valueChange
-        ? (opt.selected = selected)
-        : (opt.defaultSelected = selected);
-    }
-  else if (valueChange) el.value = value;
-  else for (let opt of el.options) opt.defaultSelected = opt.value === value;
-}
-function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
-  ((scope["E" + nodeAccessor] = openChange),
-    (scope["F" + nodeAccessor] = openChange ? 4 : 5),
-    (scope[nodeAccessor].open = scope["G" + nodeAccessor] =
-      normalizeBoolProp(open)));
-}
-function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
-  let el = scope[nodeAccessor],
-    hasChanged = () => el.open === !scope["G" + nodeAccessor];
-  syncControllable(
-    el,
-    "DIALOG" === el.tagName ? "close" : "toggle",
-    hasChanged,
-    () => {
-      let openChange = scope["E" + nodeAccessor];
-      if (openChange && hasChanged()) {
-        let newValue = el.open;
-        ((el.open = !newValue), openChange(newValue), run());
-      }
-    },
-  );
-}
-var inputType = "";
-function setValueAndUpdateSelection(el, value) {
+function setInputValue(el, value) {
   if (el.value !== value) {
     let updatedPosition = (function (
       inputType2,
@@ -885,15 +819,100 @@ function setValueAndUpdateSelection(el, value) {
     ~updatedPosition && el.setSelectionRange(updatedPosition, updatedPosition);
   }
 }
-function setCheckboxValue(scope, nodeAccessor, type, checked, checkedChange) {
-  ((scope["E" + nodeAccessor] = checkedChange),
-    checkedChange
-      ? ((scope["F" + nodeAccessor] = type),
-        (scope[nodeAccessor].checked = checked))
-      : ((scope["F" + nodeAccessor] = 5),
-        (scope[nodeAccessor].defaultChecked = checked)));
+function _attr_select_value(scope, nodeAccessor, value, valueChange) {
+  let restoreValue,
+    el = scope[nodeAccessor],
+    existing = !scope.H,
+    multiple = Array.isArray(value),
+    normalizedValue = multiple
+      ? value.map(normalizeStrProp)
+      : normalizeStrProp(value);
+  ((scope["E" + nodeAccessor] = valueChange),
+    (scope["G" + nodeAccessor] = normalizedValue),
+    (scope["F" + nodeAccessor] = valueChange ? 3 : 5),
+    pendingEffects.unshift(() => {
+      if (valueChange && existing)
+        setSelectValue(el, normalizedValue, multiple);
+      else {
+        for (let opt of el.options) {
+          let selected = multiple
+            ? normalizedValue.includes(opt.value)
+            : opt.value === normalizedValue;
+          opt.defaultSelected !== selected &&
+            (existing && (restoreValue ??= getSelectValue(el, multiple)),
+            (opt.defaultSelected = selected));
+        }
+        void 0 !== restoreValue && setSelectValue(el, restoreValue, multiple);
+      }
+    }, scope));
 }
-var controllableDelegate = createDelegator();
+function _attr_select_value_script(scope, nodeAccessor) {
+  let el = scope[nodeAccessor],
+    onChange = () => {
+      let valueChange = scope["E" + nodeAccessor];
+      if (valueChange) {
+        let oldValue = scope["G" + nodeAccessor],
+          multiple = Array.isArray(oldValue),
+          newValue = getSelectValue(el, multiple);
+        (setSelectValue(el, oldValue, multiple), valueChange(newValue), run());
+      }
+    };
+  if (isResuming)
+    if (el.multiple) {
+      scope["G" + nodeAccessor] = [];
+      for (let opt of el.options)
+        opt.defaultSelected && scope["G" + nodeAccessor].push(opt.value);
+    } else {
+      scope["G" + nodeAccessor] = "";
+      for (let opt of el.options)
+        if (opt.defaultSelected) {
+          scope["G" + nodeAccessor] = opt.value;
+          break;
+        }
+    }
+  (el._ ||
+    new MutationObserver(() => {
+      let value = scope["G" + nodeAccessor];
+      (Array.isArray(value)
+        ? value.length !== el.selectedOptions.length ||
+          value.some((value2, i) => value2 != el.selectedOptions[i].value)
+        : el.value !== value) && onChange();
+    }).observe(el, { childList: !0, subtree: !0 }),
+    syncControllable(el, "input", hasSelectChanged, onChange));
+}
+function setSelectValue(el, value, multiple) {
+  if (multiple)
+    for (let opt of el.options) opt.selected = value.includes(opt.value);
+  else el.value = value;
+}
+function getSelectValue(el, multiple) {
+  return multiple
+    ? Array.from(el.selectedOptions, (opt) => opt.value)
+    : el.value;
+}
+function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
+  ((scope["E" + nodeAccessor] = openChange),
+    (scope["F" + nodeAccessor] = openChange ? 4 : 5),
+    (openChange || scope.H) &&
+      (scope[nodeAccessor].open = scope["G" + nodeAccessor] =
+        normalizeBoolProp(open)));
+}
+function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
+  let el = scope[nodeAccessor],
+    hasChanged = () => el.open === !scope["G" + nodeAccessor];
+  syncControllable(
+    el,
+    "DIALOG" === el.tagName ? "close" : "toggle",
+    hasChanged,
+    () => {
+      let openChange = scope["E" + nodeAccessor];
+      if (openChange && hasChanged()) {
+        let newValue = el.open;
+        ((el.open = !newValue), openChange(newValue), run());
+      }
+    },
+  );
+}
 function syncControllable(el, event, hasChanged, onChange) {
   (el._ ||
     (controllableDelegate(el, event, handleChange),
@@ -932,9 +951,6 @@ function normalizeStrProp(value) {
 }
 function normalizeBoolProp(value) {
   return null != value && !1 !== value;
-}
-function toValueProp(it) {
-  return it.value;
 }
 function _to_text(value) {
   return value || 0 === value ? value + "" : "";

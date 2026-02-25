@@ -31,8 +31,10 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <textarea>
-      after
+    <textarea
+      default-value="after"
+    >
+      before
     </textarea>
     <!--M_*1 #textarea/0-->
     <button>

@@ -18,8 +18,10 @@ INSERT textarea, button
 container.querySelector("button").click();
 ```
 ```html
-<textarea>
-  after
+<textarea
+  default-value="after"
+>
+  before
 </textarea>
 <button>
   update

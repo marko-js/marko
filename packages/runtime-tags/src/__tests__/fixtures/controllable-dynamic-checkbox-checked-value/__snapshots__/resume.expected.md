@@ -234,6 +234,7 @@ container.querySelector("button").click();
 INSERT html/body/input1
 REMOVE #comment after html/body/input1
 UPDATE html/body/input1[value] null => "b"
+UPDATE html/body/input1[checked] null => ""
 ```
 
 # Render
@@ -251,6 +252,7 @@ container.querySelector(`input[value=a]`).click();
     />
     <!--M_*1 #input/0-->
     <input
+      default-checked=""
       type="radio"
       value="b"
     />
