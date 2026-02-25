@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 6.0.147
+
+### Patch Changes
+
+- [#3098](https://github.com/marko-js/marko/pull/3098) [`49ff6ac`](https://github.com/marko-js/marko/commit/49ff6ac664825f04a20ebfd1fb73c39eab4b44af) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure uncontrolled native elements never update their underlying state.
+
+- [#3098](https://github.com/marko-js/marko/pull/3098) [`a212235`](https://github.com/marko-js/marko/commit/a2122357400211eea952586b6a2b6701ee84f7bc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure default values are set for form elements when controlled handler present.
+
+- [#3098](https://github.com/marko-js/marko/pull/3098) [`a212235`](https://github.com/marko-js/marko/commit/a2122357400211eea952586b6a2b6701ee84f7bc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure updating an uncontrolled form element does not impact it's live value when controllable.
+
+- [#3098](https://github.com/marko-js/marko/pull/3098) [`83e13e9`](https://github.com/marko-js/marko/commit/83e13e93bd8efd477042211962856b8f96cb9011) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve tracking of details/dialog open/close state when controllable.
+
 ## 6.0.146
 
 ### Patch Changes
