@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.149
+
+### Patch Changes
+
+- [#3103](https://github.com/marko-js/marko/pull/3103) [`aa7f4d6`](https://github.com/marko-js/marko/commit/aa7f4d6385d1587db0f64c9102353d05958407cd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with local closures within attribute tags being rendered by a native tags content attribute.
+
 ## 6.0.148
 
 ### Patch Changes
