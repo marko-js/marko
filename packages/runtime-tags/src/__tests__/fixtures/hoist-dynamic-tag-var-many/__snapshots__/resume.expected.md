@@ -156,234 +156,235 @@
     </ul>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.db = [0,
+      M._.r = [_ =&gt; (_.eb = [0,
           {
             "BranchScopes:#text/0": [_.a = {
-              "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+              "ConditionalRenderer:#text/0": _.c =
+                "__tests__/tags/child.marko",
               "#scopeOffset/1": 4,
               setHtml: _.b = {}
-            }, _.c = {
-              "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+            }, _.d = {
+              "ConditionalRenderer:#text/0": _.c,
               "#scopeOffset/1": 7,
-              setHtml: _.d = {}
-            }, _.e = {
-              "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+              setHtml: _.e = {}
+            }, _.f = {
+              "ConditionalRenderer:#text/0": _.c,
               "#scopeOffset/1": 10,
-              setHtml: _.f = {}
-            }, _.g = {
-              "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+              setHtml: _.g = {}
+            }, _.h = {
+              "ConditionalRenderer:#text/0": _.c,
               "#scopeOffset/1": 13,
-              setHtml: _.h = {}
-            }, _.i = {
-              "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+              setHtml: _.i = {}
+            }, _.j = {
+              "ConditionalRenderer:#text/0": _.c,
               "#scopeOffset/1": 16,
-              setHtml: _.j = {}
-            }, _.k = {
-              "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+              setHtml: _.k = {}
+            }, _.l = {
+              "ConditionalRenderer:#text/0": _.c,
               "#scopeOffset/1": 19,
-              setHtml: _.l = {}
+              setHtml: _.m = {}
             }],
-            "BranchScopes:#text/1": [_.m = {
-              "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+            "BranchScopes:#text/1": [_.n = {
+              "ConditionalRenderer:#text/0": _.c,
               "#scopeOffset/1": 22,
-              setHtml2: _.n = {}
-            }, _.o = {
-              "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+              setHtml2: _.o = {}
+            }, _.p = {
+              "ConditionalRenderer:#text/0": _.c,
               "#scopeOffset/1": 25,
-              setHtml2: _.p = {}
-            }, _.q = {
-              "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+              setHtml2: _.q = {}
+            }, _.r = {
+              "ConditionalRenderer:#text/0": _.c,
               "#scopeOffset/1": 28,
-              setHtml2: _.r = {}
-            }, _.s = {
-              "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+              setHtml2: _.s = {}
+            }, _.t = {
+              "ConditionalRenderer:#text/0": _.c,
               "#scopeOffset/1": 31,
-              setHtml2: _.t = {}
+              setHtml2: _.u = {}
             }],
-            "BranchScopes:#text/2": [_.$ = {
-              "BranchScopes:#ul/0": [_.u = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+            "BranchScopes:#text/2": [_.ab = {
+              "BranchScopes:#ul/0": [_.v = {
+                "ConditionalRenderer:#text/0": _.c,
                 "#scopeOffset/1": 35,
-                setHtml3: _.v = {}
-              }, _.w = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+                setHtml3: _.w = {}
+              }, _.x = {
+                "ConditionalRenderer:#text/0": _.c,
                 "#scopeOffset/1": 38,
-                setHtml3: _.x = {}
-              }, _.y = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+                setHtml3: _.y = {}
+              }, _.z = {
+                "ConditionalRenderer:#text/0": _.c,
                 "#scopeOffset/1": 41,
-                setHtml3: _.z = {}
-              }, _.A = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+                setHtml3: _.A = {}
+              }, _.B = {
+                "ConditionalRenderer:#text/0": _.c,
                 "#scopeOffset/1": 44,
-                setHtml3: _.B = {}
-              }]
-            }, _.ab = {
-              "BranchScopes:#ul/0": [_.C = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-                "#scopeOffset/1": 48,
-                setHtml3: _.D = {}
-              }, _.E = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-                "#scopeOffset/1": 51,
-                setHtml3: _.F = {}
-              }, _.G = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-                "#scopeOffset/1": 54,
-                setHtml3: _.H = {}
-              }, _.I = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-                "#scopeOffset/1": 57,
-                setHtml3: _.J = {}
+                setHtml3: _.C = {}
               }]
             }, _.bb = {
-              "BranchScopes:#ul/0": [_.K = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-                "#scopeOffset/1": 61,
-                setHtml3: _.L = {}
-              }, _.M = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-                "#scopeOffset/1": 64,
-                setHtml3: _.N = {}
-              }, _.O = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-                "#scopeOffset/1": 67,
-                setHtml3: _.P = {}
-              }, _.Q = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
-                "#scopeOffset/1": 70,
-                setHtml3: _.R = {}
+              "BranchScopes:#ul/0": [_.D = {
+                "ConditionalRenderer:#text/0": _.c,
+                "#scopeOffset/1": 48,
+                setHtml3: _.E = {}
+              }, _.F = {
+                "ConditionalRenderer:#text/0": _.c,
+                "#scopeOffset/1": 51,
+                setHtml3: _.G = {}
+              }, _.H = {
+                "ConditionalRenderer:#text/0": _.c,
+                "#scopeOffset/1": 54,
+                setHtml3: _.I = {}
+              }, _.J = {
+                "ConditionalRenderer:#text/0": _.c,
+                "#scopeOffset/1": 57,
+                setHtml3: _.K = {}
               }]
             }, _.cb = {
-              "BranchScopes:#ul/0": [_.S = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+              "BranchScopes:#ul/0": [_.L = {
+                "ConditionalRenderer:#text/0": _.c,
+                "#scopeOffset/1": 61,
+                setHtml3: _.M = {}
+              }, _.N = {
+                "ConditionalRenderer:#text/0": _.c,
+                "#scopeOffset/1": 64,
+                setHtml3: _.O = {}
+              }, _.P = {
+                "ConditionalRenderer:#text/0": _.c,
+                "#scopeOffset/1": 67,
+                setHtml3: _.Q = {}
+              }, _.R = {
+                "ConditionalRenderer:#text/0": _.c,
+                "#scopeOffset/1": 70,
+                setHtml3: _.S = {}
+              }]
+            }, _.db = {
+              "BranchScopes:#ul/0": [_.T = {
+                "ConditionalRenderer:#text/0": _.c,
                 "#scopeOffset/1": 74,
-                setHtml3: _.T = {}
-              }, _.U = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+                setHtml3: _.U = {}
+              }, _.V = {
+                "ConditionalRenderer:#text/0": _.c,
                 "#scopeOffset/1": 77,
-                setHtml3: _.V = {}
-              }, _.W = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+                setHtml3: _.W = {}
+              }, _.X = {
+                "ConditionalRenderer:#text/0": _.c,
                 "#scopeOffset/1": 80,
-                setHtml3: _.X = {}
-              }, _.Y = {
-                "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+                setHtml3: _.Y = {}
+              }, _.Z = {
+                "ConditionalRenderer:#text/0": _.c,
                 "#scopeOffset/1": 83,
-                setHtml3: _.Z = {}
+                setHtml3: _.$ = {}
               }]
             }]
-          }, _.a, _.b, 1, _.c, _.d, 1, _.e, _.f, 1, _.g, _.h, 1, _.i, _.j,
-          1, _.k, _.l, 1, _.m, _.n, 1, _.o, _.p, 1, _.q, _.r, 1, _.s, _.t,
-          1, _.$, _.u, _.v, 1, _.w, _.x, 1, _.y, _.z, 1, _.A, _.B, 1, _.ab,
-          _.C, _.D, 1, _.E, _.F, 1, _.G, _.H, 1, _.I, _.J, 1, _.bb, _.K, _
-          .L, 1, _.M, _.N, 1, _.O, _.P, 1, _.Q, _.R, 1, _.cb, _.S, _.T, 1, _
-          .U, _.V, 1, _.W, _.X, 1, _.Y, _.Z
+          }, _.a, _.b, 1, _.d, _.e, 1, _.f, _.g, 1, _.h, _.i, 1, _.j, _.k,
+          1, _.l, _.m, 1, _.n, _.o, 1, _.p, _.q, 1, _.r, _.s, 1, _.t, _.u,
+          1, _.ab, _.v, _.w, 1, _.x, _.y, 1, _.z, _.A, 1, _.B, _.C, 1, _.bb,
+          _.D, _.E, 1, _.F, _.G, 1, _.H, _.I, 1, _.J, _.K, 1, _.cb, _.L, _
+          .M, 1, _.N, _.O, 1, _.P, _.Q, 1, _.R, _.S, 1, _.db, _.T, _.U, 1, _
+          .V, _.W, 1, _.X, _.Y, 1, _.Z, _.$
         ], _.a.setHtml = _._[
           "__tests__/tags/child.marko_0/_return"
           ](_.b), _.b["#TagVariable"] = _._[
           "__tests__/template.marko_1_setHtml/var"
-          ](_.a), _.c.setHtml = _._[
+          ](_.a), _.d.setHtml = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.d), _.d["#TagVariable"] = _._[
+          ](_.e), _.e["#TagVariable"] = _._[
           "__tests__/template.marko_1_setHtml/var"
-          ](_.c), _.e.setHtml = _._[
+          ](_.d), _.f.setHtml = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.f), _.f["#TagVariable"] = _._[
+          ](_.g), _.g["#TagVariable"] = _._[
           "__tests__/template.marko_1_setHtml/var"
-          ](_.e), _.g.setHtml = _._[
+          ](_.f), _.h.setHtml = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.h), _.h["#TagVariable"] = _._[
+          ](_.i), _.i["#TagVariable"] = _._[
           "__tests__/template.marko_1_setHtml/var"
-          ](_.g), _.i.setHtml = _._[
+          ](_.h), _.j.setHtml = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.j), _.j["#TagVariable"] = _._[
+          ](_.k), _.k["#TagVariable"] = _._[
           "__tests__/template.marko_1_setHtml/var"
-          ](_.i), _.k.setHtml = _._[
+          ](_.j), _.l.setHtml = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.l), _.l["#TagVariable"] = _._[
+          ](_.m), _.m["#TagVariable"] = _._[
           "__tests__/template.marko_1_setHtml/var"
-          ](_.k), _.m.setHtml2 = _._[
+          ](_.l), _.n.setHtml2 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.n), _.n["#TagVariable"] = _._[
+          ](_.o), _.o["#TagVariable"] = _._[
           "__tests__/template.marko_2_setHtml2/var"
-          ](_.m), _.o.setHtml2 = _._[
+          ](_.n), _.p.setHtml2 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.p), _.p["#TagVariable"] = _._[
+          ](_.q), _.q["#TagVariable"] = _._[
           "__tests__/template.marko_2_setHtml2/var"
-          ](_.o), _.q.setHtml2 = _._[
+          ](_.p), _.r.setHtml2 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.r), _.r["#TagVariable"] = _._[
+          ](_.s), _.s["#TagVariable"] = _._[
           "__tests__/template.marko_2_setHtml2/var"
-          ](_.q), _.s.setHtml2 = _._[
+          ](_.r), _.t.setHtml2 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.t), _.t["#TagVariable"] = _._[
+          ](_.u), _.u["#TagVariable"] = _._[
           "__tests__/template.marko_2_setHtml2/var"
-          ](_.s), _.u.setHtml3 = _._[
+          ](_.t), _.v.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.v), _.v["#TagVariable"] = _._[
+          ](_.w), _.w["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.u), _.w.setHtml3 = _._[
+          ](_.v), _.x.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.x), _.x["#TagVariable"] = _._[
+          ](_.y), _.y["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.w), _.y.setHtml3 = _._[
+          ](_.x), _.z.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.z), _.z["#TagVariable"] = _._[
+          ](_.A), _.A["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.y), _.A.setHtml3 = _._[
+          ](_.z), _.B.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.B), _.B["#TagVariable"] = _._[
+          ](_.C), _.C["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.A), _.C.setHtml3 = _._[
+          ](_.B), _.D.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.D), _.D["#TagVariable"] = _._[
+          ](_.E), _.E["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.C), _.E.setHtml3 = _._[
+          ](_.D), _.F.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.F), _.F["#TagVariable"] = _._[
+          ](_.G), _.G["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.E), _.G.setHtml3 = _._[
+          ](_.F), _.H.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.H), _.H["#TagVariable"] = _._[
+          ](_.I), _.I["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.G), _.I.setHtml3 = _._[
+          ](_.H), _.J.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.J), _.J["#TagVariable"] = _._[
+          ](_.K), _.K["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.I), _.K.setHtml3 = _._[
+          ](_.J), _.L.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.L), _.L["#TagVariable"] = _._[
+          ](_.M), _.M["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.K), _.M.setHtml3 = _._[
+          ](_.L), _.N.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.N), _.N["#TagVariable"] = _._[
+          ](_.O), _.O["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.M), _.O.setHtml3 = _._[
+          ](_.N), _.P.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.P), _.P["#TagVariable"] = _._[
+          ](_.Q), _.Q["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.O), _.Q.setHtml3 = _._[
+          ](_.P), _.R.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.R), _.R["#TagVariable"] = _._[
+          ](_.S), _.S["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.Q), _.S.setHtml3 = _._[
+          ](_.R), _.T.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.T), _.T["#TagVariable"] = _._[
+          ](_.U), _.U["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.S), _.U.setHtml3 = _._[
+          ](_.T), _.V.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.V), _.V["#TagVariable"] = _._[
+          ](_.W), _.W["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.U), _.W.setHtml3 = _._[
+          ](_.V), _.X.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.X), _.X["#TagVariable"] = _._[
+          ](_.Y), _.Y["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.W), _.Y.setHtml3 = _._[
+          ](_.X), _.Z.setHtml3 = _._[
           "__tests__/tags/child.marko_0/_return"
-          ](_.Z), _.Z["#TagVariable"] = _._[
+          ](_.$), _.$["#TagVariable"] = _._[
           "__tests__/template.marko_4_setHtml3/var"
-          ](_.Y), _.db),
+          ](_.Z), _.eb),
         "__tests__/template.marko_0 1"
       ];
       M._.w()

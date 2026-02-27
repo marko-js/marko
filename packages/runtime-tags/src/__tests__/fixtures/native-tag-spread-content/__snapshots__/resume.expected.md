@@ -32,23 +32,24 @@
     </em>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.g = [0, 1, _.b = {
-          "BranchScopes:#div/0": _.c = {},
-          "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content",
-          "BranchScopes:#button/1": _.d = {},
-          "ConditionalRenderer:#button/1": "__tests__/template.marko_1_content",
-          "BranchScopes:#strong/4": _.e = {},
+      M._.r = [_ =&gt; (_.h = [0, 1, _.c = {
+          "BranchScopes:#div/0": _.d = {},
+          "ConditionalRenderer:#div/0": _.a =
+            "__tests__/template.marko_1_content",
+          "BranchScopes:#button/1": _.e = {},
+          "ConditionalRenderer:#button/1": _.a,
+          "BranchScopes:#strong/4": _.f = {},
           "ConditionalRenderer:#strong/4": "__tests__/tags/my-div.marko_1_content",
-          "BranchScopes:#p/5": _.f = {},
-          "ConditionalRenderer:#p/5": "__tests__/template.marko_1_content",
-          input: _.a = {
-            content: _.h = {}
+          "BranchScopes:#p/5": _.g = {},
+          "ConditionalRenderer:#p/5": _.a,
+          input: _.b = {
+            content: _.i = {}
           }
-        }, _.c, _.d, 1, _.e, _.f], _.a.content = _._[
+        }, _.d, _.e, 1, _.f, _.g], _.b.content = _._[
           "__tests__/template.marko_1_content"
-          ](_.h), _.b.CustomContent_content = _._[
+          ](_.i), _.c.CustomContent_content = _._[
           "__tests__/tags/my-div.marko_1_content"
-          ](_.b), _.g),
+          ](_.c), _.h),
         "__tests__/tags/my-div.marko_0_input_CustomContent_content 2 __tests__/tags/my-div.marko_0_input 2"
       ];
       M._.w()

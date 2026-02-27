@@ -299,6 +299,7 @@ class State {
   flushed = false;
   wroteUndefined = false;
   buf = [] as string[];
+  strs = new Map<string, Reference>();
   refs = new WeakMap<WeakKey, Reference>();
   assigned = new Set<Reference>();
   registered = [] as Reference[];
@@ -576,7 +577,7 @@ function writeProp(
 ): boolean {
   switch (typeof val) {
     case "string":
-      return writeString(state, val);
+      return writeString(state, val, parent, accessor);
 
     case "number":
       return writeNumber(state, val);
@@ -676,8 +677,26 @@ function writeRegistered(
   return true;
 }
 
-function writeString(state: State, val: string) {
-  state.buf.push(quote(val, 0));
+function writeString(
+  state: State,
+  val: string,
+  parent: Reference | null,
+  accessor: string,
+) {
+  if (val.length > 30) {
+    const ref = state.strs.get(val);
+    if (ref) {
+      state.buf.push(ensureId(state, ref));
+    } else {
+      state.strs.set(
+        val,
+        new Reference(parent, accessor, state.flush, state.buf.length),
+      );
+      state.buf.push(quote(val, 0));
+    }
+  } else {
+    state.buf.push(quote(val, 0));
+  }
   return true;
 }
 
