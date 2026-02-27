@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div id=el></div><button>Click Me</button><!--M_*2 #button/0--> <script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,1,{"BranchScopes:#button/0":{},"ConditionalRenderer:#button/0":"__tests__/template.marko_2_content",input:_.a={"on-click":_._["__tests__/template.marko_0/onclick"],onClick:_._["__tests__/template.marko_0/onClick"],content:_.c={}},input_onClick:_._["__tests__/template.marko_0/onClick"]}],_.a.content=_._["__tests__/template.marko_2_content"](_.c),_.b),"__tests__/template.marko_1_input 2 __tests__/template.marko_1_input_onClick 2"];M._.w()</script>
+  <div id=el></div><button>Click Me</button><!--M_*2 #button/0--> <script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,1,{"BranchScopes:#button/0":_.b={},"ConditionalRenderer:#button/0":"__tests__/template.marko_2_content",input:_.a={"on-click":_._["__tests__/template.marko_0/onclick"],onClick:_._["__tests__/template.marko_0/onClick"],content:_.d={}},input_onClick:_._["__tests__/template.marko_0/onClick"]},_.b],_.a.content=_._["__tests__/template.marko_2_content"](_.d),_.c),"__tests__/template.marko_1_input 2 __tests__/template.marko_1_input_onClick 2"];M._.w()</script>
 ```
 
 # Render End
@@ -18,10 +18,9 @@
      
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, 1,
+      M._.r = [_ =&gt; (_.c = [0, 1,
         {
-          "BranchScopes:#button/0":
-          {},
+          "BranchScopes:#button/0": _.b = {},
           "ConditionalRenderer:#button/0": "__tests__/template.marko_2_content",
           input: _.a = {
             "on-click": _._[
@@ -30,14 +29,14 @@
             onClick: _._[
               "__tests__/template.marko_0/onClick"
               ],
-            content: _.c = {}
+            content: _.d = {}
           },
           input_onClick: _._[
             "__tests__/template.marko_0/onClick"
             ]
-        }], _.a.content = _._[
+        }, _.b], _.a.content = _._[
           "__tests__/template.marko_2_content"
-          ](_.c), _.b),
+          ](_.d), _.c),
         "__tests__/template.marko_1_input 2 __tests__/template.marko_1_input_onClick 2"
       ];
       M._.w()
