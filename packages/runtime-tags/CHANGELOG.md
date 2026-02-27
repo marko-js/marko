@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.150
+
+### Patch Changes
+
+- [#3105](https://github.com/marko-js/marko/pull/3105) [`39ffc6a`](https://github.com/marko-js/marko/commit/39ffc6abe837ec7ec948d8cf041d7e10e8a7f589) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Dedupe long strings when serialized.
+
 ## 6.0.149
 
 ### Patch Changes
