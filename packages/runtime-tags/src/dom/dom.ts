@@ -305,8 +305,10 @@ export function _attr_content(
   value: unknown,
 ) {
   const content = normalizeClientRender(value);
-  const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
-  if (scope[rendererAccessor] !== (scope[rendererAccessor] = content?.___id)) {
+  if (
+    scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] !==
+    (scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] = content?.___id)
+  ) {
     setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch);
     if (content?.___accessor) {
       subscribeToScopeSet(
@@ -315,6 +317,13 @@ export function _attr_content(
         scope[AccessorPrefix.BranchScopes + nodeAccessor],
       );
     }
+  }
+
+  for (const accessor in content?.___localClosures) {
+    content.___localClosures[accessor](
+      scope[AccessorPrefix.BranchScopes + nodeAccessor],
+      content.___localClosureValues![accessor],
+    );
   }
 }
 

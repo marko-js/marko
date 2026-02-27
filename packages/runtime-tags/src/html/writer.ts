@@ -98,7 +98,9 @@ export function _attr_content(
   if (rendered) {
     if (shouldResume) {
       writeScope(scopeId, {
-        [AccessorPrefix.BranchScopes + nodeAccessor]: writeScope(branchId, {}),
+        [AccessorPrefix.BranchScopes + nodeAccessor]: referenceScope(
+          writeScope(branchId, {}),
+        ),
         [AccessorPrefix.ConditionalRenderer + nodeAccessor]: render?.___id,
       });
     }

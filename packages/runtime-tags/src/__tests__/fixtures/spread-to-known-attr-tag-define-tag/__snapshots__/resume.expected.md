@@ -28,14 +28,13 @@
     </select>
     <script>
       WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.e = [0, 3,
+      M._.r = [_ =&gt; (_.h = [0, 3,
         {
-          "BranchScopes:#option/0":
-          {},
+          "BranchScopes:#option/0": _.e = {},
           "ConditionalRenderer:#option/0": "__tests__/template.marko_4_content",
           option: _.a = {
             value: 1,
-            content: _.f = {},
+            content: _.i = {},
             *[(_.b = [, _.c = {
               value: 2
             }, _.d = {
@@ -45,25 +44,23 @@
               yield* _.b
             }
           }
-        }, 1,
+        }, _.e,
         {
-          "BranchScopes:#option/0":
-          {},
+          "BranchScopes:#option/0": _.f = {},
           "ConditionalRenderer:#option/0": "__tests__/template.marko_5_content",
           option: _.c
-        }, 1,
+        }, _.f,
         {
-          "BranchScopes:#option/0":
-          {},
+          "BranchScopes:#option/0": _.g = {},
           "ConditionalRenderer:#option/0": "__tests__/template.marko_6_content",
           option: _.d
-        }], _.b[0] = _.a, _.a.content = _._[
+        }, _.g], _.b[0] = _.a, _.a.content = _._[
           "__tests__/template.marko_4_content"
-          ](_.f), _.c.content = _._[
+          ](_.i), _.c.content = _._[
           "__tests__/template.marko_5_content"
-          ](_.f), _.d.content = _._[
+          ](_.i), _.d.content = _._[
           "__tests__/template.marko_6_content"
-          ](_.f), _.e),
+          ](_.i), _.h),
         "__tests__/template.marko_3_option 4 6 8"
       ];
       M._.w()

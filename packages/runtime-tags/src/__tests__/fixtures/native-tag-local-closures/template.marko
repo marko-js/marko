@@ -1,0 +1,17 @@
+<let/size=1>
+
+<define/Child|input|>
+  <for|item| of=input.item>
+    <div ...item/>
+  </>
+</>
+
+<Child>
+  <for|i| until=size>
+    <@item>${i}</@item>
+  </for>
+</Child>
+
+<button onClick() { size++ }>
+  Add
+</button>
