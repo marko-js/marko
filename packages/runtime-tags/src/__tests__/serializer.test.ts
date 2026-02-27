@@ -47,6 +47,10 @@ describe("serializer", () => {
     describe("string", () => {
       it("empty", () => assertStringify("", `""`));
       it("normal", () => assertStringify("test", `"test"`));
+      it("over 30 chars deduped", () => {
+        const long = "1234567890123456789012345678901";
+        assertStringify({ a: long, b: long }, `{a:_.a="${long}",b:_.a}`);
+      });
       it("special characters", () =>
         assertStringify(
           '"\b\t\n\f\r\v\0</script\u2028\u2029some other content',
