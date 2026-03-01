@@ -53,14 +53,6 @@ export default {
         );
       }
     }
-
-    if (node.body.body.length > 1) {
-      throw tag.hub.buildError(
-        node.name,
-        "The [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) currently only supports static content." +
-          htmlStyleTagAlternateMsg,
-      );
-    }
   },
   translate(tag) {
     const {
@@ -74,22 +66,33 @@ export default {
       ext = ".module" + ext;
     }
 
-    const markoText = node.body.body[0] as t.MarkoText;
     const { resolveVirtualDependency } = getMarkoOpts();
-    const start = getStart(file, markoText);
-    const end = getEnd(file, markoText);
-    let code = markoText.value;
+    const createMap = !!(resolveVirtualDependency && sourceMaps);
+    let magicString: MagicString | undefined;
+    let code = "";
+    let last = 0;
     let map: SourceMap | undefined;
 
-    if (
-      resolveVirtualDependency &&
-      sourceMaps &&
-      start !== null &&
-      end !== null
-    ) {
-      const magicString = new MagicString(file.code, { filename });
-      magicString.remove(0, start);
-      magicString.remove(end, file.code.length);
+    for (const child of node.body.body as t.MarkoText[]) {
+      code += child.value;
+
+      if (createMap) {
+        const start = getStart(file, child);
+        if (start !== null) {
+          magicString ||= new MagicString(file.code, { filename });
+          if (start > last) {
+            magicString.remove(last, start);
+          }
+          last = getEnd(file, child)!;
+        }
+      }
+    }
+
+    if (magicString) {
+      if (file.code.length > last) {
+        magicString.remove(last, file.code.length);
+      }
+
       map = magicString.generateMap({
         source: filename,
         includeContent: true,

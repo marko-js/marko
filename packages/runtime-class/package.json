@@ -70,7 +70,7 @@
   },
   "dependencies": {
     "@marko/compiler": "^5.39.56",
-    "@marko/runtime-tags": "^6.0.146",
+    "@marko/runtime-tags": "^6.0.150",
     "app-module-path": "^2.2.0",
     "argly": "^1.2.0",
     "browser-refresh-client": "1.1.4",
