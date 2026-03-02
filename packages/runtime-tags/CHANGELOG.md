@@ -1,5 +1,16 @@
 # @marko/runtime-tags
 
+## 6.0.151
+
+### Patch Changes
+
+- [#3108](https://github.com/marko-js/marko/pull/3108) [`97cf126`](https://github.com/marko-js/marko/commit/97cf126772fa4521f171d3d968b18a11c6e0028f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with translating concise mode tags api style tag.
+
+- [#3108](https://github.com/marko-js/marko/pull/3108) [`f1a93a7`](https://github.com/marko-js/marko/commit/f1a93a7f4a0230aa57cf62aea094db370e0a0fad) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade htmljs-parser to fix a concise mode whitespace normalization issue.
+
+- Updated dependencies [[`97cf126`](https://github.com/marko-js/marko/commit/97cf126772fa4521f171d3d968b18a11c6e0028f), [`f1a93a7`](https://github.com/marko-js/marko/commit/f1a93a7f4a0230aa57cf62aea094db370e0a0fad)]:
+  - @marko/compiler@5.39.57
+
 ## 6.0.150
 
 ### Patch Changes
