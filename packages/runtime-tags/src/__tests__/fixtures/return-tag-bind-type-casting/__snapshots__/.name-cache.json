@@ -1,0 +1,12 @@
+{
+  "vars": {
+    "props": {
+      "$_": "r",
+      "$init": "t",
+      "$$value": "_",
+      "$$mytag_content__count__script": "o",
+      "$$mytag_content__count": "e",
+      "$$count__closure": "c"
+    }
+  }
+}
