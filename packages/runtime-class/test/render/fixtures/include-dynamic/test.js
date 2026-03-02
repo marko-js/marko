@@ -1,4 +1,3 @@
-var includeTarget = require("./include-target.marko");
 exports.templateData = {
-  includeTarget: includeTarget,
+  get includeTarget() { return require("./include-target.marko") },
 };

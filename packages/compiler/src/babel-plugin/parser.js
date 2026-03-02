@@ -194,6 +194,8 @@ export function parseMarko(file) {
           break;
       }
 
+      if (!value) return;
+
       const node = t.markoText(value);
       pushContent(node);
       onNext = (next) => {
