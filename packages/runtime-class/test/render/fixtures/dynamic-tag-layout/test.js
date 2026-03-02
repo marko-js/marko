@@ -1,3 +1,3 @@
 exports.templateData = {
-  layoutDynamic: require("./components/layout.marko"),
+  get layoutDynamic() { return require("./components/layout.marko") },
 };
