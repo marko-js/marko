@@ -4,6 +4,13 @@ import { inspect } from "node:util";
 import { register, Serializer, stringify } from "../html/serializer";
 import type { Boundary } from "../html/writer";
 
+const [major, minor] = process.version
+  .slice(1)
+  .split(".")
+  .map((v) => parseInt(v));
+const shouldTestRequestAndResponse =
+  major > 24 || (major === 24 && minor >= 14);
+
 describe("serializer", () => {
   it("example", () => {
     const data = {
@@ -1172,23 +1179,23 @@ describe("serializer", () => {
         `new Request("https://ebay.com/",{referrerPolicy:"no-referrer"})`,
       ));
 
-    it("body", async () => {
-      const serializer = assertSerializer();
-      const obj = { a: 1 };
-      const request = new Request("https://ebay.com/", {
-        method: "POST",
-        duplex: "half",
-        body: JSON.stringify(obj),
-      } as any);
-      const [result] = await serializer.assertStringify(
-        request,
-        `new Request("https://ebay.com/",{body:new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}}),duplex:"half",headers:{"content-type":"text/plain;charset=UTF-8"},method:"POST"})`,
-        `_.a.f(_.c=new Uint8Array([123,34,97,34,58,49,125]))`,
-        `_.a.r()`,
-      );
+    shouldTestRequestAndResponse &&
+      it("body", async () => {
+        const serializer = assertSerializer();
+        const obj = { a: 1 };
+        const request = new Request("https://ebay.com/", {
+          method: "POST",
+          duplex: "half",
+          body: JSON.stringify(obj),
+        } as any);
+        const [result] = await serializer.assertStringify(
+          request,
+          `new Request("https://ebay.com/",{body:new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}}),duplex:"half",headers:{"content-type":"text/plain;charset=UTF-8"},method:"POST"})`,
+          `_.a.f(_.c=new Uint8Array([123,34,97,34,58,49,125])),_.a.r()`,
+        );
 
-      assert.deepEqual(await result.json(), obj);
-    });
+        assert.deepEqual(await result.json(), obj);
+      });
   });
 
   describe("response", () => {
@@ -1213,22 +1220,22 @@ describe("serializer", () => {
       );
     });
 
-    it("buffer", async () => {
-      const serializer = assertSerializer();
-      const response = new Response(new Int8Array([116, 101, 115, 116]));
-      const [result] = await serializer.assertStringify(
-        response,
-        `new Response(new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}}))`,
-        `_.a.f(_.c=new Uint8Array([116,101,115,116]))`,
-        `_.a.r()`,
-      );
+    shouldTestRequestAndResponse &&
+      it("buffer", async () => {
+        const serializer = assertSerializer();
+        const response = new Response(new Int8Array([116, 101, 115, 116]));
+        const [result] = await serializer.assertStringify(
+          response,
+          `new Response(new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}}))`,
+          `_.a.f(_.c=new Uint8Array([116,101,115,116])),_.a.r()`,
+        );
 
-      assert.deepEqual(await consumeReader(result.body!.getReader()), {
-        yielded: [new Uint8Array([116, 101, 115, 116])],
-        errored: undefined,
-        returned: undefined,
+        assert.deepEqual(await consumeReader(result.body!.getReader()), {
+          yielded: [new Uint8Array([116, 101, 115, 116])],
+          errored: undefined,
+          returned: undefined,
+        });
       });
-    });
 
     it("ReadableStream string encoded", async () => {
       const serializer = assertSerializer();
@@ -1257,20 +1264,20 @@ describe("serializer", () => {
       assert.equal(await result.text(), "firstsecondthird");
     });
 
-    it("json", async () => {
-      const serializer = assertSerializer();
-      const response = new Response(JSON.stringify({ a: 1 }), {
-        headers: { "content-type": "application/json" },
-      });
-      const [result] = await serializer.assertStringify(
-        response,
-        `new Response(new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}}),{headers:{"content-type":"application/json"}})`,
-        `_.a.f(_.c=new Uint8Array([123,34,97,34,58,49,125]))`,
-        `_.a.r()`,
-      );
+    shouldTestRequestAndResponse &&
+      it("json", async () => {
+        const serializer = assertSerializer();
+        const response = new Response(JSON.stringify({ a: 1 }), {
+          headers: { "content-type": "application/json" },
+        });
+        const [result] = await serializer.assertStringify(
+          response,
+          `new Response(new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}}),{headers:{"content-type":"application/json"}})`,
+          `_.a.f(_.c=new Uint8Array([123,34,97,34,58,49,125])),_.a.r()`,
+        );
 
-      assert.deepEqual(await result.json(), { a: 1 });
-    });
+        assert.deepEqual(await result.json(), { a: 1 });
+      });
   });
 });
 
