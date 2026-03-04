@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.153
+
+### Patch Changes
+
+- [#3112](https://github.com/marko-js/marko/pull/3112) [`319294c`](https://github.com/marko-js/marko/commit/319294cbaafccbae6dfa1d9b018ae5210b876123) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor loop reconciler to be more efficient and smaller bundled size.
+
 ## 6.0.152
 
 ### Patch Changes
