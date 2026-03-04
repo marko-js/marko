@@ -31,6 +31,5 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-REMOVE li before li
-REMOVE li in ul
+REMOVE li, li in ul
 ```

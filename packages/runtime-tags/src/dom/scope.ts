@@ -45,11 +45,13 @@ export function destroyBranch(branch: BranchScope) {
 function destroyNestedBranches(branch: BranchScope) {
   branch[AccessorProp.Destroyed] = 1;
   branch[AccessorProp.BranchScopes]?.forEach(destroyNestedBranches);
-  branch[AccessorProp.AbortScopes]?.forEach((scope) => {
-    for (const id in scope[AccessorProp.AbortControllers]) {
-      $signalReset(scope, id);
-    }
-  });
+  branch[AccessorProp.AbortScopes]?.forEach(resetControllers);
+}
+
+function resetControllers(scope: Scope) {
+  for (const id in scope[AccessorProp.AbortControllers]) {
+    $signalReset(scope, id);
+  }
 }
 
 export function removeAndDestroyBranch(branch: BranchScope) {
