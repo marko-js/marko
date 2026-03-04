@@ -21,17 +21,10 @@ INSERT div
 
 # Mutations
 ```
+REMOVE #text, #text, #text, #text, #text, #text, #text, #text in div
 INSERT div/#text0, div/#text1
 INSERT div/#text2, div/#text3
 INSERT div/#text4, div/#text5
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before div/#text0
 UPDATE div/#text0 "" => "4"
 UPDATE div/#text2 "" => "5"
 UPDATE div/#text4 "" => "6"
@@ -47,16 +40,11 @@ UPDATE div/#text4 "" => "6"
 
 # Mutations
 ```
+REMOVE #text, #text, #text, #text, #text, #text in div
 INSERT div/#text0, div/#text1
 INSERT div/#text2, div/#text3
 INSERT div/#text4, div/#text5
 INSERT div/#text6, div/#text7
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before div/#text0
 UPDATE div/#text0 "" => "7"
 UPDATE div/#text2 "" => "10"
 UPDATE div/#text4 "" => "13"
@@ -73,18 +61,11 @@ UPDATE div/#text6 "" => "16"
 
 # Mutations
 ```
+REMOVE #text, #text, #text, #text, #text, #text, #text, #text in div
 INSERT div/#text0, div/#text1
 INSERT div/#text2, div/#text3
 INSERT div/#text4, div/#text5
 INSERT div/#text6, div/#text7
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before #text
-REMOVE #text before div/#text0
 UPDATE div/#text0 "" => "0"
 UPDATE div/#text2 "" => "-0.3"
 UPDATE div/#text4 "" => "-0.6"

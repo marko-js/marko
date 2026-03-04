@@ -28,7 +28,6 @@ import {
   run,
   runEffects,
 } from "./queue";
-import { reconcile } from "./reconcile";
 import {
   _content,
   createAndSetupBranch,
@@ -565,67 +564,196 @@ function loop<T extends unknown[] = unknown[]>(
   ) => {
     if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
     const scopesAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
-    const scopesByKeyAccessor = AccessorPrefix.BranchScopes + scopesAccessor;
     const renderer = _content("", template, walks, setup)();
     enableBranches();
     return (scope: Scope, value: T) => {
       const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
       const oldScopes = toArray<BranchScope>(scope[scopesAccessor]);
-      const oldScopesByKey: Map<unknown, BranchScope> =
-        scope[scopesByKeyAccessor] ||
-        oldScopes.reduce(
-          (map, scope, i) => map.set(scope[AccessorProp.LoopKey] ?? i, scope),
-          new Map<unknown, BranchScope>(),
-        );
       const newScopes: BranchScope[] = (scope[scopesAccessor] = []);
-      const newScopesByKey: Map<unknown, BranchScope> = (scope[
-        scopesByKeyAccessor
-      ] = new Map());
+      const oldLen = oldScopes.length;
       const parentNode = (
         referenceNode.nodeType > NodeType.Element
           ? referenceNode.parentNode ||
             oldScopes[0]?.[AccessorProp.StartNode].parentNode
           : referenceNode
       ) as Element;
+      let oldScopesByKey: Map<unknown, BranchScope> | undefined;
+      let hasPotentialMoves: boolean | undefined;
+
+      if (MARKO_DEBUG) {
+        // eslint-disable-next-line no-var
+        var seenKeys = new Set<unknown>();
+      }
+
       forEach(value, (key, args) => {
         if (MARKO_DEBUG) {
-          if (newScopesByKey.has(key)) {
+          if (seenKeys.has(key)) {
             console.error(
               `A <for> tag's \`by\` attribute must return a unique value for each item, but a duplicate was found matching:`,
               key,
             );
+          } else {
+            seenKeys.add(key);
           }
         }
 
-        const branch =
-          oldScopesByKey.get(key) ||
-          createAndSetupBranch(
+        let branch =
+          oldLen &&
+          (oldScopesByKey ||= oldScopes.reduce(
+            (map, scope, i) => map.set(scope[AccessorProp.LoopKey] ?? i, scope),
+            new Map<unknown, BranchScope>(),
+          )).get(key);
+        if (branch) {
+          hasPotentialMoves = oldScopesByKey!.delete(key);
+        } else {
+          branch = createAndSetupBranch(
             scope[AccessorProp.Global],
             renderer,
             scope,
             parentNode,
           );
+        }
         branch[AccessorProp.LoopKey] = key;
-        params?.(branch, args);
-        newScopesByKey.set(key, branch);
         newScopes.push(branch);
+        params?.(branch, args);
       });
 
+      const newLen = newScopes.length;
+      const hasSiblings = referenceNode !== parentNode;
       let afterReference: null | Node = null;
-      if (referenceNode !== parentNode) {
-        if (oldScopes.length) {
-          afterReference =
-            oldScopes[oldScopes.length - 1][AccessorProp.EndNode].nextSibling;
-          if (!newScopes.length) {
+      let oldEnd = oldLen - 1;
+      let newEnd = newLen - 1;
+      let start = 0;
+
+      if (hasSiblings) {
+        if (oldLen) {
+          afterReference = oldScopes[oldEnd][AccessorProp.EndNode].nextSibling;
+          if (!newLen) {
             parentNode.insertBefore(referenceNode, afterReference);
           }
-        } else if (newScopes.length) {
+        } else if (newLen) {
           afterReference = referenceNode.nextSibling;
           referenceNode.remove();
         }
       }
 
-      reconcile(parentNode, oldScopes, newScopes, afterReference);
+      if (!hasPotentialMoves) {
+        // Fast path: if we never match an existing branch, we can directly add or remove all scopes.
+        if (oldLen) {
+          oldScopes.forEach(
+            hasSiblings ? removeAndDestroyBranch : destroyBranch,
+          );
+          if (!hasSiblings) {
+            parentNode.textContent = "";
+          }
+        }
+
+        for (const newScope of newScopes) {
+          insertBranchBefore(newScope, parentNode, afterReference);
+        }
+
+        return;
+      }
+
+      for (const branch of oldScopesByKey!.values()) {
+        removeAndDestroyBranch(branch);
+      }
+
+      // Skip common prefix
+      while (
+        start < oldLen &&
+        start < newLen &&
+        oldScopes[start] === newScopes[start]
+      ) {
+        start++;
+      }
+
+      // Skip common suffix
+      while (
+        oldEnd >= start &&
+        newEnd >= start &&
+        oldScopes[oldEnd] === newScopes[newEnd]
+      ) {
+        oldEnd--;
+        newEnd--;
+      }
+
+      // Update afterReference to account for common suffix
+      if (oldEnd + 1 < oldLen) {
+        afterReference = oldScopes[oldEnd + 1][AccessorProp.StartNode];
+      }
+
+      if (start > oldEnd) {
+        if (start <= newEnd) {
+          for (let i = start; i <= newEnd; i++) {
+            insertBranchBefore(newScopes[i], parentNode, afterReference);
+          }
+        }
+
+        // Fast path: only new remaining
+        return;
+      } else if (start > newEnd) {
+        // Fast path: only old remaining (removes already handled above)
+        return;
+      }
+
+      // Handle mixed new/moves
+      const diffLen = newEnd - start + 1;
+      const oldPos = new Map<BranchScope, number>();
+      const sources = new Array<number>(diffLen);
+      const pred = new Array<number>(diffLen);
+      const tails: number[] = [];
+      let tail: number = -1;
+      let lo: number;
+      let hi: number;
+      let mid: number;
+
+      for (let i = start; i <= oldEnd; i++) {
+        oldPos.set(oldScopes[i], i);
+      }
+
+      for (let i = diffLen; i--; ) {
+        sources[i] = oldPos.get(newScopes[start + i]) ?? -1;
+      }
+
+      for (let i = 0; i < diffLen; i++) {
+        if (~sources[i]) {
+          if (tail < 0 || sources[tails[tail]] < sources[i]) {
+            if (~tail) pred[i] = tails[tail];
+            tails[++tail] = i;
+          } else {
+            lo = 0;
+            hi = tail;
+            while (lo < hi) {
+              mid = ((lo + hi) / 2) | 0;
+              if (sources[tails[mid]] < sources[i]) lo = mid + 1;
+              else hi = mid;
+            }
+            if (sources[i] < sources[tails[lo]]) {
+              if (lo > 0) pred[i] = tails[lo - 1];
+              tails[lo] = i;
+            }
+          }
+        }
+      }
+
+      // Backtrack to build LIS indices (reuse tails array)
+      hi = tails[tail];
+      lo = tail + 1;
+      while (lo-- > 0) {
+        tails[lo] = hi;
+        hi = pred[hi];
+      }
+
+      for (let i = diffLen; i--; ) {
+        if (~tail && i === tails[tail]) {
+          tail--;
+        } else {
+          insertBranchBefore(newScopes[start + i], parentNode, afterReference);
+        }
+
+        afterReference = newScopes[start + i][AccessorProp.StartNode];
+      }
     };
   };
 }
