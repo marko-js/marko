@@ -1,5 +1,7 @@
+import type { TestConfig } from "../../main.test";
 import { flush, wait } from "../../utils/resolve";
 
-export const steps = [{}, flush, flush, wait];
-
-export const skip_equivalent = true; // in-order streaming
+export const config: TestConfig = {
+  steps: [{}, flush, flush, wait],
+  skip_equivalent: true,
+};

@@ -1,2 +1,5 @@
-export const steps = [{}];
-export const skip_dom = true;
+import type { TestConfig } from "../../main.test";
+
+export const config: TestConfig = {
+  skip_dom: true,
+};

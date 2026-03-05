@@ -1,13 +1,4 @@
-export const steps = [
-  {},
-  clickChange,
-  clickUp,
-  clickChange,
-  clickChange,
-  clickDown,
-  clickChange,
-  clickChange,
-];
+import type { TestConfig } from "../../main.test";
 
 function clickUp(container: Element) {
   container.querySelector<HTMLButtonElement>(".up")!.click();
@@ -20,3 +11,16 @@ function clickDown(container: Element) {
 function clickChange(container: Element) {
   container.querySelector<HTMLButtonElement>(".change")!.click();
 }
+
+export const config: TestConfig = {
+  steps: [
+    {},
+    clickChange,
+    clickUp,
+    clickChange,
+    clickChange,
+    clickDown,
+    clickChange,
+    clickChange,
+  ],
+};

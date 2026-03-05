@@ -1,5 +1,7 @@
+import type { TestConfig } from "../../main.test";
 import { flush, wait } from "../../utils/resolve";
 
-export const steps = [{}, wait, flush];
-
-export const skip_equivalent = true; // try removed before flush
+export const config: TestConfig = {
+  steps: [{}, wait, flush],
+  skip_equivalent: true,
+};

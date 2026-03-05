@@ -1,3 +1,6 @@
-// export const error_compiler = true;
-export const skip_ssr = true;
-export const skip_csr = true;
+import type { TestConfig } from "../../main.test";
+
+export const config: TestConfig = {
+  skip_ssr: true,
+  skip_csr: true,
+};

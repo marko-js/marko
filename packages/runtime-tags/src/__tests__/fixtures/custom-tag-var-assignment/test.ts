@@ -1,3 +1,5 @@
+import type { TestConfig } from "../../main.test";
+
 const increment_child = (container: Element) => {
   container.querySelector<HTMLButtonElement>("button.inc-child")!.click();
 };
@@ -10,4 +12,6 @@ const reset = (container: Element) => {
   container.querySelector<HTMLButtonElement>("button.reset")!.click();
 };
 
-export const steps = [{}, increment_child, increment_parent, reset];
+export const config: TestConfig = {
+  steps: [{}, increment_child, increment_parent, reset],
+};

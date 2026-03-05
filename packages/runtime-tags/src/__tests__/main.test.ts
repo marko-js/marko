@@ -13,17 +13,22 @@ import { bundle } from "./utils/bundle";
 import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 import createBrowser from "./utils/create-browser";
 import {
+  type Flush,
   isFlush,
   isThrows,
   isWait,
   resetResolveState,
   resolveAfter,
+  type Throws,
+  type Wait,
 } from "./utils/resolve";
 import { stripInlineRuntime } from "./utils/strip-inline-runtime";
 import createMutationTracker from "./utils/track-mutations";
 
-type TestConfig = {
-  steps?: unknown[] | (() => Promise<unknown[]>);
+type Step = Input | Wait | Flush | Throws | ((container: Element) => unknown);
+type Steps = [Input, ...Step[]];
+export type TestConfig = {
+  steps?: Steps | (() => Steps | Promise<Steps>);
   skip_dom?: boolean;
   skip_html?: boolean;
   skip_csr?: boolean;
@@ -93,7 +98,7 @@ describe("runtime-tags/translator", () => {
       const initialNameCache = structuredClone(nameCache);
       const config: TestConfig = (() => {
         try {
-          return require(resolve("test.ts"));
+          return require(resolve("test.ts")).config ?? {};
         } catch {
           return {};
         }
@@ -202,11 +207,10 @@ describe("runtime-tags/translator", () => {
           const serverTemplate = require(manualSSR ? serverFile : templateFile)
             .default as Template;
 
-          const [input = {}, ...steps] = (
+          const [input = {}, ...steps] =
             typeof config.steps === "function"
               ? await config.steps()
-              : config.steps || []
-          ) as [Input, ...unknown[]];
+              : config.steps || [];
 
           const chunks: string[] = [];
           const logs: ConsoleRecord[][] = [];
@@ -305,11 +309,10 @@ describe("runtime-tags/translator", () => {
 
           const { window } = browser;
           const { document } = window;
-          const [input, ...steps] = (
+          const [input = {}, ...steps] =
             typeof config.steps === "function"
               ? await config.steps()
-              : config.steps || []
-          ) as [Input, ...unknown[]];
+              : config.steps || [];
           const { run } = browser.require<
             typeof import("@marko/runtime-tags/dom")
           >("@marko/runtime-tags/dom");

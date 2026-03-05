@@ -1,1 +1,5 @@
-export const steps = [{ foo: "bar" }];
+import type { TestConfig } from "../../main.test";
+
+export const config: TestConfig = {
+  steps: [{ foo: "bar" }],
+};

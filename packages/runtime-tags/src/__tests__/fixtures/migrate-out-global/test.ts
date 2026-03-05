@@ -1,1 +1,5 @@
-export const steps = [{ $global: { x: 1 } }];
+import type { TestConfig } from "../../main.test";
+
+export const config: TestConfig = {
+  steps: [{ $global: { x: 1 } }],
+};

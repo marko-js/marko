@@ -1,5 +1,9 @@
-export const steps = [{ show: false }, click];
+import type { TestConfig } from "../../main.test";
 
 function click(container: Element) {
   container.querySelector("button")!.click();
 }
+
+export const config: TestConfig = {
+  steps: [{ show: false }, click],
+};

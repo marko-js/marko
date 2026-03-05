@@ -15,6 +15,7 @@ export function resetResolveState() {
   state.promises = new Map();
 }
 
+export type Wait = typeof wait;
 export const wait = Object.assign(
   async () => {
     let id: number;
@@ -30,7 +31,7 @@ export const wait = Object.assign(
   },
 );
 
-export function after(id: number) {
+export function after(id: number): Wait {
   return Object.assign(
     async () => {
       await getSharedPromise(id);
@@ -42,23 +43,25 @@ export function after(id: number) {
   );
 }
 
+export type Flush = typeof flush;
 export const flush = Object.assign(() => {}, {
   flush: true,
 });
 
+export type Throws = ReturnType<typeof throws>;
 export function throws(fn: (...args: any[]) => void) {
   return Object.assign(fn, { throws: true });
 }
 
-export function isWait(value: any): value is typeof wait {
+export function isWait(value: any): value is Wait {
   return typeof value === "function" && value.wait;
 }
 
-export function isFlush(value: any): value is typeof flush {
+export function isFlush(value: any): value is Flush {
   return typeof value === "function" && value.flush;
 }
 
-export function isThrows(value: any): value is ReturnType<typeof throws> {
+export function isThrows(value: any): value is Throws {
   return typeof value === "function" && value.throws;
 }
 

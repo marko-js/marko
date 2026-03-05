@@ -1,11 +1,15 @@
-export const steps = [
-  {
-    value: "Dynamic 1",
-  },
-  {
-    value: "Dynamic 2",
-  },
-  {
-    value: "Dynamic 3",
-  },
-];
+import type { TestConfig } from "../../main.test";
+
+export const config: TestConfig = {
+  steps: [
+    {
+      value: "Dynamic 1",
+    },
+    {
+      value: "Dynamic 2",
+    },
+    {
+      value: "Dynamic 3",
+    },
+  ],
+};
