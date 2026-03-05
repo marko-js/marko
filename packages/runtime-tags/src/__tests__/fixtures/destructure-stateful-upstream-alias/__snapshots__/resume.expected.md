@@ -50,9 +50,7 @@ container.querySelector("button").click();
       Clear
     </button>
     <!--M_*1 #button/2-->
-    <ul>
-      <!--M_}1 #ul/3 5 4-->
-    </ul>
+    <ul />
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -74,6 +72,5 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-REMOVE li before li
-REMOVE li before html/body/ul/#comment
+REMOVE li, li, #comment in html/body/ul
 ```

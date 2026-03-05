@@ -39,10 +39,7 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <div>
-      <!--M_*2 #button/0-->
-      <!--M_}1 #div/0 2-->
-    </div>
+    <div />
     <div>
       0
     </div>
@@ -66,7 +63,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-REMOVE button before html/body/div0/#comment0
+REMOVE button, #comment, #comment in html/body/div0
 INSERT html/body/div1
 REMOVE #comment after html/body/div1
 UPDATE html/body/div1/#text " " => "0"
