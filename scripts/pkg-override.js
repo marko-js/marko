@@ -1,17 +1,17 @@
 const fs = require("fs");
 const path = require("path");
-for (const name of fs.readdirSync("packages")) {
+for (const name of [
+  "compiler",
+  "runtime-tags",
+  "runtime-class",
+  "runtime-class/translator",
+  "compiler/internal/babel",
+]) {
   overrideFile(path.join("packages", name, "package.json"));
-  overrideFile(path.join("packages", name, "translator/package.json"));
 }
 
 function overrideFile(file) {
-  let details;
-  try {
-    details = JSON.parse(fs.readFileSync(file, "utf8"));
-  } catch {
-    return;
-  }
+  const details = JSON.parse(fs.readFileSync(file, "utf8"));
 
   if (
     [
