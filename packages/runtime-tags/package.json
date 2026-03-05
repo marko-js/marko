@@ -41,6 +41,7 @@
   "dependencies": {
     "@marko/compiler": "^5.39.58",
     "csstype": "^3.2.3",
+    "fastest-levenshtein": "^1.0.16",
     "magic-string": "^0.30.21"
   },
   "engines": {

@@ -9,6 +9,7 @@ import {
   loadFileForTag,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
+import { closest, distance } from "fastest-levenshtein";
 import path from "path";
 
 import { getBindingPropTree } from "../../util/binding-prop-tree";
@@ -30,21 +31,8 @@ export default {
   analyze: {
     enter(tag) {
       const templateFile = getTagTemplate(tag);
-      if (!templateFile) {
-        const tagName = getTagName(tag);
-        if (tagName && tag.scope.hasBinding(tagName)) {
-          throw tag
-            .get("name")
-            .buildCodeFrameError(
-              `Local variables must be in a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags) unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
-            );
-        }
-        throw tag
-          .get("name")
-          .buildCodeFrameError(
-            `Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName}>\`.`,
-          );
-      }
+
+      if (!templateFile) throw tagNotFoundError(tag);
 
       assertAttributesOrSingleArg(tag);
 
@@ -205,23 +193,35 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
     relativePath = node.extra.tagNameImported;
   }
 
-  if (!relativePath) {
-    const tagName = getTagName(tag);
-    if (tagName && tag.scope.hasBinding(tagName)) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          `Local variables must be in a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags) unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
-        );
-    }
-    throw tag
-      .get("name")
-      .buildCodeFrameError(
-        `Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName}>\`.`,
-      );
-  }
+  if (!relativePath) throw tagNotFoundError(tag);
 
   return relativePath;
+}
+
+function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
+  const tagName = getTagName(tag);
+  if (tagName && tag.scope.hasBinding(tagName)) {
+    return tag
+      .get("name")
+      .buildCodeFrameError(
+        `Local variables must be in a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags) unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
+      );
+  }
+  let didYouMean = "";
+  if (tagName) {
+    const closestTag = closest(
+      tagName,
+      Object.keys(tag.state.file.___taglibLookup.merged.tags),
+    );
+    if (distance(tagName, closestTag) < 4) {
+      didYouMean = ` Did you mean \`<${closestTag}>\`?`;
+    }
+  }
+  return tag
+    .get("name")
+    .buildCodeFrameError(
+      `Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName}>\`.${didYouMean}`,
+    );
 }
 
 function importOrSelfReferenceName(
