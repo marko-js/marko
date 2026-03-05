@@ -1,8 +1,11 @@
-export const skip_csr = true;
-export const skip_resume = false;
+import type { TestConfig } from "../../main.test";
 
-export const steps = [{}, click, click];
-
-function click(container: HTMLElement) {
+function click(container: Element) {
   container.querySelector("button")?.click();
 }
+
+export const config: TestConfig = {
+  skip_csr: true,
+  skip_resume: false,
+  steps: [{}, click, click],
+};

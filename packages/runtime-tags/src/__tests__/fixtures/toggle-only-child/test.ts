@@ -1,4 +1,4 @@
-export const steps = [{ value: "Hello" }, type(""), type("World"), type("!")];
+import type { TestConfig } from "../../main.test";
 
 function type(value: string) {
   return (container: Element) => {
@@ -9,3 +9,7 @@ function type(value: string) {
     );
   };
 }
+
+export const config: TestConfig = {
+  steps: [{ value: "Hello" }, type(""), type("World"), type("!")],
+};

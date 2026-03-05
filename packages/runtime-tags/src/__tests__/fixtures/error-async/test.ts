@@ -1,4 +1,7 @@
+import type { TestConfig } from "../../main.test";
 import { wait } from "../../utils/resolve";
 
-export const steps = [{}, wait];
-export const error_runtime = true;
+export const config: TestConfig = {
+  steps: [{}, wait],
+  error_runtime: true,
+};

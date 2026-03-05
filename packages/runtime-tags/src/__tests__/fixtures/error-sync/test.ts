@@ -1,2 +1,5 @@
-export const steps = [{}];
-export const error_runtime = true;
+import type { TestConfig } from "../../main.test";
+
+export const config: TestConfig = {
+  error_runtime: true,
+};

@@ -1,3 +1,6 @@
-export const steps = [{ show: true }];
+import type { TestConfig } from "../../main.test";
 
-export const skip_equivalent = true;
+export const config: TestConfig = {
+  steps: [{ show: true }],
+  skip_equivalent: true,
+};

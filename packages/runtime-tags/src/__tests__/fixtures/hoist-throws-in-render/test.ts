@@ -1,3 +1,6 @@
-export const steps = [{}];
-export const error_runtime = true;
-export const skip_resume = true;
+import type { TestConfig } from "../../main.test";
+
+export const config: TestConfig = {
+  error_runtime: true,
+  skip_resume: true,
+};

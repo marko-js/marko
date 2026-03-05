@@ -1,5 +1,10 @@
-export const steps = [{}, click];
-export const skip_ssr = true;
+import type { TestConfig } from "../../main.test";
+
 function click(container: Element) {
   container.querySelector("button")!.click();
 }
+
+export const config: TestConfig = {
+  steps: [{}, click],
+  skip_ssr: true,
+};

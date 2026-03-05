@@ -1,4 +1,4 @@
-export const steps = [{}, selectC];
+import type { TestConfig } from "../../main.test";
 
 function selectC(container: Element) {
   const select = container.querySelector(`select`)!;
@@ -6,3 +6,7 @@ function selectC(container: Element) {
   select.value = "c";
   select.dispatchEvent(new window.Event("input", { bubbles: true }));
 }
+
+export const config: TestConfig = {
+  steps: [{}, selectC],
+};

@@ -1,3 +1,6 @@
+import type { TestConfig } from "../../main.test";
 import { after, flush, wait } from "../../utils/resolve";
 
-export const steps = [{}, after(2), flush, wait];
+export const config: TestConfig = {
+  steps: [{}, after(2), flush, wait],
+};

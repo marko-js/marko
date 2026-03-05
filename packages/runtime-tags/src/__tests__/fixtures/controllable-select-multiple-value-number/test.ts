@@ -1,11 +1,13 @@
-export const steps = [{}, select0, select1, select2, reset];
+import type { TestConfig } from "../../main.test";
 
 function select0(container: Element) {
   selectIndex(container, 0);
 }
+
 function select1(container: Element) {
   selectIndex(container, 1);
 }
+
 function select2(container: Element) {
   selectIndex(container, 2);
 }
@@ -21,3 +23,7 @@ function selectIndex(container: Element, index: number) {
     new select.ownerDocument.defaultView!.Event("input", { bubbles: true }),
   );
 }
+
+export const config: TestConfig = {
+  steps: [{}, select0, select1, select2, reset],
+};

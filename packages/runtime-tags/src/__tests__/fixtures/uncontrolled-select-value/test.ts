@@ -1,4 +1,4 @@
-export const steps = [{}, selectLast];
+import type { TestConfig } from "../../main.test";
 
 function selectLast(container: Element) {
   const select = container.querySelector<HTMLSelectElement>("select")!;
@@ -7,3 +7,7 @@ function selectLast(container: Element) {
     new select.ownerDocument.defaultView!.Event("change", { bubbles: true }),
   );
 }
+
+export const config: TestConfig = {
+  steps: [{}, selectLast],
+};

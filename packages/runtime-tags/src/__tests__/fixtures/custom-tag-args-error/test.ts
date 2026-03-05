@@ -1,2 +1,5 @@
-export const steps = [{}];
-export const error_compiler = ["template.marko"];
+import type { TestConfig } from "../../main.test";
+
+export const config: TestConfig = {
+  error_compiler: ["template.marko"],
+};

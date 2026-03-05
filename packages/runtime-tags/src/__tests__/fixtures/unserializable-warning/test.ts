@@ -1,2 +1,6 @@
-export const skip_dom = true;
-export const error_runtime = true;
+import type { TestConfig } from "../../main.test";
+
+export const config: TestConfig = {
+  skip_dom: true,
+  error_runtime: true,
+};

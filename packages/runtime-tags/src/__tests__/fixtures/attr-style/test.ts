@@ -1,1 +1,5 @@
-export const steps = [{ color: "red" }, { color: "purple" }];
+import type { TestConfig } from "../../main.test";
+
+export const config: TestConfig = {
+  steps: [{ color: "red" }, { color: "purple" }],
+};

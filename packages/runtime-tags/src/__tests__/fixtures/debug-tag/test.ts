@@ -1,3 +1,6 @@
-// Skipped because it triggers the debugger and you probably don't want that.
-export const skip_ssr = true;
-export const skip_csr = true;
+import type { TestConfig } from "../../main.test";
+
+export const config: TestConfig = {
+  skip_ssr: true,
+  skip_csr: true,
+};

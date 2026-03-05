@@ -1,4 +1,4 @@
-export const steps = [{}, type("w"), type("wor"), type("world")];
+import type { TestConfig } from "../../main.test";
 
 function type(value: string) {
   return (container: Element) => {
@@ -8,3 +8,7 @@ function type(value: string) {
     input.dispatchEvent(new window.Event("input", { bubbles: true }));
   };
 }
+
+export const config: TestConfig = {
+  steps: [{}, type("w"), type("wor"), type("world")],
+};

@@ -1,4 +1,4 @@
-export const steps = [{}, toggle, toggle, reverse];
+import type { TestConfig } from "../../main.test";
 
 function toggle(container: Element) {
   (container.querySelector("#toggle") as HTMLButtonElement).click();
@@ -7,3 +7,7 @@ function toggle(container: Element) {
 function reverse(container: Element) {
   (container.querySelector("#reverse") as HTMLButtonElement).click();
 }
+
+export const config: TestConfig = {
+  steps: [{}, toggle, toggle, reverse],
+};
