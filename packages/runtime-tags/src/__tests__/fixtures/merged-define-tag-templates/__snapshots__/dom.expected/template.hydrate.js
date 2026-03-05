@@ -1,4 +1,4 @@
-// size: 132 (min) 103 (brotli)
+// size: 132 (min) 104 (brotli)
 const $B_content__tag_input_value = ($scope, value) =>
     (($scope, value_length) => $A_content__value($scope.a, value_length))(
       $scope,

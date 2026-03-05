@@ -1,4 +1,4 @@
-// size: 276 (min) 172 (brotli)
+// size: 276 (min) 177 (brotli)
 const $value = _._let(3, ($scope) => _._return($scope, $scope.d));
 _._resume("a0", function ($scope) {
   return (_new_value) => {

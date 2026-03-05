@@ -1,10 +1,9 @@
 {
   "vars": {
     "props": {
-      "$_": "s",
-      "$init": "a",
-      "$$foo": "t",
-      "$$foo_class": "c"
+      "$_": "a",
+      "$init": "s",
+      "$$foo": "t"
     }
   }
 }

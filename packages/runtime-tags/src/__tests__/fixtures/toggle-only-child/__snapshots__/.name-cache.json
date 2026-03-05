@@ -5,10 +5,9 @@
       "$init": "r",
       "$$if_content__value": "_",
       "$$if_content__setup": "a",
-      "$$if_content": "n",
-      "$$if": "o",
-      "$$value": "e",
-      "$$valueChange": "i"
+      "$$if": "i",
+      "$$value": "m",
+      "$$valueChange": "o"
     }
   }
 }

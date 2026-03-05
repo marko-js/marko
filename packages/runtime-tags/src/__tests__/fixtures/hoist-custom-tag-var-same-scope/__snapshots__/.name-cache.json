@@ -2,9 +2,7 @@
   "vars": {
     "props": {
       "$_": "r",
-      "$init": "o",
-      "$$input_value__script": "t",
-      "$$input_value": "m"
+      "$init": "m"
     }
   }
 }

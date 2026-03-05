@@ -1,4 +1,4 @@
-// size: 252 (min) 178 (brotli)
+// size: 252 (min) 177 (brotli)
 const $input__script = _._script("a0", ($scope) =>
     _._attrs_script($scope, "a"),
   ),

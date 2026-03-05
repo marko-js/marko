@@ -2,12 +2,12 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "o",
-      "$$tagselect_content__setup__script": "a",
+      "$init": "a",
+      "$$tagselect_content__setup__script": "o",
       "$$tagselect_content": "r",
-      "$$dynamicTag": "e",
-      "$$value__OR__tag": "n",
-      "$$value": "_",
+      "$$dynamicTag": "_",
+      "$$value__OR__tag": "e",
+      "$$value": "n",
       "$$valueChange": "i"
     }
   }

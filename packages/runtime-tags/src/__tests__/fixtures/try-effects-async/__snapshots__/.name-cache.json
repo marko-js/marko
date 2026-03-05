@@ -3,17 +3,14 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$resolveAfter": "_",
-      "$$await_content__value": "e",
+      "$resolveAfter": "e",
       "$$await_content__$params": "r",
-      "$$catch_content__err": "c",
-      "$$catch_content__$params": "n",
-      "$$try_content__await_promise": "s",
+      "$$try_content__await_promise": "_",
       "$$try_content__clickCount__script": "a",
       "$$try_content__clickCount": "m",
-      "$$clickCount__closure": "i",
-      "$$clickCount__script": "u",
-      "$$clickCount": "l"
+      "$$clickCount__closure": "n",
+      "$$clickCount__script": "s",
+      "$$clickCount": "c"
     }
   }
 }

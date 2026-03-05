@@ -1,4 +1,4 @@
-// size: 428 (min) 226 (brotli)
+// size: 428 (min) 227 (brotli)
 _._enable_catch();
 const $await_content__value__script = _._script("a0", ($scope) =>
     console.log(`\neffect ran value=${$scope.c}`),

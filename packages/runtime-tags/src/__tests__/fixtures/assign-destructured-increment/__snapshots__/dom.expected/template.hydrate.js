@@ -1,4 +1,4 @@
-// size: 303 (min) 186 (brotli)
+// size: 303 (min) 188 (brotli)
 const $bar = _._let(3, ($scope) => {
     (_._text($scope.c, $scope.d),
       (($scope, $pattern) => {

@@ -4,12 +4,11 @@
       "$_": "t",
       "$init": "o",
       "$$onClick__script": "r",
-      "$$onClick$1": "m",
-      "$$mybutton_content__clickCount": "e",
-      "$$clickCount_closure": "n",
-      "$$clickCount": "c",
-      "$$onClick": "s",
-      "$$clickCount__closure": "_"
+      "$$onClick$1": "e",
+      "$$mybutton_content__clickCount": "m",
+      "$$clickCount__closure": "n",
+      "$$clickCount": "_",
+      "$$onClick": "a"
     }
   }
 }

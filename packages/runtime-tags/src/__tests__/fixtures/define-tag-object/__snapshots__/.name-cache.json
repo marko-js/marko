@@ -3,9 +3,8 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$myObj": "r",
-      "$$x__script": "m",
-      "$$x": "i"
+      "$$x__script": "r",
+      "$$x": "m"
     }
   }
 }

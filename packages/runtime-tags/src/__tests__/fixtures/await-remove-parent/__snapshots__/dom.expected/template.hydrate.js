@@ -1,4 +1,4 @@
-// size: 387 (min) 228 (brotli)
+// size: 387 (min) 237 (brotli)
 _._enable_catch();
 const $await_content__setup = _._script(
     "a0",

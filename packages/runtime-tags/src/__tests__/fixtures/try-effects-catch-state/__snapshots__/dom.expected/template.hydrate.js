@@ -1,4 +1,4 @@
-// size: 315 (min) 202 (brotli)
+// size: 315 (min) 199 (brotli)
 _._enable_catch();
 _._content_resume("a0", " ", " b", 0, ($scope, $params2) =>
   (($scope, err) => _._text($scope.a, err))($scope, $params2[0]),

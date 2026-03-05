@@ -1,13 +1,11 @@
 {
   "vars": {
     "props": {
-      "$_": "m",
-      "$init": "o",
+      "$_": "t",
+      "$init": "m",
+      "$$if": "o",
       "$$count__script": "r",
-      "$$count": "t",
-      "$$if_content": "n",
-      "$$if": "_",
-      "$$input_value": "a"
+      "$$count": "a"
     }
   }
 }

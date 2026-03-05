@@ -4,9 +4,9 @@
       "$_": "t",
       "$init": "o",
       "$$user": "m",
-      "$$index__script": "i",
-      "$$index": "r",
-      "$$user_id": "n"
+      "$$index__script": "c",
+      "$$index": "i",
+      "$$user_id": "r"
     }
   }
 }

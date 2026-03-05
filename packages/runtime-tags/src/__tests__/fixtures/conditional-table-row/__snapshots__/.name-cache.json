@@ -3,10 +3,9 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$if_content": "r",
-      "$$if": "m",
-      "$$show__script": "i",
-      "$$show": "n"
+      "$$if": "r",
+      "$$show__script": "m",
+      "$$show": "i"
     }
   }
 }

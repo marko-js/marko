@@ -1,4 +1,4 @@
-// size: 196 (min) 130 (brotli)
+// size: 196 (min) 122 (brotli)
 const $checked = _._let(2, ($scope) => {
   (_._attr_input_checked($scope, "a", $scope.c, $checkedChange($scope)),
     _._text($scope.b, String($scope.c)));

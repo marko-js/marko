@@ -5,9 +5,9 @@
       "$init": "o",
       "$$y__script": "n",
       "$$y": "r",
-      "$$x__OR__yChange": "i",
-      "$$x": "c",
-      "$$yChange2": "e"
+      "$$x__OR__yChange": "c",
+      "$$x": "e",
+      "$$yChange2": "i"
     }
   }
 }

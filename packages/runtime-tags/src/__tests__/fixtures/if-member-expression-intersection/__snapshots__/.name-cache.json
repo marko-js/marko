@@ -4,13 +4,12 @@
       "$_": "t",
       "$init": "o",
       "$$if_content__text": "r",
-      "$$if_content__setup": "_",
-      "$$if_content": "m",
-      "$$if": "c",
+      "$$if_content__setup": "m",
+      "$$if": "_",
       "$$hide__OR__text_length": "i",
-      "$$hide": "n",
+      "$$hide": "s",
       "$$text": "a",
-      "$$text_length": "e"
+      "$$text_length": "c"
     }
   }
 }

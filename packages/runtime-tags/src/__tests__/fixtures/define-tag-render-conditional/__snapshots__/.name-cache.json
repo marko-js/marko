@@ -3,15 +3,12 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$define_content__value": "_",
-      "$$if_content__setup": "n",
       "$$if_content__x": "e",
-      "$$if_content": "i",
-      "$$if": "c",
+      "$$if_content__setup": "i",
+      "$$if": "m",
       "$$show": "r",
-      "$$x__script": "m",
-      "$$x": "s",
-      "$$MyTag_content__value": "a"
+      "$$x__script": "_",
+      "$$x": "a"
     }
   }
 }

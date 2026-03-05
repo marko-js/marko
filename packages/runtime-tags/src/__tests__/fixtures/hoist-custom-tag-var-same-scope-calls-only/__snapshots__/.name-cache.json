@@ -1,9 +1,9 @@
 {
   "vars": {
     "props": {
-      "$_": "r",
-      "$init": "n",
-      "$$api_getter": "t"
+      "$_": "t",
+      "$init": "s",
+      "$$api_getter": "r"
     }
   }
 }

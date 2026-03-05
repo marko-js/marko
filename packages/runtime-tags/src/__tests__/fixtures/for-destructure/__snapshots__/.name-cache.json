@@ -2,15 +2,12 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "o",
-      "$$for_content__name": "c",
-      "$$for_content__description": "n",
-      "$$for_content__$params": "i",
-      "$$for_content__$temp": "r",
-      "$$for_content": "_",
-      "$$for": "a",
-      "$$items__script": "s",
-      "$$items": "e"
+      "$init": "i",
+      "$$for_content__$params": "o",
+      "$$for_content__$temp": "c",
+      "$$for": "r",
+      "$$items__script": "a",
+      "$$items": "n"
     }
   }
 }

@@ -1,4 +1,4 @@
-// size: 326 (min) 135 (brotli)
+// size: 326 (min) 129 (brotli)
 (_._script(
   "a3",
   ($scope) => ($scope.a.textContent = $scope.f.bar() || "missing a"),

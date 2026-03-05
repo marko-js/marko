@@ -8,14 +8,13 @@
       "$$for_content__messages__OR__index__script": "i",
       "$$for_content__messages__OR__index": "c",
       "$$for_content__messages": "m",
-      "$$for_content__index": "e",
-      "$$for_content__setup": "l",
+      "$$for_content__setup": "e",
+      "$$for_content__index": "l",
       "$$for_content__$params": "n",
       "$$for": "a",
-      "$$messages": "f",
-      "$$if": "s",
-      "$$last": "d",
-      "$$for_content__messages__script": "u"
+      "$$messages": "d",
+      "$$if": "f",
+      "$$last": "s"
     }
   }
 }

@@ -2,17 +2,17 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "o",
-      "$$count__script": "e",
-      "$$count$1": "r",
-      "$$input_count1__OR__input_count1Change": "_",
-      "$$input_count": "n",
+      "$init": "n",
+      "$$count__script": "o",
+      "$$count$1": "e",
+      "$$input_count1__OR__input_count1Change": "r",
+      "$$input_count": "_",
       "$$count2__script": "c",
-      "$$count2$1": "i",
-      "$$input_count2__OR__input_count2Change": "m",
-      "$$input_count2": "s",
-      "$$count": "u",
-      "$$count2": "l"
+      "$$count2$1": "m",
+      "$$input_count2__OR__input_count2Change": "i",
+      "$$input_count2": "a",
+      "$$count": "s",
+      "$$count2": "u"
     }
   }
 }

@@ -5,9 +5,9 @@
       "$init": "o",
       "$$items__OR__index__script": "m",
       "$$items__OR__index": "r",
-      "$$items": "e",
-      "$$items_": "n",
-      "$$index": "c"
+      "$$items": "c",
+      "$$items_": "e",
+      "$$index": "n"
     }
   }
 }

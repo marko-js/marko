@@ -5,20 +5,12 @@
       "$init": "o",
       "$$dynamicTag": "s",
       "$$dynamicTag2": "n",
-      "$$input_content": "r",
-      "$$get$hoisted_el": "a",
-      "$$get$hoisted_el2": "i",
+      "$$el3_getter": "r",
+      "$$inputshowChildnull_content__$el2_getter": "i",
+      "$$el2_getter": "m",
       "$$child_content2": "c",
-      "$$inputshowChildnull_content__$hoisted_el__script": "_",
-      "$$inputshowChildnull_content__$hoisted_el": "m",
-      "$$get_$hoisted_el": "e",
-      "$$get_$hoisted_el2": "b",
-      "$$inputshowsectionnull_content__setup": "d",
-      "$$el3_getter": "f",
-      "$$inputshowChildnull_content__$el2_getter": "u",
-      "$$el2_getter": "B",
-      "$$inputshowChildnull_content__setup__script": "g",
-      "$$el_getter": "p"
+      "$$inputshowChildnull_content__setup__script": "e",
+      "$$el_getter": "a"
     }
   }
 }

@@ -1,4 +1,4 @@
-// size: 255 (min) 142 (brotli)
+// size: 255 (min) 157 (brotli)
 const $bar__OR__baz__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", function () {
       ($bar($scope, $scope.e ? null : "bar"),

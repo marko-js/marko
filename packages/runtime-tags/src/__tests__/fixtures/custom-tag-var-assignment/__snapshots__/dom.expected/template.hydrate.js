@@ -1,4 +1,4 @@
-// size: 390 (min) 193 (brotli)
+// size: 390 (min) 185 (brotli)
 const $x__script = _._script("a1", ($scope) =>
     _._on($scope.a, "click", function () {
       $x($scope, $scope.c + 1);

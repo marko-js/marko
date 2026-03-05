@@ -1,4 +1,4 @@
-// size: 272 (min) 188 (brotli)
+// size: 272 (min) 184 (brotli)
 const $if_content__setup = ($scope) => {
     $MyTag_content__setup._($scope.a, $scope._);
   },

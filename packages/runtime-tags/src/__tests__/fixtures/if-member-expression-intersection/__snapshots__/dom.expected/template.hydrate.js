@@ -1,4 +1,4 @@
-// size: 237 (min) 170 (brotli)
+// size: 237 (min) 172 (brotli)
 const $if_content__text = _._if_closure(0, 0, ($scope) =>
     _._text($scope.a, $scope._.c),
   ),

@@ -1,4 +1,4 @@
-// size: 212 (min) 155 (brotli)
+// size: 212 (min) 152 (brotli)
 const $for_content__items__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", function () {
       (($scope._.b.textContent = $scope._.c.join(", ")), $items($scope._, []));

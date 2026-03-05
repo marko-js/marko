@@ -3,14 +3,11 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$bar__OR__fooChange__script": "r",
-      "$$bar__OR__fooChange": "m",
-      "$$bar": "n",
-      "$$count__script": "i",
-      "$$count": "a",
-      "$$resetCount2__script": "c",
-      "$$resetCount2": "s",
-      "$$resetCount": "_"
+      "$$resetCount2__script": "n",
+      "$$resetCount2": "r",
+      "$$count__script": "c",
+      "$$count": "i",
+      "$$resetCount": "m"
     }
   }
 }

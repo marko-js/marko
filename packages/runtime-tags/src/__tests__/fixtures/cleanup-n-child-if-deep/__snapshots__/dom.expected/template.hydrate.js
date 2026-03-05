@@ -1,4 +1,4 @@
-// size: 1115 (min) 458 (brotli)
+// size: 1115 (min) 465 (brotli)
 const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   $name__OR__write__script = _._script("a0", ($scope) => {
     ($scope.g(`${$scope.f} mounted`),

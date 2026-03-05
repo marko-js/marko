@@ -1,4 +1,4 @@
-// size: 181 (min) 145 (brotli)
+// size: 181 (min) 138 (brotli)
 const $user = _._let(3, ($scope) => $user_id($scope, $scope.d?.id)),
   $index__script = _._script("a0", ($scope) =>
     _._on($scope.b, "click", function () {

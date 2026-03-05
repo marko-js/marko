@@ -1,4 +1,4 @@
-// size: 502 (min) 251 (brotli)
+// size: 502 (min) 232 (brotli)
 _._resume_dynamic_tag();
 const $tagselect_content__setup__script = _._script("a1", ($scope) => {
     (_._attrs_script($scope, "a"),

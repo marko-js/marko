@@ -1,4 +1,4 @@
-// size: 201 (min) 127 (brotli)
+// size: 201 (min) 124 (brotli)
 const $open = _._let(3, ($scope) => {
   (_._attr_details_open_default($scope, "a", $scope.d),
     _._attr_details_open($scope, "b", $scope.d, void 0));

@@ -1,4 +1,4 @@
-// size: 199 (min) 145 (brotli)
+// size: 199 (min) 144 (brotli)
 const $for = _._for_of(0, "<div></div>", "b"),
   $children__script = _._script("a0", ($scope) => {
     1 === $scope.b?.length && $children($scope, [...$scope.b, 2]);

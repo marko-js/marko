@@ -3,12 +3,11 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$if_content__message": "n",
-      "$$if_content__setup": "r",
-      "$$if_content": "m",
-      "$$if": "_",
-      "$$show__script": "a",
-      "$$show": "i",
+      "$$if_content__message": "a",
+      "$$if_content__setup": "m",
+      "$$if": "r",
+      "$$show__script": "i",
+      "$$show": "_",
       "$$message": "c"
     }
   }

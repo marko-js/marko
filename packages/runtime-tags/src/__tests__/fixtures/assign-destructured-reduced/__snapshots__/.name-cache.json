@@ -1,8 +1,8 @@
 {
   "vars": {
     "props": {
-      "$_": "e",
-      "$init": "r",
+      "$_": "r",
+      "$init": "e",
       "$$input__OR__valueChange__script": "o",
       "$$input__OR__valueChange": "t",
       "$$input": "a",

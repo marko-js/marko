@@ -1,4 +1,4 @@
-// size: 1029 (min) 432 (brotli)
+// size: 1029 (min) 430 (brotli)
 const $name__OR__write__script = _._script("a0", ($scope) => {
     ($scope.e(`${$scope.d} mounted`),
       (_.$signal($scope, 0).onabort = () => {

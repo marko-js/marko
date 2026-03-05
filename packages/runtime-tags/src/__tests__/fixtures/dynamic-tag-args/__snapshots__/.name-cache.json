@@ -5,8 +5,8 @@
       "$init": "o",
       "$$setup": "i",
       "$$input": "m",
-      "$tags": "r",
-      "$$dynamicTag": "a",
+      "$tags": "a",
+      "$$dynamicTag": "r",
       "$$x__script": "n",
       "$$x": "_"
     }

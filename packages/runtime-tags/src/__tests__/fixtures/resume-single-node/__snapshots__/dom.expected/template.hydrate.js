@@ -1,4 +1,4 @@
-// size: 298 (min) 209 (brotli)
+// size: 298 (min) 215 (brotli)
 const $for_content__if = _._if(0, "<div>b</div>", "b"),
   $for_content__items_length = _._for_closure(0, ($scope) =>
     $for_content__if($scope, $scope._.f > 1 ? 0 : 1),

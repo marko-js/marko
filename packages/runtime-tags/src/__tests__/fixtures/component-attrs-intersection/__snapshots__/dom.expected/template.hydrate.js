@@ -1,4 +1,4 @@
-// size: 159 (min) 121 (brotli)
+// size: 159 (min) 135 (brotli)
 const $value__OR__dummy = _._or(5, ($scope) =>
     _._text($scope.a, ($scope.e, $scope.d)),
   ),

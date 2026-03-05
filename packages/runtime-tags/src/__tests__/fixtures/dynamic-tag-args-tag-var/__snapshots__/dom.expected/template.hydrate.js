@@ -1,4 +1,4 @@
-// size: 324 (min) 211 (brotli)
+// size: 324 (min) 217 (brotli)
 const $setup = () => {},
   $input = _._const(2, ($scope) => {
     (_._text($scope.a, $scope.c), _._return($scope, $scope.c));

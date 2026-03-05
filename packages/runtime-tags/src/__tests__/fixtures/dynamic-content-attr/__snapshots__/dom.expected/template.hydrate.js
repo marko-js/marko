@@ -1,4 +1,4 @@
-// size: 292 (min) 188 (brotli)
+// size: 292 (min) 190 (brotli)
 let sideEffect = 3;
 const $MyThing_content__count = _._closure_get(1, ($scope) =>
   _._text($scope.a, $scope._.b),

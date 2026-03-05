@@ -2,12 +2,11 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "o",
-      "$$if_content2__c": "r",
-      "$$customtag_content__c": "_",
-      "$$c_closure": "e",
-      "$$c": "m",
-      "$$c__closure": "c"
+      "$init": "_",
+      "$$if_content2__c": "o",
+      "$$customtag_content__c": "e",
+      "$$c__closure": "r",
+      "$$c": "c"
     }
   }
 }

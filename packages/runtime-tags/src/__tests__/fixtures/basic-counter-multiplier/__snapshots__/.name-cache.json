@@ -3,12 +3,11 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$multipliedCount": "r",
-      "$$count__OR__multiplier": "c",
-      "$$count__script": "i",
-      "$$count": "m",
-      "$$multiplier__script": "n",
-      "$$multiplier": "_"
+      "$$count__OR__multiplier": "r",
+      "$$count__script": "c",
+      "$$count": "i",
+      "$$multiplier__script": "m",
+      "$$multiplier": "n"
     }
   }
 }

@@ -2,13 +2,11 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "o",
-      "$$sometimesBar": "r",
-      "$$bar__OR__baz__script": "i",
-      "$$bar__OR__baz": "_",
-      "$$bar": "a",
-      "$$sometimesBaz": "m",
-      "$$baz": "n"
+      "$init": "r",
+      "$$bar__OR__baz__script": "o",
+      "$$bar__OR__baz": "a",
+      "$$bar": "i",
+      "$$baz": "m"
     }
   }
 }

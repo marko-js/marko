@@ -4,11 +4,11 @@
       "$_": "t",
       "$init": "n",
       "$$count__script": "o",
-      "$$count": "i",
-      "$$tagName_content": "c",
-      "$$dynamicTag": "m",
-      "$$tagName__script": "r",
-      "$$tagName": "_"
+      "$$count": "c",
+      "$$tagName_content": "i",
+      "$$dynamicTag": "a",
+      "$$tagName__script": "m",
+      "$$tagName": "r"
     }
   }
 }

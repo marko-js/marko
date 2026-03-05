@@ -3,10 +3,9 @@
     "props": {
       "$_": "t",
       "$init": "i",
-      "$$setup": "o",
-      "$$id": "m",
-      "$$input": "a",
-      "$child": "n",
+      "$$setup": "a",
+      "$$input": "m",
+      "$child": "o",
       "$$dynamicTag": "c",
       "$$tagName__script": "d",
       "$$tagName": "r"

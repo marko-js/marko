@@ -1,11 +1,9 @@
 {
   "vars": {
     "props": {
-      "$_": "r",
-      "$init": "o",
-      "$$_return": "t",
-      "$$what_content__setHtml": "n",
-      "$$setHtml_getter": "m"
+      "$_": "o",
+      "$init": "r",
+      "$$setHtml_getter": "t"
     }
   }
 }

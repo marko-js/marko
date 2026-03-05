@@ -1,7 +1,5 @@
 {
   "vars": {
-    "props": {
-      "$init": "m"
-    }
+    "props": {}
   }
 }

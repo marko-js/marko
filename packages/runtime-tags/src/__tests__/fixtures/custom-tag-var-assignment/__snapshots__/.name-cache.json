@@ -2,9 +2,9 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "n",
-      "$$x__script": "r",
-      "$$x": "c",
+      "$init": "c",
+      "$$x__script": "n",
+      "$$x": "r",
       "$$count__script": "o"
     }
   }

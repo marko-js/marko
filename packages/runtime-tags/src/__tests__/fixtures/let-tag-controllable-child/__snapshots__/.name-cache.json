@@ -3,18 +3,17 @@
     "props": {
       "$_": "t",
       "$init": "e",
-      "$$state__script": "n",
-      "$$state": "o",
-      "$$input_value__OR__input_valueChange": "_",
-      "$$input_value": "a",
-      "$$input_valueChange": "r",
-      "$$otherState__script": "c",
+      "$$state__script": "o",
+      "$$state": "_",
+      "$$thirdState__script": "n",
+      "$$thirdState": "a",
+      "$$input_value__OR__input_valueChange": "c",
+      "$$input_value": "l",
+      "$$input_valueChange": "i",
+      "$$otherState__script": "r",
       "$$otherState": "u",
-      "$$input": "l",
-      "$$source": "i",
-      "$$valueChange": "m",
-      "$$thirdState__script": "s",
-      "$$thirdState": "f"
+      "$$source": "m",
+      "$$valueChange": "s"
     }
   }
 }

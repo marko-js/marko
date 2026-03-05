@@ -1,4 +1,4 @@
-// size: 337 (min) 207 (brotli)
+// size: 337 (min) 203 (brotli)
 const $for_content__$params = ($scope, $params2) =>
     (($scope, x) => _._text($scope.a, x))($scope, $params2[0]),
   $open__script = _._script("a0", ($scope) =>
