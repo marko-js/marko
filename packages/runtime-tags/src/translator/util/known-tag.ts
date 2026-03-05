@@ -1,9 +1,5 @@
 import { types as t } from "@marko/compiler";
-import {
-  getTagTemplate,
-  isAttributeTag,
-  resolveRelativePath,
-} from "@marko/compiler/babel-utils";
+import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from "../visitors/program";
 import {
@@ -365,39 +361,6 @@ export function knownTagTranslateDOM(
       attrTagCallsByTag: undefined,
     });
   }
-}
-
-export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
-  const {
-    node,
-    hub: { file },
-  } = tag;
-  let relativePath: string | undefined;
-
-  if (t.isStringLiteral(node.name)) {
-    const template = getTagTemplate(tag);
-    relativePath = template && resolveRelativePath(file, template);
-  } else if (node.extra?.tagNameImported) {
-    relativePath = node.extra.tagNameImported;
-  }
-
-  if (!relativePath) {
-    const tagName = getTagName(tag);
-    if (tagName && tag.scope.hasBinding(tagName)) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          `Local variables must be in a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags) unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
-        );
-    }
-    throw tag
-      .get("name")
-      .buildCodeFrameError(
-        `Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName}>\`.`,
-      );
-  }
-
-  return relativePath;
 }
 
 export function finalizeKnownTags(section: Section) {
