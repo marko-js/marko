@@ -30,6 +30,7 @@
     "dist",
     "tags",
     "index.d.ts",
+    "translator.js",
     "tags-html.d.ts",
     "!**/meta.*.json",
     "!**/__tests__",
