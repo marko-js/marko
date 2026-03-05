@@ -337,6 +337,7 @@ class TagLoader {
       taglibConfig.fs.statSync(path);
       tag.template = path;
     } catch (_) {
+      // eslint-disable-next-line preserve-caught-error
       throw new Error('Template at path "' + path + '" does not exist.');
     }
   }

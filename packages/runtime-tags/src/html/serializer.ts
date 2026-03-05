@@ -429,7 +429,7 @@ export function stringify(val: unknown) {
 function writeRoot(state: State, root: unknown) {
   const { buf } = state;
   const hadBuf = buf.length !== 0;
-  let result = "";
+  let result: string;
   if (hadBuf) {
     buf.push(",");
   }
@@ -1046,7 +1046,7 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
 }
 
 function writeArrayBuffer(state: State, val: ArrayBuffer) {
-  let result = "";
+  let result: string;
 
   if (val.byteLength) {
     const view = new Int8Array(val);
@@ -1229,7 +1229,6 @@ function writeRequest(state: State, val: Request, ref: Reference) {
 
   if (val.referrerPolicy) {
     options += sep + "referrerPolicy:" + quote(val.referrerPolicy, 0);
-    sep = ",";
   }
 
   state.buf.push(
@@ -1257,7 +1256,6 @@ function writeResponse(state: State, val: Response, ref: Reference) {
   state.refs.set(val.headers, new Reference(ref, "headers", state.flush, null));
   if (headers) {
     options += sep + "headers:{" + headers + "}";
-    sep = ",";
   }
 
   if (!val.body || val.bodyUsed) {

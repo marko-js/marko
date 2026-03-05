@@ -141,7 +141,7 @@ module.exports = function scanTagsDir(
     }
 
     let tagName;
-    let tagDef = null;
+    let tagDef;
     let tagDirname;
     let tagJsonPath;
 

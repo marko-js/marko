@@ -36,8 +36,8 @@ function walkInternal(
   scope: Scope,
 ) {
   let value: number;
+  let currentMultiplier: number;
   let storedMultiplier = 0;
-  let currentMultiplier = 0;
   let currentScopeIndex = 0;
 
   for (; currentWalkIndex < walkCodes.length; ) {

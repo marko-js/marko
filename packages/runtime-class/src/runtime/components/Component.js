@@ -24,7 +24,6 @@ var CONTEXT_KEY = "__subtree_context__";
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 var slice = Array.prototype.slice;
 
-var COMPONENT_SUBSCRIBE_TO_OPTIONS;
 var NON_COMPONENT_SUBSCRIBE_TO_OPTIONS = {
   addDestroyListener: false,
 };
@@ -208,7 +207,7 @@ Component.prototype = componentProto = {
       (this.___subscriptions = new SubscriptionTracker());
 
     var subscribeToOptions = target.___isComponent
-      ? COMPONENT_SUBSCRIBE_TO_OPTIONS
+      ? undefined
       : NON_COMPONENT_SUBSCRIBE_TO_OPTIONS;
 
     return subscriptions.subscribeTo(target, subscribeToOptions);

@@ -91,16 +91,15 @@ class TaglibLoader {
 
   _handleTag(tagName, value, dependencyChain) {
     var tagProps;
-    var tagFilePath = this.filePath;
-
     var tag;
 
     if (typeof value === "string") {
-      tagFilePath = nodePath.resolve(this.dirname, value);
+      var tagFilePath = nodePath.resolve(this.dirname, value);
 
       try {
         taglibFS.fs.statSync(tagFilePath);
       } catch (_) {
+        // eslint-disable-next-line preserve-caught-error
         throw new Error(
           'Tag at path "' +
             tagFilePath +

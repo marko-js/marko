@@ -325,6 +325,7 @@ function throwUninitialized(name: string) {
   try {
     // @ts-expect-error create a browser uninitialized variable error, and then update the message.
     __UNINITIALIZED__;
+    // eslint-disable-next-line no-unassigned-vars
     let __UNINITIALIZED__;
   } catch (err: any) {
     err.message = err.message.replaceAll("__UNINITIALIZED__", name);
