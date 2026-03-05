@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.60
+
+### Patch Changes
+
+- [#3119](https://github.com/marko-js/marko/pull/3119) [`109e423`](https://github.com/marko-js/marko/commit/109e4237b2ba12cc1db11f345614e62ab5d675e0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where babel internal api was not correctly using package overrides when publishing.
+
 ## 5.39.59
 
 ### Patch Changes
