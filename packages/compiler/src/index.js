@@ -19,6 +19,11 @@ import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
 export { taglib, types };
 
+const hasBabel = !!(
+  markoModules.pkg &&
+  (markoModules.pkg.dependencies?.["@babel/core"] ||
+    markoModules.pkg.devDependencies?.["@babel/core"])
+);
 export let globalConfig = { ...defaultConfig };
 export function configure(newConfig) {
   globalConfig = { ...defaultConfig, ...newConfig };
@@ -76,20 +81,29 @@ function loadMarkoConfig(config) {
 
 async function loadBabelConfig(filename, config) {
   const baseBabelConfig = getBaseBabelConfig(filename, config);
-  return isTranslatedOutput(config.output)
+  return shouldResolveBabelConfig(config)
     ? (await loadPartialConfigAsync(baseBabelConfig)).options
     : baseBabelConfig;
 }
 
 function loadBabelConfigSync(filename, config) {
   const baseBabelConfig = getBaseBabelConfig(filename, config);
-  return isTranslatedOutput(config.output)
+  return shouldResolveBabelConfig(config)
     ? loadPartialConfig(baseBabelConfig).options
     : baseBabelConfig;
 }
 
+function shouldResolveBabelConfig(config) {
+  return !!(
+    config.babelrc ||
+    config.configFile ||
+    config.browserslistConfigFile
+  );
+}
+
 function getBaseBabelConfig(filename, { babelConfig, ...markoConfig }) {
   const isTranslated = isTranslatedOutput(markoConfig.output);
+  const loadConfig = isTranslated && hasBabel;
   const requiredPlugins = [[corePlugin, markoConfig]];
   const baseBabelConfig = {
     filenameRelative: filename
@@ -97,8 +111,9 @@ function getBaseBabelConfig(filename, { babelConfig, ...markoConfig }) {
       : undefined,
     sourceRoot: filename ? path.dirname(filename) : undefined,
     sourceFileName: filename ? path.basename(filename) : undefined,
-    configFile: isTranslated,
-    babelrc: isTranslated,
+    babelrc: loadConfig,
+    configFile: loadConfig,
+    browserslistConfigFile: loadConfig,
     ...babelConfig,
     filename,
     sourceType: "module",
