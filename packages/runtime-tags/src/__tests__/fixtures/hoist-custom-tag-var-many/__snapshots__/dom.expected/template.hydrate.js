@@ -1,4 +1,4 @@
-// size: 361 (min) 188 (brotli)
+// size: 361 (min) 186 (brotli)
 _._resume("a0", function ($scope) {
   return () => (html) => ($scope.a.innerHTML = html);
 });

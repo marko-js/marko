@@ -1,4 +1,4 @@
-// size: 183 (min) 120 (brotli)
+// size: 183 (min) 119 (brotli)
 _._var_resume(
   "a0",
   _._const(5, ($scope) => {

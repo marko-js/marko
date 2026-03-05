@@ -1,4 +1,4 @@
-// size: 509 (min) 297 (brotli)
+// size: 509 (min) 296 (brotli)
 const $list$1 = _._let(3, ($scope) =>
   _._return($scope, {
     list: $scope.d,

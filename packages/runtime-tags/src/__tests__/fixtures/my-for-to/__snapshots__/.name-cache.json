@@ -1,9 +1,7 @@
 {
   "vars": {
     "props": {
-      "$_": "t",
-      "$$myfor_content__i": "o",
-      "$$myfor_content__$params": "m"
+      "$_": "t"
     }
   }
 }

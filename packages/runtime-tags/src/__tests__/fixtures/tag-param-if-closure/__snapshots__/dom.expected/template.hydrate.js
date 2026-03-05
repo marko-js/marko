@@ -1,4 +1,4 @@
-// size: 341 (min) 232 (brotli)
+// size: 341 (min) 228 (brotli)
 const $Foo_content2__dynamicTag = _._dynamic_tag(0, 0, 0, 1),
   $Foo_content2__input_content__OR__input_value = _._or(5, ($scope) =>
     $Foo_content2__dynamicTag($scope, $scope.d, () => [$scope.e]),

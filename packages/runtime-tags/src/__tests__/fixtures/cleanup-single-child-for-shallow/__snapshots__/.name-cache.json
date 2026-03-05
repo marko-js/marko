@@ -5,16 +5,14 @@
       "$init": "t",
       "$$name__OR__write__script": "n",
       "$$name__OR__write": "r",
-      "$$name": "_",
-      "$$write$1": "e",
-      "$$for_content__setup": "s",
-      "$$for_content__write": "c",
-      "$$for_content__item": "i",
-      "$$for_content__$params": "m",
-      "$$for_content": "a",
-      "$$for": "u",
-      "$$items__script": "f",
-      "$$items": "l"
+      "$$name": "e",
+      "$$write$1": "i",
+      "$$for_content__write": "s",
+      "$$for_content__setup": "_",
+      "$$for_content__$params": "a",
+      "$$for": "d",
+      "$$items__script": "c",
+      "$$items": "m"
     }
   }
 }

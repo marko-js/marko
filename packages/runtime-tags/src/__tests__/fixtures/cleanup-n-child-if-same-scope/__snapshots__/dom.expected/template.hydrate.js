@@ -1,4 +1,4 @@
-// size: 305 (min) 194 (brotli)
+// size: 305 (min) 193 (brotli)
 const $if_content__setup__script = _._script("a0", ($scope) => {
     (($scope._.b.innerHTML += "\nmounted"),
       (_.$signal($scope, 0).onabort = () => {

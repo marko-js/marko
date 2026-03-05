@@ -1,15 +1,11 @@
 {
   "vars": {
     "props": {
-      "$_": "t",
-      "$init": "o",
-      "$$get$hoisted_el2": "r",
-      "$$get$hoisted_el3": "m",
-      "$$get_$hoisted_el2": "s",
-      "$$get_$hoisted_el3": "i",
-      "$$el3_getter": "n",
-      "$$el2_getter": "a",
-      "$$el_getter": "e"
+      "$_": "o",
+      "$init": "t",
+      "$$el3_getter": "r",
+      "$$el2_getter": "n",
+      "$$el_getter": "s"
     }
   }
 }

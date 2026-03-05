@@ -1,4 +1,4 @@
-// size: 424 (min) 250 (brotli)
+// size: 424 (min) 249 (brotli)
 const $item_content = _._content_closures(_._content_resume("a0", " ", " b"), {
     4($scope) {
       _._text($scope.a, $scope.e);

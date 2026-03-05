@@ -2,8 +2,8 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "o",
-      "$$for_content__open__script": "m",
+      "$init": "m",
+      "$$for_content__open__script": "o",
       "$$for_content__open": "r"
     }
   }

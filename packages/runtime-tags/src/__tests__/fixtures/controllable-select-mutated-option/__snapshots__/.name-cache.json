@@ -3,15 +3,13 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$for_content__opt": "n",
-      "$$for_content__$params": "_",
-      "$$for_content": "c",
-      "$$for": "e",
-      "$$options__script": "r",
+      "$$for_content__$params": "e",
+      "$$for": "n",
+      "$$options__script": "_",
       "$$options": "a",
-      "$$value": "i",
-      "$$options_": "l",
-      "$$valueChange": "s"
+      "$$value": "c",
+      "$$options_": "r",
+      "$$valueChange": "i"
     }
   }
 }

@@ -1,17 +1,11 @@
 {
   "vars": {
     "props": {
-      "$_": "o",
-      "$init": "r",
-      "$$get$hoisted_setHtml": "t",
-      "$$get$hoisted_setHtml2": "s",
-      "$$get$hoisted_setHtml3": "_",
-      "$$get_$hoisted_setHtml": "e",
-      "$$get_$hoisted_setHtml2": "c",
-      "$$get_$hoisted_setHtml3": "m",
-      "$$setHtml3_getter": "n",
-      "$$setHtml2_getter": "a",
-      "$$setHtml_getter": "i"
+      "$_": "r",
+      "$init": "o",
+      "$$setHtml3_getter": "s",
+      "$$setHtml2_getter": "t",
+      "$$setHtml_getter": "c"
     }
   }
 }

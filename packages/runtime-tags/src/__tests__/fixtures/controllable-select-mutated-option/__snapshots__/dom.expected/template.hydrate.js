@@ -1,4 +1,4 @@
-// size: 584 (min) 318 (brotli)
+// size: 584 (min) 311 (brotli)
 const $for_content__$params = ($scope, $params2) =>
     (($scope, opt) => {
       (_._attr($scope.a, "value", opt), _._text($scope.b, opt));

@@ -3,14 +3,14 @@
     "props": {
       "$_": "t",
       "$init": "c",
-      "$$count4__script": "o",
-      "$$count4": "i",
+      "$$count4__script": "i",
+      "$$count4": "o",
       "$$count5__script": "_",
       "$$count5": "n",
       "$$count6__script": "r",
       "$$count6": "e",
-      "$$count7__script": "m",
-      "$$count7": "a"
+      "$$count7__script": "a",
+      "$$count7": "l"
     }
   }
 }

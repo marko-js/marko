@@ -4,15 +4,13 @@
       "$_": "t",
       "$init": "o",
       "$resolveAfter": "e",
-      "$$await_content__value": "r",
-      "$$await_content__setup": "c",
-      "$$await_content__$params": "i",
-      "$$try_content__await": "s",
+      "$$await_content__value__script": "a",
+      "$$await_content__value": "c",
+      "$$await_content__$params": "r",
+      "$$try_content__await_promise": "s",
       "$$try_content__value": "n",
       "$$value__closure": "_",
-      "$$value": "a",
-      "$$await_content__value__script": "m",
-      "$$try_content__await_promise": "u"
+      "$$value": "m"
     }
   }
 }

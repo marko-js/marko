@@ -1,13 +1,12 @@
 {
   "vars": {
     "props": {
-      "$_": "n",
-      "$init": "t",
-      "$$if_content__setup__script": "i",
-      "$$if_content__setup": "o",
-      "$$if_content": "r",
-      "$$if": "a",
-      "$$show__script": "e",
+      "$_": "i",
+      "$init": "n",
+      "$$if_content__setup__script": "o",
+      "$$if_content__setup": "t",
+      "$$if": "r",
+      "$$show__script": "a",
       "$$show": "m"
     }
   }

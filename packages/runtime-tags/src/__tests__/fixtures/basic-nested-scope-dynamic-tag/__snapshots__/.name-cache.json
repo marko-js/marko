@@ -4,11 +4,10 @@
       "$_": "t",
       "$init": "o",
       "$$falseChild_content__count__script": "r",
-      "$$falseChild_content__count": "m",
-      "$$falseChild_content__setup": "n",
-      "$$count_closure": "_",
-      "$$count": "e",
-      "$$count__closure": "c"
+      "$$falseChild_content__count": "_",
+      "$$falseChild_content__setup": "m",
+      "$$count__closure": "n",
+      "$$count": "e"
     }
   }
 }

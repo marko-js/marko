@@ -1,4 +1,4 @@
-// size: 365 (min) 166 (brotli)
+// size: 365 (min) 163 (brotli)
 (_._content_resume("a2", "Click Me", "b"),
   _._script("a3", ($scope) =>
     _._on($scope.a, "click", function () {

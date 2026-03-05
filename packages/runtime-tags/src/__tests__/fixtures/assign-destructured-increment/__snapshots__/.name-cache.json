@@ -3,14 +3,12 @@
     "props": {
       "$_": "o",
       "$init": "t",
-      "$$pattern2": "n",
-      "$$bar": "r",
-      "$$foo2__script": "m",
-      "$$foo2": "e",
-      "$$foo": "a",
-      "$$foo__OR__fooChange__script": "c",
-      "$$foo__OR__fooChange": "_",
-      "$$fooChange2": "f"
+      "$$bar": "n",
+      "$$foo__OR__fooChange__script": "r",
+      "$$foo__OR__fooChange": "f",
+      "$$foo2": "m",
+      "$$fooChange2": "a",
+      "$$foo": "c"
     }
   }
 }

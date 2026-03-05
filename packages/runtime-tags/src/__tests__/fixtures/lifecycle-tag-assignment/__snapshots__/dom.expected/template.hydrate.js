@@ -1,4 +1,4 @@
-// size: 245 (min) 163 (brotli)
+// size: 245 (min) 159 (brotli)
 const $x__script = _._script("a0", ($scope) => {
     (_._lifecycle($scope, {
       onMount: function () {

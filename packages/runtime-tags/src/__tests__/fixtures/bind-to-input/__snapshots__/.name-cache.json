@@ -4,14 +4,13 @@
       "$_": "t",
       "$init": "r",
       "$$x__script": "o",
-      "$$x$1": "e",
-      "$$countChange__OR__count": "_",
-      "$$count": "n",
-      "$$counter_content2__x": "m",
-      "$$counter_content__x": "a",
-      "$$x_closure": "c",
-      "$$x": "s",
-      "$$x__closure": "i"
+      "$$x$1": "_",
+      "$$countChange__OR__count": "a",
+      "$$count": "e",
+      "$$counter_content2__x": "c",
+      "$$counter_content__x": "n",
+      "$$x__closure": "m",
+      "$$x": "s"
     }
   }
 }

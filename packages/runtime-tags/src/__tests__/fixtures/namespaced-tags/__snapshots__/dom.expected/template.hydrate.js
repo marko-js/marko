@@ -1,4 +1,4 @@
-// size: 669 (min) 325 (brotli)
+// size: 669 (min) 326 (brotli)
 const $Child_content2 = _._content_resume("a0", "Hi", "b"),
   $Child_content = _._content_resume("a1", "Hi", "b"),
   $Parent_content__setup = _._closure_get(10, ($scope) =>

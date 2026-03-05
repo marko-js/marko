@@ -1,4 +1,4 @@
-// size: 307 (min) 164 (brotli)
+// size: 307 (min) 163 (brotli)
 _._enable_catch();
 const $if_content__a = _._closure_get(
     2,

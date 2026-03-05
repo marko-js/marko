@@ -3,13 +3,10 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$catch_content__err": "_",
-      "$$catch_content__$params": "e",
-      "$$try_content__clickCount__script": "r",
-      "$$try_content__clickCount": "n",
-      "$$clickCount_closure": "c",
-      "$$clickCount": "m",
-      "$$clickCount__closure": "s"
+      "$$try_content__clickCount__script": "_",
+      "$$try_content__clickCount": "e",
+      "$$clickCount__closure": "r",
+      "$$clickCount": "c"
     }
   }
 }

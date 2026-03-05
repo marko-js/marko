@@ -5,11 +5,10 @@
       "$init": "n",
       "$$onClick__script": "o",
       "$$onClick$1": "r",
-      "$$text": "e",
-      "$$textAlias": "m",
-      "$$value2": "c",
-      "$$clickCount": "i",
-      "$$onClick2": "s",
+      "$$text": "c",
+      "$$textAlias": "e",
+      "$$clickCount": "m",
+      "$$onClick2": "i",
       "$$onClick": "u"
     }
   }

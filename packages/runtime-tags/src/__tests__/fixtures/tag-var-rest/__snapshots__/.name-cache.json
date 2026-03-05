@@ -4,11 +4,10 @@
       "$_": "t",
       "$init": "o",
       "$$obj": "i",
-      "$$partialObj": "n",
-      "$$partialObj_a": "r",
-      "$$a": "a",
-      "$$partialObj_b": "e",
-      "$$obj_b": "m"
+      "$$partialObj": "a",
+      "$$partialObj_a": "e",
+      "$$a": "n",
+      "$$obj_b": "r"
     }
   }
 }

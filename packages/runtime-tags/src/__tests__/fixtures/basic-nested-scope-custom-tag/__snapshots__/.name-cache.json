@@ -5,9 +5,8 @@
       "$init": "t",
       "$$child_content__count__script": "r",
       "$$child_content__count": "m",
-      "$$count_closure": "_",
-      "$$count": "c",
-      "$$count__closure": "e"
+      "$$count__closure": "_",
+      "$$count": "c"
     }
   }
 }

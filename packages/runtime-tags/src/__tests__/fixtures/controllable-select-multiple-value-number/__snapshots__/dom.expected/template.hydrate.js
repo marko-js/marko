@@ -1,4 +1,4 @@
-// size: 254 (min) 163 (brotli)
+// size: 254 (min) 165 (brotli)
 const $selected = _._let(3, ($scope) => {
   (_._attr_select_value($scope, "a", $scope.d, $valueChange($scope)),
     _._text($scope.b, $scope.d));

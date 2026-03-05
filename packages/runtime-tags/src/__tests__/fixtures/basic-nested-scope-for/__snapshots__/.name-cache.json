@@ -2,9 +2,9 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "o",
-      "$$for_content__selected__OR__num": "r",
-      "$$for_content__selected": "a",
+      "$init": "a",
+      "$$for_content__selected__OR__num": "o",
+      "$$for_content__selected": "r",
       "$$selected": "m"
     }
   }

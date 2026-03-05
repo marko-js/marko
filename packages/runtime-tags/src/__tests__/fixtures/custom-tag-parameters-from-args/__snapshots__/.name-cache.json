@@ -4,14 +4,11 @@
       "$_": "t",
       "$init": "o",
       "$$x__OR__y__script": "_",
-      "$$x__OR__y": "n",
-      "$$dynamicTag": "e",
-      "$$input_content__OR__x__OR__y": "m",
-      "$$x": "r",
-      "$$y": "c",
-      "$$customtag_content__count": "i",
-      "$$customtag_content__count2": "s",
-      "$$customtag_content__$params": "a"
+      "$$x__OR__y": "i",
+      "$$dynamicTag": "m",
+      "$$input_content__OR__x__OR__y": "r",
+      "$$x": "e",
+      "$$y": "a"
     }
   }
 }

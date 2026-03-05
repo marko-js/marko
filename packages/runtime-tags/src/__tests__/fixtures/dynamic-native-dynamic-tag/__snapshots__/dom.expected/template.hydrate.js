@@ -1,4 +1,4 @@
-// size: 228 (min) 154 (brotli)
+// size: 228 (min) 160 (brotli)
 const $tagName_content = _._content_resume("a0", "body content", "b"),
   $dynamicTag = _._dynamic_tag(0, $tagName_content),
   $tagName__OR__className = _._or(4, ($scope) =>

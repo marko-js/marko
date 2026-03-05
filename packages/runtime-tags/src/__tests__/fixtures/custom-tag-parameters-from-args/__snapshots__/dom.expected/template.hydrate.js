@@ -1,4 +1,4 @@
-// size: 392 (min) 243 (brotli)
+// size: 392 (min) 235 (brotli)
 const $x__OR__y__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", function () {
       ($x($scope, $scope.h + 1), $y($scope, $scope.i + 1));

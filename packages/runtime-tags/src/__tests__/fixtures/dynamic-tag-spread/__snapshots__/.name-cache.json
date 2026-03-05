@@ -2,7 +2,7 @@
   "vars": {
     "props": {
       "$_": "m",
-      "$init": "o"
+      "$init": "r"
     }
   }
 }

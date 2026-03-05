@@ -3,9 +3,8 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$double": "m",
-      "$$count__script": "r",
-      "$$count": "c"
+      "$$count__script": "m",
+      "$$count": "r"
     }
   }
 }

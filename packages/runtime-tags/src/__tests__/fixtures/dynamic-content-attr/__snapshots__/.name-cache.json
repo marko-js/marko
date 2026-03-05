@@ -3,14 +3,12 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$sideEffect": "e",
-      "$$define_content__count": "r",
-      "$$count__OR__MyThing": "_",
-      "$$count_closure": "c",
-      "$$count__script": "m",
-      "$$count": "n",
-      "$$count__closure": "s",
-      "$$MyThing_content__count": "a"
+      "$sideEffect": "r",
+      "$$MyThing_content__count": "_",
+      "$$count__OR__MyThing": "e",
+      "$$count__closure": "c",
+      "$$count__script": "a",
+      "$$count": "m"
     }
   }
 }

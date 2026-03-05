@@ -1,4 +1,4 @@
-// size: 788 (min) 367 (brotli)
+// size: 788 (min) 354 (brotli)
 function $setup$1($scope) {
   _._return($scope, $_return($scope));
 }

@@ -1,4 +1,4 @@
-// size: 292 (min) 207 (brotli)
+// size: 292 (min) 206 (brotli)
 const names = ["Dylan", "Michael", "Ryan", "Luke"],
   $index__script = _._script("a0", ($scope) =>
     _._on($scope.c, "click", function () {

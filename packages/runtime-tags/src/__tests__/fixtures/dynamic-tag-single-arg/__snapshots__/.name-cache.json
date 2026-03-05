@@ -5,10 +5,10 @@
       "$init": "o",
       "$$input": "m",
       "$$setup": "r",
-      "$tags": "n",
+      "$tags": "a",
       "$$dynamicTag": "i",
-      "$$x__script": "e",
-      "$$x": "_"
+      "$$x__script": "n",
+      "$$x": "e"
     }
   }
 }

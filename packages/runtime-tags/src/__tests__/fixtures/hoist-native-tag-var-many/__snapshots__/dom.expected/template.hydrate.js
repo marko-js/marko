@@ -1,4 +1,4 @@
-// size: 254 (min) 173 (brotli)
+// size: 254 (min) 154 (brotli)
 const $el3_getter = _._hoist_resume("a0", 0, "Aa", "Ac"),
   $el2_getter = _._hoist(0, "Ab"),
   $el_getter = _._hoist(0, "Aa");

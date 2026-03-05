@@ -3,11 +3,10 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$pattern2": "m",
-      "$$count__script": "r",
+      "$$count__script": "m",
       "$$count": "a",
-      "$$a": "n",
-      "$$b": "c"
+      "$$a": "r",
+      "$$b": "i"
     }
   }
 }

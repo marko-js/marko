@@ -1,4 +1,4 @@
-// size: 243 (min) 153 (brotli)
+// size: 243 (min) 151 (brotli)
 (_._script("a0", ($scope) => $scope.d(2)),
   _._script("a1", ($scope) => _._attrs_script($scope, "a")));
 const $child_content__value = _._closure_get(1, ($scope) =>

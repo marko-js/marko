@@ -6,14 +6,13 @@
       "$resolveAfter": "o",
       "$$await_content__setup": "r",
       "$$placeholder_content": "a",
-      "$$try_content__await": "m",
-      "$$try_content__setup": "i",
+      "$$await_content": "i",
+      "$$try_content__await_promise": "m",
+      "$$try_content__setup": "n",
       "$$if_content__try": "c",
-      "$$if_content__setup": "n",
+      "$$if_content__setup": "_",
       "$$if": "s",
-      "$$show": "_",
-      "$$await_content": "l",
-      "$$try_content__await_promise": "p"
+      "$$show": "l"
     }
   }
 }

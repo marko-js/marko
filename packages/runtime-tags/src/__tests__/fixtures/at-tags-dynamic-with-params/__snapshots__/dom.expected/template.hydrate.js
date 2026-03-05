@@ -1,4 +1,4 @@
-// size: 273 (min) 198 (brotli)
+// size: 273 (min) 188 (brotli)
 const $dynamicTag = _._dynamic_tag(0, 0, 0, 1),
   $item_content__$params = ($scope, $params2) =>
     (($scope, y) => _._text($scope.a, y))($scope, $params2[0]),

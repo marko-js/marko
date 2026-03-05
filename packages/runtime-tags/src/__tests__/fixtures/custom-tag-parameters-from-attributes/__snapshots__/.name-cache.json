@@ -3,14 +3,11 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$dynamicTag": "n",
-      "$$input_content__OR__input_name__OR__x": "_",
-      "$$x__script": "c",
-      "$$x": "m",
-      "$$customtag_content__name": "e",
-      "$$customtag_content__count": "r",
-      "$$customtag_content__$params": "a",
-      "$$customtag_content__$temp": "i"
+      "$$dynamicTag": "m",
+      "$$input_content__OR__input_name__OR__x": "n",
+      "$$x__script": "a",
+      "$$x": "e",
+      "$$customtag_content__$temp": "r"
     }
   }
 }

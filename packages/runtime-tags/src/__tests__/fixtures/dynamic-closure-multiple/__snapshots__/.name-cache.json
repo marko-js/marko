@@ -1,28 +1,16 @@
 {
   "vars": {
     "props": {
-      "$_": "t",
-      "$init": "o",
-      "$resolveAfter": "r",
-      "$$await_content__value": "_",
-      "$$await_content__$params": "c",
-      "$$await_content": "e",
-      "$$try_content__await": "n",
-      "$$try_content__clickCount": "m",
-      "$$clickCount_closure": "s",
-      "$$clickCount__script": "a",
-      "$$clickCount": "i",
-      "$$clickCount__closure": "l",
-      "$$try_content__await_promise": "u",
-      "$resolveAfterNext": "p",
-      "$$if_content__a": "d",
-      "$$if_content__b": "g",
-      "$$a__OR__b__script": "f",
-      "$$a__OR__b": "k",
-      "$$a__closure": "b",
-      "$$a": "x",
-      "$$b__closure": "h",
-      "$$b": "j"
+      "$_": "_",
+      "$init": "t",
+      "$$if_content__a": "o",
+      "$$if_content__b": "e",
+      "$$a__OR__b__script": "r",
+      "$$a__OR__b": "c",
+      "$$a__closure": "a",
+      "$$a": "m",
+      "$$b__closure": "s",
+      "$$b": "l"
     }
   }
 }

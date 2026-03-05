@@ -2,14 +2,13 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "o",
-      "$$await_content3__count": "e",
-      "$$await_content2__count": "r",
-      "$$await_content__count": "_",
-      "$$count_closure": "m",
+      "$init": "e",
+      "$$await_content3__count": "_",
+      "$$await_content2__count": "o",
+      "$$await_content__count": "r",
+      "$$count__closure": "m",
       "$$count__script": "c",
-      "$$count": "s",
-      "$$count__closure": "i"
+      "$$count": "s"
     }
   }
 }

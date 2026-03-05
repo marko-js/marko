@@ -3,8 +3,7 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$if_content__setup": "n",
-      "$$if_content": "m",
+      "$$if_content__setup": "m",
       "$$if": "r",
       "$$hide": "i"
     }

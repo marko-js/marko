@@ -1,4 +1,4 @@
-// size: 176 (min) 136 (brotli)
+// size: 176 (min) 129 (brotli)
 const $increment2__script = _._script("a1", ($scope) =>
     _._on($scope.a, "click", $scope.d),
   ),

@@ -1,9 +1,9 @@
 {
   "vars": {
     "props": {
-      "$_": "m",
-      "$init": "r",
-      "$$child_content__x": "t",
+      "$_": "r",
+      "$init": "t",
+      "$$child_content__x": "o",
       "$$x__closure": "_"
     }
   }

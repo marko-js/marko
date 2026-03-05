@@ -2,20 +2,20 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "e",
-      "$$Child_content2": "a",
+      "$init": "a",
+      "$$Child_content2": "e",
       "$$Child_content": "r",
       "$$Parent_content__setup": "n",
       "$$Parent_content": "_",
-      "$$dynamicTag3": "o",
-      "$$Parent__OR__Child__script": "c",
-      "$$Parent__OR__Child": "i",
-      "$$Parent__script": "m",
+      "$$dynamicTag3": "m",
+      "$$Parent__OR__Child__script": "o",
+      "$$Parent__OR__Child": "c",
+      "$$Parent__script": "i",
       "$$Parent": "s",
-      "$$dynamicTag": "u",
-      "$$dynamicTag2": "l",
-      "$$Child__script": "f",
-      "$$Child": "g"
+      "$$dynamicTag": "l",
+      "$$dynamicTag2": "u",
+      "$$Child__script": "g",
+      "$$Child": "f"
     }
   }
 }

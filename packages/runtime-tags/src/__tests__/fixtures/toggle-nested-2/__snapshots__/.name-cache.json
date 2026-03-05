@@ -3,22 +3,19 @@
     "props": {
       "$_": "t",
       "$init": "_",
-      "$$if_content2__count__script": "n",
-      "$$if_content2__count": "o",
-      "$$if_content2__setup": "c",
-      "$$if_content2": "i",
-      "$$if_content__if": "r",
-      "$$if_content__inner__script": "e",
-      "$$if_content__inner": "u",
-      "$$if_content__setup": "a",
-      "$$if_content": "l",
-      "$$if": "m",
-      "$$outer__script": "s",
-      "$$outer": "f",
-      "$$inner": "b",
-      "$$count_closure": "k",
-      "$$count": "p",
-      "$$count__closure": "d"
+      "$$if_content2__count__script": "o",
+      "$$if_content2__count": "c",
+      "$$if_content2__setup": "i",
+      "$$if_content__if": "n",
+      "$$if_content__inner__script": "r",
+      "$$if_content__inner": "e",
+      "$$if_content__setup": "u",
+      "$$if": "a",
+      "$$outer__script": "l",
+      "$$outer": "m",
+      "$$inner": "s",
+      "$$count__closure": "f",
+      "$$count": "b"
     }
   }
 }

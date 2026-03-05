@@ -2,8 +2,8 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "r",
-      "$$value": "a",
+      "$init": "a",
+      "$$value": "r",
       "$$valueChange": "e"
     }
   }

@@ -1,4 +1,4 @@
-// size: 492 (min) 219 (brotli)
+// size: 492 (min) 210 (brotli)
 const $ChildB_content__count__OR__foo = _._or(10, ($scope) =>
     (($scope, $pattern2) => $ChildB_content__$bar($scope, $pattern2.bar))(
       $scope,

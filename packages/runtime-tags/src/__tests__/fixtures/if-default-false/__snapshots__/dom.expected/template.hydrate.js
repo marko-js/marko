@@ -1,4 +1,4 @@
-// size: 127 (min) 114 (brotli)
+// size: 127 (min) 112 (brotli)
 const $if = _._if(1, "hi", "b"),
   $show__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", function () {

@@ -3,13 +3,11 @@
     "props": {
       "$_": "t",
       "$init": "o",
-      "$$item_content__mult__OR__item": "e",
-      "$$item_content__mult": "r",
-      "$$item_content__setup": "_",
-      "$$mult_closure": "c",
-      "$$mult__script": "m",
-      "$$mult": "n",
-      "$$mult__closure": "s"
+      "$$item_content__mult__OR__item": "r",
+      "$$item_content__mult": "m",
+      "$$mult__closure": "_",
+      "$$mult__script": "c",
+      "$$mult": "e"
     }
   }
 }

@@ -1,4 +1,4 @@
-// size: 377 (min) 219 (brotli)
+// size: 377 (min) 218 (brotli)
 const $for_content__$params = ($scope, $params2) =>
     $for_content__$temp($scope, $params2?.[0]),
   $for_content__$temp = ($scope, $temp) => {

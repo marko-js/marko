@@ -2,14 +2,14 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "e",
-      "$resolveAfter": "o",
-      "$$await_content__value__script": "r",
+      "$init": "o",
+      "$resolveAfter": "e",
+      "$$await_content__value__script": "a",
       "$$await_content__value": "c",
-      "$$await_content__$params": "n",
+      "$$await_content__$params": "r",
       "$$try_content__await_promise": "s",
-      "$$try_content__value": "a",
-      "$$value__closure": "_",
+      "$$try_content__value": "_",
+      "$$value__closure": "n",
       "$$value": "m"
     }
   }

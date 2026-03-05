@@ -2,16 +2,11 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "r",
-      "$$for_content__valueString": "e",
-      "$$value": "_",
-      "$$valueString": "o",
-      "$$checkedValueChange": "a",
-      "$$valueChange": "c",
-      "$$checked": "u",
-      "$$checkedValueChange3": "n",
-      "$$checkedValueChange2": "i",
-      "$$selected": "m"
+      "$init": "e",
+      "$$checked": "r",
+      "$$checkedValueChange3": "u",
+      "$$checkedValueChange2": "c",
+      "$$checkedValueChange": "_"
     }
   }
 }

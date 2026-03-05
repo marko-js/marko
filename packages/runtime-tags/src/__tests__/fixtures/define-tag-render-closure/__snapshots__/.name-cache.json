@@ -2,17 +2,14 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "o",
-      "$$define_content__x": "m",
-      "$$x__script": "r",
-      "$$x": "e",
-      "$$x__closure": "_",
-      "$$define_content__setup": "c",
-      "$$if_content__setup": "i",
-      "$$if_content": "n",
-      "$$if": "s",
-      "$$MyTag_content__x": "a",
-      "$$MyTag_content__setup": "l"
+      "$init": "_",
+      "$$if_content__setup": "e",
+      "$$MyTag_content__x": "o",
+      "$$MyTag_content__setup": "i",
+      "$$if": "r",
+      "$$x__closure": "m",
+      "$$x__script": "c",
+      "$$x": "a"
     }
   }
 }

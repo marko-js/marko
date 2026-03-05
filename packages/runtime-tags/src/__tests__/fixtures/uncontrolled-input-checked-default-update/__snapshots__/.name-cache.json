@@ -2,10 +2,8 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "r",
-      "$$value": "e",
-      "$$valueChange": "a",
-      "$$checked": "_"
+      "$init": "_",
+      "$$checked": "c"
     }
   }
 }

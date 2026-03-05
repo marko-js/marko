@@ -1,4 +1,4 @@
-// size: 125 (min) 103 (brotli)
+// size: 125 (min) 114 (brotli)
 const $toggle__script = _._script("a0", ($scope) =>
     _._on($scope.b, "click", function () {
       $toggle($scope, !$scope.c);

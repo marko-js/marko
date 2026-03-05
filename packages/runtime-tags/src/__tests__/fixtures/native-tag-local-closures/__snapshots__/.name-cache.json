@@ -1,9 +1,9 @@
 {
   "vars": {
     "props": {
-      "$_": "r",
-      "$init": "t",
-      "$$item_content": "o",
+      "$_": "t",
+      "$init": "o",
+      "$$item_content": "r",
       "$$for_content__item__script": "a",
       "$$for_content__item": "c",
       "$$for_content__$params": "n",

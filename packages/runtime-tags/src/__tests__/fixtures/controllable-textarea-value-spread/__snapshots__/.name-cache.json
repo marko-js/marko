@@ -3,10 +3,10 @@
     "props": {
       "$_": "t",
       "$init": "r",
-      "$$value": "a",
-      "$$valueChange": "e",
-      "$$input__script": "m",
-      "$$input": "o"
+      "$$input__script": "a",
+      "$$input": "m",
+      "$$value": "o",
+      "$$valueChange": "e"
     }
   }
 }

@@ -1,4 +1,4 @@
-// size: 239 (min) 169 (brotli)
+// size: 239 (min) 170 (brotli)
 const $items__OR__index__script = _._script("a0", ($scope) =>
     _._on($scope.c, "click", function () {
       const newItems = $scope.d.slice(1);

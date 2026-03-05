@@ -2,8 +2,7 @@
   "vars": {
     "props": {
       "$_": "r",
-      "$init": "o",
-      "$$setHtml_getter": "m"
+      "$init": "m"
     }
   }
 }

@@ -1,4 +1,4 @@
-// size: 130 (min) 115 (brotli)
+// size: 130 (min) 118 (brotli)
 const $for_content__open__script = _script("a0", ($scope) =>
     _on($scope.c, "click", function () {
       $for_content__open($scope, !$scope.m);

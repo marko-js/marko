@@ -2,23 +2,19 @@
   "vars": {
     "props": {
       "$_": "t",
-      "$init": "o",
-      "$$dynamicTag": "_",
+      "$init": "_",
+      "$$dynamicTag": "o",
       "$$content__OR__value": "c",
-      "$$content": "n",
-      "$$value": "e",
-      "$$child_content2__outer": "s",
-      "$$child_content2__inner": "r",
-      "$$child_content2__setup": "m",
-      "$$child_content2__$params": "i",
-      "$$child_content2": "l",
-      "$$child_content__y": "u",
-      "$$child_content__$params": "a",
-      "$$child_content__outer_closure": "d",
-      "$$child_content__outer": "g",
-      "$$x__script": "v",
-      "$$x": "b",
-      "$$child_content__outer__closure": "f"
+      "$$content": "e",
+      "$$value": "n",
+      "$$child_content2__outer": "r",
+      "$$child_content2__setup": "s",
+      "$$child_content2": "m",
+      "$$child_content__y": "a",
+      "$$child_content__outer__closure": "i",
+      "$$child_content__outer": "d",
+      "$$x__script": "u",
+      "$$x": "l"
     }
   }
 }

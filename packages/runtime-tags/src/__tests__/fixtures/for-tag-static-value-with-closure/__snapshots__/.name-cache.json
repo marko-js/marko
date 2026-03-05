@@ -5,7 +5,7 @@
       "$init": "o",
       "$$for_content__count": "r",
       "$$count__script": "m",
-      "$$count": "i"
+      "$$count": "_"
     }
   }
 }

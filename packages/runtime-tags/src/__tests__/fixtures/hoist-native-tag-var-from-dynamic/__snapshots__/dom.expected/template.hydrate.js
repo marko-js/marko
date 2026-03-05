@@ -1,4 +1,4 @@
-// size: 636 (min) 290 (brotli)
+// size: 636 (min) 289 (brotli)
 const $dynamicTag = _._dynamic_tag(0),
   $dynamicTag2 = _._dynamic_tag(1),
   $el3_getter = _._hoist(0, "B4");
