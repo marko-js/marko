@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.39.59
+
+### Patch Changes
+
+- [#3117](https://github.com/marko-js/marko/pull/3117) [`e0419aa`](https://github.com/marko-js/marko/commit/e0419aaea01c9125fc5b67cfb51ed5fabb674dbb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrades eslint which captured some unecessary variable initializations and assignments.
+
+- [#3118](https://github.com/marko-js/marko/pull/3118) [`1961089`](https://github.com/marko-js/marko/commit/1961089c02743978cc4887346ff293a160d5139a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid loading babel configs when babel is not installed locally.
+
 ## 5.39.58
 
 ### Patch Changes

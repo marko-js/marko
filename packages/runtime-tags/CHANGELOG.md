@@ -1,5 +1,18 @@
 # @marko/runtime-tags
 
+## 6.0.154
+
+### Patch Changes
+
+- [#3117](https://github.com/marko-js/marko/pull/3117) [`e0419aa`](https://github.com/marko-js/marko/commit/e0419aaea01c9125fc5b67cfb51ed5fabb674dbb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrades eslint which captured some unecessary variable initializations and assignments.
+
+- [#3114](https://github.com/marko-js/marko/pull/3114) [`cdd9c14`](https://github.com/marko-js/marko/commit/cdd9c1404e3795d67844e9ccccfe070ff8bde646) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add "did you mean?" when the tag is not found
+
+- [#3118](https://github.com/marko-js/marko/pull/3118) [`1961089`](https://github.com/marko-js/marko/commit/1961089c02743978cc4887346ff293a160d5139a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid loading babel configs when babel is not installed locally.
+
+- Updated dependencies [[`e0419aa`](https://github.com/marko-js/marko/commit/e0419aaea01c9125fc5b67cfb51ed5fabb674dbb), [`1961089`](https://github.com/marko-js/marko/commit/1961089c02743978cc4887346ff293a160d5139a)]:
+  - @marko/compiler@5.39.59
+
 ## 6.0.153
 
 ### Patch Changes
