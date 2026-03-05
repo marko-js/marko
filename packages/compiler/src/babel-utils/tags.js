@@ -192,7 +192,6 @@ export function findParentTag(path) {
     }
 
     if (!cur.isMarkoTag()) {
-      cur = undefined;
       break;
     }
 

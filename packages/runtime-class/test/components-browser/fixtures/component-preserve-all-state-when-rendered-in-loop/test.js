@@ -20,7 +20,7 @@ module.exports = function (helpers) {
   component.removeItem(itemIds[0]);
   component.update();
 
-  ensurePreservedKeys(curLookup, (curLookup = getKeyLookup()));
+  ensurePreservedKeys(curLookup, getKeyLookup());
 
   function getKeyLookup(els) {
     els = els || rootEl.children;

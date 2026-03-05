@@ -55,7 +55,7 @@ export let _dynamic_tag = (
 
   const state = getState()!;
   const branchId = _peek_scope_id();
-  let rendered = false;
+  let rendered: boolean;
   let result: unknown;
 
   if (typeof renderer === "string") {

@@ -42,9 +42,7 @@ module.exports = function babelPluginMarkoDebug() {
 function replaceMarkoDebug(path, test, consequent, alternate) {
   // Reverse replacement when negating the expression.
   if (test.type === "UnaryExpression" && test.operator === "!") {
-    const temp = consequent;
-    consequent = alternate;
-    alternate = temp;
+    alternate = consequent;
     test = test.argument;
   }
 

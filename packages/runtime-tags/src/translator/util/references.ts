@@ -1329,7 +1329,7 @@ export function createSources(
 }
 
 export function compareSources(a: Sources, b: Sources) {
-  let delta = 0;
+  let delta: number;
 
   if (a.param) {
     if (!b.param) return 1;

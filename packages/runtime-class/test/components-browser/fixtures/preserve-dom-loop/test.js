@@ -22,7 +22,7 @@ module.exports = function (helpers) {
   expect(helpers.targetEl.textContent).to.equal("abc");
 
   component.input = {
-    count: ++count,
+    count: count + 1,
     items: [].concat(items).reverse(),
   };
   component.update();

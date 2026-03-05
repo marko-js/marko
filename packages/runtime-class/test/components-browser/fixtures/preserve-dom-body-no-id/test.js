@@ -18,7 +18,7 @@ module.exports = function (helpers) {
   );
 
   component.input = {
-    counter: ++counter,
+    counter: counter + 1,
   };
   component.update();
 

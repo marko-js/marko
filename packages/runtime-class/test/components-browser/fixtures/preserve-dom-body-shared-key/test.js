@@ -12,7 +12,7 @@ module.exports = function (helpers) {
   ).to.equal("0");
 
   component.input = {
-    counter: ++counter,
+    counter: counter + 1,
   };
 
   component.update();

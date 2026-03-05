@@ -560,7 +560,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                 curFromNodeChild = fromNextSibling;
                 continue;
               }
-            } else if ((curFromNodeKey = curVFromNodeChild.___key)) {
+            } else if (curVFromNodeChild.___key) {
               // We have a keyed element here but our target VDOM node
               // is not keyed so this not doesn't belong
               isCompatible = false;

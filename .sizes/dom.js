@@ -1,4 +1,4 @@
-// size: 20693 (min) 7829 (brotli)
+// size: 20691 (min) 7838 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -343,8 +343,8 @@ function walk(startNode, walkCodes, branch) {
 }
 function walkInternal(currentWalkIndex, walkCodes, scope) {
   let value,
+    currentMultiplier,
     storedMultiplier = 0,
-    currentMultiplier = 0,
     currentScopeIndex = 0;
   for (; currentWalkIndex < walkCodes.length; )
     if (
