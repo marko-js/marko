@@ -1294,16 +1294,16 @@ declare global {
         value?: AttrStringOrNumber;
 
         /**
-         * The width of an image input in pixels.
-         * @see https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-width
-         */
-        width?: AttrStringOrNumber;
-
-        /**
          * Indicates that the file input allows the user to select a directory instead of a file.
          * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory
          */
         webkitdirectory?: AttrBoolean;
+
+        /**
+         * The width of an image input in pixels.
+         * @see https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-width
+         */
+        width?: AttrStringOrNumber;
 
         // NON STANDARD
 
