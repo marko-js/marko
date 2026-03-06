@@ -1299,6 +1299,12 @@ declare global {
          */
         width?: AttrStringOrNumber;
 
+        /**
+         * Indicates that the file input allows the user to select a directory instead of a file.
+         * @see https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory
+         */
+        webkitdirectory?: AttrBoolean;
+
         // NON STANDARD
 
         /**
