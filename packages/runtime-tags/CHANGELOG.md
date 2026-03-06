@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.156
+
+### Patch Changes
+
+- [#3121](https://github.com/marko-js/marko/pull/3121) [`22b2ecc`](https://github.com/marko-js/marko/commit/22b2ecce8e76e781485304d936d8aaf051f18fa0) Thanks [@copilot-swe-agent](https://github.com/apps/copilot-swe-agent)! - Add `webkitdirectory` boolean attribute to the `HTML.Input` type definitions
+
 ## 6.0.155
 
 ### Patch Changes
