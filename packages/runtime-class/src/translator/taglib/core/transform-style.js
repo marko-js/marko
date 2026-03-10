@@ -39,16 +39,16 @@ export default function (tag) {
   }
 
   const [startContent, type = ".css"] = matchedBlock;
-  const codeSartOffset = startContent.length;
+  const codeStartOffset = startContent.length;
   const codeEndOffset = rawValue.lastIndexOf("}");
-  const code = rawValue.slice(codeSartOffset, codeEndOffset);
+  const code = rawValue.slice(codeStartOffset, codeEndOffset);
   const base = path.basename(hub.file.opts.filename);
   const start = getStart(hub.file, node.name);
   let startPos = undefined;
   let endPos = undefined;
 
   if (start !== null) {
-    startPos = start + codeSartOffset;
+    startPos = start + codeStartOffset;
     endPos = start + codeEndOffset;
   }
 

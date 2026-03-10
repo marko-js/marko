@@ -122,8 +122,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     knownTagTranslateDOM(
       tag,
       childExports.params,
-      (binding, preferedName) =>
-        getSignal(programSection, binding, preferedName).identifier,
+      (binding, preferredName) =>
+        getSignal(programSection, binding, preferredName).identifier,
       (section, childBinding) => {
         addStatement(
           "render",
@@ -144,12 +144,12 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     knownTagTranslateDOM(
       tag,
       childExports.params,
-      (binding, perferedName) =>
+      (binding, preferredName) =>
         importOrSelfReferenceName(
           tag.hub.file,
           relativePath,
           binding.export!,
-          perferedName,
+          preferredName,
         ),
       (section, childBinding) => {
         addStatement(

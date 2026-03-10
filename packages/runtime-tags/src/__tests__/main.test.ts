@@ -552,14 +552,14 @@ describe("runtime-tags/translator", () => {
           let actual = "";
           let expected = "";
 
-          let prevResumLog = "";
+          let prevResumeLog = "";
 
           while (resumeIndex < resumeLogs.length) {
             const resumeLog = resumeLogs[resumeIndex++].replace(
               /(# Render)[^\n]+/,
               "$1",
             );
-            if (resumeLog !== prevResumLog) {
+            if (resumeLog !== prevResumeLog) {
               while (csrIndex < csrLogs.length) {
                 const csrLog = csrLogs[csrIndex++].replace(
                   /(# Render)[^\n]+/,
@@ -579,7 +579,7 @@ describe("runtime-tags/translator", () => {
               }
               actual += resumeLog;
             }
-            prevResumLog = resumeLog;
+            prevResumeLog = resumeLog;
           }
 
           if (!expected && actual) {

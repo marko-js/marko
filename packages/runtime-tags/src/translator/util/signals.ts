@@ -1561,12 +1561,12 @@ function getRegisteredFnExpression(node: t.Function) {
     const id = extra.name;
     const referencesScope = extra.referencesScope;
     const referencedBindings = extra.referencedBindingsInFunction;
-    let registedFns = registeredFnsForProgram.get(getProgram().node);
-    if (!registedFns) {
-      registeredFnsForProgram.set(getProgram().node, (registedFns = []));
+    let registeredFns = registeredFnsForProgram.get(getProgram().node);
+    if (!registeredFns) {
+      registeredFnsForProgram.set(getProgram().node, (registeredFns = []));
     }
 
-    registedFns.push({
+    registeredFns.push({
       id,
       node,
       registerId: extra.registerId,

@@ -79,7 +79,7 @@ declare global {
     /** The top level api for a Marko Template. */
     export abstract class Template<Input = unknown, Return = unknown> {
       /**
-       * The folowing types are processed up by the @marko/language-tools
+       * The following types are processed up by the @marko/language-tools
        * and inlined into the compiled template.
        *
        * This is done to support generics on each of these methods

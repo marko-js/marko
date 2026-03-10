@@ -335,7 +335,7 @@ The `on-*` attribute syntax attaches an event listener to either a native DOM ev
 
 ### `once-[event](methodName|function, ...args)`
 
-The same as the `on-*` attribut,e except that its listener is only invoked for the first event, and then removed from memory. Please see the [Event handling](#event-handling) section above for more details.
+The same as the `on-*` attribute, except that its listener is only invoked for the first event, and then removed from memory. Please see the [Event handling](#event-handling) section above for more details.
 
 ### `key`
 
@@ -821,10 +821,10 @@ Adds the listener function to the end of the listeners array for the `eventName`
 
 ### `once(eventName, handler)`
 
-| Signature   | Type       | Description                                |
-| ----------- | ---------- | ------------------------------------------ |
-| `eventName` | `String`   | Name of the event to listen for            |
-| `handler`   | `Function` | Tthe function to call when the event fires |
+| Signature   | Type       | Description                               |
+| ----------- | ---------- | ----------------------------------------- |
+| `eventName` | `String`   | Name of the event to listen for           |
+| `handler`   | `Function` | The function to call when the event fires |
 
 Adds a one-time listener function for the `eventName` event. The next time `eventName` triggers, this listener is removed and then invoked.
 

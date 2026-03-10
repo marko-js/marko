@@ -33,7 +33,7 @@ function normalizeHook(dirname, value) {
 }
 
 /**
- * We load a taglib definion using this class. Properties in the taglib
+ * We load a taglib definition using this class. Properties in the taglib
  * definition (which is just a JavaScript object with properties)
  * are mapped to handler methods in an instance of this type.
  *
@@ -158,7 +158,7 @@ class TaglibLoader {
     // The value of the "attributes" property will be an object
     // where each property maps to an attribute definition. Since these
     // attributes are on the taglib they will be "global" attribute
-    // defintions.
+    // definitions.
     //
     // The property key will be the attribute name and the property value
     // will be the attribute definition. Example:

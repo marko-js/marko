@@ -23,6 +23,7 @@ import {
 } from "./writer";
 
 const voidElementsReg =
+  /* cspell:disable-next-line */
   /^(?:area|b(?:ase|r)|col|embed|hr|i(?:mg|nput)|link|meta|param|source|track|wbr)$/;
 interface BodyContentObject {
   [x: PropertyKey]: unknown;

@@ -119,7 +119,7 @@ function createRendererFunc(
     }
 
     if (isServer) {
-      // If we are rendering on the server then things are simplier since
+      // If we are rendering on the server then things are simpler since
       // we don't need to match up the UI component with a previously
       // rendered component already mounted to the DOM. We also create
       // a lightweight ServerComponent

@@ -1243,9 +1243,9 @@ describe("serializer", () => {
       const response = new Response(
         new ReadableStream({
           async start(ctrl) {
-            ctrl.enqueue(encoder.encode("first"));
+            ctrl.enqueue(encoder.encode("first "));
             await new Promise((r) => setTimeout(r, 0));
-            ctrl.enqueue(encoder.encode("second"));
+            ctrl.enqueue(encoder.encode("second "));
             await new Promise((r) => setTimeout(r, 0));
             ctrl.enqueue(encoder.encode("third"));
             ctrl.close();
@@ -1261,7 +1261,7 @@ describe("serializer", () => {
         `_.a.f(_.e=new Uint8Array([116,104,105,114,100])),_.a.r()`,
       );
 
-      assert.equal(await result.text(), "firstsecondthird");
+      assert.equal(await result.text(), "first second third");
     });
 
     shouldTestRequestAndResponse &&

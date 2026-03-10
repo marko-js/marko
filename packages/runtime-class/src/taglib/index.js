@@ -34,7 +34,7 @@ exports.lookup = {
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {
         complain(
-          "buildTaglibLookup now requires passing in a transltor as the second argument, eg `buildTaglibLookup(dir, require('marko/translator'))`.",
+          "buildTaglibLookup now requires passing in a translator as the second argument, eg `buildTaglibLookup(dir, require('marko/translator'))`.",
         );
       }
     }

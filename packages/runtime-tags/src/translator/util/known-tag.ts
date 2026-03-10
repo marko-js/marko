@@ -311,7 +311,7 @@ export function knownTagTranslateDOM(
   propTree: BindingPropTree | undefined,
   getBindingIdentifier: (
     binding: Binding,
-    preferedName?: string,
+    preferredName?: string,
   ) => t.Identifier,
   callSetup: (section: Section, childBinding: Binding) => void,
 ) {

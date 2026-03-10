@@ -236,7 +236,7 @@ export default {
       autocomplete: [
         {
           description:
-            "The amount to increment during each interation (with from/to)",
+            "The amount to increment during each iteration (with from/to)",
         },
       ],
     },

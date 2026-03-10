@@ -226,7 +226,7 @@ declare global {
       replace(target: ChildNode): this;
       /** Replaces the children of an existing DOM element with the dom for the current instance. */
       replaceChildrenOf(target: ParentNode): this;
-      // /** Called when the component is firsted created. */
+      // /** Called when the component is first created. */
       // onCreate?(input: this["input"], out: Marko.Out): void;
       // /** Called every time the component receives input from it's parent. */
       // onInput?(input: this["input"], out: Marko.Out): void | this["input"];
@@ -246,7 +246,7 @@ declare global {
       createOut(): Out;
 
       /**
-       * The folowing types are processed up by the @marko/language-tools
+       * The following types are processed up by the @marko/language-tools
        * and inlined into the compiled template.
        *
        * This is done to support generics on each of these methods
