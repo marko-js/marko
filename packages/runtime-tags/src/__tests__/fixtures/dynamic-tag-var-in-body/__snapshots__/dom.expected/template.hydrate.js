@@ -1,9 +1,9 @@
-// size: 222 (min) 149 (brotli)
+// size: 240 (min) 168 (brotli)
 _._resume("a0", function ($scope) {
   return () => (html) => ($scope.b.innerHTML = html);
 });
 const $Child_content__setHtml__script = _._script("b0", ($scope) =>
-    $scope._.c("Hello World"),
+    _._assert_init($scope._, "c")("Hello World"),
   ),
   $Child_content__setHtml = _._closure_get(2, $Child_content__setHtml__script),
   $Child_content__setup = $Child_content__setHtml;

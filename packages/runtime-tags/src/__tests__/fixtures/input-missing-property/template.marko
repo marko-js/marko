@@ -1,0 +1,13 @@
+<let/count=0>
+<button onClick() { count++ }>
+  ${count}
+</button>
+
+<define/Child|input|>
+  <if=input.count>
+    <if=true>
+      <div>${input.name || "Fallback"}</div>
+    </>
+  </>
+</define>
+<Child count=count />

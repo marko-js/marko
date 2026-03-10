@@ -2,7 +2,7 @@ export const $template = "<!><!><!>";
 export const $walks = /* over(1), dynamicTagWithVar, over(2) */"b1c";
 import Child from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $Child_content__setHtml__script = _._script("__tests__/template.marko_1_setHtml", $scope => $scope._.setHtml("Hello World"));
+const $Child_content__setHtml__script = _._script("__tests__/template.marko_1_setHtml", $scope => _._assert_init($scope._, "setHtml")("Hello World"));
 const $Child_content__setHtml = /* @__PURE__ */_._closure_get("setHtml", $Child_content__setHtml__script);
 const $Child_content__setup = $Child_content__setHtml;
 const $Child_content = _._content_resume("__tests__/template.marko_1_content", 0, 0, $Child_content__setup);

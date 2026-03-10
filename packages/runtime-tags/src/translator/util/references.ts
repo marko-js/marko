@@ -1,9 +1,11 @@
 import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
+import { optimize } from "@marko/compiler/config";
 
 import { decodeAccessor } from "../../common/helpers";
 import { toAccess } from "../../html/serializer";
 import { finalizeFunctionRegistry } from "../visitors/function";
+import { scopeIdentifier } from "../visitors/program";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-char";
@@ -27,6 +29,7 @@ import {
   push,
   Sorted,
 } from "./optional";
+import { callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
   finalizeParamSerializeReasonGroups,
@@ -131,12 +134,14 @@ export interface Getter {
 interface Read {
   binding: Binding;
   extra: t.NodeExtra;
+  ownVar: boolean;
   getter: Getter | undefined;
 }
 
 interface ExtraRead {
   binding: Binding;
   props: Opt<string>;
+  ownVar: boolean;
   getter: Getter | undefined;
 }
 
@@ -402,19 +407,43 @@ export function trackParamsReferences(
   }
 }
 
+function getMarkoRootAsTag(path: t.NodePath) {
+  const tag = path.isMarkoTag() ? path : getMarkoRoot(path)?.parentPath;
+  if (tag?.isMarkoTag()) {
+    return tag;
+  }
+}
+
+export function isReferenceInOwnBody(
+  bindingPath: t.NodePath,
+  reference: t.NodePath,
+) {
+  const tag = getMarkoRootAsTag(bindingPath);
+  if (!tag) {
+    return false;
+  }
+  const body = tag.get("body");
+
+  let cur: t.NodePath | null = reference;
+  while (cur) {
+    if (cur === body) {
+      return true;
+    }
+    cur = cur.parentPath;
+  }
+
+  return false;
+}
+
 export function isReferenceHoisted(
   bindingPath: t.NodePath,
   reference: t.NodePath,
 ) {
-  const tag = bindingPath.isMarkoTag()
-    ? bindingPath
-    : getMarkoRoot(bindingPath)?.parentPath;
-
-  if (!tag?.isMarkoTag()) {
+  const tag = getMarkoRootAsTag(bindingPath);
+  if (!tag) {
     return false;
   }
-
-  const body = tag.parentPath!;
+  const body = tag.parentPath;
 
   let cur: t.NodePath | null = reference;
   while (cur) {
@@ -1414,7 +1443,7 @@ export function addRead(
   getter: Getter | undefined,
 ) {
   const readsByExpression = getReadsByExpression();
-  const read: Read = { binding, extra, getter };
+  const read: Read = { binding, extra, getter, ownVar: false };
   binding.reads.add(exprExtra);
   exprExtra.section = section;
   readsByExpression.set(
@@ -1470,6 +1499,14 @@ function addReadToExpression(
     section,
     getter,
   );
+
+  if (!getter && binding.type === BindingType.derived) {
+    const babelBinding = root.scope.getBinding(binding.name);
+    read.ownVar =
+      !!babelBinding &&
+      babelBinding.kind !== "param" &&
+      isReferenceInOwnBody(babelBinding.path, root);
+  }
 
   if (root.parent.type === "MarkoSpreadAttribute") {
     exprExtra.spreadFrom = binding;
@@ -1668,6 +1705,14 @@ export function getReadReplacement(
               [getScopeExpression(extra.section!, readBinding.section)],
             );
           }
+        } else if (!optimize && read.ownVar) {
+          replacement = callRuntime(
+            "_assert_init",
+            extra.section
+              ? getScopeExpression(extra.section, readBinding.section)
+              : scopeIdentifier,
+            getScopeAccessorLiteral(readBinding),
+          );
         } else {
           replacement = createScopeReadExpression(readBinding, extra.section);
         }
@@ -1939,7 +1984,7 @@ function resolveReferencedBindings(
 
       if (getter) {
         extra.section = expr.section;
-        extra.read = createRead(binding, undefined, getter);
+        extra.read = createGetterRead(binding, undefined, getter);
         addBindingGetter(binding, getter);
         if (getter.hoisted) {
           binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
@@ -1962,22 +2007,25 @@ function resolveReferencedBindings(
       allBindings = bindingUtil.add(allBindings, binding);
     }
   } else if (reads) {
-    const { binding, extra, getter } = reads;
+    const { binding, extra, getter, ownVar } = reads;
 
     if (getter) {
+      extra.read = createGetterRead(binding, undefined, getter);
       addBindingGetter(binding, getter);
       if (getter.hoisted) {
         binding.hoists = sectionUtil.add(binding.hoists, getter.hoisted);
         hoistedBindings = bindingUtil.add(hoistedBindings, binding);
       }
-    } else if (binding.type === BindingType.constant) {
-      constantBindings = binding;
-    } else if (binding.type !== BindingType.dom) {
-      referencedBindings = binding;
+    } else {
+      extra.read = createRead(binding, undefined, ownVar);
+      if (binding.type === BindingType.constant) {
+        constantBindings = binding;
+      } else if (binding.type !== BindingType.dom) {
+        referencedBindings = binding;
+      }
     }
 
     extra.section = expr.section;
-    extra.read = createRead(binding, undefined, getter);
     allBindings = binding;
   }
 
@@ -2037,7 +2085,7 @@ function resolveExpressionReference(
     readBinding.upstreamAlias &&
     findClosestReference(readBinding.upstreamAlias, rootBindings);
   if (!upstreamRoot) {
-    return createRead(readBinding, undefined, undefined);
+    return createRead(readBinding, undefined);
   }
 
   let curBinding = readBinding;
@@ -2054,7 +2102,7 @@ function resolveExpressionReference(
     props.reverse();
   }
 
-  return createRead(upstreamRoot, props, undefined);
+  return createRead(upstreamRoot, props);
 }
 
 function isSupersetSources(a: Binding, b: Binding) {
@@ -2069,9 +2117,17 @@ function isSupersetSources(a: Binding, b: Binding) {
 export function createRead(
   binding: Binding,
   props: Opt<string>,
-  getter: Getter | undefined,
+  ownVar: boolean = false,
 ): ExtraRead {
-  return { binding, props, getter };
+  return { binding, props, ownVar, getter: undefined };
+}
+
+export function createGetterRead(
+  binding: Binding,
+  props: Opt<string>,
+  getter: Getter,
+): ExtraRead {
+  return { binding, props, ownVar: false, getter };
 }
 
 function getMemberExpressionPropString(

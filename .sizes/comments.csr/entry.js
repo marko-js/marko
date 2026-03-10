@@ -1,4 +1,4 @@
-// size: 694 (min) 384 (brotli)
+// size: 694 (min) 380 (brotli)
 const $if_content__comment_comments = _if_closure(4, 0, ($scope) =>
     $input_comments$1($scope.a, $scope._.i),
   ),

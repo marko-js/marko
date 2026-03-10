@@ -2,10 +2,7 @@ export const $template = `<!>${_child_template}<div> </div>`;
 export const $walks = /* over(1), <child/var>, next(1), get, out(1) */`b0${_child_walks}&D l`;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $input_content as _child_input_content, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
-const $child_content__x = /* @__PURE__ */_._closure_get("x", $scope => {
-  debugger;
-  _._text($scope["#text/0"], $scope._.x);
-});
+const $child_content__x = /* @__PURE__ */_._closure_get("x", $scope => _._text($scope["#text/0"], _._assert_init($scope._, "x")));
 const $child_content__setup = $scope => {
   $child_content__x($scope);
   _._return($scope, 1);

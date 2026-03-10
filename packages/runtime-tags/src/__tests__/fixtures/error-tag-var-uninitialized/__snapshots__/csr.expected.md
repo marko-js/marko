@@ -1,0 +1,1 @@
+Cannot access 'name' before initialization

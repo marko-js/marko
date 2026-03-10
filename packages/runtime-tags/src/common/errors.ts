@@ -1,3 +1,5 @@
+import { AccessorProp, type Scope } from "./types";
+
 export function _el_read_error() {
   if (MARKO_DEBUG) {
     throw new Error(
@@ -20,6 +22,23 @@ export function _assert_hoist(value: unknown) {
       `Hoisted values must be functions, received type "${typeof value}".`,
     );
   }
+}
+
+export function _assert_init(scope: Scope, accessor: string) {
+  if (MARKO_DEBUG && (scope[AccessorProp.Creating] || !(accessor in scope))) {
+    try {
+      // @ts-expect-error create a browser uninitialized variable error, and then update the message.
+      __UNINITIALIZED__;
+      const __UNINITIALIZED__ = 1;
+    } catch (err: any) {
+      err.message = err.message.replaceAll("__UNINITIALIZED__", accessor);
+      throw err;
+    }
+    throw new ReferenceError(
+      `Cannot access "${accessor}" before initialization.`,
+    );
+  }
+  return scope[accessor];
 }
 
 export function assertExclusiveAttrs(

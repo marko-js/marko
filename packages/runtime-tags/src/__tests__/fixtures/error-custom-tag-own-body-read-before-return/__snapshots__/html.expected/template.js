@@ -9,7 +9,6 @@ export default _._template("__tests__/template.marko", input => {
     content: _._content("__tests__/template.marko_1_content", () => {
       _._scope_reason();
       const $scope1_id = _._scope_id();
-      debugger;
       _._html(`<span>${_._escape(x)}${_._el_resume($scope1_id, "#text/0")}</span>`);
       const $return = 1;
       _._subscribe($x__closures, _._scope($scope1_id, {

@@ -3,8 +3,8 @@
     "props": {
       "$_": "r",
       "$init": "t",
-      "$$child_content__x": "o",
-      "$$x__closure": "_"
+      "$$child_content__x": "_",
+      "$$x__closure": "e"
     }
   }
 }
