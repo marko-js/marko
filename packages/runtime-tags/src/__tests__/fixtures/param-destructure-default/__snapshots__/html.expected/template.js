@@ -55,4 +55,4 @@ export default _._template("__tests__/template.marko", input => {
     foo: {}
   });
   ChildB.content({});
-});
+}, 1);

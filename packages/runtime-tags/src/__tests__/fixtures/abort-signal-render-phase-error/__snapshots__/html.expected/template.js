@@ -6,4 +6,4 @@ export default _._template("__tests__/template.marko", input => {
     throw new Error("Cannot use $signal in a server render.");
   })().onabort = () => {})}</div>`);
   _._resume_branch($scope0_id);
-});
+}, 1);

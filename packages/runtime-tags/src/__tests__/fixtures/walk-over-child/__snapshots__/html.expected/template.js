@@ -8,4 +8,4 @@ export default _._template("__tests__/template.marko", input => {
   _child({});
   _._html(`</section><div>${_._escape(count)}</div>`);
   _._resume_branch($scope0_id);
-});
+}, 1);

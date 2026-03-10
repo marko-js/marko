@@ -39,13 +39,20 @@ export function destroyBranch(branch: BranchScope) {
   branch[AccessorProp.ParentBranch]?.[AccessorProp.BranchScopes]?.delete(
     branch,
   );
-  destroyNestedBranches(branch);
+  destroyNestedScopes(branch);
 }
 
-function destroyNestedBranches(branch: BranchScope) {
-  branch[AccessorProp.Destroyed] = 1;
-  branch[AccessorProp.BranchScopes]?.forEach(destroyNestedBranches);
-  branch[AccessorProp.AbortScopes]?.forEach(resetControllers);
+export function destroyScope(scope: Scope) {
+  if (!scope[AccessorProp.Destroyed]) {
+    destroyNestedScopes(scope);
+    resetControllers(scope);
+  }
+}
+
+function destroyNestedScopes(scope: Scope) {
+  scope[AccessorProp.Destroyed] = 1;
+  scope[AccessorProp.BranchScopes]?.forEach(destroyNestedScopes);
+  scope[AccessorProp.AbortScopes]?.forEach(resetControllers);
 }
 
 function resetControllers(scope: Scope) {

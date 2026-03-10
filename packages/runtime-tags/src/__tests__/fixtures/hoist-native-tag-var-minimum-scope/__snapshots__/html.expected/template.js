@@ -23,4 +23,4 @@ export default _._template("__tests__/template.marko", input => {
   }, 0, $scope0_id, "#text/3", 1, 0, 0);
   _._script($scope0_id, "__tests__/template.marko_0");
   _._scope($scope0_id, {}, "__tests__/template.marko", 0);
-});
+}, 1);

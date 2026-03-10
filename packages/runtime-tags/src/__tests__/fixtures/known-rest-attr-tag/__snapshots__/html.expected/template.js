@@ -13,4 +13,4 @@ export default _._template("__tests__/template.marko", input => {
       }, $scope0_id)
     })
   });
-});
+}, 1);

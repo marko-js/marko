@@ -47,4 +47,4 @@ export default _._template("__tests__/template.marko", input => {
     value_class: ["value.class", "1:8"],
     text: "8:16"
   });
-});
+}, 1);

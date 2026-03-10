@@ -16,10 +16,16 @@ import {
 
 export type ServerRenderer = ((...args: unknown[]) => unknown) & {
   ___id?: string;
+  ___embed?: boolean;
 };
 
-export const _template = (templateId: string, renderer: ServerRenderer) => {
+export const _template = (
+  templateId: string,
+  renderer: ServerRenderer,
+  page?: 1,
+) => {
   (renderer as unknown as Template).render = render;
+  (renderer as unknown as ServerRenderer).___embed = !page;
   (renderer as unknown as any)._ = renderer; // This is added exclusively for the compat layer, maybe someday it can be removed.
 
   if (MARKO_DEBUG) {
@@ -45,7 +51,7 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
     ({ $global, ...input } = input);
     $global = {
       runtimeId: DEFAULT_RUNTIME_ID,
-      renderId: DEFAULT_RENDER_ID,
+      renderId: getDefaultRenderId(this),
       ...$global,
     };
 
@@ -63,16 +69,36 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
       }
     }
   } else {
-    $global = { runtimeId: DEFAULT_RUNTIME_ID, renderId: DEFAULT_RENDER_ID };
+    $global = {
+      runtimeId: DEFAULT_RUNTIME_ID,
+      renderId: getDefaultRenderId(this),
+    };
   }
 
-  const head = new Chunk(
-    new Boundary(new State($global as State["$global"]), $global.signal),
-    null,
-    null,
-  );
+  const state = new State($global as State["$global"]);
+  const head = new Chunk(new Boundary(state, $global.signal), null, null);
+
+  if (this.___embed) {
+    (state.ensureReady ||= {})[this.___id!] = 1;
+  }
+
   head.render(this, input);
   return new ServerRendered(head);
+}
+
+function getDefaultRenderId(template: ServerRenderer): string {
+  if (template.___embed) {
+    const ENCODE_CHARS =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
+    let n = (Math.random() * 0x100000000) >>> 0;
+    let r = ENCODE_CHARS[n % 53]; // first char avoids digits and _
+    for (n = (n / 53) | 0; n; n >>>= 6) {
+      r += ENCODE_CHARS[n & 63];
+    }
+    return r;
+  }
+
+  return DEFAULT_RENDER_ID;
 }
 
 class ServerRendered implements RenderedTemplate {

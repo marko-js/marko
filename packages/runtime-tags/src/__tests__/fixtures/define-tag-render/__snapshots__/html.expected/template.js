@@ -22,4 +22,4 @@ export default _._template("__tests__/template.marko", input => {
   MyTag.content({
     name: "Ryan"
   });
-});
+}, 1);

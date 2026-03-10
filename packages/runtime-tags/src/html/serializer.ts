@@ -1531,7 +1531,7 @@ function isCircular(
   return false;
 }
 
-function toObjectKey(name: string) {
+export function toObjectKey(name: string) {
   if (name === "") {
     return '""';
   }

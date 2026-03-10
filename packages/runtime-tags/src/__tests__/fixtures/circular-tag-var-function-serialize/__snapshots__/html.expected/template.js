@@ -23,4 +23,4 @@ export default _._template("__tests__/template.marko", input => {
   }, "__tests__/template.marko", 0, {
     setter: "2:8"
   });
-});
+}, 1);

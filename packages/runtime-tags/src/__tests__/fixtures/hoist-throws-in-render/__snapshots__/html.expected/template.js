@@ -16,4 +16,4 @@ export default _._template("__tests__/template.marko", input => {
     }
   }, $scope0_id, "#text/0", 1, 0, 0);
   _._html(`<div>${_._escape((x => x())(_._hoist_read_error))}</div>`);
-});
+}, 1);

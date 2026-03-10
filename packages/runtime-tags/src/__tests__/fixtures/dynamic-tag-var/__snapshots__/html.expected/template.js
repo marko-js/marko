@@ -14,4 +14,4 @@ export default _._template("__tests__/template.marko", input => {
   let el1 = _._dynamic_tag($scope0_id, "#text/6", input.show && "div", {});
   _._var($scope0_id, "#scopeOffset/7", $inputshowdiv_scope, "__tests__/template.marko_0_el1/var");
   _._scope($scope0_id, {}, "__tests__/template.marko", 0);
-});
+}, 1);

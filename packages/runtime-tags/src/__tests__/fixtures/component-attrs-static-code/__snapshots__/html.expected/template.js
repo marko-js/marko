@@ -16,4 +16,4 @@ export default _._template("__tests__/template.marko", input => {
   _counter({
     format: formatNumber2
   });
-});
+}, 1);

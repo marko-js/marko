@@ -26,4 +26,4 @@ export default _._template("__tests__/template.marko", input => {
     _._scope_reason();
     _._html("Body content");
   }, $scope0_id), 0, 0);
-});
+}, 1);

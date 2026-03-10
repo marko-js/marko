@@ -39,4 +39,4 @@ export default _._template("__tests__/template.marko", input => {
     "ClosureScopes:value": $value__closures
   }, "__tests__/template.marko", 0);
   _._resume_branch($scope0_id);
-});
+}, 1);

@@ -7,4 +7,4 @@ export default _._template("__tests__/template.marko", input => {
   const tagVar = "tag var";
   console.log(tagVar);
   console.log(staticVar);
-});
+}, 1);

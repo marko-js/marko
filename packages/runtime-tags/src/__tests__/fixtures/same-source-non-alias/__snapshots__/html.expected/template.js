@@ -20,4 +20,4 @@ export default _._template("__tests__/template.marko", input => {
     count: "5:6"
   });
   _._resume_branch($scope0_id);
-});
+}, 1);

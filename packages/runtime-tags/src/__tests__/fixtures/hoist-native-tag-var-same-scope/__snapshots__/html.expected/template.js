@@ -12,4 +12,4 @@ export default _._template("__tests__/template.marko", input => {
     value: $el_getter
   });
   _._scope($scope0_id, {}, "__tests__/template.marko", 0);
-});
+}, 1);

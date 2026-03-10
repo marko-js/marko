@@ -16,4 +16,4 @@ export default _._template("__tests__/template.marko", input => {
   }, $scope0_id, "#text/0", 1, /* hide */1, /* hide */1, 0, 1);
   _._scope($scope0_id, {}, "__tests__/template.marko", 0);
   _._resume_branch($scope0_id);
-});
+}, 1);

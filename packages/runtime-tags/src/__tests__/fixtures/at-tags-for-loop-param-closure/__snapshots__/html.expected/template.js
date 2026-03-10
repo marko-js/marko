@@ -17,4 +17,4 @@ export default _._template("__tests__/template.marko", input => {
   _list({
     item: $item
   });
-});
+}, 1);

@@ -23,4 +23,4 @@ export default _._template("__tests__/template.marko", input => {
     })
   };
   Bar.content({});
-});
+}, 1);

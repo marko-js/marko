@@ -19,6 +19,7 @@ import {
   Serializer,
   setDebugInfo,
   toAccess,
+  toObjectKey,
 } from "./serializer";
 import type { ServerRenderer } from "./template";
 
@@ -42,8 +43,8 @@ enum Mark {
 enum RuntimeKey {
   Walk = ".w",
   Resume = ".r",
+  Blocking = ".b",
   Scripts = ".j",
-  Done = ".d",
 }
 export function getChunk(): Chunk | undefined {
   return $chunk;
@@ -987,6 +988,7 @@ export class State {
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, PartialScope>();
   public writeScopes: null | Record<number, PartialScope> = null;
+  public ensureReady: null | Record<string, 0 | 1> = null;
   public serializeReason: undefined | 0 | 1;
   constructor(
     public $global: $Global & { renderId: string; runtimeId: string },
@@ -1236,6 +1238,36 @@ export class Chunk {
           $global.renderId +
           '")',
       );
+    }
+
+    if (state.ensureReady && state.hasMainRuntime) {
+      let first = true;
+      for (const id in state.ensureReady) {
+        if (state.ensureReady[id]) {
+          state.ensureReady[id] = 0;
+          if (first) {
+            scripts = concatScripts(
+              scripts,
+              "(" +
+                runtimePrefix +
+                RuntimeKey.Blocking +
+                "={})" +
+                toAccess(toObjectKey(id)) +
+                "=1",
+            );
+          } else {
+            scripts = concatScripts(
+              scripts,
+              runtimePrefix +
+                RuntimeKey.Blocking +
+                toAccess(toObjectKey(id)) +
+                "=1",
+            );
+          }
+        }
+
+        first = false;
+      }
     }
 
     if (effects) {

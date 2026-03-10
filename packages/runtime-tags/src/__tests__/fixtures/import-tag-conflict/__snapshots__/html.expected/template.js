@@ -5,4 +5,4 @@ export default _._template("__tests__/template.marko", input => {
   _._scope_reason();
   const $scope0_id = _._scope_id();
   _._html(`${_._escape(asset1)} ${_._escape(asset2)}`);
-});
+}, 1);

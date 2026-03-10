@@ -43,4 +43,4 @@ export default _._template("__tests__/template.marko", input => {
   }, "__tests__/template.marko", 0, {
     input_show: ["input.show"]
   });
-});
+}, 1);

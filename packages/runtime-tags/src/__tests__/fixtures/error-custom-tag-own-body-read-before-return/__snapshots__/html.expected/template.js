@@ -26,4 +26,4 @@ export default _._template("__tests__/template.marko", input => {
     "ClosureScopes:x": $x__closures,
     "#childScope/0": _._existing_scope($childScope)
   }, "__tests__/template.marko", 0);
-});
+}, 1);

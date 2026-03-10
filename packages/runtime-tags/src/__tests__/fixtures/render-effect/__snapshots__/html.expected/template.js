@@ -6,4 +6,4 @@ export default _._template("__tests__/template.marko", input => {
   _renderEffect({
     value: function () {}
   });
-});
+}, 1);

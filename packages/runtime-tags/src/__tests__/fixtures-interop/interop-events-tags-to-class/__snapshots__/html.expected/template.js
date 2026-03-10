@@ -14,4 +14,4 @@ export default _._template("__tests__/template.marko", input => {
   _._html(`<div id=tags-api>${_._escape(count)}${_._el_resume($scope0_id, "#text/1")}</div>`);
   _._scope($scope0_id, {}, "__tests__/template.marko", 0);
   _._resume_branch($scope0_id);
-});
+}, 1);

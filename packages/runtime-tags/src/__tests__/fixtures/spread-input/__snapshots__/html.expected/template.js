@@ -14,4 +14,4 @@ export default _._template("__tests__/template.marko", input => {
     class: "bar"
   }, 0, 0, 0);
   _._html("</div>");
-});
+}, 1);

@@ -1,0 +1,10 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$initEmbedded": "o",
+      "$$clickCount__script": "m",
+      "$$clickCount": "r"
+    }
+  }
+}

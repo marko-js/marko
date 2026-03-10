@@ -5,4 +5,4 @@ export default _._template("__tests__/template.marko", input => {
   _._html("<div id=foo></div>");
   _._script($scope0_id, "__tests__/template.marko_0");
   _._resume_branch($scope0_id);
-});
+}, 1);

@@ -111,4 +111,4 @@ export default _._template("__tests__/template.marko", input => {
     tagConstA: "30:8",
     tagConstB: "33:8"
   });
-});
+}, 1);

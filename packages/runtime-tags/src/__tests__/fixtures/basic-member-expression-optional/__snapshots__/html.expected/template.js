@@ -13,4 +13,4 @@ export default _._template("__tests__/template.marko", input => {
     index: "9:5"
   });
   _._resume_branch($scope0_id);
-});
+}, 1);

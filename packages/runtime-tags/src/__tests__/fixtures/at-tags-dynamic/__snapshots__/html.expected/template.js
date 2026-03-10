@@ -65,4 +65,4 @@ export default _._template("__tests__/template.marko", input => {
     }),
     col: $col
   });
-});
+}, 1);

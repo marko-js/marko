@@ -44,10 +44,15 @@ export default {
           .buildCodeFrameError("Unable to resolve file for tag.");
       }
 
-      const programSection = getProgram().node.extra.section!;
+      const programExtra = getProgram().node.extra;
+      const programSection = programExtra.section!;
       const childProgram = childFile.ast.program;
       const childExtra = childProgram.extra;
       const childSection = childExtra.section!;
+
+      if (childExtra.page) {
+        programExtra.page ??= true;
+      }
 
       knownTagAnalyze(
         tag,

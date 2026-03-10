@@ -8,4 +8,4 @@ export default _._template("__tests__/template.marko", input => {
   let y = 0;
   debugger;
   _._resume_branch($scope0_id);
-});
+}, 1);

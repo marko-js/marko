@@ -5,4 +5,4 @@ export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   BazComp({});
   BazComp({});
-});
+}, 1);

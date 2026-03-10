@@ -23,4 +23,4 @@ export default _._template("__tests__/template.marko", input => {
     _._html(_._escape(data));
   }, 0);
   _._html("e");
-});
+}, 1);

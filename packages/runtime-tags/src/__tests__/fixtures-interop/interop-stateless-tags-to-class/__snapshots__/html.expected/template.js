@@ -15,4 +15,4 @@ export default _._template("__tests__/template.marko", input => {
     _._html("Say Hi");
   }, $scope0_id), 0, 0);
   _._html("<span id=display></span>");
-});
+}, 1);

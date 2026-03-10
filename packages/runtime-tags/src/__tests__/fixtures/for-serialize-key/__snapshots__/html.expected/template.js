@@ -14,4 +14,4 @@ export default _2._template("__tests__/template.marko", input => {
     });
   });
   _2._html("</div>");
-});
+}, 1);

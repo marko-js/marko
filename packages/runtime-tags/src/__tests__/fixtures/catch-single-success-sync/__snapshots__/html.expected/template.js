@@ -17,4 +17,4 @@ export default _._template("__tests__/template.marko", input => {
     })
   });
   _._html("c");
-});
+}, 1);

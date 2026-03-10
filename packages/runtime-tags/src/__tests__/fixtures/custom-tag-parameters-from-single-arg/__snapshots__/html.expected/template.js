@@ -11,4 +11,4 @@ export default _._template("__tests__/template.marko", input => {
       _._serialize_if($scope1_reason, /* count */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "1:2");
     }, $scope0_id)
   });
-});
+}, 1);

@@ -12,4 +12,4 @@ export default _._template("__tests__/template.marko", input => {
   _._html("</div><div>");
   _wrapper({});
   _._html("</div>");
-});
+}, 1);

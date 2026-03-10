@@ -17,4 +17,4 @@ export default _._template("__tests__/template.marko", input => {
     api: "3:9"
   });
   _._assert_hoist(api);
-});
+}, 1);

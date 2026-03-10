@@ -12,4 +12,4 @@ export default _._template("__tests__/template.marko", input => {
   } = z;
   _._html(`<div>${_._escape(x)}</div>${_._escape(y)}`);
   _._resume_branch($scope0_id);
-});
+}, 1);

@@ -48,4 +48,4 @@ export default _._template("__tests__/template.marko", input => {
     input_x: ["input.x"],
     input_y: ["input.y"]
   });
-});
+}, 1);

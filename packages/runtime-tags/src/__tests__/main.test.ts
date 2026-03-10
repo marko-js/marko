@@ -8,6 +8,7 @@ import path from "path";
 import glob from "tiny-glob";
 import { isDeepStrictEqual } from "util";
 
+import type { ServerRenderer } from "../html/template";
 import * as translator from "../translator";
 import { bundle } from "./utils/bundle";
 import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
@@ -29,6 +30,7 @@ type Step = Input | Wait | Flush | Throws | ((container: Element) => unknown);
 type Steps = [Input, ...Step[]];
 export type TestConfig = {
   steps?: Steps | (() => Steps | Promise<Steps>);
+  embedded?: true;
   skip_dom?: boolean;
   skip_html?: boolean;
   skip_csr?: boolean;
@@ -216,7 +218,17 @@ describe("runtime-tags/translator", () => {
           const logs: ConsoleRecord[][] = [];
           const capture = captureConsole();
           try {
-            for await (const data of serverTemplate.render(input)) {
+            for await (const data of serverTemplate.render(
+              config.embedded
+                ? {
+                    ...input,
+                    $global: {
+                      ...(input.$global as any),
+                      renderId: "embedded",
+                    },
+                  }
+                : input,
+            )) {
               chunks.push(data);
               logs.push(capture.records());
             }
@@ -225,7 +237,13 @@ describe("runtime-tags/translator", () => {
             capture.cleanup();
           }
 
-          return { chunks, logs, input, steps };
+          return {
+            chunks,
+            logs,
+            input,
+            steps,
+            id: (serverTemplate as unknown as ServerRenderer).___id!,
+          };
         })();
         serverRender = () => cached;
         return cached;
@@ -381,9 +399,9 @@ describe("runtime-tags/translator", () => {
           serverHooks.before?.();
           browserHooks.before?.();
 
-          const { chunks, logs, input, steps } = await serverRender();
+          const { id, chunks, logs, input, steps } = await serverRender();
 
-          const { run, init } = browser.require<
+          const { run, init, initEmbedded } = browser.require<
             typeof import("@marko/runtime-tags/dom")
           >("@marko/runtime-tags/dom");
 
@@ -401,7 +419,12 @@ describe("runtime-tags/translator", () => {
             }
           }
 
-          init();
+          if (config.embedded) {
+            initEmbedded(id);
+          } else {
+            init();
+          }
+
           await runSteps();
 
           async function runSteps() {

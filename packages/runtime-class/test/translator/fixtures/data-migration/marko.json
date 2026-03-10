@@ -1,5 +1,5 @@
 {
-  "<test>": {
-    "template": "./test.marko"
+  "<foo>": {
+    "template": "./foo.marko"
   }
 }

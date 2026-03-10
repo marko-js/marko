@@ -12,4 +12,4 @@ export default _._template("__tests__/template.marko", input => {
       _._resume_branch($scope1_id);
     })
   });
-});
+}, 1);

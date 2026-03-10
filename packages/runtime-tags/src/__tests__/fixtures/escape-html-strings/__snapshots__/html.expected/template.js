@@ -7,4 +7,4 @@ export default _._template("__tests__/template.marko", input => {
   _._html(`<div>${_._escape(count)}\` `);
   _child({});
   _._html("</div>");
-});
+}, 1);

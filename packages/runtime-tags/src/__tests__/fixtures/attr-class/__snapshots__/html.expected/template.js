@@ -52,4 +52,4 @@ export default _._template("__tests__/template.marko", input => {
     c: "4:10",
     d: "4:13"
   });
-});
+}, 1);

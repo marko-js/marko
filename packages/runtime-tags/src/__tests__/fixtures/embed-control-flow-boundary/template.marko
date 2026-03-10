@@ -1,0 +1,23 @@
+<script>
+  $signal.onabort = () => {
+    console.log("cleaned up");
+  }
+</script>
+
+<let/hide>
+<button#toggle onClick() {
+  hide = !hide;
+}>
+  Toggle
+</button>
+
+<button#cleanup onClick() {
+  document.body.innerHTML = "";
+}>
+  Cleanup
+</button>
+
+<if=!hide>
+  <div>Hello</div>
+</if>
+

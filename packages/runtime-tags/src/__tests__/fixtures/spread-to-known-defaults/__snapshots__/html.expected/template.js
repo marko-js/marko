@@ -19,4 +19,4 @@ export default _._template("__tests__/template.marko", input => {
     value: "abcd"
   }, 0, 0, 0);
   _._html("</div>");
-});
+}, 1);

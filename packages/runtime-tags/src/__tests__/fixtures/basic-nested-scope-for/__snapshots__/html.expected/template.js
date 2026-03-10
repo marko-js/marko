@@ -15,4 +15,4 @@ export default _._template("__tests__/template.marko", input => {
     });
   }, 0, $scope0_id, "#text/0", /* selected */1, 0, 0, 0, 1);
   _._resume_branch($scope0_id);
-});
+}, 1);

@@ -10,4 +10,4 @@ export default _._template("__tests__/template.marko", input => {
     input_foo: ["input.foo"],
     input_bar: ["input.bar"]
   });
-});
+}, 1);

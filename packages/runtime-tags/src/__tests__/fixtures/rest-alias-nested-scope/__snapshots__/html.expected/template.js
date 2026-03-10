@@ -32,4 +32,4 @@ export default _._template("__tests__/template.marko", input => {
     foo: "4:12",
     rest: "4:20"
   });
-});
+}, 1);

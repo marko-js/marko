@@ -17,4 +17,4 @@ export default _._template("__tests__/template.marko", input => {
     value: 1.1111,
     format: formatNumber2
   });
-});
+}, 1);

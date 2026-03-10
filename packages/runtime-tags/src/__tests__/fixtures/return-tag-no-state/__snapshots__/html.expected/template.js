@@ -5,4 +5,4 @@ export default _._template("__tests__/template.marko", input => {
   const $scope0_id = _._scope_id();
   let value = _child({});
   _._html(`<div>parent ${_._escape(value)}</div>`);
-});
+}, 1);

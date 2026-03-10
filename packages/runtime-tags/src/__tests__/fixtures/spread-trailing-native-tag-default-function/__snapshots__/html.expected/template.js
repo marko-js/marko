@@ -20,4 +20,4 @@ export default _2._template("__tests__/template.marko", input => {
   }, "__tests__/template.marko", 0, {
     rest: "1:22"
   });
-});
+}, 1);

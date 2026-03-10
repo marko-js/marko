@@ -10,4 +10,4 @@ export default _._template("__tests__/template.marko", input => {
       _._html("Hello");
     }, $scope0_id)
   });
-});
+}, 1);

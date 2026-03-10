@@ -34,4 +34,4 @@ export default _._template("__tests__/template.marko", input => {
     spreadAttrs: "10:8"
   });
   _._resume_branch($scope0_id);
-});
+}, 1);

@@ -5,4 +5,4 @@ export default _._template("__tests__/template.marko", input => {
   const foo = true;
   const bar = true;
   _._html(`<div>${_._escape(String(foo))}${_._escape(String(bar))}</div>`);
-});
+}, 1);

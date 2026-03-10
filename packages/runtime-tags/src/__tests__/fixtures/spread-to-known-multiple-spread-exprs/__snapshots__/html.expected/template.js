@@ -6,4 +6,4 @@ export default _._template("__tests__/template.marko", input => {
   _wrap({
     class: "foo"
   });
-});
+}, 1);

@@ -6,4 +6,4 @@ export default _._template("__tests__/template.marko", input => {
   _._html("<div>");
   _child({});
   _._html("</div>");
-});
+}, 1);

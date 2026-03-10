@@ -25,4 +25,4 @@ export default _._template("__tests__/template.marko", input => {
     })
   };
   Foo.content({});
-});
+}, 1);

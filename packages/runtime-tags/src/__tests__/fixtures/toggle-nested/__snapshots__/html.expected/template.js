@@ -50,4 +50,4 @@ export default _._template("__tests__/template.marko", input => {
     value1: "1:15",
     value2: "1:23"
   });
-});
+}, 1);

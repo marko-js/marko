@@ -9,4 +9,4 @@ export default _._template("__tests__/template.marko", input => {
   };
   const fullName = user.fullName = `${user.firstName} ${user.middleName} ${user.lastName}`;
   _._html(`<p>${_._escape(fullName)}</p>`);
-});
+}, 1);

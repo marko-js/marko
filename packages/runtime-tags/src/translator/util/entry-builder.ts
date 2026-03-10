@@ -1,12 +1,17 @@
 import { types as t } from "@marko/compiler";
-import { resolveRelativePath } from "@marko/compiler/babel-utils";
+import {
+  getTemplateId,
+  resolveRelativePath,
+} from "@marko/compiler/babel-utils";
 
+import type { DOMRuntimeHelpers } from "./runtime";
 import runtimeInfo from "./runtime-info";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     needsCompat?: boolean;
     isInteractive?: boolean;
+    page?: boolean;
   }
 }
 
@@ -30,9 +35,16 @@ export default {
       t.importDeclaration([], t.stringLiteral(it)),
     );
     if (state.init) {
+      const isPage = entryFile.path.node.extra.page;
+      const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
       body.unshift(
         t.importDeclaration(
-          [t.importSpecifier(t.identifier("init"), t.identifier("init"))],
+          [
+            t.importSpecifier(
+              t.identifier(initHelper),
+              t.identifier(initHelper),
+            ),
+          ],
           t.stringLiteral(
             `${runtimeInfo.name}/${
               entryFile.markoOpts.optimize ? "" : "debug/"
@@ -41,9 +53,17 @@ export default {
         ),
       );
       const { runtimeId } = entryFile.markoOpts;
+      const readyId =
+        !isPage && getTemplateId(entryFile.markoOpts, entryFile.opts.filename);
       const initExpression = t.callExpression(
-        t.identifier("init"),
-        runtimeId ? [t.stringLiteral(runtimeId)] : [],
+        t.identifier(initHelper),
+        readyId
+          ? runtimeId
+            ? [t.stringLiteral(readyId), t.stringLiteral(runtimeId)]
+            : [t.stringLiteral(readyId)]
+          : runtimeId
+            ? [t.stringLiteral(runtimeId)]
+            : [],
       );
 
       body.push(

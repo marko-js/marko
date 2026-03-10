@@ -14,4 +14,4 @@ export default _._template("__tests__/template.marko", input => {
     input_a: ["input.a"],
     b: "1:12"
   });
-});
+}, 1);

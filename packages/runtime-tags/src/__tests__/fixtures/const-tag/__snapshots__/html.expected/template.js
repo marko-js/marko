@@ -12,4 +12,4 @@ export default _._template("__tests__/template.marko", input => {
     y: "3:10"
   });
   _._assert_hoist(y);
-});
+}, 1);

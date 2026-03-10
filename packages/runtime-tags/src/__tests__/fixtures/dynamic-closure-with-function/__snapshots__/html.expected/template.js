@@ -40,4 +40,4 @@ export default _._template("__tests__/template.marko", input => {
     input_b: ["input.b"],
     bar: "1:7"
   });
-});
+}, 1);

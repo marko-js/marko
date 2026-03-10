@@ -32,4 +32,4 @@ export default _._template("__tests__/template.marko", input => {
     _._html("Hello World");
   }, $scope0_id), 0, 0);
   _._html("</div>");
-});
+}, 1);

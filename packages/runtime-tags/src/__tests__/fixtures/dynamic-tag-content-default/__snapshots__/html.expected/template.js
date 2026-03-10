@@ -11,4 +11,4 @@ export default _._template("__tests__/template.marko", input => {
       _._html("Hello");
     })
   });
-});
+}, 1);

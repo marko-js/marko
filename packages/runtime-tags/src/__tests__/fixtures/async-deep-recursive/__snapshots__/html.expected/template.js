@@ -6,4 +6,4 @@ export default _._template("__tests__/template.marko", input => {
   _recurse({
     level: 4
   });
-});
+}, 1);

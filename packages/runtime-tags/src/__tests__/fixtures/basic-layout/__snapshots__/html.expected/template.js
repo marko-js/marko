@@ -22,4 +22,4 @@ export default _._template("__tests__/template.marko", input => {
   _._serialize_if($scope0_reason, /* input.name */0) && _._scope($scope0_id, {
     "ClosureScopes:name": _._serialize_if($scope0_reason, /* input.name */0) && $name__closures
   }, "__tests__/template.marko", 0);
-});
+}, 1);

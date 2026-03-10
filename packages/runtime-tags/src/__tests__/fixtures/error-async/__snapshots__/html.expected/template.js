@@ -9,4 +9,4 @@ export default _._template("__tests__/template.marko", input => {
     _._html("failed");
   }, 0);
   _._html("b");
-});
+}, 1);

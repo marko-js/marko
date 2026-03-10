@@ -51,4 +51,4 @@ export default _._template("__tests__/template.marko", input => {
   }, 0, $scope0_id, "#text/2", 1, 0, 0, 0, 1);
   _._script($scope0_id, "__tests__/template.marko_0");
   _._resume_branch($scope0_id);
-});
+}, 1);

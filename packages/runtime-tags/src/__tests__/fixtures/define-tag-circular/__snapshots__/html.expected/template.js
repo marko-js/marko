@@ -30,4 +30,4 @@ export default _._template("__tests__/template.marko", input => {
   Foo.content({
     show: true
   });
-});
+}, 1);

@@ -25,4 +25,4 @@ export default _._template("__tests__/template.marko", input => {
   _._scope($scope0_id, {
     "ClosureScopes:1": $what_content__subscribers
   }, "__tests__/template.marko", 0);
-});
+}, 1);

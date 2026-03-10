@@ -27,4 +27,4 @@ export default _._template("__tests__/template.marko", input => {
     getMessage: "2:8"
   });
   _._resume_branch($scope0_id);
-});
+}, 1);

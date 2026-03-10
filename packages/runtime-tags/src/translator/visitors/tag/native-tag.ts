@@ -88,6 +88,14 @@ export default {
       }
 
       const tagName = getCanonicalTagName(tag);
+      switch (tagName) {
+        case "html":
+        case "body":
+        case "head":
+          getProgram().node.extra.page ??= true;
+          break;
+      }
+
       const isTextOnly = isTextOnlyNativeTag(tag);
       const seen: Record<string, t.MarkoAttribute> = {};
       const { attributes } = tag.node;

@@ -176,6 +176,7 @@ export default {
           "_template",
           t.stringLiteral(program.hub.file.metadata.marko.id),
           contentId ? t.identifier(contentId) : contentFn,
+          program.node.extra!.page ? t.numericLiteral(1) : undefined,
         ),
       );
 

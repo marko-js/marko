@@ -6,4 +6,4 @@ export default _2._template("__tests__/template.marko", input => {
     throw new Error("ERROR!");
   })();
   _2._html("a");
-});
+}, 1);

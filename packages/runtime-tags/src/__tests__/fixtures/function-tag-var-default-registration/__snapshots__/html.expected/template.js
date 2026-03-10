@@ -17,4 +17,4 @@ export default _._template("__tests__/template.marko", input => {
   }, "__tests__/template.marko", 0, {
     onClick: "6:3"
   });
-});
+}, 1);

@@ -17,4 +17,4 @@ export default _._template("__tests__/template.marko", input => {
     input_to: ["input.to"],
     input_step: ["input.step"]
   });
-});
+}, 1);

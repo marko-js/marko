@@ -34,4 +34,4 @@ export default _._template("__tests__/template.marko", input => {
     _._html("l");
   }, 0);
   _._html("m");
-});
+}, 1);

@@ -9,4 +9,4 @@ export default _._template("__tests__/template.marko", input => {
   _._html("<div></div>");
   _foo({});
   _._dynamic_tag($scope0_id, "#text/1", Bar, {}, 0, 0, 0);
-});
+}, 1);

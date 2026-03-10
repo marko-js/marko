@@ -11,4 +11,4 @@ export default _._template("__tests__/template.marko", input => {
     }, "__tests__/template.marko", "2:2");
   }
   _._scope($scope0_id, {}, "__tests__/template.marko", 0);
-});
+}, 1);

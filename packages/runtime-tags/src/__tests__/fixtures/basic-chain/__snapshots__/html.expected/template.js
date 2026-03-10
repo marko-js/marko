@@ -7,4 +7,4 @@ export default _._template("__tests__/template.marko", input => {
   const z = y * 3;
   _._html(`<div>${_._escape(z)}</div>`);
   _._resume_branch($scope0_id);
-});
+}, 1);

@@ -18,4 +18,4 @@ export default _._template("__tests__/template.marko", input => {
       _._html("Span");
     }, $scope0_id)
   });
-});
+}, 1);

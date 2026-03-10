@@ -35,4 +35,4 @@ export default _._template("__tests__/template.marko", input => {
     "#childScope/0": _._serialize_if($scope0_reason, /* input.a, input.b */0) && _._existing_scope($childScope),
     "#childScope/1": _._serialize_if($scope0_reason, /* input.a, input.b */0) && _._existing_scope($childScope2)
   }, "__tests__/template.marko", 0);
-});
+}, 1);

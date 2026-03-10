@@ -15,4 +15,4 @@ export default _._template("__tests__/template.marko", input => {
   }, 0, $scope0_id, "#text/1", _._serialize_guard($scope0_reason, /* input.children */0), _._serialize_guard($scope0_reason, /* input.children */0), _._serialize_guard($scope0_reason, /* input.children */0), 0, 1);
   _._html("</div>");
   _._serialize_if($scope0_reason, /* input.children */0) && _._scope($scope0_id, {}, "__tests__/template.marko", 0);
-});
+}, 1);

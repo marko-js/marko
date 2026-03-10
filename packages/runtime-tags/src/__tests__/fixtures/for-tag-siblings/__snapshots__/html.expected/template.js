@@ -14,4 +14,4 @@ export default _._template("__tests__/template.marko", input => {
     _._html(`<div>${_._escape(val)}</div>`);
   });
   _._html("<div></div></div>");
-});
+}, 1);

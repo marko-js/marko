@@ -10,4 +10,4 @@ export default _._template("__tests__/template.marko", input => {
   Baz({});
   _baz({});
   _._html(_._escape(c));
-});
+}, 1);

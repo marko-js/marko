@@ -11,4 +11,4 @@ export default _._template("__tests__/template.marko", input => {
   }, "#input/0", $scope0_id, "input")}>${_._el_resume($scope0_id, "#input/0")}`);
   _._script($scope0_id, "__tests__/template.marko_0");
   _._scope($scope0_id, {}, "__tests__/template.marko", 0);
-});
+}, 1);

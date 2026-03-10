@@ -60,4 +60,4 @@ export default _._template("__tests__/template.marko", input => {
     "ClosureScopes:2": $inputshowThingnull_content__subscribers,
     "ClosureScopes:4": $inputshowsectionnull_content__subscribers
   }, "__tests__/template.marko", 0);
-});
+}, 1);

@@ -7,4 +7,4 @@ export default _._template("__tests__/template.marko", input => {
   let x = 1;
   _._dynamic_tag($scope0_id, "#text/0", x === 1 ? baz : foo, {}, 0, 0, 0);
   _._resume_branch($scope0_id);
-});
+}, 1);
