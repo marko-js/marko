@@ -78,7 +78,7 @@ class AttrLoader {
    *
    * Example:
    *
-   * "pattern": "myprefix-*"
+   * "pattern": "prefix-*"
    */
   pattern(value) {
     var attr = this.attr;

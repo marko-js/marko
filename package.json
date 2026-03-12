@@ -17,7 +17,7 @@
     "change": "changeset add",
     "compile": "node -r ~ts scripts/inspect-compiled-output.ts",
     "format": "eslint --format unix --fix .; prettier . --write --with-node-modules --log-level=warn",
-    "lint": "eslint --format unix . && prettier . --check --with-node-modules --log-level=warn && cspell \"**/*.{md,ts,marko}\"",
+    "lint": "eslint --format unix . && prettier . --check --with-node-modules --log-level=warn && cspell \"**/*.{md,ts,js,marko}\"",
     "prepare": "husky && patch-package && npm run build-babel-types -w @marko/compiler",
     "report": "open ./coverage/lcov-report/index.html",
     "test": "mocha",

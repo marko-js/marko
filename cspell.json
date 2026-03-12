@@ -370,7 +370,7 @@
     "treeitems"
   ],
   "ignoreRegExpList": [],
-  "files": ["*", "src/**/*"],
+  "files": ["*"],
   "ignorePaths": [
     "dist",
     "fixtures",
