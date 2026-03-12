@@ -1256,8 +1256,8 @@ describe("serializer", () => {
       const [result] = await serializer.assertStringify(
         response,
         `new Response(new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}}))`,
-        `_.a.f(_.c=new Uint8Array([102,105,114,115,116]))`,
-        `_.a.f(_.d=new Uint8Array([115,101,99,111,110,100]))`,
+        `_.a.f(_.c=new Uint8Array([102,105,114,115,116,32]))`,
+        `_.a.f(_.d=new Uint8Array([115,101,99,111,110,100,32]))`,
         `_.a.f(_.e=new Uint8Array([116,104,105,114,100])),_.a.r()`,
       );
 
