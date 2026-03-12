@@ -254,10 +254,10 @@ index 0000000..17b45ea
 +    this.token("/>");
 +  } else {
 +    this.token(">");
-+    this.printSequence(
++    this.printJoin(
 +      bodyOverride || zipAttributeTagsAndBody(node),
-+      true,
-+      true,
++      false,
++      false,
 +    );
 +    this.token("</");
 +    if (!isDynamicTag) {
