@@ -37,6 +37,10 @@ index 0000000..17b45ea
 +  'wbr'
 +]);
 +
++function isInlineMarkoNode(node) {
++  return node && (node.type === 'MarkoText' || node.type === 'MarkoPlaceholder');
++}
++
 +exports.MarkoParseError = function MarkoParseError(node) {
 +  this.token(node.source);
 +}
@@ -254,11 +258,21 @@ index 0000000..17b45ea
 +    this.token("/>");
 +  } else {
 +    this.token(">");
-+    this.printJoin(
-+      bodyOverride || zipAttributeTagsAndBody(node),
-+      false,
-+      false,
-+    );
++    const bodyNodes = bodyOverride || zipAttributeTagsAndBody(node);
++    for (let i = 0; i < bodyNodes.length; i++) {
++      const node = bodyNodes[i];
++      const adjacentInline =
++        i > 0 && isInlineMarkoNode(bodyNodes[i - 1]) && isInlineMarkoNode(node);
++      if (!adjacentInline) {
++        this.newline(1);
++        this.indent();
++      }
++      this.print(node, false, true);
++      if (!adjacentInline) {
++        this.dedent();
++      }
++    }
++    if (bodyNodes.length > 0) this.newline(1);
 +    this.token("</");
 +    if (!isDynamicTag) {
 +      this.token(tagName);
