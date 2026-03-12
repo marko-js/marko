@@ -1,9 +1,5 @@
 import { types as t } from "@marko/compiler";
-import {
-  getTagDef,
-  isNativeTag,
-  type Plugin,
-} from "@marko/compiler/babel-utils";
+import { getTagDef, type Plugin } from "@marko/compiler/babel-utils";
 
 import * as hooks from "../../util/plugin-hooks";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
@@ -84,16 +80,6 @@ export default {
             throw attr.buildCodeFrameError(
               `Unsupported arguments on the \`${attr.node.name}\` attribute.`,
             );
-          }
-
-          if (attr.node.modifier) {
-            if (isNativeTag(attr.parentPath as t.NodePath<t.MarkoTag>)) {
-              attr.node.name += `:${attr.node.modifier}`;
-            } else {
-              throw attr.buildCodeFrameError(
-                `Unsupported modifier \`${attr.node.modifier}\`.`,
-              );
-            }
           }
         }
       }

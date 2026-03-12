@@ -79,10 +79,16 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
 
   for (let i = 0; i < attributes.length; i++) {
     const attr = attributes[i];
-    if (t.isMarkoAttribute(attr) && attr.bound) {
-      // Inject change handler functions from the binding shorthand.
-      attr.bound = false;
-      attributes.splice(++i, 0, getChangeHandler(tag, attr));
+    if (t.isMarkoAttribute(attr)) {
+      if (attr.bound) {
+        // Inject change handler functions from the binding shorthand.
+        attributes.splice(++i, 0, getChangeHandler(tag, attr));
+        attr.bound = false;
+      } else if (attr.modifier != null) {
+        attr.name += ":" + attr.modifier;
+      }
+
+      attr.modifier = null;
     }
   }
 }
@@ -93,22 +99,26 @@ function getChangeHandler(
 ): t.MarkoAttribute {
   const attrName = attr.name;
   const changeAttrName = attrName + "Change";
+  const modifier =
+    attr.modifier == null
+      ? undefined
+      : withPreviousLocation(t.identifier(attr.modifier), attr);
 
   if (t.isIdentifier(attr.value)) {
     const binding = tag.scope.getBinding(attr.value.name);
     if (!binding)
       return t.markoAttribute(
         changeAttrName,
-        buildChangeHandlerFunction(attr.value),
+        buildChangeHandlerFunction(attr.value, modifier),
       );
 
     const existingChangedAttr = BINDING_CHANGE_HANDLER.get(binding.identifier);
     if (!existingChangedAttr) {
       const bindingIdentifierPath =
         binding.path.getOuterBindingIdentifierPaths()[binding.identifier.name];
-      const changeAttrExpr = bindingIdentifierPath
+      let changeAttrExpr: undefined | t.Expression = bindingIdentifierPath
         ? bindingIdentifierPath.parentPath === binding.path
-          ? buildChangeHandlerFunction(attr.value)
+          ? buildChangeHandlerFunction(attr.value, modifier)
           : bindingIdentifierPath.parentPath!.isObjectProperty()
             ? getChangeHandlerFromObjectPattern(
                 bindingIdentifierPath.parentPath!,
@@ -118,6 +128,14 @@ function getChangeHandler(
 
       if (!changeAttrExpr) {
         throw tag.hub.buildError(attr.value, "Unable to bind to value.");
+      }
+
+      if (modifier && t.isIdentifier(changeAttrExpr)) {
+        changeAttrExpr = t.logicalExpression(
+          "&&",
+          changeAttrExpr,
+          buildChangeHandlerFunction(attr.value, modifier),
+        );
       }
 
       const changeHandlerAttr = t.markoAttribute(
@@ -185,13 +203,29 @@ function getChangeHandler(
               t.stringLiteral("Change"),
             );
       const computed = memberProp.type !== "Identifier";
+      let changeAttrExpr: t.Expression = attr.value.optional
+        ? t.optionalMemberExpression(memberObj, memberProp, computed, true)
+        : t.memberExpression(memberObj, memberProp, computed);
 
-      return t.markoAttribute(
-        changeAttrName,
-        attr.value.optional
-          ? t.optionalMemberExpression(memberObj, memberProp, computed, true)
-          : t.memberExpression(memberObj, memberProp, computed),
-      );
+      if (modifier) {
+        const newValueId = generateUid("next");
+        changeAttrExpr = t.logicalExpression(
+          "&&",
+          changeAttrExpr,
+          t.arrowFunctionExpression(
+            [t.identifier(newValueId)],
+            t.blockStatement([
+              t.expressionStatement(
+                t.callExpression(
+                  t.memberExpression(memberObj, memberProp, computed),
+                  [t.callExpression(modifier, [t.identifier(newValueId)])],
+                ),
+              ),
+            ]),
+          ),
+        );
+      }
+      return t.markoAttribute(changeAttrName, changeAttrExpr);
     }
   }
 
@@ -201,8 +235,15 @@ function getChangeHandler(
   );
 }
 
-function buildChangeHandlerFunction(id: t.Identifier) {
+function buildChangeHandlerFunction(
+  id: t.Identifier,
+  modifier: undefined | t.Identifier,
+) {
   const newId = "_new_" + id.name;
+  let newValue: t.Expression = withPreviousLocation(t.identifier(newId), id);
+  if (modifier) {
+    newValue = t.callExpression(modifier, [newValue]);
+  }
   return t.arrowFunctionExpression(
     [withPreviousLocation(t.identifier(newId), id)],
     t.blockStatement([
@@ -210,7 +251,7 @@ function buildChangeHandlerFunction(id: t.Identifier) {
         t.assignmentExpression(
           "=",
           withPreviousLocation(t.identifier(id.name), id),
-          withPreviousLocation(t.identifier(newId), id),
+          newValue,
         ),
       ),
     ]),

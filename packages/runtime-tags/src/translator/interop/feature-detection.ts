@@ -161,9 +161,6 @@ function scanTag(state: FeatureState, tag: t.NodePath<t.MarkoTag>) {
             (attr.get("arguments") as t.NodePath<t.Expression>[])[0],
           );
           break;
-        } else if (attr.node.modifier) {
-          addFeature(state, FeatureType.Class, "Attribute modifier", attr);
-          break;
         } else if (attr.node.bound) {
           addFeature(state, FeatureType.Tags, "Bound attribute", attr);
           break;

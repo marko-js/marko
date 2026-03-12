@@ -1,0 +1,10 @@
+{
+  "vars": {
+    "props": {
+      "$_": "t",
+      "$init": "r",
+      "$$value": "a",
+      "$$valueChange": "m"
+    }
+  }
+}
