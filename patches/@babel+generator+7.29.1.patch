@@ -1,9 +1,9 @@
 diff --git a/node_modules/@babel/generator/lib/generators/marko.js b/node_modules/@babel/generator/lib/generators/marko.js
 new file mode 100644
-index 0000000..17b45ea
+index 0000000..16c2e02
 --- /dev/null
 +++ b/node_modules/@babel/generator/lib/generators/marko.js
-@@ -0,0 +1,377 @@
+@@ -0,0 +1,389 @@
 +"use strict";
 +
 +const svgElements = new Set([
@@ -261,14 +261,12 @@ index 0000000..17b45ea
 +    const bodyNodes = bodyOverride || zipAttributeTagsAndBody(node);
 +    for (let i = 0; i < bodyNodes.length; i++) {
 +      const node = bodyNodes[i];
-+      const adjacentInline =
-+        i > 0 && isInlineMarkoNode(bodyNodes[i - 1]) && isInlineMarkoNode(node);
-+      if (!adjacentInline) {
++      if (i > 0 && isInlineMarkoNode(bodyNodes[i - 1]) && isInlineMarkoNode(node)) {
++        this.print(node, false, true);
++      } else {
 +        this.newline(1);
 +        this.indent();
-+      }
-+      this.print(node, false, true);
-+      if (!adjacentInline) {
++        this.print(node, false, true);
 +        this.dedent();
 +      }
 +    }
