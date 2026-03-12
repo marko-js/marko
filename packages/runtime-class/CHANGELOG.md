@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.38.32
+
+### Patch Changes
+
+- [#3133](https://github.com/marko-js/marko/pull/3133) [`1ca1a71`](https://github.com/marko-js/marko/commit/1ca1a71d0f07c2e9e233899c4677005026873942) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add validations around tags api attribute names.
+
+- Updated dependencies [[`1ca1a71`](https://github.com/marko-js/marko/commit/1ca1a71d0f07c2e9e233899c4677005026873942)]:
+  - @marko/runtime-tags@6.0.158
+  - @marko/compiler@5.39.62
+
 ## 5.38.31
 
 ### Patch Changes
