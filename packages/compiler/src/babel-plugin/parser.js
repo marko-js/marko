@@ -375,7 +375,14 @@ export function parseMarko(file) {
     },
 
     onAttrName(part) {
-      const [, name, modifier] = /^([^:]*)(?::(.*))?/.exec(parser.read(part));
+      let name = parser.read(part);
+      let modifier = null;
+      const modifierIndex = name.lastIndexOf(":");
+      if (~modifierIndex) {
+        modifier = name.slice(modifierIndex + 1);
+        name = name.slice(0, modifierIndex);
+      }
+
       endAttr();
       currentTag.node.attributes.push(
         (currentAttr = t.markoAttribute(

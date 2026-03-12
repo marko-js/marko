@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.61
+
+### Patch Changes
+
+- [#3130](https://github.com/marko-js/marko/pull/3130) [`2dc2152`](https://github.com/marko-js/marko/commit/2dc21520fbd1029c55c7e6c8c4f1a641d5cb8b90) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support bound attribute modifiers as a way to cast change handler values.
+
 ## 5.39.60
 
 ### Patch Changes
