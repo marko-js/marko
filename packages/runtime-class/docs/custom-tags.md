@@ -146,7 +146,7 @@ To use [tags from npm](https://www.npmjs.com/search?q=keywords%3Amarko%20compone
 npm install --save @marko-tags/match-media
 ```
 
-Marko discover tags from packages defined in your `package.json`, so you can start using them right away:
+Marko discovers tags from packages defined in your `package.json`, so you can start using them right away:
 
 ```marko
 <div>
