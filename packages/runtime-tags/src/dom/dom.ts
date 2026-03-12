@@ -2,6 +2,7 @@ import { assertExclusiveAttrs } from "../common/errors";
 import {
   classValue,
   getEventHandlerName,
+  htmlAttrNameReg,
   isEventHandler,
   normalizeDynamicRenderer,
   styleValue,
@@ -285,6 +286,12 @@ function attrsInternal(
         _attr_style(el, value);
         break;
       default: {
+        if (MARKO_DEBUG) {
+          if (htmlAttrNameReg.test(name)) {
+            throw new Error(`Invalid attribute name: ${JSON.stringify(name)}`);
+          }
+        }
+
         if (isEventHandler(name)) {
           (events ||= scope[AccessorPrefix.EventAttributes + nodeAccessor] =
             {})[getEventHandlerName(name)] = value;

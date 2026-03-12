@@ -1,5 +1,7 @@
 import { types as t } from "@marko/compiler";
+import { isNativeTag } from "@marko/compiler/babel-utils";
 
+import { htmlAttrNameReg, userAttrNameReg } from "../../../common/helpers";
 import { preAnalyze as preAnalyzeTextarea } from "../../core/textarea";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getMarkoRoot, isMarko } from "../../util/get-root";
@@ -38,6 +40,7 @@ function normalizeBody(
 function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   const { name, attributes } = node;
+  let attrNameReg = userAttrNameReg;
   normalizeBody(tag.get("body").get("body"));
   normalizeBody(tag.get("attributeTags"));
 
@@ -68,7 +71,8 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
       // Convert tags which have an associated binding to an identifier.
       // <MyTag> --> <${MyTag}>
       node.name = withPreviousLocation(t.identifier(tagName), name);
-    } else {
+    } else if (isNativeTag(tag)) {
+      attrNameReg = htmlAttrNameReg;
       switch (tagName) {
         case "textarea":
           preAnalyzeTextarea(tag);
@@ -88,6 +92,22 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
         attr.name += ":" + attr.modifier;
       }
 
+      if (attrNameReg.test(attr.name)) {
+        throw tag.hub.buildError(
+          attr.loc?.end &&
+            ({
+              loc: {
+                start: attr.loc.start,
+                end: {
+                  line: attr.loc.start.line,
+                  column: attr.loc.start.column + attr.name.length,
+                },
+              },
+            } as any),
+          "Invalid attribute name.",
+        );
+      }
+
       attr.modifier = null;
     }
   }
@@ -99,10 +119,28 @@ function getChangeHandler(
 ): t.MarkoAttribute {
   const attrName = attr.name;
   const changeAttrName = attrName + "Change";
-  const modifier =
-    attr.modifier == null
-      ? undefined
-      : withPreviousLocation(t.identifier(attr.modifier), attr);
+  let modifier: undefined | t.Identifier;
+  if (attr.modifier != null) {
+    if (!t.isValidIdentifier(attr.modifier)) {
+      throw tag.hub.buildError(
+        attr.value.loc?.end &&
+          ({
+            loc: {
+              start: {
+                line: attr.value.loc.start.line,
+                column: attr.value.loc.start.column - attr.modifier.length - 2,
+              },
+              end: {
+                line: attr.value.loc.start.line,
+                column: attr.value.loc.start.column - 2,
+              },
+            },
+          } as any),
+        "Bound attribute refinement shorthand must be a valid JavaScript identifier.",
+      );
+    }
+    modifier = withPreviousLocation(t.identifier(attr.modifier), attr);
+  }
 
   if (t.isIdentifier(attr.value)) {
     const binding = tag.scope.getBinding(attr.value.name);

@@ -1,3 +1,6 @@
+export const htmlAttrNameReg = /^[^a-z_]|[^a-z0-9._:-]/i;
+export const userAttrNameReg = /^[^a-z_$]|[^a-z0-9._:-]/i;
+
 export function _call<T>(fn: (v: T) => unknown, v: T): T {
   fn(v);
   return v;

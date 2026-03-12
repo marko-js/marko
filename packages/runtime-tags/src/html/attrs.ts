@@ -2,6 +2,7 @@ import { assertExclusiveAttrs } from "../common/errors";
 import {
   classValue,
   getEventHandlerName,
+  htmlAttrNameReg,
   isEventHandler,
   isVoid,
   styleValue,
@@ -262,6 +263,14 @@ export function _attrs(
             (name === "content" && tagName !== "meta")
           )
         ) {
+          if (MARKO_DEBUG) {
+            if (htmlAttrNameReg.test(name)) {
+              throw new Error(
+                `Invalid attribute name: ${JSON.stringify(name)}`,
+              );
+            }
+          }
+
           if (isEventHandler(name)) {
             if (!events) {
               events = {};
