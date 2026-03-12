@@ -1,5 +1,16 @@
 # @marko/runtime-tags
 
+## 6.0.157
+
+### Patch Changes
+
+- [#3125](https://github.com/marko-js/marko/pull/3125) [`1ee9ec8`](https://github.com/marko-js/marko/commit/1ee9ec8163a5e5e97ce6f64134c43450495bd14d) Thanks [@rturnq](https://github.com/rturnq)! - Add runtime guard in debug when reading tag variable in own body
+
+- [#3130](https://github.com/marko-js/marko/pull/3130) [`2dc2152`](https://github.com/marko-js/marko/commit/2dc21520fbd1029c55c7e6c8c4f1a641d5cb8b90) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support bound attribute modifiers as a way to cast change handler values.
+
+- Updated dependencies [[`2dc2152`](https://github.com/marko-js/marko/commit/2dc21520fbd1029c55c7e6c8c4f1a641d5cb8b90)]:
+  - @marko/compiler@5.39.61
+
 ## 6.0.156
 
 ### Patch Changes
