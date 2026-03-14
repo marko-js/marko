@@ -1584,6 +1584,13 @@ declare global {
           | "X-UA-Compatible";
 
         /**
+         * Specifies which media the metadata applies to (valid media query list).
+         * Only has effect when name is "theme-color".
+         * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-media
+         */
+        media?: AttrString;
+
+        /**
          * Specifies the metadata name for the content attribute.
          * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-name
          */
