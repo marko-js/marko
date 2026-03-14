@@ -67,6 +67,7 @@ export interface Section {
   serializeReason: undefined | SerializeReason;
   serializeReasons: Map<symbol, SerializeReason>;
   paramReasonGroups: ParamSerializeReasonGroups | undefined;
+  returnValueExpr: t.NodeExtra | undefined;
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
@@ -140,6 +141,7 @@ export function startSection(
       serializeReason: undefined,
       serializeReasons: new Map(),
       paramReasonGroups: undefined,
+      returnValueExpr: undefined,
       returnSerializeReason: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,

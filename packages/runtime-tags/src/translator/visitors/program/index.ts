@@ -11,8 +11,6 @@ import {
 } from "../../util/binding-prop-tree";
 import entryBuilder from "../../util/entry-builder";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
-import { getKnownAttrValues } from "../../util/get-known-attr-values";
-import { isCoreTagName } from "../../util/is-core-tag";
 import {
   getMarkoOpts,
   isOutputDOM,
@@ -50,7 +48,6 @@ export type TemplateExports = BindingPropTree["props"];
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    returnValueExpr?: t.NodeExtra;
     domExports?: {
       template: string;
       walks: string;
@@ -90,17 +87,6 @@ export default {
         setup: generateUid("setup"),
         params: undefined,
       };
-
-      for (const child of program.get("body")) {
-        if (isCoreTagName(child, "return")) {
-          const { value } = getKnownAttrValues(child.node);
-          if (value) {
-            programExtra.returnValueExpr = value.extra ??= {};
-          }
-
-          break;
-        }
-      }
     },
 
     exit(program) {

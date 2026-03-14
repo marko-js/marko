@@ -1213,10 +1213,10 @@ export function finalizeReferences() {
     }
   });
 
-  const programExtra = getProgram().node.extra;
-  if (programExtra.returnValueExpr) {
-    programExtra.section!.returnSerializeReason = getSerializeSourcesForExpr(
-      programExtra.returnValueExpr,
+  const programSection = getProgram().node.extra.section!;
+  if (programSection.returnValueExpr) {
+    programSection.returnSerializeReason = getSerializeSourcesForExpr(
+      programSection.returnValueExpr,
     );
   }
 
@@ -2207,7 +2207,7 @@ export function getAllSerializeReasonsForExtra(
   let reason = serializeReasonCache.get(extra);
   if (reason === false) return;
   if (reason === undefined) {
-    if (extra === getProgram().node.extra?.returnValueExpr) {
+    if (extra === getProgram().node.extra?.section!.returnValueExpr) {
       reason = true;
     } else {
       serializeReasonCache.set(extra, false);

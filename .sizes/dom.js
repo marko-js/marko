@@ -1,4 +1,4 @@
-// size: 21221 (min) 7972 (brotli)
+// size: 21238 (min) 7981 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -201,13 +201,17 @@ function _const(valueAccessor, fn) {
   );
 }
 function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
-  return (scope) => {
-    scope.H
-      ? id in scope
-        ? --scope[id] || fn(scope)
-        : (scope[id] = defaultPending)
-      : queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
-  };
+  return (
+    "L" !== scopeIdAccessor &&
+      (scopeIdAccessor = decodeAccessor(scopeIdAccessor)),
+    (scope) => {
+      scope.H
+        ? id in scope
+          ? --scope[id] || fn(scope)
+          : (scope[id] = defaultPending)
+        : queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
+    }
+  );
 }
 function _for_closure(ownerLoopNodeAccessor, fn) {
   let scopeAccessor =

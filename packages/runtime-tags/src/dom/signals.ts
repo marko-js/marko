@@ -66,8 +66,12 @@ export function _or(
   id: number,
   fn: SignalFn,
   defaultPending: number = 1,
-  scopeIdAccessor: Accessor = AccessorProp.Id,
+  scopeIdAccessor: EncodedAccessor = AccessorProp.Id,
 ): Signal<never> {
+  if (!MARKO_DEBUG && scopeIdAccessor !== AccessorProp.Id) {
+    scopeIdAccessor = decodeAccessor(scopeIdAccessor as number);
+  }
+
   return (scope) => {
     if (scope[AccessorProp.Creating]) {
       if (id in scope) {

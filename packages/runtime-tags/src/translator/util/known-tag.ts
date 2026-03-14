@@ -132,17 +132,6 @@ export function knownTagAnalyze(
   tagExtra[kContentSection] = contentSection;
 
   const varBinding = trackVarReferences(tag, BindingType.derived);
-  const mutatesTagVar = !!(
-    tag.node.var?.type === "Identifier" &&
-    tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
-  );
-  if (varBinding) {
-    varBinding.scopeOffset = tagExtra[kChildOffsetScopeBinding] = createBinding(
-      "#scopeOffset",
-      BindingType.dom,
-      section,
-    );
-  }
 
   const exprs = (tagExtra[kKnownExprs] = analyzeParams(
     tagExtra,
@@ -153,14 +142,24 @@ export function knownTagAnalyze(
   ));
 
   if (varBinding) {
-    const { returnSerializeReason } = contentSection;
-
-    const varExpr = mapParamReasonToExpr(
-      exprs,
-      returnSerializeReason &&
-        (returnSerializeReason === true ||
-          !!returnSerializeReason.state ||
-          (returnSerializeReason.param as Opt<InputBinding>)),
+    const mutatesTagVar = !!(
+      tag.node.var!.type === "Identifier" &&
+      tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
+    );
+    const varExpr = tagExtra.defineBodySection
+      ? contentSection.returnValueExpr
+      : mapParamReasonToExpr(
+          exprs,
+          contentSection.returnSerializeReason &&
+            (contentSection.returnSerializeReason === true ||
+              !!contentSection.returnSerializeReason.state ||
+              (contentSection.returnSerializeReason
+                .param as Opt<InputBinding>)),
+        );
+    varBinding.scopeOffset = tagExtra[kChildOffsetScopeBinding] = createBinding(
+      "#scopeOffset",
+      BindingType.dom,
+      section,
     );
     setBindingDownstream(varBinding, varExpr);
     addSerializeExpr(section, mutatesTagVar || varExpr, childScopeBinding);
@@ -367,8 +366,8 @@ export function finalizeKnownTags(section: Section) {
   for (const tagExtra of getKnownTags(section)) {
     const scopeBinding = tagExtra[kChildScopeBinding];
     const knownExprs = tagExtra[kKnownExprs];
-    const contentSection = tagExtra[kContentSection];
-    if (knownExprs && scopeBinding && contentSection?.paramReasonGroups) {
+    const contentSection = tagExtra[kContentSection]!;
+    if (knownExprs && scopeBinding && contentSection.paramReasonGroups) {
       for (const group of contentSection.paramReasonGroups) {
         addSerializeReason(
           section,

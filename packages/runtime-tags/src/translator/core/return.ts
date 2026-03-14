@@ -23,7 +23,6 @@ import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
-const tagsWithReturn = new WeakSet<t.NodePath>();
 const [getSectionReturnValueIdentifier, setReturnValueIdentifier] =
   createSectionState<t.Identifier | undefined>("returnValue");
 export { getSectionReturnValueIdentifier };
@@ -53,14 +52,13 @@ export default {
       }
     }
 
-    if (tagsWithReturn.has(tag.parentPath)) {
+    const section = getOrCreateSection(tag);
+    if (section.returnValueExpr) {
       throw tag
         .get("name")
         .buildCodeFrameError(
           `Cannot have multiple [\`<return>\` tags](https://markojs.com/docs/reference/core-tag#return) ${tag.parent.type === "Program" ? "for the template" : "within a tag's body content"}.`,
         );
-    } else {
-      tagsWithReturn.add(tag.parentPath);
     }
 
     const attrs = getKnownAttrValues(tag.node);
@@ -75,12 +73,10 @@ export default {
     if (attrs.valueChange) {
       (attrs.valueChange.extra ??= {}).isEffect = true;
       // TODO: this should be based on the parent actually mutating the tag variable.
-      addSerializeReason(
-        getOrCreateSection(tag),
-        true,
-        getAccessorProp().TagVariableChange,
-      );
+      addSerializeReason(section, true, getAccessorProp().TagVariableChange);
     }
+
+    section.returnValueExpr = attrs.value.extra ??= {};
   },
   translate: translateByTarget({
     html: {

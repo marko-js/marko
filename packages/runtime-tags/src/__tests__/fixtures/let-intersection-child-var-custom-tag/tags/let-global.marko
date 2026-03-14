@@ -1,0 +1,14 @@
+client const subsByKey: Record<string, Set<() => void>> = {};
+
+<let/value=$global[input.value]>
+<script>
+  const subs = subsByKey[input.value] ??= new Set();
+  const sub = () => value = $global[input.value];
+  $signal.onabort = () => subs.delete(sub);
+  subs.add(sub);
+</script>
+
+<return=value valueChange(next) {
+  $global[input.value] = next;
+  subsByKey[input.value]?.forEach(cb => cb());
+}>

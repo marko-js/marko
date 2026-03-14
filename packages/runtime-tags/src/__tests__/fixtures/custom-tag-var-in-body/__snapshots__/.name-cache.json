@@ -2,7 +2,10 @@
   "vars": {
     "props": {
       "$_": "r",
-      "$init": "m"
+      "$init": "m",
+      "$$child_content__setHtml__script": "o",
+      "$$child_content__setHtml": "t",
+      "$$setHtml__closure": "e"
     }
   }
 }
