@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.159
+
+### Patch Changes
+
+- [#3135](https://github.com/marko-js/marko/pull/3135) [`ae034a5`](https://github.com/marko-js/marko/commit/ae034a5e45843cadb4dded01d8322cff14b5887e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issues with incorrect intersection offset encoding in production builds.
+
+- [#3135](https://github.com/marko-js/marko/pull/3135) [`ae034a5`](https://github.com/marko-js/marko/commit/ae034a5e45843cadb4dded01d8322cff14b5887e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with return tag type analysis when using known define tags.
+
 ## 6.0.158
 
 ### Patch Changes
