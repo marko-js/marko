@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.38.34
+
+### Patch Changes
+
+- [#3137](https://github.com/marko-js/marko/pull/3137) [`d965e38`](https://github.com/marko-js/marko/commit/d965e382168e9945e71e2e3e6b87f32c90c8d59a) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add types for <meta> tag
+
+- Updated dependencies [[`d965e38`](https://github.com/marko-js/marko/commit/d965e382168e9945e71e2e3e6b87f32c90c8d59a), [`c9d7389`](https://github.com/marko-js/marko/commit/c9d7389aaacc166059cd59e5e7299ee277c49918)]:
+  - @marko/runtime-tags@6.0.160
+
 ## 5.38.33
 
 ### Patch Changes

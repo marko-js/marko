@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.160
+
+### Patch Changes
+
+- [#3137](https://github.com/marko-js/marko/pull/3137) [`d965e38`](https://github.com/marko-js/marko/commit/d965e382168e9945e71e2e3e6b87f32c90c8d59a) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add types for <meta> tag
+
+- [#3138](https://github.com/marko-js/marko/pull/3138) [`c9d7389`](https://github.com/marko-js/marko/commit/c9d7389aaacc166059cd59e5e7299ee277c49918) Thanks [@vwong](https://github.com/vwong)! - Add missing `command` and `commandfor` for HTMLButtonElement
+
 ## 6.0.159
 
 ### Patch Changes
