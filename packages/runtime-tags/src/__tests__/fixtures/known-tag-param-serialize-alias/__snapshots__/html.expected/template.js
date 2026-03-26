@@ -10,7 +10,7 @@ export default _._template("__tests__/template.marko", input => {
         a,
         b
       } = input;
-      _._html(`<div>${_._escape(a)}${_._el_resume($scope1_id, "#text/0", _._serialize_guard($scope1_reason, /* input.a */0))}</div><div>${_._escape(b)}${_._el_resume($scope1_id, "#text/1", _._serialize_guard($scope1_reason, /* b */1))}</div>`);
+      _._html(`<div>${_._escape(a)}${_._el_resume($scope1_id, "#text/0", (_._serialize_guard($scope1_reason, /* input.a */0)))}</div><div>${_._escape(b)}${_._el_resume($scope1_id, "#text/1", (_._serialize_guard($scope1_reason, /* b */1)))}</div>`);
       _._script($scope1_id, "__tests__/template.marko_1_input_a");
       _._script($scope1_id, "__tests__/template.marko_1_a");
       _._scope($scope1_id, {
@@ -22,14 +22,14 @@ export default _._template("__tests__/template.marko", input => {
   };
   const $childScope = _._peek_scope_id();
   _._set_serialize_reason({
-    /* input.a */0: _._serialize_guard($scope0_reason, /* input.a */1),
-    /* b */1: _._serialize_guard($scope0_reason, /* input.b */2)
+    /* input.a */0: (_._serialize_guard($scope0_reason, /* input.a */1)),
+    /* b */1: (_._serialize_guard($scope0_reason, /* input.b */2))
   });
   Child.content({
     a: input.a,
     b: input.b
   });
-  _._serialize_if($scope0_reason, /* input.a, input.b */0) && _._scope($scope0_id, {
-    "#childScope/0": _._serialize_if($scope0_reason, /* input.a, input.b */0) && _._existing_scope($childScope)
+  (_._serialize_if($scope0_reason, /* input.a, input.b */0)) && _._scope($scope0_id, {
+    "#childScope/0": _._existing_scope($childScope)
   }, "__tests__/template.marko", 0);
 }, 1);

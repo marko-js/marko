@@ -7,7 +7,6 @@ import {
   type BindingPropTree,
   getKnownFromPropTree,
 } from "./binding-prop-tree";
-import { getSharedUid } from "./generate-uid";
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
@@ -24,6 +23,7 @@ import {
   getSection,
   getSectionRegisterReasons,
 } from "./sections";
+import { getScopeReasonDeclaration } from "./serialize-guard";
 import { isReasonDynamic } from "./serialize-reasons";
 import { getResumeRegisterId } from "./signals";
 import { toObjectProperty, toPropertyName } from "./to-property-name";
@@ -435,16 +435,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
       }
 
       if (dynamicSerializeReason) {
-        body.node.body.unshift(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              t.identifier(
-                getSharedUid(`scope${bodySection.id}_reason`, bodySection),
-              ),
-              callRuntime("_scope_reason"),
-            ),
-          ]) as any,
-        );
+        body.node.body.unshift(getScopeReasonDeclaration(bodySection) as any);
       } else {
         body.node.body.unshift(
           t.expressionStatement(callRuntime("_scope_reason")) as any,

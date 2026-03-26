@@ -6,7 +6,8 @@ export default _._template("__tests__/template.marko", input => {
   const Child = {
     content: _._content("__tests__/template.marko_1_content", input => {
       const $scope1_id = _._scope_id();
-      const $scope1_reason = _._scope_reason();
+      const $scope1_reason = _._scope_reason(),
+        $sg__input_item = _._serialize_guard($scope1_reason, /* input.item */0);
       _._for_of(input.item, item => {
         const $scope2_id = _._scope_id();
         _._html("<div");
@@ -18,8 +19,8 @@ export default _._template("__tests__/template.marko", input => {
         }, "__tests__/template.marko", "4:4", {
           item: "4:8"
         });
-      }, 0, $scope1_id, "#text/0", _._serialize_guard($scope1_reason, /* input.item */0), _._serialize_guard($scope1_reason, /* input.item */0), _._serialize_guard($scope1_reason, /* input.item */0), 0, 1);
-      _._serialize_if($scope1_reason, /* input.item */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "3:2");
+      }, 0, $scope1_id, "#text/0", $sg__input_item, ($sg__input_item), ($sg__input_item), 0, 1);
+      (_._serialize_if($scope1_reason, /* input.item */0)) && _._scope($scope1_id, {}, "__tests__/template.marko", "3:2");
     })
   };
   const $childScope = _._peek_scope_id();

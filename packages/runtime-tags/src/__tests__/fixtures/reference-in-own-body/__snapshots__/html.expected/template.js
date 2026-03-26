@@ -6,9 +6,9 @@ export default _._template("__tests__/template.marko", input => {
     content: _._content("__tests__/template.marko_1_content", input => {
       const $scope1_id = _._scope_id();
       const $scope1_reason = _._scope_reason();
-      _._dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, _._serialize_guard($scope1_reason, /* input.content */0));
+      _._dynamic_tag($scope1_id, "#text/0", input.content, {}, 0, 0, (_._serialize_guard($scope1_reason, /* input.content */0)));
       const $return = "A";
-      _._serialize_if($scope1_reason, /* input.content */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "1:2");
+      (_._serialize_if($scope1_reason, /* input.content */0)) && _._scope($scope1_id, {}, "__tests__/template.marko", "1:2");
       return $return;
     })
   };

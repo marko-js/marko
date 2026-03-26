@@ -7,7 +7,8 @@
       "$$onClick$1": "m",
       "$$textAlias": "n",
       "$$clickCount": "a",
-      "$$onClick": "c"
+      "$$onClick": "c",
+      "$$input_text": "e"
     }
   }
 }

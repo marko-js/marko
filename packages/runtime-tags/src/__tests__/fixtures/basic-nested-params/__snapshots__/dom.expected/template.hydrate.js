@@ -1,10 +1,10 @@
 // size: 505 (min) 293 (brotli)
 const $dynamicTag = _._dynamic_tag(0, 0, 0, 1),
-  $content__OR__value = _._or(5, ($scope) =>
+  $input_content__OR__input_value = _._or(5, ($scope) =>
     $dynamicTag($scope, $scope.d, () => [$scope.e]),
   ),
-  $content = _._const(3, $content__OR__value),
-  $value = _._const(4, $content__OR__value),
+  $content = _._const(3, $input_content__OR__input_value),
+  $value = _._const(4, $input_content__OR__input_value),
   $child_content2__outer = _._closure_get(2, ($scope) =>
     _._text($scope.a, $scope._.c),
   ),

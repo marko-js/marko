@@ -5,7 +5,8 @@
       "$init": "m",
       "$$dynamicTag": "o",
       "$$inputAs__OR__inputClass__OR__htmlInput__OR__content": "e",
-      "$$content": "r"
+      "$$content": "r",
+      "$$input_as__OR__input_class__OR__htmlInput__OR__content": "a"
     }
   }
 }

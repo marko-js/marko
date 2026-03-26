@@ -9,9 +9,9 @@ const $x = /* @__PURE__ */_._let("x/9", $scope => {
   _._attr($scope["#button/0"], "data-internal", $scope.x);
   $x__script($scope);
 });
-const $countChange__OR__count = /* @__PURE__ */_._or(8, $scope => $x($scope, $scope.count, $scope.$countChange));
-export const $countChange2 = /* @__PURE__ */_._const("$countChange", $countChange__OR__count);
-export const $count = /* @__PURE__ */_._const("count", $countChange__OR__count);
+const $input_countChange__OR__input_count = /* @__PURE__ */_._or(8, $scope => $x($scope, $scope.count, $scope.$countChange));
+export const $countChange2 = /* @__PURE__ */_._const("$countChange", $input_countChange__OR__input_count);
+export const $count = /* @__PURE__ */_._const("count", $input_countChange__OR__input_count);
 export const $input_id = ($scope, input_id) => _._attr($scope["#button/0"], "id", input_id);
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/1");
 export const $input_content = ($scope, input_content) => $dynamicTag($scope, input_content);

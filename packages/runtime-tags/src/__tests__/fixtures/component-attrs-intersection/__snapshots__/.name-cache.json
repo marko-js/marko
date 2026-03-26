@@ -6,7 +6,8 @@
       "$$value__OR__dummy": "m",
       "$$value": "r",
       "$$count__script": "c",
-      "$$count": "a"
+      "$$count": "a",
+      "$$input_value__OR__dummy": "i"
     }
   }
 }

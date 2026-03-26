@@ -14,11 +14,11 @@ export default _._template("__tests__/tags/wrapper.marko", input => {
     const $scope1_id = _._scope_id();
     _._scope_reason();
     _._html("hi");
-  }, $scope0_id), 0, _._serialize_guard($scope0_reason, /* input.as, input.foo, htmlInput */3));
-  _._serialize_if($scope0_reason, /* input.as, input.foo, htmlInput */3) && _._scope($scope0_id, {
-    inputAs: _._serialize_if($scope0_reason, /* input.foo, htmlInput */2) && inputAs,
-    foo: _._serialize_if($scope0_reason, /* input.as, htmlInput */1) && foo,
-    htmlInput: _._serialize_if($scope0_reason, /* input.as, input.foo */0) && htmlInput
+  }, $scope0_id), 0, (_._serialize_guard($scope0_reason, /* input.as, input.foo, htmlInput */3)));
+  (_._serialize_if($scope0_reason, /* input.as, input.foo, htmlInput */3)) && _._scope($scope0_id, {
+    inputAs: (_._serialize_if($scope0_reason, /* input.foo, htmlInput */2)) && inputAs,
+    foo: (_._serialize_if($scope0_reason, /* input.as, htmlInput */1)) && foo,
+    htmlInput: (_._serialize_if($scope0_reason, /* input.as, input.foo */0)) && htmlInput
   }, "__tests__/tags/wrapper.marko", 0, {
     inputAs: "1:13",
     foo: "1:22",

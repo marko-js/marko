@@ -8,7 +8,10 @@
       "$$input": "a",
       "$$valueChange2": "m",
       "$$count": "n",
-      "$$valueChange": "u"
+      "$$valueChange": "u",
+      "$$input__OR__input_valueChange__script": "c",
+      "$$input__OR__input_valueChange": "s",
+      "$$input_valueChange": "i"
     }
   }
 }

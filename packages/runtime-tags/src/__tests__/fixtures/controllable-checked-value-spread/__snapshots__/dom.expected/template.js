@@ -2,7 +2,7 @@ export const $template = `${_radio_template}${_radio_template}${_radio_template}
 export const $walks = /* <radio>, <radio>, <radio>, next(1), get, out(1) */`/${_radio_walks}&/${_radio_walks}&/${_radio_walks}&D l`;
 import { $setup as _radio, $input as _radio_input, $template as _radio_template, $walks as _radio_walks } from "./tags/radio.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $checkedValue__OR__checkedValueChange = /* @__PURE__ */_._or(6, $scope => {
+const $checkedValue__OR__$checkedValueChange = /* @__PURE__ */_._or(6, $scope => {
   _radio_input($scope["#childScope/0"], {
     checkedValue: $scope.checkedValue,
     checkedValueChange: $scope.$checkedValueChange,
@@ -21,9 +21,9 @@ const $checkedValue__OR__checkedValueChange = /* @__PURE__ */_._or(6, $scope => 
 });
 const $checkedValue = /* @__PURE__ */_._let("checkedValue/4", $scope => {
   _._text($scope["#text/3"], $scope.checkedValue);
-  $checkedValue__OR__checkedValueChange($scope);
+  $checkedValue__OR__$checkedValueChange($scope);
 });
-const $checkedValueChange3 = /* @__PURE__ */_._const("$checkedValueChange", $checkedValue__OR__checkedValueChange);
+const $checkedValueChange3 = /* @__PURE__ */_._const("$checkedValueChange", $checkedValue__OR__$checkedValueChange);
 export function $setup($scope) {
   _radio($scope["#childScope/0"]);
   _radio($scope["#childScope/1"]);

@@ -1,17 +1,17 @@
 // size: 1029 (min) 430 (brotli)
-const $name__OR__write__script = _._script("a0", ($scope) => {
+const $input_name__OR__input_write__script = _._script("a0", ($scope) => {
     ($scope.e(`${$scope.d} mounted`),
       (_.$signal($scope, 0).onabort = () => {
         $scope.e(`${$scope.d} destroyed`);
       }));
   }),
-  $name__OR__write = _._or(5, ($scope) => {
-    (_.$signalReset($scope, 0), $name__OR__write__script($scope));
+  $input_name__OR__input_write = _._or(5, ($scope) => {
+    (_.$signalReset($scope, 0), $input_name__OR__input_write__script($scope));
   }),
   $name = _._const(3, ($scope) => {
-    (_._text($scope.a, $scope.d), $name__OR__write($scope));
+    (_._text($scope.a, $scope.d), $input_name__OR__input_write($scope));
   }),
-  $write$1 = _._const(4, $name__OR__write),
+  $write$1 = _._const(4, $input_name__OR__input_write),
   $if_content3__write = _._closure_get(
     8,
     ($scope) => $write$1($scope.a, $scope._._._.i),

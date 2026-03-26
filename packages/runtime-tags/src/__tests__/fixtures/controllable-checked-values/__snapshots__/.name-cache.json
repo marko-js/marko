@@ -4,7 +4,8 @@
       "$_": "t",
       "$init": "e",
       "$$checkedValue__OR__checkedValueChange": "_",
-      "$$checkedValue": "a"
+      "$$checkedValue": "a",
+      "$$checkedValue__OR__$checkedValueChange": "r"
     }
   }
 }

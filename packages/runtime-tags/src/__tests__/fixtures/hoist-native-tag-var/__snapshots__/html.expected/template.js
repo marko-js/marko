@@ -1,7 +1,9 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
 export default _._template("__tests__/template.marko", input => {
-  const $scope0_reason = _._scope_reason();
+  const $scope0_reason = _._scope_reason(),
+    $sg__input_show = _._serialize_guard($scope0_reason, /* input.show */0),
+    $si__input_show = _._serialize_if($scope0_reason, /* input.show */0);
   const $scope0_id = _._scope_id();
   const $el_getter = _._hoist($scope0_id, "__tests__/template.marko_0_#div/hoist");
   _._if(() => {
@@ -18,13 +20,13 @@ export default _._template("__tests__/template.marko", input => {
           _._scope($scope2_id, {}, "__tests__/template.marko", "2:4");
           return 0;
         }
-      }, $scope1_id, "#text/0", 1, _._serialize_guard($scope0_reason, /* input.show */0), _._serialize_guard($scope0_reason, /* input.show */0), 0, 1);
+      }, $scope1_id, "#text/0", 1, ($sg__input_show), ($sg__input_show), 0, 1);
       _._scope($scope1_id, {
-        _: _._serialize_if($scope0_reason, /* input.show */0) && _._scope_with_id($scope0_id)
+        _: ($si__input_show) && _._scope_with_id($scope0_id)
       }, "__tests__/template.marko", "1:2");
       return 0;
     }
-  }, $scope0_id, "#text/0", 1, _._serialize_guard($scope0_reason, /* input.show */0), _._serialize_guard($scope0_reason, /* input.show */0));
+  }, $scope0_id, "#text/0", 1, $sg__input_show, $sg__input_show);
   _child({
     value: $el_getter
   });
@@ -36,9 +38,9 @@ export default _._template("__tests__/template.marko", input => {
       _._scope($scope3_id, {}, "__tests__/template.marko", "19:2");
       return 0;
     }
-  }, $scope0_id, "#text/2", 1, 0, _._serialize_guard($scope0_reason, /* input.show */0), 0, 1);
+  }, $scope0_id, "#text/2", 1, 0, $sg__input_show, 0, 1);
   _._script($scope0_id, "__tests__/template.marko_0");
-  _._serialize_if($scope0_reason, /* input.show */0) && _._scope($scope0_id, {
+  ($si__input_show) && _._scope($scope0_id, {
     input_show: input.show
   }, "__tests__/template.marko", 0, {
     input_show: ["input.show"]

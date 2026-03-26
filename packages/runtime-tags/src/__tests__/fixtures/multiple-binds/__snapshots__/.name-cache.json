@@ -5,7 +5,8 @@
       "$init": "r",
       "$$count__OR__valueChange": "_",
       "$$count__script": "a",
-      "$$count": "i"
+      "$$count": "i",
+      "$$count__OR__$valueChange": "u"
     }
   }
 }

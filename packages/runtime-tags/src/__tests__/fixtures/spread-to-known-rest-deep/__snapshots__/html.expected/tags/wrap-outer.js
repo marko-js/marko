@@ -12,7 +12,7 @@ export default _._template("__tests__/tags/wrap-outer.marko", input => {
     value: "abcd",
     ...rest
   });
-  _._serialize_if($scope0_reason, /* rest.class */0) && _._scope($scope0_id, {
-    "#childScope/0": _._serialize_if($scope0_reason, /* rest.class */0) && _._existing_scope($childScope)
+  (_._serialize_if($scope0_reason, /* rest.class */0)) && _._scope($scope0_id, {
+    "#childScope/0": _._existing_scope($childScope)
   }, "__tests__/tags/wrap-outer.marko", 0);
 });

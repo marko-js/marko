@@ -8,8 +8,8 @@ export default _._template("__tests__/tags/setter.marko", input => {
   const $return = (input.value, setter);
   _._scope($scope0_id, {
     input_valueChange: input.valueChange,
-    input_value: _._serialize_if($scope0_reason, /* input.valueChange */0) && input.value,
-    setter: _._serialize_if($scope0_reason, /* input.value */1) && setter
+    input_value: (_._serialize_if($scope0_reason, /* input.valueChange */0)) && input.value,
+    setter: (_._serialize_if($scope0_reason, /* input.value */1)) && setter
   }, "__tests__/tags/setter.marko", 0, {
     input_valueChange: ["input.valueChange"],
     input_value: ["input.value"],

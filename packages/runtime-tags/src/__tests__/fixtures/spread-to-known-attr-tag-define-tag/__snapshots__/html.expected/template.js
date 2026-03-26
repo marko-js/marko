@@ -5,7 +5,8 @@ export default _._template("__tests__/template.marko", input => {
   const Child = {
     content: _._content("__tests__/template.marko_1_content", input => {
       const $scope1_id = _._scope_id();
-      const $scope1_reason = _._scope_reason();
+      const $scope1_reason = _._scope_reason(),
+        $sg__input_option = _._serialize_guard($scope1_reason, /* input.option */1);
       _._html(`<select${_._attr_class(input.class)}>`);
       _._for_of(input.option, option => {
         const $scope3_id = _._scope_id();
@@ -18,8 +19,8 @@ export default _._template("__tests__/template.marko", input => {
         }, "__tests__/template.marko", "3:6", {
           option: "3:10"
         });
-      }, 0, $scope1_id, "#select/0", _._serialize_guard($scope1_reason, /* input.option */1), _._serialize_guard($scope1_reason, /* input.class, input.option */0), _._serialize_guard($scope1_reason, /* input.option */1), "</select>", 1);
-      _._serialize_if($scope1_reason, /* input.class, input.option */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "1:2");
+      }, 0, $scope1_id, "#select/0", ($sg__input_option), (_._serialize_guard($scope1_reason, /* input.class, input.option */0)), ($sg__input_option), "</select>", 1);
+      (_._serialize_if($scope1_reason, /* input.class, input.option */0)) && _._scope($scope1_id, {}, "__tests__/template.marko", "1:2");
     })
   };
   const Wrap = {
@@ -31,15 +32,15 @@ export default _._template("__tests__/template.marko", input => {
       const $scope2_reason = _._scope_reason();
       const $childScope = _._peek_scope_id();
       _._set_serialize_reason({
-        /* input.class, input.option */0: _._serialize_guard($scope2_reason, /* _class, rest.option */0),
-        /* input.option */1: _._serialize_guard($scope2_reason, /* rest.option */1)
+        /* input.class, input.option */0: (_._serialize_guard($scope2_reason, /* _class, rest.option */0)),
+        /* input.option */1: (_._serialize_guard($scope2_reason, /* rest.option */1))
       });
       Child.content({
         class: _class,
         ...rest
       });
-      _._serialize_if($scope2_reason, /* _class, rest.option */0) && _._scope($scope2_id, {
-        "#childScope/0": _._serialize_if($scope2_reason, /* _class, rest.option */0) && _._existing_scope($childScope)
+      (_._serialize_if($scope2_reason, /* _class, rest.option */0)) && _._scope($scope2_id, {
+        "#childScope/0": _._existing_scope($childScope)
       }, "__tests__/template.marko", "9:2");
     })
   };

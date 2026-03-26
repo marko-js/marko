@@ -24,7 +24,9 @@
       "$$showMiddle": "v",
       "$$showInner__closure": "$",
       "$$showInner__script": "h",
-      "$$showInner": "M"
+      "$$showInner": "M",
+      "$$input_name__OR__input_write__script": "x",
+      "$$input_name__OR__input_write": "y"
     }
   }
 }

@@ -6,9 +6,9 @@ const $onClick__script = _._script("__tests__/tags/my-button.marko_0_onClick", $
 export const $onClick = /* @__PURE__ */_._const("onClick", $onClick__script);
 export const $text = ($scope, text) => {
   _._text($scope["#text/1"], text);
-  $textAlias($scope, text);
+  $input_value_text($scope, text);
 };
-const $textAlias = ($scope, text) => _._text($scope["#text/2"], text);
+const $input_value_text = ($scope, text) => _._text($scope["#text/2"], text);
 export const $input = ($scope, input) => {
   $onClick($scope, input.onClick);
   $value2($scope, input.value);

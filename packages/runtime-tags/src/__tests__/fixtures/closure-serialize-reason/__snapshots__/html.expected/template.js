@@ -8,9 +8,9 @@ export default _._template("__tests__/template.marko", input => {
   _._if(() => {
     if (x) {
       const $scope1_id = _._scope_id();
-      _._html(`<span>${_._escape(getMessage())}${_._el_resume($scope1_id, "#text/0", _._serialize_guard($scope0_reason, /* input.message */0))}</span>`);
+      _._html(`<span>${_._escape(getMessage())}${_._el_resume($scope1_id, "#text/0", (_._serialize_guard($scope0_reason, /* input.message */0)))}</span>`);
       _._scope($scope1_id, {
-        _: _._serialize_if($scope0_reason, /* input.message */0) && _._scope_with_id($scope0_id)
+        _: (_._serialize_if($scope0_reason, /* input.message */0)) && _._scope_with_id($scope0_id)
       }, "__tests__/template.marko", "4:4");
       return 0;
     }

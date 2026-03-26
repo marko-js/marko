@@ -15,15 +15,15 @@ const $bar = /* @__PURE__ */_._let("bar/3", $scope => {
 export function $setup($scope) {
   $bar($scope, 0);
 }
-const $foo__OR__fooChange__script = _._script("__tests__/template.marko_0_foo_$fooChange", $scope => _._on($scope["#button/0"], "click", function () {
+const $foo__OR__$fooChange__script = _._script("__tests__/template.marko_0_foo_$fooChange", $scope => _._on($scope["#button/0"], "click", function () {
   $scope.$fooChange($scope.foo + 1);
 }));
-const $foo__OR__fooChange = /* @__PURE__ */_._or(7, $foo__OR__fooChange__script);
+const $foo__OR__$fooChange = /* @__PURE__ */_._or(7, $foo__OR__$fooChange__script);
 const $foo2 = /* @__PURE__ */_._const("foo", $scope => {
   _._text($scope["#text/1"], $scope.foo);
-  $foo__OR__fooChange($scope);
+  $foo__OR__$fooChange($scope);
 });
-const $fooChange2 = /* @__PURE__ */_._const("$fooChange", $foo__OR__fooChange);
+const $fooChange2 = /* @__PURE__ */_._const("$fooChange", $foo__OR__$fooChange);
 function $foo($scope) {
   return function (v) {
     $bar($scope, v);

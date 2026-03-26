@@ -12,7 +12,9 @@
       "$$for_content__$params": "i",
       "$$for": "c",
       "$$items__script": "f",
-      "$$items": "m"
+      "$$items": "m",
+      "$$input_name__OR__input_write__script": "d",
+      "$$input_name__OR__input_write": "l"
     }
   }
 }

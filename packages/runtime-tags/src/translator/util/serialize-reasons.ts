@@ -9,6 +9,7 @@ import { getAccessorProp } from "./get-accessor-char";
 import { concat, type OneMany, type Opt } from "./optional";
 import {
   type Binding,
+  compareSources,
   getCanonicalBinding,
   type InputBinding,
   isReferencedExtra,
@@ -33,6 +34,16 @@ const serializePropByModifier: Record<
   Accessor | symbol,
   WeakMap<Section | Binding, SerializeKey>
 > = {};
+
+export function isSameReason(
+  a: SerializeReason | undefined,
+  b: SerializeReason | undefined,
+) {
+  return (
+    a === b ||
+    (a && b ? a !== true && b !== true && compareSources(a, b) === 0 : false)
+  );
+}
 
 export function isForceSerialized(
   section: Section,

@@ -14,18 +14,20 @@ export default _._template("__tests__/template.marko", input => {
   _child({
     value: x,
     content: _._content_resume("__tests__/template.marko_1_content", outer => {
-      const $scope1_reason = _._scope_reason();
+      const $scope1_reason = _._scope_reason(),
+        $si__outer = _._serialize_if($scope1_reason, /* outer */0);
       const $scope1_id = _._scope_id();
       const $child_content__outer__closures = new Set();
       _child({
         value: y,
         content: _._content_resume("__tests__/template.marko_2_content", inner => {
-          const $scope2_reason = _._scope_reason();
+          const $scope2_reason = _._scope_reason(),
+            $sg__inner = _._serialize_guard($scope2_reason, /* inner */0);
           const $scope2_id = _._scope_id();
-          _._html(`<div>${_._escape(outer)}${_._el_resume($scope2_id, "#text/0", _._serialize_guard($scope1_reason, /* outer */0))}.${_._sep(_._serialize_guard($scope2_reason, /* inner */0))}${_._escape(inner)}${_._el_resume($scope2_id, "#text/1", _._serialize_guard($scope2_reason, /* inner */0))}</div>`);
+          _._html(`<div>${_._escape(outer)}${_._el_resume($scope2_id, "#text/0", (_._serialize_guard($scope1_reason, /* outer */0)))}.${_._sep(($sg__inner))}${_._escape(inner)}${_._el_resume($scope2_id, "#text/1", ($sg__inner))}</div>`);
           _._subscribe($child_content__outer__closures, _._scope($scope2_id, {
             _: _._scope_with_id($scope1_id),
-            "ClosureSignalIndex:outer": _._serialize_if($scope1_reason, /* outer */0) && 0
+            "ClosureSignalIndex:outer": ($si__outer) && 0
           }, "__tests__/template.marko", "7:6"));
           _._resume_branch($scope2_id);
         }, $scope1_id)
@@ -33,7 +35,7 @@ export default _._template("__tests__/template.marko", input => {
       _._scope($scope1_id, {
         outer,
         _: _._scope_with_id($scope0_id),
-        "ClosureScopes:outer": _._serialize_if($scope1_reason, /* outer */0) && $child_content__outer__closures
+        "ClosureScopes:outer": ($si__outer) && $child_content__outer__closures
       }, "__tests__/template.marko", "6:2", {
         outer: "6:8"
       });

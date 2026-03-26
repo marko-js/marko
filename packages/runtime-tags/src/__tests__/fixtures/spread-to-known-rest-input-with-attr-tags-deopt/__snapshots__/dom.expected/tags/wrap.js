@@ -11,12 +11,12 @@ const $_classspandiv_content__setup = $scope => {
 };
 const $_classspandiv_content = _._content_resume("__tests__/tags/wrap.marko_1_content", `<!>${_child_template}<!>`, /* over(1), <child>, over(1) */`b/${_child_walks}&b`, $_classspandiv_content__setup);
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", $_classspandiv_content);
-const $_class__OR__rest = /* @__PURE__ */_._or(6, $scope => $dynamicTag($scope, $scope._class ? 'span' : 'div', () => ({
+const $input_class__OR__rest = /* @__PURE__ */_._or(6, $scope => $dynamicTag($scope, $scope._class ? 'span' : 'div', () => ({
   ...$scope.rest,
   class: $scope._class
 })));
-export const $_class = /* @__PURE__ */_._const("_class", $_class__OR__rest);
-export const $rest = /* @__PURE__ */_._const("rest", $_class__OR__rest);
+export const $_class = /* @__PURE__ */_._const("_class", $input_class__OR__rest);
+export const $rest = /* @__PURE__ */_._const("rest", $input_class__OR__rest);
 export const $input = ($scope, input) => {
   (({
     class: $class,

@@ -6,7 +6,8 @@
       "$$input__script": "c",
       "$$input": "t",
       "$$checkedValue__OR__checkedValueChange": "r",
-      "$$checkedValue": "u"
+      "$$checkedValue": "u",
+      "$$checkedValue__OR__$checkedValueChange": "o"
     }
   }
 }

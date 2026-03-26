@@ -13,7 +13,11 @@
       "$$ChildA_content__$bar": "s",
       "$$count__closure": "g",
       "$$count__script": "n",
-      "$$count": "b"
+      "$$count": "b",
+      "$$ChildB_content__count__OR__$foo": "d",
+      "$$ChildB_content__count__OR__$bar": "u",
+      "$$ChildA_content__count__OR__$foo": "h",
+      "$$ChildA_content__count__OR__$bar": "l"
     }
   }
 }

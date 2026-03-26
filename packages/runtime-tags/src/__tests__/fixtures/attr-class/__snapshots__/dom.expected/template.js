@@ -6,7 +6,7 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _customTag, $input_class as _customTag_input_class, $input_test as _customTag_input_test, $template as _customTag_template, $walks as _customTag_walks } from "./tags/custom-tag.marko";
 const $test_content = _._content_resume("__tests__/template.marko_1_content", "Hello", /* over(1) */"b");
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/3");
-const $c__OR__d = /* @__PURE__ */_._or(8, $scope => {
+const $input_c__OR__input_d = /* @__PURE__ */_._or(8, $scope => {
   _._attr_class_items($scope["#div/0"], {
     b: $scope.c,
     d: $scope.d
@@ -29,8 +29,8 @@ const $c__OR__d = /* @__PURE__ */_._or(8, $scope => {
     })
   }));
 });
-export const $c = /* @__PURE__ */_._const("c", $c__OR__d);
-export const $d = /* @__PURE__ */_._const("d", $c__OR__d);
+export const $c = /* @__PURE__ */_._const("c", $input_c__OR__input_d);
+export const $d = /* @__PURE__ */_._const("d", $input_c__OR__input_d);
 export function $setup($scope) {
   _customTag($scope["#childScope/1"]);
   _customTag_input_test($scope["#childScope/1"]);

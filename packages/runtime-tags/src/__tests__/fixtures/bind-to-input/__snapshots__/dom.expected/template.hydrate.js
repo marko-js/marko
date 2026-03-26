@@ -7,10 +7,10 @@ const $x__script = _._script("a0", ($scope) =>
   $x$1 = _._let(9, ($scope) => {
     (_._attr($scope.a, "data-internal", $scope.j), $x__script($scope));
   }),
-  $countChange__OR__count = _._or(8, ($scope) =>
+  $input_countChange__OR__input_count = _._or(8, ($scope) =>
     $x$1($scope, $scope.h, $scope.g),
   ),
-  $count = _._const(7, $countChange__OR__count),
+  $count = _._const(7, $input_countChange__OR__input_count),
   $counter_content2__x = _._closure_get(2, ($scope) =>
     _._text($scope.a, $scope._.c),
   ),

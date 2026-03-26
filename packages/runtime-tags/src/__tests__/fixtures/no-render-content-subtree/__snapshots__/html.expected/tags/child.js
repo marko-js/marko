@@ -12,7 +12,7 @@ export default _._template("__tests__/tags/child.marko", input => {
   _._scope($scope0_id, {
     input,
     x,
-    "#childScope/0": _._serialize_if($scope0_reason, /* input.foo */0) && _._existing_scope($childScope)
+    "#childScope/0": (_._serialize_if($scope0_reason, /* input.foo */0)) && _._existing_scope($childScope)
   }, "__tests__/tags/child.marko", 0, {
     input: 0,
     x: "1:10"

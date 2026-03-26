@@ -8,7 +8,9 @@
       "$$foo__OR__fooChange": "f",
       "$$foo2": "m",
       "$$fooChange2": "a",
-      "$$foo": "c"
+      "$$foo": "c",
+      "$$foo__OR__$fooChange__script": "e",
+      "$$foo__OR__$fooChange": "i"
     }
   }
 }

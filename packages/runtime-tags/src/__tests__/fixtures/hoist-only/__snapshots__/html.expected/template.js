@@ -1,6 +1,7 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
-  const $scope0_reason = _._scope_reason();
+  const $scope0_reason = _._scope_reason(),
+    $si__input_value = _._serialize_if($scope0_reason, /* input.value */0);
   const $scope0_id = _._scope_id();
   const $hoist1_getter = _._hoist($scope0_id, "__tests__/template.marko_0_hoist1/hoist");
   const $input_value__closures = new Set();
@@ -20,7 +21,7 @@ export default _._template("__tests__/template.marko", input => {
           _._subscribe($input_value__closures, _._scope($scope2_id, {
             hoist3,
             _: _._scope_with_id($scope1_id),
-            "ClosureSignalIndex:input_value": _._serialize_if($scope0_reason, /* input.value */0) && 0
+            "ClosureSignalIndex:input_value": ($si__input_value) && 0
           }, "__tests__/template.marko", "8:4", {
             hoist3: "10:12"
           }));
@@ -37,7 +38,7 @@ export default _._template("__tests__/template.marko", input => {
   _._scope($scope0_id, {
     input_value: input.value,
     hoist1,
-    "ClosureScopes:input_value": _._serialize_if($scope0_reason, /* input.value */0) && $input_value__closures
+    "ClosureScopes:input_value": ($si__input_value) && $input_value__closures
   }, "__tests__/template.marko", 0, {
     input_value: ["input.value"],
     hoist1: "2:8"

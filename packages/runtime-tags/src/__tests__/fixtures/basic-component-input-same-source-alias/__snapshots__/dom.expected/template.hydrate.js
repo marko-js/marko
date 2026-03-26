@@ -3,10 +3,10 @@ const $onClick__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", $scope.f),
   ),
   $onClick$1 = _._const(5, $onClick__script),
-  $textAlias = ($scope, text) => _._text($scope.c, text),
+  $input_text = ($scope, text) => _._text($scope.c, text),
   $clickCount = _._let(1, ($scope) => {
     ((($scope, text) => {
-      (_._text($scope.b, text), $textAlias($scope, text));
+      (_._text($scope.b, text), $input_text($scope, text));
     })($scope.a, $scope.b),
       $onClick$1($scope.a, $onClick($scope)));
   });

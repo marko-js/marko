@@ -27,8 +27,8 @@ export default _._template("__tests__/template.marko", input => {
       content: _._content_resume("__tests__/template.marko_3_content", err => {
         const $scope3_reason = _._scope_reason();
         const $scope3_id = _._scope_id();
-        _._html(`${_._escape(err)}${_._el_resume($scope3_id, "#text/0", _._serialize_guard($scope3_reason, /* err */0))}`);
-        _._serialize_if($scope3_reason, /* err */0) && _._scope($scope3_id, {}, "__tests__/template.marko", "17:4");
+        _._html(`${_._escape(err)}${_._el_resume($scope3_id, "#text/0", (_._serialize_guard($scope3_reason, /* err */0)))}`);
+        (_._serialize_if($scope3_reason, /* err */0)) && _._scope($scope3_id, {}, "__tests__/template.marko", "17:4");
       }, $scope0_id)
     }),
     placeholder: _.attrTag({

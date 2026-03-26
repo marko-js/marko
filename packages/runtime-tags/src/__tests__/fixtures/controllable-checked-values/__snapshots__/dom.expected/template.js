@@ -1,16 +1,16 @@
 export const $template = "<input type=checkbox><input type=checkbox><input type=checkbox><span> </span>";
 export const $walks = /* get, over(1), get, over(1), get, over(1), next(1), get, out(1) */" b b bD l";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $checkedValue__OR__checkedValueChange = /* @__PURE__ */_._or(6, $scope => {
+const $checkedValue__OR__$checkedValueChange = /* @__PURE__ */_._or(6, $scope => {
   _._attr_input_checkedValue($scope, "#input/0", $scope.checkedValue, $scope.$checkedValueChange, "a");
   _._attr_input_checkedValue($scope, "#input/1", $scope.checkedValue, $scope.$checkedValueChange, "b");
   _._attr_input_checkedValue($scope, "#input/2", $scope.checkedValue, $scope.$checkedValueChange, "c");
 });
 const $checkedValue = /* @__PURE__ */_._let("checkedValue/4", $scope => {
   _._text($scope["#text/3"], $scope.checkedValue);
-  $checkedValue__OR__checkedValueChange($scope);
+  $checkedValue__OR__$checkedValueChange($scope);
 });
-const $checkedValueChange3 = /* @__PURE__ */_._const("$checkedValueChange", $checkedValue__OR__checkedValueChange);
+const $checkedValueChange3 = /* @__PURE__ */_._const("$checkedValueChange", $checkedValue__OR__$checkedValueChange);
 const $setup__script = _._script("__tests__/template.marko_0", $scope => {
   _._attr_input_checkedValue_script($scope, "#input/0");
   _._attr_input_checkedValue_script($scope, "#input/1");

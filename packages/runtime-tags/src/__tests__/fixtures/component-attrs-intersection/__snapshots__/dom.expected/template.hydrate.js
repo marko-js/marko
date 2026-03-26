@@ -1,8 +1,8 @@
 // size: 159 (min) 135 (brotli)
-const $value__OR__dummy = _._or(5, ($scope) =>
+const $input_value__OR__dummy = _._or(5, ($scope) =>
     _._text($scope.a, ($scope.e, $scope.d)),
   ),
-  $value = _._const(3, $value__OR__dummy),
+  $value = _._const(3, $input_value__OR__dummy),
   $count__script = _._script("b0", ($scope) =>
     _._on($scope.b, "click", function () {
       $count($scope, $scope.c + 1);

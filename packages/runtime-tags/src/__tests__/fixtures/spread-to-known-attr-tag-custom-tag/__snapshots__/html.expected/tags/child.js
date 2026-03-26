@@ -1,6 +1,7 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/tags/child.marko", input => {
-  const $scope0_reason = _._scope_reason();
+  const $scope0_reason = _._scope_reason(),
+    $sg__input_option = _._serialize_guard($scope0_reason, /* input.option */1);
   const $scope0_id = _._scope_id();
   _._html(`<select${_._attr_class(input.class)}>`);
   _._for_of(input.option, option => {
@@ -14,6 +15,6 @@ export default _._template("__tests__/tags/child.marko", input => {
     }, "__tests__/tags/child.marko", "2:4", {
       option: "2:8"
     });
-  }, 0, $scope0_id, "#select/0", _._serialize_guard($scope0_reason, /* input.option */1), _._serialize_guard($scope0_reason, /* input.class, input.option */0), _._serialize_guard($scope0_reason, /* input.option */1), "</select>", 1);
-  _._serialize_if($scope0_reason, /* input.class, input.option */0) && _._scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+  }, 0, $scope0_id, "#select/0", ($sg__input_option), (_._serialize_guard($scope0_reason, /* input.class, input.option */0)), ($sg__input_option), "</select>", 1);
+  (_._serialize_if($scope0_reason, /* input.class, input.option */0)) && _._scope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });

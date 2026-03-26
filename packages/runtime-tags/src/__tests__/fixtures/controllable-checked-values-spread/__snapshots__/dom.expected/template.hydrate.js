@@ -6,7 +6,7 @@ const $input__script = _._script("a0", ($scope) =>
     (_._attrs($scope, "a", { type: "checkbox", ...$scope.c }),
       $input__script($scope));
   }),
-  $checkedValue__OR__checkedValueChange = _._or(6, ($scope) => {
+  $checkedValue__OR__$checkedValueChange = _._or(6, ($scope) => {
     ($input($scope.a, {
       checkedValue: $scope.e,
       checkedValueChange: $scope.f,
@@ -25,7 +25,7 @@ const $input__script = _._script("a0", ($scope) =>
   }),
   $checkedValue = _._let(4, ($scope) => {
     (_._text($scope.d, $scope.e),
-      $checkedValue__OR__checkedValueChange($scope));
+      $checkedValue__OR__$checkedValueChange($scope));
   });
 (_._resume("b0", function ($scope) {
   return (_new_checkedValue) => {

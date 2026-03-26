@@ -19,10 +19,10 @@ import {
   type Binding,
   BindingType,
   bindingUtil,
-  compareSources,
   getCanonicalBinding,
   getDebugName,
   getDebugNames,
+  getDebugNamesAsIdentifier,
   getDebugScopeAccess,
   getReadReplacement,
   getScopeAccessor,
@@ -47,7 +47,11 @@ import {
   sectionUtil,
 } from "./sections";
 import { getExprIfSerialized } from "./serialize-guard";
-import { getSerializeReason, type SerializeReason } from "./serialize-reasons";
+import {
+  getSerializeReason,
+  isSameReason,
+  type SerializeReason,
+} from "./serialize-reasons";
 import { simplifyFunction } from "./simplify-fn";
 import { createSectionState } from "./state";
 import {
@@ -197,7 +201,7 @@ export function getBindingGetterIdentifier(
 export function getSignal(
   section: Section,
   referencedBindings: ReferencedBindings,
-  name: string = generateSignalName(referencedBindings),
+  name?: string,
 ) {
   if (referencedBindings && !Array.isArray(referencedBindings)) {
     if (referencedBindings.type === BindingType.constant) {
@@ -218,6 +222,11 @@ export function getSignal(
   const signals = getSignals(section);
   let signal = signals.get(referencedBindings)!;
   if (!signal) {
+    const signalName =
+      name ??
+      (referencedBindings
+        ? getDebugNamesAsIdentifier(referencedBindings)
+        : "setup");
     const exportName = referencedBindings
       ? !Array.isArray(referencedBindings) &&
         referencedBindings.section === section &&
@@ -230,7 +239,7 @@ export function getSignal(
         identifier: exportName
           ? t.identifier(exportName)
           : generateUidIdentifier(
-              section.name ? `${section.name}__${name}` : name,
+              section.name ? `${section.name}__${signalName}` : signalName,
             ),
         referencedBindings,
         section,
@@ -648,30 +657,6 @@ export function subscribe(references: ReferencedBindings, subscriber: Signal) {
       }
     });
   }
-}
-
-function generateSignalName(referencedBindings?: ReferencedBindings) {
-  let name: string;
-
-  if (referencedBindings) {
-    if (Array.isArray(referencedBindings)) {
-      name = "";
-
-      for (const ref of referencedBindings) {
-        if (name) {
-          name += `__OR__${ref.name.replace(/^\$/, "")}`;
-        } else {
-          name = ref.name;
-        }
-      }
-    } else {
-      name = referencedBindings.name;
-    }
-  } else {
-    name = "setup";
-  }
-
-  return name;
 }
 
 export function replaceNullishAndEmptyFunctionsWith0(
@@ -1153,6 +1138,11 @@ export function writeHTMLResumeStatements(
   const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
     ? true
     : section.serializeReason;
+  const ifSerialized = (reason: SerializeReason, expr: t.Expression) => {
+    if (isSameReason(sectionSerializeReason, reason)) return expr;
+    return getExprIfSerialized(section, reason, expr);
+  };
+
   let debugVars: t.ObjectProperty[] | undefined;
   const writeSerializedBinding = (binding: Binding) => {
     const reason = getSerializeReason(section, binding);
@@ -1162,17 +1152,7 @@ export function writeHTMLResumeStatements(
     serializedProperties.push(
       toObjectProperty(
         accessor,
-        sectionSerializeReason &&
-          (sectionSerializeReason === reason ||
-            (sectionSerializeReason !== true &&
-              reason !== true &&
-              compareSources(sectionSerializeReason, reason) === 0))
-          ? getDeclaredBindingExpression(binding)
-          : getExprIfSerialized(
-              section,
-              reason,
-              getDeclaredBindingExpression(binding),
-            ),
+        ifSerialized(reason, getDeclaredBindingExpression(binding)),
       ),
     );
 
@@ -1211,21 +1191,14 @@ export function writeHTMLResumeStatements(
     const ownerAccessor = getAccessorProp().Owner;
     const ownerReason = getSerializeReason(section, ownerAccessor);
     if (ownerReason) {
-      const getOwnerExpr = callRuntime(
-        "_scope_with_id",
-        getScopeIdIdentifier(section.parent),
-      );
       serializedLookup.delete(ownerAccessor);
       serializedProperties.push(
         toObjectProperty(
           ownerAccessor,
-          sectionSerializeReason &&
-            (sectionSerializeReason === ownerReason ||
-              (sectionSerializeReason !== true &&
-                ownerReason !== true &&
-                compareSources(sectionSerializeReason, ownerReason) === 0))
-            ? getOwnerExpr
-            : getExprIfSerialized(section, ownerReason, getOwnerExpr),
+          ifSerialized(
+            ownerReason,
+            callRuntime("_scope_with_id", getScopeIdIdentifier(section.parent)),
+          ),
         ),
       );
     }
@@ -1233,7 +1206,7 @@ export function writeHTMLResumeStatements(
 
   for (const [key, { expression, reason }] of serializedLookup) {
     serializedProperties.push(
-      toObjectProperty(key, getExprIfSerialized(section, reason, expression)),
+      toObjectProperty(key, ifSerialized(reason, expression)),
     );
   }
 

@@ -9,9 +9,9 @@ export default _._template("__tests__/template.marko", input => {
   const $childScope = _._peek_scope_id();
   _child(input);
   _._html("</div><div id=dynamic>");
-  _._dynamic_tag($scope0_id, "#text/1", Child, input, 0, 0, _._serialize_guard($scope0_reason, /* input */0));
+  _._dynamic_tag($scope0_id, "#text/1", Child, input, 0, 0, (_._serialize_guard($scope0_reason, /* input */0)));
   _._html("</div>");
-  _._serialize_if($scope0_reason, /* input */0) && _._scope($scope0_id, {
-    "#childScope/0": _._serialize_if($scope0_reason, /* input */0) && _._existing_scope($childScope)
+  (_._serialize_if($scope0_reason, /* input */0)) && _._scope($scope0_id, {
+    "#childScope/0": _._existing_scope($childScope)
   }, "__tests__/template.marko", 0);
 }, 1);

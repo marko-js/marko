@@ -20,6 +20,7 @@ import {
   getSection,
   type Section,
 } from "../../util/sections";
+import { getScopeReasonDeclaration } from "../../util/serialize-guard";
 import { isReasonDynamic } from "../../util/serialize-reasons";
 import {
   addWriteScopeBuilder,
@@ -141,14 +142,7 @@ export default {
       }
 
       if (dynamicSerializeReason) {
-        renderContent.push(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              t.identifier(getSharedUid(`scope${section.id}_reason`, section)),
-              callRuntime("_scope_reason"),
-            ),
-          ]),
-        );
+        renderContent.push(getScopeReasonDeclaration(section));
       } else {
         renderContent.push(t.expressionStatement(callRuntime("_scope_reason")));
       }

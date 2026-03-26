@@ -1,12 +1,12 @@
-// size: 342 (min) 194 (brotli)
+// size: 342 (min) 187 (brotli)
 const $onClick__script = _._script("a0", ($scope) =>
     _._on($scope.a, "click", $scope.f),
   ),
   $onClick$1 = _._const(5, $onClick__script),
   $text = ($scope, text) => {
-    (_._text($scope.b, text), $textAlias($scope, text));
+    (_._text($scope.b, text), $input_value_text($scope, text));
   },
-  $textAlias = ($scope, text) => _._text($scope.c, text),
+  $input_value_text = ($scope, text) => _._text($scope.c, text),
   $clickCount = _._let(2, ($scope) => {
     ((($scope, $value) => {
       $text($scope, $value.text);

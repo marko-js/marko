@@ -1,21 +1,21 @@
-// size: 1115 (min) 465 (brotli)
+// size: 1115 (min) 468 (brotli)
 const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
-  $name__OR__write__script = _._script("a0", ($scope) => {
+  $input_name__OR__input_write__script = _._script("a0", ($scope) => {
     ($scope.g(`${$scope.f} mounted`),
       (_.$signal($scope, 0).onabort = () => {
         $scope.g(`${$scope.f} destroyed`);
       }));
   }),
-  $name__OR__write = _._or(7, ($scope) => {
-    (_.$signalReset($scope, 0), $name__OR__write__script($scope));
+  $input_name__OR__input_write = _._or(7, ($scope) => {
+    (_.$signalReset($scope, 0), $input_name__OR__input_write__script($scope));
   }),
   $name = _._const(5, ($scope) => {
     (_._text($scope.a, $scope.f),
       _._text($scope.b, $scope.f),
       _._text($scope.c, $scope.f),
-      $name__OR__write($scope));
+      $input_name__OR__input_write($scope));
   }),
-  $write$1 = _._const(6, $name__OR__write),
+  $write$1 = _._const(6, $input_name__OR__input_write),
   $if_content3__write = _._closure_get(
     8,
     ($scope) => $write$1($scope.a, $scope._._._.i),

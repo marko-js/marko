@@ -11,14 +11,15 @@ export default _._template("__tests__/template.marko", input => {
       foo: $foo
     }) => {
       const $scope1_id = _._scope_id();
-      const $scope1_reason = _._scope_reason();
+      const $scope1_reason = _._scope_reason(),
+        $sg__foo = _._serialize_guard($scope1_reason, /* foo */1);
       const {
         bar: $bar
       } = void 0 !== $foo ? $foo : {
         bar: count + 2
       };
       const bar = void 0 !== $bar ? $bar : count + 1;
-      _._html(`<div${_._attr("id", id)} class=a>${_._escape(bar)}${_._el_resume($scope1_id, "#text/1")} ${_._sep(_._serialize_guard($scope1_reason, /* foo */1))}${_._escape(typeof foo)}${_._el_resume($scope1_id, "#text/2", _._serialize_guard($scope1_reason, /* foo */1))}</div>${_._el_resume($scope1_id, "#div/0", _._serialize_guard($scope1_reason, /* id */0))}`);
+      _._html(`<div${_._attr("id", id)} class=a>${_._escape(bar)}${_._el_resume($scope1_id, "#text/1")} ${_._sep(($sg__foo))}${_._escape(typeof foo)}${_._el_resume($scope1_id, "#text/2", ($sg__foo))}</div>${_._el_resume($scope1_id, "#div/0", (_._serialize_guard($scope1_reason, /* id */0)))}`);
       _._subscribe($count__closures, _._scope($scope1_id, {
         foo,
         _: _._scope_with_id($scope0_id),
@@ -45,7 +46,8 @@ export default _._template("__tests__/template.marko", input => {
   const ChildB = {
     content: _._content("__tests__/template.marko_2_content", input => {
       const $scope2_id = _._scope_id();
-      const $scope2_reason = _._scope_reason();
+      const $scope2_reason = _._scope_reason(),
+        $sg__foo2 = _._serialize_guard($scope2_reason, /* foo */1);
       const {
         foo,
         foo: $foo2
@@ -56,7 +58,7 @@ export default _._template("__tests__/template.marko", input => {
         bar: count + 2
       };
       const bar = void 0 !== $bar2 ? $bar2 : count + 1;
-      _._html(`<div${_._attr("id", input.id)} class=b>${_._escape(bar)}${_._el_resume($scope2_id, "#text/1")} ${_._sep(_._serialize_guard($scope2_reason, /* foo */1))}${_._escape(typeof foo)}${_._el_resume($scope2_id, "#text/2", _._serialize_guard($scope2_reason, /* foo */1))}</div>${_._el_resume($scope2_id, "#div/0", _._serialize_guard($scope2_reason, /* input.id */0))}`);
+      _._html(`<div${_._attr("id", input.id)} class=b>${_._escape(bar)}${_._el_resume($scope2_id, "#text/1")} ${_._sep(($sg__foo2))}${_._escape(typeof foo)}${_._el_resume($scope2_id, "#text/2", ($sg__foo2))}</div>${_._el_resume($scope2_id, "#div/0", (_._serialize_guard($scope2_reason, /* input.id */0)))}`);
       _._subscribe($count__closures, _._scope($scope2_id, {
         foo,
         _: _._scope_with_id($scope0_id),

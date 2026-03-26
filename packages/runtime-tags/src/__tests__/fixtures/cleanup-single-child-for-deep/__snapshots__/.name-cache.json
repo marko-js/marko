@@ -21,7 +21,9 @@
       "$$for_content__$params": "$",
       "$$for": "b",
       "$$items__script": "p",
-      "$$items": "D"
+      "$$items": "D",
+      "$$input_name__OR__input_write__script": "k",
+      "$$input_name__OR__input_write": "h"
     }
   }
 }

@@ -8,12 +8,12 @@ export default _._template("__tests__/tags/wrap.marko", input => {
     ...rest
   } = input;
   const $childScope = _._peek_scope_id();
-  _._set_serialize_reason(_._serialize_guard($scope0_reason, /* input.value, rest.class */0));
+  _._set_serialize_reason((_._serialize_guard($scope0_reason, /* input.value, rest.class */0)));
   _child({
     value: value,
     ...rest
   });
-  _._serialize_if($scope0_reason, /* input.value, rest.class */0) && _._scope($scope0_id, {
-    "#childScope/0": _._serialize_if($scope0_reason, /* input.value, rest.class */0) && _._existing_scope($childScope)
+  (_._serialize_if($scope0_reason, /* input.value, rest.class */0)) && _._scope($scope0_id, {
+    "#childScope/0": _._existing_scope($childScope)
   }, "__tests__/tags/wrap.marko", 0);
 });

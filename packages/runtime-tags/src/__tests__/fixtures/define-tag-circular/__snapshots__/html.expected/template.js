@@ -7,7 +7,9 @@ export default _._template("__tests__/template.marko", input => {
       show
     }) => {
       const $scope1_id = _._scope_id();
-      const $scope1_reason = _._scope_reason();
+      const $scope1_reason = _._scope_reason(),
+        $sg__show = _._serialize_guard($scope1_reason, /* show */0),
+        $si__show = _._serialize_if($scope1_reason, /* show */0);
       _._if(() => {
         if (show) {
           const $scope2_id = _._scope_id();
@@ -19,12 +21,12 @@ export default _._template("__tests__/template.marko", input => {
             })
           };
           Bar.content({});
-          _._serialize_if($scope1_reason, /* show */0) && _._scope($scope2_id, {}, "__tests__/template.marko", "2:4");
+          ($si__show) && _._scope($scope2_id, {}, "__tests__/template.marko", "2:4");
           return 0;
         }
-      }, $scope1_id, "#text/0", _._serialize_guard($scope1_reason, /* show */0), _._serialize_guard($scope1_reason, /* show */0), _._serialize_guard($scope1_reason, /* show */0));
+      }, $scope1_id, "#text/0", $sg__show, ($sg__show), ($sg__show));
       _._html(" foo");
-      _._serialize_if($scope1_reason, /* show */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "1:2");
+      ($si__show) && _._scope($scope1_id, {}, "__tests__/template.marko", "1:2");
     })
   };
   Foo.content({

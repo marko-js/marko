@@ -4,21 +4,21 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 _._resume_dynamic_tag();
 const $startContent_content = /* @__PURE__ */_._content("__tests__/tags/my-tag.marko_1_content", "default", /* over(1) */"b");
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0");
-const $inputAs__OR__inputClass__OR__htmlInput__OR__content = /* @__PURE__ */_._or(9, $scope => $dynamicTag($scope, $scope.inputAs || "div", () => ({
+const $input_as__OR__input_class__OR__htmlInput__OR__content = /* @__PURE__ */_._or(9, $scope => $dynamicTag($scope, $scope.inputAs || "div", () => ({
   ...$scope.htmlInput,
   class: ["foo", $scope.inputClass],
   content: $scope.content
 })), 3);
-const $content = /* @__PURE__ */_._let("content/8", $inputAs__OR__inputClass__OR__htmlInput__OR__content);
+const $content = /* @__PURE__ */_._let("content/8", $input_as__OR__input_class__OR__htmlInput__OR__content);
 const $startContent = ($scope, startContent) => $content($scope, startContent);
 export function $setup($scope) {
   $startContent($scope, {
     content: $startContent_content($scope)
   });
 }
-export const $inputAs = /* @__PURE__ */_._const("inputAs", $inputAs__OR__inputClass__OR__htmlInput__OR__content);
-export const $inputClass = /* @__PURE__ */_._const("inputClass", $inputAs__OR__inputClass__OR__htmlInput__OR__content);
-export const $htmlInput = /* @__PURE__ */_._const("htmlInput", $inputAs__OR__inputClass__OR__htmlInput__OR__content);
+export const $inputAs = /* @__PURE__ */_._const("inputAs", $input_as__OR__input_class__OR__htmlInput__OR__content);
+export const $inputClass = /* @__PURE__ */_._const("inputClass", $input_as__OR__input_class__OR__htmlInput__OR__content);
+export const $htmlInput = /* @__PURE__ */_._const("htmlInput", $input_as__OR__input_class__OR__htmlInput__OR__content);
 const $inputContent__script = _._script("__tests__/tags/my-tag.marko_0_inputContent", $scope => $content($scope, $scope.inputContent));
 export const $inputContent = /* @__PURE__ */_._const("inputContent", $inputContent__script);
 export const $input = ($scope, input) => {

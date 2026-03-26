@@ -1654,6 +1654,40 @@ export function getDebugNames(refs: ReferencedBindings) {
   return mapToString(refs, ", ", getDebugName);
 }
 
+export function getDebugNamesAsIdentifier(refs: ReferencedBindings) {
+  return mapToString(refs, "__OR__", getDebugNameAsIdentifier);
+}
+
+export function getDebugNameAsIdentifier(binding: Binding) {
+  let root = binding;
+  let access = "";
+
+  if (binding.type === BindingType.input) {
+    while (
+      root.upstreamAlias !== root.section.params &&
+      root.excludeProperties === undefined
+    ) {
+      if (root.property !== undefined) {
+        access = `_${root.property.replace(/[^a-z0-9_$]/gi, "_") + access}`;
+      }
+      root = root.upstreamAlias as InputBinding;
+    }
+  } else {
+    while (
+      !(root.loc || root.declared) &&
+      root.upstreamAlias &&
+      root.excludeProperties === undefined
+    ) {
+      if (root.property !== undefined) {
+        access = `_${root.property.replace(/[^a-z0-9_$]/gi, "_") + access}`;
+      }
+      root = root.upstreamAlias;
+    }
+  }
+
+  return root.name + access;
+}
+
 export function getSectionInstancesAccessor(section: Section) {
   return section.sectionAccessor
     ? section.sectionAccessor.prefix +

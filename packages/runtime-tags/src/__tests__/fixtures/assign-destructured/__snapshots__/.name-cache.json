@@ -5,7 +5,9 @@
       "$init": "o",
       "$$bar__OR__fooChange__script": "r",
       "$$bar__OR__fooChange": "m",
-      "$$bar": "n"
+      "$$bar": "n",
+      "$$bar__OR__$fooChange__script": "i",
+      "$$bar__OR__$fooChange": "a"
     }
   }
 }

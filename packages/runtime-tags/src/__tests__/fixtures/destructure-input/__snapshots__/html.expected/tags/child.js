@@ -7,7 +7,7 @@ export default _._template("__tests__/tags/child.marko", input => {
     ...rest
   } = input;
   _._html(`<div${_._attrs(rest, "#div/0", $scope0_id, "div")}>`);
-  _._dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _._serialize_guard($scope0_reason, /* input.content */0));
+  _._dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, (_._serialize_guard($scope0_reason, /* input.content */0)));
   _._html(`</div>${_._el_resume($scope0_id, "#div/0")}`);
   _._script($scope0_id, "__tests__/tags/child.marko_0_rest");
   _._scope($scope0_id, {

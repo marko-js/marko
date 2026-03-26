@@ -11,13 +11,13 @@ const $rest = /* @__PURE__ */_._const("rest", $scope => {
   $rest__script($scope);
 });
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/1");
-const $content = ($scope, content) => $dynamicTag($scope, content);
+const $input_content = ($scope, content) => $dynamicTag($scope, content);
 export const $input = ($scope, input) => {
   (({
     content,
     ...rest
   }) => $rest($scope, rest))(input);
   $input_class($scope, input.class);
-  $content($scope, input.content);
+  $input_content($scope, input.content);
 };
 export default /* @__PURE__ */_._template("__tests__/tags/child.marko", $template, $walks, $setup, $input);

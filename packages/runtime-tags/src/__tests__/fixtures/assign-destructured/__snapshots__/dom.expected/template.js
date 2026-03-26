@@ -1,13 +1,13 @@
 export const $template = "<button><!>:<!></button>";
 export const $walks = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $bar__OR__fooChange__script = _._script("__tests__/template.marko_0_bar_$fooChange", $scope => _._on($scope["#button/0"], "click", function () {
+const $bar__OR__$fooChange__script = _._script("__tests__/template.marko_0_bar_$fooChange", $scope => _._on($scope["#button/0"], "click", function () {
   $scope.$fooChange($scope.bar + 1);
 }));
-const $bar__OR__fooChange = /* @__PURE__ */_._or(7, $bar__OR__fooChange__script);
+const $bar__OR__$fooChange = /* @__PURE__ */_._or(7, $bar__OR__$fooChange__script);
 const $bar = /* @__PURE__ */_._let("bar/3", $scope => {
   _._text($scope["#text/2"], $scope.bar);
-  $bar__OR__fooChange($scope);
+  $bar__OR__$fooChange($scope);
 });
 const $pattern2 = ($scope, $pattern) => {
   $foo2($scope, $pattern.foo);
@@ -21,7 +21,7 @@ export function $setup($scope) {
   });
 }
 const $foo2 = ($scope, foo) => _._text($scope["#text/1"], foo);
-const $fooChange2 = /* @__PURE__ */_._const("$fooChange", $bar__OR__fooChange);
+const $fooChange2 = /* @__PURE__ */_._const("$fooChange", $bar__OR__$fooChange);
 function $foo($scope) {
   return function (v) {
     $bar($scope, v);
