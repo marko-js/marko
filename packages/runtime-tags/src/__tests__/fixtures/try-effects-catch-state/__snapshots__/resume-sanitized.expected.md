@@ -6,7 +6,7 @@
 <button>
   inc
 </button>
--- ‍
+--
 ```
 
 
@@ -21,7 +21,7 @@ container.querySelector("button").click();
 <button>
   inc
 </button>
--- ‍
+--
 ```
 
 

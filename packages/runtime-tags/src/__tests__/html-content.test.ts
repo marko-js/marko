@@ -6,9 +6,9 @@ const falseishValues = [undefined, null, false];
 
 describe("runtime-tags/html/content", () => {
   describe("escapeXML", () => {
-    it("should return &zwj; for falseish values", () => {
+    it("should return empty string for falseish values", () => {
       for (const value of falseishValues) {
-        assert.equal(helpers._escape(value), "&zwj;");
+        assert.equal(helpers._escape(value), "");
       }
     });
 

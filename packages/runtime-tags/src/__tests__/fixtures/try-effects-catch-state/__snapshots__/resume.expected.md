@@ -14,7 +14,6 @@
     <!--M_*2 #button/0-->
      -- 
     <!---->
-    ‍
     <!--M_*2 #text/1-->
     <!--M_]1 #text/1 2-->
     <script>
@@ -39,6 +38,7 @@
 
 # Mutations
 ```
+INSERT html/body/#text1
 INSERT html/body/#text2
 INSERT html/body/div/#text
 ```
@@ -62,7 +62,6 @@ container.querySelector("button").click();
     <!--M_*2 #button/0-->
      -- 
     <!---->
-    ‍
     <!--M_*2 #text/1-->
     <!--M_]1 #text/1 2-->
     <script>

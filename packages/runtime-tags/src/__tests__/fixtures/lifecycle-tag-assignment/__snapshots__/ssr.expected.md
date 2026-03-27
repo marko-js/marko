@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div>x=<span>0<!--M_*1 #text/0--></span>, was=<!>&zwj;<!--M_*1 #text/1--></div><button id=increment>Increment</button><!--M_*1 #button/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{x:0}]),"__tests__/template.marko_0_x 1"];M._.w()</script>
+  <div>x=<span>0<!--M_*1 #text/0--></span>, was=<!><!--M_*1 #text/1--></div><button id=increment>Increment</button><!--M_*1 #button/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{x:0}]),"__tests__/template.marko_0_x 1"];M._.w()</script>
 ```
 
 # Render End
@@ -16,7 +16,6 @@
       </span>
       , was=
       <!---->
-      ‍
       <!--M_*1 #text/1-->
     </div>
     <button
@@ -51,7 +50,6 @@ INSERT html/body/div/span/#text
 INSERT html/body/div/span/#comment
 INSERT html/body/div/#text1
 INSERT html/body/div/#comment0
-INSERT html/body/div/#text2
 INSERT html/body/div/#comment1
 INSERT html/body/button
 INSERT html/body/button/#text

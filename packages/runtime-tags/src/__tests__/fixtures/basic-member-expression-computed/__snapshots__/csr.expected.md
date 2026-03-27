@@ -64,12 +64,8 @@ UPDATE div0/#text "b" => "c"
 container.querySelector("button").click();
 ```
 ```html
-<div>
-  ‍
-</div>
-<div>
-  ‍
-</div>
+<div />
+<div />
 <button>
   Update
 </button>
@@ -77,8 +73,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE div0/#text "c" => "‍"
-UPDATE div1/#text "c" => "‍"
+UPDATE div0/#text "c" => ""
+UPDATE div1/#text "c" => ""
 ```
 
 # Render
@@ -86,12 +82,8 @@ UPDATE div1/#text "c" => "‍"
 container.querySelector("button").click();
 ```
 ```html
-<div>
-  ‍
-</div>
-<div>
-  ‍
-</div>
+<div />
+<div />
 <button>
   Update
 </button>

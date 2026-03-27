@@ -103,7 +103,7 @@ export function _attr_nonce(scope: Scope, nodeAccessor: Accessor) {
 }
 
 export function _text(node: Text | Comment, value: unknown) {
-  const normalizedValue = normalizeString(value);
+  const normalizedValue = _to_text(value);
   // TODO: benchmark if it is actually faster to check data first
   if (node.data !== normalizedValue) {
     node.data = normalizedValue;
@@ -111,7 +111,7 @@ export function _text(node: Text | Comment, value: unknown) {
 }
 
 export function _text_content(node: ParentNode, value: unknown) {
-  const normalizedValue = normalizeString(value);
+  const normalizedValue = _to_text(value);
   // TODO: benchmark if it is actually faster to check data first
   if (node.textContent !== normalizedValue) {
     node.textContent = normalizedValue;
@@ -404,9 +404,6 @@ export function normalizeAttrValue(value: unknown) {
   }
 }
 
-function normalizeString(value: unknown) {
-  return value || value === 0 ? value + "" : "\u200d";
-}
 export function _lifecycle(
   scope: Scope,
   thisObj: Record<string, unknown> & {

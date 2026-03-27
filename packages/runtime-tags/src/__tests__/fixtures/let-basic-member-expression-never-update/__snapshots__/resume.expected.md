@@ -3,9 +3,7 @@
 <html>
   <head />
   <body>
-    <div>
-      ‍
-    </div>
+    <div />
     <button>
       Update
     </button>
@@ -33,9 +31,7 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <div>
-      ‍
-    </div>
+    <div />
     <button>
       Update
     </button>

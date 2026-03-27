@@ -340,7 +340,7 @@ export default {
               valueChange,
             );
           } else if (value) {
-            writeAtStartOfBody = callRuntime("_escape_text", value);
+            writeAtStartOfBody = callRuntime("_escape", value);
           }
         }
 
@@ -1084,7 +1084,7 @@ function getTextOnlyEscapeHelper(tagName: string) {
     case "style":
       return "_escape_style";
     default:
-      return "_escape_text";
+      return "_escape";
   }
 }
 

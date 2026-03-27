@@ -131,9 +131,7 @@ container.querySelector(".remove").click();
     reset
   </button>
 </form>
-<div>
-  ‍
-</div>
+<div />
 <button
   class="remove"
 >

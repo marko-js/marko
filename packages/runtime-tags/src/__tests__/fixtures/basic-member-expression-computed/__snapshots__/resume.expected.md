@@ -121,11 +121,9 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      ‍
       <!--M_*1 #text/0-->
     </div>
     <div>
-      ‍
       <!--M_*1 #text/1-->
     </div>
     <button>
@@ -149,8 +147,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div0/#text "c" => "‍"
-UPDATE html/body/div1/#text "c" => "‍"
+UPDATE html/body/div0/#text "c" => ""
+UPDATE html/body/div1/#text "c" => ""
 ```
 
 # Render
@@ -162,11 +160,9 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      ‍
       <!--M_*1 #text/0-->
     </div>
     <div>
-      ‍
       <!--M_*1 #text/1-->
     </div>
     <button>

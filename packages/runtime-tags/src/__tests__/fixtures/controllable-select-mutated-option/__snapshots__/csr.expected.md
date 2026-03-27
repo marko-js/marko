@@ -146,9 +146,7 @@ container.querySelector(".remove").click();
     reset
   </button>
 </form>
-<div>
-  ‍
-</div>
+<div />
 <button
   class="remove"
 >
@@ -164,7 +162,7 @@ container.querySelector(".remove").click();
 # Mutations
 ```
 REMOVE option in form/select
-UPDATE div/#text "3" => "‍"
+UPDATE div/#text "3" => ""
 ```
 
 # Render
@@ -205,7 +203,7 @@ container.querySelector(".add").click();
 # Mutations
 ```
 INSERT form/select/option
-UPDATE div/#text "‍" => "3"
+UPDATE div/#text "" => "3"
 ```
 
 # Render

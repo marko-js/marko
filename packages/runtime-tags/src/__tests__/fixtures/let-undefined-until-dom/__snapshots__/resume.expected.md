@@ -4,7 +4,6 @@
   <head />
   <body>
     <div>
-      ‍
       <!--M_*1 #text/0-->
     </div>
     <script>
@@ -18,6 +17,10 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/div/#text
+```
 
 # Render ASYNC
 ```html
@@ -41,5 +44,5 @@
 
 # Mutations
 ```
-UPDATE html/body/div/#text "‍" => "Client Only"
+UPDATE html/body/div/#text "" => "Client Only"
 ```

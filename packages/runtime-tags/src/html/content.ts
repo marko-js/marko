@@ -7,10 +7,6 @@ const replaceUnsafeXML = (c: string) => (c === "&" ? "&amp;" : "&lt;");
 const escapeXMLStr = (str: string) =>
   unsafeXMLReg.test(str) ? str.replace(unsafeXMLReg, replaceUnsafeXML) : str;
 export function _escape(val: unknown) {
-  return val ? escapeXMLStr(val + "") : val === 0 ? "0" : "&zwj;";
-}
-
-export function _escape_text(val: unknown) {
   return val ? escapeXMLStr(val + "") : val === 0 ? "0" : "";
 }
 

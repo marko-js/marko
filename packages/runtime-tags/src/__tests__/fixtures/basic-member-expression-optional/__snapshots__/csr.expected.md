@@ -1,11 +1,7 @@
 # Render
 ```html
-<div>
-  ‍
-</div>
-<div>
-  ‍
-</div>
+<div />
+<div />
 <button>
   Update
 </button>
@@ -34,8 +30,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE div0/#text "‍" => "0"
-UPDATE div1/#text "‍" => "Dylan"
+UPDATE div0/#text "" => "0"
+UPDATE div1/#text "" => "Dylan"
 ```
 
 # Render
@@ -109,12 +105,8 @@ UPDATE div1/#text "Ryan" => "Luke"
 container.querySelector("button").click();
 ```
 ```html
-<div>
-  ‍
-</div>
-<div>
-  ‍
-</div>
+<div />
+<div />
 <button>
   Update
 </button>
@@ -122,6 +114,6 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE div0/#text "3" => "‍"
-UPDATE div1/#text "Luke" => "‍"
+UPDATE div0/#text "3" => ""
+UPDATE div1/#text "Luke" => ""
 ```

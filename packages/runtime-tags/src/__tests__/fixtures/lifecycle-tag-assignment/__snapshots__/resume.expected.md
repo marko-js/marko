@@ -11,7 +11,6 @@
       </span>
       , was=
       <!---->
-      ‍
       <!--M_*1 #text/1-->
     </div>
     <button
@@ -34,6 +33,10 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/div/#text2
+```
 
 # Render
 ```js
@@ -77,7 +80,7 @@ container.querySelector("#increment")?.click();
 # Mutations
 ```
 UPDATE html/body/div/span/#text "0" => "1"
-UPDATE html/body/div/#text2 "‍" => "0"
+UPDATE html/body/div/#text2 "" => "0"
 ```
 
 # Render

@@ -51,12 +51,8 @@ container.querySelector("button").click();
 container.querySelector("button").click();
 ```
 ```html
-<div>
-  ‍
-</div>
-<div>
-  ‍
-</div>
+<div />
+<div />
 <button>
   Update
 </button>
@@ -68,12 +64,8 @@ container.querySelector("button").click();
 container.querySelector("button").click();
 ```
 ```html
-<div>
-  ‍
-</div>
-<div>
-  ‍
-</div>
+<div />
+<div />
 <button>
   Update
 </button>

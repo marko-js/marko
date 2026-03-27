@@ -1,8 +1,6 @@
 # Render
 ```html
-<div>
-  ‍
-</div>
+<div />
 <button>
   Update
 </button>
@@ -18,9 +16,7 @@ INSERT div, button
 container.querySelector("button").click();
 ```
 ```html
-<div>
-  ‍
-</div>
+<div />
 <button>
   Update
 </button>

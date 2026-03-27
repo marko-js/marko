@@ -1,4 +1,4 @@
-// size: 21238 (min) 7981 (brotli)
+// size: 21277 (min) 7982 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -662,13 +662,19 @@ function init(runtimeId = "M") {
                         ($global.runtimeId = runtimeId),
                         ($global.renderId = renderId));
               for (visit of (visits = render.v))
-                ((lastTokenIndex = render.i.length),
+                if (
+                  ((lastTokenIndex = render.i.length),
                   (visitText = visit.data),
                   (visitType = visitText[lastTokenIndex++]),
                   (visitScope = getScope(nextToken())),
-                  "*" === visitType
-                    ? (visitScope[nextToken()] = visit.previousSibling)
-                    : branchesEnabled && visitBranches());
+                  "*" === visitType)
+                ) {
+                  let prev = visit.previousSibling;
+                  visitScope[nextToken()] =
+                    prev && (prev.nodeType < 8 || prev.data)
+                      ? prev
+                      : visit.parentNode.insertBefore(new Text(), visit);
+                } else branchesEnabled && visitBranches();
               return (
                 embedEnabled &&
                   (render.n ||= visit?.parentNode.insertBefore(
@@ -1077,11 +1083,11 @@ function _attr_nonce(scope, nodeAccessor) {
   _attr(scope[nodeAccessor], "nonce", scope.$.cspNonce);
 }
 function _text(node, value) {
-  let normalizedValue = normalizeString(value);
+  let normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function _text_content(node, value) {
-  let normalizedValue = normalizeString(value);
+  let normalizedValue = _to_text(value);
   node.textContent !== normalizedValue && (node.textContent = normalizedValue);
 }
 function _attrs(scope, nodeAccessor, nextAttrs) {
@@ -1255,9 +1261,6 @@ function _html(scope, value, accessor) {
 }
 function normalizeAttrValue(value) {
   if (value || 0 === value) return !0 === value ? "" : value + "";
-}
-function normalizeString(value) {
-  return value || 0 === value ? value + "" : "‍";
 }
 function _lifecycle(scope, thisObj, index = 0) {
   let accessor = "K" + index,

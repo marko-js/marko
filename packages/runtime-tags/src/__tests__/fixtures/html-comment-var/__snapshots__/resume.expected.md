@@ -6,13 +6,11 @@
     <div>
       <!--Body Text-->
       <!--M_*2 #comment/0-->
-      ‍
       <!--M_*1 #text/2-->
     </div>
     <span>
       <!--Body Text-->
       <!--M_*4 #comment/0-->
-      ‍
       <!--M_*1 #text/5-->
     </span>
     <script>
@@ -43,14 +41,12 @@
   <body>
     <div>
       <!--Body Text-->
-      <!--M_*2 #comment/0-->
-      DIV
+      <!--DIV-->
       <!--M_*1 #text/2-->
     </div>
     <span>
       <!--Body Text-->
-      <!--M_*4 #comment/0-->
-      SPAN
+      <!--SPAN-->
       <!--M_*1 #text/5-->
     </span>
     <script>
@@ -75,6 +71,6 @@
 
 # Mutations
 ```
-UPDATE html/body/div/#text "‍" => "DIV"
-UPDATE html/body/span/#text "‍" => "SPAN"
+UPDATE html/body/div/#comment1 "M_*2 #comment/0" => "DIV"
+UPDATE html/body/span/#comment1 "M_*4 #comment/0" => "SPAN"
 ```

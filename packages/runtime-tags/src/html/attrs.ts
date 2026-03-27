@@ -8,7 +8,7 @@ import {
   styleValue,
 } from "../common/helpers";
 import { type Accessor, AccessorPrefix, ControlledType } from "../common/types";
-import { _escape_text } from "./content";
+import { _escape } from "./content";
 import {
   _attr_content,
   _html,
@@ -72,7 +72,7 @@ export function _attr_textarea_value(
     );
   }
 
-  return _escape_text(value);
+  return _escape(value);
 }
 
 export function _attr_input_value(

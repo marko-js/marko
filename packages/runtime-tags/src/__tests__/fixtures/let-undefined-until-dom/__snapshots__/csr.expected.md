@@ -1,8 +1,6 @@
 # Render
 ```html
-<div>
-  ‍
-</div>
+<div />
 ```
 
 # Mutations
@@ -19,5 +17,5 @@ INSERT div
 
 # Mutations
 ```
-UPDATE div/#text "‍" => "Client Only"
+UPDATE div/#text "" => "Client Only"
 ```

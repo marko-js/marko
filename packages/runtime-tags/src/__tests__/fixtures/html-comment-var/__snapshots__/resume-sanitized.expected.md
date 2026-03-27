@@ -1,20 +1,12 @@
 # Render
 ```html
-<div>
-  ‍
-</div>
-<span>
-  ‍
-</span>
+<div />
+<span />
 ```
 
 
 # Render ASYNC
 ```html
-<div>
-  DIV
-</div>
-<span>
-  SPAN
-</span>
+<div />
+<span />
 ```

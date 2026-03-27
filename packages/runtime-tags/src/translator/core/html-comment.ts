@@ -110,7 +110,7 @@ export default {
           if (t.isMarkoText(child)) {
             write`${child.value}`;
           } else if (t.isMarkoPlaceholder(child)) {
-            write`${callRuntime("_escape_text", child.value)}`;
+            write`${callRuntime("_escape", child.value)}`;
           }
         }
       } else {

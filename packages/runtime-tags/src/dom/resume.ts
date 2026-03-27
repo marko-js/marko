@@ -299,8 +299,13 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             visitScope = getScope(nextToken(/* read scope id */));
 
             if (visitType === ResumeSymbol.Node) {
+              const prev = visit.previousSibling;
               visitScope[nextToken(/* read accessor */)] =
-                visit.previousSibling;
+                prev &&
+                (prev.nodeType < 8 /* Node.COMMENT_NODE */ ||
+                  (prev as Comment).data)
+                  ? prev
+                  : visit.parentNode!.insertBefore(new Text(), visit);
             } else if (branchesEnabled) {
               visitBranches!();
             }

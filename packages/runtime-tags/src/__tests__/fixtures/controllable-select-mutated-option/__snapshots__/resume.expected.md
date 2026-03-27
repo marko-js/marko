@@ -250,7 +250,6 @@ container.querySelector(".remove").click();
       </button>
     </form>
     <div>
-      ‍
       <!--M_*1 #text/1-->
     </div>
     <button
@@ -293,7 +292,7 @@ container.querySelector(".remove").click();
 # Mutations
 ```
 REMOVE #comment, #comment, option, #comment, #comment in html/body/form/select
-UPDATE html/body/div/#text "3" => "‍"
+UPDATE html/body/div/#text "3" => ""
 ```
 
 # Render
@@ -363,7 +362,7 @@ container.querySelector(".add").click();
 # Mutations
 ```
 INSERT html/body/form/select/option
-UPDATE html/body/div/#text "‍" => "3"
+UPDATE html/body/div/#text "" => "3"
 ```
 
 # Render

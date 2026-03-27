@@ -4,11 +4,9 @@
   <head />
   <body>
     <div>
-      ‍
       <!--M_*1 #text/0-->
     </div>
     <div>
-      ‍
       <!--M_*1 #text/1-->
     </div>
     <button>
@@ -29,6 +27,11 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/div0/#text
+INSERT html/body/div1/#text
+```
 
 # Render
 ```js
@@ -66,8 +69,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div0/#text "‍" => "0"
-UPDATE html/body/div1/#text "‍" => "Dylan"
+UPDATE html/body/div0/#text "" => "0"
+UPDATE html/body/div1/#text "" => "Dylan"
 ```
 
 # Render
@@ -199,11 +202,9 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      ‍
       <!--M_*1 #text/0-->
     </div>
     <div>
-      ‍
       <!--M_*1 #text/1-->
     </div>
     <button>
@@ -226,6 +227,6 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div0/#text "3" => "‍"
-UPDATE html/body/div1/#text "Luke" => "‍"
+UPDATE html/body/div0/#text "3" => ""
+UPDATE html/body/div1/#text "Luke" => ""
 ```
