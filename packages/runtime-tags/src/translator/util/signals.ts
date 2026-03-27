@@ -1474,11 +1474,25 @@ function getBuildAssignment(extra: AssignedBindingExtra) {
   const { assignmentTo, assignment } = extra;
   if (assignmentTo) {
     return (section: Section, value: t.Expression) => {
-      const replacement = callRuntime(
-        "_call",
-        createScopeReadExpression(assignmentTo, section),
-        value,
-      );
+      let scopeRead: t.Expression;
+      if (assignmentTo.pruned) {
+        // The change binding was pruned because an ancestor binding is
+        // already tracked. Read the change handler via property chain
+        // from the nearest non-pruned ancestor.
+        let cur = assignmentTo;
+        const props: string[] = [];
+        while (cur.pruned && cur.property !== undefined && cur.upstreamAlias) {
+          props.push(cur.property);
+          cur = cur.upstreamAlias;
+        }
+        scopeRead = createScopeReadExpression(cur, section);
+        for (let i = props.length; i--; ) {
+          scopeRead = toMemberExpression(scopeRead, props[i], false);
+        }
+      } else {
+        scopeRead = createScopeReadExpression(assignmentTo, section);
+      }
+      const replacement = callRuntime("_call", scopeRead, value);
       updateExpressions.add(replacement);
       return replacement;
     };

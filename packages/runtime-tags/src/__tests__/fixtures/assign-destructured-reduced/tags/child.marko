@@ -1,8 +1,11 @@
 <const/{value}=input>
 <script>
   input;
-  if ((value = 2) !== 2) {
+  const updated = (value = 2);
+  if (updated !== 2) {
     // Assignments always return their value.
     throw new Error(`Expected value to be 2`);
   }
+
+  console.log(updated, value);
 </script>

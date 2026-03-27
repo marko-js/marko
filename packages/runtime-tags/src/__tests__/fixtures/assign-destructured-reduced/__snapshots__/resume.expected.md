@@ -10,14 +10,18 @@
               value: 0
             }
           }
-        }, _.b], _.a.valueChange = _.b.$valueChange = _._[
+        }, _.b], _.a.valueChange = _._[
           "__tests__/template.marko_0/valueChange"
           ](_.d), _.c),
-        "__tests__/tags/child.marko_0_input_$valueChange 2"
+        "__tests__/tags/child.marko_0_input 2"
       ];
       M._.w()
     </script>
   </head>
   <body />
 </html>
+```
+# Console
+```
+LOG 2 0
 ```

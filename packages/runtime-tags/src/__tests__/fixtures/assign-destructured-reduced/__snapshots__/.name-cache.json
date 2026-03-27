@@ -11,7 +11,8 @@
       "$$valueChange": "u",
       "$$input__OR__input_valueChange__script": "c",
       "$$input__OR__input_valueChange": "s",
-      "$$input_valueChange": "i"
+      "$$input_valueChange": "i",
+      "$$input__script": "l"
     }
   }
 }

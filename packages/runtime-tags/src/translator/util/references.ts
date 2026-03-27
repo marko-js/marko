@@ -567,7 +567,6 @@ function trackAssignment(
             true,
           );
         idExtra.assignmentTo = changeBinding;
-        changeBinding.pruned = false;
         addReadToExpression(id, changeBinding, undefined);
       }
     }
@@ -2025,7 +2024,14 @@ function resolveReferencedBindings(
           hoistedBindings = bindingUtil.add(hoistedBindings, binding);
         }
       } else {
-        if (extra.assignmentTo !== binding) {
+        if (extra.assignmentTo === binding) {
+          const upstreamRoot =
+            binding.upstreamAlias &&
+            findClosestReference(binding.upstreamAlias, rootBindings);
+          if (upstreamRoot) {
+            binding = upstreamRoot;
+          }
+        } else {
           extra.section = expr.section;
           ({ binding } = extra.read ??= resolveExpressionReference(
             rootBindings,

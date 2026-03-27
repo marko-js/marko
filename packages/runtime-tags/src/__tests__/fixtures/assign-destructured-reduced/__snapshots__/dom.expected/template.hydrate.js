@@ -1,17 +1,13 @@
-// size: 277 (min) 180 (brotli)
-const $input__OR__input_valueChange__script = _._script("a0", ($scope) => {
-    if (($scope.b, 2 !== _._call($scope.c, 2)))
-      throw new Error("Expected value to be 2");
+// size: 268 (min) 179 (brotli)
+const $input__script = _._script("a0", ($scope) => {
+    {
+      $scope.b;
+      const updated = _._call($scope.b.valueChange, 2);
+      if (2 !== updated) throw new Error("Expected value to be 2");
+      console.log(updated, $scope.b.value);
+    }
   }),
-  $input__OR__input_valueChange = _._or(
-    3,
-    $input__OR__input_valueChange__script,
-  ),
-  $input = _._const(1, ($scope) => {
-    ($input_valueChange($scope, $scope.b.valueChange),
-      $input__OR__input_valueChange($scope));
-  }),
-  $input_valueChange = _._const(2, $input__OR__input_valueChange),
+  $input = _._const(1, $input__script),
   $count = _._let(1, ($scope) =>
     $input($scope.a, { value: $scope.b, valueChange: $valueChange($scope) }),
   );
