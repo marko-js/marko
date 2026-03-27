@@ -67,6 +67,10 @@ describe("resolveCursorPosition", () => {
       updated: "(540)| 810-9227",
       inputType: "deleteBackwards",
     },
+    {
+      initial: "ab5|c",
+      updated: "(5|",
+    },
   ].forEach(({ initial, updated, inputType }) => {
     it(initial + " → " + updated, () => {
       const initialPosition = initial.indexOf("|");
@@ -90,5 +94,13 @@ describe("resolveCursorPosition", () => {
         assert.equal(actual, updated);
       }
     });
+  });
+
+  it("should not return a position beyond the updated value length", () => {
+    const pos = resolveCursorPosition("", 3, "ab5c", "(5");
+    assert.ok(
+      pos <= 2,
+      `expected position <= 2 (updatedValue length), got ${pos}`,
+    );
   });
 });
