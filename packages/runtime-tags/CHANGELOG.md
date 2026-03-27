@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 6.0.161
+
+### Patch Changes
+
+- [#3141](https://github.com/marko-js/marko/pull/3141) [`7e7acd6`](https://github.com/marko-js/marko/commit/7e7acd6f15d8910764db50c961367cb518a79360) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize assignments to tag variables that could get pruned.
+
+- [#3141](https://github.com/marko-js/marko/pull/3141) [`69a673c`](https://github.com/marko-js/marko/commit/69a673ca428cd52da3a2b77034e7ab4696ef1625) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Dedupe section serialize guards when the same reason is referenced multiple times.
+
+- [#3144](https://github.com/marko-js/marko/pull/3144) [`bb97657`](https://github.com/marko-js/marko/commit/bb9765754f7a6d450f7998e424c7658bceaea85e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where controlled text input could fail to resolve new cursor position.
+
+- [#3143](https://github.com/marko-js/marko/pull/3143) [`6c86710`](https://github.com/marko-js/marko/commit/6c867107231664c1858dd2f77fcf20bd005b9ec8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid using zwj for empty rendered placeholder string content.
+
 ## 6.0.160
 
 ### Patch Changes

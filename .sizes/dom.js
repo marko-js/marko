@@ -1,4 +1,4 @@
-// size: 21277 (min) 7982 (brotli)
+// size: 21265 (min) 8006 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -113,9 +113,7 @@ function handleDelegated(ev) {
     (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
-function stripSpacesAndPunctuation(str) {
-  return str.replace(/[^\p{L}\p{N}]/gu, "");
-}
+var R = /[^\p{L}\p{N}]/gu;
 var parsers = {};
 function parseHTML(html, ns) {
   let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
@@ -879,15 +877,11 @@ function setInputValue(el, value) {
         if (updatedValue.startsWith(before)) return initialPosition;
         if (updatedValue.endsWith(after))
           return updatedValue.length - after.length;
-        {
-          let relevantChars = stripSpacesAndPunctuation(before).length,
-            pos = 0,
-            relevantIndex = 0;
-          for (; relevantIndex < relevantChars; )
-            (stripSpacesAndPunctuation(updatedValue[pos]) && relevantIndex++,
-              pos++);
-          return pos;
-        }
+        let count = before.replace(R, "").length,
+          pos = 0;
+        for (; count && updatedValue[pos]; )
+          updatedValue[pos++].replace(R, "") && count--;
+        return pos;
       }
       return -1;
     })(
