@@ -3,7 +3,6 @@ export const $template = "<!><!><!>";
 export const $walks = /* over(1), replace, over(2) */"b%c";
 import _helloInternal from "./components/hello-internal.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
-_._resume("__tests__/tags/components/hello-internal.marko", _helloInternal);
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0");
 export function $setup($scope) {
   $dynamicTag($scope, _helloInternal);

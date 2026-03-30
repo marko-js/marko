@@ -1,6 +1,5 @@
-import { s as _s } from "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
+import "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
 import _classCounter from "./components/class-counter.marko";
-_s(_classCounter, "__tests__/components/class-counter.marko");
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   _._scope_reason();

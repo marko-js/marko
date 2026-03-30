@@ -1,6 +1,5 @@
-import { s as _s } from "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
+import "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
 import _myButton from "./components/my-button/index.marko";
-_s(_myButton, "__tests__/components/my-button/index.marko");
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   _._scope_reason();

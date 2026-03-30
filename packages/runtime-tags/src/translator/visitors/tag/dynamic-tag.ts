@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import {
   assertAttributesOrArgs,
   getProgram,
+  getTagTemplate,
   importDefault,
   importNamed,
   loadFileForTag,
@@ -145,7 +146,17 @@ export default {
   },
   translate: {
     enter(tag) {
-      if (tag.node.extra?.defineBodySection) {
+      const tagExtra = tag.node.extra;
+      if (
+        tagExtra?.featureType === "class" &&
+        !isOutputHTML() &&
+        !getTagTemplate(tag)
+      ) {
+        tag.remove();
+        return;
+      }
+
+      if (tagExtra?.defineBodySection) {
         if (isOutputHTML()) {
           writer.flushBefore(tag);
         }
@@ -252,31 +263,55 @@ export default {
         // This is the interop layer leaking into the translator
         // We use the dynamic tag when a custom tag from the class runtime is used
 
-        if (isOutputHTML()) {
+        if (getTagTemplate(tag)) {
+          if (getSerializeReason(tagSection, nodeBinding)) {
+            if (isOutputHTML()) {
+              getProgram().node.body.push(
+                t.markoScriptlet(
+                  [
+                    t.expressionStatement(
+                      t.callExpression(
+                        importNamed(tag.hub.file, getCompatRuntimeFile(), "s"),
+                        [
+                          t.identifier((tagExpression as t.Identifier).name),
+                          t.stringLiteral(
+                            loadFileForTag(tag)!.metadata.marko.id,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                  true,
+                ),
+              );
+            } else {
+              getProgram().node.body.push(
+                t.expressionStatement(
+                  callRuntime(
+                    "_resume",
+                    t.stringLiteral(loadFileForTag(tag)!.metadata.marko.id),
+                    t.identifier((tagExpression as t.Identifier).name),
+                  ),
+                ),
+              );
+            }
+          }
+        } else {
           getProgram().node.body.push(
             t.markoScriptlet(
               [
                 t.expressionStatement(
-                  t.callExpression(
-                    importNamed(tag.hub.file, getCompatRuntimeFile(), "s"),
-                    [
+                  t.assignmentExpression(
+                    "??=",
+                    t.memberExpression(
                       t.identifier((tagExpression as t.Identifier).name),
-                      t.stringLiteral(loadFileForTag(tag)!.metadata.marko.id),
-                    ],
+                      t.identifier("_"),
+                    ),
+                    t.identifier((tagExpression as t.Identifier).name),
                   ),
                 ),
               ],
               true,
-            ),
-          );
-        } else {
-          getProgram().node.body.push(
-            t.expressionStatement(
-              callRuntime(
-                "_resume",
-                t.stringLiteral(loadFileForTag(tag)!.metadata.marko.id),
-                t.identifier((tagExpression as t.Identifier).name),
-              ),
             ),
           );
         }

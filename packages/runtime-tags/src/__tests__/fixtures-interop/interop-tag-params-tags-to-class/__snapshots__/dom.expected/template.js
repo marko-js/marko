@@ -3,7 +3,6 @@ export const $template = "<!><!><!>";
 export const $walks = /* over(1), replace, over(2) */"b%c";
 import * as _ from "@marko/runtime-tags/debug/dom";
 import _classLayout from "./components/class-layout.marko";
-_._resume("__tests__/components/class-layout.marko", _classLayout);
 const $classlayout_content__multiplier__OR__baseCount = /* @__PURE__ */_._or(7, $scope => _._text($scope["#text/4"], $scope._.multiplier * $scope.baseCount));
 const $classlayout_content__multiplier__script = _._script("__tests__/template.marko_1_multiplier", $scope => _._on($scope["#button/1"], "click", function () {
   $multiplier($scope._, $scope._.multiplier + 1);
