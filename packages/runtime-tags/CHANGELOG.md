@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.162
+
+### Patch Changes
+
+- [#3145](https://github.com/marko-js/marko/pull/3145) [`654fdc2`](https://github.com/marko-js/marko/commit/654fdc2ea9423d61ede4b87d5fdc4e9ae79bec4a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve support for class/tags interop when using legacy renderer apis.
+
 ## 6.0.161
 
 ### Patch Changes
