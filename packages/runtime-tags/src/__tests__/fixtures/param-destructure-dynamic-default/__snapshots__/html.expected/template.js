@@ -22,8 +22,7 @@ export default _._template("__tests__/template.marko", input => {
       _._html(`<div${_._attr("id", id)} class=a>${_._escape(bar)}${_._el_resume($scope1_id, "#text/1")} ${_._sep(($sg__foo))}${_._escape(typeof foo)}${_._el_resume($scope1_id, "#text/2", ($sg__foo))}</div>${_._el_resume($scope1_id, "#div/0", (_._serialize_guard($scope1_reason, /* id */0)))}`);
       _._subscribe($count__closures, _._scope($scope1_id, {
         foo,
-        _: _._scope_with_id($scope0_id),
-        "ClosureSignalIndex:count": 0
+        _: _._scope_with_id($scope0_id)
       }, "__tests__/template.marko", "2:1", {
         foo: "2:21"
       }));

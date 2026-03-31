@@ -17,8 +17,7 @@
           count: 0,
           "ClosureScopes:count": new Set
         }]), _ =&gt; (_.c = [_.e = {
-          _: _.b = _.a[1],
-          "ClosureSignalIndex:count": 0
+          _: _.b = _.a[1]
         }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.c)];
         M._.w()
       </script>
@@ -51,8 +50,7 @@ INSERT html/body/div/#text2
           count: 0,
           "ClosureScopes:count": new Set
         }]), _ =&gt; (_.c = [_.e = {
-          _: _.b = _.a[1],
-          "ClosureSignalIndex:count": 0
+          _: _.b = _.a[1]
         }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.c)];
         M._.w()
       </script>
@@ -92,8 +90,7 @@ INSERT html/body/div/script1
           count: 0,
           "ClosureScopes:count": new Set
         }]), _ =&gt; (_.c = [_.e = {
-          _: _.b = _.a[1],
-          "ClosureSignalIndex:count": 0
+          _: _.b = _.a[1]
         }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.c)];
         M._.w()
       </script>
@@ -178,8 +175,7 @@ container.querySelector("button").click();
           count: 0,
           "ClosureScopes:count": new Set
         }]), _ =&gt; (_.c = [_.e = {
-          _: _.b = _.a[1],
-          "ClosureSignalIndex:count": 0
+          _: _.b = _.a[1]
         }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.c)];
         M._.w()
       </script>
@@ -249,8 +245,7 @@ container.querySelector("button").click();
           count: 0,
           "ClosureScopes:count": new Set
         }]), _ =&gt; (_.c = [_.e = {
-          _: _.b = _.a[1],
-          "ClosureSignalIndex:count": 0
+          _: _.b = _.a[1]
         }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.c)];
         M._.w()
       </script>
@@ -320,8 +315,7 @@ container.querySelector("button").click();
           count: 0,
           "ClosureScopes:count": new Set
         }]), _ =&gt; (_.c = [_.e = {
-          _: _.b = _.a[1],
-          "ClosureSignalIndex:count": 0
+          _: _.b = _.a[1]
         }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.c)];
         M._.w()
       </script>

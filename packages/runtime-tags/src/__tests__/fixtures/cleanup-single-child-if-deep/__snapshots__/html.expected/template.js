@@ -42,8 +42,7 @@ export default _._template("__tests__/template.marko", input => {
           }, $scope2_id, "#text/1", 1, /* showInner */1, /* showInner */1, 0, 1);
           _._html("</div>");
           _._subscribe($showInner__closures, _._scope($scope2_id, {
-            _: _._scope_with_id($scope1_id),
-            "ClosureSignalIndex:showInner": 0
+            _: _._scope_with_id($scope1_id)
           }, "__tests__/template.marko", "14:6"));
           return 0;
         }

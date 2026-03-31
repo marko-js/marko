@@ -185,8 +185,7 @@ UPDATE html/body/button/#text "2" => "3"
     <script>
       M._.r.push(_ =&gt; (_.d = [1,
       {
-        _: _.b,
-        "ClosureSignalIndex:value": 0
+        _: _.b
       }]));
       M._.j.b = _ =&gt;
       {
@@ -264,8 +263,7 @@ container.querySelector("button").click();
     <script>
       M._.r.push(_ =&gt; (_.d = [1,
       {
-        _: _.b,
-        "ClosureSignalIndex:value": 0
+        _: _.b
       }]));
       M._.j.b = _ =&gt;
       {

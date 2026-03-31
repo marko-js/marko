@@ -26,9 +26,7 @@
           _: _.a,
           "#BranchAccessor": "#text/1"
         }, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:a": 0,
-          "ClosureSignalIndex:b": 0
+          _: _.b
         }], (_.d).add(_.e), (_.f).add(_.e), _.c),
         "__tests__/template.marko_0_a_b 1"
       ];
@@ -74,9 +72,7 @@ container.querySelector("button").click();
           _: _.a,
           "#BranchAccessor": "#text/1"
         }, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:a": 0,
-          "ClosureSignalIndex:b": 0
+          _: _.b
         }], (_.d).add(_.e), (_.f).add(_.e), _.c),
         "__tests__/template.marko_0_a_b 1"
       ];
@@ -123,9 +119,7 @@ container.querySelector("button").click();
           _: _.a,
           "#BranchAccessor": "#text/1"
         }, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:a": 0,
-          "ClosureSignalIndex:b": 0
+          _: _.b
         }], (_.d).add(_.e), (_.f).add(_.e), _.c),
         "__tests__/template.marko_0_a_b 1"
       ];
@@ -172,9 +166,7 @@ container.querySelector("button").click();
           _: _.a,
           "#BranchAccessor": "#text/1"
         }, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:a": 0,
-          "ClosureSignalIndex:b": 0
+          _: _.b
         }], (_.d).add(_.e), (_.f).add(_.e), _.c),
         "__tests__/template.marko_0_a_b 1"
       ];

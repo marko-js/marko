@@ -10,8 +10,7 @@ export default _._template("__tests__/template.marko", input => {
     _._scope_reason();
     _._script($scope1_id, "__tests__/template.marko_1_setHtml");
     _._subscribe($setHtml__closures, _._scope($scope1_id, {
-      _: _._scope_with_id($scope0_id),
-      "ClosureSignalIndex:setHtml": 0
+      _: _._scope_with_id($scope0_id)
     }, "__tests__/template.marko", "3:4"));
     _._resume_branch($scope1_id);
   }, $scope0_id));

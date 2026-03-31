@@ -25,7 +25,6 @@
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
@@ -72,7 +71,6 @@ INSERT html/body/#text1
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
@@ -136,7 +134,6 @@ container.querySelector("button").click();
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
@@ -178,7 +175,6 @@ container.querySelector("button").click();
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
@@ -235,7 +231,6 @@ REMOVE #document-fragment/#text2 after html/body/#text
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
@@ -289,7 +284,6 @@ container.querySelector("button").click();
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
@@ -331,7 +325,6 @@ container.querySelector("button").click();
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
@@ -388,7 +381,6 @@ REMOVE #document-fragment/#text2 after html/body/#text
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"

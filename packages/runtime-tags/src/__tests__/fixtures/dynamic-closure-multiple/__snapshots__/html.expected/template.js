@@ -14,9 +14,7 @@ export default _._template("__tests__/template.marko", input => {
       const $scope2_id = _._scope_id();
       _._html(`<div>${_._escape(a)}${_._el_resume($scope2_id, "#text/0")}</div><div>${_._escape(b)}${_._el_resume($scope2_id, "#text/1")}</div>`);
       _._subscribe($b__closures, _._subscribe($a__closures, _._scope($scope2_id, {
-        _: _._scope_with_id($scope1_id),
-        "ClosureSignalIndex:a": 0,
-        "ClosureSignalIndex:b": 0
+        _: _._scope_with_id($scope1_id)
       }, "__tests__/template.marko", "8:4")));
     }
     _._scope($scope1_id, {

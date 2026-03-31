@@ -33,8 +33,7 @@
         }, _.b = {
           _: _.a
         }, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], (_.d).add(_.e), _.c),
         "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
@@ -87,8 +86,7 @@ container.querySelector("#count").click();
         }, _.b = {
           _: _.a
         }, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], (_.d).add(_.e), _.c),
         "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
@@ -141,8 +139,7 @@ container.querySelector("#count").click();
         }, _.b = {
           _: _.a
         }, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], (_.d).add(_.e), _.c),
         "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
@@ -189,8 +186,7 @@ container.querySelector("#inner").click();
         }, _.b = {
           _: _.a
         }, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], (_.d).add(_.e), _.c),
         "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
@@ -243,8 +239,7 @@ container.querySelector("#inner").click();
         }, _.b = {
           _: _.a
         }, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], (_.d).add(_.e), _.c),
         "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
@@ -297,8 +292,7 @@ container.querySelector("#count").click();
         }, _.b = {
           _: _.a
         }, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], (_.d).add(_.e), _.c),
         "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
@@ -338,8 +332,7 @@ container.querySelector("#outer").click();
         }, _.b = {
           _: _.a
         }, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], (_.d).add(_.e), _.c),
         "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
@@ -394,8 +387,7 @@ container.querySelector("#outer").click();
         }, _.b = {
           _: _.a
         }, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], (_.d).add(_.e), _.c),
         "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];
@@ -447,8 +439,7 @@ container.querySelector("#count").click();
         }, _.b = {
           _: _.a
         }, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], (_.d).add(_.e), _.c),
         "__tests__/template.marko_2_count 3 __tests__/template.marko_1_inner 2 __tests__/template.marko_0_outer 1"
       ];

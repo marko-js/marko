@@ -65,16 +65,13 @@
             {
               bar: 0
             },
-            _: _.a,
-            "ClosureSignalIndex:count": 0
+            _: _.a
           }, _.e = {
             foo:
             {},
-            _: _.a,
-            "ClosureSignalIndex:count": 0
+            _: _.a
           }, _.f = {
-            _: _.a,
-            "ClosureSignalIndex:count": 0
+            _: _.a
           }, _.g = {
             foo:
             {
@@ -171,16 +168,13 @@ container.querySelector("button")?.click();
             {
               bar: 0
             },
-            _: _.a,
-            "ClosureSignalIndex:count": 0
+            _: _.a
           }, _.e = {
             foo:
             {},
-            _: _.a,
-            "ClosureSignalIndex:count": 0
+            _: _.a
           }, _.f = {
-            _: _.a,
-            "ClosureSignalIndex:count": 0
+            _: _.a
           }, _.g = {
             foo:
             {
@@ -284,16 +278,13 @@ container.querySelector("button")?.click();
             {
               bar: 0
             },
-            _: _.a,
-            "ClosureSignalIndex:count": 0
+            _: _.a
           }, _.e = {
             foo:
             {},
-            _: _.a,
-            "ClosureSignalIndex:count": 0
+            _: _.a
           }, _.f = {
-            _: _.a,
-            "ClosureSignalIndex:count": 0
+            _: _.a
           }, _.g = {
             foo:
             {

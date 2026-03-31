@@ -37,6 +37,7 @@ import {
   forEachSectionReverse,
   getCommonSection,
   getDirectClosures,
+  getDynamicClosureIndex,
   getOrCreateSection,
   getSectionForBody,
   getSectionRegisterReasons,
@@ -1123,12 +1124,14 @@ export function finalizeReferences() {
             closure,
             getAccessorPrefix().ClosureScopes,
           );
-          addSerializeReason(
-            section,
-            closure.sources,
-            closure,
-            getAccessorPrefix().ClosureSignalIndex,
-          );
+          if (getDynamicClosureIndex(closure, section)) {
+            addSerializeReason(
+              section,
+              closure.sources,
+              closure,
+              getAccessorPrefix().ClosureSignalIndex,
+            );
+          }
         }
       }
     });

@@ -16,8 +16,7 @@
           "#childScope/0": _.a = {},
           "ClosureScopes:count": _.d = new Set
         }, _.a, 2, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], _.a["#TagVariableChange"] = _._[
           "__tests__/tags/my-let.marko_0/valueChange"
           ](_.a), _.a["#TagVariable"] = _._[
@@ -53,8 +52,7 @@ container.querySelector("button").click();
           "#childScope/0": _.a = {},
           "ClosureScopes:count": _.d = new Set
         }, _.a, 2, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], _.a["#TagVariableChange"] = _._[
           "__tests__/tags/my-let.marko_0/valueChange"
           ](_.a), _.a["#TagVariable"] = _._[
@@ -94,8 +92,7 @@ container.querySelector("button").click();
           "#childScope/0": _.a = {},
           "ClosureScopes:count": _.d = new Set
         }, _.a, 2, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], _.a["#TagVariableChange"] = _._[
           "__tests__/tags/my-let.marko_0/valueChange"
           ](_.a), _.a["#TagVariable"] = _._[
@@ -135,8 +132,7 @@ container.querySelector("button").click();
           "#childScope/0": _.a = {},
           "ClosureScopes:count": _.d = new Set
         }, _.a, 2, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], _.a["#TagVariableChange"] = _._[
           "__tests__/tags/my-let.marko_0/valueChange"
           ](_.a), _.a["#TagVariable"] = _._[

@@ -22,8 +22,7 @@
       M._.r = [_ =&gt; (_.c = [0, _.a = {
           "ClosureScopes:c": _.d = new Set
         }, 1, _.e = {
-          _: _.a,
-          "ClosureSignalIndex:c": 0
+          _: _.a
         }, _.b = {
           _: _.a
         }, _.f = {
@@ -66,8 +65,7 @@ container.querySelector("button").click();
       M._.r = [_ =&gt; (_.c = [0, _.a = {
           "ClosureScopes:c": _.d = new Set
         }, 1, _.e = {
-          _: _.a,
-          "ClosureSignalIndex:c": 0
+          _: _.a
         }, _.b = {
           _: _.a
         }, _.f = {

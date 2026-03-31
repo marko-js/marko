@@ -13,8 +13,7 @@ export default _._template("__tests__/template.marko", input => {
         _._html(`<button>Confirm <!>${_._escape(count + 1)}${_._el_resume($scope2_id, "#text/1")}</button>${_._el_resume($scope2_id, "#button/0")}`);
         _._script($scope2_id, "__tests__/template.marko_2_counts_count");
         _._subscribe($counts__closures, _._scope($scope2_id, {
-          _: _._scope_with_id($scope1_id),
-          "ClosureSignalIndex:counts": 0
+          _: _._scope_with_id($scope1_id)
         }, "__tests__/template.marko", "4:4"));
         return 0;
       } else {

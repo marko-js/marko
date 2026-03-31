@@ -24,11 +24,9 @@
           x: 1,
           "ClosureScopes:x": _.c = new Set
         }, _.d = {
-          _: _.a,
-          "ClosureSignalIndex:x": 0
+          _: _.a
         }, 1, _.e = {
           _: _.a,
-          "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
         }], (_.c).add(_.d), _.c.add(_.e), _.b),
         "__tests__/template.marko_0_x 1"
@@ -73,11 +71,9 @@ container.querySelector("button").click();
           x: 1,
           "ClosureScopes:x": _.c = new Set
         }, _.d = {
-          _: _.a,
-          "ClosureSignalIndex:x": 0
+          _: _.a
         }, 1, _.e = {
           _: _.a,
-          "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
         }], (_.c).add(_.d), _.c.add(_.e), _.b),
         "__tests__/template.marko_0_x 1"
@@ -128,11 +124,9 @@ container.querySelector("button").click();
           x: 1,
           "ClosureScopes:x": _.c = new Set
         }, _.d = {
-          _: _.a,
-          "ClosureSignalIndex:x": 0
+          _: _.a
         }, 1, _.e = {
           _: _.a,
-          "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
         }], (_.c).add(_.d), _.c.add(_.e), _.b),
         "__tests__/template.marko_0_x 1"
@@ -179,11 +173,9 @@ container.querySelector("button").click();
           x: 1,
           "ClosureScopes:x": _.c = new Set
         }, _.d = {
-          _: _.a,
-          "ClosureSignalIndex:x": 0
+          _: _.a
         }, 1, _.e = {
           _: _.a,
-          "ClosureSignalIndex:x": 0,
           "#ClosestBranchId": 3
         }], (_.c).add(_.d), _.c.add(_.e), _.b),
         "__tests__/template.marko_0_x 1"

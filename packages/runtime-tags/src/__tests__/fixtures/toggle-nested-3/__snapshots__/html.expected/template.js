@@ -17,8 +17,7 @@ export default _._template("__tests__/template.marko", input => {
           _._html(`<button id=count>${_._escape(count)}${_._el_resume($scope2_id, "#text/1")}</button>${_._el_resume($scope2_id, "#button/0")}`);
           _._script($scope2_id, "__tests__/template.marko_2_count");
           _._subscribe($count__closures, _._scope($scope2_id, {
-            _: _._scope_with_id($scope1_id),
-            "ClosureSignalIndex:count": 0
+            _: _._scope_with_id($scope1_id)
           }, "__tests__/template.marko", "8:6"));
           return 0;
         }

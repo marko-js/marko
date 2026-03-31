@@ -18,8 +18,7 @@
             attrs: _.b = {}
           }
         }, _.c, _.g = {
-          _: _.d,
-          "ClosureSignalIndex:clickCount": 0
+          _: _.d
         }], _.a.click = _.b.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.d), (_.f).add(_.g), _.e),
@@ -55,8 +54,7 @@ container.querySelector("button").click();
             attrs: _.b = {}
           }
         }, _.c, _.g = {
-          _: _.d,
-          "ClosureSignalIndex:clickCount": 0
+          _: _.d
         }], _.a.click = _.b.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.d), (_.f).add(_.g), _.e),
@@ -96,8 +94,7 @@ container.querySelector("button").click();
             attrs: _.b = {}
           }
         }, _.c, _.g = {
-          _: _.d,
-          "ClosureSignalIndex:clickCount": 0
+          _: _.d
         }], _.a.click = _.b.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.d), (_.f).add(_.g), _.e),
@@ -137,8 +134,7 @@ container.querySelector("button").click();
             attrs: _.b = {}
           }
         }, _.c, _.g = {
-          _: _.d,
-          "ClosureSignalIndex:clickCount": 0
+          _: _.d
         }], _.a.click = _.b.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.d), (_.f).add(_.g), _.e),

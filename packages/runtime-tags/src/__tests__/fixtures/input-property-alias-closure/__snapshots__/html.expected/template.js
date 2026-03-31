@@ -29,8 +29,7 @@ export default _._template("__tests__/template.marko", input => {
       const $scope2_id = _._scope_id();
       _._html(`${_._escape(text)}${_._el_resume($scope2_id, "#text/0", ($sg__input_text))}`);
       ($si__input_text) && _._subscribe($input_text__closures, _._scope($scope2_id, {
-        _: _._scope_with_id($scope0_id),
-        "ClosureSignalIndex:input_text": 0
+        _: _._scope_with_id($scope0_id)
       }, "__tests__/template.marko", "7:1"));
       _._resume_branch($scope2_id);
     })

@@ -14,8 +14,7 @@ export default _._template("__tests__/template.marko", input => {
       const $scope1_id = _._scope_id();
       _._html(`${_._escape(value)}${_._el_resume($scope1_id, "#text/0")}`);
       _._subscribe($value__closures, _._scope($scope1_id, {
-        _: _._scope_with_id($scope0_id),
-        "ClosureSignalIndex:value": 0
+        _: _._scope_with_id($scope0_id)
       }, "__tests__/template.marko", "3:1"));
       _._resume_branch($scope1_id);
     }, $scope0_id)

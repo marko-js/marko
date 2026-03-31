@@ -28,8 +28,7 @@
           m5i: _.a = {}
         }, _.e = {
           m5c: "_0-2",
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], _.a.renderBody = _._[
           "__tests__/template.marko_1_content"
           ](_.b), (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]),
@@ -109,8 +108,7 @@ container.querySelector("#tags").click();
           m5i: _.a = {}
         }, _.e = {
           m5c: "_0-2",
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], _.a.renderBody = _._[
           "__tests__/template.marko_1_content"
           ](_.b), (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]),
@@ -179,8 +177,7 @@ container.querySelector("#class").click();
           m5i: _.a = {}
         }, _.e = {
           m5c: "_0-2",
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], _.a.renderBody = _._[
           "__tests__/template.marko_1_content"
           ](_.b), (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]),
@@ -249,8 +246,7 @@ container.querySelector("#tags").click();
           m5i: _.a = {}
         }, _.e = {
           m5c: "_0-2",
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], _.a.renderBody = _._[
           "__tests__/template.marko_1_content"
           ](_.b), (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]),
@@ -319,8 +315,7 @@ container.querySelector("#class").click();
           m5i: _.a = {}
         }, _.e = {
           m5c: "_0-2",
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], _.a.renderBody = _._[
           "__tests__/template.marko_1_content"
           ](_.b), (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]),
@@ -389,8 +384,7 @@ container.querySelector("#tags").click();
           m5i: _.a = {}
         }, _.e = {
           m5c: "_0-2",
-          _: _.b,
-          "ClosureSignalIndex:count": 0
+          _: _.b
         }], _.a.renderBody = _._[
           "__tests__/template.marko_1_content"
           ](_.b), (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]),

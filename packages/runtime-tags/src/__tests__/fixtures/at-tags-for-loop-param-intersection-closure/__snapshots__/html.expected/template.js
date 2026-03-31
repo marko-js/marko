@@ -14,8 +14,7 @@ export default _._template("__tests__/template.marko", input => {
         _._html(`${_._escape(item * mult)}${_._el_resume($scope1_id, "#text/0")}`);
         _._subscribe($mult__closures, _._scope($scope1_id, {
           item,
-          _: _._scope_with_id($scope0_id),
-          "ClosureSignalIndex:mult": 0
+          _: _._scope_with_id($scope0_id)
         }, "__tests__/template.marko", "4:5", {
           item: "3:7"
         }));

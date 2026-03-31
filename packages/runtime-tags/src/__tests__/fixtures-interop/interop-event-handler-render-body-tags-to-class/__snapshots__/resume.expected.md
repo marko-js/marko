@@ -23,8 +23,7 @@
           m5i: _.b = {}
         }, _.e = {
           m5c: "_0-1",
-          _: _.a,
-          "ClosureSignalIndex:count": 0
+          _: _.a
         }], _.a["ConditionalRenderer:#text/0"] = _._.$compat_renderer(_.a[
           "ConditionalRenderer:#text/0"]), _.b.renderBody = _._[
           "__tests__/template.marko_1_content"
@@ -107,8 +106,7 @@ container.querySelector("button").click();
           m5i: _.b = {}
         }, _.e = {
           m5c: "_0-1",
-          _: _.a,
-          "ClosureSignalIndex:count": 0
+          _: _.a
         }], _.a["ConditionalRenderer:#text/0"] = _._.$compat_renderer(_.a[
           "ConditionalRenderer:#text/0"]), _.b.renderBody = _._[
           "__tests__/template.marko_1_content"
@@ -179,8 +177,7 @@ container.querySelector("button").click();
           m5i: _.b = {}
         }, _.e = {
           m5c: "_0-1",
-          _: _.a,
-          "ClosureSignalIndex:count": 0
+          _: _.a
         }], _.a["ConditionalRenderer:#text/0"] = _._.$compat_renderer(_.a[
           "ConditionalRenderer:#text/0"]), _.b.renderBody = _._[
           "__tests__/template.marko_1_content"
@@ -251,8 +248,7 @@ container.querySelector("button").click();
           m5i: _.b = {}
         }, _.e = {
           m5c: "_0-1",
-          _: _.a,
-          "ClosureSignalIndex:count": 0
+          _: _.a
         }], _.a["ConditionalRenderer:#text/0"] = _._.$compat_renderer(_.a[
           "ConditionalRenderer:#text/0"]), _.b.renderBody = _._[
           "__tests__/template.marko_1_content"

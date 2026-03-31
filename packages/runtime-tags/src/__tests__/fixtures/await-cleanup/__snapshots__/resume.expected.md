@@ -109,8 +109,7 @@ INSERT html/body/#text2
       M._.r.push(_ =&gt; (_.e = [1,
       {
         "#ClosestBranchId": 2,
-        _: _.c,
-        "ClosureSignalIndex:show": 0
+        _: _.c
       }]), _ =&gt; (_.f = [
       {
         "#ClosestBranchId": 2
@@ -200,8 +199,7 @@ container.querySelector("button").click();
       M._.r.push(_ =&gt; (_.e = [1,
       {
         "#ClosestBranchId": 2,
-        _: _.c,
-        "ClosureSignalIndex:show": 0
+        _: _.c
       }]), _ =&gt; (_.f = [
       {
         "#ClosestBranchId": 2

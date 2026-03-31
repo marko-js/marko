@@ -12,9 +12,7 @@
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "BranchScopes:#button/0": _.b = {
-            "ClosureSignalIndex:count": 0
-          },
+          "BranchScopes:#button/0": _.b = {},
           "ConditionalRenderer:#button/0": "__tests__/template.marko_1_content",
           count: 0,
           MyThing: _.c = {},
@@ -48,9 +46,7 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "BranchScopes:#button/0": _.b = {
-            "ClosureSignalIndex:count": 0
-          },
+          "BranchScopes:#button/0": _.b = {},
           "ConditionalRenderer:#button/0": "__tests__/template.marko_1_content",
           count: 0,
           MyThing: _.c = {},
@@ -88,9 +84,7 @@ container.querySelector("button").click();
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
-          "BranchScopes:#button/0": _.b = {
-            "ClosureSignalIndex:count": 0
-          },
+          "BranchScopes:#button/0": _.b = {},
           "ConditionalRenderer:#button/0": "__tests__/template.marko_1_content",
           count: 0,
           MyThing: _.c = {},

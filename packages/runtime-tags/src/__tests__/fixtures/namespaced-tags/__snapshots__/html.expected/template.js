@@ -1,8 +1,7 @@
 import * as _ from "@marko/runtime-tags/debug/html";
 export default _._template("__tests__/template.marko", input => {
   const $scope0_reason = _._scope_reason(),
-    $sg__input_value = _._serialize_guard($scope0_reason, /* input.value */0),
-    $si__input_value = _._serialize_if($scope0_reason, /* input.value */0);
+    $sg__input_value = _._serialize_guard($scope0_reason, /* input.value */0);
   const $scope0_id = _._scope_id();
   const $input_value__closures = new Set();
   let Parent = "div";
@@ -29,8 +28,7 @@ export default _._template("__tests__/template.marko", input => {
     const $scope1_reason = _._scope_reason();
     _._html(`${_._unescaped(input.value)}${_._el_resume($scope1_id, "#text/0", $sg__input_value)}`);
     _._subscribe($input_value__closures, _._scope($scope1_id, {
-      _: _._scope_with_id($scope0_id),
-      "ClosureSignalIndex:input_value": ($si__input_value) && 0
+      _: _._scope_with_id($scope0_id)
     }, "__tests__/template.marko", "12:3"));
     _._resume_branch($scope1_id);
   }, $scope0_id));
@@ -42,7 +40,7 @@ export default _._template("__tests__/template.marko", input => {
     input_value: input.value,
     Parent,
     Child,
-    "ClosureScopes:input_value": ($si__input_value) && $input_value__closures
+    "ClosureScopes:input_value": (_._serialize_if($scope0_reason, /* input.value */0)) && $input_value__closures
   }, "__tests__/template.marko", 0, {
     input_value: ["input.value"],
     Parent: "1:5",

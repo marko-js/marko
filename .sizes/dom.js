@@ -1,4 +1,4 @@
-// size: 21265 (min) 8006 (brotli)
+// size: 21268 (min) 7989 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -263,7 +263,7 @@ function _closure(...closureSignals) {
         childScope.H ||
           queueRender(
             childScope,
-            closureSignals[childScope[___signalIndexAccessor]],
+            closureSignals[childScope[___signalIndexAccessor] || 0],
             -1,
           );
   };

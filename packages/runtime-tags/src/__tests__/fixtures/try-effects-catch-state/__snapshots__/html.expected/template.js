@@ -13,8 +13,7 @@ export default _._template("__tests__/template.marko", input => {
     })())}${_._el_resume($scope1_id, "#text/1")}`);
     _._script($scope1_id, "__tests__/template.marko_1_clickCount");
     _._subscribe($clickCount__closures, _._scope($scope1_id, {
-      _: _._scope_with_id($scope0_id),
-      "ClosureSignalIndex:clickCount": 0
+      _: _._scope_with_id($scope0_id)
     }, "__tests__/template.marko", "4:2"));
     _._resume_branch($scope1_id);
   }, $scope0_id), {

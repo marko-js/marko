@@ -23,8 +23,7 @@ const $content = input => {
           });
           ($si__input_level) && _._scope($scope3_id, {
             _: _._scope_with_id($scope2_id),
-            "#childScope/0": _._existing_scope($childScope),
-            "ClosureSignalIndex:input_level": 0
+            "#childScope/0": _._existing_scope($childScope)
           }, "__tests__/tags/recurse.marko", "7:7");
           _._resume_branch($scope3_id);
         }, ($sg__input_level));

@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div id=outside>0<!--M_*1 #text/0--></div><!--M_[--><!--M_!^2-->loading...<!--M_!2--><!--M_]1 #text/1 2--><style M_>t{display:none}</style><t M_=2><!--M_#b--></t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ClosureScopes:value":_.d=new Set},_.b={_:_.a,"ClosureSignalIndex:value":0,"#BranchAccessor":"#text/1"}],_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_content"](_.a),(_.d).add(_.b),_.c),"__tests__/template.marko_0 1"];REORDER_RUNTIME(M._);M._.w()</script>
+  <div id=outside>0<!--M_*1 #text/0--></div><!--M_[--><!--M_!^2-->loading...<!--M_!2--><!--M_]1 #text/1 2--><style M_>t{display:none}</style><t M_=2><!--M_#b--></t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ClosureScopes:value":_.d=new Set},_.b={_:_.a,"#BranchAccessor":"#text/1"}],_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_content"](_.a),(_.d).add(_.b),_.c),"__tests__/template.marko_0 1"];REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Write
@@ -36,7 +36,6 @@
           "ClosureScopes:value": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:value": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
@@ -106,7 +105,6 @@ INSERT html/body/script
           "ClosureScopes:value": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:value": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"

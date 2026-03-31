@@ -30,8 +30,7 @@
             x: 0
           }
         }, _.a, _.f = {
-          _: _.b,
-          "ClosureSignalIndex:x": 0
+          _: _.b
         }, _.c, _.g = {
           _: _.b,
           "ClosureSignalIndex:x": 1
@@ -82,8 +81,7 @@ container.querySelector("#controlled").click();
             x: 0
           }
         }, _.a, _.f = {
-          _: _.b,
-          "ClosureSignalIndex:x": 0
+          _: _.b
         }, _.c, _.g = {
           _: _.b,
           "ClosureSignalIndex:x": 1
@@ -140,8 +138,7 @@ container.querySelector("#uncontrolled").click();
             x: 0
           }
         }, _.a, _.f = {
-          _: _.b,
-          "ClosureSignalIndex:x": 0
+          _: _.b
         }, _.c, _.g = {
           _: _.b,
           "ClosureSignalIndex:x": 1
@@ -196,8 +193,7 @@ container.querySelector("#controlled").click();
             x: 0
           }
         }, _.a, _.f = {
-          _: _.b,
-          "ClosureSignalIndex:x": 0
+          _: _.b
         }, _.c, _.g = {
           _: _.b,
           "ClosureSignalIndex:x": 1
@@ -254,8 +250,7 @@ container.querySelector("#uncontrolled").click();
             x: 0
           }
         }, _.a, _.f = {
-          _: _.b,
-          "ClosureSignalIndex:x": 0
+          _: _.b
         }, _.c, _.g = {
           _: _.b,
           "ClosureSignalIndex:x": 1
@@ -310,8 +305,7 @@ container.querySelector("#controlled").click();
             x: 0
           }
         }, _.a, _.f = {
-          _: _.b,
-          "ClosureSignalIndex:x": 0
+          _: _.b
         }, _.c, _.g = {
           _: _.b,
           "ClosureSignalIndex:x": 1
@@ -368,8 +362,7 @@ container.querySelector("#uncontrolled").click();
             x: 0
           }
         }, _.a, _.f = {
-          _: _.b,
-          "ClosureSignalIndex:x": 0
+          _: _.b
         }, _.c, _.g = {
           _: _.b,
           "ClosureSignalIndex:x": 1

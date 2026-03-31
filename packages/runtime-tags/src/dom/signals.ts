@@ -173,7 +173,7 @@ export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {
         if (!childScope[AccessorProp.Creating]) {
           queueRender(
             childScope,
-            closureSignals[childScope[___signalIndexAccessor]],
+            closureSignals[childScope[___signalIndexAccessor] || 0],
             -1,
           );
         }

@@ -14,8 +14,7 @@ export default _._template("__tests__/template.marko", input => {
     _._script($scope1_id, "__tests__/template.marko_1_multiplier");
     _._subscribe($multiplier__closures, _._scope($scope1_id, {
       baseCount,
-      _: _._scope_with_id($scope0_id),
-      "ClosureSignalIndex:multiplier": 0
+      _: _._scope_with_id($scope0_id)
     }, "__tests__/template.marko", "2:2", {
       baseCount: "2:15"
     }));

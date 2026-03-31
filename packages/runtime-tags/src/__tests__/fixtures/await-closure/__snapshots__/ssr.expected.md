@@ -5,7 +5,7 @@
 
 # Write
 ```html
-  <t M_=b><!--M_[--><span>1<!--M_*4 #text/0--></span><!--M_]2 #text/0 4--></t><script>M._.r.push(_=>(_.d=[1,{_:_.b,"ClosureSignalIndex:value":0}]));M._.j.b=_=>{_.push("__tests__/template.marko_2_value/pending 4")};M._.w()</script>
+  <t M_=b><!--M_[--><span>1<!--M_*4 #text/0--></span><!--M_]2 #text/0 4--></t><script>M._.r.push(_=>(_.d=[1,{_:_.b}]));M._.j.b=_=>{_.push("__tests__/template.marko_2_value/pending 4")};M._.w()</script>
 ```
 
 # Render ASYNC
@@ -116,8 +116,7 @@ INSERT html/body/script
     <script>
       M._.r.push(_ =&gt; (_.d = [1,
       {
-        _: _.b,
-        "ClosureSignalIndex:value": 0
+        _: _.b
       }]));
       M._.j.b = _ =&gt;
       {

@@ -20,8 +20,7 @@
           },
           "ClosureScopes:setHtml": _.d = new Set
         }, _.b, _.e = {
-          _: _.a,
-          "ClosureSignalIndex:setHtml": 0
+          _: _.a
         }], _.a.setHtml = _._[
           "__tests__/tags/child.marko_0/_return"
           ](_.b), _.b["#TagVariable"] = _._[

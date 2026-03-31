@@ -57,8 +57,7 @@ Inner mounted
           name: "Outer",
           "#ClosestBranchId": 2
         }, _.e = {
-          _: _.c,
-          "ClosureSignalIndex:showInner": 0
+          _: _.c
         }, _.d = {
           name: "Middle",
           "#ClosestBranchId": 4
@@ -148,8 +147,7 @@ Inner destroyed
           name: "Outer",
           "#ClosestBranchId": 2
         }, _.e = {
-          _: _.c,
-          "ClosureSignalIndex:showInner": 0
+          _: _.c
         }, _.d = {
           name: "Middle",
           "#ClosestBranchId": 4
@@ -234,8 +232,7 @@ Middle destroyed
           name: "Outer",
           "#ClosestBranchId": 2
         }, _.e = {
-          _: _.c,
-          "ClosureSignalIndex:showInner": 0
+          _: _.c
         }, _.d = {
           name: "Middle",
           "#ClosestBranchId": 4
@@ -315,8 +312,7 @@ Outer destroyed
           name: "Outer",
           "#ClosestBranchId": 2
         }, _.e = {
-          _: _.c,
-          "ClosureSignalIndex:showInner": 0
+          _: _.c
         }, _.d = {
           name: "Middle",
           "#ClosestBranchId": 4
@@ -396,8 +392,7 @@ Outer destroyed
           name: "Outer",
           "#ClosestBranchId": 2
         }, _.e = {
-          _: _.c,
-          "ClosureSignalIndex:showInner": 0
+          _: _.c
         }, _.d = {
           name: "Middle",
           "#ClosestBranchId": 4
@@ -469,8 +464,7 @@ Outer destroyed
           name: "Outer",
           "#ClosestBranchId": 2
         }, _.e = {
-          _: _.c,
-          "ClosureSignalIndex:showInner": 0
+          _: _.c
         }, _.d = {
           name: "Middle",
           "#ClosestBranchId": 4
@@ -557,8 +551,7 @@ Inner mounted
           name: "Outer",
           "#ClosestBranchId": 2
         }, _.e = {
-          _: _.c,
-          "ClosureSignalIndex:showInner": 0
+          _: _.c
         }, _.d = {
           name: "Middle",
           "#ClosestBranchId": 4
@@ -654,8 +647,7 @@ Outer destroyed
           name: "Outer",
           "#ClosestBranchId": 2
         }, _.e = {
-          _: _.c,
-          "ClosureSignalIndex:showInner": 0
+          _: _.c
         }, _.d = {
           name: "Middle",
           "#ClosestBranchId": 4

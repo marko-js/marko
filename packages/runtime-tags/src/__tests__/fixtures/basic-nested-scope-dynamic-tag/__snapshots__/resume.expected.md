@@ -14,8 +14,7 @@
           count: 0,
           "ClosureScopes:count": _.c = new Set
         }, 1, _.d = {
-          _: _.a,
-          "ClosureSignalIndex:count": 0
+          _: _.a
         }], (_.c).add(_.d), _.b),
         "__tests__/template.marko_1_count 3"
       ];
@@ -45,8 +44,7 @@ container.querySelector("button").click();
           count: 0,
           "ClosureScopes:count": _.c = new Set
         }, 1, _.d = {
-          _: _.a,
-          "ClosureSignalIndex:count": 0
+          _: _.a
         }], (_.c).add(_.d), _.b),
         "__tests__/template.marko_1_count 3"
       ];
@@ -80,8 +78,7 @@ container.querySelector("button").click();
           count: 0,
           "ClosureScopes:count": _.c = new Set
         }, 1, _.d = {
-          _: _.a,
-          "ClosureSignalIndex:count": 0
+          _: _.a
         }], (_.c).add(_.d), _.b),
         "__tests__/template.marko_1_count 3"
       ];
@@ -115,8 +112,7 @@ container.querySelector("button").click();
           count: 0,
           "ClosureScopes:count": _.c = new Set
         }, 1, _.d = {
-          _: _.a,
-          "ClosureSignalIndex:count": 0
+          _: _.a
         }], (_.c).add(_.d), _.b),
         "__tests__/template.marko_1_count 3"
       ];

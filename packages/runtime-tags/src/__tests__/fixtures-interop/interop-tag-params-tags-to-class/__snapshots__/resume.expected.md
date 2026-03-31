@@ -41,8 +41,7 @@
         }, _.e = {
           m5c: "_0-2",
           baseCount: 0,
-          _: _.b,
-          "ClosureSignalIndex:multiplier": 0
+          _: _.b
         }], _.a.renderBody = _._[
           "__tests__/template.marko_1_content"
           ](_.b), (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]),
@@ -135,8 +134,7 @@ container.querySelector("#tags").click();
         }, _.e = {
           m5c: "_0-2",
           baseCount: 0,
-          _: _.b,
-          "ClosureSignalIndex:multiplier": 0
+          _: _.b
         }], _.a.renderBody = _._[
           "__tests__/template.marko_1_content"
           ](_.b), (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]),
@@ -218,8 +216,7 @@ container.querySelector("#class").click();
         }, _.e = {
           m5c: "_0-2",
           baseCount: 0,
-          _: _.b,
-          "ClosureSignalIndex:multiplier": 0
+          _: _.b
         }], _.a.renderBody = _._[
           "__tests__/template.marko_1_content"
           ](_.b), (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]),
@@ -303,8 +300,7 @@ container.querySelector("#tags").click();
         }, _.e = {
           m5c: "_0-2",
           baseCount: 0,
-          _: _.b,
-          "ClosureSignalIndex:multiplier": 0
+          _: _.b
         }], _.a.renderBody = _._[
           "__tests__/template.marko_1_content"
           ](_.b), (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]),
@@ -387,8 +383,7 @@ container.querySelector("#class").click();
         }, _.e = {
           m5c: "_0-2",
           baseCount: 0,
-          _: _.b,
-          "ClosureSignalIndex:multiplier": 0
+          _: _.b
         }], _.a.renderBody = _._[
           "__tests__/template.marko_1_content"
           ](_.b), (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]),
@@ -472,8 +467,7 @@ container.querySelector("#tags").click();
         }, _.e = {
           m5c: "_0-2",
           baseCount: 0,
-          _: _.b,
-          "ClosureSignalIndex:multiplier": 0
+          _: _.b
         }], _.a.renderBody = _._[
           "__tests__/template.marko_1_content"
           ](_.b), (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]),

@@ -23,16 +23,13 @@
           "ClosureScopes:mult": _.c = new Set
         }, 2, _.d = {
           item: 1,
-          _: _.a,
-          "ClosureSignalIndex:mult": 0
+          _: _.a
         }, 1, _.e = {
           item: 2,
-          _: _.a,
-          "ClosureSignalIndex:mult": 0
+          _: _.a
         }, 1, _.f = {
           item: 3,
-          _: _.a,
-          "ClosureSignalIndex:mult": 0
+          _: _.a
         }], (_.c).add(_.d), _.c.add(_.e), _.c.add(_.f), _.b),
         "__tests__/template.marko_0_mult 1"
       ];
@@ -71,16 +68,13 @@ container.querySelector("button").click();
           "ClosureScopes:mult": _.c = new Set
         }, 2, _.d = {
           item: 1,
-          _: _.a,
-          "ClosureSignalIndex:mult": 0
+          _: _.a
         }, 1, _.e = {
           item: 2,
-          _: _.a,
-          "ClosureSignalIndex:mult": 0
+          _: _.a
         }, 1, _.f = {
           item: 3,
-          _: _.a,
-          "ClosureSignalIndex:mult": 0
+          _: _.a
         }], (_.c).add(_.d), _.c.add(_.e), _.c.add(_.f), _.b),
         "__tests__/template.marko_0_mult 1"
       ];
@@ -126,16 +120,13 @@ container.querySelector("button").click();
           "ClosureScopes:mult": _.c = new Set
         }, 2, _.d = {
           item: 1,
-          _: _.a,
-          "ClosureSignalIndex:mult": 0
+          _: _.a
         }, 1, _.e = {
           item: 2,
-          _: _.a,
-          "ClosureSignalIndex:mult": 0
+          _: _.a
         }, 1, _.f = {
           item: 3,
-          _: _.a,
-          "ClosureSignalIndex:mult": 0
+          _: _.a
         }], (_.c).add(_.d), _.c.add(_.e), _.c.add(_.f), _.b),
         "__tests__/template.marko_0_mult 1"
       ];
@@ -181,16 +172,13 @@ container.querySelector("button").click();
           "ClosureScopes:mult": _.c = new Set
         }, 2, _.d = {
           item: 1,
-          _: _.a,
-          "ClosureSignalIndex:mult": 0
+          _: _.a
         }, 1, _.e = {
           item: 2,
-          _: _.a,
-          "ClosureSignalIndex:mult": 0
+          _: _.a
         }, 1, _.f = {
           item: 3,
-          _: _.a,
-          "ClosureSignalIndex:mult": 0
+          _: _.a
         }], (_.c).add(_.d), _.c.add(_.e), _.c.add(_.f), _.b),
         "__tests__/template.marko_0_mult 1"
       ];

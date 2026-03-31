@@ -15,8 +15,7 @@
           "ClosureScopes:value": _.f = new Set
         }, _.b = {
           "BranchScopes:#div/0": _.d = {
-            _: _.a,
-            "ClosureSignalIndex:value": 0
+            _: _.a
           },
           "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content",
           rest: _.c = {}
@@ -51,8 +50,7 @@
           "ClosureScopes:value": _.f = new Set
         }, _.b = {
           "BranchScopes:#div/0": _.d = {
-            _: _.a,
-            "ClosureSignalIndex:value": 0
+            _: _.a
           },
           "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content",
           rest: _.c = {}

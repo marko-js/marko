@@ -18,8 +18,7 @@ export default _._template("__tests__/template.marko", input => {
     });
     _._script($scope1_id, "__tests__/template.marko_1_clickCount");
     _._subscribe($clickCount__closures, _._scope($scope1_id, {
-      _: _._scope_with_id($scope0_id),
-      "ClosureSignalIndex:clickCount": 0
+      _: _._scope_with_id($scope0_id)
     }, "__tests__/template.marko", "7:2"));
     _._resume_branch($scope1_id);
   }, $scope0_id), {

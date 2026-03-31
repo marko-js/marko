@@ -1055,12 +1055,15 @@ export function writeHTMLResumeStatements(
           );
         }
 
-        setBindingSerializedValue(
-          section,
-          closure,
-          t.numericLiteral(getDynamicClosureIndex(closure, section)),
-          getAccessorPrefix().ClosureSignalIndex,
-        );
+        const closureIndex = getDynamicClosureIndex(closure, section);
+        if (closureIndex) {
+          setBindingSerializedValue(
+            section,
+            closure,
+            t.numericLiteral(closureIndex),
+            getAccessorPrefix().ClosureSignalIndex,
+          );
+        }
 
         if (underTryPlaceholder(section)) {
           const reason = getSerializeReason(section);

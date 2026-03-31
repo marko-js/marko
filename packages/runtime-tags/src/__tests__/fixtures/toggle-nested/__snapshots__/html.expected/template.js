@@ -7,8 +7,6 @@ export default _._template("__tests__/template.marko", input => {
     $sg__input_show = _._serialize_guard($scope0_reason, /* input.show */4),
     $si__input_show__OR__input_value = _._serialize_if($scope0_reason, /* input.show, input.value1 */0),
     $si__input_show__OR__input_value2 = _._serialize_if($scope0_reason, /* input.show, input.value2 */1),
-    $si__input_value = _._serialize_if($scope0_reason, /* input.value1 */5),
-    $si__input_value2 = _._serialize_if($scope0_reason, /* input.value2 */6),
     $si__input_show__OR__input_value1__OR__input_value = _._serialize_if($scope0_reason, /* input.show, input.value1, input.value2 */3);
   const $scope0_id = _._scope_id();
   const $value__closures = new Set();
@@ -27,8 +25,7 @@ export default _._template("__tests__/template.marko", input => {
           const $scope2_id = _._scope_id();
           _._html(`<span>${_._escape(value1)}${_._el_resume($scope2_id, "#text/0", ($sg__input_value))}</span>`);
           ($si__input_show__OR__input_value) && _._subscribe($value__closures, _._scope($scope2_id, {
-            _: _._scope_with_id($scope1_id),
-            "ClosureSignalIndex:value1": ($si__input_value) && 0
+            _: _._scope_with_id($scope1_id)
           }, "__tests__/template.marko", "4:6"));
           return 0;
         }
@@ -38,8 +35,7 @@ export default _._template("__tests__/template.marko", input => {
           const $scope3_id = _._scope_id();
           _._html(`<span>${_._escape(value2)}${_._el_resume($scope3_id, "#text/0", ($sg__input_value2))}</span>`);
           ($si__input_show__OR__input_value2) && _._subscribe($value2__closures, _._scope($scope3_id, {
-            _: _._scope_with_id($scope1_id),
-            "ClosureSignalIndex:value2": ($si__input_value2) && 0
+            _: _._scope_with_id($scope1_id)
           }, "__tests__/template.marko", "5:6"));
           return 0;
         }
@@ -53,8 +49,8 @@ export default _._template("__tests__/template.marko", input => {
   ($si__input_show__OR__input_value1__OR__input_value) && _._scope($scope0_id, {
     value1: ($si__input_show__OR__input_value) && value1,
     value2: ($si__input_show__OR__input_value2) && value2,
-    "ClosureScopes:value1": ($si__input_value) && $value__closures,
-    "ClosureScopes:value2": ($si__input_value2) && $value2__closures
+    "ClosureScopes:value1": (_._serialize_if($scope0_reason, /* input.value1 */5)) && $value__closures,
+    "ClosureScopes:value2": (_._serialize_if($scope0_reason, /* input.value2 */6)) && $value2__closures
   }, "__tests__/template.marko", 0, {
     value1: "1:15",
     value2: "1:23"

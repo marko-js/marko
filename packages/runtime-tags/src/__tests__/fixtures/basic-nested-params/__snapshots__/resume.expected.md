@@ -32,7 +32,6 @@
           "ClosureScopes:outer": _.e = new Set
         }, 1, _.f = {
           _: _.c,
-          "ClosureSignalIndex:outer": 0,
           "#ClosestBranchId": 3
         }], _.a.content = _._[
           "__tests__/template.marko_1_content"
@@ -87,7 +86,6 @@ container.querySelector("button").click();
           "ClosureScopes:outer": _.e = new Set
         }, 1, _.f = {
           _: _.c,
-          "ClosureSignalIndex:outer": 0,
           "#ClosestBranchId": 3
         }], _.a.content = _._[
           "__tests__/template.marko_1_content"
@@ -142,7 +140,6 @@ container.querySelector("button").click();
           "ClosureScopes:outer": _.e = new Set
         }, 1, _.f = {
           _: _.c,
-          "ClosureSignalIndex:outer": 0,
           "#ClosestBranchId": 3
         }], _.a.content = _._[
           "__tests__/template.marko_1_content"
@@ -197,7 +194,6 @@ container.querySelector("button").click();
           "ClosureScopes:outer": _.e = new Set
         }, 1, _.f = {
           _: _.c,
-          "ClosureSignalIndex:outer": 0,
           "#ClosestBranchId": 3
         }], _.a.content = _._[
           "__tests__/template.marko_1_content"

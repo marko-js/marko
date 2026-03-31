@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div><!--M_[-->Got: a <!>0<!--M_*2 #text/1--><!--M_]1 #text/0 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{count:0,"ClosureScopes:count":new Set}]),_=>(_.c=[_.e={_:_.b=_.a[1],"ClosureSignalIndex:count":0}],(_.d=_.b["ClosureScopes:count"]).add(_.e),_.c)];M._.w()</script>
+  <div><!--M_[-->Got: a <!>0<!--M_*2 #text/1--><!--M_]1 #text/0 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{count:0,"ClosureScopes:count":new Set}]),_=>(_.c=[_.e={_:_.b=_.a[1]}],(_.d=_.b["ClosureScopes:count"]).add(_.e),_.c)];M._.w()</script>
 ```
 
 # Write
@@ -32,8 +32,7 @@
           count: 0,
           "ClosureScopes:count": new Set
         }]), _ =&gt; (_.c = [_.e = {
-          _: _.b = _.a[1],
-          "ClosureSignalIndex:count": 0
+          _: _.b = _.a[1]
         }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.c)];
         M._.w()
       </script>
@@ -76,8 +75,7 @@ INSERT html/body/div/script
           count: 0,
           "ClosureScopes:count": new Set
         }]), _ =&gt; (_.c = [_.e = {
-          _: _.b = _.a[1],
-          "ClosureSignalIndex:count": 0
+          _: _.b = _.a[1]
         }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.c)];
         M._.w()
       </script>
@@ -117,8 +115,7 @@ INSERT html/body/div/script1
           count: 0,
           "ClosureScopes:count": new Set
         }]), _ =&gt; (_.c = [_.e = {
-          _: _.b = _.a[1],
-          "ClosureSignalIndex:count": 0
+          _: _.b = _.a[1]
         }], (_.d = _.b["ClosureScopes:count"]).add(_.e), _.c)];
         M._.w()
       </script>

@@ -15,8 +15,7 @@
           "ClosureScopes:clickCount": _.d = new Set,
           "#childScope/0": _.a = {}
         }, _.a, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:clickCount": 0
+          _: _.b
         }], _.a.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.b), (_.d).add(_.e), _.c),
@@ -49,8 +48,7 @@ container.querySelector("button").click();
           "ClosureScopes:clickCount": _.d = new Set,
           "#childScope/0": _.a = {}
         }, _.a, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:clickCount": 0
+          _: _.b
         }], _.a.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.b), (_.d).add(_.e), _.c),
@@ -87,8 +85,7 @@ container.querySelector("button").click();
           "ClosureScopes:clickCount": _.d = new Set,
           "#childScope/0": _.a = {}
         }, _.a, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:clickCount": 0
+          _: _.b
         }], _.a.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.b), (_.d).add(_.e), _.c),
@@ -125,8 +122,7 @@ container.querySelector("button").click();
           "ClosureScopes:clickCount": _.d = new Set,
           "#childScope/0": _.a = {}
         }, _.a, _.e = {
-          _: _.b,
-          "ClosureSignalIndex:clickCount": 0
+          _: _.b
         }], _.a.onClick = _._[
           "__tests__/template.marko_0/onClick"
           ](_.b), (_.d).add(_.e), _.c),

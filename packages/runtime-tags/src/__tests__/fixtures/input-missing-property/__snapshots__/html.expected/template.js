@@ -10,8 +10,7 @@ export default _._template("__tests__/template.marko", input => {
       const $Child_content__input_name__closures = new Set();
       const $scope1_reason = _._scope_reason(),
         $si__input_count__OR__input_name = _._serialize_if($scope1_reason, /* input.count, input.name */0),
-        $sg__input_count = _._serialize_guard($scope1_reason, /* input.count */1),
-        $si__input_name = _._serialize_if($scope1_reason, /* input.name */2);
+        $sg__input_count = _._serialize_guard($scope1_reason, /* input.count */1);
       _._if(() => {
         if (input.count) {
           const $scope2_id = _._scope_id();
@@ -19,8 +18,7 @@ export default _._template("__tests__/template.marko", input => {
             const $scope3_id = _._scope_id();
             _._html(`<div>${_._escape(input.name || "Fallback")}${_._el_resume($scope3_id, "#text/0", (_._serialize_guard($scope1_reason, /* input.name */2)))}</div>`);
             ($si__input_count__OR__input_name) && _._subscribe($Child_content__input_name__closures, _._scope($scope3_id, {
-              _: _._scope_with_id($scope2_id),
-              "ClosureSignalIndex:input_name": ($si__input_name) && 0
+              _: _._scope_with_id($scope2_id)
             }, "__tests__/template.marko", "8:6"));
           }
           ($si__input_count__OR__input_name) && _._scope($scope2_id, {
@@ -31,7 +29,7 @@ export default _._template("__tests__/template.marko", input => {
       }, $scope1_id, "#text/0", $sg__input_count, ($sg__input_count), ($sg__input_count));
       $si__input_count__OR__input_name && _._scope($scope1_id, {
         input_name: (_._serialize_if($scope1_reason, /* input.count */1)) && input.name,
-        "ClosureScopes:input_name": ($si__input_name) && $Child_content__input_name__closures
+        "ClosureScopes:input_name": (_._serialize_if($scope1_reason, /* input.name */2)) && $Child_content__input_name__closures
       }, "__tests__/template.marko", "6:2", {
         input_name: ["input.name", "6:15"]
       });

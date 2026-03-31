@@ -29,7 +29,6 @@
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/2"
         }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_3_content"
@@ -92,7 +91,6 @@ INSERT html/body/#text1
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/2"
         }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_3_content"
@@ -175,7 +173,6 @@ container.querySelector("button").click();
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/2"
         }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_3_content"
@@ -229,7 +226,6 @@ container.querySelector("button").click();
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/2"
         }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_3_content"
@@ -306,7 +302,6 @@ REMOVE #document-fragment/#text3 after html/body/#text
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/2"
         }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_3_content"
@@ -378,7 +373,6 @@ container.querySelector("button").click();
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/2"
         }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_3_content"
@@ -432,7 +426,6 @@ container.querySelector("button").click();
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/2"
         }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_3_content"
@@ -501,7 +494,6 @@ REMOVE #document-fragment/#text3 after html/body/#text
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:clickCount": 0,
           "#BranchAccessor": "#text/2"
         }], _.b["#CatchContent"] = _._[
           "__tests__/template.marko_3_content"

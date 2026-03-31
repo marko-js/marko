@@ -71,8 +71,7 @@ INSERT html/body/#text1
     <script>
       M._.r.push(_ =&gt; (_.d = [1,
       {
-        _: _.b,
-        "ClosureSignalIndex:value": 0
+        _: _.b
       }]));
       M._.j.b = _ =&gt;
       {

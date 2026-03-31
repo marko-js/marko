@@ -26,7 +26,6 @@
           "ClosureScopes:value": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:value": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
@@ -73,7 +72,6 @@ INSERT html/body/#text1
           "ClosureScopes:value": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:value": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
@@ -120,7 +118,6 @@ UPDATE html/body/div/#text "0" => "1"
           "ClosureScopes:value": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:value": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
@@ -192,7 +189,6 @@ INSERT html/body/script1
           "ClosureScopes:value": _.d = new Set
         }, _.b = {
           _: _.a,
-          "ClosureSignalIndex:value": 0,
           "#BranchAccessor": "#text/1"
         }], _.b["#PlaceholderContent"] = _._[
           "__tests__/template.marko_2_content"
