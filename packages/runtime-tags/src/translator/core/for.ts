@@ -385,7 +385,7 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#for",
     },
   ],
-} satisfies Tag;
+} as Tag;
 
 export function buildForRuntimeCall(
   type: ForType,

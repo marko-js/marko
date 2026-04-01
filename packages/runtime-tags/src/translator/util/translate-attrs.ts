@@ -14,6 +14,7 @@ import { isOutputHTML } from "./marko-config";
 import {
   type AttrTagLookup,
   getAttrTagIdentifier,
+  getAttrTagPaths,
 } from "./nested-attribute-tags";
 import { toArray } from "./optional";
 import { getScopeAccessor } from "./references";
@@ -65,11 +66,7 @@ export function translateAttrs(
       }
     }
 
-    const attrTags = tag.node.body.attributeTags
-      ? (tag.get("body").get("body") as ReturnType<
-          typeof tag.get<"attributeTags">
-        >)
-      : tag.get("attributeTags");
+    const attrTags = getAttrTagPaths(tag);
     for (let i = 0; i < attrTags.length; i++) {
       const child = attrTags[i];
       if (child.isMarkoTag()) {
@@ -370,11 +367,7 @@ function addAllAttrTagsAsDynamic(
   propTree: BindingPropTree | true,
   contentKey: ContentKey,
 ) {
-  const attrTags = tag.node.body.attributeTags
-    ? (tag.get("body").get("body") as ReturnType<
-        typeof tag.get<"attributeTags">
-      >)
-    : tag.get("attributeTags");
+  const attrTags = getAttrTagPaths(tag);
   for (let i = 0; i < attrTags.length; i++) {
     i = addDynamicAttrTagStatements(
       attrTags,

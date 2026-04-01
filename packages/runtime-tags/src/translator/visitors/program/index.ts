@@ -3,7 +3,6 @@ import {
   loadFileForImport,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
-import path from "path";
 
 import {
   type BindingPropTree,
@@ -19,9 +18,9 @@ import {
 import {
   BindingType,
   finalizeReferences,
-  type Sources,
   trackParamsReferences,
 } from "../../util/references";
+import { resolveRelativeToEntry } from "../../util/resolve-relative-to-entry";
 import { getCompatRuntimeFile } from "../../util/runtime";
 import { startSection } from "../../util/sections";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -29,22 +28,10 @@ import programDOM from "./dom";
 import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
 
-export type ParamSerializeReason = NonNullable<Sources["param"]>;
-export interface ParamSerializeReasonGroup {
-  id: symbol;
-  reason: ParamSerializeReason;
-}
-export type ParamSerializeReasonGroups = [
-  ParamSerializeReasonGroup,
-  ...ParamSerializeReasonGroup[],
-];
-
 export let scopeIdentifier: t.Identifier;
 export function isScopeIdentifier(node: t.Node): node is t.Identifier {
   return node === scopeIdentifier;
 }
-
-export type TemplateExports = BindingPropTree["props"];
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -158,18 +145,3 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
-
-function resolveRelativeToEntry(
-  entryFile: t.BabelFile,
-  file: t.BabelFile,
-  req: string,
-) {
-  return file === entryFile
-    ? resolveRelativePath(file, req)
-    : resolveRelativePath(
-        entryFile,
-        req[0] === "."
-          ? path.join(file.opts.filename as string, "..", req)
-          : req,
-      );
-}

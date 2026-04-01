@@ -1657,7 +1657,7 @@ export function getDebugNamesAsIdentifier(refs: ReferencedBindings) {
   return mapToString(refs, "__OR__", getDebugNameAsIdentifier);
 }
 
-export function getDebugNameAsIdentifier(binding: Binding) {
+function getDebugNameAsIdentifier(binding: Binding) {
   let root = binding;
   let access = "";
 
@@ -2181,20 +2181,6 @@ function getMemberExpressionPropString(
     case "Identifier":
       if (expr.computed) return;
       return expr.property.name;
-  }
-}
-
-export function getObjectPropertyKeyString(
-  expr: t.ObjectProperty | t.ObjectMethod,
-) {
-  switch (expr.key.type) {
-    case "StringLiteral":
-      return expr.key.value;
-    case "NumericLiteral":
-      return "" + expr.key.value;
-    case "Identifier":
-      if (expr.computed) return;
-      return expr.key.name;
   }
 }
 

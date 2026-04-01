@@ -143,7 +143,10 @@ export interface Tag {
     controlFlow?: boolean;
     ignoreAttributes?: boolean;
     relaxRequireCommas?: boolean;
+    statement?: boolean;
+    preserveWhitespace?: boolean;
     text?: boolean;
+    html?: boolean;
   };
 }
 

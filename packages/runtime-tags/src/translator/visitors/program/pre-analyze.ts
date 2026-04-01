@@ -360,7 +360,7 @@ function getLiteralName(node: t.Node) {
   }
 }
 
-export function getAssignmentInsertions(
+function getAssignmentInsertions(
   node: t.Node,
   insertions?: t.MarkoTag[] | undefined,
 ) {

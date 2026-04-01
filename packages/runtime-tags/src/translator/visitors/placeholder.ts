@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 
+import { isVoid } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
 import evaluate from "../util/evaluate";
 import { isNonHTMLText } from "../util/is-non-html-text";
@@ -136,7 +137,7 @@ export default {
         } else {
           addStatement(
             "render",
-            getSection(placeholder),
+            section,
             valueExtra.referencedBindings,
             t.expressionStatement(
               method === "_text"
@@ -212,10 +213,6 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   }
 
   return (placeholderExtra[kSiblingText] = SiblingText.None);
-}
-
-function isVoid(value: unknown) {
-  return value == null || value === false;
 }
 
 function isStaticText(node?: t.Node) {

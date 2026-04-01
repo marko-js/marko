@@ -22,7 +22,7 @@ import type { Section } from "./sections";
 
 export type SerializeReasons = true | [Sources, ...Sources[]];
 export type SerializeReason = true | Sources;
-export type SerializeKey = symbol & { __serialize_key__: 1 };
+type SerializeKey = symbol & { __serialize_key__: 1 };
 
 const scopeExprsBySection = new WeakMap<Section, OneMany<t.NodeExtra>>();
 const propExprsBySection = new WeakMap<

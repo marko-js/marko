@@ -379,7 +379,7 @@ export function attrAssignment(value: string) {
     : "";
 }
 
-export function escapeSingleQuotedAttrValue(value: string) {
+function escapeSingleQuotedAttrValue(value: string) {
   return singleQuoteAttrReplacements.test(value)
     ? value.replace(
         singleQuoteAttrReplacements,
@@ -392,7 +392,7 @@ function replaceUnsafeSingleQuoteAttrChar(match: string) {
   return match === "'" ? "&#39;" : "&amp;";
 }
 
-export function escapeDoubleQuotedAttrValue(value: string) {
+function escapeDoubleQuotedAttrValue(value: string) {
   return doubleQuoteAttrReplacements.test(value)
     ? value.replace(
         doubleQuoteAttrReplacements,

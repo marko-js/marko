@@ -105,7 +105,6 @@ export default {
     const bodySection = startSection(tagBody)!;
     const valueExtra = evaluate(valueAttr.value);
 
-    getOrCreateSection(tag);
     const paramsBinding = trackParamsReferences(tagBody, BindingType.derived);
 
     if (paramsBinding) {
@@ -227,7 +226,7 @@ export default {
   attributes: {},
   autocomplete: [
     {
-      description: "Use to consume asynchronous an data.",
+      description: "Use to consume asynchronous data.",
       descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#await",
     },
   ],

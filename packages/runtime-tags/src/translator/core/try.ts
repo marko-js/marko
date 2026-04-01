@@ -9,7 +9,6 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
-import { assertNoSpreadAttrs } from "../util/assert";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
   type Binding,
@@ -62,7 +61,6 @@ export default {
     assertNoArgs(tag);
     assertNoParams(tag);
     assertNoAttributes(tag);
-    assertNoSpreadAttrs(tag);
     analyzeAttributeTags(tag);
     const section = getOrCreateSection(tag);
     const tagExtra = mergeReferences(

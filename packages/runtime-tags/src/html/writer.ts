@@ -110,7 +110,7 @@ export function _attr_content(
   }
 }
 
-export function normalizeServerRender(value: unknown) {
+function normalizeServerRender(value: unknown) {
   const renderer = normalizeDynamicRenderer<ServerRenderer>(value);
   if (renderer) {
     if (typeof renderer === "function") {

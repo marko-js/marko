@@ -159,7 +159,7 @@ export default {
     dom(tag) { ... },
   }),
   migrate(tag) { ... },
-} satisfies Tag;
+} as Tag;
 ```
 
 ### `callRuntime()`

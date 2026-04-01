@@ -113,7 +113,7 @@ export default {
   attributes: {},
   autocomplete: [
     {
-      description: "Use to create an constant binding.",
+      description: "Use to create a constant binding.",
       descriptionMoreURL: "https://markojs.com/docs/reference/core-tag#const",
     },
   ],

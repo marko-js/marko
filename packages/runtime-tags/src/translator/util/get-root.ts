@@ -31,7 +31,10 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
   let fnPath:
     | undefined
     | t.NodePath<
-        t.FunctionExpression | t.ArrowFunctionExpression | t.ObjectMember
+        | t.FunctionDeclaration
+        | t.FunctionExpression
+        | t.ArrowFunctionExpression
+        | t.ObjectMember
       >;
   while (!isMarko(curPath)) {
     if (isFunction(curPath)) {
@@ -114,7 +117,10 @@ export function isMarko(path: t.NodePath<any>): path is MarkoExprRootPath {
 function isFunction(
   path: t.NodePath<t.Node>,
 ): path is t.NodePath<
-  t.FunctionExpression | t.ArrowFunctionExpression | t.ObjectMember
+  | t.FunctionDeclaration
+  | t.FunctionExpression
+  | t.ArrowFunctionExpression
+  | t.ObjectMember
 > {
   switch (path.type) {
     case "FunctionDeclaration":

@@ -41,7 +41,7 @@ export function _attr(element: Element, name: string, value: unknown) {
   setAttribute(element, name, normalizeAttrValue(value));
 }
 
-export function setAttribute(
+function setAttribute(
   element: Element,
   name: string,
   value: string | undefined,
@@ -385,7 +385,7 @@ export function _html(scope: Scope, value: unknown, accessor: Accessor) {
   removeChildNodes(firstChild, lastChild);
 }
 
-export function normalizeClientRender(value: any) {
+function normalizeClientRender(value: any) {
   const renderer = normalizeDynamicRenderer<Renderer>(value);
   if (renderer) {
     if ((renderer as Renderer).___id) {

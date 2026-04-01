@@ -16,7 +16,7 @@ export function buildAggregateError(
   const finalMsg = `${rootMsg}:\n\n${paths
     .map(
       ([msg, path]: [string, t.NodePath]) =>
-        `\u001b[90m${msg} at ${getFileNameWithLoc(
+        `\x1b[90m${msg} at ${getFileNameWithLoc(
           fileName,
           path,
         )}:\x1b[0m\n${getFrame(file, path)}`,

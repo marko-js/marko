@@ -2,7 +2,6 @@ import type { PendingRender } from "../dom/queue";
 import type { Renderer as ClientRenderer, Renderer } from "../dom/renderer";
 import type { AccessorProp } from "./accessor.debug";
 export type Falsy = undefined | null | false | 0 | "";
-export type CommentWalker = TreeWalker & Record<string, Comment>;
 export interface BranchScope extends Scope {
   [AccessorProp.StartNode]: ChildNode;
   [AccessorProp.EndNode]: ChildNode;

@@ -39,12 +39,6 @@ export const _template = (
   return _content_resume(templateId, renderer) as unknown as Template;
 };
 
-export function isTemplate(
-  renderer: ServerRenderer | Template,
-): renderer is ServerRenderer & Template {
-  return !!(renderer as any)._;
-}
-
 function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
   let { $global } = input;
   if ($global) {

@@ -338,7 +338,7 @@ export const IfTag = {
         "https://markojs.com/docs/reference/core-tag#if--else",
     },
   ],
-} satisfies Tag;
+} as Tag;
 
 export const ElseIfTag = {
   ...IfTag,

@@ -334,7 +334,7 @@ export default {
           if (valueChange) {
             writeAtStartOfBody = callRuntime(
               "_attr_textarea_value",
-              getScopeIdIdentifier(getSection(tag)),
+              getScopeIdIdentifier(tagSection),
               visitAccessor,
               value,
               valueChange,
@@ -507,7 +507,7 @@ export default {
             t.expressionStatement(
               callRuntime(
                 "_attr_select_value",
-                getScopeIdIdentifier(getSection(tag)),
+                getScopeIdIdentifier(tagSection),
                 nodeBinding && getScopeAccessorLiteral(nodeBinding),
                 selectArgs.value,
                 selectArgs.valueChange,

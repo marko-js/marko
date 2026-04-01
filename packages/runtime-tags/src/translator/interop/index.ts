@@ -7,6 +7,7 @@ import { generator } from "@marko/compiler/internal/babel";
 import path from "path";
 
 import * as translate6 from "..";
+import { resolveRelativeToEntry } from "../util/resolve-relative-to-entry";
 import { isTagsAPI } from "./feature-detection";
 
 type TagDef = Record<string, unknown>;
@@ -336,19 +337,4 @@ function getVisitorExit<A, B extends t.Node>(
   visit: t.VisitNode<A, B> | undefined,
 ): t.VisitNodeFunction<A, B> | undefined {
   return typeof visit === "object" ? visit?.exit : undefined;
-}
-
-function resolveRelativeToEntry(
-  entryFile: t.BabelFile,
-  file: t.BabelFile,
-  req: string,
-) {
-  return file === entryFile
-    ? resolveRelativePath(file, req)
-    : resolveRelativePath(
-        entryFile,
-        req[0] === "."
-          ? path.join(file.opts.filename as string, "..", req)
-          : req,
-      );
 }

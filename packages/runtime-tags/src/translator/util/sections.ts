@@ -197,11 +197,6 @@ export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
 export const [getSectionParentIsOwner, setSectionParentIsOwner] =
   createSectionState<boolean>("parentIsOwner", () => false);
 
-const [_getScopeIdentifier] = createSectionState<t.Identifier>(
-  "scopeIdentifier",
-  () => t.identifier("undefined"),
-);
-
 export const [getBranchRendererArgs, setBranchRendererArgs] =
   createSectionState<
     [
@@ -211,17 +206,6 @@ export const [getBranchRendererArgs, setBranchRendererArgs] =
       params?: t.Expression,
     ]
   >("rendererExpression");
-
-export const getScopeIdentifier = (
-  section: Section,
-  ignoreDefault?: boolean,
-) => {
-  const scopeId = _getScopeIdentifier(section);
-  if (!ignoreDefault && scopeId.name === "undefined") {
-    scopeId.name = generateUid(`scope${section.id}`);
-  }
-  return scopeId;
-};
 
 export function forEachSection(fn: (section: Section) => void) {
   const { sections } = getProgram().node.extra;

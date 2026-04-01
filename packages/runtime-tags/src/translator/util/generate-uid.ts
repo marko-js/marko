@@ -44,10 +44,7 @@ export function generateUidIdentifier(name?: string) {
   return t.identifier(generateUid(name));
 }
 
-const sharedUIDsForFile = new WeakMap<
-  t.BabelFile | Section,
-  Map<string, string>
->();
+const sharedUIDsForFile = new WeakMap<t.BabelFile, Map<string, string>>();
 export function getSharedUid(name: string, section?: Section) {
   const file = getFile();
   let sharedUIDs = sharedUIDsForFile.get(file);
@@ -91,15 +88,11 @@ export function usedSharedUid(name: string) {
   return !!sharedUIDsForFile.get(getFile())?.has(name);
 }
 
-export function getSharedUidIdentifier(name: string) {
-  return t.identifier(getSharedUid(name));
-}
-
 function getInitialCounts(file: t.BabelFile) {
   const counts = new Map<string, number>();
   const program = file.path;
   const countName = (name: string) => {
-    const match = /^$(.*?)([1-9]\d*)?$/.exec(name);
+    const match = /^\$(.*?)([1-9]\d*)?$/.exec(name);
     if (match) {
       const name = match[1];
       const count = match[2] ? +match[2] + 1 : 1;

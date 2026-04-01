@@ -121,7 +121,7 @@ export default {
         } else {
           addStatement(
             "render",
-            getSection(tag),
+            tagSection,
             tagExtra.referencedBindings,
             t.expressionStatement(
               callRuntime(

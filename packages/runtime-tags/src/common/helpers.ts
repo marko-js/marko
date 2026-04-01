@@ -66,12 +66,6 @@ export function isVoid(value: unknown) {
   return value == null || value === false;
 }
 
-export function alphaEncode(num: number): string {
-  return num < 52
-    ? String.fromCharCode(num < 26 ? num + 97 : num + (65 - 26))
-    : alphaEncode((num / 52) | 0) + alphaEncode(num % 52);
-}
-
 export function normalizeDynamicRenderer<Renderer>(
   value: any,
 ): Renderer | string | undefined {

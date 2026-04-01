@@ -15,8 +15,6 @@ export interface AttrTagMeta {
 
 export type AttrTagLookup = Record<string, AttrTagMeta>;
 
-export type AttrTagGroup = AttrTagLookup[string]["group"];
-
 type AttrTagNames = string[];
 
 declare module "@marko/compiler/dist/types" {
@@ -39,12 +37,18 @@ export function getAttrTagIdentifier(
   return t.identifier(name);
 }
 
+export function getAttrTagPaths(tag: t.NodePath<t.MarkoTag>) {
+  return (
+    tag.node.body.attributeTags
+      ? tag.get("body").get("body")
+      : tag.get("attributeTags")
+  ) as ReturnType<typeof tag.get<"attributeTags">>;
+}
+
 export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
   if (tag.node.extra?.attributeTags) return tag.node.extra.attributeTags;
 
-  const attrTags = tag.node.body.attributeTags
-    ? tag.get("body").get("body")
-    : tag.get("attributeTags");
+  const attrTags = getAttrTagPaths(tag);
   if (!attrTags.length) return;
 
   const tagExtra = (tag.node.extra ??= {});
@@ -132,9 +136,7 @@ function crawlAttrTags(
   attrTagNodesByName: Record<string, t.NodePath<t.MarkoTag>[]>,
   attrTagNames = new Set<string>(),
 ) {
-  const attrTags = tag.node.body.attributeTags
-    ? tag.get("body").get("body")
-    : tag.get("attributeTags");
+  const attrTags = getAttrTagPaths(tag);
   for (const child of attrTags) {
     if (child.isMarkoTag()) {
       if (isAttributeTag(child)) {

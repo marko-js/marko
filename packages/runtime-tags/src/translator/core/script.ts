@@ -150,7 +150,7 @@ export default {
   },
   autocomplete: [
     {
-      description: "Use to create a side effects.",
+      description: "Use to create side effects.",
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#script",
     },
   ],

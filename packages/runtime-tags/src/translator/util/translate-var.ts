@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUidIdentifier } from "./generate-uid";
-import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
+import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { toArray } from "./optional";
 import { getCanonicalBinding } from "./references";
 import { getOrCreateSection } from "./sections";

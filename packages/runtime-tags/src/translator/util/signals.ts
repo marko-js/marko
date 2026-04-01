@@ -11,7 +11,7 @@ import { scopeIdentifier } from "../visitors/program";
 import { forEachIdentifier } from "./for-each-identifier";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
-import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
+import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
 import { find, forEach, type Opt, push, some } from "./optional";
 import {
@@ -639,7 +639,7 @@ export function getSignalValueIdentifier(signal: Signal) {
   return t.identifier(canonicalBinding.name);
 }
 
-export function subscribe(references: ReferencedBindings, subscriber: Signal) {
+function subscribe(references: ReferencedBindings, subscriber: Signal) {
   if (references) {
     forEach(references, (binding) => {
       if (binding.type !== BindingType.constant) {
@@ -797,32 +797,6 @@ export function getResumeRegisterId(
     filename as string,
     `${section.id}${name}${type ? "/" + type : ""}`,
   );
-}
-
-const usedRegisterIdsBySection = new WeakMap<Section, Set<string>>();
-export function getRegisterUID(section: Section, name: string) {
-  const {
-    markoOpts,
-    opts: { filename },
-  } = getFile();
-
-  let used = usedRegisterIdsBySection.get(section);
-  if (!used) usedRegisterIdsBySection.set(section, (used = new Set()));
-
-  const baseId = getTemplateId(
-    markoOpts,
-    filename as string,
-    `${section.id}/${name}`,
-  );
-  let count = 0;
-  let id = baseId;
-
-  while (used.has(id)) {
-    id = baseId + "_" + ++count;
-  }
-
-  used.add(id);
-  return id;
 }
 
 export function writeSignals(section: Section) {

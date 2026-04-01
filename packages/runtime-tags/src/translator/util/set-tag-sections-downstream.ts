@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { getTagName } from "./get-tag-name";
-import { analyzeAttributeTags } from "./nested-attribute-tags";
+import { analyzeAttributeTags, getAttrTagPaths } from "./nested-attribute-tags";
 import { concat, type Opt } from "./optional";
 import type { Binding } from "./references";
 import { getSection, getSectionForBody, type Section } from "./sections";
@@ -48,9 +48,7 @@ function crawlSectionsAndSetBinding(
 
   if (!attrTagLookup) return;
 
-  const attrTags = tag.node.body.attributeTags
-    ? tag.get("body").get("body")
-    : tag.get("attributeTags");
+  const attrTags = getAttrTagPaths(tag);
 
   for (const child of attrTags) {
     if (child.isMarkoTag()) {

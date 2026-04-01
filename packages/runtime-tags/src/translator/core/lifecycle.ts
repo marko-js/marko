@@ -96,7 +96,7 @@ export default {
   attributes: {},
   autocomplete: [
     {
-      description: "Use to create a side effects.",
+      description: "Use to create side effects.",
       descriptionMoreURL:
         "https://markojs.com/docs/reference/core-tag#lifecycle",
     },

@@ -3,7 +3,7 @@ import { getProgram } from "@marko/compiler/babel-utils";
 
 import type { Section } from "./sections";
 
-export const createProgramState = <T>(init: () => T) => {
+export function createProgramState<T>(init: () => T) {
   const map = new WeakMap<t.NodePath<t.Program>, T>();
   return [
     () => {
@@ -17,7 +17,7 @@ export const createProgramState = <T>(init: () => T) => {
       map.set(getProgram(), value);
     },
   ] as const;
-};
+}
 
 export function createSectionState<T = unknown>(
   key: string,

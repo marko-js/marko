@@ -16,6 +16,7 @@ import {
   type AttrTagLookup,
   type AttrTagMeta,
   getAttrTagIdentifier,
+  getAttrTagPaths,
 } from "./nested-attribute-tags";
 import {
   filterMap,
@@ -499,9 +500,7 @@ function analyzeAttrs(
       seen.add(attrTagLookup[attrTagName].name);
     }
 
-    const attrTags = tag.node.body.attributeTags
-      ? tag.get("body").get("body")
-      : tag.get("attributeTags");
+    const attrTags = getAttrTagPaths(tag);
     for (const child of attrTags) {
       if (child.isMarkoTag()) {
         if (isAttributeTag(child)) {
