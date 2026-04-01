@@ -37,9 +37,6 @@ export type TestConfig = {
   skip_ssr?: boolean;
   skip_equivalent?: boolean;
   skip_resume?: boolean;
-  manual_csr?: boolean;
-  manual_ssr?: boolean;
-  manual_resume?: boolean;
   error_compiler?: true | string[];
   error_runtime?: boolean;
 };
@@ -49,24 +46,7 @@ type TestHooks = {
   after?: () => void;
 };
 
-const baseConfig: compiler.Config = {
-  translator,
-  babelConfig: {
-    babelrc: false,
-    configFile: false,
-  },
-  writeVersionComment: false,
-};
-
-const htmlConfig: compiler.Config = { ...baseConfig, output: "html" };
-const domConfig: compiler.Config = { ...baseConfig, output: "dom" };
-const snapCache = new Map<unknown, unknown>();
-
 describe("runtime-tags/translator", () => {
-  before(() => {
-    register({ ...htmlConfig, modules: "cjs" });
-  });
-
   const fixturesDir = path.join(__dirname, "fixtures");
   for (const entry of fs.readdirSync(fixturesDir)) {
     if (entry.endsWith(".skip")) continue;
@@ -75,11 +55,7 @@ describe("runtime-tags/translator", () => {
       const resolve = (file: string) => path.join(fixturesDir, entry, file);
       const fixtureDir = resolve(".");
       const relativeFixtureDir = path.relative(process.cwd(), fixtureDir);
-      const serverFile = resolve("server.ts");
-      const resumeFile = resolve("resume.ts");
-      const browserFile = resolve("browser.ts");
       const templateFile = resolve("template.marko");
-      const hasTemplate = fs.existsSync(templateFile);
       const snapshotsDir = resolve("__snapshots__");
       const nameCacheFile = path.join(snapshotsDir, ".name-cache.json");
       const nameCache = (() => {
@@ -105,27 +81,29 @@ describe("runtime-tags/translator", () => {
           return {};
         }
       })();
-      const skipHTML = !hasTemplate || config.skip_html;
-      const skipDOM = !hasTemplate || config.skip_dom;
+      const compileOpts: compiler.Config = {
+        translator,
+        cache: new Map(),
+        writeVersionComment: false,
+        babelConfig: {
+          babelrc: false,
+          configFile: false,
+          browserslistConfigFile: false,
+        },
+      };
+      const ssrCompileOpts: compiler.Config = {
+        ...compileOpts,
+        output: "html",
+      };
+      const csrCompileOpts: compiler.Config = { ...compileOpts, output: "dom" };
 
-      const manualSSR = skipHTML || config.manual_ssr;
-      const manualCSR = skipDOM || config.manual_csr;
-      const manualResume = skipHTML || skipDOM || config.manual_resume;
-
-      const skipSSR =
-        !(manualSSR ? fs.existsSync(serverFile) : hasTemplate) ||
-        config.skip_ssr ||
-        config.error_compiler;
-      const skipCSR =
-        !(manualCSR ? fs.existsSync(browserFile) : hasTemplate) ||
-        config.skip_csr ||
-        config.error_compiler;
+      const skipHTML = config.skip_html;
+      const skipDOM = config.skip_dom;
+      const skipSSR = skipHTML || config.skip_ssr || config.error_compiler;
+      const skipCSR = skipDOM || config.skip_csr || config.error_compiler;
       const skipResume =
         config.skip_resume !== false &&
-        (!(manualResume ? fs.existsSync(resumeFile) : hasTemplate) ||
-          config.skip_resume ||
-          skipSSR ||
-          skipCSR);
+        (config.skip_resume || skipSSR || skipCSR);
       const skipEquivalent = config.skip_equivalent || skipCSR || skipResume;
       const stripFixtureDir = async (str: string | Promise<string>) =>
         (await str).replaceAll(relativeFixtureDir, "__tests__");
@@ -144,7 +122,7 @@ describe("runtime-tags/translator", () => {
         });
         const finalConfig: compiler.Config = {
           ...compilerConfig,
-          cache: snapCache, // these need a different cache since they `resolveVirtualDependency` is relevant to the compile cache.
+          cache: new Map(), // these need a different cache since `resolveVirtualDependency` is relevant to the compile cache.
           resolveVirtualDependency(_filename, { code, virtualPath }) {
             return `virtual:${virtualPath} ${code}`;
           },
@@ -206,8 +184,7 @@ describe("runtime-tags/translator", () => {
 
       let serverRender = () => {
         const cached = (async () => {
-          const serverTemplate = require(manualSSR ? serverFile : templateFile)
-            .default as Template;
+          const serverTemplate = require(templateFile).default as Template;
 
           const [input = {}, ...steps] =
             typeof config.steps === "function"
@@ -264,7 +241,7 @@ describe("runtime-tags/translator", () => {
           const browser = createBrowser({
             dir: __dirname,
             extensions: register({
-              ...domConfig,
+              ...csrCompileOpts,
               modules: "cjs",
               extensions: {},
             }),
@@ -316,7 +293,7 @@ describe("runtime-tags/translator", () => {
           const browser = createBrowser({
             dir: __dirname,
             extensions: register({
-              ...domConfig,
+              ...csrCompileOpts,
               extensions: {},
             }),
           });
@@ -335,7 +312,7 @@ describe("runtime-tags/translator", () => {
             typeof import("@marko/runtime-tags/dom")
           >("@marko/runtime-tags/dom");
           const template = browser.require<{ default: Template }>(
-            manualCSR ? browserFile : templateFile,
+            templateFile,
           ).default;
           const container = document.createElement("div");
           const tracker = createMutationTracker(browser, container);
@@ -386,7 +363,7 @@ describe("runtime-tags/translator", () => {
           const browser = createBrowser({
             dir: __dirname,
             extensions: register({
-              ...domConfig,
+              ...csrCompileOpts,
               modules: "cjs",
               extensions: {},
             }),
@@ -405,7 +382,7 @@ describe("runtime-tags/translator", () => {
             typeof import("@marko/runtime-tags/dom")
           >("@marko/runtime-tags/dom");
 
-          browser.require(manualResume ? resumeFile : templateFile);
+          browser.require(templateFile);
 
           const flushNext = browser.stream(chunks);
 
@@ -472,6 +449,10 @@ describe("runtime-tags/translator", () => {
         return cached;
       };
 
+      before(() => {
+        register({ ...ssrCompileOpts, modules: "cjs" });
+      });
+
       after(() => {
         if (!isDeepStrictEqual(initialNameCache, nameCache)) {
           fs.writeFileSync(
@@ -482,9 +463,11 @@ describe("runtime-tags/translator", () => {
       });
 
       describe("compile", () => {
-        (skipHTML ? it.skip : it)("html", () => snapAllTemplates(htmlConfig));
+        (skipHTML ? it.skip : it)("html", () =>
+          snapAllTemplates(ssrCompileOpts),
+        );
 
-        (skipDOM ? it.skip : it)("dom", () => snapAllTemplates(domConfig));
+        (skipDOM ? it.skip : it)("dom", () => snapAllTemplates(csrCompileOpts));
       });
 
       describe("render", () => {

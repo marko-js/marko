@@ -1,0 +1,12 @@
+diff --git a/node_modules/mocha/lib/nodejs/esm-utils.js b/node_modules/mocha/lib/nodejs/esm-utils.js
+index 447c7d3..8eb5eee 100644
+--- a/node_modules/mocha/lib/nodejs/esm-utils.js
++++ b/node_modules/mocha/lib/nodejs/esm-utils.js
+@@ -99,6 +99,7 @@ const requireModule = async (file, esmDecorator) => {
+   } catch (requireErr) {
+     debug('requireModule caught err: %O', requireErr.message);
+     try {
++      console.error(requireErr);
+       return dealWithExports(await formattedImport(file, esmDecorator));
+     } catch (importErr) {
+       // If a --require module throws in a Node.js version that doesn't yet support .ts files,
