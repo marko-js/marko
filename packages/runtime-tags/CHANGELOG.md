@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.163
+
+### Patch Changes
+
+- [#3148](https://github.com/marko-js/marko/pull/3148) [`9874646`](https://github.com/marko-js/marko/commit/987464666ad45107a66a2da96c8e2224ff3d8eb6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid serializing dynamic closure signal indexes for the first dynamic closure.
+
 ## 6.0.162
 
 ### Patch Changes
