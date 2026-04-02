@@ -126,8 +126,6 @@ INSERT #comment
 INSERT html/body/#comment5
 REMOVE #comment after html/body/#comment4
 REMOVE #comment after html/body/#comment4
-INSERT html/body/#text1
-INSERT html/body/#text0
-INSERT html/body/#text2
+INSERT html/body/#text
 INSERT html/body/script2
 ```

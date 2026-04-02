@@ -33,10 +33,6 @@
 </html>
 ```
 
-# Mutations
-```
-INSERT html/body/div/#text1
-```
 
 # Render FLUSH
 ```html
@@ -94,7 +90,7 @@ INSERT t
 INSERT html/body/div/div
 INSERT html/body/div/div/#comment0
 INSERT html/body/div/div/#comment1
-INSERT html/body/div/div/#text0
+INSERT html/body/div/div/#text
 INSERT html/body/div/div/#comment2
 INSERT html/body/div/div/#comment3
 INSERT t
@@ -105,7 +101,6 @@ REMOVE #comment after html/body/div/#comment0
 REMOVE #comment after html/body/div/#comment0
 INSERT html/body/div/div
 REMOVE t after html/body/script0
-INSERT html/body/div/div/#text1
 INSERT html/body/script1
 ```
 
@@ -180,7 +175,7 @@ INSERT t
 INSERT html/body/div/div/div
 INSERT html/body/div/div/div/#comment0
 INSERT html/body/div/div/div/#comment1
-INSERT html/body/div/div/div/#text0
+INSERT html/body/div/div/div/#text
 INSERT html/body/div/div/div/#comment2
 INSERT html/body/div/div/div/#comment3
 INSERT t
@@ -191,7 +186,6 @@ REMOVE #comment after html/body/div/div/#comment0
 REMOVE #comment after html/body/div/div/#comment0
 INSERT html/body/div/div/div
 REMOVE t after html/body/script1
-INSERT html/body/div/div/div/#text1
 INSERT html/body/script2
 ```
 
@@ -281,7 +275,7 @@ INSERT t
 INSERT html/body/div/div/div/div
 INSERT html/body/div/div/div/div/#comment0
 INSERT html/body/div/div/div/div/#comment1
-INSERT html/body/div/div/div/div/#text0
+INSERT html/body/div/div/div/div/#text
 INSERT html/body/div/div/div/div/#comment2
 INSERT html/body/div/div/div/div/#comment3
 INSERT t
@@ -292,7 +286,6 @@ REMOVE #comment after html/body/div/div/div/#comment0
 REMOVE #comment after html/body/div/div/div/#comment0
 INSERT html/body/div/div/div/div
 REMOVE t after html/body/script2
-INSERT html/body/div/div/div/div/#text1
 INSERT html/body/script3
 ```
 

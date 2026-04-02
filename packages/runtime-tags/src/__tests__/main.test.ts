@@ -8,7 +8,6 @@ import path from "path";
 import glob from "tiny-glob";
 import { isDeepStrictEqual } from "util";
 
-import type { ServerRenderer } from "../html/template";
 import * as translator from "../translator";
 import { bundle } from "./utils/bundle";
 import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
@@ -219,7 +218,6 @@ describe("runtime-tags/translator", () => {
             logs,
             input,
             steps,
-            id: (serverTemplate as unknown as ServerRenderer).___id!,
           };
         })();
         serverRender = () => cached;
@@ -239,7 +237,7 @@ describe("runtime-tags/translator", () => {
       let ssr = () => {
         const cached = (async () => {
           const browser = createBrowser({
-            dir: __dirname,
+            dir: fixtureDir,
             extensions: register({
               ...csrCompileOpts,
               modules: "cjs",
@@ -291,7 +289,7 @@ describe("runtime-tags/translator", () => {
       let csr = () => {
         const cached = (async () => {
           const browser = createBrowser({
-            dir: __dirname,
+            dir: fixtureDir,
             extensions: register({
               ...csrCompileOpts,
               extensions: {},
@@ -360,8 +358,16 @@ describe("runtime-tags/translator", () => {
 
       let resume = () => {
         const cached = (async () => {
+          const hydrateCode = await compileCode(templateFile, {
+            ...csrCompileOpts,
+            modules: "cjs",
+            output: "hydrate",
+            resolveVirtualDependency() {
+              throw new Error("Not supported");
+            },
+          });
           const browser = createBrowser({
-            dir: __dirname,
+            dir: fixtureDir,
             extensions: register({
               ...csrCompileOpts,
               modules: "cjs",
@@ -376,13 +382,11 @@ describe("runtime-tags/translator", () => {
           serverHooks.before?.();
           browserHooks.before?.();
 
-          const { id, chunks, logs, input, steps } = await serverRender();
+          const { chunks, logs, input, steps } = await serverRender();
 
-          const { run, init, initEmbedded } = browser.require<
+          const { run } = browser.require<
             typeof import("@marko/runtime-tags/dom")
           >("@marko/runtime-tags/dom");
-
-          browser.require(templateFile);
 
           const flushNext = browser.stream(chunks);
 
@@ -396,11 +400,7 @@ describe("runtime-tags/translator", () => {
             }
           }
 
-          if (config.embedded) {
-            initEmbedded(id);
-          } else {
-            init();
-          }
+          browser.window.Function("require", hydrateCode)(browser.require);
 
           await runSteps();
 

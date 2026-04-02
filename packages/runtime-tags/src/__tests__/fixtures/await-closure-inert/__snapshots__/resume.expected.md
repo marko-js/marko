@@ -29,10 +29,6 @@
 </html>
 ```
 
-# Mutations
-```
-INSERT html/body/#text1
-```
 
 # Render FLUSH
 ```html

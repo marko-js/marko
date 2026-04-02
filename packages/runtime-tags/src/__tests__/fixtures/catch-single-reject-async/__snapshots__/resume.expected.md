@@ -49,19 +49,18 @@
 ```
 INSERT #comment
 INSERT html/body/#comment1
-INSERT html/body/#text3
+INSERT html/body/#text2
 INSERT html/head/style
 INSERT html/head/style/#text
 INSERT t
 INSERT html/body/#text1
-REMOVE html/head/style after html/body/#text3
+REMOVE html/head/style after html/body/#text2
 INSERT html/head/style
-REMOVE t after html/body/#text3
+REMOVE t after html/body/#text2
 REMOVE script after #text
 REMOVE #text after #comment
 REMOVE #comment after html/body/#comment0
 REMOVE #comment after html/body/#comment0
 INSERT html/body/#text1
-INSERT html/body/#text2
 INSERT html/body/script
 ```

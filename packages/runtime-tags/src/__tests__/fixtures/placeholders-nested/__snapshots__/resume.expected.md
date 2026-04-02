@@ -35,10 +35,6 @@
 </html>
 ```
 
-# Mutations
-```
-INSERT html/body/#text2
-```
 
 # Render FLUSH
 ```html
@@ -80,7 +76,7 @@ INSERT html/body/#text2
 
 # Mutations
 ```
-INSERT html/body/#text4
+INSERT html/body/#text3
 ```
 
 # Render FLUSH
@@ -131,11 +127,11 @@ INSERT html/body/#text4
 ```
 INSERT t
 INSERT html/body/#text2
-REMOVE t after html/body/#text8
+REMOVE t after html/body/#text6
 REMOVE #text after #comment
 REMOVE #comment after html/body/#comment0
 REMOVE #comment after html/body/#comment0
-INSERT html/body/#text1, html/body/#text2, html/body/#text3, html/body/#comment1, html/body/#comment2, html/body/#text4, html/body/#comment3, html/body/#text5, html/body/#comment4
+INSERT html/body/#text1, html/body/#text2, html/body/#text3, html/body/#comment1, html/body/#comment2, html/body/#text4, html/body/#comment3, html/body/#comment4
 INSERT html/body/script1
 ```
 
