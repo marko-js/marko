@@ -109,6 +109,7 @@
     },
     "./modules": "./modules.js",
     "./internal/babel": {
+      "types": "./internal/babel/index.ts",
       "browser": "./dist/babel.web.js",
       "default": "./dist/babel.js"
     },
