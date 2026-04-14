@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.63
+
+### Patch Changes
+
+- [#3156](https://github.com/marko-js/marko/pull/3156) [`c8fe2fb`](https://github.com/marko-js/marko/commit/c8fe2fb657ff8733e30549f1935b72d1654cba00) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose types for internal babel file through package.json exports.
+
 ## 5.39.62
 
 ### Patch Changes
