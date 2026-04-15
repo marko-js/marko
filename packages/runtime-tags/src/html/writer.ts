@@ -852,12 +852,12 @@ export function _try(
     | ServerRenderer
     | undefined;
 
-  if (catchContent) {
+  if (catchContent || input.catch) {
     tryCatch(
       placeholderContent
         ? () => tryPlaceholder(content, placeholderContent, branchId)
         : content,
-      catchContent,
+      catchContent || (() => {}),
     );
   } else if (placeholderContent) {
     tryPlaceholder(content, placeholderContent, branchId);
@@ -867,7 +867,7 @@ export function _try(
 
   writeScope(branchId, {
     [AccessorProp.BranchAccessor]: accessor,
-    [AccessorProp.CatchContent]: catchContent,
+    [AccessorProp.CatchContent]: catchContent || input.catch,
     [AccessorProp.PlaceholderContent]: placeholderContent,
   });
 

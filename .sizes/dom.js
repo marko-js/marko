@@ -1,4 +1,4 @@
-// size: 21268 (min) 7989 (brotli)
+// size: 21273 (min) 8013 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -1444,7 +1444,7 @@ function _try(nodeAccessor, template, walks, setup) {
     let branch = scope[branchAccessor];
     branch &&
       ((branch.C = nodeAccessor),
-      (branch.E = normalizeDynamicRenderer(input.catch)),
+      (branch.E = input.catch),
       (branch.Q = normalizeDynamicRenderer(input.placeholder)));
   };
 }
@@ -1462,10 +1462,10 @@ function renderCatch(scope, error) {
       setConditionalRenderer(
         owner,
         tryWithCatch.C,
-        tryWithCatch.E,
+        (tryWithCatch.E = normalizeDynamicRenderer(tryWithCatch.E)),
         createAndSetupBranch,
       ),
-      tryWithCatch.E.d?.(owner["A" + tryWithCatch.C], [error]));
+      tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
   }
 }
 function _if(nodeAccessor, ...branchesArgs) {

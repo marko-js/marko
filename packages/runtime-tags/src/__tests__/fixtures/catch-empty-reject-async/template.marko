@@ -1,0 +1,10 @@
+import { rejectAfter } from "../../utils/resolve";
+
+-- a
+<try>
+  b<await|data|=rejectAfter(new Error("ERROR!"), 1)>
+    ${data}
+  </await>c
+  <@catch/>
+</try>
+-- d
