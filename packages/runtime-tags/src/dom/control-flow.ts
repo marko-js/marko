@@ -267,7 +267,8 @@ export function _try(
     const branch = scope[branchAccessor];
     if (branch) {
       branch[AccessorProp.BranchAccessor] = nodeAccessor;
-      branch[AccessorProp.CatchContent] = input.catch;
+      branch[AccessorProp.CatchContent] =
+        input.catch && (normalizeDynamicRenderer(input.catch) || 0);
       branch[AccessorProp.PlaceholderContent] = normalizeDynamicRenderer(
         input.placeholder,
       );
@@ -296,9 +297,7 @@ export function renderCatch(scope: Scope, error: unknown) {
     setConditionalRenderer(
       owner,
       tryWithCatch[AccessorProp.BranchAccessor],
-      (tryWithCatch[AccessorProp.CatchContent] = normalizeDynamicRenderer(
-        tryWithCatch[AccessorProp.CatchContent],
-      )),
+      tryWithCatch[AccessorProp.CatchContent],
       createAndSetupBranch,
     );
     tryWithCatch[AccessorProp.CatchContent]?.___params?.(

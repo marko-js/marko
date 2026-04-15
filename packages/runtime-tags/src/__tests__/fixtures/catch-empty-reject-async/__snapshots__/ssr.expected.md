@@ -1,6 +1,6 @@
 # Write
 ```html
-  a<!--M_[--><!--M_!^b-->b<script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,1,{"#BranchAccessor":"#text/0","#CatchContent":{*[Symbol.iterator](){yield this}}}])]</script>
+  a<!--M_[--><!--M_!^b-->b<script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,1,{"#BranchAccessor":"#text/0","#CatchContent":0}])]</script>
 ```
 
 # Write
@@ -22,13 +22,7 @@
       M._.r = [_ =&gt; (_.a = [0, 1,
       {
         "#BranchAccessor": "#text/0",
-        "#CatchContent":
-        {
-          *[Symbol.iterator]()
-          {
-            yield this
-          }
-        }
+        "#CatchContent": 0
       }])]
     </script>
   </body>

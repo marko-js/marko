@@ -845,14 +845,14 @@ export function _try(
   const branchId = _peek_scope_id();
   $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
 
-  const catchContent = normalizeDynamicRenderer(input.catch) as
-    | ServerRenderer
-    | undefined;
+  const catchContent = input.catch
+    ? (normalizeDynamicRenderer(input.catch) as ServerRenderer | undefined) || 0
+    : undefined;
   const placeholderContent = normalizeDynamicRenderer(input.placeholder) as
     | ServerRenderer
     | undefined;
 
-  if (catchContent || input.catch) {
+  if (catchContent !== undefined) {
     tryCatch(
       placeholderContent
         ? () => tryPlaceholder(content, placeholderContent, branchId)
@@ -867,7 +867,7 @@ export function _try(
 
   writeScope(branchId, {
     [AccessorProp.BranchAccessor]: accessor,
-    [AccessorProp.CatchContent]: catchContent || input.catch,
+    [AccessorProp.CatchContent]: catchContent,
     [AccessorProp.PlaceholderContent]: placeholderContent,
   });
 

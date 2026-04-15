@@ -12,13 +12,7 @@
       M._.r = [_ =&gt; (_.a = [0, 1,
       {
         "#BranchAccessor": "#text/0",
-        "#CatchContent":
-        {
-          *[Symbol.iterator]()
-          {
-            yield this
-          }
-        }
+        "#CatchContent": 0
       }])]
     </script>
   </body>

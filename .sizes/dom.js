@@ -1,4 +1,4 @@
-// size: 21273 (min) 8013 (brotli)
+// size: 21287 (min) 8016 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -131,7 +131,7 @@ function skipScope() {
 }
 function findBranchWithKey(scope, key) {
   let branch = scope.F;
-  for (; branch && !branch[key]; ) branch = branch.N;
+  for (; branch && !(key in branch); ) branch = branch.N;
   return branch;
 }
 function destroyBranch(branch) {
@@ -1444,7 +1444,7 @@ function _try(nodeAccessor, template, walks, setup) {
     let branch = scope[branchAccessor];
     branch &&
       ((branch.C = nodeAccessor),
-      (branch.E = input.catch),
+      (branch.E = input.catch && (normalizeDynamicRenderer(input.catch) || 0)),
       (branch.Q = normalizeDynamicRenderer(input.placeholder)));
   };
 }
@@ -1462,7 +1462,7 @@ function renderCatch(scope, error) {
       setConditionalRenderer(
         owner,
         tryWithCatch.C,
-        (tryWithCatch.E = normalizeDynamicRenderer(tryWithCatch.E)),
+        tryWithCatch.E,
         createAndSetupBranch,
       ),
       tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
