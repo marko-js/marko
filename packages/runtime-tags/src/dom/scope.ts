@@ -29,7 +29,7 @@ export function findBranchWithKey(
   key: string,
 ): BranchScope | undefined {
   let branch = scope[AccessorProp.ClosestBranch];
-  while (branch && !(key in branch)) {
+  while (branch && branch[key] == null) {
     branch = branch[AccessorProp.ParentBranch];
   }
   return branch;

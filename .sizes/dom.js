@@ -1,4 +1,4 @@
-// size: 21287 (min) 8016 (brotli)
+// size: 21288 (min) 8002 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -131,7 +131,7 @@ function skipScope() {
 }
 function findBranchWithKey(scope, key) {
   let branch = scope.F;
-  for (; branch && !(key in branch); ) branch = branch.N;
+  for (; branch && null == branch[key]; ) branch = branch.N;
   return branch;
 }
 function destroyBranch(branch) {
