@@ -1,5 +1,31 @@
 # Change Log
 
+## 5.38.36
+
+### Patch Changes
+
+- [#3159](https://github.com/marko-js/marko/pull/3159) [`19d4b37`](https://github.com/marko-js/marko/commit/19d4b37d0806c4185eed4e0f300092621974f45e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix escaping issue for dynamic text interpolation inside `<script>`, `<style>`, `<html-script>` and `<html-style>` tags.
+
+  The issue was that the escaping logic for those tags used a CASE SENSITIVE search for the closing tag which could be bypassed like so:
+
+  ```marko
+  <script>${"</SCRIPT><img src=x onerror=alert('uh oh')>"}</script>
+  ```
+
+  Note that `script` and `style` there should _never_ render unsanitized user defined values, regardless of wether or not the closing tag is escaped, since these are conceptually just "eval".
+
+- [#3159](https://github.com/marko-js/marko/pull/3159) [`19d4b37`](https://github.com/marko-js/marko/commit/19d4b37d0806c4185eed4e0f300092621974f45e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix escaping for `<html-comment>` tag.
+  Previously this tag relied on normal xml escaping which looks for `<`.
+  This PR updates to have a special escape for `<html-comment>` tags that replaces `>` instead.
+
+  ```marko
+  // Previously incorrectly escaped.
+  <html-comment>${">Uh oh"}</html-comment>
+  ```
+
+- Updated dependencies [[`19d4b37`](https://github.com/marko-js/marko/commit/19d4b37d0806c4185eed4e0f300092621974f45e), [`19d4b37`](https://github.com/marko-js/marko/commit/19d4b37d0806c4185eed4e0f300092621974f45e)]:
+  - @marko/runtime-tags@6.0.164
+
 ## 5.38.35
 
 ### Patch Changes
