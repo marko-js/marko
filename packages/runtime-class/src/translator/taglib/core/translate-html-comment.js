@@ -3,6 +3,7 @@ import {
   assertNoArgs,
   assertNoAttributes,
   assertNoParams,
+  importDefault,
 } from "@marko/compiler/babel-utils";
 
 import writeHTML from "../../util/html-out-write";
@@ -15,11 +16,30 @@ export function enter(path) {
   assertNoAttributes(path);
 
   if (path.hub.file.markoOpts.output === "html") {
-    path.replaceWithMultiple([
-      writeHTML`<!--`,
-      ...path.node.body.body,
-      writeHTML`-->`,
-    ]);
+    const { file } = path.hub;
+    const nodes = [writeHTML`<!--`];
+
+    for (const child of path.node.body.body) {
+      if (t.isMarkoText(child)) {
+        nodes.push(child);
+      } else if (t.isMarkoPlaceholder(child)) {
+        const escapeFnModule = child.escape
+          ? "marko/src/runtime/html/helpers/escape-comment-placeholder.js"
+          : "marko/src/runtime/helpers/to-string.js";
+        const escapeFnAlias = child.escape
+          ? "marko_escapeComment"
+          : "marko_to_string";
+        nodes.push(
+          writeHTML`${t.callExpression(
+            importDefault(file, escapeFnModule, escapeFnAlias),
+            [child.value],
+          )}`,
+        );
+      }
+    }
+
+    nodes.push(writeHTML`-->`);
+    path.replaceWithMultiple(nodes.filter(Boolean));
   } else {
     const templateQuasis = [];
     const templateExpressions = [];

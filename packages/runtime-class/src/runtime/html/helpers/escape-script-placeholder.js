@@ -1,5 +1,5 @@
 "use strict";
-const unsafeCharsReg = /<\/script/g;
+const unsafeCharsReg = /<\/script/gi;
 const replaceMatch = () => "\\x3C/script";
 const escape = (str) =>
   unsafeCharsReg.test(str) ? str.replace(unsafeCharsReg, replaceMatch) : str;

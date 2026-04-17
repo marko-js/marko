@@ -7,6 +7,7 @@ import {
   _attr_class,
   _attr_style,
   _escape,
+  _escape_comment,
   _escape_script,
   _escape_style,
   _unescaped,
@@ -71,6 +72,7 @@ export function callRuntime(
 export function getHTMLRuntime() {
   return {
     _escape,
+    _escape_comment,
     _unescaped,
     _attr,
     _attr_class,

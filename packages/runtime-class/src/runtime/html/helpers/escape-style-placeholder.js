@@ -1,5 +1,5 @@
 "use strict";
-const unsafeCharsReg = /<\/style/g;
+const unsafeCharsReg = /<\/style/gi;
 const replaceMatch = () => "\\3C/style";
 const escape = (str) =>
   unsafeCharsReg.test(str) ? str.replace(unsafeCharsReg, replaceMatch) : str;

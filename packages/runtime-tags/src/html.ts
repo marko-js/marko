@@ -25,6 +25,7 @@ export {
 export { compat } from "./html/compat";
 export {
   _escape,
+  _escape_comment,
   _escape_script,
   _escape_style,
   _unescaped,

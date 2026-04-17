@@ -72,6 +72,13 @@ describe("runtime-tags/html/content", () => {
       );
     });
 
+    it("should escape </STYLE case-insensitively", () => {
+      assert.equal(
+        helpers._escape_style("foo </STYLE> bar"),
+        "foo \\3C/style> bar",
+      );
+    });
+
     it("should allow normally escaped html stuff", () => {
       assert.equal(helpers._escape_style("foo < bar & baz"), "foo < bar & baz");
     });
@@ -82,6 +89,44 @@ describe("runtime-tags/html/content", () => {
       assert.equal(helpers._escape_style(true), "true");
       assert.equal(helpers._escape_style("foo"), "foo");
       assert.equal(helpers._escape_style({}), "[object Object]");
+    });
+  });
+
+  describe("escapeScript", () => {
+    it("should escape </SCRIPT case-insensitively", () => {
+      assert.equal(
+        helpers._escape_script("foo </SCRIPT> bar"),
+        "foo \\x3C/script> bar",
+      );
+    });
+  });
+
+  describe("escapeComment", () => {
+    it("should return empty string for falseish values", () => {
+      for (const value of falseishValues) {
+        assert.equal(helpers._escape_comment(value), "");
+      }
+    });
+
+    it("should escape > to prevent comment termination", () => {
+      assert.equal(helpers._escape_comment("-->"), "--&gt;");
+      assert.equal(helpers._escape_comment("--!>"), "--!&gt;");
+      assert.equal(helpers._escape_comment(">"), "&gt;");
+    });
+
+    it("should allow < and & through unchanged", () => {
+      assert.equal(
+        helpers._escape_comment("foo < bar & baz"),
+        "foo < bar & baz",
+      );
+    });
+
+    it("should toString anything else", () => {
+      assert.equal(helpers._escape_comment(0), "0");
+      assert.equal(helpers._escape_comment(42), "42");
+      assert.equal(helpers._escape_comment(true), "true");
+      assert.equal(helpers._escape_comment("foo"), "foo");
+      assert.equal(helpers._escape_comment({}), "[object Object]");
     });
   });
 });
