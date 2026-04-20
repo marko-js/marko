@@ -21,19 +21,6 @@ The compiler/translator entry is `src/translator/index.ts`. The translator is fu
 
 Note: publish aliases `@marko/runtime-tags` and `marko`@6.
 
-## File Organization
-
-### Top-down structure (public API first)
-
-Files should be organized from most important to least important:
-
-1. Public API (exports)
-2. High-level orchestration logic
-3. Helper functions
-4. Low-level implementation details
-
-Use function hoisting (`function` declarations) to enable this structure without forward declarations.
-
 ## Naming Conventions
 
 ### Underscore-prefixed runtime API (`_name`)
@@ -198,11 +185,10 @@ These produce compiler errors with source locations via `buildCodeFrameError`.
 
 ```sh
 npm test -- --grep "runtime-tags.*" # all tests (uses mocha)
-npm test -- --grep "runtime-tags.* FIXTURE " # specific fixture
-npm test -- --grep "runtime-tags.* FIXTURE compile" # compiled outputs only
-npm test -- --grep "runtime-tags.* FIXTURE render" # render outputs only
+npm test -- --grep "runtime-tags.* <fixture> " # specific fixture
+npm test -- --grep "runtime-tags.* <fixture> compile" # compiled outputs only
+npm test -- --grep "runtime-tags.* <fixture> render" # render outputs only
 npm test -- --grep "runtime-tags.*" --update # snapshot update
-
 
 npm test -- --grep "translator-interop.*" # interop tests (run after the base tags runtime tests pass)
 ```
