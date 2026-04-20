@@ -6,6 +6,7 @@ import {
   AccessorPrefix,
   AccessorProp,
   type BranchScope,
+  ClosureSignalProp,
   type EncodedAccessor,
   type Scope,
 } from "../common/types";
@@ -15,9 +16,7 @@ import { _resume } from "./resume";
 import { schedule } from "./schedule";
 
 export type SignalFn = (scope: Scope) => void;
-export type Signal<T> = ((scope: Scope, value: T) => void) & {
-  ___subscribe?(scope: Scope): void;
-};
+export type Signal<T> = (scope: Scope, value: T) => void;
 
 export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
   const valueAccessor = MARKO_DEBUG
@@ -161,19 +160,20 @@ export function subscribeToScopeSet(
 }
 
 export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {
-  const [{ ___scopeInstancesAccessor, ___signalIndexAccessor }] =
-    closureSignals;
+  const [firstSignal] = closureSignals;
+  const scopeInstances = firstSignal[ClosureSignalProp.ScopeInstancesAccessor];
+  const signalIndex = firstSignal[ClosureSignalProp.SignalIndexAccessor];
   for (let i = closureSignals.length; i--; ) {
-    closureSignals[i].___index = i;
+    closureSignals[i][ClosureSignalProp.Index] = i;
   }
 
   return (scope: Scope) => {
-    if (scope[___scopeInstancesAccessor]) {
-      for (const childScope of scope[___scopeInstancesAccessor] as Set<Scope>) {
+    if (scope[scopeInstances]) {
+      for (const childScope of scope[scopeInstances] as Set<Scope>) {
         if (!childScope[AccessorProp.Creating]) {
           queueRender(
             childScope,
-            closureSignals[childScope[___signalIndexAccessor] || 0],
+            closureSignals[childScope[signalIndex] || 0],
             -1,
           );
         }
@@ -190,21 +190,22 @@ export function _closure_get(
 ) {
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
   const closureSignal = ((scope) => {
-    scope[closureSignal.___signalIndexAccessor] = closureSignal.___index;
+    scope[closureSignal[ClosureSignalProp.SignalIndexAccessor]] =
+      closureSignal[ClosureSignalProp.Index];
     fn(scope);
     subscribeToScopeSet(
       getOwnerScope ? getOwnerScope(scope) : scope[AccessorProp.Owner]!,
-      closureSignal.___scopeInstancesAccessor,
+      closureSignal[ClosureSignalProp.ScopeInstancesAccessor],
       scope,
     );
   }) as SignalFn & {
-    ___scopeInstancesAccessor: string;
-    ___signalIndexAccessor: string;
-    ___index: number;
+    [ClosureSignalProp.ScopeInstancesAccessor]: string;
+    [ClosureSignalProp.SignalIndexAccessor]: string;
+    [ClosureSignalProp.Index]: number;
   };
-  closureSignal.___scopeInstancesAccessor =
+  closureSignal[ClosureSignalProp.ScopeInstancesAccessor] =
     AccessorPrefix.ClosureScopes + valueAccessor;
-  closureSignal.___signalIndexAccessor =
+  closureSignal[ClosureSignalProp.SignalIndexAccessor] =
     AccessorPrefix.ClosureSignalIndex + valueAccessor;
 
   resumeId && _resume(resumeId, closureSignal);

@@ -1,8 +1,9 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
-import type {
-  RenderedTemplate,
-  Template,
-  TemplateInput,
+import {
+  type RenderedTemplate,
+  RendererProp,
+  type Template,
+  type TemplateInput,
 } from "../common/types";
 import { _content_resume } from "./dynamic-tag";
 import {
@@ -15,8 +16,8 @@ import {
 } from "./writer";
 
 export type ServerRenderer = ((...args: unknown[]) => unknown) & {
-  ___id?: string;
-  ___embed?: boolean;
+  [RendererProp.Id]?: string;
+  [RendererProp.Embed]?: boolean;
 };
 
 export const _template = (
@@ -25,7 +26,7 @@ export const _template = (
   page?: 1,
 ) => {
   (renderer as unknown as Template).render = render;
-  (renderer as unknown as ServerRenderer).___embed = !page;
+  (renderer as unknown as ServerRenderer)[RendererProp.Embed] = !page;
   (renderer as unknown as any)._ = renderer; // This is added exclusively for the compat layer, maybe someday it can be removed.
 
   if (MARKO_DEBUG) {
@@ -72,8 +73,8 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
   const state = new State($global as State["$global"]);
   const head = new Chunk(new Boundary(state, $global.signal), null, null);
 
-  if (this.___embed) {
-    (state.ensureReady ||= {})[this.___id!] = 1;
+  if (this[RendererProp.Embed]) {
+    (state.ensureReady ||= {})[this[RendererProp.Id]!] = 1;
   }
 
   head.render(this, input);
@@ -81,7 +82,7 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
 }
 
 function getDefaultRenderId(template: ServerRenderer): string {
-  if (template.___embed) {
+  if (template[RendererProp.Embed]) {
     const ENCODE_CHARS =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
     let n = (Math.random() * 0x100000000) >>> 0;

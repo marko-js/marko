@@ -12,6 +12,7 @@ import {
   AccessorPrefix,
   AccessorProp,
   ControlledType,
+  RendererProp,
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
@@ -314,22 +315,23 @@ export function _attr_content(
   const content = normalizeClientRender(value);
   if (
     scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] !==
-    (scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] = content?.___id)
+    (scope[AccessorPrefix.ConditionalRenderer + nodeAccessor] =
+      content?.[RendererProp.Id])
   ) {
     setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch);
-    if (content?.___accessor) {
+    if (content?.[RendererProp.Accessor]) {
       subscribeToScopeSet(
-        content.___owner!,
-        content.___accessor,
+        content[RendererProp.Owner]!,
+        content[RendererProp.Accessor],
         scope[AccessorPrefix.BranchScopes + nodeAccessor],
       );
     }
   }
 
-  for (const accessor in content?.___localClosures) {
-    content.___localClosures[accessor](
+  for (const accessor in content?.[RendererProp.LocalClosures]) {
+    content![RendererProp.LocalClosures]![accessor](
       scope[AccessorPrefix.BranchScopes + nodeAccessor],
-      content.___localClosureValues![accessor],
+      content![RendererProp.LocalClosureValues]![accessor],
     );
   }
 }
@@ -388,7 +390,7 @@ export function _html(scope: Scope, value: unknown, accessor: Accessor) {
 function normalizeClientRender(value: any) {
   const renderer = normalizeDynamicRenderer<Renderer>(value);
   if (renderer) {
-    if ((renderer as Renderer).___id) {
+    if ((renderer as Renderer)[RendererProp.Id]) {
       return renderer as Renderer;
     } else if (MARKO_DEBUG) {
       throw new Error(

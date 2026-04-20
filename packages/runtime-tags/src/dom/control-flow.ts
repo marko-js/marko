@@ -11,6 +11,7 @@ import {
   type BranchScope,
   type EncodedAccessor,
   NodeType,
+  RendererProp,
   type Scope,
 } from "../common/types";
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
@@ -300,7 +301,7 @@ export function renderCatch(scope: Scope, error: unknown) {
       tryWithCatch[AccessorProp.CatchContent],
       createAndSetupBranch,
     );
-    tryWithCatch[AccessorProp.CatchContent]?.___params?.(
+    tryWithCatch[AccessorProp.CatchContent]?.[RendererProp.Params]?.(
       owner[
         AccessorPrefix.BranchScopes + tryWithCatch[AccessorProp.BranchAccessor]
       ],
@@ -361,7 +362,7 @@ export let _dynamic_tag = function dynamicTag(
     if (
       scope[rendererAccessor] !==
         (scope[rendererAccessor] =
-          (normalizedRenderer as Renderer | undefined)?.___id ||
+          (normalizedRenderer as Renderer | undefined)?.[RendererProp.Id] ||
           normalizedRenderer) ||
       (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
     ) {
@@ -387,10 +388,10 @@ export let _dynamic_tag = function dynamicTag(
             content,
             createAndSetupBranch,
           );
-          if (content.___accessor) {
+          if (content[RendererProp.Accessor]) {
             subscribeToScopeSet(
-              content.___owner!,
-              content.___accessor,
+              content[RendererProp.Owner]!,
+              content[RendererProp.Accessor],
               scope[childScopeAccessor][
                 AccessorPrefix.BranchScopes +
                   (MARKO_DEBUG ? `#${normalizedRenderer}/0` : "a")
@@ -398,10 +399,10 @@ export let _dynamic_tag = function dynamicTag(
             );
           }
         }
-      } else if (normalizedRenderer?.___accessor) {
+      } else if (normalizedRenderer?.[RendererProp.Accessor]) {
         subscribeToScopeSet(
-          normalizedRenderer.___owner!,
-          normalizedRenderer.___accessor,
+          normalizedRenderer[RendererProp.Owner]!,
+          normalizedRenderer[RendererProp.Accessor],
           scope[childScopeAccessor],
         );
       }
@@ -430,16 +431,16 @@ export let _dynamic_tag = function dynamicTag(
           queueEffect(childScope, dynamicTagScript);
         }
       } else {
-        for (const accessor in normalizedRenderer.___localClosures) {
-          normalizedRenderer.___localClosures[accessor](
+        for (const accessor in normalizedRenderer[RendererProp.LocalClosures]) {
+          normalizedRenderer[RendererProp.LocalClosures]![accessor](
             childScope,
-            normalizedRenderer.___localClosureValues![accessor],
+            normalizedRenderer[RendererProp.LocalClosureValues]![accessor],
           );
         }
 
-        if (normalizedRenderer.___params) {
+        if (normalizedRenderer[RendererProp.Params]) {
           if (inputIsArgs) {
-            normalizedRenderer.___params(
+            normalizedRenderer[RendererProp.Params]!(
               childScope,
               (normalizedRenderer as any)._ ? args[0] : args,
             );
@@ -447,7 +448,7 @@ export let _dynamic_tag = function dynamicTag(
             const inputWithContent = getContent
               ? { ...args, content: getContent(scope) }
               : args || {};
-            normalizedRenderer.___params(
+            normalizedRenderer[RendererProp.Params]!(
               childScope,
               (normalizedRenderer as any)._
                 ? inputWithContent

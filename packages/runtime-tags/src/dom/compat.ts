@@ -3,7 +3,7 @@ import {
   RENDERER_REGISTER_ID,
   SET_SCOPE_REGISTER_ID,
 } from "../common/compat-meta";
-import { AccessorProp, type BranchScope } from "../common/types";
+import { AccessorProp, type BranchScope, RendererProp } from "../common/types";
 import { patchDynamicTag } from "./control-flow";
 import { toInsertNode } from "./dom";
 import { prepareEffects, queueEffect, runEffects } from "./queue";
@@ -26,7 +26,7 @@ export const compat = {
     _resume(RENDERER_REGISTER_ID, fn);
   },
   isRenderer(renderer: any) {
-    return renderer.___clone;
+    return renderer[RendererProp.Clone];
   },
   getStartNode(branch: any) {
     return branch[AccessorProp.StartNode];
@@ -60,11 +60,11 @@ export const compat = {
     return value;
   },
   createRenderer(
-    params: NonNullable<Renderer["___params"]>,
+    params: NonNullable<Renderer[RendererProp.Params]>,
     clone: () => { startNode: ChildNode; endNode: ChildNode },
   ) {
     const renderer = _content("", 0, 0, 0, params)();
-    renderer.___clone = (branch) => {
+    renderer[RendererProp.Clone] = (branch) => {
       const cloned = clone();
       branch[AccessorProp.StartNode] = cloned.startNode;
       branch[AccessorProp.EndNode] = cloned.endNode;
@@ -94,12 +94,15 @@ export const compat = {
         branch = component.scope = createAndSetupBranch(
           out.global,
           renderer,
-          renderer.___owner,
+          renderer[RendererProp.Owner],
           document.body,
         );
       }
 
-      renderer.___params?.(branch, (renderer as any)._ ? args[0] : args);
+      renderer[RendererProp.Params]?.(
+        branch,
+        (renderer as any)._ ? args[0] : args,
+      );
     });
 
     if (created) {

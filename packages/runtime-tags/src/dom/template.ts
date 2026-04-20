@@ -3,6 +3,7 @@ import {
   AccessorProp,
   type BranchScope,
   type MountedTemplate,
+  RendererProp,
   type Scope,
   type Template,
   type TemplateInput,
@@ -102,7 +103,7 @@ function mount(
   }
 
   let curValue: unknown;
-  const args = this.___params;
+  const args = this[RendererProp.Params];
   const effects = prepareEffects(() => {
     branch = createBranch(
       $global as any as Scope[AccessorProp.Global],
@@ -114,7 +115,7 @@ function mount(
     branch[AccessorProp.TagVariable] = (newValue: unknown) => {
       curValue = newValue;
     };
-    this.___setup?.(branch);
+    this[RendererProp.Setup]?.(branch);
     args?.(branch, input);
   });
 

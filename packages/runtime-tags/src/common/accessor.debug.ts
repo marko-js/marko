@@ -41,3 +41,28 @@ export enum AccessorProp {
   TagVariable = "#TagVariable",
   TagVariableChange = "#TagVariableChange",
 }
+
+export enum RendererProp {
+  Id = "id",
+  Clone = "clone",
+  Setup = "setup",
+  Params = "params",
+  Owner = "owner",
+  Accessor = "accessor",
+  LocalClosures = "localClosures",
+  LocalClosureValues = "localClosureValues",
+  Embed = "embed",
+}
+
+export enum PendingRenderProp {
+  Key = "key",
+  Scope = "scope",
+  Signal = "signal",
+  Value = "value",
+}
+
+export enum ClosureSignalProp {
+  ScopeInstancesAccessor = "scopeInstancesAccessor",
+  SignalIndexAccessor = "signalIndexAccessor",
+  Index = "index",
+}

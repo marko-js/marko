@@ -3,6 +3,7 @@ import {
   AccessorProp,
   type BranchScope,
   NodeType,
+  RendererProp,
   type Scope,
 } from "../common/types";
 import { insertChildNodes } from "./dom";
@@ -14,14 +15,14 @@ import { _const, type Signal, type SignalFn } from "./signals";
 import { walk } from "./walker";
 
 export type Renderer = {
-  ___id: string;
-  ___setup: undefined | SetupFn;
-  ___clone: (branch: BranchScope, ns: string) => void;
-  ___params: Signal<unknown> | undefined;
-  ___owner: Scope | undefined;
-  ___accessor: Accessor | undefined;
-  ___localClosures?: Record<Accessor, Signal<unknown>>;
-  ___localClosureValues?: Record<Accessor, unknown>;
+  [RendererProp.Id]: string;
+  [RendererProp.Setup]: undefined | SetupFn;
+  [RendererProp.Clone]: (branch: BranchScope, ns: string) => void;
+  [RendererProp.Params]: Signal<unknown> | undefined;
+  [RendererProp.Owner]: Scope | undefined;
+  [RendererProp.Accessor]: Accessor | undefined;
+  [RendererProp.LocalClosures]?: Record<Accessor, Signal<unknown>>;
+  [RendererProp.LocalClosureValues]?: Record<Accessor, unknown>;
 };
 
 export type SetupFn = (scope: Scope) => void;
@@ -33,17 +34,19 @@ export function createBranch(
   parentNode: ParentNode,
 ) {
   const branch = createScope($global) as BranchScope;
-  branch[AccessorProp.Owner] = (renderer as Renderer).___owner || parentScope;
+  branch[AccessorProp.Owner] =
+    (renderer as Renderer)[RendererProp.Owner] || parentScope;
   setParentBranch(branch, parentScope?.[AccessorProp.ClosestBranch]);
 
   if (MARKO_DEBUG) {
     branch[AccessorProp.Renderer] = renderer;
   }
 
-  (renderer as Renderer | { ___clone?: Renderer["___clone"] }).___clone?.(
-    branch,
-    (parentNode as Element).namespaceURI!,
-  );
+  (
+    renderer as
+      | Renderer
+      | { [RendererProp.Clone]?: Renderer[RendererProp.Clone] }
+  )[RendererProp.Clone]?.(branch, (parentNode as Element).namespaceURI!);
 
   return branch;
 }
@@ -72,8 +75,8 @@ export function createAndSetupBranch(
 }
 
 export function setupBranch(renderer: Renderer, branch: BranchScope) {
-  if (renderer.___setup) {
-    queueRender(branch, renderer.___setup, -1);
+  if (renderer[RendererProp.Setup]) {
+    queueRender(branch, renderer[RendererProp.Setup], -1);
   }
   return branch;
 }
@@ -95,7 +98,7 @@ export function _content(
   walks = walks ? walks.replace(/[^\0-1]+$/, "") : "";
   setup = setup ? (setup as { _: SetupFn })._ || setup : undefined;
   params ||= undefined;
-  const clone: Renderer["___clone"] = template
+  const clone: Renderer[RendererProp.Clone] = template
     ? (branch, ns) => {
         ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(
           template,
@@ -113,12 +116,12 @@ export function _content(
 
   return (owner?: Scope): Renderer => {
     return {
-      ___id: id,
-      ___clone: clone,
-      ___owner: owner,
-      ___setup: setup,
-      ___params: params,
-      ___accessor: dynamicScopesAccessor,
+      [RendererProp.Id]: id,
+      [RendererProp.Clone]: clone,
+      [RendererProp.Owner]: owner,
+      [RendererProp.Setup]: setup,
+      [RendererProp.Params]: params,
+      [RendererProp.Accessor]: dynamicScopesAccessor,
     };
   };
 }
@@ -141,14 +144,14 @@ export function _content_closures(
   renderer: ReturnType<typeof _content>,
   closureFns: Record<Accessor, SignalFn>,
 ) {
-  const closureSignals: NonNullable<Renderer["___localClosures"]> = {};
+  const closureSignals: NonNullable<Renderer[RendererProp.LocalClosures]> = {};
   for (const key in closureFns) {
     closureSignals[key] = _const(MARKO_DEBUG ? key : +key, closureFns[key]);
   }
   return (owner: Scope, closureValues: Record<Accessor, unknown>): Renderer => {
     const instance = renderer(owner);
-    instance.___localClosures = closureSignals;
-    instance.___localClosureValues = closureValues;
+    instance[RendererProp.LocalClosures] = closureSignals;
+    instance[RendererProp.LocalClosureValues] = closureValues;
     return instance;
   };
 }

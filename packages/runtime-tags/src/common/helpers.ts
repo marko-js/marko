@@ -1,3 +1,5 @@
+import { RendererProp } from "./accessor.debug";
+
 export const htmlAttrNameReg = /^[^a-z_]|[^a-z0-9._:-]/i;
 export const userAttrNameReg = /^[^a-z_$]|[^a-z0-9._:-]/i;
 
@@ -72,7 +74,7 @@ export function normalizeDynamicRenderer<Renderer>(
   if (value) {
     if (typeof value === "string") return value;
     const normalized = value.content || value.default || value;
-    if (/*@__KEY__*/ "___id" in normalized) {
+    if (RendererProp.Id in normalized) {
       return normalized;
     }
   }

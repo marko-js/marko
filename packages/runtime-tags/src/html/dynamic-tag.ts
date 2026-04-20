@@ -5,6 +5,7 @@ import {
   type Accessor,
   AccessorPrefix,
   AccessorProp,
+  RendererProp,
   ResumeSymbol,
 } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
@@ -195,7 +196,8 @@ export let _dynamic_tag = (
     if (shouldResume) {
       _scope(scopeId, {
         [AccessorPrefix.ConditionalRenderer + accessor]:
-          (renderer as ServerRenderer | undefined)?.___id || renderer,
+          (renderer as ServerRenderer | undefined)?.[RendererProp.Id] ||
+          renderer,
       });
     }
   } else {
@@ -206,7 +208,7 @@ export let _dynamic_tag = (
 };
 
 export function _content(id: string, fn: ServerRenderer) {
-  fn.___id = id;
+  fn[RendererProp.Id] = id;
   return fn;
 }
 
@@ -231,7 +233,8 @@ export const patchDynamicTag = (
       resume,
     ) => {
       const patched = patch(tag, scopeId, accessor);
-      if (patched !== tag) (patched as any).___id = tag;
+      if (patched !== tag)
+        (patched as ServerRenderer)[RendererProp.Id] = tag as string;
       return originalDynamicTag(
         scopeId,
         accessor,

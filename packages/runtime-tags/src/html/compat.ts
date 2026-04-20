@@ -4,7 +4,7 @@ import {
   SET_SCOPE_REGISTER_ID,
 } from "../common/compat-meta";
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
-import type { Scope } from "../common/types";
+import { RendererProp, type Scope } from "../common/types";
 import { patchDynamicTag } from "./dynamic-tag";
 import { getRegistered, register } from "./serializer";
 import type { ServerRenderer } from "./template";
@@ -57,7 +57,7 @@ export const compat = {
     return state;
   },
   isTagsAPI(fn: any) {
-    return !!fn.___id;
+    return !!fn[RendererProp.Id];
   },
   onFlush(fn: (chunk: Chunk) => void) {
     const { flushHTML } = Chunk.prototype;

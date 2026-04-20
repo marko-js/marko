@@ -11,6 +11,7 @@ import {
   type Falsy,
   ResumeSymbol,
 } from "../common/types";
+import { RendererProp } from "../common/types";
 import { attrAssignment } from "./attrs";
 import { forInBy, forOfBy, forStepBy } from "./for";
 import { REORDER_RUNTIME_CODE, WALKER_RUNTIME_CODE } from "./inlined-runtimes";
@@ -102,7 +103,8 @@ export function _attr_content(
         [AccessorPrefix.BranchScopes + nodeAccessor]: referenceScope(
           writeScope(branchId, {}),
         ),
-        [AccessorPrefix.ConditionalRenderer + nodeAccessor]: render?.___id,
+        [AccessorPrefix.ConditionalRenderer + nodeAccessor]:
+          render?.[RendererProp.Id],
       });
     }
   } else {

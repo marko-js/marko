@@ -46,7 +46,13 @@ export interface AwaitCounter {
   c: () => void | 1;
 }
 
-export { AccessorPrefix, AccessorProp } from "./accessor.debug";
+export {
+  AccessorPrefix,
+  AccessorProp,
+  ClosureSignalProp,
+  PendingRenderProp,
+  RendererProp,
+} from "./accessor.debug";
 
 export enum NodeType {
   Element = 1,

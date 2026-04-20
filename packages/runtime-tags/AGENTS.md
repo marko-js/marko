@@ -35,17 +35,17 @@ export function _text(...) { ... }
 
 These are **not** "private" in the traditional sense. The underscore means these are internal runtime API entry points which are public to generated code, but not meant for direct use by application authors.
 
-### Triple-underscore properties (`___name`)
+### Internal object properties via accessor enums
 
-Internal object properties on renderers, templates, and other runtime structures use a triple-underscore prefix:
+Internal properties on runtime objects (renderers, pending renders, closure signals, etc.) use enum-based computed keys defined in `src/common/accessor.ts` / `src/common/accessor.debug.ts`:
 
 ```ts
-renderer.___id;
-scope.___owner;
-template.___localClosures;
+renderer[RendererProp.Id];
+render[PendingRenderProp.Scope];
+closureSignal[ClosureSignalProp.Index];
 ```
 
-These are mangled into short names for production builds.
+Each unique object type gets its own enum so all enums can start from `"a"`, `"b"`, `"c"` — maximizing gzip compression. The debug variants use descriptive strings (`"id"`, `"scope"`, etc.) swapped in by the `remap-debug` build plugin.
 
 ## `MARKO_DEBUG` Pattern
 

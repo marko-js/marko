@@ -1,14 +1,19 @@
-import { AccessorProp, type BranchScope, type Scope } from "../common/types";
+import {
+  AccessorProp,
+  type BranchScope,
+  PendingRenderProp,
+  type Scope,
+} from "../common/types";
 import { renderCatch } from "./control-flow";
 import { enableBranches } from "./resume";
 import type { Signal, SignalFn } from "./signals";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 export type PendingRender = {
-  ___key: number;
-  ___scope: Scope;
-  ___signal: Signal<any>;
-  ___value: unknown;
+  [PendingRenderProp.Key]: number;
+  [PendingRenderProp.Scope]: Scope;
+  [PendingRenderProp.Signal]: Signal<any>;
+  [PendingRenderProp.Value]: unknown;
 };
 
 let pendingRenders: PendingRender[] = [];
@@ -31,14 +36,14 @@ export function queueRender<T>(
   const key = scopeKey * scopeKeyOffset + signalKey;
   let render = signalKey >= 0 && pendingRendersLookup.get(key);
   if (render) {
-    render.___value = value;
+    render[PendingRenderProp.Value] = value;
   } else {
     queuePendingRender(
       (render = {
-        ___key: key,
-        ___scope: scope,
-        ___signal: signal,
-        ___value: value,
+        [PendingRenderProp.Key]: key,
+        [PendingRenderProp.Scope]: scope,
+        [PendingRenderProp.Signal]: signal,
+        [PendingRenderProp.Value]: value,
       }),
     );
     signalKey >= 0 && pendingRendersLookup.set(key, render);
@@ -50,7 +55,8 @@ export function queuePendingRender(render: PendingRender) {
   while (i) {
     const parentIndex = (i - 1) >> 1;
     const parent = pendingRenders[parentIndex];
-    if (render.___key - parent.___key >= 0) break;
+    if (render[PendingRenderProp.Key] - parent[PendingRenderProp.Key] >= 0)
+      break;
     pendingRenders[i] = parent;
     i = parentIndex;
   }
@@ -116,7 +122,7 @@ function runRenders() {
     if (render !== item) {
       let i = 0;
       const mid = pendingRenders.length >> 1;
-      const key = (pendingRenders[0] = item).___key;
+      const key = (pendingRenders[0] = item)[PendingRenderProp.Key];
 
       while (i < mid) {
         let bestChild = (i << 1) + 1;
@@ -124,12 +130,14 @@ function runRenders() {
 
         if (
           right < pendingRenders.length &&
-          pendingRenders[right].___key - pendingRenders[bestChild].___key < 0
+          pendingRenders[right][PendingRenderProp.Key] -
+            pendingRenders[bestChild][PendingRenderProp.Key] <
+            0
         ) {
           bestChild = right;
         }
 
-        if (pendingRenders[bestChild].___key - key >= 0) {
+        if (pendingRenders[bestChild][PendingRenderProp.Key] - key >= 0) {
           break;
         } else {
           pendingRenders[i] = pendingRenders[bestChild];
@@ -141,7 +149,9 @@ function runRenders() {
     }
 
     if (
-      !render.___scope[AccessorProp.ClosestBranch]?.[AccessorProp.Destroyed]
+      !render[PendingRenderProp.Scope][AccessorProp.ClosestBranch]?.[
+        AccessorProp.Destroyed
+      ]
     ) {
       runRender(render);
     }
@@ -155,7 +165,10 @@ function runRenders() {
 }
 
 let runRender = (render: PendingRender) =>
-  render.___signal(render.___scope, render.___value);
+  render[PendingRenderProp.Signal](
+    render[PendingRenderProp.Scope],
+    render[PendingRenderProp.Value],
+  );
 
 export let _enable_catch = () => {
   _enable_catch = () => {};
@@ -201,11 +214,11 @@ export let _enable_catch = () => {
   )(runEffects);
   runRender = ((runRender) => (render: PendingRender) => {
     try {
-      let branch = render.___scope[AccessorProp.ClosestBranch];
+      let branch = render[PendingRenderProp.Scope][AccessorProp.ClosestBranch];
       while (branch) {
         if (branch[AccessorProp.PendingRenders]) {
           (asyncRendersLookup as typeof pendingRendersLookup).set(
-            render.___key,
+            render[PendingRenderProp.Key],
             render,
           );
           return branch[AccessorProp.PendingRenders].push(render);
@@ -214,7 +227,7 @@ export let _enable_catch = () => {
       }
       runRender(render);
     } catch (error) {
-      renderCatch(render.___scope, error);
+      renderCatch(render[PendingRenderProp.Scope], error);
     }
   })(runRender);
 };
