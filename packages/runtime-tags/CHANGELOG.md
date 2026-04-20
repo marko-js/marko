@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.165
+
+### Patch Changes
+
+- [#3158](https://github.com/marko-js/marko/pull/3158) [`6bf1616`](https://github.com/marko-js/marko/commit/6bf16167ecac61aebf70b05acc39fc4cd78c4d3d) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Ensure that `<try>` respects empty `<@catch/>`
+
 ## 6.0.164
 
 ### Patch Changes
