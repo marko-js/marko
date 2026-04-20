@@ -3,6 +3,7 @@ import {
   assertAttributesOrSingleArg,
   getProgram,
   getTagDef,
+  getTaglibLookup,
   getTagTemplate,
   importDefault,
   importNamed,
@@ -216,7 +217,7 @@ function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
   if (tagName) {
     const closestTag = closest(
       tagName,
-      Object.keys(tag.state.file.___taglibLookup.merged.tags),
+      Object.keys((getTaglibLookup(tag.hub.file) as any).merged.tags),
     );
     if (distance(tagName, closestTag) < 4) {
       didYouMean = ` Did you mean \`<${closestTag}>\`?`;

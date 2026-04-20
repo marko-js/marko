@@ -1,4 +1,4 @@
-// size: 21288 (min) 8002 (brotli)
+// size: 21292 (min) 7995 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -79,7 +79,7 @@ function normalizeDynamicRenderer(value) {
   if (value) {
     if ("string" == typeof value) return value;
     let normalized = value.content || value.default || value;
-    if ("g" in normalized) return normalized;
+    if ("a" in normalized) return normalized;
   }
 }
 var decodeAccessor = (num) =>
@@ -254,16 +254,17 @@ function subscribeToScopeSet(ownerScope, accessor, scope) {
     ));
 }
 function _closure(...closureSignals) {
-  let [{ o: ___scopeInstancesAccessor, q: ___signalIndexAccessor }] =
-    closureSignals;
-  for (let i = closureSignals.length; i--; ) closureSignals[i].x = i;
+  let [firstSignal] = closureSignals,
+    scopeInstances = firstSignal.a,
+    signalIndex = firstSignal.b;
+  for (let i = closureSignals.length; i--; ) closureSignals[i].c = i;
   return (scope) => {
-    if (scope[___scopeInstancesAccessor])
-      for (let childScope of scope[___scopeInstancesAccessor])
+    if (scope[scopeInstances])
+      for (let childScope of scope[scopeInstances])
         childScope.H ||
           queueRender(
             childScope,
-            closureSignals[childScope[___signalIndexAccessor] || 0],
+            closureSignals[childScope[signalIndex] || 0],
             -1,
           );
   };
@@ -271,17 +272,17 @@ function _closure(...closureSignals) {
 function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
   valueAccessor = decodeAccessor(valueAccessor);
   let closureSignal = (scope) => {
-    ((scope[closureSignal.q] = closureSignal.x),
+    ((scope[closureSignal.b] = closureSignal.c),
       fn(scope),
       subscribeToScopeSet(
         getOwnerScope ? getOwnerScope(scope) : scope._,
-        closureSignal.o,
+        closureSignal.a,
         scope,
       ));
   };
   return (
-    (closureSignal.o = "B" + valueAccessor),
-    (closureSignal.q = "C" + valueAccessor),
+    (closureSignal.a = "B" + valueAccessor),
+    (closureSignal.b = "C" + valueAccessor),
     resumeId && _resume(resumeId, closureSignal),
     closureSignal
   );
@@ -399,9 +400,9 @@ function walkInternal(currentWalkIndex, walkCodes, scope) {
 function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global);
   return (
-    (branch._ = renderer.f || parentScope),
+    (branch._ = renderer.e || parentScope),
     setParentBranch(branch, parentScope?.F),
-    renderer.k?.(branch, parentNode.namespaceURI),
+    renderer.b?.(branch, parentNode.namespaceURI),
     branch
   );
 }
@@ -417,7 +418,7 @@ function createAndSetupBranch($global, renderer, parentScope, parentNode) {
   );
 }
 function setupBranch(renderer, branch) {
-  return (renderer.l && queueRender(branch, renderer.l, -1), branch);
+  return (renderer.c && queueRender(branch, renderer.c, -1), branch);
 }
 function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
   ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
@@ -454,12 +455,12 @@ function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
         walk((branch.S = branch.K = new Text()), walks, branch);
       };
   return (owner) => ({
-    g: id,
-    k: clone,
-    f: owner,
-    l: setup,
+    a: id,
+    b: clone,
+    e: owner,
+    c: setup,
     d: params,
-    e: dynamicScopesAccessor,
+    f: dynamicScopesAccessor,
   });
 }
 function _content_resume(
@@ -482,8 +483,8 @@ function _content_closures(renderer, closureFns) {
   return (owner, closureValues) => {
     let instance = renderer(owner);
     return (
-      (instance.h = closureSignals),
-      (instance.t = closureValues),
+      (instance.g = closureSignals),
+      (instance.h = closureValues),
       instance
     );
   };
@@ -1209,14 +1210,14 @@ function attrsInternal(scope, nodeAccessor, nextAttrs) {
 function _attr_content(scope, nodeAccessor, value) {
   let content = (function (value) {
     let renderer = normalizeDynamicRenderer(value);
-    if (renderer && renderer.g) return renderer;
+    if (renderer && renderer.a) return renderer;
   })(value);
-  scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = content?.g) &&
+  scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = content?.a) &&
     (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
-    content?.e &&
-      subscribeToScopeSet(content.f, content.e, scope["A" + nodeAccessor]));
-  for (let accessor in content?.h)
-    content.h[accessor](scope["A" + nodeAccessor], content.t[accessor]);
+    content?.f &&
+      subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor]));
+  for (let accessor in content?.g)
+    content.g[accessor](scope["A" + nodeAccessor], content.h[accessor]);
 }
 function _attrs_script(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
@@ -1499,7 +1500,7 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
       if (
         scope[rendererAccessor] !==
           (scope[rendererAccessor] =
-            normalizedRenderer?.g || normalizedRenderer) ||
+            normalizedRenderer?.a || normalizedRenderer) ||
         (getContent && !normalizedRenderer && !scope[childScopeAccessor])
       )
         if (
@@ -1522,18 +1523,18 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
               content,
               createAndSetupBranch,
             ),
-              content.e &&
+              content.f &&
                 subscribeToScopeSet(
-                  content.f,
                   content.e,
+                  content.f,
                   scope[childScopeAccessor].Aa,
                 ));
           }
         } else
-          normalizedRenderer?.e &&
+          normalizedRenderer?.f &&
             subscribeToScopeSet(
-              normalizedRenderer.f,
               normalizedRenderer.e,
+              normalizedRenderer.f,
               scope[childScopeAccessor],
             );
       if (normalizedRenderer) {
@@ -1548,10 +1549,10 @@ var _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
             (childScope.Ia || childScope.Ea) &&
               queueEffect(childScope, dynamicTagScript));
         else {
-          for (let accessor in normalizedRenderer.h)
-            normalizedRenderer.h[accessor](
+          for (let accessor in normalizedRenderer.g)
+            normalizedRenderer.g[accessor](
               childScope,
-              normalizedRenderer.t[accessor],
+              normalizedRenderer.h[accessor],
             );
           if (normalizedRenderer.d)
             if (inputIsArgs)
@@ -1799,8 +1800,8 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let key = scopeKey * scopeKeyOffset + signalKey,
     render = signalKey >= 0 && pendingRendersLookup.get(key);
   render
-    ? (render.u = value)
-    : (queuePendingRender((render = { a: key, j: scope, y: signal, u: value })),
+    ? (render.d = value)
+    : (queuePendingRender((render = { a: key, b: scope, c: signal, d: value })),
       signalKey >= 0 && pendingRendersLookup.set(key, render));
 }
 function queuePendingRender(render) {
@@ -1873,12 +1874,12 @@ function runRenders() {
       }
       pendingRenders[i] = item;
     }
-    render.j.F?.I || runRender(render);
+    render.b.F?.I || runRender(render);
   }
   for (let scope of pendingScopes) scope.H = 0;
   pendingScopes = [];
 }
-var runRender = (render) => render.y(render.j, render.u),
+var runRender = (render) => render.c(render.b, render.d),
   _enable_catch = () => {
     ((_enable_catch = () => {}), enableBranches());
     let handlePendingTry = (fn, scope, branch) => {
@@ -1907,7 +1908,7 @@ var runRender = (render) => render.y(render.j, render.u),
     )(runEffects)),
       (runRender = ((runRender2) => (render) => {
         try {
-          let branch = render.j.F;
+          let branch = render.b.F;
           for (; branch; ) {
             if (branch.W)
               return (
@@ -1918,7 +1919,7 @@ var runRender = (render) => render.y(render.j, render.u),
           }
           runRender2(render);
         } catch (error) {
-          renderCatch(render.j, error);
+          renderCatch(render.b, error);
         }
       })(runRender)));
   };
@@ -1950,7 +1951,7 @@ var classIdToBranch = new Map(),
     registerRenderer(fn) {
       _resume("$C_r", fn);
     },
-    isRenderer: (renderer) => renderer.k,
+    isRenderer: (renderer) => renderer.b,
     getStartNode: (branch) => branch.S,
     setScopeNodes(branch, startNode, endNode) {
       ((branch.S = startNode), (branch.K = endNode));
@@ -1975,7 +1976,7 @@ var classIdToBranch = new Map(),
     createRenderer(params, clone) {
       let renderer = _content("", 0, 0, 0, params)();
       return (
-        (renderer.k = (branch) => {
+        (renderer.b = (branch) => {
           let cloned = clone();
           ((branch.S = cloned.startNode), (branch.K = cloned.endNode));
         }),
@@ -2004,7 +2005,7 @@ var classIdToBranch = new Map(),
               createAndSetupBranch(
                 out.global,
                 renderer,
-                renderer.f,
+                renderer.e,
                 document.body,
               ))),
             renderer.d?.(branch, renderer._ ? args[0] : args));
@@ -2051,7 +2052,7 @@ function mount(input = {}, reference, position) {
         (branch.T = (newValue) => {
           curValue = newValue;
         }),
-        this.l?.(branch),
+        this.c?.(branch),
         args?.(branch, input));
     });
   return (
