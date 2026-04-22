@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.166
+
+### Patch Changes
+
+- [#3165](https://github.com/marko-js/marko/pull/3165) [`e4c0874`](https://github.com/marko-js/marko/commit/e4c08749fbe90572099f85757b157effab80c055) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize runtime for bundling with rolldown.
+
+- [#3165](https://github.com/marko-js/marko/pull/3165) [`0be6dad`](https://github.com/marko-js/marko/commit/0be6dad0d770efa17e568ee3f96f0d8e87a490cc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Use replaced enum pattern instead of mangled properties to produce more compressible runtime.
+
 ## 6.0.165
 
 ### Patch Changes
