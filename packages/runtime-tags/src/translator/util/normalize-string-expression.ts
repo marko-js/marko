@@ -52,7 +52,7 @@ export default function normalizeStringExpression(
           params,
           t.templateLiteral(
             strs.map((raw) =>
-              t.templateElement({ raw: raw.replace(/`/g, "\\`") }),
+              t.templateElement({ raw: escapeTemplateRaw(raw) }),
             ),
             params,
           ),
@@ -64,7 +64,7 @@ export default function normalizeStringExpression(
     }
 
     return t.templateLiteral(
-      strs.map((raw) => t.templateElement({ raw: raw.replace(/`/g, "\\`") })),
+      strs.map((raw) => t.templateElement({ raw: escapeTemplateRaw(raw) })),
       exprs,
     );
   } else if (curStr) {
@@ -74,6 +74,10 @@ export default function normalizeStringExpression(
 
 export function appendLiteral(arr: unknown[], str: string) {
   arr[arr.length - 1] += str;
+}
+
+function escapeTemplateRaw(raw: string) {
+  return raw.replace(/\\/g, "\\\\").replace(/`/g, "\\`");
 }
 
 function shiftItems(list: unknown[], start: number, offset: number) {
