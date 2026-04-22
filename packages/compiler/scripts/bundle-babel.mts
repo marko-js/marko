@@ -13,7 +13,7 @@ await Promise.all(
         sourcemap: false,
         minify: "dce-only",
         format: "cjs",
-        intro: "'use strict';",
+        strict: true,
         file: platform === "node" ? "dist/babel.js" : "dist/babel.web.js",
       },
     }),

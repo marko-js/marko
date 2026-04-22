@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 
 export default function normalizeStringExpression(
   parts: (string | t.Expression)[],
+  useIife?: boolean,
 ): t.Expression | undefined {
   const strs: string[] = [];
   const exprs: t.Expression[] = [];
@@ -42,6 +43,25 @@ export default function normalizeStringExpression(
     }
 
     strs.push(curStr);
+
+    if (useIife) {
+      // Note: this is a temporary workaround for https://github.com/rolldown/rolldown/issues/9189
+      const params = exprs.map((_, i) => t.identifier(`_w${i}`));
+      const iife = t.callExpression(
+        t.arrowFunctionExpression(
+          params,
+          t.templateLiteral(
+            strs.map((raw) =>
+              t.templateElement({ raw: raw.replace(/`/g, "\\`") }),
+            ),
+            params,
+          ),
+        ),
+        exprs,
+      );
+      t.addComment(iife, "leading", "@__PURE__");
+      return iife;
+    }
 
     return t.templateLiteral(
       strs.map((raw) => t.templateElement({ raw: raw.replace(/`/g, "\\`") })),

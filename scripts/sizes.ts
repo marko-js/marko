@@ -1,25 +1,15 @@
 import * as compiler from "@marko/compiler";
-import pluginTerser from "@rollup/plugin-terser";
-import pluginVirtual from "@rollup/plugin-virtual";
 import fs from "fs";
 import kleur from "kleur";
 import path from "path";
 import { format } from "prettier";
-import { type OutputAsset, type OutputChunk, rollup } from "rollup";
+import { build, type OutputAsset, type OutputChunk } from "rolldown";
+import { minifySync } from "rolldown/utils";
 import { table } from "table";
-import { minify } from "terser";
 import glob from "tiny-glob";
 import zlib from "zlib";
 
 const compiledOutputDir = path.join(process.cwd(), ".sizes");
-const nameCacheFile = path.join(process.cwd(), ".sizes", "name-cache.json");
-const nameCache = (() => {
-  try {
-    return JSON.parse(fs.readFileSync(nameCacheFile, "utf-8"));
-  } catch {
-    return {};
-  }
-})();
 
 try {
   fs.rmSync(compiledOutputDir, { recursive: true });
@@ -55,6 +45,10 @@ const translatorPath = path.join(
 const configPath = path.join(rootDir, ".sizes.json");
 const skipExamples = process.argv.includes("--no-examples");
 
+const markoRe = /\.marko$/;
+const virtualEntry = "entry";
+const virtualEntryRe = new RegExp(`^${virtualEntry}$`);
+
 run(configPath);
 
 async function run(configPath: string) {
@@ -63,10 +57,8 @@ async function run(configPath: string) {
   const measure = (process.env.MEASURE as undefined | keyof Sizes) || "brotli";
 
   console.log(measure);
-
   console.log(renderTable(current, previous, measure));
   writeData(configPath, current);
-  await fs.promises.writeFile(nameCacheFile, JSON.stringify(nameCache));
 }
 
 function loadData(configPath: string): Saved {
@@ -148,10 +140,7 @@ function renderSize(
 }
 
 async function getResults(examples: Record<string, string>) {
-  const [, , runtimeTotal, runtimeFiles] = await bundleExample(
-    runtimePath,
-    false,
-  );
+  const [runtimeTotal, runtimeFiles] = await bundleRuntime();
   const results: Result[] = [
     {
       name: "*",
@@ -168,7 +157,7 @@ async function getResults(examples: Record<string, string>) {
 
   for (const [exampleName, examplePath] of Object.entries(examples)) {
     for (const hydrate of [false, true]) {
-      const [user, runtime, total, files] = await bundleExample(
+      const [user, runtime, total, files] = await bundleUserCode(
         examplePath,
         hydrate,
       );
@@ -200,13 +189,12 @@ async function getResults(examples: Record<string, string>) {
 async function analyzeChunk(chunk: OutputChunk) {
   const { name, code } = chunk;
   const minified = stripModuleCode(
-    (
-      await minify(code, {
-        nameCache,
-        compress: {},
-        mangle: { module: true },
-      })
-    ).code!,
+    minifySync("chunk.js", code, {
+      compress: true,
+      codegen: true,
+      mangle: true,
+      module: true,
+    }).code,
   );
 
   const sizes = {
@@ -229,63 +217,67 @@ function addSizes(all: Sizes[]) {
   return total;
 }
 
-async function bundleExample(examplePath: string, hydrate: boolean) {
-  const isRuntime = examplePath === runtimePath;
-  const virtualEntry = "./entry.js";
-  const optimizeKnownTemplates: string[] | undefined = isRuntime
-    ? undefined
-    : await glob(path.join(path.dirname(examplePath), "**/*.marko"), {
-        absolute: true,
-      });
-  const bundle = await rollup({
-    input: isRuntime ? runtimePath : virtualEntry,
+async function bundleRuntime() {
+  const { output } = await build({ input: runtimePath });
+  const chunk = output.find((c): c is OutputChunk => "code" in c)!;
+  const analyzed = await analyzeChunk(chunk);
+  return [analyzed.sizes, { [analyzed.name]: analyzed.code }] as const;
+}
+
+async function bundleUserCode(examplePath: string, hydrate: boolean) {
+  const cache = new Map<unknown, unknown>();
+  const optimizeKnownTemplates: string[] = await glob(
+    path.join(path.dirname(examplePath), "**/*.marko"),
+    { absolute: true },
+  );
+  const { output } = await build({
+    input: virtualEntry,
+    resolve: { alias: { "@marko/runtime-tags/dom": runtimePath } },
     plugins: [
       {
-        name: "marko",
-        resolveId(source) {
-          if (source === "@marko/runtime-tags/dom") {
-            return runtimePath;
+        name: "entry",
+        resolveId(id, importer) {
+          if (id === virtualEntry) {
+            return id;
+          }
+
+          if (importer === virtualEntry) {
+            return this.resolve(id, examplePath);
           }
         },
-        async load(id) {
-          if (id.endsWith(".marko")) {
-            return (
-              await compiler.compileFile(id, {
-                translator: translatorPath,
-                output: "dom",
-                optimize: true,
-                babelConfig: {
-                  babelrc: false,
-                  configFile: false,
-                },
-                writeVersionComment: false,
-                optimizeKnownTemplates,
-              })
-            ).code;
-          }
-          return null;
+        load: {
+          filter: { id: { include: virtualEntryRe } },
+          handler: () => {
+            return hydrate
+              ? `import ${JSON.stringify(examplePath)}; import { init } from "@marko/runtime-tags/dom"; init();`
+              : `import template from ${JSON.stringify(examplePath)};template.mount();`;
+          },
         },
       },
-      !isRuntime &&
-        pluginVirtual({
-          [virtualEntry]: hydrate
-            ? `import ${JSON.stringify(
-                examplePath,
-              )}; import { init } from "@marko/runtime-tags/dom"; init();`
-            : `import template from ${JSON.stringify(examplePath)};template.mount();`,
-        }),
-      pluginTerser({ compress: {}, mangle: false }),
+      {
+        name: "marko",
+        load: {
+          filter: { id: { include: markoRe } },
+          async handler(id) {
+            const { code, map } = await compiler.compileFile(id, {
+              translator: translatorPath,
+              cache,
+              output: "dom",
+              writeVersionComment: false,
+              optimize: true,
+              optimizeKnownTemplates,
+              babelConfig: {
+                babelrc: false,
+                configFile: false,
+                browserslistConfigFile: false,
+              },
+            });
+            return { code, map };
+          },
+        },
+      },
     ],
-  });
-
-  const { output } = await bundle.generate({
-    format: "es",
-    compact: true,
-    manualChunks(id) {
-      if (id === runtimePath) {
-        return "runtime";
-      }
-    },
+    output: { manualChunks },
   });
   const runtimeChunk = output.find(isRuntimeChunk);
   const [analyzedRuntimeCode, analyzedUserCode] = await Promise.all([
@@ -297,6 +289,7 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
   const totalSize = runtimeSize ? addSizes([userSize, runtimeSize]) : userSize;
   const files: Record<string, string> = {};
 
+  if (analyzedRuntimeCode) files["runtime.js"] = analyzedRuntimeCode.code;
   for (const { name, code } of analyzedUserCode) {
     files[name] = code;
   }
@@ -327,4 +320,10 @@ function isRuntimeChunk(
   chunk: OutputChunk | OutputAsset,
 ): chunk is OutputChunk {
   return chunk.name === "runtime" && "code" in chunk;
+}
+
+function manualChunks(id: string) {
+  if (id === runtimePath) {
+    return "runtime";
+  }
 }

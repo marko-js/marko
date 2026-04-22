@@ -554,6 +554,7 @@ export const _for_until = loop<
   forUntil(until, from, step, (v) => cb(by(v), [v])),
 );
 
+/* @__NO_SIDE_EFFECTS__ */
 function loop<T extends unknown[] = unknown[]>(
   forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
 ) {

@@ -1,11 +1,12 @@
 import { assertExclusiveAttrs } from "../common/errors";
 import {
-  classValue,
   getEventHandlerName,
   htmlAttrNameReg,
   isEventHandler,
   normalizeDynamicRenderer,
-  styleValue,
+  stringifyClassObject,
+  stringifyStyleObject,
+  toDelimitedString,
 } from "../common/helpers";
 import {
   type Accessor,
@@ -58,7 +59,11 @@ function setAttribute(
 }
 
 export function _attr_class(element: Element, value: unknown) {
-  setAttribute(element, "class", classValue(value) || undefined);
+  setAttribute(
+    element,
+    "class",
+    toDelimitedString(value, " ", stringifyClassObject) || undefined,
+  );
 }
 
 export function _attr_class_items(
@@ -79,7 +84,11 @@ export function _attr_class_item(
 }
 
 export function _attr_style(element: Element, value: unknown) {
-  setAttribute(element, "style", styleValue(value) || undefined);
+  setAttribute(
+    element,
+    "style",
+    toDelimitedString(value, ";", stringifyStyleObject) || undefined,
+  );
 }
 
 export function _attr_style_items(

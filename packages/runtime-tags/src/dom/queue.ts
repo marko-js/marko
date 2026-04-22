@@ -170,64 +170,68 @@ let runRender = (render: PendingRender) =>
     render[PendingRenderProp.Value],
   );
 
-export let _enable_catch = () => {
-  _enable_catch = () => {};
-  enableBranches();
-  const handlePendingTry = (
-    fn: ExecFn,
-    scope: Scope,
-    branch: BranchScope | undefined,
-  ) => {
-    // walk up the branches to see if any have an AwaitCounter with count (i) > 0
-    // if not, return false
-    // if so, return true and push the fn to the pending async queue on the try branch
-    while (branch) {
-      if (branch[AccessorProp.AwaitCounter]?.i) {
-        return (branch[AccessorProp.PendingEffects] ||= []).push(fn, scope);
-      }
-      branch = branch[AccessorProp.ParentBranch];
-    }
-  };
-  runEffects = (
-    (runEffects) =>
-    (effects: unknown[], checkPending = placeholderShown.has(effects)) => {
-      if (checkPending || caughtError.has(effects)) {
-        let i = 0;
-        let fn: SignalFn;
-        let scope: Scope;
-        let branch: BranchScope | undefined;
-        for (; i < effects.length; ) {
-          fn = effects[i++] as SignalFn;
-          scope = effects[i++] as Scope;
-          branch = scope[AccessorProp.ClosestBranch];
-          if (
-            !branch?.[AccessorProp.Destroyed] &&
-            !(checkPending && handlePendingTry(fn, scope, branch))
-          ) {
-            fn(scope);
-          }
-        }
-      } else {
-        runEffects(effects);
-      }
-    }
-  )(runEffects);
-  runRender = ((runRender) => (render: PendingRender) => {
-    try {
-      let branch = render[PendingRenderProp.Scope][AccessorProp.ClosestBranch];
+let catchEnabled: undefined | 1;
+export function _enable_catch() {
+  if (!catchEnabled) {
+    catchEnabled = 1;
+    enableBranches();
+    const handlePendingTry = (
+      fn: ExecFn,
+      scope: Scope,
+      branch: BranchScope | undefined,
+    ) => {
+      // walk up the branches to see if any have an AwaitCounter with count (i) > 0
+      // if not, return false
+      // if so, return true and push the fn to the pending async queue on the try branch
       while (branch) {
-        if (branch[AccessorProp.PendingRenders]) {
-          (asyncRendersLookup as typeof pendingRendersLookup).set(
-            render[PendingRenderProp.Key],
-            render,
-          );
-          return branch[AccessorProp.PendingRenders].push(render);
+        if (branch[AccessorProp.AwaitCounter]?.i) {
+          return (branch[AccessorProp.PendingEffects] ||= []).push(fn, scope);
         }
-        branch = branch![AccessorProp.ParentBranch];
+        branch = branch[AccessorProp.ParentBranch];
       }
-      runRender(render);
-    } catch (error) {
-      renderCatch(render[PendingRenderProp.Scope], error);
-    }
-  })(runRender);
-};
+    };
+    runEffects = (
+      (runEffects) =>
+      (effects: unknown[], checkPending = placeholderShown.has(effects)) => {
+        if (checkPending || caughtError.has(effects)) {
+          let i = 0;
+          let fn: SignalFn;
+          let scope: Scope;
+          let branch: BranchScope | undefined;
+          for (; i < effects.length; ) {
+            fn = effects[i++] as SignalFn;
+            scope = effects[i++] as Scope;
+            branch = scope[AccessorProp.ClosestBranch];
+            if (
+              !branch?.[AccessorProp.Destroyed] &&
+              !(checkPending && handlePendingTry(fn, scope, branch))
+            ) {
+              fn(scope);
+            }
+          }
+        } else {
+          runEffects(effects);
+        }
+      }
+    )(runEffects);
+    runRender = ((runRender) => (render: PendingRender) => {
+      try {
+        let branch =
+          render[PendingRenderProp.Scope][AccessorProp.ClosestBranch];
+        while (branch) {
+          if (branch[AccessorProp.PendingRenders]) {
+            (asyncRendersLookup as typeof pendingRendersLookup).set(
+              render[PendingRenderProp.Key],
+              render,
+            );
+            return branch[AccessorProp.PendingRenders].push(render);
+          }
+          branch = branch![AccessorProp.ParentBranch];
+        }
+        runRender(render);
+      } catch (error) {
+        renderCatch(render[PendingRenderProp.Scope], error);
+      }
+    })(runRender);
+  }
+}

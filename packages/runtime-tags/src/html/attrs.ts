@@ -1,11 +1,12 @@
 import { assertExclusiveAttrs } from "../common/errors";
 import {
-  classValue,
   getEventHandlerName,
   htmlAttrNameReg,
   isEventHandler,
   isVoid,
-  styleValue,
+  stringifyClassObject,
+  stringifyStyleObject,
+  toDelimitedString,
 } from "../common/helpers";
 import { type Accessor, AccessorPrefix, ControlledType } from "../common/types";
 import { _escape } from "./content";
@@ -19,11 +20,17 @@ import {
 } from "./writer";
 
 export function _attr_class(value: unknown) {
-  return stringAttr("class", classValue(value));
+  return stringAttr(
+    "class",
+    toDelimitedString(value, " ", stringifyClassObject),
+  );
 }
 
 export function _attr_style(value: unknown) {
-  return stringAttr("style", styleValue(value));
+  return stringAttr(
+    "style",
+    toDelimitedString(value, ";", stringifyStyleObject),
+  );
 }
 
 export function _attr_option_value(value: unknown) {

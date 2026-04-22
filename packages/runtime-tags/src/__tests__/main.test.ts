@@ -6,7 +6,6 @@ import fs from "fs";
 import snap from "mocha-snap";
 import path from "path";
 import glob from "tiny-glob";
-import { isDeepStrictEqual } from "util";
 
 import * as translator from "../translator";
 import { bundle } from "./utils/bundle";
@@ -55,24 +54,6 @@ describe("runtime-tags/translator", () => {
       const fixtureDir = resolve(".");
       const relativeFixtureDir = path.relative(process.cwd(), fixtureDir);
       const templateFile = resolve("template.marko");
-      const snapshotsDir = resolve("__snapshots__");
-      const nameCacheFile = path.join(snapshotsDir, ".name-cache.json");
-      const nameCache = (() => {
-        try {
-          return JSON.parse(fs.readFileSync(nameCacheFile, "utf-8")) as Record<
-            string,
-            unknown
-          >;
-        } catch {
-          try {
-            fs.mkdirSync(snapshotsDir, { recursive: true });
-          } catch {
-            // ignore
-          }
-          return {};
-        }
-      })();
-      const initialNameCache = structuredClone(nameCache);
       const config: TestConfig = (() => {
         try {
           return require(resolve("test.ts")).config ?? {};
@@ -158,7 +139,7 @@ describe("runtime-tags/translator", () => {
               !config.error_compiler
             ) {
               await targetSnap(
-                () => stripFixtureDir(bundle(file, nameCache, finalConfig)),
+                () => stripFixtureDir(bundle(file, finalConfig)),
                 {
                   file: name.replace(".marko", ".hydrate.js"),
                   dir: fixtureDir,
@@ -451,15 +432,6 @@ describe("runtime-tags/translator", () => {
 
       before(() => {
         register({ ...ssrCompileOpts, modules: "cjs" });
-      });
-
-      after(() => {
-        if (!isDeepStrictEqual(initialNameCache, nameCache)) {
-          fs.writeFileSync(
-            nameCacheFile,
-            JSON.stringify(nameCache, null, 2) + "\n",
-          );
-        }
       });
 
       describe("compile", () => {

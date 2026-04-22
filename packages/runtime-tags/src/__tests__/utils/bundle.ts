@@ -1,10 +1,8 @@
 import * as compiler from "@marko/compiler";
-import pluginTerser from "@rollup/plugin-terser";
-import fs from "fs/promises";
 import path from "path";
 import { format } from "prettier";
-import { type OutputChunk, rollup } from "rollup";
-import { minify } from "terser";
+import { build, type OutputChunk } from "rolldown";
+import { minifySync } from "rolldown/utils";
 import glob from "tiny-glob";
 import zlib from "zlib";
 
@@ -13,96 +11,77 @@ interface Sizes {
   brotli: number;
 }
 
+const markoExt = ".marko";
+const markoRe = new RegExp(`\\${markoExt}$`);
+const virtualEntry = "entry";
+const virtualEntryRe = new RegExp(`^${virtualEntry}$`);
+
 export async function bundle(
   entryTemplate: string,
-  nameCache: Record<string, unknown>,
   compilerConfig: compiler.Config,
 ) {
   const cache = new Map<unknown, unknown>();
-  const hydratePrefix = "\0hydrate:";
-  const entryCode = await fs.readFile(entryTemplate, "utf-8");
   const optimizeKnownTemplates: string[] = await glob(
-    path.join(path.dirname(entryTemplate), "**/*.marko"),
+    path.join(path.dirname(entryTemplate), `**/*${markoExt}`),
     { absolute: true },
   );
-  const bundle = await rollup({
-    input: hydratePrefix + entryTemplate,
-    onwarn(warning, warn) {
-      switch (warning.code) {
-        case "EMPTY_BUNDLE":
-        case "UNUSED_EXTERNAL_IMPORT":
-          break;
-        default:
-          warn(warning);
-          break;
-      }
+  const { output } = await build({
+    input: virtualEntry,
+    external: (id) => !markoRe.test(id),
+    treeshake: {
+      moduleSideEffects: "no-external",
     },
     plugins: [
       {
-        name: "marko",
+        name: "entry",
         resolveId(id, importer) {
-          if (!id.endsWith(".marko")) {
-            return {
-              id,
-              external: true,
-              moduleSideEffects: false,
-            };
-          }
-
-          if (id.startsWith(hydratePrefix)) {
+          if (id === virtualEntry) {
             return id;
           }
 
-          if (importer?.startsWith(hydratePrefix)) {
-            return this.resolve(id, importer.slice(hydratePrefix.length), {
-              skipSelf: true,
+          if (importer === virtualEntry) {
+            return this.resolve(id, entryTemplate);
+          }
+        },
+        load: {
+          filter: { id: { include: virtualEntryRe } },
+          async handler() {
+            const { code } = await compiler.compileFile(entryTemplate, {
+              ...compilerConfig,
+              cache,
+              optimize: true,
+              optimizeKnownTemplates,
+              output: "hydrate",
             });
-          }
-        },
-        load(id) {
-          if (id.startsWith(hydratePrefix)) {
-            id = id.slice(hydratePrefix.length);
-          }
-
-          if (id === entryTemplate) {
-            return entryCode;
-          }
-
-          return null;
-        },
-        async transform(code, id) {
-          if (id.endsWith(".marko")) {
-            const isHydrate = id.startsWith(hydratePrefix);
-            if (isHydrate) {
-              id = id.slice(hydratePrefix.length);
-            }
-
-            return (
-              await compiler.compile(code, id, {
-                ...compilerConfig,
-                cache,
-                optimize: true,
-                optimizeKnownTemplates,
-                output: isHydrate ? "hydrate" : "dom",
-              })
-            ).code;
-          }
-          return null;
+            return code;
+          },
         },
       },
-      pluginTerser({ compress: {}, mangle: false }),
-    ],
-  });
+      {
+        name: "marko",
+        load: {
+          filter: { id: { include: markoRe } },
+          async handler(id) {
+            const { code, map } = await compiler.compileFile(id, {
+              ...compilerConfig,
+              cache,
+              optimize: true,
+              optimizeKnownTemplates,
+              output: "dom",
+            });
 
-  const { output } = await bundle.generate({
-    format: "es",
-    compact: true,
+            return { code, map };
+          },
+        },
+      },
+    ],
+    output: {
+      minify: { compress: true, mangle: false, codegen: true },
+    },
   });
   const chunks = output.filter((chunk) => "code" in chunk) as OutputChunk[];
   const size = addSizes(
-    await Promise.all(
-      chunks.map((chunk) => getSizesForSrc(chunk.code, nameCache)),
-    ),
+    await Promise.all(chunks.map((chunk) => getSizesForSrc(chunk.code))),
   );
 
   if (size.min === 0) {
@@ -123,18 +102,14 @@ export async function bundle(
   return `// size: ${size.min} (min) ${size.brotli} (brotli)\n${stripModuleCode(result)}`;
 }
 
-async function getSizesForSrc(
-  code: string,
-  nameCache: Record<string, unknown>,
-): Promise<Sizes> {
+async function getSizesForSrc(code: string): Promise<Sizes> {
   const minified = stripModuleCode(
-    (
-      await minify(code, {
-        nameCache,
-        compress: {},
-        mangle: { module: true },
-      })
-    ).code!,
+    minifySync("bundle.js", code, {
+      compress: true,
+      codegen: true,
+      mangle: true,
+      module: true,
+    }).code,
   );
   return {
     min: Buffer.byteLength(minified),

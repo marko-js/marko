@@ -34,8 +34,9 @@ for (const entry of args.positionals) {
     sourceMaps: false,
     modules: "esm",
     babelConfig: {
-      configFile: false,
       babelrc: false,
+      configFile: false,
+      browserslistConfigFile: false,
     },
     translator: args.values.translator || "@marko/runtime-tags/translator",
   });

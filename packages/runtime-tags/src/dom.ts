@@ -61,7 +61,7 @@ export {
   _to_text,
 } from "./dom/dom";
 export { _on } from "./dom/event";
-export { _enable_catch as _enable_catch, run } from "./dom/queue";
+export { _enable_catch, run } from "./dom/queue";
 export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export { _el, _resume, _var_resume, init, initEmbedded } from "./dom/resume";
 export {

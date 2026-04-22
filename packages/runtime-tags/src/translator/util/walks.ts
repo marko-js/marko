@@ -205,7 +205,7 @@ export function getWalkString(section: Section) {
 
   visitInternal(section);
   const walks = getWalks(section);
-  const walkLiteral = normalizeStringExpression(walks.map(unwrapWalk));
+  const walkLiteral = normalizeStringExpression(walks.map(unwrapWalk), true);
   if (walkLiteral && (walkLiteral as t.StringLiteral).value !== "") {
     withLeadingComment(walkLiteral, getWalkComment(section).join(", "));
   }

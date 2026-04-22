@@ -104,11 +104,10 @@ export const [getSectionMeta] = createSectionState<SectionMeta>(
     const writes = getWrites(section);
     const meta = {
       walks: getWalkString(section),
-      writes: normalizeStringExpression([
-        writePrefix,
-        ...writes.map(unwrapWrite),
-        writePostfix,
-      ]),
+      writes: normalizeStringExpression(
+        [writePrefix, ...writes.map(unwrapWrite), writePostfix],
+        true,
+      ),
       decls: undefined,
     };
     return meta;

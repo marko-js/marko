@@ -30,7 +30,8 @@ export function walk(startNode: Node, walkCodes: string, branch: BranchScope) {
   walkInternal(0, walkCodes, branch);
 }
 
-function walkInternal(
+// TODO: turn into normal function declaration when resolved: https://github.com/oxc-project/oxc/issues/17364?issue=rolldown%7Crolldown%7C7666
+const walkInternal = function walkInternal(
   currentWalkIndex: number,
   walkCodes: string,
   scope: Scope,
@@ -125,7 +126,7 @@ function walkInternal(
         WalkCode.Multiplier;
     }
   }
-}
+};
 
 export function getDebugKey(index: number, node: Node | string) {
   if (typeof node === "string") {

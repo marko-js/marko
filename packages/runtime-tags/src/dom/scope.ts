@@ -49,11 +49,12 @@ export function destroyScope(scope: Scope) {
   }
 }
 
-function destroyNestedScopes(scope: Scope) {
+// TODO: turn into normal function declaration when resolved: https://github.com/oxc-project/oxc/issues/17364?issue=rolldown%7Crolldown%7C7666
+const destroyNestedScopes = function destroyNestedScopes(scope: Scope) {
   scope[AccessorProp.Destroyed] = 1;
   scope[AccessorProp.BranchScopes]?.forEach(destroyNestedScopes);
   scope[AccessorProp.AbortScopes]?.forEach(resetControllers);
-}
+};
 
 function resetControllers(scope: Scope) {
   for (const id in scope[AccessorProp.AbortControllers]) {

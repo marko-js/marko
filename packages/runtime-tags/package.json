@@ -37,7 +37,7 @@
     "!**/*.tsbuildinfo"
   ],
   "scripts": {
-    "build": "node -r ~ts ./scripts/bundle.ts"
+    "build": "node -r ~ts ./scripts/bundle.mts"
   },
   "dependencies": {
     "@marko/compiler": "^5.39.62",

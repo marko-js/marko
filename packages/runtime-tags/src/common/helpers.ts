@@ -8,27 +8,20 @@ export function _call<T>(fn: (v: T) => unknown, v: T): T {
   return v;
 }
 
-export function classValue(classValue: unknown) {
-  return toDelimitedString(classValue, " ", stringifyClassObject);
-}
-
-function stringifyClassObject(name: string, value: unknown) {
+export function stringifyClassObject(name: string, value: unknown) {
   return value ? name : "";
 }
 
-export function styleValue(styleValue: unknown) {
-  return toDelimitedString(styleValue, ";", stringifyStyleObject);
-}
-
-function stringifyStyleObject(name: string, value: unknown) {
+export function stringifyStyleObject(name: string, value: unknown) {
   return value || value === 0 ? name + ":" + value : "";
 }
 
-function toDelimitedString(
+// TODO: turn into normal function declaration when resolved: https://github.com/oxc-project/oxc/issues/17364?issue=rolldown%7Crolldown%7C7666
+export const toDelimitedString = function toDelimitedString(
   val: unknown,
   delimiter: string,
   stringify: (n: string, v: unknown) => string | undefined,
-) {
+): string {
   let str = "";
   let sep = "";
   let part: string | undefined;
@@ -44,7 +37,7 @@ function toDelimitedString(
         }
       }
     } else {
-      for (const name in val) {
+      for (const name in val as Record<string, unknown>) {
         part = stringify(name, (val as Record<string, unknown>)[name]);
         if (part) {
           str += sep + part;
@@ -53,9 +46,8 @@ function toDelimitedString(
       }
     }
   }
-
   return str;
-}
+};
 
 export function isEventHandler(name: string): name is `on${string}` {
   return /^on[A-Z-]/.test(name);

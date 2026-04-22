@@ -1,78 +1,66 @@
-/**
- * TODO:
- * This file should replace ./build.ts once rolldown adds the following optimizations.
- *
- * https://github.com/oxc-project/oxc/issues/6073
- * https://github.com/oxc-project/oxc/issues/15375
- */
-
 import path from "node:path";
 
-import { build } from "rolldown";
+import { build, rolldown } from "rolldown";
+
+import debugPlugin from "./build-plugins/debug.mts";
+import declHoistPlugin from "./build-plugins/decl-hoist.mts";
 
 const cwd = path.join(import.meta.dirname, "..");
 
-await Promise.all(
-  [
-    // Build translator
-    build({
-      cwd,
-      input: "src/translator/index.ts",
-      platform: "node",
-      external: [/^[^./]/, path.join(cwd, "package.json")],
-      transform: {
-        define: {
-          MARKO_DEBUG: "false",
+await Promise.all([
+  // Build translator
+  build({
+    cwd,
+    input: "src/translator/index.ts",
+    platform: "node",
+    external: [/^[^./]/, path.join(cwd, "package.json")],
+    transform: {
+      define: {
+        MARKO_DEBUG: "false",
+      },
+    },
+    output: {
+      format: "cjs",
+      strict: true,
+      sourcemap: false,
+      minify: "dce-only",
+      dir: "dist/translator",
+    },
+  }),
+  // Build runtime
+  ...["dom", "html"].flatMap((name) =>
+    ["dist/debug", "dist"].map(async (out) => {
+      const file = `${out}/${name}`;
+      const isProd = out === "dist";
+      const minify = isProd
+        ? { mangle: false, codegen: false, compress: true }
+        : ("dce-only" as const);
+      await using bundle = await rolldown({
+        cwd,
+        input: `src/${name}.ts`,
+        platform: name === "dom" ? "browser" : "node",
+        experimental: { nativeMagicString: true },
+        transform: {
+          define: { MARKO_DEBUG: String(!isProd) },
         },
-      },
-      output: {
-        format: "cjs",
-        sourcemap: false,
-        minify: "dce-only",
-        dir: "dist/translator",
-        intro: "'use strict';",
-      },
-    }),
-    // Build runtime
-    ["dist/debug", "dist"].map((env) =>
-      ["dom", "html"].map((name) =>
-        (["esm", "cjs"] as const).map(async (format) => {
-          const isProd = env === "dist";
-          await build({
-            cwd,
-            input: `src/${name}.ts`,
-            platform: name === "dom" ? "browser" : "node",
-            // mangleProps: isProd ? /^___/ : undefined,
-            transform: {
-              define: { MARKO_DEBUG: String(!isProd) },
-            },
-            plugins: isProd
-              ? [
-                  {
-                    name: "debug",
-                    resolveId: {
-                      filter: { id: { include: /^\..*\.debug$/ } },
-                      handler(id, importer, opts) {
-                        return this.resolve(
-                          id.replace(/\.debug$/, ""),
-                          importer,
-                          opts,
-                        );
-                      },
-                    },
-                  },
-                ]
-              : undefined,
-            output: {
-              format,
-              sourcemap: false,
-              minify: "dce-only",
-              file: `${env}/${name}.${format === "esm" ? "mjs" : "js"}`,
-              intro: format === "cjs" ? "'use strict';" : undefined,
-            },
-          });
+        plugins: isProd ? [debugPlugin(), declHoistPlugin()] : undefined,
+      });
+
+      await Promise.all([
+        bundle.write({
+          file: `${file}.mjs`,
+          format: "esm",
+          minify,
+          sourcemap: false,
         }),
-      ),
-    ),
-  ].flat(),
-);
+        bundle.write({
+          file: `${file}.js`,
+          format: "cjs",
+          strict: true,
+          minify,
+          sourcemap: false,
+        }),
+      ]);
+    }),
+  ),
+]);

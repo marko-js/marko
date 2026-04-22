@@ -18,6 +18,7 @@ export function _on<
   (element as any)["$" + type] = handler || null;
 }
 
+/* @__NO_SIDE_EFFECTS__ */
 export function createDelegator() {
   const kEvents = Symbol();
   return function ensureDelegated(
