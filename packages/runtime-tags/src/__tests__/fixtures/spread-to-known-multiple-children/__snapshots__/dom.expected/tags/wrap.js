@@ -1,5 +1,8 @@
-export const $template = `${_child_template}${_child_template}`;
-export const $walks = /* <child>, <child> */`/${_child_walks}&/${_child_walks}&`;
+export const $template = /*@__PURE__*/((_w0, _w1) => `${_w0}${_w1}`)(_child_template, _child_template);
+export const $walks =
+/*@__PURE__*/
+/* <child>, <child> */
+((_w0, _w1) => `/${_w0}&/${_w1}&`)(_child_walks, _child_walks);
 import { $setup as _child, $input_class as _child_input_class, $input_value as _child_input_value, $template as _child_template, $walks as _child_walks } from "./child.marko";
 export function $setup($scope) {
   _child($scope["#childScope/0"]);

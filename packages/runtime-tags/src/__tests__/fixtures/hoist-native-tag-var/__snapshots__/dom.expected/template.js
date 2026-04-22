@@ -1,5 +1,8 @@
-export const $template = `<!><!>${_child_template}<hr><!><!>`;
-export const $walks = /* over(1), replace, over(1), <child>, over(1), replace, over(2) */`b%b/${_child_walks}&b%c`;
+export const $template = /*@__PURE__*/(_w0 => `<!><!>${_w0}<hr><!><!>`)(_child_template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), replace, over(1), <child>, over(1), replace, over(2) */
+(_w0 => `b%b/${_w0}&b%c`)(_child_walks);
 import { $setup as _child, $input as _child_input, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $el2_getter = _._hoist("#div/0", "BranchScopes:#text/2");
@@ -11,7 +14,10 @@ const $if_content2__setup = $scope => {
     value: $if_content2__$el_getter($scope)
   });
 };
-const $if_content__if = /* @__PURE__ */_._if("#text/0", `<div></div>${_child_template}`, /* get, over(1), <child> */` b/${_child_walks}&`, $if_content2__setup);
+const $if_content__if = /* @__PURE__ */_._if("#text/0", /*@__PURE__*/(_w0 => `<div></div>${_w0}`)(_child_template),
+/*@__PURE__*/
+/* get, over(1), <child> */
+(_w0 => ` b/${_w0}&`)(_child_walks), $if_content2__setup);
 const $if_content__input_show = /* @__PURE__ */_._if_closure("#text/0", 0, $scope => $if_content__if($scope, $scope._.input_show ? 0 : 1));
 const $if_content__setup = $if_content__input_show;
 const $if = /* @__PURE__ */_._if("#text/0", "<!><!><!>", /* over(1), replace, over(2) */"b%c", $if_content__setup);

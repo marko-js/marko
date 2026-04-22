@@ -1,5 +1,8 @@
-export const $template = `${_store_template}<button>Clear</button><ul></ul>`;
-export const $walks = /* <store/var>, get, over(1), get, over(1) */`0${_store_walks}& b b`;
+export const $template = /*@__PURE__*/(_w0 => `${_w0}<button>Clear</button><ul></ul>`)(_store_template);
+export const $walks =
+/*@__PURE__*/
+/* <store/var>, get, over(1), get, over(1) */
+(_w0 => `0${_w0}& b b`)(_store_walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _store, $input_value as _store_input_value, $template as _store_template, $walks as _store_walks } from "./tags/store.marko";
 const $for_content__item = ($scope, item) => _._text($scope["#text/0"], item);

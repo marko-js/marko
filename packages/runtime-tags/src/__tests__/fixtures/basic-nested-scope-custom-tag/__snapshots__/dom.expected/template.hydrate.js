@@ -1,6 +1,6 @@
-// size: 156 (min) 115 (brotli)
-const $child_content__count__script = _._script("b0", ($scope) =>
-    _._on($scope.a, "click", function () {
+// size: 156 (min) 116 (brotli)
+const $child_content__count__script = _._script(`b0`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       $count($scope._, $scope._.b + 1);
     }),
   ),

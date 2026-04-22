@@ -1,7 +1,10 @@
 const $MyTag_content__walks = /* next(1), get, out(1) */"D l",
   $MyTag_content__template = "<div> </div>";
-export const $template = `<!>${$MyTag_content__template}<button> </button>`;
-export const $walks = /* over(1), <MyTag>, get, next(1), get, out(1) */`b/${$MyTag_content__walks}& D l`;
+export const $template = /*@__PURE__*/(_w0 => `<!>${_w0}<button> </button>`)($MyTag_content__template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <MyTag>, get, next(1), get, out(1) */
+(_w0 => `b/${_w0}& D l`)($MyTag_content__walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $MyTag_content__number = ($scope, number) => _._text($scope["#text/0"], number);
 const $MyTag_content__$params = ($scope, $params2) => $MyTag_content__$temp($scope, $params2?.[0]);

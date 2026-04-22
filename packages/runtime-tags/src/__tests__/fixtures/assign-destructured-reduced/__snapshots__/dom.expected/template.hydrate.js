@@ -1,9 +1,9 @@
-// size: 268 (min) 179 (brotli)
-const $input__script = _._script("a0", ($scope) => {
+// size: 262 (min) 177 (brotli)
+const $input__script = _._script(`a0`, ($scope) => {
     {
       $scope.b;
-      const updated = _._call($scope.b.valueChange, 2);
-      if (2 !== updated) throw new Error("Expected value to be 2");
+      let updated = _._call($scope.b.valueChange, 2);
+      if (updated !== 2) throw Error(`Expected value to be 2`);
       console.log(updated, $scope.b.value);
     }
   }),
@@ -16,4 +16,4 @@ function $valueChange($scope) {
     $count($scope, _new_count);
   };
 }
-(_._resume("b0", $valueChange), init());
+(_._resume(`b0`, $valueChange), init());

@@ -1,5 +1,8 @@
-export const $template = `${_letGlobal_template}<div> </div><div> </div><button> </button>`;
-export const $walks = /* <let-global/var>, next(1), get, out(1), next(1), get, out(1), get, next(1), get, out(1) */`0${_letGlobal_walks}&D lD l D l`;
+export const $template = /*@__PURE__*/(_w0 => `${_w0}<div> </div><div> </div><button> </button>`)(_letGlobal_template);
+export const $walks =
+/*@__PURE__*/
+/* <let-global/var>, next(1), get, out(1), next(1), get, out(1), get, next(1), get, out(1) */
+(_w0 => `0${_w0}&D lD l D l`)(_letGlobal_walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _letGlobal, $input_value as _letGlobal_input_value, $template as _letGlobal_template, $walks as _letGlobal_walks } from "./tags/let-global.marko";
 const $a__OR__b = /* @__PURE__ */_._or(8, $scope => _._text($scope["#text/5"], `${$scope.a},${$scope.b}`), 1, "#scopeOffset/1");

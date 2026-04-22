@@ -13,7 +13,10 @@ const $for_content2__setup = $scope => {
   $for_content2__setup__script($scope);
 };
 const $for_content2__ref = _._var_resume("__tests__/template.marko_2_ref/var", /* @__PURE__ */_._const("ref", $scope => _._assert_hoist($scope.ref)));
-const $for_content__for = /* @__PURE__ */_._for_to("#text/0", _child_template, /* <child/var> */`0${_child_walks}&`, $for_content2__setup);
+const $for_content__for = /* @__PURE__ */_._for_to("#text/0", _child_template,
+/*@__PURE__*/
+/* <child/var> */
+(_w0 => `0${_w0}&`)(_child_walks), $for_content2__setup);
 const $for_content__setup__script = _._script("__tests__/template.marko_1", $scope => (_._el_read($scope._["#pre/1"]).innerHTML += `${[...$for_content__ref_getter($scope)].length}; ${$for_content__ref_getter($scope)()}\n\t`));
 const $for_content__setup = $scope => {
   $for_content__for($scope, [2, 0, 1]);

@@ -7,7 +7,10 @@ const $if_content__setup = $scope => {
   $if_content__onCount._($scope);
   _counter($scope["#childScope/0"]);
 };
-const $if = /* @__PURE__ */_._if("#div/0", `<div>${_counter_template}</div>`, /* next(1), <counter>, out(1) */`D/${_counter_walks}&l`, $if_content__setup);
+const $if = /* @__PURE__ */_._if("#div/0", /*@__PURE__*/(_w0 => `<div>${_w0}</div>`)(_counter_template),
+/*@__PURE__*/
+/* next(1), <counter>, out(1) */
+(_w0 => `D/${_w0}&l`)(_counter_walks), $if_content__setup);
 const $show = /* @__PURE__ */_._let("show/1", $scope => $if($scope, $scope.show ? 0 : 1));
 const $onCount2 = /* @__PURE__ */_._const("onCount");
 export function $setup($scope) {

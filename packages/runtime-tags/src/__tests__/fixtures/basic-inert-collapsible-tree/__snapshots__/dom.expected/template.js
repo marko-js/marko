@@ -1,5 +1,8 @@
 export const $template = _comments_template;
-export const $walks = /* <comments> */`/${_comments_walks}&`;
+export const $walks =
+/*@__PURE__*/
+/* <comments> */
+(_w0 => `/${_w0}&`)(_comments_walks);
 import { $setup as _comments, $input_comments as _comments_input_comments, $input_path as _comments_input_path, $template as _comments_template, $walks as _comments_walks } from "./tags/comments.marko";
 export function $setup($scope) {
   _comments($scope["#childScope/0"]);

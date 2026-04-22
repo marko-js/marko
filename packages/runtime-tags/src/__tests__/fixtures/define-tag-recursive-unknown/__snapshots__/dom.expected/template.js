@@ -1,7 +1,10 @@
 const $Foo_content__walks = /* over(1), replace, over(2) */"b%c",
   $Foo_content__template = "<!><!><!>";
-export const $template = `<!>${$Foo_content__template}<!>`;
-export const $walks = /* over(1), <Foo>, over(1) */`b/${$Foo_content__walks}&b`;
+export const $template = /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)($Foo_content__template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <Foo>, over(1) */
+(_w0 => `b/${_w0}&b`)($Foo_content__walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $else_content__input_message = /* @__PURE__ */_._if_closure("#text/0", 1, $scope => _._text($scope["#text/0"], JSON.stringify($scope._.input_message)));
 const $else_content__setup = $else_content__input_message;

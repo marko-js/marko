@@ -1,5 +1,8 @@
-export const $template = `<button>Inc</button>${_child_template}`;
-export const $walks = /* get, over(1), <child> */` b/${_child_walks}&`;
+export const $template = /*@__PURE__*/(_w0 => `<button>Inc</button>${_w0}`)(_child_template);
+export const $walks =
+/*@__PURE__*/
+/* get, over(1), <child> */
+(_w0 => ` b/${_w0}&`)(_child_walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $content as _child_input_content, $value as _child_input_value, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 const $child_content2__outer = /* @__PURE__ */_._closure_get("outer", $scope => _._text($scope["#text/0"], $scope._.outer));
@@ -16,7 +19,10 @@ const $child_content__setup = $scope => {
 const $child_content__$params = ($scope, $params2) => $child_content__outer($scope, $params2[0]);
 const $child_content__outer__closure = /* @__PURE__ */_._closure($child_content2__outer);
 const $child_content__outer = /* @__PURE__ */_._const("outer", $child_content__outer__closure);
-const $child_content = _._content_resume("__tests__/template.marko_1_content", _child_template, /* <child> */`/${_child_walks}&`, $child_content__setup, $child_content__$params);
+const $child_content = _._content_resume("__tests__/template.marko_1_content", _child_template,
+/*@__PURE__*/
+/* <child> */
+(_w0 => `/${_w0}&`)(_child_walks), $child_content__setup, $child_content__$params);
 const $x__script = _._script("__tests__/template.marko_0_x", $scope => _._on($scope["#button/0"], "click", function () {
   $x($scope, $scope.x + 1);
 }));

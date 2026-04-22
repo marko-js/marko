@@ -1,5 +1,8 @@
-export const $template = `<div id=known>${_child_template}</div><div id=dynamic><!></div>`;
-export const $walks = /* next(1), <child>, out(1), next(1), replace, out(1) */`D/${_child_walks}&lD%l`;
+export const $template = /*@__PURE__*/(_w0 => `<div id=known>${_w0}</div><div id=dynamic><!></div>`)(_child_template);
+export const $walks =
+/*@__PURE__*/
+/* next(1), <child>, out(1), next(1), replace, out(1) */
+(_w0 => `D/${_w0}&lD%l`)(_child_walks);
 import childTag from "./tags/child.marko";
 const Child = childTag;
 import { $setup as _child, $_class as _child_input_class, $rest as _child_input_$rest, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";

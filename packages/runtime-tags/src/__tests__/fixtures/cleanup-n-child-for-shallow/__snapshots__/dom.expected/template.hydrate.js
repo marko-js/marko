@@ -1,5 +1,5 @@
-// size: 596 (min) 330 (brotli)
-const $input_name__OR__input_write__script = _._script("a0", ($scope) => {
+// size: 609 (min) 349 (brotli)
+const $input_name__OR__input_write__script = _._script(`a0`, ($scope) => {
     ($scope.g(`mounted ${$scope.f}`),
       (_.$signal($scope, 0).onabort = () => {
         $scope.g(`destroyed ${$scope.f}`);
@@ -21,26 +21,27 @@ const $input_name__OR__input_write__script = _._script("a0", ($scope) => {
   $for_content__setup = ($scope) => {
     ($for_content__write._($scope), $scope.a);
   },
-  $for_content__$params = ($scope, $params2) =>
-    (($scope, item) => $name($scope.a, item))($scope, $params2[0]),
+  $for_content__item = ($scope, item) => $name($scope.a, item),
   $for = _._for_of(
     2,
-    "<div> </div><span> </span><p> </p>",
-    "/D lD lD l&",
+    `<div> </div><span> </span><p> </p>`,
+    ((_w0) => `/${_w0}&`)(`D lD lD l`),
     $for_content__setup,
-    $for_content__$params,
+    ($scope, $params2) => $for_content__item($scope, $params2[0]),
   ),
-  $items__script = _._script("b1", ($scope) =>
-    _._on($scope.a, "click", function () {
+  $items__script = _._script(`b1`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       $items($scope, $scope.d?.length ? $scope.d.slice(0, -1) : [1, 2, 3]);
     }),
   ),
   $items = _._let(3, ($scope) => {
     ($for($scope, [$scope.d]), $items__script($scope));
   });
-(_._resume("b0", function ($scope) {
+function $write($scope) {
   return function (msg) {
-    $scope.b.innerHTML += "\n" + msg;
+    $scope.b.innerHTML +=
+      `
+` + msg;
   };
-}),
-  init());
+}
+(_._resume(`b0`, $write), init());

@@ -1,5 +1,6 @@
-// size: 1029 (min) 430 (brotli)
-const $input_name__OR__input_write__script = _._script("a0", ($scope) => {
+// size: 1072 (min) 455 (brotli)
+const $template = `<p> </p>`,
+  $input_name__OR__input_write__script = _._script(`a0`, ($scope) => {
     ($scope.e(`${$scope.d} mounted`),
       (_.$signal($scope, 0).onabort = () => {
         $scope.e(`${$scope.d} destroyed`);
@@ -17,20 +18,24 @@ const $input_name__OR__input_write__script = _._script("a0", ($scope) => {
     ($scope) => $write$1($scope.a, $scope._._._.i),
     ($scope) => $scope._._._,
   ),
-  $if_content3__setup = ($scope) => {
-    ($if_content3__write($scope), $scope.a, $name($scope.a, "Inner"));
-  },
-  $if_content2__if = _._if(1, "<p> </p>", "/D l&", $if_content3__setup),
+  $if_content2__if = _._if(
+    1,
+    $template,
+    ((_w0) => `/${_w0}&`)(`D l`),
+    ($scope) => {
+      ($if_content3__write($scope), $scope.a, $name($scope.a, `Inner`));
+    },
+  ),
   $if_content2__showInner = _._closure_get(
     7,
-    ($scope) => $if_content2__if($scope, $scope._._.h ? 0 : 1),
+    ($scope) => $if_content2__if($scope, +!$scope._._.h),
     ($scope) => $scope._._,
   ),
   $if_content2__setup = ($scope) => {
     ($if_content2__showInner($scope),
       $if_content2__write($scope),
       $scope.a,
-      $name($scope.a, "Middle"));
+      $name($scope.a, `Middle`));
   },
   $if_content2__write = _._closure_get(
     8,
@@ -39,33 +44,38 @@ const $input_name__OR__input_write__script = _._script("a0", ($scope) => {
   ),
   $if_content__if = _._if(
     1,
-    "<div><p> </p><!></div>",
-    "D/D l&%l",
+    ((_w0) => `<div>${_w0}<!></div>`)($template),
+    ((_w0) => `D/${_w0}&%l`)(`D l`),
     $if_content2__setup,
   ),
   $if_content__showMiddle = _._if_closure(4, 0, ($scope) =>
-    $if_content__if($scope, $scope._.g ? 0 : 1),
+    $if_content__if($scope, +!$scope._.g),
   ),
   $if_content__setup = ($scope) => {
     ($if_content__showMiddle._($scope),
       $if_content__write._($scope),
       $scope.a,
-      $name($scope.a, "Outer"));
+      $name($scope.a, `Outer`));
   },
   $if_content__write = _._if_closure(4, 0, ($scope) =>
     $write$1($scope.a, $scope._.i),
   ),
-  $if = _._if(4, "<div><p> </p><!></div>", "D/D l&%l", $if_content__setup),
-  $showOuter__script = _._script("b1", ($scope) =>
-    _._on($scope.a, "click", function () {
+  $if = _._if(
+    4,
+    ((_w0) => `<div>${_w0}<!></div>`)($template),
+    ((_w0) => `D/${_w0}&%l`)(`D l`),
+    $if_content__setup,
+  ),
+  $showOuter__script = _._script(`b1`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       $showOuter($scope, !$scope.f);
     }),
   ),
   $showOuter = _._let(5, ($scope) => {
-    ($if($scope, $scope.f ? 0 : 1), $showOuter__script($scope));
+    ($if($scope, +!$scope.f), $showOuter__script($scope));
   }),
-  $showMiddle__script = _._script("b2", ($scope) =>
-    _._on($scope.b, "click", function () {
+  $showMiddle__script = _._script(`b2`, ($scope) =>
+    _._on($scope.b, `click`, function () {
       $showMiddle($scope, !$scope.g);
     }),
   ),
@@ -73,17 +83,19 @@ const $input_name__OR__input_write__script = _._script("a0", ($scope) => {
     ($if_content__showMiddle($scope), $showMiddle__script($scope));
   }),
   $showInner__closure = _._closure($if_content2__showInner),
-  $showInner__script = _._script("b3", ($scope) =>
-    _._on($scope.c, "click", function () {
+  $showInner__script = _._script(`b3`, ($scope) =>
+    _._on($scope.c, `click`, function () {
       $showInner($scope, !$scope.h);
     }),
   ),
   $showInner = _._let(7, ($scope) => {
     ($showInner__closure($scope), $showInner__script($scope));
   });
-(_._resume("b0", function ($scope) {
+function $write($scope) {
   return function (msg) {
-    $scope.d.innerHTML += "\n" + msg;
+    $scope.d.innerHTML +=
+      `
+` + msg;
   };
-}),
-  init());
+}
+(_._resume(`b0`, $write), init());

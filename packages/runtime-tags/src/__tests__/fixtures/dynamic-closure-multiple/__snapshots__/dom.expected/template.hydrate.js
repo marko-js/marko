@@ -1,4 +1,4 @@
-// size: 307 (min) 163 (brotli)
+// size: 307 (min) 186 (brotli)
 _._enable_catch();
 const $if_content__a = _._closure_get(
     2,
@@ -10,8 +10,8 @@ const $if_content__a = _._closure_get(
     ($scope) => _._text($scope.b, $scope._._.d),
     ($scope) => $scope._._,
   ),
-  $a__OR__b__script = _._script("a0", ($scope) =>
-    _._on($scope.a, "click", function () {
+  $a__OR__b__script = _._script(`a0`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       ($a($scope, $scope.c + 1), $b($scope, $scope.d + 1));
     }),
   ),

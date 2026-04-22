@@ -2,8 +2,11 @@ const $ChildA_content__walks = /* get, next(1), replace, over(2), replace, out(1
   $ChildA_content__template = "<div class=a><!> <!></div>",
   $ChildB_content__walks = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l",
   $ChildB_content__template = "<div class=b><!> <!></div>";
-export const $template = `<!>${$ChildA_content__template}${$ChildA_content__template}${$ChildA_content__template}${$ChildB_content__template}${$ChildB_content__template}${$ChildB_content__template}<button>Increment default</button>`;
-export const $walks = /* over(1), <ChildA>, <ChildA>, <ChildA>, <ChildB>, <ChildB>, <ChildB>, get, over(1) */`b/${$ChildA_content__walks}&/${$ChildA_content__walks}&/${$ChildA_content__walks}&/${$ChildB_content__walks}&/${$ChildB_content__walks}&/${$ChildB_content__walks}& b`;
+export const $template = /*@__PURE__*/((_w0, _w1, _w2, _w3, _w4, _w5) => `<!>${_w0}${_w1}${_w2}${_w3}${_w4}${_w5}<button>Increment default</button>`)($ChildA_content__template, $ChildA_content__template, $ChildA_content__template, $ChildB_content__template, $ChildB_content__template, $ChildB_content__template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <ChildA>, <ChildA>, <ChildA>, <ChildB>, <ChildB>, <ChildB>, get, over(1) */
+((_w0, _w1, _w2, _w3, _w4, _w5) => `b/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}& b`)($ChildA_content__walks, $ChildA_content__walks, $ChildA_content__walks, $ChildB_content__walks, $ChildB_content__walks, $ChildB_content__walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $ChildB_content__$pattern = ($scope, $pattern2) => $ChildB_content__$bar($scope, $pattern2.bar);
 const $ChildB_content__count__OR__$foo = /* @__PURE__ */_._or(10, $scope => $ChildB_content__$pattern($scope, void 0 !== $scope.foo ? $scope.foo : {

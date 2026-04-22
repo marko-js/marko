@@ -2,15 +2,21 @@ const $Wrap_content__walks = /* over(1), replace, over(2) */"b%c",
   $Wrap_content__template = "<!><!><!>",
   $Message_content__walks = /* get, over(1) */" b",
   $Message_content__template = " ";
-export const $template = `<!>${$Wrap_content__template}<!>`;
-export const $walks = /* over(1), <Wrap>, over(1) */`b/${$Wrap_content__walks}&b`;
+export const $template = /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)($Wrap_content__template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <Wrap>, over(1) */
+(_w0 => `b/${_w0}&b`)($Wrap_content__walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 _._resume_dynamic_tag();
 const $Wrap_content2__setup = $scope => {
   $Message_content__input_before($scope["#childScope/0"], "hello");
   $Message_content__input_after($scope["#childScope/0"], "world");
 };
-const $Wrap_content2 = _._content_resume("__tests__/template.marko_3_content", `<!>${$Message_content__template}<!>`, /* over(1), <Message>, over(1) */`b/${$Message_content__walks}&b`, $Wrap_content2__setup);
+const $Wrap_content2 = _._content_resume("__tests__/template.marko_3_content", /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)($Message_content__template),
+/*@__PURE__*/
+/* over(1), <Message>, over(1) */
+(_w0 => `b/${_w0}&b`)($Message_content__walks), $Wrap_content2__setup);
 const $Message_content__input_before__OR__input_after = /* @__PURE__ */_._or(5, $scope => _._text($scope["#text/0"], $scope.input_before + $scope.input_after));
 const $Message_content__input_before = /* @__PURE__ */_._const("input_before", $Message_content__input_before__OR__input_after);
 const $Message_content__input_after = /* @__PURE__ */_._const("input_after", $Message_content__input_before__OR__input_after);

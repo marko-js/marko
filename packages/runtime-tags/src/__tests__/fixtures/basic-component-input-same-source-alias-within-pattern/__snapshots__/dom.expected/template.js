@@ -1,5 +1,8 @@
-export const $template = `${_myButton_template}${_myButton_template}`;
-export const $walks = /* <my-button>, <my-button> */`/${_myButton_walks}&/${_myButton_walks}&`;
+export const $template = /*@__PURE__*/((_w0, _w1) => `${_w0}${_w1}`)(_myButton_template, _myButton_template);
+export const $walks =
+/*@__PURE__*/
+/* <my-button>, <my-button> */
+((_w0, _w1) => `/${_w0}&/${_w1}&`)(_myButton_walks, _myButton_walks);
 import { $setup as _myButton, $value2 as _myButton_input_value, $onClick as _myButton_input_onClick, $template as _myButton_template, $walks as _myButton_walks, $text as _myButton_input_value_text } from "./tags/my-button.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $clickCount = /* @__PURE__ */_._let("clickCount/2", $scope => {

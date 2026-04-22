@@ -1,9 +1,14 @@
-// size: 376 (min) 238 (brotli)
-_._resume_dynamic_tag();
-_._content_resume("a1", "<!> <!>", "b/ b&b", ($scope) => {
-  ($Message_content__input_before($scope.a, "hello"),
-    $Message_content__input_after($scope.a, "world"));
-});
+// size: 402 (min) 241 (brotli)
+(_._resume_dynamic_tag(),
+  _._content_resume(
+    `a1`,
+    ((_w0) => `<!>${_w0}<!>`)(` `),
+    ((_w0) => `b/${_w0}&b`)(` b`),
+    ($scope) => {
+      ($Message_content__input_before($scope.a, `hello`),
+        $Message_content__input_after($scope.a, `world`));
+    },
+  ));
 const $Message_content__input_before__OR__input_after = _._or(5, ($scope) =>
     _._text($scope.a, $scope.d + $scope.e),
   ),
@@ -37,4 +42,4 @@ function $onClick($scope) {
     console.log($x($scope, $scope.b + 1) - 1);
   };
 }
-(_._resume("a0", $onClick), init());
+(_._resume(`a0`, $onClick), init());

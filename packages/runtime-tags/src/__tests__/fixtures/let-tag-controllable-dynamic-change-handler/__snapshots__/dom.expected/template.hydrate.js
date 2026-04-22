@@ -1,6 +1,6 @@
-// size: 310 (min) 167 (brotli)
-const $y__script = _._script("a1", ($scope) =>
-    _._on($scope.a, "click", function () {
+// size: 313 (min) 174 (brotli)
+const $y__script = _._script(`a1`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       $y($scope, $scope.h + 1);
     }),
   ),
@@ -12,14 +12,14 @@ const $y__script = _._script("a1", ($scope) =>
     (_._text($scope.b, $scope.e), $x__OR__yChange($scope));
   }),
   $yChange2 = _._let(5, $x__OR__yChange);
-(_._script("a2", ($scope) =>
-  _._on($scope.d, "click", function () {
+_._script(`a2`, ($scope) =>
+  _._on($scope.d, `click`, function () {
     $yChange2($scope, null);
   }),
-),
-  _._resume("a0", function ($scope) {
-    return function (newValue) {
-      $x($scope, newValue + 1);
-    };
-  }),
-  init());
+);
+function $yChange($scope) {
+  return function (newValue) {
+    $x($scope, newValue + 1);
+  };
+}
+(_._resume(`a0`, $yChange), init());

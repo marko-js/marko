@@ -1,10 +1,10 @@
-// size: 319 (min) 207 (brotli)
+// size: 319 (min) 205 (brotli)
 const $else_content__clickCount = _._if_closure(0, 1, ($scope) =>
     _._text($scope.a, $scope._.b),
   ),
   $else_content__setup = $else_content__clickCount,
-  $if_content__clickCount__script = _._script("a0", ($scope) =>
-    _._on($scope.a, "click", function () {
+  $if_content__clickCount__script = _._script(`a0`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       $clickCount($scope._, $scope._.b + 1);
     }),
   ),
@@ -14,11 +14,11 @@ const $else_content__clickCount = _._if_closure(0, 1, ($scope) =>
   $if_content__setup = $if_content__clickCount,
   $if = _._if(
     0,
-    "<button> </button>",
-    " D l",
+    `<button> </button>`,
+    ` D l`,
     $if_content__setup,
-    "<span>The button was clicked <!> times.</span>",
-    "Db%l",
+    `<span>The button was clicked <!> times.</span>`,
+    `Db%l`,
     $else_content__setup,
   ),
   $clickCount = _._let(1, ($scope) => {

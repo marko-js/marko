@@ -1,5 +1,8 @@
-export const $template = `${_myTextarea_template}<span> </span>`;
-export const $walks = /* <my-textarea>, next(1), get, out(1) */`/${_myTextarea_walks}&D l`;
+export const $template = /*@__PURE__*/(_w0 => `${_w0}<span> </span>`)(_myTextarea_template);
+export const $walks =
+/*@__PURE__*/
+/* <my-textarea>, next(1), get, out(1) */
+(_w0 => `/${_w0}&D l`)(_myTextarea_walks);
 import { $setup as _myTextarea, $input as _myTextarea_input, $template as _myTextarea_template, $walks as _myTextarea_walks } from "./tags/my-textarea.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $value = /* @__PURE__ */_._let("value/2", $scope => {

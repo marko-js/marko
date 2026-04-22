@@ -1,23 +1,22 @@
-// size: 377 (min) 218 (brotli)
-const $for_content__$params = ($scope, $params2) =>
+// size: 377 (min) 225 (brotli)
+const $for_content__name = ($scope, name) => _._text($scope.a, name),
+  $for_content__description = ($scope, description) =>
+    _._text($scope.b, description),
+  $for_content__$params = ($scope, $params2) =>
     $for_content__$temp($scope, $params2?.[0]),
   $for_content__$temp = ($scope, $temp) => {
-    ((($scope, name) => {
-      _._text($scope.a, name);
-    })($scope, $temp.name),
-      (($scope, description) => {
-        _._text($scope.b, description);
-      })($scope, $temp.description));
+    ($for_content__name($scope, $temp.name),
+      $for_content__description($scope, $temp.description));
   },
-  $for = _._for_of(0, "<div><!>: <!></div>", "D%c%l", 0, $for_content__$params),
-  $items__script = _._script("a0", ($scope) => {
-    (_._on($scope.b, "click", function () {
+  $for = _._for_of(0, `<div><!>: <!></div>`, `D%c%l`, 0, $for_content__$params),
+  $items__script = _._script(`a0`, ($scope) => {
+    (_._on($scope.b, `click`, function () {
       $items($scope, [
         ...$scope.d,
-        { name: "JavaScript", description: "Java, but scriptier" },
+        { name: `JavaScript`, description: `Java, but scriptier` },
       ]);
     }),
-      _._on($scope.c, "click", function () {
+      _._on($scope.c, `click`, function () {
         $items($scope, $scope.d.slice(0, -1));
       }));
   }),

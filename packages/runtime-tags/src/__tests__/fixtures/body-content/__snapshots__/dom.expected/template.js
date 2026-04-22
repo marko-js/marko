@@ -1,5 +1,8 @@
 export const $template = _FancyButton_template;
-export const $walks = /* <FancyButton> */`/${_FancyButton_walks}&`;
+export const $walks =
+/*@__PURE__*/
+/* <FancyButton> */
+(_w0 => `/${_w0}&`)(_FancyButton_walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _FancyButton, $content as _FancyButton_input_content, $attrs as _FancyButton_input_$rest, $template as _FancyButton_template, $walks as _FancyButton_walks } from "./tags/FancyButton.marko";
 const $FancyButton_content__clickCount = /* @__PURE__ */_._closure_get("clickCount", $scope => _._text($scope["#text/0"], $scope._.clickCount));

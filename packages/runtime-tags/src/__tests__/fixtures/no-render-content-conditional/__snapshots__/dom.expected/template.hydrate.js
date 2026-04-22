@@ -1,7 +1,7 @@
-// size: 119 (min) 110 (brotli)
+// size: 119 (min) 111 (brotli)
 const $input__OR__x__script = _._script(
-    "a0",
+    `a0`,
     ($scope) => ($scope.d.output().innerHTML = $scope.f),
   ),
   $input__OR__x = _._or(6, $input__OR__x__script);
-(_._var_resume("a1", _._const(5, $input__OR__x)), _._el("c0", 0), init());
+(_._var_resume(`a1`, _._const(5, $input__OR__x)), _._el(`c0`, 0), init());

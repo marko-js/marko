@@ -1,12 +1,12 @@
-// size: 233 (min) 122 (brotli)
-const $count__script = _._script("a0", ($scope) => {
-    (_._on($scope.a, "click", function () {
+// size: 233 (min) 113 (brotli)
+const $count__script = _._script(`a0`, ($scope) => {
+    (_._on($scope.a, `click`, function () {
       $count($scope, $scope.g + 2);
     }),
-      _._on($scope.c, "click", function () {
-        $count($scope, 3 * $scope.g);
+      _._on($scope.c, `click`, function () {
+        $count($scope, $scope.g * 3);
       }),
-      _._on($scope.e, "click", function () {
+      _._on($scope.e, `click`, function () {
         $count($scope, $scope.g ** 3);
       }));
   }),

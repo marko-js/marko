@@ -1,5 +1,8 @@
-export const $template = `<button></button>${_customTag_template}<div></div>`;
-export const $walks = /* get, over(1), <custom-tag>, get, over(1) */` b/${_customTag_walks}& b`;
+export const $template = /*@__PURE__*/(_w0 => `<button></button>${_w0}<div></div>`)(_customTag_template);
+export const $walks =
+/*@__PURE__*/
+/* get, over(1), <custom-tag>, get, over(1) */
+(_w0 => ` b/${_w0}& b`)(_customTag_walks);
 const a = 1;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _customTag, $input_content as _customTag_input_content, $template as _customTag_template, $walks as _customTag_walks } from "./tags/custom-tag.marko";

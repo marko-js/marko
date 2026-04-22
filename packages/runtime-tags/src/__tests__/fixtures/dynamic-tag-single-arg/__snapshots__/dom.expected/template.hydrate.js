@@ -1,12 +1,12 @@
-// size: 280 (min) 192 (brotli)
+// size: 280 (min) 193 (brotli)
 const $input = ($scope, input) => _._text($scope.a, input);
 function $setup($scope) {
-  _._return($scope, "hello from other");
+  _._return($scope, `hello from other`);
 }
-const tags = [_._template("a", "<div> </div>", "D l", $setup, $input)],
+const tags = [_._template(`a`, `<div> </div>`, `D l`, $setup, $input)],
   $dynamicTag = _._dynamic_tag(2, 0, 0, 1),
-  $x__script = _._script("b0", ($scope) =>
-    _._on($scope.a, "click", function () {
+  $x__script = _._script(`b0`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       $x($scope, $scope.d + 1);
     }),
   ),

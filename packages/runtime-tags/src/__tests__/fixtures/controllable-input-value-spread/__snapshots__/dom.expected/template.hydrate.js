@@ -1,13 +1,13 @@
-// size: 231 (min) 154 (brotli)
-const $input__script = _._script("a0", ($scope) =>
-    _._attrs_script($scope, "a"),
+// size: 231 (min) 158 (brotli)
+const $input__script = _._script(`a0`, ($scope) =>
+    _._attrs_script($scope, `a`),
   ),
   $input = _._const(2, ($scope) => {
-    (_._attrs($scope, "a", $scope.c), $input__script($scope));
+    (_._attrs($scope, `a`, $scope.c), $input__script($scope));
   }),
   $value = _._let(2, ($scope) => {
     ($input($scope.a, {
-      type: "text",
+      type: `text`,
       value: $scope.c,
       valueChange: $valueChange($scope),
     }),
@@ -18,4 +18,4 @@ function $valueChange($scope) {
     $value($scope, _new_value);
   };
 }
-(_._resume("b0", $valueChange), init());
+(_._resume(`b0`, $valueChange), init());

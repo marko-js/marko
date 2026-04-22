@@ -1,5 +1,8 @@
-export const $template = `${_customInput_template}<span><!> <!></span>`;
-export const $walks = /* <custom-input>, next(1), replace, over(2), replace, out(1) */`/${_customInput_walks}&D%c%l`;
+export const $template = /*@__PURE__*/(_w0 => `${_w0}<span><!> <!></span>`)(_customInput_template);
+export const $walks =
+/*@__PURE__*/
+/* <custom-input>, next(1), replace, over(2), replace, out(1) */
+(_w0 => `/${_w0}&D%c%l`)(_customInput_walks);
 import { $setup as _customInput, $input_value as _customInput_input_value, $input_valueChange as _customInput_input_valueChange, $template as _customInput_template, $walks as _customInput_walks } from "./tags/custom-input.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $value = /* @__PURE__ */_._let("value/3", $scope => {

@@ -1,35 +1,35 @@
-// size: 396 (min) 187 (brotli)
-const $input__script = _._script("a0", ($scope) =>
-    _._attrs_script($scope, "a"),
+// size: 399 (min) 189 (brotli)
+const $input__script = _._script(`a0`, ($scope) =>
+    _._attrs_script($scope, `a`),
   ),
   $input = _._const(2, ($scope) => {
-    (_._attrs($scope, "a", { type: "radio", ...$scope.c }),
+    (_._attrs($scope, `a`, { type: `radio`, ...$scope.c }),
       $input__script($scope));
   }),
   $checkedValue__OR__$checkedValueChange = _._or(6, ($scope) => {
     ($input($scope.a, {
       checkedValue: $scope.e,
       checkedValueChange: $scope.f,
-      value: "a",
+      value: `a`,
     }),
       $input($scope.b, {
         checkedValue: $scope.e,
         checkedValueChange: $scope.f,
-        value: "b",
+        value: `b`,
       }),
       $input($scope.c, {
         checkedValue: $scope.e,
         checkedValueChange: $scope.f,
-        value: "c",
+        value: `c`,
       }));
   }),
   $checkedValue = _._let(4, ($scope) => {
     (_._text($scope.d, $scope.e),
       $checkedValue__OR__$checkedValueChange($scope));
   });
-(_._resume("b0", function ($scope) {
+function $checkedValueChange2($scope) {
   return (_new_checkedValue) => {
     $checkedValue($scope, _new_checkedValue);
   };
-}),
-  init());
+}
+(_._resume(`b0`, $checkedValueChange2), init());

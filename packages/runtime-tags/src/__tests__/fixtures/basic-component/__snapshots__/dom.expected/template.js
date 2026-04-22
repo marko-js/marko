@@ -1,5 +1,8 @@
-export const $template = `<div>${_counter_template}</div>`;
-export const $walks = /* next(1), <counter>, out(1) */`D/${_counter_walks}&l`;
+export const $template = /*@__PURE__*/(_w0 => `<div>${_w0}</div>`)(_counter_template);
+export const $walks =
+/*@__PURE__*/
+/* next(1), <counter>, out(1) */
+(_w0 => `D/${_w0}&l`)(_counter_walks);
 import { $setup as _counter, $template as _counter_template, $walks as _counter_walks } from "./tags/counter.marko";
 export function $setup($scope) {
   _counter($scope["#childScope/0"]);

@@ -1,5 +1,8 @@
-export const $template = `${_mySelect_template}<span> </span>`;
-export const $walks = /* <my-select>, next(1), get, out(1) */`/${_mySelect_walks}&D l`;
+export const $template = /*@__PURE__*/(_w0 => `${_w0}<span> </span>`)(_mySelect_template);
+export const $walks =
+/*@__PURE__*/
+/* <my-select>, next(1), get, out(1) */
+(_w0 => `/${_w0}&D l`)(_mySelect_walks);
 import { $setup as _mySelect, $input as _mySelect_input, $template as _mySelect_template, $walks as _mySelect_walks } from "./tags/my-select.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $myselect_content = _._content_resume("__tests__/template.marko_1_content", "<option value=a>A</option><option value=b>B</option><option value=c>C</option>", /* over(3) */"d");

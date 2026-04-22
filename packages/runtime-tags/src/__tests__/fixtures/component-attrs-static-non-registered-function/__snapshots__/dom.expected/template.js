@@ -1,5 +1,8 @@
-export const $template = `${_price_template}${_price_template}`;
-export const $walks = /* <price>, <price> */`/${_price_walks}&/${_price_walks}&`;
+export const $template = /*@__PURE__*/((_w0, _w1) => `${_w0}${_w1}`)(_price_template, _price_template);
+export const $walks =
+/*@__PURE__*/
+/* <price>, <price> */
+((_w0, _w1) => `/${_w0}&/${_w1}&`)(_price_walks, _price_walks);
 const formatNumber = n => {
   return "$" + n.toFixed(2);
 };

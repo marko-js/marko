@@ -1,14 +1,14 @@
-// size: 261 (min) 139 (brotli)
-const $x__script = _._script("a0", ($scope) => {
+// size: 261 (min) 134 (brotli)
+const $x__script = _._script(`a0`, ($scope) => {
     (_._lifecycle($scope, {
       onMount: function () {
-        document.getElementById("ref").textContent = "Mount " + $scope.b;
+        document.getElementById(`ref`).textContent = `Mount ` + $scope.b;
       },
       onUpdate: function () {
-        document.getElementById("ref").textContent = "Update " + $scope.b;
+        document.getElementById(`ref`).textContent = `Update ` + $scope.b;
       },
     }),
-      _._on($scope.a, "click", function () {
+      _._on($scope.a, `click`, function () {
         $x($scope, $scope.b + 1);
       }));
   }),

@@ -1,17 +1,17 @@
-// size: 652 (min) 342 (brotli)
+// size: 650 (min) 348 (brotli)
 const $else_content__count = _._if_closure(0, 1, ($scope) =>
     _._text($scope.b, $scope._.c),
   ),
-  $else_content__setup__script = _._script("a0", ($scope) =>
-    _._on($scope.a, "click", function () {
+  $else_content__setup__script = _._script(`a0`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       $for_content__editing($scope._, !0);
     }),
   ),
   $else_content__setup = ($scope) => {
     ($else_content__count._($scope), $else_content__setup__script($scope));
   },
-  $if_content__counts__OR__count__script = _._script("a1", ($scope) =>
-    _._on($scope.a, "click", function () {
+  $if_content__counts__OR__count__script = _._script(`a1`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       ($counts($scope._._, [
         ...$scope._._.b.slice(0, $scope._.M),
         $scope._.c + 1,
@@ -37,15 +37,15 @@ const $else_content__count = _._if_closure(0, 1, ($scope) =>
   }),
   $for_content__if = _._if(
     0,
-    "<button>Confirm <!></button>",
-    " Db%l",
+    `<button>Confirm <!></button>`,
+    ` Db%l`,
     $if_content__setup,
-    "<button>Increment <!></button>",
-    " Db%l",
+    `<button>Increment <!></button>`,
+    ` Db%l`,
     $else_content__setup,
   ),
   $for_content__editing = _._let(4, ($scope) =>
-    $for_content__if($scope, $scope.e ? 0 : 1),
+    $for_content__if($scope, +!$scope.e),
   ),
   $for_content__setup = ($scope) => $for_content__editing($scope, !1),
   $for_content__$params = ($scope, $params2) =>
@@ -55,8 +55,8 @@ const $else_content__count = _._if_closure(0, 1, ($scope) =>
   }),
   $for = _._for_of(
     0,
-    "<!><!><!>",
-    "b%c",
+    `<!><!><!>`,
+    `b%c`,
     $for_content__setup,
     $for_content__$params,
   ),

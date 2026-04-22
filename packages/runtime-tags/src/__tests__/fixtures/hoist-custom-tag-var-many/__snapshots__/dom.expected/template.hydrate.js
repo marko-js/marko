@@ -1,19 +1,20 @@
-// size: 361 (min) 186 (brotli)
-_._resume("a0", function ($scope) {
+// size: 362 (min) 191 (brotli)
+function $_return($scope) {
   return () => (html) => ($scope.a.innerHTML = html);
-});
-const $setHtml3_getter = _._hoist_resume("b0", 2, "Aa", "Ac");
-_._var_resume("b1", _._const(2));
-const $setHtml2_getter = _._hoist(2, "Ab");
-_._var_resume("b2", _._const(2));
-const $setHtml_getter = _._hoist(2, "Aa");
-(_._var_resume("b3", _._const(2)),
-  _._script("b4", ($scope) => {
-    ($setHtml_getter($scope)()("First Only"),
-      $setHtml2_getter($scope)()("First Only"));
+}
+_._resume(`a0`, $_return);
+const $setHtml3_getter = _._hoist_resume(`b0`, 2, `Aa`, `Ac`);
+_._var_resume(`b1`, _._const(2));
+const $setHtml2_getter = _._hoist(2, `Ab`);
+_._var_resume(`b2`, _._const(2));
+const $setHtml_getter = _._hoist(2, `Aa`);
+(_._var_resume(`b3`, _._const(2)),
+  _._script(`b4`, ($scope) => {
+    ($setHtml_getter($scope)()(`First Only`),
+      $setHtml2_getter($scope)()(`First Only`));
     {
       let i = 0;
-      for (const fn of $setHtml3_getter($scope)) fn(`All (${i++})`);
+      for (let fn of $setHtml3_getter($scope)) fn(`All (${i++})`);
     }
   }),
   init());

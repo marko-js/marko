@@ -8,7 +8,10 @@ const $if_content__setup = $scope => {
   _child($scope["#childScope/0"]);
 };
 const $setter2 = /* @__PURE__ */_._const("setter");
-const $if = /* @__PURE__ */_._if("#text/0", _child_template, /* <child> */`/${_child_walks}&`, $if_content__setup);
+const $if = /* @__PURE__ */_._if("#text/0", _child_template,
+/*@__PURE__*/
+/* <child> */
+(_w0 => `/${_w0}&`)(_child_walks), $if_content__setup);
 export function $setup($scope) {
   /* value */0;
   $setter2($scope, $setter($scope));

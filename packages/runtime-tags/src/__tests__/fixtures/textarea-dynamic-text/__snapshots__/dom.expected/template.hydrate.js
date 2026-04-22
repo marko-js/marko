@@ -1,10 +1,10 @@
-// size: 130 (min) 97 (brotli)
+// size: 130 (min) 96 (brotli)
 const $value = _._let(2, ($scope) =>
-  _._attr_textarea_value_default($scope, "a", $scope.c),
+  _._attr_textarea_value_default($scope, `a`, $scope.c),
 );
-(_._script("a0", ($scope) =>
-  _._on($scope.b, "click", function () {
-    $value($scope, "after");
+(_._script(`a0`, ($scope) =>
+  _._on($scope.b, `click`, function () {
+    $value($scope, `after`);
   }),
 ),
   init());

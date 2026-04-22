@@ -1,5 +1,8 @@
-export const $template = `${_getter_template}<div></div>`;
-export const $walks = /* <getter/var>, get, over(1) */`0${_getter_walks}& b`;
+export const $template = /*@__PURE__*/(_w0 => `${_w0}<div></div>`)(_getter_template);
+export const $walks =
+/*@__PURE__*/
+/* <getter/var>, get, over(1) */
+(_w0 => `0${_w0}& b`)(_getter_walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _getter, $template as _getter_template, $walks as _getter_walks } from "./tags/getter.marko";
 const $get__script = _._script("__tests__/template.marko_0_get", $scope => (_._el_read($scope["#div/2"]).textContent = $scope.get()));

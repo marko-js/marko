@@ -1,5 +1,8 @@
-export const $template = `${_setter_template}<div> </div>`;
-export const $walks = /* <setter/var>, next(1), get, out(1) */`0${_setter_walks}&D l`;
+export const $template = /*@__PURE__*/(_w0 => `${_w0}<div> </div>`)(_setter_template);
+export const $walks =
+/*@__PURE__*/
+/* <setter/var>, next(1), get, out(1) */
+(_w0 => `0${_w0}&D l`)(_setter_walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _setter, $input_value as _setter_input_value, $input_valueChange as _setter_input_valueChange, $template as _setter_template, $walks as _setter_walks } from "./tags/setter.marko";
 const $count = /* @__PURE__ */_._let("count/3", $scope => {

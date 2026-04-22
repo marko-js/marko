@@ -1,11 +1,11 @@
-// size: 292 (min) 206 (brotli)
-const names = ["Dylan", "Michael", "Ryan", "Luke"],
-  $index__script = _._script("a0", ($scope) =>
-    _._on($scope.c, "click", function () {
+// size: 292 (min) 203 (brotli)
+const names = [`Dylan`, `Michael`, `Ryan`, `Luke`],
+  $index__script = _._script(`a0`, ($scope) =>
+    _._on($scope.c, `click`, function () {
       ($index($scope, $scope.d === names.length - 1 ? -1 : $scope.d + 1),
         $user(
           $scope,
-          -1 !== $scope.d && { id: $scope.d, name: names[$scope.d] },
+          $scope.d !== -1 && { id: $scope.d, name: names[$scope.d] },
         ));
     }),
   ),

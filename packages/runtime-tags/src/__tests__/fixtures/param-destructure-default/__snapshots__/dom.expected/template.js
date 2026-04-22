@@ -2,8 +2,11 @@ const $ChildA_content__walks = /* next(1), replace, over(2), replace, out(1) */"
   $ChildA_content__template = "<div class=a><!> <!></div>",
   $ChildB_content__walks = /* next(1), replace, over(2), replace, out(1) */"D%c%l",
   $ChildB_content__template = "<div class=b><!> <!></div>";
-export const $template = `<!>${$ChildA_content__template}${$ChildA_content__template}${$ChildA_content__template}${$ChildB_content__template}${$ChildB_content__template}${$ChildB_content__template}<!>`;
-export const $walks = /* over(1), <ChildA>, <ChildA>, <ChildA>, <ChildB>, <ChildB>, <ChildB>, over(1) */`b/${$ChildA_content__walks}&/${$ChildA_content__walks}&/${$ChildA_content__walks}&/${$ChildB_content__walks}&/${$ChildB_content__walks}&/${$ChildB_content__walks}&b`;
+export const $template = /*@__PURE__*/((_w0, _w1, _w2, _w3, _w4, _w5) => `<!>${_w0}${_w1}${_w2}${_w3}${_w4}${_w5}<!>`)($ChildA_content__template, $ChildA_content__template, $ChildA_content__template, $ChildB_content__template, $ChildB_content__template, $ChildB_content__template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <ChildA>, <ChildA>, <ChildA>, <ChildB>, <ChildB>, <ChildB>, over(1) */
+((_w0, _w1, _w2, _w3, _w4, _w5) => `b/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}&b`)($ChildA_content__walks, $ChildA_content__walks, $ChildA_content__walks, $ChildB_content__walks, $ChildB_content__walks, $ChildB_content__walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $ChildB_content__$pattern = ($scope, $pattern2) => $ChildB_content__$bar($scope, $pattern2.bar);
 const $ChildB_content__bar = ($scope, bar) => _._text($scope["#text/0"], bar);

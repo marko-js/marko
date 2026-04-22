@@ -1,7 +1,7 @@
-// size: 66 (min) 64 (brotli)
-(_._resume("a0", function ($scope) {
+// size: 69 (min) 71 (brotli)
+function $bar($scope) {
   return function (test) {
     return $scope.d + test;
   };
-}),
-  init());
+}
+(_._resume(`a0`, $bar), init());

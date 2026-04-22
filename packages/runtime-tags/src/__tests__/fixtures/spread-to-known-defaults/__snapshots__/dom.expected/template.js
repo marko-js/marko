@@ -1,5 +1,8 @@
-export const $template = `<div id=value-missing>${_wrap_template}</div><div id=value-undefined>${_wrap_template}</div><div id=dynamic-value-set><!></div>`;
-export const $walks = /* next(1), <wrap>, out(1), next(1), <wrap>, out(1), next(1), replace, out(1) */`D/${_wrap_walks}&lD/${_wrap_walks}&lD%l`;
+export const $template = /*@__PURE__*/((_w0, _w1) => `<div id=value-missing>${_w0}</div><div id=value-undefined>${_w1}</div><div id=dynamic-value-set><!></div>`)(_wrap_template, _wrap_template);
+export const $walks =
+/*@__PURE__*/
+/* next(1), <wrap>, out(1), next(1), <wrap>, out(1), next(1), replace, out(1) */
+((_w0, _w1) => `D/${_w0}&lD/${_w1}&lD%l`)(_wrap_walks, _wrap_walks);
 import wrapTag from "./tags/wrap.marko";
 const Wrap = wrapTag;
 import { $setup as _wrap, $input as _wrap_input, $template as _wrap_template, $walks as _wrap_walks } from "./tags/wrap.marko";

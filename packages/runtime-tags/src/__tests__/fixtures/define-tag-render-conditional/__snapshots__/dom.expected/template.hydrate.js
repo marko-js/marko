@@ -1,12 +1,18 @@
-// size: 269 (min) 202 (brotli)
-const $if_content__x = _._if_closure(0, 0, ($scope) =>
-    (($scope, value) => _._text($scope.a, value))($scope.a, $scope._.e),
+// size: 295 (min) 208 (brotli)
+const $MyTag_content__value = ($scope, value) => _._text($scope.a, value),
+  $if_content__x = _._if_closure(0, 0, ($scope) =>
+    $MyTag_content__value($scope.a, $scope._.e),
   ),
   $if_content__setup = $if_content__x,
-  $if = _._if(0, "<!><div>Hello <!></div><!>", "b/Db%l&b", $if_content__setup),
-  $show = _._let(3, ($scope) => $if($scope, $scope.d ? 0 : 1)),
-  $x__script = _._script("a0", ($scope) =>
-    _._on($scope.b, "click", function () {
+  $if = _._if(
+    0,
+    ((_w0) => `<!>${_w0}<!>`)(`<div>Hello <!></div>`),
+    ((_w0) => `b/${_w0}&b`)(`Db%l`),
+    $if_content__setup,
+  ),
+  $show = _._let(3, ($scope) => $if($scope, +!$scope.d)),
+  $x__script = _._script(`a0`, ($scope) =>
+    _._on($scope.b, `click`, function () {
       ($x($scope, $scope.e + 1), $show($scope, !0));
     }),
   ),

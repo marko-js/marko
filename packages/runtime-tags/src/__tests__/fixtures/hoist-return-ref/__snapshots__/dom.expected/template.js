@@ -1,5 +1,8 @@
-export const $template = `${_child_template}${_source_template}`;
-export const $walks = /* <child>, <source/var> */`/${_child_walks}&0${_source_walks}&`;
+export const $template = /*@__PURE__*/((_w0, _w1) => `${_w0}${_w1}`)(_child_template, _source_template);
+export const $walks =
+/*@__PURE__*/
+/* <child>, <source/var> */
+((_w0, _w1) => `/${_w0}&0${_w1}&`)(_child_walks, _source_walks);
 import { $setup as _child, $input as _child_input, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _source, $template as _source_template, $walks as _source_walks } from "./tags/source.marko";

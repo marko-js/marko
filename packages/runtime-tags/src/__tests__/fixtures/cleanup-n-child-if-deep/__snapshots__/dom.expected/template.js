@@ -8,7 +8,10 @@ const $if_content3__setup = $scope => {
   _child($scope["#childScope/0"]);
   _child_input_name($scope["#childScope/0"], "Inner");
 };
-const $if_content2__if = /* @__PURE__ */_._if("#text/1", _child_template, /* <child> */`/${_child_walks}&`, $if_content3__setup);
+const $if_content2__if = /* @__PURE__ */_._if("#text/1", _child_template,
+/*@__PURE__*/
+/* <child> */
+(_w0 => `/${_w0}&`)(_child_walks), $if_content3__setup);
 const $if_content2__showInner = /* @__PURE__ */_._closure_get("showInner", $scope => $if_content2__if($scope, $scope._._.showInner ? 0 : 1), $scope => $scope._._);
 const $if_content2__setup = $scope => {
   $if_content2__showInner($scope);
@@ -17,7 +20,10 @@ const $if_content2__setup = $scope => {
   _child_input_name($scope["#childScope/0"], "Middle");
 };
 const $if_content2__write = /* @__PURE__ */_._closure_get("write", $scope => _child_input_write($scope["#childScope/0"], $scope._._.write), $scope => $scope._._);
-const $if_content__if = /* @__PURE__ */_._if("#text/1", `<div>${_child_template}<!></div>`, /* next(1), <child>, replace, out(1) */`D/${_child_walks}&%l`, $if_content2__setup);
+const $if_content__if = /* @__PURE__ */_._if("#text/1", /*@__PURE__*/(_w0 => `<div>${_w0}<!></div>`)(_child_template),
+/*@__PURE__*/
+/* next(1), <child>, replace, out(1) */
+(_w0 => `D/${_w0}&%l`)(_child_walks), $if_content2__setup);
 const $if_content__showMiddle = /* @__PURE__ */_._if_closure("#text/4", 0, $scope => $if_content__if($scope, $scope._.showMiddle ? 0 : 1));
 const $if_content__setup = $scope => {
   $if_content__showMiddle._($scope);
@@ -26,7 +32,10 @@ const $if_content__setup = $scope => {
   _child_input_name($scope["#childScope/0"], "Outer");
 };
 const $if_content__write = /* @__PURE__ */_._if_closure("#text/4", 0, $scope => _child_input_write($scope["#childScope/0"], $scope._.write));
-const $if = /* @__PURE__ */_._if("#text/4", `<div>${_child_template}<!></div>`, /* next(1), <child>, replace, out(1) */`D/${_child_walks}&%l`, $if_content__setup);
+const $if = /* @__PURE__ */_._if("#text/4", /*@__PURE__*/(_w0 => `<div>${_w0}<!></div>`)(_child_template),
+/*@__PURE__*/
+/* next(1), <child>, replace, out(1) */
+(_w0 => `D/${_w0}&%l`)(_child_walks), $if_content__setup);
 const $showOuter__script = _._script("__tests__/template.marko_0_showOuter", $scope => _._on($scope["#button/0"], "click", function () {
   $showOuter($scope, !$scope.showOuter);
 }));

@@ -1,5 +1,8 @@
-export const $template = `<!>${_child_template}`;
-export const $walks = /* over(1), <child/var> */`b0${_child_walks}&`;
+export const $template = /*@__PURE__*/(_w0 => `<!>${_w0}`)(_child_template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <child/var> */
+(_w0 => `b0${_w0}&`)(_child_walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $input_content as _child_input_content, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 const $child_content__setHtml__script = _._script("__tests__/template.marko_1_setHtml", $scope => _._assert_init($scope._, "setHtml")("Hello world"));

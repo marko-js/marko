@@ -9,7 +9,10 @@ const $_classspandiv_content__setup = $scope => {
   $_classspandiv_content__input_foo($scope);
   _child($scope["#childScope/0"]);
 };
-const $_classspandiv_content = _._content_resume("__tests__/tags/wrap.marko_1_content", `<!>${_child_template}<!>`, /* over(1), <child>, over(1) */`b/${_child_walks}&b`, $_classspandiv_content__setup);
+const $_classspandiv_content = _._content_resume("__tests__/tags/wrap.marko_1_content", /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)(_child_template),
+/*@__PURE__*/
+/* over(1), <child>, over(1) */
+(_w0 => `b/${_w0}&b`)(_child_walks), $_classspandiv_content__setup);
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", $_classspandiv_content);
 const $input_class__OR__rest = /* @__PURE__ */_._or(6, $scope => $dynamicTag($scope, $scope._class ? 'span' : 'div', () => ({
   ...$scope.rest,

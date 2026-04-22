@@ -1,11 +1,17 @@
-// size: 131 (min) 103 (brotli)
-(_2._script("a0", ($scope) =>
-  _2._on($scope.a, "click", (_, el) => {
-    let bar;
-    var $result, value;
-    (($result = { value: "updated", bar: "bar" }),
-      ({ value: value, bar: bar } = $result),
-      (el.textContent = bar));
-  }),
+// size: 149 (min) 111 (brotli)
+const identity = (fn) => fn;
+(_2._script(`a0`, ($scope) =>
+  _2._on(
+    $scope.a,
+    `click`,
+    identity((_, el) => {
+      let bar;
+      ((($result, value) => (({ value, bar } = $result), $result))({
+        value: `updated`,
+        bar: `bar`,
+      }),
+        (el.textContent = bar));
+    }),
+  ),
 ),
   init());

@@ -2,8 +2,8 @@
 const $for_content__count = _._for_closure(0, ($scope) =>
     _._text($scope.b, $scope._.d),
   ),
-  $count__script = _._script("a0", ($scope) =>
-    _._on($scope.b, "click", function () {
+  $count__script = _._script(`a0`, ($scope) =>
+    _._on($scope.b, `click`, function () {
       $count($scope, $scope.d + 1);
     }),
   ),

@@ -1,9 +1,15 @@
 const $A_content__walks = /* get, over(1) */" b",
   $A_content__template = " ",
-  $B_content__walks = /* over(1), <A>, over(1) */`b/${$A_content__walks}&b`,
-  $B_content__template = `<!>${$A_content__template}<!>`;
-export const $template = `<!>${$B_content__template}<!>`;
-export const $walks = /* over(1), <B>, over(1) */`b/${$B_content__walks}&b`;
+  $B_content__walks =
+  /*@__PURE__*/
+  /* over(1), <A>, over(1) */
+  (_w0 => `b/${_w0}&b`)($A_content__walks),
+  $B_content__template = /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)($A_content__template);
+export const $template = /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)($B_content__template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <B>, over(1) */
+(_w0 => `b/${_w0}&b`)($B_content__walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $B_content__value_length = ($scope, value_length) => $A_content__value($scope["#childScope/0"], value_length);
 const $B_content__tag_input_value = ($scope, value) => $B_content__value_length($scope, value?.length);

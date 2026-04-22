@@ -1,5 +1,8 @@
-export const $template = `<!>${_myLet_template}${_myTag_template}<!>`;
-export const $walks = /* over(1), <my-let/var>, <my-tag>, over(1) */`b0${_myLet_walks}&/${_myTag_walks}&b`;
+export const $template = /*@__PURE__*/((_w0, _w1) => `<!>${_w0}${_w1}<!>`)(_myLet_template, _myTag_template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <my-let/var>, <my-tag>, over(1) */
+((_w0, _w1) => `b0${_w0}&/${_w1}&b`)(_myLet_walks, _myTag_walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _myLet, $input_value as _myLet_input_value, $template as _myLet_template, $walks as _myLet_walks } from "./tags/my-let.marko";
 import { $setup as _myTag, $input_content as _myTag_input_content, $template as _myTag_template, $walks as _myTag_walks } from "./tags/my-tag.marko";

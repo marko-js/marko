@@ -1,5 +1,8 @@
 export const $template = _myButton_template;
-export const $walks = /* <my-button> */`/${_myButton_walks}&`;
+export const $walks =
+/*@__PURE__*/
+/* <my-button> */
+(_w0 => `/${_w0}&`)(_myButton_walks);
 import { $setup as _myButton, $input as _myButton_input, $template as _myButton_template, $walks as _myButton_walks } from "./tags/my-button.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $mybutton_content = _._content_resume("__tests__/template.marko_1_content", "Click", /* over(1) */"b");

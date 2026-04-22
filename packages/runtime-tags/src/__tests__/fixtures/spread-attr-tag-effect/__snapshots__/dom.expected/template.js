@@ -1,5 +1,8 @@
 export const $template = _wrap_template;
-export const $walks = /* <wrap> */`/${_wrap_walks}&`;
+export const $walks =
+/*@__PURE__*/
+/* <wrap> */
+(_w0 => `/${_w0}&`)(_wrap_walks);
 import { $setup as _wrap, $input_option as _wrap_input_option, $template as _wrap_template, $walks as _wrap_walks } from "./tags/wrap.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $option_content = _._content_resume("__tests__/template.marko_1_content", "1", /* over(1) */"b");

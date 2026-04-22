@@ -1,10 +1,11 @@
-// size: 315 (min) 199 (brotli)
+// size: 319 (min) 202 (brotli)
 _._enable_catch();
-_._content_resume("a0", " ", " b", 0, ($scope, $params2) =>
-  (($scope, err) => _._text($scope.a, err))($scope, $params2[0]),
+const $catch_content__err = ($scope, err) => _._text($scope.a, err);
+_._content_resume(`a0`, ` `, ` b`, 0, ($scope, $params2) =>
+  $catch_content__err($scope, $params2[0]),
 );
-const $try_content__clickCount__script = _._script("a1", ($scope) => {
-    (_._on($scope.a, "click", function () {
+const $try_content__clickCount__script = _._script(`a1`, ($scope) => {
+    (_._on($scope.a, `click`, function () {
       $clickCount($scope._, $scope._.c + 1);
     }),
       ($scope._.a.textContent = $scope._.c));
@@ -13,7 +14,7 @@ const $try_content__clickCount__script = _._script("a1", ($scope) => {
     (_._text(
       $scope.b,
       (() => {
-        if ($scope._.c > 1) throw new Error("ERROR!");
+        if ($scope._.c > 1) throw Error(`ERROR!`);
       })(),
     ),
       $try_content__clickCount__script($scope));

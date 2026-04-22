@@ -1,5 +1,8 @@
 export const $template = _renderEffect_template;
-export const $walks = /* <render-effect> */`/${_renderEffect_walks}&`;
+export const $walks =
+/*@__PURE__*/
+/* <render-effect> */
+(_w0 => `/${_w0}&`)(_renderEffect_walks);
 import { $setup as _renderEffect, $input as _renderEffect_input, $template as _renderEffect_template, $walks as _renderEffect_walks } from "./tags/render-effect.marko";
 export function $setup($scope) {
   _renderEffect($scope["#childScope/0"]);

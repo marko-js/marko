@@ -1,5 +1,8 @@
-export const $template = `${_counter_template}<button class=inc-parent> </button><button class=reset>reset</button>`;
-export const $walks = /* <counter/var>, get, next(1), get, out(1), get, over(1) */`0${_counter_walks}& D l b`;
+export const $template = /*@__PURE__*/(_w0 => `${_w0}<button class=inc-parent> </button><button class=reset>reset</button>`)(_counter_template);
+export const $walks =
+/*@__PURE__*/
+/* <counter/var>, get, next(1), get, out(1), get, over(1) */
+(_w0 => `0${_w0}& D l b`)(_counter_walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _counter, $template as _counter_template, $walks as _counter_walks } from "./tags/counter.marko";
 const $count__script = _._script("__tests__/template.marko_0_count", $scope => _._on($scope["#button/2"], "click", function () {

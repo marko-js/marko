@@ -1,7 +1,10 @@
 const $Tag_content__walks = /* over(1), replace, over(2) */"b%c",
   $Tag_content__template = "<!><!><!>";
-export const $template = `<!>${$Tag_content__template}<!>`;
-export const $walks = /* over(1), <Tag/var>, over(1) */`b0${$Tag_content__walks}&b`;
+export const $template = /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)($Tag_content__template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <Tag/var>, over(1) */
+(_w0 => `b0${_w0}&b`)($Tag_content__walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $Tag_content2__name = /* @__PURE__ */_._closure_get("name", $scope => _._text($scope["#text/0"], _._assert_init($scope._, "name")));
 const $Tag_content2__setup = $Tag_content2__name;

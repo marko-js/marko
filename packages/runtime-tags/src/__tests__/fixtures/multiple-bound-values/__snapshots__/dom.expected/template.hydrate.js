@@ -1,6 +1,6 @@
-// size: 489 (min) 219 (brotli)
-const $count__script = _._script("a0", ($scope) =>
-    _._on($scope.a, "click", function () {
+// size: 495 (min) 226 (brotli)
+const $count__script = _._script(`a0`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       $count$1($scope, $scope.m + 1);
     }),
   ),
@@ -11,8 +11,8 @@ const $count__script = _._script("a0", ($scope) =>
     $count$1($scope, $scope.g, $scope.h),
   ),
   $input_count = _._const(6, $input_count1__OR__input_count1Change),
-  $count2__script = _._script("a1", ($scope) =>
-    _._on($scope.c, "click", function () {
+  $count2__script = _._script(`a1`, ($scope) =>
+    _._on($scope.c, `click`, function () {
       $count2$1($scope, $scope.n + 1);
     }),
   ),
@@ -29,14 +29,14 @@ const $count__script = _._script("a0", ($scope) =>
   $count2 = _._let(4, ($scope) => {
     ($input_count2($scope.a, $scope.e), _._text($scope.c, $scope.e));
   });
-(_._resume("b1", function ($scope) {
+function $count2Change($scope) {
   return (_new_count2) => {
     $count2($scope, _new_count2);
   };
-}),
-  _._resume("b0", function ($scope) {
-    return (_new_count1) => {
-      $count($scope, _new_count1);
-    };
-  }),
-  init());
+}
+function $count1Change($scope) {
+  return (_new_count1) => {
+    $count($scope, _new_count1);
+  };
+}
+(_._resume(`b1`, $count2Change), _._resume(`b0`, $count1Change), init());

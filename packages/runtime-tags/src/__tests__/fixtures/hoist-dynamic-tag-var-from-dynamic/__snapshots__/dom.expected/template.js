@@ -1,5 +1,8 @@
-export const $template = `<!>${_thing_template}<!><!><!>`;
-export const $walks = /* over(1), <thing>, replace, over(1), replace, over(2) */`b/${_thing_walks}&%b%c`;
+export const $template = /*@__PURE__*/(_w0 => `<!>${_w0}<!><!><!>`)(_thing_template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <thing>, replace, over(1), replace, over(2) */
+(_w0 => `b/${_w0}&%b%c`)(_thing_walks);
 import Child from "./tags/child.marko";
 import Thing from "./tags/thing.marko";
 import { $setup as _thing, $input_content as _thing_input_content, $template as _thing_template, $walks as _thing_walks } from "./tags/thing.marko";
@@ -18,7 +21,10 @@ const $inputshowThingnull_content__setup = $scope => {
   _thing($scope["#childScope/0"]);
   _thing_input_content($scope["#childScope/0"], $thing_content2($scope));
 };
-const $inputshowThingnull_content = _._content_resume("__tests__/template.marko_2_content", `<!>${_thing_template}<!>`, /* over(1), <thing>, over(1) */`b/${_thing_walks}&b`, $inputshowThingnull_content__setup, 0, "ClosureScopes:2");
+const $inputshowThingnull_content = _._content_resume("__tests__/template.marko_2_content", /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)(_thing_template),
+/*@__PURE__*/
+/* over(1), <thing>, over(1) */
+(_w0 => `b/${_w0}&b`)(_thing_walks), $inputshowThingnull_content__setup, 0, "ClosureScopes:2");
 const $setHtml_getter = _._hoist_resume("__tests__/template.marko_0_setHtml/hoist", "setHtml", "ClosureScopes:1");
 const $thing_content__dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $thing_content__setHtml);
 const $thing_content__setHtml = _._var_resume("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */_._const("setHtml", $scope => _._assert_hoist($scope.setHtml)));

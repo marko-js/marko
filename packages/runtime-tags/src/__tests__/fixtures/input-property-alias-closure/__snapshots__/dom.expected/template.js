@@ -1,7 +1,10 @@
 const $Child_content__walks = /* replace, over(2), replace, over(2) */"%c%c",
   $Child_content__template = "<!> and <!><!>";
-export const $template = `<!>${$Child_content__template}<!>`;
-export const $walks = /* over(1), <Child>, over(1) */`b/${$Child_content__walks}&b`;
+export const $template = /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)($Child_content__template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <Child>, over(1) */
+(_w0 => `b/${_w0}&b`)($Child_content__walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $Child_content2__input_text = /* @__PURE__ */_._closure_get("input_text", $scope => _._text($scope["#text/0"], $scope._.input_text));
 const $Child_content2__setup = $Child_content2__input_text;

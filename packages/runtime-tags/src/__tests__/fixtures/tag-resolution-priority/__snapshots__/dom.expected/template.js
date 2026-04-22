@@ -1,5 +1,8 @@
-export const $template = `<div></div>${_foo_template}<!><!>`;
-export const $walks = /* over(1), <foo>, replace, over(2) */`b/${_foo_walks}&%c`;
+export const $template = /*@__PURE__*/(_w0 => `<div></div>${_w0}<!><!>`)(_foo_template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <foo>, replace, over(2) */
+(_w0 => `b/${_w0}&%c`)(_foo_walks);
 const div = "span";
 const foo = "div";
 const Bar = "div";

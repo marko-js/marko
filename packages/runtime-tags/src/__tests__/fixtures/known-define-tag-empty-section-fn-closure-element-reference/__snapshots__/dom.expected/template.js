@@ -1,7 +1,10 @@
 const $MyButton_content__walks = /* get, over(2) */" c",
   $MyButton_content__template = "<button></button> ";
-export const $template = `<div></div>${$MyButton_content__template}<!>`;
-export const $walks = /* get, over(1), <MyButton>, over(1) */` b/${$MyButton_content__walks}&b`;
+export const $template = /*@__PURE__*/(_w0 => `<div></div>${_w0}<!>`)($MyButton_content__template);
+export const $walks =
+/*@__PURE__*/
+/* get, over(1), <MyButton>, over(1) */
+(_w0 => ` b/${_w0}&b`)($MyButton_content__walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $MyButton_content__input_message__script = _._script("__tests__/template.marko_1_input_message", $scope => _._on($scope["#button/0"], "click", function () {
   _._el_read($scope._["#div/0"]).textContent += `[onClick(${$scope.input_message})]`;

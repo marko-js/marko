@@ -5,7 +5,10 @@ const $if_content__setup = $scope => {
   _test($scope["#childScope/0"]);
 };
 import * as _ from "@marko/runtime-tags/debug/dom";
-const $if = /* @__PURE__ */_._if("#text/0", `<!>${_test_template}<!>`, /* over(1), <test>, over(1) */`b/${_test_walks}&b`, $if_content__setup);
+const $if = /* @__PURE__ */_._if("#text/0", /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)(_test_template),
+/*@__PURE__*/
+/* over(1), <test>, over(1) */
+(_w0 => `b/${_w0}&b`)(_test_walks), $if_content__setup);
 const $m = /* @__PURE__ */_._let("m/1", $scope => $if($scope, $scope.m ? 0 : 1));
 const $setup__script = _._script("__tests__/template.marko_0", $scope => $m($scope, 1));
 export function $setup($scope) {

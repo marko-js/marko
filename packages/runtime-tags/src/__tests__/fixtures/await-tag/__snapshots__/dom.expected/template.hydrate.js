@@ -1,4 +1,4 @@
-// size: 246 (min) 127 (brotli)
+// size: 246 (min) 128 (brotli)
 const $await_content3__count = _._closure_get(4, ($scope) =>
     _._text($scope.b, $scope._.e),
   ),
@@ -13,8 +13,8 @@ const $await_content3__count = _._closure_get(4, ($scope) =>
     $await_content2__count,
     $await_content3__count,
   ),
-  $count__script = _._script("a0", ($scope) =>
-    _._on($scope.d, "click", function () {
+  $count__script = _._script(`a0`, ($scope) =>
+    _._on($scope.d, `click`, function () {
       $count($scope, $scope.e + 1);
     }),
   ),

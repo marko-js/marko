@@ -1,5 +1,8 @@
-export const $template = `<!>${_myFor_template}<!>`;
-export const $walks = /* over(1), <my-for>, over(1) */`b/${_myFor_walks}&b`;
+export const $template = /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)(_myFor_template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <my-for>, over(1) */
+(_w0 => `b/${_w0}&b`)(_myFor_walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _myFor, $input_content as _myFor_input_content, $input_to as _myFor_input_to, $template as _myFor_template, $walks as _myFor_walks } from "./tags/my-for.marko";
 const $myfor_content__i = ($scope, i) => _._text($scope["#text/0"], i);

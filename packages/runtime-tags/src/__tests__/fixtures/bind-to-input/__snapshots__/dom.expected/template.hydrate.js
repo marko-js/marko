@@ -1,11 +1,11 @@
-// size: 365 (min) 204 (brotli)
-const $x__script = _._script("a0", ($scope) =>
-    _._on($scope.a, "click", function () {
+// size: 368 (min) 215 (brotli)
+const $x__script = _._script(`a0`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       $x$1($scope, $scope.j + 1);
     }),
   ),
   $x$1 = _._let(9, ($scope) => {
-    (_._attr($scope.a, "data-internal", $scope.j), $x__script($scope));
+    (_._attr($scope.a, `data-internal`, $scope.j), $x__script($scope));
   }),
   $input_countChange__OR__input_count = _._or(8, ($scope) =>
     $x$1($scope, $scope.h, $scope.g),
@@ -23,9 +23,9 @@ const $x__script = _._script("a0", ($scope) =>
       $count($scope.b, $scope.c),
       $x__closure($scope));
   });
-(_._resume("b0", function ($scope) {
+function $countChange($scope) {
   return (_new_x) => {
     $x($scope, _new_x);
   };
-}),
-  init());
+}
+(_._resume(`b0`, $countChange), init());

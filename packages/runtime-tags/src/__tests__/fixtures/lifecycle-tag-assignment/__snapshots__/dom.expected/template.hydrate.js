@@ -1,5 +1,5 @@
-// size: 245 (min) 159 (brotli)
-const $x__script = _._script("a0", ($scope) => {
+// size: 245 (min) 158 (brotli)
+const $x__script = _._script(`a0`, ($scope) => {
     (_._lifecycle($scope, {
       onMount: function () {
         this.cur = $scope.d;
@@ -8,7 +8,7 @@ const $x__script = _._script("a0", ($scope) => {
         ($prev($scope, this.cur), (this.cur = $scope.d));
       },
     }),
-      _._on($scope.c, "click", function () {
+      _._on($scope.c, `click`, function () {
         $x($scope, $scope.d + 1);
       }));
   }),

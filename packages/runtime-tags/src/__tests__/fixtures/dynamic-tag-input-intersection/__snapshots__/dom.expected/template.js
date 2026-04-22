@@ -1,5 +1,8 @@
-export const $template = `<!>${_myTag_template}${_myTag_template}<!>`;
-export const $walks = /* over(1), <my-tag>, <my-tag>, over(1) */`b/${_myTag_walks}&/${_myTag_walks}&b`;
+export const $template = /*@__PURE__*/((_w0, _w1) => `<!>${_w0}${_w1}<!>`)(_myTag_template, _myTag_template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <my-tag>, <my-tag>, over(1) */
+((_w0, _w1) => `b/${_w0}&/${_w1}&b`)(_myTag_walks, _myTag_walks);
 import { $setup as _myTag, $inputContent as _myTag_input_content, $inputAs as _myTag_input_as, $inputClass as _myTag_input_class, $htmlInput as _myTag_input_$rest, $template as _myTag_template, $walks as _myTag_walks } from "./tags/my-tag.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $mytag_content2 = _._content_resume("__tests__/template.marko_2_content", "Span", /* over(1) */"b");

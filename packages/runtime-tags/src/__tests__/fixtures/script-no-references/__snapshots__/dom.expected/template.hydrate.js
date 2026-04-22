@@ -1,9 +1,9 @@
-// size: 126 (min) 87 (brotli)
-(_._script("a0", ($scope) => {
+// size: 124 (min) 85 (brotli)
+(_._script(`a0`, ($scope) => {
   {
-    const el = document.getElementById("foo");
-    ((el.innerHTML = "foo"),
-      (_.$signal($scope, 0).onabort = () => (el.innerHTML = "")));
+    let el = document.getElementById(`foo`);
+    ((el.innerHTML = `foo`),
+      (_.$signal($scope, 0).onabort = () => (el.innerHTML = ``)));
   }
 }),
   init());

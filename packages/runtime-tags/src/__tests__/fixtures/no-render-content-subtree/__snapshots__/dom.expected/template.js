@@ -11,7 +11,10 @@ const $if_content__setup = $scope => {
 };
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $output_getter = _._el("__tests__/template.marko_0_#div", "#div/0");
-const $if = /* @__PURE__ */_._if("#text/1", _child_template, /* <child> */`/${_child_walks}&`, $if_content__setup);
+const $if = /* @__PURE__ */_._if("#text/1", _child_template,
+/*@__PURE__*/
+/* <child> */
+(_w0 => `/${_w0}&`)(_child_walks), $if_content__setup);
 export const $input_show = ($scope, input_show) => $if($scope, input_show ? 0 : 1);
 export const $input = ($scope, input) => $input_show($scope, input.show);
 export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -1,16 +1,15 @@
-// size: 342 (min) 187 (brotli)
-const $onClick__script = _._script("a0", ($scope) =>
-    _._on($scope.a, "click", $scope.f),
+// size: 342 (min) 192 (brotli)
+const $onClick__script = _._script(`a0`, ($scope) =>
+    _._on($scope.a, `click`, $scope.f),
   ),
   $onClick$1 = _._const(5, $onClick__script),
   $text = ($scope, text) => {
     (_._text($scope.b, text), $input_value_text($scope, text));
   },
   $input_value_text = ($scope, text) => _._text($scope.c, text),
+  $value2 = ($scope, $value) => $text($scope, $value.text),
   $clickCount = _._let(2, ($scope) => {
-    ((($scope, $value) => {
-      $text($scope, $value.text);
-    })($scope.a, { text: $scope.c }),
+    ($value2($scope.a, { text: $scope.c }),
       $onClick$1($scope.a, $onClick($scope)),
       $text($scope.b, $scope.c),
       $onClick$1($scope.b, $onClick2($scope)));
@@ -25,4 +24,4 @@ function $onClick($scope) {
     $clickCount($scope, $scope.c + 1);
   };
 }
-(_._resume("b1", $onClick2), _._resume("b0", $onClick), init());
+(_._resume(`b1`, $onClick2), _._resume(`b0`, $onClick), init());

@@ -1,5 +1,8 @@
-export const $template = `<div>${_wrapper_template}</div><div>${_wrapper_template}</div>`;
-export const $walks = /* next(1), <wrapper>, out(1), next(1), <wrapper>, out(1) */`D/${_wrapper_walks}&lD/${_wrapper_walks}&l`;
+export const $template = /*@__PURE__*/((_w0, _w1) => `<div>${_w0}</div><div>${_w1}</div>`)(_wrapper_template, _wrapper_template);
+export const $walks =
+/*@__PURE__*/
+/* next(1), <wrapper>, out(1), next(1), <wrapper>, out(1) */
+((_w0, _w1) => `D/${_w0}&lD/${_w1}&l`)(_wrapper_walks, _wrapper_walks);
 import { $setup as _wrapper, $input as _wrapper_param_, $template as _wrapper_template, $walks as _wrapper_walks, $foo as _wrapper_input_foo, $inputAs as _wrapper_input_as, $htmlInput as _wrapper_input_$rest } from "./tags/wrapper.marko";
 export function $setup($scope) {
   _wrapper($scope["#childScope/0"]);

@@ -1,24 +1,24 @@
-// size: 502 (min) 232 (brotli)
+// size: 502 (min) 241 (brotli)
 _._resume_dynamic_tag();
-const $tagselect_content__setup__script = _._script("a1", ($scope) => {
-    (_._attrs_script($scope, "a"),
-      _._attrs_script($scope, "b"),
-      _._attrs_script($scope, "c"));
+const $tagselect_content__setup__script = _._script(`a1`, ($scope) => {
+    (_._attrs_script($scope, `a`),
+      _._attrs_script($scope, `b`),
+      _._attrs_script($scope, `c`));
   }),
   $tagselect_content = _._content_resume(
-    "a2",
-    "<option>A</option><option>B</option><option>C</option>",
-    " b b b",
+    `a2`,
+    `<option>A</option><option>B</option><option>C</option>`,
+    ` b b b`,
     ($scope) => {
-      (_._attrs($scope, "a", { value: "a" }),
-        _._attrs($scope, "b", { value: "b" }),
-        _._attrs($scope, "c", { value: "c" }),
+      (_._attrs($scope, `a`, { value: `a` }),
+        _._attrs($scope, `b`, { value: `b` }),
+        _._attrs($scope, `c`, { value: `c` }),
         $tagselect_content__setup__script($scope));
     },
   ),
   $dynamicTag = _._dynamic_tag(0, $tagselect_content),
   $value__OR__tag = _._or(4, ($scope) =>
-    $dynamicTag($scope, $scope.d ? "select" : {}, () => ({
+    $dynamicTag($scope, $scope.d ? `select` : {}, () => ({
       value: $scope.c,
       valueChange: $valueChange($scope),
     })),
@@ -31,4 +31,4 @@ function $valueChange($scope) {
     $value($scope, v);
   };
 }
-(_._resume("a0", $valueChange), init());
+(_._resume(`a0`, $valueChange), init());

@@ -8,7 +8,10 @@ const $if_content__setup = $scope => {
     write: $write($scope)
   });
 };
-const $if = /* @__PURE__ */_._if("#text/2", _child_template, /* <child> */`/${_child_walks}&`, $if_content__setup);
+const $if = /* @__PURE__ */_._if("#text/2", _child_template,
+/*@__PURE__*/
+/* <child> */
+(_w0 => `/${_w0}&`)(_child_walks), $if_content__setup);
 const $show__script = _._script("__tests__/template.marko_0_show", $scope => _._on($scope["#button/0"], "click", function () {
   $show($scope, !$scope.show);
 }));

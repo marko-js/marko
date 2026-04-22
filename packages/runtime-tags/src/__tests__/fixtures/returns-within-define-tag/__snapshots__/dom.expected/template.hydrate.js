@@ -17,13 +17,14 @@ const $Twice_content__value__OR__call = _._or(4, ($scope) =>
     ($Twice_content__value($scope.e, $onClickTwice($scope)),
       _._text($scope.h, $scope.k));
   }),
-  $onClickOnce2__script = _._script("a4", ($scope) =>
-    _._on($scope.c, "click", $scope.j),
+  $onClickOnce2__script = _._script(`a4`, ($scope) =>
+    _._on($scope.c, `click`, $scope.j),
   );
-_._var_resume("a5", _._const(9, $onClickOnce2__script));
-const $onClickTwice2__script = _._script("a6", ($scope) =>
-  _._on($scope.g, "click", $scope.l),
+_._var_resume(`a5`, _._const(9, $onClickOnce2__script));
+const $onClickTwice2__script = _._script(`a6`, ($scope) =>
+  _._on($scope.g, `click`, $scope.l),
 );
+_._var_resume(`a7`, _._const(11, $onClickTwice2__script));
 function $_return2($scope) {
   return function () {
     $scope.d && ($Twice_content__call($scope, $scope.d - 1), $scope.c());
@@ -44,9 +45,8 @@ function $onClickTwice($scope) {
     $clickTwiceCount($scope, $scope.k + 1);
   };
 }
-(_._var_resume("a7", _._const(11, $onClickTwice2__script)),
-  _._resume("a2", $_return2),
-  _._resume("a0", $_return),
-  _._resume("a1", $onClickOnce),
-  _._resume("a3", $onClickTwice),
+(_._resume(`a2`, $_return2),
+  _._resume(`a0`, $_return),
+  _._resume(`a1`, $onClickOnce),
+  _._resume(`a3`, $onClickTwice),
   init());

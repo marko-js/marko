@@ -1,9 +1,15 @@
 const $Child_content__walks = /* get, over(1) */" b",
   $Child_content__template = "<select></select>",
-  $Wrap_content__walks = /* over(1), <Child>, over(1) */`b/${$Child_content__walks}&b`,
-  $Wrap_content__template = `<!>${$Child_content__template}<!>`;
-export const $template = `<!>${$Wrap_content__template}<!>`;
-export const $walks = /* over(1), <Wrap>, over(1) */`b/${$Wrap_content__walks}&b`;
+  $Wrap_content__walks =
+  /*@__PURE__*/
+  /* over(1), <Child>, over(1) */
+  (_w0 => `b/${_w0}&b`)($Child_content__walks),
+  $Wrap_content__template = /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)($Child_content__template);
+export const $template = /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)($Wrap_content__template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <Wrap>, over(1) */
+(_w0 => `b/${_w0}&b`)($Wrap_content__walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $option_content3 = _._content_resume("__tests__/template.marko_6_content", "Three", /* over(1) */"b");
 const $option_content2 = _._content_resume("__tests__/template.marko_5_content", "Two", /* over(1) */"b");

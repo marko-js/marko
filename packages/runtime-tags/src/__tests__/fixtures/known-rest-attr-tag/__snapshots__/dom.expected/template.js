@@ -1,5 +1,8 @@
 export const $template = _child_template;
-export const $walks = /* <child> */`/${_child_walks}&`;
+export const $walks =
+/*@__PURE__*/
+/* <child> */
+(_w0 => `/${_w0}&`)(_child_walks);
 import { $setup as _child, $buttons as _child_input_button, $htmlInput as _child_input_$rest, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $button_content = _._content_resume("__tests__/template.marko_1_content", "one", /* over(1) */"b");

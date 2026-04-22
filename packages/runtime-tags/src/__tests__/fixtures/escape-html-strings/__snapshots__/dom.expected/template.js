@@ -1,5 +1,8 @@
-export const $template = `<div><!>\` ${_child_template}</div>`;
-export const $walks = /* next(1), replace, over(2), <child>, out(1) */`D%c/${_child_walks}&l`;
+export const $template = /*@__PURE__*/(_w0 => `<div><!>\` ${_w0}</div>`)(_child_template);
+export const $walks =
+/*@__PURE__*/
+/* next(1), replace, over(2), <child>, out(1) */
+(_w0 => `D%c/${_w0}&l`)(_child_walks);
 const count = 1;
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";

@@ -1,5 +1,8 @@
-export const $template = `${_radio_template}${_radio_template}${_radio_template}<span> </span>`;
-export const $walks = /* <radio>, <radio>, <radio>, next(1), get, out(1) */`/${_radio_walks}&/${_radio_walks}&/${_radio_walks}&D l`;
+export const $template = /*@__PURE__*/((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}<span> </span>`)(_radio_template, _radio_template, _radio_template);
+export const $walks =
+/*@__PURE__*/
+/* <radio>, <radio>, <radio>, next(1), get, out(1) */
+((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}&D l`)(_radio_walks, _radio_walks, _radio_walks);
 import { $setup as _radio, $input as _radio_input, $template as _radio_template, $walks as _radio_walks } from "./tags/radio.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $checkedValue__OR__$checkedValueChange = /* @__PURE__ */_._or(6, $scope => {

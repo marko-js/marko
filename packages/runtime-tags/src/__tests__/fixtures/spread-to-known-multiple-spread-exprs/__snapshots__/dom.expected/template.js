@@ -1,5 +1,8 @@
 export const $template = _wrap_template;
-export const $walks = /* <wrap> */`/${_wrap_walks}&`;
+export const $walks =
+/*@__PURE__*/
+/* <wrap> */
+(_w0 => `/${_w0}&`)(_wrap_walks);
 import { $setup as _wrap, $input as _wrap_input, $template as _wrap_template, $walks as _wrap_walks } from "./tags/wrap.marko";
 export function $setup($scope) {
   _wrap($scope["#childScope/0"]);

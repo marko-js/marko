@@ -12,7 +12,10 @@ const $for_content2__outerItem__OR__middleItem = /* @__PURE__ */_._or(3, $scope 
 const $for_content2__outerItem = /* @__PURE__ */_._for_closure("#text/1", $for_content2__outerItem__OR__middleItem);
 const $for_content2__middleItem = /* @__PURE__ */_._const("middleItem", $for_content2__outerItem__OR__middleItem);
 const $for_content2__$params = ($scope, $params3) => $for_content2__middleItem($scope, $params3[0]);
-const $for_content__for = /* @__PURE__ */_._for_of("#text/1", `<div>${_child_template}</div>`, /* next(1), <child>, out(1) */`D/${_child_walks}&l`, $for_content2__setup, $for_content2__$params);
+const $for_content__for = /* @__PURE__ */_._for_of("#text/1", /*@__PURE__*/(_w0 => `<div>${_w0}</div>`)(_child_template),
+/*@__PURE__*/
+/* next(1), <child>, out(1) */
+(_w0 => `D/${_w0}&l`)(_child_walks), $for_content2__setup, $for_content2__$params);
 const $for_content__items = /* @__PURE__ */_._for_closure("#text/2", $scope => $for_content__for($scope, [$scope._.items]));
 const $for_content__setup = $scope => {
   $for_content__items._($scope);
@@ -25,7 +28,10 @@ const $for_content__outerItem = /* @__PURE__ */_._const("outerItem", $scope => {
   $for_content2__outerItem($scope);
 });
 const $for_content__$params = ($scope, $params2) => $for_content__outerItem($scope, $params2[0]);
-const $for = /* @__PURE__ */_._for_of("#text/2", `<div>${_child_template}<!></div>`, /* next(1), <child>, replace, out(1) */`D/${_child_walks}&%l`, $for_content__setup, $for_content__$params);
+const $for = /* @__PURE__ */_._for_of("#text/2", /*@__PURE__*/(_w0 => `<div>${_w0}<!></div>`)(_child_template),
+/*@__PURE__*/
+/* next(1), <child>, replace, out(1) */
+(_w0 => `D/${_w0}&%l`)(_child_walks), $for_content__setup, $for_content__$params);
 const $items__script = _._script("__tests__/template.marko_0_items", $scope => _._on($scope["#button/0"], "click", function () {
   $items($scope, $scope.items?.length ? $scope.items.slice(0, -1) : [1, 2, 3]);
 }));

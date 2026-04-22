@@ -1,9 +1,9 @@
-// size: 252 (min) 177 (brotli)
-const $input__script = _._script("a0", ($scope) =>
-    _._attrs_script($scope, "a"),
+// size: 252 (min) 170 (brotli)
+const $input__script = _._script(`a0`, ($scope) =>
+    _._attrs_script($scope, `a`),
   ),
   $input = _._const(2, ($scope) => {
-    (_._attrs($scope, "a", { type: "checkbox", ...$scope.c }),
+    (_._attrs($scope, `a`, { type: `checkbox`, ...$scope.c }),
       $input__script($scope));
   }),
   $checked = _._let(2, ($scope) => {
@@ -18,4 +18,4 @@ function $checkedChange($scope) {
     $checked($scope, _new_checked);
   };
 }
-(_._resume("b0", $checkedChange), init());
+(_._resume(`b0`, $checkedChange), init());

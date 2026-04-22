@@ -1,11 +1,11 @@
-// size: 135 (min) 82 (brotli)
-(_._script("a0", ($scope) => $scope.c(1)),
-  _._resume("b1", function ($scope) {
-    return function () {
-      $scope._.b();
-    };
-  }),
-  _._resume("b0", function ($scope) {
-    return function () {};
-  }),
-  init());
+// size: 141 (min) 98 (brotli)
+_._script(`a0`, ($scope) => $scope.c(1));
+function $valueChange($scope) {
+  return function () {
+    $scope._.b();
+  };
+}
+function $setter($scope) {
+  return function () {};
+}
+(_._resume(`b1`, $valueChange), _._resume(`b0`, $setter), init());

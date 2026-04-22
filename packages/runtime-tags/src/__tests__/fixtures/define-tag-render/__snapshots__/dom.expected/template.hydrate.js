@@ -1,6 +1,6 @@
-// size: 129 (min) 101 (brotli)
-const $MyTag_content__y__script = _._script("a0", ($scope) =>
-    _._on($scope.c, "click", function () {
+// size: 129 (min) 100 (brotli)
+const $MyTag_content__y__script = _._script(`a0`, ($scope) =>
+    _._on($scope.c, `click`, function () {
       $MyTag_content__y($scope, $scope.h + 1);
     }),
   ),

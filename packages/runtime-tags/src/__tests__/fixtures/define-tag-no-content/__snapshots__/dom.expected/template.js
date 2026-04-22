@@ -1,7 +1,10 @@
 const $Baz_content__walks = /* over(1) */"b",
   $Baz_content__template = "<div>Baz Content</div>";
-export const $template = `<!><!><!>${$Baz_content__template}<!>`;
-export const $walks = /* over(1), replace, over(1), replace, over(1), <Baz>, over(1) */`b%b%b/${$Baz_content__walks}&b`;
+export const $template = /*@__PURE__*/(_w0 => `<!><!><!>${_w0}<!>`)($Baz_content__template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), replace, over(1), replace, over(1), <Baz>, over(1) */
+(_w0 => `b%b%b/${_w0}&b`)($Baz_content__walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $Baz_content2 = _._content_resume("__tests__/template.marko_4_content", "<div>Baz Fallback</div>", /* over(1) */"b");
 const $Bar_content = _._content_resume("__tests__/template.marko_2_content", "<div>Bar Fallback</div>", /* over(1) */"b");

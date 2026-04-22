@@ -5,7 +5,10 @@ import * as _ from "@marko/runtime-tags/debug/dom";
 const $tagName_content__setup = $scope => {
   _counter($scope["#childScope/0"]);
 };
-const $tagName_content = _._content_resume("__tests__/template.marko_1_content", _counter_template, /* <counter> */`/${_counter_walks}&`, $tagName_content__setup);
+const $tagName_content = _._content_resume("__tests__/template.marko_1_content", _counter_template,
+/*@__PURE__*/
+/* <counter> */
+(_w0 => `/${_w0}&`)(_counter_walks), $tagName_content__setup);
 const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", $tagName_content);
 const $tagName__script = _._script("__tests__/template.marko_0_tagName", $scope => _._on($scope["#button/1"], "click", function () {
   $tagName($scope, $scope.tagName === "span" ? "div" : "span");

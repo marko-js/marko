@@ -1,6 +1,7 @@
-// size: 820 (min) 409 (brotli)
-const $input_name__OR__input_write__script = _._script(
-    "a0",
+// size: 857 (min) 433 (brotli)
+const $template = `<div> </div>`,
+  $input_name__OR__input_write__script = _._script(
+    `a0`,
     ($scope) =>
       (_.$signal($scope, 0).onabort = () => {
         $scope.e(`destroyed ${$scope.d}`);
@@ -34,14 +35,12 @@ const $input_name__OR__input_write__script = _._script(
     2,
     $for_content2__outerItem__OR__middleItem,
   ),
-  $for_content2__$params = ($scope, $params3) =>
-    $for_content2__middleItem($scope, $params3[0]),
   $for_content__for = _._for_of(
     1,
-    "<div><div> </div></div>",
-    "D/D l&l",
+    ((_w0) => `<div>${_w0}</div>`)($template),
+    ((_w0) => `D/${_w0}&l`)(`D l`),
     $for_content2__setup,
-    $for_content2__$params,
+    ($scope, $params3) => $for_content2__middleItem($scope, $params3[0]),
   ),
   $for_content__items = _._for_closure(2, ($scope) =>
     $for_content__for($scope, [$scope._.d]),
@@ -55,17 +54,15 @@ const $input_name__OR__input_write__script = _._script(
   $for_content__outerItem = _._const(3, ($scope) => {
     ($name($scope.a, `${$scope.d}`), $for_content2__outerItem($scope));
   }),
-  $for_content__$params = ($scope, $params2) =>
-    $for_content__outerItem($scope, $params2[0]),
   $for = _._for_of(
     2,
-    "<div><div> </div><!></div>",
-    "D/D l&%l",
+    ((_w0) => `<div>${_w0}<!></div>`)($template),
+    ((_w0) => `D/${_w0}&%l`)(`D l`),
     $for_content__setup,
-    $for_content__$params,
+    ($scope, $params2) => $for_content__outerItem($scope, $params2[0]),
   ),
-  $items__script = _._script("b1", ($scope) =>
-    _._on($scope.a, "click", function () {
+  $items__script = _._script(`b1`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       $items($scope, $scope.d?.length ? $scope.d.slice(0, -1) : [1, 2, 3]);
     }),
   ),
@@ -74,9 +71,11 @@ const $input_name__OR__input_write__script = _._script(
       $for_content__items($scope),
       $items__script($scope));
   });
-(_._resume("b0", function ($scope) {
+function $write($scope) {
   return function (msg) {
-    $scope.b.innerHTML += "\n" + msg;
+    $scope.b.innerHTML +=
+      `
+` + msg;
   };
-}),
-  init());
+}
+(_._resume(`b0`, $write), init());

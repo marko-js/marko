@@ -1,4 +1,4 @@
-// size: 509 (min) 296 (brotli)
+// size: 511 (min) 290 (brotli)
 const $list$1 = _._let(3, ($scope) =>
   _._return($scope, {
     list: $scope.d,
@@ -16,15 +16,16 @@ function $_return($scope) {
     $list$1($scope, v);
   };
 }
-(_._resume("a1", $_return2), _._resume("a0", $_return));
-const $for_content__$params = ($scope, $params2) =>
-  (($scope, item) => _._text($scope.a, item))($scope, $params2[0]);
-_._var_resume("b0", ($scope, store) => {
+(_._resume(`a1`, $_return2), _._resume(`a0`, $_return));
+const $for_content__item = ($scope, item) => _._text($scope.a, item),
+  $for_content__$params = ($scope, $params2) =>
+    $for_content__item($scope, $params2[0]);
+_._var_resume(`b0`, ($scope, store) => {
   ($store_list($scope, store?.list),
     $store_listChange($scope, store?.listChange),
     $store_clear($scope, store?.clear));
 });
-const $for = _._for_of(3, "<li> </li>", "D l", 0, $for_content__$params),
+const $for = _._for_of(3, `<li> </li>`, `D l`, 0, $for_content__$params),
   $list = _._let(9, ($scope) => $for($scope, [$scope.j])),
   $store_list__OR__store_listChange = _._or(
     7,
@@ -34,8 +35,8 @@ const $for = _._for_of(3, "<li> </li>", "D l", 0, $for_content__$params),
   ),
   $store_list = _._const(5, $store_list__OR__store_listChange),
   $store_listChange = _._const(6, $store_list__OR__store_listChange),
-  $store_clear__script = _._script("b1", ($scope) =>
-    _._on($scope.c, "click", $scope.i),
+  $store_clear__script = _._script(`b1`, ($scope) =>
+    _._on($scope.c, `click`, $scope.i),
   ),
   $store_clear = _._const(8, $store_clear__script);
 init();

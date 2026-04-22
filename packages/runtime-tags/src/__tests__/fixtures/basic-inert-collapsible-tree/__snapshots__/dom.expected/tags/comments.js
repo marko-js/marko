@@ -27,7 +27,10 @@ const $for_content__setup = $scope => {
   $for_content__open($scope, true);
 };
 const $for_content__comment_text = ($scope, comment_text) => _._text($scope["#text/1"], comment_text);
-const $for_content__if = /* @__PURE__ */_._if("#text/4", $template, /* <comments> */`/${$walks}&`, $if_content__setup);
+const $for_content__if = /* @__PURE__ */_._if("#text/4", $template,
+/*@__PURE__*/
+/* <comments> */
+(_w0 => `/${_w0}&`)($walks), $if_content__setup);
 const $for_content__comment_comments = /* @__PURE__ */_._const("comment_comments", $scope => {
   $for_content__if($scope, $scope.comment_comments ? 0 : 1);
   $if_content__comment_comments($scope);

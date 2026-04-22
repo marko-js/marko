@@ -1,7 +1,10 @@
 const $Child_content2__walks = /* get, over(1) */" b",
   $Child_content2__template = "<div></div>";
-export const $template = `<!>${$Child_content2__template}<!>`;
-export const $walks = /* over(1), <Child>, over(1) */`b/${$Child_content2__walks}&b`;
+export const $template = /*@__PURE__*/(_w0 => `<!>${_w0}<!>`)($Child_content2__template);
+export const $walks =
+/*@__PURE__*/
+/* over(1), <Child>, over(1) */
+(_w0 => `b/${_w0}&b`)($Child_content2__walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $Child_content2__input__script = _._script("__tests__/template.marko_3_input", $scope => _._attrs_script($scope, "#div/0"));
 const $Child_content2__input = /* @__PURE__ */_._const("input", $scope => {

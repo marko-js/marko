@@ -1,12 +1,13 @@
-// size: 303 (min) 188 (brotli)
-const $bar = _._let(3, ($scope) => {
+// size: 305 (min) 185 (brotli)
+const $pattern2 = ($scope, $pattern) => {
+    ($foo2($scope, $pattern.foo), $fooChange2($scope, $pattern.fooChange));
+  },
+  $bar = _._let(3, ($scope) => {
     (_._text($scope.c, $scope.d),
-      (($scope, $pattern) => {
-        ($foo2($scope, $pattern.foo), $fooChange2($scope, $pattern.fooChange));
-      })($scope, { foo: $scope.d, fooChange: $foo($scope) }));
+      $pattern2($scope, { foo: $scope.d, fooChange: $foo($scope) }));
   }),
-  $foo__OR__$fooChange__script = _._script("a1", ($scope) =>
-    _._on($scope.a, "click", function () {
+  $foo__OR__$fooChange__script = _._script(`a1`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       $scope.g($scope.f + 1);
     }),
   ),
@@ -20,4 +21,4 @@ function $foo($scope) {
     $bar($scope, v);
   };
 }
-(_._resume("a0", $foo), init());
+(_._resume(`a0`, $foo), init());

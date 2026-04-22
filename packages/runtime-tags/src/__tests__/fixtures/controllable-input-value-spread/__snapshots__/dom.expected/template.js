@@ -1,5 +1,8 @@
-export const $template = `${_myInput_template}<span> </span>`;
-export const $walks = /* <my-input>, next(1), get, out(1) */`/${_myInput_walks}&D l`;
+export const $template = /*@__PURE__*/(_w0 => `${_w0}<span> </span>`)(_myInput_template);
+export const $walks =
+/*@__PURE__*/
+/* <my-input>, next(1), get, out(1) */
+(_w0 => `/${_w0}&D l`)(_myInput_walks);
 import { $setup as _myInput, $input as _myInput_input, $template as _myInput_template, $walks as _myInput_walks } from "./tags/my-input.marko";
 import * as _ from "@marko/runtime-tags/debug/dom";
 const $value = /* @__PURE__ */_._let("value/2", $scope => {

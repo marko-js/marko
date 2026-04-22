@@ -1,5 +1,8 @@
 export const $template = _layout_template;
-export const $walks = /* <layout> */`/${_layout_walks}&`;
+export const $walks =
+/*@__PURE__*/
+/* <layout> */
+(_w0 => `/${_w0}&`)(_layout_walks);
 import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _layout, $content as _layout_input_content, $template as _layout_template, $walks as _layout_walks } from "./tags/layout.marko";
 const $layout_content__input_name = /* @__PURE__ */_._closure_get("name", $scope => _._text($scope["#text/0"], $scope._.name));

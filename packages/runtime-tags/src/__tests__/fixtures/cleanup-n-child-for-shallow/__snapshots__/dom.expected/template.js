@@ -9,7 +9,10 @@ const $for_content__setup = $scope => {
 };
 const $for_content__item = ($scope, item) => _child_input_name($scope["#childScope/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $for = /* @__PURE__ */_._for_of("#text/2", _child_template, /* <child> */`/${_child_walks}&`, $for_content__setup, $for_content__$params);
+const $for = /* @__PURE__ */_._for_of("#text/2", _child_template,
+/*@__PURE__*/
+/* <child> */
+(_w0 => `/${_w0}&`)(_child_walks), $for_content__setup, $for_content__$params);
 const $items__script = _._script("__tests__/template.marko_0_items", $scope => _._on($scope["#button/0"], "click", function () {
   $items($scope, $scope.items?.length ? $scope.items.slice(0, -1) : [1, 2, 3]);
 }));

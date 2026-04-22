@@ -1,5 +1,5 @@
-// size: 120 (min) 99 (brotli)
-const $x__script = _._script("a0", ($scope) => {
+// size: 120 (min) 102 (brotli)
+const $x__script = _._script(`a0`, ($scope) => {
     ($y($scope, $scope.c), $x($scope, 2));
   }),
   $x = _._let(2, ($scope) => {

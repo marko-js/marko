@@ -1,6 +1,6 @@
 // size: 224 (min) 152 (brotli)
-const $onClick__script = _._script("a0", ($scope) =>
-    _._on($scope.a, "click", $scope.e),
+const $onClick__script = _._script(`a0`, ($scope) =>
+    _._on($scope.a, `click`, $scope.e),
   ),
   $onClick$1 = _._const(4, $onClick__script),
   $mybutton_content__clickCount = _._closure_get(1, ($scope) =>
@@ -15,4 +15,4 @@ function $onClick($scope) {
     $clickCount($scope, $scope.b + 1);
   };
 }
-(_._resume("b0", $onClick), init());
+(_._resume(`b0`, $onClick), init());

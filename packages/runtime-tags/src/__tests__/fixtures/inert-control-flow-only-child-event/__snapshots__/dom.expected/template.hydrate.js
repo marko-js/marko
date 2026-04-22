@@ -1,9 +1,9 @@
-// size: 164 (min) 126 (brotli)
+// size: 164 (min) 128 (brotli)
 const $for_content__selected = _._for_closure(0, ($scope) =>
-    _._attr($scope.a, "data-selected", $scope._.b === $scope.M),
+    _._attr($scope.a, `data-selected`, $scope._.b === $scope.M),
   ),
-  $selected__script = _._script("a0", ($scope) =>
-    _._on($scope.a, "click", function () {
+  $selected__script = _._script(`a0`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       $selected($scope, $scope.b + 1);
     }),
   ),

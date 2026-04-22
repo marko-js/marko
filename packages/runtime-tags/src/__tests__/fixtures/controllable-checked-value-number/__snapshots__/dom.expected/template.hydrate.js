@@ -1,27 +1,32 @@
-// size: 508 (min) 165 (brotli)
+// size: 508 (min) 172 (brotli)
 const $checked = _._let(4, ($scope) => {
   (_._attr_input_checkedValue(
     $scope,
-    "a",
-    $scope.e + "",
+    `a`,
+    $scope.e + ``,
     $checkedValueChange($scope),
     0,
   ),
     _._attr_input_checkedValue(
       $scope,
-      "b",
+      `b`,
       $scope.e,
       $checkedValueChange2($scope),
-      "1",
+      `1`,
     ),
     _._attr_input_checkedValue(
       $scope,
-      "c",
+      `c`,
       $scope.e,
       $checkedValueChange3($scope),
       2,
     ),
     _._text($scope.d, $scope.e));
+});
+_._script(`a3`, ($scope) => {
+  (_._attr_input_checkedValue_script($scope, `a`),
+    _._attr_input_checkedValue_script($scope, `b`),
+    _._attr_input_checkedValue_script($scope, `c`));
 });
 function $checkedValueChange3($scope) {
   return function (v) {
@@ -38,12 +43,7 @@ function $checkedValueChange($scope) {
     $checked($scope, +v);
   };
 }
-(_._script("a3", ($scope) => {
-  (_._attr_input_checkedValue_script($scope, "a"),
-    _._attr_input_checkedValue_script($scope, "b"),
-    _._attr_input_checkedValue_script($scope, "c"));
-}),
-  _._resume("a2", $checkedValueChange3),
-  _._resume("a1", $checkedValueChange2),
-  _._resume("a0", $checkedValueChange),
+(_._resume(`a2`, $checkedValueChange3),
+  _._resume(`a1`, $checkedValueChange2),
+  _._resume(`a0`, $checkedValueChange),
   init());

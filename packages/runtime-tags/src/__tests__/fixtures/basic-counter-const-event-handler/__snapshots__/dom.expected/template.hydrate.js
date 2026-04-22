@@ -1,6 +1,6 @@
-// size: 176 (min) 129 (brotli)
-const $increment2__script = _._script("a1", ($scope) =>
-    _._on($scope.a, "click", $scope.d),
+// size: 176 (min) 142 (brotli)
+const $increment2__script = _._script(`a1`, ($scope) =>
+    _._on($scope.a, `click`, $scope.d),
   ),
   $increment2 = _._const(3, $increment2__script),
   $clickCount = _._let(2, ($scope) => {
@@ -11,4 +11,4 @@ function $increment($scope) {
     $clickCount($scope, $scope.c + 1);
   };
 }
-(_._resume("a0", $increment), init());
+(_._resume(`a0`, $increment), init());

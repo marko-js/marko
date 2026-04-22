@@ -1,11 +1,11 @@
-// size: 127 (min) 112 (brotli)
-const $if = _._if(1, "hi", "b"),
-  $show__script = _._script("a0", ($scope) =>
-    _._on($scope.a, "click", function () {
+// size: 125 (min) 109 (brotli)
+const $if = _._if(1, `hi`, `b`),
+  $show__script = _._script(`a0`, ($scope) =>
+    _._on($scope.a, `click`, function () {
       $show($scope, !$scope.c);
     }),
   ),
   $show = _._let(2, ($scope) => {
-    ($if($scope, $scope.c ? 0 : 1), $show__script($scope));
+    ($if($scope, +!$scope.c), $show__script($scope));
   });
 init();

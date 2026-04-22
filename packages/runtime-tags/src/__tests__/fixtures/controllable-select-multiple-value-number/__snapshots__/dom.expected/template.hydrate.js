@@ -1,7 +1,13 @@
-// size: 254 (min) 165 (brotli)
+// size: 254 (min) 154 (brotli)
 const $selected = _._let(3, ($scope) => {
-  (_._attr_select_value($scope, "a", $scope.d, $valueChange($scope)),
+  (_._attr_select_value($scope, `a`, $scope.d, $valueChange($scope)),
     _._text($scope.b, $scope.d));
+});
+_._script(`a1`, ($scope) => {
+  (_._attr_select_value_script($scope, `a`),
+    _._on($scope.c, `click`, function () {
+      $selected($scope, [1]);
+    }));
 });
 function $valueChange($scope) {
   return function (v) {
@@ -11,11 +17,4 @@ function $valueChange($scope) {
     );
   };
 }
-(_._script("a1", ($scope) => {
-  (_._attr_select_value_script($scope, "a"),
-    _._on($scope.c, "click", function () {
-      $selected($scope, [1]);
-    }));
-}),
-  _._resume("a0", $valueChange),
-  init());
+(_._resume(`a0`, $valueChange), init());
