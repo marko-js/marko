@@ -1,9 +1,0 @@
-{
-  "vars": {
-    "props": {
-      "$_": "t",
-      "$init": "r",
-      "$$get__script": "o"
-    }
-  }
-}

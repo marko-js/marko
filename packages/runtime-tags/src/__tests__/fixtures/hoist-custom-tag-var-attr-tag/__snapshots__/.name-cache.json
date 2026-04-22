@@ -1,9 +1,0 @@
-{
-  "vars": {
-    "props": {
-      "$_": "o",
-      "$init": "r",
-      "$$setHtml_getter": "t"
-    }
-  }
-}
