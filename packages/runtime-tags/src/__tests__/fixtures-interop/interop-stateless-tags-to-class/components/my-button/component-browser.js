@@ -1,7 +1,7 @@
 export default class {
   handleClick(e) {
     if (!this.input.disabled) {
-      this.emit("click", e)
+      this.emit("click", e);
     }
   }
 }

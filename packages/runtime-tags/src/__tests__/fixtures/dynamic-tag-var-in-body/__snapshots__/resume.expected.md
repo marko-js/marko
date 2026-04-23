@@ -2,11 +2,11 @@
 
 ```html
 <!--M_[-->
+<!--M_[-->
 <!--M_]2 #text/0 3-->
 <html>
   <head />
   <body>
-    <!--M_[-->
     <div />
     <!--M_*2 #div/1-->
     <!--M_]1 #text/0 2-->
@@ -32,11 +32,4 @@
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-REMOVE html/body/#comment0 before #comment0
-INSERT html/body/#comment0
-INSERT html/body/#text
 ```

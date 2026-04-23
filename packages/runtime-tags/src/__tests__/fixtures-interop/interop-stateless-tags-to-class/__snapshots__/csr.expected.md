@@ -20,7 +20,10 @@ INSERT button/#text3
 INSERT button/#text2
 ```
 
-# Render ASYNC
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <!---->
 <button>
@@ -36,20 +39,4 @@ INSERT button/#text2
 # Mutations
 ```
 INSERT span/#text
-```
-
-# Render
-```js
-container.querySelector("button").click();
-```
-```html
-<!---->
-<button>
-  Say Hi
-</button>
-<span
-  id="display"
->
-  Hi!
-</span>
 ```

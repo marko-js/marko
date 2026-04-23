@@ -1,4 +1,8 @@
-export const error_compiler = ["tags/hello.marko"];
-export const skip_csr = true;
-export const skip_ssr = true;
-export const skip_resume = true;
+import type { TestConfig } from "../../main.test";
+
+export const config: TestConfig = {
+  error_compiler: ["tags/hello.marko"],
+  skip_csr: true,
+  skip_ssr: true,
+  skip_resume: true,
+};

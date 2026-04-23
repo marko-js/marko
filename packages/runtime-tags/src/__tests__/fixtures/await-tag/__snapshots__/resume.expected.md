@@ -26,10 +26,6 @@
 </html>
 ```
 
-# Mutations
-```
-INSERT html/body/div/#text2
-```
 
 # Render FLUSH
 ```html
@@ -134,22 +130,20 @@ INSERT html/body/div/script1
 # Mutations
 ```
 INSERT html/body/div/#comment4
-INSERT html/body/div/#text3
+INSERT html/body/div/#text2
 INSERT html/body/div/#comment5
-INSERT html/body/div/#text4
+INSERT html/body/div/#text3
 INSERT html/body/div/#comment6
 INSERT html/body/div/#comment7
 INSERT html/body/div/#comment8
-INSERT html/body/div/#text6
+INSERT html/body/div/#text4
 INSERT html/body/div/#comment9
-INSERT html/body/div/#text7
+INSERT html/body/div/#text5
 INSERT html/body/div/#comment10
 INSERT html/body/div/#comment11
 INSERT html/body/div/button
 INSERT html/body/div/button/#text
 INSERT html/body/div/#comment12
-INSERT html/body/div/#text5
-INSERT html/body/div/#text8
 INSERT html/body/script
 ```
 
@@ -219,8 +213,8 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE html/body/div/#text1 "0" => "1"
-UPDATE html/body/div/#text7 "0" => "1"
-UPDATE html/body/div/#text4 "0" => "1"
+UPDATE html/body/div/#text5 "0" => "1"
+UPDATE html/body/div/#text3 "0" => "1"
 ```
 
 # Render
@@ -289,8 +283,8 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE html/body/div/#text1 "1" => "2"
-UPDATE html/body/div/#text7 "1" => "2"
-UPDATE html/body/div/#text4 "1" => "2"
+UPDATE html/body/div/#text5 "1" => "2"
+UPDATE html/body/div/#text3 "1" => "2"
 ```
 
 # Render
@@ -359,6 +353,6 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE html/body/div/#text1 "2" => "3"
-UPDATE html/body/div/#text7 "2" => "3"
-UPDATE html/body/div/#text4 "2" => "3"
+UPDATE html/body/div/#text5 "2" => "3"
+UPDATE html/body/div/#text3 "2" => "3"
 ```

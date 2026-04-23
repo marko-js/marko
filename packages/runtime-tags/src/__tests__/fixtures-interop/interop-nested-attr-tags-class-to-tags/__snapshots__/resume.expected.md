@@ -1,5 +1,6 @@
 # Render
 ```html
+<!--F#1-->
 <html>
   <head />
   <body>
@@ -7,16 +8,13 @@
       id="tags"
     >
       0
-      <!--Ms*1 #text/1-->
     </button>
-    <!--Ms*1 #button/0-->
     <div>
       <button
         id="class"
       >
         0
       </button>
-      <!--Ms]1 #text/2 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("s");
@@ -49,23 +47,21 @@
 
 # Mutations
 ```
-INSERT #text
 INSERT html/body/#text0
 INSERT html/body/#text5
-REMOVE #comment before html/body/#text0
+REMOVE #comment before #comment
 REMOVE #comment after html/body/#text5
-INSERT html/body/div/#text0, html/body/div/#text3
-REMOVE #comment after html/body/div/#text3
-REMOVE button after html/body/div/#text3
-REMOVE #text after html/body/div/#text3
 INSERT html/body/#text1
 INSERT html/body/#text4
 INSERT html/body/#text2
 INSERT html/body/#text3
-REMOVE #comment after html/body/#text2
-REMOVE #comment after html/body/div
-REMOVE html/body/#text4 after html/body/#text3
+INSERT html/body/button, html/body/div
+REMOVE html/body/#text4 after #comment
 INSERT html/body/#text4
+REMOVE #comment after button
+REMOVE #comment after div
+REMOVE button after html/body/#text4
+REMOVE div after html/body/#text4
 INSERT html/body/div/#text1
 INSERT html/body/div/#text2
 INSERT html/body/div/button
@@ -77,6 +73,7 @@ INSERT html/body/div/button/#text
 container.querySelector("#tags").click();
 ```
 ```html
+<!--F#1-->
 <html>
   <head />
   <body>
@@ -84,16 +81,13 @@ container.querySelector("#tags").click();
       id="tags"
     >
       1
-      <!--Ms*1 #text/1-->
     </button>
-    <!--Ms*1 #button/0-->
     <div>
       <button
         id="class"
       >
         0
       </button>
-      <!--Ms]1 #text/2 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("s");
@@ -134,6 +128,7 @@ UPDATE html/body/button/#text "0" => "1"
 container.querySelector("#class").click();
 ```
 ```html
+<!--F#1-->
 <html>
   <head />
   <body>
@@ -141,16 +136,13 @@ container.querySelector("#class").click();
       id="tags"
     >
       1
-      <!--Ms*1 #text/1-->
     </button>
-    <!--Ms*1 #button/0-->
     <div>
       <button
         id="class"
       >
         1
       </button>
-      <!--Ms]1 #text/2 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("s");
@@ -200,6 +192,7 @@ INSERT html/body/div/button/#text
 container.querySelector("#tags").click();
 ```
 ```html
+<!--F#1-->
 <html>
   <head />
   <body>
@@ -207,16 +200,13 @@ container.querySelector("#tags").click();
       id="tags"
     >
       2
-      <!--Ms*1 #text/1-->
     </button>
-    <!--Ms*1 #button/0-->
     <div>
       <button
         id="class"
       >
         1
       </button>
-      <!--Ms]1 #text/2 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("s");
@@ -257,6 +247,7 @@ UPDATE html/body/button/#text "1" => "2"
 container.querySelector("#class").click();
 ```
 ```html
+<!--F#1-->
 <html>
   <head />
   <body>
@@ -264,16 +255,13 @@ container.querySelector("#class").click();
       id="tags"
     >
       2
-      <!--Ms*1 #text/1-->
     </button>
-    <!--Ms*1 #button/0-->
     <div>
       <button
         id="class"
       >
         2
       </button>
-      <!--Ms]1 #text/2 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("s");
@@ -323,6 +311,7 @@ INSERT html/body/div/button/#text
 container.querySelector("#tags").click();
 ```
 ```html
+<!--F#1-->
 <html>
   <head />
   <body>
@@ -330,16 +319,13 @@ container.querySelector("#tags").click();
       id="tags"
     >
       3
-      <!--Ms*1 #text/1-->
     </button>
-    <!--Ms*1 #button/0-->
     <div>
       <button
         id="class"
       >
         2
       </button>
-      <!--Ms]1 #text/2 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("s");

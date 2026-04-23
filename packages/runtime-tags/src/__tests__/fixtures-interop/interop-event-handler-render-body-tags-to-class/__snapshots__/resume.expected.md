@@ -3,11 +3,7 @@
 <html>
   <head />
   <body>
-    <!--M_[-->
-    <button>
-      0
-      <!--M_*3 #text/0-->
-    </button>
+    <button />
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
@@ -63,19 +59,22 @@
 
 # Mutations
 ```
+REMOVE #comment before #comment
+INSERT #comment
 INSERT html/body/#text2
 INSERT html/body/#text0
 INSERT html/body/#text1
-REMOVE #comment after html/body/#comment0
+REMOVE #comment before html
 REMOVE #comment after html/body/#text1
+INSERT html/body/button
 INSERT html/body/button/#text0
-INSERT html/body/button/#text4
-INSERT html/body/button/#text1
 INSERT html/body/button/#text3
-REMOVE #comment after html/body/button/#text1
-REMOVE #comment after html/body/button/#comment
-REMOVE html/body/button/#text4 after html/body/button/#text3
-INSERT html/body/button/#text4
+INSERT html/body/button/#text1
+INSERT html/body/button/#text2
+REMOVE html/body/button/#text3 after html/body/button/#text2
+INSERT html/body/button/#text3
+REMOVE #comment after html/body/button
+REMOVE button after html/body/button
 ```
 
 # Render
@@ -86,11 +85,7 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[-->
-    <button>
-      1
-      <!--M_*3 #text/0-->
-    </button>
+    <button />
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
@@ -144,10 +139,6 @@ container.querySelector("button").click();
 </html>
 ```
 
-# Mutations
-```
-UPDATE html/body/button/#text2 "0" => "1"
-```
 
 # Render
 ```js
@@ -157,11 +148,7 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[-->
-    <button>
-      2
-      <!--M_*3 #text/0-->
-    </button>
+    <button />
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
@@ -215,10 +202,6 @@ container.querySelector("button").click();
 </html>
 ```
 
-# Mutations
-```
-UPDATE html/body/button/#text2 "1" => "2"
-```
 
 # Render
 ```js
@@ -228,11 +211,7 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[-->
-    <button>
-      3
-      <!--M_*3 #text/0-->
-    </button>
+    <button />
     <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
@@ -284,9 +263,4 @@ container.querySelector("button").click();
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-UPDATE html/body/button/#text2 "2" => "3"
 ```

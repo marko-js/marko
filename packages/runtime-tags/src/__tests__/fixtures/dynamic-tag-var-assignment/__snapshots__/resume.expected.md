@@ -1,9 +1,9 @@
 # Render
 ```html
+<!--M_[-->
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       class="inc"
     >
@@ -39,22 +39,16 @@
 </html>
 ```
 
-# Mutations
-```
-REMOVE html/body/#comment0 before html
-INSERT html/body/#comment0
-INSERT html/body/#text
-```
 
 # Render
 ```js
 container.querySelector("button.inc").click();
 ```
 ```html
+<!--M_[-->
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       class="inc"
     >
@@ -100,10 +94,10 @@ UPDATE html/body/button0/#text "1" => "2"
 container.querySelector("button.inc").click();
 ```
 ```html
+<!--M_[-->
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       class="inc"
     >
@@ -149,10 +143,10 @@ UPDATE html/body/button0/#text "2" => "3"
 container.querySelector("button.reset").click();
 ```
 ```html
+<!--M_[-->
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       class="inc"
     >
@@ -198,10 +192,10 @@ UPDATE html/body/button0/#text "3" => "0"
 container.querySelector("button.inc").click();
 ```
 ```html
+<!--M_[-->
 <html>
   <head />
   <body>
-    <!--M_[-->
     <button
       class="inc"
     >

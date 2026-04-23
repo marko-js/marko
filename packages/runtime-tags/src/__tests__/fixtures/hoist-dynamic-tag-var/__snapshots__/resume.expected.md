@@ -1,10 +1,10 @@
 # Render `{"show":true}`
 
 ```html
+<!--M_[-->
 <html>
   <head />
   <body>
-    <!--M_[-->
     <div>
       Hello world
     </div>
@@ -71,11 +71,6 @@
 
 # Mutations
 ```
-REMOVE html/body/#comment0 before html
-INSERT html/body/#comment0
-INSERT html/body/#text0
-INSERT html/body/#text1
-INSERT html/body/#text2
 INSERT html/body/div2/#text
 INSERT html/body/div0/#text
 INSERT html/body/div1/#text

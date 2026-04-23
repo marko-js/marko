@@ -1,14 +1,14 @@
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
-import type { Input, Template } from "@marko/runtime-tags/common/types";
+import type { Input } from "@marko/runtime-tags/common/types";
 import assert from "assert";
 import fs from "fs";
 import snap from "mocha-snap";
 import path from "path";
 import glob from "tiny-glob";
 
-import * as translator from "../translator";
-import { bundle } from "./utils/bundle";
+import * as tagsTranslator from "../translator";
+import { bundle, createRunner } from "./utils/bundle";
 import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 import createBrowser from "./utils/create-browser";
 import {
@@ -40,7 +40,21 @@ export type TestConfig = {
 };
 
 describe("runtime-tags/translator", () => {
-  const fixturesDir = path.join(__dirname, "fixtures");
+  testFixtures();
+});
+
+describe("translator-interop", () => {
+  testFixtures(true);
+});
+
+function testFixtures(interop?: true) {
+  const translator = interop
+    ? require.resolve("marko/translator")
+    : tagsTranslator;
+  const fixturesDir = path.join(
+    __dirname,
+    interop ? "fixtures-interop" : "fixtures",
+  );
   for (const entry of fs.readdirSync(fixturesDir)) {
     if (entry.endsWith(".skip")) continue;
 
@@ -58,7 +72,6 @@ describe("runtime-tags/translator", () => {
       })();
       const compileOpts: compiler.Config = {
         translator,
-        cache: new Map(),
         writeVersionComment: false,
         babelConfig: {
           babelrc: false,
@@ -71,7 +84,6 @@ describe("runtime-tags/translator", () => {
         output: "html",
       };
       const csrCompileOpts: compiler.Config = { ...compileOpts, output: "dom" };
-
       const skipHTML = config.skip_html;
       const skipDOM = config.skip_dom;
       const skipSSR = skipHTML || config.skip_ssr || config.error_compiler;
@@ -97,7 +109,6 @@ describe("runtime-tags/translator", () => {
         });
         const finalConfig: compiler.Config = {
           ...compilerConfig,
-          cache: new Map(), // these need a different cache since `resolveVirtualDependency` is relevant to the compile cache.
           resolveVirtualDependency(_filename, { code, virtualPath }) {
             return `virtual:${virtualPath} ${code}`;
           },
@@ -159,18 +170,21 @@ describe("runtime-tags/translator", () => {
 
       let serverRender = () => {
         const cached = (async () => {
-          const serverTemplate = require(templateFile).default as Template;
-
+          const runSSR = await createRunner(
+            templateFile,
+            ssrCompileOpts,
+            "ssr",
+          );
           const [input = {}, ...steps] =
             typeof config.steps === "function"
               ? await config.steps()
               : config.steps || [];
-
           const chunks: string[] = [];
           const logs: ConsoleRecord[][] = [];
           const capture = captureConsole();
+          const { template } = runSSR();
           try {
-            for await (const data of serverTemplate.render(
+            for await (const data of template.render(
               config.embedded
                 ? {
                     ...input,
@@ -189,12 +203,7 @@ describe("runtime-tags/translator", () => {
             capture.cleanup();
           }
 
-          return {
-            chunks,
-            logs,
-            input,
-            steps,
-          };
+          return { chunks, logs, input, steps };
         })();
         serverRender = () => cached;
         return cached;
@@ -202,20 +211,11 @@ describe("runtime-tags/translator", () => {
 
       let ssr = () => {
         const cached = (async () => {
-          const browser = createBrowser({
-            dir: fixtureDir,
-            extensions: register({
-              ...csrCompileOpts,
-              modules: "cjs",
-              extensions: {},
-            }),
-          });
+          const browser = createBrowser();
           const { window } = browser;
           const { document } = window;
           const { chunks, logs } = await serverRender();
-
           const flushNext = browser.stream(chunks);
-
           const tracker = createMutationTracker(browser, document);
 
           for (const data of chunks) {
@@ -248,31 +248,25 @@ describe("runtime-tags/translator", () => {
 
       let csr = () => {
         const cached = (async () => {
-          const browser = createBrowser({
-            dir: fixtureDir,
-            extensions: register({
-              ...csrCompileOpts,
-              extensions: {},
-            }),
-          });
-
+          const browser = createBrowser();
+          const runCSR = await createRunner(
+            templateFile,
+            csrCompileOpts,
+            "csr",
+            interop,
+          );
           const { window } = browser;
           const { document } = window;
           const [input = {}, ...steps] =
             typeof config.steps === "function"
               ? await config.steps()
               : config.steps || [];
-          const { run } = browser.require<
-            typeof import("@marko/runtime-tags/dom")
-          >("@marko/runtime-tags/dom");
-          const template = browser.require<{ default: Template }>(
-            templateFile,
-          ).default;
           const container = document.createElement("div");
           const tracker = createMutationTracker(browser, container);
 
           document.body.appendChild(container);
 
+          const { template, run } = runCSR(browser.ctx);
           const instance = template.mount(input, container, "afterbegin");
           tracker.logUpdate(input);
 
@@ -313,34 +307,18 @@ describe("runtime-tags/translator", () => {
 
       let resume = () => {
         const cached = (async () => {
-          const hydrateCode = await compileCode(templateFile, {
-            ...csrCompileOpts,
-            modules: "cjs",
-            output: "hydrate",
-            resolveVirtualDependency() {
-              throw new Error("Not supported");
-            },
-          });
-          const browser = createBrowser({
-            dir: fixtureDir,
-            extensions: register({
-              ...csrCompileOpts,
-              modules: "cjs",
-              extensions: {},
-            }),
-          });
+          const [runResume, { chunks, logs, input, steps }] = await Promise.all(
+            [
+              createRunner(templateFile, csrCompileOpts, "resume", interop),
+              serverRender(),
+            ],
+          );
+
+          const browser = createBrowser();
           const { window } = browser;
           const { document } = window;
-          const { chunks, logs, input, steps } = await serverRender();
-
-          const { run } = browser.require<
-            typeof import("@marko/runtime-tags/dom")
-          >("@marko/runtime-tags/dom");
-
           const flushNext = browser.stream(chunks);
-
           let hasFlush = flushNext();
-
           const tracker = createMutationTracker(browser, document);
 
           for (const group of logs) {
@@ -349,7 +327,7 @@ describe("runtime-tags/translator", () => {
             }
           }
 
-          browser.window.Function("require", hydrateCode)(browser.require);
+          const { run } = runResume(browser.ctx);
 
           await runSteps();
 
@@ -511,7 +489,7 @@ describe("runtime-tags/translator", () => {
       });
     });
   }
-});
+}
 
 async function compileCode(templateFile: string, config: compiler.Config) {
   return (await compiler.compileFile(templateFile, config)).code;

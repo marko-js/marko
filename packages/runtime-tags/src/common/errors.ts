@@ -35,7 +35,7 @@ export function _assert_init(scope: Scope, accessor: string) {
       throw err;
     }
     throw new ReferenceError(
-      `Cannot access "${accessor}" before initialization.`,
+      `Cannot access '${accessor}' before initialization`,
     );
   }
   return scope[accessor];

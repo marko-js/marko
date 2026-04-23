@@ -1,10 +1,10 @@
 # Render `{"show":true}`
 
 ```html
+<!--M_[-->
 <html>
   <head />
   <body>
-    <!--M_[-->
     <div>
       First Only
     </div>
@@ -395,34 +395,6 @@
 
 # Mutations
 ```
-REMOVE html/body/#comment0 before html
-INSERT html/body/#comment0
-INSERT html/body/#text0
-INSERT html/body/#text1
-INSERT html/body/#text2
-INSERT html/body/#text3
-INSERT html/body/#text4
-INSERT html/body/#text5
-INSERT html/body/#text6
-INSERT html/body/#text7
-INSERT html/body/#text8
-INSERT html/body/#text9
-INSERT html/body/ul0/#text0
-INSERT html/body/ul0/#text1
-INSERT html/body/ul0/#text2
-INSERT html/body/ul0/#text3
-INSERT html/body/ul1/#text0
-INSERT html/body/ul1/#text1
-INSERT html/body/ul1/#text2
-INSERT html/body/ul1/#text3
-INSERT html/body/ul2/#text0
-INSERT html/body/ul2/#text1
-INSERT html/body/ul2/#text2
-INSERT html/body/ul2/#text3
-INSERT html/body/ul3/#text0
-INSERT html/body/ul3/#text1
-INSERT html/body/ul3/#text2
-INSERT html/body/ul3/#text3
 INSERT html/body/div0/#text
 INSERT html/body/div6/#text
 INSERT html/body/ul0/div0/#text

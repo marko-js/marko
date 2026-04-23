@@ -39,6 +39,6 @@
 ```
 INSERT html/body/#text0
 INSERT html/body/#text1
-REMOVE #comment before html/body/#text0
+REMOVE #comment before html
 REMOVE #comment after html/body/#text1
 ```

@@ -13,9 +13,7 @@
       id="tags"
     >
       0
-      <!--Ms*1 #text/1-->
     </button>
-    <!--Ms*1 #button/0-->
     <script>
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.a = [0,
@@ -48,16 +46,19 @@
 ```
 INSERT html/body/#text0
 INSERT html/body/#text5
-REMOVE #comment before html/body/#text0
+REMOVE #comment before html
 REMOVE #comment after html/body/#text5
 INSERT html/body/#text1
 INSERT html/body/#text4
 INSERT html/body/#text2
 INSERT html/body/#text3
 REMOVE #comment after html/body/#text2
-REMOVE #comment after html/body/#comment
+REMOVE #comment after #comment
+REMOVE #comment after button
+INSERT html/body/button1
 REMOVE html/body/#text4 after html/body/#text3
 INSERT html/body/#text4
+REMOVE button after html/body/#text2
 ```
 
 # Render
@@ -78,9 +79,7 @@ container.querySelector("#tags").click();
       id="tags"
     >
       1
-      <!--Ms*1 #text/1-->
     </button>
-    <!--Ms*1 #button/0-->
     <script>
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.a = [0,
@@ -132,9 +131,7 @@ container.querySelector("#class").click();
       id="tags"
     >
       1
-      <!--Ms*1 #text/1-->
     </button>
-    <!--Ms*1 #button/0-->
     <script>
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.a = [0,
@@ -187,9 +184,7 @@ container.querySelector("#tags").click();
       id="tags"
     >
       2
-      <!--Ms*1 #text/1-->
     </button>
-    <!--Ms*1 #button/0-->
     <script>
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.a = [0,
@@ -241,9 +236,7 @@ container.querySelector("#class").click();
       id="tags"
     >
       2
-      <!--Ms*1 #text/1-->
     </button>
-    <!--Ms*1 #button/0-->
     <script>
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.a = [0,
@@ -296,9 +289,7 @@ container.querySelector("#tags").click();
       id="tags"
     >
       3
-      <!--Ms*1 #text/1-->
     </button>
-    <!--Ms*1 #button/0-->
     <script>
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.a = [0,
