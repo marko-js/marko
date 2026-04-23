@@ -378,6 +378,10 @@ export default {
           const dynamicScopeIdentifier = generateUidIdentifier(
             tag.get("name").toString() + "_scope",
           );
+          const mutatesTagVar = !!(
+            tag.node.var!.type === "Identifier" &&
+            tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
+          );
           statements.push(
             t.variableDeclaration("const", [
               t.variableDeclarator(
@@ -405,6 +409,9 @@ export default {
                     "var",
                   ),
                 ),
+                mutatesTagVar
+                  ? getScopeAccessorLiteral(nodeBinding)
+                  : undefined,
               ),
             ),
           );

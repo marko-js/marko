@@ -160,14 +160,17 @@ export function _var(
   scopeOffsetAccessor: Accessor,
   childScopeId: number,
   registryId: string,
+  nodeAccessor?: Accessor,
 ) {
   _scope_with_id(parentScopeId)[scopeOffsetAccessor] = _scope_id();
   // TODO: if the return value is already registered, use that.
-  _scope_with_id(childScopeId)[AccessorProp.TagVariable] = _resume(
-    {},
-    registryId,
-    parentScopeId,
-  );
+  const childScope = _scope_with_id(childScopeId);
+  childScope[AccessorProp.TagVariable] = _resume({}, registryId, parentScopeId);
+  if (nodeAccessor !== undefined) {
+    writeScope(parentScopeId, {
+      [AccessorPrefix.BranchScopes + nodeAccessor]: childScope,
+    });
+  }
 }
 
 export function _resume<T extends WeakKey>(

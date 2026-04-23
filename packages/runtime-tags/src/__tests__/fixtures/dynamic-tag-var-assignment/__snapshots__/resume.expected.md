@@ -22,10 +22,11 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.c = {
           "ConditionalRenderer:#text/0": "__tests__/tags/counter.marko",
-          "#scopeOffset/1": 3
-        }, _.a = {
-          x: 1
-        }], _.a["#TagVariableChange"] = _._[
+          "#scopeOffset/1": 3,
+          "BranchScopes:#text/0": _.a = {
+            x: 1
+          }
+        }, _.a], _.a["#TagVariableChange"] = _._[
           "__tests__/tags/counter.marko_0/valueChange"
           ](_.a), _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_count/var"
@@ -72,10 +73,11 @@ container.querySelector("button.inc").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.c = {
           "ConditionalRenderer:#text/0": "__tests__/tags/counter.marko",
-          "#scopeOffset/1": 3
-        }, _.a = {
-          x: 1
-        }], _.a["#TagVariableChange"] = _._[
+          "#scopeOffset/1": 3,
+          "BranchScopes:#text/0": _.a = {
+            x: 1
+          }
+        }, _.a], _.a["#TagVariableChange"] = _._[
           "__tests__/tags/counter.marko_0/valueChange"
           ](_.a), _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_count/var"
@@ -120,10 +122,11 @@ container.querySelector("button.inc").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.c = {
           "ConditionalRenderer:#text/0": "__tests__/tags/counter.marko",
-          "#scopeOffset/1": 3
-        }, _.a = {
-          x: 1
-        }], _.a["#TagVariableChange"] = _._[
+          "#scopeOffset/1": 3,
+          "BranchScopes:#text/0": _.a = {
+            x: 1
+          }
+        }, _.a], _.a["#TagVariableChange"] = _._[
           "__tests__/tags/counter.marko_0/valueChange"
           ](_.a), _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_count/var"
@@ -168,10 +171,11 @@ container.querySelector("button.reset").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.c = {
           "ConditionalRenderer:#text/0": "__tests__/tags/counter.marko",
-          "#scopeOffset/1": 3
-        }, _.a = {
-          x: 1
-        }], _.a["#TagVariableChange"] = _._[
+          "#scopeOffset/1": 3,
+          "BranchScopes:#text/0": _.a = {
+            x: 1
+          }
+        }, _.a], _.a["#TagVariableChange"] = _._[
           "__tests__/tags/counter.marko_0/valueChange"
           ](_.a), _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_count/var"
@@ -216,10 +220,11 @@ container.querySelector("button.inc").click();
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0, _.c = {
           "ConditionalRenderer:#text/0": "__tests__/tags/counter.marko",
-          "#scopeOffset/1": 3
-        }, _.a = {
-          x: 1
-        }], _.a["#TagVariableChange"] = _._[
+          "#scopeOffset/1": 3,
+          "BranchScopes:#text/0": _.a = {
+            x: 1
+          }
+        }, _.a], _.a["#TagVariableChange"] = _._[
           "__tests__/tags/counter.marko_0/valueChange"
           ](_.a), _.a["#TagVariable"] = _._[
           "__tests__/template.marko_0_count/var"
