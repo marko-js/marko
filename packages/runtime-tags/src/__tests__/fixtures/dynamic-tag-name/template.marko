@@ -23,7 +23,7 @@ static const foo = '';
 <const/largeHeading = isLarge && "h1"/>
 <${largeHeading || "h2"} class=["a", "b"] other=other/>
 
-<${global.x = "a" + "b"} class=["a", "b"] other=other/>
+<${globalThis.x = "a" + "b"} class=["a", "b"] other=other/>
 <${"h" + level} class=["a", "b"] other=other/>
 <${`h${level}`} class=["a", "b"] other=other/>
 

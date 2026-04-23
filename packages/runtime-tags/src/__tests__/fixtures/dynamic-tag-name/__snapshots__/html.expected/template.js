@@ -66,7 +66,7 @@ export default _._template("__tests__/template.marko", input => {
     class: ["a", "b"],
     other: other
   }, 0, 0, ($sg__input_isLarge__OR__input_other));
-  _._dynamic_tag($scope0_id, "#text/10", global.x = "a" + "b", {
+  _._dynamic_tag($scope0_id, "#text/10", globalThis.x = "a" + "b", {
     class: ["a", "b"],
     other: other
   }, 0, 0, ($sg__input_other));

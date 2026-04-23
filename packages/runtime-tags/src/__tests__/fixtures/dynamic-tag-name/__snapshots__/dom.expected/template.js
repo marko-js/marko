@@ -84,7 +84,7 @@ const $input_other__OR__tagConstB = /* @__PURE__ */_._or(41, $scope => $dynamicT
   other: $scope.other
 })));
 export const $other = /* @__PURE__ */_._const("other", $scope => {
-  $dynamicTag11($scope, global.x = "a" + "b", () => ({
+  $dynamicTag11($scope, globalThis.x = "a" + "b", () => ({
     class: ["a", "b"],
     other: $scope.other
   }));
