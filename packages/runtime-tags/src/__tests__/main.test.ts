@@ -39,11 +39,6 @@ export type TestConfig = {
   error_runtime?: boolean;
 };
 
-type TestHooks = {
-  before?: () => void;
-  after?: () => void;
-};
-
 describe("runtime-tags/translator", () => {
   const fixturesDir = path.join(__dirname, "fixtures");
   for (const entry of fs.readdirSync(fixturesDir)) {
@@ -205,16 +200,6 @@ describe("runtime-tags/translator", () => {
         return cached;
       };
 
-      const getHooks = (
-        browser?: ReturnType<typeof createBrowser>,
-      ): TestHooks => {
-        try {
-          return (browser ? browser.require : require)(resolve("hooks.ts"));
-        } catch {
-          return {};
-        }
-      };
-
       let ssr = () => {
         const cached = (async () => {
           const browser = createBrowser({
@@ -227,10 +212,6 @@ describe("runtime-tags/translator", () => {
           });
           const { window } = browser;
           const { document } = window;
-          const hooks = getHooks();
-
-          hooks.before?.();
-
           const { chunks, logs } = await serverRender();
 
           const flushNext = browser.stream(chunks);
@@ -259,8 +240,6 @@ describe("runtime-tags/translator", () => {
 
           tracker.cleanup();
 
-          hooks.after?.();
-
           return { browser, tracker };
         })();
         ssr = () => cached;
@@ -276,10 +255,6 @@ describe("runtime-tags/translator", () => {
               extensions: {},
             }),
           });
-
-          const hooks = getHooks(browser);
-
-          hooks.before?.();
 
           const { window } = browser;
           const { document } = window;
@@ -330,7 +305,6 @@ describe("runtime-tags/translator", () => {
 
           tracker.cleanup();
 
-          hooks.after?.();
           return { browser, tracker };
         })();
         csr = () => cached;
@@ -357,12 +331,6 @@ describe("runtime-tags/translator", () => {
           });
           const { window } = browser;
           const { document } = window;
-          const serverHooks = getHooks();
-          const browserHooks = getHooks(browser);
-
-          serverHooks.before?.();
-          browserHooks.before?.();
-
           const { chunks, logs, input, steps } = await serverRender();
 
           const { run } = browser.require<
@@ -420,9 +388,6 @@ describe("runtime-tags/translator", () => {
           }
 
           tracker.cleanup();
-
-          serverHooks.after?.();
-          browserHooks.after?.();
 
           return { browser, tracker };
         })();
