@@ -112,6 +112,11 @@ export const entryBuilder = {
 
     const { watchFiles, imports, lassoDeps, body } = state;
 
+    if (fileMeta.implicitSplitComponent) {
+      state.hasComponents = true;
+      return;
+    }
+
     if (fileMeta.component) {
       state.hasComponents = true;
 
@@ -175,7 +180,7 @@ export const entryBuilder = {
       }
     }
 
-    if (fileMeta.component) {
+    if (fileMeta.component && !fileMeta.implicitSplitComponent) {
       // Split component
       const splitComponentId = t.identifier(
         `component_${state.splitComponentIndex++}`,
