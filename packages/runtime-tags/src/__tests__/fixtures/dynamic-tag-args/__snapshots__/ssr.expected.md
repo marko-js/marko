@@ -5,68 +5,63 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <button>
-      Count: 
-      <!---->
-      1
-      <!--M_*1 #text/1-->
-    </button>
-    <!--M_*1 #button/0-->
-    <!--M_[-->
-    <div>
-      1
-      <!--M_*2 #text/0-->
-    </div>
-    <!--M_]1 #text/2 2-->
-    <div>
-      false
-    </div>
-    <div>
-      true
-    </div>
-    <div>
-      "spread1"
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          "ConditionalRenderer:#text/2": "__tests__/tags/custom-tag.marko",
-          x: 1
-        }]),
-        "__tests__/template.marko_0_x 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button>
+  Count: 
+  <!---->
+  1
+  <!--M_*1 #text/1-->
+</button>
+<!--M_*1 #button/0-->
+<!--M_[-->
+<div>
+  1
+  <!--M_*2 #text/0-->
+</div>
+<!--M_]1 #text/2 2-->
+<div>
+  false
+</div>
+<div>
+  true
+</div>
+<div>
+  "spread1"
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      "ConditionalRenderer:#text/2": "__tests__/tags/custom-tag.marko",
+      x: 1
+    }]),
+    "__tests__/template.marko_0_x 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/button
-INSERT html/body/button/#text0
-INSERT html/body/button/#comment0
-INSERT html/body/button/#text1
-INSERT html/body/button/#comment1
-INSERT html/body/#comment0
-INSERT html/body/#comment1
-INSERT html/body/div0
-INSERT html/body/div0/#text
-INSERT html/body/div0/#comment
-INSERT html/body/#comment2
-INSERT html/body/div1
-INSERT html/body/div1/#text
-INSERT html/body/div2
-INSERT html/body/div2/#text
-INSERT html/body/div3
-INSERT html/body/div3/#text
-INSERT html/body/script
-INSERT html/body/script/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT button
+INSERT button/#text0
+INSERT button/#comment0
+INSERT button/#text1
+INSERT button/#comment1
+INSERT #comment0
+INSERT #comment1
+INSERT div0
+INSERT div0/#text
+INSERT div0/#comment
+INSERT #comment2
+INSERT div1
+INSERT div1/#text
+INSERT div2
+INSERT div2/#text
+INSERT div3
+INSERT div3/#text
+INSERT script
+INSERT script/#text
 ```

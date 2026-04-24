@@ -5,52 +5,47 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <div
-      style="color:red"
-    />
-    <div
-      style="width:100px"
-    />
-    <div
-      style="color:green"
-    />
-    <div
-      style="color:red"
-    />
-    <div
-      style="width:100px"
-    />
-    <div
-      style="color:green"
-    />
-    <div
-      style="color:green"
-    />
-    <div
-      id="test"
-      style="color:green"
-    >
-      Hello
-    </div>
-  </body>
-</html>
+<div
+  style="color:red"
+/>
+<div
+  style="width:100px"
+/>
+<div
+  style="color:green"
+/>
+<div
+  style="color:red"
+/>
+<div
+  style="width:100px"
+/>
+<div
+  style="color:green"
+/>
+<div
+  style="color:green"
+/>
+<div
+  id="test"
+  style="color:green"
+>
+  Hello
+</div>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/div0
-INSERT html/body/div1
-INSERT html/body/div2
-INSERT html/body/div3
-INSERT html/body/div4
-INSERT html/body/div5
-INSERT html/body/div6
-INSERT html/body/div7
-INSERT html/body/div7/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT div0
+INSERT div1
+INSERT div2
+INSERT div3
+INSERT div4
+INSERT div5
+INSERT div6
+INSERT div7
+INSERT div7/#text
 ```

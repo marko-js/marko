@@ -5,29 +5,24 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <div
-      id="foo"
-    />
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div
+  id="foo"
+/>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/div
-INSERT html/body/script
-INSERT html/body/script/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT div
+INSERT script
+INSERT script/#text
 ```

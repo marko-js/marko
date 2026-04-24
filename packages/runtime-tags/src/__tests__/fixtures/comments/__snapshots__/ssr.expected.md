@@ -5,23 +5,18 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <!--abc-->
-      <!--[if lt IE 9]&gt;&lt;script src="..."&gt;&lt;/script&gt;&lt;![endif]-->
-    </div>
-  </body>
-</html>
+<div>
+  <!--abc-->
+  <!--[if lt IE 9]&gt;&lt;script src="..."&gt;&lt;/script&gt;&lt;![endif]-->
+</div>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/div
-INSERT html/body/div/#comment0
-INSERT html/body/div/#comment1
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT div
+INSERT div/#comment0
+INSERT div/#comment1
 ```

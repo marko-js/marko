@@ -1,55 +1,35 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    a
-  </body>
-</html>
+a
 ```
 
 
 # Render FLUSH
 ```html
-<html>
-  <head />
-  <body>
-    ab
-  </body>
-</html>
+ab
 ```
 
 # Mutations
 ```
-INSERT html/body/#text1
+INSERT #text1
 ```
 
 # Render FLUSH
 ```html
-<html>
-  <head />
-  <body>
-    abc
-  </body>
-</html>
+abc
 ```
 
 # Mutations
 ```
-INSERT html/body/#text2
+INSERT #text2
 ```
 
 # Render FLUSH
 ```html
-<html>
-  <head />
-  <body>
-    abcdefghijklm
-  </body>
-</html>
+abcdefghijklm
 ```
 
 # Mutations
 ```
-INSERT html/body/#text3
+INSERT #text3
 ```

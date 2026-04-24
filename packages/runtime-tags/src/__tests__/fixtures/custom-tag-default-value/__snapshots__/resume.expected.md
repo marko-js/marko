@@ -1,9 +1,4 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    3 y 
-  </body>
-</html>
+3 y
 ```

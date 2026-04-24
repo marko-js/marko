@@ -1,45 +1,40 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <div
-      id="target"
-    >
-      <span
-        data-selected=""
-      >
-        0
-      </span>
-      <!--M_*2 #span/0-->
-      <span>
-        1
-      </span>
-      <!--M_*3 #span/0-->
-      <span>
-        2
-      </span>
-      <!--M_*4 #span/0-->
-    </div>
-    <!--M_*1 #div/0-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.e = [0, _.a = {
-          "BranchScopes:#div/0": [_.b = {
-            "#LoopKey": 0
-          }, _.c = {
-            "#LoopKey": 1
-          }, _.d = {
-            "#LoopKey": 2
-          }],
-          selected: 0
-        }, _.b, _.c, _.d], _.b._ = _.c._ = _.d._ = _.a, _.e),
-        "__tests__/template.marko_0_selected 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div
+  id="target"
+>
+  <span
+    data-selected=""
+  >
+    0
+  </span>
+  <!--M_*2 #span/0-->
+  <span>
+    1
+  </span>
+  <!--M_*3 #span/0-->
+  <span>
+    2
+  </span>
+  <!--M_*4 #span/0-->
+</div>
+<!--M_*1 #div/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.e = [0, _.a = {
+      "BranchScopes:#div/0": [_.b = {
+        "#LoopKey": 0
+      }, _.c = {
+        "#LoopKey": 1
+      }, _.d = {
+        "#LoopKey": 2
+      }],
+      selected: 0
+    }, _.b, _.c, _.d], _.b._ = _.c._ = _.d._ = _.a, _.e),
+    "__tests__/template.marko_0_selected 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -48,52 +43,47 @@
 container.querySelector("#target").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div
-      id="target"
-    >
-      <span>
-        0
-      </span>
-      <!--M_*2 #span/0-->
-      <span
-        data-selected=""
-      >
-        1
-      </span>
-      <!--M_*3 #span/0-->
-      <span>
-        2
-      </span>
-      <!--M_*4 #span/0-->
-    </div>
-    <!--M_*1 #div/0-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.e = [0, _.a = {
-          "BranchScopes:#div/0": [_.b = {
-            "#LoopKey": 0
-          }, _.c = {
-            "#LoopKey": 1
-          }, _.d = {
-            "#LoopKey": 2
-          }],
-          selected: 0
-        }, _.b, _.c, _.d], _.b._ = _.c._ = _.d._ = _.a, _.e),
-        "__tests__/template.marko_0_selected 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div
+  id="target"
+>
+  <span>
+    0
+  </span>
+  <!--M_*2 #span/0-->
+  <span
+    data-selected=""
+  >
+    1
+  </span>
+  <!--M_*3 #span/0-->
+  <span>
+    2
+  </span>
+  <!--M_*4 #span/0-->
+</div>
+<!--M_*1 #div/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.e = [0, _.a = {
+      "BranchScopes:#div/0": [_.b = {
+        "#LoopKey": 0
+      }, _.c = {
+        "#LoopKey": 1
+      }, _.d = {
+        "#LoopKey": 2
+      }],
+      selected: 0
+    }, _.b, _.c, _.d], _.b._ = _.c._ = _.d._ = _.a, _.e),
+    "__tests__/template.marko_0_selected 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/div/span0[data-selected] "" => null
-UPDATE html/body/div/span1[data-selected] null => ""
+UPDATE div/span0[data-selected] "" => null
+UPDATE div/span1[data-selected] null => ""
 ```
 
 # Render
@@ -101,50 +91,45 @@ UPDATE html/body/div/span1[data-selected] null => ""
 container.querySelector("#target").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div
-      id="target"
-    >
-      <span>
-        0
-      </span>
-      <!--M_*2 #span/0-->
-      <span>
-        1
-      </span>
-      <!--M_*3 #span/0-->
-      <span
-        data-selected=""
-      >
-        2
-      </span>
-      <!--M_*4 #span/0-->
-    </div>
-    <!--M_*1 #div/0-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.e = [0, _.a = {
-          "BranchScopes:#div/0": [_.b = {
-            "#LoopKey": 0
-          }, _.c = {
-            "#LoopKey": 1
-          }, _.d = {
-            "#LoopKey": 2
-          }],
-          selected: 0
-        }, _.b, _.c, _.d], _.b._ = _.c._ = _.d._ = _.a, _.e),
-        "__tests__/template.marko_0_selected 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div
+  id="target"
+>
+  <span>
+    0
+  </span>
+  <!--M_*2 #span/0-->
+  <span>
+    1
+  </span>
+  <!--M_*3 #span/0-->
+  <span
+    data-selected=""
+  >
+    2
+  </span>
+  <!--M_*4 #span/0-->
+</div>
+<!--M_*1 #div/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.e = [0, _.a = {
+      "BranchScopes:#div/0": [_.b = {
+        "#LoopKey": 0
+      }, _.c = {
+        "#LoopKey": 1
+      }, _.d = {
+        "#LoopKey": 2
+      }],
+      selected: 0
+    }, _.b, _.c, _.d], _.b._ = _.c._ = _.d._ = _.a, _.e),
+    "__tests__/template.marko_0_selected 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/div/span1[data-selected] "" => null
-UPDATE html/body/div/span2[data-selected] null => ""
+UPDATE div/span1[data-selected] "" => null
+UPDATE div/span2[data-selected] null => ""
 ```

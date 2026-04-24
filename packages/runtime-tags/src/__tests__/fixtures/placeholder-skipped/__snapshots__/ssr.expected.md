@@ -10,65 +10,55 @@
 
 # Render ASYNC
 ```html
-<html>
-  <head />
-  <body>
-    a
-    <!--M_[-->
-    b
-    <!--M_]1 #text/0 2-->
-    c
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
-        "#BranchAccessor": "#text/0",
-        "#PlaceholderContent": _.c = {}
-      }], _.a["#PlaceholderContent"] = _._[
-        "__tests__/template.marko_2_content"
-        ](_.c), _.b)]
-    </script>
-  </body>
-</html>
+a
+<!--M_[-->
+b
+<!--M_]1 #text/0 2-->
+c
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
+    "#BranchAccessor": "#text/0",
+    "#PlaceholderContent": _.c = {}
+  }], _.a["#PlaceholderContent"] = _._[
+    "__tests__/template.marko_2_content"
+    ](_.c), _.b)]
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/#text0
-INSERT html/body/#comment0
-INSERT html/body/#text1
-INSERT html/body/#comment1
-INSERT html/body/#text2
-INSERT html/body/script
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT #text0
+INSERT #comment0
+INSERT #text1
+INSERT #comment1
+INSERT #text2
+INSERT script
 ```
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    a
-    <!--M_[-->
-    b
-    <!--M_]1 #text/0 2-->
-    c
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
-        "#BranchAccessor": "#text/0",
-        "#PlaceholderContent": _.c = {}
-      }], _.a["#PlaceholderContent"] = _._[
-        "__tests__/template.marko_2_content"
-        ](_.c), _.b)]
-    </script>
-    de
-  </body>
-</html>
+a
+<!--M_[-->
+b
+<!--M_]1 #text/0 2-->
+c
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
+    "#BranchAccessor": "#text/0",
+    "#PlaceholderContent": _.c = {}
+  }], _.a["#PlaceholderContent"] = _._[
+    "__tests__/template.marko_2_content"
+    ](_.c), _.b)]
+</script>
+de
 ```
 
 # Mutations
 ```
-INSERT html/body/#text3
+INSERT #text3
 ```

@@ -11,64 +11,59 @@
 
 # Render End
 ```html
-<html>
-  <head>
-    <script
-      nonce="default-nonce"
-      type="magic"
-    >
-      A
-    </script>
-    <script
-      nonce="override"
-      type="magic"
-    >
-      B
-    </script>
-    <script
-      nonce="override-spread"
-      type="magic"
-    >
-      C
-    </script>
-    <!--M_*1 #script/1-->
-    <!--M_|1 #text/2-->
-    <script
-      nonce="default-nonce"
-    >
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [
-        {
-          cspNonce: "default-nonce"
-        },
-        {
-          spreadAttrs:
-          {
-            nonce: "override-spread"
-          }
-        }]),
-        "__tests__/template.marko_0 1 __tests__/template.marko_0_spreadAttrs 1"
-      ];
-      M._.w()
-    </script>
-  </head>
-  <body />
-</html>
+<script
+  nonce="default-nonce"
+  type="magic"
+>
+  A
+</script>
+<script
+  nonce="override"
+  type="magic"
+>
+  B
+</script>
+<script
+  nonce="override-spread"
+  type="magic"
+>
+  C
+</script>
+<!--M_*1 #script/1-->
+<!--M_|1 #text/2-->
+<script
+  nonce="default-nonce"
+>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [
+    {
+      cspNonce: "default-nonce"
+    },
+    {
+      spreadAttrs:
+      {
+        nonce: "override-spread"
+      }
+    }]),
+    "__tests__/template.marko_0 1 __tests__/template.marko_0_spreadAttrs 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/head/script0
-INSERT html/head/script0/#text
-INSERT html/head/script1
-INSERT html/head/script1/#text
-INSERT html/head/script2
-INSERT html/head/script2/#text
-INSERT html/head/#comment0
-INSERT html/head/#comment1
-INSERT html/head/script3
-INSERT html/head/script3/#text
-INSERT html/body
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT script0
+INSERT script0/#text
+INSERT script1
+INSERT script1/#text
+INSERT script2
+INSERT script2/#text
+INSERT #comment0
+INSERT #comment1
+INSERT script3
+INSERT script3/#text
 ```

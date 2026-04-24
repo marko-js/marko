@@ -49,6 +49,7 @@ export async function bundle(
     { absolute: true },
   );
   const { output } = await build({
+    write: false,
     input: entryId,
     external: (id) => !(markoRe.test(id) || virtualRe.test(id)),
     treeshake: {
@@ -124,6 +125,7 @@ export async function bundle(
   return `// size: ${size.min} (min) ${size.brotli} (brotli)\n${stripModuleCode(result)}`;
 }
 
+let vmFileId = 0;
 export async function createRunner<T extends RunnerMode>(
   entryTemplate: string,
   compilerConfig: compiler.Config,
@@ -131,28 +133,29 @@ export async function createRunner<T extends RunnerMode>(
   interop?: boolean,
 ) {
   const code = await bundleRunner(entryTemplate, compilerConfig, mode, interop);
+  const opts = {
+    filename: path.resolve(`__${(++vmFileId).toString(36)}__.js`),
+  };
   switch (mode) {
     case "ssr":
       return (() => {
         (globalThis as any).require = nodeRequire;
-        vm.runInThisContext(code, runOpts);
+        vm.runInThisContext(code, opts);
         (globalThis as any).require = undefined;
         const __exports__ = (globalThis as any).__exports__;
         (globalThis as any).__exports__ = undefined;
         return __exports__;
       }) as T extends "ssr" ? () => { template: Template } : never;
     case "csr":
+    case "resume":
       return ((ctx) => {
-        vm.runInContext(code, ctx, runOpts);
+        vm.runInContext(code, ctx, opts);
         return (ctx as any).__exports__;
       }) as T extends "csr"
         ? (ctx: vm.Context) => { template: Template; run: RunDOM }
-        : never;
-    case "resume":
-      return ((ctx) => {
-        vm.runInContext(code, ctx, runOpts);
-        return (ctx as any).__exports__;
-      }) as T extends "resume" ? (ctx: vm.Context) => { run: RunDOM } : never;
+        : T extends "resume"
+          ? (ctx: vm.Context) => { run: RunDOM }
+          : never;
   }
 }
 
@@ -169,6 +172,7 @@ async function bundleRunner(
   };
 
   const { output } = await build({
+    write: false,
     input: entryId,
     platform: mode === "ssr" ? "node" : "browser",
     transform: { define: { MARKO_DEBUG: "true" } },
@@ -223,11 +227,8 @@ async function bundleRunner(
       name: "__exports__",
       sourcemap: "inline",
       sourcemapExcludeSources: true,
-      sourcemapPathTransform(relPath, sourcemapPath) {
-        return path.relative(
-          process.cwd(),
-          path.resolve(path.dirname(sourcemapPath), relPath),
-        );
+      sourcemapPathTransform(source, sourcemapPath) {
+        return path.resolve(sourcemapPath, "..", source);
       },
     },
   });

@@ -1,43 +1,37 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <div
-      id="el"
-    />
-    <button>
-      Click Me
-    </button>
-    <!--M_*2 #button/0-->
-     
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, 1,
-        {
-          "BranchScopes:#button/0": _.b = {},
-          "ConditionalRenderer:#button/0": "__tests__/template.marko_2_content",
-          input: _.a = {
-            "on-click": _._[
-              "__tests__/template.marko_0/onclick"
-              ],
-            onClick: _._[
-              "__tests__/template.marko_0/onClick"
-              ],
-            content: _.d = {}
-          },
-          input_onClick: _._[
-            "__tests__/template.marko_0/onClick"
-            ]
-        }, _.b], _.a.content = _._[
-          "__tests__/template.marko_2_content"
-          ](_.d), _.c),
-        "__tests__/template.marko_1_input 2 __tests__/template.marko_1_input_onClick 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div
+  id="el"
+/>
+<button>
+  Click Me
+</button>
+<!--M_*2 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.c = [0, 1,
+    {
+      "BranchScopes:#button/0": _.b = {},
+      "ConditionalRenderer:#button/0": "__tests__/template.marko_2_content",
+      input: _.a = {
+        "on-click": _._[
+          "__tests__/template.marko_0/onclick"
+          ],
+        onClick: _._[
+          "__tests__/template.marko_0/onClick"
+          ],
+        content: _.d = {}
+      },
+      input_onClick: _._[
+        "__tests__/template.marko_0/onClick"
+        ]
+    }, _.b], _.a.content = _._[
+      "__tests__/template.marko_2_content"
+      ](_.d), _.c),
+    "__tests__/template.marko_1_input 2 __tests__/template.marko_1_input_onClick 2"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -46,51 +40,45 @@
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div
-      id="el"
-    >
-      [onClick(child)][onClick(parent)]
-    </div>
-    <button>
-      Click Me
-    </button>
-    <!--M_*2 #button/0-->
-     
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, 1,
-        {
-          "BranchScopes:#button/0": _.b = {},
-          "ConditionalRenderer:#button/0": "__tests__/template.marko_2_content",
-          input: _.a = {
-            "on-click": _._[
-              "__tests__/template.marko_0/onclick"
-              ],
-            onClick: _._[
-              "__tests__/template.marko_0/onClick"
-              ],
-            content: _.d = {}
-          },
-          input_onClick: _._[
-            "__tests__/template.marko_0/onClick"
-            ]
-        }, _.b], _.a.content = _._[
-          "__tests__/template.marko_2_content"
-          ](_.d), _.c),
-        "__tests__/template.marko_1_input 2 __tests__/template.marko_1_input_onClick 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div
+  id="el"
+>
+  [onClick(child)][onClick(parent)]
+</div>
+<button>
+  Click Me
+</button>
+<!--M_*2 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.c = [0, 1,
+    {
+      "BranchScopes:#button/0": _.b = {},
+      "ConditionalRenderer:#button/0": "__tests__/template.marko_2_content",
+      input: _.a = {
+        "on-click": _._[
+          "__tests__/template.marko_0/onclick"
+          ],
+        onClick: _._[
+          "__tests__/template.marko_0/onClick"
+          ],
+        content: _.d = {}
+      },
+      input_onClick: _._[
+        "__tests__/template.marko_0/onClick"
+        ]
+    }, _.b], _.a.content = _._[
+      "__tests__/template.marko_2_content"
+      ](_.d), _.c),
+    "__tests__/template.marko_1_input 2 __tests__/template.marko_1_input_onClick 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
 INSERT #text
-REMOVE #text in html/body/div
-INSERT html/body/div/#text
+REMOVE #text in div
+INSERT div/#text
 ```

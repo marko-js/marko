@@ -1,13 +1,8 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      type="button"
-    >
-      Whoops
-    </button>
-  </body>
-</html>
+<button
+  type="button"
+>
+  Whoops
+</button>
 ```

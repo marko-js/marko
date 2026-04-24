@@ -1,30 +1,25 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <button>
-        0
-        <!--M_*2 #text/1-->
-      </button>
-      <!--M_*2 #button/0-->
-      <!--M_|1 #text/0 2-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          clickCount: 0
-        },
-        {
-          _: _.a
-        }]),
-        "__tests__/template.marko_1_clickCount 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  <button>
+    0
+    <!--M_*2 #text/1-->
+  </button>
+  <!--M_*2 #button/0-->
+  <!--M_|1 #text/0 2-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      clickCount: 0
+    },
+    {
+      _: _.a
+    }]),
+    "__tests__/template.marko_1_clickCount 2"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -33,37 +28,32 @@
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <button>
-        1
-      </button>
-      <!--M_*2 #button/0-->
-      <!--M_|1 #text/0 2-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          clickCount: 0
-        },
-        {
-          _: _.a
-        }]),
-        "__tests__/template.marko_1_clickCount 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  <button>
+    1
+  </button>
+  <!--M_*2 #button/0-->
+  <!--M_|1 #text/0 2-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      clickCount: 0
+    },
+    {
+      _: _.a
+    }]),
+    "__tests__/template.marko_1_clickCount 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/div/button
-REMOVE button after html/body/div/button
-UPDATE html/body/div/button/#text " " => "1"
+INSERT div/button
+REMOVE button after div/button
+UPDATE div/button/#text " " => "1"
 ```
 
 # Render
@@ -71,35 +61,30 @@ UPDATE html/body/div/button/#text " " => "1"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <button>
-        2
-      </button>
-      <!--M_*2 #button/0-->
-      <!--M_|1 #text/0 2-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          clickCount: 0
-        },
-        {
-          _: _.a
-        }]),
-        "__tests__/template.marko_1_clickCount 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  <button>
+    2
+  </button>
+  <!--M_*2 #button/0-->
+  <!--M_|1 #text/0 2-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      clickCount: 0
+    },
+    {
+      _: _.a
+    }]),
+    "__tests__/template.marko_1_clickCount 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/div/button/#text "1" => "2"
+UPDATE div/button/#text "1" => "2"
 ```
 
 # Render
@@ -107,35 +92,30 @@ UPDATE html/body/div/button/#text "1" => "2"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <span>
-        The button was clicked 3 times.
-      </span>
-      <!--M_*2 #button/0-->
-      <!--M_|1 #text/0 2-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          clickCount: 0
-        },
-        {
-          _: _.a
-        }]),
-        "__tests__/template.marko_1_clickCount 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  <span>
+    The button was clicked 3 times.
+  </span>
+  <!--M_*2 #button/0-->
+  <!--M_|1 #text/0 2-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      clickCount: 0
+    },
+    {
+      _: _.a
+    }]),
+    "__tests__/template.marko_1_clickCount 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/div/span
-REMOVE button after html/body/div/span
-UPDATE html/body/div/span/#text1 "" => "3"
+INSERT div/span
+REMOVE button after div/span
+UPDATE div/span/#text1 "" => "3"
 ```

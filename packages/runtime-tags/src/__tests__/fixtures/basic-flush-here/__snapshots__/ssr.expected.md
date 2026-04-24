@@ -5,25 +5,20 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    BEFORE-M-
-    <h1>
-      Hello World
-    </h1>
-    -AFTER
-  </body>
-</html>
+BEFORE-M-
+<h1>
+  Hello World
+</h1>
+-AFTER
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/#text0
-INSERT html/body/h1
-INSERT html/body/h1/#text
-INSERT html/body/#text1
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT #text0
+INSERT h1
+INSERT h1/#text
+INSERT #text1
 ```

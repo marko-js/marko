@@ -1,31 +1,26 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      Hello Ryan 
-      <!---->
-      1
-      <!--M_*2 #text/1-->
-    </div>
-    <button>
-      1
-      <!--M_*2 #text/3-->
-    </button>
-    <!--M_*2 #button/2-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0, 1,
-        {
-          y: 1
-        }]),
-        "__tests__/template.marko_1_y 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  Hello Ryan 
+  <!---->
+  1
+  <!--M_*2 #text/1-->
+</div>
+<button>
+  1
+  <!--M_*2 #text/3-->
+</button>
+<!--M_*2 #button/2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0, 1,
+    {
+      y: 1
+    }]),
+    "__tests__/template.marko_1_y 2"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -34,38 +29,33 @@
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      Hello Ryan 
-      <!---->
-      2
-      <!--M_*2 #text/1-->
-    </div>
-    <button>
-      2
-      <!--M_*2 #text/3-->
-    </button>
-    <!--M_*2 #button/2-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0, 1,
-        {
-          y: 1
-        }]),
-        "__tests__/template.marko_1_y 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  Hello Ryan 
+  <!---->
+  2
+  <!--M_*2 #text/1-->
+</div>
+<button>
+  2
+  <!--M_*2 #text/3-->
+</button>
+<!--M_*2 #button/2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0, 1,
+    {
+      y: 1
+    }]),
+    "__tests__/template.marko_1_y 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/div/#text1 "1" => "2"
-UPDATE html/body/button/#text "1" => "2"
+UPDATE div/#text1 "1" => "2"
+UPDATE button/#text "1" => "2"
 ```
 
 # Render
@@ -73,38 +63,33 @@ UPDATE html/body/button/#text "1" => "2"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      Hello Ryan 
-      <!---->
-      3
-      <!--M_*2 #text/1-->
-    </div>
-    <button>
-      3
-      <!--M_*2 #text/3-->
-    </button>
-    <!--M_*2 #button/2-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0, 1,
-        {
-          y: 1
-        }]),
-        "__tests__/template.marko_1_y 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  Hello Ryan 
+  <!---->
+  3
+  <!--M_*2 #text/1-->
+</div>
+<button>
+  3
+  <!--M_*2 #text/3-->
+</button>
+<!--M_*2 #button/2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0, 1,
+    {
+      y: 1
+    }]),
+    "__tests__/template.marko_1_y 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/div/#text1 "2" => "3"
-UPDATE html/body/button/#text "2" => "3"
+UPDATE div/#text1 "2" => "3"
+UPDATE button/#text "2" => "3"
 ```
 
 # Render
@@ -112,36 +97,31 @@ UPDATE html/body/button/#text "2" => "3"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      Hello Ryan 
-      <!---->
-      4
-      <!--M_*2 #text/1-->
-    </div>
-    <button>
-      4
-      <!--M_*2 #text/3-->
-    </button>
-    <!--M_*2 #button/2-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0, 1,
-        {
-          y: 1
-        }]),
-        "__tests__/template.marko_1_y 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  Hello Ryan 
+  <!---->
+  4
+  <!--M_*2 #text/1-->
+</div>
+<button>
+  4
+  <!--M_*2 #text/3-->
+</button>
+<!--M_*2 #button/2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0, 1,
+    {
+      y: 1
+    }]),
+    "__tests__/template.marko_1_y 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/div/#text1 "3" => "4"
-UPDATE html/body/button/#text "3" => "4"
+UPDATE div/#text1 "3" => "4"
+UPDATE button/#text "3" => "4"
 ```

@@ -1,13 +1,8 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <textarea>
-      hello
-    </textarea>
-  </body>
-</html>
+<textarea>
+  hello
+</textarea>
 ```
 
 
@@ -21,16 +16,11 @@ textarea.dispatchEvent(new window.Event("input", {
 }));
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <textarea
-      default-value="hello"
-    >
-      w
-    </textarea>
-  </body>
-</html>
+<textarea
+  default-value="hello"
+>
+  w
+</textarea>
 ```
 
 
@@ -44,16 +34,11 @@ textarea.dispatchEvent(new window.Event("input", {
 }));
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <textarea
-      default-value="hello"
-    >
-      wor
-    </textarea>
-  </body>
-</html>
+<textarea
+  default-value="hello"
+>
+  wor
+</textarea>
 ```
 
 
@@ -67,14 +52,9 @@ textarea.dispatchEvent(new window.Event("input", {
 }));
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <textarea
-      default-value="hello"
-    >
-      world
-    </textarea>
-  </body>
-</html>
+<textarea
+  default-value="hello"
+>
+  world
+</textarea>
 ```

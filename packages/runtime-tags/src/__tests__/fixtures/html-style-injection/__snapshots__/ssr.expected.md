@@ -5,21 +5,16 @@
 
 # Render End
 ```html
-<html>
-  <head>
-    <style>
-      .evil { content: '\3C/style&gt;'; }
-    </style>
-  </head>
-  <body />
-</html>
+<style>
+  .evil { content: '\3C/style&gt;'; }
+</style>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/head/style
-INSERT html/head/style/#text
-INSERT html/body
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT style
+INSERT style/#text
 ```

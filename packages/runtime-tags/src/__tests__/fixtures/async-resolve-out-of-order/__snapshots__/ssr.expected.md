@@ -10,33 +10,23 @@
 
 # Render ASYNC
 ```html
-<html>
-  <head />
-  <body>
-    a
-  </body>
-</html>
+a
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT #text
 ```
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    abcde
-  </body>
-</html>
+abcde
 ```
 
 # Mutations
 ```
-INSERT html/body/#text1
+INSERT #text1
 ```

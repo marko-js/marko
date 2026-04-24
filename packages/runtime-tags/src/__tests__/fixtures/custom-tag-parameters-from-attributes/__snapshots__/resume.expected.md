@@ -1,48 +1,43 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      class="inc"
-    >
-      1
-      <!--M_*2 #text/1-->
-    </button>
-    <!--M_*2 #button/0-->
-    <!--M_[-->
-    <div>
-      Count (
-      <!---->
-      hello
-      <!--M_*3 #text/0-->
-      ): 
-      <!---->
-      1
-      <!--M_*3 #text/1-->
-    </div>
-    <!--M_]2 #text/2 3-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
-          "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
-          input_content: _.c = {},
-          input_name: "hello",
-          x: 1
-        }], _.a.input_content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.c), _.b),
-        "__tests__/tags/custom-tag.marko_0_x 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  class="inc"
+>
+  1
+  <!--M_*2 #text/1-->
+</button>
+<!--M_*2 #button/0-->
+<!--M_[-->
+<div>
+  Count (
+  <!---->
+  hello
+  <!--M_*3 #text/0-->
+  ): 
+  <!---->
+  1
+  <!--M_*3 #text/1-->
+</div>
+<!--M_]2 #text/2 3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
+      "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
+      input_content: _.c = {},
+      input_name: "hello",
+      x: 1
+    }], _.a.input_content = _._[
+      "__tests__/template.marko_1_content"
+      ](_.c), _.b),
+    "__tests__/tags/custom-tag.marko_0_x 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/#text
+INSERT #text
 ```
 
 # Render
@@ -50,50 +45,45 @@ INSERT html/body/#text
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      class="inc"
-    >
-      2
-      <!--M_*2 #text/1-->
-    </button>
-    <!--M_*2 #button/0-->
-    <!--M_[-->
-    <div>
-      Count (
-      <!---->
-      hello
-      <!--M_*3 #text/0-->
-      ): 
-      <!---->
-      2
-      <!--M_*3 #text/1-->
-    </div>
-    <!--M_]2 #text/2 3-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
-          "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
-          input_content: _.c = {},
-          input_name: "hello",
-          x: 1
-        }], _.a.input_content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.c), _.b),
-        "__tests__/tags/custom-tag.marko_0_x 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  class="inc"
+>
+  2
+  <!--M_*2 #text/1-->
+</button>
+<!--M_*2 #button/0-->
+<!--M_[-->
+<div>
+  Count (
+  <!---->
+  hello
+  <!--M_*3 #text/0-->
+  ): 
+  <!---->
+  2
+  <!--M_*3 #text/1-->
+</div>
+<!--M_]2 #text/2 3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
+      "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
+      input_content: _.c = {},
+      input_name: "hello",
+      x: 1
+    }], _.a.input_content = _._[
+      "__tests__/template.marko_1_content"
+      ](_.c), _.b),
+    "__tests__/tags/custom-tag.marko_0_x 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button/#text "1" => "2"
-UPDATE html/body/div/#text3 "1" => "2"
+UPDATE button/#text "1" => "2"
+UPDATE div/#text3 "1" => "2"
 ```
 
 # Render
@@ -101,50 +91,45 @@ UPDATE html/body/div/#text3 "1" => "2"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      class="inc"
-    >
-      3
-      <!--M_*2 #text/1-->
-    </button>
-    <!--M_*2 #button/0-->
-    <!--M_[-->
-    <div>
-      Count (
-      <!---->
-      hello
-      <!--M_*3 #text/0-->
-      ): 
-      <!---->
-      3
-      <!--M_*3 #text/1-->
-    </div>
-    <!--M_]2 #text/2 3-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
-          "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
-          input_content: _.c = {},
-          input_name: "hello",
-          x: 1
-        }], _.a.input_content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.c), _.b),
-        "__tests__/tags/custom-tag.marko_0_x 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  class="inc"
+>
+  3
+  <!--M_*2 #text/1-->
+</button>
+<!--M_*2 #button/0-->
+<!--M_[-->
+<div>
+  Count (
+  <!---->
+  hello
+  <!--M_*3 #text/0-->
+  ): 
+  <!---->
+  3
+  <!--M_*3 #text/1-->
+</div>
+<!--M_]2 #text/2 3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
+      "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
+      input_content: _.c = {},
+      input_name: "hello",
+      x: 1
+    }], _.a.input_content = _._[
+      "__tests__/template.marko_1_content"
+      ](_.c), _.b),
+    "__tests__/tags/custom-tag.marko_0_x 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button/#text "2" => "3"
-UPDATE html/body/div/#text3 "2" => "3"
+UPDATE button/#text "2" => "3"
+UPDATE div/#text3 "2" => "3"
 ```
 
 # Render
@@ -152,48 +137,43 @@ UPDATE html/body/div/#text3 "2" => "3"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      class="inc"
-    >
-      4
-      <!--M_*2 #text/1-->
-    </button>
-    <!--M_*2 #button/0-->
-    <!--M_[-->
-    <div>
-      Count (
-      <!---->
-      hello
-      <!--M_*3 #text/0-->
-      ): 
-      <!---->
-      4
-      <!--M_*3 #text/1-->
-    </div>
-    <!--M_]2 #text/2 3-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
-          "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
-          input_content: _.c = {},
-          input_name: "hello",
-          x: 1
-        }], _.a.input_content = _._[
-          "__tests__/template.marko_1_content"
-          ](_.c), _.b),
-        "__tests__/tags/custom-tag.marko_0_x 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  class="inc"
+>
+  4
+  <!--M_*2 #text/1-->
+</button>
+<!--M_*2 #button/0-->
+<!--M_[-->
+<div>
+  Count (
+  <!---->
+  hello
+  <!--M_*3 #text/0-->
+  ): 
+  <!---->
+  4
+  <!--M_*3 #text/1-->
+</div>
+<!--M_]2 #text/2 3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, 1, _.a = {
+      "ConditionalRenderer:#text/2": "__tests__/template.marko_1_content",
+      input_content: _.c = {},
+      input_name: "hello",
+      x: 1
+    }], _.a.input_content = _._[
+      "__tests__/template.marko_1_content"
+      ](_.c), _.b),
+    "__tests__/tags/custom-tag.marko_0_x 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button/#text "3" => "4"
-UPDATE html/body/div/#text3 "3" => "4"
+UPDATE button/#text "3" => "4"
+UPDATE div/#text3 "3" => "4"
 ```

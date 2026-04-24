@@ -6,16 +6,12 @@
 # Render End
 ```html
 <!----&gt;-->
-<html>
-  <head />
-  <body />
-</html>
 ```
 
 # Mutations
 ```
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
 INSERT #comment
-INSERT html
-INSERT html/head
-INSERT html/body
 ```

@@ -1,29 +1,24 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <table>
-      <tbody>
-        <!--M_}1 #tbody/0-->
-      </tbody>
-    </table>
-    <button>
-      Toggle
-    </button>
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          show: !1
-        }]),
-        "__tests__/template.marko_0_show 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<table>
+  <tbody>
+    <!--M_}1 #tbody/0-->
+  </tbody>
+</table>
+<button>
+  Toggle
+</button>
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      show: !1
+    }]),
+    "__tests__/template.marko_0_show 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -32,40 +27,35 @@
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <table>
-      <tbody>
-        <!--M_}1 #tbody/0-->
-        <tr>
-          <td>
-            Hi
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <button>
-      Toggle
-    </button>
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          show: !1
-        }]),
-        "__tests__/template.marko_0_show 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<table>
+  <tbody>
+    <!--M_}1 #tbody/0-->
+    <tr>
+      <td>
+        Hi
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button>
+  Toggle
+</button>
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      show: !1
+    }]),
+    "__tests__/template.marko_0_show 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/table/tbody/tr
+INSERT table/tbody/tr
 ```
 
 # Render
@@ -73,33 +63,28 @@ INSERT html/body/table/tbody/tr
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <table>
-      <tbody />
-    </table>
-    <button>
-      Toggle
-    </button>
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          show: !1
-        }]),
-        "__tests__/template.marko_0_show 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<table>
+  <tbody />
+</table>
+<button>
+  Toggle
+</button>
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      show: !1
+    }]),
+    "__tests__/template.marko_0_show 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-REMOVE #comment, tr in html/body/table/tbody
+REMOVE #comment, tr in table/tbody
 ```
 
 # Render
@@ -107,37 +92,32 @@ REMOVE #comment, tr in html/body/table/tbody
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <table>
-      <tbody>
-        <tr>
-          <td>
-            Hi
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <button>
-      Toggle
-    </button>
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          show: !1
-        }]),
-        "__tests__/template.marko_0_show 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<table>
+  <tbody>
+    <tr>
+      <td>
+        Hi
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button>
+  Toggle
+</button>
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      show: !1
+    }]),
+    "__tests__/template.marko_0_show 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/table/tbody/tr
+INSERT table/tbody/tr
 ```

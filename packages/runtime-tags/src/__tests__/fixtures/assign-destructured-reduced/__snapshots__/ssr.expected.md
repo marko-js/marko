@@ -5,33 +5,28 @@
 
 # Render End
 ```html
-<html>
-  <head>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.d = {
-          "#childScope/0": _.b = {
-            input: _.a = {
-              value: 0
-            }
-          }
-        }, _.b], _.a.valueChange = _._[
-          "__tests__/template.marko_0/valueChange"
-          ](_.d), _.c),
-        "__tests__/tags/child.marko_0_input 2"
-      ];
-      M._.w()
-    </script>
-  </head>
-  <body />
-</html>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.c = [0, _.d = {
+      "#childScope/0": _.b = {
+        input: _.a = {
+          value: 0
+        }
+      }
+    }, _.b], _.a.valueChange = _._[
+      "__tests__/template.marko_0/valueChange"
+      ](_.d), _.c),
+    "__tests__/tags/child.marko_0_input 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/head/script
-INSERT html/head/script/#text
-INSERT html/body
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT script
+INSERT script/#text
 ```

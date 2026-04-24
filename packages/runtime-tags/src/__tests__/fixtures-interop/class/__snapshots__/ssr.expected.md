@@ -6,24 +6,19 @@
 # Render End
 ```html
 <!--M#s0-->
-<html>
-  <head />
-  <body>
-    <button>
-      0
-    </button>
-    <!--M/-->
-  </body>
-</html>
+<button>
+  0
+</button>
+<!--M/-->
 ```
 
 # Mutations
 ```
-INSERT #comment
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/button
-INSERT html/body/button/#text
-INSERT html/body/#comment
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT #comment0
+INSERT button
+INSERT button/#text
+INSERT #comment1
 ```

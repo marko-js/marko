@@ -5,21 +5,16 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <input
-      class="foo"
-      value="abcd"
-    />
-  </body>
-</html>
+<input
+  class="foo"
+  value="abcd"
+/>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/input
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT input
 ```

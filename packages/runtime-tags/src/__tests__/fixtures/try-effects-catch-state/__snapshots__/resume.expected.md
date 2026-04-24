@@ -1,45 +1,40 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      0
-    </div>
-    <!--M_*1 #div/0-->
-    <!--M_[-->
-    <button>
-      inc
-    </button>
-    <!--M_*2 #button/0-->
-     -- 
-    <!---->
-    <!--M_*2 #text/1-->
-    <!--M_]1 #text/1 2-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          clickCount: 0,
-          "ClosureScopes:clickCount": _.d = new Set
-        }, _.b = {
-          _: _.a,
-          "#BranchAccessor": "#text/1"
-        }], _.b["#CatchContent"] = _._[
-          "__tests__/template.marko_2_content"
-          ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_1_clickCount 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  0
+</div>
+<!--M_*1 #div/0-->
+<!--M_[-->
+<button>
+  inc
+</button>
+<!--M_*2 #button/0-->
+--
+<!---->
+<!--M_*2 #text/1-->
+<!--M_]1 #text/1 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.c = [0, _.a = {
+      clickCount: 0,
+      "ClosureScopes:clickCount": _.d = new Set
+    }, _.b = {
+      _: _.a,
+      "#BranchAccessor": "#text/1"
+    }], _.b["#CatchContent"] = _._[
+      "__tests__/template.marko_2_content"
+      ](_.a), (_.d).add(_.b), _.c),
+    "__tests__/template.marko_1_clickCount 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/#text1
-INSERT html/body/#text2
-INSERT html/body/div/#text
+INSERT #text1
+INSERT #text2
+INSERT div/#text
 ```
 
 # Render
@@ -47,45 +42,40 @@ INSERT html/body/div/#text
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      1
-    </div>
-    <!--M_*1 #div/0-->
-    <!--M_[-->
-    <button>
-      inc
-    </button>
-    <!--M_*2 #button/0-->
-     -- 
-    <!---->
-    <!--M_*2 #text/1-->
-    <!--M_]1 #text/1 2-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          clickCount: 0,
-          "ClosureScopes:clickCount": _.d = new Set
-        }, _.b = {
-          _: _.a,
-          "#BranchAccessor": "#text/1"
-        }], _.b["#CatchContent"] = _._[
-          "__tests__/template.marko_2_content"
-          ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_1_clickCount 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  1
+</div>
+<!--M_*1 #div/0-->
+<!--M_[-->
+<button>
+  inc
+</button>
+<!--M_*2 #button/0-->
+--
+<!---->
+<!--M_*2 #text/1-->
+<!--M_]1 #text/1 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.c = [0, _.a = {
+      clickCount: 0,
+      "ClosureScopes:clickCount": _.d = new Set
+    }, _.b = {
+      _: _.a,
+      "#BranchAccessor": "#text/1"
+    }], _.b["#CatchContent"] = _._[
+      "__tests__/template.marko_2_content"
+      ](_.a), (_.d).add(_.b), _.c),
+    "__tests__/template.marko_1_clickCount 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-REMOVE #text in html/body/div
-INSERT html/body/div/#text
+REMOVE #text in div
+INSERT div/#text
 ```
 
 # Render
@@ -93,44 +83,39 @@ INSERT html/body/div/#text
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      1
-    </div>
-    <!--M_*1 #div/0-->
-    Error: ERROR!
-    <!--M_]1 #text/1 2-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          clickCount: 0,
-          "ClosureScopes:clickCount": _.d = new Set
-        }, _.b = {
-          _: _.a,
-          "#BranchAccessor": "#text/1"
-        }], _.b["#CatchContent"] = _._[
-          "__tests__/template.marko_2_content"
-          ](_.a), (_.d).add(_.b), _.c),
-        "__tests__/template.marko_1_clickCount 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  1
+</div>
+<!--M_*1 #div/0-->
+Error: ERROR!
+<!--M_]1 #text/1 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.c = [0, _.a = {
+      clickCount: 0,
+      "ClosureScopes:clickCount": _.d = new Set
+    }, _.b = {
+      _: _.a,
+      "#BranchAccessor": "#text/1"
+    }], _.b["#CatchContent"] = _._[
+      "__tests__/template.marko_2_content"
+      ](_.a), (_.d).add(_.b), _.c),
+    "__tests__/template.marko_1_clickCount 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/#text
-REMOVE #comment after html/body/#text
-REMOVE button after html/body/#text
-REMOVE #comment after html/body/#text
-REMOVE #text after html/body/#text
-REMOVE #comment after html/body/#text
-REMOVE #text after html/body/#text
-REMOVE #comment after html/body/#text
-REMOVE #text after html/body/#text
-UPDATE html/body/#text " " => "Error: ERROR!"
+INSERT #text
+REMOVE #comment after #text
+REMOVE button after #text
+REMOVE #comment after #text
+REMOVE #text after #text
+REMOVE #comment after #text
+REMOVE #text after #text
+REMOVE #comment after #text
+REMOVE #text after #text
+UPDATE #text " " => "Error: ERROR!"
 ```

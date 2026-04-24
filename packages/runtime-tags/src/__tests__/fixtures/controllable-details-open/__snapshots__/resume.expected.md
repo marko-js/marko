@@ -1,29 +1,24 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <details>
-      <summary />
-    </details>
-    <!--M_*1 #details/0-->
-    <span>
-      false
-      <!--M_*1 #text/1-->
-    </span>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#details/0": 4
-        }], _.a["ControlledHandler:#details/0"] = _._[
-          "__tests__/template.marko_0/openChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<details>
+  <summary />
+</details>
+<!--M_*1 #details/0-->
+<span>
+  false
+  <!--M_*1 #text/1-->
+</span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      "ControlledType:#details/0": 4
+    }], _.a["ControlledHandler:#details/0"] = _._[
+      "__tests__/template.marko_0/openChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -33,40 +28,35 @@ const details = container.querySelector("details");
 details.open = !details.open;
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <details
-      open=""
-    >
-      <summary />
-    </details>
-    <!--M_*1 #details/0-->
-    <span>
-      true
-      <!--M_*1 #text/1-->
-    </span>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#details/0": 4
-        }], _.a["ControlledHandler:#details/0"] = _._[
-          "__tests__/template.marko_0/openChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<details
+  open=""
+>
+  <summary />
+</details>
+<!--M_*1 #details/0-->
+<span>
+  true
+  <!--M_*1 #text/1-->
+</span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      "ControlledType:#details/0": 4
+    }], _.a["ControlledHandler:#details/0"] = _._[
+      "__tests__/template.marko_0/openChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/details[open] null => ""
-UPDATE html/body/details[open] "" => ""
-UPDATE html/body/details[open] null => ""
-UPDATE html/body/span/#text "false" => "true"
+UPDATE details[open] null => ""
+UPDATE details[open] "" => ""
+UPDATE details[open] null => ""
+UPDATE span/#text "false" => "true"
 ```
 
 # Render
@@ -75,38 +65,33 @@ const details = container.querySelector("details");
 details.open = !details.open;
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <details>
-      <summary />
-    </details>
-    <!--M_*1 #details/0-->
-    <span>
-      false
-      <!--M_*1 #text/1-->
-    </span>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#details/0": 4
-        }], _.a["ControlledHandler:#details/0"] = _._[
-          "__tests__/template.marko_0/openChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<details>
+  <summary />
+</details>
+<!--M_*1 #details/0-->
+<span>
+  false
+  <!--M_*1 #text/1-->
+</span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      "ControlledType:#details/0": 4
+    }], _.a["ControlledHandler:#details/0"] = _._[
+      "__tests__/template.marko_0/openChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/details[open] "" => null
-UPDATE html/body/details[open] null => null
-UPDATE html/body/details[open] "" => null
-UPDATE html/body/span/#text "true" => "false"
+UPDATE details[open] "" => null
+UPDATE details[open] null => null
+UPDATE details[open] "" => null
+UPDATE span/#text "true" => "false"
 ```
 
 # Render
@@ -115,38 +100,33 @@ const details = container.querySelector("details");
 details.open = !details.open;
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <details
-      open=""
-    >
-      <summary />
-    </details>
-    <!--M_*1 #details/0-->
-    <span>
-      true
-      <!--M_*1 #text/1-->
-    </span>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#details/0": 4
-        }], _.a["ControlledHandler:#details/0"] = _._[
-          "__tests__/template.marko_0/openChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<details
+  open=""
+>
+  <summary />
+</details>
+<!--M_*1 #details/0-->
+<span>
+  true
+  <!--M_*1 #text/1-->
+</span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      "ControlledType:#details/0": 4
+    }], _.a["ControlledHandler:#details/0"] = _._[
+      "__tests__/template.marko_0/openChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/details[open] null => ""
-UPDATE html/body/details[open] "" => ""
-UPDATE html/body/details[open] null => ""
-UPDATE html/body/span/#text "false" => "true"
+UPDATE details[open] null => ""
+UPDATE details[open] "" => ""
+UPDATE details[open] null => ""
+UPDATE span/#text "false" => "true"
 ```

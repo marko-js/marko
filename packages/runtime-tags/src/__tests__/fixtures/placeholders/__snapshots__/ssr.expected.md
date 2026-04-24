@@ -9,52 +9,47 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    replaced
-    <span>
-      replaced
-      <div />
-    </span>
-    <div>
-      <div>
-        a
-      </div>
-      replacedHello Text &lt;a/&gt;replacedHello HTML 
-      <span>
-        hi
-      </span>
-      <script>
-        'Hello &lt;b&gt; \x3C/script&gt;'
-      </script>
-      <style>
-        
+replaced
+<span>
+  replaced
+  <div />
+</span>
+<div>
+  <div>
+    a
+  </div>
+  replacedHello Text &lt;a/&gt;replacedHello HTML 
+  <span>
+    hi
+  </span>
+  <script>
+    'Hello &lt;b&gt; \x3C/script&gt;'
+  </script>
+  <style>
+    
     .test { content: 'Hello &lt;b&gt; \3C/style&gt;' }
   
-      </style>
-    </div>
-  </body>
-</html>
+  </style>
+</div>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/#text
-INSERT html/body/span
-INSERT html/body/span/#text
-INSERT html/body/span/div
-INSERT html/body/div
-INSERT html/body/div/div
-INSERT html/body/div/div/#text
-INSERT html/body/div/#text
-INSERT html/body/div/span
-INSERT html/body/div/span/#text
-INSERT html/body/div/script
-INSERT html/body/div/script/#text
-INSERT html/body/div/style
-INSERT html/body/div/style/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT #text
+INSERT span
+INSERT span/#text
+INSERT span/div
+INSERT div
+INSERT div/div
+INSERT div/div/#text
+INSERT div/#text
+INSERT div/span
+INSERT div/span/#text
+INSERT div/script
+INSERT div/script/#text
+INSERT div/style
+INSERT div/style/#text
 ```

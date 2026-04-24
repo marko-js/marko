@@ -1,49 +1,39 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <!--M_[-->
-      <!--M_)1 #div/0-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {}]),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  <!--M_[-->
+  <!--M_)1 #div/0-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {}]),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
 # Render ASYNC
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <!--M_[-->
-      <!--M_)1 #div/0-->
-      ABCD
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {}]),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  <!--M_[-->
+  <!--M_)1 #div/0-->
+  ABCD
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {}]),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/div/#text0, html/body/div/#text1, html/body/div/#text2
-UPDATE html/body/div/#text1 "" => "C"
+INSERT div/#text0, div/#text1, div/#text2
+UPDATE div/#text1 "" => "C"
 ```

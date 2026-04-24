@@ -11,50 +11,44 @@
 
 # Render End
 ```html
-<html>
-  <head>
-    <script
-      type="importmap"
-    >
-      {
-        "imports":
-        {
-          "0": "https://markojs.com",
-        }
-      }
-    </script>
-    <!--M_*1 #script/0-->
-  </head>
-  <body>
-    <div>
-      0
-      <!--M_*1 #text/1-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          count: 0
-        }]),
-        "__tests__/template.marko_0_count 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<script
+  type="importmap"
+>
+  {
+    "imports":
+    {
+      "0": "https://markojs.com",
+    }
+  }
+</script>
+<!--M_*1 #script/0-->
+<div>
+  0
+  <!--M_*1 #text/1-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      count: 0
+    }]),
+    "__tests__/template.marko_0_count 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/head/script
-INSERT html/head/script/#text
-INSERT html/head/#comment
-INSERT html/body
-INSERT html/body/div
-INSERT html/body/div/#text
-INSERT html/body/div/#comment
-INSERT html/body/script
-INSERT html/body/script/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT script0
+INSERT script0/#text
+INSERT #comment
+INSERT div
+INSERT div/#text
+INSERT div/#comment
+INSERT script1
+INSERT script1/#text
 ```

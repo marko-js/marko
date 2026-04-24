@@ -14,9 +14,10 @@ const { DOMElement, DOMCollection } = plugins;
 
 export default function createMutationTracker(
   browser: { window: JSDOM["window"]; virtualConsole: VirtualConsole },
-  container: ParentNode = window.document,
+  root: ParentNode,
 ) {
   let cleaned = false;
+  let container: ParentNode | undefined;
   let pendingRecords: undefined | MutationRecord[];
   const { window, virtualConsole } = browser;
   const logs: string[] = [];
@@ -30,7 +31,7 @@ export default function createMutationTracker(
       logRecords("ASYNC", records, consoleCapture.records());
     }
   });
-  observer.observe(container, {
+  observer.observe(root, {
     attributes: true,
     attributeOldValue: true,
     characterData: true,
@@ -99,6 +100,15 @@ export default function createMutationTracker(
     if (cleaned) {
       throw new Error(`log called after cleanup`);
     }
+
+    container ||=
+      isDocument(root) &&
+      root.body &&
+      !root.head.firstChild &&
+      !root.body.attributes.length &&
+      !root.documentElement.attributes.length
+        ? root.body
+        : root;
 
     logs.push(
       getStatusString(container, mutationRecords, consoleRecords, update),

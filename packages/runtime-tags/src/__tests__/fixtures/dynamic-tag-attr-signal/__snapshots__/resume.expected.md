@@ -1,28 +1,23 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <p
-      class="A"
-    >
-      paragraph
-    </p>
-    <!--M_*1 #p/0-->
-    <button />
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          className: "A"
-        }]),
-        "__tests__/template.marko_0_className 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<p
+  class="A"
+>
+  paragraph
+</p>
+<!--M_*1 #p/0-->
+<button />
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      className: "A"
+    }]),
+    "__tests__/template.marko_0_className 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -31,34 +26,29 @@
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <p
-      class="B"
-    >
-      paragraph
-    </p>
-    <!--M_*1 #p/0-->
-    <button />
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          className: "A"
-        }]),
-        "__tests__/template.marko_0_className 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<p
+  class="B"
+>
+  paragraph
+</p>
+<!--M_*1 #p/0-->
+<button />
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      className: "A"
+    }]),
+    "__tests__/template.marko_0_className 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/p[class] "A" => "B"
+UPDATE p[class] "A" => "B"
 ```
 
 # Render
@@ -66,32 +56,27 @@ UPDATE html/body/p[class] "A" => "B"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <p
-      class="A"
-    >
-      paragraph
-    </p>
-    <!--M_*1 #p/0-->
-    <button />
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          className: "A"
-        }]),
-        "__tests__/template.marko_0_className 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<p
+  class="A"
+>
+  paragraph
+</p>
+<!--M_*1 #p/0-->
+<button />
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      className: "A"
+    }]),
+    "__tests__/template.marko_0_className 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/p[class] "B" => "A"
+UPDATE p[class] "B" => "A"
 ```

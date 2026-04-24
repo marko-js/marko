@@ -1,93 +1,88 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <button>
-      1
-    </button>
-    <!--M_*2 #button/0-->
-    <button>
-      2
-    </button>
-    <!--M_*3 #button/0-->
-    <button>
-      3
-    </button>
-    <!--M_*4 #button/0-->
-    <button>
-      4
-    </button>
-    <!--M_*5 #button/0-->
-    <button>
-      5
-    </button>
-    <!--M_*6 #button/0-->
-    <button>
-      6
-    </button>
-    <!--M_*7 #button/0-->
-    <button>
-      7
-    </button>
-    <!--M_*8 #button/0-->
-    <button>
-      8
-    </button>
-    <!--M_*9 #button/0-->
-    <button>
-      9
-    </button>
-    <!--M_*10 #button/0-->
-    <button>
-      10
-    </button>
-    <!--M_*11 #button/0-->
-    <button>
-      11
-    </button>
-    <!--M_*12 #button/0-->
-    <button>
-      12
-    </button>
-    <!--M_*13 #button/0-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.n = [0, _.a = {
-            "BranchScopes:#text/0": [_.b = {
-              num: 1
-            }, _.c = {
-              num: 2
-            }, _.d = {
-              num: 3
-            }, _.e = {
-              num: 4
-            }, _.f = {
-              num: 5
-            }, _.g = {
-              num: 6
-            }, _.h = {
-              num: 7
-            }, _.i = {
-              num: 8
-            }, _.j = {
-              num: 9
-            }, _.k = {
-              num: 10
-            }, _.l = {
-              num: 11
-            }, _.m = {
-              num: 12
-            }]
-          }, _.b, _.c, _.d, _.e, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m], _.b
-          ._ = _.c._ = _.d._ = _.e._ = _.f._ = _.g._ = _.h._ = _.i._ = _.j._ =
-          _.k._ = _.l._ = _.m._ = _.a, _.n),
-        "__tests__/template.marko_1_num 2 3 4 5 6 7 8 9 10 11 12 13"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button>
+  1
+</button>
+<!--M_*2 #button/0-->
+<button>
+  2
+</button>
+<!--M_*3 #button/0-->
+<button>
+  3
+</button>
+<!--M_*4 #button/0-->
+<button>
+  4
+</button>
+<!--M_*5 #button/0-->
+<button>
+  5
+</button>
+<!--M_*6 #button/0-->
+<button>
+  6
+</button>
+<!--M_*7 #button/0-->
+<button>
+  7
+</button>
+<!--M_*8 #button/0-->
+<button>
+  8
+</button>
+<!--M_*9 #button/0-->
+<button>
+  9
+</button>
+<!--M_*10 #button/0-->
+<button>
+  10
+</button>
+<!--M_*11 #button/0-->
+<button>
+  11
+</button>
+<!--M_*12 #button/0-->
+<button>
+  12
+</button>
+<!--M_*13 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.n = [0, _.a = {
+        "BranchScopes:#text/0": [_.b = {
+          num: 1
+        }, _.c = {
+          num: 2
+        }, _.d = {
+          num: 3
+        }, _.e = {
+          num: 4
+        }, _.f = {
+          num: 5
+        }, _.g = {
+          num: 6
+        }, _.h = {
+          num: 7
+        }, _.i = {
+          num: 8
+        }, _.j = {
+          num: 9
+        }, _.k = {
+          num: 10
+        }, _.l = {
+          num: 11
+        }, _.m = {
+          num: 12
+        }]
+      }, _.b, _.c, _.d, _.e, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m], _.b._ =
+      _.c._ = _.d._ = _.e._ = _.f._ = _.g._ = _.h._ = _.i._ = _.j._ = _.k._ =
+      _.l._ = _.m._ = _.a, _.n),
+    "__tests__/template.marko_1_num 2 3 4 5 6 7 8 9 10 11 12 13"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -96,118 +91,113 @@
 click(c, 2);
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button>
-      1
-    </button>
-    <!--M_*2 #button/0-->
-    <button
-      data-multiple=""
-      data-selected=""
-    >
-      2
-    </button>
-    <!--M_*3 #button/0-->
-    <button>
-      3
-    </button>
-    <!--M_*4 #button/0-->
-    <button
-      data-multiple=""
-    >
-      4
-    </button>
-    <!--M_*5 #button/0-->
-    <button>
-      5
-    </button>
-    <!--M_*6 #button/0-->
-    <button
-      data-multiple=""
-    >
-      6
-    </button>
-    <!--M_*7 #button/0-->
-    <button>
-      7
-    </button>
-    <!--M_*8 #button/0-->
-    <button
-      data-multiple=""
-    >
-      8
-    </button>
-    <!--M_*9 #button/0-->
-    <button>
-      9
-    </button>
-    <!--M_*10 #button/0-->
-    <button
-      data-multiple=""
-    >
-      10
-    </button>
-    <!--M_*11 #button/0-->
-    <button>
-      11
-    </button>
-    <!--M_*12 #button/0-->
-    <button
-      data-multiple=""
-    >
-      12
-    </button>
-    <!--M_*13 #button/0-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.n = [0, _.a = {
-            "BranchScopes:#text/0": [_.b = {
-              num: 1
-            }, _.c = {
-              num: 2
-            }, _.d = {
-              num: 3
-            }, _.e = {
-              num: 4
-            }, _.f = {
-              num: 5
-            }, _.g = {
-              num: 6
-            }, _.h = {
-              num: 7
-            }, _.i = {
-              num: 8
-            }, _.j = {
-              num: 9
-            }, _.k = {
-              num: 10
-            }, _.l = {
-              num: 11
-            }, _.m = {
-              num: 12
-            }]
-          }, _.b, _.c, _.d, _.e, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m], _.b
-          ._ = _.c._ = _.d._ = _.e._ = _.f._ = _.g._ = _.h._ = _.i._ = _.j._ =
-          _.k._ = _.l._ = _.m._ = _.a, _.n),
-        "__tests__/template.marko_1_num 2 3 4 5 6 7 8 9 10 11 12 13"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button>
+  1
+</button>
+<!--M_*2 #button/0-->
+<button
+  data-multiple=""
+  data-selected=""
+>
+  2
+</button>
+<!--M_*3 #button/0-->
+<button>
+  3
+</button>
+<!--M_*4 #button/0-->
+<button
+  data-multiple=""
+>
+  4
+</button>
+<!--M_*5 #button/0-->
+<button>
+  5
+</button>
+<!--M_*6 #button/0-->
+<button
+  data-multiple=""
+>
+  6
+</button>
+<!--M_*7 #button/0-->
+<button>
+  7
+</button>
+<!--M_*8 #button/0-->
+<button
+  data-multiple=""
+>
+  8
+</button>
+<!--M_*9 #button/0-->
+<button>
+  9
+</button>
+<!--M_*10 #button/0-->
+<button
+  data-multiple=""
+>
+  10
+</button>
+<!--M_*11 #button/0-->
+<button>
+  11
+</button>
+<!--M_*12 #button/0-->
+<button
+  data-multiple=""
+>
+  12
+</button>
+<!--M_*13 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.n = [0, _.a = {
+        "BranchScopes:#text/0": [_.b = {
+          num: 1
+        }, _.c = {
+          num: 2
+        }, _.d = {
+          num: 3
+        }, _.e = {
+          num: 4
+        }, _.f = {
+          num: 5
+        }, _.g = {
+          num: 6
+        }, _.h = {
+          num: 7
+        }, _.i = {
+          num: 8
+        }, _.j = {
+          num: 9
+        }, _.k = {
+          num: 10
+        }, _.l = {
+          num: 11
+        }, _.m = {
+          num: 12
+        }]
+      }, _.b, _.c, _.d, _.e, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m], _.b._ =
+      _.c._ = _.d._ = _.e._ = _.f._ = _.g._ = _.h._ = _.i._ = _.j._ = _.k._ =
+      _.l._ = _.m._ = _.a, _.n),
+    "__tests__/template.marko_1_num 2 3 4 5 6 7 8 9 10 11 12 13"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button1[data-selected] null => ""
-UPDATE html/body/button1[data-multiple] null => ""
-UPDATE html/body/button3[data-multiple] null => ""
-UPDATE html/body/button5[data-multiple] null => ""
-UPDATE html/body/button7[data-multiple] null => ""
-UPDATE html/body/button9[data-multiple] null => ""
-UPDATE html/body/button11[data-multiple] null => ""
+UPDATE button1[data-selected] null => ""
+UPDATE button1[data-multiple] null => ""
+UPDATE button3[data-multiple] null => ""
+UPDATE button5[data-multiple] null => ""
+UPDATE button7[data-multiple] null => ""
+UPDATE button9[data-multiple] null => ""
+UPDATE button11[data-multiple] null => ""
 ```
 
 # Render
@@ -215,115 +205,110 @@ UPDATE html/body/button11[data-multiple] null => ""
 click(c, 3);
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button>
-      1
-    </button>
-    <!--M_*2 #button/0-->
-    <button>
-      2
-    </button>
-    <!--M_*3 #button/0-->
-    <button
-      data-multiple=""
-      data-selected=""
-    >
-      3
-    </button>
-    <!--M_*4 #button/0-->
-    <button>
-      4
-    </button>
-    <!--M_*5 #button/0-->
-    <button>
-      5
-    </button>
-    <!--M_*6 #button/0-->
-    <button
-      data-multiple=""
-    >
-      6
-    </button>
-    <!--M_*7 #button/0-->
-    <button>
-      7
-    </button>
-    <!--M_*8 #button/0-->
-    <button>
-      8
-    </button>
-    <!--M_*9 #button/0-->
-    <button
-      data-multiple=""
-    >
-      9
-    </button>
-    <!--M_*10 #button/0-->
-    <button>
-      10
-    </button>
-    <!--M_*11 #button/0-->
-    <button>
-      11
-    </button>
-    <!--M_*12 #button/0-->
-    <button
-      data-multiple=""
-    >
-      12
-    </button>
-    <!--M_*13 #button/0-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.n = [0, _.a = {
-            "BranchScopes:#text/0": [_.b = {
-              num: 1
-            }, _.c = {
-              num: 2
-            }, _.d = {
-              num: 3
-            }, _.e = {
-              num: 4
-            }, _.f = {
-              num: 5
-            }, _.g = {
-              num: 6
-            }, _.h = {
-              num: 7
-            }, _.i = {
-              num: 8
-            }, _.j = {
-              num: 9
-            }, _.k = {
-              num: 10
-            }, _.l = {
-              num: 11
-            }, _.m = {
-              num: 12
-            }]
-          }, _.b, _.c, _.d, _.e, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m], _.b
-          ._ = _.c._ = _.d._ = _.e._ = _.f._ = _.g._ = _.h._ = _.i._ = _.j._ =
-          _.k._ = _.l._ = _.m._ = _.a, _.n),
-        "__tests__/template.marko_1_num 2 3 4 5 6 7 8 9 10 11 12 13"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button>
+  1
+</button>
+<!--M_*2 #button/0-->
+<button>
+  2
+</button>
+<!--M_*3 #button/0-->
+<button
+  data-multiple=""
+  data-selected=""
+>
+  3
+</button>
+<!--M_*4 #button/0-->
+<button>
+  4
+</button>
+<!--M_*5 #button/0-->
+<button>
+  5
+</button>
+<!--M_*6 #button/0-->
+<button
+  data-multiple=""
+>
+  6
+</button>
+<!--M_*7 #button/0-->
+<button>
+  7
+</button>
+<!--M_*8 #button/0-->
+<button>
+  8
+</button>
+<!--M_*9 #button/0-->
+<button
+  data-multiple=""
+>
+  9
+</button>
+<!--M_*10 #button/0-->
+<button>
+  10
+</button>
+<!--M_*11 #button/0-->
+<button>
+  11
+</button>
+<!--M_*12 #button/0-->
+<button
+  data-multiple=""
+>
+  12
+</button>
+<!--M_*13 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.n = [0, _.a = {
+        "BranchScopes:#text/0": [_.b = {
+          num: 1
+        }, _.c = {
+          num: 2
+        }, _.d = {
+          num: 3
+        }, _.e = {
+          num: 4
+        }, _.f = {
+          num: 5
+        }, _.g = {
+          num: 6
+        }, _.h = {
+          num: 7
+        }, _.i = {
+          num: 8
+        }, _.j = {
+          num: 9
+        }, _.k = {
+          num: 10
+        }, _.l = {
+          num: 11
+        }, _.m = {
+          num: 12
+        }]
+      }, _.b, _.c, _.d, _.e, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m], _.b._ =
+      _.c._ = _.d._ = _.e._ = _.f._ = _.g._ = _.h._ = _.i._ = _.j._ = _.k._ =
+      _.l._ = _.m._ = _.a, _.n),
+    "__tests__/template.marko_1_num 2 3 4 5 6 7 8 9 10 11 12 13"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button1[data-selected] "" => null
-UPDATE html/body/button1[data-multiple] "" => null
-UPDATE html/body/button2[data-selected] null => ""
-UPDATE html/body/button2[data-multiple] null => ""
-UPDATE html/body/button3[data-multiple] "" => null
-UPDATE html/body/button7[data-multiple] "" => null
-UPDATE html/body/button8[data-multiple] null => ""
-UPDATE html/body/button9[data-multiple] "" => null
+UPDATE button1[data-selected] "" => null
+UPDATE button1[data-multiple] "" => null
+UPDATE button2[data-selected] null => ""
+UPDATE button2[data-multiple] null => ""
+UPDATE button3[data-multiple] "" => null
+UPDATE button7[data-multiple] "" => null
+UPDATE button8[data-multiple] null => ""
+UPDATE button9[data-multiple] "" => null
 ```
 
 # Render
@@ -331,109 +316,104 @@ UPDATE html/body/button9[data-multiple] "" => null
 click(c, 5);
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button>
-      1
-    </button>
-    <!--M_*2 #button/0-->
-    <button>
-      2
-    </button>
-    <!--M_*3 #button/0-->
-    <button>
-      3
-    </button>
-    <!--M_*4 #button/0-->
-    <button>
-      4
-    </button>
-    <!--M_*5 #button/0-->
-    <button
-      data-multiple=""
-      data-selected=""
-    >
-      5
-    </button>
-    <!--M_*6 #button/0-->
-    <button>
-      6
-    </button>
-    <!--M_*7 #button/0-->
-    <button>
-      7
-    </button>
-    <!--M_*8 #button/0-->
-    <button>
-      8
-    </button>
-    <!--M_*9 #button/0-->
-    <button>
-      9
-    </button>
-    <!--M_*10 #button/0-->
-    <button
-      data-multiple=""
-    >
-      10
-    </button>
-    <!--M_*11 #button/0-->
-    <button>
-      11
-    </button>
-    <!--M_*12 #button/0-->
-    <button>
-      12
-    </button>
-    <!--M_*13 #button/0-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.n = [0, _.a = {
-            "BranchScopes:#text/0": [_.b = {
-              num: 1
-            }, _.c = {
-              num: 2
-            }, _.d = {
-              num: 3
-            }, _.e = {
-              num: 4
-            }, _.f = {
-              num: 5
-            }, _.g = {
-              num: 6
-            }, _.h = {
-              num: 7
-            }, _.i = {
-              num: 8
-            }, _.j = {
-              num: 9
-            }, _.k = {
-              num: 10
-            }, _.l = {
-              num: 11
-            }, _.m = {
-              num: 12
-            }]
-          }, _.b, _.c, _.d, _.e, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m], _.b
-          ._ = _.c._ = _.d._ = _.e._ = _.f._ = _.g._ = _.h._ = _.i._ = _.j._ =
-          _.k._ = _.l._ = _.m._ = _.a, _.n),
-        "__tests__/template.marko_1_num 2 3 4 5 6 7 8 9 10 11 12 13"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button>
+  1
+</button>
+<!--M_*2 #button/0-->
+<button>
+  2
+</button>
+<!--M_*3 #button/0-->
+<button>
+  3
+</button>
+<!--M_*4 #button/0-->
+<button>
+  4
+</button>
+<!--M_*5 #button/0-->
+<button
+  data-multiple=""
+  data-selected=""
+>
+  5
+</button>
+<!--M_*6 #button/0-->
+<button>
+  6
+</button>
+<!--M_*7 #button/0-->
+<button>
+  7
+</button>
+<!--M_*8 #button/0-->
+<button>
+  8
+</button>
+<!--M_*9 #button/0-->
+<button>
+  9
+</button>
+<!--M_*10 #button/0-->
+<button
+  data-multiple=""
+>
+  10
+</button>
+<!--M_*11 #button/0-->
+<button>
+  11
+</button>
+<!--M_*12 #button/0-->
+<button>
+  12
+</button>
+<!--M_*13 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.n = [0, _.a = {
+        "BranchScopes:#text/0": [_.b = {
+          num: 1
+        }, _.c = {
+          num: 2
+        }, _.d = {
+          num: 3
+        }, _.e = {
+          num: 4
+        }, _.f = {
+          num: 5
+        }, _.g = {
+          num: 6
+        }, _.h = {
+          num: 7
+        }, _.i = {
+          num: 8
+        }, _.j = {
+          num: 9
+        }, _.k = {
+          num: 10
+        }, _.l = {
+          num: 11
+        }, _.m = {
+          num: 12
+        }]
+      }, _.b, _.c, _.d, _.e, _.f, _.g, _.h, _.i, _.j, _.k, _.l, _.m], _.b._ =
+      _.c._ = _.d._ = _.e._ = _.f._ = _.g._ = _.h._ = _.i._ = _.j._ = _.k._ =
+      _.l._ = _.m._ = _.a, _.n),
+    "__tests__/template.marko_1_num 2 3 4 5 6 7 8 9 10 11 12 13"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button2[data-selected] "" => null
-UPDATE html/body/button2[data-multiple] "" => null
-UPDATE html/body/button4[data-selected] null => ""
-UPDATE html/body/button4[data-multiple] null => ""
-UPDATE html/body/button5[data-multiple] "" => null
-UPDATE html/body/button8[data-multiple] "" => null
-UPDATE html/body/button9[data-multiple] null => ""
-UPDATE html/body/button11[data-multiple] "" => null
+UPDATE button2[data-selected] "" => null
+UPDATE button2[data-multiple] "" => null
+UPDATE button4[data-selected] null => ""
+UPDATE button4[data-multiple] null => ""
+UPDATE button5[data-multiple] "" => null
+UPDATE button8[data-multiple] "" => null
+UPDATE button9[data-multiple] null => ""
+UPDATE button11[data-multiple] "" => null
 ```

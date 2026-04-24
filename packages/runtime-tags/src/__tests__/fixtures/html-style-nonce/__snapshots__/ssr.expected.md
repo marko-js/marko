@@ -11,67 +11,62 @@
 
 # Render End
 ```html
-<html>
-  <head>
-    <style
-      nonce="default-nonce"
-    >
-      
+<style
+  nonce="default-nonce"
+>
+  
   A {}
 
-    </style>
-    <style
-      nonce="override"
-    >
-      
+</style>
+<style
+  nonce="override"
+>
+  
   B {}
 
-    </style>
-    <style
-      nonce="override-spread"
-    >
-      
+</style>
+<style
+  nonce="override-spread"
+>
+  
   C {}
 
-    </style>
-    <!--M_*1 #style/1-->
-    <!--M_|1 #text/2-->
-    <script
-      nonce="default-nonce"
-    >
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [
-        {
-          cspNonce: "default-nonce"
-        },
-        {
-          spreadAttrs:
-          {
-            nonce: "override-spread"
-          }
-        }]),
-        "__tests__/template.marko_0 1 __tests__/template.marko_0_spreadAttrs 1"
-      ];
-      M._.w()
-    </script>
-  </head>
-  <body />
-</html>
+</style>
+<!--M_*1 #style/1-->
+<!--M_|1 #text/2-->
+<script
+  nonce="default-nonce"
+>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [
+    {
+      cspNonce: "default-nonce"
+    },
+    {
+      spreadAttrs:
+      {
+        nonce: "override-spread"
+      }
+    }]),
+    "__tests__/template.marko_0 1 __tests__/template.marko_0_spreadAttrs 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/head/style0
-INSERT html/head/style0/#text
-INSERT html/head/style1
-INSERT html/head/style1/#text
-INSERT html/head/style2
-INSERT html/head/style2/#text
-INSERT html/head/#comment0
-INSERT html/head/#comment1
-INSERT html/head/script
-INSERT html/head/script/#text
-INSERT html/body
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT style0
+INSERT style0/#text
+INSERT style1
+INSERT style1/#text
+INSERT style2
+INSERT style2/#text
+INSERT #comment0
+INSERT #comment1
+INSERT script
+INSERT script/#text
 ```

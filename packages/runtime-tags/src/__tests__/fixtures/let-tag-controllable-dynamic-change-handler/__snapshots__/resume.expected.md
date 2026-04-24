@@ -1,39 +1,34 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      id="inc"
-    >
-      1
-      <!--M_*1 #text/1-->
-      |
-      <!---->
-      1
-      <!--M_*1 #text/2-->
-    </button>
-    <!--M_*1 #button/0-->
-    <button
-      id="toggle"
-    >
-      toggle
-    </button>
-    <!--M_*1 #button/3-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          x: 1,
-          y: 1
-        }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
-          "__tests__/template.marko_0/yChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  id="inc"
+>
+  1
+  <!--M_*1 #text/1-->
+  |
+  <!---->
+  1
+  <!--M_*1 #text/2-->
+</button>
+<!--M_*1 #button/0-->
+<button
+  id="toggle"
+>
+  toggle
+</button>
+<!--M_*1 #button/3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      x: 1,
+      y: 1
+    }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
+      "__tests__/template.marko_0/yChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -42,46 +37,41 @@
 container.querySelector("#inc").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      id="inc"
-    >
-      3
-      <!--M_*1 #text/1-->
-      |
-      <!---->
-      3
-      <!--M_*1 #text/2-->
-    </button>
-    <!--M_*1 #button/0-->
-    <button
-      id="toggle"
-    >
-      toggle
-    </button>
-    <!--M_*1 #button/3-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          x: 1,
-          y: 1
-        }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
-          "__tests__/template.marko_0/yChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  id="inc"
+>
+  3
+  <!--M_*1 #text/1-->
+  |
+  <!---->
+  3
+  <!--M_*1 #text/2-->
+</button>
+<!--M_*1 #button/0-->
+<button
+  id="toggle"
+>
+  toggle
+</button>
+<!--M_*1 #button/3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      x: 1,
+      y: 1
+    }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
+      "__tests__/template.marko_0/yChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button0/#text0 "1" => "3"
-UPDATE html/body/button0/#text2 "1" => "3"
+UPDATE button0/#text0 "1" => "3"
+UPDATE button0/#text2 "1" => "3"
 ```
 
 # Render
@@ -89,46 +79,41 @@ UPDATE html/body/button0/#text2 "1" => "3"
 container.querySelector("#inc").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      id="inc"
-    >
-      5
-      <!--M_*1 #text/1-->
-      |
-      <!---->
-      5
-      <!--M_*1 #text/2-->
-    </button>
-    <!--M_*1 #button/0-->
-    <button
-      id="toggle"
-    >
-      toggle
-    </button>
-    <!--M_*1 #button/3-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          x: 1,
-          y: 1
-        }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
-          "__tests__/template.marko_0/yChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  id="inc"
+>
+  5
+  <!--M_*1 #text/1-->
+  |
+  <!---->
+  5
+  <!--M_*1 #text/2-->
+</button>
+<!--M_*1 #button/0-->
+<button
+  id="toggle"
+>
+  toggle
+</button>
+<!--M_*1 #button/3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      x: 1,
+      y: 1
+    }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
+      "__tests__/template.marko_0/yChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button0/#text0 "3" => "5"
-UPDATE html/body/button0/#text2 "3" => "5"
+UPDATE button0/#text0 "3" => "5"
+UPDATE button0/#text2 "3" => "5"
 ```
 
 # Render
@@ -136,40 +121,35 @@ UPDATE html/body/button0/#text2 "3" => "5"
 container.querySelector("#toggle").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      id="inc"
-    >
-      5
-      <!--M_*1 #text/1-->
-      |
-      <!---->
-      5
-      <!--M_*1 #text/2-->
-    </button>
-    <!--M_*1 #button/0-->
-    <button
-      id="toggle"
-    >
-      toggle
-    </button>
-    <!--M_*1 #button/3-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          x: 1,
-          y: 1
-        }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
-          "__tests__/template.marko_0/yChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  id="inc"
+>
+  5
+  <!--M_*1 #text/1-->
+  |
+  <!---->
+  5
+  <!--M_*1 #text/2-->
+</button>
+<!--M_*1 #button/0-->
+<button
+  id="toggle"
+>
+  toggle
+</button>
+<!--M_*1 #button/3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      x: 1,
+      y: 1
+    }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
+      "__tests__/template.marko_0/yChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -178,45 +158,40 @@ container.querySelector("#toggle").click();
 container.querySelector("#inc").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      id="inc"
-    >
-      5
-      <!--M_*1 #text/1-->
-      |
-      <!---->
-      6
-      <!--M_*1 #text/2-->
-    </button>
-    <!--M_*1 #button/0-->
-    <button
-      id="toggle"
-    >
-      toggle
-    </button>
-    <!--M_*1 #button/3-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          x: 1,
-          y: 1
-        }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
-          "__tests__/template.marko_0/yChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  id="inc"
+>
+  5
+  <!--M_*1 #text/1-->
+  |
+  <!---->
+  6
+  <!--M_*1 #text/2-->
+</button>
+<!--M_*1 #button/0-->
+<button
+  id="toggle"
+>
+  toggle
+</button>
+<!--M_*1 #button/3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      x: 1,
+      y: 1
+    }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
+      "__tests__/template.marko_0/yChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button0/#text2 "5" => "6"
+UPDATE button0/#text2 "5" => "6"
 ```
 
 # Render
@@ -224,43 +199,38 @@ UPDATE html/body/button0/#text2 "5" => "6"
 container.querySelector("#inc").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      id="inc"
-    >
-      5
-      <!--M_*1 #text/1-->
-      |
-      <!---->
-      7
-      <!--M_*1 #text/2-->
-    </button>
-    <!--M_*1 #button/0-->
-    <button
-      id="toggle"
-    >
-      toggle
-    </button>
-    <!--M_*1 #button/3-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          x: 1,
-          y: 1
-        }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
-          "__tests__/template.marko_0/yChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  id="inc"
+>
+  5
+  <!--M_*1 #text/1-->
+  |
+  <!---->
+  7
+  <!--M_*1 #text/2-->
+</button>
+<!--M_*1 #button/0-->
+<button
+  id="toggle"
+>
+  toggle
+</button>
+<!--M_*1 #button/3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      x: 1,
+      y: 1
+    }], _.a.yChange = _.a["TagVariableChange:y"] = _._[
+      "__tests__/template.marko_0/yChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1 __tests__/template.marko_0_y 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button0/#text2 "6" => "7"
+UPDATE button0/#text2 "6" => "7"
 ```

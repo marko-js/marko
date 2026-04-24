@@ -5,23 +5,18 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <div
-      bar="a d b"
-      class="c"
-      foo="acb"
-      nested="a c nested d b"
-    />
-  </body>
-</html>
+<div
+  bar="a d b"
+  class="c"
+  foo="acb"
+  nested="a c nested d b"
+/>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/div
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT div
 ```

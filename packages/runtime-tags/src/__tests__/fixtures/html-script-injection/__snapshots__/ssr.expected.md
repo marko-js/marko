@@ -5,21 +5,16 @@
 
 # Render End
 ```html
-<html>
-  <head>
-    <script>
-      var x = '\x3C/script&gt;'
-    </script>
-  </head>
-  <body />
-</html>
+<script>
+  var x = '\x3C/script&gt;'
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/head/script
-INSERT html/head/script/#text
-INSERT html/body
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT script
+INSERT script/#text
 ```

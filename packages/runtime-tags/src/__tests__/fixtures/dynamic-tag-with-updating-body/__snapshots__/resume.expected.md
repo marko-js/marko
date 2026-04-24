@@ -1,49 +1,44 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <!--M_[-->
-      <button
-        id="count"
-      >
-        0
-        <!--M_*4 #text/1-->
-      </button>
-      <!--M_*4 #button/0-->
-      <!--M_]2 #div/0 3-->
-    </div>
-    <!--M_'1 #text/0 2-->
-    <button
-      id="changeTag"
-    />
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          "ConditionalRenderer:#text/0": "div",
-          tagName: "div"
-        },
-        {
-          "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-        }, 1,
-        {
-          count: 0,
-          "#ClosestBranchId": 3
-        }]),
-        "__tests__/tags/counter.marko_0_count 4 __tests__/template.marko_0_tagName 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  <!--M_[-->
+  <button
+    id="count"
+  >
+    0
+    <!--M_*4 #text/1-->
+  </button>
+  <!--M_*4 #button/0-->
+  <!--M_]2 #div/0 3-->
+</div>
+<!--M_'1 #text/0 2-->
+<button
+  id="changeTag"
+/>
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      "ConditionalRenderer:#text/0": "div",
+      tagName: "div"
+    },
+    {
+      "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
+    }, 1,
+    {
+      count: 0,
+      "#ClosestBranchId": 3
+    }]),
+    "__tests__/tags/counter.marko_0_count 4 __tests__/template.marko_0_tagName 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/div/#text
+INSERT div/#text
 ```
 
 # Render
@@ -51,50 +46,45 @@ INSERT html/body/div/#text
 container.querySelector("#count").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <!--M_[-->
-      <button
-        id="count"
-      >
-        1
-        <!--M_*4 #text/1-->
-      </button>
-      <!--M_*4 #button/0-->
-      <!--M_]2 #div/0 3-->
-    </div>
-    <!--M_'1 #text/0 2-->
-    <button
-      id="changeTag"
-    />
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          "ConditionalRenderer:#text/0": "div",
-          tagName: "div"
-        },
-        {
-          "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-        }, 1,
-        {
-          count: 0,
-          "#ClosestBranchId": 3
-        }]),
-        "__tests__/tags/counter.marko_0_count 4 __tests__/template.marko_0_tagName 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  <!--M_[-->
+  <button
+    id="count"
+  >
+    1
+    <!--M_*4 #text/1-->
+  </button>
+  <!--M_*4 #button/0-->
+  <!--M_]2 #div/0 3-->
+</div>
+<!--M_'1 #text/0 2-->
+<button
+  id="changeTag"
+/>
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      "ConditionalRenderer:#text/0": "div",
+      tagName: "div"
+    },
+    {
+      "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
+    }, 1,
+    {
+      count: 0,
+      "#ClosestBranchId": 3
+    }]),
+    "__tests__/tags/counter.marko_0_count 4 __tests__/template.marko_0_tagName 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/div/button/#text "0" => "1"
+UPDATE div/button/#text "0" => "1"
 ```
 
 # Render
@@ -102,49 +92,44 @@ UPDATE html/body/div/button/#text "0" => "1"
 container.querySelector("#changeTag").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <span>
-      <button
-        id="count"
-      >
-        0
-      </button>
-    </span>
-    <!--M_'1 #text/0 2-->
-    <button
-      id="changeTag"
-    />
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          "ConditionalRenderer:#text/0": "div",
-          tagName: "div"
-        },
-        {
-          "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-        }, 1,
-        {
-          count: 0,
-          "#ClosestBranchId": 3
-        }]),
-        "__tests__/tags/counter.marko_0_count 4 __tests__/template.marko_0_tagName 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<span>
+  <button
+    id="count"
+  >
+    0
+  </button>
+</span>
+<!--M_'1 #text/0 2-->
+<button
+  id="changeTag"
+/>
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      "ConditionalRenderer:#text/0": "div",
+      tagName: "div"
+    },
+    {
+      "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
+    }, 1,
+    {
+      count: 0,
+      "#ClosestBranchId": 3
+    }]),
+    "__tests__/tags/counter.marko_0_count 4 __tests__/template.marko_0_tagName 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/span
-REMOVE div after html/body/span
-INSERT html/body/span/button
-UPDATE html/body/span/button/#text " " => "0"
+INSERT span
+REMOVE div after span
+INSERT span/button
+UPDATE span/button/#text " " => "0"
 ```
 
 # Render
@@ -152,44 +137,39 @@ UPDATE html/body/span/button/#text " " => "0"
 container.querySelector("#count").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <span>
-      <button
-        id="count"
-      >
-        1
-      </button>
-    </span>
-    <!--M_'1 #text/0 2-->
-    <button
-      id="changeTag"
-    />
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          "ConditionalRenderer:#text/0": "div",
-          tagName: "div"
-        },
-        {
-          "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-        }, 1,
-        {
-          count: 0,
-          "#ClosestBranchId": 3
-        }]),
-        "__tests__/tags/counter.marko_0_count 4 __tests__/template.marko_0_tagName 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<span>
+  <button
+    id="count"
+  >
+    1
+  </button>
+</span>
+<!--M_'1 #text/0 2-->
+<button
+  id="changeTag"
+/>
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      "ConditionalRenderer:#text/0": "div",
+      tagName: "div"
+    },
+    {
+      "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
+    }, 1,
+    {
+      count: 0,
+      "#ClosestBranchId": 3
+    }]),
+    "__tests__/tags/counter.marko_0_count 4 __tests__/template.marko_0_tagName 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/span/button/#text "0" => "1"
+UPDATE span/button/#text "0" => "1"
 ```

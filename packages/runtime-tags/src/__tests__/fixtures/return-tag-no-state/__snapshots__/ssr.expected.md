@@ -5,26 +5,21 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <span>
-      child
-    </span>
-    <div>
-      parent 1
-    </div>
-  </body>
-</html>
+<span>
+  child
+</span>
+<div>
+  parent 1
+</div>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/span
-INSERT html/body/span/#text
-INSERT html/body/div
-INSERT html/body/div/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT span
+INSERT span/#text
+INSERT div
+INSERT div/#text
 ```

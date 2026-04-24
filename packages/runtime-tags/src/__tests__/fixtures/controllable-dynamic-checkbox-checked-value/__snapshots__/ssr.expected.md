@@ -5,75 +5,70 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <input
-      checked=""
-      type="radio"
-      value="a"
-    />
-    <!--M_*1 #input/0-->
-    <input
-      type="radio"
-      value="b"
-    />
-    <!--M_*2 #input/0-->
-    <!--M_|1 #text/1 2-->
-    <input
-      type="radio"
-      value="c"
-    />
-    <!--M_*1 #input/2-->
-    <span>
-      a
-      <!--M_*1 #text/3-->
-    </span>
-    <button>
-      Toggle
-    </button>
-    <!--M_*1 #button/4-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.c = [0, _.a = {
-          "ControlledType:#input/0": 1,
-          "ControlledType:#input/2": 1,
-          show: !0,
-          checkedValue: "a"
-        }, _.b = {
-          "ControlledType:#input/0": 1,
-          _: _.a
-        }], _.a["ControlledHandler:#input/0"] = _.a[
-          "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _.b[
-          "ControlledHandler:#input/0"] = _._[
-          "__tests__/template.marko_0/checkedValueChange2"
-          ](_.a), _.c),
-        "__tests__/template.marko_1 2 __tests__/template.marko_0_show 1 __tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<input
+  checked=""
+  type="radio"
+  value="a"
+/>
+<!--M_*1 #input/0-->
+<input
+  type="radio"
+  value="b"
+/>
+<!--M_*2 #input/0-->
+<!--M_|1 #text/1 2-->
+<input
+  type="radio"
+  value="c"
+/>
+<!--M_*1 #input/2-->
+<span>
+  a
+  <!--M_*1 #text/3-->
+</span>
+<button>
+  Toggle
+</button>
+<!--M_*1 #button/4-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.c = [0, _.a = {
+      "ControlledType:#input/0": 1,
+      "ControlledType:#input/2": 1,
+      show: !0,
+      checkedValue: "a"
+    }, _.b = {
+      "ControlledType:#input/0": 1,
+      _: _.a
+    }], _.a["ControlledHandler:#input/0"] = _.a[
+      "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _.b[
+      "ControlledHandler:#input/0"] = _._[
+      "__tests__/template.marko_0/checkedValueChange2"
+      ](_.a), _.c),
+    "__tests__/template.marko_1 2 __tests__/template.marko_0_show 1 __tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/input0
-INSERT html/body/#comment0
-INSERT html/body/input1
-INSERT html/body/#comment1
-INSERT html/body/#comment2
-INSERT html/body/input2
-INSERT html/body/#comment3
-INSERT html/body/span
-INSERT html/body/span/#text
-INSERT html/body/span/#comment
-INSERT html/body/button
-INSERT html/body/button/#text
-INSERT html/body/#comment4
-INSERT html/body/script
-INSERT html/body/script/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT input0
+INSERT #comment0
+INSERT input1
+INSERT #comment1
+INSERT #comment2
+INSERT input2
+INSERT #comment3
+INSERT span
+INSERT span/#text
+INSERT span/#comment
+INSERT button
+INSERT button/#text
+INSERT #comment4
+INSERT script
+INSERT script/#text
 ```

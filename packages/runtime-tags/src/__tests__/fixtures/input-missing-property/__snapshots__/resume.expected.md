@@ -1,28 +1,23 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <button>
-      0
-      <!--M_*1 #text/1-->
-    </button>
-    <!--M_*1 #button/0-->
-    <!--M_[-->
-    <!--M_]2 #text/0-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-        {
-          count: 0,
-          "#childScope/2": _.a = {}
-        }, _.a]),
-        "__tests__/template.marko_0_count 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button>
+  0
+  <!--M_*1 #text/1-->
+</button>
+<!--M_*1 #button/0-->
+<!--M_[-->
+<!--M_]2 #text/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0,
+    {
+      count: 0,
+      "#childScope/2": _.a = {}
+    }, _.a]),
+    "__tests__/template.marko_0_count 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -31,43 +26,38 @@
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button>
-      1
-      <!--M_*1 #text/1-->
-    </button>
-    <!--M_*1 #button/0-->
-    <!--M_[-->
-    <!---->
-    <div>
-      Fallback
-    </div>
-    <!---->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-        {
-          count: 0,
-          "#childScope/2": _.a = {}
-        }, _.a]),
-        "__tests__/template.marko_0_count 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button>
+  1
+  <!--M_*1 #text/1-->
+</button>
+<!--M_*1 #button/0-->
+<!--M_[-->
+<!---->
+<div>
+  Fallback
+</div>
+<!---->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0,
+    {
+      count: 0,
+      "#childScope/2": _.a = {}
+    }, _.a]),
+    "__tests__/template.marko_0_count 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button/#text "0" => "1"
-INSERT html/body/#comment2, #text, html/body/#comment3
-REMOVE #comment after html/body/#comment3
-INSERT html/body/div
-REMOVE #text after html/body/div
-UPDATE html/body/div/#text " " => "Fallback"
+UPDATE button/#text "0" => "1"
+INSERT #comment2, #text, #comment3
+REMOVE #comment after #comment3
+INSERT div
+REMOVE #text after div
+UPDATE div/#text " " => "Fallback"
 ```
 
 # Render
@@ -75,38 +65,33 @@ UPDATE html/body/div/#text " " => "Fallback"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button>
-      2
-      <!--M_*1 #text/1-->
-    </button>
-    <!--M_*1 #button/0-->
-    <!--M_[-->
-    <!---->
-    <div>
-      Fallback
-    </div>
-    <!---->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-        {
-          count: 0,
-          "#childScope/2": _.a = {}
-        }, _.a]),
-        "__tests__/template.marko_0_count 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button>
+  2
+  <!--M_*1 #text/1-->
+</button>
+<!--M_*1 #button/0-->
+<!--M_[-->
+<!---->
+<div>
+  Fallback
+</div>
+<!---->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0,
+    {
+      count: 0,
+      "#childScope/2": _.a = {}
+    }, _.a]),
+    "__tests__/template.marko_0_count 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button/#text "1" => "2"
+UPDATE button/#text "1" => "2"
 ```
 
 # Render
@@ -114,36 +99,31 @@ UPDATE html/body/button/#text "1" => "2"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button>
-      3
-      <!--M_*1 #text/1-->
-    </button>
-    <!--M_*1 #button/0-->
-    <!--M_[-->
-    <!---->
-    <div>
-      Fallback
-    </div>
-    <!---->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-        {
-          count: 0,
-          "#childScope/2": _.a = {}
-        }, _.a]),
-        "__tests__/template.marko_0_count 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button>
+  3
+  <!--M_*1 #text/1-->
+</button>
+<!--M_*1 #button/0-->
+<!--M_[-->
+<!---->
+<div>
+  Fallback
+</div>
+<!---->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0,
+    {
+      count: 0,
+      "#childScope/2": _.a = {}
+    }, _.a]),
+    "__tests__/template.marko_0_count 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button/#text "2" => "3"
+UPDATE button/#text "2" => "3"
 ```

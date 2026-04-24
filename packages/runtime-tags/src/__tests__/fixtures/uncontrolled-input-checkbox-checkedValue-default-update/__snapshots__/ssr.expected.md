@@ -5,57 +5,52 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <input
-      checked=""
-      type="checkbox"
-      value="a"
-    />
-    <input
-      type="checkbox"
-      value="b"
-    />
-    <input
-      type="checkbox"
-      value="b"
-    />
-    <!--M_*1 #input/2-->
-    <input
-      type="checkbox"
-      value="b"
-    />
-    <!--M_*1 #input/3-->
-    <button>
-      Update
-    </button>
-    <!--M_*1 #button/4-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0]),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<input
+  checked=""
+  type="checkbox"
+  value="a"
+/>
+<input
+  type="checkbox"
+  value="b"
+/>
+<input
+  type="checkbox"
+  value="b"
+/>
+<!--M_*1 #input/2-->
+<input
+  type="checkbox"
+  value="b"
+/>
+<!--M_*1 #input/3-->
+<button>
+  Update
+</button>
+<!--M_*1 #button/4-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0]),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/input0
-INSERT html/body/input1
-INSERT html/body/input2
-INSERT html/body/#comment0
-INSERT html/body/input3
-INSERT html/body/#comment1
-INSERT html/body/button
-INSERT html/body/button/#text
-INSERT html/body/#comment2
-INSERT html/body/script
-INSERT html/body/script/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT input0
+INSERT input1
+INSERT input2
+INSERT #comment0
+INSERT input3
+INSERT #comment1
+INSERT button
+INSERT button/#text
+INSERT #comment2
+INSERT script
+INSERT script/#text
 ```

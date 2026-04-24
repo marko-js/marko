@@ -6,50 +6,45 @@
 # Render End
 ```html
 <!--M_[-->
-<html>
-  <head />
-  <body>
-    <div>
-      Child 1 has 
-      <!---->
-      3
-      <!--M_*2 #text/0-->
-    </div>
-    <!--M_]1 #text/0 2-->
-    <button />
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          "ConditionalRenderer:#text/0": "__tests__/tags/child1.marko",
-          tagName: _._[
-            "__tests__/tags/child1.marko"
-            ],
-          val: 3
-        }]),
-        "__tests__/template.marko_0_tagName 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  Child 1 has 
+  <!---->
+  3
+  <!--M_*2 #text/0-->
+</div>
+<!--M_]1 #text/0 2-->
+<button />
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      "ConditionalRenderer:#text/0": "__tests__/tags/child1.marko",
+      tagName: _._[
+        "__tests__/tags/child1.marko"
+        ],
+      val: 3
+    }]),
+    "__tests__/template.marko_0_tagName 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT #comment
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/div
-INSERT html/body/div/#text0
-INSERT html/body/div/#comment0
-INSERT html/body/div/#text1
-INSERT html/body/div/#comment1
-INSERT html/body/#comment0
-INSERT html/body/button
-INSERT html/body/#comment1
-INSERT html/body/script
-INSERT html/body/script/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT #comment0
+INSERT div
+INSERT div/#text0
+INSERT div/#comment0
+INSERT div/#text1
+INSERT div/#comment1
+INSERT #comment1
+INSERT button
+INSERT #comment2
+INSERT script
+INSERT script/#text
 ```

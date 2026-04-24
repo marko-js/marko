@@ -5,50 +5,45 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      class="inc"
-    >
-      1
-      <!--M_*2 #text/1-->
-    </button>
-    <!--M_*2 #button/0-->
-    <div>
-      1
-      <!--M_*1 #text/2-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.c = {
-          "#scopeOffset/1": 3,
-          "#childScope/0": _.a = {
-            x: 1
-          }
-        }, _.a], _.a["#TagVariable"] = _._[
-          "__tests__/template.marko_0_data/var"
-          ](_.c), _.b),
-        "__tests__/tags/child.marko_0_x 2"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  class="inc"
+>
+  1
+  <!--M_*2 #text/1-->
+</button>
+<!--M_*2 #button/0-->
+<div>
+  1
+  <!--M_*1 #text/2-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.c = {
+      "#scopeOffset/1": 3,
+      "#childScope/0": _.a = {
+        x: 1
+      }
+    }, _.a], _.a["#TagVariable"] = _._[
+      "__tests__/template.marko_0_data/var"
+      ](_.c), _.b),
+    "__tests__/tags/child.marko_0_x 2"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/button
-INSERT html/body/button/#text
-INSERT html/body/button/#comment
-INSERT html/body/#comment
-INSERT html/body/div
-INSERT html/body/div/#text
-INSERT html/body/div/#comment
-INSERT html/body/script
-INSERT html/body/script/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT button
+INSERT button/#text
+INSERT button/#comment
+INSERT #comment
+INSERT div
+INSERT div/#text
+INSERT div/#comment
+INSERT script
+INSERT script/#text
 ```

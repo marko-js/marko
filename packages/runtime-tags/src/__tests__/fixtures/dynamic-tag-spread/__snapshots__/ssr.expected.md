@@ -5,37 +5,32 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <div
-        id="foo"
-      >
-        hi
-      </div>
-    </div>
-    <div>
-      <div
-        data-foo="bar"
-        id="foo"
-      >
-        hi
-      </div>
-    </div>
-  </body>
-</html>
+<div>
+  <div
+    id="foo"
+  >
+    hi
+  </div>
+</div>
+<div>
+  <div
+    data-foo="bar"
+    id="foo"
+  >
+    hi
+  </div>
+</div>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/div0
-INSERT html/body/div0/div
-INSERT html/body/div0/div/#text
-INSERT html/body/div1
-INSERT html/body/div1/div
-INSERT html/body/div1/div/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT div0
+INSERT div0/div
+INSERT div0/div/#text
+INSERT div1
+INSERT div1/div
+INSERT div1/div/#text
 ```

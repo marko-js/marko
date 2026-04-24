@@ -1,57 +1,47 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <!--M_[-->
-      <!--M_]1 #text/0-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0]),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  <!--M_[-->
+  <!--M_]1 #text/0-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0]),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
 # Render ASYNC
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <!--M_[-->
-      <!---->
-      <!---->
-      <!---->
-      <div>
-        123
-      </div>
-      <!---->
-      <!---->
-      <!---->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0]),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  <!--M_[-->
+  <!---->
+  <!---->
+  <!---->
+  <div>
+    123
+  </div>
+  <!---->
+  <!---->
+  <!---->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0]),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/div/#comment1, html/body/div/#comment2, html/body/div/#comment3, #text, html/body/div/#comment4, html/body/div/#comment5, html/body/div/#comment6
-REMOVE #comment after html/body/div/#comment6
-INSERT html/body/div/div
-REMOVE #text after html/body/div/div
-UPDATE html/body/div/div/#text " " => "123"
+INSERT div/#comment1, div/#comment2, div/#comment3, #text, div/#comment4, div/#comment5, div/#comment6
+REMOVE #comment after div/#comment6
+INSERT div/div
+REMOVE #text after div/div
+UPDATE div/div/#text " " => "123"
 ```

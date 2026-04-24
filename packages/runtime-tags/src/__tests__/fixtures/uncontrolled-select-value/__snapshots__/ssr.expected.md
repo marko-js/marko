@@ -5,41 +5,36 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <select>
-      <option
-        value="a"
-      >
-        A
-      </option>
-      <option
-        selected=""
-        value="b"
-      >
-        B
-      </option>
-      <option
-        value="c"
-      >
-        C
-      </option>
-    </select>
-  </body>
-</html>
+<select>
+  <option
+    value="a"
+  >
+    A
+  </option>
+  <option
+    selected=""
+    value="b"
+  >
+    B
+  </option>
+  <option
+    value="c"
+  >
+    C
+  </option>
+</select>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/select
-INSERT html/body/select/option0
-INSERT html/body/select/option0/#text
-INSERT html/body/select/option1
-INSERT html/body/select/option1/#text
-INSERT html/body/select/option2
-INSERT html/body/select/option2/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT select
+INSERT select/option0
+INSERT select/option0/#text
+INSERT select/option1
+INSERT select/option1/#text
+INSERT select/option2
+INSERT select/option2/#text
 ```

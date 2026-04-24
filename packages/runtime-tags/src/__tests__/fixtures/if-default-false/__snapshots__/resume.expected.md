@@ -1,24 +1,19 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <button />
-    <!--M_*1 #button/0-->
-    <!--M_[-->
-    <!--M_]1 #text/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          show: !1
-        }]),
-        "__tests__/template.marko_0_show 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button />
+<!--M_*1 #button/0-->
+<!--M_[-->
+<!--M_]1 #text/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      show: !1
+    }]),
+    "__tests__/template.marko_0_show 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -27,31 +22,26 @@
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button />
-    <!--M_*1 #button/0-->
-    <!--M_[-->
-    hi
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          show: !1
-        }]),
-        "__tests__/template.marko_0_show 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button />
+<!--M_*1 #button/0-->
+<!--M_[-->
+hi
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      show: !1
+    }]),
+    "__tests__/template.marko_0_show 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/#text
-REMOVE #comment after html/body/#text
+INSERT #text
+REMOVE #comment after #text
 ```
 
 # Render
@@ -59,31 +49,26 @@ REMOVE #comment after html/body/#text
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button />
-    <!--M_*1 #button/0-->
-    <!--M_[-->
-    <!--M_]1 #text/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          show: !1
-        }]),
-        "__tests__/template.marko_0_show 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button />
+<!--M_*1 #button/0-->
+<!--M_[-->
+<!--M_]1 #text/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      show: !1
+    }]),
+    "__tests__/template.marko_0_show 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/#comment2
-REMOVE #text after html/body/#comment2
+INSERT #comment2
+REMOVE #text after #comment2
 ```
 
 # Render
@@ -91,29 +76,24 @@ REMOVE #text after html/body/#comment2
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button />
-    <!--M_*1 #button/0-->
-    <!--M_[-->
-    hi
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          show: !1
-        }]),
-        "__tests__/template.marko_0_show 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button />
+<!--M_*1 #button/0-->
+<!--M_[-->
+hi
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      show: !1
+    }]),
+    "__tests__/template.marko_0_show 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/#text
-REMOVE #comment after html/body/#text
+INSERT #text
+REMOVE #comment after #text
 ```

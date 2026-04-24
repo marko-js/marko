@@ -1,11 +1,6 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      &lt;div&gt;
-    </div>
-  </body>
-</html>
+<div>
+  &lt;div&gt;
+</div>
 ```

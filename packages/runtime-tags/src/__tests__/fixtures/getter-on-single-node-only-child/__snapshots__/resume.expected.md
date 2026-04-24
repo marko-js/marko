@@ -1,40 +1,35 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <button />
-    <!--M_*1 #button/0-->
-    <ul
-      class="attached"
-    >
-      <li>
-        0
-        <!--M_*2 #text/0-->
-      </li>
-      <li>
-        1
-        <!--M_*3 #text/0-->
-      </li>
-      <!--M_}1 #ul/1 3 2-->
-    </ul>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          items: [0, 1]
-        }]),
-        "__tests__/template.marko_0 1 __tests__/template.marko_0_items 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button />
+<!--M_*1 #button/0-->
+<ul
+  class="attached"
+>
+  <li>
+    0
+    <!--M_*2 #text/0-->
+  </li>
+  <li>
+    1
+    <!--M_*3 #text/0-->
+  </li>
+  <!--M_}1 #ul/1 3 2-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      items: [0, 1]
+    }]),
+    "__tests__/template.marko_0 1 __tests__/template.marko_0_items 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/ul[class] null => "attached"
+UPDATE ul[class] null => "attached"
 ```
 
 # Render
@@ -42,44 +37,39 @@ UPDATE html/body/ul[class] null => "attached"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button />
-    <!--M_*1 #button/0-->
-    <ul
-      class="attached"
-    >
-      <li>
-        0
-        <!--M_*2 #text/0-->
-      </li>
-      <li>
-        1
-        <!--M_*3 #text/0-->
-      </li>
-      <!--M_}1 #ul/1 3 2-->
-      <li>
-        2
-      </li>
-    </ul>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          items: [0, 1]
-        }]),
-        "__tests__/template.marko_0 1 __tests__/template.marko_0_items 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button />
+<!--M_*1 #button/0-->
+<ul
+  class="attached"
+>
+  <li>
+    0
+    <!--M_*2 #text/0-->
+  </li>
+  <li>
+    1
+    <!--M_*3 #text/0-->
+  </li>
+  <!--M_}1 #ul/1 3 2-->
+  <li>
+    2
+  </li>
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      items: [0, 1]
+    }]),
+    "__tests__/template.marko_0 1 __tests__/template.marko_0_items 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/ul/li2
+INSERT ul/li2
 ```
 
 # Render
@@ -87,47 +77,42 @@ INSERT html/body/ul/li2
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button />
-    <!--M_*1 #button/0-->
-    <ul
-      class="attached"
-    >
-      <li>
-        0
-        <!--M_*2 #text/0-->
-      </li>
-      <li>
-        1
-        <!--M_*3 #text/0-->
-      </li>
-      <!--M_}1 #ul/1 3 2-->
-      <li>
-        2
-      </li>
-      <li>
-        3
-      </li>
-    </ul>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          items: [0, 1]
-        }]),
-        "__tests__/template.marko_0 1 __tests__/template.marko_0_items 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button />
+<!--M_*1 #button/0-->
+<ul
+  class="attached"
+>
+  <li>
+    0
+    <!--M_*2 #text/0-->
+  </li>
+  <li>
+    1
+    <!--M_*3 #text/0-->
+  </li>
+  <!--M_}1 #ul/1 3 2-->
+  <li>
+    2
+  </li>
+  <li>
+    3
+  </li>
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      items: [0, 1]
+    }]),
+    "__tests__/template.marko_0 1 __tests__/template.marko_0_items 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/ul/li3
+INSERT ul/li3
 ```
 
 # Render
@@ -135,48 +120,43 @@ INSERT html/body/ul/li3
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button />
-    <!--M_*1 #button/0-->
-    <ul
-      class="attached"
-    >
-      <li>
-        0
-        <!--M_*2 #text/0-->
-      </li>
-      <li>
-        1
-        <!--M_*3 #text/0-->
-      </li>
-      <!--M_}1 #ul/1 3 2-->
-      <li>
-        2
-      </li>
-      <li>
-        3
-      </li>
-      <li>
-        4
-      </li>
-    </ul>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          items: [0, 1]
-        }]),
-        "__tests__/template.marko_0 1 __tests__/template.marko_0_items 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button />
+<!--M_*1 #button/0-->
+<ul
+  class="attached"
+>
+  <li>
+    0
+    <!--M_*2 #text/0-->
+  </li>
+  <li>
+    1
+    <!--M_*3 #text/0-->
+  </li>
+  <!--M_}1 #ul/1 3 2-->
+  <li>
+    2
+  </li>
+  <li>
+    3
+  </li>
+  <li>
+    4
+  </li>
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      items: [0, 1]
+    }]),
+    "__tests__/template.marko_0 1 __tests__/template.marko_0_items 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/ul/li4
+INSERT ul/li4
 ```

@@ -6,69 +6,64 @@
 # Render End
 ```html
 <!--M#_0-->
-<html>
-  <head />
-  <body>
-    <button
-      id="class-api"
-    >
-      0
-    </button>
-    <!--M/-->
-    <div
-      id="tags-api"
-    >
-      0
-      <!--M_*1 #text/1-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-      {},
+<button
+  id="class-api"
+>
+  0
+</button>
+<!--M/-->
+<div
+  id="tags-api"
+>
+  0
+  <!--M_*1 #text/1-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+  {},
+  {
+    m5c: "_0",
+    m5i:
+    {}
+  }]), _ =&gt; (_.c = [-2, _.b = _.a[1]])];
+  M._.w();
+  $MC = (window.$MC || []).concat(
+  {
+    "p": "_",
+    "w": [
+      ["_0", 0, 2,
       {
-        m5c: "_0",
-        m5i:
-        {}
-      }]), _ =&gt; (_.c = [-2, _.b = _.a[1]])];
-      M._.w();
-      $MC = (window.$MC || []).concat(
-      {
-        "p": "_",
-        "w": [
-          ["_0", 0, 2,
-          {
-            "e": [
-              ["count", [
-                "__tests__/template.marko_0/onCount",
-                1
-              ]]
-            ],
-            "f": 1
-          }]
+        "e": [
+          ["count", [
+            "__tests__/template.marko_0/onCount",
+            1
+          ]]
         ],
-        "t": [
-          "__tests__/components/class-counter.marko"
-        ]
-      });
-      M._.r.push("$compat_setScope 2");
-      M._.w()
-    </script>
-  </body>
-</html>
+        "f": 1
+      }]
+    ],
+    "t": [
+      "__tests__/components/class-counter.marko"
+    ]
+  });
+  M._.r.push("$compat_setScope 2");
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT #comment
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/button
-INSERT html/body/button/#text
-INSERT html/body/#comment
-INSERT html/body/div
-INSERT html/body/div/#text
-INSERT html/body/div/#comment
-INSERT html/body/script
-INSERT html/body/script/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT #comment0
+INSERT button
+INSERT button/#text
+INSERT #comment1
+INSERT div
+INSERT div/#text
+INSERT div/#comment
+INSERT script
+INSERT script/#text
 ```

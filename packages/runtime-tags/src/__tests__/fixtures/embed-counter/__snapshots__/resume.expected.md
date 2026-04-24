@@ -1,35 +1,30 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <button>
-        0
-        <!--Membedded*1 #text/1-->
-      </button>
-      <!--Membedded*1 #button/0-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("embedded");
-      (M.embedded.b = {})[
-        "__tests__/template.marko"
-        ] = 1;
-      M.embedded.r = [_ =&gt; (_.a = [0,
-        {
-          clickCount: 0
-        }]),
-        "__tests__/template.marko_0_clickCount 1"
-      ];
-      M.embedded.w()
-    </script>
-  </body>
-</html>
+<div>
+  <button>
+    0
+    <!--Membedded*1 #text/1-->
+  </button>
+  <!--Membedded*1 #button/0-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("embedded");
+  (M.embedded.b = {})[
+    "__tests__/template.marko"
+    ] = 1;
+  M.embedded.r = [_ =&gt; (_.a = [0,
+    {
+      clickCount: 0
+    }]),
+    "__tests__/template.marko_0_clickCount 1"
+  ];
+  M.embedded.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/div/#text
+INSERT div/#text
 ```
 
 # Render
@@ -37,36 +32,31 @@ INSERT html/body/div/#text
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <button>
-        1
-        <!--Membedded*1 #text/1-->
-      </button>
-      <!--Membedded*1 #button/0-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("embedded");
-      (M.embedded.b = {})[
-        "__tests__/template.marko"
-        ] = 1;
-      M.embedded.r = [_ =&gt; (_.a = [0,
-        {
-          clickCount: 0
-        }]),
-        "__tests__/template.marko_0_clickCount 1"
-      ];
-      M.embedded.w()
-    </script>
-  </body>
-</html>
+<div>
+  <button>
+    1
+    <!--Membedded*1 #text/1-->
+  </button>
+  <!--Membedded*1 #button/0-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("embedded");
+  (M.embedded.b = {})[
+    "__tests__/template.marko"
+    ] = 1;
+  M.embedded.r = [_ =&gt; (_.a = [0,
+    {
+      clickCount: 0
+    }]),
+    "__tests__/template.marko_0_clickCount 1"
+  ];
+  M.embedded.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/div/button/#text "0" => "1"
+UPDATE div/button/#text "0" => "1"
 ```
 
 # Render
@@ -74,36 +64,31 @@ UPDATE html/body/div/button/#text "0" => "1"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <button>
-        2
-        <!--Membedded*1 #text/1-->
-      </button>
-      <!--Membedded*1 #button/0-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("embedded");
-      (M.embedded.b = {})[
-        "__tests__/template.marko"
-        ] = 1;
-      M.embedded.r = [_ =&gt; (_.a = [0,
-        {
-          clickCount: 0
-        }]),
-        "__tests__/template.marko_0_clickCount 1"
-      ];
-      M.embedded.w()
-    </script>
-  </body>
-</html>
+<div>
+  <button>
+    2
+    <!--Membedded*1 #text/1-->
+  </button>
+  <!--Membedded*1 #button/0-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("embedded");
+  (M.embedded.b = {})[
+    "__tests__/template.marko"
+    ] = 1;
+  M.embedded.r = [_ =&gt; (_.a = [0,
+    {
+      clickCount: 0
+    }]),
+    "__tests__/template.marko_0_clickCount 1"
+  ];
+  M.embedded.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/div/button/#text "1" => "2"
+UPDATE div/button/#text "1" => "2"
 ```
 
 # Render
@@ -111,34 +96,29 @@ UPDATE html/body/div/button/#text "1" => "2"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <button>
-        3
-        <!--Membedded*1 #text/1-->
-      </button>
-      <!--Membedded*1 #button/0-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("embedded");
-      (M.embedded.b = {})[
-        "__tests__/template.marko"
-        ] = 1;
-      M.embedded.r = [_ =&gt; (_.a = [0,
-        {
-          clickCount: 0
-        }]),
-        "__tests__/template.marko_0_clickCount 1"
-      ];
-      M.embedded.w()
-    </script>
-  </body>
-</html>
+<div>
+  <button>
+    3
+    <!--Membedded*1 #text/1-->
+  </button>
+  <!--Membedded*1 #button/0-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("embedded");
+  (M.embedded.b = {})[
+    "__tests__/template.marko"
+    ] = 1;
+  M.embedded.r = [_ =&gt; (_.a = [0,
+    {
+      clickCount: 0
+    }]),
+    "__tests__/template.marko_0_clickCount 1"
+  ];
+  M.embedded.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/div/button/#text "2" => "3"
+UPDATE div/button/#text "2" => "3"
 ```

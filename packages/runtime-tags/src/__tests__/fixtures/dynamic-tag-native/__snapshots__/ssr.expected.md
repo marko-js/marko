@@ -5,23 +5,18 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <p
-      class="par"
-    >
-      paragraph
-    </p>
-  </body>
-</html>
+<p
+  class="par"
+>
+  paragraph
+</p>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/p
-INSERT html/body/p/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT p
+INSERT p/#text
 ```

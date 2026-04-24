@@ -1,32 +1,25 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <!--M_[-->
-    Body Content
-    <!--M_]1 #text/0 2-->
-    <button />
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          x: null
-        }]),
-        "__tests__/template.marko_0_x 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<!--M_[-->
+Body Content
+<!--M_]1 #text/0 2-->
+<button />
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      x: null
+    }]),
+    "__tests__/template.marko_0_x 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-REMOVE html/body/#comment0 before html
-INSERT html/body/#comment0
-INSERT html/body/#text1
+INSERT #text1
 ```
 
 # Render
@@ -34,36 +27,31 @@ INSERT html/body/#text1
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      Body Content
-    </div>
-    <!--M_]1 #text/0 2-->
-    <button />
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          x: null
-        }]),
-        "__tests__/template.marko_0_x 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  Body Content
+</div>
+<!--M_]1 #text/0 2-->
+<button />
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      x: null
+    }]),
+    "__tests__/template.marko_0_x 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/div
-REMOVE #comment after html/body/div
-REMOVE #text after html/body/div
-REMOVE #text after html/body/div
-INSERT html/body/div/#text
+INSERT div
+REMOVE #comment after div
+REMOVE #text after div
+REMOVE #text after div
+INSERT div/#text
 ```
 
 # Render
@@ -71,29 +59,24 @@ INSERT html/body/div/#text
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    Body Content
-    <!--M_]1 #text/0 2-->
-    <button />
-    <!--M_*1 #button/1-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          x: null
-        }]),
-        "__tests__/template.marko_0_x 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+Body Content
+<!--M_]1 #text/0 2-->
+<button />
+<!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      x: null
+    }]),
+    "__tests__/template.marko_0_x 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html/body/#text
-REMOVE div after html/body/#text
+INSERT #text
+REMOVE div after #text
 ```

@@ -5,31 +5,26 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      1` 
-      <span>
-        child`"'
-      </span>
-      <span>
-        ${value}
-      </span>
-    </div>
-  </body>
-</html>
+<div>
+  1` 
+  <span>
+    child`"'
+  </span>
+  <span>
+    ${value}
+  </span>
+</div>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/div
-INSERT html/body/div/#text
-INSERT html/body/div/span0
-INSERT html/body/div/span0/#text
-INSERT html/body/div/span1
-INSERT html/body/div/span1/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT div
+INSERT div/#text
+INSERT div/span0
+INSERT div/span0/#text
+INSERT div/span1
+INSERT div/span1/#text
 ```

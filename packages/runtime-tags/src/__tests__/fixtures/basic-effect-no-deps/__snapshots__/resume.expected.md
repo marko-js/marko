@@ -1,7 +1,10 @@
 # Render
 ```html
 <html>
-  <head>
+  <head />
+  <body
+    class="no-deps"
+  >
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [
@@ -9,10 +12,7 @@
       ];
       M._.w()
     </script>
-  </head>
-  <body
-    class="no-deps"
-  />
+  </body>
 </html>
 ```
 

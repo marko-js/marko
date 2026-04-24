@@ -5,18 +5,13 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    Hello John & Suzy Invalid Entity: &b ; Valid Numeric Entity: " Valid Hexadecimal Entity: ¢
-  </body>
-</html>
+Hello John & Suzy Invalid Entity: &b ; Valid Numeric Entity: " Valid Hexadecimal Entity: ¢
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT #text
 ```

@@ -1,9 +1,4 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    012345
-  </body>
-</html>
+012345
 ```

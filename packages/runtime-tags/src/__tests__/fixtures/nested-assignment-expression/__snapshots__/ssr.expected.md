@@ -5,55 +5,50 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <button>
-      0
-      <!--M_*1 #text/1-->
-    </button>
-    <!--M_*1 #button/0-->
-    used to be 
-    <span>
-      0
-      <!--M_*1 #text/2-->
-    </span>
-     which should be the same as 
-    <span>
-      0
-      <!--M_*1 #text/3-->
-    </span>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          clickCount: 0
-        }]),
-        "__tests__/template.marko_0_clickCount 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button>
+  0
+  <!--M_*1 #text/1-->
+</button>
+<!--M_*1 #button/0-->
+used to be
+<span>
+  0
+  <!--M_*1 #text/2-->
+</span>
+which should be the same as
+<span>
+  0
+  <!--M_*1 #text/3-->
+</span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      clickCount: 0
+    }]),
+    "__tests__/template.marko_0_clickCount 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/button
-INSERT html/body/button/#text
-INSERT html/body/button/#comment
-INSERT html/body/#comment
-INSERT html/body/#text0
-INSERT html/body/span0
-INSERT html/body/span0/#text
-INSERT html/body/span0/#comment
-INSERT html/body/#text1
-INSERT html/body/span1
-INSERT html/body/span1/#text
-INSERT html/body/span1/#comment
-INSERT html/body/script
-INSERT html/body/script/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT button
+INSERT button/#text
+INSERT button/#comment
+INSERT #comment
+INSERT #text0
+INSERT span0
+INSERT span0/#text
+INSERT span0/#comment
+INSERT #text1
+INSERT span1
+INSERT span1/#text
+INSERT span1/#comment
+INSERT script
+INSERT script/#text
 ```

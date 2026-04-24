@@ -5,42 +5,37 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <dialog />
-    <dialog />
-    <!--M_*1 #dialog/0-->
-    <dialog />
-    <!--M_*1 #dialog/1-->
-    <button>
-      Update
-    </button>
-    <!--M_*1 #button/2-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0]),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<dialog />
+<dialog />
+<!--M_*1 #dialog/0-->
+<dialog />
+<!--M_*1 #dialog/1-->
+<button>
+  Update
+</button>
+<!--M_*1 #button/2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0]),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/dialog0
-INSERT html/body/dialog1
-INSERT html/body/#comment0
-INSERT html/body/dialog2
-INSERT html/body/#comment1
-INSERT html/body/button
-INSERT html/body/button/#text
-INSERT html/body/#comment2
-INSERT html/body/script
-INSERT html/body/script/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT dialog0
+INSERT dialog1
+INSERT #comment0
+INSERT dialog2
+INSERT #comment1
+INSERT button
+INSERT button/#text
+INSERT #comment2
+INSERT script
+INSERT script/#text
 ```

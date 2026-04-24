@@ -20,63 +20,43 @@
 
 # Render ASYNC
 ```html
-<html>
-  <head />
-  <body>
-    a
-  </body>
-</html>
+a
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT #text
 ```
 
 # Render ASYNC
 ```html
-<html>
-  <head />
-  <body>
-    ab
-  </body>
-</html>
+ab
 ```
 
 # Mutations
 ```
-INSERT html/body/#text1
+INSERT #text1
 ```
 
 # Render ASYNC
 ```html
-<html>
-  <head />
-  <body>
-    abc
-  </body>
-</html>
+abc
 ```
 
 # Mutations
 ```
-INSERT html/body/#text2
+INSERT #text2
 ```
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    abcdefghijklm
-  </body>
-</html>
+abcdefghijklm
 ```
 
 # Mutations
 ```
-INSERT html/body/#text3
+INSERT #text3
 ```

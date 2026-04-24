@@ -1,27 +1,22 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      class="a b c"
-    >
-      0
-      <!--M_*1 #text/1-->
-    </button>
-    <!--M_*1 #button/0-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          count: 0
-        }]),
-        "__tests__/template.marko_0_count 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  class="a b c"
+>
+  0
+  <!--M_*1 #text/1-->
+</button>
+<!--M_*1 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      count: 0
+    }]),
+    "__tests__/template.marko_0_count 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -30,34 +25,29 @@
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      class="a b c d e f"
-    >
-      1
-      <!--M_*1 #text/1-->
-    </button>
-    <!--M_*1 #button/0-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          count: 0
-        }]),
-        "__tests__/template.marko_0_count 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  class="a b c d e f"
+>
+  1
+  <!--M_*1 #text/1-->
+</button>
+<!--M_*1 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      count: 0
+    }]),
+    "__tests__/template.marko_0_count 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button[class] "a b c" => "a b c d e f"
-UPDATE html/body/button/#text "0" => "1"
+UPDATE button[class] "a b c" => "a b c d e f"
+UPDATE button/#text "0" => "1"
 ```
 
 # Render
@@ -65,34 +55,29 @@ UPDATE html/body/button/#text "0" => "1"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      class="a b c"
-    >
-      2
-      <!--M_*1 #text/1-->
-    </button>
-    <!--M_*1 #button/0-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          count: 0
-        }]),
-        "__tests__/template.marko_0_count 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  class="a b c"
+>
+  2
+  <!--M_*1 #text/1-->
+</button>
+<!--M_*1 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      count: 0
+    }]),
+    "__tests__/template.marko_0_count 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button[class] "a b c d e f" => "a b c"
-UPDATE html/body/button/#text "1" => "2"
+UPDATE button[class] "a b c d e f" => "a b c"
+UPDATE button/#text "1" => "2"
 ```
 
 # Render
@@ -100,32 +85,27 @@ UPDATE html/body/button/#text "1" => "2"
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <button
-      class="a b c d e f"
-    >
-      3
-      <!--M_*1 #text/1-->
-    </button>
-    <!--M_*1 #button/0-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          count: 0
-        }]),
-        "__tests__/template.marko_0_count 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button
+  class="a b c d e f"
+>
+  3
+  <!--M_*1 #text/1-->
+</button>
+<!--M_*1 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      count: 0
+    }]),
+    "__tests__/template.marko_0_count 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/button[class] "a b c" => "a b c d e f"
-UPDATE html/body/button/#text "2" => "3"
+UPDATE button[class] "a b c" => "a b c d e f"
+UPDATE button/#text "2" => "3"
 ```

@@ -5,18 +5,13 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    Static Dynamic 1
-  </body>
-</html>
+Static Dynamic 1
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT #text
 ```

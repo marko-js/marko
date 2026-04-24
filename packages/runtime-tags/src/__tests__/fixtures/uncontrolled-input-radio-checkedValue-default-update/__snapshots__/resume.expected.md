@@ -1,40 +1,35 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <input
-      checked=""
-      type="radio"
-      value="a"
-    />
-    <input
-      type="radio"
-      value="b"
-    />
-    <input
-      type="radio"
-      value="b"
-    />
-    <!--M_*1 #input/2-->
-    <input
-      type="radio"
-      value="b"
-    />
-    <!--M_*1 #input/3-->
-    <button>
-      Update
-    </button>
-    <!--M_*1 #button/4-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0]),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<input
+  checked=""
+  type="radio"
+  value="a"
+/>
+<input
+  type="radio"
+  value="b"
+/>
+<input
+  type="radio"
+  value="b"
+/>
+<!--M_*1 #input/2-->
+<input
+  type="radio"
+  value="b"
+/>
+<!--M_*1 #input/3-->
+<button>
+  Update
+</button>
+<!--M_*1 #button/4-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0]),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -43,47 +38,42 @@
 container.querySelector("button").click();
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <input
-      checked=""
-      type="radio"
-      value="a"
-    />
-    <input
-      type="radio"
-      value="b"
-    />
-    <input
-      default-checked=""
-      type="radio"
-      value="b"
-    />
-    <!--M_*1 #input/2-->
-    <input
-      default-checked=""
-      type="radio"
-      value="b"
-    />
-    <!--M_*1 #input/3-->
-    <button>
-      Update
-    </button>
-    <!--M_*1 #button/4-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0]),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<input
+  checked=""
+  type="radio"
+  value="a"
+/>
+<input
+  type="radio"
+  value="b"
+/>
+<input
+  default-checked=""
+  type="radio"
+  value="b"
+/>
+<!--M_*1 #input/2-->
+<input
+  default-checked=""
+  type="radio"
+  value="b"
+/>
+<!--M_*1 #input/3-->
+<button>
+  Update
+</button>
+<!--M_*1 #button/4-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0]),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/input2[checked] null => ""
-UPDATE html/body/input3[checked] null => ""
+UPDATE input2[checked] null => ""
+UPDATE input3[checked] null => ""
 ```

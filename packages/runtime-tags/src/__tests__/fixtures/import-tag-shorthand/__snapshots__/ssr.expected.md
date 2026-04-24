@@ -5,20 +5,15 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <div />
-    <div />
-  </body>
-</html>
+<div />
+<div />
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/div0
-INSERT html/body/div1
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT div0
+INSERT div1
 ```

@@ -5,39 +5,34 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <button />
-    <!--M_*1 #button/0-->
-    <div>
-      3
-      <!--M_*1 #text/1-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          items: [0, 1, 2]
-        }]),
-        "__tests__/template.marko_0_items 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<button />
+<!--M_*1 #button/0-->
+<div>
+  3
+  <!--M_*1 #text/1-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      items: [0, 1, 2]
+    }]),
+    "__tests__/template.marko_0_items 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/button
-INSERT html/body/#comment
-INSERT html/body/div
-INSERT html/body/div/#text
-INSERT html/body/div/#comment
-INSERT html/body/script
-INSERT html/body/script/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT button
+INSERT #comment
+INSERT div
+INSERT div/#text
+INSERT div/#comment
+INSERT script
+INSERT script/#text
 ```

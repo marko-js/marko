@@ -5,40 +5,35 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      <span
-        id="1"
-      >
-        a
-      </span>
-      <span
-        id="2"
-      >
-        b
-      </span>
-      <span
-        id="3"
-      >
-        c
-      </span>
-    </div>
-  </body>
-</html>
+<div>
+  <span
+    id="1"
+  >
+    a
+  </span>
+  <span
+    id="2"
+  >
+    b
+  </span>
+  <span
+    id="3"
+  >
+    c
+  </span>
+</div>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/div
-INSERT html/body/div/span0
-INSERT html/body/div/span0/#text
-INSERT html/body/div/span1
-INSERT html/body/div/span1/#text
-INSERT html/body/div/span2
-INSERT html/body/div/span2/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT div
+INSERT div/span0
+INSERT div/span0/#text
+INSERT div/span1
+INSERT div/span1/#text
+INSERT div/span2
+INSERT div/span2/#text
 ```

@@ -5,21 +5,16 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <textarea>
-      hello
-    </textarea>
-  </body>
-</html>
+<textarea>
+  hello
+</textarea>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/textarea
-INSERT html/body/textarea/#text
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT textarea
+INSERT textarea/#text
 ```

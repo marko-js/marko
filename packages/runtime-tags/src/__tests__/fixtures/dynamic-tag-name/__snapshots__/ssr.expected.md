@@ -5,64 +5,59 @@
 
 # Render End
 ```html
-<html>
-  <head />
-  <body>
-    <h2
-      class="a b"
-    />
-    <div
-      class="a b"
-    >
-      B 
-    </div>
-    Body content
-    <div
-      class="a b"
-    >
-      A 
-    </div>
-    <h2
-      class="a b"
-    />
-    <ab
-      class="a b"
-    />
-    <hundefined
-      class="a b"
-    />
-    <hundefined
-      class="a b"
-    />
-    <a
-      class="a b"
-    />
-    <h1 />
-    <div />
-    <div />
-    <div />
-  </body>
-</html>
+<h2
+  class="a b"
+/>
+<div
+  class="a b"
+>
+  B 
+</div>
+Body content
+<div
+  class="a b"
+>
+  A 
+</div>
+<h2
+  class="a b"
+/>
+<ab
+  class="a b"
+/>
+<hundefined
+  class="a b"
+/>
+<hundefined
+  class="a b"
+/>
+<a
+  class="a b"
+/>
+<h1 />
+<div />
+<div />
+<div />
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/body
-INSERT html/body/h20
-INSERT html/body/div0
-INSERT html/body/div0/#text
-INSERT html/body/#text
-INSERT html/body/div1
-INSERT html/body/div1/#text
-INSERT html/body/h21
-INSERT html/body/ab
-INSERT html/body/hundefined0
-INSERT html/body/hundefined1
-INSERT html/body/a
-INSERT html/body/h1
-INSERT html/body/div2
-INSERT html/body/div3
-INSERT html/body/div4
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT h20
+INSERT div0
+INSERT div0/#text
+INSERT #text
+INSERT div1
+INSERT div1/#text
+INSERT h21
+INSERT ab
+INSERT hundefined0
+INSERT hundefined1
+INSERT a
+INSERT h1
+INSERT div2
+INSERT div3
+INSERT div4
 ```

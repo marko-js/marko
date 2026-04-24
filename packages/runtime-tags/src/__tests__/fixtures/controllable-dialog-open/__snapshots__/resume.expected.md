@@ -1,30 +1,25 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <dialog
-      open=""
-    />
-    <!--M_*1 #dialog/0-->
-    <span>
-      true
-      <!--M_*1 #text/1-->
-    </span>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#dialog/0": 4,
-          "ControlledValue:#dialog/0": !0
-        }], _.a["ControlledHandler:#dialog/0"] = _._[
-          "__tests__/template.marko_0/openChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<dialog
+  open=""
+/>
+<!--M_*1 #dialog/0-->
+<span>
+  true
+  <!--M_*1 #text/1-->
+</span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      "ControlledType:#dialog/0": 4,
+      "ControlledValue:#dialog/0": !0
+    }], _.a["ControlledHandler:#dialog/0"] = _._[
+      "__tests__/template.marko_0/openChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
@@ -34,37 +29,32 @@ const dialog = container.querySelector("dialog");
 dialog.open = !dialog.open;
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <dialog />
-    <!--M_*1 #dialog/0-->
-    <span>
-      false
-      <!--M_*1 #text/1-->
-    </span>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#dialog/0": 4,
-          "ControlledValue:#dialog/0": !0
-        }], _.a["ControlledHandler:#dialog/0"] = _._[
-          "__tests__/template.marko_0/openChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<dialog />
+<!--M_*1 #dialog/0-->
+<span>
+  false
+  <!--M_*1 #text/1-->
+</span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      "ControlledType:#dialog/0": 4,
+      "ControlledValue:#dialog/0": !0
+    }], _.a["ControlledHandler:#dialog/0"] = _._[
+      "__tests__/template.marko_0/openChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/dialog[open] "" => null
-UPDATE html/body/dialog[open] null => null
-UPDATE html/body/dialog[open] "" => null
-UPDATE html/body/span/#text "true" => "false"
+UPDATE dialog[open] "" => null
+UPDATE dialog[open] null => null
+UPDATE dialog[open] "" => null
+UPDATE span/#text "true" => "false"
 ```
 
 # Render
@@ -73,39 +63,34 @@ const dialog = container.querySelector("dialog");
 dialog.open = !dialog.open;
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <dialog
-      open=""
-    />
-    <!--M_*1 #dialog/0-->
-    <span>
-      true
-      <!--M_*1 #text/1-->
-    </span>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#dialog/0": 4,
-          "ControlledValue:#dialog/0": !0
-        }], _.a["ControlledHandler:#dialog/0"] = _._[
-          "__tests__/template.marko_0/openChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<dialog
+  open=""
+/>
+<!--M_*1 #dialog/0-->
+<span>
+  true
+  <!--M_*1 #text/1-->
+</span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      "ControlledType:#dialog/0": 4,
+      "ControlledValue:#dialog/0": !0
+    }], _.a["ControlledHandler:#dialog/0"] = _._[
+      "__tests__/template.marko_0/openChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/dialog[open] null => ""
-UPDATE html/body/dialog[open] "" => ""
-UPDATE html/body/dialog[open] null => ""
-UPDATE html/body/span/#text "false" => "true"
+UPDATE dialog[open] null => ""
+UPDATE dialog[open] "" => ""
+UPDATE dialog[open] null => ""
+UPDATE span/#text "false" => "true"
 ```
 
 # Render
@@ -114,35 +99,30 @@ const dialog = container.querySelector("dialog");
 dialog.open = !dialog.open;
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <dialog />
-    <!--M_*1 #dialog/0-->
-    <span>
-      false
-      <!--M_*1 #text/1-->
-    </span>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0, _.a = {
-          "ControlledType:#dialog/0": 4,
-          "ControlledValue:#dialog/0": !0
-        }], _.a["ControlledHandler:#dialog/0"] = _._[
-          "__tests__/template.marko_0/openChange"
-          ](_.a), _.b),
-        "__tests__/template.marko_0 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<dialog />
+<!--M_*1 #dialog/0-->
+<span>
+  false
+  <!--M_*1 #text/1-->
+</span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.b = [0, _.a = {
+      "ControlledType:#dialog/0": 4,
+      "ControlledValue:#dialog/0": !0
+    }], _.a["ControlledHandler:#dialog/0"] = _._[
+      "__tests__/template.marko_0/openChange"
+      ](_.a), _.b),
+    "__tests__/template.marko_0 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/dialog[open] "" => null
-UPDATE html/body/dialog[open] null => null
-UPDATE html/body/dialog[open] "" => null
-UPDATE html/body/span/#text "true" => "false"
+UPDATE dialog[open] "" => null
+UPDATE dialog[open] null => null
+UPDATE dialog[open] "" => null
+UPDATE span/#text "true" => "false"
 ```

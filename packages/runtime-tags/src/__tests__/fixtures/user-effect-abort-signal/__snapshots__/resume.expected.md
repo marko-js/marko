@@ -1,60 +1,50 @@
 # Render `{"value":0}`
 
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      0
-      <!--M_*1 #text/0-->
-       
-      <!---->
-      0
-      <!--M_*1 #text/1-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          input_value: 0
-        }]),
-        "__tests__/template.marko_0_input_value 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  0
+  <!--M_*1 #text/0-->
+   
+  <!---->
+  0
+  <!--M_*1 #text/1-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      input_value: 0
+    }]),
+    "__tests__/template.marko_0_input_value 1"
+  ];
+  M._.w()
+</script>
 ```
 
 
 # Render ASYNC
 ```html
-<html>
-  <head />
-  <body>
-    <div>
-      1
-      <!--M_*1 #text/0-->
-       
-      <!---->
-      0
-      <!--M_*1 #text/1-->
-    </div>
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          input_value: 0
-        }]),
-        "__tests__/template.marko_0_input_value 1"
-      ];
-      M._.w()
-    </script>
-  </body>
-</html>
+<div>
+  1
+  <!--M_*1 #text/0-->
+   
+  <!---->
+  0
+  <!--M_*1 #text/1-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      input_value: 0
+    }]),
+    "__tests__/template.marko_0_input_value 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-UPDATE html/body/div/#text0 "0" => "1"
+UPDATE div/#text0 "0" => "1"
 ```

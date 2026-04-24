@@ -8,6 +8,7 @@ export default function createBrowser() {
     virtualConsole,
   });
   const { window } = dom;
+  window.__coverage__ = (globalThis as any).__coverage__;
   window.__RESOLVE_STATE__ = globalThis.__RESOLVE_STATE__;
   window.setImmediate = setImmediate;
   window.MessageChannel = class MessageChannel {
@@ -54,7 +55,7 @@ export default function createBrowser() {
 
       if (chunks.length > 1) {
         const parsed = document.implementation.createHTMLDocument();
-        parsed.write(chunks.join("<!--%%FLUSH%%-->"));
+        parsed.write(ensureBody(chunks.join("<!--%%FLUSH%%-->")));
         parsed.doctype?.remove();
 
         const walker = parsed.createTreeWalker(parsed);
@@ -88,11 +89,15 @@ export default function createBrowser() {
 
       return () => {
         if (chunks.length) {
-          document.write(chunks[0]);
+          document.write(ensureBody(chunks[0]));
         }
         document.close();
         return false;
       };
     },
   };
+}
+
+function ensureBody(html: string) {
+  return /<body/i.test(html) ? html : `<body>${html}`;
 }

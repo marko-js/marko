@@ -9,39 +9,34 @@
 
 # Render End
 ```html
-<html>
-  <head>
-    <style>
-      
+<style>
+  
   .test {
     content: 0
   }
 
-    </style>
-    <!--M_*1 #style/0-->
-    <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.a = [0,
-        {
-          count: 0
-        }]),
-        "__tests__/template.marko_0_count 1"
-      ];
-      M._.w()
-    </script>
-  </head>
-  <body />
-</html>
+</style>
+<!--M_*1 #style/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ =&gt; (_.a = [0,
+    {
+      count: 0
+    }]),
+    "__tests__/template.marko_0_count 1"
+  ];
+  M._.w()
+</script>
 ```
 
 # Mutations
 ```
-INSERT html
-INSERT html/head
-INSERT html/head/style
-INSERT html/head/style/#text
-INSERT html/head/#comment
-INSERT html/head/script
-INSERT html/head/script/#text
-INSERT html/body
+INSERT #document/html
+INSERT #document/html/head
+INSERT #document/html/body
+INSERT style
+INSERT style/#text
+INSERT #comment
+INSERT script
+INSERT script/#text
 ```

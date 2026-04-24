@@ -1,6 +1,8 @@
 # Render
 ```html
-<button />
+<button>
+  0
+</button>
 ```
 
 
@@ -9,7 +11,9 @@
 container.querySelector("button").click();
 ```
 ```html
-<button />
+<button>
+  1
+</button>
 ```
 
 
@@ -18,7 +22,9 @@ container.querySelector("button").click();
 container.querySelector("button").click();
 ```
 ```html
-<button />
+<button>
+  2
+</button>
 ```
 
 
@@ -27,5 +33,7 @@ container.querySelector("button").click();
 container.querySelector("button").click();
 ```
 ```html
-<button />
+<button>
+  3
+</button>
 ```

@@ -1,28 +1,23 @@
 # Render
 ```html
-<html>
-  <head />
-  <body>
-    <select>
-      <option
-        value="a"
-      >
-        A
-      </option>
-      <option
-        selected=""
-        value="b"
-      >
-        B
-      </option>
-      <option
-        value="c"
-      >
-        C
-      </option>
-    </select>
-  </body>
-</html>
+<select>
+  <option
+    value="a"
+  >
+    A
+  </option>
+  <option
+    selected=""
+    value="b"
+  >
+    B
+  </option>
+  <option
+    value="c"
+  >
+    C
+  </option>
+</select>
 ```
 
 
@@ -35,28 +30,23 @@ select.dispatchEvent(new select.ownerDocument.defaultView.Event("change", {
 }));
 ```
 ```html
-<html>
-  <head />
-  <body>
-    <select>
-      <option
-        value="a"
-      >
-        A
-      </option>
-      <option
-        default-selected=""
-        value="b"
-      >
-        B
-      </option>
-      <option
-        selected=""
-        value="c"
-      >
-        C
-      </option>
-    </select>
-  </body>
-</html>
+<select>
+  <option
+    value="a"
+  >
+    A
+  </option>
+  <option
+    default-selected=""
+    value="b"
+  >
+    B
+  </option>
+  <option
+    selected=""
+    value="c"
+  >
+    C
+  </option>
+</select>
 ```
