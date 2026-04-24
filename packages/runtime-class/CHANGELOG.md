@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.38.37
+
+### Patch Changes
+
+- [#3168](https://github.com/marko-js/marko/pull/3168) [`5f86376`](https://github.com/marko-js/marko/commit/5f8637682b7907f839c471f626b480d1d06caae8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid root level implicit split component becoming a hydrate entry.
+
+- Updated dependencies [[`5238b9f`](https://github.com/marko-js/marko/commit/5238b9fbad084f6f4e4628ed6ee7fc2774a5140f)]:
+  - @marko/runtime-tags@6.0.167
+
 ## 5.38.36
 
 ### Patch Changes

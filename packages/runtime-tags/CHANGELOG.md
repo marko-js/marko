@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.167
+
+### Patch Changes
+
+- [#3168](https://github.com/marko-js/marko/pull/3168) [`5238b9f`](https://github.com/marko-js/marko/commit/5238b9fbad084f6f4e4628ed6ee7fc2774a5140f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with update branch not being serialized correctly with mutable tag var from a dynamic tag.
+
 ## 6.0.166
 
 ### Patch Changes
