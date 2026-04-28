@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.168
+
+### Patch Changes
+
+- [#3171](https://github.com/marko-js/marko/pull/3171) [`13e9561`](https://github.com/marko-js/marko/commit/13e956117267bd0cc4b2bd9670367c55ba306b52) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix incorrect declaration hoisting in production runtime builds.
+
 ## 6.0.167
 
 ### Patch Changes
