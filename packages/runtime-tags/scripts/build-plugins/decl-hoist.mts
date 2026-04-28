@@ -18,20 +18,26 @@ export default function moduleScopeVarHoistPlugin(): Plugin {
       })["declarations"] = [];
 
       for (const node of ast.body) {
-        if (node.type !== "VariableDeclaration") continue;
+        if (
+          node.type === "VariableDeclaration" &&
+          (node.kind === "let" || node.kind === "const")
+        ) {
+          // Remove keyword (e.g. "let " or "const ")
+          s.remove(node.start, node.declarations[0].start);
 
-        // Remove keyword (e.g. "let ", "const ", "var ")
-        s.remove(node.start, node.declarations[0].start);
+          for (let i = 0; i < node.declarations.length; i++) {
+            const d = node.declarations[i];
+            // Remove ", " between adjacent declarators
+            if (i) s.remove(node.declarations[i - 1].end, d.start);
+            decls.push(d);
+          }
 
-        for (let i = 0; i < node.declarations.length; i++) {
-          const d = node.declarations[i];
-          // Remove ", " between adjacent declarators
-          if (i) s.remove(node.declarations[i - 1].end, d.start);
-          decls.push(d);
+          // Remove trailing semicolon
+          s.remove(
+            node.declarations[node.declarations.length - 1].end,
+            node.end,
+          );
         }
-
-        // Remove trailing semicolon
-        s.remove(node.declarations[node.declarations.length - 1].end, node.end);
       }
 
       if (!decls.length) return null;
