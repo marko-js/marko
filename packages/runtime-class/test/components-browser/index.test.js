@@ -71,7 +71,7 @@ function runHydrateTest(fixture) {
       .then(function (html) {
         var browser = createBrowserWithMarko(__dirname, String(html), {
           beforeParse(window, browser) {
-            var marko = browser.require("marko/components");
+            var marko = browser.require("marko/components-browser.marko");
             var rootComponent = browser.require(hydrateComponentPath);
             rootComponent = rootComponent.default || rootComponent;
             marko.register(ssrTemplate.meta.id, rootComponent);

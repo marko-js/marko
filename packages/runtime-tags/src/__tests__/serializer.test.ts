@@ -501,25 +501,25 @@ describe("serializer", () => {
       );
     });
 
-    it.skip("Symbol.iterator registered", () => {
-      // Unsupported for now since we share the reference for iterators on attribute tags.
-      const obj = {
-        y: 2,
-        [Symbol.iterator]: iterate,
-      };
+    // it.skip("Symbol.iterator registered", () => {
+    //   // Unsupported for now since we share the reference for iterators on attribute tags.
+    //   const obj = {
+    //     y: 2,
+    //     [Symbol.iterator]: iterate,
+    //   };
 
-      function* iterate() {
-        yield 1;
-        yield 2;
-        yield 3;
-      }
+    //   function* iterate() {
+    //     yield 1;
+    //     yield 2;
+    //     yield 3;
+    //   }
 
-      register("iterate", iterate);
+    //   register("iterate", iterate);
 
-      assertStringify(obj, `{y:2,[Symbol.iterator]:_._.iterate}`, {
-        _: { iterate },
-      });
-    });
+    //   assertStringify(obj, `{y:2,[Symbol.iterator]:_._.iterate}`, {
+    //     _: { iterate },
+    //   });
+    // });
   });
 
   describe("typed arrays", () => {

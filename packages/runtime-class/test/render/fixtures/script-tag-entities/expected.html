@@ -1,1 +1,3 @@
-<script>console.log('<div>Hello <script>evil\x3C/script></div>');</script>
+<script>
+  document.querySelector("script")?.insertAdjacentHTML("afterend", '<div>Hello <script>evil\x3C/script></div>');
+</script>

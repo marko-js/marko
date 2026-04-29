@@ -1,6 +1,6 @@
 "use strict";
 
-var runtimeHtmlHelpers = require("marko/runtime/html/helpers");
+var runtimeHtmlHelpers = require("marko/src/runtime/html/helpers");
 var escapeXml = runtimeHtmlHelpers.x;
 var escapeXmlAttr = runtimeHtmlHelpers.xa;
 var escapeScript = runtimeHtmlHelpers.xs;

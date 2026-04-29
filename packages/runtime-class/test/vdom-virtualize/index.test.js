@@ -3,7 +3,7 @@
 require("../__util__/test-init");
 var fs = require("fs");
 var { JSDOM } = require("jsdom");
-var virtualize = require("marko/runtime/vdom/vdom").___virtualize;
+var virtualize = require("marko/src/runtime/vdom/vdom").___virtualize;
 var autotest = require("mocha-autotest").default;
 var toHTML = require("../__util__/toHTML");
 

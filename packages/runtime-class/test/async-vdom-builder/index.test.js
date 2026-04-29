@@ -1,7 +1,7 @@
 require("../__util__/test-init");
 var expect = require("chai").expect;
-var AsyncVDOMBuilder = require("marko/runtime/vdom/AsyncVDOMBuilder");
-var VElement = require("marko/runtime/vdom/VElement");
+var AsyncVDOMBuilder = require("marko/src/runtime/vdom/AsyncVDOMBuilder");
+var VElement = require("marko/src/runtime/vdom/VElement");
 
 function getChildNodes(parentNode) {
   var childNodes = [];

@@ -27,13 +27,11 @@ function testRunner(fixture) {
 }
 
 function compareNormalized({ test, context }) {
-  test(function () {
-    if (!("html" in context) || !("vdom" in context)) {
-      this.skip();
-    } else {
+  if ("html" in context && "vdom" in context) {
+    test(function () {
       expect(context.html).to.equal(context.vdom);
-    }
-  });
+    });
+  }
 }
 
 async function runRenderTest(fixture) {

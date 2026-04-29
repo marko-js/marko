@@ -4,7 +4,7 @@ require("../__util__/test-init");
 
 var fs = require("fs");
 var { JSDOM } = require("jsdom");
-var vdom = require("marko/runtime/vdom/vdom");
+var vdom = require("marko/src/runtime/vdom/vdom");
 var autotest = require("mocha-autotest").default;
 var domToString = require("../__util__/domToString");
 

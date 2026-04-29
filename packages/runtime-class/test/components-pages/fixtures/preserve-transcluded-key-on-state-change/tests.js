@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it.skip("should update correctly", function () {
+it("should update correctly", function () {
   var component = window.component;
   var originalChild = component.getComponent("child");
 
@@ -11,4 +11,4 @@ it.skip("should update correctly", function () {
   component.forceUpdate();
   component.update();
   expect(component.getComponent("child")).to.eql(originalChild);
-}).details = "issue #947";
+});

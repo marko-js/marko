@@ -22,6 +22,12 @@ autotest("fixtures", (fixture) => {
 
     var main = require(resolve("test.js"));
 
-    main.check(marko, hotReload, expect, snapshot);
+    const { log } = console;
+    try {
+      console.log = () => {};
+      main.check(marko, hotReload, expect, snapshot);
+    } finally {
+      console.log = log;
+    }
   });
 });

@@ -1,2 +1,2 @@
 <SCRIPT>
-  "console.log('<div>Hello <script>evil</script></div>');"
+  "\n  document.querySelector(\"script\")?.insertAdjacentHTML(\"afterend\", '<div>Hello <script>evil</script></div>');\n"

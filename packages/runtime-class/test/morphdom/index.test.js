@@ -6,7 +6,7 @@ const fs = require("fs");
 const path = require("path");
 var chai = require("chai");
 const { JSDOM } = require("jsdom");
-const morphdom = require("marko/runtime/vdom/morphdom");
+const morphdom = require("marko/src/runtime/vdom/morphdom");
 var autotest = require("mocha-autotest").default;
 chai.config.includeStack = true;
 
@@ -29,7 +29,7 @@ autotest("fixtures", (fixture) => {
 
     let fromNode = JSDOM.fragment(fromHTML);
     let realToNode = JSDOM.fragment(toHTML);
-    var targetVEl = require("marko/runtime/vdom/vdom").___virtualize(
+    var targetVEl = require("marko/src/runtime/vdom/vdom").___virtualize(
       realToNode,
     );
     var expectedHTML = serializeNode(realToNode);

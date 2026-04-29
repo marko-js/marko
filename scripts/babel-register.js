@@ -1,5 +1,5 @@
 globalThis.MARKO_DEBUG = true;
-
+require("complain").silence = true;
 // aliased as ~ts via package.json
 require("@babel/register")({
   babelrc: false,

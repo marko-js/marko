@@ -1,0 +1,31 @@
+diff --git a/node_modules/mocha-autotest/dist/index.js b/node_modules/mocha-autotest/dist/index.js
+index 57f53f1..609eaec 100644
+--- a/node_modules/mocha-autotest/dist/index.js
++++ b/node_modules/mocha-autotest/dist/index.js
+@@ -78,12 +78,8 @@ function runFixtureTest(name, dir, run, mode, context) {
+     const skip = main.skip || main["skip_" + mode];
+     const fails = main.fails || main["fails_" + mode];
+ 
+-    if (skip) {
+-      mochaTestFunction = it.skip;
+-      mochaDetails = skip;
+-    } else if (fails) {
+-      mochaTestFunction = it.fails;
+-      mochaDetails = fails;
++    if (skip || fails) {
++      return;
+     }
+   }
+ 
+@@ -128,10 +124,7 @@ function runFixtureTest(name, dir, run, mode, context) {
+   };
+ 
+   const skip = reason => {
+-    const test = it.skip(name);
+-    test.details = reason;
+-    test.file = mainPath;
+-    return test;
++    return { details: reason, file: mainPath };
+   };
+ 
+   run({

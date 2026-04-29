@@ -32,8 +32,7 @@ module.exports = function (dir, html, options) {
       window.addEventListener("error", (e) => {
         browser.error = browser.error || e.error;
       });
-      browser.require("complain").log = (...args) =>
-        require("complain").log(...args);
+      browser.require("complain").silence = true;
       globals.forEach(function (k) {
         window[k] = global[k];
       });

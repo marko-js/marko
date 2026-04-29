@@ -8,7 +8,7 @@ chai.config.includeStack = true;
 
 var expect = chai.expect;
 var fsReadOptions = { encoding: "utf8" };
-var AsyncStream = require("marko/runtime/html/AsyncStream");
+var AsyncStream = require("marko/src/runtime/html/AsyncStream");
 
 /* DEBUG INFO:
    ===========

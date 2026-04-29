@@ -1,5 +1,4 @@
 import * as compiler from "@marko/compiler";
-import register from "@marko/compiler/register";
 import type { Input } from "@marko/runtime-tags/common/types";
 import assert from "assert";
 import fs from "fs";
@@ -59,8 +58,8 @@ function testFixtures(interop?: true) {
     if (entry.endsWith(".skip")) continue;
 
     describe(entry, () => {
-      const resolve = (file: string) => path.join(fixturesDir, entry, file);
-      const fixtureDir = resolve(".");
+      const fixtureDir = path.join(fixturesDir, entry);
+      const resolve = (file: string) => path.join(fixtureDir, file);
       const relativeFixtureDir = path.relative(process.cwd(), fixtureDir);
       const templateFile = resolve("template.marko");
       const config: TestConfig = (() => {
@@ -83,7 +82,10 @@ function testFixtures(interop?: true) {
         ...compileOpts,
         output: "html",
       };
-      const csrCompileOpts: compiler.Config = { ...compileOpts, output: "dom" };
+      const csrCompileOpts: compiler.Config = {
+        ...compileOpts,
+        output: "dom",
+      };
       const skipHTML = config.skip_html;
       const skipDOM = config.skip_dom;
       const skipSSR = skipHTML || config.skip_ssr || config.error_compiler;
@@ -97,10 +99,7 @@ function testFixtures(interop?: true) {
       const snapMD = (fn: () => Promise<string>) =>
         (config.error_runtime ? snap.catch : snap)(
           () => stripFixtureDir(fn()),
-          {
-            ext: `.md`,
-            dir: fixtureDir,
-          },
+          { ext: ".md", dir: fixtureDir },
         );
       const snapAllTemplates = async (compilerConfig: compiler.Config) => {
         const additionalMarkoFiles = await glob(resolve("**/*.marko"), {
@@ -118,30 +117,23 @@ function testFixtures(interop?: true) {
         for (const file of additionalMarkoFiles) {
           try {
             const name = path.relative(fixtureDir, file);
-            let snapName = name;
-            let targetSnap: typeof snap.catch = snap;
-            if (
+            const isError =
               config.error_compiler === true ||
-              config.error_compiler?.includes(name)
-            ) {
-              snapName = name.replace(".marko", ".error.txt");
-              targetSnap = snap.catch;
-            } else {
-              snapName = name.replace(".marko", ".js");
-            }
+              config.error_compiler?.includes(name);
+            const targetSnap = isError ? snap.catch : snap;
 
             await targetSnap(
               () => stripFixtureDir(compileCode(file, finalConfig)),
               {
-                file: snapName,
                 dir: fixtureDir,
+                file: name.replace(".marko", isError ? ".error.txt" : ".js"),
               },
             );
 
             if (
               compilerConfig.output === "dom" &&
               file === templateFile &&
-              !skipResume &&
+              !skipSSR &&
               !config.error_compiler
             ) {
               await targetSnap(
@@ -159,8 +151,9 @@ function testFixtures(interop?: true) {
 
         if (errors.length === 1) {
           throw errors[0];
-        } else if (errors.length > 1) {
-          console.error(errors);
+        }
+
+        if (errors.length > 1) {
           throw new AggregateError(
             errors,
             "\n" + errors.map((e) => e.toString()).join("\n"),
@@ -168,324 +161,279 @@ function testFixtures(interop?: true) {
         }
       };
 
-      let serverRender = () => {
-        const cached = (async () => {
-          const runSSR = await createRunner(
-            templateFile,
-            ssrCompileOpts,
-            "ssr",
-          );
-          const [input = {}, ...steps] =
-            typeof config.steps === "function"
-              ? await config.steps()
-              : config.steps || [];
-          const chunks: string[] = [];
-          const logs: ConsoleRecord[][] = [];
-          const capture = captureConsole();
-          const { template } = runSSR();
-          try {
-            for await (const data of template.render(
-              config.embedded
-                ? {
-                    ...input,
-                    $global: {
-                      ...(input.$global as any),
-                      renderId: "embedded",
-                    },
-                  }
-                : input,
-            )) {
-              chunks.push(data);
-              logs.push(capture.records());
-            }
+      const serverRender = once(async () => {
+        const runSSR = await createRunner(templateFile, ssrCompileOpts, "ssr");
+        const { input, steps } = await getSteps(config);
+        const chunks: string[] = [];
+        const logs: ConsoleRecord[][] = [];
+        const capture = captureConsole();
+        const { template } = runSSR();
+        try {
+          for await (const data of template.render(
+            config.embedded
+              ? {
+                  ...input,
+                  $global: {
+                    ...(input.$global as any),
+                    renderId: "embedded",
+                  },
+                }
+              : input,
+          )) {
+            chunks.push(data);
             logs.push(capture.records());
-          } finally {
-            capture.cleanup();
           }
+          logs.push(capture.records());
+        } finally {
+          capture.cleanup();
+        }
 
-          return { chunks, logs, input, steps };
-        })();
-        serverRender = () => cached;
-        return cached;
-      };
+        return { chunks, logs, input, steps };
+      });
 
-      let ssr = () => {
-        const cached = (async () => {
-          const browser = createBrowser();
-          const { window } = browser;
-          const { document } = window;
-          const { chunks, logs } = await serverRender();
-          const flushNext = browser.stream(chunks);
-          const tracker = createMutationTracker(browser, document);
+      const ssr = once(async () => {
+        const browser = createBrowser();
+        const { window } = browser;
+        const { document } = window;
+        const { chunks, logs } = await serverRender();
+        const flushNext = browser.stream(chunks);
+        const tracker = createMutationTracker(browser, document);
 
-          for (const data of chunks) {
-            const formattedHtml = indent(stripInlineRuntime(data));
+        for (const data of chunks) {
+          const formattedHtml = indent(stripInlineRuntime(data));
 
-            if (formattedHtml) {
-              tracker.log(`# Write\n\`\`\`html\n${formattedHtml}\n\`\`\``);
-            }
+          if (formattedHtml) {
+            tracker.log(`# Write\n\`\`\`html\n${formattedHtml}\n\`\`\``);
           }
+        }
 
-          for (const group of logs) {
-            for (const { type, args } of group) {
-              window.console[type](...args);
-            }
+        for (const group of logs) {
+          for (const { type, args } of group) {
+            window.console[type](...args);
           }
+        }
 
-          while (flushNext()) {
-            await 1;
-          }
+        while (flushNext()) {
+          await 1;
+        }
 
-          tracker.logUpdate("End", true);
+        tracker.logUpdate("End", true);
 
-          tracker.cleanup();
+        tracker.cleanup();
+        return { browser, tracker };
+      });
 
-          return { browser, tracker };
-        })();
-        ssr = () => cached;
-        return cached;
-      };
+      const csr = once(async () => {
+        const browser = createBrowser();
+        const runCSR = await createRunner(
+          templateFile,
+          csrCompileOpts,
+          "csr",
+          interop,
+        );
+        const { window } = browser;
+        const { document } = window;
+        const { input, steps } = await getSteps(config);
+        const container = document.createElement("div");
+        const tracker = createMutationTracker(browser, container);
 
-      let csr = () => {
-        const cached = (async () => {
-          const browser = createBrowser();
-          const runCSR = await createRunner(
-            templateFile,
-            csrCompileOpts,
-            "csr",
-            interop,
-          );
-          const { window } = browser;
-          const { document } = window;
-          const [input = {}, ...steps] =
-            typeof config.steps === "function"
-              ? await config.steps()
-              : config.steps || [];
-          const container = document.createElement("div");
-          const tracker = createMutationTracker(browser, container);
+        document.body.appendChild(container);
 
-          document.body.appendChild(container);
+        const { template, run } = runCSR(browser.ctx);
+        const instance = template.mount(input, container, "afterbegin");
+        tracker.logUpdate(input);
 
-          const { template, run } = runCSR(browser.ctx);
-          const instance = template.mount(input, container, "afterbegin");
-          tracker.logUpdate(input);
-
-          for (const update of steps) {
-            if (isWait(update)) {
-              await update();
-            } else if (isFlush(update)) {
-              continue;
-            } else if (typeof update === "function") {
-              tracker.beginUpdate();
-              await update(document.documentElement);
-              if (isThrows(update)) {
-                try {
-                  run();
-                  throw new Error("Expected error to be thrown");
-                } catch (err) {
-                  tracker.logError(update, err as Error);
-                  break;
-                }
-              } else {
+        for (const update of steps) {
+          if (isWait(update)) {
+            await update();
+          } else if (isFlush(update)) {
+            continue;
+          } else if (typeof update === "function") {
+            tracker.beginUpdate();
+            await update(document.documentElement);
+            if (isThrows(update)) {
+              try {
                 run();
-                await 1; // allow a microtask before we log the update in order to catch mutation observers.
-                tracker.logUpdate(update);
-              }
-            } else {
-              instance.update(update);
-              tracker.logUpdate(update);
-            }
-          }
-
-          tracker.cleanup();
-
-          return { browser, tracker };
-        })();
-        csr = () => cached;
-        return cached;
-      };
-
-      let resume = () => {
-        const cached = (async () => {
-          const [runResume, { chunks, logs, input, steps }] = await Promise.all(
-            [
-              createRunner(templateFile, csrCompileOpts, "resume", interop),
-              serverRender(),
-            ],
-          );
-
-          const browser = createBrowser();
-          const { window } = browser;
-          const { document } = window;
-          const flushNext = browser.stream(chunks);
-          let hasFlush = flushNext();
-          const tracker = createMutationTracker(browser, document);
-
-          for (const group of logs) {
-            for (const { type, args } of group) {
-              window.console[type](...args);
-            }
-          }
-
-          const { run } = runResume(browser.ctx);
-
-          await runSteps();
-
-          async function runSteps() {
-            tracker.logUpdate(input);
-
-            for (const update of steps) {
-              if (isWait(update)) {
-                await update();
-              } else if (isFlush(update)) {
-                if (hasFlush) {
-                  tracker.beginUpdate();
-                  hasFlush = flushNext();
-                  await 1; // allow a microtask before we log the update in order to catch mutation observers
-                  tracker.logUpdate("FLUSH");
-                }
-              } else if (typeof update === "function") {
-                tracker.beginUpdate();
-                await update(document.documentElement);
-                run();
-                await 1; // allow a microtask before we log the update in order to catch mutation observers
-                tracker.logUpdate(update);
-              } else {
-                // if new input is detected, stop testing
-                // this will be covered by the client tests
+                throw new Error("Expected error to be thrown");
+              } catch (err) {
+                tracker.logError(update, err as Error);
                 break;
               }
+            } else {
+              run();
+              await 1; // allow a microtask before we log the update in order to catch mutation observers.
+              tracker.logUpdate(update);
             }
+          } else {
+            instance.update(update);
+            tracker.logUpdate(update);
+          }
+        }
 
-            while (hasFlush) {
-              await resolveAfter(0, 1);
+        tracker.cleanup();
+        return { browser, tracker };
+      });
+
+      const resume = once(async () => {
+        const [runResume, { chunks, logs, input, steps }] = await Promise.all([
+          createRunner(templateFile, csrCompileOpts, "resume", interop),
+          serverRender(),
+        ]);
+
+        const browser = createBrowser();
+        const { window } = browser;
+        const { document } = window;
+        const flushNext = browser.stream(chunks);
+        let hasFlush = flushNext();
+        const tracker = createMutationTracker(browser, document);
+
+        for (const group of logs) {
+          for (const { type, args } of group) {
+            window.console[type](...args);
+          }
+        }
+
+        const { run } = runResume(browser.ctx);
+
+        tracker.logUpdate(input);
+
+        for (const update of steps) {
+          if (isWait(update)) {
+            await update();
+          } else if (isFlush(update)) {
+            if (hasFlush) {
               tracker.beginUpdate();
               hasFlush = flushNext();
-              tracker.logUpdate("FLUSH (auto)");
+              await 1; // allow a microtask before we log the update in order to catch mutation observers
+              tracker.logUpdate("FLUSH");
             }
+          } else if (typeof update === "function") {
+            tracker.beginUpdate();
+            await update(document.documentElement);
+            run();
+            await 1; // allow a microtask before we log the update in order to catch mutation observers
+            tracker.logUpdate(update);
+          } else {
+            // if new input is detected, stop testing
+            // this will be covered by the client tests
+            break;
           }
+        }
 
-          tracker.cleanup();
+        while (hasFlush) {
+          await resolveAfter(0, 1);
+          tracker.beginUpdate();
+          hasFlush = flushNext();
+          tracker.logUpdate("FLUSH (auto)");
+        }
 
-          return { browser, tracker };
-        })();
-        resume = () => cached;
-        return cached;
-      };
+        tracker.cleanup();
 
-      before(() => {
-        register({ ...ssrCompileOpts, modules: "cjs" });
+        return { browser, tracker };
       });
 
       describe("compile", () => {
-        (skipHTML ? it.skip : it)("html", () =>
-          snapAllTemplates(ssrCompileOpts),
-        );
-
-        (skipDOM ? it.skip : it)("dom", () => snapAllTemplates(csrCompileOpts));
+        skipHTML || it("html", () => snapAllTemplates(ssrCompileOpts));
+        skipDOM || it("dom", () => snapAllTemplates(csrCompileOpts));
       });
 
       describe("render", () => {
-        beforeEach(() => {
-          resetResolveState();
-        });
+        beforeEach(resetResolveState);
 
-        (skipSSR ? it.skip : it)("ssr", async () => {
-          await snapMD(async () => (await ssr()).tracker.getLogs());
-        });
+        skipSSR ||
+          it("ssr", async () => {
+            await snapMD(async () => (await ssr()).tracker.getLogs());
+          });
 
-        (skipResume ? it.skip : it)("resume", async () => {
-          await snapMD(async () => (await resume()).tracker.getLogs());
-        });
+        skipResume ||
+          it("resume", async () => {
+            await snapMD(async () => (await resume()).tracker.getLogs());
+          });
 
-        (skipCSR ? it.skip : it)("csr", async () => {
-          await snapMD(async () => (await csr()).tracker.getLogs());
-        });
+        skipCSR ||
+          it("csr", async () => {
+            await snapMD(async () => (await csr()).tracker.getLogs());
+          });
       });
 
       describe("sanitized", () => {
-        beforeEach(() => {
-          resetResolveState();
-        });
+        beforeEach(resetResolveState);
 
-        (skipSSR ? it.skip : it)("ssr-sanitized", async () => {
-          await snapMD(async () => (await ssr()).tracker.getLogs(true));
-        });
+        skipSSR ||
+          it("ssr-sanitized", async () => {
+            await snapMD(async () => (await ssr()).tracker.getLogs(true));
+          });
 
-        (skipResume ? it.skip : it)("resume-sanitized", async () => {
-          await snapMD(async () => (await resume()).tracker.getLogs(true));
-        });
+        skipResume ||
+          it("resume-sanitized", async () => {
+            await snapMD(async () => (await resume()).tracker.getLogs(true));
+          });
 
-        (skipCSR ? it.skip : it)("csr-sanitized", async () => {
-          await snapMD(async () => (await csr()).tracker.getLogs(true));
-        });
+        skipCSR ||
+          it("csr-sanitized", async () => {
+            await snapMD(async () => (await csr()).tracker.getLogs(true));
+          });
 
-        (skipEquivalent ? it.skip : it)("equivalent", async () => {
-          if (config.error_runtime) {
-            const resumeError = (await resume()
-              .then(() => undefined)
-              .catch((err) => err)) as Error | undefined;
-            const csrError = (await csr()
-              .then(() => undefined)
-              .catch((err) => err)) as Error | undefined;
-            if (!resumeError) throw new Error("Resume did not error.");
-            if (!csrError) throw new Error("CSR did not error.");
-            assert.strictEqual(resumeError.message, csrError.message);
-            return;
-          }
-
-          const normalizeLog = (log: string) =>
-            log.replace(/[cs]M_[a-z0-9]+/g, "%id");
-
-          const resumeLogs = (await resume()).tracker
-            .getRawLogs(true)
-            .map(normalizeLog);
-          const csrLogs = (await csr()).tracker
-            .getRawLogs(true)
-            .map(normalizeLog);
-
-          let csrIndex = 0;
-          let resumeIndex = 0;
-
-          let actual = "";
-          let expected = "";
-
-          let prevResumeLog = "";
-
-          while (resumeIndex < resumeLogs.length) {
-            const resumeLog = resumeLogs[resumeIndex++].replace(
-              /(# Render)[^\n]+/,
-              "$1",
-            );
-            if (resumeLog !== prevResumeLog) {
-              while (csrIndex < csrLogs.length) {
-                const csrLog = csrLogs[csrIndex++].replace(
-                  /(# Render)[^\n]+/,
-                  "$1",
-                );
-                if (csrLog === resumeLog) {
-                  if (expected) {
-                    expected += "\n\n";
-                  }
-                  expected += csrLog;
-                  break;
-                }
-              }
-
-              if (actual) {
-                actual += "\n\n";
-              }
-              actual += resumeLog;
+        skipEquivalent ||
+          it("equivalent", async () => {
+            if (config.error_runtime) {
+              const resumeError = await resume()
+                .then(() => {})
+                .catch((err: Error) => err);
+              const csrError = await csr()
+                .then(() => {})
+                .catch((err: Error) => err);
+              if (!resumeError) throw new Error("Resume did not error.");
+              if (!csrError) throw new Error("CSR did not error.");
+              assert.strictEqual(resumeError.message, csrError.message);
+              return;
             }
-            prevResumeLog = resumeLog;
-          }
 
-          if (!expected && actual) {
-            assert.strictEqual(csrLogs.join("\n\n"), resumeLogs.join("\n\n"));
-          } else {
-            assert.strictEqual(actual, expected);
-          }
-        });
+            const normalizeLog = (log: string) =>
+              log.replace(/[cs]M_[a-z0-9]+/g, "%id");
+
+            const resumeLogs = (await resume()).tracker
+              .getRawLogs(true)
+              .map(normalizeLog);
+            const csrLogs = (await csr()).tracker
+              .getRawLogs(true)
+              .map(normalizeLog);
+
+            let csrIndex = 0;
+            let resumeIndex = 0;
+            let actual = "";
+            let expected = "";
+            let prevResumeLog = "";
+
+            while (resumeIndex < resumeLogs.length) {
+              const resumeLog = resumeLogs[resumeIndex++].replace(
+                /(# Render)[^\n]+/,
+                "$1",
+              );
+              if (resumeLog !== prevResumeLog) {
+                while (csrIndex < csrLogs.length) {
+                  const csrLog = csrLogs[csrIndex++].replace(
+                    /(# Render)[^\n]+/,
+                    "$1",
+                  );
+                  if (csrLog === resumeLog) {
+                    if (expected) expected += "\n\n";
+                    expected += csrLog;
+                    break;
+                  }
+                }
+                if (actual) actual += "\n\n";
+                actual += resumeLog;
+              }
+              prevResumeLog = resumeLog;
+            }
+
+            if (!expected && actual) {
+              assert.strictEqual(csrLogs.join("\n\n"), resumeLogs.join("\n\n"));
+            } else {
+              assert.strictEqual(actual, expected);
+            }
+          });
       });
     });
   }
@@ -493,6 +441,19 @@ function testFixtures(interop?: true) {
 
 async function compileCode(templateFile: string, config: compiler.Config) {
   return (await compiler.compileFile(templateFile, config)).code;
+}
+
+async function getSteps(config: TestConfig) {
+  const [input = {} as Input, ...steps] =
+    typeof config.steps === "function"
+      ? await config.steps()
+      : (config.steps ?? []);
+  return { input, steps };
+}
+
+function once<T>(fn: () => Promise<T>): () => Promise<T> {
+  let cached: Promise<T> | undefined;
+  return () => (cached ??= fn());
 }
 
 function indent(data: unknown) {
