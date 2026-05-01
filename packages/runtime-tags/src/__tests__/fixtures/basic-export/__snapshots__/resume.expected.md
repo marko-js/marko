@@ -1,5 +1,4 @@
-# Render `{"value":123}`
-
+# Render
 ```html
 <div>
   123

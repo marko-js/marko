@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["node"],
     "lib": ["dom", "ESNext"],
     "strict": true,
     "allowJs": true,
