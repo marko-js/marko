@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "include": ["src"],
-  "exclude": ["**/__snapshots__"],
+  "exclude": ["**/__snapshots__", "**/dist"],
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
