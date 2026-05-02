@@ -187,7 +187,7 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       break;
     }
   }
-  if (!prev.node && t.isProgram(placeholder.parentPath)) {
+  if (!prev.node && t.isProgram(placeholder.parent)) {
     return (placeholderExtra[kSiblingText] = SiblingText.Before);
   }
   let next = placeholder.getNextSibling();
@@ -208,7 +208,7 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       break;
     }
   }
-  if (!next.node && t.isProgram(placeholder.parentPath)) {
+  if (!next.node && t.isProgram(placeholder.parent)) {
     return (placeholderExtra[kSiblingText] = SiblingText.After);
   }
 

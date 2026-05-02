@@ -1,18 +1,9 @@
 {
   "extends": "./tsconfig.json",
-  "include": [
-    "scripts",
-    "packages/compiler/*.d.ts",
-    "packages/runtime-tags/*.d.ts"
-  ],
-  "compilerOptions": {
-    "noEmit": true,
-    "skipLibCheck": false,
-    "emitDeclarationOnly": false
-  },
+  "include": ["scripts"],
   "references": [
-    {
-      "path": "./packages/runtime-tags"
-    }
+    { "path": "./packages/compiler" },
+    { "path": "./packages/runtime-tags" },
+    { "path": "./packages/runtime-class" }
   ]
 }

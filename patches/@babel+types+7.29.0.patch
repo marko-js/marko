@@ -546,11 +546,24 @@ index 0000000..e14efd5
 +  },
 +});
 diff --git a/node_modules/@babel/types/lib/index.d.ts b/node_modules/@babel/types/lib/index.d.ts
-index efa49cb..fdaa187 100644
+index efa49cb..b5023dc 100644
 --- a/node_modules/@babel/types/lib/index.d.ts
 +++ b/node_modules/@babel/types/lib/index.d.ts
-@@ -375,7 +375,8 @@ interface BaseNode {
-     extra?: Record<string, unknown>;
+@@ -364,6 +364,8 @@ interface SourceLocation {
+     filename: string;
+     identifierName: string | undefined | null;
+ }
++
++export interface NodeExtra {}
+ interface BaseNode {
+     leadingComments?: Comment[] | null;
+     innerComments?: Comment[] | null;
+@@ -372,10 +374,11 @@ interface BaseNode {
+     end?: number | null;
+     loc?: SourceLocation | null;
+     range?: [number, number];
+-    extra?: Record<string, unknown>;
++    extra?: NodeExtra;
  }
  type CommentTypeShorthand = "leading" | "inner" | "trailing";
 -type Node = AnyTypeAnnotation | ArgumentPlaceholder | ArrayExpression | ArrayPattern | ArrayTypeAnnotation | ArrowFunctionExpression | AssignmentExpression | AssignmentPattern | AwaitExpression | BigIntLiteral | BinaryExpression | BindExpression | BlockStatement | BooleanLiteral | BooleanLiteralTypeAnnotation | BooleanTypeAnnotation | BreakStatement | CallExpression | CatchClause | ClassAccessorProperty | ClassBody | ClassDeclaration | ClassExpression | ClassImplements | ClassMethod | ClassPrivateMethod | ClassPrivateProperty | ClassProperty | ConditionalExpression | ContinueStatement | DebuggerStatement | DecimalLiteral | DeclareClass | DeclareExportAllDeclaration | DeclareExportDeclaration | DeclareFunction | DeclareInterface | DeclareModule | DeclareModuleExports | DeclareOpaqueType | DeclareTypeAlias | DeclareVariable | DeclaredPredicate | Decorator | Directive | DirectiveLiteral | DoExpression | DoWhileStatement | EmptyStatement | EmptyTypeAnnotation | EnumBooleanBody | EnumBooleanMember | EnumDeclaration | EnumDefaultedMember | EnumNumberBody | EnumNumberMember | EnumStringBody | EnumStringMember | EnumSymbolBody | ExistsTypeAnnotation | ExportAllDeclaration | ExportDefaultDeclaration | ExportDefaultSpecifier | ExportNamedDeclaration | ExportNamespaceSpecifier | ExportSpecifier | ExpressionStatement | File | ForInStatement | ForOfStatement | ForStatement | FunctionDeclaration | FunctionExpression | FunctionTypeAnnotation | FunctionTypeParam | GenericTypeAnnotation | Identifier | IfStatement | Import | ImportAttribute | ImportDeclaration | ImportDefaultSpecifier | ImportExpression | ImportNamespaceSpecifier | ImportSpecifier | IndexedAccessType | InferredPredicate | InterfaceDeclaration | InterfaceExtends | InterfaceTypeAnnotation | InterpreterDirective | IntersectionTypeAnnotation | JSXAttribute | JSXClosingElement | JSXClosingFragment | JSXElement | JSXEmptyExpression | JSXExpressionContainer | JSXFragment | JSXIdentifier | JSXMemberExpression | JSXNamespacedName | JSXOpeningElement | JSXOpeningFragment | JSXSpreadAttribute | JSXSpreadChild | JSXText | LabeledStatement | LogicalExpression | MemberExpression | MetaProperty | MixedTypeAnnotation | ModuleExpression | NewExpression | Noop | NullLiteral | NullLiteralTypeAnnotation | NullableTypeAnnotation | NumberLiteral$1 | NumberLiteralTypeAnnotation | NumberTypeAnnotation | NumericLiteral | ObjectExpression | ObjectMethod | ObjectPattern | ObjectProperty | ObjectTypeAnnotation | ObjectTypeCallProperty | ObjectTypeIndexer | ObjectTypeInternalSlot | ObjectTypeProperty | ObjectTypeSpreadProperty | OpaqueType | OptionalCallExpression | OptionalIndexedAccessType | OptionalMemberExpression | ParenthesizedExpression | PipelineBareFunction | PipelinePrimaryTopicReference | PipelineTopicExpression | Placeholder | PrivateName | Program | QualifiedTypeIdentifier | RecordExpression | RegExpLiteral | RegexLiteral$1 | RestElement | RestProperty$1 | ReturnStatement | SequenceExpression | SpreadElement | SpreadProperty$1 | StaticBlock | StringLiteral | StringLiteralTypeAnnotation | StringTypeAnnotation | Super | SwitchCase | SwitchStatement | SymbolTypeAnnotation | TSAnyKeyword | TSArrayType | TSAsExpression | TSBigIntKeyword | TSBooleanKeyword | TSCallSignatureDeclaration | TSConditionalType | TSConstructSignatureDeclaration | TSConstructorType | TSDeclareFunction | TSDeclareMethod | TSEnumBody | TSEnumDeclaration | TSEnumMember | TSExportAssignment | TSExpressionWithTypeArguments | TSExternalModuleReference | TSFunctionType | TSImportEqualsDeclaration | TSImportType | TSIndexSignature | TSIndexedAccessType | TSInferType | TSInstantiationExpression | TSInterfaceBody | TSInterfaceDeclaration | TSIntersectionType | TSIntrinsicKeyword | TSLiteralType | TSMappedType | TSMethodSignature | TSModuleBlock | TSModuleDeclaration | TSNamedTupleMember | TSNamespaceExportDeclaration | TSNeverKeyword | TSNonNullExpression | TSNullKeyword | TSNumberKeyword | TSObjectKeyword | TSOptionalType | TSParameterProperty | TSParenthesizedType | TSPropertySignature | TSQualifiedName | TSRestType | TSSatisfiesExpression | TSStringKeyword | TSSymbolKeyword | TSTemplateLiteralType | TSThisType | TSTupleType | TSTypeAliasDeclaration | TSTypeAnnotation | TSTypeAssertion | TSTypeLiteral | TSTypeOperator | TSTypeParameter | TSTypeParameterDeclaration | TSTypeParameterInstantiation | TSTypePredicate | TSTypeQuery | TSTypeReference | TSUndefinedKeyword | TSUnionType | TSUnknownKeyword | TSVoidKeyword | TaggedTemplateExpression | TemplateElement | TemplateLiteral | ThisExpression | ThisTypeAnnotation | ThrowStatement | TopicReference | TryStatement | TupleExpression | TupleTypeAnnotation | TypeAlias | TypeAnnotation | TypeCastExpression | TypeParameter | TypeParameterDeclaration | TypeParameterInstantiation | TypeofTypeAnnotation | UnaryExpression | UnionTypeAnnotation | UpdateExpression | V8IntrinsicIdentifier | VariableDeclaration | VariableDeclarator | Variance | VoidPattern | VoidTypeAnnotation | WhileStatement | WithStatement | YieldExpression;
@@ -559,7 +572,7 @@ index efa49cb..fdaa187 100644
  interface ArrayExpression extends BaseNode {
      type: "ArrayExpression";
      elements: (null | Expression | SpreadElement)[];
-@@ -570,6 +571,7 @@ interface NewExpression extends BaseNode {
+@@ -570,6 +573,7 @@ interface NewExpression extends BaseNode {
  interface Program extends BaseNode {
      type: "Program";
      body: Statement[];
@@ -567,7 +580,7 @@ index efa49cb..fdaa187 100644
      directives: Directive[];
      sourceType: "script" | "module";
      interpreter?: InterpreterDirective | null;
-@@ -1805,12 +1807,15 @@ interface TSTypeParameter extends BaseNode {
+@@ -1805,12 +1809,15 @@ interface TSTypeParameter extends BaseNode {
      out?: boolean | null;
  }
  type Standardized = ArrayExpression | AssignmentExpression | BinaryExpression | InterpreterDirective | Directive | DirectiveLiteral | BlockStatement | BreakStatement | CallExpression | CatchClause | ConditionalExpression | ContinueStatement | DebuggerStatement | DoWhileStatement | EmptyStatement | ExpressionStatement | File | ForInStatement | ForStatement | FunctionDeclaration | FunctionExpression | Identifier | IfStatement | LabeledStatement | StringLiteral | NumericLiteral | NullLiteral | BooleanLiteral | RegExpLiteral | LogicalExpression | MemberExpression | NewExpression | Program | ObjectExpression | ObjectMethod | ObjectProperty | RestElement | ReturnStatement | SequenceExpression | ParenthesizedExpression | SwitchCase | SwitchStatement | ThisExpression | ThrowStatement | TryStatement | UnaryExpression | UpdateExpression | VariableDeclaration | VariableDeclarator | WhileStatement | WithStatement | AssignmentPattern | ArrayPattern | ArrowFunctionExpression | ClassBody | ClassExpression | ClassDeclaration | ExportAllDeclaration | ExportDefaultDeclaration | ExportNamedDeclaration | ExportSpecifier | ForOfStatement | ImportDeclaration | ImportDefaultSpecifier | ImportNamespaceSpecifier | ImportSpecifier | ImportExpression | MetaProperty | ClassMethod | ObjectPattern | SpreadElement | Super | TaggedTemplateExpression | TemplateElement | TemplateLiteral | YieldExpression | AwaitExpression | Import | BigIntLiteral | ExportNamespaceSpecifier | OptionalMemberExpression | OptionalCallExpression | ClassProperty | ClassAccessorProperty | ClassPrivateProperty | ClassPrivateMethod | PrivateName | StaticBlock | ImportAttribute;
@@ -586,7 +599,7 @@ index efa49cb..fdaa187 100644
  type Terminatorless = BreakStatement | ContinueStatement | ReturnStatement | ThrowStatement | YieldExpression | AwaitExpression;
  type CompletionStatement = BreakStatement | ContinueStatement | ReturnStatement | ThrowStatement;
  type Conditional = ConditionalExpression | IfStatement;
-@@ -1820,7 +1825,8 @@ type ExpressionWrapper = ExpressionStatement | ParenthesizedExpression | TypeCas
+@@ -1820,7 +1827,8 @@ type ExpressionWrapper = ExpressionStatement | ParenthesizedExpression | TypeCas
  type For = ForInStatement | ForStatement | ForOfStatement;
  type ForXStatement = ForInStatement | ForOfStatement;
  type Function = FunctionDeclaration | FunctionExpression | ObjectMethod | ArrowFunctionExpression | ClassMethod | ClassPrivateMethod;
@@ -596,7 +609,7 @@ index efa49cb..fdaa187 100644
  type Pureish = FunctionDeclaration | FunctionExpression | StringLiteral | NumericLiteral | NullLiteral | BooleanLiteral | RegExpLiteral | ArrowFunctionExpression | BigIntLiteral | DecimalLiteral;
  type Declaration = FunctionDeclaration | VariableDeclaration | ClassDeclaration | ExportAllDeclaration | ExportDefaultDeclaration | ExportNamedDeclaration | ImportDeclaration | DeclareClass | DeclareFunction | DeclareInterface | DeclareModule | DeclareModuleExports | DeclareTypeAlias | DeclareOpaqueType | DeclareVariable | DeclareExportDeclaration | DeclareExportAllDeclaration | InterfaceDeclaration | OpaqueType | TypeAlias | EnumDeclaration | TSDeclareFunction | TSInterfaceDeclaration | TSTypeAliasDeclaration | TSEnumDeclaration | TSModuleDeclaration | TSImportEqualsDeclaration;
  type FunctionParameter = Identifier | RestElement | AssignmentPattern | ArrayPattern | ObjectPattern | VoidPattern;
-@@ -1835,7 +1841,8 @@ type ObjectMember = ObjectMethod | ObjectProperty;
+@@ -1835,7 +1843,8 @@ type ObjectMember = ObjectMethod | ObjectProperty;
  type Property = ObjectProperty | ClassProperty | ClassAccessorProperty | ClassPrivateProperty;
  type UnaryLike = UnaryExpression | SpreadElement;
  type Pattern = AssignmentPattern | ArrayPattern | ObjectPattern | VoidPattern;
@@ -606,7 +619,7 @@ index efa49cb..fdaa187 100644
  type ImportOrExportDeclaration = ExportAllDeclaration | ExportDefaultDeclaration | ExportNamedDeclaration | ImportDeclaration;
  type ExportDeclaration = ExportAllDeclaration | ExportDefaultDeclaration | ExportNamedDeclaration;
  type ModuleSpecifier = ExportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier | ImportSpecifier | ExportNamespaceSpecifier | ExportDefaultSpecifier;
-@@ -1907,6 +1914,8 @@ interface Aliases {
+@@ -1907,6 +1916,8 @@ interface Aliases {
      TSType: TSType;
      TSBaseType: TSBaseType;
      ModuleDeclaration: ModuleDeclaration;
@@ -615,7 +628,7 @@ index efa49cb..fdaa187 100644
  }
  type DeprecatedAliases = NumberLiteral$1 | RegexLiteral$1 | RestProperty$1 | SpreadProperty$1;
  interface ParentMaps {
-@@ -3614,4 +3623,138 @@ declare const react: {
+@@ -3614,4 +3625,138 @@ declare const react: {
      buildChildren: typeof buildChildren;
  };
  

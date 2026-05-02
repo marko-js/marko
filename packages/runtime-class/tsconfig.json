@@ -1,0 +1,8 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": ["*.d.ts"],
+  "compilerOptions": {
+    "skipLibCheck": false,
+    "tsBuildInfoFile": "../../dist/tsconfig.runtime-class.tsbuildinfo"
+  }
+}

@@ -766,7 +766,9 @@ export function addValue(
     value,
   });
 
-  if (value.extra?.referencedBindingsInFunction) {
+  if (
+    (value.extra as t.FunctionExtra | undefined)?.referencedBindingsInFunction
+  ) {
     parentSignal.hasSideEffect = true;
   }
 }

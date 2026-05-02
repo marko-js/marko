@@ -11,11 +11,15 @@ import {
 import { isCoreTag } from "./is-core-tag";
 
 declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    featureType?: "class" | "tags";
+  }
   export interface MarkoTagExtra {
     tagNameType?: TagNameType;
     tagNameNullable?: boolean;
     tagNameDynamic?: boolean;
     tagNameImported?: string;
+    featureType?: ProgramExtra["featureType"];
   }
 }
 
