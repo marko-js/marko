@@ -34,6 +34,11 @@
 INSERT html/body/#text1
 ```
 
+# Write
+```html
+  <t M_=b><!--M_[--><button>1<!--M_*4 #text/1--></button><!--M_*4 #button/0--><span>1<!--M_*5 #text/0--></span><!--M_|4 #text/2 5--><!--M_]2 #text/0 4--></t><script>M._.r.push(_=>(_.e=[1,_.d={value:1},{_:_.d}]));M._.j.b=_=>{_.push("__tests__/template.marko_3_value 4")};M._.w()</script>
+```
+
 # Render FLUSH
 ```html
 <html>

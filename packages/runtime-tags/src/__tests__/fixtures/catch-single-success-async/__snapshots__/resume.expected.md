@@ -16,6 +16,11 @@ b
 ```
 
 
+# Write
+```html
+  cd<!--M_!b--><!--M_]1 #text/0 2-->fgh
+```
+
 # Render FLUSH
 ```html
 a

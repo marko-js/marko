@@ -61,6 +61,11 @@ container.querySelector("button").click();
 ```
 
 
+# Write
+```html
+  <span>Hello</span><span>1<!--M_*2 #text/0--></span><!--M_|1 #text/3 2--><script>M._.r.push("__tests__/template.marko_0_value 1");M._.w()</script>
+```
+
 # Render FLUSH
 ```html
 <button>

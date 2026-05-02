@@ -1,1 +1,0 @@
-Unable to serialize "unserializable" in packages/runtime-tags/src/__tests__/fixtures/unserializable-warning/template.marko:2:10 (reading nested.thing)

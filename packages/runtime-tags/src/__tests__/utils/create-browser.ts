@@ -1,6 +1,10 @@
+import path from "node:path";
+
 import { JSDOM, VirtualConsole } from "jsdom";
 
-export default function createBrowser() {
+import { importWithContext } from "./import-with-context";
+
+export default function createBrowser(dir?: string) {
   const virtualConsole = new VirtualConsole();
   const dom = new JSDOM("", {
     runScripts: "dangerously",
@@ -8,6 +12,9 @@ export default function createBrowser() {
     virtualConsole,
   });
   const { window } = dom;
+  const ctx = dom.getInternalVMContext();
+  const qmt = window.queueMicrotask;
+  let scripts: string[] = ["template.mjs"];
   window.__coverage__ = (globalThis as any).__coverage__;
   window.__RESOLVE_STATE__ = globalThis.__RESOLVE_STATE__;
   window.setImmediate = setImmediate;
@@ -48,7 +55,23 @@ export default function createBrowser() {
   return {
     window,
     virtualConsole,
-    ctx: dom.getInternalVMContext(),
+    ctx,
+    async runAsyncScripts(beforeEffects?: () => void): Promise<void> {
+      if (dir) {
+        // Patch queueMicrotask to prevent scheduled updates (from effects)
+        // from executing before we snapshot the dom.
+        window.queueMicrotask = (fn: () => void) => deferred.push(fn);
+        const deferred: (() => void)[] = [];
+        const pending = scripts.map((src) =>
+          importWithContext(path.join(dir, src), { browser: true }, ctx),
+        );
+        scripts = [];
+        await Promise.all(pending);
+        window.queueMicrotask = qmt;
+        beforeEffects?.();
+        deferred.forEach(qmt);
+      }
+    },
     stream(chunks: string[]): () => boolean {
       const { document } = window;
       document.open();

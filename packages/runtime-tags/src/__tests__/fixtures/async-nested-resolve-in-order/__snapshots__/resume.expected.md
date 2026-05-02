@@ -4,6 +4,11 @@ a
 ```
 
 
+# Write
+```html
+  b
+```
+
 # Render FLUSH
 ```html
 ab
@@ -14,6 +19,11 @@ ab
 INSERT #text1
 ```
 
+# Write
+```html
+  c
+```
+
 # Render FLUSH
 ```html
 abc
@@ -22,6 +32,11 @@ abc
 # Mutations
 ```
 INSERT #text2
+```
+
+# Write
+```html
+  defghijklm
 ```
 
 # Render FLUSH

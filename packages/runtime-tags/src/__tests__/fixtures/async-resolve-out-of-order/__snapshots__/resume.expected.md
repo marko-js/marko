@@ -4,6 +4,11 @@ a
 ```
 
 
+# Write
+```html
+  bcde
+```
+
 # Render FLUSH
 ```html
 abcde

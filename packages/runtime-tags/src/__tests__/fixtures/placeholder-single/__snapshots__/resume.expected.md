@@ -32,6 +32,11 @@
 ```
 
 
+# Write
+```html
+  fg
+```
+
 # Render FLUSH
 ```html
 <html>
@@ -69,6 +74,11 @@
 # Mutations
 ```
 INSERT html/body/#text3
+```
+
+# Write
+```html
+  <t M_=b>c</t><script>M._.w()</script>
 ```
 
 # Render FLUSH

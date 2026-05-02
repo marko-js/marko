@@ -22,6 +22,11 @@
 ```
 
 
+# Write
+```html
+  <style M_>t{display:none}</style><t M_=c>Rejected B</t><script>REORDER_RUNTIME(M._);M._.w()</script>
+```
+
 # Render FLUSH
 ```html
 <!--M_[-->
@@ -59,6 +64,11 @@ REMOVE #document/html/head/style after script0
 INSERT #document/html/head/style
 REMOVE t after script0
 INSERT script1
+```
+
+# Write
+```html
+  <div>Resolved A: A Value</div><!--M_!b--><!--M_]1 #text/0 2--><!--M_[--><!--M_!^c--><!--M_!c--><!--M_]1 #text/1 3--><!--M_[--><!--M_!^d--><!--M_[--><div>Resolved C: C Value</div><button>Before</button><!--M_*7 #button/1--><!--M_]4 #text/0 7--><!--M_!d--><!--M_]1 #text/2 4--><script>M._.r.push("__tests__/template.marko_9 7");M._.w()</script>
 ```
 
 # Render FLUSH

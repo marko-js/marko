@@ -34,6 +34,11 @@
 ```
 
 
+# Write
+```html
+  <t M_=b><div data-level=3><!--M_[--><!--M_!^9-->LOADING...<!--M_!9--><!--M_]8 #text/1 9--></div></t><t M_=9><!--M_#c--></t><script>M._.r.push(_=>(_.e=[4,_.d={"#BranchAccessor":"#text/1","#PlaceholderContent":_.f={}}],_.d["#PlaceholderContent"]=_._["__tests__/tags/recurse.marko_4_content"](_.f),_.e));M._.w()</script>
+```
+
 # Render FLUSH
 ```html
 <html>
@@ -102,6 +107,11 @@ REMOVE #comment after html/body/div/#comment0
 INSERT html/body/div/div
 REMOVE t after html/body/script0
 INSERT html/body/script1
+```
+
+# Write
+```html
+  <t M_=c><div data-level=2><!--M_[--><!--M_!^14-->LOADING...<!--M_!14--><!--M_]13 #text/1 14--></div></t><t M_=14><!--M_#d--></t><script>M._.r.push(_=>(_.h=[4,_.g={"#BranchAccessor":"#text/1","#PlaceholderContent":_.i={}}],_.g["#PlaceholderContent"]=_._["__tests__/tags/recurse.marko_4_content"](_.i),_.h));M._.w()</script>
 ```
 
 # Render FLUSH
@@ -187,6 +197,11 @@ REMOVE #comment after html/body/div/div/#comment0
 INSERT html/body/div/div/div
 REMOVE t after html/body/script1
 INSERT html/body/script2
+```
+
+# Write
+```html
+  <t M_=d><div data-level=1><!--M_[--><!--M_!^19-->LOADING...<!--M_!19--><!--M_]18 #text/1 19--></div></t><t M_=19><!--M_#e--></t><script>M._.r.push(_=>(_.k=[4,_.j={"#BranchAccessor":"#text/1","#PlaceholderContent":_.l={}}],_.j["#PlaceholderContent"]=_._["__tests__/tags/recurse.marko_4_content"](_.l),_.k));M._.w()</script>
 ```
 
 # Render FLUSH
@@ -287,6 +302,11 @@ REMOVE #comment after html/body/div/div/div/#comment0
 INSERT html/body/div/div/div/div
 REMOVE t after html/body/script2
 INSERT html/body/script3
+```
+
+# Write
+```html
+  <t M_=e></t><script>M._.w()</script>
 ```
 
 # Render FLUSH

@@ -16,6 +16,11 @@ b
 ```
 
 
+# Write
+```html
+  <!--M_!b--><!--M_]1 #text/0 2-->def<style M_>t{display:none}</style><t M_=b>ERROR!</t><script>REORDER_RUNTIME(M._);M._.w()</script>
+```
+
 # Render FLUSH
 ```html
 a

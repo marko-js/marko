@@ -1,6 +1,8 @@
 {
   "timeout": 5000,
+  "no-warnings": true,
   "enable-source-maps": true,
+  "experimental-vm-modules": true,
   "require": ["~ts", "mocha-snap"],
   "spec": ["packages/*/@(src|test)/**/*.test.@(js|ts)"],
   "watchFiles": ["src/**/*.@(js|ts|marko)", "!**/__snapshots__/**"]

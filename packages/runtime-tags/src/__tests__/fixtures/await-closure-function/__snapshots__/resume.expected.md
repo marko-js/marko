@@ -37,6 +37,11 @@
 INSERT html/body/#text1
 ```
 
+# Write
+```html
+  <t M_=b><!--M_[-->0<!--M_*4 #text/0--><!--M_]2 #text/0 4--></t><script>M._.r.push(_=>(_.d=[1,{_:_.b}]));M._.j.b=_=>{_.push("__tests__/template.marko_2_value/pending 4 __tests__/template.marko_2_value 4")};M._.w()</script>
+```
+
 # Render FLUSH
 ```html
 <html>
