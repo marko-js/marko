@@ -77,7 +77,10 @@ export function appendLiteral(arr: unknown[], str: string) {
 }
 
 function escapeTemplateRaw(raw: string) {
-  return raw.replace(/\\/g, "\\\\").replace(/`/g, "\\`");
+  return raw
+    .replace(/\\/g, "\\\\")
+    .replace(/`/g, "\\`")
+    .replace(/\$(?=\{)/g, "\\$");
 }
 
 function shiftItems(list: unknown[], start: number, offset: number) {
