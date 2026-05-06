@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.38.38
+
+### Patch Changes
+
+- [#3176](https://github.com/marko-js/marko/pull/3176) [`3a6b10c`](https://github.com/marko-js/marko/commit/3a6b10c13c77372cce2da50b1da81b7fe5a28ad6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Unify some class/tags api html types.
+
+- Updated dependencies [[`3a6b10c`](https://github.com/marko-js/marko/commit/3a6b10c13c77372cce2da50b1da81b7fe5a28ad6)]:
+  - @marko/runtime-tags@6.0.169
+
 ## 5.38.37
 
 ### Patch Changes

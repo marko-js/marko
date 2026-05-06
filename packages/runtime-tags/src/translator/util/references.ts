@@ -160,6 +160,7 @@ declare module "@marko/compiler/dist/types" {
     pruned?: true;
     isEffect?: true;
     spreadFrom?: Binding;
+    merged?: NodeExtra;
     [kIsInvoked]?: true;
   }
 
@@ -577,7 +578,7 @@ function trackAssignment(
 export function setReferencesScope(path: t.NodePath<any>) {
   const fnRoot = getFnRoot(path);
   if (fnRoot) {
-    (fnRoot.node.extra ??= {}).referencesScope = true;
+    ((fnRoot.node.extra ??= {}) as t.FunctionExtra).referencesScope = true;
   }
 }
 
@@ -2214,7 +2215,10 @@ export interface RegisteredFnExtra extends ReferencedExtra, t.FunctionExtra {
 export function isRegisteredFnExtra(
   extra: t.NodeExtra | undefined,
 ): extra is RegisteredFnExtra {
-  return isReferencedExtra(extra) && extra.registerId !== undefined;
+  return (
+    isReferencedExtra(extra) &&
+    (extra as RegisteredFnExtra).registerId !== undefined
+  );
 }
 
 export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {

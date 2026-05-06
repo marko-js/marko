@@ -30,6 +30,11 @@
 ```
 
 
+# Write
+```html
+  <t M_=b><span>1</span></t><script>M._.w()</script>
+```
+
 # Render FLUSH
 ```html
 <html>

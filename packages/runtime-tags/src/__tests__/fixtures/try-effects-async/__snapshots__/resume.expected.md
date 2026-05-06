@@ -55,6 +55,11 @@
 INSERT html/body/#text1
 ```
 
+# Write
+```html
+  <t M_=c><!--M_[-->Async: <!>0<!--M_*4 #text/0--><!--M_]2 #text/0 4--></t><script>M._.w()</script>
+```
+
 # Render FLUSH
 ```html
 <html>

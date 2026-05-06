@@ -48,9 +48,10 @@ export default {
       (isMarkoAttribute(markoRoot)
         ? markoRoot.node.default
           ? t.toIdentifier(
-              markoRoot.parentPath.has("var")
+              (markoRoot.parentPath.has("var")
                 ? markoRoot.parentPath.get("var")
-                : markoRoot.parentPath.get("name"),
+                : markoRoot.parentPath.get("name")
+              ).toString(),
             )
           : markoRoot.node.name
         : t.isVariableDeclarator(fn.parent) && t.isIdentifier(fn.parent.id)

@@ -1,1 +1,0 @@
-Unable to serialize "input" in packages/runtime-tags/src/__tests__/fixtures/component-attrs-import-value/tags/counter.marko (reading format)

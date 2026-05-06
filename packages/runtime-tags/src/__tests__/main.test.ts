@@ -1,13 +1,13 @@
 import * as compiler from "@marko/compiler";
-import type { Input } from "@marko/runtime-tags/common/types";
 import assert from "assert";
 import fs from "fs";
 import snap from "mocha-snap";
 import path from "path";
 import glob from "tiny-glob";
 
+import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
-import { bundle, createRunner } from "./utils/bundle";
+import { bundle, createCSRRunner, createLinkedRunner } from "./utils/bundle";
 import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 import createBrowser from "./utils/create-browser";
 import {
@@ -88,7 +88,7 @@ function testFixtures(interop?: true) {
       };
       const skipHTML = config.skip_html;
       const skipDOM = config.skip_dom;
-      const skipSSR = skipHTML || config.skip_ssr || config.error_compiler;
+      const skipSSR = skipHTML || config.skip_ssr || config.error_compiler; // TODO: remove
       const skipCSR = skipDOM || config.skip_csr || config.error_compiler;
       const skipResume =
         config.skip_resume !== false &&
@@ -133,7 +133,7 @@ function testFixtures(interop?: true) {
             if (
               compilerConfig.output === "dom" &&
               file === templateFile &&
-              !skipSSR &&
+              !skipResume &&
               !config.error_compiler
             ) {
               await targetSnap(
@@ -161,74 +161,11 @@ function testFixtures(interop?: true) {
         }
       };
 
-      const serverRender = once(async () => {
-        const runSSR = await createRunner(templateFile, ssrCompileOpts, "ssr");
-        const { input, steps } = await getSteps(config);
-        const chunks: string[] = [];
-        const logs: ConsoleRecord[][] = [];
-        const capture = captureConsole();
-        const { template } = runSSR();
-        try {
-          for await (const data of template.render(
-            config.embedded
-              ? {
-                  ...input,
-                  $global: {
-                    ...(input.$global as any),
-                    renderId: "embedded",
-                  },
-                }
-              : input,
-          )) {
-            chunks.push(data);
-            logs.push(capture.records());
-          }
-          logs.push(capture.records());
-        } finally {
-          capture.cleanup();
-        }
-
-        return { chunks, logs, input, steps };
-      });
-
-      const ssr = once(async () => {
-        const browser = createBrowser();
-        const { window } = browser;
-        const { document } = window;
-        const { chunks, logs } = await serverRender();
-        const flushNext = browser.stream(chunks);
-        const tracker = createMutationTracker(browser, document);
-
-        for (const data of chunks) {
-          const formattedHtml = indent(stripInlineRuntime(data));
-
-          if (formattedHtml) {
-            tracker.log(`# Write\n\`\`\`html\n${formattedHtml}\n\`\`\``);
-          }
-        }
-
-        for (const group of logs) {
-          for (const { type, args } of group) {
-            window.console[type](...args);
-          }
-        }
-
-        while (flushNext()) {
-          await 1;
-        }
-
-        tracker.logUpdate("End", true);
-
-        tracker.cleanup();
-        return { browser, tracker };
-      });
-
       const csr = once(async () => {
         const browser = createBrowser();
-        const runCSR = await createRunner(
+        const runCSR = await createCSRRunner(
           templateFile,
-          csrCompileOpts,
-          "csr",
+          compileOpts,
           interop,
         );
         const { window } = browser;
@@ -239,7 +176,7 @@ function testFixtures(interop?: true) {
 
         document.body.appendChild(container);
 
-        const { template, run } = runCSR(browser.ctx);
+        const { default: template, run } = await runCSR(browser.ctx);
         const instance = template.mount(input, container, "afterbegin");
         tracker.logUpdate(input);
 
@@ -275,16 +212,51 @@ function testFixtures(interop?: true) {
       });
 
       const resume = once(async () => {
-        const [runResume, { chunks, logs, input, steps }] = await Promise.all([
-          createRunner(templateFile, csrCompileOpts, "resume", interop),
-          serverRender(),
-        ]);
+        const runner = await createLinkedRunner(
+          fixtureDir,
+          { template: "./template.marko" },
+          compileOpts,
+          interop,
+        );
+        const { input, steps } = await getSteps(config);
+        const chunks: string[] = [];
+        const logs: ConsoleRecord[][] = [];
+        const capture = captureConsole();
+        const { template } = await runner.runServer();
 
-        const browser = createBrowser();
+        try {
+          for await (const data of template.render(
+            config.embedded
+              ? {
+                  ...input,
+                  $global: {
+                    ...(input.$global as any),
+                    renderId: "embedded",
+                  },
+                }
+              : input,
+          )) {
+            chunks.push(data);
+            logs.push(capture.records());
+          }
+          logs.push(capture.records());
+        } finally {
+          resetResolveState();
+          capture.cleanup();
+        }
+
+        const browser = createBrowser(runner.assets);
         const { window } = browser;
         const { document } = window;
         const flushNext = browser.stream(chunks);
         let hasFlush = flushNext();
+        let flushIndex = 0;
+        const flushWithLog = () => {
+          tracker.log(
+            `# Write\n\`\`\`html\n${indent(stripInlineRuntime(chunks[++flushIndex]))}\n\`\`\``,
+          );
+          return flushNext();
+        };
         const tracker = createMutationTracker(browser, document);
 
         for (const group of logs) {
@@ -293,9 +265,9 @@ function testFixtures(interop?: true) {
           }
         }
 
-        const { run } = runResume(browser.ctx);
-
-        tracker.logUpdate(input);
+        tracker.beginUpdate();
+        await browser.runAsyncScripts(() => tracker.logUpdate(input));
+        const { run } = browser.ctx as typeof import("@marko/runtime-tags/dom");
 
         for (const update of steps) {
           if (isWait(update)) {
@@ -303,8 +275,8 @@ function testFixtures(interop?: true) {
           } else if (isFlush(update)) {
             if (hasFlush) {
               tracker.beginUpdate();
-              hasFlush = flushNext();
-              await 1; // allow a microtask before we log the update in order to catch mutation observers
+              hasFlush = flushWithLog();
+              await browser.runAsyncScripts();
               tracker.logUpdate("FLUSH");
             }
           } else if (typeof update === "function") {
@@ -323,7 +295,9 @@ function testFixtures(interop?: true) {
         while (hasFlush) {
           await resolveAfter(0, 1);
           tracker.beginUpdate();
-          hasFlush = flushNext();
+          hasFlush = flushWithLog();
+          await browser.runAsyncScripts();
+          run();
           tracker.logUpdate("FLUSH (auto)");
         }
 
@@ -340,11 +314,6 @@ function testFixtures(interop?: true) {
       describe("render", () => {
         beforeEach(resetResolveState);
 
-        skipSSR ||
-          it("ssr", async () => {
-            await snapMD(async () => (await ssr()).tracker.getLogs());
-          });
-
         skipResume ||
           it("resume", async () => {
             await snapMD(async () => (await resume()).tracker.getLogs());
@@ -358,11 +327,6 @@ function testFixtures(interop?: true) {
 
       describe("sanitized", () => {
         beforeEach(resetResolveState);
-
-        skipSSR ||
-          it("ssr-sanitized", async () => {
-            await snapMD(async () => (await ssr()).tracker.getLogs(true));
-          });
 
         skipResume ||
           it("resume-sanitized", async () => {

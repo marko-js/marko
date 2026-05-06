@@ -36,6 +36,11 @@
 ```
 
 
+# Write
+```html
+  ij
+```
+
 # Render FLUSH
 ```html
 <html>
@@ -77,6 +82,11 @@
 # Mutations
 ```
 INSERT html/body/#text3
+```
+
+# Write
+```html
+  <t M_=b>c</t><script>M._.w()</script>
 ```
 
 # Render FLUSH
@@ -133,6 +143,11 @@ REMOVE #comment after html/body/#comment0
 REMOVE #comment after html/body/#comment0
 INSERT html/body/#text1, html/body/#text2, html/body/#text3, html/body/#comment1, html/body/#comment2, html/body/#text4, html/body/#comment3, html/body/#comment4
 INSERT html/body/script1
+```
+
+# Write
+```html
+  <t M_=c>f</t><script>M._.w()</script>
 ```
 
 # Render FLUSH

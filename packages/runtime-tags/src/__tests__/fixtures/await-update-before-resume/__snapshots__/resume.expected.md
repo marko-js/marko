@@ -90,6 +90,11 @@ INSERT html/body/#text1
 UPDATE html/body/div/#text "0" => "1"
 ```
 
+# Write
+```html
+  <t M_=b><!--M_[--><div id=inside>0<!--M_*4 #text/0--></div><!--M_]2 #text/0 4--></t><script>M._.r.push(_=>(_.e=[1,{value:0}]));M._.j.b=_=>{_.push("__tests__/template.marko_3_value 4 __tests__/template.marko_3 4")};M._.w()</script>
+```
+
 # Render FLUSH
 ```html
 <html>

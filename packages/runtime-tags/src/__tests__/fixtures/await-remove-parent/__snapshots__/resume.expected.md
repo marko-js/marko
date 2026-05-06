@@ -90,6 +90,11 @@ REMOVE #comment after html/body/#comment
 REMOVE #text after html/body/#comment
 ```
 
+# Write
+```html
+  <t M_=b></t><script>M._.r.push(_=>(_.d=[1,{"#ClosestBranchId":2}]));M._.j.b=_=>{_.push("__tests__/template.marko_4 5")};M._.w()</script>
+```
+
 # Render FLUSH
 ```html
 <html>

@@ -916,8 +916,7 @@ declare global {
           | AttrMissing
           | "application/x-www-form-urlencoded"
           | "multipart/form-data"
-          | "text/plain"
-          | (string & {});
+          | "text/plain";
         /**
          * Specifies the HTTP method used to submit the form to the server.
          * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-method
@@ -1501,7 +1500,7 @@ declare global {
         value?: AttrStringOrNumber;
 
         /** @deprecated */
-        type?: AttrMimeType;
+        type?: AttrString;
       }
       // TODO break into multiple interfaces based on rel?
       interface Link extends HTMLAttributes<HTMLLinkElement> {
@@ -5707,7 +5706,7 @@ interface CommonAttributes<T extends Element> {
    * Defines the hierarchical level of an element within a structure.
    * @see https://www.w3.org/TR/wai-aria-1.1/#aria-level
    */
-  "aria-level"?: AttrString;
+  "aria-level"?: AttrMissing | number | string;
   /**
    * Indicates that an element will be updated, and describes the types of updates the user agents, assistive technologies,
    * and user can expect from the live region.

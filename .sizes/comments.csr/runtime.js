@@ -286,7 +286,6 @@ function createCloneableHTML(html, ns) {
         }
   );
 }
-function enableBranches() {}
 function _resume(id, obj) {
   return (registeredValues[id] = obj);
 }
@@ -340,18 +339,15 @@ function _if(nodeAccessor, ...branchesArgs) {
     branches.push(
       _content("", branchesArgs[i++], branchesArgs[i++], branchesArgs[i++])(),
     );
-  return (
-    enableBranches(),
-    (scope, newBranch) => {
-      newBranch !== scope[branchAccessor] &&
-        setConditionalRenderer(
-          scope,
-          nodeAccessor,
-          branches[(scope[branchAccessor] = newBranch)],
-          createAndSetupBranch,
-        );
-    }
-  );
+  return (scope, newBranch) => {
+    newBranch !== scope[branchAccessor] &&
+      setConditionalRenderer(
+        scope,
+        nodeAccessor,
+        branches[(scope[branchAccessor] = newBranch)],
+        createAndSetupBranch,
+      );
+  };
 }
 function setConditionalRenderer(
   scope,
@@ -386,127 +382,121 @@ function loop(forEach) {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let scopesAccessor = "A" + nodeAccessor,
       renderer = _content("", template, walks, setup)();
-    return (
-      enableBranches(),
-      (scope, value) => {
-        let referenceNode = scope[nodeAccessor],
-          oldScopes = toArray(scope[scopesAccessor]),
-          newScopes = (scope[scopesAccessor] = []),
-          oldLen = oldScopes.length,
-          parentNode =
-            referenceNode.nodeType > 1
-              ? referenceNode.parentNode || oldScopes[0]?.S.parentNode
-              : referenceNode,
-          oldScopesByKey,
-          hasPotentialMoves;
-        forEach(value, (key, args) => {
-          let branch =
-            oldLen &&
-            (oldScopesByKey ||= oldScopes.reduce(
-              (map, scope, i) => map.set(scope.M ?? i, scope),
-              /* @__PURE__ */ new Map(),
-            )).get(key);
-          (branch
-            ? (hasPotentialMoves = oldScopesByKey.delete(key))
-            : (branch = createAndSetupBranch(
-                scope.$,
-                renderer,
-                scope,
-                parentNode,
-              )),
-            (branch.M = key),
-            newScopes.push(branch),
-            params?.(branch, args));
-        });
-        let newLen = newScopes.length,
-          hasSiblings = referenceNode !== parentNode,
-          afterReference = null,
-          oldEnd = oldLen - 1,
-          newEnd = newLen - 1,
-          start = 0;
-        if (
-          (hasSiblings &&
-            (oldLen
-              ? ((afterReference = oldScopes[oldEnd].K.nextSibling),
-                newLen ||
-                  parentNode.insertBefore(referenceNode, afterReference))
-              : newLen &&
-                ((afterReference = referenceNode.nextSibling),
-                referenceNode.remove())),
-          !hasPotentialMoves)
-        ) {
+    return (scope, value) => {
+      let referenceNode = scope[nodeAccessor],
+        oldScopes = toArray(scope[scopesAccessor]),
+        newScopes = (scope[scopesAccessor] = []),
+        oldLen = oldScopes.length,
+        parentNode =
+          referenceNode.nodeType > 1
+            ? referenceNode.parentNode || oldScopes[0]?.S.parentNode
+            : referenceNode,
+        oldScopesByKey,
+        hasPotentialMoves;
+      forEach(value, (key, args) => {
+        let branch =
           oldLen &&
-            (oldScopes.forEach(
-              hasSiblings ? removeAndDestroyBranch : destroyBranch,
-            ),
-            hasSiblings || (parentNode.textContent = ""));
-          for (let newScope of newScopes)
-            insertBranchBefore(newScope, parentNode, afterReference);
-          return;
-        }
-        for (let branch of oldScopesByKey.values())
-          removeAndDestroyBranch(branch);
-        for (
-          ;
-          start < oldLen &&
-          start < newLen &&
-          oldScopes[start] === newScopes[start];
-        )
-          start++;
-        for (
-          ;
-          oldEnd >= start &&
-          newEnd >= start &&
-          oldScopes[oldEnd] === newScopes[newEnd];
-        )
-          (oldEnd--, newEnd--);
-        if (
-          (oldEnd + 1 < oldLen && (afterReference = oldScopes[oldEnd + 1].S),
-          start > oldEnd)
-        ) {
-          if (start <= newEnd)
-            for (let i = start; i <= newEnd; i++)
-              insertBranchBefore(newScopes[i], parentNode, afterReference);
-          return;
-        } else if (start > newEnd) return;
-        let diffLen = newEnd - start + 1,
-          oldPos = /* @__PURE__ */ new Map(),
-          sources = Array(diffLen),
-          pred = Array(diffLen),
-          tails = [],
-          tail = -1,
-          lo,
-          hi,
-          mid;
-        for (let i = start; i <= oldEnd; i++) oldPos.set(oldScopes[i], i);
-        for (let i = diffLen; i--; )
-          sources[i] = oldPos.get(newScopes[start + i]) ?? -1;
-        for (let i = 0; i < diffLen; i++)
-          if (~sources[i])
-            if (tail < 0 || sources[tails[tail]] < sources[i])
-              (~tail && (pred[i] = tails[tail]), (tails[++tail] = i));
-            else {
-              for (lo = 0, hi = tail; lo < hi; )
-                ((mid = ((lo + hi) / 2) | 0),
-                  sources[tails[mid]] < sources[i]
-                    ? (lo = mid + 1)
-                    : (hi = mid));
-              sources[i] < sources[tails[lo]] &&
-                (lo > 0 && (pred[i] = tails[lo - 1]), (tails[lo] = i));
-            }
-        for (hi = tails[tail], lo = tail + 1; lo-- > 0; )
-          ((tails[lo] = hi), (hi = pred[hi]));
-        for (let i = diffLen; i--; )
-          (~tail && i === tails[tail]
-            ? tail--
-            : insertBranchBefore(
-                newScopes[start + i],
-                parentNode,
-                afterReference,
-              ),
-            (afterReference = newScopes[start + i].S));
+          (oldScopesByKey ||= oldScopes.reduce(
+            (map, scope, i) => map.set(scope.M ?? i, scope),
+            /* @__PURE__ */ new Map(),
+          )).get(key);
+        (branch
+          ? (hasPotentialMoves = oldScopesByKey.delete(key))
+          : (branch = createAndSetupBranch(
+              scope.$,
+              renderer,
+              scope,
+              parentNode,
+            )),
+          (branch.M = key),
+          newScopes.push(branch),
+          params?.(branch, args));
+      });
+      let newLen = newScopes.length,
+        hasSiblings = referenceNode !== parentNode,
+        afterReference = null,
+        oldEnd = oldLen - 1,
+        newEnd = newLen - 1,
+        start = 0;
+      if (
+        (hasSiblings &&
+          (oldLen
+            ? ((afterReference = oldScopes[oldEnd].K.nextSibling),
+              newLen || parentNode.insertBefore(referenceNode, afterReference))
+            : newLen &&
+              ((afterReference = referenceNode.nextSibling),
+              referenceNode.remove())),
+        !hasPotentialMoves)
+      ) {
+        oldLen &&
+          (oldScopes.forEach(
+            hasSiblings ? removeAndDestroyBranch : destroyBranch,
+          ),
+          hasSiblings || (parentNode.textContent = ""));
+        for (let newScope of newScopes)
+          insertBranchBefore(newScope, parentNode, afterReference);
+        return;
       }
-    );
+      for (let branch of oldScopesByKey.values())
+        removeAndDestroyBranch(branch);
+      for (
+        ;
+        start < oldLen &&
+        start < newLen &&
+        oldScopes[start] === newScopes[start];
+      )
+        start++;
+      for (
+        ;
+        oldEnd >= start &&
+        newEnd >= start &&
+        oldScopes[oldEnd] === newScopes[newEnd];
+      )
+        (oldEnd--, newEnd--);
+      if (
+        (oldEnd + 1 < oldLen && (afterReference = oldScopes[oldEnd + 1].S),
+        start > oldEnd)
+      ) {
+        if (start <= newEnd)
+          for (let i = start; i <= newEnd; i++)
+            insertBranchBefore(newScopes[i], parentNode, afterReference);
+        return;
+      } else if (start > newEnd) return;
+      let diffLen = newEnd - start + 1,
+        oldPos = /* @__PURE__ */ new Map(),
+        sources = Array(diffLen),
+        pred = Array(diffLen),
+        tails = [],
+        tail = -1,
+        lo,
+        hi,
+        mid;
+      for (let i = start; i <= oldEnd; i++) oldPos.set(oldScopes[i], i);
+      for (let i = diffLen; i--; )
+        sources[i] = oldPos.get(newScopes[start + i]) ?? -1;
+      for (let i = 0; i < diffLen; i++)
+        if (~sources[i])
+          if (tail < 0 || sources[tails[tail]] < sources[i])
+            (~tail && (pred[i] = tails[tail]), (tails[++tail] = i));
+          else {
+            for (lo = 0, hi = tail; lo < hi; )
+              ((mid = ((lo + hi) / 2) | 0),
+                sources[tails[mid]] < sources[i] ? (lo = mid + 1) : (hi = mid));
+            sources[i] < sources[tails[lo]] &&
+              (lo > 0 && (pred[i] = tails[lo - 1]), (tails[lo] = i));
+          }
+      for (hi = tails[tail], lo = tail + 1; lo-- > 0; )
+        ((tails[lo] = hi), (hi = pred[hi]));
+      for (let i = diffLen; i--; )
+        (~tail && i === tails[tail]
+          ? tail--
+          : insertBranchBefore(
+              newScopes[start + i],
+              parentNode,
+              afterReference,
+            ),
+          (afterReference = newScopes[start + i].S));
+    };
   };
 }
 function bySecondArg(_item, index) {

@@ -21,6 +21,11 @@
 ```
 
 
+# Write
+```html
+  <!--M_[-->2<!--M_*2 #text/0--><!--M_]1 #text/2 2--></p><p>2 * <!>2<!--M_*1 #text/3--> = <!--M_[-->4<!--M_*3 #text/0--><!--M_]1 #text/4 3--></p><p>3 * <!>2<!--M_*1 #text/5--> = <!--M_[-->6<!--M_*4 #text/0--><!--M_]1 #text/6 4--></p><p>4 * <!>2<!--M_*1 #text/7--> = <!--M_[-->8<!--M_*5 #text/0--><!--M_]1 #text/8 5--></p><p>5 * <!>2<!--M_*1 #text/9--> = <!--M_[-->10<!--M_*6 #text/0--><!--M_]1 #text/10 6--></p><script>M._.r.push("__tests__/template.marko_0_n 1");M._.w()</script>
+```
+
 # Render FLUSH
 ```html
 <button>
