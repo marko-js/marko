@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.171
+
+### Patch Changes
+
+- [#3179](https://github.com/marko-js/marko/pull/3179) [`42de2f9`](https://github.com/marko-js/marko/commit/42de2f9633f07ff050cab50b69eafa2870bf7e32) Thanks [@vwong](https://github.com/vwong)! - Allow "${" string in attributes
+
 ## 6.0.170
 
 ### Patch Changes
