@@ -95,6 +95,12 @@ export default function createBrowser(dir?: string) {
             }
 
             const isScript = (node as Element).tagName === "SCRIPT";
+
+            if (dir && isScript && (node as HTMLScriptElement).src) {
+              scripts.push((node as HTMLScriptElement).src);
+              continue;
+            }
+
             const clone = document.importNode(node, isScript);
             targetNodes.set(node, clone);
             (targetNodes.get(node.parentNode!) as ParentNode).appendChild(
@@ -112,7 +118,17 @@ export default function createBrowser(dir?: string) {
 
       return () => {
         if (chunks.length) {
-          document.write(ensureBody(chunks[0]));
+          let [chunk] = chunks;
+          if (dir) {
+            chunk = chunk.replace(
+              /<script async src="([^"]+)"><\/script>/gi,
+              (_, script) => {
+                scripts.push(script);
+                return "";
+              },
+            );
+          }
+          document.write(ensureBody(chunk));
         }
         document.close();
         return false;

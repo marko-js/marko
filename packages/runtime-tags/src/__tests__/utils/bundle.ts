@@ -26,6 +26,7 @@ const virtualPrefix = "\0virtual:";
 const virtualRe = new RegExp(`^${virtualPrefix}`);
 
 export async function bundle(template: string, config: compiler.Config) {
+  const cwd = path.dirname(template);
   const cache = new Map<unknown, unknown>();
   const virtual = createVirtual();
   const compileOpts: compiler.Config = {
@@ -33,11 +34,12 @@ export async function bundle(template: string, config: compiler.Config) {
     cache,
     resolveVirtualDependency: virtual.resolveVirtualDependency,
   };
-  const optimizeKnownTemplates: string[] = await glob(
-    path.join(path.dirname(template), `**/*${markoExt}`),
-    { absolute: true },
-  );
+  const optimizeKnownTemplates: string[] = await glob(`**/*${markoExt}`, {
+    cwd,
+    absolute: true,
+  });
   const { output } = await build({
+    cwd,
     write: false,
     input: entryId,
     external: (id) => !(markoRe.test(id) || virtualRe.test(id)),
@@ -67,27 +69,28 @@ export async function bundle(template: string, config: compiler.Config) {
       minify: { compress: true, mangle: false, codegen: true },
     },
   });
-  const chunks = output.filter((chunk) => "code" in chunk) as OutputChunk[];
-  const size = addSizes(
-    await Promise.all(chunks.map((chunk) => getSizesForSrc(chunk.code))),
-  );
+  const chunks = output.filter(
+    (chunk) => "code" in chunk && chunk.code,
+  ) as OutputChunk[];
+  if (!chunks.length) return `// size: 0\n`;
 
-  if (size.min === 0) {
-    return `// size: 0\n`;
-  }
+  return (
+    await Promise.all(
+      chunks.map(async (chunk) => {
+        const { code } = chunk;
+        const [formatted, size] = await Promise.all([
+          format(stripModuleCode(code), { parser: "babel" }),
+          getSizesForSrc(code),
+        ]);
+        let prefix = `// size: ${size.min} (min) ${size.brotli} (brotli)\n`;
+        if (!chunk.isEntry) {
+          prefix += `// chunk: ${chunk.name}\n`;
+        }
 
-  let result = "";
-  for (const chunk of chunks) {
-    if (chunk.type === "chunk" && chunk.code) {
-      if (chunks.length > 1) {
-        result += `\n\n// chunk: ${chunk.name}`;
-      }
-
-      result += `\n\n${await format(chunk.code, { parser: "babel" })}`;
-    }
-  }
-
-  return `// size: ${size.min} (min) ${size.brotli} (brotli)\n${stripModuleCode(result)}`;
+        return prefix + formatted;
+      }),
+    )
+  ).join("\n");
 }
 
 export async function createCSRRunner(
@@ -122,6 +125,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
     ],
     output: {
       dir: out,
+      cleanDir: true,
       sourcemap: true,
       sourcemapExcludeSources: true,
       entryFileNames: "[name].mjs",
@@ -146,7 +150,9 @@ export async function createLinkedRunner<T extends Record<string, string>>(
   const ssrOut = path.join(out, "resume/ssr");
   const csrOut = path.join(out, "resume/csr");
   const virtual = createVirtual();
-  const entryTemplates = Object.keys(entries).reduce(
+  const templateEntryToFile = (entry: string) =>
+    path.join(cwd, entries[entry.slice(templateEntryPrefix.length)]);
+  const entryNameIds = Object.keys(entries).reduce(
     (input, name) => {
       input[name as keyof T] = templateEntryPrefix + name;
       return input;
@@ -161,7 +167,7 @@ export async function createLinkedRunner<T extends Record<string, string>>(
 
   const csrBuilt = build({
     cwd,
-    input: entryTemplates,
+    input: entryNameIds,
     platform: "browser",
     transform: { define: { MARKO_DEBUG: "true" } },
     plugins: [
@@ -172,25 +178,18 @@ export async function createLinkedRunner<T extends Record<string, string>>(
         resolveId(id, importer) {
           if (templateEntryRe.test(id)) return id;
           if (importer && templateEntryRe.test(importer)) {
-            return this.resolve(
-              id,
-              path.join(
-                cwd,
-                entries[importer.slice(templateEntryPrefix.length)],
-              ),
-            );
+            return this.resolve(id, templateEntryToFile(importer));
           }
         },
         load: {
-          filter: { id: { include: templateEntryRe } },
+          filter: { id: templateEntryRe },
           handler(id) {
-            const name = id.slice(templateEntryPrefix.length);
-            const file = path.join(cwd, entries[name]);
-            const { code } = compiler.compileFileSync(file, {
+            const { code } = compiler.compileFileSync(templateEntryToFile(id), {
               ...compileOpts,
               output: "hydrate",
               sourceMaps: false,
             });
+            // TODO: use a separate top level entry for exposing runtime.
             return `${code}\nimport { run as _run } from "@marko/runtime-tags/dom"\n${
               interop
                 ? `import { ___componentLookup } from "marko/src/node_modules/@internal/components-util"\nglobalThis.run=()=>{ _run(); Object.values(___componentLookup).forEach((c) => c.update())}`
@@ -202,6 +201,7 @@ export async function createLinkedRunner<T extends Record<string, string>>(
     ],
     output: {
       dir: csrOut,
+      cleanDir: true,
       sourcemap: true,
       sourcemapExcludeSources: true,
       entryFileNames: "[name].mjs",
@@ -217,7 +217,7 @@ export async function createLinkedRunner<T extends Record<string, string>>(
       virtual.plugin,
       markoPlugin({ ...compileOpts, output: "html" }),
       entryPlugin(
-        Object.entries(entryTemplates)
+        Object.entries(entryNameIds)
           .map(
             ([name, file]) =>
               `export { default as ${name} } from ${JSON.stringify(file)};`,
@@ -229,17 +229,11 @@ export async function createLinkedRunner<T extends Record<string, string>>(
         resolveId(id, importer) {
           if (templateEntryRe.test(id)) return id;
           if (importer && templateEntryRe.test(importer)) {
-            return this.resolve(
-              id,
-              path.join(
-                cwd,
-                entries[importer.slice(templateEntryPrefix.length)],
-              ),
-            );
+            return this.resolve(id, templateEntryToFile(importer));
           }
         },
         load: {
-          filter: { id: { include: templateEntryRe } },
+          filter: { id: templateEntryRe },
           handler(id) {
             const name = id.slice(templateEntryPrefix.length);
             const file = entries[name];
@@ -251,6 +245,7 @@ export async function createLinkedRunner<T extends Record<string, string>>(
     ],
     output: {
       dir: ssrOut,
+      cleanDir: true,
       sourcemap: true,
       sourcemapExcludeSources: true,
       entryFileNames: "[name].mjs",
@@ -284,15 +279,6 @@ async function getSizesForSrc(code: string): Promise<Sizes> {
   };
 }
 
-function addSizes(all: Sizes[]) {
-  const total = { min: 0, brotli: 0 };
-  for (const { min, brotli } of all) {
-    total.min += min;
-    total.brotli += brotli;
-  }
-  return total;
-}
-
 function createVirtual(): {
   resolveVirtualDependency: NonNullable<
     compiler.Config["resolveVirtualDependency"]
@@ -312,14 +298,14 @@ function createVirtual(): {
     plugin: {
       name: "virtual",
       resolveId(id, importer) {
-        if (modules.has(id)) return id;
+        if (virtualRe.test(id)) return id;
 
-        if (importer && virtualRe.test(importer) && id[0] === ".") {
+        if (importer && virtualRe.test(importer)) {
           return this.resolve(id, importer.replace(virtualPrefix, ""));
         }
       },
       load: {
-        filter: { id: { include: virtualRe } },
+        filter: { id: virtualRe },
         handler(id) {
           return modules.get(id);
         },
@@ -345,7 +331,7 @@ function entryPlugin(code: string, from?: string): Plugin {
       }
     },
     load: {
-      filter: { id: { include: entryIdRe } },
+      filter: { id: entryIdRe },
       handler: () => code,
     },
   };
@@ -355,7 +341,7 @@ function markoPlugin(config: compiler.Config): Plugin {
   return {
     name: "marko",
     load: {
-      filter: { id: { include: markoRe } },
+      filter: { id: markoRe },
       handler(id) {
         const { code, map } = compiler.compileFileSync(id, config);
         return { code, map };
@@ -374,7 +360,7 @@ function brotli(src: string): Promise<Buffer> {
 
 function stripModuleCode(code: string) {
   return code.replace(
-    /\s*(?:export\s*\{[^}]*\}|import\s*(?:\{[^}]*\}|[^"'\n{]*)\s*from\s*(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'));?\s*/gm,
+    /\b(?:export\s*\{[^}]*\}|import\s*(?:\{[^}]*\}|[^"'\n{]*)\s*from\s*(?:"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'));?/gm,
     "",
   );
 }

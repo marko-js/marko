@@ -222,9 +222,9 @@ function testFixtures(interop?: true) {
         const chunks: string[] = [];
         const logs: ConsoleRecord[][] = [];
         const capture = captureConsole();
-        const { template } = await runner.runServer();
 
         try {
+          const { template } = await runner.runServer();
           for await (const data of template.render(
             config.embedded
               ? {

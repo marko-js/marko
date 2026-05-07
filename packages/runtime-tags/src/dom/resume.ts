@@ -66,8 +66,9 @@ export function enableBranches() {
 }
 
 export const ready = /*@__PURE__*/ ((_) => (id: string) => {
-  (readyLookup![id] as undefined | (() => {}))?.();
+  const cb = readyLookup![id] as undefined | (() => {});
   readyLookup![id] = 1;
+  cb?.();
 })((readyLookup = {}));
 
 export function initEmbedded(readyId: string, runtimeId?: string) {
@@ -250,7 +251,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             for (const readyId in render.b as Record<string, unknown>) {
               if (readyLookup[readyId] !== 1) {
                 readyLookup[readyId] = ((prev) => () => {
-                  render.m!();
+                  runResumeEffects(render);
                   prev?.();
                 })(readyLookup[readyId]);
                 return effects;

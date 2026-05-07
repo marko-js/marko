@@ -5,7 +5,7 @@ export function isOutputHTML() {
 }
 
 export function isOutputDOM() {
-  return !isOutputHTML();
+  return getMarkoOpts().output === "dom";
 }
 
 export function getMarkoOpts() {
