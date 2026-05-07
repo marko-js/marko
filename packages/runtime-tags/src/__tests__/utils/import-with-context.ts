@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import vm from "node:vm";
 
 import { type ResolveOptions, resolveSync } from "resolve-sync";
+const cacheForCtx = new WeakMap<WeakKey, Map<string, Promise<vm.Module>>>();
 
 export async function importWithContext<T>(
   entry: string,
@@ -9,7 +10,9 @@ export async function importWithContext<T>(
   context: vm.Context,
 ): Promise<T> {
   vm.createContext(context);
-  const cache = new Map<string, Promise<vm.Module>>();
+  const cache =
+    cacheForCtx.get(context) ||
+    ((cache) => (cacheForCtx.set(context, cache), cache))(new Map());
   const root = await load(entry);
 
   if (root.status === "linked") {
@@ -24,26 +27,12 @@ export async function importWithContext<T>(
       const mod = new vm.SourceTextModule(readFileSync(id, "utf8"), {
         context,
         identifier: id,
-        importModuleDynamically,
+        importModuleDynamically: linker,
       });
       cache.set(id, (cached = mod.link(linker).then(() => mod)));
     }
 
     return cached;
-  }
-
-  async function importModuleDynamically(id: string, parent: vm.Module) {
-    const child = await linker(id, parent);
-
-    if (child.status === "unlinked") {
-      await child.link(linker);
-    }
-
-    if (child.status === "linked") {
-      await child.evaluate();
-    }
-
-    return child;
   }
 
   function linker(id: string, parent: vm.Module) {

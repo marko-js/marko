@@ -1,8 +1,7 @@
+import path from "node:path";
+
 import { types as t } from "@marko/compiler";
-import {
-  getTemplateId,
-  resolveRelativePath,
-} from "@marko/compiler/babel-utils";
+import { getTemplateId } from "@marko/compiler/babel-utils";
 
 import type { DOMRuntimeHelpers } from "./runtime";
 import runtimeInfo from "./runtime-info";
@@ -17,7 +16,6 @@ declare module "@marko/compiler/dist/types" {
 
 type EntryFile = t.BabelFile & {
   [kState]?: {
-    imports: string[];
     init: boolean;
   };
 };
@@ -31,13 +29,11 @@ export default {
         "Unable to build hydrate code, no files were visited before finalizing the build",
       );
     }
-    const body: t.Statement[] = state.imports.map((it) =>
-      t.importDeclaration([], t.stringLiteral(it)),
-    );
+    const body: t.Statement[] = [];
     if (state.init) {
       const isPage = entryFile.path.node.extra.page;
       const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
-      body.unshift(
+      body.push(
         t.importDeclaration(
           [
             t.importSpecifier(
@@ -50,6 +46,10 @@ export default {
               entryFile.markoOpts.optimize ? "" : "debug/"
             }dom`,
           ),
+        ),
+        t.importDeclaration(
+          [],
+          t.stringLiteral(`./${path.basename(entryFile.opts.filename)}`),
         ),
       );
       const { runtimeId } = entryFile.markoOpts;
@@ -88,12 +88,10 @@ export default {
     visitChild: (id: string) => void,
   ) {
     const state = (entryFile[kState] ||= {
-      imports: [],
       init: false,
     });
     const programExtra = file.path.node.extra;
     const { analyzedTags } = file.metadata.marko;
-    state.imports.push(resolveRelativePath(entryFile, file.opts.filename));
 
     if (programExtra.isInteractive || programExtra.needsCompat) {
       state.init = true;
