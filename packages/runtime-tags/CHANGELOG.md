@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.170
+
+### Patch Changes
+
+- [#3180](https://github.com/marko-js/marko/pull/3180) [`5462011`](https://github.com/marko-js/marko/commit/54620115748d0aa24a131f3569aeef7f3796534f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid importing any client runtime code when no templates have need initialization.
+
 ## 6.0.169
 
 ### Patch Changes

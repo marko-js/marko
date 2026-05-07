@@ -1,4 +1,4 @@
-// size: 21163 (min) 7934 (brotli)
+// size: 21171 (min) 7956 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -87,7 +87,8 @@ let empty = [],
   branchesEnabled,
   embedEnabled,
   ready = /* @__PURE__ */ ((_) => (id) => {
-    (readyLookup[id]?.(), (readyLookup[id] = 1));
+    let cb = readyLookup[id];
+    ((readyLookup[id] = 1), cb?.());
   })((readyLookup = {})),
   isResuming,
   inputType = "",
@@ -864,7 +865,7 @@ function init(runtimeId = "M") {
                   if (readyLookup[readyId] !== 1)
                     return (
                       (readyLookup[readyId] = ((prev) => () => {
-                        (render.m(), prev?.());
+                        (runResumeEffects(render), prev?.());
                       })(readyLookup[readyId])),
                       effects
                     );
