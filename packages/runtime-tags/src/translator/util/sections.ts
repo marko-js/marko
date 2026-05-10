@@ -313,14 +313,25 @@ export function getNodeContentType(
 }
 
 export function getSectionRegisterReasons(section: Section) {
-  if (section.isBranch) return false; // Branches handle wether to register their section/renderer.
+  if (section.isBranch) return false; // Branches handle whether to register their section/renderer.
 
   const { downstreamBinding } = section;
   if (downstreamBinding) {
-    return getAllSerializeReasonsForBinding(
+    const downstreamReasons = getAllSerializeReasonsForBinding(
       downstreamBinding.binding,
       downstreamBinding.properties,
     );
+    if (!downstreamReasons) return false;
+    if (
+      downstreamReasons !== true &&
+      !section.serializeReason &&
+      !section.serializeReasons.size &&
+      !section.parent?.serializeReason &&
+      !section.parent?.serializeReasons.size
+    ) {
+      return false;
+    }
+    return downstreamReasons;
   } else if (downstreamBinding === false) {
     return false;
   }

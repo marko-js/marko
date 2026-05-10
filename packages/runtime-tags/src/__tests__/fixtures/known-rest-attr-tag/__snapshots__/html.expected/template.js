@@ -6,11 +6,11 @@ export default _._template("__tests__/template.marko", input => {
   _child({
     button: _.attrTag({
       onClick: _._resume(function () {}, "__tests__/template.marko_0/onClick"),
-      content: _._content_resume("__tests__/template.marko_1_content", () => {
+      content: _._content("__tests__/template.marko_1_content", () => {
         _._scope_reason();
         const $scope1_id = _._scope_id();
         _._html("one");
-      }, $scope0_id)
+      })
     })
   });
 }, 1);
