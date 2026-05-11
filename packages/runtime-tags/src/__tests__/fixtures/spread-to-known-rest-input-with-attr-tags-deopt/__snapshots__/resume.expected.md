@@ -45,7 +45,8 @@
           yield* _.b
         }
       }
-    }, 1, _.l = {
+    }, 1,
+    {
       _: _.e
     }, 1,
     {
@@ -66,7 +67,7 @@
       "__tests__/template.marko_1_content"
       ](_.j), _.d.content = _._[
       "__tests__/template.marko_2_content"
-      ](_.j), (_.k = new Set).add(_.l), _.i),
+      ](_.j), _.i),
     "__tests__/tags/child.marko_1_item 6 8"
   ];
   M._.w()

@@ -10,7 +10,6 @@
     "__tests__/template.marko_0/hoist"
     ](_.c), _.a.hoist3 = _._[
     "__tests__/template.marko_2/hoist2"
-    ](_.a), (_.e = new Set).add(_.a), _.d)];
-  M._.w()
+    ](_.a), _.d)]
 </script>
 ```

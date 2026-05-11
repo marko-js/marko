@@ -22,7 +22,7 @@ export default _._template("__tests__/tags/wrap.marko", input => {
     _child({
       foo: input.foo
     });
-    _._subscribe($input_foo__closures, _._scope($scope1_id, {
+    _._subscribe(($si__input_foo) && $input_foo__closures, _._scope($scope1_id, {
       _: _._scope_with_id($scope0_id),
       "#childScope/0": ($si__input_foo) && _._existing_scope($childScope)
     }, "__tests__/tags/wrap.marko", "2:4"));
@@ -32,7 +32,7 @@ export default _._template("__tests__/tags/wrap.marko", input => {
     input_foo: input.foo,
     _class: (_._serialize_if($scope0_reason, /* rest */3)) && _class,
     rest: (_._serialize_if($scope0_reason, /* input.class */2)) && rest,
-    "ClosureScopes:input_foo": ($si__input_foo) && $input_foo__closures
+    "ClosureScopes:input_foo": $si__input_foo && $input_foo__closures
   }, "__tests__/tags/wrap.marko", 0, {
     input_foo: ["input.foo"],
     _class: "1:17",

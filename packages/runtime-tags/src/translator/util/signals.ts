@@ -49,6 +49,7 @@ import {
 import { getExprIfSerialized } from "./serialize-guard";
 import {
   getSerializeReason,
+  isReasonDynamic,
   isSameReason,
   type SerializeReason,
 } from "./serialize-reasons";
@@ -1087,8 +1088,27 @@ export function writeHTMLResumeStatements(
             );
           }
         } else {
+          const closureScopesReason = getSerializeReason(
+            closure.section,
+            closure,
+            getAccessorPrefix().ClosureScopes,
+          );
+          const effectiveSectionReason = nonAnalyzedForceSerializedSection.has(
+            section,
+          )
+            ? true
+            : section.serializeReason;
+          const subscribeArg =
+            isReasonDynamic(closureScopesReason) &&
+            !isSameReason(closureScopesReason, effectiveSectionReason)
+              ? getExprIfSerialized(
+                  closure.section,
+                  closureScopesReason,
+                  identifier,
+                )
+              : identifier;
           addWriteScopeBuilder(section, (expr) =>
-            callRuntime("_subscribe", identifier, expr),
+            callRuntime("_subscribe", subscribeArg, expr),
           );
         }
       }

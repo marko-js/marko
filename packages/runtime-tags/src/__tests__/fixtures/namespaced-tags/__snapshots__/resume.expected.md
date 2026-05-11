@@ -73,9 +73,10 @@
     }, 1,
     {
       "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-    }, _.d = {
+    },
+    {
       _: _.a
-    }], (_.c = new Set).add(_.d), _.b),
+    }]),
     "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
   ];
   M._.w()
@@ -169,9 +170,10 @@ container.querySelector(".toggle-parent").click();
     }, 1,
     {
       "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-    }, _.d = {
+    },
+    {
       _: _.a
-    }], (_.c = new Set).add(_.d), _.b),
+    }]),
     "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
   ];
   M._.w()
@@ -263,9 +265,10 @@ container.querySelector(".toggle-parent").click();
     }, 1,
     {
       "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-    }, _.d = {
+    },
+    {
       _: _.a
-    }], (_.c = new Set).add(_.d), _.b),
+    }]),
     "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
   ];
   M._.w()
@@ -357,9 +360,10 @@ container.querySelector(".toggle-parent").click();
     }, 1,
     {
       "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-    }, _.d = {
+    },
+    {
       _: _.a
-    }], (_.c = new Set).add(_.d), _.b),
+    }]),
     "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
   ];
   M._.w()
@@ -437,9 +441,10 @@ container.querySelector(".toggle-child").click();
     }, 1,
     {
       "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-    }, _.d = {
+    },
+    {
       _: _.a
-    }], (_.c = new Set).add(_.d), _.b),
+    }]),
     "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
   ];
   M._.w()
@@ -525,9 +530,10 @@ container.querySelector(".toggle-child").click();
     }, 1,
     {
       "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-    }, _.d = {
+    },
+    {
       _: _.a
-    }], (_.c = new Set).add(_.d), _.b),
+    }]),
     "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
   ];
   M._.w()
@@ -609,9 +615,10 @@ container.querySelector(".toggle-child").click();
     }, 1,
     {
       "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
-    }, _.d = {
+    },
+    {
       _: _.a
-    }], (_.c = new Set).add(_.d), _.b),
+    }]),
     "__tests__/template.marko_0_Parent_Child 1 __tests__/template.marko_0_Child 1 __tests__/template.marko_0_Parent 1"
   ];
   M._.w()
