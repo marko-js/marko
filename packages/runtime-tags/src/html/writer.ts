@@ -1567,7 +1567,7 @@ function getFilteredGlobals($global: Record<string, unknown>) {
 }
 
 export function _subscribe(
-  subscribers: Set<ScopeInternals> | false,
+  subscribers: Set<ScopeInternals> | undefined,
   scope: ScopeInternals,
 ) {
   if (subscribers) {

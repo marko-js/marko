@@ -1028,6 +1028,9 @@ export function writeHTMLResumeStatements(
   const body = path.node.body as t.Statement[];
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
+  const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
+    ? true
+    : section.serializeReason;
   forEach(section.referencedClosures, (closure) => {
     if (closure.sources) {
       if (isDynamicClosure(section, closure)) {
@@ -1093,14 +1096,9 @@ export function writeHTMLResumeStatements(
             closure,
             getAccessorPrefix().ClosureScopes,
           );
-          const effectiveSectionReason = nonAnalyzedForceSerializedSection.has(
-            section,
-          )
-            ? true
-            : section.serializeReason;
           const subscribeArg =
             isReasonDynamic(closureScopesReason) &&
-            !isSameReason(closureScopesReason, effectiveSectionReason)
+            !isSameReason(closureScopesReason, sectionSerializeReason)
               ? getExprIfSerialized(
                   closure.section,
                   closureScopesReason,
@@ -1134,9 +1132,6 @@ export function writeHTMLResumeStatements(
   const writeScopeBuilder = getSectionWriteScopeBuilder(section);
   const serializedLookup = getSerializedAccessors(section);
   const serializedProperties: t.ObjectProperty[] = [];
-  const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
-    ? true
-    : section.serializeReason;
   const ifSerialized = (reason: SerializeReason, expr: t.Expression) => {
     if (isSameReason(sectionSerializeReason, reason)) return expr;
     return getExprIfSerialized(section, reason, expr);
