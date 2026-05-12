@@ -40,6 +40,8 @@ const pureDOMFunctions = new Set<string>([
   "_for_until",
   "_let",
   "_const",
+  "_lazy_signal",
+  "_lazy_setup",
 ] satisfies DOMRuntimeHelpers[]);
 
 export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {
@@ -82,7 +84,7 @@ export function getHTMLRuntime() {
   };
 }
 
-function getRuntimePath(output: string) {
+export function getRuntimePath(output: string) {
   const { optimize } = getMarkoOpts();
   return `${runtimeInfo.name}/${
     optimize ? "" : "debug/"

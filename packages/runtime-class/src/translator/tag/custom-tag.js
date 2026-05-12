@@ -3,6 +3,7 @@ import {
   assertNoArgs,
   getTagDef,
   importDefault,
+  importNamed,
   loadFileForTag,
   resolveRelativePath,
   resolveTagImport,
@@ -53,7 +54,25 @@ export default function (path, isNullable) {
     if (binding && !binding.identifier.loc) binding = null;
 
     if (relativePath) {
-      tagIdentifier = importDefault(file, relativePath, tagName);
+      if (node.extra?.tagNameLazy && markoOpts.output === "dom") {
+        const importBinding = path.scope.getBinding(tagName);
+        if (importBinding?.path?.parentPath?.isImportDeclaration()) {
+          importBinding.path.parentPath.remove();
+        }
+        const lazyTagFn = importDefault(
+          file,
+          "marko/src/runtime/helpers/lazy-tag.js",
+          "marko_lazy_tag",
+        );
+        tagIdentifier = t.callExpression(lazyTagFn, [
+          t.arrowFunctionExpression(
+            [],
+            t.callExpression(t.import(), [t.stringLiteral(relativePath)]),
+          ),
+        ]);
+      } else {
+        tagIdentifier = importDefault(file, relativePath, tagName);
+      }
     } else if (binding) {
       path.set("name", t.identifier(tagName));
       return dynamicTag(path);
@@ -68,6 +87,35 @@ export default function (path, isNullable) {
     }
   } else {
     tagIdentifier = name;
+  }
+
+  if (
+    node.extra?.tagNameLazy &&
+    markoOpts.output === "html" &&
+    markoOpts.linkAssets
+  ) {
+    const { linkAssets } = markoOpts;
+    const childFile = loadFileForTag(path);
+    if (childFile) {
+      const assetId = childFile.metadata.marko.id;
+      linkAssets.onAsset("lazy", childFile.opts.filename, assetId);
+      const runtimeId = importDefault(
+        file,
+        linkAssets.runtime,
+        "marko_asset_runtime",
+      );
+      const withAssetsFn = importNamed(
+        file,
+        "marko/src/runtime/helpers/with-entry.js",
+        "withAssets",
+        "marko_with_assets",
+      );
+      tagIdentifier = t.callExpression(withAssetsFn, [
+        tagIdentifier,
+        runtimeId,
+        t.stringLiteral(assetId),
+      ]);
+    }
   }
 
   const foundAttrs = getAttrs(path);

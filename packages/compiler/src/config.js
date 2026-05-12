@@ -134,6 +134,11 @@ const config = {
   resolveVirtualDependency: null,
 
   /**
+   * Provides browser asset resolution and runtime hooks for lazy loading and server entries.
+   */
+  linkAssets: null,
+
+  /**
    * Compiling a Marko template may require other (used) Marko templates to compile.
    * To prevent compiling templates more than once, most of the compilation is cached.
    */

@@ -14,7 +14,7 @@ export default function createBrowser(dir?: string) {
   const { window } = dom;
   const ctx = dom.getInternalVMContext();
   const qmt = window.queueMicrotask;
-  let scripts: string[] = ["template.mjs"];
+  let scripts: string[] = [];
   window.__coverage__ = (globalThis as any).__coverage__;
   window.__RESOLVE_STATE__ = globalThis.__RESOLVE_STATE__;
   window.setImmediate = setImmediate;

@@ -111,6 +111,12 @@ function testFixtures(interop?: true) {
           resolveVirtualDependency(_filename, { code, virtualPath }) {
             return `virtual:${virtualPath} ${code}`;
           },
+          linkAssets: {
+            runtime: "assets-runtime",
+            onAsset() {
+              /* noop for snapshots. */
+            },
+          },
         };
         const errors: Error[] = [];
 

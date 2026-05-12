@@ -1,5 +1,9 @@
 declare const Config: {
-  output?: "html" | "dom" | "hydrate" | "migrate" | "source";
+  output?: "html" | "dom" | "hydrate" | "migrate" | "source" | "server-entry";
+  linkAssets?: {
+    runtime: string;
+    onAsset(kind: "entry" | "lazy", file: string, id: string): void;
+  };
   errorRecovery?: boolean;
   applyFixes?: Map<number, unknown>;
   stripTypes?: boolean;

@@ -1,4 +1,4 @@
-// size: 21171 (min) 7956 (brotli)
+// size: 22361 (min) 8342 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2062,6 +2062,125 @@ function $signal(scope, id) {
 }
 function abort(ctrl) {
   ctrl.abort();
+}
+function _lazy_setup(nodeAccessor, childScopeAccessor, load) {
+  let cached, pending;
+  return (
+    (nodeAccessor = decodeAccessor(nodeAccessor)),
+    (childScopeAccessor = decodeAccessor(childScopeAccessor)),
+    (ownerScope) => {
+      let childScope = ownerScope[childScopeAccessor];
+      ((childScope["^"] = childScope["^"] || []),
+        cached
+          ? applyLazyModule(cached, ownerScope, nodeAccessor, childScope)
+          : (pending ||= load()).then(
+              (mod) => {
+                ((cached = mod),
+                  applyLazyModule(mod, ownerScope, nodeAccessor, childScope));
+              },
+              (error) => {
+                ((childScope["^"] = void 0),
+                  schedule(),
+                  queueRender(childScope, renderCatch, -1, error),
+                  run());
+              },
+            ));
+    }
+  );
+}
+function applyLazyModule(
+  [template, walks, setup],
+  ownerScope,
+  nodeAccessor,
+  childScope,
+) {
+  applyLazyRenderer(
+    _content("", template, walks, setup)(),
+    ownerScope[nodeAccessor],
+    childScope,
+  );
+}
+function applyLazyRenderer(renderer, placeholder, childScope) {
+  if (!placeholder.parentNode) return;
+  let ns =
+    placeholder.parentNode.namespaceURI || "http://www.w3.org/1999/xhtml";
+  renderer.b(childScope, ns);
+  let startNode = childScope.S,
+    endNode = childScope.K;
+  (insertChildNodes(placeholder.parentNode, placeholder, startNode, endNode),
+    placeholder.remove());
+  let buffer = childScope["^"];
+  if (
+    ((childScope["^"] = void 0),
+    (childScope.H = 1),
+    pendingScopes.push(childScope),
+    schedule(),
+    renderer.c && queueRender(childScope, renderer.c, -1),
+    buffer.length)
+  )
+    if (buffer.every((b) => b.cached))
+      for (let i = 0; i < buffer.length; i++)
+        queueRender(childScope, buffer[i].cached, i, buffer[i].value);
+    else
+      Promise.all(buffer.map((b) => b.promise)).then((signals) => {
+        (schedule(), (childScope.H = 1), pendingScopes.push(childScope));
+        for (let i = 0; i < signals.length; i++)
+          queueRender(childScope, signals[i], i, buffer[i].value);
+        run();
+      });
+  run();
+}
+function _lazy_signal(load) {
+  let signalPromise, cachedSignal;
+  return (scope, value) => {
+    (signalPromise ||
+      ((signalPromise = load()), signalPromise.then((s) => (cachedSignal = s))),
+      "^" in scope || (scope["^"] = []));
+    let buffer = scope["^"];
+    buffer
+      ? buffer.push({
+          promise: signalPromise,
+          value,
+          cached: cachedSignal,
+        })
+      : cachedSignal
+        ? cachedSignal(scope, value)
+        : signalPromise.then((signal) => {
+            (schedule(), queueRender(scope, signal, 0, value), run());
+          });
+  };
+}
+function _lazy_renderer(id, load) {
+  let pending,
+    getLazy = () => (pending ||= load().then((mod) => mod.default)),
+    renderer = {
+      a: id,
+      b: (branch) => {
+        ((branch.S = branch.K = new Text()), (branch["^"] = branch["^"] || []));
+      },
+      c: (branch) => {
+        getLazy().then(
+          (renderer) => {
+            if (branch.I) return;
+            let buffer = branch["^"],
+              paramsSignal = renderer.d ?? (() => {});
+            if (buffer) for (let entry of buffer) entry.cached ??= paramsSignal;
+            applyLazyRenderer(renderer, branch.S, branch);
+          },
+          (error) => {
+            ((branch["^"] = void 0),
+              schedule(),
+              queueRender(branch, renderCatch, -1, error),
+              run());
+          },
+        );
+      },
+      d: _lazy_signal(() => getLazy().then((r) => r.d ?? (() => {}))),
+      e: void 0,
+      f: void 0,
+      _: void 0,
+    };
+  return ((renderer._ = renderer), renderer);
 }
 function mount(input = {}, reference, position) {
   let branch,

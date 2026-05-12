@@ -16,58 +16,80 @@ interface Sizes {
   brotli: number;
 }
 
-const markoExt = ".marko";
-const markoRe = new RegExp(`\\${markoExt}$`);
 const entryId = "entry";
-const entryIdRe = new RegExp(`^${entryId}$`);
-const templateEntryPrefix = "\0entry:";
-const templateEntryRe = new RegExp(`^${templateEntryPrefix}`);
-const virtualPrefix = "\0virtual:";
-const virtualRe = new RegExp(`^${virtualPrefix}`);
+const markoExt = ".marko";
+const markoRe = /\.marko$/;
+const entryExt = ".entry.mjs";
+const entryRe = /\.marko(\.lazy)?\.entry\.mjs$/;
+const lazyEntryExt = ".lazy.entry.mjs";
+const assetRuntimeId = "\0asset-runtime";
+const assetRuntimeIdRe = /\0asset-runtime$/;
+const virtualFilePrefix = "v:";
+const virtualRe = /(?:^|\/)v:/;
 
 export async function bundle(template: string, config: compiler.Config) {
   const cwd = path.dirname(template);
-  const cache = new Map<unknown, unknown>();
-  const virtual = createVirtual();
+  const virtual = createVirtual(cwd);
   const compileOpts: compiler.Config = {
     ...config,
-    cache,
+    cache: new Map(),
     resolveVirtualDependency: virtual.resolveVirtualDependency,
+    optimize: true,
+    optimizeKnownTemplates: await glob(`**/*${markoExt}`, {
+      cwd,
+      absolute: true,
+    }),
   };
-  const optimizeKnownTemplates: string[] = await glob(`**/*${markoExt}`, {
-    cwd,
-    absolute: true,
-  });
   const { output } = await build({
     cwd,
     write: false,
-    input: entryId,
+    input: { [entryId]: path.relative(cwd, template) + entryExt },
     external: (id) => !(markoRe.test(id) || virtualRe.test(id)),
-    treeshake: {
-      moduleSideEffects: "no-external",
-    },
+    treeshake: { moduleSideEffects: "no-external" },
     plugins: [
       virtual.plugin,
-      markoPlugin({
-        ...compileOpts,
-        optimize: true,
-        optimizeKnownTemplates,
-        output: "dom",
-      }),
-      entryPlugin(
-        compiler.compileFileSync(template, {
-          ...compileOpts,
-          optimize: true,
-          sourceMaps: false,
-          optimizeKnownTemplates,
-          output: "hydrate",
-        }).code,
-        template,
-      ),
+      markoPlugin({ ...compileOpts, output: "dom" }),
+      {
+        name: "lazy-chunks",
+        resolveId: {
+          filter: { id: markoRe },
+          async handler(id, importer, opts) {
+            if (opts.kind === "dynamic-import") {
+              const resolved = await this.resolve(id, importer, opts);
+              if (resolved) {
+                this.emitFile({
+                  type: "chunk",
+                  id: path.relative(cwd, resolved.id) + lazyEntryExt,
+                });
+              }
+            }
+          },
+        },
+      },
+      {
+        name: "entry",
+        resolveId: {
+          filter: { id: entryRe },
+          handler: (id) => path.resolve(cwd, id),
+        },
+        load: {
+          filter: { id: entryRe },
+          handler(id) {
+            const file = id.replace(entryRe, markoExt);
+            const hydrateInit = !entryRe.exec(id)![1];
+            const { code } = compiler.compileFileSync(file, {
+              ...compileOpts,
+              hydrateInit,
+              output: "hydrate",
+              sourceMaps: false,
+            });
+
+            return code;
+          },
+        },
+      },
     ],
-    output: {
-      minify: { compress: true, mangle: false, codegen: true },
-    },
+    output: { minify: { compress: true, mangle: false, codegen: true } },
   });
   const chunks = output.filter(
     (chunk) => "code" in chunk && chunk.code,
@@ -98,21 +120,20 @@ export async function createCSRRunner(
   config: compiler.Config,
   interop?: boolean,
 ) {
-  const out = path.join(template, "../dist/csr");
-  const virtual = createVirtual();
+  const cwd = path.dirname(template);
+  const out = path.join(cwd, "dist/csr");
+  const virtual = createVirtual(cwd);
+  const compileOpts: compiler.Config = {
+    ...config,
+    cache: new Map(),
+    resolveVirtualDependency: virtual.resolveVirtualDependency,
+  };
   await build({
-    input: entryId,
-    platform: "browser",
-    transform: { define: { MARKO_DEBUG: "true" } },
-    plugins: [
-      virtual.plugin,
-      markoPlugin({
-        ...config,
-        output: "dom",
-        resolveVirtualDependency: virtual.resolveVirtualDependency,
-      }),
-      entryPlugin(
-        `export { default } from ${JSON.stringify(template)};\n${
+    cwd,
+    input: {
+      [entryId]: virtual.toVirtualFile(
+        template + entryExt,
+        `export { default } from "./${path.basename(template)}";\n${
           interop
             ? `import { run as _run } from "@marko/runtime-tags/dom";
 import { ___componentLookup } from "marko/src/node_modules/@internal/components-util";
@@ -120,9 +141,11 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
 `
             : `export { run } from "@marko/runtime-tags/dom";`
         }`,
-        template,
       ),
-    ],
+    },
+    platform: "browser",
+    transform: { define: { MARKO_DEBUG: "true" } },
+    plugins: [virtual.plugin, markoPlugin({ ...compileOpts, output: "dom" })],
     output: {
       dir: out,
       cleanDir: true,
@@ -149,52 +172,55 @@ export async function createLinkedRunner<T extends Record<string, string>>(
   const out = path.join(cwd, "dist");
   const ssrOut = path.join(out, "resume/ssr");
   const csrOut = path.join(out, "resume/csr");
-  const virtual = createVirtual();
-  const templateEntryToFile = (entry: string) =>
-    path.join(cwd, entries[entry.slice(templateEntryPrefix.length)]);
-  const entryNameIds = Object.keys(entries).reduce(
-    (input, name) => {
-      input[name as keyof T] = templateEntryPrefix + name;
-      return input;
-    },
-    {} as Record<keyof T, string>,
-  );
+  const virtual = createVirtual(cwd);
+  const csrEntries = createEntries();
+  const entryNames = Object.keys(entries);
   const compileOpts: compiler.Config = {
     ...config,
     cache: new Map(),
     resolveVirtualDependency: virtual.resolveVirtualDependency,
+    linkAssets: {
+      runtime: assetRuntimeId,
+      onAsset(kind, file, id) {
+        csrEntries.add(id, file + (kind === "lazy" ? lazyEntryExt : entryExt));
+      },
+    },
   };
 
   const csrBuilt = build({
     cwd,
-    input: entryNameIds,
     platform: "browser",
     transform: { define: { MARKO_DEBUG: "true" } },
     plugins: [
       virtual.plugin,
+      csrEntries.plugin,
       markoPlugin({ ...compileOpts, output: "dom" }),
       {
-        name: "csr-template-entry",
-        resolveId(id, importer) {
-          if (templateEntryRe.test(id)) return id;
-          if (importer && templateEntryRe.test(importer)) {
-            return this.resolve(id, templateEntryToFile(importer));
-          }
+        name: "csr-entry",
+        resolveId: {
+          filter: { id: entryRe },
+          handler: (id) => path.resolve(cwd, id),
         },
         load: {
-          filter: { id: templateEntryRe },
+          filter: { id: entryRe },
           handler(id) {
-            const { code } = compiler.compileFileSync(templateEntryToFile(id), {
+            const file = id.replace(entryRe, markoExt);
+            const hydrateInit = !entryRe.exec(id)![1];
+            const { code } = compiler.compileFileSync(file, {
               ...compileOpts,
+              hydrateInit,
               output: "hydrate",
               sourceMaps: false,
             });
-            // TODO: use a separate top level entry for exposing runtime.
-            return `${code}\nimport { run as _run } from "@marko/runtime-tags/dom"\n${
-              interop
-                ? `import { ___componentLookup } from "marko/src/node_modules/@internal/components-util"\nglobalThis.run=()=>{ _run(); Object.values(___componentLookup).forEach((c) => c.update())}`
-                : `globalThis.run=_run`
-            }`;
+
+            return hydrateInit
+              ? code +
+                  `\nimport { run as _run } from "@marko/runtime-tags/dom"\n${
+                    interop
+                      ? `import { ___componentLookup } from "marko/src/node_modules/@internal/components-util"\nglobalThis.run=()=>{ _run(); Object.values(___componentLookup).forEach((c) => c.update())}`
+                      : `globalThis.run=_run`
+                  }`
+              : code;
           },
         },
       },
@@ -209,37 +235,99 @@ export async function createLinkedRunner<T extends Record<string, string>>(
   });
   const ssrBuilt = build({
     cwd,
-    input: entryId,
+    input: {
+      [entryId]: virtual.toVirtualFile(
+        path.join(cwd, "server.mjs"),
+        entryNames
+          .map(
+            (name) =>
+              `export { default as ${name} } from "${entries[name] + entryExt}";`,
+          )
+          .join("\n"),
+      ),
+    },
     platform: "node",
     transform: { define: { MARKO_DEBUG: "true" } },
     experimental: { nativeMagicString: true },
     plugins: [
       virtual.plugin,
       markoPlugin({ ...compileOpts, output: "html" }),
-      entryPlugin(
-        Object.entries(entryNameIds)
-          .map(
-            ([name, file]) =>
-              `export { default as ${name} } from ${JSON.stringify(file)};`,
-          )
-          .join("\n"),
-      ),
       {
-        name: "ssr-template-entry",
-        resolveId(id, importer) {
-          if (templateEntryRe.test(id)) return id;
-          if (importer && templateEntryRe.test(importer)) {
-            return this.resolve(id, templateEntryToFile(importer));
-          }
+        name: "ssr-entry",
+        resolveId: {
+          filter: { id: entryRe },
+          handler: (id) => path.resolve(cwd, id),
         },
         load: {
-          filter: { id: templateEntryRe },
+          filter: { id: entryRe },
           handler(id) {
-            const name = id.slice(templateEntryPrefix.length);
-            const file = entries[name];
-            // TODO: facade that adds assets.
-            return `export { default } from ${JSON.stringify(file)}`;
+            const file = id.replace(entryRe, markoExt);
+            const { code } = compiler.compileFileSync(file, {
+              ...compileOpts,
+              output: "server-entry",
+              sourceMaps: false,
+            });
+
+            return code;
           },
+        },
+      },
+      {
+        name: "asset-runtime",
+        buildEnd: csrEntries.end,
+        resolveId: {
+          filter: { id: assetRuntimeIdRe },
+          handler: (id) => id,
+        },
+        load: {
+          filter: { id: assetRuntimeIdRe },
+          handler: () => `const kSeen = Symbol("Seen Assets");
+const kPending = Symbol("Pending Assets");
+export default {
+  add(g, assets) {
+    const seen = (g[kSeen] ||= new Set());
+    if (!seen.has(assets)) {
+      seen.add(assets);
+      (g[kPending] ||= []).push(assets);
+    }
+  },
+  print(g, slot) {
+    let html = ""
+    if (slot === "head") {
+      for (const p of g[kPending]) {
+        const a = __MARKO_MANIFEST__[p];
+        if (a) html += \`<script async src="\${a.head}"></script>\`;
+      }
+      g[kPending] = [];
+    }
+    return html;
+  }
+}`,
+        },
+        async renderChunk(_code, _chunk, _options, meta) {
+          const { output } = await csrBuilt;
+          const manifest: {
+            [entry: string]: {
+              "head-prepend"?: string;
+              head?: string;
+              "body-prepend"?: string;
+              body?: string;
+            };
+          } = {};
+
+          for (const chunk of output) {
+            if (
+              chunk.type === "chunk" &&
+              chunk.isEntry &&
+              chunk.facadeModuleId
+            ) {
+              const name = csrEntries.get(chunk.facadeModuleId);
+              if (name) manifest[name] = { head: chunk.fileName };
+            }
+          }
+          return meta.magicString!.append(
+            `;var __MARKO_MANIFEST__=${JSON.stringify(manifest)}`,
+          );
         },
       },
     ],
@@ -279,60 +367,45 @@ async function getSizesForSrc(code: string): Promise<Sizes> {
   };
 }
 
-function createVirtual(): {
+function createVirtual(cwd: string): {
+  toVirtualFile(id: string, code: string): string;
   resolveVirtualDependency: NonNullable<
     compiler.Config["resolveVirtualDependency"]
   >;
   plugin: Plugin;
 } {
   const modules = new Map<string, string>();
-
+  const withPrefix = (id: string) => {
+    const baseStart = id.lastIndexOf("/") + 1;
+    if (!baseStart) return virtualFilePrefix + id;
+    return id.slice(0, baseStart) + virtualFilePrefix + id.slice(baseStart);
+  };
   return {
-    resolveVirtualDependency(filename, { code, virtualPath }) {
+    toVirtualFile(file, code) {
+      const id = withPrefix(path.relative(cwd, file));
+      modules.set(id, code);
+      return id;
+    },
+    resolveVirtualDependency(from, { code, virtualPath }) {
       if (/\.js$/.test(virtualPath)) {
-        const id = virtualPrefix + path.join(filename, "..", virtualPath);
+        const id = path.relative(
+          cwd,
+          path.resolve(from, "..", withPrefix(virtualPath)),
+        );
         modules.set(id, code);
         return id;
       }
     },
     plugin: {
       name: "virtual",
-      resolveId(id, importer) {
-        if (virtualRe.test(id)) return id;
-
-        if (importer && virtualRe.test(importer)) {
-          return this.resolve(id, importer.replace(virtualPrefix, ""));
-        }
+      resolveId: {
+        filter: { id: virtualRe },
+        handler: (id) => modules.has(id) && path.resolve(cwd, id),
       },
       load: {
         filter: { id: virtualRe },
-        handler(id) {
-          return modules.get(id);
-        },
+        handler: (id) => modules.get(path.relative(cwd, id)),
       },
-    },
-  };
-}
-
-function entryPlugin(code: string, from?: string): Plugin {
-  return {
-    name: "entry",
-    resolveId(id, importer) {
-      if (id === entryId) {
-        return id;
-      }
-
-      if (importer === entryId) {
-        if (id[0] === "/" || id[0] === "\0") {
-          return id;
-        }
-
-        return this.resolve(id, from);
-      }
-    },
-    load: {
-      filter: { id: entryIdRe },
-      handler: () => code,
     },
   };
 }
@@ -345,6 +418,45 @@ function markoPlugin(config: compiler.Config): Plugin {
       handler(id) {
         const { code, map } = compiler.compileFileSync(id, config);
         return { code, map };
+      },
+    },
+  };
+}
+
+function createEntries(): {
+  end(): void;
+  get(id: string): string | undefined;
+  add(name: string, id: string): void;
+  plugin: Plugin;
+} {
+  const end = Promise.withResolvers<void>();
+  const seen = new Map<string, string>();
+  let emit: undefined | ((id: string) => void);
+  let last: undefined | string;
+
+  return {
+    end: end.resolve,
+    get: (id) => (id ? seen.get(id) : undefined),
+    add(name, id) {
+      if (seen.has(id)) return;
+      seen.set(id, name);
+      emit?.(id);
+      last = id;
+    },
+    plugin: {
+      name: "entries",
+      buildStart() {
+        emit = (id) => this.emitFile({ type: "chunk", id });
+        seen.keys().forEach(emit);
+        emit("\0");
+      },
+      resolveId: {
+        filter: { id: /^\0$/ },
+        async handler() {
+          await end.promise;
+          if (last) return this.resolve(last);
+          this.error("No entries added");
+        },
       },
     },
   };

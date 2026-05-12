@@ -4,6 +4,7 @@ export {
   _el_read_error,
   _hoist_read_error,
 } from "./common/errors";
+export { withAssets, withEntry } from "./html/assets";
 export {
   _attr,
   _attr_class,

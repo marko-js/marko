@@ -127,6 +127,9 @@ export const analyze = {
         relativePath = resolveTagImport(tag, importSource) || importSource;
         tag.node.extra = tag.node.extra || {};
         tag.node.extra.tagNameImported = relativePath;
+        if (isLazyImport(binding.path.parent)) {
+          tag.node.extra.tagNameLazy = true;
+        }
       }
     }
 
@@ -230,7 +233,41 @@ export const translate = {
         hub: { file },
       } = path;
 
-      if (file.markoOpts.output === "hydrate") {
+      if (file.markoOpts.output === "server-entry") {
+        const { linkAssets } = file.markoOpts;
+        const templateId = file.metadata.marko.id;
+        linkAssets?.onAsset("entry", file.opts.filename, templateId);
+        const relPath = resolveRelativePath(file, file.opts.filename);
+        path.node.body = [
+          t.importDeclaration(
+            [t.importDefaultSpecifier(t.identifier("_runtime"))],
+            t.stringLiteral(linkAssets?.runtime ?? ""),
+          ),
+          t.importDeclaration(
+            [t.importDefaultSpecifier(t.identifier("_template"))],
+            t.stringLiteral(relPath),
+          ),
+          t.importDeclaration(
+            [
+              t.importSpecifier(
+                t.identifier("withEntry"),
+                t.identifier("withEntry"),
+              ),
+            ],
+            t.stringLiteral("marko/src/runtime/helpers/with-entry.js"),
+          ),
+          t.exportAllDeclaration(t.stringLiteral(relPath)),
+          t.exportDefaultDeclaration(
+            t.callExpression(t.identifier("withEntry"), [
+              t.identifier("_template"),
+              t.identifier("_runtime"),
+              t.stringLiteral(templateId),
+            ]),
+          ),
+        ];
+        path.skip();
+        return;
+      } else if (file.markoOpts.output === "hydrate") {
         addDependencies(file, true);
         return;
       } else if (
@@ -603,6 +640,17 @@ export function getRuntimeEntryFiles(output, optimize) {
           `${base}runtime/helpers/tags-compat/dom${optimize ? "" : "-debug"}.mjs`,
         ]),
   ];
+}
+
+function isLazyImport(importDecl) {
+  return (
+    Array.isArray(importDecl.attributes) &&
+    importDecl.attributes.some(
+      (a) =>
+        (a.key.type === "Identifier" ? a.key.name : a.key.value) === "lazy" &&
+        a.value.value === "load",
+    )
+  );
 }
 
 function isRenderContent({ node }) {
