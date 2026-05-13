@@ -1,8 +1,8 @@
-// size: 400 (min) 237 (brotli)
+// size: 400 (min) 236 (brotli)
 const _marko_template = t(`a`);
-r(`a`, () => _marko_split_component);
+r(`a`, () => component_0);
 const _marko_component = {};
-((_marko_split_component.renderer = _marko_template._ =
+((component_0.renderer = _marko_template._ =
   _marko_renderer(
     function (input, out, _componentDef, _component, state, $global) {
       (out.be(`button`, _marko_attrs(input), `0`, _component, null, 4, {
