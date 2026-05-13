@@ -1,4 +1,4 @@
-// size: 4082 (min) 1825 (brotli)
+// size: 4104 (min) 1835 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -68,7 +68,11 @@ let decodeAccessor = (num) =>
   pendingScopes = [],
   rendering,
   runEffects = (effects) => {
-    for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
+    for (let i = 0; i < effects.length; ) {
+      let fn = effects[i++],
+        scope = effects[i++];
+      scope.F?.I || fn(scope);
+    }
   },
   runRender = (render) => render.c(render.b, render.d),
   _template = (id, template, walks, setup, inputSignal) => {

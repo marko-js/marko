@@ -110,7 +110,11 @@ export function prepareEffects(fn: () => void): unknown[] {
 
 export let runEffects = ((effects) => {
   for (let i = 0; i < effects.length; ) {
-    (effects[i++] as (scope: Scope) => void)(effects[i++] as Scope);
+    const fn = effects[i++] as (scope: Scope) => void;
+    const scope = effects[i++] as Scope;
+    if (!scope[AccessorProp.ClosestBranch]?.[AccessorProp.Destroyed]) {
+      fn(scope);
+    }
   }
 }) as (effects: unknown[], checkPending?: boolean | 1) => void;
 

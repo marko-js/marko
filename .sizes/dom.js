@@ -1,4 +1,4 @@
-// size: 21171 (min) 7956 (brotli)
+// size: 21193 (min) 7940 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -205,7 +205,11 @@ let empty = [],
   pendingScopes = [],
   rendering,
   runEffects = (effects) => {
-    for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
+    for (let i = 0; i < effects.length; ) {
+      let fn = effects[i++],
+        scope = effects[i++];
+      scope.F?.I || fn(scope);
+    }
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled,
