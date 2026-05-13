@@ -109,6 +109,8 @@ export function prepareEffects(fn: () => void): unknown[] {
 }
 
 export let runEffects = ((effects) => {
+  // Skip effects for scopes whose closest branch has been destroyed
+  // to prevent runtime errors from stale DOM references.
   for (let i = 0; i < effects.length; ) {
     const fn = effects[i++] as (scope: Scope) => void;
     const scope = effects[i++] as Scope;
