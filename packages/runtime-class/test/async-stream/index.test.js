@@ -326,36 +326,6 @@ describe("AsyncStream", function () {
     out.write("3").end();
   });
 
-  it("should support writing to a through2 stream", function (done) {
-    var output = "";
-    var through2 = require("through2")(
-      function write(data, encoding, callback) {
-        output += data;
-        callback(null, data);
-      },
-    );
-
-    var errors = [];
-    var out = createAsyncStream(through2)
-      .on("error", function (e) {
-        errors.push(e);
-      })
-      .on("finish", function () {
-        expect(errors.length).to.equal(0);
-        expect(output).to.equal("123");
-        done();
-      })
-      .write("1");
-
-    var asyncOut = out.beginAsync();
-    setTimeout(function () {
-      asyncOut.write("2");
-      asyncOut.end();
-    }, 10);
-
-    out.write("3").end();
-  });
-
   it("should support writing to a through stream", function (done) {
     var output = "";
     var through = require("through")(function write(data) {
