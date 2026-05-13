@@ -46,7 +46,7 @@
     "magic-string": "^0.30.21"
   },
   "engines": {
-    "node": "18 || 20 || >=22"
+    "node": ">=22"
   },
   "exports:override": {
     ".": {
