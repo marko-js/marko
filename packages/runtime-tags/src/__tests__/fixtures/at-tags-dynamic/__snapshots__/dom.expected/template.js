@@ -41,7 +41,7 @@ export function $setup($scope) {
       $row = _.attrTags($row, {
         row: row,
         content: $row_content($scope, {
-          row
+          row: row
         })
       });
     });
