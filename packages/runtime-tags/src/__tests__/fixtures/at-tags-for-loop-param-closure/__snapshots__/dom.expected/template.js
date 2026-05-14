@@ -16,7 +16,7 @@ export function $setup($scope) {
   _.forOf([1, 2, 3], zzz => {
     $item = _.attrTags($item, {
       content: $item_content($scope, {
-        zzz
+        zzz: zzz
       })
     });
   });

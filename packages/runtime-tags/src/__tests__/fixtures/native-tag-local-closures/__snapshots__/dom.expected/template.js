@@ -29,7 +29,7 @@ const $size = /* @__PURE__ */_._let("size/2", $scope => {
   _.forUntil($scope.size, 0, 1, i => {
     $item = _.attrTags($item, {
       content: $item_content($scope, {
-        i
+        i: i
       })
     });
   });

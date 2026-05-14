@@ -26,8 +26,8 @@ export function $setup($scope) {
   }, (a, v) => {
     $item = _.attrTags($item, {
       content: $item_content($scope, {
-        a,
-        v
+        a: a,
+        v: v
       })
     });
   });
