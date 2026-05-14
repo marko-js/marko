@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.172
+
+### Patch Changes
+
+- [#3188](https://github.com/marko-js/marko/pull/3188) [`78a15b7`](https://github.com/marko-js/marko/commit/78a15b74637dcb7cafc131a36f47fbdc0e91889d) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Attr tag local member expression hoists
+
 ## 6.0.171
 
 ### Patch Changes
