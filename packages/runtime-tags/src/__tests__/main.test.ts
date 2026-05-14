@@ -1,7 +1,6 @@
 import * as compiler from "@marko/compiler";
 import assert from "assert";
 import fs from "fs";
-import snap from "mocha-snap";
 import path from "path";
 import glob from "tiny-glob";
 
@@ -20,6 +19,7 @@ import {
   type Throws,
   type Wait,
 } from "./utils/resolve";
+import { snap } from "./utils/snap";
 import { stripInlineRuntime } from "./utils/strip-inline-runtime";
 import createMutationTracker from "./utils/track-mutations";
 
@@ -96,12 +96,17 @@ function testFixtures(interop?: true) {
       const skipEquivalent = config.skip_equivalent || skipCSR || skipResume;
       const stripFixtureDir = async (str: string | Promise<string>) =>
         (await str).replaceAll(relativeFixtureDir, "__tests__");
-      const snapMD = (fn: () => Promise<string>) =>
-        (config.error_runtime ? snap.catch : snap)(
+      const snapMD = (file: string, fn: () => Promise<string>) =>
+        snap(
           () => stripFixtureDir(fn()),
-          { ext: ".md", dir: fixtureDir },
+          fixtureDir,
+          file,
+          config.error_runtime,
         );
-      const snapAllTemplates = async (compilerConfig: compiler.Config) => {
+      const snapAllTemplates = async (
+        testName: string,
+        compilerConfig: compiler.Config,
+      ) => {
         const additionalMarkoFiles = await glob(resolve("**/*.marko"), {
           absolute: true,
           cwd: fixtureDir,
@@ -120,14 +125,12 @@ function testFixtures(interop?: true) {
             const isError =
               config.error_compiler === true ||
               config.error_compiler?.includes(name);
-            const targetSnap = isError ? snap.catch : snap;
 
-            await targetSnap(
+            await snap(
               () => stripFixtureDir(compileCode(file, finalConfig)),
-              {
-                dir: fixtureDir,
-                file: name.replace(".marko", isError ? ".error.txt" : ".js"),
-              },
+              fixtureDir,
+              `${testName}.expected/${name.replace(".marko", isError ? ".error.txt" : ".js")}`,
+              isError,
             );
 
             if (
@@ -136,12 +139,11 @@ function testFixtures(interop?: true) {
               !skipResume &&
               !config.error_compiler
             ) {
-              await targetSnap(
+              await snap(
                 () => stripFixtureDir(bundle(file, finalConfig)),
-                {
-                  file: name.replace(".marko", ".hydrate.js"),
-                  dir: fixtureDir,
-                },
+                fixtureDir,
+                `${testName}.expected/${name.replace(".marko", ".hydrate.js")}`,
+                isError,
               );
             }
           } catch (e) {
@@ -307,8 +309,8 @@ function testFixtures(interop?: true) {
       });
 
       describe("compile", () => {
-        skipHTML || it("html", () => snapAllTemplates(ssrCompileOpts));
-        skipDOM || it("dom", () => snapAllTemplates(csrCompileOpts));
+        skipHTML || it("html", () => snapAllTemplates("html", ssrCompileOpts));
+        skipDOM || it("dom", () => snapAllTemplates("dom", csrCompileOpts));
       });
 
       describe("render", () => {
@@ -316,12 +318,16 @@ function testFixtures(interop?: true) {
 
         skipResume ||
           it("resume", async () => {
-            await snapMD(async () => (await resume()).tracker.getLogs());
+            await snapMD("resume.expected.md", async () =>
+              (await resume()).tracker.getLogs(),
+            );
           });
 
         skipCSR ||
           it("csr", async () => {
-            await snapMD(async () => (await csr()).tracker.getLogs());
+            await snapMD("csr.expected.md", async () =>
+              (await csr()).tracker.getLogs(),
+            );
           });
       });
 
@@ -330,12 +336,16 @@ function testFixtures(interop?: true) {
 
         skipResume ||
           it("resume-sanitized", async () => {
-            await snapMD(async () => (await resume()).tracker.getLogs(true));
+            await snapMD("resume-sanitized.expected.md", async () =>
+              (await resume()).tracker.getLogs(true),
+            );
           });
 
         skipCSR ||
           it("csr-sanitized", async () => {
-            await snapMD(async () => (await csr()).tracker.getLogs(true));
+            await snapMD("csr-sanitized.expected.md", async () =>
+              (await csr()).tracker.getLogs(true),
+            );
           });
 
         skipEquivalent ||

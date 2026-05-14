@@ -21,7 +21,7 @@
     "prepare": "husky && patch-package && npm run build-babel-types -w @marko/compiler",
     "report": "open ./coverage/lcov-report/index.html",
     "test": "mocha",
-    "test:update": "UPDATE_EXPECTATIONS=1 mocha --update"
+    "test:update": "UPDATE_EXPECTATIONS=1 mocha"
   },
   "overrides": {
     "yargs": "^18.0.0"
@@ -73,7 +73,6 @@
     "lint-staged": "^17.0.4",
     "mocha": "^11.7.5",
     "mocha-autotest": "^1.1.3",
-    "mocha-snap": "^5.0.1",
     "patch-package": "^8.0.1",
     "prettier": "^3.8.3",
     "prettier-plugin-packagejson": "^3.0.2",
