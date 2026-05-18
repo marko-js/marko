@@ -4,12 +4,15 @@ import path from "path";
 
 const UPDATE = process.env.UPDATE_EXPECTATIONS;
 const CWD = process.cwd();
+const writtenDirs = new Set<string>();
+const writtenFiles = new Map<string, string>();
 
 export async function snap(
   fn: () => unknown,
   dir: string,
   file: string,
   expectErr?: boolean,
+  uniqueName?: string,
 ): Promise<void> {
   const snapdir = dir + path.sep + "__snapshots__";
   const expectedFile = snapdir + path.sep + file;
@@ -38,7 +41,7 @@ export async function snap(
     actual = "" + (await fn());
   }
 
-  let expected: undefined | string;
+  let expected: string;
   try {
     expected = fs.readFileSync(expectedFile, "utf8");
   } catch (err) {
@@ -52,14 +55,56 @@ export async function snap(
     ) {
       throw err;
     }
+
+    expected = "";
   }
 
-  if (UPDATE || expected === undefined) {
+  if (UPDATE) {
+    const previousWrite = writtenFiles.get(expectedFile);
+    if (previousWrite !== undefined && previousWrite !== actual) {
+      throw new Error(
+        `Snapshot conflict: "${file}" was written with different content by two tests.`,
+      );
+    }
     if (expected !== actual) {
-      fs.mkdirSync(snapdir, { recursive: true });
-      fs.writeFileSync(expectedFile, actual);
+      if (actual) {
+        writtenDirs.add(snapdir);
+        writtenFiles.set(expectedFile, actual);
+        fs.mkdirSync(path.dirname(expectedFile), { recursive: true });
+        fs.writeFileSync(expectedFile, actual);
+      } else {
+        try {
+          fs.unlinkSync(expectedFile);
+        } catch {
+          // ignore
+        }
+      }
     }
   } else {
+    if (actual !== expected) {
+      const ext = path.extname(file);
+      const actualFile =
+        snapdir +
+        path.sep +
+        (uniqueName ?? file.slice(0, -ext.length)).slice(0, -ext.length) +
+        ".actual" +
+        ext;
+      fs.mkdirSync(path.dirname(actualFile), { recursive: true });
+      fs.writeFileSync(actualFile, actual);
+    }
     assert.strictEqual(actual, expected);
   }
+}
+
+if (UPDATE) {
+  after(function cleanupSnapshots() {
+    for (const snapdir of writtenDirs) {
+      for (const entry of fs.readdirSync(snapdir)) {
+        const filePath = path.join(snapdir, entry);
+        if (!writtenFiles.has(filePath)) {
+          fs.rmSync(filePath, { recursive: true });
+        }
+      }
+    }
+  });
 }

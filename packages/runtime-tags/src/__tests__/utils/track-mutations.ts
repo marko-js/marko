@@ -1,4 +1,3 @@
-import { js_beautify } from "js-beautify";
 import type { JSDOM, VirtualConsole } from "jsdom";
 import format, { plugins } from "pretty-format";
 
@@ -7,80 +6,76 @@ import {
   type ConsoleRecord,
   formatConsoleRecord,
 } from "./capture-console";
-import { getNodePath } from "./get-node-info";
-import { stripInlineRuntime } from "./strip-inline-runtime";
+import * as nodeInfo from "./get-node-info";
 
 const { DOMElement, DOMCollection } = plugins;
 
-export default function createMutationTracker(
-  browser: { window: JSDOM["window"]; virtualConsole: VirtualConsole },
-  root: ParentNode,
-) {
+export default function createMutationTracker(browser: {
+  window: JSDOM["window"];
+  virtualConsole: VirtualConsole;
+}) {
   let cleaned = false;
-  let container: ParentNode | undefined;
-  let pendingRecords: undefined | MutationRecord[];
+  let hasRendered = false;
+  let pendingMutations: undefined | MutationRecord[];
   const { window, virtualConsole } = browser;
   const logs: string[] = [];
-  const sanitizedLogs: string[] = [];
   const errors: Set<Error> = new Set();
   const consoleCapture = captureConsole(virtualConsole);
   const observer = new window.MutationObserver((records) => {
-    if (pendingRecords) {
-      pendingRecords = [...pendingRecords, ...records];
+    if (pendingMutations) {
+      pendingMutations = [...pendingMutations, ...records];
     } else {
-      logRecords("ASYNC", records, consoleCapture.records());
+      // TODO: throw
+      pendingMutations = records;
+      logRecords();
     }
-  });
-  observer.observe(root, {
-    attributes: true,
-    attributeOldValue: true,
-    characterData: true,
-    characterDataOldValue: true,
-    childList: true,
-    subtree: true,
   });
   window.addEventListener("error", handleError);
   window.addEventListener("unhandledrejection", handleRejection);
 
   return {
     beginUpdate() {
-      pendingRecords = [];
+      pendingMutations = [];
     },
-    log(message: string) {
-      if (cleaned) {
-        throw new Error(`log called after cleanup`);
+    logErrors(update: unknown) {
+      if (!errors.size) {
+        throw new Error("Expected error to be thrown");
       }
-      logs.push(message);
-    },
-    logError(update: unknown, expectedError: Error) {
-      throwErrors();
 
       if (cleaned) {
         throw new Error(`logError called after cleanup`);
       }
 
-      logs.push(getErrorStatusString(expectedError, update));
-      sanitizedLogs.push(getErrorStatusString(expectedError, update, true));
+      logs.push(getErrorStatusString([...errors], update, hasRendered));
+      errors.clear();
+      hasRendered = true;
     },
-    logUpdate(update: unknown, optional?: boolean) {
+    logRender(input: unknown) {
+      observer.observe(window.document, {
+        attributes: true,
+        attributeOldValue: true,
+        characterData: true,
+        characterDataOldValue: true,
+        childList: true,
+        subtree: true,
+      });
+
+      this.logUpdate(input);
+      hasRendered = true;
+    },
+    logUpdate(update?: unknown) {
+      const pending = observer.takeRecords();
+      if (pending.length) {
+        pendingMutations = pendingMutations
+          ? [...pendingMutations, ...pending]
+          : pending;
+      }
+
       throwErrors();
-
-      if (cleaned) {
-        throw new Error(`logUpdate called after cleanup`);
-      }
-
-      const records = [...(pendingRecords || []), ...observer.takeRecords()];
-      const consoleRecords = consoleCapture.records();
-      pendingRecords = undefined;
-      if (records.length || consoleRecords.length || !optional) {
-        logRecords(update, records, consoleRecords);
-      }
+      logRecords(update);
     },
-    getRawLogs(sanitized?: boolean) {
-      return sanitized ? sanitizedLogs : logs;
-    },
-    getLogs(sanitized?: boolean) {
-      return (sanitized ? sanitizedLogs : logs).join("\n\n");
+    getLogs() {
+      return logs.length ? logs.join("\n\n") + "\n" : "";
     },
     cleanup() {
       window.removeEventListener("error", handleError);
@@ -92,30 +87,21 @@ export default function createMutationTracker(
     },
   };
 
-  function logRecords(
-    update: unknown,
-    mutationRecords: MutationRecord[],
-    consoleRecords: ConsoleRecord[],
-  ) {
+  function logRecords(update?: unknown) {
     if (cleaned) {
       throw new Error(`log called after cleanup`);
     }
 
-    container ||=
-      isDocument(root) &&
-      root.body &&
-      !root.head.firstChild &&
-      !root.body.attributes.length &&
-      !root.documentElement.attributes.length
-        ? root.body
-        : root;
-
     logs.push(
-      getStatusString(container, mutationRecords, consoleRecords, update),
+      getStatusString(
+        window.document.body,
+        pendingMutations || [],
+        consoleCapture.records(),
+        update,
+        hasRendered,
+      ),
     );
-    sanitizedLogs.push(
-      getStatusString(container, mutationRecords, consoleRecords, update, true),
-    );
+    pendingMutations = undefined;
   }
 
   function throwErrors() {
@@ -144,44 +130,23 @@ export default function createMutationTracker(
   }
 }
 
-function cloneAndNormalize(container: ParentNode) {
-  const clone = container.cloneNode(true) as ParentNode;
-  normalizeTree(container, clone);
-  clone.normalize();
-  return clone;
-}
-
-function cloneAndSanitize(container: ParentNode) {
-  if (isDocument(container)) {
-    container = container.body || container.createElement("body");
-  }
-  const clone = container.cloneNode(true) as ParentNode;
+function cloneAndSanitize(body: Document["body"]) {
+  const clone = body.cloneNode(true) as ParentNode;
   const ignoredNodes: ChildNode[] = [];
-  normalizeTree(container, clone, shouldIgnore);
-  for (const ignoredNode of ignoredNodes) {
-    ignoredNode.remove();
+  normalizeTree(body, clone, ignoredNodes);
+  for (const node of ignoredNodes) {
+    node.remove();
   }
   clone.normalize();
-
   return clone;
-
-  function shouldIgnore(node: Node) {
-    if (isComment(node) || isIgnoredTag(node)) {
-      ignoredNodes.push(node);
-      return true;
-    }
-
-    return false;
-  }
 }
 
-function normalizeTree(
-  source: Node,
-  target: Node,
-  shouldIgnore?: (node: Node) => boolean,
-) {
-  if (shouldIgnore?.(target)) return;
-  if (isElement(target) && isElement(source)) {
+function normalizeTree(source: Node, target: Node, ignoredNodes: ChildNode[]) {
+  if (nodeInfo.isIgnoredNode(target)) {
+    ignoredNodes.push(target);
+    return;
+  }
+  if (nodeInfo.isElement(target) && nodeInfo.isElement(source)) {
     const style = target.getAttribute("style");
     if (style) {
       target.setAttribute(
@@ -203,7 +168,7 @@ function normalizeTree(
       );
     }
 
-    if (isInputElement(target) && isInputElement(source)) {
+    if (nodeInfo.isInputElement(target) && nodeInfo.isInputElement(source)) {
       if (target.type === "checkbox" || target.type === "radio") {
         if (source.defaultChecked && !source.checked) {
           target.setAttribute("default-checked", "");
@@ -223,12 +188,18 @@ function normalizeTree(
           target.removeAttribute("value");
         }
       }
-    } else if (isTextAreaElement(target) && isTextAreaElement(source)) {
+    } else if (
+      nodeInfo.isTextAreaElement(target) &&
+      nodeInfo.isTextAreaElement(source)
+    ) {
       if (source.defaultValue && source.defaultValue !== source.value) {
         target.setAttribute("default-value", source.defaultValue);
       }
       target.textContent = source.value;
-    } else if (isOptionElement(target) && isOptionElement(source)) {
+    } else if (
+      nodeInfo.isOptionElement(target) &&
+      nodeInfo.isOptionElement(source)
+    ) {
       if (source.defaultSelected && !source.selected) {
         target.setAttribute("default-selected", "");
       }
@@ -237,29 +208,11 @@ function normalizeTree(
       } else {
         target.removeAttribute("selected");
       }
-    } else if (
-      isScriptElement(target) &&
-      isScriptElement(source) &&
-      source.textContent
-    ) {
-      let depth = 0;
-      let parent = target.parentNode;
-      while (parent) {
-        parent = parent.parentNode;
-        depth++;
-      }
-      target.textContent = js_beautify(stripInlineRuntime(source.textContent), {
-        indent_size: 2,
-        indent_level: depth,
-        wrap_line_length: 80,
-        brace_style: "expand",
-      }).trimStart();
     }
   }
 
-  // Recursively handle child nodes
   for (let i = 0; i < source.childNodes.length; i++) {
-    normalizeTree(source.childNodes[i], target.childNodes[i], shouldIgnore);
+    normalizeTree(source.childNodes[i], target.childNodes[i], ignoredNodes);
   }
 }
 
@@ -272,73 +225,54 @@ function getUpdateString(update: unknown) {
   }
 
   if (update == null || !Object.keys(update).length) return "";
-  return ` \`${JSON.stringify(update)}\`\n`;
+  return ` \`${JSON.stringify(update)}\``;
 }
 
 function getStatusString(
-  container: ParentNode,
+  body: Document["body"] | null,
   mutationRecords: MutationRecord[],
   consoleRecords: ConsoleRecord[],
   update: unknown,
-  sanitized?: boolean,
+  hasRendered: boolean,
 ) {
-  const updateString = getUpdateString(update);
-  const formattedHTML = Array.from(
-    (sanitized ? cloneAndSanitize(container) : cloneAndNormalize(container))
-      .childNodes,
-    (node) =>
-      format(node, {
-        plugins: [DOMElement, DOMCollection],
-      }).trim(),
-  )
+  const formattedHTML = body
+    ? Array.from(cloneAndSanitize(body).childNodes, (node) =>
+        format(node, { plugins: [DOMElement, DOMCollection] }).trim(),
+      )
+        .filter(Boolean)
+        .join("\n")
+        .trim()
+    : "";
+  const formattedMutations = mutationRecords
+    .map(formatMutationRecord)
     .filter(Boolean)
-    .join("\n")
-    .trim();
-  const formattedMutations =
-    !sanitized &&
-    mutationRecords
-      .map((record) => formatMutationRecord(record, container))
-      .filter(Boolean)
-      .join("\n");
+    .join("\n");
   const formattedConsole = consoleRecords
     .map(formatConsoleRecord)
     .filter(Boolean)
     .join("\n");
 
-  let result = `# Render${updateString}\n`;
-
-  if (formattedHTML) {
-    result += `\`\`\`html\n${formattedHTML}\n\`\`\`\n`;
-    if (formattedMutations) result += "\n";
-  }
-
-  if (formattedMutations) {
-    result += `# Mutations\n\`\`\`\n${formattedMutations}\n\`\`\``;
-    if (formattedConsole) result += "\n";
-  }
-
-  if (formattedConsole) {
-    result += `# Console\n\`\`\`\n${formattedConsole}\n\`\`\``;
-  }
-
+  let result = `# ${hasRendered ? "Update" : "Render"}${getUpdateString(update)}`;
+  if (formattedHTML) result += `\n\`\`\`html\n${formattedHTML}\n\`\`\``;
+  if (formattedMutations)
+    result += `\n## Change\n\`\`\`\n${formattedMutations}\n\`\`\``;
+  if (formattedConsole)
+    result += `\n## Console\n\`\`\`\n${formattedConsole}\n\`\`\``;
   return result;
 }
 
 function getErrorStatusString(
-  error: Error,
+  errors: Error[],
   update: unknown,
-  omitStack?: boolean,
+  hasRendered: boolean,
 ) {
-  const updateString = getUpdateString(update);
-  const formattedError =
-    !omitStack && error.stack
-      ? error.stack.replaceAll(process.cwd(), "")
-      : error.message;
-  return `# Render${updateString}\n# Error\n\`\`\`\n${formattedError}\n\`\`\``;
+  return `# ${hasRendered ? "Update" : "Render"}${getUpdateString(update)}\n## Error\n\`\`\`\n${errors.map((err) => err.message).join("\n\n")}\n\`\`\``;
 }
 
-function formatMutationRecord(record: MutationRecord, container: ParentNode) {
+function formatMutationRecord(record: MutationRecord) {
   const { target, oldValue } = record;
+
+  if (nodeInfo.isIgnoredNode(target)) return;
 
   switch (record.type) {
     case "attributes": {
@@ -346,12 +280,14 @@ function formatMutationRecord(record: MutationRecord, container: ParentNode) {
       const newValue = (target as HTMLElement).getAttribute(
         attributeName as string,
       );
-      return `UPDATE ${getNodePath(target, container)}[${attributeName}] ${JSON.stringify(
+      return `UPDATE: ${nodeInfo.getNodePath(target)}[${attributeName}] ${JSON.stringify(
         oldValue,
       )} => ${JSON.stringify(newValue)}`;
     }
 
     case "characterData": {
+      if (nodeInfo.isIgnoredNode(target.parentNode!)) return;
+
       const newValue = target.nodeValue;
 
       // if the new value begins with the old value
@@ -366,51 +302,33 @@ function formatMutationRecord(record: MutationRecord, container: ParentNode) {
         return;
       }
 
-      return `UPDATE ${getNodePath(target, container)} ${JSON.stringify(
+      return `UPDATE: ${nodeInfo.getNodePath(target)} ${JSON.stringify(
         oldValue || "",
       )} => ${JSON.stringify(target.nodeValue || "")}`;
     }
 
     case "childList": {
-      const { removedNodes, addedNodes, previousSibling, nextSibling } = record;
+      const { removedNodes, addedNodes, previousSibling } = record;
+      const removed = nodeInfo.getSanitizedNodes(removedNodes);
+      const added = nodeInfo.getSanitizedNodes(addedNodes);
+
+      if (!removed.length && !added.length) return;
+
       const details: string[] = [];
-      if (removedNodes.length) {
-        const relativeNode = previousSibling || nextSibling || target;
-        const position =
-          relativeNode === previousSibling
-            ? "after"
-            : relativeNode === nextSibling
-              ? "before"
-              : "in";
+      if (removed.length) {
         details.push(
-          `REMOVE ${Array.from(removedNodes, (node) =>
-            getNodePath(node, container),
-          ).join(", ")} ${position} ${getNodePath(relativeNode, container)}`,
+          `REMOVE: ${nodeInfo.getNodeSelector(removed, previousSibling, target)}`,
         );
       }
 
-      if (addedNodes.length) {
+      if (added.length) {
         details.push(
-          `INSERT ${Array.from(addedNodes)
-            .map((node) => getNodePath(node, container))
-            .join(", ")}`,
+          `INSERT: ${nodeInfo.getNodeSelector(added, previousSibling, target)}`,
         );
       }
 
       return details.join("\n");
     }
-  }
-}
-
-function isIgnoredTag(node: Node): node is Element {
-  switch (isElement(node) && node.tagName) {
-    case "LINK":
-    case "TITLE":
-    case "STYLE":
-    case "SCRIPT":
-      return true;
-    default:
-      return false;
   }
 }
 
@@ -440,32 +358,4 @@ function trimDedent(str: string) {
   return str
     .replace(new RegExp(`^[ \\t]{${indent[0].length}}`, "gm"), "")
     .trim();
-}
-
-function isDocument(node: Node): node is Document {
-  return node.nodeType === 9;
-}
-
-function isElement(node: Node): node is HTMLElement {
-  return node.nodeType === 1;
-}
-
-function isComment(node: Node): node is Comment {
-  return node.nodeType === 8;
-}
-
-function isInputElement(node: Element): node is HTMLInputElement {
-  return node.tagName === "INPUT";
-}
-
-function isOptionElement(node: Element): node is HTMLOptionElement {
-  return node.tagName === "OPTION";
-}
-
-function isTextAreaElement(node: Element): node is HTMLTextAreaElement {
-  return node.tagName === "TEXTAREA";
-}
-
-function isScriptElement(node: Element): node is HTMLScriptElement {
-  return node.tagName === "SCRIPT";
 }
