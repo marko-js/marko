@@ -1,6 +1,6 @@
 import type { Boundary } from "./writer";
 
-const kTouchedIterator = Symbol();
+const kTouchedIterator = Symbol.for("marko.touchedIterator");
 const { hasOwnProperty } = {};
 const Generator = (function* () {})().constructor;
 const AsyncGenerator = (async function* () {})().constructor;
@@ -1738,11 +1738,13 @@ function isWord(char: string) {
 }
 
 function patchIteratorNext(proto: Iterator<any>) {
+  if ((proto.next as any)[kTouchedIterator]) return;
   const { next } = proto;
   proto.next = function (value) {
     (this as any)[kTouchedIterator] = 1;
     return next.call(this, value);
   };
+  (proto.next as any)[kTouchedIterator] = true;
 }
 
 function compareRegisteredReferences(a: Reference, b: Reference) {
