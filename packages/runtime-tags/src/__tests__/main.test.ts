@@ -1,12 +1,15 @@
 import * as compiler from "@marko/compiler";
-import assert from "assert";
 import fs from "fs";
+import { html_beautify } from "js-beautify";
 import path from "path";
-import glob from "tiny-glob";
 
 import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
-import { bundle, createCSRRunner, createLinkedRunner } from "./utils/bundle";
+import {
+  createClientRunner,
+  createServerRunner,
+  getSizes,
+} from "./utils/bundle";
 import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 import createBrowser from "./utils/create-browser";
 import {
@@ -20,7 +23,10 @@ import {
   type Wait,
 } from "./utils/resolve";
 import { snap } from "./utils/snap";
-import { stripInlineRuntime } from "./utils/strip-inline-runtime";
+import {
+  stripDebugRuntime,
+  stripOptimizeRuntime,
+} from "./utils/strip-inline-runtime";
 import createMutationTracker from "./utils/track-mutations";
 
 type Step = Input | Wait | Flush | Throws | ((container: Element) => unknown);
@@ -28,14 +34,15 @@ type Steps = [Input, ...Step[]];
 export type TestConfig = {
   steps?: Steps | (() => Steps | Promise<Steps>);
   embedded?: true;
+  equivalent?: boolean;
+  error_dom?: boolean;
+  error_html?: boolean;
+  skip_optimize?: boolean;
   skip_dom?: boolean;
   skip_html?: boolean;
   skip_csr?: boolean;
   skip_ssr?: boolean;
-  skip_equivalent?: boolean;
-  skip_resume?: boolean;
   error_compiler?: true | string[];
-  error_runtime?: boolean;
 };
 
 describe("runtime-tags/translator", () => {
@@ -69,352 +76,279 @@ function testFixtures(interop?: true) {
           return {};
         }
       })();
-      const compileOpts: compiler.Config = {
-        translator,
-        writeVersionComment: false,
-        babelConfig: {
-          babelrc: false,
-          configFile: false,
-          browserslistConfigFile: false,
-        },
-      };
-      const ssrCompileOpts: compiler.Config = {
-        ...compileOpts,
-        output: "html",
-      };
-      const csrCompileOpts: compiler.Config = {
-        ...compileOpts,
-        output: "dom",
-      };
+      const hasCompilerError = !!config.error_compiler;
       const skipHTML = config.skip_html;
       const skipDOM = config.skip_dom;
-      const skipSSR = skipHTML || config.skip_ssr || config.error_compiler; // TODO: remove
-      const skipCSR = skipDOM || config.skip_csr || config.error_compiler;
-      const skipResume =
-        config.skip_resume !== false &&
-        (config.skip_resume || skipSSR || skipCSR);
-      const skipEquivalent = config.skip_equivalent || skipCSR || skipResume;
       const stripFixtureDir = async (str: string | Promise<string>) =>
         (await str).replaceAll(relativeFixtureDir, "__tests__");
-      const snapMD = (file: string, fn: () => Promise<string>) =>
-        snap(
-          () => stripFixtureDir(fn()),
-          fixtureDir,
-          file,
-          config.error_runtime,
+
+      if (!fs.existsSync(templateFile)) {
+        console.warn(
+          `Template missing for fixture: ${path.relative(process.cwd(), templateFile)}`,
         );
-      const snapAllTemplates = async (
-        testName: string,
-        compilerConfig: compiler.Config,
-      ) => {
-        const additionalMarkoFiles = await glob(resolve("**/*.marko"), {
-          absolute: true,
-          cwd: fixtureDir,
-        });
-        const finalConfig: compiler.Config = {
-          ...compilerConfig,
-          resolveVirtualDependency(_filename, { code, virtualPath }) {
-            return `virtual:${virtualPath} ${code}`;
-          },
-        };
-        const errors: Error[] = [];
+        return;
+      }
 
-        for (const file of additionalMarkoFiles) {
-          try {
-            const name = path.relative(fixtureDir, file);
-            const isError =
-              config.error_compiler === true ||
-              config.error_compiler?.includes(name);
+      for (const mode of interop || config.skip_optimize
+        ? ["debug"]
+        : (["debug", "optimize"] as const)) {
+        describe(mode, () => {
+          const optimize = mode === "optimize";
+          const equivalent = config.equivalent !== false;
+          const skipSSR =
+            hasCompilerError || skipDOM || skipHTML || config.skip_ssr;
+          const skipCSR = hasCompilerError || skipDOM || config.skip_csr;
+          const getModeOpts = once(
+            (): compiler.Config => ({
+              translator,
+              writeVersionComment: false,
+              babelConfig: {
+                babelrc: false,
+                configFile: false,
+                browserslistConfigFile: false,
+              },
+              optimize,
+              optimizeKnownTemplates: optimize
+                ? (
+                    fs.readdirSync(fixtureDir, {
+                      recursive: true,
+                    }) as string[]
+                  )
+                    .filter((f) => f.endsWith(".marko"))
+                    .map((f) => path.join(fixtureDir, f))
+                : undefined,
+            }),
+          );
 
-            await snap(
-              () => stripFixtureDir(compileCode(file, finalConfig)),
+          const ssrRunner = once(() =>
+            createServerRunner(
               fixtureDir,
-              `${testName}.expected/${name.replace(".marko", isError ? ".error.txt" : ".js")}`,
-              isError,
-            );
+              { template: "./template.marko" },
+              getModeOpts(),
+              interop,
+            ),
+          );
 
-            if (
-              compilerConfig.output === "dom" &&
-              file === templateFile &&
-              !skipResume &&
-              !config.error_compiler
-            ) {
-              await snap(
-                () => stripFixtureDir(bundle(file, finalConfig)),
-                fixtureDir,
-                `${testName}.expected/${name.replace(".marko", ".hydrate.js")}`,
-                isError,
+          const snapMode = (
+            fn: () => unknown,
+            file: string,
+            expectErr?: boolean,
+            actualFile?: string,
+          ) => {
+            const resolvedFile =
+              expectErr && actualFile ? `${actualFile}.error.txt` : file;
+            return snap(
+              fn,
+              fixtureDir,
+              optimize
+                ? resolvedFile
+                : resolvedFile.replace(/(\.[^.]+)$/, ".debug$1"),
+              expectErr,
+              actualFile &&
+                (optimize
+                  ? actualFile
+                  : actualFile.replace(/(\.[^.]+)$/, ".debug$1")),
+            );
+          };
+
+          const snapCompile = async (output: "html" | "dom") => {
+            if (config.error_compiler) {
+              await snapMode(
+                () => {
+                  for (const f of config.error_compiler === true
+                    ? [templateFile]
+                    : (config.error_compiler as string[]).map(resolve)) {
+                    compiler.compileFileSync(f, { ...getModeOpts(), output });
+                  }
+                },
+                `error-compile-${output}.txt`,
+                true,
               );
-            }
-          } catch (e) {
-            errors.push(e as Error);
-          }
-        }
-
-        if (errors.length === 1) {
-          throw errors[0];
-        }
-
-        if (errors.length > 1) {
-          throw new AggregateError(
-            errors,
-            "\n" + errors.map((e) => e.toString()).join("\n"),
-          );
-        }
-      };
-
-      const csr = once(async () => {
-        const browser = createBrowser();
-        const runCSR = await createCSRRunner(
-          templateFile,
-          compileOpts,
-          interop,
-        );
-        const { window } = browser;
-        const { document } = window;
-        const { input, steps } = await getSteps(config);
-        const container = document.createElement("div");
-        const tracker = createMutationTracker(browser, container);
-
-        document.body.appendChild(container);
-
-        const { default: template, run } = await runCSR(browser.ctx);
-        const instance = template.mount(input, container, "afterbegin");
-        tracker.logUpdate(input);
-
-        for (const update of steps) {
-          if (isWait(update)) {
-            await update();
-          } else if (isFlush(update)) {
-            continue;
-          } else if (typeof update === "function") {
-            tracker.beginUpdate();
-            await update(document.documentElement);
-            if (isThrows(update)) {
-              try {
-                run();
-                throw new Error("Expected error to be thrown");
-              } catch (err) {
-                tracker.logError(update, err as Error);
-                break;
-              }
-            } else {
-              run();
-              await 1; // allow a microtask before we log the update in order to catch mutation observers.
-              tracker.logUpdate(update);
-            }
-          } else {
-            instance.update(update);
-            tracker.logUpdate(update);
-          }
-        }
-
-        tracker.cleanup();
-        return { browser, tracker };
-      });
-
-      const resume = once(async () => {
-        const runner = await createLinkedRunner(
-          fixtureDir,
-          { template: "./template.marko" },
-          compileOpts,
-          interop,
-        );
-        const { input, steps } = await getSteps(config);
-        const chunks: string[] = [];
-        const logs: ConsoleRecord[][] = [];
-        const capture = captureConsole();
-
-        try {
-          const { template } = await runner.runServer();
-          for await (const data of template.render(
-            config.embedded
-              ? {
-                  ...input,
-                  $global: {
-                    ...(input.$global as any),
-                    renderId: "embedded",
-                  },
-                }
-              : input,
-          )) {
-            chunks.push(data);
-            logs.push(capture.records());
-          }
-          logs.push(capture.records());
-        } finally {
-          resetResolveState();
-          capture.cleanup();
-        }
-
-        const browser = createBrowser(runner.assets);
-        const { window } = browser;
-        const { document } = window;
-        const flushNext = browser.stream(chunks);
-        let hasFlush = flushNext();
-        let flushIndex = 0;
-        const flushWithLog = () => {
-          tracker.log(
-            `# Write\n\`\`\`html\n${indent(stripInlineRuntime(chunks[++flushIndex]))}\n\`\`\``,
-          );
-          return flushNext();
-        };
-        const tracker = createMutationTracker(browser, document);
-
-        for (const group of logs) {
-          for (const { type, args } of group) {
-            window.console[type](...args);
-          }
-        }
-
-        tracker.beginUpdate();
-        await browser.runAsyncScripts(() => tracker.logUpdate(input));
-        const { run } = browser.ctx as typeof import("@marko/runtime-tags/dom");
-
-        for (const update of steps) {
-          if (isWait(update)) {
-            await update();
-          } else if (isFlush(update)) {
-            if (hasFlush) {
-              tracker.beginUpdate();
-              hasFlush = flushWithLog();
-              await browser.runAsyncScripts();
-              tracker.logUpdate("FLUSH");
-            }
-          } else if (typeof update === "function") {
-            tracker.beginUpdate();
-            await update(document.documentElement);
-            run();
-            await 1; // allow a microtask before we log the update in order to catch mutation observers
-            tracker.logUpdate(update);
-          } else {
-            // if new input is detected, stop testing
-            // this will be covered by the client tests
-            break;
-          }
-        }
-
-        while (hasFlush) {
-          await resolveAfter(0, 1);
-          tracker.beginUpdate();
-          hasFlush = flushWithLog();
-          await browser.runAsyncScripts();
-          run();
-          tracker.logUpdate("FLUSH (auto)");
-        }
-
-        tracker.cleanup();
-
-        return { browser, tracker };
-      });
-
-      describe("compile", () => {
-        skipHTML || it("html", () => snapAllTemplates("html", ssrCompileOpts));
-        skipDOM || it("dom", () => snapAllTemplates("dom", csrCompileOpts));
-      });
-
-      describe("render", () => {
-        beforeEach(resetResolveState);
-
-        skipResume ||
-          it("resume", async () => {
-            await snapMD("resume.expected.md", async () =>
-              (await resume()).tracker.getLogs(),
-            );
-          });
-
-        skipCSR ||
-          it("csr", async () => {
-            await snapMD("csr.expected.md", async () =>
-              (await csr()).tracker.getLogs(),
-            );
-          });
-      });
-
-      describe("sanitized", () => {
-        beforeEach(resetResolveState);
-
-        skipResume ||
-          it("resume-sanitized", async () => {
-            await snapMD("resume-sanitized.expected.md", async () =>
-              (await resume()).tracker.getLogs(true),
-            );
-          });
-
-        skipCSR ||
-          it("csr-sanitized", async () => {
-            await snapMD("csr-sanitized.expected.md", async () =>
-              (await csr()).tracker.getLogs(true),
-            );
-          });
-
-        skipEquivalent ||
-          it("equivalent", async () => {
-            if (config.error_runtime) {
-              const resumeError = await resume()
-                .then(() => {})
-                .catch((err: Error) => err);
-              const csrError = await csr()
-                .then(() => {})
-                .catch((err: Error) => err);
-              if (!resumeError) throw new Error("Resume did not error.");
-              if (!csrError) throw new Error("CSR did not error.");
-              assert.strictEqual(resumeError.message, csrError.message);
               return;
             }
 
-            const normalizeLog = (log: string) =>
-              log.replace(/[cs]M_[a-z0-9]+/g, "%id");
+            await snapMode(async () => {
+              const runner = await ssrRunner();
+              return stripFixtureDir(await runner[`${output}Bundle`]());
+            }, `${output}.bundle.js`);
+          };
 
-            const resumeLogs = (await resume()).tracker
-              .getRawLogs(true)
-              .map(normalizeLog);
-            const csrLogs = (await csr()).tracker
-              .getRawLogs(true)
-              .map(normalizeLog);
+          const csr = once(async () => {
+            resetResolveState();
+            const browser = createBrowser();
+            const runClient = await createClientRunner(
+              templateFile,
+              getModeOpts(),
+              interop,
+            );
+            const { window } = browser;
+            const { document } = window;
+            const { input, steps } = await getSteps(config);
+            const tracker = createMutationTracker(browser);
+            const { template, run } = await runClient(browser.ctx);
+            const instance = template.mount(input, document.body, "afterbegin");
+            tracker.logRender(input);
 
-            let csrIndex = 0;
-            let resumeIndex = 0;
-            let actual = "";
-            let expected = "";
-            let prevResumeLog = "";
-
-            while (resumeIndex < resumeLogs.length) {
-              const resumeLog = resumeLogs[resumeIndex++].replace(
-                /(# Render)[^\n]+/,
-                "$1",
-              );
-              if (resumeLog !== prevResumeLog) {
-                while (csrIndex < csrLogs.length) {
-                  const csrLog = csrLogs[csrIndex++].replace(
-                    /(# Render)[^\n]+/,
-                    "$1",
-                  );
-                  if (csrLog === resumeLog) {
-                    if (expected) expected += "\n\n";
-                    expected += csrLog;
-                    break;
-                  }
+            for (const update of steps) {
+              if (isWait(update)) {
+                await update();
+              } else if (isFlush(update)) {
+                continue;
+              } else if (typeof update === "function") {
+                tracker.beginUpdate();
+                await update(document.documentElement);
+                run();
+                await 1; // allow a microtask before we log the update in order to catch mutation observers.
+                if (isThrows(update)) {
+                  tracker.logErrors(update);
+                } else {
+                  tracker.logUpdate(update);
                 }
-                if (actual) actual += "\n\n";
-                actual += resumeLog;
+              } else {
+                instance.update(update);
+                tracker.logUpdate(update);
               }
-              prevResumeLog = resumeLog;
             }
 
-            if (!expected && actual) {
-              assert.strictEqual(csrLogs.join("\n\n"), resumeLogs.join("\n\n"));
-            } else {
-              assert.strictEqual(actual, expected);
-            }
+            tracker.cleanup();
+            return { browser, tracker };
           });
-      });
+
+          const ssr = once(async () => {
+            resetResolveState();
+            const runner = await ssrRunner();
+            const { input, steps } = await getSteps(config);
+            const chunks: string[] = [];
+            const logs: ConsoleRecord[][] = [];
+            const capture = captureConsole();
+
+            try {
+              const { template } = await runner.runServer();
+              for await (const data of template.render(
+                config.embedded
+                  ? {
+                      ...input,
+                      $global: {
+                        ...(input.$global as any),
+                        renderId: "embedded",
+                      },
+                    }
+                  : input,
+              )) {
+                chunks.push(data);
+                logs.push(capture.records());
+              }
+              logs.push(capture.records());
+            } finally {
+              resetResolveState();
+              capture.cleanup();
+            }
+
+            const browser = createBrowser(runner.assets);
+            const { window } = browser;
+            const { document } = window;
+            const flushNext = browser.stream(chunks);
+            let hasFlush = flushNext();
+            const flushWithLog = () => flushNext();
+            const tracker = createMutationTracker(browser);
+
+            for (const group of logs) {
+              for (const { type, args } of group) {
+                window.console[type](...args);
+              }
+            }
+
+            await browser.runAsyncScripts(() => tracker.logRender(input));
+            const { run } =
+              browser.ctx as typeof import("@marko/runtime-tags/dom");
+
+            for (const update of steps) {
+              if (isWait(update)) {
+                await update();
+              } else if (isFlush(update)) {
+                if (hasFlush) {
+                  tracker.beginUpdate();
+                  hasFlush = flushWithLog();
+                  await browser.runAsyncScripts();
+                  tracker.logUpdate();
+                }
+              } else if (typeof update === "function") {
+                tracker.beginUpdate();
+                await update(document.documentElement);
+                run();
+                await 1; // allow a microtask before we log the update in order to catch mutation observers
+                if (isThrows(update)) {
+                  tracker.logErrors(update);
+                } else {
+                  tracker.logUpdate(update);
+                }
+              } else {
+                // if new input is detected, stop testing
+                // this will be covered by the client tests
+                break;
+              }
+            }
+
+            while (hasFlush) {
+              await resolveAfter(0, 1);
+              tracker.beginUpdate();
+              hasFlush = flushWithLog();
+              await browser.runAsyncScripts();
+              run();
+              tracker.logUpdate();
+            }
+
+            tracker.cleanup();
+
+            return { browser, tracker, chunks };
+          });
+
+          skipHTML || it("html", () => snapCompile("html"));
+          skipDOM || it("dom", () => snapCompile("dom"));
+
+          skipSSR ||
+            it("ssr", async () => {
+              await snapMode(
+                async () => {
+                  const { tracker, chunks } = await ssr();
+                  await snapMode(async () => {
+                    const pretty = html_beautify(
+                      chunks
+                        .map(
+                          optimize ? stripOptimizeRuntime : stripDebugRuntime,
+                        )
+                        .join("\n\n<!-- FLUSH -->\n\n"),
+                      {
+                        indent_size: 2,
+                        wrap_line_length: 80,
+                        end_with_newline: false,
+                      },
+                    );
+
+                    return optimize
+                      ? `<!-- total: ${await getSizes(chunks.join(""))} -->\n${pretty}\n`
+                      : `${pretty}\n`;
+                  }, "writes.html");
+                  return tracker.getLogs();
+                },
+                equivalent ? "render.md" : "render-ssr.md",
+                config.error_html,
+                "ssr",
+              );
+            });
+
+          skipCSR ||
+            it("csr", () =>
+              snapMode(
+                async () => stripFixtureDir((await csr()).tracker.getLogs()),
+                equivalent ? "render.md" : "render-csr.md",
+                config.error_dom,
+                "csr",
+              ));
+        });
+      }
     });
   }
-}
-
-async function compileCode(templateFile: string, config: compiler.Config) {
-  return (await compiler.compileFile(templateFile, config)).code;
 }
 
 async function getSteps(config: TestConfig) {
@@ -425,14 +359,7 @@ async function getSteps(config: TestConfig) {
   return { input, steps };
 }
 
-function once<T>(fn: () => Promise<T>): () => Promise<T> {
-  let cached: Promise<T> | undefined;
+function once<T>(fn: () => T): () => T {
+  let cached: T | undefined;
   return () => (cached ??= fn());
-}
-
-function indent(data: unknown) {
-  return String(data)
-    .split("\n")
-    .map((line) => `  ${line}`)
-    .join("\n");
 }
