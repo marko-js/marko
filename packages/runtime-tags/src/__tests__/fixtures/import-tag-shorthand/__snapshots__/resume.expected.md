@@ -1,5 +1,0 @@
-# Render
-```html
-<div />
-<div />
-```

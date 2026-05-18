@@ -1,0 +1,7 @@
+// total: 8687 (min) 3657 (brotli)
+// template.marko: 180 (min) 145 (brotli)
+const $if_content__setup = ($scope) => _attr_nonce($scope, "a");
+const $spreadAttrs__script = _script("a1", ($scope) => _attrs_script($scope, "b"));
+const $if = /* @__PURE__ */ _if(2, "<script type=magic>\n    D\n  <\/script>", " b", $if_content__setup);
+const $mounted = /* @__PURE__ */ _let(4, ($scope) => $if($scope, $scope.e ? 0 : 1));
+const $setup__script = _script("a0", ($scope) => $mounted($scope, true));

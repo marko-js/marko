@@ -1,6 +1,6 @@
 import type { TestConfig } from "../../main.test";
 
 export const config: TestConfig = {
+  equivalent: false,
   steps: [{ show: true }],
-  skip_equivalent: true,
 };

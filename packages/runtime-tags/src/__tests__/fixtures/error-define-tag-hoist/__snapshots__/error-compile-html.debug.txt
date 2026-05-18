@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-define-tag-hoist/template.marko:2:3
+      1 | define/B
+    > 2 |   A
+        |   ^ Hoisted values must be functions. The `<define>` tag variable may not be hoisted. Please move the `<define>` tag prior to any references or extract to a separate `.marko` file.
+      3 |
+      4 | define/A
+      5 |   -- Hello

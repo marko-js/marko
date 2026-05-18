@@ -9,6 +9,5 @@ function toggle(container: Element) {
 }
 
 export const config: TestConfig = {
-  skip_ssr: true,
   steps: [{}, increment, toggle, increment, toggle],
 };

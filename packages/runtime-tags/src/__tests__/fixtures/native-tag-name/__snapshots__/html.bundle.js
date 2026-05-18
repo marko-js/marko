@@ -1,0 +1,6 @@
+// template.marko
+var template_default = _template("a", (input) => {
+	_scope_reason();
+	_scope_id();
+	_html("<span></span><div></div><div></div>");
+}, 1);

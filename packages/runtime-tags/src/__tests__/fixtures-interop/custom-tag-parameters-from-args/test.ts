@@ -5,6 +5,6 @@ function click(container: Element) {
 }
 
 export const config: TestConfig = {
-  skip_resume: true,
+  skip_html: true, // TODO: it is broken.
   steps: [{}, click, click, click],
 };

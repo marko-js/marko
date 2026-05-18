@@ -5,6 +5,5 @@ function click(container: Element) {
 }
 
 export const config: TestConfig = {
-  skip_equivalent: true,
   steps: [{}, click, click, click],
 };

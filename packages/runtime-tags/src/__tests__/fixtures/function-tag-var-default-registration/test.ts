@@ -6,5 +6,4 @@ function click(container: Element) {
 
 export const config: TestConfig = {
   steps: [{}, click],
-  skip_ssr: true,
 };

@@ -1,1 +1,0 @@
-x is a readonly tag variable.

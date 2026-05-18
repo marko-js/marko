@@ -1,0 +1,15 @@
+<!-- total: 436 (min) 279 (brotli) -->
+<div a=1 b=2></div><!--M_*1 a-->
+<div a=1 b=2></div><!--M_*1 b-->
+<div a=0 b=2></div><!--M_*1 c-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.a = [0, {
+    f: {
+      a: 1,
+      b: 2
+    },
+    g: 0
+  }]), "a0 1 a1 1"];
+  M._.w()
+</script>
