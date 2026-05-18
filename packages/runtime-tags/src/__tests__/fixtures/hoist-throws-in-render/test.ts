@@ -1,6 +1,7 @@
 import type { TestConfig } from "../../main.test";
 
 export const config: TestConfig = {
-  error_runtime: true,
-  skip_resume: true,
+  error_dom: true,
+  error_html: true,
+  skip_optimize: true,
 };

@@ -1,7 +1,10 @@
 import type { TestConfig } from "../../main.test";
+import { throws } from "../../utils/resolve";
 
 export const config: TestConfig = {
-  error_runtime: true,
-  skip_ssr: true,
-  skip_resume: false,
+  skip_optimize: true,
+  steps: [
+    {},
+    throws((container) => container.querySelector("button")!.click()),
+  ],
 };

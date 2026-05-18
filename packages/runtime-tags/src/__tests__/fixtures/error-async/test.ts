@@ -3,5 +3,6 @@ import { wait } from "../../utils/resolve";
 
 export const config: TestConfig = {
   steps: [{}, wait],
-  error_runtime: true,
+  error_html: true,
+  error_dom: true,
 };

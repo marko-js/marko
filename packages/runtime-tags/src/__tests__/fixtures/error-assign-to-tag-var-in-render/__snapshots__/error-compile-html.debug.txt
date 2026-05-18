@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-tag-var-in-render/template.marko:2:8
+      1 | <let/x=1>
+    > 2 | <div>${x++}</>
+        |        ^ Assignments to a tag variable must be within a script or function.
+      3 |

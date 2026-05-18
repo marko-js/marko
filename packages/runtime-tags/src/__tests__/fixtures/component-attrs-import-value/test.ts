@@ -7,5 +7,5 @@ function click(container: Element) {
 export const config: TestConfig = {
   steps: [{}, click],
   skip_csr: true,
-  error_runtime: true,
+  error_html: true,
 };

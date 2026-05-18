@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-invalid-modifier-name/template.marko:2:22
+      1 | <let/value=0/>
+    > 2 | <custom-input myAttr:123:=value/>
+        |                      ^^^ Bound attribute refinement shorthand must be a valid JavaScript identifier.
+      3 |
+      4 |
+      5 |

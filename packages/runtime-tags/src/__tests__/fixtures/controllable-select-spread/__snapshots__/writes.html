@@ -1,0 +1,21 @@
+<!-- total: 587 (min) 350 (brotli) -->
+<select>
+  <option value=a>A</option>
+  <option value=b selected>B</option>
+  <option value=c>C</option>
+</select><!--M_*2 a--><span>b<!--M_*1 b--></span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.d = [0, _.e = {
+      a: _.a = {
+        Fa: 3,
+        Aa: _.c = {},
+        Da: "a1",
+        c: _.b = {
+          value: "b"
+        }
+      }
+    }, _.a, _.c], _.a.Ea = _.b.valueChange = _._.a0(_.e), _.b.content = _._
+    .a1(_.e), _.d), "b0 2"];
+  M._.w()
+</script>

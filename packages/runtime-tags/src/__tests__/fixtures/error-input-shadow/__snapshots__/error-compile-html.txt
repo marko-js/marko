@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-input-shadow/template.marko:1:8
+    > 1 | <const/input=1>
+        |        ^^^^^ Duplicate declaration "input"
+      2 | <script>
+      3 |   console.log(input)
+      4 | </>

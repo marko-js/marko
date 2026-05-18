@@ -1,0 +1,1 @@
+$scope.d.format is not a function

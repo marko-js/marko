@@ -1,0 +1,39 @@
+<!-- total: 803 (min) 440 (brotli) -->
+<button id=outer>Toggle Outer</button><!--M_*1 a--><button id=middle>Toggle
+  Middle</button><!--M_*1 b--><button id=inner>Toggle
+  Inner</button><!--M_*1 c-->
+<pre></pre><!--M_*1 d-->
+<div>
+  <p>Outer</p>
+  <div>
+    <p>Middle</p>
+    <p>Inner</p><!--M_|4 b 6-->
+  </div><!--M_|2 b 4-->
+</div><!--M_|1 e 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.g = [0, _.a = {
+      f: !0,
+      g: !0,
+      h: !0,
+      Bh: _.h = new Set
+    }, _.c = {
+      _: _.a
+    }, _.b = {
+      d: "Outer",
+      G: 2
+    }, _.e = {
+      _: _.c
+    }, _.d = {
+      d: "Middle",
+      G: 4
+    }, {
+      _: _.e
+    }, _.f = {
+      d: "Inner",
+      G: 6
+    }], _.a.i = _.b.e = _.d.e = _.f.e = _._.a0(_.a), (_.h).add(_.e), _.g),
+    "b0 3 5 7 a1 1 a2 1 a3 1"
+  ];
+  M._.w()
+</script>
