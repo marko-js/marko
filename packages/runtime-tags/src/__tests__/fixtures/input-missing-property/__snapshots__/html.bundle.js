@@ -7,14 +7,14 @@ var template_default = _template("a", (input) => {
 	const Child = { content: _content("a0", (input) => {
 		const $scope1_id = _scope_id();
 		const $Child_content__input_name__closures = /* @__PURE__ */ new Set();
-		const $scope1_reason = _scope_reason(), $si__input_count__OR__input_name = _serialize_if($scope1_reason, 0), $sg__input_count = _serialize_guard($scope1_reason, 1);
+		const $scope1_reason = _scope_reason(), $si__input_count__OR__input_name = _serialize_if($scope1_reason, 0), $sg__input_count = _serialize_guard($scope1_reason, 1), $si__input_name = _serialize_if($scope1_reason, 2);
 		_if(() => {
 			if (input.count) {
 				const $scope2_id = _scope_id();
 				{
 					const $scope3_id = _scope_id();
 					_html(`<div>${_escape(input.name || "Fallback")}${_el_resume($scope3_id, "a", _serialize_guard($scope1_reason, 2))}</div>`);
-					$si__input_count__OR__input_name && _subscribe($Child_content__input_name__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }));
+					$si__input_count__OR__input_name && _subscribe($si__input_name && $Child_content__input_name__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }));
 				}
 				$si__input_count__OR__input_name && writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", $sg__input_count, $sg__input_count, $sg__input_count);
 		$si__input_count__OR__input_name && writeScope($scope1_id, {
 			e: _serialize_if($scope1_reason, 1) && input.name,
-			Be: _serialize_if($scope1_reason, 2) && $Child_content__input_name__closures
+			Be: $si__input_name && $Child_content__input_name__closures
 		});
 	}) };
 	const $childScope = _peek_scope_id();

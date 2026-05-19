@@ -1570,9 +1570,11 @@ function getFilteredGlobals($global: Record<string, unknown>) {
 }
 
 export function _subscribe(
-  subscribers: Set<ScopeInternals>,
+  subscribers: Set<ScopeInternals> | undefined,
   scope: ScopeInternals,
 ) {
-  $chunk.boundary.state.serializer.writeCall(scope, subscribers, "add");
+  if (subscribers) {
+    $chunk.boundary.state.serializer.writeCall(scope, subscribers, "add");
+  }
   return referenceScope(scope);
 }
