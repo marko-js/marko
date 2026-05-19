@@ -1,5 +1,5 @@
 // total: 3155 (min) 1550 (brotli)
-// template.marko: 612 (min) 247 (brotli)
+// template.marko: 598 (min) 241 (brotli)
 const $Twice_content__value__OR__call = /* @__PURE__ */ _or(4, ($scope) => _return($scope, $_return2($scope)));
 const $Twice_content__call = /* @__PURE__ */ _let(3, $Twice_content__value__OR__call);
 const $Twice_content__value = /* @__PURE__ */ _const(2, $Twice_content__value__OR__call);
@@ -14,10 +14,8 @@ const $clickTwiceCount = /* @__PURE__ */ _let(10, ($scope) => {
 	$Twice_content__value($scope.e, $onClickTwice($scope));
 	_text($scope.h, $scope.k);
 });
-const $onClickOnce2__script = _script("a9", ($scope) => _on($scope.c, "click", $scope.j));
-const $onClickOnce2 = _var_resume("a5", /* @__PURE__ */ _const(9, $onClickOnce2__script));
-const $onClickTwice2__script = _script("a8", ($scope) => _on($scope.g, "click", $scope.l));
-const $onClickTwice2 = _var_resume("a7", /* @__PURE__ */ _const(11, $onClickTwice2__script));
+const $onClickOnce2 = _var_resume("a5", /* @__PURE__ */ _const(9, _script("a9", ($scope) => _on($scope.c, "click", $scope.j))));
+const $onClickTwice2 = _var_resume("a7", /* @__PURE__ */ _const(11, _script("a8", ($scope) => _on($scope.g, "click", $scope.l))));
 function $_return2($scope) {
 	return function() {
 		if ($scope.d) {

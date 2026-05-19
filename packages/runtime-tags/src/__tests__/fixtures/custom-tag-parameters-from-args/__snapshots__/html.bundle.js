@@ -18,11 +18,10 @@ var custom_tag_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_id = _scope_id();
 	custom_tag_default({ content: _content_resume("a0", (count, count2) => {
 		const $scope1_reason = _scope_reason(), $sg__count = _serialize_guard($scope1_reason, 1), $sg__count2 = _serialize_guard($scope1_reason, 2);
 		const $scope1_id = _scope_id();
 		_html(`<div>Counts: ${_sep($sg__count)}${_escape(count)}${_el_resume($scope1_id, "a", $sg__count)},${_sep($sg__count2)}${_escape(count2)}${_el_resume($scope1_id, "b", $sg__count2)}</div>`);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
-	}, $scope0_id) });
+	}, _scope_id()) });
 }, 1);

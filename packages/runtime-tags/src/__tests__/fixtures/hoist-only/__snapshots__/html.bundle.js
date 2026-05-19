@@ -12,9 +12,8 @@ var template_default = _template("a", (input) => {
 				{
 					const $scope2_id = _scope_id();
 					_hoist($scope2_id, "a3");
-					const hoist3 = _resume(() => input.value, "a1", $scope2_id);
 					_subscribe($input_value__closures, writeScope($scope2_id, {
-						a: hoist3,
+						a: _resume(() => input.value, "a1", $scope2_id),
 						_: _scope_with_id($scope1_id)
 					}));
 					return 0;

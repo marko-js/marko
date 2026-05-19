@@ -7,7 +7,7 @@ const $input_content__OR__input_value = /* @__PURE__ */ _or(5, ($scope) => $dyna
 const $content = /* @__PURE__ */ _const(3, $input_content__OR__input_value);
 const $value = /* @__PURE__ */ _const(4, $input_content__OR__input_value);
 
-// template.marko: 421 (min) 238 (brotli)
+// template.marko: 417 (min) 234 (brotli)
 const $child_content2__outer = /* @__PURE__ */ _closure_get(2, ($scope) => _text($scope.a, $scope._.c));
 const $child_content2__setup = $child_content2__outer;
 const $child_content2__inner = ($scope, inner) => _text($scope.b, inner);
@@ -20,8 +20,7 @@ const $child_content__setup = ($scope) => {
 	$content($scope.a, $child_content2($scope));
 };
 const $child_content__$params = ($scope, $params2) => $child_content__outer($scope, $params2[0]);
-const $child_content__outer__closure = /* @__PURE__ */ _closure($child_content2__outer);
-const $child_content__outer = /* @__PURE__ */ _const(2, $child_content__outer__closure);
+const $child_content__outer = /* @__PURE__ */ _const(2, /* @__PURE__ */ _closure($child_content2__outer));
 const $child_content = _content_resume("a1", $template, /* @__PURE__ */ ((_w0) => `/${_w0}&`)("D%l"), $child_content__setup, $child_content__$params);
 const $x__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
 	$x($scope, $scope.c + 1);

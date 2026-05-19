@@ -21,6 +21,5 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	thing_default({ value: _hoist($scope0_id, "a0") });
-	let setHtml = child_default({});
-	writeScope($scope0_id, { d: setHtml });
+	writeScope($scope0_id, { d: child_default({}) });
 }, 1);

@@ -1,5 +1,5 @@
 // total: 6796 (min) 3105 (brotli)
-// template.marko: 297 (min) 189 (brotli)
+// template.marko: 293 (min) 187 (brotli)
 _enable_catch();
 const $catch_content__err = ($scope, err) => _text($scope.a, err);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
@@ -16,5 +16,4 @@ const $try_content__clickCount = /* @__PURE__ */ _closure_get(2, ($scope) => {
 	})());
 	$try_content__clickCount__script($scope);
 });
-const $clickCount__closure = /* @__PURE__ */ _closure($try_content__clickCount);
-const $clickCount = /* @__PURE__ */ _let(2, $clickCount__closure);
+const $clickCount = /* @__PURE__ */ _let(2, /* @__PURE__ */ _closure($try_content__clickCount));
