@@ -1,13 +1,12 @@
 // total: 5604 (min) 2657 (brotli)
-// template.marko: 279 (min) 154 (brotli)
+// template.marko: 275 (min) 150 (brotli)
 _enable_catch();
 const $if_content__a = /* @__PURE__ */ _closure_get(2, ($scope) => _text($scope.a, $scope._._.c), ($scope) => $scope._._);
 const $if_content__b = /* @__PURE__ */ _closure_get(3, ($scope) => _text($scope.b, $scope._._.d), ($scope) => $scope._._);
-const $a__OR__b__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
+const $a__OR__b = /* @__PURE__ */ _or(4, _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$a($scope, $scope.c + 1);
 	$b($scope, $scope.d + 1);
-}));
-const $a__OR__b = /* @__PURE__ */ _or(4, $a__OR__b__script);
+})));
 const $a__closure = /* @__PURE__ */ _closure($if_content__a);
 const $a = /* @__PURE__ */ _let(2, ($scope) => {
 	$a__OR__b($scope);

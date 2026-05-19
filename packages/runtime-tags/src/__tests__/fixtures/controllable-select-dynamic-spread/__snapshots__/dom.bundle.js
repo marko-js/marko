@@ -1,5 +1,5 @@
 // total: 13249 (min) 5094 (brotli)
-// template.marko: 470 (min) 221 (brotli)
+// template.marko: 466 (min) 219 (brotli)
 _resume_dynamic_tag();
 const $tagselect_content__setup__script = _script("a2", ($scope) => {
 	_attrs_script($scope, "a");
@@ -12,8 +12,7 @@ const $tagselect_content__setup = ($scope) => {
 	_attrs($scope, "c", { value: "c" });
 	$tagselect_content__setup__script($scope);
 };
-const $tagselect_content = _content_resume("a1", "<option>A</option><option>B</option><option>C</option>", " b b b", $tagselect_content__setup);
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0, $tagselect_content);
+const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0, _content_resume("a1", "<option>A</option><option>B</option><option>C</option>", " b b b", $tagselect_content__setup));
 const $value__OR__tag = /* @__PURE__ */ _or(4, ($scope) => $dynamicTag($scope, $scope.d ? "select" : {}, () => ({
 	value: $scope.c,
 	valueChange: $valueChange($scope)

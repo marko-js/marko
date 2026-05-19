@@ -11,6 +11,5 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	_scope_id();
-	let value = child_default({});
-	_html(`<div>parent ${_escape(value)}</div>`);
+	_html(`<div>parent ${_escape(child_default({}))}</div>`);
 }, 1);

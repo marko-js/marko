@@ -89,7 +89,7 @@ function testFixtures(interop?: true) {
         return;
       }
 
-      for (const mode of interop || config.skip_optimize
+      for (const mode of config.skip_optimize
         ? ["debug"]
         : (["debug", "optimize"] as const)) {
         describe(mode, () => {

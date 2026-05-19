@@ -1,6 +1,6 @@
 // total: 6292 (min) 2830 (brotli)
-// template.marko: 487 (min) 196 (brotli)
-const $if_content__x__script = _script("a0", ($scope) => _lifecycle($scope, {
+// template.marko: 483 (min) 204 (brotli)
+const $if_content__x = /* @__PURE__ */ _if_closure(0, 0, _script("a0", ($scope) => _lifecycle($scope, {
 	onMount: function() {
 		document.getElementById("ref").textContent = "Mount " + $scope._.d;
 	},
@@ -10,8 +10,7 @@ const $if_content__x__script = _script("a0", ($scope) => _lifecycle($scope, {
 	onDestroy: function() {
 		document.getElementById("ref").textContent = "Destroy";
 	}
-}));
-const $if_content__x = /* @__PURE__ */ _if_closure(0, 0, $if_content__x__script);
+})));
 const $if_content__setup = $if_content__x;
 const $x__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
 	$x($scope, $scope.d + 1);

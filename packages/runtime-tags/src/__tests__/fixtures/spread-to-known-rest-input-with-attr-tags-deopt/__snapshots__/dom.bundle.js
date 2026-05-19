@@ -24,7 +24,7 @@ const $_classspandiv_content__setup = ($scope) => {
 	$_classspandiv_content__input_foo($scope);
 	/* @__PURE__ */ $setup($scope.a);
 };
-const $_classspandiv_content = _content_resume("c0", /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($template), /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c"), $_classspandiv_content__setup);
+const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0, _content_resume("c0", /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($template), /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c"), $_classspandiv_content__setup));
 
 // template.marko: 64 (min) 59 (brotli)
 const $desc_content2 = _content_resume("a1", "Two", "b");

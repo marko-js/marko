@@ -1,6 +1,6 @@
 // tags/child.marko
 var child_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_name = _serialize_guard($scope0_reason, 0);
+	const $sg__input_name = _serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
 	const { name, write } = input;
 	_html(`<div>${_escape(name)}${_el_resume($scope0_id, "a", $sg__input_name)}</div><span>${_escape(name)}${_el_resume($scope0_id, "b", $sg__input_name)}</span><p>${_escape(name)}${_el_resume($scope0_id, "c", $sg__input_name)}</p>`);

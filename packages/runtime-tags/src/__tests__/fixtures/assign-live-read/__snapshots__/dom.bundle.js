@@ -1,7 +1,6 @@
 // total: 2709 (min) 1390 (brotli)
-// template.marko: 244 (min) 150 (brotli)
-const $resetCount2__script = _script("a1", ($scope) => _on($scope.c, "click", $scope.e));
-const $resetCount2 = /* @__PURE__ */ _const(4, $resetCount2__script);
+// template.marko: 240 (min) 152 (brotli)
+const $resetCount2 = /* @__PURE__ */ _const(4, _script("a1", ($scope) => _on($scope.c, "click", $scope.e)));
 const $count__script = _script("a2", ($scope) => {
 	_on($scope.a, "click", function() {
 		$count($scope, $scope.d + 1);

@@ -1,9 +1,8 @@
 // total: 2669 (min) 1383 (brotli)
-// template.marko: 168 (min) 128 (brotli)
-const $bar__OR__$fooChange__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
+// template.marko: 164 (min) 125 (brotli)
+const $bar__OR__$fooChange = /* @__PURE__ */ _or(7, _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$scope.g($scope.d + 1);
-}));
-const $bar__OR__$fooChange = /* @__PURE__ */ _or(7, $bar__OR__$fooChange__script);
+})));
 const $bar = /* @__PURE__ */ _let(3, ($scope) => {
 	_text($scope.c, $scope.d);
 	$bar__OR__$fooChange($scope);

@@ -1,6 +1,6 @@
 // tags/my-button.marko
 var my_button_default = _template("b", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_text = _serialize_guard($scope0_reason, 0);
+	const $sg__input_text = _serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
 	const { onClick, text } = input;
 	const { text: textAlias } = input;
