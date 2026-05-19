@@ -1,6 +1,6 @@
 {
   "name": "@marko/runtime-tags",
-  "version": "6.0.171",
+  "version": "6.0.173",
   "description": "Optimized runtime for Marko templates.",
   "keywords": [
     "api",
@@ -46,7 +46,7 @@
     "magic-string": "^0.30.21"
   },
   "engines": {
-    "node": "18 || 20 || >=22"
+    "node": ">=22"
   },
   "exports:override": {
     ".": {

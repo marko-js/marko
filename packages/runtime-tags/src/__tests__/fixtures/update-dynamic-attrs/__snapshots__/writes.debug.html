@@ -1,0 +1,16 @@
+<div a=1 b=2></div><!--M_*1 #div/0-->
+<div a=1 b=2></div><!--M_*1 #div/1-->
+<div a=0 b=2></div><!--M_*1 #div/2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.a = [0, {
+      input_value: {
+        a: 1,
+        b: 2
+      },
+      a: 0
+    }]),
+    "packages/runtime-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko_0_input_value_a 1 packages/runtime-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko_0_input_value 1"
+  ];
+  M._.w()
+</script>

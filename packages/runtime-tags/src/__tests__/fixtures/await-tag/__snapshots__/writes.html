@@ -1,0 +1,34 @@
+<!-- total: 743 (min) 407 (brotli) -->
+<div><!--M_[-->Got: a <!>0<!--M_*2 b--><!--M_]1 a 2-->
+    <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ => (_.a = [0, {
+        e: 0,
+        Be: new Set
+      }]), _ => (_.c = [_.e = {
+        _: _.b = _.a[1]
+      }], (_.d = _.b.Be).add(_.e), _.c)];
+      M._.w()
+    </script>
+
+    <!-- FLUSH -->
+
+    <script>
+      M._.r.push(_ => (_.f = [_.g = {
+        _: _.b,
+        Ce: 2
+      }], _.d.add(_.g), _.f));
+      M._.w()
+    </script>
+
+    <!-- FLUSH -->
+
+    <!--M_[-->Got: b <!>0<!--M_*4 b--><!--M_]1 b 4--><!--M_[-->Got: c <!>
+        0<!--M_*3 b--><!--M_]1 c 3--><button>Inc</button><!--M_*1 d--></div>
+<script>
+  M._.r.push(_ => (_.h = [_.i = {
+    _: _.b,
+    Ce: 1
+  }], _.d.add(_.i), _.h), "a0 1");
+  M._.w()
+</script>

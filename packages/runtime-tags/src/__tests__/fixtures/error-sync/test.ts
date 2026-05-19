@@ -1,5 +1,6 @@
 import type { TestConfig } from "../../main.test";
 
 export const config: TestConfig = {
-  error_runtime: true,
+  error_html: true,
+  error_dom: true,
 };

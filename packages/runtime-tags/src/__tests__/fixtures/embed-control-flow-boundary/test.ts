@@ -11,6 +11,5 @@ function cleanup(container: Element) {
 export const config: TestConfig = {
   embedded: true,
   skip_csr: true,
-  skip_resume: false,
   steps: [{}, toggle, toggle, toggle, cleanup],
 };

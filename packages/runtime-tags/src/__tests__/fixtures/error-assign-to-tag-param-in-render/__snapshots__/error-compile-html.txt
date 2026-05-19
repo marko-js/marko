@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-tag-param-in-render/template.marko:2:10
+      1 | <define/Tag|{ x }|>
+    > 2 |   <div>${x++}</>
+        |          ^ Assignments to a tag parameter must be within a script or function.
+      3 | </define>
+      4 |
+      5 | <let/x=1>

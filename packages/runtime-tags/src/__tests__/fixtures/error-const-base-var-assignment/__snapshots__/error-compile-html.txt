@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-const-base-var-assignment/template.marko:4:3
+      2 |
+      3 | <script>
+    > 4 |   foo = "bar";
+        |   ^^^^^^^^^^^ foo is readonly and cannot be mutated.
+      5 | </script>
+      6 |

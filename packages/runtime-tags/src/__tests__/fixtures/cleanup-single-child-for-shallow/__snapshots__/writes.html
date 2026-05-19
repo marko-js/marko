@@ -1,0 +1,30 @@
+<!-- total: 602 (min) 360 (brotli) -->
+<button>Toggle</button><!--M_*1 a-->
+<div></div><!--M_*1 b-->
+<div>1<!--M_*3 a--></div>
+<div>2<!--M_*5 a--></div>
+<div>3<!--M_*7 a--></div><!--M_|1 c 6 4 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.e = [0, _.a = {
+      d: [1, 2, 3]
+    }, {
+      a: _.b = {
+        d: 1,
+        G: 2
+      }
+    }, _.b, {
+      a: _.c = {
+        d: 2,
+        G: 4
+      }
+    }, _.c, {
+      a: _.d = {
+        d: 3,
+        G: 6
+      }
+    }, _.d], _.a.e = _.b.e = _.c.e = _.d.e = _._.a0(_.a), _.e),
+    "b0 3 5 7 a1 1"
+  ];
+  M._.w()
+</script>

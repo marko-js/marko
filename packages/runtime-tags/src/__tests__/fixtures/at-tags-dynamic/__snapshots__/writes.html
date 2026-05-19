@@ -1,0 +1,86 @@
+<!-- total: 1749 (min) 627 (brotli) -->
+<div class=item style=color:red>foo</div><!--M_*3 a-->
+<div class=item style=color:blue>bar</div><!--M_*5 a-->
+<div class=item style=color:green>bar</div><!--M_*7 a-->
+<div class=col x=0 row="[object Object]"></div><!--M_*9 a-->
+<div class=row row=a>a<!--M_*12 a--></div><!--M_*11 a-->
+<div class=row row=b>b<!--M_*14 a--></div><!--M_*13 a-->
+<div class=col x=1 row="[object Object]"></div><!--M_*15 a-->
+<div class=row row=c>c<!--M_*18 a--></div><!--M_*17 a-->
+<div class=row row=d>d<!--M_*20 a--></div><!--M_*19 a-->
+<div class=col outside row="[object Object]"></div><!--M_*21 a-->
+<div class=row row=-1>Outside</div><!--M_*23 a-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.r = [0, 2, {
+      d: _.a = {
+        style: {
+          color: "red"
+        },
+        content: _.s = {},
+        *[(_.b = [, _.c = {
+          style: {
+            color: "blue"
+          }
+        }, _.d = {
+          style: {
+            color: "green"
+          }
+        }], Symbol.iterator)]() {
+          yield* _.b
+        }
+      }
+    }, 1, {
+      d: _.c
+    }, 1, {
+      d: _.d
+    }, 1, {
+      d: _.i = {
+        x: 0,
+        row: _.e = {
+          row: "a",
+          *[(_.f = [, _.g = {
+            row: "b"
+          }], Symbol.iterator)]() {
+            yield* _.f
+          }
+        },
+        *[(_.h = [, _.o = {
+          x: 1,
+          row: _.j = {
+            row: "c",
+            *[(_.k = [, _.l = {
+              row: "d"
+            }], Symbol.iterator)]() {
+              yield* _.k
+            }
+          }
+        }, _.q = {
+          outside: !0,
+          row: _.m = {
+            row: -1,
+            *[Symbol.iterator]() {
+              yield this
+            }
+          }
+        }], Symbol.iterator)]() {
+          yield* _.h
+        }
+      }
+    }, 1, _.n = {}, 1, {
+      d: _.g
+    }, 1, {
+      d: _.o
+    }, 1, _.p = {}, 1, {
+      d: _.l
+    }, 1, {
+      d: _.q
+    }, 1, {
+      d: _.m
+    }], _.b[0] = _.a, _.f[0] = _.n.d = _.e, _.h[0] = _.i, _.k[0] = _.p.d = _
+    .j, _.a.content = _._.a0(_.s), _.c.content = _._.a1(_.s), _.d.content =
+    _._.a1(_.s), _.e.content = _._.a2(_.s), _.g.content = _._.a2(_.s), _.j
+    .content = _._.a2(_.s), _.l.content = _._.a2(_.s), _.m.content = _._.a3(
+      _.s), _.r), "b0 3 5 7 b1 11 13 b2 9 b1 17 19 b2 15 b1 23 b2 21"];
+  M._.w()
+</script>

@@ -1,0 +1,41 @@
+# Render
+```html
+<input
+  type="checkbox"
+/>
+<input
+  type="checkbox"
+/>
+<input
+  type="checkbox"
+/>
+<button>
+  Update
+</button>
+```
+
+# Update
+```js
+container.querySelector("button").click();
+```
+```html
+<input
+  type="checkbox"
+/>
+<input
+  default-checked=""
+  type="checkbox"
+/>
+<input
+  default-checked=""
+  type="checkbox"
+/>
+<button>
+  Update
+</button>
+```
+## Change
+```
+UPDATE: input:nth-of-type(2)[checked] null => ""
+UPDATE: input:nth-of-type(3)[checked] null => ""
+```

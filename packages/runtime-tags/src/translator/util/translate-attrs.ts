@@ -7,6 +7,7 @@ import {
   type BindingPropTree,
   getKnownFromPropTree,
 } from "./binding-prop-tree";
+import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
 import { getKnownAttrValues } from "./get-known-attr-values";
 import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
@@ -27,7 +28,7 @@ import {
 import { getScopeReasonDeclaration } from "./serialize-guard";
 import { isReasonDynamic } from "./serialize-reasons";
 import { getResumeRegisterId } from "./signals";
-import { toObjectProperty, toPropertyName } from "./to-property-name";
+import { toObjectProperty } from "./to-property-name";
 
 const contentProps = new WeakSet<t.Node>();
 type ContentKey = "renderBody" | "content";
@@ -460,13 +461,9 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
               scopeIdentifier,
               t.objectExpression(
                 toArray(bodySection.referencedLocalClosures, (ref) => {
-                  const accessor = getScopeAccessor(ref, true);
-                  const isShorthand = accessor === ref.name;
-                  return t.objectProperty(
-                    toPropertyName(accessor),
-                    t.identifier(ref.name),
-                    false,
-                    isShorthand,
+                  return toObjectProperty(
+                    getScopeAccessor(ref, true),
+                    getDeclaredBindingExpression(ref),
                   );
                 }),
               ),

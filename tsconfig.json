@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["node"],
+    "types": ["node", "mocha"],
     "lib": ["dom", "ESNext"],
     "strict": true,
     "allowJs": true,

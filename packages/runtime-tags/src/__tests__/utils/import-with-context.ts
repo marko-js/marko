@@ -27,12 +27,22 @@ export async function importWithContext<T>(
       const mod = new vm.SourceTextModule(readFileSync(id, "utf8"), {
         context,
         identifier: id,
-        importModuleDynamically: linker,
+        importModuleDynamically,
       });
       cache.set(id, (cached = mod.link(linker).then(() => mod)));
     }
 
     return cached;
+  }
+
+  async function importModuleDynamically(id: string, parent: vm.Module) {
+    const child = await linker(id, parent);
+
+    if (child.status === "linked") {
+      await child.evaluate();
+    }
+
+    return child;
   }
 
   function linker(id: string, parent: vm.Module) {

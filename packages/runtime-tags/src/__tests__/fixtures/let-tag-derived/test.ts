@@ -5,5 +5,6 @@ function click(container: Element) {
 }
 
 export const config: TestConfig = {
+  equivalent: false,
   steps: [{ a: 2 }, click, { a: 3 }, click],
 };

@@ -1,0 +1,34 @@
+<!-- total: 979 (min) 408 (brotli) -->
+<div>
+  <div class=by-string>
+    first<!--M_*2 a-->second<!--M_*3 a-->third<!--M_*4 a--><!--M_}1 a 4 3 2-->
+  </div>
+  <div class=by-function>
+    first<!--M_*5 a-->second<!--M_*6 a-->third<!--M_*7 a--><!--M_}1 b 7 6 5-->
+  </div>
+  <div class=by-unknown-string>
+    first<!--M_*8 a-->second<!--M_*9 a-->third<!--M_*10 a--><!--M_}1 c 10 9 8-->
+  </div>
+  <div class=by-unknown-function>
+    first<!--M_*11 a-->second<!--M_*12 a-->third<!--M_*13 a--><!--M_}1 d 13 12 11-->
+  </div>
+  <div class=by-unknown-missing>
+    first<!--M_*14 a-->second<!--M_*15 a-->third<!--M_*16 a--><!--M_}1 e 16 15 14-->
+  </div><button>Rotate</button><!--M_*1 f-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.a = [0, {
+    g: [{
+      id: 0,
+      text: "first"
+    }, {
+      id: 1,
+      text: "second"
+    }, {
+      id: 2,
+      text: "third"
+    }]
+  }]), "a0 1"];
+  M._.w()
+</script>

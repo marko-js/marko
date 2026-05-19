@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 6.0.173
+
+### Patch Changes
+
+- [#3190](https://github.com/marko-js/marko/pull/3190) [`d050807`](https://github.com/marko-js/marko/commit/d0508070b355511647995634c33da240aa87f032) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid patching async/generators multiple times when multiple ssr marko runtimes are loaded in the same process.
+
+## 6.0.172
+
+### Patch Changes
+
+- [#3188](https://github.com/marko-js/marko/pull/3188) [`78a15b7`](https://github.com/marko-js/marko/commit/78a15b74637dcb7cafc131a36f47fbdc0e91889d) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Attr tag local member expression hoists
+
 ## 6.0.171
 
 ### Patch Changes

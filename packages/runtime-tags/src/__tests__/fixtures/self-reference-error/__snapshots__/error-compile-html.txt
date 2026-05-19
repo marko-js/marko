@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/self-reference-error/template.marko:1:10
+    > 1 | <const/x=x + 1>
+        |          ^ Tag variable circular references are not supported.
+      2 |
