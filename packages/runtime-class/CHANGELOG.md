@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.39.0
+
+### Minor Changes
+
+- [#3184](https://github.com/marko-js/marko/pull/3184) [`6bbeb1f`](https://github.com/marko-js/marko/commit/6bbeb1f2a40772f49394d8d694b207b4f0f3fb28) Thanks [@vwong](https://github.com/vwong)! - Optimise serialisation of Marko.Body
+
+### Patch Changes
+
+- Updated dependencies [[`c05121e`](https://github.com/marko-js/marko/commit/c05121e98cf5f94cb023ea524a212e0c6c415f8c), [`6bbeb1f`](https://github.com/marko-js/marko/commit/6bbeb1f2a40772f49394d8d694b207b4f0f3fb28)]:
+  - @marko/runtime-tags@6.1.0
+
 ## 5.38.39
 
 ### Patch Changes
