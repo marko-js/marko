@@ -89,7 +89,7 @@ fixtures/<name>/
 ### Running tests
 
 ```sh
-npm test -- --grep "runtime-class.*"             # all tests
-npm test -- --grep "runtime-class.* <fixture> "  # specific fixture
-npm test -- --grep "runtime-class.*" --update    # update snapshots
+npm test # all tests
+npm test -- --grep "<fixture> " # specific fixture
+npm run test:update # update snapshots
 ```

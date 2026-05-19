@@ -7,6 +7,5 @@ function click(container: Element) {
 export const config: TestConfig = {
   embedded: true,
   skip_csr: true,
-  skip_resume: false,
   steps: [{}, click],
 };

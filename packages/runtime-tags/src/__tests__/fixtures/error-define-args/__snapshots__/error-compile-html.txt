@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-define-args/template.marko:1:9
+    > 1 | <define(y)/x/>
+        |         ^ Tag does not support arguments.
+      2 |

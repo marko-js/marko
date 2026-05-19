@@ -1,0 +1,21 @@
+<!-- total: 579 (min) 318 (brotli) -->
+<script nonce=default-nonce type=magic>
+  A
+</script>
+<script type=magic nonce=override>
+  B
+</script>
+<script nonce=override-spread type=magic>
+  C
+</script><!--M_*1 b--><!--M_|1 c-->
+<script nonce=default-nonce>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.a = [{
+    cspNonce: "default-nonce"
+  }, {
+    d: {
+      nonce: "override-spread"
+    }
+  }]), "a0 1 a1 1"];
+  M._.w()
+</script>

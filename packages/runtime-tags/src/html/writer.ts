@@ -14,7 +14,10 @@ import {
 import { RendererProp } from "../common/types";
 import { attrAssignment } from "./attrs";
 import { forInBy, forOfBy, forStepBy } from "./for";
-import { REORDER_RUNTIME_CODE, WALKER_RUNTIME_CODE } from "./inlined-runtimes";
+import {
+  REORDER_RUNTIME_CODE,
+  WALKER_RUNTIME_CODE,
+} from "./inlined-runtimes.debug";
 import {
   register as serializerRegister,
   Serializer,

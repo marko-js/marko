@@ -1,5 +1,0 @@
-# Render
-# Console
-```
-LOG "A"
-```

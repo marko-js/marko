@@ -1,0 +1,17 @@
+<div></div><!--M_*1 #div/0--><!--M_[--><button>inc</button><!--M_*2 #button/0-->
+-- <!><!--M_*2 #text/1--><!--M_]1 #text/1 2-->
+  <script>
+    WALKER_RUNTIME("M")("_");
+    M._.r = [_ => (_.c = [0, _.a = {
+        clickCount: 0,
+        "ClosureScopes:clickCount": _.d = new Set
+      }, _.b = {
+        _: _.a,
+        "#BranchAccessor": "#text/1"
+      }], _.b["#CatchContent"] = _._[
+        "packages/runtime-tags/src/__tests__/fixtures/try-effects-catch-state/template.marko_2_content"
+        ](_.a), (_.d).add(_.b), _.c),
+      "packages/runtime-tags/src/__tests__/fixtures/try-effects-catch-state/template.marko_1_clickCount 2"
+    ];
+    M._.w()
+  </script>

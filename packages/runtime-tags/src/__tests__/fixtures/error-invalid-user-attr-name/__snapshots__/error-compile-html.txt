@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-invalid-user-attr-name/template.marko:1:14
+    > 1 | <MyComponent @invalid@attr="value"/>
+        |              ^^^^^^^^^^^^^ Invalid attribute name.
+      2 |

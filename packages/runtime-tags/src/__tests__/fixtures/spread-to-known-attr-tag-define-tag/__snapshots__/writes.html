@@ -1,0 +1,34 @@
+<!-- total: 746 (min) 408 (brotli) -->
+<select class=foo>
+  <option value=1>One</option><!--M_*4 a-->
+  <option value=2>Two</option><!--M_*6 a-->
+  <option value=3>Three</option><!--M_*8 a-->
+</select>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.h = [0, 3, {
+    Aa: _.e = {},
+    Da: "a3",
+    c: _.a = {
+      value: 1,
+      content: _.i = {},
+      *[(_.b = [, _.c = {
+        value: 2
+      }, _.d = {
+        value: 3
+      }], Symbol.iterator)]() {
+        yield* _.b
+      }
+    }
+  }, _.e, {
+    Aa: _.f = {},
+    Da: "a4",
+    c: _.c
+  }, _.f, {
+    Aa: _.g = {},
+    Da: "a5",
+    c: _.d
+  }, _.g], _.b[0] = _.a, _.a.content = _._.a3(_.i), _.c.content = _._.a4(_
+    .i), _.d.content = _._.a5(_.i), _.h), "a0 4 6 8"];
+  M._.w()
+</script>

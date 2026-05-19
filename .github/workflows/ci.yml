@@ -19,7 +19,7 @@ jobs:
       - name: Use node
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: 26
           cache: npm
       - name: Install dependencies
         run: npm ci
@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [20, 22, 24]
+        node: [22, 24, 26]
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -64,7 +64,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v6
         with:
-          node-version: 24
+          node-version: 26
           cache: npm
       - name: Install dependencies
         run: npm ci

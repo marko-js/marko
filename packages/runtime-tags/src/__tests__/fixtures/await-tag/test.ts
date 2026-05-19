@@ -6,6 +6,6 @@ function click(container: Element) {
 }
 
 export const config: TestConfig = {
+  equivalent: false,
   steps: [{}, flush, flush, wait, click, click, click],
-  skip_equivalent: true,
 };

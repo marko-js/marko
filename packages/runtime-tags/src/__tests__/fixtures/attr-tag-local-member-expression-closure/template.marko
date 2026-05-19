@@ -1,0 +1,16 @@
+<define/Child|{ item: items }|>
+  <for|item| of=items>
+    <${item}/>
+  </for>
+</>
+
+
+<for|texts| of=[[{ text: "hello" }, { text: "world" }]]>
+    <Child>
+        <for|item| of=texts>
+            <@item>
+                ${item.text}
+            </@item>
+        </for>
+    </Child>
+</for>
