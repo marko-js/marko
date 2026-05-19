@@ -38,10 +38,9 @@ var my_div_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_id = _scope_id();
 	my_div_default({ content: _content_resume("a0", () => {
 		_scope_reason();
 		_scope_id();
 		_html("Hello");
-	}, $scope0_id) });
+	}, _scope_id()) });
 }, 1);

@@ -18,7 +18,7 @@ function $_return($scope) {
 _resume("b1", $_return2);
 _resume("b0", $_return);
 
-// template.marko: 213 (min) 160 (brotli)
+// template.marko: 209 (min) 157 (brotli)
 const $for_content__item = ($scope, item) => _text($scope.a, item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $store = _var_resume("a0", ($scope, store) => {
@@ -27,5 +27,4 @@ const $store = _var_resume("a0", ($scope, store) => {
 });
 const $for = /* @__PURE__ */ _for_of(3, "<li> </li>", "D l", 0, $for_content__$params);
 const $list = ($scope, list) => $for($scope, [list]);
-const $clear__script = _script("a1", ($scope) => _on($scope.c, "click", $scope.g));
-const $clear = /* @__PURE__ */ _const(6, $clear__script);
+const $clear = /* @__PURE__ */ _const(6, _script("a1", ($scope) => _on($scope.c, "click", $scope.g)));

@@ -13,12 +13,11 @@ function $setup($scope) {
 	$count($scope, 0);
 }
 
-// template.marko: 207 (min) 150 (brotli)
+// template.marko: 203 (min) 148 (brotli)
 const $tagName_content__setup = ($scope) => {
 	$setup($scope.a);
 };
-const $tagName_content = _content_resume("a0", $template, /* @__PURE__ */ ((_w0) => `/${_w0}&`)($walks), $tagName_content__setup);
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0, $tagName_content);
+const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0, _content_resume("a0", $template, /* @__PURE__ */ ((_w0) => `/${_w0}&`)($walks), $tagName_content__setup));
 const $tagName__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$tagName($scope, $scope.c === "span" ? "div" : "span");
 }));

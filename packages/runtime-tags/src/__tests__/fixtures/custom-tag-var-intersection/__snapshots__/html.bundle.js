@@ -22,8 +22,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	let data = child_default({ extra: 1 });
 	_var($scope0_id, "b", $childScope, "a0");
-	const message = `${name} ${data}`;
-	_html(`<div>${_escape(message)}${_el_resume($scope0_id, "c")}</div>`);
+	_html(`<div>${_escape(`${name} ${data}`)}${_el_resume($scope0_id, "c")}</div>`);
 	writeScope($scope0_id, {
 		d: name,
 		a: _existing_scope($childScope)

@@ -16,7 +16,6 @@ var my_for_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_id = _scope_id();
 	my_for_default({
 		to: 5,
 		content: _content_resume("a0", (i) => {
@@ -24,6 +23,6 @@ var template_default = _template("a", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`${_escape(i)}${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 0))}`);
 			_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
-		}, $scope0_id)
+		}, _scope_id())
 	});
 }, 1);

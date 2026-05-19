@@ -1,11 +1,10 @@
 // total: 6364 (min) 2923 (brotli)
-// tags/counter.marko: 255 (min) 175 (brotli)
+// tags/counter.marko: 251 (min) 156 (brotli)
 const $template = "<button> </button>";
 const $walks = " D l";
-const $input_onCount__OR__clickCount__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
+const $input_onCount__OR__clickCount = /* @__PURE__ */ _or(6, _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$scope.e($clickCount($scope, $scope.f + 1));
-}));
-const $input_onCount__OR__clickCount = /* @__PURE__ */ _or(6, $input_onCount__OR__clickCount__script);
+})));
 const $clickCount = /* @__PURE__ */ _let(5, ($scope) => {
 	_text($scope.b, ((() => {
 		if ($scope.f > 0) throw new Error("This should not have executed since the parent removes this component when the count is greater than 0");

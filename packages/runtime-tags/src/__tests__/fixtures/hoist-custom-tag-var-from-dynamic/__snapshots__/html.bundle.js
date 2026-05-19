@@ -19,7 +19,7 @@ var child_default = _template("b", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
+	const $sg__input_show = _serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
 	_hoist($scope0_id, "a0");
 	const $thing_content__subscribers = /* @__PURE__ */ new Set();
@@ -27,9 +27,7 @@ var template_default = _template("a", (input) => {
 	const $inputshowsectionnull_content__subscribers = /* @__PURE__ */ new Set();
 	thing_default({ content: _content("a1", () => {
 		_scope_reason();
-		const $scope1_id = _scope_id();
-		let setHtml = child_default({});
-		_subscribe($thing_content__subscribers, writeScope($scope1_id, { c: setHtml }));
+		_subscribe($thing_content__subscribers, writeScope(_scope_id(), { c: child_default({}) }));
 	}) });
 	_dynamic_tag($scope0_id, "b", input.show ? thing_default : null, {}, _content_resume("a3", () => {
 		const $scope2_id = _scope_id();
@@ -37,17 +35,14 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		thing_default({ content: _content("a2", () => {
 			_scope_reason();
-			const $scope3_id = _scope_id();
-			let setHtml2 = child_default({});
-			_subscribe($thing_content2__subscribers, writeScope($scope3_id, { c: setHtml2 }));
+			_subscribe($thing_content2__subscribers, writeScope(_scope_id(), { c: child_default({}) }));
 		}) });
 		_subscribe($inputshowThingnull_content__subscribers, writeScope($scope2_id, { B3: $thing_content2__subscribers }));
 	}, $scope0_id), 0, $sg__input_show);
 	_dynamic_tag($scope0_id, "c", input.show ? "section" : null, {}, _content_resume("a4", () => {
 		const $scope4_id = _scope_id();
 		_scope_reason();
-		let setHtml3 = child_default({});
-		_subscribe($inputshowsectionnull_content__subscribers, writeScope($scope4_id, { c: setHtml3 }));
+		_subscribe($inputshowsectionnull_content__subscribers, writeScope($scope4_id, { c: child_default({}) }));
 	}, $scope0_id), 0, $sg__input_show);
 	_script($scope0_id, "a5");
 	writeScope($scope0_id, {

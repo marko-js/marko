@@ -8,7 +8,7 @@ function $valueChange($scope) {
 }
 _resume("b0", $valueChange);
 
-// template.marko: 170 (min) 133 (brotli)
+// template.marko: 166 (min) 130 (brotli)
 const $mytag_content__count__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	_var_change($scope._.a, $scope._.d + 1);
 }));
@@ -16,5 +16,4 @@ const $mytag_content__count = /* @__PURE__ */ _closure_get(3, ($scope) => {
 	_text($scope.b, $scope._.d);
 	$mytag_content__count__script($scope);
 });
-const $count__closure = /* @__PURE__ */ _closure($mytag_content__count);
-const $count = _var_resume("a0", /* @__PURE__ */ _const(3, $count__closure));
+const $count = _var_resume("a0", /* @__PURE__ */ _const(3, /* @__PURE__ */ _closure($mytag_content__count)));
