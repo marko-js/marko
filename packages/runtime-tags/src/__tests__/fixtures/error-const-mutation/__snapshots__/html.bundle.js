@@ -7,6 +7,5 @@ var template_default = _template("a", (input) => {
 		middleName: "R.R.",
 		lastName: "Martin"
 	};
-	const fullName = user.fullName = `${user.firstName} ${user.middleName} ${user.lastName}`;
-	_html(`<p>${_escape(fullName)}</p>`);
+	_html(`<p>${_escape(user.fullName = `${user.firstName} ${user.middleName} ${user.lastName}`)}</p>`);
 }, 1);

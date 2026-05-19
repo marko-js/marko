@@ -48,11 +48,13 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
     },
     platform: "browser",
     treeshake: optimize,
+    experimental: { nativeMagicString: true },
     transform: { define: { MARKO_DEBUG: String(!optimize) } },
     moduleTypes: { ".css": "text" },
     plugins: [
       virtual.plugin,
       optimize && remapDebugPlugin(),
+      optimize && interop && remapDistPlugin(),
       markoPlugin({ ...compileOpts, output: "dom" }),
     ],
     output: {
@@ -99,12 +101,14 @@ export async function createServerRunner<T extends Record<string, string>>(
     cwd,
     platform: "browser",
     treeshake: optimize,
+    experimental: { nativeMagicString: true },
     transform: { define: { MARKO_DEBUG: String(!optimize) } },
     moduleTypes: { ".css": "text" },
     plugins: [
       virtual.plugin,
       domEntry.plugin,
       optimize && remapDebugPlugin(),
+      optimize && interop && remapDistPlugin(),
       markoPlugin({ ...compileOpts, output: "dom" }),
       {
         name: "dom-entry",
@@ -160,6 +164,7 @@ export async function createServerRunner<T extends Record<string, string>>(
     plugins: [
       virtual.plugin,
       optimize && remapDebugPlugin(),
+      optimize && interop && remapDistPlugin(),
       markoPlugin({ ...compileOpts, output: "html" }),
       {
         name: "html-entry",
@@ -296,6 +301,29 @@ function remapDebugPlugin(): Plugin {
     load: {
       filter: { id: debugRe },
       handler: (id) => readFileSync(id.replace(debugRe, "."), "utf8"),
+    },
+  };
+}
+
+function remapDistPlugin(): Plugin {
+  const distRe = /^marko\/dist\//;
+  return {
+    name: "remap-marko-dist",
+    resolveId: {
+      filter: { id: distRe },
+      handler(id) {
+        return this.resolve(id.replace(distRe, "marko/src/"));
+      },
+    },
+    // runtime-class src files use "MARKO_DEBUG" (string literal) as an if-condition
+    // that babel inlines to true/false when building dist. Since we're bypassing
+    // dist and loading src directly, we substitute the value ourselves.
+    transform: {
+      filter: { id: /\/runtime-class\/src\// },
+      handler(code, _id, meta) {
+        if (!code.includes('"MARKO_DEBUG"')) return;
+        return { code: meta.magicString!.replaceAll('"MARKO_DEBUG"', "false") };
+      },
     },
   };
 }

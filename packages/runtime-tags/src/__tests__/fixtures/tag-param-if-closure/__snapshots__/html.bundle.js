@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	Foo.content({
 		value: count,
 		content: _content_resume("a1", (v) => {
-			const $scope1_reason = _scope_reason(), $sg__v = _serialize_guard($scope1_reason, 0);
+			const $sg__v = _serialize_guard(_scope_reason(), 0);
 			const $scope1_id = _scope_id();
 			_if(() => {
 				if (v) {

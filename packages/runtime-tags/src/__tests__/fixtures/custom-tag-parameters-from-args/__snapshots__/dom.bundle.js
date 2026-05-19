@@ -1,10 +1,9 @@
 // total: 13179 (min) 5091 (brotli)
-// tags/custom-tag.marko: 229 (min) 157 (brotli)
-const $x__OR__y__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
+// tags/custom-tag.marko: 225 (min) 153 (brotli)
+const $x__OR__y = /* @__PURE__ */ _or(9, _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$x($scope, $scope.h + 1);
 	$y($scope, $scope.i + 1);
-}));
-const $x__OR__y = /* @__PURE__ */ _or(9, $x__OR__y__script);
+})));
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(3, 0, 0, 1);
 const $input_content__OR__x__OR__y = /* @__PURE__ */ _or(10, ($scope) => $dynamicTag($scope, $scope.g, () => [$scope.h, $scope.i]), 2);
 const $x = /* @__PURE__ */ _let(7, ($scope) => {

@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getFile, importStar } from "@marko/compiler/babel-utils";
+import { getFile, importNamed } from "@marko/compiler/babel-utils";
 
 import type { Falsy } from "../../common/types";
 import {
@@ -14,7 +14,6 @@ import {
 } from "../../html";
 import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
-import { toMemberExpression } from "./to-property-name";
 
 export type DOMRuntimeHelpers = keyof typeof import("../../dom");
 export type HTMLRuntimeHelpers = keyof typeof import("../../html");
@@ -44,10 +43,7 @@ const pureDOMFunctions = new Set<string>([
 
 export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {
   const { output } = getMarkoOpts();
-  return toMemberExpression(
-    importStar(getFile(), getRuntimePath(output), "_"),
-    name,
-  );
+  return importNamed(getFile(), getRuntimePath(output), name);
 }
 
 export function callRuntime(

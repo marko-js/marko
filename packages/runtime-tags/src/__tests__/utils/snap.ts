@@ -66,10 +66,14 @@ export async function snap(
         `Snapshot conflict: "${file}" was written with different content by two tests.`,
       );
     }
+
+    if (actual) {
+      writtenFiles.set(expectedFile, actual);
+      writtenDirs.add(snapdir);
+    }
+
     if (expected !== actual) {
       if (actual) {
-        writtenDirs.add(snapdir);
-        writtenFiles.set(expectedFile, actual);
         fs.mkdirSync(path.dirname(expectedFile), { recursive: true });
         fs.writeFileSync(expectedFile, actual);
       } else {

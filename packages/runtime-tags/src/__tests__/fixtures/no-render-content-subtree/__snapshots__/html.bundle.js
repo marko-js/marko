@@ -22,7 +22,7 @@ var child_default = _template("b", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0);
+	const $sg__input_show = _serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
 	const output = _el($scope0_id, "a0");
 	_html(`<div></div>${_el_resume($scope0_id, "a")}`);

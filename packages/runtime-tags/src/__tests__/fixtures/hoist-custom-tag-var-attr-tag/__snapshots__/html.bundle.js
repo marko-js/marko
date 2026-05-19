@@ -24,9 +24,7 @@ var template_default = _template("a", (input) => {
 	const $what_content__subscribers = /* @__PURE__ */ new Set();
 	thing_default({ what: attrTag({ content: _content("a1", () => {
 		_scope_reason();
-		const $scope1_id = _scope_id();
-		let setHtml = child_default({});
-		_subscribe($what_content__subscribers, writeScope($scope1_id, { c: setHtml }));
+		_subscribe($what_content__subscribers, writeScope(_scope_id(), { c: child_default({}) }));
 	}) }) });
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, { B1: $what_content__subscribers });

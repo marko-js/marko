@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input_value = _serialize_if($scope0_reason, 0);
+	const $si__input_value = _serialize_if(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
 	_hoist($scope0_id, "a2");
 	const $input_value__closures = /* @__PURE__ */ new Set();

@@ -1,17 +1,14 @@
 // total: 13616 (min) 5234 (brotli)
-// template.marko: 631 (min) 310 (brotli)
+// template.marko: 623 (min) 305 (brotli)
 const $Child_content2 = _content_resume("a1", "Hi", "b");
 const $Child_content = _content_resume("a0", "Hi", "b");
 const $Parent_content__input_value = /* @__PURE__ */ _closure_get(10, ($scope) => _html($scope, $scope._.k, "a"));
-const $Parent_content__setup = $Parent_content__input_value;
-const $Parent_content = _content_resume("a2", " ", " b", $Parent_content__setup);
-const $dynamicTag3 = /* @__PURE__ */ _dynamic_tag(5, $Parent_content);
-const $Parent__OR__Child__script = _script("a3", ($scope) => {
+const $dynamicTag3 = /* @__PURE__ */ _dynamic_tag(5, _content_resume("a2", " ", " b", $Parent_content__input_value));
+const $Parent__OR__Child = /* @__PURE__ */ _or(13, _script("a3", ($scope) => {
 	$scope.l;
 	$scope.m;
 	for (const node of $scope.a.querySelectorAll("a")) if (node.getAttribute("ns") !== node.namespaceURI) node.setAttribute("ns", node.namespaceURI);
-});
-const $Parent__OR__Child = /* @__PURE__ */ _or(13, $Parent__OR__Child__script);
+}));
 const $Parent__script = _script("a5", ($scope) => _on($scope.g, "click", function() {
 	$Parent($scope, $scope.l === "div" ? "svg" : "div");
 }));

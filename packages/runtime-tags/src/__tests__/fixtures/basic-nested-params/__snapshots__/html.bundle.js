@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 			child_default({
 				value: y,
 				content: _content_resume("a0", (inner) => {
-					const $scope2_reason = _scope_reason(), $sg__inner = _serialize_guard($scope2_reason, 0);
+					const $sg__inner = _serialize_guard(_scope_reason(), 0);
 					const $scope2_id = _scope_id();
 					_html(`<div>${_escape(outer)}${_el_resume($scope2_id, "a", _serialize_guard($scope1_reason, 0))}.${_sep($sg__inner)}${_escape(inner)}${_el_resume($scope2_id, "b", $sg__inner)}</div>`);
 					_subscribe($si__outer && $child_content__outer__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));

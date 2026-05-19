@@ -9,13 +9,12 @@ function $setter($scope) {
 }
 _resume("b0", $setter);
 
-// template.marko: 162 (min) 120 (brotli)
+// template.marko: 158 (min) 123 (brotli)
 const $count = /* @__PURE__ */ _let(3, ($scope) => {
 	$input_value($scope.a, $scope.d);
 	_text($scope.c, $scope.d);
 });
-const $setCount__script = _script("a2", ($scope) => $scope.e());
-const $setCount = _var_resume("a1", /* @__PURE__ */ _const(4, $setCount__script));
+const $setCount = _var_resume("a1", /* @__PURE__ */ _const(4, _script("a2", ($scope) => $scope.e())));
 function $valueChange($scope) {
 	return (_new_count) => {
 		$count($scope, _new_count);
