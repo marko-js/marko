@@ -30,7 +30,7 @@ var wrap_default = _template("c", (input) => {
 		const $childScope = _peek_scope_id();
 		_set_serialize_reason(_serialize_guard($scope0_reason, 1));
 		child_default({ foo: input.foo });
-		_subscribe($input_foo__closures, writeScope($scope1_id, {
+		_subscribe($si__input_foo && $input_foo__closures, writeScope($scope1_id, {
 			_: _scope_with_id($scope0_id),
 			a: $si__input_foo && _existing_scope($childScope)
 		}));

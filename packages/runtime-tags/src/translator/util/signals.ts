@@ -49,6 +49,7 @@ import {
 import { getExprIfSerialized } from "./serialize-guard";
 import {
   getSerializeReason,
+  isReasonDynamic,
   isSameReason,
   type SerializeReason,
 } from "./serialize-reasons";
@@ -1027,6 +1028,9 @@ export function writeHTMLResumeStatements(
   const body = path.node.body as t.Statement[];
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
+  const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
+    ? true
+    : section.serializeReason;
   forEach(section.referencedClosures, (closure) => {
     if (closure.sources) {
       if (isDynamicClosure(section, closure)) {
@@ -1087,8 +1091,22 @@ export function writeHTMLResumeStatements(
             );
           }
         } else {
+          const closureScopesReason = getSerializeReason(
+            closure.section,
+            closure,
+            getAccessorPrefix().ClosureScopes,
+          );
+          const subscribeArg =
+            isReasonDynamic(closureScopesReason) &&
+            !isSameReason(closureScopesReason, sectionSerializeReason)
+              ? getExprIfSerialized(
+                  closure.section,
+                  closureScopesReason,
+                  identifier,
+                )
+              : identifier;
           addWriteScopeBuilder(section, (expr) =>
-            callRuntime("_subscribe", identifier, expr),
+            callRuntime("_subscribe", subscribeArg, expr),
           );
         }
       }
@@ -1114,9 +1132,6 @@ export function writeHTMLResumeStatements(
   const writeScopeBuilder = getSectionWriteScopeBuilder(section);
   const serializedLookup = getSerializedAccessors(section);
   const serializedProperties: t.ObjectProperty[] = [];
-  const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
-    ? true
-    : section.serializeReason;
   const ifSerialized = (reason: SerializeReason, expr: t.Expression) => {
     if (isSameReason(sectionSerializeReason, reason)) return expr;
     return getExprIfSerialized(section, reason, expr);
