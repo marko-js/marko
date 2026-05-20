@@ -7,12 +7,12 @@
 <t M_=2><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, 1, _.a = {
+  M._.r = [_ => (_.b = [0, 1, {
     "#BranchAccessor": "#text/0",
-    "#PlaceholderContent": _.c = {}
-  }], _.a["#PlaceholderContent"] = _._[
-    "packages/runtime-tags/src/__tests__/fixtures/await-closure-within/template.marko_2_content"
-    ](_.c), _.b)];
+    "#PlaceholderContent": _._[
+      "packages/runtime-tags/src/__tests__/fixtures/await-closure-within/template.marko_2_content"
+      ](_.a = {})
+  }])];
   REORDER_RUNTIME(M._);
   M._.w()
 </script>
@@ -23,10 +23,10 @@
   <!--M_[--><button>1<!--M_*4 #text/1--></button><!--M_*4 #button/0--><span>1<!--M_*5 #text/0--></span><!--M_|4 #text/2 5--><!--M_]2 #text/0 4-->
 </t>
 <script>
-  M._.r.push(_ => (_.e = [1, _.d = {
+  M._.r.push(_ => (_.d = [1, _.c = {
     value: 1
   }, {
-    _: _.d
+    _: _.c
   }]));
   M._.j.b = _ => {
     _.push(

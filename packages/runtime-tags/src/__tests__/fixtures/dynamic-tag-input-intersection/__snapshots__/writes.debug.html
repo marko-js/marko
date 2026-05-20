@@ -3,9 +3,11 @@
   class=foo><!--M_[-->default<!--M_]6 #span/0 7--></span><!--M_'5 #text/0 6-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.d = [0, 1, _.a = {
+  M._.r = [_ => (_.d = [0, 1, {
       "ConditionalRenderer:#text/0": "div",
-      inputContent: _.e = {},
+      inputContent: _._[
+        "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-input-intersection/template.marko_1_content"
+        ](_.a = {}),
       htmlInput: {}
     }, {
       "ConditionalRenderer:#div/0": _.c =
@@ -16,11 +18,9 @@
       htmlInput: {}
     }, {
       "ConditionalRenderer:#span/0": _.c
-    }], _.a.inputContent = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-input-intersection/template.marko_1_content"
-      ](_.e), _.b.inputContent = _._[
+    }], _.b.inputContent = _._[
       "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-input-intersection/template.marko_2_content"
-      ](_.e), _.d),
+      ](_.a), _.d),
     "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-input-intersection/tags/my-tag.marko_0_inputContent 2 5"
   ];
   M._.w()

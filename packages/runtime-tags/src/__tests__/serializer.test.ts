@@ -860,7 +860,7 @@ describe("serializer", () => {
       const scope = { value: 1 };
       const obj = { fn: builder(scope) };
       register("fn", obj.fn, scope);
-      assertStringify(obj, `{fn:_.b={value:1}},_.a.fn=_._.fn(_.b)`, {
+      assertStringify(obj, `{fn:_._.fn(_.a={value:1})}`, {
         _: { fn: builder },
       });
     });
@@ -896,6 +896,54 @@ describe("serializer", () => {
           _: { fn: builder },
         },
       );
+    });
+
+    it("inline scoped reference where scope has fn back-reference", () => {
+      // obj.fn and scope.fn are the same closure; scope is not yet in refs when fn is
+      // encountered, so the inline path is taken. Inside the scope write, scope.fn
+      // triggers the deferred path (scope is now in refs), producing a second builder call.
+      const scope = { value: 1 } as any;
+      const builder =
+        ({ value }: typeof scope) =>
+        () =>
+          value;
+      scope.fn = builder(scope);
+      register("fn", scope.fn, scope);
+      assertStringify(
+        { fn: scope.fn },
+        `{fn:_._.fn(_.a={value:1})},_.a.fn=_._.fn(_.a)`,
+        {
+          _: { fn: builder },
+        },
+      );
+    });
+
+    it("scoped reference repeated", () => {
+      // Same registered fn appears twice. First hit: inline path (scope not in refs).
+      // Second hit: deferred path (scope now in refs). Produces two builder calls.
+      const scope = { value: 1 };
+      const builder = (s: typeof scope) => () => s.value;
+      const fn = builder(scope);
+      register("fn", fn, scope);
+      assertStringify(
+        { fn1: fn, fn2: fn },
+        `{fn1:_._.fn(_.a={value:1})},_.b.fn2=_._.fn(_.a)`,
+        {
+          _: { fn: builder },
+        },
+      );
+    });
+
+    it("scoped reference scope reused across flushes", () => {
+      // fn is written inline in flush 1 (scope gets an id via ensureId).
+      // flush 2 references scope directly — must find the id without crashing.
+      const scope = { value: 1 };
+      const builder = (s: typeof scope) => () => s.value;
+      const fn = builder(scope);
+      register("fn", fn, scope);
+      const serializer = assertSerializer({ _: { fn: builder } });
+      serializer.assertStringify({ fn }, `{fn:_._.fn(_.a={value:1})}`);
+      serializer.assertStringify({ scope }, `{scope:_.a}`);
     });
   });
 

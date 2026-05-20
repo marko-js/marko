@@ -4,14 +4,14 @@
 <!--M_]2 #text/3 3-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, 1, _.a = {
+  M._.r = [_ => (_.b = [0, 1, {
       "ConditionalRenderer:#text/3": "packages/runtime-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/template.marko_1_content",
-      input_content: _.c = {},
+      input_content: _._[
+        "packages/runtime-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/template.marko_1_content"
+        ](_.a = {}),
       x: 1,
       y: 10
-    }], _.a.input_content = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/template.marko_1_content"
-      ](_.c), _.b),
+    }]),
     "packages/runtime-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/tags/custom-tag.marko_0_x_y 2"
   ];
   M._.w()
