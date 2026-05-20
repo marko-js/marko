@@ -1,4 +1,4 @@
-// total: 2640 (min) 1377 (brotli)
+// total: 2624 (min) 1371 (brotli)
 // tags/counter.marko: 129 (min) 113 (brotli)
 const $input__OR__count = /* @__PURE__ */ _or(5, ($scope) => _text($scope.b, $scope.d.format($scope.e)));
 const $count__script = _script("b0", ($scope) => _on($scope.a, "click", function() {

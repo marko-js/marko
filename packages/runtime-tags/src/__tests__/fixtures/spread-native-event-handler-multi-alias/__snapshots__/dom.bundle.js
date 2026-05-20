@@ -1,4 +1,4 @@
-// total: 6381 (min) 2618 (brotli)
+// total: 6377 (min) 2610 (brotli)
 // template.marko: 349 (min) 164 (brotli)
 const $MyButton_content2 = _content_resume("a5", "Click Me", "b");
 const $MyButton_content__input_onClick = /* @__PURE__ */ _const(3, _script("a4", ($scope) => _on($scope.a, "click", function() {

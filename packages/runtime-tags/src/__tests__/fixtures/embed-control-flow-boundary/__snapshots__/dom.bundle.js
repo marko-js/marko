@@ -1,4 +1,4 @@
-// total: 6191 (min) 2845 (brotli)
+// total: 6167 (min) 2821 (brotli)
 // template.marko: 256 (min) 164 (brotli)
 const $if = /* @__PURE__ */ _if(2, "<div>Hello</div>", "b");
 const $hide__script = _script("a0", ($scope) => _on($scope.a, "click", function() {

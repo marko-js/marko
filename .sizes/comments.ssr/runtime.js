@@ -1,4 +1,4 @@
-// size: 2548 (min) 1287 (brotli)
+// size: 2532 (min) 1287 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -9,7 +9,7 @@ let decodeAccessor = (num) =>
   curRuntimeId,
   readyLookup = {},
   pendingRenders = [],
-  pendingRendersLookup = /* @__PURE__ */ new Map(),
+  pendingRendersLookup = {},
   asyncRendersLookup,
   pendingEffects = [],
   pendingScopes = [],
@@ -204,7 +204,7 @@ function normalizeAttrValue(value) {
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let key = scopeKey * 1e3 + signalKey,
-    render = signalKey >= 0 && pendingRendersLookup.get(key);
+    render = signalKey >= 0 && pendingRendersLookup[key];
   render
     ? (render.d = value)
     : (queuePendingRender(
@@ -215,7 +215,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
           d: value,
         }),
       ),
-      signalKey >= 0 && pendingRendersLookup.set(key, render));
+      signalKey >= 0 && (pendingRendersLookup[key] = render));
 }
 function queuePendingRender(render) {
   let i = pendingRenders.push(render) - 1;
@@ -232,7 +232,7 @@ function queueEffect(scope, fn) {
 }
 function run() {
   let effects = pendingEffects;
-  asyncRendersLookup = /* @__PURE__ */ new Map();
+  asyncRendersLookup = {};
   try {
     ((rendering = 1), runRenders());
   } finally {

@@ -59,11 +59,13 @@ function setAttribute(
 }
 
 export function _attr_class(element: Element, value: unknown) {
-  setAttribute(
-    element,
-    "class",
-    toDelimitedString(value, " ", stringifyClassObject) || undefined,
-  );
+  value =
+    typeof value === "string"
+      ? value
+      : toDelimitedString(value, " ", stringifyClassObject);
+  if (value !== element.className) {
+    element.className = value as string;
+  }
 }
 
 export function _attr_class_items(
@@ -438,11 +440,10 @@ export function _lifecycle(
 
 export function removeChildNodes(startNode: ChildNode, endNode: ChildNode) {
   const stop = endNode.nextSibling;
-  let current = startNode;
-  while (current !== stop) {
-    const next = current.nextSibling;
-    current.remove();
-    current = next!;
+  while (startNode !== stop) {
+    const next = startNode.nextSibling;
+    startNode.remove();
+    startNode = next!;
   }
 }
 
@@ -459,11 +460,10 @@ export function toInsertNode(startNode: Node, endNode: Node) {
   if (startNode === endNode) return startNode;
   const parent = new DocumentFragment();
   const stop = endNode.nextSibling;
-  let current = startNode;
-  while (current !== stop) {
-    const next = current.nextSibling;
-    parent.appendChild(current);
-    current = next!;
+  while (startNode !== stop) {
+    const next = startNode.nextSibling;
+    parent.appendChild(startNode);
+    startNode = next!;
   }
 
   return parent;

@@ -1,4 +1,4 @@
-// total: 7051 (min) 3242 (brotli)
+// total: 7027 (min) 3215 (brotli)
 // template.marko: 317 (min) 195 (brotli)
 const $for_content__x = ($scope, x) => _text($scope.a, x);
 const $for_content__$params = ($scope, $params2) => $for_content__x($scope, $params2[0]);

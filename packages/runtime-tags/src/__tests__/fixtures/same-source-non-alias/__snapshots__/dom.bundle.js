@@ -1,4 +1,4 @@
-// total: 2600 (min) 1348 (brotli)
+// total: 2584 (min) 1341 (brotli)
 // template.marko: 194 (min) 131 (brotli)
 function createWrapper(a) {
 	return { a };

@@ -1,4 +1,4 @@
-// size: 21171 (min) 7956 (brotli)
+// size: 21166 (min) 7935 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -197,7 +197,7 @@ let empty = [],
       forUntil(until, from, step, (v) => cb(by(v), [v])),
   ),
   pendingRenders = [],
-  pendingRendersLookup = /* @__PURE__ */ new Map(),
+  pendingRendersLookup = {},
   asyncRendersLookup,
   caughtError = /* @__PURE__ */ new WeakSet(),
   placeholderShown = /* @__PURE__ */ new WeakSet(),
@@ -487,7 +487,7 @@ function _const(valueAccessor, fn) {
   return (
     (valueAccessor = decodeAccessor(valueAccessor)),
     (scope, value) => {
-      (!(valueAccessor in scope) || scope[valueAccessor] !== value) &&
+      (scope.H || scope[valueAccessor] !== value) &&
         ((scope[valueAccessor] = value), fn?.(scope));
     }
   );
@@ -1270,11 +1270,11 @@ function setAttribute(element, name, value) {
       : element.setAttribute(name, value));
 }
 function _attr_class(element, value) {
-  setAttribute(
-    element,
-    "class",
-    toDelimitedString(value, " ", stringifyClassObject) || void 0,
-  );
+  ((value =
+    typeof value == "string"
+      ? value
+      : toDelimitedString(value, " ", stringifyClassObject)),
+    value !== element.className && (element.className = value));
 }
 function _attr_class_items(element, items) {
   for (let key in items) _attr_class_item(element, key, items[key]);
@@ -1491,11 +1491,10 @@ function _lifecycle(scope, thisObj, index = 0) {
       ($signal(scope, accessor).onabort = () => thisObj.onDestroy?.()));
 }
 function removeChildNodes(startNode, endNode) {
-  let stop = endNode.nextSibling,
-    current = startNode;
-  for (; current !== stop; ) {
-    let next = current.nextSibling;
-    (current.remove(), (current = next));
+  let stop = endNode.nextSibling;
+  for (; startNode !== stop; ) {
+    let next = startNode.nextSibling;
+    (startNode.remove(), (startNode = next));
   }
 }
 function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
@@ -1504,11 +1503,10 @@ function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
 function toInsertNode(startNode, endNode) {
   if (startNode === endNode) return startNode;
   let parent = new DocumentFragment(),
-    stop = endNode.nextSibling,
-    current = startNode;
-  for (; current !== stop; ) {
-    let next = current.nextSibling;
-    (parent.appendChild(current), (current = next));
+    stop = endNode.nextSibling;
+  for (; startNode !== stop; ) {
+    let next = startNode.nextSibling;
+    (parent.appendChild(startNode), (startNode = next));
   }
   return parent;
 }
@@ -1920,7 +1918,7 @@ function byFirstArg(name) {
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let key = scopeKey * 1e3 + signalKey,
-    render = signalKey >= 0 && pendingRendersLookup.get(key);
+    render = signalKey >= 0 && pendingRendersLookup[key];
   render
     ? (render.d = value)
     : (queuePendingRender(
@@ -1931,7 +1929,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
           d: value,
         }),
       ),
-      signalKey >= 0 && pendingRendersLookup.set(key, render));
+      signalKey >= 0 && (pendingRendersLookup[key] = render));
 }
 function queuePendingRender(render) {
   let i = pendingRenders.push(render) - 1;
@@ -1948,7 +1946,7 @@ function queueEffect(scope, fn) {
 }
 function run() {
   let effects = pendingEffects;
-  asyncRendersLookup = /* @__PURE__ */ new Map();
+  asyncRendersLookup = {};
   try {
     ((rendering = 1), runRenders());
   } finally {
@@ -1966,7 +1964,7 @@ function prepareEffects(fn) {
     preparedEffects = (pendingEffects = []);
   ((pendingRenders = []),
     (asyncRendersLookup = pendingRendersLookup),
-    (pendingRendersLookup = /* @__PURE__ */ new Map()));
+    (pendingRendersLookup = {}));
   try {
     ((rendering = 1), fn(), runRenders());
   } finally {
@@ -2038,7 +2036,7 @@ function _enable_catch() {
           for (; branch; ) {
             if (branch.W)
               return (
-                asyncRendersLookup.set(render.a, render),
+                (asyncRendersLookup[render.a] = render),
                 branch.W.push(render)
               );
             branch = branch.N;

@@ -1,4 +1,4 @@
-// total: 12817 (min) 4953 (brotli)
+// total: 12828 (min) 4957 (brotli)
 // template.marko: 220 (min) 139 (brotli)
 _resume_dynamic_tag();
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0, _content_resume("a1", "body content", "b"));

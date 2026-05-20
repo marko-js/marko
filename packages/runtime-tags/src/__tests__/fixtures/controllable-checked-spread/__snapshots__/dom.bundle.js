@@ -1,4 +1,4 @@
-// total: 8610 (min) 3293 (brotli)
+// total: 8623 (min) 3301 (brotli)
 // tags/checkbox.marko: 38 (min) 42 (brotli)
 const $input__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
 const $input = /* @__PURE__ */ _const(2, ($scope) => {

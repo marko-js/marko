@@ -54,7 +54,7 @@ export function _const<T>(
 ): Signal<T> {
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
   return (scope, value) => {
-    if (!(valueAccessor in scope) || scope[valueAccessor] !== value) {
+    if (scope[AccessorProp.Creating] || scope[valueAccessor] !== value) {
       scope[valueAccessor] = value;
       fn?.(scope);
     }

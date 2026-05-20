@@ -1,4 +1,4 @@
-// total: 2646 (min) 1381 (brotli)
+// total: 2630 (min) 1375 (brotli)
 // template.marko: 138 (min) 114 (brotli)
 const $a__OR__b__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$a($scope, $scope.c + 1);

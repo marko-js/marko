@@ -1,4 +1,4 @@
-// total: 7336 (min) 3269 (brotli)
+// total: 7306 (min) 3247 (brotli)
 // tags/child.marko: 92 (min) 73 (brotli)
 const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>";
 const $walks = "D%lD%lD%l";

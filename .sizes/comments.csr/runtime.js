@@ -1,4 +1,4 @@
-// size: 6448 (min) 2831 (brotli)
+// size: 6413 (min) 2825 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -67,7 +67,7 @@ let decodeAccessor = (num) =>
       : forOf(all, (item, i) => cb(by(item, i), [item, i]));
   }),
   pendingRenders = [],
-  pendingRendersLookup = /* @__PURE__ */ new Map(),
+  pendingRendersLookup = {},
   asyncRendersLookup,
   pendingEffects = [],
   pendingScopes = [],
@@ -175,7 +175,7 @@ function _const(valueAccessor, fn) {
   return (
     (valueAccessor = decodeAccessor(valueAccessor)),
     (scope, value) => {
-      (!(valueAccessor in scope) || scope[valueAccessor] !== value) &&
+      (scope.H || scope[valueAccessor] !== value) &&
         ((scope[valueAccessor] = value), fn?.(scope));
     }
   );
@@ -309,11 +309,10 @@ function normalizeAttrValue(value) {
   if (value || value === 0) return value === !0 ? "" : value + "";
 }
 function removeChildNodes(startNode, endNode) {
-  let stop = endNode.nextSibling,
-    current = startNode;
-  for (; current !== stop; ) {
-    let next = current.nextSibling;
-    (current.remove(), (current = next));
+  let stop = endNode.nextSibling;
+  for (; startNode !== stop; ) {
+    let next = startNode.nextSibling;
+    (startNode.remove(), (startNode = next));
   }
 }
 function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
@@ -322,11 +321,10 @@ function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
 function toInsertNode(startNode, endNode) {
   if (startNode === endNode) return startNode;
   let parent = new DocumentFragment(),
-    stop = endNode.nextSibling,
-    current = startNode;
-  for (; current !== stop; ) {
-    let next = current.nextSibling;
-    (parent.appendChild(current), (current = next));
+    stop = endNode.nextSibling;
+  for (; startNode !== stop; ) {
+    let next = startNode.nextSibling;
+    (parent.appendChild(startNode), (startNode = next));
   }
   return parent;
 }
@@ -504,7 +502,7 @@ function bySecondArg(_item, index) {
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let key = scopeKey * 1e3 + signalKey,
-    render = signalKey >= 0 && pendingRendersLookup.get(key);
+    render = signalKey >= 0 && pendingRendersLookup[key];
   render
     ? (render.d = value)
     : (queuePendingRender(
@@ -515,7 +513,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
           d: value,
         }),
       ),
-      signalKey >= 0 && pendingRendersLookup.set(key, render));
+      signalKey >= 0 && (pendingRendersLookup[key] = render));
 }
 function queuePendingRender(render) {
   let i = pendingRenders.push(render) - 1;
@@ -532,7 +530,7 @@ function queueEffect(scope, fn) {
 }
 function run() {
   let effects = pendingEffects;
-  asyncRendersLookup = /* @__PURE__ */ new Map();
+  asyncRendersLookup = {};
   try {
     ((rendering = 1), runRenders());
   } finally {
@@ -550,7 +548,7 @@ function prepareEffects(fn) {
     preparedEffects = (pendingEffects = []);
   ((pendingRenders = []),
     (asyncRendersLookup = pendingRendersLookup),
-    (pendingRendersLookup = /* @__PURE__ */ new Map()));
+    (pendingRendersLookup = {}));
   try {
     ((rendering = 1), fn(), runRenders());
   } finally {
