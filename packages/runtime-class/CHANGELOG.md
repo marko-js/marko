@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.39.1
+
+### Patch Changes
+
+- [#3183](https://github.com/marko-js/marko/pull/3183) [`03f9f23`](https://github.com/marko-js/marko/commit/03f9f23aff3ceeaf98c2f4c92158016ab15f3dd3) Thanks [@vwong](https://github.com/vwong)! - Optimise serialisation of static children
+
+- Updated dependencies [[`94abdc7`](https://github.com/marko-js/marko/commit/94abdc73cdcd824508d3a25f9e27f4959fe1bdcc), [`e6a46be`](https://github.com/marko-js/marko/commit/e6a46bee8c954e056433131cc697e86607724f20), [`03f9f23`](https://github.com/marko-js/marko/commit/03f9f23aff3ceeaf98c2f4c92158016ab15f3dd3)]:
+  - @marko/runtime-tags@6.1.1
+
 ## 5.39.0
 
 ### Minor Changes
