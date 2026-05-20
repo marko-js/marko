@@ -1,6 +1,6 @@
 ---
-"@marko/runtime-tags": minor
-"marko": minor
+"@marko/runtime-tags": patch
+"marko": patch
 ---
 
 Optimise serialisation of static children
