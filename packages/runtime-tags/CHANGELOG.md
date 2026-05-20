@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.1.0
+
+### Minor Changes
+
+- [#3184](https://github.com/marko-js/marko/pull/3184) [`6bbeb1f`](https://github.com/marko-js/marko/commit/6bbeb1f2a40772f49394d8d694b207b4f0f3fb28) Thanks [@vwong](https://github.com/vwong)! - Optimise serialisation of Marko.Body
+
+### Patch Changes
+
+- [#3192](https://github.com/marko-js/marko/pull/3192) [`c05121e`](https://github.com/marko-js/marko/commit/c05121e98cf5f94cb023ea524a212e0c6c415f8c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid namespace imports which leads to better inlining in rolldown.
+
 ## 6.0.173
 
 ### Patch Changes
