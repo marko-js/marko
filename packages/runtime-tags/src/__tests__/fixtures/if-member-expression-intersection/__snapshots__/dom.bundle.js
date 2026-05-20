@@ -1,4 +1,4 @@
-// total: 5768 (min) 2668 (brotli)
+// total: 5738 (min) 2653 (brotli)
 // tags/child.marko: 213 (min) 172 (brotli)
 const $if_content__text = /* @__PURE__ */ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.c));
 const $if = /* @__PURE__ */ _if(0, "<div> </div>", "D l", $if_content__text);

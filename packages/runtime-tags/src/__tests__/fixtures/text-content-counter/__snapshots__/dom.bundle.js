@@ -1,4 +1,4 @@
-// total: 2451 (min) 1280 (brotli)
+// total: 2435 (min) 1273 (brotli)
 // template.marko: 125 (min) 87 (brotli)
 const $clickCount = /* @__PURE__ */ _let(1, _script("a0", ($scope) => {
 	document.getElementById("button").textContent = $scope.b;

@@ -1,4 +1,4 @@
-// total: 6867 (min) 3118 (brotli)
+// total: 6839 (min) 3100 (brotli)
 // template.marko: 194 (min) 139 (brotli)
 _enable_catch();
 const $placeholder_content = _content_resume("a2", "loading...", "b");

@@ -1,4 +1,4 @@
-// total: 7437 (min) 3418 (brotli)
+// total: 7407 (min) 3407 (brotli)
 // template.marko: 272 (min) 195 (brotli)
 const $for_content__if = /* @__PURE__ */ _if(0, "<div>b</div>", "b");
 const $for_content__items_length = /* @__PURE__ */ _for_closure(0, ($scope) => $for_content__if($scope, $scope._.f > 1 ? 0 : 1));

@@ -1,4 +1,4 @@
-// total: 13616 (min) 5234 (brotli)
+// total: 13626 (min) 5243 (brotli)
 // template.marko: 623 (min) 305 (brotli)
 const $Child_content2 = _content_resume("a1", "Hi", "b");
 const $Child_content = _content_resume("a0", "Hi", "b");

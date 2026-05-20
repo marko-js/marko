@@ -1,4 +1,4 @@
-// total: 3042 (min) 1556 (brotli)
+// total: 3026 (min) 1547 (brotli)
 // tags/outer.marko: 61 (min) 65 (brotli)
 const $inner_content__setup__script = _script("c0", ($scope) => _on($scope.a, "click", function() {
 	this.doThing();

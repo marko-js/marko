@@ -1,4 +1,4 @@
-// total: 6364 (min) 2923 (brotli)
+// total: 6334 (min) 2904 (brotli)
 // tags/counter.marko: 251 (min) 156 (brotli)
 const $template = "<button> </button>";
 const $walks = " D l";

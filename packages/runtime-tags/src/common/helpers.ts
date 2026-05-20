@@ -81,7 +81,7 @@ export function normalizeDynamicRenderer<Renderer>(
   It works by checking the input against 3 ranges, offsetting it by the number
   of base-36 outputs which are invalid identifiers and converting that value to
   a base-36 string:
-  
+
       Range                       Offset                  Decoded
       ---------------------------------------------------------------
       [0, 26)                     10                      a ... z

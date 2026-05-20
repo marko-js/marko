@@ -1,4 +1,4 @@
-// total: 5844 (min) 2708 (brotli)
+// total: 5820 (min) 2693 (brotli)
 // template.marko: 279 (min) 179 (brotli)
 const $if_content__setup__script = _script("a0", ($scope) => {
 	$scope._.b.innerHTML += "\nmounted";

@@ -1,4 +1,4 @@
-// size: 4082 (min) 1825 (brotli)
+// size: 4053 (min) 1803 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -62,7 +62,7 @@ let decodeAccessor = (num) =>
   cloneCache = {},
   registeredValues = {},
   pendingRenders = [],
-  pendingRendersLookup = /* @__PURE__ */ new Map(),
+  pendingRendersLookup = {},
   asyncRendersLookup,
   pendingEffects = [],
   pendingScopes = [],
@@ -231,11 +231,10 @@ function _text(node, value) {
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function removeChildNodes(startNode, endNode) {
-  let stop = endNode.nextSibling,
-    current = startNode;
-  for (; current !== stop; ) {
-    let next = current.nextSibling;
-    (current.remove(), (current = next));
+  let stop = endNode.nextSibling;
+  for (; startNode !== stop; ) {
+    let next = startNode.nextSibling;
+    (startNode.remove(), (startNode = next));
   }
 }
 function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
@@ -244,17 +243,16 @@ function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
 function toInsertNode(startNode, endNode) {
   if (startNode === endNode) return startNode;
   let parent = new DocumentFragment(),
-    stop = endNode.nextSibling,
-    current = startNode;
-  for (; current !== stop; ) {
-    let next = current.nextSibling;
-    (parent.appendChild(current), (current = next));
+    stop = endNode.nextSibling;
+  for (; startNode !== stop; ) {
+    let next = startNode.nextSibling;
+    (parent.appendChild(startNode), (startNode = next));
   }
   return parent;
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let key = scopeKey * 1e3 + signalKey,
-    render = signalKey >= 0 && pendingRendersLookup.get(key);
+    render = signalKey >= 0 && pendingRendersLookup[key];
   render
     ? (render.d = value)
     : (queuePendingRender(
@@ -265,7 +263,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
           d: value,
         }),
       ),
-      signalKey >= 0 && pendingRendersLookup.set(key, render));
+      signalKey >= 0 && (pendingRendersLookup[key] = render));
 }
 function queuePendingRender(render) {
   let i = pendingRenders.push(render) - 1;
@@ -282,7 +280,7 @@ function queueEffect(scope, fn) {
 }
 function run() {
   let effects = pendingEffects;
-  asyncRendersLookup = /* @__PURE__ */ new Map();
+  asyncRendersLookup = {};
   try {
     ((rendering = 1), runRenders());
   } finally {
@@ -300,7 +298,7 @@ function prepareEffects(fn) {
     preparedEffects = (pendingEffects = []);
   ((pendingRenders = []),
     (asyncRendersLookup = pendingRendersLookup),
-    (pendingRendersLookup = /* @__PURE__ */ new Map()));
+    (pendingRendersLookup = {}));
   try {
     ((rendering = 1), fn(), runRenders());
   } finally {

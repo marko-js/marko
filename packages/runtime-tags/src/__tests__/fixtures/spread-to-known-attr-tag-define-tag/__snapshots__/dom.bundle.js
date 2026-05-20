@@ -1,4 +1,4 @@
-// total: 6156 (min) 2542 (brotli)
+// total: 6152 (min) 2533 (brotli)
 // template.marko: 136 (min) 79 (brotli)
 const $option_content3 = _content_resume("a5", "Three", "b");
 const $option_content2 = _content_resume("a4", "Two", "b");

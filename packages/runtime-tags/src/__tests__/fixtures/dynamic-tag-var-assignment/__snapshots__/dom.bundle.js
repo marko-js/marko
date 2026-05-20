@@ -1,4 +1,4 @@
-// total: 2713 (min) 1390 (brotli)
+// total: 2697 (min) 1385 (brotli)
 // tags/counter.marko: 164 (min) 127 (brotli)
 const $x__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
 	$x($scope, $scope.c + 1);

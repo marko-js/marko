@@ -1,4 +1,4 @@
-// total: 2739 (min) 1428 (brotli)
+// total: 2717 (min) 1417 (brotli)
 // template.marko: 268 (min) 197 (brotli)
 const names = [
 	"Dylan",
