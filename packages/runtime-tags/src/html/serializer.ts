@@ -655,6 +655,15 @@ function writeRegistered(
   registered: Registered,
 ) {
   if (parent && registered.scope) {
+    if (!state.refs.has(registered.scope)) {
+      state.buf.push(registered.access + "(");
+      writeProp(state, registered.scope, null, "");
+      state.buf.push(")");
+      const scopeRef = state.refs.get(registered.scope);
+      if (scopeRef) ensureId(state, scopeRef);
+      return true;
+    }
+
     const fnRef = new Reference(
       parent,
       accessor,
@@ -665,11 +674,7 @@ function writeRegistered(
     state.refs.set(val, fnRef);
     state.registered.push(fnRef);
     addAssignment(fnRef, ensureId(state, parent) + toAccess(accessor));
-
-    return (
-      !state.refs.has(registered.scope) &&
-      writeProp(state, registered.scope, null, "")
-    );
+    return false;
   } else {
     state.buf.push(registered.access);
   }
