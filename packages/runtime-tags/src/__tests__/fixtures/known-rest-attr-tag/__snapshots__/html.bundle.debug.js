@@ -26,10 +26,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	child_default({ button: attrTag({
 		onClick: _resume(function() {}, "__tests__/template.marko_0/onClick"),
-		content: _content_resume("__tests__/template.marko_1_content", () => {
+		content: _content("__tests__/template.marko_1_content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html("one");
-		}, $scope0_id)
+		})
 	}) });
 }, 1);

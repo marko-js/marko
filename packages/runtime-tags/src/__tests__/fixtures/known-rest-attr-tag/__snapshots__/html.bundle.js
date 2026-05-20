@@ -23,13 +23,13 @@ var child_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_id = _scope_id();
+	_scope_id();
 	child_default({ button: attrTag({
 		onClick: _resume(function() {}, "a0"),
-		content: _content_resume("a1", () => {
+		content: _content("a1", () => {
 			_scope_reason();
 			_scope_id();
 			_html("one");
-		}, $scope0_id)
+		})
 	}) });
 }, 1);

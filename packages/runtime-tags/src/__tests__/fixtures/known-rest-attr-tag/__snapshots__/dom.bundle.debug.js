@@ -27,7 +27,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 // template.marko
 const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)(" b");
-const $button_content = _content_resume("__tests__/template.marko_1_content", "one", "b");
+const $button_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "one", "b");
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$buttons($scope["#childScope/0"], attrTag({
