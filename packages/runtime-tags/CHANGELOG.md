@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.1.2
+
+### Patch Changes
+
+- [`3d4d156`](https://github.com/marko-js/marko/commit/3d4d1564ee514940e8b998a73c4b5d160f8bd16f) Thanks [@vwong](https://github.com/vwong)! - fix: register content renderer when downstream component has own state
+
+- [`156517d`](https://github.com/marko-js/marko/commit/156517ddea688a56356ec58cb69c954103fd397e) Thanks [@vwong](https://github.com/vwong)! - Fix setting `class` on SVG elements throwing `TypeError: setting getter-only property "className"`
+
 ## 6.1.1
 
 ### Patch Changes
