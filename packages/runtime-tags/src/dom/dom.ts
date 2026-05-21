@@ -62,9 +62,7 @@ export function _attr_class(element: Element, value: unknown) {
   setAttribute(
     element,
     "class",
-    (typeof value === "string"
-      ? value
-      : toDelimitedString(value, " ", stringifyClassObject)) || undefined,
+    toDelimitedString(value, " ", stringifyClassObject) || undefined,
   );
 }
 
