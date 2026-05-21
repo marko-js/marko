@@ -1,4 +1,4 @@
-// total: 13067 (min) 5029 (brotli)
+// total: 13032 (min) 5014 (brotli)
 // tags/counter.marko: 100 (min) 85 (brotli)
 const $template = "<button id=count> </button>";
 const $walks = " D l";

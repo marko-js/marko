@@ -1,4 +1,4 @@
-// size: 21166 (min) 7935 (brotli)
+// size: 21132 (min) 7918 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1270,11 +1270,11 @@ function setAttribute(element, name, value) {
       : element.setAttribute(name, value));
 }
 function _attr_class(element, value) {
-  ((value =
-    typeof value == "string"
-      ? value
-      : toDelimitedString(value, " ", stringifyClassObject)),
-    value !== element.className && (element.className = value));
+  setAttribute(
+    element,
+    "class",
+    toDelimitedString(value, " ", stringifyClassObject) || void 0,
+  );
 }
 function _attr_class_items(element, items) {
   for (let key in items) _attr_class_item(element, key, items[key]);

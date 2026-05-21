@@ -1,4 +1,4 @@
-// total: 2834 (min) 1454 (brotli)
+// total: 2893 (min) 1471 (brotli)
 // template.marko: 144 (min) 130 (brotli)
 const $count__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.c + 1);
