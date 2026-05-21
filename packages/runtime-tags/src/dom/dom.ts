@@ -59,13 +59,13 @@ function setAttribute(
 }
 
 export function _attr_class(element: Element, value: unknown) {
-  value =
-    typeof value === "string"
+  setAttribute(
+    element,
+    "class",
+    (typeof value === "string"
       ? value
-      : toDelimitedString(value, " ", stringifyClassObject);
-  if (value !== element.className) {
-    element.className = value as string;
-  }
+      : toDelimitedString(value, " ", stringifyClassObject)) || undefined,
+  );
 }
 
 export function _attr_class_items(
