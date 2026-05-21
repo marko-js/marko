@@ -323,7 +323,7 @@ export function getSectionRegisterReasons(section: Section) {
     );
     if (!downstreamReasons) return false;
     if (
-      downstreamReasons !== true &&
+      isReasonDynamic(downstreamReasons) &&
       !section.serializeReason &&
       !section.serializeReasons.size &&
       !section.parent?.serializeReason &&
