@@ -1,4 +1,4 @@
-// total: 2946 (min) 1493 (brotli)
+// total: 2946 (min) 1491 (brotli)
 // template.marko: 195 (min) 129 (brotli)
 const $for_content__selected__OR__num = /* @__PURE__ */ _or(4, ($scope) => {
 	_attr($scope.a, "data-selected", $scope._.b === $scope.d);

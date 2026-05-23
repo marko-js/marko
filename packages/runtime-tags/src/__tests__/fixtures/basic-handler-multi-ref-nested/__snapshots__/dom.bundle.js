@@ -1,4 +1,4 @@
-// total: 2621 (min) 1368 (brotli)
+// total: 2621 (min) 1366 (brotli)
 // template.marko: 126 (min) 110 (brotli)
 const $a__OR__b = /* @__PURE__ */ _or(4, _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$a($scope, $scope.c.map((a) => $scope.d));

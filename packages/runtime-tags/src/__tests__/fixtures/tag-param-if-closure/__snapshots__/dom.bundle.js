@@ -1,4 +1,4 @@
-// total: 13442 (min) 5208 (brotli)
+// total: 13444 (min) 5207 (brotli)
 // template.marko: 313 (min) 215 (brotli)
 const $Foo_content2__dynamicTag = /* @__PURE__ */ _dynamic_tag(0, 0, 0, 1);
 const $Foo_content2__input_content__OR__input_value = /* @__PURE__ */ _or(5, ($scope) => $Foo_content2__dynamicTag($scope, $scope.d, () => [$scope.e]));

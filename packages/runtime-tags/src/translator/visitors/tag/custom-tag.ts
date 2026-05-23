@@ -13,20 +13,43 @@ import {
 import { closest, distance } from "fastest-levenshtein";
 import path from "path";
 
+import { WalkCode } from "../../../common/types";
 import { getBindingPropTree } from "../../util/binding-prop-tree";
+import { generateUidIdentifier } from "../../util/generate-uid";
 import { getTagName } from "../../util/get-tag-name";
 import {
   knownTagAnalyze,
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { isOutputHTML } from "../../util/marko-config";
+import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import type { Binding } from "../../util/references";
+import {
+  BindingType,
+  createBinding,
+  getScopeAccessorLiteral,
+} from "../../util/references";
+import { callRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
+import { getOrCreateSection } from "../../util/sections";
 import { addStatement, getSignal } from "../../util/signals";
+import { createProgramState } from "../../util/state";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
+import { scopeIdentifier } from "../program";
 import { getTemplateContentName } from "../program/html";
+
+const kLazyTagBinding = Symbol("lazy tag binding");
+const [getLazyWrapped] = createProgramState(
+  () => new Map<string, t.Identifier>(),
+);
+
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoTagExtra {
+    [kLazyTagBinding]?: Binding;
+  }
+}
 
 export default {
   analyze: {
@@ -45,6 +68,7 @@ export default {
           .buildCodeFrameError("Unable to resolve file for tag.");
       }
 
+      const tagExtra = (tag.node.extra ??= {});
       const programExtra = getProgram().node.extra;
       const programSection = programExtra.section!;
       const childProgram = childFile.ast.program;
@@ -53,6 +77,14 @@ export default {
 
       if (childExtra.page) {
         programExtra.page ??= true;
+      }
+
+      if (tagExtra.tagNameLazy) {
+        tagExtra[kLazyTagBinding] = createBinding(
+          "#text",
+          BindingType.dom,
+          getOrCreateSection(tag),
+        );
       }
 
       knownTagAnalyze(
@@ -82,8 +114,10 @@ export default {
 
 function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
-  const childProgram = loadFileForTag(tag)!.ast.program;
+  const childFile = loadFileForTag(tag)!;
+  const childProgram = childFile.ast.program;
   const childExtra = childProgram.extra;
+  const readyId = node.extra?.tagNameLazy && childExtra.readyId;
 
   let tagIdentifier: t.Expression;
   if (t.isStringLiteral(node.name)) {
@@ -93,6 +127,42 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       : importDefault(tag.hub.file, relativePath, getTagName(tag));
   } else {
     tagIdentifier = node.name;
+
+    if (readyId) {
+      const markoOpts = getMarkoOpts();
+      const { file } = tag.hub;
+      const program = file.path;
+      const lazyWrapped = getLazyWrapped();
+      const existing = lazyWrapped.get(readyId);
+      markoOpts.linkAssets?.onAsset("lazy", childFile.opts.filename, readyId);
+
+      if (existing) {
+        tagIdentifier = existing;
+      } else {
+        const originalIdentifier = tagIdentifier;
+        tagIdentifier = generateUidIdentifier(
+          `lazy_${(tagIdentifier as t.Identifier).name}`,
+        );
+        lazyWrapped.set(readyId, tagIdentifier);
+        program.node.body.push(
+          t.markoScriptlet(
+            [
+              t.variableDeclaration("const", [
+                t.variableDeclarator(
+                  tagIdentifier,
+                  callRuntime(
+                    "withAssets",
+                    originalIdentifier,
+                    t.stringLiteral(readyId),
+                  ),
+                ),
+              ]),
+            ],
+            true,
+          ),
+        );
+      }
+    }
   }
 
   knownTagTranslateHTML(
@@ -113,13 +183,108 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const childExtra = childFile.ast.program.extra;
   const childExports = childExtra.domExports!;
   const childSection = childExtra.section!;
+  const isLazy = node.extra?.tagNameLazy;
   const tagName = t.isIdentifier(node.name)
     ? node.name.name
     : t.isStringLiteral(node.name)
       ? node.name.value
       : "tag";
 
-  if (programSection === childSection) {
+  if (isLazy) {
+    const childFileName = childFile.opts.filename;
+    const lazySignalMap = new Map<string, t.Identifier>();
+
+    if (childExports.params?.props) {
+      const attrsPropTree =
+        childExports.params.props[node.arguments?.length || 0];
+      if (attrsPropTree?.props) {
+        for (const [, propTree] of Object.entries(attrsPropTree.props)) {
+          const exportName = propTree.binding.export!;
+          const signalIdent = generateUidIdentifier(
+            `lazy_${tagName}_tag_${propTree.binding.name}`,
+          );
+          lazySignalMap.set(exportName, signalIdent);
+          getProgram().node.body.push(
+            t.variableDeclaration("let", [
+              t.variableDeclarator(
+                signalIdent,
+                callRuntime(
+                  "_lazy_signal",
+                  t.arrowFunctionExpression(
+                    [],
+                    t.callExpression(t.import(), [
+                      t.stringLiteral(
+                        buildLazySignalVirtualModule(
+                          file,
+                          childFileName,
+                          exportName,
+                          propTree.binding.name,
+                        )!,
+                      ),
+                    ]),
+                  ),
+                ),
+              ),
+            ]),
+          );
+        }
+      }
+    }
+
+    knownTagTranslateDOM(
+      tag,
+      childExports.params,
+      (binding) => {
+        const ident = lazySignalMap.get(binding.export!);
+        if (ident) return ident;
+        return importOrSelfReferenceName(
+          tag.hub.file,
+          relativePath,
+          binding.export!,
+        );
+      },
+      (section, childBinding) => {
+        const setupIdent = generateUidIdentifier(`lazy_${tagName}_setup`);
+        getProgram().node.body.push(
+          t.variableDeclaration("let", [
+            t.variableDeclarator(
+              setupIdent,
+              callRuntime(
+                "_lazy_setup",
+                getScopeAccessorLiteral(node.extra![kLazyTagBinding]!, true),
+                getScopeAccessorLiteral(childBinding, true),
+                t.arrowFunctionExpression(
+                  [],
+                  t.callExpression(t.import(), [
+                    t.stringLiteral(
+                      buildLazySetupVirtualModule(
+                        file,
+                        childFileName,
+                        childExports,
+                      ),
+                    ),
+                  ]),
+                ),
+              ),
+            ),
+          ]),
+        );
+        addStatement(
+          "render",
+          section,
+          undefined,
+          t.expressionStatement(
+            t.callExpression(setupIdent, [scopeIdentifier]),
+          ),
+        );
+      },
+    );
+
+    write`<!>`;
+    walks.visit(tag, WalkCode.Replace);
+    walks.injectWalks(tag, tagName);
+    walks.enterShallow(tag);
+  } else if (programSection === childSection) {
     knownTagTranslateDOM(
       tag,
       childExports.params,
@@ -249,4 +414,28 @@ function isCircularRequest(file: t.BabelFile, request: string) {
     request === filename ||
     (request[0] === "." && path.resolve(filename, "..", request) === filename)
   );
+}
+
+function buildLazySetupVirtualModule(
+  file: t.BabelFile,
+  childFileName: string,
+  childExports: { template: string; walks: string; setup: string },
+) {
+  const parts = `${childExports.template}, ${childExports.walks}, ${childExports.setup}`;
+  return getMarkoOpts().resolveVirtualDependency!(file.opts.filename, {
+    virtualPath: `${resolveRelativePath(file, childFileName)}.setup.js`,
+    code: `import { ${parts} } from "./${path.basename(childFileName)}"\nexport const _ = [${parts}]`,
+  })!;
+}
+
+function buildLazySignalVirtualModule(
+  file: t.BabelFile,
+  childFileName: string,
+  childExport: string,
+  childBinding: string,
+) {
+  return getMarkoOpts().resolveVirtualDependency!(file.opts.filename, {
+    virtualPath: `${resolveRelativePath(file, childFileName)}.${childBinding}.js`,
+    code: `export { ${childExport} as _ } from "./${path.basename(childFileName)}"`,
+  });
 }

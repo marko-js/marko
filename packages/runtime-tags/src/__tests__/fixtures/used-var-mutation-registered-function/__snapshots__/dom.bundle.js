@@ -1,4 +1,4 @@
-// total: 2493 (min) 1308 (brotli)
+// total: 2493 (min) 1307 (brotli)
 // template.marko: 99 (min) 85 (brotli)
 const identity = (fn) => fn;
 const $value = /* @__PURE__ */ _let(2, ($scope) => _text($scope.b, $scope.c));

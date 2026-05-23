@@ -2,10 +2,8 @@
 var child_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let x = 1;
-	let y = 2;
 	_html("<span>child</span>");
-	const $return = x + y;
+	const $return = 3;
 	_resume_branch($scope0_id);
 	return $return;
 });

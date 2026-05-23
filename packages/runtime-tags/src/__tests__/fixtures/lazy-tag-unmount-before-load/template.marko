@@ -1,0 +1,7 @@
+import Child from "./child.marko" with { lazy: "load" }
+
+<let/show=true>
+<button onClick() { show = !show }>Toggle</button>
+<if=show>
+  <Child value=1/>
+</if>

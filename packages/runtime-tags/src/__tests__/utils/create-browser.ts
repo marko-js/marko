@@ -14,7 +14,15 @@ export default function createBrowser(dir?: string) {
   const { window } = dom;
   const ctx = dom.getInternalVMContext();
   const qmt = window.queueMicrotask;
-  let scripts: string[] = ["template.marko.entry.mjs"];
+  const flushRaf = () => {
+    if (!rafQueue) return;
+    const timestamp = performance.now();
+    const batch = rafQueue;
+    rafQueue = undefined;
+    for (const fn of batch) fn(timestamp);
+  };
+  let rafQueue: FrameRequestCallback[] | undefined;
+  let scripts: string[] = [];
   window.__coverage__ = (globalThis as any).__coverage__;
   window.__RESOLVE_STATE__ = globalThis.__RESOLVE_STATE__;
   window.setImmediate = setImmediate;
@@ -32,30 +40,21 @@ export default function createBrowser(dir?: string) {
       };
     }
   };
-  window.requestAnimationFrame = (() => {
-    let queue: FrameRequestCallback[] | undefined;
-    return function requestAnimationFrame(fn) {
-      if (queue) {
-        queue.push(fn);
-      } else {
-        queue = [fn];
-        setTimeout(() => {
-          const timestamp = performance.now();
-          const batch = queue!;
-          queue = undefined;
-          for (const fn of batch) {
-            fn(timestamp);
-          }
-        });
-      }
-      return 0;
-    };
-  })();
+  window.requestAnimationFrame = (fn) => {
+    if (rafQueue) {
+      rafQueue.push(fn);
+    } else {
+      rafQueue = [fn];
+      setTimeout(flushRaf);
+    }
+    return 0;
+  };
 
   return {
     window,
     virtualConsole,
     ctx,
+    flushRaf,
     async runAsyncScripts(beforeEffects?: () => void): Promise<void> {
       if (dir) {
         // Patch queueMicrotask to prevent scheduled updates (from effects)

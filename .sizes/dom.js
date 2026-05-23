@@ -1,4 +1,4 @@
-// size: 21132 (min) 7918 (brotli)
+// size: 22354 (min) 8342 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -456,7 +456,7 @@ function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
 function flushAndWaitFrame() {
-  (run(), requestAnimationFrame(triggerMacroTask));
+  (requestAnimationFrame(triggerMacroTask), run());
 }
 function triggerMacroTask() {
   (channel ||
@@ -1518,79 +1518,58 @@ function _await_promise(nodeAccessor, params) {
     _enable_catch(),
     (scope, promise) => {
       let awaitBranch = scope[branchAccessor],
-        tryBranch = findBranchWithKey(scope, "Q") || awaitBranch,
+        tryPlaceholder = findBranchWithKey(scope, "Q"),
+        tryBranch = tryPlaceholder || awaitBranch,
         awaitCounter = tryBranch.O;
-      (awaitCounter?.i ||
-        (awaitCounter = tryBranch.O =
-          {
-            i: 0,
-            c() {
-              if (--awaitCounter.i) return 1;
-              if (tryBranch === scope[branchAccessor])
-                scope[nodeAccessor].parentNode &&
-                  scope[nodeAccessor].replaceWith(
-                    scope[branchAccessor].S.parentNode,
-                  );
-              else {
-                let placeholderBranch = tryBranch.P;
-                placeholderBranch &&
-                  ((tryBranch.P = 0),
-                  placeholderBranch.S.parentNode.insertBefore(
-                    tryBranch.S.parentNode,
-                    placeholderBranch.S,
-                  ),
-                  removeAndDestroyBranch(placeholderBranch));
-              }
-              queueEffect(tryBranch, (scope) => {
-                let pendingEffects = scope.J;
-                pendingEffects &&
-                  ((scope.J = []), runEffects(pendingEffects, 1));
-              });
-            },
-          }),
-        placeholderShown.add(pendingEffects),
-        scope[promiseAccessor] ||
-          (awaitBranch && (awaitBranch.W ||= []),
-          awaitCounter.i++ ||
-            requestAnimationFrame(
-              () =>
-                awaitCounter.i &&
-                runEffects(
-                  prepareEffects(() =>
-                    queueRender(
-                      tryBranch === awaitBranch ? scope : tryBranch,
-                      () => {
-                        tryBranch.Q
-                          ? (insertBranchBefore(
-                              (tryBranch.P = createAndSetupBranch(
-                                scope.$,
-                                tryBranch.Q,
-                                tryBranch._,
-                                tryBranch.S.parentNode,
-                              )),
-                              tryBranch.S.parentNode,
-                              tryBranch.S,
-                            ),
-                            tempDetachBranch(tryBranch))
-                          : awaitBranch.V ||
-                            (awaitBranch.S.parentNode.insertBefore(
-                              scope[nodeAccessor],
-                              awaitBranch.S,
-                            ),
-                            tempDetachBranch(tryBranch));
-                      },
-                      -1,
+      (placeholderShown.add(pendingEffects),
+        tryPlaceholder
+          ? scope[promiseAccessor] ||
+            (awaitBranch && (awaitBranch.W ||= []),
+            (awaitCounter = addAwaitCounter(scope, tryPlaceholder)))
+          : (awaitCounter?.i ||
+              (awaitCounter = tryBranch.O =
+                {
+                  i: 0,
+                  c() {
+                    if (--awaitCounter.i) return 1;
+                    (tryBranch === scope[branchAccessor]
+                      ? scope[nodeAccessor].parentNode &&
+                        scope[nodeAccessor].replaceWith(
+                          scope[branchAccessor].S.parentNode,
+                        )
+                      : dismissPlaceholder(tryBranch),
+                      queueEffect(tryBranch, runPendingEffects));
+                  },
+                }),
+            scope[promiseAccessor] ||
+              (awaitBranch && (awaitBranch.W ||= []),
+              awaitCounter.i++ ||
+                requestAnimationFrame(
+                  () =>
+                    awaitCounter.i &&
+                    runEffects(
+                      prepareEffects(() =>
+                        queueRender(
+                          scope,
+                          () => {
+                            awaitBranch.V ||
+                              (awaitBranch.S.parentNode.insertBefore(
+                                scope[nodeAccessor],
+                                awaitBranch.S,
+                              ),
+                              tempDetachBranch(tryBranch));
+                          },
+                          -1,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-            )));
+                ))));
       let thisPromise = (scope[promiseAccessor] = promise.then(
         (data) => {
           if (thisPromise === scope[promiseAccessor]) {
             let referenceNode = scope[nodeAccessor];
             ((scope[promiseAccessor] = 0),
-              queueMicrotask(run),
-              queueRender(
+              queueAsyncRender(
                 scope,
                 () => {
                   ((awaitBranch = scope[branchAccessor]).V &&
@@ -1635,8 +1614,7 @@ function _await_promise(nodeAccessor, params) {
         (error) => {
           thisPromise === scope[promiseAccessor] &&
             ((awaitCounter.i = scope[promiseAccessor] = 0),
-            schedule(),
-            queueRender(scope, renderCatch, -1, error));
+            queueAsyncRender(scope, renderCatch, -1, error));
         },
       ));
     }
@@ -1655,6 +1633,64 @@ function _await_content(nodeAccessor, template, walks, setup) {
     )).V = renderer),
       pendingScopes.pop());
   };
+}
+function addAwaitCounter(scope, tryBranch = findBranchWithKey(scope, "Q")) {
+  if (!tryBranch) return;
+  let awaitCounter = tryBranch.O;
+  return (
+    awaitCounter?.i ||
+      (awaitCounter = tryBranch.O =
+        {
+          i: 0,
+          c() {
+            if (--awaitCounter.i) return 1;
+            (dismissPlaceholder(tryBranch),
+              queueEffect(tryBranch, runPendingEffects));
+          },
+        }),
+    placeholderShown.add(pendingEffects),
+    awaitCounter.i++ ||
+      requestAnimationFrame(
+        () =>
+          awaitCounter.i &&
+          runEffects(
+            prepareEffects(() =>
+              queueRender(
+                tryBranch,
+                () => {
+                  (insertBranchBefore(
+                    (tryBranch.P = createAndSetupBranch(
+                      tryBranch.$,
+                      tryBranch.Q,
+                      tryBranch._,
+                      tryBranch.S.parentNode,
+                    )),
+                    tryBranch.S.parentNode,
+                    tryBranch.S,
+                  ),
+                    tempDetachBranch(tryBranch));
+                },
+                -1,
+              ),
+            ),
+          ),
+      ),
+    awaitCounter
+  );
+}
+function runPendingEffects(scope) {
+  let effects = scope.J;
+  effects && ((scope.J = []), runEffects(effects, 1));
+}
+function dismissPlaceholder(tryBranch) {
+  let placeholderBranch = tryBranch.P;
+  placeholderBranch &&
+    ((tryBranch.P = 0),
+    placeholderBranch.S.parentNode.insertBefore(
+      tryBranch.S.parentNode,
+      placeholderBranch.S,
+    ),
+    removeAndDestroyBranch(placeholderBranch));
 }
 function _try(nodeAccessor, template, walks, setup) {
   nodeAccessor = decodeAccessor(nodeAccessor);
@@ -1957,6 +1993,9 @@ function run() {
   }
   runEffects(effects);
 }
+function queueAsyncRender(scope, signal, signalKey, value) {
+  (queueRender(scope, signal, signalKey, value), queueMicrotask(run));
+}
 function prepareEffects(fn) {
   let prevRenders = pendingRenders,
     prevEffects = pendingEffects,
@@ -2124,5 +2163,140 @@ function mount(input = {}, reference, position) {
       },
     }
   );
+}
+function _lazy_template(id, load) {
+  _enable_catch();
+  let pending,
+    params,
+    getLazy = () => (pending ||= load().then((r) => ((params = r.d), r)));
+  return _template(
+    id,
+    0,
+    0,
+    (branch) => {
+      let awaitCounter;
+      (params || (awaitCounter = addAwaitCounter(branch)),
+        getLazy().then(
+          (r) =>
+            queueAsyncRender(
+              branch,
+              (branch) => {
+                let marker = branch.S,
+                  parent = marker.parentNode,
+                  value = branch.X;
+                ((branch.X = 0),
+                  (branch.H = 1),
+                  r.b(branch, parent.namespaceURI),
+                  insertBranchBefore(branch, parent, marker),
+                  marker.remove(),
+                  pendingScopes.push(branch),
+                  setupBranch(r, branch),
+                  value && params(branch, value.a),
+                  awaitCounter?.c());
+              },
+              -1,
+            ),
+          (error) => {
+            (awaitCounter && (awaitCounter.i = 0),
+              (branch.X = 0),
+              queueAsyncRender(branch, renderCatch, -1, error));
+          },
+        ));
+    },
+    (scope, value) => {
+      (getLazy(),
+        scope.X == 0
+          ? params
+            ? params(scope, value)
+            : pending.then(
+                () => queueAsyncRender(scope, params, 0, value),
+                () => 0,
+              )
+          : (scope.X = { a: value }));
+    },
+  );
+}
+function _lazy_setup(nodeAccessor, childScopeAccessor, load) {
+  ((nodeAccessor = decodeAccessor(nodeAccessor)),
+    (childScopeAccessor = decodeAccessor(childScopeAccessor)));
+  let pending,
+    renderer,
+    apply = (child, owner) => {
+      let marker = owner[nodeAccessor],
+        parent = marker.parentNode,
+        values = child.X,
+        remaining;
+      if (
+        ((child.X = 0),
+        (child.H = 1),
+        renderer.b(child, parent.namespaceURI),
+        insertBranchBefore(child, parent, marker),
+        marker.remove(),
+        pendingScopes.push(child),
+        setupBranch(renderer, child),
+        (remaining = values?.size))
+      )
+        for (let [promise, entry] of values)
+          promise.then(
+            (signal) => {
+              ((entry.b = signal),
+                --remaining ||
+                  ((child.H = 1),
+                  pendingScopes.push(child),
+                  queueAsyncRender(
+                    child,
+                    (scope, buf) => buf.forEach((e) => e.b(scope, e.a)),
+                    -1,
+                    values,
+                  )));
+            },
+            () => 0,
+          );
+    };
+  return (
+    _enable_catch(),
+    (owner) => {
+      let child = owner[childScopeAccessor];
+      if (renderer) apply(child, owner);
+      else {
+        let awaitCounter = addAwaitCounter(owner);
+        ((child.X ||= /* @__PURE__ */ new Map()),
+          (pending ||= load()).then(
+            (mod) => {
+              ((renderer = _content("", ...mod._)()),
+                queueAsyncRender(
+                  child,
+                  awaitCounter
+                    ? (child, owner) => {
+                        (apply(child, owner), awaitCounter.c());
+                      }
+                    : apply,
+                  -1,
+                  owner,
+                ));
+            },
+            (error) => {
+              (awaitCounter && (awaitCounter.i = 0),
+                (child.X = 0),
+                queueAsyncRender(child, renderCatch, -1, error));
+            },
+          ));
+      }
+    }
+  );
+}
+function _lazy_signal(load) {
+  let pending, signal;
+  return (scope, value) => {
+    ((pending ||= load().then((s) => (signal = s._))),
+      scope.X == 0
+        ? signal
+          ? signal(scope, value)
+          : pending.then(
+              (signal) => queueAsyncRender(scope, signal, 0, value),
+              () => 0,
+            )
+        : (scope.X ||= /* @__PURE__ */ new Map()).set(pending, { a: value }));
+  };
 }
 //#endregion

@@ -1,4 +1,4 @@
-// total: 2782 (min) 1418 (brotli)
+// total: 2782 (min) 1416 (brotli)
 // template.marko: 215 (min) 122 (brotli)
 const $open = /* @__PURE__ */ _let(3, ($scope) => {
 	_attr_details_or_dialog_open_default($scope, "a", $scope.d);

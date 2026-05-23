@@ -1,4 +1,4 @@
-// total: 2188 (min) 1122 (brotli)
+// total: 2190 (min) 1123 (brotli)
 // tags/child.marko: 59 (min) 63 (brotli)
 function $_return($scope) {
 	return () => (html) => $scope.a.innerHTML = html;

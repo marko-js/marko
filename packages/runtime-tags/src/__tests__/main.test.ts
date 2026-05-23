@@ -15,8 +15,10 @@ import createBrowser from "./utils/create-browser";
 import {
   type Flush,
   isFlush,
+  isRafFlush,
   isThrows,
   isWait,
+  type RafFlush,
   resetResolveState,
   resolveAfter,
   type Throws,
@@ -29,7 +31,13 @@ import {
 } from "./utils/strip-inline-runtime";
 import createMutationTracker from "./utils/track-mutations";
 
-type Step = Input | Wait | Flush | Throws | ((container: Element) => unknown);
+type Step =
+  | Input
+  | Wait
+  | Flush
+  | RafFlush
+  | Throws
+  | ((container: Element) => unknown);
 type Steps = [Input, ...Step[]];
 export type TestConfig = {
   steps?: Steps | (() => Steps | Promise<Steps>);
@@ -194,6 +202,12 @@ function testFixtures(interop?: true) {
                 await update();
               } else if (isFlush(update)) {
                 continue;
+              } else if (isRafFlush(update)) {
+                tracker.beginUpdate();
+                browser.flushRaf();
+                run();
+                await 1; // allow a microtask before we log the update in order to catch mutation observers.
+                tracker.logUpdate(update);
               } else if (typeof update === "function") {
                 tracker.beginUpdate();
                 await update(document.documentElement);
@@ -272,6 +286,12 @@ function testFixtures(interop?: true) {
                   await browser.runAsyncScripts();
                   tracker.logUpdate();
                 }
+              } else if (isRafFlush(update)) {
+                tracker.beginUpdate();
+                browser.flushRaf();
+                run();
+                await 1; // allow a microtask before we log the update in order to catch mutation observers
+                tracker.logUpdate(update);
               } else if (typeof update === "function") {
                 tracker.beginUpdate();
                 await update(document.documentElement);
@@ -313,11 +333,11 @@ function testFixtures(interop?: true) {
                   const { tracker, chunks } = await ssr();
                   await snapMode(async () => {
                     const pretty = html_beautify(
-                      chunks
-                        .map(
-                          optimize ? stripOptimizeRuntime : stripDebugRuntime,
-                        )
-                        .join("\n\n<!-- FLUSH -->\n\n"),
+                      (optimize ? stripOptimizeRuntime : stripDebugRuntime)(
+                        stripDefaultScript(
+                          chunks.join("\n\n<!-- FLUSH -->\n\n"),
+                        ),
+                      ),
                       {
                         indent_size: 2,
                         wrap_line_length: 80,
@@ -326,7 +346,9 @@ function testFixtures(interop?: true) {
                     );
 
                     return optimize
-                      ? `<!-- total: ${await getSizes(chunks.join(""))} -->\n${pretty}\n`
+                      ? `<!-- total: ${await getSizes(
+                          stripDefaultScript(chunks.join("")),
+                        )} -->\n${pretty}\n`
                       : `${pretty}\n`;
                   }, "writes.html");
                   return tracker.getLogs();
@@ -357,6 +379,13 @@ async function getSteps(config: TestConfig) {
       ? await config.steps()
       : (config.steps ?? []);
   return { input, steps };
+}
+
+function stripDefaultScript(html: string) {
+  return html.replace(
+    `<script async src="template.marko.page.mjs"></script>`,
+    "",
+  );
 }
 
 function once<T>(fn: () => T): () => T {

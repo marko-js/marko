@@ -1,0 +1,22 @@
+<button>Inc</button><!--M_*1 #button/0-->
+<script async src="child-a.marko.lazy.mjs"></script><span
+  class=a>0<!--M_*2 #text/0--></span>
+<script async src="child-b.marko.lazy.mjs"></script><span
+  class=b>0<!--M_*3 #text/0--></span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  (M._.b = {})[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-multiple/child-a.marko"
+    ] = 1;
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-multiple/child-b.marko"
+    ] = 1;
+  M._.r = [_ => (_.c = [0, {
+      value: 0,
+      "#childScope/2": _.a = {},
+      "#childScope/4": _.b = {}
+    }, _.a, _.b]),
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-multiple/template.marko_0_value 1"
+  ];
+  M._.w()
+</script>

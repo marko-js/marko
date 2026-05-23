@@ -130,7 +130,10 @@ export function createInteropTranslator(translate5: any) {
       Program: {
         enter(program, state) {
           const entryFile = program.hub.file;
-          if (entryFile.markoOpts.output !== "hydrate") {
+          const { output, entry } = entryFile.markoOpts;
+          const isDOMPageEntry =
+            (output === "dom" && entry === "page") || output === "hydrate";
+          if (!isDOMPageEntry) {
             return enterProgram?.call(this, program, state);
           }
 

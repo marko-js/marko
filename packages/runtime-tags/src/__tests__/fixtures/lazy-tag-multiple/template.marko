@@ -1,0 +1,7 @@
+import ChildA from "./child-a.marko" with { lazy: "load" }
+import ChildB from "./child-b.marko" with { lazy: "load" }
+
+<let/value=0>
+<button onClick() { value++ }>Inc</button>
+<ChildA value=value/>
+<ChildB value=value/>

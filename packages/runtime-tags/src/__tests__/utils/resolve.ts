@@ -48,6 +48,11 @@ export const flush = Object.assign(() => {}, {
   flush: true,
 });
 
+export type RafFlush = typeof rafFlush;
+export const rafFlush = Object.assign(() => {}, {
+  rafFlush: true as const,
+});
+
 export type Throws = ReturnType<typeof throws>;
 export function throws(fn: (...args: any[]) => void) {
   return Object.assign(fn, { throws: true });
@@ -59,6 +64,10 @@ export function isWait(value: any): value is Wait {
 
 export function isFlush(value: any): value is Flush {
   return typeof value === "function" && value.flush;
+}
+
+export function isRafFlush(value: any): value is RafFlush {
+  return typeof value === "function" && (value as any).rafFlush;
 }
 
 export function isThrows(value: any): value is Throws {

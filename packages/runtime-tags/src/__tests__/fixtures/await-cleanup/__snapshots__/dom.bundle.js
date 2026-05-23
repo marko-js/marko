@@ -1,4 +1,4 @@
-// total: 9521 (min) 4106 (brotli)
+// total: 9826 (min) 4171 (brotli)
 // template.marko: 732 (min) 350 (brotli)
 _enable_catch();
 const $await_content2__setup__script = _script("a2", ($scope) => $signal($scope, 0).onabort = () => document.querySelector("#two").textContent = "Pass");

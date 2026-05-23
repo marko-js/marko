@@ -5,9 +5,9 @@ import {
   getTagDef,
   isNativeTag,
   loadFileForTag,
-  resolveTagImport,
 } from "@marko/compiler/babel-utils";
 
+import { isLazyImportDecl } from "../visitors/import-declaration";
 import { isCoreTag } from "./is-core-tag";
 
 declare module "@marko/compiler/dist/types" {
@@ -19,6 +19,7 @@ declare module "@marko/compiler/dist/types" {
     tagNameNullable?: boolean;
     tagNameDynamic?: boolean;
     tagNameImported?: string;
+    tagNameLazy?: boolean;
     featureType?: ProgramExtra["featureType"];
   }
 }
@@ -94,6 +95,7 @@ function analyzeExpressionTagName(
   let type: TagNameType | undefined;
   let nullable = false;
   let tagNameImported: string | false | undefined;
+  let tagNameLazy = false;
 
   while ((path = pending.pop()) && type !== TagNameType.DynamicTag) {
     if (path.isConditionalExpression()) {
@@ -145,11 +147,11 @@ function analyzeExpressionTagName(
           MARKO_FILE_REG.test(decl.source.value) &&
           decl.specifiers.some((it) => t.isImportDefaultSpecifier(it))
         ) {
-          const resolvedImport =
-            resolveTagImport(name, decl.source.value) || decl.source.value;
+          const resolvedImport = decl.extra?.tagImport || decl.source.value;
           if (type === undefined) {
             type = TagNameType.CustomTag;
             tagNameImported = resolvedImport;
+            tagNameLazy = isLazyImportDecl(decl);
           } else if (type === TagNameType.NativeTag) {
             type = TagNameType.DynamicTag;
             tagNameImported = undefined;
@@ -202,5 +204,6 @@ function analyzeExpressionTagName(
 
   if (type === TagNameType.CustomTag && tagNameImported) {
     extra.tagNameImported = tagNameImported;
+    extra.tagNameLazy = tagNameLazy;
   }
 }

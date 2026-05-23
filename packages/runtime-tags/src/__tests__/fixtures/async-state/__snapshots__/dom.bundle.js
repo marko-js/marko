@@ -1,4 +1,4 @@
-// total: 8487 (min) 3737 (brotli)
+// total: 8793 (min) 3803 (brotli)
 // template.marko: 274 (min) 175 (brotli)
 _enable_catch();
 const $await_content__value = ($scope, value) => _text($scope.a, value);

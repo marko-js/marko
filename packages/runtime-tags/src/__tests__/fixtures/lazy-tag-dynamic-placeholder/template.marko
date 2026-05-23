@@ -1,0 +1,10 @@
+import Child from "./child.marko" with { lazy: "load" }
+
+<let/show=true>
+<let/value=1>
+<button class="toggle" onClick() { show = !show }>Toggle</button>
+<button class="inc" onClick() { value++ }>Inc</button>
+<try>
+  <${show ? Child : null} label="x" value=value/>
+  <@placeholder>-- loading...</@placeholder>
+</try>

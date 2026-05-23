@@ -3,6 +3,7 @@ import {
   assertNoArgs,
   getTagDef,
   importDefault,
+  importNamed,
   loadFileForTag,
   resolveRelativePath,
   resolveTagImport,
@@ -12,6 +13,9 @@ import withPreviousLocation from "../util/with-previous-location";
 import dynamicTag from "./dynamic-tag";
 import nativeTag from "./native-tag";
 import { buildEventHandlerArray, getAttrs } from "./util";
+
+const lazyTagsByFile = new WeakMap();
+const withAssetsByFile = new WeakMap();
 
 export default function (path, isNullable) {
   const {
@@ -53,7 +57,45 @@ export default function (path, isNullable) {
     if (binding && !binding.identifier.loc) binding = null;
 
     if (relativePath) {
-      tagIdentifier = importDefault(file, relativePath, tagName);
+      if (node.extra?.tagNameLazy && markoOpts.output === "dom") {
+        const importBinding = path.scope.getBinding(tagName);
+        if (importBinding?.path?.parentPath?.isImportDeclaration()) {
+          importBinding.path.parentPath.remove();
+        }
+        let lazyTags = lazyTagsByFile.get(file);
+        if (!lazyTags) lazyTagsByFile.set(file, (lazyTags = new Map()));
+        if (lazyTags.has(relativePath)) {
+          tagIdentifier = lazyTags.get(relativePath);
+        } else {
+          const lazyTagFn = importDefault(
+            file,
+            "marko/src/runtime/helpers/lazy-tag.js",
+            "marko_lazy_tag",
+          );
+          const lazyId = file.path.scope.generateUidIdentifier(
+            `marko_lazy_${tagName}`,
+          );
+          lazyTags.set(relativePath, lazyId);
+          file.path.unshiftContainer("body", [
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                lazyId,
+                t.callExpression(lazyTagFn, [
+                  t.arrowFunctionExpression(
+                    [],
+                    t.callExpression(t.import(), [
+                      t.stringLiteral(relativePath),
+                    ]),
+                  ),
+                ]),
+              ),
+            ]),
+          ]);
+          tagIdentifier = lazyId;
+        }
+      } else {
+        tagIdentifier = importDefault(file, relativePath, tagName);
+      }
     } else if (binding) {
       path.set("name", t.identifier(tagName));
       return dynamicTag(path);
@@ -68,6 +110,53 @@ export default function (path, isNullable) {
     }
   } else {
     tagIdentifier = name;
+  }
+
+  if (
+    node.extra?.tagNameLazy &&
+    markoOpts.output === "html" &&
+    markoOpts.linkAssets
+  ) {
+    const { linkAssets } = markoOpts;
+    const childFile = loadFileForTag(path);
+    if (childFile) {
+      const assetId = childFile.metadata.marko.id;
+      const lazyRelativePath = node.extra.relativePath;
+      const lazyTagName = name.value;
+      let withAssetsMap = withAssetsByFile.get(file);
+      linkAssets.onAsset("lazy", childFile.opts.filename, assetId);
+
+      if (!withAssetsMap) {
+        withAssetsByFile.set(file, (withAssetsMap = new Map()));
+      }
+
+      if (withAssetsMap.has(lazyRelativePath)) {
+        tagIdentifier = withAssetsMap.get(lazyRelativePath);
+      } else {
+        const withAssetsFn = importNamed(
+          file,
+          "marko/src/runtime/helpers/with-entry.js",
+          "withAssets",
+          "marko_with_assets",
+        );
+        const withAssetsId = file.path.scope.generateUidIdentifier(
+          `marko_with_assets_${lazyTagName}`,
+        );
+        withAssetsMap.set(lazyRelativePath, withAssetsId);
+        file.path.unshiftContainer("body", [
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              withAssetsId,
+              t.callExpression(withAssetsFn, [
+                tagIdentifier,
+                t.stringLiteral(assetId),
+              ]),
+            ),
+          ]),
+        ]);
+        tagIdentifier = withAssetsId;
+      }
+    }
   }
 
   const foundAttrs = getAttrs(path);

@@ -16,7 +16,9 @@ import { _resume } from "./resume";
 import { schedule } from "./schedule";
 
 export type SignalFn = (scope: Scope) => void;
-export type Signal<T> = (scope: Scope, value: T) => void;
+export type Signal<T = unknown, U extends Scope = Scope> = unknown extends T
+  ? (scope: U, value?: T) => void
+  : (scope: U, value: T) => void;
 
 export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
   const valueAccessor = MARKO_DEBUG
@@ -53,12 +55,12 @@ export function _const<T>(
   fn?: SignalFn,
 ): Signal<T> {
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
-  return (scope, value) => {
+  return ((scope: Scope, value: T | undefined) => {
     if (scope[AccessorProp.Creating] || scope[valueAccessor] !== value) {
       scope[valueAccessor] = value;
       fn?.(scope);
     }
-  };
+  }) as Signal<T>;
 }
 
 export function _or(

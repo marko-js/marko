@@ -1,4 +1,4 @@
-// total: 7437 (min) 3425 (brotli)
+// total: 7439 (min) 3428 (brotli)
 // tags/child.marko: 92 (min) 72 (brotli)
 const $template = "<div> </div>";
 const $setup = () => {};

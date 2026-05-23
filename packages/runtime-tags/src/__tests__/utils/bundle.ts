@@ -12,8 +12,11 @@ type RunDOM = typeof import("@marko/runtime-tags/dom").run;
 
 const markoExt = ".marko";
 const markoRe = /\.marko$/;
-const entryExt = ".entry.mjs";
-const entryRe = /\.marko\.entry\.mjs$/;
+const pageExt = ".page.mjs";
+const lazyExt = ".lazy.mjs";
+const entryRe = /\.marko\.(lazy|page)?\.mjs$/;
+const assetRuntimeId = "\0asset-runtime";
+const assetRuntimeIdRe = /\0asset-runtime$/;
 const virtualFilePrefix = "v:";
 const virtualRe = /(?:^|\/)v:/;
 
@@ -35,7 +38,7 @@ export async function createClientRunner(
     cwd,
     input: {
       main: virtual.toVirtualFile(
-        template + entryExt,
+        template + pageExt,
         `export { default as template } from "./${path.basename(template)}";\n${
           interop
             ? `import { run as _run } from "@marko/runtime-tags/dom";
@@ -95,6 +98,12 @@ export async function createServerRunner<T extends Record<string, string>>(
     ...config,
     cache: new Map(),
     resolveVirtualDependency: virtual.resolveVirtualDependency,
+    linkAssets: {
+      runtime: assetRuntimeId,
+      onAsset(kind, file, id) {
+        domEntry.add(id, file + (kind === "lazy" ? lazyExt : pageExt));
+      },
+    },
   };
 
   const domBuilt = build({
@@ -120,16 +129,22 @@ export async function createServerRunner<T extends Record<string, string>>(
           filter: { id: entryRe },
           handler(id) {
             const file = id.replace(entryRe, markoExt);
+            const isPage = entryRe.exec(id)![1] === "page";
             const { code } = compiler.compileFileSync(file, {
               ...compileOpts,
-              output: "hydrate",
+              output: "dom",
+              entry: isPage ? "page" : "lazy",
               sourceMaps: false,
             });
-            return `${code}\nimport { run as _run } from "@marko/runtime-tags/dom"\n${
-              interop
-                ? `import { ___componentLookup } from "marko/src/node_modules/@internal/components-util"\nglobalThis.run=()=>{ _run(); Object.values(___componentLookup).forEach((c) => c.update())}`
-                : `globalThis.run=_run`
-            }`;
+
+            return isPage
+              ? code +
+                  `\nimport { run as _run } from "@marko/runtime-tags/dom"\n${
+                    interop
+                      ? `import { ___componentLookup } from "marko/src/node_modules/@internal/components-util"\nglobalThis.run=()=>{ _run(); Object.values(___componentLookup).forEach((c) => c.update())}`
+                      : `globalThis.run=_run`
+                  }`
+              : code;
           },
         },
       },
@@ -148,11 +163,10 @@ export async function createServerRunner<T extends Record<string, string>>(
       main: virtual.toVirtualFile(
         path.join(cwd, "main.mjs"),
         entryNames
-          .map((name) => {
-            const id = entries[name] + entryExt;
-            domEntry.add(name, id);
-            return `export { default as ${name} } from "${id}";`;
-          })
+          .map(
+            (name) =>
+              `export { default as ${name} } from "${entries[name] + pageExt}";`,
+          )
           .join("\n"),
       ),
     },
@@ -168,7 +182,6 @@ export async function createServerRunner<T extends Record<string, string>>(
       markoPlugin({ ...compileOpts, output: "html" }),
       {
         name: "html-entry",
-        buildEnd: domEntry.end,
         resolveId: {
           filter: { id: entryRe },
           handler: (id) => path.resolve(cwd, id),
@@ -177,9 +190,53 @@ export async function createServerRunner<T extends Record<string, string>>(
           filter: { id: entryRe },
           handler(id) {
             const file = id.replace(entryRe, markoExt);
-            // TODO: facade that adds assets.
-            return `export { default } from ${JSON.stringify(file)}`;
+            const { code } = compiler.compileFileSync(file, {
+              ...compileOpts,
+              output: "html",
+              entry: "page",
+              sourceMaps: false,
+            });
+
+            return code;
           },
+        },
+      },
+      {
+        name: "asset-runtime",
+        buildEnd: domEntry.end,
+        resolveId: {
+          filter: { id: assetRuntimeIdRe },
+          handler: (id) => id,
+        },
+        load: {
+          filter: { id: assetRuntimeIdRe },
+          handler: () => `export function flush(g, type, asset) {
+  const a = __MARKO_MANIFEST__[asset]?.[type];
+  return a ? \`<script async src="\${a}"></script>\` : "";
+}`,
+        },
+        async renderChunk(_code, _chunk, _options, meta) {
+          const { output } = await domBuilt;
+          const manifest: {
+            [entry: string]: {
+              block?: string;
+              defer?: string;
+            };
+          } = {};
+
+          for (const chunk of output) {
+            if (
+              chunk.type === "chunk" &&
+              chunk.isEntry &&
+              chunk.facadeModuleId
+            ) {
+              const id = domEntry.get(chunk.facadeModuleId);
+              if (id) manifest[id] = { defer: chunk.fileName };
+            }
+          }
+          return meta.magicString!.append(
+            `;var __MARKO_MANIFEST__=${JSON.stringify(manifest)}`,
+          );
         },
       },
     ],

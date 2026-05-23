@@ -1,4 +1,4 @@
-// total: 5970 (min) 2749 (brotli)
+// total: 5972 (min) 2749 (brotli)
 // tags/test.marko: 0 (min) 1 (brotli)
 const $Tag_content__walks = "b%c", $Tag_content__template = "<!><!><!>";
 const $template = /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($Tag_content__template);

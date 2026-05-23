@@ -1,4 +1,4 @@
-// total: 7052 (min) 3241 (brotli)
+// total: 7054 (min) 3241 (brotli)
 // tags/store.marko: 182 (min) 112 (brotli)
 const $list$1 = /* @__PURE__ */ _let(3, ($scope) => _return($scope, {
 	list: $scope.d,

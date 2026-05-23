@@ -1,4 +1,4 @@
-// total: 13091 (min) 5058 (brotli)
+// total: 13091 (min) 5056 (brotli)
 // tags/consumer.marko: 175 (min) 131 (brotli)
 const $if_content__dynamicTag = /* @__PURE__ */ _dynamic_tag(0);
 const $if_content__input_content = /* @__PURE__ */ _if_closure(1, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.e));

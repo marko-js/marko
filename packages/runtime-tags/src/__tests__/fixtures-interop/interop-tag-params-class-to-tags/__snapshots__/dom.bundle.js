@@ -1,4 +1,4 @@
-// total: 65857 (min) 20311 (brotli)
+// total: 65859 (min) 20319 (brotli)
 // components/tags-layout.marko: 183 (min) 146 (brotli)
 var import_vdom = require_vdom();
 const $template = "<button id=tags> </button><div><!></div>";

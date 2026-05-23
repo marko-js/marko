@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) });
 	writeScope($scope0_id, {
 		b: value,
-		c: value?.class,
-		d: value?.text
+		c: void 0,
+		d: void 0
 	});
 }, 1);
