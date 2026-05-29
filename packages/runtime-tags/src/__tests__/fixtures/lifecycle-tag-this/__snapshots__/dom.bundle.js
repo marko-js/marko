@@ -1,4 +1,4 @@
-// total: 2766 (min) 1417 (brotli)
+// total: 2930 (min) 1477 (brotli)
 // template.marko: 232 (min) 142 (brotli)
 const $x = /* @__PURE__ */ _let(1, _script("a0", ($scope) => {
 	_lifecycle($scope, {

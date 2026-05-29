@@ -1,0 +1,7 @@
+<let/count=0/>
+<lifecycle
+  onMount() { document.getElementById("log").textContent += "mount,"; }
+  onUpdate() { document.getElementById("log").textContent += "update" + count + ","; }
+/>
+<span#log/>
+<button#inc onClick() { count++ }>+</button>

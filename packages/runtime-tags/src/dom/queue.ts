@@ -25,6 +25,26 @@ export let pendingEffects: unknown[] = [];
 export let pendingScopes: Scope[] = [];
 export let rendering: undefined | 0 | 1;
 
+// Track page-unload state so we skip lifecycle effects after pagehide fires.
+// pageshow resets the flag to handle BFCache restore correctly.
+export let isUnloading = false;
+if (typeof window !== "undefined") {
+  window.addEventListener(
+    "pagehide",
+    () => {
+      isUnloading = true;
+    },
+    { capture: true },
+  );
+  window.addEventListener(
+    "pageshow",
+    () => {
+      isUnloading = false;
+    },
+    { capture: true },
+  );
+}
+
 const scopeKeyOffset = 1e3;
 export function queueRender<T>(
   scope: Scope,
@@ -71,6 +91,7 @@ export function queueEffect<S extends Scope, T extends ExecFn<S>>(
 }
 
 export function run() {
+  if (isUnloading) return;
   const effects = pendingEffects;
   asyncRendersLookup = {};
   try {

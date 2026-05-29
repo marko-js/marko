@@ -1,4 +1,4 @@
-// total: 2021 (min) 1071 (brotli)
+// total: 2185 (min) 1134 (brotli)
 // tags/child.marko: 89 (min) 93 (brotli)
 const $input__OR__x = /* @__PURE__ */ _or(6, _script("b1", ($scope) => $scope.d.output().innerHTML = $scope.f));
 const $x = _var_resume("b0", /* @__PURE__ */ _const(5, $input__OR__x));

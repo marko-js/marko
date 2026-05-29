@@ -1,4 +1,4 @@
-// total: 2228 (min) 1190 (brotli)
+// total: 2392 (min) 1249 (brotli)
 // template.marko: 124 (min) 93 (brotli)
 const $B_content__value_length = ($scope, value_length) => $A_content__value($scope.a, value_length);
 const $B_content__tag_input_value = ($scope, value) => $B_content__value_length($scope, value?.length);

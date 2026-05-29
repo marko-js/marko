@@ -1,4 +1,4 @@
-// total: 1498 (min) 825 (brotli)
+// total: 1662 (min) 892 (brotli)
 // template.marko: 92 (min) 80 (brotli)
 const $baz2 = /* @__PURE__ */ _const(2, _script("a1", ($scope) => $scope.a.textContent = $scope.c.bar()));
 function $baz($scope) {

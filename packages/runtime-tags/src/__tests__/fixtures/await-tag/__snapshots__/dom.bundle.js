@@ -1,4 +1,4 @@
-// total: 3481 (min) 1728 (brotli)
+// total: 3645 (min) 1775 (brotli)
 // template.marko: 222 (min) 118 (brotli)
 const $await_content3__count = /* @__PURE__ */ _closure_get(4, ($scope) => _text($scope.b, $scope._.e));
 const $await_content2__count = /* @__PURE__ */ _closure_get(4, ($scope) => _text($scope.b, $scope._.e));

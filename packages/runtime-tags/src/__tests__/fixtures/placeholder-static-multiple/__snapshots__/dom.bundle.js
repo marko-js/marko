@@ -1,4 +1,4 @@
-// total: 5482 (min) 2558 (brotli)
+// total: 5648 (min) 2617 (brotli)
 // template.marko: 132 (min) 119 (brotli)
 const $if_content__mounted = /* @__PURE__ */ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.b && "C"));
 const $if = /* @__PURE__ */ _if(0, "AB<!>D", "b%c", $if_content__mounted);

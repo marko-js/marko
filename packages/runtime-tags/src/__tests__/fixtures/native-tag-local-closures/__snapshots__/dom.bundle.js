@@ -1,4 +1,4 @@
-// total: 14105 (min) 5492 (brotli)
+// total: 14273 (min) 5551 (brotli)
 // template.marko: 390 (min) 236 (brotli)
 const $item_content = /* @__PURE__ */ _content_closures(_content_resume("a2", " ", " b"), { 4($scope) {
 	_text($scope.a, $scope.e);

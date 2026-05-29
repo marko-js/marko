@@ -1,4 +1,4 @@
-// total: 2631 (min) 1360 (brotli)
+// total: 2795 (min) 1418 (brotli)
 // tags/my-button.marko: 38 (min) 42 (brotli)
 const $onClick__script = _script("b0", ($scope) => _on($scope.a, "click", $scope.e));
 const $onClick$1 = /* @__PURE__ */ _const(4, $onClick__script);

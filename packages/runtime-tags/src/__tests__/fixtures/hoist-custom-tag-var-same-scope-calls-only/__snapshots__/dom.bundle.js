@@ -1,4 +1,4 @@
-// total: 2145 (min) 1108 (brotli)
+// total: 2309 (min) 1173 (brotli)
 // tags/child.marko: 30 (min) 34 (brotli)
 const $input__script = _script("b0", ($scope) => $scope.b.action());
 

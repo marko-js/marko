@@ -10,7 +10,7 @@ import {
   ResumeSymbol,
   type Scope,
 } from "../common/types";
-import { runEffects } from "./queue";
+import { isUnloading, runEffects } from "./queue";
 import { setParentBranch } from "./renderer";
 import { destroyScope } from "./scope";
 import { _el_read, type Signal } from "./signals";
@@ -349,6 +349,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 export let isResuming: undefined | 0 | 1;
 
 function runResumeEffects(render: RenderData) {
+  if (isUnloading) return;
   try {
     isResuming = 1;
     runEffects(render.m!(), 1);

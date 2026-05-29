@@ -1,4 +1,4 @@
-// total: 2019 (min) 1055 (brotli)
+// total: 2183 (min) 1111 (brotli)
 // tags/child.marko: 39 (min) 43 (brotli)
 const $input__script = _script("b0", ($scope) => $scope.a.innerHTML = $scope.c.y());
 

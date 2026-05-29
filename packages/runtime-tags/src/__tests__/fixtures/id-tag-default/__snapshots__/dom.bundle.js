@@ -1,4 +1,4 @@
-// total: 2915 (min) 1483 (brotli)
+// total: 3079 (min) 1541 (brotli)
 // template.marko: 229 (min) 156 (brotli)
 const $sometimesBar = ($scope, sometimesBar) => _attr($scope.c, "id", sometimesBar);
 const $bar__OR__baz = /* @__PURE__ */ _or(6, _script("a0", ($scope) => _on($scope.a, "click", function() {

@@ -1,4 +1,4 @@
-// size: 4053 (min) 1803 (brotli)
+// size: 4213 (min) 1867 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -67,6 +67,7 @@ let decodeAccessor = (num) =>
   pendingEffects = [],
   pendingScopes = [],
   rendering,
+  isUnloading = !1,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
   },
@@ -250,6 +251,21 @@ function toInsertNode(startNode, endNode) {
   }
   return parent;
 }
+typeof window < "u" &&
+  (window.addEventListener(
+    "pagehide",
+    () => {
+      isUnloading = !0;
+    },
+    { capture: !0 },
+  ),
+  window.addEventListener(
+    "pageshow",
+    () => {
+      isUnloading = !1;
+    },
+    { capture: !0 },
+  ));
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let key = scopeKey * 1e3 + signalKey,
     render = signalKey >= 0 && pendingRendersLookup[key];
@@ -279,6 +295,7 @@ function queueEffect(scope, fn) {
   pendingEffects.push(fn, scope);
 }
 function run() {
+  if (isUnloading) return;
   let effects = pendingEffects;
   asyncRendersLookup = {};
   try {

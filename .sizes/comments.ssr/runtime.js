@@ -1,4 +1,4 @@
-// size: 2532 (min) 1287 (brotli)
+// size: 2696 (min) 1342 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -14,6 +14,7 @@ let decodeAccessor = (num) =>
   pendingEffects = [],
   pendingScopes = [],
   rendering,
+  isUnloading = !1,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
   },
@@ -175,10 +176,11 @@ function init(runtimeId = "M") {
     });
 }
 function runResumeEffects(render) {
-  try {
-    runEffects(render.m(), 1);
-  } finally {
-  }
+  if (!isUnloading)
+    try {
+      runEffects(render.m(), 1);
+    } finally {
+    }
 }
 function _resume(id, obj) {
   return (registeredValues[id] = obj);
@@ -202,6 +204,21 @@ function _text(node, value) {
 function normalizeAttrValue(value) {
   if (value || value === 0) return value === !0 ? "" : value + "";
 }
+typeof window < "u" &&
+  (window.addEventListener(
+    "pagehide",
+    () => {
+      isUnloading = !0;
+    },
+    { capture: !0 },
+  ),
+  window.addEventListener(
+    "pageshow",
+    () => {
+      isUnloading = !1;
+    },
+    { capture: !0 },
+  ));
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let key = scopeKey * 1e3 + signalKey,
     render = signalKey >= 0 && pendingRendersLookup[key];
@@ -231,6 +248,7 @@ function queueEffect(scope, fn) {
   pendingEffects.push(fn, scope);
 }
 function run() {
+  if (isUnloading) return;
   let effects = pendingEffects;
   asyncRendersLookup = {};
   try {

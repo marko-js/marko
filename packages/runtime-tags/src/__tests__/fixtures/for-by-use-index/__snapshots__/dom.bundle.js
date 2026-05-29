@@ -1,4 +1,4 @@
-// total: 7884 (min) 3587 (brotli)
+// total: 8051 (min) 3652 (brotli)
 // template.marko: 388 (min) 257 (brotli)
 const $if_content__last = /* @__PURE__ */ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.d));
 const $if_content__setup = $if_content__last;

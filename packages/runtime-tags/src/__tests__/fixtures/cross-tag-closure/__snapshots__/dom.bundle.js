@@ -1,4 +1,4 @@
-// total: 3200 (min) 1612 (brotli)
+// total: 3364 (min) 1680 (brotli)
 // tags/my-let.marko: 83 (min) 74 (brotli)
 const $value = /* @__PURE__ */ _let(3, ($scope) => _return($scope, $scope.d));
 function $valueChange($scope) {

@@ -1,4 +1,4 @@
-// total: 13756 (min) 5312 (brotli)
+// total: 13924 (min) 5372 (brotli)
 // tags/custom-tag.marko: 0 (min) 1 (brotli)
 const $template = "<div>Child: <!></div>";
 const $walks = "Db%l";
