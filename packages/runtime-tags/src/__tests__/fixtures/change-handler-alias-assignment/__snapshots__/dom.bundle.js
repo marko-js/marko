@@ -1,4 +1,4 @@
-// total: 2003 (min) 1033 (brotli)
+// total: 2269 (min) 1132 (brotli)
 // template.marko: 127 (min) 90 (brotli)
 const $fooChange2 = /* @__PURE__ */ _const(2, _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$scope.c("After");

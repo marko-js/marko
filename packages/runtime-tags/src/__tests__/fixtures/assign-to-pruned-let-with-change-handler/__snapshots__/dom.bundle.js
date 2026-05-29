@@ -1,4 +1,4 @@
-// total: 2723 (min) 1388 (brotli)
+// total: 2805 (min) 1395 (brotli)
 // template.marko: 174 (min) 126 (brotli)
 const $liveCount = /* @__PURE__ */ _let(2, ($scope) => _text($scope.b, $scope.c));
 const $count = /* @__PURE__ */ _let(3);

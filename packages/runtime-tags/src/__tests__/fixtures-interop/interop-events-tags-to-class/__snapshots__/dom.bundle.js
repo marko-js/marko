@@ -1,4 +1,4 @@
-// total: 66910 (min) 20744 (brotli)
+// total: 66992 (min) 20764 (brotli)
 // components/class-counter.marko: 454 (min) 258 (brotli)
 var import_vdom = require_vdom();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());

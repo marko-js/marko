@@ -1,4 +1,4 @@
-// total: 4256 (min) 1934 (brotli)
+// total: 4338 (min) 1943 (brotli)
 // template.marko: 186 (min) 114 (brotli)
 const $value = /* @__PURE__ */ _let(5, ($scope) => {
 	_attr_select_value_default($scope, "c", $scope.f);

@@ -1,4 +1,4 @@
-// total: 2669 (min) 1368 (brotli)
+// total: 2751 (min) 1379 (brotli)
 // template.marko: 115 (min) 95 (brotli)
 const $MyTag_content__y__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
 	$MyTag_content__y($scope, $scope.h + 1);

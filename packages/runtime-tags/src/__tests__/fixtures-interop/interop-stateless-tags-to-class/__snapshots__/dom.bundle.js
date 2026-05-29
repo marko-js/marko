@@ -1,4 +1,4 @@
-// total: 66671 (min) 20613 (brotli)
+// total: 66951 (min) 20648 (brotli)
 // components/my-button/component-browser.js: 91 (min) 60 (brotli)
 var import_registry = require_registry();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());

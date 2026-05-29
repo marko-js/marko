@@ -1,4 +1,4 @@
-// total: 2944 (min) 1466 (brotli)
+// total: 3026 (min) 1477 (brotli)
 // template.marko: 246 (min) 124 (brotli)
 const $count = /* @__PURE__ */ _let(1, _script("a0", ($scope) => {
 	_lifecycle($scope, {

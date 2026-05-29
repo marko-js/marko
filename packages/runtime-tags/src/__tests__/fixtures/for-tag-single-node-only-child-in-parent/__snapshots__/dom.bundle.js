@@ -1,4 +1,4 @@
-// total: 6743 (min) 3096 (brotli)
+// total: 6825 (min) 3106 (brotli)
 // template.marko: 185 (min) 146 (brotli)
 const $for = /* @__PURE__ */ _for_of(0, "<div></div>", "b");
 const $children__script = _script("a0", ($scope) => {

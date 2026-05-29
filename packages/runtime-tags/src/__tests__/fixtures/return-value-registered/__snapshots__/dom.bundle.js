@@ -1,4 +1,4 @@
-// total: 1834 (min) 979 (brotli)
+// total: 2100 (min) 1070 (brotli)
 // tags/getter.marko: 43 (min) 47 (brotli)
 function $getter() {
 	return "hello";

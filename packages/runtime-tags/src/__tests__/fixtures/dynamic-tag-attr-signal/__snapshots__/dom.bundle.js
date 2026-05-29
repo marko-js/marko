@@ -1,4 +1,4 @@
-// total: 2947 (min) 1480 (brotli)
+// total: 3029 (min) 1492 (brotli)
 // template.marko: 118 (min) 99 (brotli)
 const $className__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$className($scope, $scope.c === "A" ? "B" : "A");

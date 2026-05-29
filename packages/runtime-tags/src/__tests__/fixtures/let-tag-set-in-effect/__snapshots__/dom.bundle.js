@@ -1,4 +1,4 @@
-// total: 2367 (min) 1239 (brotli)
+// total: 2449 (min) 1244 (brotli)
 // template.marko: 106 (min) 97 (brotli)
 const $x__script = _script("a0", ($scope) => {
 	$y($scope, $scope.c);

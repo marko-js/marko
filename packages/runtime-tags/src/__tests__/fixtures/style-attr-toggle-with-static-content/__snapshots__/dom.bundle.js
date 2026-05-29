@@ -1,4 +1,4 @@
-// total: 2677 (min) 1376 (brotli)
+// total: 2759 (min) 1381 (brotli)
 // template.marko: 134 (min) 111 (brotli)
 const $open__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.c);

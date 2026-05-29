@@ -1,4 +1,4 @@
-// total: 8829 (min) 3704 (brotli)
+// total: 8911 (min) 3711 (brotli)
 // template.marko: 180 (min) 145 (brotli)
 const $if_content__setup = ($scope) => _attr_nonce($scope, "a");
 const $spreadAttrs__script = _script("a1", ($scope) => _attrs_script($scope, "b"));

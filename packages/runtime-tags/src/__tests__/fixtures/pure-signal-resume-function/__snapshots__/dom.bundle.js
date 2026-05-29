@@ -1,4 +1,4 @@
-// total: 6344 (min) 2609 (brotli)
+// total: 6620 (min) 2699 (brotli)
 // tags/my-button.marko: 38 (min) 42 (brotli)
 const $input__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
 

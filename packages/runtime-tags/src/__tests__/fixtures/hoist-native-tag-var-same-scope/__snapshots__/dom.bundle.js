@@ -1,4 +1,4 @@
-// total: 2033 (min) 1046 (brotli)
+// total: 2299 (min) 1145 (brotli)
 // tags/child.marko: 49 (min) 53 (brotli)
 const $input__script = _script("b0", ($scope) => $scope.b.value().innerHTML = "mounted");
 

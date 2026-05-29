@@ -1,4 +1,4 @@
-// total: 2463 (min) 1276 (brotli)
+// total: 2545 (min) 1282 (brotli)
 // tags/parent-el.marko: 82 (min) 74 (brotli)
 const $tagName = /* @__PURE__ */ _let(1, ($scope) => _return($scope, $scope.b));
 const $setup__script = _script("b0", ($scope) => $tagName($scope, $scope.a.parentElement.tagName));

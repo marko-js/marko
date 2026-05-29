@@ -1,4 +1,4 @@
-// total: 2238 (min) 1135 (brotli)
+// total: 2504 (min) 1226 (brotli)
 // tags/child.marko: 67 (min) 71 (brotli)
 let id = 0;
 const $input__script = _script("b0", ($scope) => $scope.b.value()?.classList.add(`child${id++}`));

@@ -1,4 +1,4 @@
-// size: 2696 (min) 1342 (brotli)
+// size: 2778 (min) 1350 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -38,6 +38,14 @@ function handleDelegated(ev) {
     (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
+typeof window < "u" &&
+  window.addEventListener(
+    "pageshow",
+    () => {
+      ((isScheduled = 0), schedule());
+    },
+    { capture: !0 },
+  );
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }

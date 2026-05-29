@@ -1,4 +1,4 @@
-// size: 4213 (min) 1867 (brotli)
+// size: 4295 (min) 1881 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -124,6 +124,14 @@ function resetControllers(scope) {
 function removeAndDestroyBranch(branch) {
   (destroyBranch(branch), removeChildNodes(branch.S, branch.K));
 }
+typeof window < "u" &&
+  window.addEventListener(
+    "pageshow",
+    () => {
+      ((isScheduled = 0), schedule());
+    },
+    { capture: !0 },
+  );
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }

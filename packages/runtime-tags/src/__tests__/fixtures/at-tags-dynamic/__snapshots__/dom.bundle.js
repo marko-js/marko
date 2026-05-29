@@ -1,4 +1,4 @@
-// total: 6377 (min) 2607 (brotli)
+// total: 6653 (min) 2698 (brotli)
 // tags/hello/index.marko: 114 (min) 53 (brotli)
 const $for_content3__row__script = _script("b1", ($scope) => _attrs_script($scope, "a"));
 const $for_content2__col__script = _script("b2", ($scope) => _attrs_script($scope, "a"));

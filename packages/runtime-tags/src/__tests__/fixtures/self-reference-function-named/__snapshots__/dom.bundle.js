@@ -1,4 +1,4 @@
-// total: 2742 (min) 1405 (brotli)
+// total: 2824 (min) 1410 (brotli)
 // template.marko: 184 (min) 133 (brotli)
 const $sum = ($scope, sum) => _text($scope.b, sum());
 const $items__script = _script("a0", ($scope) => _on($scope.a, "click", function() {

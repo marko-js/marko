@@ -1,4 +1,4 @@
-// total: 66513 (min) 20520 (brotli)
+// total: 66802 (min) 20609 (brotli)
 // tags/components/hello-internal.marko: 335 (min) 193 (brotli)
 var import_vdom = require_vdom();
 var import_const_element = /* @__PURE__ */ __toESM(require_const_element());

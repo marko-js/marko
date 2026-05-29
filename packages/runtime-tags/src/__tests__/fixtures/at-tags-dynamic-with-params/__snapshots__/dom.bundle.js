@@ -1,4 +1,4 @@
-// total: 13187 (min) 5076 (brotli)
+// total: 13270 (min) 5089 (brotli)
 // tags/hello/index.marko: 0 (min) 1 (brotli)
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0, 0, 0, 1);
 const $input_item = ($scope, input_item) => $dynamicTag($scope, input_item, () => [1]);

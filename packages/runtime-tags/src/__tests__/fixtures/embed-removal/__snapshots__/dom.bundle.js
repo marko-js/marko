@@ -1,4 +1,4 @@
-// total: 2639 (min) 1311 (brotli)
+// total: 2905 (min) 1408 (brotli)
 // template.marko: 128 (min) 95 (brotli)
 const $setup__script = _script("a0", ($scope) => {
 	$signal($scope, 0).onabort = () => {

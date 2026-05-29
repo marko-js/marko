@@ -1,4 +1,4 @@
-// total: 1973 (min) 1025 (brotli)
+// total: 2239 (min) 1123 (brotli)
 // template.marko: 97 (min) 78 (brotli)
 const $onClick = /* @__PURE__ */ _const(3, _script("a1", ($scope) => _on($scope.b, "click", $scope.d)));
 function $updateText(ev) {

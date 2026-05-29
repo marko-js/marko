@@ -1,4 +1,4 @@
-// total: 1730 (min) 926 (brotli)
+// total: 1996 (min) 1017 (brotli)
 // tags/hello-setter.marko: 43 (min) 47 (brotli)
 const $el__script = _script("b0", ($scope) => $scope.c().textContent = "hello");
 

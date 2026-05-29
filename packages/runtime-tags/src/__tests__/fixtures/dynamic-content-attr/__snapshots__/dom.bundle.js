@@ -1,4 +1,4 @@
-// total: 5999 (min) 2695 (brotli)
+// total: 6081 (min) 2703 (brotli)
 // template.marko: 268 (min) 177 (brotli)
 let sideEffect = 3;
 const $MyThing_content__count = /* @__PURE__ */ _closure_get(1, ($scope) => _text($scope.a, $scope._.b));

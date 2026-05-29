@@ -1,4 +1,4 @@
-// total: 67745 (min) 21033 (brotli)
+// total: 67827 (min) 21038 (brotli)
 // components/custom-tag.marko: 240 (min) 162 (brotli)
 var import_vdom = require_vdom();
 const $template = "<button class=inc><!>,<!></button><!><!>";

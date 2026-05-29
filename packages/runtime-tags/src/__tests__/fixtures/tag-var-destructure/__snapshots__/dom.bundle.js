@@ -1,4 +1,4 @@
-// total: 2940 (min) 1485 (brotli)
+// total: 3022 (min) 1490 (brotli)
 // template.marko: 410 (min) 233 (brotli)
 const $a = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g));
 const $b = /* @__PURE__ */ _let(7, ($scope) => _text($scope.c, $scope.h));

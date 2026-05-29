@@ -1,4 +1,4 @@
-// total: 6090 (min) 2813 (brotli)
+// total: 6172 (min) 2824 (brotli)
 // template.marko: 271 (min) 193 (brotli)
 const $MyTag_content__walks = "Db%l", $MyTag_content__template = "<div>Hello <!></div>";
 const $MyTag_content__value = ($scope, value) => _text($scope.a, value);

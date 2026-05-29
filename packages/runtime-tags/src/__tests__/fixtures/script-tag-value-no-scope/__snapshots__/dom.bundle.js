@@ -1,4 +1,4 @@
-// total: 1751 (min) 927 (brotli)
+// total: 2017 (min) 1012 (brotli)
 // template.marko: 181 (min) 117 (brotli)
 const $setText2 = /* @__PURE__ */ _const(1, _script("a1", ($scope) => $scope.b()));
 function $setText($scope) {

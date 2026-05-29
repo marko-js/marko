@@ -1,4 +1,4 @@
-// total: 67730 (min) 21087 (brotli)
+// total: 67812 (min) 21088 (brotli)
 // components/class-layout.marko: 549 (min) 291 (brotli)
 var import_vdom = require_vdom();
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());

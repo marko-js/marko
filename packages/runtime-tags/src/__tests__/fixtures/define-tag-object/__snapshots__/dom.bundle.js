@@ -1,4 +1,4 @@
-// total: 2715 (min) 1396 (brotli)
+// total: 2797 (min) 1406 (brotli)
 // template.marko: 161 (min) 128 (brotli)
 const $myObj = ($scope, myObj) => _text($scope.a, JSON.stringify(myObj));
 const $x__script = _script("a0", ($scope) => _on($scope.b, "click", function() {

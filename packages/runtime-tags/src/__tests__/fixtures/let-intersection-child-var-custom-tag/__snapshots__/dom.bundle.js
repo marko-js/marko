@@ -1,4 +1,4 @@
-// total: 3308 (min) 1660 (brotli)
+// total: 3390 (min) 1670 (brotli)
 // tags/let-global.marko: 234 (min) 178 (brotli)
 const subsByKey = {};
 const $value = /* @__PURE__ */ _let(3, ($scope) => _return($scope, $scope.d));

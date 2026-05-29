@@ -1,4 +1,4 @@
-// total: 67271 (min) 20852 (brotli)
+// total: 67354 (min) 20858 (brotli)
 // components/my-button.marko: 422 (min) 238 (brotli)
 var import_vdom = require_vdom();
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());

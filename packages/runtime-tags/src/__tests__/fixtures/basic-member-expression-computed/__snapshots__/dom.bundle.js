@@ -1,4 +1,4 @@
-// total: 2936 (min) 1490 (brotli)
+// total: 3018 (min) 1496 (brotli)
 // template.marko: 217 (min) 166 (brotli)
 const $items__OR__index__script = _script("a0", ($scope) => _on($scope.c, "click", function() {
 	const newItems = $scope.d.slice(1);

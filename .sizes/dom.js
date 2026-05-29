@@ -1,4 +1,4 @@
-// size: 21304 (min) 7989 (brotli)
+// size: 21384 (min) 8029 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -453,6 +453,14 @@ function tempDetachBranch(branch) {
   ((fragment.namespaceURI = branch.S.parentNode.namespaceURI),
     insertChildNodes(fragment, null, branch.S, branch.K));
 }
+typeof window < "u" &&
+  window.addEventListener(
+    "pageshow",
+    () => {
+      ((isScheduled = 0), schedule());
+    },
+    { capture: !0 },
+  );
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
