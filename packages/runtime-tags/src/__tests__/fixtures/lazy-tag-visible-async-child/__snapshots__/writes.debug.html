@@ -1,0 +1,33 @@
+<button class=parent>parent <!>
+    1<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<script>
+  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (e =>
+    e && new IntersectionObserver(($, i) => i.disconnect() + l(), {
+      rootMargin: "100px"
+    }).observe(e))(document.querySelector(":is(body)") || l()))(document
+    .currentScript,
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.a = [0, {
+      count: 1
+    }]),
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-async-child/template.marko_0_count 1"
+  ];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[--><button class=child>child <!>
+    1<!--M_*3 #text/1--></button><!--M_*3 #button/0--><!--M_]2 #text/0 3-->
+<script>
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-async-child/child.marko": [
+      _ => (_.b = [0, 2, {
+        count: 1
+      }]),
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-async-child/child.marko_1_count 3"
+    ]
+  };
+  M._.w()
+</script>

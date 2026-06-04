@@ -1,0 +1,8 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/count = input.value>
+<try>
+  <Child value=count/>
+  <@placeholder>-- loading...</@placeholder>
+</try>
+<button onClick() { count++ }>click</button>

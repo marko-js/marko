@@ -17,11 +17,6 @@ UPDATE: div::text@0 "0" => "1"
 ```
 
 # Update `{"value":1}`
-```html
-<div>
-  1 0
-</div>
-```
 
 # Update
 ```html

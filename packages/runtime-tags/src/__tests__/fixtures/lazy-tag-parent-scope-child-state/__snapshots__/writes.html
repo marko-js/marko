@@ -1,0 +1,17 @@
+<!-- total: 582 (min) 333 (brotli) -->
+<button class=parent>parent: <!>0<!--M_*1 b--></button><!--M_*1 a-->
+<script async type=module src="child.marko.load.mjs"></script><button
+  class=child>0<!--M_*2 b-->: <!>0<!--M_*2 c--></button><!--M_*2 a-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [_ => (_.c = [0, 1, {
+      g: 0
+    }]), "a0 2"]
+  };
+  M._.r = [_ => (_.b = [0, {
+    e: 0,
+    d: _.a = {}
+  }, _.a]), "b0 1"];
+  M._.w()
+</script>

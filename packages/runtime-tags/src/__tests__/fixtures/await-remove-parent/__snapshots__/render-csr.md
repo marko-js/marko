@@ -6,12 +6,3 @@
   Pass
 </div>
 ```
-
-# Update
-```html
-<div
-  id="outside"
->
-  Pass
-</div>
-```

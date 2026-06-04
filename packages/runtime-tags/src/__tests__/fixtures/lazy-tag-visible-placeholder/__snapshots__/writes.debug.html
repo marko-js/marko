@@ -1,0 +1,21 @@
+<!--M_[--><span>1<!--M_*3 #text/0--></span><!--M_]1 #text/0 2--><button>click</button><!--M_*1 #button/1-->
+<script>
+  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (e =>
+    e && new IntersectionObserver(($, i) => i.disconnect() + l()).observe(e))(
+    document.querySelector(":is(body)") || l()))(document.currentScript,
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.d = [0, _.a = {
+      count: 1,
+      "ClosureScopes:count": _.e = new Set
+    }, _.b = {
+      _: _.a,
+      "#childScope/1": _.c = {},
+      "#BranchAccessor": "#text/0"
+    }, _.c], _.b["#PlaceholderContent"] = _._[
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-placeholder/template.marko_2_content"
+      ](_.a), (_.e).add(_.b), _.d),
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-placeholder/template.marko_0_count 1"
+  ];
+  M._.w()
+</script>

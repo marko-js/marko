@@ -1,4 +1,4 @@
-// total: 5941 (min) 2748 (brotli)
+// total: 5904 (min) 2719 (brotli)
 // template.marko: 295 (min) 197 (brotli)
 const $else_content__clickCount = /* @__PURE__ */ _if_closure(0, 1, ($scope) => _text($scope.a, $scope._.b));
 const $else_content__setup = $else_content__clickCount;

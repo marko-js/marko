@@ -1,4 +1,4 @@
-// total: 13205 (min) 5116 (brotli)
+// total: 13166 (min) 5082 (brotli)
 // template.marko: 376 (min) 217 (brotli)
 const $Wrap_content__walks = "b%c", $Wrap_content__template = "<!><!><!>", $Message_content__walks = " b", $Message_content__template = " ";
 _resume_dynamic_tag();

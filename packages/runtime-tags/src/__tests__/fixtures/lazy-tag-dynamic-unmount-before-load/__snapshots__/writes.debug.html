@@ -1,0 +1,47 @@
+<button>Toggle</button><!--M_*1 #button/0--><!--M_[--><!--M_!^2-->Loading...<!--M_!2--><!--M_]1 #text/1 2-->
+<style M_>
+  t {
+    display: none
+  }
+</style>
+<t M_=2><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.c = [0, _.a = {
+      show: !0,
+      "ClosureScopes:show": new Set
+    }, _.b = {
+      _: _.a,
+      "#BranchAccessor": "#text/1"
+    }], _.b["#PlaceholderContent"] = _._[
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/template.marko_3_content"
+      ](_.a), _.c),
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/template.marko_0_show 1"
+  ];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t M_=b><!--M_[--><!--M_[-->
+  <script async type=module src="child.marko.load.mjs"></script>
+  <span>1<!--M_*5 #text/0--></span><!--M_]4 #text/0 5--><!--M_]2 #text/0 4-->
+</t>
+<script>
+  M._.r.push(_ => (_.d = [1, {
+    "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/child.marko",
+    _: _.b
+  }]));
+  M._.j.b = _ => {
+    M._.b = {
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/child.marko": [
+        "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/child.marko_0 5"
+      ]
+    };
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic-unmount-before-load/template.marko_2_show/pending 4"
+      )
+  };
+  M._.w()
+</script>

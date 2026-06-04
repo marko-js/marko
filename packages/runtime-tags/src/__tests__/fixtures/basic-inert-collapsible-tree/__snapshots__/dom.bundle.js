@@ -1,4 +1,4 @@
-// total: 2699 (min) 1391 (brotli)
+// total: 2666 (min) 1371 (brotli)
 // tags/comments.marko: 137 (min) 121 (brotli)
 const $for_content__open__script = _script("b0", ($scope) => _on($scope.c, "click", function() {
 	$for_content__open($scope, !$scope.m);

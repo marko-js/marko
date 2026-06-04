@@ -14,13 +14,6 @@ textarea.dispatchEvent(new window.Event("input", {
   bubbles: true
 }));
 ```
-```html
-<textarea
-  default-value="hello"
->
-  w
-</textarea>
-```
 
 # Update
 ```js
@@ -31,13 +24,6 @@ textarea.dispatchEvent(new window.Event("input", {
   bubbles: true
 }));
 ```
-```html
-<textarea
-  default-value="hello"
->
-  wor
-</textarea>
-```
 
 # Update
 ```js
@@ -47,11 +33,4 @@ textarea.value = value;
 textarea.dispatchEvent(new window.Event("input", {
   bubbles: true
 }));
-```
-```html
-<textarea
-  default-value="hello"
->
-  world
-</textarea>
 ```

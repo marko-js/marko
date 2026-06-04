@@ -1,8 +1,6 @@
 # Render
 
 # Update
-
-# Update
 ```html
 <div>
   Resolved A: A Value

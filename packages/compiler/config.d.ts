@@ -1,5 +1,12 @@
+type EntryKind = "page" | "load";
 declare const Config: {
-  output?: "html" | "dom" | "hydrate" | "migrate" | "source";
+  /** `"hydrate"` is deprecated — use `output: "dom", entry: "page"` instead. */
+  output?: "html" | "dom" | "migrate" | "source" | "hydrate";
+  entry?: EntryKind;
+  linkAssets?: {
+    runtime: string;
+    onAsset(kind: EntryKind, file: string, id: string): void;
+  };
   errorRecovery?: boolean;
   applyFixes?: Map<number, unknown>;
   stripTypes?: boolean;

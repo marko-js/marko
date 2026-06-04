@@ -12,11 +12,3 @@
 ```js
 container.querySelector("button").click();
 ```
-```html
-<details />
-<details />
-<details />
-<button>
-  Update
-</button>
-```

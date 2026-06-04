@@ -20,12 +20,3 @@ loading...
 ```
 REMOVE: #outside + ::text("loading...")
 ```
-
-# Update
-```html
-<div
-  id="outside"
->
-  Pass
-</div>
-```

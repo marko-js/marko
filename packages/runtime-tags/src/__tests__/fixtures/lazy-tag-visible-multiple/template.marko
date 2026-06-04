@@ -1,0 +1,7 @@
+import ChildA from "./child-a.marko" with { load: "visible:is(body)" }
+import ChildB from "./child-b.marko" with { load: "visible:is(body)" }
+
+<let/value=input.value>
+<button onClick() { value++ }>Inc</button>
+<div.a><ChildA value=value/></div>
+<div.b><ChildB value=value/></div>

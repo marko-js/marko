@@ -72,7 +72,7 @@ export function enterShallow(path: t.NodePath<any>) {
 export function injectWalks(
   tag: t.NodePath<t.MarkoTag>,
   name: string,
-  expr: Walk,
+  expr?: Walk,
 ) {
   const section = getSection(tag);
   const walks = getWalks(section);

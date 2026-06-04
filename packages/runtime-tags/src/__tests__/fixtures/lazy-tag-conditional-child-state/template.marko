@@ -1,0 +1,13 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/show=true>
+<let/value=0>
+<button.parent onClick() {
+  value++
+}>
+  Inc
+</button>
+
+<if=value % 2 === 0>
+  <Child label="child" value=value/>
+</if>

@@ -1,0 +1,7 @@
+import Child from "./child.marko" with { load: "visible:is(body)?rootMargin=100px" }
+
+<let/count=input.value/>
+<button.parent onClick() { count++ }>
+  parent ${count}
+</button>
+<Child value=input.value/>

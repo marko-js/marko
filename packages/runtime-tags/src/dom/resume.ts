@@ -18,6 +18,7 @@ import { getDebugKey } from "./walker";
 
 type Resumes = (number | Scope)[];
 type ResumeFn = (ctx: object) => Resumes;
+type ResumeData = (string | ResumeFn)[] & { c?: number };
 export interface Renders {
   (renderId: string): RenderData;
   [renderId: string]: RenderData;
@@ -28,7 +29,7 @@ export interface RenderData {
   // Marked nodes to visit
   v: Comment[];
   // Resumes
-  r?: (string | ResumeFn)[];
+  r?: ResumeData;
   // Scope lookup (just needed for compat layer)
   s?: Record<string, Scope>;
   // Walk
@@ -37,9 +38,8 @@ export interface RenderData {
   m?(): unknown[];
   // Reference node used for embedded renders.
   n?: Text;
-  // List of resume blocking ids.
-  b?: 0 | Record<string, 1 | 0>;
-
+  // Blocking resumes keyed by ready id.
+  b?: Record<string, ResumeData>;
   /* --- Used by inline runtime --- */
 
   // Document
@@ -56,44 +56,43 @@ export interface RenderData {
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
 const registeredValues: Record<string, unknown> = {};
-let curRuntimeId: string | undefined;
-let readyLookup: undefined | Record<string, 1 | (() => void)>;
+let curRenders: Renders;
 let branchesEnabled: undefined | 1;
-let embedEnabled: undefined | 1;
+let embedObserver: undefined | MutationObserver;
+let readyIds: undefined | string[];
 
 export function enableBranches() {
   branchesEnabled = 1;
 }
 
-export const ready = /*@__PURE__*/ ((_) => (id: string) => {
-  const cb = readyLookup![id] as undefined | (() => {});
-  readyLookup![id] = 1;
-  cb?.();
-})((readyLookup = {}));
+export function ready(readyId: string, runtimeId?: string) {
+  (readyIds ||= []).push(readyId);
+  init(runtimeId);
+  for (const renderId in curRenders) {
+    runResumeEffects(curRenders[renderId]);
+  }
+}
 
 export function initEmbedded(readyId: string, runtimeId?: string) {
-  embedEnabled = 1;
-  ready(readyId);
-  init(runtimeId);
-  new MutationObserver(() => {
-    const renders = (self as any)[curRuntimeId!] as Renders | undefined;
-    for (const renderId in renders) {
-      const { s, n } = renders[renderId];
+  (embedObserver ||= new MutationObserver(() => {
+    for (const renderId in curRenders) {
+      const { s, n } = curRenders[renderId];
       if (n && !n.isConnected) {
-        delete renders[renderId];
+        delete curRenders[renderId];
         for (const id in s) {
           destroyScope(s[id]);
         }
       }
     }
-  }).observe(document.body, { childList: true, subtree: true });
+  })).observe(document, { childList: true, subtree: true });
+  ready(readyId, runtimeId);
 }
 export function init(runtimeId = DEFAULT_RUNTIME_ID) {
-  if (curRuntimeId) {
+  if (curRenders) {
     if (MARKO_DEBUG) {
-      if (curRuntimeId !== runtimeId) {
+      if (curRenders !== (self as any)[runtimeId]) {
         throw new Error(
-          `Marko initialized multiple times with different $global.runtimeId's of ${JSON.stringify(runtimeId)} and ${JSON.stringify(curRuntimeId)}.`,
+          `Marko initialized multiple times with different $global.runtimeId's.`,
         );
       }
     }
@@ -101,16 +100,13 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
     return;
   }
 
-  curRuntimeId = runtimeId;
-
-  let resumeRender: Renders;
   const renders = (self as any)[runtimeId] as Renders | undefined;
   const defineRuntime = (desc: PropertyDescriptor) =>
     Object.defineProperty(self, runtimeId, desc);
   const initRuntime = (renders: Renders) => {
     defineRuntime({
-      value: (resumeRender = ((renderId: string) => {
-        const render = (resumeRender[renderId] =
+      value: (curRenders = ((renderId: string) => {
+        const render = (curRenders[renderId] =
           renders[renderId] || renders(renderId));
         const walk = render.w;
         const scopeLookup: Record<string | number, Scope> = (render.s = {});
@@ -226,42 +222,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               visitText.indexOf(" ", lastTokenIndex) + 1 ||
               visitText.length + 1) - 1,
           ));
-        let $global: Scope[AccessorProp.Global] | undefined;
-        let lastEffect: unknown;
-        let visits: RenderData["v"];
-        let resumes: NonNullable<RenderData["r"]>;
-        let visit: Comment;
-        let visitText: string;
-        let visitType: ResumeSymbol;
-        let visitScope: Scope;
-        let lastToken: string;
-        let lastTokenIndex: number;
-        let lastScopeId = 0;
-
-        if (MARKO_DEBUG) {
-          if (render.m) {
-            throw new Error(
-              `Marko rendered multiple times with $global.runtimeId as ${JSON.stringify(runtimeId)} and $global.renderId as ${JSON.stringify(renderId)}. Ensure each render into a page has a unique $global.renderId.`,
-            );
-          }
-        }
-
-        render.m = (effects: unknown[] = []) => {
-          if (readyLookup) {
-            for (const readyId in render.b as Record<string, unknown>) {
-              if (readyLookup[readyId] !== 1) {
-                readyLookup[readyId] = ((prev) => () => {
-                  runResumeEffects(render);
-                  prev?.();
-                })(readyLookup[readyId]);
-                return effects;
-              }
-            }
-
-            render.b = 0;
-          }
-
-          for (const serialized of (resumes = render.r || [])) {
+        const processResumes = (
+          resumes: ResumeData = [],
+          effects: unknown[],
+        ) => {
+          let lastScopeId = resumes.c || 0;
+          for (const serialized of resumes) {
             if (typeof serialized === "string") {
               lastTokenIndex = 0;
               visitText = serialized;
@@ -273,7 +239,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 }
               }
             } else {
-              for (const scope of serialized(serializeContext)) {
+              for (let scope of serialized(serializeContext)) {
                 if (!$global) {
                   $global = (scope || {}) as Scope[AccessorProp.Global];
                   $global.runtimeId = runtimeId;
@@ -281,7 +247,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 } else if (typeof scope === "number") {
                   lastScopeId += scope;
                 } else {
-                  scopeLookup[(scope[AccessorProp.Id] = ++lastScopeId)] = scope;
+                  scope[AccessorProp.Id] = ++lastScopeId;
+                  if (scopeLookup[lastScopeId]) {
+                    scope = Object.assign(scopeLookup[lastScopeId], scope);
+                  } else {
+                    scopeLookup[lastScopeId] = scope;
+                  }
                   scope[AccessorProp.Global] = $global;
                   if (branchesEnabled) {
                     scope[AccessorProp.ClosestBranch] = getScope(
@@ -292,6 +263,35 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               }
             }
           }
+          resumes.c = lastScopeId;
+          resumes.length = 0;
+        };
+        let $global: Scope[AccessorProp.Global] | undefined;
+        let lastEffect: unknown;
+        let visits: RenderData["v"];
+        let visit: Comment;
+        let visitText: string;
+        let visitType: ResumeSymbol;
+        let visitScope: Scope;
+        let lastToken: string;
+        let lastTokenIndex: number;
+
+        if (MARKO_DEBUG) {
+          if (render.m) {
+            throw new Error(
+              `Marko rendered multiple times with $global.runtimeId as ${JSON.stringify(runtimeId)} and $global.renderId as ${JSON.stringify(renderId)}. Ensure each render into a page has a unique $global.renderId.`,
+            );
+          }
+        }
+
+        render.m = (effects: unknown[] = []) => {
+          if (readyIds) {
+            readyIds.forEach((renderId) =>
+              processResumes(render.b?.[renderId], effects),
+            );
+          }
+
+          processResumes(render.r, effects);
 
           for (visit of (visits = render.v)) {
             lastTokenIndex = render.i.length;
@@ -312,15 +312,14 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             }
           }
 
-          if (embedEnabled) {
+          if (embedObserver) {
             render.n ||= visit?.parentNode!.insertBefore(
               new Text(),
               visit.nextSibling,
             );
           }
 
-          visits.length = resumes.length = 0;
-
+          visits.length = 0;
           return effects;
         };
 
@@ -336,7 +335,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
   if (renders) {
     initRuntime(renders);
     for (const renderId in renders) {
-      runResumeEffects(resumeRender!(renderId));
+      runResumeEffects((curRenders as Renders)(renderId));
     }
   } else {
     defineRuntime({

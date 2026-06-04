@@ -1,4 +1,4 @@
-// total: 9041 (min) 3485 (brotli)
+// total: 9008 (min) 3475 (brotli)
 // tags/FancyButton.marko: 38 (min) 42 (brotli)
 const $attrs__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
 const $attrs = /* @__PURE__ */ _const(5, ($scope) => {

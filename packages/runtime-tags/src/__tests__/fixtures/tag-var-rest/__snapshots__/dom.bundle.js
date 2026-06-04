@@ -1,4 +1,4 @@
-// total: 2786 (min) 1431 (brotli)
+// total: 2755 (min) 1411 (brotli)
 // template.marko: 356 (min) 205 (brotli)
 const $obj = /* @__PURE__ */ _let(6, ($scope) => {
 	_text($scope.a, JSON.stringify($scope.g));

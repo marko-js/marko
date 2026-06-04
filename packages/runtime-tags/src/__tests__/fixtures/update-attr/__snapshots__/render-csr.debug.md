@@ -7,12 +7,6 @@
 ```
 
 # Update `{"value":"1"}`
-```html
-<div
-  a="0"
-  b="1"
-/>
-```
 
 # Update `{"value":"2"}`
 ```html

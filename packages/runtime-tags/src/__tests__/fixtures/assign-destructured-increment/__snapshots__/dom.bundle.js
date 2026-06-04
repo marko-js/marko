@@ -1,4 +1,4 @@
-// total: 2826 (min) 1453 (brotli)
+// total: 2795 (min) 1433 (brotli)
 // template.marko: 279 (min) 181 (brotli)
 const $pattern2 = ($scope, $pattern) => {
 	$foo2($scope, $pattern.foo);

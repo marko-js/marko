@@ -1,0 +1,41 @@
+<!-- total: 1058 (min) 542 (brotli) -->
+<button class=parent>parent <!>1<!--M_*1 b--></button><!--M_*1 a--><button
+  class=child>first: <!>1<!--M_*2 c--></button><!--M_*2 a-->
+<script>
+  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (e =>
+    e && new IntersectionObserver(($, i) => i.disconnect() + l()).observe(e))(
+    document.querySelector(":is(body)") || l()))(document.currentScript,
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [_ => (_.b = [0, 1, {
+      h: 1
+    }]), "a0 2"]
+  };
+  M._.r = [_ => (_.a = [0, {
+    j: 1
+  }])];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[--><button class=mid>mid <!>
+    11<!--M_*3 b--></button><!--M_*3 a--><!--M_]1 e 3-->
+<script>
+  M._.r.push(_ => (_.c = [1, {
+    e: 11
+  }]), "b0 3");
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<button class=child>second: <!>21<!--M_*5 c--></button><!--M_*5 a-->
+<script>
+  M._.b._a.push(_ => (_.d = [0, 2, {
+    h: 21
+  }]), "a0 5");
+  M._.r.push("b1 1");
+  M._.w()
+</script>

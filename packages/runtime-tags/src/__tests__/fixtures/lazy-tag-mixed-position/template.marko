@@ -1,0 +1,12 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/show=true>
+<let/value=0>
+<button class="toggle" onClick() { show = !show }>Toggle</button>
+<button class="inc" onClick() { value++ }>Inc</button>
+
+<!-- known-tag position: uses _lazy_setup/_lazy_signal -->
+<Child value=value/>
+
+<!-- dynamic position: same binding used as _lazy_renderer -->
+<${show ? Child : null} value=value/>

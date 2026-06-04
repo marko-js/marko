@@ -3,6 +3,7 @@ import {
   assertNoArgs,
   getTagDef,
   importDefault,
+  importNamed,
   loadFileForTag,
   resolveRelativePath,
   resolveTagImport,
@@ -12,6 +13,9 @@ import withPreviousLocation from "../util/with-previous-location";
 import dynamicTag from "./dynamic-tag";
 import nativeTag from "./native-tag";
 import { buildEventHandlerArray, getAttrs } from "./util";
+
+const loadTagsByFile = new WeakMap();
+const withAssetsByFile = new WeakMap();
 
 export default function (path, isNullable) {
   const {
@@ -53,7 +57,45 @@ export default function (path, isNullable) {
     if (binding && !binding.identifier.loc) binding = null;
 
     if (relativePath) {
-      tagIdentifier = importDefault(file, relativePath, tagName);
+      if (node.extra?.tagNameLoad && markoOpts.output === "dom") {
+        const importBinding = path.scope.getBinding(tagName);
+        if (importBinding?.path?.parentPath?.isImportDeclaration()) {
+          importBinding.path.parentPath.remove();
+        }
+        let loadTags = loadTagsByFile.get(file);
+        if (!loadTags) loadTagsByFile.set(file, (loadTags = new Map()));
+        if (loadTags.has(relativePath)) {
+          tagIdentifier = loadTags.get(relativePath);
+        } else {
+          const loadTagFn = importDefault(
+            file,
+            "marko/src/runtime/helpers/load-tag.js",
+            "marko_load_tag",
+          );
+          const loadId = file.path.scope.generateUidIdentifier(
+            `marko_load_${tagName}`,
+          );
+          loadTags.set(relativePath, loadId);
+          file.path.unshiftContainer("body", [
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                loadId,
+                t.callExpression(loadTagFn, [
+                  t.arrowFunctionExpression(
+                    [],
+                    t.callExpression(t.import(), [
+                      t.stringLiteral(relativePath),
+                    ]),
+                  ),
+                ]),
+              ),
+            ]),
+          ]);
+          tagIdentifier = loadId;
+        }
+      } else {
+        tagIdentifier = importDefault(file, relativePath, tagName);
+      }
     } else if (binding) {
       path.set("name", t.identifier(tagName));
       return dynamicTag(path);
@@ -68,6 +110,53 @@ export default function (path, isNullable) {
     }
   } else {
     tagIdentifier = name;
+  }
+
+  if (
+    node.extra?.tagNameLoad &&
+    markoOpts.output === "html" &&
+    markoOpts.linkAssets
+  ) {
+    const { linkAssets } = markoOpts;
+    const childFile = loadFileForTag(path);
+    if (childFile) {
+      const assetId = childFile.metadata.marko.id;
+      const loadRelativePath = node.extra.relativePath;
+      const loadTagName = name.value;
+      let withAssetsMap = withAssetsByFile.get(file);
+      linkAssets.onAsset("load", childFile.opts.filename, assetId);
+
+      if (!withAssetsMap) {
+        withAssetsByFile.set(file, (withAssetsMap = new Map()));
+      }
+
+      if (withAssetsMap.has(loadRelativePath)) {
+        tagIdentifier = withAssetsMap.get(loadRelativePath);
+      } else {
+        const withAssetsFn = importNamed(
+          file,
+          "marko/src/runtime/helpers/with-entry.js",
+          "withAssets",
+          "marko_with_assets",
+        );
+        const withAssetsId = file.path.scope.generateUidIdentifier(
+          `marko_with_assets_${loadTagName}`,
+        );
+        withAssetsMap.set(loadRelativePath, withAssetsId);
+        file.path.unshiftContainer("body", [
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              withAssetsId,
+              t.callExpression(withAssetsFn, [
+                tagIdentifier,
+                t.stringLiteral(assetId),
+              ]),
+            ),
+          ]),
+        ]);
+        tagIdentifier = withAssetsId;
+      }
+    }
   }
 
   const foundAttrs = getAttrs(path);

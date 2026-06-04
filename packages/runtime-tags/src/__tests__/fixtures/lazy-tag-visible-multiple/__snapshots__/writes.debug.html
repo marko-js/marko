@@ -1,0 +1,22 @@
+<button>Inc</button><!--M_*1 #button/0-->
+<div class=a><span class=a>1<!--M_*2 #text/0--></span></div>
+<div class=b><span class=b>2<!--M_*3 #text/0--></span></div>
+<script>
+  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (e =>
+    e && new IntersectionObserver(($, i) => i.disconnect() + l()).observe(e))(
+    document.querySelector(":is(body)") || l()))(document.currentScript,
+    "<script async type=module src=\"child-a.marko.load.mjs\">\x3C/script>");
+  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (e =>
+    e && new IntersectionObserver(($, i) => i.disconnect() + l()).observe(e))(
+    document.querySelector(":is(body)") || l()))(document.currentScript,
+    "<script async type=module src=\"child-b.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.c = [0, {
+      value: 1,
+      "#childScope/2": _.a = {},
+      "#childScope/4": _.b = {}
+    }, _.a, _.b]),
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-multiple/template.marko_0_value 1"
+  ];
+  M._.w()
+</script>

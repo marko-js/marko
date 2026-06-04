@@ -1,4 +1,4 @@
-// total: 6203 (min) 2553 (brotli)
+// total: 6168 (min) 2529 (brotli)
 // tags/my-div.marko: 205 (min) 82 (brotli)
 const $CustomContent_content = _content_resume("b0", "Custom content", "b");
 const $input__OR__CustomContent_content__script = _script("b1", ($scope) => _attrs_script($scope, "f"));

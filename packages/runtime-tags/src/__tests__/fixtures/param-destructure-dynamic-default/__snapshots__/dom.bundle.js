@@ -1,4 +1,4 @@
-// total: 3443 (min) 1700 (brotli)
+// total: 3412 (min) 1677 (brotli)
 // template.marko: 468 (min) 214 (brotli)
 const $ChildB_content__$pattern = ($scope, $pattern2) => $ChildB_content__$bar($scope, $pattern2.bar);
 const $ChildB_content__count__OR__$foo = /* @__PURE__ */ _or(10, ($scope) => $ChildB_content__$pattern($scope, void 0 !== $scope.g ? $scope.g : { bar: $scope._.h + 2 }));

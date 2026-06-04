@@ -2,7 +2,16 @@ import path from "node:path";
 
 import { JSDOM, VirtualConsole } from "jsdom";
 
-import { importWithContext } from "./import-with-context";
+import {
+  importWithContext,
+  waitForPendingModules,
+} from "./import-with-context";
+import type { FlushType } from "./resolve";
+type IOEntry = {
+  callback: IntersectionObserverCallback;
+  io: IntersectionObserver;
+  targets: Set<Element>;
+};
 
 export default function createBrowser(dir?: string) {
   const virtualConsole = new VirtualConsole();
@@ -13,11 +22,58 @@ export default function createBrowser(dir?: string) {
   });
   const { window } = dom;
   const ctx = dom.getInternalVMContext();
+  const loadedScripts = new Set<string>();
   const qmt = window.queueMicrotask;
-  let scripts: string[] = ["template.marko.entry.mjs"];
+  const flushVisible = () => {
+    if (!ioQueue) return;
+    const batch = ioQueue;
+    ioQueue = undefined;
+    for (const { io, targets, callback } of batch) {
+      const entries = [...targets].map(
+        (target) =>
+          ({ isIntersecting: true, target }) as IntersectionObserverEntry,
+      );
+      if (entries.length) callback(entries, io as IntersectionObserver);
+    }
+  };
+  const flushRaf = () => {
+    if (!rafQueue) return;
+    const timestamp = performance.now();
+    const batch = rafQueue;
+    rafQueue = undefined;
+    for (const fn of batch) fn(timestamp);
+  };
+  const flushIdle = () => {
+    if (!idleQueue) return;
+    const batch = idleQueue;
+    idleQueue = undefined;
+    for (const fn of batch) {
+      fn({
+        didTimeout: false,
+        timeRemaining: () => 0,
+      });
+    }
+  };
+  let ioQueue: Set<IOEntry> | undefined;
+  let rafQueue: FrameRequestCallback[] | undefined;
+  let idleQueue: IdleRequestCallback[] | undefined;
   window.__coverage__ = (globalThis as any).__coverage__;
   window.__RESOLVE_STATE__ = globalThis.__RESOLVE_STATE__;
   window.setImmediate = setImmediate;
+  window.IntersectionObserver = class IntersectionObserver {
+    #entry: IOEntry;
+    constructor(callback: IntersectionObserverCallback) {
+      (ioQueue ||= new Set()).add(
+        (this.#entry = { callback, io: this as any, targets: new Set() }),
+      );
+    }
+    disconnect() {
+      ioQueue?.delete(this.#entry);
+    }
+    observe(target: Element) {
+      this.#entry.targets.add(target);
+    }
+  };
   window.MessageChannel = class MessageChannel {
     port1: any;
     port2: any;
@@ -32,41 +88,55 @@ export default function createBrowser(dir?: string) {
       };
     }
   };
-  window.requestAnimationFrame = (() => {
-    let queue: FrameRequestCallback[] | undefined;
-    return function requestAnimationFrame(fn) {
-      if (queue) {
-        queue.push(fn);
-      } else {
-        queue = [fn];
-        setTimeout(() => {
-          const timestamp = performance.now();
-          const batch = queue!;
-          queue = undefined;
-          for (const fn of batch) {
-            fn(timestamp);
-          }
-        });
-      }
-      return 0;
-    };
-  })();
+  window.requestAnimationFrame = (fn) => {
+    if (rafQueue) {
+      rafQueue.push(fn);
+    } else {
+      rafQueue = [fn];
+      setTimeout(flushRaf);
+    }
+    return 0;
+  };
+  window.requestIdleCallback = (fn) => {
+    if (idleQueue) {
+      idleQueue.push(fn);
+    } else {
+      idleQueue = [fn];
+      setTimeout(flushIdle);
+    }
+    return 0;
+  };
 
   return {
     window,
     virtualConsole,
     ctx,
+    flush(flushType: Exclude<FlushType, "stream">) {
+      switch (flushType) {
+        case "raf":
+          flushRaf();
+          break;
+        case "idle":
+          flushIdle();
+          break;
+        case "visible":
+          flushVisible();
+          break;
+      }
+    },
     async runAsyncScripts(beforeEffects?: () => void): Promise<void> {
       if (dir) {
         // Patch queueMicrotask to prevent scheduled updates (from effects)
         // from executing before we snapshot the dom.
         window.queueMicrotask = (fn: () => void) => deferred.push(fn);
         const deferred: (() => void)[] = [];
-        const pending = scripts.map((src) =>
-          importWithContext(path.join(dir, src), { browser: true }, ctx),
-        );
-        scripts = [];
-        await Promise.all(pending);
+        for (const { src, type } of window.document.scripts) {
+          if (src && type === "module" && !loadedScripts.has(src)) {
+            loadedScripts.add(src);
+            importWithContext(path.join(dir, src), { browser: true }, ctx);
+          }
+        }
+        await waitForPendingModules(ctx);
         window.queueMicrotask = qmt;
         beforeEffects?.();
         deferred.forEach(qmt);
@@ -94,20 +164,14 @@ export default function createBrowser(dir?: string) {
               return true;
             }
 
-            const isScript = (node as Element).tagName === "SCRIPT";
-
-            if (dir && isScript && (node as HTMLScriptElement).src) {
-              scripts.push((node as HTMLScriptElement).src);
-              continue;
-            }
-
-            const clone = document.importNode(node, isScript);
+            const isInline = isInlineScript(node);
+            const clone = document.importNode(node, isInline);
             targetNodes.set(node, clone);
             (targetNodes.get(node.parentNode!) as ParentNode).appendChild(
               clone,
             );
 
-            if (isScript) {
+            if (isInline) {
               walker.nextNode();
             }
           }
@@ -118,23 +182,20 @@ export default function createBrowser(dir?: string) {
 
       return () => {
         if (chunks.length) {
-          let [chunk] = chunks;
-          if (dir) {
-            chunk = chunk.replace(
-              /<script async src="([^"]+)"><\/script>/gi,
-              (_, script) => {
-                scripts.push(script);
-                return "";
-              },
-            );
-          }
-          document.write(ensureBody(chunk));
+          document.write(ensureBody(chunks[0]));
         }
         document.close();
         return false;
       };
     },
   };
+}
+
+function isInlineScript(node: Node): node is HTMLScriptElement {
+  return (
+    (node as HTMLScriptElement).tagName === "SCRIPT" &&
+    (node as HTMLScriptElement).type !== "module"
+  );
 }
 
 function ensureBody(html: string) {

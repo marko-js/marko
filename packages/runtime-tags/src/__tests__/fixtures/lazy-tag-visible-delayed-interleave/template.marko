@@ -1,0 +1,20 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "visible:is(body)" }
+
+<let/parent=input.value/>
+<button.parent onClick() { parent++ }>
+  parent ${parent}
+</button>
+
+<Child label="first" value=input.value/>
+
+<await|value|=resolveAfter(input.value + 10, 1)>
+  <let/mid=value/>
+  <button.mid onClick() { mid++ }>
+    mid ${mid}
+  </button>
+</await>
+
+<await|value|=resolveAfter(input.value + 20, 2)>
+  <Child label="second" value=value/>
+</await>

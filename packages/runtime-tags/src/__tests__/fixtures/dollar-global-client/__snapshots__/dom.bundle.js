@@ -1,4 +1,4 @@
-// total: 5776 (min) 2656 (brotli)
+// total: 5739 (min) 2633 (brotli)
 // template.marko: 228 (min) 141 (brotli)
 const $if_content2__setup = ($scope) => _text($scope.a, $scope.$.x);
 const $if_content__setup = ($scope) => _text($scope.a, $scope.$.x);

@@ -14,6 +14,7 @@ import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 import createBrowser from "./utils/create-browser";
 import {
   type Flush,
+  type FlushType,
   isFlush,
   isThrows,
   isWait,
@@ -181,34 +182,19 @@ function testFixtures(interop?: true) {
               getModeOpts(),
               interop,
             );
-            const { window } = browser;
-            const { document } = window;
+            const { document } = browser.window;
             const { input, steps } = await getSteps(config);
             const tracker = createMutationTracker(browser);
             const { template, run } = await runClient(browser.ctx);
             const instance = template.mount(input, document.body, "afterbegin");
             tracker.logRender(input);
 
-            for (const update of steps) {
-              if (isWait(update)) {
-                await update();
-              } else if (isFlush(update)) {
-                continue;
-              } else if (typeof update === "function") {
-                tracker.beginUpdate();
-                await update(document.documentElement);
-                run();
-                await 1; // allow a microtask before we log the update in order to catch mutation observers.
-                if (isThrows(update)) {
-                  tracker.logErrors(update);
-                } else {
-                  tracker.logUpdate(update);
-                }
-              } else {
-                instance.update(update);
-                tracker.logUpdate(update);
-              }
-            }
+            await runSteps(steps, tracker, browser, run, {
+              onInput: (input) => {
+                instance.update(input);
+                tracker.logUpdate(input);
+              },
+            });
 
             tracker.cleanup();
             return { browser, tracker };
@@ -246,10 +232,13 @@ function testFixtures(interop?: true) {
 
             const browser = createBrowser(runner.assets);
             const { window } = browser;
-            const { document } = window;
             const flushNext = browser.stream(chunks);
+            const flushAndRun = async () => {
+              hasFlush = flushNext();
+              await browser.runAsyncScripts();
+              run();
+            };
             let hasFlush = flushNext();
-            const flushWithLog = () => flushNext();
             const tracker = createMutationTracker(browser);
 
             for (const group of logs) {
@@ -262,39 +251,14 @@ function testFixtures(interop?: true) {
             const { run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
 
-            for (const update of steps) {
-              if (isWait(update)) {
-                await update();
-              } else if (isFlush(update)) {
-                if (hasFlush) {
-                  tracker.beginUpdate();
-                  hasFlush = flushWithLog();
-                  await browser.runAsyncScripts();
-                  tracker.logUpdate();
-                }
-              } else if (typeof update === "function") {
-                tracker.beginUpdate();
-                await update(document.documentElement);
-                run();
-                await 1; // allow a microtask before we log the update in order to catch mutation observers
-                if (isThrows(update)) {
-                  tracker.logErrors(update);
-                } else {
-                  tracker.logUpdate(update);
-                }
-              } else {
-                // if new input is detected, stop testing
-                // this will be covered by the client tests
-                break;
-              }
-            }
+            await runSteps(steps, tracker, browser, run, {
+              onFlush: hasFlush ? flushAndRun : undefined,
+            });
 
             while (hasFlush) {
               await resolveAfter(0, 1);
               tracker.beginUpdate();
-              hasFlush = flushWithLog();
-              await browser.runAsyncScripts();
-              run();
+              await flushAndRun();
               tracker.logUpdate();
             }
 
@@ -313,11 +277,11 @@ function testFixtures(interop?: true) {
                   const { tracker, chunks } = await ssr();
                   await snapMode(async () => {
                     const pretty = html_beautify(
-                      chunks
-                        .map(
-                          optimize ? stripOptimizeRuntime : stripDebugRuntime,
-                        )
-                        .join("\n\n<!-- FLUSH -->\n\n"),
+                      (optimize ? stripOptimizeRuntime : stripDebugRuntime)(
+                        stripDefaultScript(
+                          chunks.join("\n\n<!-- FLUSH -->\n\n"),
+                        ),
+                      ),
                       {
                         indent_size: 2,
                         wrap_line_length: 80,
@@ -326,7 +290,9 @@ function testFixtures(interop?: true) {
                     );
 
                     return optimize
-                      ? `<!-- total: ${await getSizes(chunks.join(""))} -->\n${pretty}\n`
+                      ? `<!-- total: ${await getSizes(
+                          stripDefaultScript(chunks.join("")),
+                        )} -->\n${pretty}\n`
                       : `${pretty}\n`;
                   }, "writes.html");
                   return tracker.getLogs();
@@ -351,12 +317,69 @@ function testFixtures(interop?: true) {
   }
 }
 
+async function runSteps(
+  steps: Step[],
+  tracker: ReturnType<typeof createMutationTracker>,
+  browser: ReturnType<typeof createBrowser>,
+  run: () => void,
+  opts: {
+    onInput?: (input: Input) => void;
+    onFlush?: () => Promise<void>;
+  },
+) {
+  for (const update of steps) {
+    if (isWait(update)) {
+      await update();
+      await browser.runAsyncScripts();
+    } else if (isFlush(update)) {
+      if (update.flushType === "stream") {
+        if (opts.onFlush) {
+          tracker.beginUpdate();
+          await opts.onFlush();
+          tracker.logUpdate();
+        }
+      } else {
+        tracker.beginUpdate();
+        browser.flush(update.flushType as Exclude<FlushType, "stream">);
+        run();
+        await 1; // allow a microtask before we log the update in order to catch mutation observers.
+        tracker.logUpdate();
+      }
+    } else if (typeof update === "function") {
+      tracker.beginUpdate();
+      await update(browser.window.document.documentElement);
+      run();
+      await browser.runAsyncScripts();
+      run();
+      await 1; // allow a microtask before we log the update in order to catch mutation observers.
+      if (isThrows(update)) {
+        tracker.logErrors(update);
+      } else {
+        tracker.logUpdate(update);
+      }
+    } else if (opts.onInput) {
+      opts.onInput(update);
+    } else {
+      // if new input is detected, stop testing
+      // this will be covered by the client tests
+      break;
+    }
+  }
+}
+
 async function getSteps(config: TestConfig) {
   const [input = {} as Input, ...steps] =
     typeof config.steps === "function"
       ? await config.steps()
       : (config.steps ?? []);
   return { input, steps };
+}
+
+function stripDefaultScript(html: string) {
+  return html.replace(
+    `<script async type=module src="template.marko.page.mjs"></script>`,
+    "",
+  );
 }
 
 function once<T>(fn: () => T): () => T {

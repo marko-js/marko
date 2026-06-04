@@ -1,4 +1,4 @@
-// total: 2591 (min) 1343 (brotli)
+// total: 2558 (min) 1318 (brotli)
 // template.marko: 113 (min) 94 (brotli)
 const $toggle__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$toggle($scope, !$scope.c);

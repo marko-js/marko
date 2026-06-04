@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
+  getTemplateId,
   loadFileForImport,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
@@ -21,7 +22,7 @@ import {
   trackParamsReferences,
 } from "../../util/references";
 import { resolveRelativeToEntry } from "../../util/resolve-relative-to-entry";
-import { getCompatRuntimeFile } from "../../util/runtime";
+import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
 import { startSection } from "../../util/sections";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
@@ -35,6 +36,7 @@ export function isScopeIdentifier(node: t.Node): node is t.Identifier {
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
+    readyId?: string;
     domExports?: {
       template: string;
       walks: string;
@@ -61,6 +63,7 @@ export default {
       startSection(program);
       trackParamsReferences(program, BindingType.input);
 
+      const markoOpts = getMarkoOpts();
       const programExtra = (program.node.extra ??= {});
       const inputBinding = program.node.params![0].extra?.binding;
       if (inputBinding) {
@@ -74,6 +77,12 @@ export default {
         setup: generateUid("setup"),
         params: undefined,
       };
+
+      if (markoOpts.linkAssets) {
+        programExtra.readyId =
+          (markoOpts.optimize ? "_" : "ready:") +
+          getTemplateId(markoOpts, program.hub.file.opts.filename);
+      }
     },
 
     exit(program) {
@@ -90,27 +99,125 @@ export default {
       scopeIdentifier = isOutputDOM()
         ? generateUidIdentifier("scope")
         : (null as any as t.Identifier);
-      if (getMarkoOpts().output === "hydrate") {
-        const entryFile = program.hub.file;
-        const visitedFiles = new Set([
-          resolveRelativePath(entryFile, entryFile.opts.filename),
-        ]);
-        entryBuilder.visit(entryFile, entryFile, function visitChild(resolved) {
-          if (!visitedFiles.has(resolved)) {
-            visitedFiles.add(resolved);
-            const file = loadFileForImport(entryFile, resolved);
-            if (file) {
-              entryBuilder.visit(file, entryFile, (id) =>
-                visitChild(resolveRelativeToEntry(entryFile, file, id)),
-              );
-            }
-          }
-        });
+      {
+        const markoOpts = getMarkoOpts();
+        const { output, entry, runtimeId } = markoOpts;
+        const isLoadEntry = entry === "load";
+        const isDOMPageEntry =
+          (output === "dom" && entry === "page") || output === "hydrate";
+        const isServerEntry = output === "html" && entry === "page";
 
-        program.node.body = entryBuilder.build(entryFile);
-        program.skip();
-        return;
+        if (isLoadEntry) {
+          const entryFile = program.hub.file;
+          const { filename } = entryFile.opts;
+          const { readyId } = program.node.extra!;
+          const body: t.Statement[] = [];
+          const importExpr = t.callExpression(t.import(), [
+            t.stringLiteral(resolveRelativePath(entryFile, filename)),
+          ]);
+
+          if (readyId) {
+            const readyArgs = [t.stringLiteral(readyId)];
+            if (runtimeId) {
+              readyArgs.push(t.stringLiteral(runtimeId));
+            }
+
+            body.push(
+              t.importDeclaration(
+                [
+                  t.importSpecifier(
+                    t.identifier("ready"),
+                    t.identifier("ready"),
+                  ),
+                ],
+                t.stringLiteral(getRuntimePath("dom")),
+              ),
+              t.expressionStatement(
+                t.callExpression(
+                  t.memberExpression(importExpr, t.identifier("then")),
+                  [
+                    t.arrowFunctionExpression(
+                      [],
+                      t.callExpression(t.identifier("ready"), readyArgs),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            body.push(t.expressionStatement(importExpr));
+          }
+
+          program.node.body = body;
+          program.skip();
+          return;
+        }
+
+        if (isDOMPageEntry) {
+          const entryFile = program.hub.file;
+          const { filename } = entryFile.opts;
+          const visitedFiles = new Set([
+            resolveRelativePath(entryFile, filename),
+          ]);
+          entryBuilder.visit(
+            entryFile,
+            entryFile,
+            function visitChild(resolved) {
+              if (!visitedFiles.has(resolved)) {
+                visitedFiles.add(resolved);
+                const file = loadFileForImport(entryFile, resolved);
+                if (file) {
+                  entryBuilder.visit(file, entryFile, (id) =>
+                    visitChild(resolveRelativeToEntry(entryFile, file, id)),
+                  );
+                }
+              }
+            },
+          );
+
+          program.node.body = entryBuilder.build(entryFile);
+          program.skip();
+          return;
+        }
+
+        if (isServerEntry) {
+          const entryFile = program.hub.file;
+          const { filename } = entryFile.opts;
+          const relativeImport = resolveRelativePath(entryFile, filename);
+          const templateId = getTemplateId(markoOpts, filename);
+          markoOpts.linkAssets.onAsset("page", filename, templateId);
+          program.node.body = [
+            t.importDeclaration(
+              [t.importSpecifier(t.identifier("flush"), t.identifier("flush"))],
+              t.stringLiteral(markoOpts.linkAssets.runtime),
+            ),
+            t.importDeclaration(
+              [t.importDefaultSpecifier(t.identifier("template"))],
+              t.stringLiteral(relativeImport),
+            ),
+            t.importDeclaration(
+              [
+                t.importSpecifier(
+                  t.identifier("withEntry"),
+                  t.identifier("withEntry"),
+                ),
+              ],
+              t.stringLiteral(getRuntimePath("html")),
+            ),
+            t.exportAllDeclaration(t.stringLiteral(relativeImport)),
+            t.exportDefaultDeclaration(
+              t.callExpression(t.identifier("withEntry"), [
+                t.identifier("template"),
+                t.identifier("flush"),
+                t.stringLiteral(templateId),
+              ]),
+            ),
+          ];
+          program.skip();
+          return;
+        }
       }
+
       if (isOutputHTML()) {
         programHTML.translate.enter();
       } else {

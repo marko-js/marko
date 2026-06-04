@@ -1,0 +1,8 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<await|value|=resolveAfter(input.value, 1)>
+  <let/count=value/>
+  <button.child onClick() { count++ }>
+    child ${count}
+  </button>
+</await>

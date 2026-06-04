@@ -12,7 +12,7 @@ type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 export type PendingRender = {
   [PendingRenderProp.Key]: number;
   [PendingRenderProp.Scope]: Scope;
-  [PendingRenderProp.Signal]: Signal<any>;
+  [PendingRenderProp.Signal]: Signal<any, any>;
   [PendingRenderProp.Value]: unknown;
 };
 
@@ -26,9 +26,9 @@ export let pendingScopes: Scope[] = [];
 export let rendering: undefined | 0 | 1;
 
 const scopeKeyOffset = 1e3;
-export function queueRender<T>(
-  scope: Scope,
-  signal: Signal<T>,
+export function queueRender<T, U extends Scope = Scope>(
+  scope: U,
+  signal: Signal<T, U>,
   signalKey: number,
   value?: T,
   scopeKey = scope[AccessorProp.Id],
@@ -83,6 +83,16 @@ export function run() {
     pendingEffects = [];
   }
   runEffects(effects);
+}
+
+export function queueAsyncRender<T, U extends Scope = Scope>(
+  scope: U,
+  signal: Signal<T, U>,
+  signalKey: number,
+  value?: T,
+) {
+  queueRender(scope, signal, signalKey, value);
+  queueMicrotask(run);
 }
 
 export function prepareEffects(fn: () => void): unknown[] {

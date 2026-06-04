@@ -1,4 +1,4 @@
-// total: 8921 (min) 3856 (brotli)
+// total: 8885 (min) 3836 (brotli)
 // template.marko: 546 (min) 285 (brotli)
 const $for_content__opt = ($scope, opt) => {
 	_attr($scope.a, "value", opt);

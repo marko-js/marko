@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-lazy-unsupported-strategy/template.marko:1:48
+    > 1 | import Child from "./child.marko" with { load: "viewport" }
+        |                                                ^^^^^^^^^^ Unknown trigger type "viewport". Supported triggers are "visible", "idle", and "on-*".
+      2 |
+      3 | <Child value=input.value/>
+      4 |

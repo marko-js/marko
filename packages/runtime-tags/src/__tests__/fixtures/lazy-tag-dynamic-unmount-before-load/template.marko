@@ -1,0 +1,11 @@
+import Child from "./child.marko" with { load: "render" }
+import { resolveAfter } from "../../utils/resolve"
+
+<let/show=true>
+<button onClick() { show = !show }>Toggle</button>
+<try>
+  <await|_|=resolveAfter(undefined, 1)>
+    <${show ? Child : null} value=1/>
+  </await>
+  <@placeholder>Loading...</@placeholder>
+</try>

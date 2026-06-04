@@ -1,4 +1,4 @@
-// total: 7015 (min) 3137 (brotli)
+// total: 7380 (min) 3185 (brotli)
 // template.marko: 570 (min) 224 (brotli)
 const multiply = (multiplier, n) => resolveAfter(multiplier * n);
 const $await_content5__result = ($scope, result) => _text($scope.a, result);

@@ -1,0 +1,5 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/value=0>
+<button onClick() { value++ }>Inc</button>
+<Child value=value/>

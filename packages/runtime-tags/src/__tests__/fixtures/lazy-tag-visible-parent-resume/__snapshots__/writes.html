@@ -1,0 +1,21 @@
+<!-- total: 780 (min) 445 (brotli) -->
+<button class=parent>parent <!>1<!--M_*1 b--></button><!--M_*1 a--><button
+  class=child>child <!>1<!--M_*2 b--></button><!--M_*2 a-->
+<script>
+  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (e =>
+    e && new IntersectionObserver(($, i) => i.disconnect() + l(), {
+      rootMargin: "100px"
+    }).observe(e))(document.querySelector(":is(body)") || l()))(document
+    .currentScript,
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [_ => (_.b = [0, 1, {
+      f: 1
+    }]), "a0 2"]
+  };
+  M._.r = [_ => (_.a = [0, {
+    h: 1
+  }]), "b0 1"];
+  M._.w()
+</script>

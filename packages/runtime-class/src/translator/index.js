@@ -127,6 +127,9 @@ export const analyze = {
         relativePath = resolveTagImport(tag, importSource) || importSource;
         tag.node.extra = tag.node.extra || {};
         tag.node.extra.tagNameImported = relativePath;
+        if (isLoadImport(binding.path.parent)) {
+          tag.node.extra.tagNameLoad = true;
+        }
       }
     }
 
@@ -230,7 +233,44 @@ export const translate = {
         hub: { file },
       } = path;
 
-      if (file.markoOpts.output === "hydrate") {
+      if (file.markoOpts.output === "html" && file.markoOpts.entry === "page") {
+        const { linkAssets } = file.markoOpts;
+        const templateId = file.metadata.marko.id;
+        const relPath = resolveRelativePath(file, file.opts.filename);
+        linkAssets.onAsset("page", file.opts.filename, templateId);
+        path.node.body = [
+          t.importDeclaration(
+            [t.importSpecifier(t.identifier("flush"), t.identifier("flush"))],
+            t.stringLiteral(linkAssets.runtime),
+          ),
+          t.importDeclaration(
+            [t.importDefaultSpecifier(t.identifier("template"))],
+            t.stringLiteral(relPath),
+          ),
+          t.importDeclaration(
+            [
+              t.importSpecifier(
+                t.identifier("withEntry"),
+                t.identifier("withEntry"),
+              ),
+            ],
+            t.stringLiteral("marko/src/runtime/helpers/with-entry.js"),
+          ),
+          t.exportAllDeclaration(t.stringLiteral(relPath)),
+          t.exportDefaultDeclaration(
+            t.callExpression(t.identifier("withEntry"), [
+              t.identifier("template"),
+              t.identifier("flush"),
+              t.stringLiteral(templateId),
+            ]),
+          ),
+        ];
+        path.skip();
+        return;
+      } else if (
+        (file.markoOpts.output === "dom" && file.markoOpts.entry) ||
+        file.markoOpts.output === "hydrate"
+      ) {
         addDependencies(file, true);
         return;
       } else if (
@@ -603,6 +643,18 @@ export function getRuntimeEntryFiles(output, optimize) {
           `${base}runtime/helpers/tags-compat/dom${optimize ? "" : "-debug"}.mjs`,
         ]),
   ];
+}
+
+function isLoadImport(importDecl) {
+  return (
+    Array.isArray(importDecl.attributes) &&
+    importDecl.attributes.some(
+      (a) =>
+        (a.key.type === "Identifier" ? a.key.name : a.key.value) === "load" &&
+        a.value.type === "StringLiteral" &&
+        a.value.value === "render",
+    )
+  );
 }
 
 function isRenderContent({ node }) {

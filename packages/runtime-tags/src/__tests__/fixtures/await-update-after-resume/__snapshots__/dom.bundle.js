@@ -1,4 +1,4 @@
-// total: 8370 (min) 3672 (brotli)
+// total: 8737 (min) 3730 (brotli)
 // template.marko: 416 (min) 224 (brotli)
 _enable_catch();
 const $await_content__value__script = _script("a0", ($scope) => console.log(`effect ran value=${$scope.c}`));

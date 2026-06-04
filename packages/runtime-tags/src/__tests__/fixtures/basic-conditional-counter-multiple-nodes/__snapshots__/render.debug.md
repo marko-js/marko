@@ -49,14 +49,6 @@ REMOVE: .toggle + ::text("1")
 ```js
 container.querySelector("button.inc").click();
 ```
-```html
-<button
-  class="inc"
-/>
-<button
-  class="toggle"
-/>
-```
 
 # Update
 ```js

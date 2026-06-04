@@ -1,4 +1,4 @@
-// total: 1846 (min) 986 (brotli)
+// total: 1813 (min) 965 (brotli)
 // template.marko: 136 (min) 86 (brotli)
 const $if_content2__hoist3_getter = _hoist_resume("a3", 0);
 const $hoist1_getter = _hoist_resume("a2", 4);

@@ -1,0 +1,10 @@
+import Child from "./child.marko" with { load: "visible#target" }
+
+<let/show=false>
+<let/value=0>
+<button id="show" onClick() { show = !show }>Show</button>
+<button id="inc" onClick() { value++ }>Inc</button>
+<if=show>
+  <div id="target"/>
+</if>
+<Child value=value/>

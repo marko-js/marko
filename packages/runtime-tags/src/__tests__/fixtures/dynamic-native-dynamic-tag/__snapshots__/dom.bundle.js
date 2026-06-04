@@ -1,4 +1,4 @@
-// total: 12920 (min) 4999 (brotli)
+// total: 12880 (min) 4960 (brotli)
 // template.marko: 208 (min) 153 (brotli)
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0, _content_resume("a0", "body content", "b"));
 const $tagName__OR__className = /* @__PURE__ */ _or(4, ($scope) => $dynamicTag($scope, $scope.c, () => ({ class: $scope.d })));

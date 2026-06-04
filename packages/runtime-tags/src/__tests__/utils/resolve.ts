@@ -43,9 +43,23 @@ export function after(id: number): Wait {
   );
 }
 
-export type Flush = typeof flush;
+export type FlushType = "stream" | "raf" | "idle" | "visible";
+export type Flush = { flushType: FlushType };
+
 export const flush = Object.assign(() => {}, {
-  flush: true,
+  flushType: "stream" as const,
+});
+
+export const flushRAF = Object.assign(() => {}, {
+  flushType: "raf" as const,
+});
+
+export const flushIdle = Object.assign(() => {}, {
+  flushType: "idle" as const,
+});
+
+export const flushVisible = Object.assign(() => {}, {
+  flushType: "visible" as const,
 });
 
 export type Throws = ReturnType<typeof throws>;
@@ -58,7 +72,7 @@ export function isWait(value: any): value is Wait {
 }
 
 export function isFlush(value: any): value is Flush {
-  return typeof value === "function" && value.flush;
+  return typeof value === "function" && value.flushType !== undefined;
 }
 
 export function isThrows(value: any): value is Throws {

@@ -1,0 +1,53 @@
+<button class=parent>parent <!>
+    1<!--M_*1 #text/1--></button><!--M_*1 #button/0--><button class=child>first:
+  <!>1<!--M_*2 #text/2--></button><!--M_*2 #button/0-->
+<script>
+  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (e =>
+    e && new IntersectionObserver(($, i) => i.disconnect() + l()).observe(e))(
+    document.querySelector(":is(body)") || l()))(document.currentScript,
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-delayed-interleave/child.marko": [
+      _ => (_.b = [0, 1, {
+        count: 1
+      }]),
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-delayed-interleave/child.marko_0_count 2"
+    ]
+  };
+  M._.r = [_ => (_.a = [0, {
+    parent: 1
+  }])];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[--><button class=mid>mid <!>
+    11<!--M_*3 #text/1--></button><!--M_*3 #button/0--><!--M_]1 #text/4 3-->
+<script>
+  M._.r.push(_ => (_.c = [1, {
+      mid: 11
+    }]),
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-delayed-interleave/template.marko_1_mid 3"
+    );
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<button class=child>second: <!>
+    21<!--M_*5 #text/2--></button><!--M_*5 #button/0-->
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-delayed-interleave/child.marko"
+    ].push(_ => (_.d = [0, 2, {
+      count: 21
+    }]),
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-delayed-interleave/child.marko_0_count 5"
+    );
+  M._.r.push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-delayed-interleave/template.marko_0_parent 1"
+    );
+  M._.w()
+</script>

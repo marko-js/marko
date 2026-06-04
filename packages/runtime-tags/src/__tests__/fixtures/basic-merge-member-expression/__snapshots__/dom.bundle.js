@@ -1,4 +1,4 @@
-// total: 2807 (min) 1423 (brotli)
+// total: 2774 (min) 1400 (brotli)
 // template.marko: 152 (min) 105 (brotli)
 const $foo = /* @__PURE__ */ _let(3, ($scope) => {
 	_attr_class($scope.a, ($scope.d, $scope.d.class));
