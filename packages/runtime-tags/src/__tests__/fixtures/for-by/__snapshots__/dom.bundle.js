@@ -1,5 +1,4 @@
-// total: 7232 (min) 3232 (brotli)
-// template.marko: 691 (min) 270 (brotli)
+// template.marko
 function getStringBy() {
 	return "id";
 }

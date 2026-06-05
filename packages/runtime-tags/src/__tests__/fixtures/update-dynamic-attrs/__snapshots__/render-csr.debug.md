@@ -61,15 +61,6 @@ UPDATE: div:nth-of-type(2)[b] "2" => null
 ```
 
 # Update `{"value":null}`
-```html
-<div />
-<div
-  a="0"
-/>
-<div
-  a="0"
-/>
-```
 
 # Update `{"value":{"a":1}}`
 ```html

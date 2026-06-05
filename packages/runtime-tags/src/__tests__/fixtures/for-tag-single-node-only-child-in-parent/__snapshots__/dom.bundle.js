@@ -1,5 +1,4 @@
-// total: 6577 (min) 3046 (brotli)
-// template.marko: 185 (min) 146 (brotli)
+// template.marko
 const $for = /* @__PURE__ */ _for_of(0, "<div></div>", "b");
 const $children__script = _script("a0", ($scope) => {
 	if ($scope.b?.length === 1) $children($scope, [...$scope.b, 2]);

@@ -1,5 +1,4 @@
-// total: 2024 (min) 1051 (brotli)
-// template.marko: 236 (min) 141 (brotli)
+// template.marko
 const $el3_getter = _hoist_resume("a0", 0, "Aa", "Ac");
 const $el2_getter = _hoist(0, "Ab");
 const $el_getter = _hoist(0, "Aa");

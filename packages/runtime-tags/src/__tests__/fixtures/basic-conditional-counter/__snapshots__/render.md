@@ -52,14 +52,6 @@ REMOVE: .toggle + span
 ```js
 container.querySelector("button.inc").click();
 ```
-```html
-<button
-  class="inc"
-/>
-<button
-  class="toggle"
-/>
-```
 
 # Update
 ```js

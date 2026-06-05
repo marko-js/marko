@@ -1,5 +1,4 @@
-// total: 8368 (min) 3664 (brotli)
-// template.marko: 364 (min) 215 (brotli)
+// template.marko
 _enable_catch();
 const $await_content__setup = _script("a0", ($scope) => document.querySelector("#outside").textContent = "Fail");
 const $placeholder_content = _content_resume("a1", "loading...", "b");

@@ -1,5 +1,4 @@
-// total: 3997 (min) 1903 (brotli)
-// template.marko: 302 (min) 170 (brotli)
+// template.marko
 const $count__OR__$valueChange = /* @__PURE__ */ _or(5, ($scope) => {
 	_attr_input_value($scope, "b", $scope.d, $scope.e);
 	_attr_input_value($scope, "c", $scope.d, $scope.e);

@@ -1,5 +1,4 @@
-// total: 2351 (min) 1243 (brotli)
-// tags/child.marko: 128 (min) 102 (brotli)
+// tags/child.marko
 const $input__script = _script("b0", ($scope) => {
 	{
 		$scope.b;
@@ -10,7 +9,7 @@ const $input__script = _script("b0", ($scope) => {
 });
 const $input = /* @__PURE__ */ _const(1, $input__script);
 
-// template.marko: 109 (min) 109 (brotli)
+// template.marko
 const $count = /* @__PURE__ */ _let(1, ($scope) => $input($scope.a, {
 	value: $scope.b,
 	valueChange: $valueChange($scope)

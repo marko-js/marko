@@ -1,9 +1,8 @@
-// total: 5773 (min) 2666 (brotli)
-// tags/child.marko: 0 (min) 1 (brotli)
+// tags/child.marko
 const $if = /* @__PURE__ */ _if(0, "<span></span>", "b");
 const $input_value = ($scope, input_value) => $if($scope, input_value ? 0 : 1);
 
-// template.marko: 150 (min) 140 (brotli)
+// template.marko
 const $count__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.e + 1);
 }));

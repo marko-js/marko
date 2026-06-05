@@ -1,5 +1,4 @@
-// total: 2961 (min) 1486 (brotli)
-// tags/2counters.marko: 196 (min) 123 (brotli)
+// tags/2counters.marko
 const $count__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
 	$count$1($scope, $scope.m + 1);
 }));
@@ -19,7 +18,7 @@ const $count2$1 = /* @__PURE__ */ _let(13, ($scope) => {
 const $input_count2__OR__input_count2Change = /* @__PURE__ */ _or(11, ($scope) => $count2$1($scope, $scope.j, $scope.k));
 const $input_count2 = /* @__PURE__ */ _const(9, $input_count2__OR__input_count2Change);
 
-// template.marko: 209 (min) 119 (brotli)
+// template.marko
 const $count = /* @__PURE__ */ _let(3, ($scope) => {
 	$input_count($scope.a, $scope.d);
 	_text($scope.b, $scope.d);

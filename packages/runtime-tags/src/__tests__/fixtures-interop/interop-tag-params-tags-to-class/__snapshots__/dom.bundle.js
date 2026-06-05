@@ -1,5 +1,4 @@
-// total: 67562 (min) 21060 (brotli)
-// components/class-layout.marko: 549 (min) 291 (brotli)
+// components/class-layout.marko
 var import_vdom = require_vdom();
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
@@ -25,7 +24,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 }, { t: _marko_componentType }, _marko_component);
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
-// template.marko: 363 (min) 230 (brotli)
+// template.marko
 const $classlayout_content__multiplier__OR__baseCount = /* @__PURE__ */ _or(7, ($scope) => _text($scope.e, $scope._.b * $scope.g));
 const $classlayout_content__multiplier__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$multiplier($scope._, $scope._.b + 1);
@@ -48,9 +47,9 @@ const $classlayout_content__$params = ($scope, $params2) => {
 const $classlayout_content = _content_resume("a0", "<h1> </h1><button id=tags><!> * <!> = <!></button>", "D l D%c%c%l", $classlayout_content__setup, $classlayout_content__$params);
 const $multiplier = /* @__PURE__ */ _let(1, /* @__PURE__ */ _closure($classlayout_content__multiplier));
 
-// v:template.marko.hydrate-6.js: 0 (min) 1 (brotli)
+// v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => init$1();
 
-// v:template.marko.hydrate-5.js: 21 (min) 19 (brotli)
+// v:template.marko.hydrate-5.js
 var import_components = require_components();
 var v_template_marko_hydrate_5_default = () => (0, import_components.init)();

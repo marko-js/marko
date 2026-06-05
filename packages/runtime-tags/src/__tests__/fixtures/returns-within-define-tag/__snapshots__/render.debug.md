@@ -37,18 +37,6 @@ UPDATE: .once::text "0" => "1"
 ```js
 container.querySelector("button.once").click();
 ```
-```html
-<button
-  class="once"
->
-  1
-</button>
-<button
-  class="twice"
->
-  0
-</button>
-```
 
 # Update
 ```js
@@ -95,16 +83,4 @@ UPDATE: .twice::text "1" => "2"
 # Update
 ```js
 container.querySelector("button.twice").click();
-```
-```html
-<button
-  class="once"
->
-  1
-</button>
-<button
-  class="twice"
->
-  2
-</button>
 ```

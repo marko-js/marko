@@ -1,5 +1,4 @@
-// total: 2629 (min) 1369 (brotli)
-// template.marko: 141 (min) 109 (brotli)
+// template.marko
 const $x__OR__y = /* @__PURE__ */ _or(5, _script("a0", ($scope) => _on($scope.a, "click", () => $x($scope, $y($scope, $scope.d + $scope.e)))));
 const $x = /* @__PURE__ */ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);

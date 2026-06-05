@@ -1,5 +1,4 @@
-// total: 8005 (min) 3605 (brotli)
-// template.marko: 490 (min) 292 (brotli)
+// template.marko
 const $for_content__checked = /* @__PURE__ */ _let(6, ($scope) => _attr_input_checked($scope, "a", $scope.g, $checkedChange($scope)));
 const $for_content__states__OR__state = /* @__PURE__ */ _or(3, ($scope) => $for_content__checked($scope, $scope.c, $valueChange($scope)));
 const $for_content__states = /* @__PURE__ */ _for_closure(0, $for_content__states__OR__state);

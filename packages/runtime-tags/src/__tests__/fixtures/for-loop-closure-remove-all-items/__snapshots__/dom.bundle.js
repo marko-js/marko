@@ -1,5 +1,4 @@
-// total: 6768 (min) 3145 (brotli)
-// template.marko: 190 (min) 143 (brotli)
+// template.marko
 const $for_content__items = /* @__PURE__ */ _for_closure(0, _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$scope._.b.textContent = $scope._.c.join(", ");
 	$items($scope._, []);

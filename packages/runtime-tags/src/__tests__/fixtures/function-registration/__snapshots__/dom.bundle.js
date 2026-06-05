@@ -1,5 +1,4 @@
-// total: 1797 (min) 959 (brotli)
-// template.marko: 79 (min) 83 (brotli)
+// template.marko
 function updateText(ev) {
 	ev.target.textContent = "after";
 }

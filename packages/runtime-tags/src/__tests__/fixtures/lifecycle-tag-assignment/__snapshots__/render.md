@@ -48,26 +48,6 @@ container.querySelector("#increment")?.click();
   <span>
     2
   </span>
-  , was=0
-</div>
-<button
-  id="increment"
->
-  Increment
-</button>
-```
-## Change
-```
-UPDATE: div > span::text "1" => "2"
-```
-
-# Update
-```html
-<div>
-  x=
-  <span>
-    2
-  </span>
   , was=1
 </div>
 <button
@@ -78,5 +58,6 @@ UPDATE: div > span::text "1" => "2"
 ```
 ## Change
 ```
+UPDATE: div > span::text "1" => "2"
 UPDATE: div::text@8 "0" => "1"
 ```

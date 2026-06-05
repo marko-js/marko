@@ -1,5 +1,4 @@
-// total: 2514 (min) 1313 (brotli)
-// template.marko: 120 (min) 96 (brotli)
+// template.marko
 function identity(fn) {
 	return fn;
 }

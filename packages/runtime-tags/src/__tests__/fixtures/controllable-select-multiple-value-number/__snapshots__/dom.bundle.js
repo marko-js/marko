@@ -1,5 +1,4 @@
-// total: 4245 (min) 1931 (brotli)
-// template.marko: 236 (min) 152 (brotli)
+// template.marko
 const $selected = /* @__PURE__ */ _let(3, ($scope) => {
 	_attr_select_value($scope, "a", $scope.d, $valueChange($scope));
 	_text($scope.b, $scope.d);

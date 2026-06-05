@@ -9,20 +9,10 @@
 ```js
 container.querySelector("button").click();
 ```
-```html
-<button>
-  1
-</button>
-```
 
 # Update
 ```js
 container.querySelector("button").click();
-```
-```html
-<button>
-  1
-</button>
 ```
 
 # Update

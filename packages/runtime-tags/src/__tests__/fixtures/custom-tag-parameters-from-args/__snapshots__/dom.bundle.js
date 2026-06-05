@@ -1,5 +1,4 @@
-// total: 13155 (min) 5081 (brotli)
-// tags/custom-tag.marko: 225 (min) 153 (brotli)
+// tags/custom-tag.marko
 const $x__OR__y = /* @__PURE__ */ _or(9, _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$x($scope, $scope.h + 1);
 	$y($scope, $scope.i + 1);
@@ -17,7 +16,7 @@ const $y = /* @__PURE__ */ _let(8, ($scope) => {
 	$input_content__OR__x__OR__y($scope);
 });
 
-// template.marko: 141 (min) 110 (brotli)
+// template.marko
 const $customtag_content__count = ($scope, count) => _text($scope.a, count);
 const $customtag_content__count2 = ($scope, count2) => _text($scope.b, count2);
 const $customtag_content__$params = ($scope, $params2) => {

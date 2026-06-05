@@ -23,12 +23,6 @@ INSERT: button + ::text("0")
 ```js
 container.querySelector("button").click();
 ```
-```html
-<button>
-  inc
-</button>
-0
-```
 
 # Update
 ```html
@@ -59,12 +53,6 @@ REMOVE: ::text + ::text("LOADING...")
 # Update
 ```js
 container.querySelector("button").click();
-```
-```html
-<button>
-  inc
-</button>
-1
 ```
 
 # Update

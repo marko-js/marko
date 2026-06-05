@@ -1,5 +1,4 @@
-// total: 49538 (min) 14678 (brotli)
-// template.marko: 423 (min) 239 (brotli)
+// template.marko
 var import_components = require_components();
 var import_vdom = require_vdom();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());

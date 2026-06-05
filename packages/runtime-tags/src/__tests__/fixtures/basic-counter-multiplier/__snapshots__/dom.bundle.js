@@ -1,5 +1,4 @@
-// total: 2716 (min) 1403 (brotli)
-// template.marko: 236 (min) 139 (brotli)
+// template.marko
 const $multipliedCount = ($scope, multipliedCount) => _text($scope.d, multipliedCount);
 const $count__OR__multiplier = /* @__PURE__ */ _or(6, ($scope) => $multipliedCount($scope, $scope.e * $scope.f));
 const $count__script = _script("a0", ($scope) => _on($scope.c, "click", function() {

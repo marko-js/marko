@@ -1,5 +1,4 @@
-// total: 8663 (min) 3644 (brotli)
-// template.marko: 180 (min) 145 (brotli)
+// template.marko
 const $if_content__setup = ($scope) => _attr_nonce($scope, "a");
 const $spreadAttrs__script = _script("a1", ($scope) => _attrs_script($scope, "b"));
 const $if = /* @__PURE__ */ _if(2, "<script type=magic>\n    D\n  <\/script>", " b", $if_content__setup);

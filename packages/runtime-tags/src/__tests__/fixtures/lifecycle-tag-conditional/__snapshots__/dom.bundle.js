@@ -1,5 +1,4 @@
-// total: 6268 (min) 2817 (brotli)
-// template.marko: 483 (min) 204 (brotli)
+// template.marko
 const $if_content__x = /* @__PURE__ */ _if_closure(0, 0, _script("a0", ($scope) => _lifecycle($scope, {
 	onMount: function() {
 		document.getElementById("ref").textContent = "Mount " + $scope._.d;

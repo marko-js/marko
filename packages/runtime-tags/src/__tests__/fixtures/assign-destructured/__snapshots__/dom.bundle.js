@@ -1,5 +1,4 @@
-// total: 2653 (min) 1375 (brotli)
-// template.marko: 164 (min) 125 (brotli)
+// template.marko
 const $bar__OR__$fooChange = /* @__PURE__ */ _or(7, _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$scope.g($scope.d + 1);
 })));

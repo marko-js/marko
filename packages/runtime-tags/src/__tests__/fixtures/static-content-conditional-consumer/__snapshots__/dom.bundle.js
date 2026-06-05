@@ -1,5 +1,4 @@
-// total: 13091 (min) 5058 (brotli)
-// tags/consumer.marko: 175 (min) 131 (brotli)
+// tags/consumer.marko
 const $if_content__dynamicTag = /* @__PURE__ */ _dynamic_tag(0);
 const $if_content__input_content = /* @__PURE__ */ _if_closure(1, 0, ($scope) => $if_content__dynamicTag($scope, $scope._.e));
 const $if = /* @__PURE__ */ _if(1, "<!><!><!>", "b%c", $if_content__input_content);
@@ -11,5 +10,5 @@ const $show = /* @__PURE__ */ _let(5, ($scope) => {
 	$show__script($scope);
 });
 
-// template.marko: 54 (min) 58 (brotli)
+// template.marko
 const $consumer_content = _content_resume("a0", "<div>static content</div>", "b");

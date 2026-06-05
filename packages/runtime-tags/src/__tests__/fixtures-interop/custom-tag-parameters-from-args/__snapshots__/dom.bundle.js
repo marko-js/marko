@@ -1,5 +1,4 @@
-// total: 67576 (min) 21037 (brotli)
-// components/custom-tag.marko: 240 (min) 162 (brotli)
+// components/custom-tag.marko
 var import_vdom = require_vdom();
 const $template = "<button class=inc><!>,<!></button><!><!>";
 const $walks = " D%c%l%c";
@@ -27,7 +26,7 @@ const $input_content = /* @__PURE__ */ _const(6, $input_content__OR__x__OR__y);
 const $input = ($scope, input) => $input_content($scope, input.content);
 var custom_tag_default = /* @__PURE__ */ _template("b", $template, $walks, $setup, $input);
 
-// template.marko: 428 (min) 237 (brotli)
+// template.marko
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();
@@ -50,8 +49,8 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 }, _marko_component);
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
-// v:template.marko.hydrate-6.js: 0 (min) 1 (brotli)
+// v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => init();
 
-// v:template.marko.hydrate-5.js: 0 (min) 1 (brotli)
+// v:template.marko.hydrate-5.js
 var v_template_marko_hydrate_5_default = () => {};

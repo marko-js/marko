@@ -1,5 +1,4 @@
-// total: 2871 (min) 1479 (brotli)
-// template.marko: 259 (min) 181 (brotli)
+// template.marko
 const $Let_content__internal = /* @__PURE__ */ _let(0, ($scope) => _return($scope, $scope.a));
 const $a__OR__b__script = _script("a3", ($scope) => _on($scope.c, "click", function() {
 	_var_change($scope.a, $scope.e + 1);

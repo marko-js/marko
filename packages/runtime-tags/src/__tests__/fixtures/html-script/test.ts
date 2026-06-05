@@ -1,7 +1,9 @@
 import type { TestConfig } from "../../main.test";
 
 function click(container: Element) {
-  container.querySelector("script")!.click();
+  container
+    .querySelector<HTMLScriptElement>(`script[type="importmap"]`)!
+    .click();
 }
 
 export const config: TestConfig = {

@@ -12,8 +12,8 @@ type RunDOM = typeof import("@marko/runtime-tags/dom").run;
 
 const markoExt = ".marko";
 const markoRe = /\.marko$/;
-const entryExt = ".entry.mjs";
-const entryRe = /\.marko\.entry\.mjs$/;
+const pageExt = ".page.mjs";
+const entryRe = /\.marko\.page\.mjs$/;
 const virtualFilePrefix = "v:";
 const virtualRe = /(?:^|\/)v:/;
 
@@ -35,7 +35,7 @@ export async function createClientRunner(
     cwd,
     input: {
       main: virtual.toVirtualFile(
-        template + entryExt,
+        template + pageExt,
         `export { default as template } from "./${path.basename(template)}";\n${
           interop
             ? `import { run as _run } from "@marko/runtime-tags/dom";
@@ -81,8 +81,8 @@ export async function createServerRunner<T extends Record<string, string>>(
 ): Promise<{
   assets: string;
   runServer(): Promise<Record<keyof T, Template>>;
-  domBundle(): Promise<string>;
-  htmlBundle(): Promise<string>;
+  domBundle(): Promise<SnapshotResult>;
+  htmlBundle(): Promise<SnapshotResult>;
 }> {
   const optimize = !!config.optimize;
   const out = path.join(cwd, "dist", "ssr", optimize ? "optimize" : "debug");
@@ -149,7 +149,7 @@ export async function createServerRunner<T extends Record<string, string>>(
         path.join(cwd, "main.mjs"),
         entryNames
           .map((name) => {
-            const id = entries[name] + entryExt;
+            const id = entries[name] + pageExt;
             domEntry.add(name, id);
             return `export { default as ${name} } from "${id}";`;
           })
@@ -206,32 +206,46 @@ export async function createServerRunner<T extends Record<string, string>>(
   };
 }
 
+interface SnapshotResult {
+  snapshot: string;
+  sizes: Record<string, ChunkSizes | Sizes> | undefined;
+}
+export interface ChunkSizes {
+  total: Sizes;
+  files: Record<string, number>;
+}
 async function buildSnapshot(
   result: RolldownOutput,
   cwd: string,
   includeSizes?: boolean,
-): Promise<string> {
+): Promise<SnapshotResult> {
   const parts: string[] = [];
+  const sizes: Record<string, ChunkSizes | Sizes> | undefined = includeSizes
+    ? {}
+    : undefined;
   for (const chunk of result.output) {
     if (!("code" in chunk) || !chunk.code) continue;
     const { modules } = chunk;
+    const files: Record<string, number> = {};
     let fixtureCode = "";
     for (const id in modules) {
       if (!id.startsWith(cwd) || entryRe.test(id)) continue;
       const modCode = stripModuleCode(modules[id].code);
       if (!modCode) continue;
+      const relId = path.relative(cwd, id);
       if (fixtureCode) fixtureCode += "\n\n";
-      fixtureCode += `// ${path.relative(cwd, id)}${includeSizes ? `: ${await getMinifiedSizes(modCode)}` : ""}\n${modCode}`;
+      fixtureCode += `// ${relId}\n${modCode}`;
+      if (sizes) files[relId] = modules[id].renderedLength;
     }
     if (!fixtureCode) continue;
-    parts.push(
-      includeSizes
-        ? `// total: ${await getMinifiedSizes(chunk.code)}\n${fixtureCode}`
-        : fixtureCode,
-    );
+    parts.push(fixtureCode);
+    if (sizes) {
+      const total = await getMinifiedSizes(chunk.code);
+      sizes[chunk.fileName] =
+        Object.keys(files).length === 1 ? total : { total, files };
+    }
   }
-  if (!parts.length) return "";
-  return `${parts.join("\n\n")}\n`;
+  return { snapshot: parts.length ? `${parts.join("\n\n")}\n` : "", sizes };
 }
 
 function getMinifiedSizes(code: string) {
@@ -244,8 +258,15 @@ function getMinifiedSizes(code: string) {
   return getSizes(minified);
 }
 
-export async function getSizes(str: string) {
-  return `${Buffer.byteLength(str)} (min) ${Buffer.byteLength(await brotli(str))} (brotli)`;
+export interface Sizes {
+  min: number;
+  brotli: number;
+}
+export async function getSizes(str: string): Promise<Sizes> {
+  return {
+    min: Buffer.byteLength(str),
+    brotli: Buffer.byteLength(await brotli(str)),
+  };
 }
 
 function virtualPlugin(cwd: string): {

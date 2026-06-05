@@ -1,5 +1,4 @@
-// total: 5979 (min) 2753 (brotli)
-// tags/child.marko: 90 (min) 72 (brotli)
+// tags/child.marko
 const $template = "<div>child</div>";
 const $setup = () => {};
 const $input__script = _script("b0", ($scope) => {
@@ -13,7 +12,7 @@ const $input = /* @__PURE__ */ _const(1, ($scope) => {
 	$input__script($scope);
 });
 
-// template.marko: 235 (min) 162 (brotli)
+// template.marko
 const $if_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup($scope.a);
 	$input($scope.a, { write: $write($scope) });

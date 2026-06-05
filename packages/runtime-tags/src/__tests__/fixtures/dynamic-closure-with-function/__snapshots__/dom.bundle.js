@@ -1,5 +1,4 @@
-// total: 1405 (min) 781 (brotli)
-// template.marko: 63 (min) 67 (brotli)
+// template.marko
 function $bar($scope) {
 	return function(test) {
 		return $scope.d + test;

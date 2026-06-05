@@ -1,5 +1,4 @@
-// total: 2623 (min) 1370 (brotli)
-// template.marko: 165 (min) 129 (brotli)
+// template.marko
 const $user = /* @__PURE__ */ _let(3, ($scope) => $user_id($scope, $scope.d?.id));
 const $index__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$index($scope, $scope.c + 1);

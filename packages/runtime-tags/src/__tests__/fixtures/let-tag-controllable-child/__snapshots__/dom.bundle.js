@@ -1,5 +1,4 @@
-// total: 3102 (min) 1532 (brotli)
-// tags/child.marko: 291 (min) 140 (brotli)
+// tags/child.marko
 const $state__script = _script("b2", ($scope) => _on($scope.a, "click", function() {
 	$state($scope, $scope.o + 1);
 }));
@@ -38,7 +37,7 @@ const $input = ($scope, input) => {
 	$otherState($scope, input["value"], input["valueChange"]);
 };
 
-// template.marko: 126 (min) 100 (brotli)
+// template.marko
 const $source = /* @__PURE__ */ _let(2, ($scope) => {
 	$input($scope.a, {
 		value: $scope.c,

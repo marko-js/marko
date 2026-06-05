@@ -92,15 +92,14 @@ export default function createMutationTracker(browser: {
       throw new Error(`log called after cleanup`);
     }
 
-    logs.push(
-      getStatusString(
-        window.document.body,
-        pendingMutations || [],
-        consoleCapture.records(),
-        update,
-        hasRendered,
-      ),
+    const entry = getStatusString(
+      window.document.body,
+      pendingMutations || [],
+      consoleCapture.records(),
+      update,
+      hasRendered,
     );
+    if (entry !== null) logs.push(entry);
     pendingMutations = undefined;
   }
 
@@ -234,15 +233,8 @@ function getStatusString(
   consoleRecords: ConsoleRecord[],
   update: unknown,
   hasRendered: boolean,
-) {
-  const formattedHTML = body
-    ? Array.from(cloneAndSanitize(body).childNodes, (node) =>
-        format(node, { plugins: [DOMElement, DOMCollection] }).trim(),
-      )
-        .filter(Boolean)
-        .join("\n")
-        .trim()
-    : "";
+): string | null {
+  const updateStr = getUpdateString(update);
   const formattedMutations = mutationRecords
     .map(formatMutationRecord)
     .filter(Boolean)
@@ -251,8 +243,24 @@ function getStatusString(
     .map(formatConsoleRecord)
     .filter(Boolean)
     .join("\n");
+  const formattedHTML =
+    !body || (hasRendered && !formattedMutations)
+      ? ""
+      : Array.from(cloneAndSanitize(body).childNodes, (node) =>
+          format(node, { plugins: [DOMElement, DOMCollection] }).trim(),
+        )
+          .filter(Boolean)
+          .join("\n")
+          .trim();
 
-  let result = `# ${hasRendered ? "Update" : "Render"}${getUpdateString(update)}`;
+  if (
+    hasRendered &&
+    !(updateStr || formattedMutations || formattedConsole || formattedHTML)
+  ) {
+    return null;
+  }
+
+  let result = `# ${hasRendered ? "Update" : "Render"}${updateStr}`;
   if (formattedHTML) result += `\n\`\`\`html\n${formattedHTML}\n\`\`\``;
   if (formattedMutations)
     result += `\n## Change\n\`\`\`\n${formattedMutations}\n\`\`\``;

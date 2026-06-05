@@ -1,5 +1,4 @@
-// total: 65515 (min) 20120 (brotli)
-// components/tags-counter.marko: 115 (min) 99 (brotli)
+// components/tags-counter.marko
 var import_vdom = require_vdom();
 const $template = "<button id=tags> </button>";
 const $walks = " D l";
@@ -17,7 +16,7 @@ const $input_count = ($scope, input_count) => _attr($scope.a, "data-parent", inp
 const $input = ($scope, input) => $input_count($scope, input.count);
 var tags_counter_default = /* @__PURE__ */ _template("b", $template, $walks, $setup, $input);
 
-// template.marko: 517 (min) 281 (brotli)
+// template.marko
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();

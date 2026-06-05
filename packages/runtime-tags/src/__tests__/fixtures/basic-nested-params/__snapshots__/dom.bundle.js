@@ -1,5 +1,4 @@
-// total: 13584 (min) 5273 (brotli)
-// tags/child.marko: 0 (min) 1 (brotli)
+// tags/child.marko
 const $template = "<div><!></div>";
 const $setup = () => {};
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0, 0, 0, 1);
@@ -7,7 +6,7 @@ const $input_content__OR__input_value = /* @__PURE__ */ _or(5, ($scope) => $dyna
 const $content = /* @__PURE__ */ _const(3, $input_content__OR__input_value);
 const $value = /* @__PURE__ */ _const(4, $input_content__OR__input_value);
 
-// template.marko: 417 (min) 234 (brotli)
+// template.marko
 const $child_content2__outer = /* @__PURE__ */ _closure_get(2, ($scope) => _text($scope.a, $scope._.c));
 const $child_content2__setup = $child_content2__outer;
 const $child_content2__inner = ($scope, inner) => _text($scope.b, inner);

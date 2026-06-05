@@ -1,5 +1,4 @@
-// total: 65857 (min) 20311 (brotli)
-// components/tags-layout.marko: 183 (min) 146 (brotli)
+// components/tags-layout.marko
 var import_vdom = require_vdom();
 const $template = "<button id=tags> </button><div><!></div>";
 const $walks = " D lD%l";
@@ -20,7 +19,7 @@ const $input_content = /* @__PURE__ */ _const(5, $input_content__OR__count);
 const $input = ($scope, input) => $input_content($scope, input.content);
 var tags_layout_default = /* @__PURE__ */ _template("b", $template, $walks, $setup, $input);
 
-// template.marko: 622 (min) 311 (brotli)
+// template.marko
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();

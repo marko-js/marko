@@ -75,23 +75,6 @@ INSERT: #ref::text("Destroy")
 ```js
 container.querySelector("#increment")?.click();
 ```
-```html
-<div
-  id="ref"
->
-  Destroy
-</div>
-<button
-  id="increment"
->
-  Increment
-</button>
-<button
-  id="toggle"
->
-  Toggle
-</button>
-```
 
 # Update
 ```js

@@ -1,4 +1,4 @@
-// size: 2360 (min) 1225 (brotli)
+// size: 2327 (min) 1206 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -6,8 +6,7 @@ let decodeAccessor = (num) =>
   isScheduled,
   channel,
   registeredValues = {},
-  curRuntimeId,
-  readyLookup = {},
+  curRenders,
   pendingRenders = [],
   pendingRendersLookup = {},
   asyncRendersLookup,
@@ -41,7 +40,7 @@ function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
 function flushAndWaitFrame() {
-  (run(), requestAnimationFrame(triggerMacroTask));
+  (requestAnimationFrame(triggerMacroTask), run());
 }
 function triggerMacroTask() {
   (channel ||
@@ -77,15 +76,13 @@ function _script(id, fn) {
   );
 }
 function init(runtimeId = "M") {
-  if (curRuntimeId) return;
-  curRuntimeId = runtimeId;
-  let resumeRender,
-    renders = self[runtimeId],
+  if (curRenders) return;
+  let renders = self[runtimeId],
     defineRuntime = (desc) => Object.defineProperty(self, runtimeId, desc),
     initRuntime = (renders) => {
       defineRuntime({
-        value: (resumeRender = (renderId) => {
-          let render = (resumeRender[renderId] =
+        value: (curRenders = (renderId) => {
+          let render = (curRenders[renderId] =
               renders[renderId] || renders(renderId)),
             walk = render.w,
             scopeLookup = (render.s = {}),
@@ -98,31 +95,9 @@ function init(runtimeId = "M") {
                   visitText.indexOf(" ", lastTokenIndex) + 1 ||
                   visitText.length + 1) - 1,
               )),
-            $global,
-            lastEffect,
-            visits,
-            resumes,
-            visit,
-            visitText,
-            visitType,
-            visitScope,
-            lastToken,
-            lastTokenIndex,
-            lastScopeId = 0;
-          return (
-            (render.m = (effects = []) => {
-              if (readyLookup) {
-                for (let readyId in render.b)
-                  if (readyLookup[readyId] !== 1)
-                    return (
-                      (readyLookup[readyId] = ((prev) => () => {
-                        (runResumeEffects(render), prev?.());
-                      })(readyLookup[readyId])),
-                      effects
-                    );
-                render.b = 0;
-              }
-              for (let serialized of (resumes = render.r || []))
+            processResumes = (resumes = [], effects) => {
+              let lastScopeId = resumes.c || 0;
+              for (let serialized of resumes)
                 if (typeof serialized == "string")
                   for (
                     lastTokenIndex = 0, visitText = serialized;
@@ -136,11 +111,31 @@ function init(runtimeId = "M") {
                     $global
                       ? typeof scope == "number"
                         ? (lastScopeId += scope)
-                        : ((scopeLookup[(scope.L = ++lastScopeId)] = scope),
+                        : ((scope.L = ++lastScopeId),
+                          scopeLookup[lastScopeId]
+                            ? (scope = Object.assign(
+                                scopeLookup[lastScopeId],
+                                scope,
+                              ))
+                            : (scopeLookup[lastScopeId] = scope),
                           (scope.$ = $global))
                       : (($global = scope || {}),
                         ($global.runtimeId = runtimeId),
                         ($global.renderId = renderId));
+              ((resumes.c = lastScopeId), (resumes.length = 0));
+            },
+            $global,
+            lastEffect,
+            visits,
+            visit,
+            visitText,
+            visitType,
+            visitScope,
+            lastToken,
+            lastTokenIndex;
+          return (
+            (render.m = (effects = []) => {
+              processResumes(render.r, effects);
               for (visit of (visits = render.v))
                 if (
                   ((lastTokenIndex = render.i.length),
@@ -155,7 +150,7 @@ function init(runtimeId = "M") {
                       ? prev
                       : visit.parentNode.insertBefore(new Text(), visit);
                 }
-              return ((visits.length = resumes.length = 0), effects);
+              return ((visits.length = 0), effects);
             }),
             (render.w = () => {
               (walk(), runResumeEffects(render));
@@ -167,7 +162,7 @@ function init(runtimeId = "M") {
     };
   if (renders) {
     initRuntime(renders);
-    for (let renderId in renders) runResumeEffects(resumeRender(renderId));
+    for (let renderId in renders) runResumeEffects(curRenders(renderId));
   } else
     defineRuntime({
       configurable: !0,

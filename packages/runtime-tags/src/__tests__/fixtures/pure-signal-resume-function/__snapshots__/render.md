@@ -9,11 +9,6 @@
 ```js
 container.querySelector("button").click();
 ```
-```html
-<button>
-  Click
-</button>
-```
 ## Console
 ```
 LOG "foo"
@@ -23,11 +18,6 @@ LOG "foo"
 ```js
 container.querySelector("button").click();
 ```
-```html
-<button>
-  Click
-</button>
-```
 ## Console
 ```
 LOG "foo"
@@ -36,11 +26,6 @@ LOG "foo"
 # Update
 ```js
 container.querySelector("button").click();
-```
-```html
-<button>
-  Click
-</button>
 ```
 ## Console
 ```

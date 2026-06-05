@@ -1,10 +1,9 @@
-// total: 7237 (min) 3348 (brotli)
-// tags/child.marko: 0 (min) 1 (brotli)
+// tags/child.marko
 const $template = "<div> </div>";
 const $setup = () => {};
 const $name = ($scope, name) => _text($scope.a, name);
 
-// template.marko: 378 (min) 246 (brotli)
+// template.marko
 const $for_content2__outer__OR__inner = /* @__PURE__ */ _or(3, ($scope) => $name($scope.a, `${$scope._.c}.${$scope.c}`));
 const $for_content2__outer = /* @__PURE__ */ _for_closure(0, $for_content2__outer__OR__inner);
 const $for_content2__setup = ($scope) => {

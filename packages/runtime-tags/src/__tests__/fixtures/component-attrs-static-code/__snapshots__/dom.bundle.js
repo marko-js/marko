@@ -1,5 +1,4 @@
-// total: 2718 (min) 1401 (brotli)
-// tags/counter.marko: 129 (min) 113 (brotli)
+// tags/counter.marko
 const $input__OR__count = /* @__PURE__ */ _or(5, ($scope) => _text($scope.b, $scope.d.format($scope.e)));
 const $count__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.e + 1);
@@ -9,7 +8,7 @@ const $count = /* @__PURE__ */ _let(4, ($scope) => {
 	$count__script($scope);
 });
 
-// template.marko: 106 (min) 65 (brotli)
+// template.marko
 function $formatNumber(n) {
 	return "$" + n.toFixed(2);
 }

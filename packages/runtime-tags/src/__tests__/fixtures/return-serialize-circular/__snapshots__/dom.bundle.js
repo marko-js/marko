@@ -1,5 +1,4 @@
-// total: 2558 (min) 1326 (brotli)
-// tags/setter.marko: 56 (min) 60 (brotli)
+// tags/setter.marko
 const $input_value__OR__setter = /* @__PURE__ */ _or(5, ($scope) => _return($scope, ($scope.d, $scope.e)));
 const $input_value = /* @__PURE__ */ _const(3, $input_value__OR__setter);
 function $setter($scope) {
@@ -9,7 +8,7 @@ function $setter($scope) {
 }
 _resume("b0", $setter);
 
-// template.marko: 158 (min) 123 (brotli)
+// template.marko
 const $count = /* @__PURE__ */ _let(3, ($scope) => {
 	$input_value($scope.a, $scope.d);
 	_text($scope.c, $scope.d);
