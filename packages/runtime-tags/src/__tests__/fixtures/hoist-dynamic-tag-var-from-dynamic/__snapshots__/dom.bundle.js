@@ -1,5 +1,4 @@
-// total: 14117 (min) 5414 (brotli)
-// tags/child.marko: 59 (min) 63 (brotli)
+// tags/child.marko
 const $template$1 = "<div></div>";
 const $walks$1 = " b";
 function $setup$1($scope) {
@@ -11,7 +10,7 @@ function $_return($scope) {
 _resume("b0", $_return);
 var child_default = /* @__PURE__ */ _template("b", $template$1, " b", $setup$1);
 
-// tags/thing.marko: 0 (min) 1 (brotli)
+// tags/thing.marko
 const $template = "<!><!><!><!>";
 const $walks = "b%b%c";
 const $setup = () => {};
@@ -22,7 +21,7 @@ const $input_content = ($scope, input_content) => {
 	$dynamicTag2($scope, input_content);
 };
 
-// template.marko: 605 (min) 272 (brotli)
+// template.marko
 const $setHtml3_getter = _hoist(2, "B4");
 const $inputshowsectionnull_content__dynamicTag = /* @__PURE__ */ _dynamic_tag(0, 0, () => $inputshowsectionnull_content__setHtml);
 const $inputshowsectionnull_content__setHtml = _var_resume("a6", /* @__PURE__ */ _const(2));

@@ -1,5 +1,4 @@
-// total: 7950 (min) 3469 (brotli)
-// template.marko: 606 (min) 261 (brotli)
+// template.marko
 const $if_content__checkedValue__OR__$checkedValueChange = /* @__PURE__ */ _or(1, ($scope) => _attr_input_checkedValue($scope, "a", $scope._.g, $scope._.h, "b"));
 const $if_content__checkedValue = /* @__PURE__ */ _if_closure(1, 0, $if_content__checkedValue__OR__$checkedValueChange);
 const $if_content__setup__script = _script("a1", ($scope) => _attr_input_checkedValue_script($scope, "a"));

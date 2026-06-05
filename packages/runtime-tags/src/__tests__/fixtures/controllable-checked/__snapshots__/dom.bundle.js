@@ -1,5 +1,4 @@
-// total: 3227 (min) 1553 (brotli)
-// template.marko: 180 (min) 117 (brotli)
+// template.marko
 const $checked = /* @__PURE__ */ _let(2, ($scope) => {
 	_attr_input_checked($scope, "a", $scope.c, $checkedChange($scope));
 	_text($scope.b, String($scope.c));

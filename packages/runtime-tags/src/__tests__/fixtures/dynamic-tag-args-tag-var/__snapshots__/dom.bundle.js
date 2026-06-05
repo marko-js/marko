@@ -1,5 +1,4 @@
-// total: 13756 (min) 5312 (brotli)
-// tags/custom-tag.marko: 0 (min) 1 (brotli)
+// tags/custom-tag.marko
 const $template = "<div>Child: <!></div>";
 const $walks = "Db%l";
 const $setup = () => {};
@@ -9,7 +8,7 @@ const $input = /* @__PURE__ */ _const(2, ($scope) => {
 });
 var custom_tag_default = /* @__PURE__ */ _template("b", $template, $walks, $setup, $input);
 
-// template.marko: 211 (min) 159 (brotli)
+// template.marko
 const tags = [custom_tag_default];
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(2, 0, () => $y, 1);
 const $x__script = _script("a1", ($scope) => _on($scope.a, "click", function() {

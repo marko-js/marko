@@ -1,8 +1,7 @@
-// total: 2145 (min) 1108 (brotli)
-// tags/child.marko: 30 (min) 34 (brotli)
+// tags/child.marko
 const $input__script = _script("b0", ($scope) => $scope.b.action());
 
-// tags/source.marko: 106 (min) 82 (brotli)
+// tags/source.marko
 function $_return($scope) {
 	return () => ({
 		setHtml(value) {
@@ -15,7 +14,7 @@ function $_return($scope) {
 }
 _resume("c0", $_return);
 
-// template.marko: 161 (min) 116 (brotli)
+// template.marko
 const $api_getter = _hoist(3);
 const $setup__script = _script("a1", ($scope) => $api_getter($scope)().setHtml("works"));
 const $api = _var_resume("a2", /* @__PURE__ */ _const(3));

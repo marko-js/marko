@@ -1,5 +1,4 @@
-// total: 13592 (min) 5226 (brotli)
-// template.marko: 623 (min) 305 (brotli)
+// template.marko
 const $Child_content2 = _content_resume("a1", "Hi", "b");
 const $Child_content = _content_resume("a0", "Hi", "b");
 const $Parent_content__input_value = /* @__PURE__ */ _closure_get(10, ($scope) => _html($scope, $scope._.k, "a"));

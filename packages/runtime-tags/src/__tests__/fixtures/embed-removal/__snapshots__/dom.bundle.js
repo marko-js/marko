@@ -1,5 +1,4 @@
-// total: 2475 (min) 1251 (brotli)
-// template.marko: 128 (min) 95 (brotli)
+// template.marko
 const $setup__script = _script("a0", ($scope) => {
 	$signal($scope, 0).onabort = () => {
 		console.log("cleaned up");

@@ -1,5 +1,4 @@
-// total: 2786 (min) 1431 (brotli)
-// template.marko: 356 (min) 205 (brotli)
+// template.marko
 const $obj = /* @__PURE__ */ _let(6, ($scope) => {
 	_text($scope.a, JSON.stringify($scope.g));
 	(({ a, ...partialObj }) => $partialObj($scope, partialObj))($scope.g);

@@ -1,5 +1,4 @@
-// total: 5901 (min) 2710 (brotli)
-// template.marko: 252 (min) 159 (brotli)
+// template.marko
 const $if_content__count = /* @__PURE__ */ _if_closure(2, 0, ($scope) => _text($scope.a, $scope._.e));
 const $if = /* @__PURE__ */ _if(2, "<span> </span>", "D l", $if_content__count);
 const $show__script = _script("a0", ($scope) => _on($scope.b, "click", function() {

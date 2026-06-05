@@ -40,15 +40,6 @@ INSERT: div::text("0")
 ```js
 container.querySelector("button").click();
 ```
-```html
-<button>
-  inc
-</button>
-<div>
-  0
-</div>
-Async: 0
-```
 
 # Update
 ```html
@@ -88,15 +79,6 @@ INSERT: div::text("1")
 # Update
 ```js
 container.querySelector("button").click();
-```
-```html
-<button>
-  inc
-</button>
-<div>
-  1
-</div>
-Async: 1
 ```
 
 # Update

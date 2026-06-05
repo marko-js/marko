@@ -1,5 +1,4 @@
-// total: 66503 (min) 20514 (brotli)
-// components/my-button/component-browser.js: 91 (min) 60 (brotli)
+// components/my-button/component-browser.js
 var import_registry = require_registry();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
@@ -11,7 +10,7 @@ var component_browser_default = class {
 	}
 };
 
-// components/my-button/index.marko: 455 (min) 233 (brotli)
+// components/my-button/index.marko
 var import_defineComponent = /* @__PURE__ */ __toESM(require_defineComponent());
 const _marko_componentType = "b", _marko_template = (0, import_vdom.t)(_marko_componentType);
 (0, import_registry.r)(_marko_componentType, () => component_browser_default);
@@ -26,7 +25,7 @@ component_browser_default.renderer = _marko_template._ = (0, import_renderer.def
 }, _marko_component);
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
-// template.marko: 137 (min) 86 (brotli)
+// template.marko
 _resume_dynamic_tag();
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0, _content_resume("a1", "Say Hi", "b"));
 function $onClick() {
@@ -34,10 +33,10 @@ function $onClick() {
 }
 _resume("a0", $onClick);
 
-// v:template.marko.hydrate-6.js: 0 (min) 1 (brotli)
+// v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => init$1();
 
-// v:template.marko.hydrate-5.js: 65 (min) 50 (brotli)
+// v:template.marko.hydrate-5.js
 var import_components = require_components();
 (0, import_components.register)("b", component_browser_default);
 var v_template_marko_hydrate_5_default = () => (0, import_components.init)();

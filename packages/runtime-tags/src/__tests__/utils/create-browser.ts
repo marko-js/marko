@@ -2,7 +2,10 @@ import path from "node:path";
 
 import { JSDOM, VirtualConsole } from "jsdom";
 
-import { importWithContext } from "./import-with-context";
+import {
+  importWithContext,
+  waitForPendingModules,
+} from "./import-with-context";
 
 export default function createBrowser(dir?: string) {
   const virtualConsole = new VirtualConsole();
@@ -13,8 +16,8 @@ export default function createBrowser(dir?: string) {
   });
   const { window } = dom;
   const ctx = dom.getInternalVMContext();
+  const loadedScripts = new Set<string>();
   const qmt = window.queueMicrotask;
-  let scripts: string[] = ["template.marko.entry.mjs"];
   window.__coverage__ = (globalThis as any).__coverage__;
   window.__RESOLVE_STATE__ = globalThis.__RESOLVE_STATE__;
   window.setImmediate = setImmediate;
@@ -62,11 +65,22 @@ export default function createBrowser(dir?: string) {
         // from executing before we snapshot the dom.
         window.queueMicrotask = (fn: () => void) => deferred.push(fn);
         const deferred: (() => void)[] = [];
-        const pending = scripts.map((src) =>
-          importWithContext(path.join(dir, src), { browser: true }, ctx),
-        );
-        scripts = [];
-        await Promise.all(pending);
+        if (!loadedScripts.size) {
+          loadedScripts.add("template.marko.page.mjs");
+          importWithContext(
+            path.join(dir, "template.marko.page.mjs"),
+            { browser: true },
+            ctx,
+          );
+        }
+
+        for (const { src, type } of window.document.scripts) {
+          if (src && type === "module" && !loadedScripts.has(src)) {
+            loadedScripts.add(src);
+            importWithContext(path.join(dir, src), { browser: true }, ctx);
+          }
+        }
+        await waitForPendingModules(ctx);
         window.queueMicrotask = qmt;
         beforeEffects?.();
         deferred.forEach(qmt);
@@ -94,20 +108,14 @@ export default function createBrowser(dir?: string) {
               return true;
             }
 
-            const isScript = (node as Element).tagName === "SCRIPT";
-
-            if (dir && isScript && (node as HTMLScriptElement).src) {
-              scripts.push((node as HTMLScriptElement).src);
-              continue;
-            }
-
-            const clone = document.importNode(node, isScript);
+            const isInline = isInlineScript(node);
+            const clone = document.importNode(node, isInline);
             targetNodes.set(node, clone);
             (targetNodes.get(node.parentNode!) as ParentNode).appendChild(
               clone,
             );
 
-            if (isScript) {
+            if (isInline) {
               walker.nextNode();
             }
           }
@@ -118,23 +126,20 @@ export default function createBrowser(dir?: string) {
 
       return () => {
         if (chunks.length) {
-          let [chunk] = chunks;
-          if (dir) {
-            chunk = chunk.replace(
-              /<script async src="([^"]+)"><\/script>/gi,
-              (_, script) => {
-                scripts.push(script);
-                return "";
-              },
-            );
-          }
-          document.write(ensureBody(chunk));
+          document.write(ensureBody(chunks[0]));
         }
         document.close();
         return false;
       };
     },
   };
+}
+
+function isInlineScript(node: Node): node is HTMLScriptElement {
+  return (
+    (node as HTMLScriptElement).tagName === "SCRIPT" &&
+    (node as HTMLScriptElement).type !== "module"
+  );
 }
 
 function ensureBody(html: string) {

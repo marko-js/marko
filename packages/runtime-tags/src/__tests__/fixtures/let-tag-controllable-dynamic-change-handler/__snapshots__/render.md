@@ -60,18 +60,6 @@ UPDATE: #inc::text@2 "3" => "5"
 ```js
 container.querySelector("#toggle").click();
 ```
-```html
-<button
-  id="inc"
->
-  5|5
-</button>
-<button
-  id="toggle"
->
-  toggle
-</button>
-```
 
 # Update
 ```js

@@ -1,5 +1,4 @@
-// total: 5970 (min) 2749 (brotli)
-// tags/test.marko: 0 (min) 1 (brotli)
+// tags/test.marko
 const $Tag_content__walks = "b%c", $Tag_content__template = "<!><!><!>";
 const $template = /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($Tag_content__template);
 const $walks = /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)($Tag_content__walks);
@@ -12,7 +11,7 @@ function $setup($scope) {
 	$count($scope, 123);
 }
 
-// template.marko: 133 (min) 109 (brotli)
+// template.marko
 const $if_content__setup = ($scope) => {
 	$setup($scope.a);
 };

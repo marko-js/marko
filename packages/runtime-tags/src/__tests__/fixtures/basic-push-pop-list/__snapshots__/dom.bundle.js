@@ -1,5 +1,4 @@
-// total: 6919 (min) 3196 (brotli)
-// template.marko: 280 (min) 185 (brotli)
+// template.marko
 const $for_content__item = ($scope, item) => _text($scope.a, item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $id__OR__items = /* @__PURE__ */ _or(5, _script("a1", ($scope) => _on($scope.b, "click", function() {

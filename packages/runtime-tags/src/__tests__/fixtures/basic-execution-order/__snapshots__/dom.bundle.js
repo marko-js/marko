@@ -1,5 +1,4 @@
-// total: 5925 (min) 2734 (brotli)
-// template.marko: 199 (min) 148 (brotli)
+// template.marko
 const $if_content__message_text = /* @__PURE__ */ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.d));
 const $if_content__setup = $if_content__message_text;
 const $message = /* @__PURE__ */ _let(2, ($scope) => $message_text($scope, $scope.c?.text));

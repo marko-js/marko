@@ -1,5 +1,4 @@
-// total: 7175 (min) 3249 (brotli)
-// template.marko: 228 (min) 163 (brotli)
+// template.marko
 _enable_catch();
 const $placeholder_content = _content_resume("a1", "loading...", "b");
 const $await_content__value = /* @__PURE__ */ _closure_get(3, ($scope) => _text($scope.a, $scope._._.d), ($scope) => $scope._._, "a0");

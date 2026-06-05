@@ -1,5 +1,4 @@
-// total: 7232 (min) 3334 (brotli)
-// tags/store.marko: 182 (min) 112 (brotli)
+// tags/store.marko
 const $list$1 = /* @__PURE__ */ _let(3, ($scope) => _return($scope, {
 	list: $scope.d,
 	listChange: $_return($scope),
@@ -18,7 +17,7 @@ function $_return($scope) {
 _resume("b1", $_return2);
 _resume("b0", $_return);
 
-// template.marko: 293 (min) 199 (brotli)
+// template.marko
 const $for_content__item = ($scope, item) => _text($scope.a, item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $store = _var_resume("a0", ($scope, store) => {

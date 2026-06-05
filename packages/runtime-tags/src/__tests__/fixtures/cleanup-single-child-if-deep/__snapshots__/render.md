@@ -163,62 +163,10 @@ INSERT: pre::text("\nOuter mounted\nMiddle mounted\nInner mounted\nInner destroy
 ```js
 container.querySelector("button#inner").click();
 ```
-```html
-<button
-  id="outer"
->
-  Toggle Outer
-</button>
-<button
-  id="middle"
->
-  Toggle Middle
-</button>
-<button
-  id="inner"
->
-  Toggle Inner
-</button>
-<pre>
-  
-Outer mounted
-Middle mounted
-Inner mounted
-Inner destroyed
-Middle destroyed
-Outer destroyed
-</pre>
-```
 
 # Update
 ```js
 container.querySelector("button#middle").click();
-```
-```html
-<button
-  id="outer"
->
-  Toggle Outer
-</button>
-<button
-  id="middle"
->
-  Toggle Middle
-</button>
-<button
-  id="inner"
->
-  Toggle Inner
-</button>
-<pre>
-  
-Outer mounted
-Middle mounted
-Inner mounted
-Inner destroyed
-Middle destroyed
-Outer destroyed
-</pre>
 ```
 
 # Update

@@ -1,5 +1,4 @@
-// total: 5576 (min) 2644 (brotli)
-// template.marko: 275 (min) 150 (brotli)
+// template.marko
 _enable_catch();
 const $if_content__a = /* @__PURE__ */ _closure_get(2, ($scope) => _text($scope.a, $scope._._.c), ($scope) => $scope._._);
 const $if_content__b = /* @__PURE__ */ _closure_get(3, ($scope) => _text($scope.b, $scope._._.d), ($scope) => $scope._._);

@@ -1,5 +1,4 @@
-// total: 2523 (min) 1318 (brotli)
-// template.marko: 133 (min) 113 (brotli)
+// template.marko
 const $MyTag_content__count = ($scope, count) => _text($scope.b, count);
 const $count__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);

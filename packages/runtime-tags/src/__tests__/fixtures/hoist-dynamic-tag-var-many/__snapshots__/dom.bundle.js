@@ -1,11 +1,10 @@
-// total: 2188 (min) 1122 (brotli)
-// tags/child.marko: 59 (min) 63 (brotli)
+// tags/child.marko
 function $_return($scope) {
 	return () => (html) => $scope.a.innerHTML = html;
 }
 _resume("b0", $_return);
 
-// template.marko: 277 (min) 154 (brotli)
+// template.marko
 const $setHtml3_getter = _hoist_resume("a0", 2, "Aa", "Ac");
 const $for_content4__setHtml = _var_resume("a3", /* @__PURE__ */ _const(2));
 const $setHtml2_getter = _hoist(2, "Ab");

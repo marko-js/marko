@@ -1,5 +1,4 @@
-// total: 12925 (min) 4998 (brotli)
-// tags/my-tag.marko: 159 (min) 129 (brotli)
+// tags/my-tag.marko
 _resume_dynamic_tag();
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0);
 const $input_as__OR__input_class__OR__htmlInput__OR__content = /* @__PURE__ */ _or(9, ($scope) => $dynamicTag($scope, $scope.d || "div", () => ({
@@ -10,6 +9,6 @@ const $input_as__OR__input_class__OR__htmlInput__OR__content = /* @__PURE__ */ _
 const $content = /* @__PURE__ */ _let(8, $input_as__OR__input_class__OR__htmlInput__OR__content);
 const $inputContent__script = _script("b1", ($scope) => $content($scope, $scope.f));
 
-// template.marko: 65 (min) 62 (brotli)
+// template.marko
 const $mytag_content2 = _content_resume("a1", "Span", "b");
 const $mytag_content = _content_resume("a0", "Div", "b");

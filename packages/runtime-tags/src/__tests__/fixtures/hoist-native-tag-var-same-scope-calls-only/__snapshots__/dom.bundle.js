@@ -1,8 +1,7 @@
-// total: 1617 (min) 864 (brotli)
-// tags/child.marko: 30 (min) 34 (brotli)
+// tags/child.marko
 const $input__script = _script("b0", ($scope) => $scope.b.action());
 
-// template.marko: 193 (min) 117 (brotli)
+// template.marko
 const $setup__script = _script("a2", ($scope) => $scope.b.innerHTML = "works");
 function $action2($scope) {
 	return function() {

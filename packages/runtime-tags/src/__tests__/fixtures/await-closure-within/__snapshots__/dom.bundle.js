@@ -1,5 +1,4 @@
-// total: 7006 (min) 3188 (brotli)
-// template.marko: 248 (min) 171 (brotli)
+// template.marko
 _enable_catch();
 const $if_content__value = /* @__PURE__ */ _if_closure(2, 0, ($scope) => _text($scope.a, $scope._.d));
 const $await_content__if = /* @__PURE__ */ _if(2, "<span> </span>", "D l", $if_content__value);

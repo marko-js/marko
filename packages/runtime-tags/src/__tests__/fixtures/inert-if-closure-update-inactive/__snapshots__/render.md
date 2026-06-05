@@ -9,8 +9,3 @@
 ```js
 container.querySelector("button").click();
 ```
-```html
-<button>
-  Update
-</button>
-```

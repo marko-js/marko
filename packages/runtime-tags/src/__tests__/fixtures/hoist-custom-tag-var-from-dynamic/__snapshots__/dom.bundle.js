@@ -1,5 +1,4 @@
-// total: 13445 (min) 5155 (brotli)
-// tags/thing.marko: 0 (min) 1 (brotli)
+// tags/thing.marko
 const $template$1 = "<!><!><!><!>";
 const $walks = "b%b%c";
 const $setup$1 = () => {};
@@ -10,7 +9,7 @@ const $input_content = ($scope, input_content) => {
 	$dynamicTag2($scope, input_content);
 };
 
-// tags/child.marko: 59 (min) 63 (brotli)
+// tags/child.marko
 const $template = "<div></div>";
 function $setup($scope) {
 	_return($scope, $_return($scope));
@@ -20,7 +19,7 @@ function $_return($scope) {
 }
 _resume("b0", $_return);
 
-// template.marko: 593 (min) 261 (brotli)
+// template.marko
 const $setHtml3_getter = _hoist(2, "B4");
 const $inputshowsectionnull_content__setHtml = _var_resume("a6", /* @__PURE__ */ _const(2));
 const $inputshowsectionnull_content__setup = ($scope) => {

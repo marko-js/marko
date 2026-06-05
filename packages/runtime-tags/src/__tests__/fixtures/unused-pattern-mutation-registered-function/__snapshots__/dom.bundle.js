@@ -1,5 +1,4 @@
-// total: 1859 (min) 979 (brotli)
-// template.marko: 141 (min) 106 (brotli)
+// template.marko
 const identity = (fn) => fn;
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", identity((_, el) => {
 	let bar;

@@ -169,8 +169,15 @@ function isIgnoredTag(
     case "LINK":
     case "TITLE":
     case "STYLE":
-    case "SCRIPT":
       return true;
+    case "SCRIPT":
+      switch ((node as HTMLScriptElement).type) {
+        case "":
+        case "module":
+          return true;
+        default:
+          return false;
+      }
     default:
       return false;
   }

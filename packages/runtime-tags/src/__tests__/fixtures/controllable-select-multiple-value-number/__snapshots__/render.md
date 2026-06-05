@@ -58,29 +58,6 @@ UPDATE: span::text "1" => "0,1"
 ```js
 selectIndex(container, 1);
 ```
-```html
-<select
-  multiple=""
->
-  <option
-    selected=""
-    value="0"
-  />
-  <option
-    selected=""
-    value="1"
-  />
-  <option
-    value="2"
-  />
-</select>
-<span>
-  0,1
-</span>
-<button>
-  Reset
-</button>
-```
 
 # Update
 ```js

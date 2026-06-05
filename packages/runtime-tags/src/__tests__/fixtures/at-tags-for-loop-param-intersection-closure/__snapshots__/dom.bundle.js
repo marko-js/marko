@@ -1,5 +1,4 @@
-// total: 3096 (min) 1583 (brotli)
-// template.marko: 172 (min) 149 (brotli)
+// template.marko
 const $item_content__mult__OR__item = /* @__PURE__ */ _or(1, ($scope) => _text($scope.a, $scope.f * $scope._.d));
 const $item_content__mult = /* @__PURE__ */ _closure_get(3, $item_content__mult__OR__item);
 const $mult__closure = /* @__PURE__ */ _closure($item_content__mult);

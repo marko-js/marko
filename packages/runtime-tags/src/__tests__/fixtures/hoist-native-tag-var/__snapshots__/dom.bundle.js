@@ -1,9 +1,8 @@
-// total: 2074 (min) 1078 (brotli)
-// tags/child.marko: 67 (min) 71 (brotli)
+// tags/child.marko
 let id = 0;
 const $input__script = _script("b0", ($scope) => $scope.b.value()?.classList.add(`child${id++}`));
 
-// template.marko: 179 (min) 116 (brotli)
+// template.marko
 const $el2_getter = _hoist(0, "Ac");
 const $el_getter = _hoist_resume("a0", 0, "Aa", "Aa");
 const $if_content2__$el_getter = _el("a1", 0);

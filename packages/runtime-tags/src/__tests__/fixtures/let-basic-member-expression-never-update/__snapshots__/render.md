@@ -10,9 +10,3 @@
 ```js
 container.querySelector("button").click();
 ```
-```html
-<div />
-<button>
-  Update
-</button>
-```

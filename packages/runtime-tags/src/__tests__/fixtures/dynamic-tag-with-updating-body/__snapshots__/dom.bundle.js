@@ -1,5 +1,4 @@
-// total: 13032 (min) 5014 (brotli)
-// tags/counter.marko: 100 (min) 85 (brotli)
+// tags/counter.marko
 const $template = "<button id=count> </button>";
 const $walks = " D l";
 const $count__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
@@ -13,7 +12,7 @@ function $setup($scope) {
 	$count($scope, 0);
 }
 
-// template.marko: 203 (min) 148 (brotli)
+// template.marko
 const $tagName_content__setup = ($scope) => {
 	$setup($scope.a);
 };

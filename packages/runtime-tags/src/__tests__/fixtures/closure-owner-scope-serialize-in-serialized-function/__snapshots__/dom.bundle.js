@@ -1,5 +1,4 @@
-// total: 1534 (min) 839 (brotli)
-// template.marko: 134 (min) 94 (brotli)
+// template.marko
 const $if_content__run = /* @__PURE__ */ _const(1, _script("a2", ($scope) => $scope.b()));
 function $run($scope) {
 	return function() {

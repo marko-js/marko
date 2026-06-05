@@ -1,5 +1,4 @@
-// total: 67104 (min) 20808 (brotli)
-// components/my-button.marko: 422 (min) 238 (brotli)
+// components/my-button.marko
 var import_vdom = require_vdom();
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
@@ -18,7 +17,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 }, _marko_component);
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
-// template.marko: 282 (min) 157 (brotli)
+// template.marko
 _resume("b", _marko_template);
 _resume_dynamic_tag();
 const $mybutton_content__count = /* @__PURE__ */ _closure_get(1, ($scope) => _text($scope.a, $scope._.b));
@@ -35,9 +34,9 @@ function $onClick($scope) {
 }
 _resume("a0", $onClick);
 
-// v:template.marko.hydrate-6.js: 0 (min) 1 (brotli)
+// v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => init$1();
 
-// v:template.marko.hydrate-5.js: 21 (min) 19 (brotli)
+// v:template.marko.hydrate-5.js
 var import_components = require_components();
 var v_template_marko_hydrate_5_default = () => (0, import_components.init)();

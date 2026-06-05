@@ -1,5 +1,4 @@
-// total: 5738 (min) 2653 (brotli)
-// tags/child.marko: 213 (min) 172 (brotli)
+// tags/child.marko
 const $if_content__text = /* @__PURE__ */ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.c));
 const $if = /* @__PURE__ */ _if(0, "<div> </div>", "D l", $if_content__text);
 const $hide__OR__text_length = /* @__PURE__ */ _or(4, ($scope) => $if($scope, !$scope.b && $scope.d ? 0 : 1));

@@ -1,5 +1,4 @@
-// total: 6768 (min) 3096 (brotli)
-// template.marko: 293 (min) 187 (brotli)
+// template.marko
 _enable_catch();
 const $catch_content__err = ($scope, err) => _text($scope.a, err);
 const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);

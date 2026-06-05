@@ -28,24 +28,3 @@ select.dispatchEvent(new select.ownerDocument.defaultView.Event("change", {
   bubbles: true
 }));
 ```
-```html
-<select>
-  <option
-    value="a"
-  >
-    A
-  </option>
-  <option
-    default-selected=""
-    value="b"
-  >
-    B
-  </option>
-  <option
-    selected=""
-    value="c"
-  >
-    C
-  </option>
-</select>
-```

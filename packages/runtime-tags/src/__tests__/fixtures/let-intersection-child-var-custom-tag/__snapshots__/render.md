@@ -37,30 +37,8 @@ UPDATE: button::text "0,1" => "2,2"
 ```js
 container.querySelector("button").click();
 ```
-```html
-<div>
-  2
-</div>
-<div>
-  2
-</div>
-<button>
-  2,2
-</button>
-```
 
 # Update
 ```js
 container.querySelector("button").click();
-```
-```html
-<div>
-  2
-</div>
-<div>
-  2
-</div>
-<button>
-  2,2
-</button>
 ```

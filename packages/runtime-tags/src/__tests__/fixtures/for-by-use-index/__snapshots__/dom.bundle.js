@@ -1,5 +1,4 @@
-// total: 7884 (min) 3587 (brotli)
-// template.marko: 388 (min) 257 (brotli)
+// template.marko
 const $if_content__last = /* @__PURE__ */ _if_closure(1, 0, ($scope) => _text($scope.a, $scope._.d));
 const $if_content__setup = $if_content__last;
 const $for_content__messages__OR__index = /* @__PURE__ */ _or(5, _script("a0", ($scope) => _on($scope.a, "click", function() {

@@ -1,5 +1,4 @@
-// total: 7027 (min) 3215 (brotli)
-// template.marko: 317 (min) 195 (brotli)
+// template.marko
 const $for_content__x = ($scope, x) => _text($scope.a, x);
 const $for_content__$params = ($scope, $params2) => $for_content__x($scope, $params2[0]);
 const $open__script = _script("a1", ($scope) => _on($scope.b, "click", function() {

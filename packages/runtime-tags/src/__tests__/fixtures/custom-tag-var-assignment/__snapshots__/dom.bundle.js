@@ -1,5 +1,4 @@
-// total: 2843 (min) 1422 (brotli)
-// tags/counter.marko: 164 (min) 127 (brotli)
+// tags/counter.marko
 const $x__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
 	$x($scope, $scope.c + 1);
 }));
@@ -15,7 +14,7 @@ function $valueChange($scope) {
 }
 _resume("b0", $valueChange);
 
-// template.marko: 195 (min) 118 (brotli)
+// template.marko
 const $count__script = _script("a2", ($scope) => _on($scope.c, "click", function() {
 	_var_change($scope.a, $scope.f + 1);
 }));

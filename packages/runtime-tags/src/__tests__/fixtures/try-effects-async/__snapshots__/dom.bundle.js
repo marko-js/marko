@@ -1,5 +1,4 @@
-// total: 8628 (min) 3793 (brotli)
-// template.marko: 432 (min) 245 (brotli)
+// template.marko
 _enable_catch();
 const $await_content__value = ($scope, value) => _text($scope.a, value > 1 ? (() => {
 	throw new Error("ERROR!");
