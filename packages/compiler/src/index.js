@@ -17,6 +17,7 @@ import { buildCodeFrameError } from "./util/build-code-frame";
 import throwAggregateError from "./util/merge-errors";
 import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
+export { version } from "../package.json";
 export { taglib, types };
 
 const hasBabel = !!(
@@ -67,6 +68,10 @@ export function getRuntimeEntryFiles(output, requestedTranslator) {
   }
 
   return [];
+}
+
+export function getRuntimeVersion(requestedTranslator) {
+  return tryLoadTranslator(requestedTranslator)?.version ?? "0.0.0";
 }
 
 function loadMarkoConfig(config) {

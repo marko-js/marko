@@ -1,0 +1,7 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "render" }
+
+<Child id="sync" value=input.value/>
+<await|value|=resolveAfter(input.value + 1, 1)>
+  <Child id="async" value=value/>
+</await>

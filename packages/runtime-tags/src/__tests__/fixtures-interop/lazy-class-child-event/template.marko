@@ -1,0 +1,14 @@
+import Child from "<child>" with { load: "on-mouseover body" }
+
+class {
+  onCreate() {
+    this.state = { value: 0 };
+  }
+  increment() {
+    this.state.value++;
+  }
+}
+
+<button id="inc" onClick("increment")>Inc</button>
+<Child value=state.value/>
+<init-components/>

@@ -23,10 +23,10 @@ import {
   pendingScopes,
   placeholderShown,
   prepareEffects,
+  queueAsyncRender,
   queueEffect,
   queuePendingRender,
   queueRender,
-  run,
   runEffects,
 } from "./queue";
 import {
@@ -38,7 +38,6 @@ import {
   type SetupFn,
 } from "./renderer";
 import { _resume, enableBranches } from "./resume";
-import { schedule } from "./schedule";
 import {
   destroyBranch,
   findBranchWithKey,
@@ -59,93 +58,72 @@ export function _await_promise(
   return (scope: Scope, promise: Promise<unknown>) => {
     // TODO: !isPromise, render synchronously
     let awaitBranch = scope[branchAccessor] as BranchScope;
-    const tryBranch =
-      findBranchWithKey(scope, AccessorProp.PlaceholderContent) || awaitBranch;
+    const tryPlaceholder = findBranchWithKey(
+      scope,
+      AccessorProp.PlaceholderContent,
+    );
+    const tryBranch = tryPlaceholder || awaitBranch;
     let awaitCounter = tryBranch[AccessorProp.AwaitCounter];
-
-    if (!awaitCounter?.i) {
-      awaitCounter = tryBranch[AccessorProp.AwaitCounter] = {
-        i: 0,
-        c() {
-          if (--awaitCounter!.i) return 1;
-          if (tryBranch === scope[branchAccessor]) {
-            if ((scope[nodeAccessor] as ChildNode).parentNode) {
-              (scope[nodeAccessor] as ChildNode).replaceWith(
-                (scope[branchAccessor] as BranchScope)[AccessorProp.StartNode]
-                  .parentNode!,
-              );
-            }
-          } else {
-            const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
-            if (placeholderBranch) {
-              tryBranch[AccessorProp.PlaceholderBranch] = 0;
-              // Since this is temp detached the parent node is a document fragment with all of the children in the branch.
-              placeholderBranch[
-                AccessorProp.StartNode
-              ].parentNode!.insertBefore(
-                tryBranch[AccessorProp.StartNode].parentNode!,
-                placeholderBranch[AccessorProp.StartNode],
-              );
-              removeAndDestroyBranch(placeholderBranch);
-            }
-          }
-
-          queueEffect(tryBranch, (scope) => {
-            const pendingEffects = scope[AccessorProp.PendingEffects];
-            if (pendingEffects) {
-              scope[AccessorProp.PendingEffects] = [];
-              runEffects(pendingEffects, 1);
-            }
-          });
-        },
-      };
-    }
 
     placeholderShown.add(pendingEffects);
 
-    if (!scope[promiseAccessor]) {
-      if (awaitBranch) {
-        awaitBranch[AccessorProp.PendingRenders] ||= [];
+    if (tryPlaceholder) {
+      if (!scope[promiseAccessor]) {
+        if (awaitBranch) {
+          awaitBranch[AccessorProp.PendingRenders] ||= [];
+        }
+        awaitCounter = addAwaitCounter(scope, tryPlaceholder)!;
       }
-      if (!awaitCounter.i++) {
-        requestAnimationFrame(
-          () =>
-            awaitCounter!.i &&
-            runEffects(
-              prepareEffects(() =>
-                queueRender(
-                  tryBranch === awaitBranch ? scope : tryBranch,
-                  () => {
-                    if (tryBranch[AccessorProp.PlaceholderContent]) {
-                      insertBranchBefore(
-                        (tryBranch[AccessorProp.PlaceholderBranch] =
-                          createAndSetupBranch(
-                            scope[AccessorProp.Global],
-                            tryBranch[
-                              AccessorProp.PlaceholderContent
-                            ] as Renderer,
-                            tryBranch[AccessorProp.Owner],
-                            tryBranch[AccessorProp.StartNode].parentNode!,
-                          )),
-                        tryBranch[AccessorProp.StartNode].parentNode!,
-                        tryBranch[AccessorProp.StartNode],
-                      );
-                      tempDetachBranch(tryBranch);
-                    } else if (!awaitBranch[AccessorProp.DetachedAwait]) {
-                      awaitBranch[
-                        AccessorProp.StartNode
-                      ].parentNode!.insertBefore(
-                        scope[nodeAccessor] as Node,
-                        awaitBranch[AccessorProp.StartNode],
-                      );
-                      tempDetachBranch(tryBranch);
-                    }
-                  },
-                  -1,
+    } else {
+      if (!awaitCounter?.i) {
+        awaitCounter = tryBranch[AccessorProp.AwaitCounter] = {
+          i: 0,
+          c() {
+            if (--awaitCounter!.i) return 1;
+            if (tryBranch === scope[branchAccessor]) {
+              if ((scope[nodeAccessor] as ChildNode).parentNode) {
+                (scope[nodeAccessor] as ChildNode).replaceWith(
+                  (scope[branchAccessor] as BranchScope)[AccessorProp.StartNode]
+                    .parentNode!,
+                );
+              }
+            } else {
+              dismissPlaceholder(tryBranch);
+            }
+            queueEffect(tryBranch, runPendingEffects);
+          },
+        };
+      }
+
+      if (!scope[promiseAccessor]) {
+        if (awaitBranch) {
+          awaitBranch[AccessorProp.PendingRenders] ||= [];
+        }
+        if (!awaitCounter.i++) {
+          requestAnimationFrame(
+            () =>
+              awaitCounter!.i &&
+              runEffects(
+                prepareEffects(() =>
+                  queueRender(
+                    scope,
+                    () => {
+                      if (!awaitBranch[AccessorProp.DetachedAwait]) {
+                        awaitBranch[
+                          AccessorProp.StartNode
+                        ].parentNode!.insertBefore(
+                          scope[nodeAccessor] as Node,
+                          awaitBranch[AccessorProp.StartNode],
+                        );
+                        tempDetachBranch(tryBranch);
+                      }
+                    },
+                    -1,
+                  ),
                 ),
               ),
-            ),
-        );
+          );
+        }
       }
     }
 
@@ -155,70 +133,61 @@ export function _await_promise(
           const referenceNode = scope[nodeAccessor] as ChildNode;
           scope[promiseAccessor] = 0;
 
-          queueMicrotask(run);
-          queueRender(
-            scope,
-            () => {
-              if (
-                (awaitBranch = scope[branchAccessor] as BranchScope)[
-                  AccessorProp.DetachedAwait
-                ]
-              ) {
-                pendingScopes.push(awaitBranch);
-                setupBranch(
-                  awaitBranch[AccessorProp.DetachedAwait],
-                  awaitBranch,
-                );
-                awaitBranch[AccessorProp.DetachedAwait] = 0;
+          queueAsyncRender(scope, () => {
+            if (
+              (awaitBranch = scope[branchAccessor] as BranchScope)[
+                AccessorProp.DetachedAwait
+              ]
+            ) {
+              pendingScopes.push(awaitBranch);
+              setupBranch(awaitBranch[AccessorProp.DetachedAwait], awaitBranch);
+              awaitBranch[AccessorProp.DetachedAwait] = 0;
 
-                insertBranchBefore(
-                  awaitBranch,
-                  (scope[nodeAccessor] as ChildNode).parentNode!,
-                  scope[nodeAccessor] as ChildNode,
-                );
-                referenceNode.remove();
-              }
+              insertBranchBefore(
+                awaitBranch,
+                (scope[nodeAccessor] as ChildNode).parentNode!,
+                scope[nodeAccessor] as ChildNode,
+              );
+              referenceNode.remove();
+            }
 
-              params?.(awaitBranch as BranchScope, [data]);
+            params?.(awaitBranch as BranchScope, [data]);
 
-              const pendingRenders = awaitBranch[
-                AccessorProp.PendingRenders
-              ] as PendingRender[] | undefined;
-              awaitBranch[AccessorProp.PendingRenders] = 0;
-              pendingRenders?.forEach(queuePendingRender);
+            const pendingRenders = awaitBranch[AccessorProp.PendingRenders] as
+              | PendingRender[]
+              | undefined;
+            awaitBranch[AccessorProp.PendingRenders] = 0;
+            pendingRenders?.forEach(queuePendingRender);
 
-              placeholderShown.add(pendingEffects); // TODO: check if still needed
+            placeholderShown.add(pendingEffects); // TODO: check if still needed
 
-              awaitCounter.c();
-              if (awaitCounter.m) {
-                const fnScopes = new Map<unknown, Set<Scope>>();
-                const effects = awaitCounter.m();
-                for (let i = 0; i < pendingEffects.length; ) {
-                  const fn = pendingEffects[i++] as any;
-                  let scopes = fnScopes.get(fn);
-                  if (!scopes) {
-                    fnScopes.set(fn, (scopes = new Set()));
-                  }
-                  scopes.add(pendingEffects[i++] as Scope);
+            awaitCounter!.c();
+            if (awaitCounter!.m) {
+              const fnScopes = new Map<unknown, Set<Scope>>();
+              const effects = awaitCounter!.m([]);
+              for (let i = 0; i < pendingEffects.length; ) {
+                const fn = pendingEffects[i++] as any;
+                let scopes = fnScopes.get(fn);
+                if (!scopes) {
+                  fnScopes.set(fn, (scopes = new Set()));
                 }
-                for (let i = 0; i < effects.length; ) {
-                  const fn = effects[i++] as any;
-                  const scope = effects[i++] as Scope;
-                  if (!fnScopes.get(fn)?.has(scope)) {
-                    queueEffect(scope, fn);
-                  }
+                scopes.add(pendingEffects[i++] as Scope);
+              }
+              for (let i = 0; i < effects.length; ) {
+                const fn = effects[i++] as any;
+                const scope = effects[i++] as Scope;
+                if (!fnScopes.get(fn)?.has(scope)) {
+                  queueEffect(scope, fn);
                 }
               }
-            },
-            -1,
-          );
+            }
+          });
         }
       },
       (error) => {
         if (thisPromise === scope[promiseAccessor]) {
-          awaitCounter.i = scope[promiseAccessor] = 0;
-          schedule();
-          queueRender(scope, renderCatch, -1, error);
+          awaitCounter!.i = scope[promiseAccessor] = 0;
+          queueAsyncRender(scope, renderCatch, error);
         }
       },
     ));
@@ -243,6 +212,75 @@ export function _await_content(
     ))[AccessorProp.DetachedAwait] = renderer;
     pendingScopes.pop();
   };
+}
+
+export function addAwaitCounter(
+  scope: Scope,
+  tryBranch = findBranchWithKey(scope, AccessorProp.PlaceholderContent),
+): AwaitCounter | undefined {
+  if (!tryBranch) return;
+  let awaitCounter = tryBranch[AccessorProp.AwaitCounter];
+  if (!awaitCounter?.i) {
+    awaitCounter = tryBranch[AccessorProp.AwaitCounter] = {
+      i: 0,
+      c() {
+        if (--awaitCounter!.i) return 1;
+        dismissPlaceholder(tryBranch);
+        queueEffect(tryBranch, runPendingEffects);
+      },
+    };
+  }
+  placeholderShown.add(pendingEffects);
+  if (!awaitCounter.i++) {
+    requestAnimationFrame(
+      () =>
+        awaitCounter!.i &&
+        runEffects(
+          prepareEffects(() =>
+            queueRender(
+              tryBranch,
+              () => {
+                insertBranchBefore(
+                  (tryBranch[AccessorProp.PlaceholderBranch] =
+                    createAndSetupBranch(
+                      tryBranch[AccessorProp.Global],
+                      tryBranch[AccessorProp.PlaceholderContent] as Renderer,
+                      tryBranch[AccessorProp.Owner]!,
+                      tryBranch[AccessorProp.StartNode].parentNode!,
+                    )),
+                  tryBranch[AccessorProp.StartNode].parentNode!,
+                  tryBranch[AccessorProp.StartNode],
+                );
+                tempDetachBranch(tryBranch);
+              },
+              -1,
+            ),
+          ),
+        ),
+    );
+  }
+  return awaitCounter;
+}
+
+function runPendingEffects(scope: BranchScope) {
+  const effects = scope[AccessorProp.PendingEffects];
+  if (effects) {
+    scope[AccessorProp.PendingEffects] = [];
+    runEffects(effects, 1);
+  }
+}
+
+function dismissPlaceholder(tryBranch: BranchScope) {
+  const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
+  if (placeholderBranch) {
+    tryBranch[AccessorProp.PlaceholderBranch] = 0;
+    // Since this is temp detached the parent node is a document fragment with all of the children in the branch.
+    placeholderBranch[AccessorProp.StartNode].parentNode!.insertBefore(
+      tryBranch[AccessorProp.StartNode].parentNode!,
+      placeholderBranch[AccessorProp.StartNode],
+    );
+    removeAndDestroyBranch(placeholderBranch);
+  }
 }
 
 export function _try(

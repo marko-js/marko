@@ -1,0 +1,12 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/count=0>
+<button onClick() {
+  count++
+}>
+  Inc
+</button>
+
+<if=count % 2 === 0>
+  <Child label="x" value=count/>
+</if>

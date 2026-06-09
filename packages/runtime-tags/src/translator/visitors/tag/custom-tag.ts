@@ -13,20 +13,41 @@ import {
 import { closest, distance } from "fastest-levenshtein";
 import path from "path";
 
+import { WalkCode } from "../../../common/types";
+import type { LoadTrigger } from "../../../html/assets";
 import { getBindingPropTree } from "../../util/binding-prop-tree";
+import { generateUidIdentifier } from "../../util/generate-uid";
 import { getTagName } from "../../util/get-tag-name";
 import {
   knownTagAnalyze,
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { isOutputHTML } from "../../util/marko-config";
+import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import type { Binding } from "../../util/references";
+import {
+  BindingType,
+  createBinding,
+  getScopeAccessorLiteral,
+} from "../../util/references";
+import { callRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
+import { getOrCreateSection } from "../../util/sections";
 import { addStatement, getSignal } from "../../util/signals";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
+import type { LoadImportConfig } from "../import-declaration";
+import { scopeIdentifier } from "../program";
 import { getTemplateContentName } from "../program/html";
+
+const kLoadTagBinding = Symbol("load tag binding");
+
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoTagExtra {
+    [kLoadTagBinding]?: Binding;
+  }
+}
 
 export default {
   analyze: {
@@ -45,6 +66,7 @@ export default {
           .buildCodeFrameError("Unable to resolve file for tag.");
       }
 
+      const tagExtra = (tag.node.extra ??= {});
       const programExtra = getProgram().node.extra;
       const programSection = programExtra.section!;
       const childProgram = childFile.ast.program;
@@ -53,6 +75,14 @@ export default {
 
       if (childExtra.page) {
         programExtra.page ??= true;
+      }
+
+      if (tagExtra.tagNameLoad) {
+        tagExtra[kLoadTagBinding] = createBinding(
+          "#text",
+          BindingType.dom,
+          getOrCreateSection(tag),
+        );
       }
 
       knownTagAnalyze(
@@ -82,9 +112,9 @@ export default {
 
 function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
-  const childProgram = loadFileForTag(tag)!.ast.program;
+  const childFile = loadFileForTag(tag)!;
+  const childProgram = childFile.ast.program;
   const childExtra = childProgram.extra;
-
   let tagIdentifier: t.Expression;
   if (t.isStringLiteral(node.name)) {
     const relativePath = getTagRelativePath(tag);
@@ -113,13 +143,130 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const childExtra = childFile.ast.program.extra;
   const childExports = childExtra.domExports!;
   const childSection = childExtra.section!;
+  const loadConfig = node.extra?.tagNameLoad;
+  const isLoad = !!loadConfig;
   const tagName = t.isIdentifier(node.name)
     ? node.name.name
     : t.isStringLiteral(node.name)
       ? node.name.value
       : "tag";
 
-  if (programSection === childSection) {
+  if (isLoad) {
+    const childFileName = childFile.opts.filename;
+    const loadSignalMap = new Map<string, t.Identifier>();
+    const triggerExpr = loadTriggersToExpression(loadConfig);
+    let triggerIdent: t.Identifier | undefined;
+    if (triggerExpr) {
+      triggerIdent = generateUidIdentifier(`load_${tagName}_trigger`);
+      getProgram().node.body.push(
+        t.variableDeclaration("const", [
+          t.variableDeclarator(triggerIdent, triggerExpr),
+        ]),
+      );
+    }
+
+    if (childExports.params?.props) {
+      const attrsPropTree =
+        childExports.params.props[node.arguments?.length || 0];
+      if (attrsPropTree?.props) {
+        for (const [, propTree] of Object.entries(attrsPropTree.props)) {
+          const exportName = propTree.binding.export!;
+          const signalIdent = generateUidIdentifier(
+            `load_${tagName}_tag_${propTree.binding.name}`,
+          );
+          loadSignalMap.set(exportName, signalIdent);
+          const loadExpr = t.arrowFunctionExpression(
+            [],
+            t.callExpression(t.import(), [
+              t.stringLiteral(
+                buildLoadSignalVirtualModule(
+                  file,
+                  childFileName,
+                  exportName,
+                  propTree.binding.name,
+                )!,
+              ),
+            ]),
+          );
+          getProgram().node.body.push(
+            t.variableDeclaration("let", [
+              t.variableDeclarator(
+                signalIdent,
+                callRuntime(
+                  "_load_signal",
+                  triggerIdent
+                    ? t.addComment(
+                        t.callExpression(triggerIdent, [loadExpr]),
+                        "leading",
+                        "@__PURE__",
+                      )
+                    : loadExpr,
+                ),
+              ),
+            ]),
+          );
+        }
+      }
+    }
+
+    knownTagTranslateDOM(
+      tag,
+      childExports.params,
+      (binding) => {
+        // make this lazy
+        const ident = loadSignalMap.get(binding.export!);
+        if (ident) return ident;
+        return importOrSelfReferenceName(
+          tag.hub.file,
+          relativePath,
+          binding.export!,
+        );
+      },
+      (section, childBinding) => {
+        const setupIdent = generateUidIdentifier(`load_${tagName}_setup`);
+        const setupLoadExpr = t.arrowFunctionExpression(
+          [],
+          t.callExpression(t.import(), [
+            t.stringLiteral(
+              buildLoadSetupVirtualModule(file, childFileName, childExports),
+            ),
+          ]),
+        );
+        getProgram().node.body.push(
+          t.variableDeclaration("let", [
+            t.variableDeclarator(
+              setupIdent,
+              callRuntime(
+                "_load_setup",
+                getScopeAccessorLiteral(node.extra![kLoadTagBinding]!, true),
+                getScopeAccessorLiteral(childBinding, true),
+                triggerIdent
+                  ? t.addComment(
+                      t.callExpression(triggerIdent, [setupLoadExpr]),
+                      "leading",
+                      "@__PURE__",
+                    )
+                  : setupLoadExpr,
+              ),
+            ),
+          ]),
+        );
+        addStatement(
+          "render",
+          section,
+          undefined,
+          t.expressionStatement(
+            t.callExpression(setupIdent, [scopeIdentifier]),
+          ),
+        );
+      },
+    );
+
+    write`<!>`;
+    walks.visit(tag, WalkCode.Replace);
+    walks.injectWalks(tag, tagName);
+    walks.enterShallow(tag);
+  } else if (programSection === childSection) {
     knownTagTranslateDOM(
       tag,
       childExports.params,
@@ -249,4 +396,68 @@ function isCircularRequest(file: t.BabelFile, request: string) {
     request === filename ||
     (request[0] === "." && path.resolve(filename, "..", request) === filename)
   );
+}
+
+function buildLoadSetupVirtualModule(
+  file: t.BabelFile,
+  childFileName: string,
+  childExports: { template: string; walks: string; setup: string },
+) {
+  const parts = `${childExports.template}, ${childExports.walks}, ${childExports.setup}`;
+  return getMarkoOpts().resolveVirtualDependency!(file.opts.filename, {
+    virtualPath: `${resolveRelativePath(file, childFileName)}.setup.js`,
+    code: `import { ${parts} } from "./${path.basename(childFileName)}"\nexport const _ = [${parts}]`,
+  })!;
+}
+
+function buildLoadSignalVirtualModule(
+  file: t.BabelFile,
+  childFileName: string,
+  childExport: string,
+  childBinding: string,
+) {
+  return getMarkoOpts().resolveVirtualDependency!(file.opts.filename, {
+    virtualPath: `${resolveRelativePath(file, childFileName)}.${childBinding}.js`,
+    code: `export { ${childExport} as _ } from "./${path.basename(childFileName)}"`,
+  });
+}
+
+function loadTriggersToExpression(loadConfig: LoadImportConfig | undefined) {
+  if (!loadConfig || loadConfig.render) return;
+
+  const triggers = loadConfig.triggers.map(toDOMTriggerExpression);
+  return triggers.length === 1
+    ? triggers[0]
+    : callRuntime("_load_race_trigger", ...triggers);
+}
+
+function toDOMTriggerExpression(trigger: LoadTrigger) {
+  switch (trigger.type) {
+    case "visible":
+      return callRuntime(
+        "_load_visible_trigger",
+        t.stringLiteral(trigger.selector),
+        optionalValueToNode(trigger.options),
+      );
+    case "idle":
+      return callRuntime(
+        "_load_idle_trigger",
+        optionalValueToNode(trigger.options),
+      );
+    case "media":
+      return callRuntime(
+        "_load_media_trigger",
+        t.stringLiteral(trigger.selector),
+      );
+    default:
+      return callRuntime(
+        "_load_event_trigger",
+        t.stringLiteral(trigger.type.slice("on-".length)),
+        t.stringLiteral(trigger.selector),
+      );
+  }
+}
+
+function optionalValueToNode(value: unknown) {
+  return value ? t.valueToNode(value) : undefined;
 }

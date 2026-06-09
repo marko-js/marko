@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-lazy-malformed-options/template.marko:1:48
+    > 1 | import Child from "./child.marko" with { load: "visible span?margin-top" }
+        |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^ Unknown param "margin-top" for the "visible" trigger. Supported params: "rootMargin".
+      2 |
+      3 | <Child value=input.value/>
+      4 |

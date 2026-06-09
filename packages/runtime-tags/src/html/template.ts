@@ -71,13 +71,18 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
   }
 
   const state = new State($global as State["$global"]);
-  const head = new Chunk(new Boundary(state, $global.signal), null, null);
+  const head = new Chunk(
+    new Boundary(state, $global.signal),
+    null,
+    null,
+    state,
+  );
 
   if (this[RendererProp.Embed]) {
-    (state.ensureReady ||= {})[this[RendererProp.Id]!] = 1;
+    head.renderWaitReady(this[RendererProp.Id]!, this, input);
+  } else {
+    head.render(this, input);
   }
-
-  head.render(this, input);
   return new ServerRendered(head);
 }
 

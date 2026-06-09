@@ -1,0 +1,28 @@
+<button>Inc</button><!--M_*1 #button/0-->
+<script async type=module src="child.marko.load.mjs"></script>
+<span>1<!--M_*3 #text/0--></span><span>2<!--M_*5 #text/0--></span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-shared-parent/tags/child.marko": [
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-shared-parent/tags/child.marko_0 3"
+    ]
+  };
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-shared-parent/tags/child.marko"
+    ].push(
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-shared-parent/tags/child.marko_0 5"
+    );
+  M._.r = [_ => (_.e = [0, {
+      value: 1,
+      "#childScope/1": _.a = {
+        "#childScope/1": _.b = {}
+      },
+      "#childScope/2": _.c = {
+        "#childScope/1": _.d = {}
+      }
+    }, _.a, _.b, _.c, _.d]),
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-shared-parent/template.marko_0_value 1"
+  ];
+  M._.w()
+</script>

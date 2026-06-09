@@ -42,11 +42,10 @@ export function createBranch(
     branch[AccessorProp.Renderer] = renderer;
   }
 
-  (
-    renderer as
-      | Renderer
-      | { [RendererProp.Clone]?: Renderer[RendererProp.Clone] }
-  )[RendererProp.Clone]?.(branch, (parentNode as Element).namespaceURI!);
+  (renderer as Renderer)[RendererProp.Clone]?.(
+    branch,
+    (parentNode as Element).namespaceURI!,
+  );
 
   return branch;
 }

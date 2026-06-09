@@ -28,6 +28,17 @@ import {
 import type { ServerRenderer } from "./template";
 
 export type PartialScope = Record<Accessor, unknown>;
+type DeferredResume = Chunk | Chunk[];
+
+interface SerializeState {
+  readyId?: string;
+  scopes: Map<number, ScopeInternals>;
+  lastSerializedScopeId: number;
+  resumes: string;
+  writeScopes: Record<number, PartialScope>;
+  flushScopes: boolean;
+}
+
 type ScopeInternals = PartialScope & {
   [K_SCOPE_ID]?: number;
   [K_SCOPE_REFERENCED]?: 1;
@@ -47,7 +58,7 @@ enum Mark {
 enum RuntimeKey {
   Walk = ".w",
   Resume = ".r",
-  Blocking = ".b",
+  Ready = ".b",
   Scripts = ".j",
 }
 export function getChunk(): Chunk | undefined {
@@ -74,8 +85,16 @@ export function writeScript(script: string) {
   $chunk.writeScript(script);
 }
 
+export function writeWaitReady(
+  readyId: string,
+  renderer: ServerRenderer,
+  input: unknown,
+) {
+  return $chunk.renderWaitReady(readyId, renderer, input);
+}
+
 export function _script(scopeId: number, registryId: string) {
-  if ($chunk.context?.[kIsAsync]) {
+  if ($chunk.serializeState.readyId || $chunk.context?.[kIsAsync]) {
     _resume_branch(scopeId);
   }
   $chunk.boundary.state.needsMainRuntime = true;
@@ -711,7 +730,8 @@ export function writeScopeToState(
   scopeId: number,
   partialScope: PartialScope,
 ) {
-  const { scopes } = state;
+  const target = $chunk.serializeState;
+  const { scopes } = target;
   let scope: ScopeInternals | undefined = scopes.get(scopeId);
   state.needsMainRuntime = true;
 
@@ -720,14 +740,11 @@ export function writeScopeToState(
   } else {
     scope = partialScope;
     scope[K_SCOPE_ID] = scopeId;
-    state.scopes.set(scopeId, scope);
+    scopes.set(scopeId, scope);
   }
 
-  if (state.writeScopes) {
-    state.writeScopes[scopeId] = scope;
-  } else {
-    state.writeScopes = { [scopeId]: scope };
-  }
+  target.writeScopes[scopeId] = scope;
+  target.flushScopes = true;
 
   return scope;
 }
@@ -758,11 +775,11 @@ export function _existing_scope(scopeId: number) {
 }
 
 export function _scope_with_id(scopeId: number) {
-  const { state } = $chunk.boundary;
-  let scope = state.scopes.get(scopeId);
+  const target = $chunk.serializeState;
+  let scope = target.scopes.get(scopeId);
   if (!scope) {
     scope = { [K_SCOPE_ID]: scopeId };
-    state.scopes.set(scopeId, scope);
+    target.scopes.set(scopeId, scope);
   }
   return referenceScope(scope);
 }
@@ -801,7 +818,7 @@ export function _await<T>(
 
   const chunk = $chunk;
   const { boundary } = chunk;
-  chunk.next = $chunk = new Chunk(boundary, chunk.next, chunk.context);
+  chunk.next = $chunk = chunk.fork(boundary, chunk.next);
   chunk.async = true;
   if (chunk.context?.[kPendingContexts]) {
     chunk.context = { ...chunk.context, [kPendingContexts]: 0 };
@@ -894,14 +911,14 @@ function tryPlaceholder(
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
-  const body = new Chunk(boundary, null, chunk.context);
+  const body = chunk.fork(boundary, null);
 
   if (body === body.render(content)) {
     chunk.append(body);
     return;
   }
 
-  chunk.next = $chunk = new Chunk(boundary, chunk.next, chunk.context);
+  chunk.next = $chunk = chunk.fork(boundary, chunk.next);
   chunk.placeholderBody = body;
   chunk.placeholderRender = placeholder;
   chunk.placeholderBranchId = branchId;
@@ -912,7 +929,7 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
   const { boundary } = chunk;
   const { state } = boundary;
   const catchBoundary = new Boundary(state);
-  const body = new Chunk(catchBoundary, null, chunk.context);
+  const body = chunk.fork(catchBoundary, null);
   const bodyEnd = body.render(content);
 
   if (catchBoundary.signal.aborted) {
@@ -929,10 +946,7 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
 
   const reorderId = state.nextReorderId();
   const endMarker = state.mark(Mark.PlaceholderEnd, reorderId);
-  const bodyNext =
-    (bodyEnd.next =
-    $chunk =
-      new Chunk(boundary, chunk.next, body.context));
+  const bodyNext = (bodyEnd.next = $chunk = body.fork(boundary, chunk.next));
   chunk.next = body;
   chunk.writeHTML(state.mark(Mark.Placeholder, reorderId));
   bodyEnd.writeHTML(endMarker);
@@ -965,7 +979,7 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
         } while (cur !== bodyNext);
       }
 
-      const catchChunk = new Chunk(boundary, null, chunk.context);
+      const catchChunk = chunk.fork(boundary, null);
       catchChunk.reorderId = reorderId;
       catchChunk.render(catchContent, catchBoundary.signal.reason);
       state.reorder(catchChunk);
@@ -978,7 +992,7 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
   };
 }
 
-export class State {
+export class State implements SerializeState {
   public tagId = 1;
   public scopeId = 1;
   public reorderId = 1;
@@ -986,6 +1000,7 @@ export class State {
   public hasGlobals = false;
   public needsMainRuntime = false;
   public hasMainRuntime = false;
+  public hasReadyRuntime = false;
   public hasReorderRuntime = false;
   public hasWrittenResume = false;
   public walkOnNextFlush = false;
@@ -994,9 +1009,12 @@ export class State {
   public nonceAttr = "";
   public serializer = new Serializer();
   public writeReorders: Chunk[] | null = null;
-  public scopes = new Map<number, PartialScope>();
-  public writeScopes: null | Record<number, PartialScope> = null;
-  public ensureReady: null | Record<string, 0 | 1> = null;
+  public scopes = new Map<number, ScopeInternals>();
+  public flushScopes = false;
+  public firstScopeId = this.scopeId;
+  public readyScopeIds: Record<string, number> | null = null;
+  public writeScopes: Record<number, PartialScope> = {};
+  public readyIds: Set<string> | null = null;
   public serializeReason: undefined | 0 | 1;
   constructor(
     public $global: $Global & { renderId: string; runtimeId: string },
@@ -1024,6 +1042,30 @@ export class State {
       this.needsMainRuntime = true;
       this.writeReorders = [chunk];
     }
+  }
+
+  writeReady(id: string, resumes: string) {
+    const readyKey = toObjectKey(id);
+    const readyObj = this.runtimePrefix + RuntimeKey.Ready + toAccess(readyKey);
+    if (this.readyIds?.has(id)) {
+      return readyObj + ".push(" + resumes + ")";
+    }
+
+    (this.readyIds ||= new Set()).add(id);
+    if (this.hasReadyRuntime) {
+      return readyObj + "=[" + resumes + "]";
+    }
+
+    this.hasReadyRuntime = true;
+    return (
+      this.runtimePrefix +
+      RuntimeKey.Ready +
+      "={" +
+      readyKey +
+      ":[" +
+      resumes +
+      "]}"
+    );
   }
 
   nextReorderId() {
@@ -1077,7 +1119,7 @@ export class Boundary extends AbortController {
 
   flush() {
     if (!this.signal.aborted) {
-      flushSerializer(this);
+      flushSerializer(this, this.state);
     }
 
     return this.count
@@ -1115,6 +1157,7 @@ export class Chunk {
   public consumed = false;
   public needsWalk = false;
   public reorderId: string | null = null;
+  public deferredResume: DeferredResume | null = null;
   public placeholderBody: Chunk | null = null;
   public placeholderRender: (() => void) | null = null;
   public placeholderBranchId: number | null = null;
@@ -1122,10 +1165,40 @@ export class Chunk {
     public boundary: Boundary,
     public next: Chunk | null,
     public context: Record<string | symbol, unknown> | null,
+    public serializeState: SerializeState,
   ) {
     this.boundary = boundary;
     this.next = next;
     this.context = context;
+    this.serializeState = serializeState;
+  }
+
+  fork(boundary: Boundary, next: Chunk | null) {
+    return new Chunk(boundary, next, this.context, this.serializeState);
+  }
+
+  renderWaitReady(readyId: string, renderer: ServerRenderer, input: unknown) {
+    const { boundary } = this;
+    const { state } = boundary;
+    const body = new Chunk(boundary, null, this.context, {
+      readyId,
+      scopes: new Map(),
+      lastSerializedScopeId:
+        state.readyScopeIds?.[readyId] ?? state.firstScopeId,
+      resumes: "",
+      writeScopes: {},
+      flushScopes: false,
+    });
+    const bodyEnd = body.render(renderer, input);
+
+    if (body === bodyEnd) {
+      this.writeHTML(body.html);
+      this.deferResume(body);
+      this.needsWalk ||= body.needsWalk;
+    } else {
+      bodyEnd.next = bodyEnd.fork(boundary, this.next);
+      this.next = body;
+    }
   }
 
   writeHTML(html: string) {
@@ -1145,11 +1218,29 @@ export class Chunk {
     this.scripts = concatScripts(this.scripts, script);
   }
 
+  deferResume(chunk: Chunk) {
+    this.deferredResume = appendDeferredResume(this.deferredResume, chunk);
+  }
+
   append(chunk: Chunk) {
     this.html += chunk.html;
     this.effects = concatEffects(this.effects, chunk.effects);
     this.scripts = concatScripts(this.scripts, chunk.scripts);
     this.lastEffect = chunk.lastEffect || this.lastEffect;
+    this.appendDeferredResume(chunk.takeDeferredResume());
+  }
+
+  appendDeferredResume(deferredResume: DeferredResume | null) {
+    this.deferredResume = appendDeferredResume(
+      this.deferredResume,
+      deferredResume,
+    );
+  }
+
+  takeDeferredResume() {
+    const { deferredResume } = this;
+    this.deferredResume = null;
+    return deferredResume;
   }
   flushPlaceholder() {
     if (this.placeholderBody) {
@@ -1190,13 +1281,22 @@ export class Chunk {
       let effects = "";
       let scripts = "";
       let lastEffect = "";
+      let deferredResume: DeferredResume | null = null;
       do {
         cur.flushPlaceholder();
         needsWalk ||= cur.needsWalk;
         html += cur.html;
-        effects = concatEffects(effects, cur.effects);
-        scripts = concatScripts(scripts, cur.scripts);
-        lastEffect = cur.lastEffect || lastEffect;
+        if (cur.serializeState.readyId) {
+          deferredResume = appendDeferredResume(deferredResume, cur);
+        } else {
+          effects = concatEffects(effects, cur.effects);
+          scripts = concatScripts(scripts, cur.scripts);
+          lastEffect = cur.lastEffect || lastEffect;
+        }
+        deferredResume = appendDeferredResume(
+          deferredResume,
+          cur.takeDeferredResume(),
+        );
         cur.consumed = true;
         cur = cur.next;
       } while (cur.next && !cur.async);
@@ -1206,6 +1306,7 @@ export class Chunk {
       cur.effects = concatEffects(effects, cur.effects);
       cur.scripts = concatScripts(scripts, cur.scripts);
       cur.lastEffect = lastEffect;
+      cur.appendDeferredResume(deferredResume);
     }
 
     return cur;
@@ -1227,6 +1328,44 @@ export class Chunk {
     }
   }
 
+  flushReadyResumeScripts() {
+    const { boundary, serializeState } = this;
+    const { readyId } = serializeState;
+    let scripts = "";
+    const deferredResume = this.takeDeferredResume();
+    if (Array.isArray(deferredResume)) {
+      for (const chunk of deferredResume) {
+        scripts = concatScripts(scripts, chunk.flushReadyResumeScripts());
+      }
+    } else if (deferredResume) {
+      scripts = deferredResume.flushReadyResumeScripts();
+    }
+
+    if (readyId && !this.async) {
+      const { state } = boundary;
+      flushSerializer(boundary, serializeState);
+      const { effects } = this;
+      const { resumes } = serializeState;
+      const chunkScripts = this.scripts;
+      serializeState.resumes = "";
+      this.effects = this.scripts = "";
+      this.lastEffect = "";
+      if (resumes || effects) {
+        state.needsMainRuntime = true;
+        scripts = concatScripts(
+          scripts,
+          boundary.state.writeReady(
+            readyId,
+            concatSequence(resumes, effects && `"${effects}"`),
+          ),
+        );
+      }
+      scripts = concatScripts(scripts, chunkScripts);
+    }
+
+    return scripts;
+  }
+
   flushScript() {
     const { boundary, effects } = this;
     const { state } = boundary;
@@ -1234,6 +1373,14 @@ export class Chunk {
     let { html, scripts } = this;
     let needsWalk = state.walkOnNextFlush;
     if (needsWalk) state.walkOnNextFlush = false;
+
+    const readyResumeScripts = this.flushReadyResumeScripts();
+    if (readyResumeScripts) {
+      needsWalk = true;
+      if (!state.hasGlobals) {
+        flushSerializerGlobals(boundary);
+      }
+    }
 
     if (state.needsMainRuntime && !state.hasMainRuntime) {
       state.hasMainRuntime = true;
@@ -1248,35 +1395,7 @@ export class Chunk {
       );
     }
 
-    if (state.ensureReady && state.hasMainRuntime) {
-      let first = true;
-      for (const id in state.ensureReady) {
-        if (state.ensureReady[id]) {
-          state.ensureReady[id] = 0;
-          if (first) {
-            scripts = concatScripts(
-              scripts,
-              "(" +
-                runtimePrefix +
-                RuntimeKey.Blocking +
-                "={})" +
-                toAccess(toObjectKey(id)) +
-                "=1",
-            );
-          } else {
-            scripts = concatScripts(
-              scripts,
-              runtimePrefix +
-                RuntimeKey.Blocking +
-                toAccess(toObjectKey(id)) +
-                "=1",
-            );
-          }
-        }
-
-        first = false;
-      }
-    }
+    scripts = concatScripts(scripts, readyResumeScripts);
 
     if (effects) {
       needsWalk = true;
@@ -1327,10 +1446,14 @@ export class Chunk {
         for (;;) {
           cur.flushPlaceholder();
           const { next } = cur;
+          const readyResumeScripts = cur.flushReadyResumeScripts();
           cur.consumed = true;
           reorderHTML += cur.html;
           reorderEffects = concatEffects(reorderEffects, cur.effects);
-          reorderScripts = concatScripts(reorderScripts, cur.scripts);
+          reorderScripts = concatScripts(
+            reorderScripts,
+            concatScripts(readyResumeScripts, cur.scripts),
+          );
 
           if (cur.async) {
             reorderHTML += state.mark(
@@ -1429,22 +1552,29 @@ export class Chunk {
   }
 }
 
-function flushSerializer(boundary: Boundary) {
+function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
   const { state } = boundary;
-  const { writeScopes, serializer } = state;
+  const { serializer } = state;
   const { flushed } = serializer;
-  if (writeScopes || flushed) {
+  if (serializeState.flushScopes || flushed) {
+    const { writeScopes } = serializeState;
     let shouldSerialize = false;
     const serializeData: [
       $global?: ReturnType<typeof getFilteredGlobals>,
       ...(number | PartialScope)[],
     ] = [];
-    let { lastSerializedScopeId } = state;
+    const globals = getFilteredGlobals(state.$global);
+    const isBlockingState = serializeState !== state;
+    let needsDefaultGlobal =
+      isBlockingState && !serializeState.resumes && !globals;
+    let { lastSerializedScopeId } = serializeState;
 
-    if (!state.hasGlobals) {
-      state.hasGlobals = true;
-      serializeData.push(getFilteredGlobals(state.$global));
-      shouldSerialize = true;
+    if (!isBlockingState) {
+      if (!state.hasGlobals) {
+        state.hasGlobals = true;
+        serializeData.push(globals);
+        shouldSerialize = true;
+      }
     }
 
     for (const key in writeScopes) {
@@ -1456,6 +1586,10 @@ function flushSerializer(boundary: Boundary) {
         const scopeId = getScopeId(scope)!;
         const scopeIdDelta = scopeId - lastSerializedScopeId;
         lastSerializedScopeId = scopeId + 1;
+        if (needsDefaultGlobal) {
+          needsDefaultGlobal = false;
+          serializeData.push(0);
+        }
         if (scopeIdDelta) serializeData.push(scopeIdDelta);
         serializeData.push(scope);
         shouldSerialize = true;
@@ -1463,17 +1597,53 @@ function flushSerializer(boundary: Boundary) {
     }
 
     if (shouldSerialize) {
-      state.resumes = concatSequence(
-        state.resumes,
+      serializeState.resumes = concatSequence(
+        serializeState.resumes,
         serializer.stringify(serializeData, boundary),
       );
     }
-    state.lastSerializedScopeId = lastSerializedScopeId;
-    state.writeScopes = null;
+    serializeState.lastSerializedScopeId = lastSerializedScopeId;
+    if (serializeState.readyId) {
+      (state.readyScopeIds ||= {})[serializeState.readyId] =
+        lastSerializedScopeId;
+    }
+    serializeState.writeScopes = {};
+    serializeState.flushScopes = false;
     if (flushed) {
       state.walkOnNextFlush = true;
     }
   }
+}
+
+function flushSerializerGlobals(boundary: Boundary) {
+  const { state } = boundary;
+  const globals = getFilteredGlobals(state.$global);
+  state.hasGlobals = true;
+  if (globals) {
+    state.needsMainRuntime = true;
+    state.resumes = concatSequence(
+      state.resumes,
+      state.serializer.stringify([globals], boundary),
+    );
+  }
+}
+
+function appendDeferredResume(
+  current: DeferredResume | null,
+  next: DeferredResume | null,
+): DeferredResume | null {
+  if (!next) return current;
+  if (!current) return next;
+  if (Array.isArray(current)) {
+    if (Array.isArray(next)) {
+      current.push(...next);
+    } else {
+      current.push(next);
+    }
+    return current;
+  }
+
+  return Array.isArray(next) ? [current, ...next] : [current, next];
 }
 
 export function _trailers(html: string) {

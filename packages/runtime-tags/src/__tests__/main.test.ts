@@ -16,6 +16,7 @@ import { captureConsole, type ConsoleRecord } from "./utils/capture-console";
 import createBrowser from "./utils/create-browser";
 import {
   type Flush,
+  type FlushType,
   isFlush,
   isThrows,
   isWait,
@@ -294,7 +295,9 @@ function testFixtures(interop?: true) {
                   await snapMode(async () => {
                     const pretty = html_beautify(
                       (optimize ? stripOptimizeRuntime : stripDebugRuntime)(
-                        chunks.join("\n\n<!-- FLUSH -->\n\n"),
+                        stripDefaultScript(
+                          chunks.join("\n\n<!-- FLUSH -->\n\n"),
+                        ),
                       ),
                       {
                         indent_size: 2,
@@ -304,7 +307,9 @@ function testFixtures(interop?: true) {
                     );
 
                     if (optimize) {
-                      stats.html = await getSizes(chunks.join(""));
+                      stats.html = await getSizes(
+                        stripDefaultScript(chunks.join("")),
+                      );
                     }
 
                     return `${pretty}\n`;
@@ -345,10 +350,19 @@ async function runSteps(
     if (isWait(update)) {
       await update();
       await browser.runAsyncScripts();
+      run();
+      tracker.logUpdate();
     } else if (isFlush(update)) {
-      if (opts.onFlush) {
+      if (update.flushType === "stream") {
+        if (opts.onFlush) {
+          tracker.beginUpdate();
+          await opts.onFlush();
+          tracker.logUpdate();
+        }
+      } else {
         tracker.beginUpdate();
-        await opts.onFlush();
+        browser.flush(update.flushType as Exclude<FlushType, "stream">);
+        run();
         tracker.logUpdate();
       }
     } else if (typeof update === "function") {
@@ -378,6 +392,13 @@ async function getSteps(config: TestConfig) {
       ? await config.steps()
       : (config.steps ?? []);
   return { input, steps };
+}
+
+function stripDefaultScript(html: string) {
+  return html.replace(
+    `<script async type=module src="template.marko.page.mjs"></script>`,
+    "",
+  );
 }
 
 function once<T>(fn: () => T): () => T {

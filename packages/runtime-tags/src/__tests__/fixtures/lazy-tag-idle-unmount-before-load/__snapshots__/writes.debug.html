@@ -1,0 +1,29 @@
+<button
+  id=toggle>Toggle</button><!--M_*1 #button/0--><!--M_[--><span>0<!--M_*3 #text/0--></span><!--M_]1 #text/1 2--><button
+  id=inc>Inc</button><!--M_*1 #button/2-->
+<script>
+  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (self
+    .requestIdleCallback || l)(l, {
+    timeout: 100
+  }))(document.currentScript,
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-idle-unmount-before-load/child.marko": [
+      _ => (_.d = [0, 2, {
+        "#ClosestBranchId": 2
+      }]),
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-idle-unmount-before-load/child.marko_0 3"
+    ]
+  };
+  M._.r = [_ => (_.c = [0, _.a = {
+      show: !0,
+      value: 0
+    }, {
+      _: _.a,
+      "#childScope/1": _.b = {}
+    }, _.b]),
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-idle-unmount-before-load/template.marko_0_value 1 packages/runtime-tags/src/__tests__/fixtures/lazy-tag-idle-unmount-before-load/template.marko_0_show 1"
+  ];
+  M._.w()
+</script>

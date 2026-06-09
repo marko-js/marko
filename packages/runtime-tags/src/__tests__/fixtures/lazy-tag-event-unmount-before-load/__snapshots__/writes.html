@@ -1,0 +1,24 @@
+<button
+  id=toggle>Toggle</button><!--M_*1 a--><!--M_[--><span>0<!--M_*3 a--></span><!--M_]1 b 2--><button
+  id=load>Load</button><button id=inc>Inc</button><!--M_*1 c-->
+<script>
+  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (e => e
+    ?.addEventListener("click", l, {
+      once: 1
+    }))(document.querySelector("#load") || l()))(document.currentScript,
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [_ => (_.d = [0, 2, {
+      G: 2
+    }]), "a0 3"]
+  };
+  M._.r = [_ => (_.c = [0, _.a = {
+    d: !0,
+    e: 0
+  }, {
+    _: _.a,
+    b: _.b = {}
+  }, _.b]), "b0 1 b1 1"];
+  M._.w()
+</script>

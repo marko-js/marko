@@ -3,7 +3,8 @@
 <div>Hello</div><!--Membedded|1 c 2-->
 <script>
   WALKER_RUNTIME("M")("embedded");
-  (M.embedded.b = {}).a = 1;
-  M.embedded.r = [_ => (_.a = [0, {}]), "a0 1 a1 1"];
+  M.embedded.b = {
+    a: [_ => (_.a = [0, {}]), "a0 1 a1 1"]
+  };
   M.embedded.w()
 </script>

@@ -94,14 +94,15 @@ export const compat = {
     };
   },
   flushScript($global: any) {
-    const boundary = new Boundary(this.ensureState($global));
+    const state = this.ensureState($global);
+    const boundary = new Boundary(state);
     if (boundary.flush() === FlushStatus.continue) {
       throw new Error(
         "Cannot serialize promise across tags/class compat layer.",
       );
     }
 
-    return new Chunk(boundary, null, null).flushScript().scripts;
+    return new Chunk(boundary, null, null, state).flushScript().scripts;
   },
   render(
     renderer: ServerRenderer,
@@ -111,11 +112,13 @@ export const compat = {
     input: any,
     completeChunks: Chunk[],
   ) {
-    const boundary = new Boundary(this.ensureState(classAPIOut.global));
+    const state = this.ensureState(classAPIOut.global);
+    const boundary = new Boundary(state);
     let head = new Chunk(
       boundary,
       null,
       null /* TODO: this should grab the context from the previous chunk */,
+      state,
     );
     let normalizedInput = input;
     if ("renderBody" in input) {

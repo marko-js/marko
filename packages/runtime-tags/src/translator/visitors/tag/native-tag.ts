@@ -16,7 +16,7 @@ import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorProp } from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
 import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
-import { isOutputHTML } from "../../util/marko-config";
+import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
 import { type Opt, push } from "../../util/optional";
 import {
   type Binding,
@@ -531,6 +531,9 @@ export default {
         }
 
         if (!tagExtra[kSkipEndTag] && !isOpenOnly && !selectArgs) {
+          if (tagName === "head" && getMarkoOpts().linkAssets) {
+            write`${callRuntime("_flush_head")}`;
+          }
           write`</${tagName}>`;
         }
 

@@ -1,0 +1,169 @@
+import type { $Global, Template } from "../common/types";
+import { _escape_script } from "./content";
+import { toObjectKey } from "./serializer";
+import { _template, type ServerRenderer } from "./template";
+import { _html, $global, writeScript, writeWaitReady } from "./writer";
+
+const kAssets = Symbol();
+const kBlockIndex = Symbol();
+const kDeferIndex = Symbol();
+const { hasOwnProperty } = {};
+export interface VisibleTrigger {
+  type: "visible";
+  selector: string;
+  options?: { rootMargin?: string };
+}
+export interface IdleTrigger {
+  type: "idle";
+  selector?: never;
+  options?: { timeout?: number };
+}
+export interface MediaTrigger {
+  type: "media";
+  selector: string;
+  options?: never;
+}
+export interface EventTrigger {
+  type: `on-${string}`;
+  selector: string;
+  options?: never;
+}
+export type LoadTrigger =
+  | VisibleTrigger
+  | IdleTrigger
+  | MediaTrigger
+  | EventTrigger;
+type Trigger = LoadTrigger;
+interface Asset {
+  id: string;
+  triggers?: Trigger[];
+}
+
+declare module "../common/types" {
+  interface $Global {
+    [kAssets]?: Asset[];
+    [kBlockIndex]?: number;
+    [kDeferIndex]?: number;
+  }
+}
+
+type AssetFlush = (
+  g: $Global,
+  type: "block" | "defer",
+  asset: string,
+) => string;
+let assetFlush: AssetFlush;
+
+export function withLoadAssets(
+  renderer: ServerRenderer,
+  assetId: string,
+  triggers?: Trigger[],
+): ServerRenderer {
+  return Object.assign((input: unknown) => {
+    const g = $global();
+    addAsset(g, assetId, triggers);
+    _html(flush(g, ""));
+    return writeWaitReady(assetId, renderer, input);
+  }, renderer);
+}
+
+export function withPageAssets(
+  template: ServerRenderer & Template,
+  runtime: AssetFlush,
+  assetId: string,
+): Template {
+  assetFlush = runtime;
+  return Object.assign((input: unknown) => {
+    const g = $global();
+    addAsset(g, assetId);
+    if (g.__flush__) {
+      _html(flush(g, ""));
+    } else {
+      g.__flush__ = flush;
+    }
+
+    return template(input);
+  }, template);
+}
+
+export function _flush_head(): string {
+  const g = $global();
+  return g[kAssets] ? flush(g, "") : "";
+}
+
+function flush(g: $Global, html: string) {
+  let result = "";
+  const assets = g[kAssets]!;
+  const { length } = assets;
+  let bi = g[kBlockIndex]!;
+  let di = g[kDeferIndex]!;
+
+  for (; bi < length; bi++) {
+    result += assetFlush(g, "block", assets[bi].id);
+  }
+
+  for (; di < length; di++) {
+    const { id, triggers } = assets[di];
+    const deferHTML = assetFlush(g, "defer", id);
+    if (triggers) {
+      if (deferHTML) writeTriggerScript(deferHTML, triggers);
+    } else {
+      result += deferHTML;
+    }
+  }
+
+  g[kBlockIndex] = bi;
+  g[kDeferIndex] = di;
+  return result + html;
+}
+
+function addAsset(g: $Global, id: string, triggers?: Trigger[]) {
+  const assets = g[kAssets];
+  if (!assets) {
+    g[kAssets] = [{ id, triggers }];
+    g[kBlockIndex] = g[kDeferIndex] = 0;
+  } else if (!assets.find((a) => a.id === id)) {
+    // TODO: error if multiple triggers for same asset.
+    assets.push({ id, triggers });
+  }
+}
+
+function writeTriggerScript(html: string, triggers: Trigger[]) {
+  const htmlStr = _escape_script(JSON.stringify(html));
+  const exprs = triggers.map((trigger) => {
+    const options = trigger.options && toObjectExpression(trigger.options);
+    switch (trigger.type) {
+      case "visible":
+        return `(e=>e&&new IntersectionObserver(($,i)=>i.disconnect()+l()${
+          options ? `,${options}` : ""
+        }).observe(e))(document.querySelector(${JSON.stringify(trigger.selector)})||l())`;
+      case "idle":
+        return `(self.requestIdleCallback||l)(l${options ? `,${options}` : ""})`;
+      case "media":
+        return `(m=>m.matches?l():m.addEventListener("change",l,{once:1}))(matchMedia(${JSON.stringify(trigger.selector)}))`;
+      default:
+        return `(e=>e?.addEventListener("${trigger.type.slice("on-".length)}",l,{once:1}))(document.querySelector(${JSON.stringify(trigger.selector)})||l())`;
+    }
+  });
+  writeScript(
+    `((p,h,d,l=$=>d||p.insertAdjacentHTML("afterend",d=h))=>${
+      exprs.length > 1 ? `{${exprs.join(";")}}` : exprs[0]
+    })(document.currentScript,${htmlStr})`,
+  );
+}
+
+function toObjectExpression(options: object) {
+  let result = "{";
+  let sep = "";
+  for (const key in options) {
+    if (hasOwnProperty.call(options, key)) {
+      result +=
+        sep +
+        toObjectKey(key) +
+        ":" +
+        JSON.stringify((options as Record<string, unknown>)[key]);
+      sep = ",";
+    }
+  }
+  return result + "}";
+}

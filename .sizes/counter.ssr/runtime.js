@@ -1,4 +1,4 @@
-// size: 2327 (min) 1206 (brotli)
+// size: 2324 (min) 1202 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -134,7 +134,7 @@ function init(runtimeId = "M") {
             lastToken,
             lastTokenIndex;
           return (
-            (render.m = (effects = []) => {
+            (render.m = (effects) => {
               processResumes(render.r, effects);
               for (visit of (visits = render.v))
                 if (
@@ -171,7 +171,7 @@ function init(runtimeId = "M") {
 }
 function runResumeEffects(render) {
   try {
-    runEffects(render.m(), 1);
+    runEffects(render.m([]), 1);
   } finally {
   }
 }
