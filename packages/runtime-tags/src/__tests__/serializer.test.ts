@@ -32,7 +32,7 @@ describe("serializer", () => {
 
     assertStringify(
       data,
-      `{strings:"hello\\nworld",numbers:[1,NaN,Infinity],booleans:[!0,!1],void:[null,$],regexps:/abc/g,maps:new Map(_.a=[[1,2]]),sets:new Set(_.b=[1,2]),nested:{object:_.d={"special-keys":1}}},_.d.cyclical=_.c`,
+      `{strings:"hello\\nworld",numbers:[1,NaN,Infinity],booleans:[!0,!1],void:[null,$],regexps:/abc/g,maps:new Map([[1,2]]),sets:new Set([1,2]),nested:{object:_.b={"special-keys":1}}},_.b.cyclical=_.a`,
     );
   });
 
@@ -54,9 +54,13 @@ describe("serializer", () => {
     describe("string", () => {
       it("empty", () => assertStringify("", `""`));
       it("normal", () => assertStringify("test", `"test"`));
-      it("over 30 chars deduped", () => {
-        const long = "1234567890123456789012345678901";
+      it("long strings deduped", () => {
+        const long = "1234567890123";
         assertStringify({ a: long, b: long }, `{a:_.a="${long}",b:_.a}`);
+      });
+      it("short strings repeated", () => {
+        const short = "123456789012";
+        assertStringify({ a: short, b: short }, `{a:"${short}",b:"${short}"}`);
       });
       it("special characters", () =>
         assertStringify(
@@ -133,11 +137,10 @@ describe("serializer", () => {
   });
 
   describe("date", () => {
-    it("epoch", () =>
-      assertStringify(new Date(0), `new Date("1970-01-01T00:00:00.000Z")`));
+    it("epoch", () => assertStringify(new Date(0), `new Date(0)`));
     it("now", () => {
       const date = new Date();
-      assertStringify(date, `new Date("${date.toISOString()}")`);
+      assertStringify(date, `new Date(${+date})`);
     });
   });
 
@@ -448,7 +451,7 @@ describe("serializer", () => {
           mother,
           father,
         },
-        `{mother:{name:"Jane",registered:_.b=new Date("1970-01-01T00:00:00.000Z"),pattern:_.c=/test/,firstChild:_.a={name:"Henry"},children:_.d=[_.a]},father:{name:"Frank",registered:_.b,pattern:_.c,firstChild:_.a,children:_.d}}`,
+        `{mother:{name:"Jane",registered:_.b=new Date(0),pattern:_.c=/test/,firstChild:_.a={name:"Henry"},children:_.d=[_.a]},father:{name:"Frank",registered:_.b,pattern:_.c,firstChild:_.a,children:_.d}}`,
       );
     });
 
@@ -498,6 +501,47 @@ describe("serializer", () => {
       assertStringify(
         obj,
         `{x:1,*[(_.a=[1,2,],Symbol.iterator)](){yield*_.a}},_.a[2]=_.b`,
+      );
+    });
+
+    it("Symbol.iterator yields self", () => {
+      const obj = {
+        x: 1,
+        *[Symbol.iterator]() {
+          yield obj;
+        },
+      };
+
+      assertStringify(obj, `{x:1,*[Symbol.iterator](){yield this}}`);
+    });
+
+    it("Symbol.iterator yields self then rest", () => {
+      // The attr tag shape: yields itself first, then any repeated tags.
+      const obj = {
+        x: 1,
+        *[Symbol.iterator]() {
+          yield obj;
+          yield { y: 2 };
+        },
+      };
+
+      assertStringify(
+        obj,
+        `{x:1,*[(_.a=[{y:2}],Symbol.iterator)](){yield this;yield*_.a}}`,
+      );
+    });
+
+    it("Symbol.iterator single item", () => {
+      const obj = {
+        x: 1,
+        *[Symbol.iterator]() {
+          yield { y: 2 };
+        },
+      };
+
+      assertStringify(
+        obj,
+        `{x:1,*[(_.a=[{y:2}],Symbol.iterator)](){yield*_.a}}`,
       );
     });
 

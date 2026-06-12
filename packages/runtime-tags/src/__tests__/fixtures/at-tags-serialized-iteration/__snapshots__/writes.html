@@ -1,0 +1,26 @@
+<div></div><!--M_*2 a-->
+<div></div><!--M_*3 a-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.b = [0, 1, {
+    d: {
+      label: "a",
+      *[(_.a = [{
+        label: "b"
+      }, {
+        label: "c"
+      }], Symbol.iterator)]() {
+        yield this;
+        yield* _.a
+      }
+    }
+  }, {
+    d: {
+      label: "solo",
+      *[Symbol.iterator]() {
+        yield this
+      }
+    }
+  }]), "b0 2 3"];
+  M._.w()
+</script>

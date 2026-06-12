@@ -2,40 +2,41 @@
      value=1>One</span><!--M_*6 a--><span value=1>Two</span><!--M_*8 a--></span>
  <script>
    WALKER_RUNTIME("M")("_");
-   M._.r = [_ => (_.i = [0, 1, _.e = {
-       d: _.c = {
+   M._.r = [_ => (_.g = [0, 1, _.d = {
+     d: {
+       value: 1,
+       desc: {
+         content: _._.a0(_.a = {}),
+         *[Symbol.iterator]() {
+           yield this
+         }
+       },
+       *[(_.b = [_.f = {
          value: 1,
-         desc: {
-           content: _._.a0(_.a = {}),
+         desc: _.c = {
            *[Symbol.iterator]() {
              yield this
            }
-         },
-         *[(_.b = [, _.h = {
-           value: 1,
-           desc: _.d = {
-             *[Symbol.iterator]() {
-               yield this
-             }
-           }
-         }], Symbol.iterator)]() {
-           yield* _.b
          }
+       }], Symbol.iterator)]() {
+         yield this;
+         yield* _.b
        }
-     }, 1, {
-       _: _.e
-     }, 1, {
-       f: _.g = {
-         value: 1,
-         *[(_.f = [, _.h], Symbol.iterator)]() {
-           yield* _.f
-         }
+     }
+   }, 1, {
+     _: _.d
+   }, 1, {
+     f: {
+       value: 1,
+       *[(_.e = [_.f], Symbol.iterator)]() {
+         yield this;
+         yield* _.e
        }
-     }, 1, {
-       f: {
-         value: 1
-       }
-     }], _.b[0] = _.c, _.f[0] = _.g, _.d.content = _._.a1(_.a), _.i),
-     "b0 6 8"];
+     }
+   }, 1, {
+     f: {
+       value: 1
+     }
+   }], _.c.content = _._.a1(_.a), _.g), "b0 6 8"];
    M._.w()
  </script>
