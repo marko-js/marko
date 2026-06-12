@@ -148,13 +148,7 @@ function runRenders() {
       pendingRenders[i] = item;
     }
 
-    if (
-      !render[PendingRenderProp.Scope][AccessorProp.ClosestBranch]?.[
-        AccessorProp.Destroyed
-      ]
-    ) {
-      runRender(render);
-    }
+    runRender(render);
   }
 
   for (const scope of pendingScopes) {
@@ -169,6 +163,20 @@ let runRender = (render: PendingRender) =>
     render[PendingRenderProp.Scope],
     render[PendingRenderProp.Value],
   );
+
+// Installed by `enableBranches` so apps without branches don't pay for
+// the destroyed branch check.
+export function skipDestroyedRenders() {
+  runRender = ((runRender) => (render: PendingRender) => {
+    if (
+      !render[PendingRenderProp.Scope][AccessorProp.ClosestBranch]?.[
+        AccessorProp.Destroyed
+      ]
+    ) {
+      runRender(render);
+    }
+  })(runRender);
+}
 
 let catchEnabled: undefined | 1;
 export function _enable_catch() {
