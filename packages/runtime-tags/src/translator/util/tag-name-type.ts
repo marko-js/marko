@@ -5,7 +5,6 @@ import {
   getTagDef,
   isNativeTag,
   loadFileForTag,
-  resolveTagImport,
 } from "@marko/compiler/babel-utils";
 
 import { isCoreTag } from "./is-core-tag";
@@ -145,8 +144,7 @@ function analyzeExpressionTagName(
           MARKO_FILE_REG.test(decl.source.value) &&
           decl.specifiers.some((it) => t.isImportDefaultSpecifier(it))
         ) {
-          const resolvedImport =
-            resolveTagImport(name, decl.source.value) || decl.source.value;
+          const resolvedImport = decl.extra?.tagImport || decl.source.value;
           if (type === undefined) {
             type = TagNameType.CustomTag;
             tagNameImported = resolvedImport;

@@ -56,12 +56,7 @@ export function callRuntime(
     filterArguments(args),
   );
   if (isOutputDOM() && pureDOMFunctions.has(name)) {
-    callExpression.leadingComments = [
-      {
-        type: "CommentBlock",
-        value: ` @__PURE__ `,
-      } as t.CommentBlock,
-    ];
+    return t.addComment(callExpression, "leading", "@__PURE__");
   }
   return callExpression;
 }

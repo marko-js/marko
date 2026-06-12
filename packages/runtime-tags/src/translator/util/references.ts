@@ -69,7 +69,6 @@ import { createProgramState } from "./state";
 import { toMemberExpression } from "./to-property-name";
 import withPreviousLocation from "./with-previous-location";
 
-const kIsInvoked = Symbol("hoist is invoked");
 export const kBranchSerializeReason = Symbol("branch serialize reason");
 export type Aliases = undefined | Binding | { [property: string]: Aliases };
 
@@ -151,8 +150,6 @@ declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     section?: Section;
     referencedBindings?: ReferencedBindings;
-    constantBindings?: ReferencedBindings;
-    hoistedBindings?: ReferencedBindings;
     downstream?: Opt<Binding>;
     binding?: Binding;
     assignment?: Binding;
@@ -162,14 +159,12 @@ declare module "@marko/compiler/dist/types" {
     isEffect?: true;
     spreadFrom?: Binding;
     merged?: NodeExtra;
-    [kIsInvoked]?: true;
   }
 
   export interface FunctionExtra {
     referencesScope?: boolean;
     referencedBindingsInFunction?: ReferencedBindings;
     constantBindingsInFunction?: ReferencedBindings;
-    hoistedBindingsInFunction?: ReferencedBindings;
     name?: string;
     registerId?: string;
     registerReason?: SerializeReason;
@@ -884,9 +879,12 @@ export function finalizeReferences() {
         intersectionsBySection,
       );
       expr.referencedBindings = exprBindings.referencedBindings;
-      expr.constantBindings = exprBindings.constantBindings;
-      expr.hoistedBindings = expr.section.referencedHoists =
-        exprBindings.hoistedBindings;
+      if (exprBindings.hoistedBindings) {
+        expr.section.referencedHoists = bindingUtil.union(
+          expr.section.referencedHoists,
+          exprBindings.hoistedBindings,
+        );
+      }
 
       if (expr.isEffect) {
         forEach(exprBindings.referencedBindings, (binding) => {
@@ -910,7 +908,6 @@ export function finalizeReferences() {
                   );
             fn.referencedBindingsInFunction = fnBindings.referencedBindings;
             fn.constantBindingsInFunction = fnBindings.constantBindings;
-            fn.hoistedBindingsInFunction = fnBindings.hoistedBindings;
           }
         }
       }
@@ -1935,16 +1932,13 @@ function resolveReferencedBindingsInFunction(
 ) {
   let referencedBindings: ReferencedBindings;
   let constantBindings: ReferencedBindings;
-  let hoistedBindings: ReferencedBindings;
 
   if (reads) {
     if (Array.isArray(reads)) {
       for (const read of reads) {
         const { getter, binding } = read;
         if (getter) {
-          if (getter.hoisted && bindingUtil.find(refs, binding)) {
-            hoistedBindings = bindingUtil.add(hoistedBindings, binding);
-          }
+          // hoisted/getter reads resolve through getters, not signals.
         } else if (binding.type === BindingType.constant) {
           if (bindingUtil.find(refs, binding)) {
             constantBindings = bindingUtil.add(constantBindings, binding);
@@ -1959,9 +1953,7 @@ function resolveReferencedBindingsInFunction(
     } else {
       const { getter, binding } = reads;
       if (getter) {
-        if (getter.hoisted && bindingUtil.find(refs, binding)) {
-          hoistedBindings = binding;
-        }
+        // hoisted/getter reads resolve through getters, not signals.
       } else if (binding.type === BindingType.constant) {
         if (bindingUtil.find(refs, binding)) {
           constantBindings = binding;
@@ -1972,7 +1964,7 @@ function resolveReferencedBindingsInFunction(
     }
   }
 
-  return { referencedBindings, constantBindings, hoistedBindings };
+  return { referencedBindings, constantBindings };
 }
 
 function findClosestReference(
@@ -2130,7 +2122,7 @@ function resolveReferencedBindings(
     // Resolve canonical intersection based on the expressions section.
     // This ensures referential equality between reference binding groups.
     const intersections = intersectionsBySection.get(expr.section) || [];
-    const combined = concat(
+    const combined = bindingUtil.union(
       referencedBindings,
       constantBindings,
     ) as Intersection;
