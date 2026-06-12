@@ -1,4 +1,4 @@
-export const WALKER_RUNTIME_CODE = /* js */ `((runtimeId) => (self[runtimeId] || (self[runtimeId] = (
+export const WALKER_RUNTIME_CODE = /* js */ `((runtimeId) => (self[runtimeId] ||= (
   renderId,
   prefix = runtimeId + renderId,
   prefixLen = prefix.length,
@@ -33,7 +33,7 @@ export const WALKER_RUNTIME_CODE = /* js */ `((runtimeId) => (self[runtimeId] ||
       }
     },
   })
-), self[runtimeId]))`;
+, self[runtimeId]))`;
 export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
   if (runtime.j) return;
   let onNextSibling,
