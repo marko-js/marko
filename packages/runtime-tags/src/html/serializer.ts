@@ -682,26 +682,32 @@ function writeRegistered(
   return true;
 }
 
+// Strings longer than this are tracked for reuse — a repeat emits a
+// reference binding instead of the literal. Tracking costs no wire bytes
+// (the binding is only claimed on a second use); break even on the first
+// reuse is ~6 chars, the margin keeps the map from filling with tiny
+// strings.
+const STRING_DEDUP_LENGTH = 12;
+
 function writeString(
   state: State,
   val: string,
   parent: Reference | null,
   accessor: string,
 ) {
-  if (val.length > 30) {
+  if (val.length > STRING_DEDUP_LENGTH) {
     const ref = state.strs.get(val);
     if (ref) {
       state.buf.push(ensureId(state, ref));
+      return true;
     } else {
       state.strs.set(
         val,
         new Reference(parent, accessor, state.flush, state.buf.length),
       );
-      state.buf.push(quote(val, 0));
     }
-  } else {
-    state.buf.push(quote(val, 0));
   }
+  state.buf.push(quote(val, 0));
   return true;
 }
 
@@ -891,7 +897,9 @@ function writeArray(state: State, val: unknown[], ref: Reference) {
 }
 
 function writeDate(state: State, val: Date) {
-  state.buf.push('new Date("' + val.toISOString() + '")');
+  // Epoch form is ~12 bytes smaller than an ISO string and also round
+  // trips invalid dates (`toISOString` throws on them).
+  state.buf.push("new Date(" + +val + ")");
   return true;
 }
 
@@ -923,16 +931,9 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
     return true;
   }
 
-  const arrayRef = new Reference(
-    ref,
-    null,
-    state.flush,
-    null,
-    nextRefAccess(state),
-  );
-
   const items: unknown[] = [];
   let assigns: undefined | string[];
+  let needsId: undefined | boolean;
   let i = 0;
 
   // Using the map constructor uses 2 bytes per entry (serialized as an array).
@@ -950,6 +951,8 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
         (assigns ||= []).push("a[" + i + "][1]");
       }
 
+      needsId ||= isDedupedMember(itemKey) || isDedupedMember(itemValue);
+
       i = items.push(
         itemValue === undefined
           ? itemKey === undefined
@@ -959,20 +962,17 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
       );
     }
 
-    if (assigns) {
-      state.buf.push(
+    writeArrayArg(
+      state,
+      ref,
+      items,
+      assigns &&
         "((m,a)=>(" +
           assignsToString(assigns, "m") +
-          ",a.forEach(i=>m.set(i[0],i[1])),m))(new Map," +
-          arrayRef.id +
-          "=",
-      );
-    } else {
-      state.buf.push("new Map(" + arrayRef.id + "=");
-    }
-
-    writeArray(state, items, arrayRef);
-    state.buf.push(")");
+          ",a.forEach(i=>m.set(i[0],i[1])),m))(new Map,",
+      "new Map(",
+      needsId,
+    );
   } else {
     for (let [itemKey, itemValue] of val) {
       if (itemKey === val) {
@@ -985,26 +985,22 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
         (assigns ||= []).push("a[" + (i + 1) + "]");
       }
 
+      needsId ||= isDedupedMember(itemKey) || isDedupedMember(itemValue);
+
       i = items.push(itemKey, itemValue);
     }
 
-    if (assigns) {
-      state.buf.push(
+    writeArrayArg(
+      state,
+      ref,
+      items,
+      assigns &&
         "(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1])," +
           assignsToString(assigns, "new Map") +
-          "))(" +
-          arrayRef.id +
-          "=",
-      );
-    } else {
-      state.buf.push(
-        "(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),new Map))(" +
-          arrayRef.id +
-          "=",
-      );
-    }
-    writeArray(state, items, arrayRef);
-    state.buf.push(")");
+          "))(",
+      "(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),new Map))(",
+      needsId,
+    );
   }
 
   return true;
@@ -1018,36 +1014,82 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
 
   const items: (unknown | undefined)[] = [];
   let assigns: undefined | string[];
+  let needsId: undefined | boolean;
   let i = 0;
   for (let item of val) {
     if (item === val) {
       item = 0;
       (assigns ||= []).push("i[" + i + "]");
+    } else {
+      needsId ||= isDedupedMember(item);
     }
 
     i = items.push(item);
   }
 
-  const arrayRef = new Reference(
+  writeArrayArg(
+    state,
     ref,
-    null,
-    state.flush,
-    null,
-    nextRefAccess(state),
-  );
-  state.buf.push(
-    (assigns
-      ? "((s,i)=>(" +
+    items,
+    assigns &&
+      "((s,i)=>(" +
         assignsToString(assigns, "s") +
-        ",i.forEach(i=>s.add(i)),s))(new Set,"
-      : "new Set(") +
-      arrayRef.id +
-      "=",
+        ",i.forEach(i=>s.add(i)),s))(new Set,",
+    "new Set(",
+    needsId,
   );
-
-  writeArray(state, items, arrayRef);
-  state.buf.push(")");
   return true;
+}
+
+// Writes the backing array argument for a Map/Set. The array has no
+// accessor, so members that may be referenced again later must reach it
+// through an eagerly claimed id binding (`needsId`, and always for the
+// self-reference wrapper form) — while primitive members never reference
+// back through it and skip the binding entirely.
+function writeArrayArg(
+  state: State,
+  ref: Reference,
+  items: unknown[],
+  assignsPrefix: string | undefined | false,
+  plainPrefix: string,
+  needsId?: boolean,
+) {
+  if (assignsPrefix || needsId) {
+    const arrayRef = new Reference(
+      ref,
+      null,
+      state.flush,
+      null,
+      nextRefAccess(state),
+    );
+    state.buf.push((assignsPrefix || plainPrefix) + arrayRef.id + "=");
+    writeArray(state, items, arrayRef);
+  } else {
+    state.buf.push(plainPrefix);
+    writeArray(
+      state,
+      items,
+      new Reference(ref, null, state.flush, state.buf.length),
+    );
+  }
+  state.buf.push(")");
+}
+
+// Direct Map/Set members that may be referenced again later bind through
+// the backing array, so its id must be claimed eagerly; primitives never
+// do.
+function isDedupedMember(val: unknown) {
+  switch (typeof val) {
+    case "object":
+      return val !== null;
+    case "function":
+    case "symbol":
+      return true;
+    case "string":
+      return val.length > STRING_DEDUP_LENGTH;
+    default:
+      return false;
+  }
 }
 
 function writeArrayBuffer(state: State, val: ArrayBuffer) {
@@ -1413,32 +1455,39 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
   }
 
   if (hasSymbolIterator(val)) {
-    const iterArr = [...val];
-    switch (iterArr.length) {
-      case 0:
-        state.buf.push(sep + "*[Symbol.iterator](){}");
-        break;
-      case 1:
-        state.buf.push(
-          sep +
-            "*[Symbol.iterator](){yield " +
-            (iterArr[0] === val ? "this" : ensureId(state, ref)) +
-            "}",
-        );
-        break;
-      default: {
-        const iterRef = new Reference(
-          ref,
-          null,
-          state.flush,
-          null,
-          nextRefAccess(state),
-        );
-        state.buf.push(sep + "*[(" + iterRef.id + "=");
-        writeArray(state, iterArr, iterRef);
-        state.buf.push(",Symbol.iterator)](){yield*" + iterRef.id + "}");
-        break;
+    // Attr tags (and other self first iterables) yield the object itself
+    // first; `yield this` keeps that out of the iteration array so it does
+    // not need a deferred circular assignment.
+    let yieldSelf = "";
+    const iterArr: unknown[] = [];
+    for (const item of val) {
+      if (item === val && !(yieldSelf || iterArr.length)) {
+        yieldSelf = "yield this;";
+      } else {
+        iterArr.push(item);
       }
+    }
+
+    if (iterArr.length) {
+      // Remaining items live in a bound array outside the generator body —
+      // the body only evaluates when iterated, so members cannot be
+      // written there without breaking reference dedup.
+      const iterRef = new Reference(
+        ref,
+        null,
+        state.flush,
+        null,
+        nextRefAccess(state),
+      );
+      state.buf.push(sep + "*[(" + iterRef.id + "=");
+      writeArray(state, iterArr, iterRef);
+      state.buf.push(
+        ",Symbol.iterator)](){" + yieldSelf + "yield*" + iterRef.id + "}",
+      );
+    } else {
+      state.buf.push(
+        sep + "*[Symbol.iterator](){" + yieldSelf.slice(0, -1) + "}",
+      );
     }
 
     sep = ",";

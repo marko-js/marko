@@ -1,0 +1,28 @@
+<div></div><!--M_*2 #div/0-->
+<div></div><!--M_*3 #div/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => (_.b = [0, 1, {
+      input_item: {
+        label: "a",
+        *[(_.a = [{
+          label: "b"
+        }, {
+          label: "c"
+        }], Symbol.iterator)]() {
+          yield this;
+          yield* _.a
+        }
+      }
+    }, {
+      input_item: {
+        label: "solo",
+        *[Symbol.iterator]() {
+          yield this
+        }
+      }
+    }]),
+    "packages/runtime-tags/src/__tests__/fixtures/at-tags-serialized-iteration/tags/list.marko_0_input_item 2 3"
+  ];
+  M._.w()
+</script>

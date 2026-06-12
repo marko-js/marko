@@ -11,75 +11,82 @@
 <div class=row row=-1>Outside</div><!--M_*23 a-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.s = [0, 2, {
-        d: _.c = {
+  M._.r = [_ => (_.o = [0, 2, {
+        d: {
           style: {
             color: "red"
           },
           content: _._.a0(_.a = {}),
-          *[(_.b = [, _.d = {
+          *[(_.b = [_.c = {
             style: {
               color: "blue"
             }
-          }, _.e = {
+          }, _.d = {
             style: {
               color: "green"
             }
           }], Symbol.iterator)]() {
+            yield this;
             yield* _.b
           }
         }
       }, 1, {
+        d: _.c
+      }, 1, {
         d: _.d
       }, 1, {
-        d: _.e
-      }, 1, {
-        d: _.j = {
+        d: {
           x: 0,
-          row: _.f = {
+          row: _.e = {
             row: "a",
-            *[(_.g = [, _.h = {
+            *[(_.f = [_.g = {
               row: "b"
             }], Symbol.iterator)]() {
-              yield* _.g
+              yield this;
+              yield* _.f
             }
           },
-          *[(_.i = [, _.p = {
+          *[(_.h = [_.m = {
             x: 1,
-            row: _.k = {
+            row: _.i = {
               row: "c",
-              *[(_.l = [, _.m = {
+              *[(_.j = [_.k = {
                 row: "d"
               }], Symbol.iterator)]() {
-                yield* _.l
+                yield this;
+                yield* _.j
               }
             }
-          }, _.r = {
+          }, _.n = {
             outside: !0,
-            row: _.n = {
+            row: _.l = {
               row: -1,
               *[Symbol.iterator]() {
                 yield this
               }
             }
           }], Symbol.iterator)]() {
-            yield* _.i
+            yield this;
+            yield* _.h
           }
         }
-      }, 1, _.o = {}, 1, {
-        d: _.h
       }, 1, {
-        d: _.p
-      }, 1, _.q = {}, 1, {
+        d: _.e
+      }, 1, {
+        d: _.g
+      }, 1, {
         d: _.m
       }, 1, {
-        d: _.r
+        d: _.i
+      }, 1, {
+        d: _.k
       }, 1, {
         d: _.n
-      }], _.b[0] = _.c, _.g[0] = _.o.d = _.f, _.i[0] = _.j, _.l[0] = _.q.d = _
-      .k, _.d.content = _._.a1(_.a), _.e.content = _._.a1(_.a), _.f.content =
-      _._.a2(_.a), _.h.content = _._.a2(_.a), _.k.content = _._.a2(_.a), _.m
-      .content = _._.a2(_.a), _.n.content = _._.a3(_.a), _.s),
+      }, 1, {
+        d: _.l
+      }], _.c.content = _._.a1(_.a), _.d.content = _._.a1(_.a), _.e.content =
+      _._.a2(_.a), _.g.content = _._.a2(_.a), _.i.content = _._.a2(_.a), _.k
+      .content = _._.a2(_.a), _.l.content = _._.a3(_.a), _.o),
     "b0 3 5 7 b1 11 13 b2 9 b1 17 19 b2 15 b1 23 b2 21"
   ];
   M._.w()

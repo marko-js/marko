@@ -1,0 +1,11 @@
+export interface Input {
+  item: Marko.AttrTag<{ label: string }>;
+}
+
+// The effect iterates the (resumed) attr tags in the browser, proving the
+// serialized iterator yields the first tag (`this`) and any repeated tags
+// in order.
+<div/$el/>
+<script>
+  $el().textContent = [...input.item].map((item) => item.label).join("|");
+</script>
