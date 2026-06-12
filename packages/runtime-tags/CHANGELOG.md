@@ -1,5 +1,40 @@
 # @marko/runtime-tags
 
+## 6.1.4
+
+### Patch Changes
+
+- [#3210](https://github.com/marko-js/marko/pull/3210) [`5005d96`](https://github.com/marko-js/marko/commit/5005d96ed13d9f898dcca2a185210a533aae7666) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add native lazy loading of tags.
+
+  Tags can be lazily loaded by adding a `load` import attribute, in both the tags API and the class API:
+
+  ```marko
+  import Child from "./child.marko" with { load: "visible .selector" }
+
+  <Child/>
+  ```
+
+  The attribute value is either `render`, which loads the module when the tag first renders in the browser, or one or more `|` separated triggers that start the load:
+  - `visible <selector>` loads when an element matching the selector intersects the viewport (supports `?rootMargin=`).
+  - `idle` loads when the browser becomes idle (supports `?timeout=`).
+  - `media <query>` loads when the media query matches.
+  - `on<Event> <selector>` loads when the event fires on an element matching the selector.
+
+  Lazily loaded content still server renders, tree shakes, and resumes. The server tracks the assets each lazy section needs, writing inline trigger scripts into the HTML as it streams to avoid network waterfalls. Lazy loading requires a bundler integration through the `linkAssets` compiler option.
+
+- [#3210](https://github.com/marko-js/marko/pull/3210) [`5005d96`](https://github.com/marko-js/marko/commit/5005d96ed13d9f898dcca2a185210a533aae7666) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add compiler entry compilation and native asset handling for bundler integrations.
+  - `entry: "page" | "load"` compiles a template as a top level page entry or a lazily loaded entry, replacing the deprecated `output: "hydrate"`.
+  - `linkAssets: { runtime, onAsset }` connects the bundler: `onAsset(kind, file, id)` is called for every discovered page and load entry, and `runtime` names a module whose `flush` function resolves an asset id into the HTML for its tags while rendering.
+
+  With `linkAssets` configured the server tracks the assets needed by each page, writing their script tags into the streamed HTML (at the end of `<head>` when rendered, otherwise before the first flush).
+
+- [#3208](https://github.com/marko-js/marko/pull/3208) [`9e043c0`](https://github.com/marko-js/marko/commit/9e043c07242a90d8d489098261da51964597c59c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Rework scope serialization and resumption: scopes serialize through a per-render context with canonical ids (smaller payloads; scopes that serialize no props are elided entirely), registered factories are invoked through that context, async serialized values (promises/streams) settle through the mutation queue so completions are no longer dropped or misordered across flushes, and embedded renders resume through the same machinery.
+
+- [#3210](https://github.com/marko-js/marko/pull/3210) [`5005d96`](https://github.com/marko-js/marko/commit/5005d96ed13d9f898dcca2a185210a533aae7666) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add version APIs for tooling: `@marko/compiler` now exports its `version`, translators export theirs, and `getRuntimeVersion(translator)` returns the resolved translator's version.
+
+- Updated dependencies [[`5005d96`](https://github.com/marko-js/marko/commit/5005d96ed13d9f898dcca2a185210a533aae7666), [`5005d96`](https://github.com/marko-js/marko/commit/5005d96ed13d9f898dcca2a185210a533aae7666)]:
+  - @marko/compiler@5.39.64
+
 ## 6.1.3
 
 ### Patch Changes
