@@ -233,7 +233,7 @@ export function _serialize_guard(
   condition: undefined | 1 | Record<string, 1>,
   key: string,
 ) {
-  return condition && (condition === 1 || condition[key]) ? 1 : 0;
+  return _serialize_if(condition, key) || 0;
 }
 
 export function _el_resume(
@@ -296,72 +296,22 @@ export function _for_of(
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
-  const { state } = $chunk.boundary;
-  const resumeKeys = serializeMarker !== 0;
-  const resumeMarker =
-    serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
-  let flushBranchIds = "";
-
-  if (serializeBranch !== 0) {
-    let loopScopes: Opt<ScopeInternals>;
-    if (MARKO_DEBUG) {
-      // eslint-disable-next-line no-var
-      var seenKeys = new Set<unknown>();
-    }
-    forOf(list, (item, index) => {
-      const branchId = _peek_scope_id();
-      const itemKey = forOfBy(by, item, index);
-      if (MARKO_DEBUG) {
-        if (by) {
-          if (seenKeys.has(itemKey)) {
-            console.error(
-              `A <for> tag's \`by\` attribute must return a unique value for each item, but a duplicate was found matching:`,
-              itemKey,
-            );
-          }
-          seenKeys.add(itemKey);
-        }
-      }
-      if (resumeMarker) {
-        if (singleNode) {
-          flushBranchIds = " " + branchId + flushBranchIds;
-        } else {
-          $chunk.writeHTML(
-            state.mark(ResumeSymbol.BranchStart, flushBranchIds),
-          );
-          flushBranchIds = branchId + "";
-        }
-      }
-
-      withBranchId(branchId, () => {
-        cb(item, index);
-        const branchScope = writeScope(branchId, {});
-        if (resumeKeys && itemKey !== index) {
-          branchScope[AccessorProp.LoopKey] = itemKey;
-        }
-        if (!resumeMarker) {
-          loopScopes = push(loopScopes, referenceScope(branchScope));
-        }
-      });
-    });
-
-    if (loopScopes) {
-      writeScope(scopeId, {
-        [AccessorPrefix.BranchScopes + accessor]: loopScopes,
-      });
-    }
-  } else {
-    forOf(list, cb);
-  }
-
-  writeBranchEnd(
+  forBranches(
+    by,
+    (each) =>
+      each
+        ? forOf(list, (item, index) => {
+            const itemKey = forOfBy(by, item, index);
+            each(itemKey, itemKey === index, () => cb(item, index));
+          })
+        : forOf(list, cb),
     scopeId,
     accessor,
-    serializeStateful,
+    serializeBranch,
     serializeMarker,
+    serializeStateful,
     parentEndTag,
     singleNode,
-    singleNode ? flushBranchIds : flushBranchIds ? " " + flushBranchIds : "",
   );
 }
 
@@ -377,72 +327,23 @@ export function _for_in(
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
-  const { state } = $chunk.boundary;
-  const resumeKeys = serializeMarker !== 0;
-  const resumeMarker =
-    serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
-  let flushBranchIds = "";
-
-  if (serializeBranch !== 0) {
-    let loopScopes: Opt<ScopeInternals>;
-    if (MARKO_DEBUG) {
-      // eslint-disable-next-line no-var
-      var seenKeys = new Set<unknown>();
-    }
-    forIn(obj, (key, value) => {
-      const branchId = _peek_scope_id();
-      const itemKey = forInBy(by, key, value);
-      if (MARKO_DEBUG) {
-        if (by) {
-          if (seenKeys.has(itemKey)) {
-            console.error(
-              `A <for> tag's \`by\` attribute must return a unique value for each item, but a duplicate was found matching:`,
-              itemKey,
-            );
-          }
-          seenKeys.add(itemKey);
-        }
-      }
-      if (resumeMarker) {
-        if (singleNode) {
-          flushBranchIds = " " + branchId + flushBranchIds;
-        } else {
-          $chunk.writeHTML(
-            state.mark(ResumeSymbol.BranchStart, flushBranchIds),
-          );
-          flushBranchIds = branchId + "";
-        }
-      }
-
-      withBranchId(branchId, () => {
-        cb(key, value);
-        const branchScope = writeScope(branchId, {});
-        if (resumeKeys) {
-          branchScope[AccessorProp.LoopKey] = itemKey;
-        }
-        if (!resumeMarker) {
-          loopScopes = push(loopScopes, referenceScope(branchScope));
-        }
-      });
-    });
-
-    if (loopScopes) {
-      writeScope(scopeId, {
-        [AccessorPrefix.BranchScopes + accessor]: loopScopes,
-      });
-    }
-  } else {
-    forIn(obj, cb);
-  }
-
-  writeBranchEnd(
+  forBranches(
+    by,
+    (each) =>
+      each
+        ? forIn(obj, (key, value) => {
+            // There is no positional index for `for...in`, so the loop key
+            // is always serialized.
+            each(forInBy(by, key, value), false, () => cb(key, value));
+          })
+        : forIn(obj, cb),
     scopeId,
     accessor,
-    serializeStateful,
+    serializeBranch,
     serializeMarker,
+    serializeStateful,
     parentEndTag,
     singleNode,
-    singleNode ? flushBranchIds : flushBranchIds ? " " + flushBranchIds : "",
   );
 }
 
@@ -460,72 +361,22 @@ export function _for_to(
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
-  const { state } = $chunk.boundary;
-  const resumeKeys = serializeMarker !== 0;
-  const resumeMarker =
-    serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
-  let flushBranchIds = "";
-
-  if (serializeBranch !== 0) {
-    let loopScopes: Opt<ScopeInternals>;
-    if (MARKO_DEBUG) {
-      // eslint-disable-next-line no-var
-      var seenKeys = new Set<unknown>();
-    }
-    forTo(to, from, step, (i) => {
-      const branchId = _peek_scope_id();
-      const itemKey = forStepBy(by, i);
-      if (MARKO_DEBUG) {
-        if (by) {
-          if (seenKeys.has(itemKey)) {
-            console.error(
-              `A <for> tag's \`by\` attribute must return a unique value for each item, but a duplicate was found matching:`,
-              itemKey,
-            );
-          }
-          seenKeys.add(itemKey);
-        }
-      }
-      if (resumeMarker) {
-        if (singleNode) {
-          flushBranchIds = " " + branchId + flushBranchIds;
-        } else {
-          $chunk.writeHTML(
-            state.mark(ResumeSymbol.BranchStart, flushBranchIds),
-          );
-          flushBranchIds = branchId + "";
-        }
-      }
-
-      withBranchId(branchId, () => {
-        cb(i);
-        const branchScope = writeScope(branchId, {});
-        if (resumeKeys && itemKey !== i) {
-          branchScope[AccessorProp.LoopKey] = itemKey;
-        }
-        if (!resumeMarker) {
-          loopScopes = push(loopScopes, referenceScope(branchScope));
-        }
-      });
-    });
-
-    if (loopScopes) {
-      writeScope(scopeId, {
-        [AccessorPrefix.BranchScopes + accessor]: loopScopes,
-      });
-    }
-  } else {
-    forTo(to, from, step, cb);
-  }
-
-  writeBranchEnd(
+  forBranches(
+    by,
+    (each) =>
+      each
+        ? forTo(to, from, step, (i) => {
+            const itemKey = forStepBy(by, i);
+            each(itemKey, itemKey === i, () => cb(i));
+          })
+        : forTo(to, from, step, cb),
     scopeId,
     accessor,
-    serializeStateful,
+    serializeBranch,
     serializeMarker,
+    serializeStateful,
     parentEndTag,
     singleNode,
-    singleNode ? flushBranchIds : flushBranchIds ? " " + flushBranchIds : "",
   );
 }
 
@@ -543,63 +394,108 @@ export function _for_until(
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
+  forBranches(
+    by,
+    (each) =>
+      each
+        ? forUntil(to, from, step, (i) => {
+            const itemKey = forStepBy(by, i);
+            each(itemKey, itemKey === i, () => cb(i));
+          })
+        : forUntil(to, from, step, cb),
+    scopeId,
+    accessor,
+    serializeBranch,
+    serializeMarker,
+    serializeStateful,
+    parentEndTag,
+    singleNode,
+  );
+}
+
+// Shared driver for the `_for_*` loop variants: writes branch start/end
+// markers, branch scopes (with the loop key when it differs from the
+// positional index), and the branch scope list when markers are disabled.
+// When the branch is not serialized, `iterate` receives `0` and runs the
+// raw loop. `by` is only read for the MARKO_DEBUG duplicate key check.
+function forBranches(
+  by: unknown,
+  iterate: (
+    each:
+      | 0
+      | ((itemKey: unknown, sameAsIndex: boolean, render: () => void) => void),
+  ) => void,
+  scopeId: number,
+  accessor: Accessor,
+  serializeBranch: undefined | 0 | 1,
+  serializeMarker: undefined | 0 | 1,
+  serializeStateful: undefined | 0 | 1,
+  parentEndTag: string | undefined | 0,
+  singleNode?: 1,
+) {
+  if (serializeBranch === 0) {
+    iterate(0);
+    writeBranchEnd(
+      scopeId,
+      accessor,
+      serializeStateful,
+      serializeMarker,
+      parentEndTag,
+      singleNode,
+      "",
+    );
+    return;
+  }
+
   const { state } = $chunk.boundary;
   const resumeKeys = serializeMarker !== 0;
   const resumeMarker =
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
   let flushBranchIds = "";
+  let loopScopes: Opt<ScopeInternals>;
+  if (MARKO_DEBUG) {
+    // eslint-disable-next-line no-var
+    var seenKeys = new Set<unknown>();
+  }
 
-  if (serializeBranch !== 0) {
-    let loopScopes: Opt<ScopeInternals>;
+  iterate((itemKey, sameAsIndex, render) => {
+    const branchId = _peek_scope_id();
     if (MARKO_DEBUG) {
-      // eslint-disable-next-line no-var
-      var seenKeys = new Set<unknown>();
-    }
-    forUntil(to, from, step, (i) => {
-      const branchId = _peek_scope_id();
-      const itemKey = forStepBy(by, i);
-      if (MARKO_DEBUG) {
-        if (by) {
-          if (seenKeys.has(itemKey)) {
-            console.error(
-              `A <for> tag's \`by\` attribute must return a unique value for each item, but a duplicate was found matching:`,
-              itemKey,
-            );
-          }
-          seenKeys.add(itemKey);
-        }
-      }
-
-      if (resumeMarker) {
-        if (singleNode) {
-          flushBranchIds = " " + branchId + flushBranchIds;
-        } else {
-          $chunk.writeHTML(
-            state.mark(ResumeSymbol.BranchStart, flushBranchIds),
+      if (by) {
+        if (seenKeys.has(itemKey)) {
+          console.error(
+            `A <for> tag's \`by\` attribute must return a unique value for each item, but a duplicate was found matching:`,
+            itemKey,
           );
-          flushBranchIds = branchId + "";
         }
+        seenKeys.add(itemKey);
       }
-
-      withBranchId(branchId, () => {
-        cb(i);
-        const branchScope = writeScope(branchId, {});
-        if (resumeKeys && itemKey !== i) {
-          branchScope[AccessorProp.LoopKey] = itemKey;
-        }
-        if (!resumeMarker) {
-          loopScopes = push(loopScopes, referenceScope(branchScope));
-        }
-      });
-    });
-
-    if (loopScopes) {
-      writeScope(scopeId, {
-        [AccessorPrefix.BranchScopes + accessor]: loopScopes,
-      });
     }
-  } else {
-    forUntil(to, from, step, cb);
+    if (resumeMarker) {
+      if (singleNode) {
+        flushBranchIds = " " + branchId + flushBranchIds;
+      } else {
+        $chunk.writeHTML(state.mark(ResumeSymbol.BranchStart, flushBranchIds));
+        flushBranchIds = branchId + "";
+      }
+    }
+
+    withBranchId(branchId, () => {
+      render();
+      const branchScope = writeScope(
+        branchId,
+        resumeKeys && !sameAsIndex ? { [AccessorProp.LoopKey]: itemKey } : {},
+      );
+      if (!resumeMarker) {
+        loopScopes = push(loopScopes, referenceScope(branchScope));
+      }
+    });
+  });
+
+  if (loopScopes) {
+    writeScope(scopeId, {
+      [AccessorPrefix.BranchScopes + accessor]: loopScopes,
+    });
   }
 
   writeBranchEnd(
