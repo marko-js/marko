@@ -16,8 +16,12 @@ import { destroyScope } from "./scope";
 import { _el_read, type Signal } from "./signals";
 import { getDebugKey } from "./walker";
 
-type Resumes = (number | Scope)[];
-type ResumeFn = (ctx: object) => Resumes;
+type ResumeFn = (ctx: SerializeContext) => unknown;
+type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
+interface SerializeContext {
+  (data: number | (Scope | number)[], registryId?: string): unknown;
+  _: Record<string, unknown>;
+}
 export interface Renders {
   (renderId: string): RenderData;
   [renderId: string]: RenderData;
@@ -28,18 +32,13 @@ export interface RenderData {
   // Marked nodes to visit
   v: Comment[];
   // Resumes
-  r?: (string | ResumeFn)[];
-  // Scope lookup (just needed for compat layer)
-  s?: Record<string, Scope>;
+  r?: ResumeData;
   // Walk
   w(): void;
   // Deserialize scopes and run scripts ("m" for marko)
-  m?(): unknown[];
-  // Reference node used for embedded renders.
-  n?: Text;
-  // List of resume blocking ids.
-  b?: 0 | Record<string, 1 | 0>;
-
+  m?(effects: unknown[]): unknown[];
+  // Blocking resumes keyed by ready id.
+  b?: Record<string, ResumeData>;
   /* --- Used by inline runtime --- */
 
   // Document
@@ -56,10 +55,14 @@ export interface RenderData {
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
 const registeredValues: Record<string, unknown> = {};
-let curRuntimeId: string | undefined;
-let readyLookup: undefined | Record<string, 1 | (() => void)>;
+let curRenders: Renders;
 let branchesEnabled: undefined | 1;
-let embedEnabled: undefined | 1;
+let embedRenders:
+  | undefined
+  | Map<Text, [renderId: string, scopes: Record<string | number, Scope>]>;
+// Only assigned by `ready()`, so the lazy stream machinery guarded by
+// `readyIds` checks is dropped from apps without lazy tags.
+let readyIds: undefined | Set<string>;
 
 export function enableBranches() {
   if (!branchesEnabled) {
@@ -68,35 +71,37 @@ export function enableBranches() {
   }
 }
 
-export const ready = /*@__PURE__*/ ((_) => (id: string) => {
-  const cb = readyLookup![id] as undefined | (() => {});
-  readyLookup![id] = 1;
-  cb?.();
-})((readyLookup = {}));
+export function ready(readyId: string, runtimeId?: string) {
+  (readyIds ||= new Set()).add(readyId);
+  init(runtimeId);
+  for (const renderId in curRenders) {
+    runResumeEffects(curRenders[renderId]);
+  }
+}
 
 export function initEmbedded(readyId: string, runtimeId?: string) {
-  embedEnabled = 1;
-  ready(readyId);
-  init(runtimeId);
-  new MutationObserver(() => {
-    const renders = (self as any)[curRuntimeId!] as Renders | undefined;
-    for (const renderId in renders) {
-      const { s, n } = renders[renderId];
-      if (n && !n.isConnected) {
-        delete renders[renderId];
-        for (const id in s) {
-          destroyScope(s[id]);
+  if (!embedRenders) {
+    embedRenders = new Map();
+    new MutationObserver(() => {
+      for (const [anchor, [renderId, scopes]] of embedRenders!) {
+        if (!anchor.isConnected) {
+          embedRenders!.delete(anchor);
+          delete curRenders[renderId];
+          for (const id in scopes) {
+            destroyScope(scopes[id]);
+          }
         }
       }
-    }
-  }).observe(document.body, { childList: true, subtree: true });
+    }).observe(document, { childList: true, subtree: true });
+  }
+  ready(readyId, runtimeId);
 }
 export function init(runtimeId = DEFAULT_RUNTIME_ID) {
-  if (curRuntimeId) {
+  if (curRenders) {
     if (MARKO_DEBUG) {
-      if (curRuntimeId !== runtimeId) {
+      if (curRenders !== (self as any)[runtimeId]) {
         throw new Error(
-          `Marko initialized multiple times with different $global.runtimeId's of ${JSON.stringify(runtimeId)} and ${JSON.stringify(curRuntimeId)}.`,
+          `Marko initialized multiple times with different $global.runtimeId's.`,
         );
       }
     }
@@ -104,124 +109,167 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
     return;
   }
 
-  curRuntimeId = runtimeId;
-
-  let resumeRender: Renders;
   const renders = (self as any)[runtimeId] as Renders | undefined;
   const defineRuntime = (desc: PropertyDescriptor) =>
     Object.defineProperty(self, runtimeId, desc);
   const initRuntime = (renders: Renders) => {
     defineRuntime({
-      value: (resumeRender = ((renderId: string) => {
-        const render = (resumeRender[renderId] =
+      value: (curRenders = ((renderId: string) => {
+        const render = (curRenders[renderId] =
           renders[renderId] || renders(renderId));
         const walk = render.w;
-        const scopeLookup: Record<string | number, Scope> = (render.s = {});
+        const scopeLookup: Record<string | number, Scope> = {};
+        // Scopes initialize on creation so a scope that serialized no
+        // props (elided from the fill entirely) is indistinguishable from
+        // an empty one when reached through visits/effects/references.
         const getScope = (id: string | number) =>
-          (scopeLookup[id] ||= { [AccessorProp.Id]: +id } as Scope);
-        const serializeContext: Record<string, unknown> = {
-          _: registeredValues,
+          scopeLookup[id] ||
+          initScope((scopeLookup[id] = { [AccessorProp.Id]: +id } as Scope));
+        const initGlobal = () =>
+          ($global ||= {
+            runtimeId,
+            renderId,
+          } as Scope[AccessorProp.Global]);
+        const initScope = (scope: Scope) => {
+          scope[AccessorProp.Global] = initGlobal();
+          if (branchesEnabled && scope[AccessorProp.ClosestBranchId]) {
+            scope[AccessorProp.ClosestBranch] = getScope(
+              scope[AccessorProp.ClosestBranchId],
+            ) as BranchScope;
+          }
+          return scope;
         };
-        const visitBranches =
-          branchesEnabled &&
-          ((
-            branchScopesStack: Opt<BranchScope>[] = [],
-            branchStarts: Comment[] = [],
-            orphanBranches: BranchScope[] = [],
-            curBranchScopes?: Opt<BranchScope>,
-          ) => {
-            return (
-              branchId?: number,
-              branch?: BranchScope,
-              endedBranches?: BranchScope[],
-              accessor?: string,
-              singleNode?: boolean,
-              parent = visit.parentNode!,
-              startVisit: ChildNode = visit,
-              i = orphanBranches.length,
-            ) => {
-              if (visitType !== ResumeSymbol.BranchStart) {
-                visitScope[nextToken(/* read accessor */)] =
-                  visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
-                  visitType ===
-                    ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
-                    ? parent
-                    : visit;
-                accessor = AccessorPrefix.BranchScopes + lastToken;
-                singleNode =
-                  visitType !== ResumeSymbol.BranchEnd &&
-                  visitType !== ResumeSymbol.BranchEndOnlyChildInParent;
-                nextToken(/* read optional first branchId */);
-              }
-
-              while ((branchId = +lastToken)) {
-                (endedBranches ||= []).push(
-                  (branch = getScope(branchId) as BranchScope),
+        const applyScopes = (partials: (Scope | number)[]) => {
+          let scopeId = partials[0] as number;
+          for (let i = 1; i < partials.length; i++) {
+            const partial = partials[i];
+            if (typeof partial === "number") {
+              scopeId += partial;
+            } else {
+              if (scopeId) {
+                // Adopts the partial as the scope when it is new (assigning
+                // it onto itself is a no-op); merging into an existing scope
+                // re-initializes it so a closest branch id arriving in this
+                // fill applies.
+                initScope(
+                  Object.assign(
+                    (scopeLookup[scopeId] ||=
+                      ((partial[AccessorProp.Id] = scopeId), partial)),
+                    partial,
+                  ),
                 );
-                setParentBranch(branch, branch[AccessorProp.ClosestBranch]);
-                if (
-                  (branch[AccessorProp.AwaitCounter] = render.p?.[branchId])
-                ) {
-                  branch[AccessorProp.AwaitCounter].m = render.m;
-                }
+              } else {
+                Object.assign(initGlobal(), partial);
+              }
+              scopeId++;
+            }
+          }
+        };
+        const serializeContext = ((
+          data: number | (Scope | number)[],
+          registryId?: string,
+        ) =>
+          typeof data === "number"
+            ? registryId
+              ? (registeredValues[registryId] as RegisteredFn)(getScope(data))
+              : getScope(data)
+            : applyScopes(data)) as SerializeContext;
+        const createVisitBranches = (
+          branchScopesStack: Opt<BranchScope>[] = [],
+          branchStarts: Comment[] = [],
+          orphanBranches: BranchScope[] = [],
+          curBranchScopes?: Opt<BranchScope>,
+        ) => {
+          return (
+            branchId?: number,
+            branch?: BranchScope,
+            endedBranches?: BranchScope[],
+            accessor?: string,
+            singleNode?: boolean,
+            parent = visit.parentNode!,
+            startVisit: ChildNode = visit,
+            i = orphanBranches.length,
+          ) => {
+            if (visitType !== ResumeSymbol.BranchStart) {
+              visitScope[nextToken(/* read accessor */)] =
+                visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
+                visitType === ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
+                  ? parent
+                  : visit;
+              accessor = AccessorPrefix.BranchScopes + lastToken;
+              singleNode =
+                visitType !== ResumeSymbol.BranchEnd &&
+                visitType !== ResumeSymbol.BranchEndOnlyChildInParent;
+              nextToken(/* read optional first branchId */);
+            }
 
-                if (singleNode) {
-                  while (
-                    startVisit.previousSibling &&
-                    ~visits.indexOf(
-                      (startVisit = startVisit.previousSibling) as Comment,
-                    )
-                  );
-                  branch[AccessorProp.EndNode] = branch[
-                    AccessorProp.StartNode
-                  ] = startVisit;
-                  if (visitType === ResumeSymbol.BranchEndNativeTag) {
-                    branch[MARKO_DEBUG ? getDebugKey(0, startVisit) : "a"] =
-                      startVisit;
-                  }
-                } else {
-                  curBranchScopes = push(curBranchScopes, branch);
-                  if (accessor) {
-                    visitScope[accessor] = curBranchScopes;
-                    curBranchScopes = branchScopesStack.pop();
-                  }
-                  startVisit = branchStarts.pop()!;
-                  if (parent !== startVisit.parentNode) {
-                    parent.prepend(startVisit);
-                  }
-                  branch[AccessorProp.StartNode] = startVisit;
-                  branch[AccessorProp.EndNode] =
-                    visit.previousSibling === startVisit
-                      ? startVisit
-                      : parent.insertBefore(new Text(), visit);
-                }
-
-                while (i && orphanBranches[--i][AccessorProp.Id] > branchId) {
-                  setParentBranch(orphanBranches.pop()!, branch);
-                }
-
-                nextToken(/* read optional next branchId */);
+            while ((branchId = +lastToken)) {
+              (endedBranches ||= []).push(
+                (branch = getScope(branchId) as BranchScope),
+              );
+              setParentBranch(branch, branch[AccessorProp.ClosestBranch]);
+              if ((branch[AccessorProp.AwaitCounter] = render.p?.[branchId])) {
+                branch[AccessorProp.AwaitCounter].m = render.m;
               }
 
-              if (endedBranches) {
-                orphanBranches.push(...endedBranches);
-                if (singleNode) {
-                  visitScope[accessor!] =
-                    endedBranches.length > 1
-                      ? endedBranches.reverse()
-                      : endedBranches[0];
+              if (singleNode) {
+                while (
+                  startVisit.previousSibling &&
+                  ~visits.indexOf(
+                    (startVisit = startVisit.previousSibling) as Comment,
+                  )
+                );
+                branch[AccessorProp.EndNode] = branch[AccessorProp.StartNode] =
+                  startVisit;
+                if (visitType === ResumeSymbol.BranchEndNativeTag) {
+                  branch[MARKO_DEBUG ? getDebugKey(0, startVisit) : "a"] =
+                    startVisit;
                 }
+              } else {
+                curBranchScopes = push(curBranchScopes, branch);
+                if (accessor) {
+                  visitScope[accessor] = curBranchScopes;
+                  curBranchScopes = branchScopesStack.pop();
+                }
+                startVisit = branchStarts.pop()!;
+                if (parent !== startVisit.parentNode) {
+                  parent.prepend(startVisit);
+                }
+                branch[AccessorProp.StartNode] = startVisit;
+                branch[AccessorProp.EndNode] =
+                  visit.previousSibling === startVisit
+                    ? startVisit
+                    : parent.insertBefore(new Text(), visit);
               }
 
-              if (visitType === ResumeSymbol.BranchStart) {
-                if (!endedBranches) {
-                  branchScopesStack.push(curBranchScopes);
-                  curBranchScopes = undefined;
-                }
-                branchStarts.push(visit);
+              while (i && orphanBranches[--i][AccessorProp.Id] > branchId) {
+                setParentBranch(orphanBranches.pop()!, branch);
               }
-            };
-          })();
+
+              nextToken(/* read optional next branchId */);
+            }
+
+            if (endedBranches) {
+              // Avoids spreading into push, which is capped by engine
+              // argument limits for very large branch lists.
+              for (const ended of endedBranches) orphanBranches.push(ended);
+              if (singleNode) {
+                visitScope[accessor!] =
+                  endedBranches.length > 1
+                    ? endedBranches.reverse()
+                    : endedBranches[0];
+              }
+            }
+
+            if (visitType === ResumeSymbol.BranchStart) {
+              if (!endedBranches) {
+                branchScopesStack.push(curBranchScopes);
+                curBranchScopes = undefined;
+              }
+              branchStarts.push(visit);
+            }
+          };
+        };
         const nextToken = () =>
           (lastToken = visitText.slice(
             lastTokenIndex,
@@ -229,42 +277,13 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               visitText.indexOf(" ", lastTokenIndex) + 1 ||
               visitText.length + 1) - 1,
           ));
-        let $global: Scope[AccessorProp.Global] | undefined;
-        let lastEffect: unknown;
-        let visits: RenderData["v"];
-        let resumes: NonNullable<RenderData["r"]>;
-        let visit: Comment;
-        let visitText: string;
-        let visitType: ResumeSymbol;
-        let visitScope: Scope;
-        let lastToken: string;
-        let lastTokenIndex: number;
-        let lastScopeId = 0;
-
-        if (MARKO_DEBUG) {
-          if (render.m) {
-            throw new Error(
-              `Marko rendered multiple times with $global.runtimeId as ${JSON.stringify(runtimeId)} and $global.renderId as ${JSON.stringify(renderId)}. Ensure each render into a page has a unique $global.renderId.`,
-            );
-          }
-        }
-
-        render.m = (effects: unknown[] = []) => {
-          if (readyLookup) {
-            for (const readyId in render.b as Record<string, unknown>) {
-              if (readyLookup[readyId] !== 1) {
-                readyLookup[readyId] = ((prev) => () => {
-                  runResumeEffects(render);
-                  prev?.();
-                })(readyLookup[readyId]);
-                return effects;
-              }
-            }
-
-            render.b = 0;
-          }
-
-          for (const serialized of (resumes = render.r || [])) {
+        const processResumes = (
+          resumes: ResumeData = [],
+          effects: unknown[],
+        ) => {
+          let i = 0;
+          for (; i < resumes.length; i++) {
+            const serialized = resumes[i];
             if (typeof serialized === "string") {
               lastTokenIndex = 0;
               visitText = serialized;
@@ -275,27 +294,78 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   effects.push(lastEffect, getScope(lastToken));
                 }
               }
+            } else if (Array.isArray(serialized)) {
+              if (
+                !(
+                  readyIds &&
+                  serialized.every(
+                    // A dep's data is always flushed before a marker that
+                    // names it (bindings only reference already written
+                    // values), so its resumes are guaranteed present once
+                    // its module has loaded.
+                    (dep) =>
+                      readyIds!.has(dep as string) && !render.b![dep].length,
+                  )
+                )
+              ) {
+                break;
+              }
+            } else if (readyIds && typeof serialized === "number") {
+              // A reorder reservation gate, will swap
+              // when the reordered content arrives.
+              break;
             } else {
-              for (const scope of serialized(serializeContext)) {
-                if (!$global) {
-                  $global = (scope || {}) as Scope[AccessorProp.Global];
-                  $global.runtimeId = runtimeId;
-                  $global.renderId = renderId;
-                } else if (typeof scope === "number") {
-                  lastScopeId += scope;
-                } else {
-                  scopeLookup[(scope[AccessorProp.Id] = ++lastScopeId)] = scope;
-                  scope[AccessorProp.Global] = $global;
-                  if (branchesEnabled) {
-                    scope[AccessorProp.ClosestBranch] = getScope(
-                      scope[AccessorProp.ClosestBranchId]!,
-                    ) as BranchScope;
-                  }
+              // Gates cannot reach here: they only occur in ready streams,
+              // which are processed with `readyIds` set. A payload either
+              // returns its fill array directly, or applies it through the
+              // serialize context and ends in `,0` so its return value can
+              // never be mistaken for a fill.
+              const scopes = (serialized as ResumeFn)(serializeContext);
+              if (Array.isArray(scopes)) applyScopes(scopes);
+            }
+          }
+          resumes.splice(0, i);
+          return i;
+        };
+        let $global: Scope[AccessorProp.Global] | undefined;
+        let lastEffect: unknown;
+        let visits: RenderData["v"];
+        let visit: Comment;
+        let visitText: string;
+        let visitType: ResumeSymbol;
+        let visitScope: Scope;
+        let lastToken: string;
+        let lastTokenIndex: number;
+        let visitBranches: undefined | (() => void);
+        let embedAnchor: Text | undefined;
+        serializeContext._ = registeredValues;
+
+        if (MARKO_DEBUG) {
+          if (render.m) {
+            throw new Error(
+              `Marko rendered multiple times with $global.runtimeId as ${JSON.stringify(runtimeId)} and $global.renderId as ${JSON.stringify(renderId)}. Ensure each render into a page has a unique $global.renderId.`,
+            );
+          }
+        }
+
+        render.m = (effects: unknown[]) => {
+          processResumes(render.r, effects);
+
+          if (readyIds && render.b) {
+            // Process ready channels to a fixed point — draining one may
+            // unblock another's deps marker.
+            for (let progress: unknown = 1; progress; ) {
+              progress = 0;
+              for (const readyId of readyIds) {
+                const resumes = render.b[readyId];
+                if (resumes && processResumes(resumes, effects)) {
+                  progress = 1;
                 }
               }
             }
           }
 
+          let retained = 0;
           for (visit of (visits = render.v)) {
             lastTokenIndex = render.i.length;
             visitText = visit.data!;
@@ -311,19 +381,28 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   ? prev
                   : visit.parentNode!.insertBefore(new Text(), visit);
             } else if (branchesEnabled) {
-              visitBranches!();
+              (visitBranches ||= createVisitBranches())();
+            } else if (render.b) {
+              // Pending ready data means a lazily loaded module may still
+              // enable branches; its visits ride the same flush as the
+              // ready data, so they are compacted in place to reprocess.
+              visits[retained++] = visit;
             }
           }
 
-          if (embedEnabled) {
-            render.n ||= visit?.parentNode!.insertBefore(
-              new Text(),
-              visit.nextSibling,
+          if (embedRenders && !embedAnchor && visit) {
+            // The anchor's disconnection marks the embedded render as
+            // removed; the observer destroys its scopes.
+            embedRenders.set(
+              (embedAnchor = visit.parentNode!.insertBefore(
+                new Text(),
+                visit.nextSibling,
+              )),
+              [renderId, scopeLookup],
             );
           }
 
-          visits.length = resumes.length = 0;
-
+          visits.length = retained;
           return effects;
         };
 
@@ -339,7 +418,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
   if (renders) {
     initRuntime(renders);
     for (const renderId in renders) {
-      runResumeEffects(resumeRender!(renderId));
+      runResumeEffects((curRenders as Renders)(renderId));
     }
   } else {
     defineRuntime({
@@ -354,7 +433,7 @@ export let isResuming: undefined | 0 | 1;
 function runResumeEffects(render: RenderData) {
   try {
     isResuming = 1;
-    runEffects(render.m!(), 1);
+    runEffects(render.m!([]), 1);
   } finally {
     isResuming = 0;
   }

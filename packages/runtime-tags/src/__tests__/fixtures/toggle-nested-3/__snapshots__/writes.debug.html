@@ -4,16 +4,16 @@
   hello</div>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.c = [0, _.a = {
+  M._.r = [_ => [1, {
       outer: !0,
       inner: !0,
       count: 0,
-      "ClosureScopes:count": _.d = new Set
-    }, _.b = {
-      _: _.a
-    }, _.e = {
-      _: _.b
-    }], (_.d).add(_.e), _.c),
+      "ClosureScopes:count": new Set([_(3)])
+    }, {
+      _: _(1)
+    }, {
+      _: _(2)
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/toggle-nested-3/template.marko_2_count 3 packages/runtime-tags/src/__tests__/fixtures/toggle-nested-3/template.marko_1_inner 2 packages/runtime-tags/src/__tests__/fixtures/toggle-nested-3/template.marko_0_outer 1"
   ];
   M._.w()

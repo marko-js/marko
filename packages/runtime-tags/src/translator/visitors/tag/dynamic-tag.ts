@@ -273,10 +273,10 @@ export default {
                       t.callExpression(
                         importNamed(tag.hub.file, getCompatRuntimeFile(), "s"),
                         [
-                          t.identifier((tagExpression as t.Identifier).name),
                           t.stringLiteral(
                             loadFileForTag(tag)!.metadata.marko.id,
                           ),
+                          t.identifier((tagExpression as t.Identifier).name),
                         ],
                       ),
                     ),

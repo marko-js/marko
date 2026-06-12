@@ -1,7 +1,7 @@
 <div id=ref>0</div>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, {
+  M._.r = [_ => [1, {
       promise: (p => p = new Promise((f, r) => _.a = {
         f,
         r(e) {
@@ -9,7 +9,7 @@
           r(e)
         }
       }))()
-    }]),
+    }], _ => (_.a.f("hello"), 0),
     "packages/runtime-tags/src/__tests__/fixtures/serialize-promise/template.marko_0_promise 1"
   ];
   M._.w()

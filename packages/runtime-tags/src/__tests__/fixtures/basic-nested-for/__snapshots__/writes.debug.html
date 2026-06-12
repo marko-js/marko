@@ -5,27 +5,27 @@
 <div>1.1<!--M_*11 #text/0--></div><!--M_|7 #text/0 10 8--><!--M_]1 #text/1 7-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.h = [0, _.a = {
+  M._.r = [_ => [1, {
       items: [0, 1]
-    }, _.b = {
+    }, {
       outer: 0,
-      _: _.a
+      _: _(1)
     }, {
-      _: _.b,
-      "#childScope/0": _.c = {}
-    }, _.c, {
-      _: _.b,
-      "#childScope/0": _.d = {}
-    }, _.d, _.e = {
+      _: _(2),
+      "#childScope/0": _(4)
+    }, 1, {
+      _: _(2),
+      "#childScope/0": _(6)
+    }, 1, {
       outer: 1,
-      _: _.a
+      _: _(1)
     }, {
-      _: _.e,
-      "#childScope/0": _.f = {}
-    }, _.f, {
-      _: _.e,
-      "#childScope/0": _.g = {}
-    }, _.g]),
+      _: _(7),
+      "#childScope/0": _(9)
+    }, 1, {
+      _: _(7),
+      "#childScope/0": _(11)
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/basic-nested-for/template.marko_0_items 1"
   ];
   M._.w()

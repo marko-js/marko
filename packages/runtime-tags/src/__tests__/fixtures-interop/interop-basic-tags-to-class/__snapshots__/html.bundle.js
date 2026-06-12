@@ -16,7 +16,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 });
 
 // template.marko
-s(_marko_template, "b");
+s("b", _marko_template);
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

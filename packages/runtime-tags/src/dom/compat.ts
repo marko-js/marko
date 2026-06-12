@@ -1,9 +1,10 @@
+import { RENDER_BODY_ID, SET_SCOPE_REGISTER_ID } from "../common/compat-meta";
 import {
-  RENDER_BODY_ID,
-  RENDERER_REGISTER_ID,
-  SET_SCOPE_REGISTER_ID,
-} from "../common/compat-meta";
-import { AccessorProp, type BranchScope, RendererProp } from "../common/types";
+  AccessorProp,
+  type BranchScope,
+  RendererProp,
+  type Scope,
+} from "../common/types";
 import { patchDynamicTag } from "./control-flow";
 import { toInsertNode } from "./dom";
 import { prepareEffects, queueEffect, runEffects } from "./queue";
@@ -11,19 +12,41 @@ import { _content, createAndSetupBranch, type Renderer } from "./renderer";
 import { _resume, getRegisteredWithScope } from "./resume";
 import { destroyBranch } from "./scope";
 const classIdToBranch = new Map<string, BranchScope>();
+// Keyed by the render handle — the one object reachable from both sides
+// of the interop boundary (the class side rebuilds its own $global at
+// hydration, so only the runtimeId/renderId values cross it) — and
+// released with the render when an embedded render is destroyed.
+const scopesByRender = new WeakMap<object, Record<string, Scope>>();
+const getRenderScopes = ($global: Record<string, unknown>) => {
+  const render = (self as any)[$global.runtimeId as string]?.[
+    $global.renderId as string
+  ];
+  let scopes = render && scopesByRender.get(render);
+  if (render && !scopes) {
+    scopesByRender.set(render, (scopes = {}));
+  }
+  return scopes as Record<string, Scope> | undefined;
+};
 
 export const compat = {
   patchDynamicTag,
   queueEffect,
   init(warp10Noop: any) {
-    _resume(SET_SCOPE_REGISTER_ID, (branch: BranchScope & { m5c: string }) => {
-      classIdToBranch.set(branch.m5c, branch);
+    _resume(SET_SCOPE_REGISTER_ID, (scope: Scope & { m5c?: string }) => {
+      getRenderScopes(scope[AccessorProp.Global]!)![scope[AccessorProp.Id]] =
+        scope;
+      if (scope.m5c) {
+        classIdToBranch.set(scope.m5c, scope as BranchScope);
+      }
     });
 
     _resume(RENDER_BODY_ID, warp10Noop);
   },
-  registerRenderer(fn: any) {
-    _resume(RENDERER_REGISTER_ID, fn);
+  getScope($global: Record<string, unknown>, scopeId: unknown) {
+    return getRenderScopes($global)?.[scopeId as string];
+  },
+  setRendererId(renderer: any, id: unknown) {
+    renderer[RendererProp.Id] = id;
   },
   isRenderer(renderer: any) {
     return renderer[RendererProp.Clone];
@@ -52,8 +75,8 @@ export const compat = {
     if (Array.isArray(value) && typeof value[0] === "string") {
       return getRegisteredWithScope(
         value[0],
-        value.length === 2 &&
-          (self as any)[$global.runtimeId]?.[$global.renderId]?.s[value[1]],
+        // Misses naturally for scope-less values (no/null scope id).
+        getRenderScopes($global)?.[value[1]],
       );
     }
 

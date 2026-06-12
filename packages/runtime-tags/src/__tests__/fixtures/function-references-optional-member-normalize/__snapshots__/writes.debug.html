@@ -3,17 +3,23 @@
 <div></div><!--M_*1 #div/2-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.d = [0, _.e = {
-      a: _.a = {},
-      b: _.b = {},
-      c: _.c = {}
-    }], _.a.bar = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/function-references-optional-member-normalize/template.marko_0/a"
-      ](_.e), _.b.baz = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/function-references-optional-member-normalize/template.marko_0/b"
-      ](_.e), _.c.baz = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/function-references-optional-member-normalize/template.marko_0/c"
-      ](_.e), _.d),
+  M._.r = [_ => [1, {
+      a: {
+        bar: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/function-references-optional-member-normalize/template.marko_0/a"
+          )
+      },
+      b: {
+        baz: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/function-references-optional-member-normalize/template.marko_0/b"
+          )
+      },
+      c: {
+        baz: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/function-references-optional-member-normalize/template.marko_0/c"
+          )
+      }
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/function-references-optional-member-normalize/template.marko_0_c 1 packages/runtime-tags/src/__tests__/fixtures/function-references-optional-member-normalize/template.marko_0_b 1 packages/runtime-tags/src/__tests__/fixtures/function-references-optional-member-normalize/template.marko_0_a 1"
   ];
   M._.w()

@@ -1,11 +1,12 @@
 <button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, _.a = {
-      clickCount: 0
-    }], _.a.increment = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0/increment"
-      ](_.a), _.b),
+  M._.r = [_ => [1, {
+      clickCount: 0,
+      increment: _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0/increment"
+        )
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0_increment 1"
   ];
   M._.w()

@@ -1,5 +1,6 @@
 import type { Boundary } from "./writer";
 
+export const K_SCOPE_ID = Symbol("Scope ID");
 const kTouchedIterator = Symbol.for("marko.touchedIterator");
 const { hasOwnProperty } = {};
 const Generator = (function* () {})().constructor;
@@ -11,30 +12,25 @@ interface Registered {
   id: string;
   access: string;
   scope: unknown;
-  instanceId: number;
 }
 
-enum MutationType {
-  call,
-  assign,
+interface ScopeInternals {
+  [K_SCOPE_ID]?: number;
 }
 
-interface CallMutation {
-  type: MutationType.call;
-  value: unknown;
-  object: unknown;
-  property: string | undefined;
-  spread?: boolean;
-}
+export type ScopeFlush = [scopeId: number, scope: object, props: object];
 
-interface AssignMutation {
-  type: MutationType.assign;
+export interface SerializeChannel {
+  readyId?: string;
+  parent?: SerializeChannel;
+}
+interface Mutation {
   value: unknown;
   object: unknown;
   property: string;
+  channel: SerializeChannel | undefined;
+  valueId?: string | null;
 }
-
-type Mutation = CallMutation | AssignMutation;
 
 type TypedArray =
   | Int8Array
@@ -295,35 +291,29 @@ const KNOWN_OBJECTS = new Map<object, string>([
 class State {
   ids = 0;
   flush = 0;
-  registerInstanceId = 0;
-  flushed = false;
   wroteUndefined = false;
   buf = [] as string[];
   strs = new Map<string, Reference>();
   refs = new WeakMap<WeakKey, Reference>();
   assigned = new Set<Reference>();
-  registered = [] as Reference[];
   boundary: Boundary | undefined = undefined;
+  channel: SerializeChannel | undefined = undefined;
+  channelDeps: Set<string> | null = null;
   mutated: Mutation[] = [];
 }
 
 class Reference {
   declare debug?: Debug;
-  public registered: null | Registered = null;
   public assigns: null | string[] = null;
+  public scopeId: number | undefined = undefined;
+  public channel: SerializeChannel | undefined = undefined;
   constructor(
     public parent: Reference | null,
     public accessor: string | null,
     public flush: number,
     public pos: number | null = null,
     public id: string | null = null,
-  ) {
-    this.parent = parent;
-    this.accessor = accessor;
-    this.flush = flush;
-    this.pos = pos;
-    this.id = id;
-  }
+  ) {}
 }
 
 interface Debug {
@@ -343,60 +333,52 @@ export function setDebugInfo(
 
 export class Serializer {
   #state = new State();
-  get flushed() {
-    return this.#state.flushed;
+  pending(channel?: SerializeChannel) {
+    return hasMatchingMutations(this.#state.mutated, channel?.readyId);
   }
-  stringify(val: unknown, boundary: Boundary) {
+  // The channel of the first pending ready gated mutation, if any;
+  // draining a channel removes its mutations, so callers loop until none
+  // remain.
+  pendingReadyChannel() {
+    for (const mutation of this.#state.mutated) {
+      if (mutation.channel?.readyId) return mutation.channel;
+    }
+  }
+  stringifyScopes(
+    flushes: ScopeFlush[],
+    globals: object | 0,
+    boundary: Boundary,
+    channel?: SerializeChannel,
+  ) {
     try {
-      this.#state.flushed = false;
       this.#state.boundary = boundary;
-      return writeRoot(this.#state, val);
+      this.#state.channel = channel;
+      return writeScopesRoot(this.#state, flushes, globals);
     } finally {
       this.#state.flush++;
       this.#state.buf = [];
     }
   }
-  nextId() {
-    return nextId(this.#state);
+  written(val: WeakKey) {
+    return this.#state.refs.has(val);
   }
-  symbol(id: string) {
-    const symbol = Symbol();
-    this.#state.refs.set(symbol, new Reference(null, null, 0, null, id));
-    return symbol;
+  takeChannelDeps() {
+    const deps = this.#state.channelDeps;
+    this.#state.channelDeps = null;
+    return deps;
   }
   writeCall(
     value: unknown,
     object: unknown,
-    property?: string,
-    spread?: boolean,
+    property: string,
+    channel?: SerializeChannel,
   ) {
-    const state = this.#state;
-    state.mutated.push({
-      type: MutationType.call,
+    this.#state.mutated.push({
       value,
       object,
       property,
-      spread,
+      channel,
     });
-    state.flushed = true;
-  }
-  writeAssign(value: unknown, object: unknown, property: string) {
-    const state = this.#state;
-    state.mutated.push({
-      type: MutationType.assign,
-      value,
-      object,
-      property,
-    });
-    state.flushed = true;
-  }
-  register<T extends WeakKey>(id: string, val: T, scope?: unknown) {
-    return register(
-      id,
-      val,
-      scope,
-      scope ? ++this.#state.registerInstanceId : 0,
-    );
   }
 }
 
@@ -404,12 +386,10 @@ export function register<T extends WeakKey>(
   id: string,
   val: T,
   scope?: unknown,
-  instanceId?: number,
 ) {
   REGISTRY.set(val, {
     id,
     scope,
-    instanceId: instanceId ?? 0,
     access: "_._" + toAccess(toObjectKey(id)),
   });
   return val;
@@ -422,53 +402,73 @@ export function getRegistered(val: WeakKey) {
   }
 }
 
-export function stringify(val: unknown) {
-  return writeRoot(new State(), val);
-}
-
-function writeRoot(state: State, root: unknown) {
+// A payload with only scope data returns the fill array directly
+// (`_=>[1,{a},{b},2,{e}]`). When there are trailing expressions (deferred
+// assigns/mutations, which may reference bindings created inside the fill
+// and so must evaluate after it) the fill is applied through the serialize
+// context instead and the payload ends in `,0` so an arbitrary value from
+// its last expression can never be misread as a fill — the browser only
+// applies a payload's return value when it is an array.
+function writeScopesRoot(
+  state: State,
+  flushes: ScopeFlush[],
+  globals: object | 0,
+) {
   const { buf } = state;
-  const hadBuf = buf.length !== 0;
-  let result: string;
-  if (hadBuf) {
-    buf.push(",");
+  let nextSlotId = -1;
+  let fillIndex = -1;
+
+  if (globals) {
+    fillIndex = buf.push("[0,") - 1;
+    writeProp(state, globals, null, "");
+    nextSlotId = 1;
   }
 
-  if (writeProp(state, root, null, "")) {
-    const rootRef = state.refs.get(root as object);
-    if (rootRef) {
-      const rootId = ensureId(state, rootRef);
-      if (
-        state.assigned.size ||
-        state.registered.length ||
-        state.mutated.length
-      ) {
-        state.assigned.delete(rootRef!);
-        writeAssigned(state);
-        buf.push(
-          "," +
-            (rootRef.assigns
-              ? assignsToString(rootRef.assigns, rootId)
-              : rootId),
-        );
-      }
-    }
+  for (const flush of flushes) {
+    const scopeId = flush[0];
+    const scope = flush[1];
+    const ref =
+      state.refs.get(scope) || newScopeReference(state, scope, scopeId);
 
-    result = "(";
-    buf.push(")");
-  } else {
-    if (hadBuf) {
+    // The slot opener is patched in after the props are written — scopes
+    // that serialize no props are folded into the next emitted slot's
+    // skip count (the browser creates scopes on demand).
+    const openIndex = buf.push("") - 1;
+    if (writeObjectProps(state, flush[2], ref)) {
+      buf[openIndex] =
+        nextSlotId === -1
+          ? "[" + scopeId + ",{"
+          : (scopeId > nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
+      if (fillIndex === -1) fillIndex = openIndex;
+      nextSlotId = scopeId + 1;
+      buf.push("}");
+    } else {
       buf.pop();
-      writeAssigned(state);
     }
-
-    result = "{";
-    buf.push("}");
   }
 
+  if (nextSlotId !== -1) {
+    buf.push("]");
+  }
+
+  let extras = "";
+  if (state.assigned.size || hasChannelMutations(state)) {
+    extras = ",0)";
+    if (fillIndex !== -1) {
+      buf[fillIndex] = "_(" + buf[fillIndex];
+      buf.push(")");
+    }
+    writeAssigned(state);
+  }
+
+  let result = extras && "(";
   for (const chunk of buf) {
     result += chunk;
   }
+  result += extras;
+
+  // Everything elided and nothing else to flush.
+  if (!result) return "";
 
   if (state.wroteUndefined) {
     state.wroteUndefined = false;
@@ -479,40 +479,28 @@ function writeRoot(state: State, root: unknown) {
 }
 
 function writeAssigned(state: State) {
+  let sep = state.buf.length ? "," : "";
+
   if (state.assigned.size) {
     let buf = "";
     for (const ref of state.assigned) {
-      buf += "," + assignsToString(ref.assigns!, ref.id!);
+      buf += sep + assignsToString(ref.assigns!, ref.id!);
       ref.assigns = null;
+      sep = ",";
     }
 
     state.buf.push(buf);
     state.assigned = new Set();
   }
 
-  if (state.registered.length) {
-    let buf = "";
-    for (const ref of state.registered.sort(compareRegisteredReferences)) {
-      const scopeRef = state.refs.get(ref.registered!.scope!);
-      buf +=
-        "," +
-        assignsToString(
-          ref.assigns!,
-          ref.registered!.access +
-            "(" +
-            (scopeRef ? ensureId(state, scopeRef) : ref.assigns![0]) +
-            ")",
-        );
-      ref.assigns = null;
-      ref.registered = null;
-    }
-
-    state.buf.push(buf);
-    state.registered = [];
-  }
-
-  if (state.mutated.length) {
+  if (hasChannelMutations(state)) {
+    const remaining: Mutation[] = [];
     for (const mutation of state.mutated) {
+      if (!mutationMatchesReadyId(mutation, state.channel?.readyId)) {
+        remaining.push(mutation);
+        continue;
+      }
+
       const hasSeen = state.refs.get(mutation.object as object)?.id;
       const objectStartIndex = state.buf.push(
         state.buf.length === 0 ? "" : ",",
@@ -520,7 +508,7 @@ function writeAssigned(state: State) {
 
       if (writeProp(state, mutation.object, null, "")) {
         const objectRef = state.refs.get(mutation.object as object);
-        if (objectRef) {
+        if (objectRef && objectRef.scopeId === undefined) {
           if (!objectRef.id) {
             objectRef.id = nextRefAccess(state);
             state.buf[objectStartIndex] =
@@ -535,21 +523,17 @@ function writeAssigned(state: State) {
         state.buf.push("void 0");
       }
 
-      const isCall = mutation.type === MutationType.call;
       const valueStartIndex = state.buf.push(
-        isCall
-          ? (mutation.property === undefined
-              ? ""
-              : toAccess(toObjectKey(mutation.property))) +
-              "(" +
-              (mutation.spread ? "..." : "")
-          : toAccess(toObjectKey(mutation.property)) + "=",
+        toAccess(toObjectKey(mutation.property)) + "(",
       );
 
-      if (writeProp(state, mutation.value, null, "")) {
+      if (mutation.value === undefined) {
+        // Settling with undefined writes no argument (`_.x.f()`).
+      } else if (writeProp(state, mutation.value, null, "")) {
         const valueRef = state.refs.get(mutation.value as object);
-        if (valueRef && !valueRef.id) {
-          valueRef.id = nextRefAccess(state);
+        // Scopes never claim a binding (`_(N)` is self-resolving).
+        if (valueRef && !valueRef.id && valueRef.scopeId === undefined) {
+          valueRef.id = mutation.valueId || nextRefAccess(state);
           state.buf[valueStartIndex] =
             valueRef.id + "=" + state.buf[valueStartIndex];
         }
@@ -557,16 +541,37 @@ function writeAssigned(state: State) {
         state.buf.push("void 0");
       }
 
-      if (isCall) {
-        state.buf.push(")");
-      }
+      state.buf.push(")");
     }
-    state.mutated = [];
+    state.mutated = remaining;
 
-    if (state.assigned.size || state.registered.length) {
+    if (state.assigned.size) {
       writeAssigned(state);
     }
   }
+}
+
+function hasChannelMutations(state: State) {
+  return hasMatchingMutations(state.mutated, state.channel?.readyId);
+}
+
+function hasMatchingMutations(
+  mutated: Mutation[],
+  readyId: string | undefined,
+) {
+  for (const mutation of mutated) {
+    if (mutationMatchesReadyId(mutation, readyId)) return true;
+  }
+  return false;
+}
+
+function mutationMatchesReadyId(
+  mutation: Mutation,
+  readyId: string | undefined,
+) {
+  return mutation.channel?.readyId
+    ? mutation.channel.readyId === readyId
+    : !readyId;
 }
 
 function writeProp(
@@ -610,16 +615,29 @@ function writeReferenceOr(
   parent: Reference | null,
   accessor: string,
 ) {
+  const scopeId = (val as ScopeInternals)[K_SCOPE_ID];
+
+  if (scopeId !== undefined) {
+    trackScope(state, val, scopeId);
+    state.buf.push("_(" + scopeId + ")");
+    return true;
+  }
+
   let ref = state.refs.get(val);
   if (ref) {
+    if (!trackChannel(state, ref)) {
+      if (MARKO_DEBUG) abortUnreachableChannel(state, val);
+      return false;
+    }
+
     if (parent) {
       if (ref.assigns) {
-        addAssignment(ref, ensureId(state, parent) + toAccess(accessor));
+        addAssignment(ref, accessId(state, parent) + toAccess(accessor));
         return false;
       } else if (isCircular(parent, ref)) {
         ensureId(state, ref);
         state.assigned.add(ref);
-        addAssignment(ref, ensureId(state, parent) + toAccess(accessor));
+        addAssignment(ref, accessId(state, parent) + toAccess(accessor));
         return false;
       }
     }
@@ -636,6 +654,7 @@ function writeReferenceOr(
     val,
     (ref = new Reference(parent, accessor, state.flush, state.buf.length)),
   );
+  ref.channel = state.channel;
 
   if (MARKO_DEBUG) {
     ref.debug = DEBUG.get(val);
@@ -647,6 +666,28 @@ function writeReferenceOr(
   return false;
 }
 
+// Ensures a canonical scope has a reference (recording ancestor stream
+// deps when it already does) so `_(id)` emissions stay channel-aware.
+function trackScope(state: State, val: WeakKey, scopeId: number) {
+  const ref = state.refs.get(val);
+  if (ref) {
+    trackChannel(state, ref);
+  } else {
+    newScopeReference(state, val, scopeId);
+  }
+}
+
+function newScopeReference(state: State, val: WeakKey, scopeId: number) {
+  const ref = new Reference(null, null, state.flush);
+  ref.scopeId = scopeId;
+  ref.channel = state.channel;
+  state.refs.set(val, ref);
+  if (MARKO_DEBUG) {
+    ref.debug = DEBUG.get(val);
+  }
+  return ref;
+}
+
 function writeRegistered(
   state: State,
   val: WeakKey,
@@ -654,31 +695,30 @@ function writeRegistered(
   accessor: string,
   registered: Registered,
 ) {
-  if (parent && registered.scope) {
-    if (!state.refs.has(registered.scope)) {
-      state.buf.push(registered.access + "(");
-      writeProp(state, registered.scope, null, "");
-      state.buf.push(")");
-      const scopeRef = state.refs.get(registered.scope);
-      if (scopeRef) ensureId(state, scopeRef);
-      return true;
+  const { scope } = registered;
+  if (scope) {
+    // Registered factories never eagerly read from the scope they close
+    // over (reads happen inside the returned implementations) and scopes
+    // are self-resolving, so the call is written inline at the value
+    // position. The reference dedups repeated uses to a single invocation.
+    const ref = new Reference(parent, accessor, state.flush, state.buf.length);
+    ref.channel = state.channel;
+    state.refs.set(val, ref);
+    if (MARKO_DEBUG) {
+      ref.debug = DEBUG.get(val);
     }
 
-    const fnRef = new Reference(
-      parent,
-      accessor,
-      state.flush,
-      state.buf.length,
-    );
-    fnRef.registered = registered;
-    state.refs.set(val, fnRef);
-    state.registered.push(fnRef);
-    addAssignment(fnRef, ensureId(state, parent) + toAccess(accessor));
-    return false;
+    // The factory is invoked through the serialize context (`_(1,"a3")`),
+    // which resolves the scope by id within its render — smaller than
+    // referencing the registry and scope separately (`_._.a3(_(1))`). The
+    // registry itself is global, so a bare id could not be resolved
+    // without the per render context.
+    const scopeId = (scope as ScopeInternals)[K_SCOPE_ID]!;
+    trackScope(state, scope, scopeId);
+    state.buf.push("_(" + scopeId + "," + quote(registered.id, 0) + ")");
   } else {
     state.buf.push(registered.access);
   }
-
   return true;
 }
 
@@ -698,13 +738,19 @@ function writeString(
   if (val.length > STRING_DEDUP_LENGTH) {
     const ref = state.strs.get(val);
     if (ref) {
-      state.buf.push(ensureId(state, ref));
-      return true;
+      if (trackChannel(state, ref)) {
+        state.buf.push(ensureId(state, ref));
+        return true;
+      }
     } else {
-      state.strs.set(
-        val,
-        new Reference(parent, accessor, state.flush, state.buf.length),
+      const ref = new Reference(
+        parent,
+        accessor,
+        state.flush,
+        state.buf.length,
       );
+      ref.channel = state.channel;
+      state.strs.set(val, ref);
     }
   }
   state.buf.push(quote(val, 0));
@@ -909,20 +955,28 @@ function writeRegExp(state: State, val: RegExp) {
 }
 
 function writePromise(state: State, val: Promise<unknown>, ref: Reference) {
-  const { boundary } = state;
+  const { boundary, channel } = state;
   if (!boundary) return false;
 
   const pId = nextRefAccess(state);
-  const pRef = new Reference(ref, null, state.flush, null, pId);
+  const handle = newAsyncHandle(state, ref, pId);
   state.buf.push(
     "(p=>p=new Promise((f,r)=>" + pId + "={f,r(e){p.catch(_=>0);r(e)}}))()",
   );
   val.then(
-    (v) => writeAsyncCall(state, boundary, pRef, "f", v, pId),
-    (v) => writeAsyncCall(state, boundary, pRef, "r", v, pId),
+    (v) => writeAsyncCall(state, boundary, handle, "f", v, channel, pId),
+    (v) => writeAsyncCall(state, boundary, handle, "r", v, channel, pId),
   );
   boundary.startAsync();
   return true;
+}
+
+function newAsyncHandle(state: State, parent: Reference, id: string) {
+  const handle = {};
+  const handleRef = new Reference(parent, null, state.flush, null, id);
+  handleRef.channel = state.channel;
+  state.refs.set(handle, handleRef);
+  return handle;
 }
 
 function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
@@ -1044,8 +1098,8 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
 // Writes the backing array argument for a Map/Set. The array has no
 // accessor, so members that may be referenced again later must reach it
 // through an eagerly claimed id binding (`needsId`, and always for the
-// self-reference wrapper form) — while primitive members never reference
-// back through it and skip the binding entirely.
+// self-reference wrapper form) — while primitive/scope-only members never
+// reference back through it and skip the binding entirely.
 function writeArrayArg(
   state: State,
   ref: Reference,
@@ -1076,12 +1130,12 @@ function writeArrayArg(
 }
 
 // Direct Map/Set members that may be referenced again later bind through
-// the backing array, so its id must be claimed eagerly; primitives never
-// do.
+// the backing array, so its id must be claimed eagerly; primitives and
+// canonical scopes (self-resolving) never do.
 function isDedupedMember(val: unknown) {
   switch (typeof val) {
     case "object":
-      return val !== null;
+      return val !== null && (val as ScopeInternals)[K_SCOPE_ID] === undefined;
     case "function":
     case "symbol":
       return true;
@@ -1325,23 +1379,23 @@ function writeReadableStream(
   val: ReadableStream<unknown>,
   ref: Reference,
 ) {
-  const { boundary } = state;
+  const { boundary, channel } = state;
   if (!boundary || val.locked) return false;
 
   const reader = val.getReader();
   const iterId = nextRefAccess(state);
-  const iterRef = new Reference(ref, null, state.flush, null, iterId);
+  const handle = newAsyncHandle(state, ref, iterId);
   const onFulfilled = ({ value, done }: ReadableStreamReadResult<unknown>) => {
     if (done) {
-      writeAsyncCall(state, boundary, iterRef, "r", value);
+      writeAsyncCall(state, boundary, handle, "r", value, channel);
     } else if (!boundary.signal.aborted) {
       reader.read().then(onFulfilled, onRejected);
       boundary.startAsync();
-      writeAsyncCall(state, boundary, iterRef, "f", value);
+      writeAsyncCall(state, boundary, handle, "f", value, channel);
     }
   };
   const onRejected = (reason: unknown) => {
-    writeAsyncCall(state, boundary, iterRef, "j", reason);
+    writeAsyncCall(state, boundary, handle, "j", reason, channel);
   };
 
   state.buf.push(
@@ -1398,22 +1452,22 @@ function writeAsyncGenerator(
     return true;
   }
 
-  const { boundary } = state;
+  const { boundary, channel } = state;
   if (!boundary) return false;
 
   const iterId = nextRefAccess(state);
-  const iterRef = new Reference(ref, null, state.flush, null, iterId);
+  const handle = newAsyncHandle(state, ref, iterId);
   const onFulfilled = ({ value, done }: IteratorResult<unknown>) => {
     if (done) {
-      writeAsyncCall(state, boundary, iterRef, "r", value);
+      writeAsyncCall(state, boundary, handle, "r", value, channel);
     } else if (!boundary.signal.aborted) {
       iter.next().then(onFulfilled, onRejected);
       boundary.startAsync();
-      writeAsyncCall(state, boundary, iterRef, "f", value);
+      writeAsyncCall(state, boundary, handle, "f", value, channel);
     }
   };
   const onRejected = (reason: unknown) => {
-    writeAsyncCall(state, boundary, iterRef, "j", reason);
+    writeAsyncCall(state, boundary, handle, "j", reason, channel);
   };
 
   state.buf.push(
@@ -1499,26 +1553,21 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
 function writeAsyncCall(
   state: State,
   boundary: Boundary,
-  ref: Reference,
+  handle: WeakKey,
   method: string,
   value: unknown,
-  preferredValueId: string | null = null,
+  channel: SerializeChannel | undefined,
+  valueId: string | null = null,
 ) {
   if (boundary.signal.aborted) return;
 
-  state.flushed = true;
-  const valueStartIndex = state.buf.push(
-    (state.buf.length === 0 ? "" : ",") + ref.id + "." + method + "(",
-  );
-  if (writeProp(state, value, ref, "")) {
-    const valueRef = state.refs.get(value as object);
-    if (valueRef && !valueRef.id) {
-      valueRef.id = preferredValueId || nextRefAccess(state);
-      state.buf[valueStartIndex] =
-        valueRef.id + "=" + state.buf[valueStartIndex];
-    }
-  }
-  state.buf.push(")");
+  state.mutated.push({
+    value,
+    object: handle,
+    property: method,
+    channel,
+    valueId,
+  });
   boundary.endAsync();
 }
 
@@ -1567,6 +1616,31 @@ function throwUnserializable(
     }
 
     const err = new TypeError(message, { cause });
+    err.stack = undefined;
+    state.boundary.abort(err);
+  }
+}
+
+function trackChannel(state: State, ref: Reference) {
+  const refReadyId = ref.channel?.readyId;
+  if (!refReadyId || refReadyId === state.channel?.readyId) return true;
+  let cur = state.channel?.parent;
+  while (cur) {
+    if (cur.readyId === refReadyId) {
+      (state.channelDeps ||= new Set()).add(refReadyId);
+      return true;
+    }
+    cur = cur.parent;
+  }
+  return false;
+}
+
+function abortUnreachableChannel(state: State, val: unknown) {
+  if (state.boundary?.abort) {
+    const err = new TypeError(
+      "Unable to serialize a value shared between independently lazy loaded content. Values shared this way must also be serialized by content that is not lazily loaded, or by a common parent.",
+      { cause: val },
+    );
     err.stack = undefined;
     state.boundary.abort(err);
   }
@@ -1626,7 +1700,7 @@ export function toAccess(accessor: string) {
 // Creates a JavaScript double quoted string and escapes all characters not listed as DoubleStringCharacters on
 // Also includes "<" to escape "</script>" and "\" to avoid invalid escapes in the output.
 // http://www.ecma-international.org/ecma-262/5.1/#sec-7.8.4
-function quote(str: string, startPos: number): string {
+export function quote(str: string, startPos: number): string {
   let result = "";
   let lastPos = 0;
 
@@ -1666,7 +1740,22 @@ function quote(str: string, startPos: number): string {
 }
 
 function ensureId(state: State, ref: Reference) {
-  return ref.id || assignId(state, ref);
+  if (ref.scopeId !== undefined) {
+    trackChannel(state, ref);
+    return "_(" + ref.scopeId + ")";
+  }
+
+  if (ref.id) {
+    trackChannel(state, ref);
+    return ref.id;
+  }
+
+  return assignId(state, ref);
+}
+
+function accessId(state: State, ref: Reference) {
+  const id = ensureId(state, ref);
+  return id === ref.id || ref.scopeId !== undefined ? id : "(" + id + ")";
 }
 
 function assignId(state: State, ref: Reference) {
@@ -1683,6 +1772,8 @@ function assignId(state: State, ref: Reference) {
     return ref.id;
   }
 
+  ref.channel = state.channel;
+
   let cur = ref;
   let accessPrevValue = "";
 
@@ -1691,12 +1782,14 @@ function assignId(state: State, ref: Reference) {
     const parent = cur.parent!;
 
     if (parent.id) {
-      accessPrevValue = parent.id + accessPrevValue;
-      break;
+      if (trackChannel(state, parent) || !parent.parent) {
+        accessPrevValue = parent.id + accessPrevValue;
+        break;
+      }
     }
 
-    if (parent.flush === state.flush) {
-      accessPrevValue = ensureId(state, parent) + accessPrevValue;
+    if (parent.flush === state.flush || parent.scopeId !== undefined) {
+      accessPrevValue = accessId(state, parent) + accessPrevValue;
       break;
     }
 
@@ -1799,8 +1892,4 @@ function patchIteratorNext(proto: Iterator<any>) {
     return next.call(this, value);
   };
   (proto.next as any)[kTouchedIterator] = true;
-}
-
-function compareRegisteredReferences(a: Reference, b: Reference) {
-  return a.registered!.instanceId - b.registered!.instanceId;
 }

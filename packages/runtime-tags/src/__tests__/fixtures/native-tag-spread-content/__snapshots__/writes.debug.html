@@ -4,24 +4,25 @@
 <p>Hello</p><!--M_*2 #p/5--><em>Custom content</em>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.h = [0, 1, _.c = {
-      "BranchScopes:#div/0": _.d = {},
+  M._.r = [_ => [2, {
+      "BranchScopes:#div/0": _(3),
       "ConditionalRenderer:#div/0": _.a =
         "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content/template.marko_1_content",
-      "BranchScopes:#button/1": _.e = {},
+      "BranchScopes:#button/1": _(4),
       "ConditionalRenderer:#button/1": _.a,
-      "BranchScopes:#strong/4": _.f = {},
+      "BranchScopes:#strong/4": _(6),
       "ConditionalRenderer:#strong/4": "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content/tags/my-div.marko_1_content",
-      "BranchScopes:#p/5": _.g = {},
+      "BranchScopes:#p/5": _(7),
       "ConditionalRenderer:#p/5": _.a,
       input: {
-        content: _._[
+        content: _(1,
           "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content/template.marko_1_content"
-          ](_.b = {})
-      }
-    }, _.d, _.e, 1, _.f, _.g], _.c.CustomContent_content = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content/tags/my-div.marko_1_content"
-      ](_.c), _.h),
+          )
+      },
+      CustomContent_content: _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content/tags/my-div.marko_1_content"
+        )
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content/tags/my-div.marko_0_input_CustomContent_content 2 packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content/tags/my-div.marko_0_input 2"
   ];
   M._.w()

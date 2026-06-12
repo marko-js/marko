@@ -2,13 +2,13 @@
 </div>
 <script>
   WALKER_RUNTIME("M")("embedded");
-  (M.embedded.b = {})[
-    "packages/runtime-tags/src/__tests__/fixtures/embed-counter/template.marko"
-    ] = 1;
-  M.embedded.r = [_ => (_.a = [0, {
-      clickCount: 0
-    }]),
-    "packages/runtime-tags/src/__tests__/fixtures/embed-counter/template.marko_0_clickCount 1"
-  ];
+  M.embedded.b = {
+    "packages/runtime-tags/src/__tests__/fixtures/embed-counter/template.marko": [
+      _ => [1, {
+        clickCount: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/embed-counter/template.marko_0_clickCount 1"
+    ]
+  };
   M.embedded.w()
 </script>

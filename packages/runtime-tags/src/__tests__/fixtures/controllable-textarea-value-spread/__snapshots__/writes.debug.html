@@ -1,16 +1,18 @@
 <textarea>hello</textarea><!--M_*2 #textarea/0--><span>hello<!--M_*1 #text/1--></span>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.c = [0, _.d = {
-      "#childScope/0": _.a = {
-        "ControlledType:#textarea/0": 2,
-        input: _.b = {
-          value: "hello"
-        }
+  M._.r = [_ => [1, {
+      "#childScope/0": _(2)
+    }, {
+      "ControlledType:#textarea/0": 2,
+      "ControlledHandler:#textarea/0": _.a = _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-textarea-value-spread/template.marko_0/valueChange"
+        ),
+      input: {
+        value: "hello",
+        valueChange: _.a
       }
-    }, _.a], _.a["ControlledHandler:#textarea/0"] = _.b.valueChange = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/controllable-textarea-value-spread/template.marko_0/valueChange"
-      ](_.d), _.c),
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/controllable-textarea-value-spread/tags/my-textarea.marko_0_input 2"
   ];
   M._.w()

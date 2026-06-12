@@ -1,7 +1,7 @@
 {
   "dom": {},
   "html": {
-    "min": 340,
-    "brotli": 249
+    "min": 315,
+    "brotli": 228
   }
 }

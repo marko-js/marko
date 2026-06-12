@@ -1,0 +1,10 @@
+<let/count=1/>
+<const/getCount=() => count/>
+<const/promise=Promise.resolve(getCount)/>
+<script>
+  document.getElementById("ref")!.textContent = String((await promise)());
+</script>
+<button onClick() { count++ }>
+  inc:${count}
+</button>
+<div id="ref">0</div>

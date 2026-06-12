@@ -1,4 +1,4 @@
-// size: 2492 (min) 1262 (brotli)
+// size: 2690 (min) 1317 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -6,8 +6,8 @@ let decodeAccessor = (num) =>
   isScheduled,
   channel,
   registeredValues = {},
-  curRuntimeId,
-  readyLookup = {},
+  curRenders,
+  readyIds,
   pendingRenders = [],
   pendingRendersLookup = {},
   asyncRendersLookup,
@@ -71,20 +71,48 @@ function _script(id, fn) {
   );
 }
 function init(runtimeId = "M") {
-  if (curRuntimeId) return;
-  curRuntimeId = runtimeId;
-  let resumeRender,
-    renders = self[runtimeId],
+  if (curRenders) return;
+  let renders = self[runtimeId],
     defineRuntime = (desc) => Object.defineProperty(self, runtimeId, desc),
     initRuntime = (renders) => {
       defineRuntime({
-        value: (resumeRender = (renderId) => {
-          let render = (resumeRender[renderId] =
+        value: (curRenders = (renderId) => {
+          let render = (curRenders[renderId] =
               renders[renderId] || renders(renderId)),
             walk = render.w,
-            scopeLookup = (render.s = {}),
-            getScope = (id) => (scopeLookup[id] ||= { L: +id }),
-            serializeContext = { _: registeredValues },
+            scopeLookup = {},
+            getScope = (id) =>
+              scopeLookup[id] || initScope((scopeLookup[id] = { L: +id })),
+            initGlobal = () =>
+              ($global ||= {
+                runtimeId,
+                renderId,
+              }),
+            initScope = (scope) => ((scope.$ = initGlobal()), scope),
+            applyScopes = (partials) => {
+              let scopeId = partials[0];
+              for (let i = 1; i < partials.length; i++) {
+                let partial = partials[i];
+                typeof partial == "number"
+                  ? (scopeId += partial)
+                  : (scopeId
+                      ? initScope(
+                          Object.assign(
+                            (scopeLookup[scopeId] ||=
+                              ((partial.L = scopeId), partial)),
+                            partial,
+                          ),
+                        )
+                      : Object.assign(initGlobal(), partial),
+                    scopeId++);
+              }
+            },
+            serializeContext = (data, registryId) =>
+              typeof data == "number"
+                ? registryId
+                  ? registeredValues[registryId](getScope(data))
+                  : getScope(data)
+                : applyScopes(data),
             nextToken = () =>
               (lastToken = visitText.slice(
                 lastTokenIndex,
@@ -92,31 +120,10 @@ function init(runtimeId = "M") {
                   visitText.indexOf(" ", lastTokenIndex) + 1 ||
                   visitText.length + 1) - 1,
               )),
-            $global,
-            lastEffect,
-            visits,
-            resumes,
-            visit,
-            visitText,
-            visitType,
-            visitScope,
-            lastToken,
-            lastTokenIndex,
-            lastScopeId = 0;
-          return (
-            (render.m = (effects = []) => {
-              if (readyLookup) {
-                for (let readyId in render.b)
-                  if (readyLookup[readyId] !== 1)
-                    return (
-                      (readyLookup[readyId] = ((prev) => () => {
-                        (runResumeEffects(render), prev?.());
-                      })(readyLookup[readyId])),
-                      effects
-                    );
-                render.b = 0;
-              }
-              for (let serialized of (resumes = render.r || []))
+            processResumes = (resumes = [], effects) => {
+              let i = 0;
+              for (; i < resumes.length; i++) {
+                let serialized = resumes[i];
                 if (typeof serialized == "string")
                   for (
                     lastTokenIndex = 0, visitText = serialized;
@@ -125,16 +132,28 @@ function init(runtimeId = "M") {
                     /\D/.test(lastToken)
                       ? (lastEffect = registeredValues[lastToken])
                       : effects.push(lastEffect, getScope(lastToken));
-                else
-                  for (let scope of serialized(serializeContext))
-                    $global
-                      ? typeof scope == "number"
-                        ? (lastScopeId += scope)
-                        : ((scopeLookup[(scope.L = ++lastScopeId)] = scope),
-                          (scope.$ = $global))
-                      : (($global = scope || {}),
-                        ($global.runtimeId = runtimeId),
-                        ($global.renderId = renderId));
+                else if (Array.isArray(serialized)) break;
+                else {
+                  let scopes = serialized(serializeContext);
+                  Array.isArray(scopes) && applyScopes(scopes);
+                }
+              }
+              return (resumes.splice(0, i), i);
+            },
+            $global,
+            lastEffect,
+            visits,
+            visit,
+            visitText,
+            visitType,
+            visitScope,
+            lastToken,
+            lastTokenIndex;
+          return (
+            (serializeContext._ = registeredValues),
+            (render.m = (effects) => {
+              if ((processResumes(render.r, effects), readyIds));
+              let retained = 0;
               for (visit of (visits = render.v))
                 if (
                   ((lastTokenIndex = render.i.length),
@@ -148,8 +167,8 @@ function init(runtimeId = "M") {
                     prev && (prev.nodeType < 8 || prev.data)
                       ? prev
                       : visit.parentNode.insertBefore(new Text(), visit);
-                }
-              return ((visits.length = resumes.length = 0), effects);
+                } else render.b && (visits[retained++] = visit);
+              return ((visits.length = retained), effects);
             }),
             (render.w = () => {
               (walk(), runResumeEffects(render));
@@ -161,7 +180,7 @@ function init(runtimeId = "M") {
     };
   if (renders) {
     initRuntime(renders);
-    for (let renderId in renders) runResumeEffects(resumeRender(renderId));
+    for (let renderId in renders) runResumeEffects(curRenders(renderId));
   } else
     defineRuntime({
       configurable: !0,
@@ -170,7 +189,7 @@ function init(runtimeId = "M") {
 }
 function runResumeEffects(render) {
   try {
-    runEffects(render.m(), 1);
+    runEffects(render.m([]), 1);
   } finally {
   }
 }

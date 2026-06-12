@@ -2,7 +2,7 @@
 import { _el_read_error, _hoist_read_error } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
 import { normalizeDynamicRenderer } from "../common/helpers";
-import { type Opt, push } from "../common/opt";
+import { concat, forEach, type Opt, push } from "../common/opt";
 import {
   type $Global,
   type Accessor,
@@ -19,7 +19,10 @@ import {
   WALKER_RUNTIME_CODE,
 } from "./inlined-runtimes.debug";
 import {
+  K_SCOPE_ID,
+  quote,
   register as serializerRegister,
+  type ScopeFlush,
   Serializer,
   setDebugInfo,
   toAccess,
@@ -28,15 +31,22 @@ import {
 import type { ServerRenderer } from "./template";
 
 export type PartialScope = Record<Accessor, unknown>;
+
+interface SerializeState {
+  readyId?: string;
+  parent?: SerializeState;
+  resumes: string;
+  writeScopes: Record<number, PartialScope>;
+  passiveScopes?: Record<number, PartialScope>;
+  flushScopes: boolean;
+}
+
 type ScopeInternals = PartialScope & {
   [K_SCOPE_ID]?: number;
-  [K_SCOPE_REFERENCED]?: 1;
 };
 
 let $chunk: Chunk;
 const NOOP = () => {};
-const K_SCOPE_ID = Symbol("Scope ID");
-const K_SCOPE_REFERENCED = Symbol("Scope Referenced");
 
 enum Mark {
   Placeholder = "!^",
@@ -47,7 +57,7 @@ enum Mark {
 enum RuntimeKey {
   Walk = ".w",
   Resume = ".r",
-  Blocking = ".b",
+  Ready = ".b",
   Scripts = ".j",
 }
 export function getChunk(): Chunk | undefined {
@@ -74,8 +84,36 @@ export function writeScript(script: string) {
   $chunk.writeScript(script);
 }
 
+export function writeWaitReady(
+  readyId: string,
+  renderer: ServerRenderer,
+  input: unknown,
+) {
+  const chunk = $chunk;
+  const { boundary } = chunk;
+  const body = new Chunk(boundary, null, chunk.context, {
+    readyId,
+    parent: chunk.serializeState,
+    resumes: "",
+    writeScopes: {},
+    flushScopes: false,
+  });
+  const bodyEnd = body.render(renderer, input);
+
+  if (body === bodyEnd) {
+    chunk.writeHTML(body.html);
+    body.deferOwnReady();
+    chunk.deferredReady = push(chunk.deferredReady, body);
+  } else {
+    // The remainder of the render continues after the async body in a chunk
+    // that restores the parent serialize state.
+    bodyEnd.next = $chunk = chunk.fork(boundary, chunk.next);
+    chunk.next = body;
+  }
+}
+
 export function _script(scopeId: number, registryId: string) {
-  if ($chunk.context?.[kIsAsync]) {
+  if ($chunk.serializeState.readyId || $chunk.context?.[kIsAsync]) {
     _resume_branch(scopeId);
   }
   $chunk.boundary.state.needsMainRuntime = true;
@@ -103,9 +141,7 @@ export function _attr_content(
   if (rendered) {
     if (shouldResume) {
       writeScope(scopeId, {
-        [AccessorPrefix.BranchScopes + nodeAccessor]: referenceScope(
-          writeScope(branchId, {}),
-        ),
+        [AccessorPrefix.BranchScopes + nodeAccessor]: writeScope(branchId, {}),
         [AccessorPrefix.ConditionalRenderer + nodeAccessor]:
           render?.[RendererProp.Id],
       });
@@ -165,10 +201,11 @@ export function _var(
   registryId: string,
   nodeAccessor?: Accessor,
 ) {
-  _scope_with_id(parentScopeId)[scopeOffsetAccessor] = _scope_id();
+  writeScopePassive(parentScopeId, { [scopeOffsetAccessor]: _scope_id() });
   // TODO: if the return value is already registered, use that.
-  const childScope = _scope_with_id(childScopeId);
-  childScope[AccessorProp.TagVariable] = _resume({}, registryId, parentScopeId);
+  const childScope = writeScopePassive(childScopeId, {
+    [AccessorProp.TagVariable]: _resume({}, registryId, parentScopeId),
+  });
   if (nodeAccessor !== undefined) {
     writeScope(parentScopeId, {
       [AccessorPrefix.BranchScopes + nodeAccessor]: childScope,
@@ -176,18 +213,25 @@ export function _var(
   }
 }
 
+function writeScopePassive(scopeId: number, partialScope: PartialScope) {
+  const target = $chunk.serializeState;
+  const scope = _scope_with_id(scopeId);
+  const passive = (target.passiveScopes ||= {});
+  Object.assign(scope, partialScope);
+  passive[scopeId] = Object.assign(passive[scopeId] || {}, partialScope);
+  return scope;
+}
+
 export function _resume<T extends WeakKey>(
   val: T,
   id: string,
   scopeId?: number,
 ): T {
-  return scopeId === undefined
-    ? serializerRegister(id, val)
-    : $chunk.boundary.state.serializer.register(
-        id,
-        val,
-        _scope_with_id(scopeId),
-      );
+  return serializerRegister(
+    id,
+    val,
+    scopeId === undefined ? undefined : _scope_with_id(scopeId),
+  );
 }
 
 export function _id() {
@@ -487,7 +531,7 @@ function forBranches(
         resumeKeys && !sameAsIndex ? { [AccessorProp.LoopKey]: itemKey } : {},
       );
       if (!resumeMarker) {
-        loopScopes = push(loopScopes, referenceScope(branchScope));
+        loopScopes = push(loopScopes, branchScope);
       }
     });
   });
@@ -539,7 +583,7 @@ export function _if(
       [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex || undefined, // we convert 0 to undefined since the runtime defaults branch to 0.
       [AccessorPrefix.BranchScopes + accessor]: resumeMarker
         ? undefined
-        : referenceScope(writeScope(branchId, {})),
+        : writeScope(branchId, {}),
     });
   }
 
@@ -589,44 +633,25 @@ function writeBranchEnd(
   }
 }
 
-function scopeHasReference(scope: PartialScope) {
-  return !!(scope as ScopeInternals)[K_SCOPE_REFERENCED];
-}
-
-function referenceScope(scope: ScopeInternals) {
-  scope[K_SCOPE_REFERENCED] = 1;
-  return scope;
-}
-
 let writeScope = (scopeId: number, partialScope: PartialScope) => {
-  return writeScopeToState($chunk.boundary.state, scopeId, partialScope);
-};
-
-export function writeScopeToState(
-  state: State,
-  scopeId: number,
-  partialScope: PartialScope,
-) {
-  const { scopes } = state;
-  let scope: ScopeInternals | undefined = scopes.get(scopeId);
+  const { state } = $chunk.boundary;
+  const target = $chunk.serializeState;
+  const scope = scopeWithId(state, scopeId);
+  const pending = target.writeScopes[scopeId];
   state.needsMainRuntime = true;
+  Object.assign(scope, partialScope);
 
-  if (scope) {
-    Object.assign(scope, partialScope);
+  // Each serialize state only flushes the props it wrote itself; the
+  // canonical scope (above) accumulates everything for server side reads.
+  if (pending && pending !== partialScope) {
+    Object.assign(pending, partialScope);
   } else {
-    scope = partialScope;
-    scope[K_SCOPE_ID] = scopeId;
-    state.scopes.set(scopeId, scope);
+    target.writeScopes[scopeId] = partialScope;
   }
-
-  if (state.writeScopes) {
-    state.writeScopes[scopeId] = scope;
-  } else {
-    state.writeScopes = { [scopeId]: scope };
-  }
+  target.flushScopes = true;
 
   return scope;
-}
+};
 
 if (MARKO_DEBUG) {
   writeScope = (
@@ -649,18 +674,24 @@ if (MARKO_DEBUG) {
 
 export { writeScope as _scope };
 
+// Marks the scope as flushing (without writing props itself) so that
+// passive props (eg tag variables) ride along; the empty entry is elided
+// from the wire when nothing else merges in.
 export function _existing_scope(scopeId: number) {
-  return writeScope(scopeId, _scope_with_id(scopeId));
+  return writeScope(scopeId, {});
 }
 
 export function _scope_with_id(scopeId: number) {
-  const { state } = $chunk.boundary;
-  let scope = state.scopes.get(scopeId);
+  return scopeWithId($chunk.boundary.state, scopeId);
+}
+
+function scopeWithId(state: State, scopeId: number) {
+  const { scopes } = state;
+  let scope = scopes.get(scopeId);
   if (!scope) {
-    scope = { [K_SCOPE_ID]: scopeId };
-    state.scopes.set(scopeId, scope);
+    scopes.set(scopeId, (scope = { [K_SCOPE_ID]: scopeId }));
   }
-  return referenceScope(scope);
+  return scope;
 }
 
 export function $global() {
@@ -697,7 +728,7 @@ export function _await<T>(
 
   const chunk = $chunk;
   const { boundary } = chunk;
-  chunk.next = $chunk = new Chunk(boundary, chunk.next, chunk.context);
+  chunk.next = $chunk = chunk.fork(boundary, chunk.next);
   chunk.async = true;
   if (chunk.context?.[kPendingContexts]) {
     chunk.context = { ...chunk.context, [kPendingContexts]: 0 };
@@ -790,17 +821,15 @@ function tryPlaceholder(
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
-  const body = new Chunk(boundary, null, chunk.context);
+  const body = chunk.fork(boundary, null);
 
   if (body === body.render(content)) {
     chunk.append(body);
     return;
   }
 
-  chunk.next = $chunk = new Chunk(boundary, chunk.next, chunk.context);
-  chunk.placeholderBody = body;
-  chunk.placeholderRender = placeholder;
-  chunk.placeholderBranchId = branchId;
+  chunk.next = $chunk = chunk.fork(boundary, chunk.next);
+  chunk.placeholder = { body, render: placeholder, branchId };
 }
 
 function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
@@ -808,7 +837,7 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
   const { boundary } = chunk;
   const { state } = boundary;
   const catchBoundary = new Boundary(state);
-  const body = new Chunk(catchBoundary, null, chunk.context);
+  const body = chunk.fork(catchBoundary, null);
   const bodyEnd = body.render(content);
 
   if (catchBoundary.signal.aborted) {
@@ -825,10 +854,7 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
 
   const reorderId = state.nextReorderId();
   const endMarker = state.mark(Mark.PlaceholderEnd, reorderId);
-  const bodyNext =
-    (bodyEnd.next =
-    $chunk =
-      new Chunk(boundary, chunk.next, body.context));
+  const bodyNext = (bodyEnd.next = $chunk = body.fork(boundary, chunk.next));
   chunk.next = body;
   chunk.writeHTML(state.mark(Mark.Placeholder, reorderId));
   bodyEnd.writeHTML(endMarker);
@@ -854,14 +880,14 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
             cur.needsWalk = true;
             cur.html = endMarker;
             cur.scripts = cur.effects = cur.lastEffect = "";
-            cur.placeholderBody = cur.placeholderRender = cur.reorderId = null;
+            cur.placeholder = cur.reorderId = cur.deferredReady = null;
           }
 
           cur = next;
         } while (cur !== bodyNext);
       }
 
-      const catchChunk = new Chunk(boundary, null, chunk.context);
+      const catchChunk = chunk.fork(boundary, null);
       catchChunk.reorderId = reorderId;
       catchChunk.render(catchContent, catchBoundary.signal.reason);
       state.reorder(catchChunk);
@@ -874,14 +900,15 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
   };
 }
 
-export class State {
+export class State implements SerializeState {
   public tagId = 1;
   public scopeId = 1;
   public reorderId = 1;
-  public lastSerializedScopeId = this.scopeId;
+  public readyGate = 1;
   public hasGlobals = false;
   public needsMainRuntime = false;
   public hasMainRuntime = false;
+  public hasReadyRuntime = false;
   public hasReorderRuntime = false;
   public hasWrittenResume = false;
   public walkOnNextFlush = false;
@@ -890,14 +917,14 @@ export class State {
   public nonceAttr = "";
   public serializer = new Serializer();
   public writeReorders: Chunk[] | null = null;
-  public scopes = new Map<number, PartialScope>();
-  public writeScopes: null | Record<number, PartialScope> = null;
-  public ensureReady: null | Record<string, 0 | 1> = null;
+  public scopes = new Map<number, ScopeInternals>();
+  public flushScopes = false;
+  public writeScopes: Record<number, PartialScope> = {};
+  public readyIds: Set<string> | null = null;
   public serializeReason: undefined | 0 | 1;
   constructor(
     public $global: $Global & { renderId: string; runtimeId: string },
   ) {
-    this.$global = $global;
     if ($global.cspNonce) {
       this.nonceAttr = " nonce" + attrAssignment($global.cspNonce);
     }
@@ -920,6 +947,33 @@ export class State {
       this.needsMainRuntime = true;
       this.writeReorders = [chunk];
     }
+  }
+
+  writeReady(id: string, resumes: string) {
+    const readyKey = toObjectKey(id);
+    if (this.readyIds?.has(id)) {
+      return this.readyAccess(readyKey) + ".push(" + resumes + ")";
+    }
+
+    (this.readyIds ||= new Set()).add(id);
+    if (this.hasReadyRuntime) {
+      return this.readyAccess(readyKey) + "=[" + resumes + "]";
+    }
+
+    this.hasReadyRuntime = true;
+    return (
+      this.runtimePrefix +
+      RuntimeKey.Ready +
+      "={" +
+      readyKey +
+      ":[" +
+      resumes +
+      "]}"
+    );
+  }
+
+  readyAccess(readyKey: string) {
+    return this.runtimePrefix + RuntimeKey.Ready + toAccess(readyKey);
   }
 
   nextReorderId() {
@@ -953,7 +1007,6 @@ export class Boundary extends AbortController {
     parent?: AbortSignal,
   ) {
     super();
-    this.state = state;
     this.signal.addEventListener("abort", () => {
       this.count = 0;
       this.state = new State(this.state.$global);
@@ -973,7 +1026,7 @@ export class Boundary extends AbortController {
 
   flush() {
     if (!this.signal.aborted) {
-      flushSerializer(this);
+      flushSerializer(this, this.state);
     }
 
     return this.count
@@ -1011,17 +1064,21 @@ export class Chunk {
   public consumed = false;
   public needsWalk = false;
   public reorderId: string | null = null;
-  public placeholderBody: Chunk | null = null;
-  public placeholderRender: (() => void) | null = null;
-  public placeholderBranchId: number | null = null;
+  public deferredReady: Opt<Chunk> = null;
+  public placeholder: {
+    body: Chunk;
+    render: () => void;
+    branchId: number;
+  } | null = null;
   constructor(
     public boundary: Boundary,
     public next: Chunk | null,
     public context: Record<string | symbol, unknown> | null,
-  ) {
-    this.boundary = boundary;
-    this.next = next;
-    this.context = context;
+    public serializeState: SerializeState,
+  ) {}
+
+  fork(boundary: Boundary, next: Chunk | null) {
+    return new Chunk(boundary, next, this.context, this.serializeState);
   }
 
   writeHTML(html: string) {
@@ -1046,19 +1103,42 @@ export class Chunk {
     this.effects = concatEffects(this.effects, chunk.effects);
     this.scripts = concatScripts(this.scripts, chunk.scripts);
     this.lastEffect = chunk.lastEffect || this.lastEffect;
+    this.deferredReady = concat(this.deferredReady, chunk.takeDeferredReady());
+  }
+
+  takeDeferredReady() {
+    const { deferredReady } = this;
+    this.deferredReady = null;
+    return deferredReady;
+  }
+
+  deferOwnReady() {
+    if (
+      this.serializeState.readyId &&
+      (this.effects || this.scripts || this.serializeState.flushScopes)
+    ) {
+      // The chunk's own pending resume data is carried at the head of its
+      // deferred list so it is flushed before any lazy content nested
+      // within it (which may reference its data).
+      const deferred = this.fork(this.boundary, null);
+      deferred.effects = this.effects;
+      deferred.scripts = this.scripts;
+      this.effects = this.scripts = this.lastEffect = "";
+      this.deferredReady = concat<Chunk>(deferred, this.deferredReady);
+    }
   }
   flushPlaceholder() {
-    if (this.placeholderBody) {
-      const body = this.placeholderBody.consume();
+    const { placeholder } = this;
+    if (placeholder) {
+      const body = placeholder.body.consume();
 
       if (body.async) {
         const { state } = this.boundary;
-        const reorderId = (body.reorderId = this.placeholderBranchId
-          ? this.placeholderBranchId + ""
+        const reorderId = (body.reorderId = placeholder.branchId
+          ? placeholder.branchId + ""
           : state.nextReorderId());
-        this.placeholderBranchId = null;
         this.writeHTML(state.mark(Mark.Placeholder, reorderId));
-        const after = this.render(this.placeholderRender!);
+        const after = this.render(placeholder.render);
         if (after !== this) {
           // TODO: eventually this should be allowed.
           // Once it's allowed we'll need check if placeholder needs to be disposed once body complete.
@@ -1073,37 +1153,42 @@ export class Chunk {
         this.next = body;
       }
 
-      this.placeholderRender = this.placeholderBody = null;
+      this.placeholder = null;
     }
   }
 
   consume() {
     let cur: Chunk = this;
-    let needsWalk = cur.needsWalk;
+    let html = "";
+    let effects = "";
+    let scripts = "";
+    let lastEffect = "";
+    let needsWalk = false;
+    let deferredReady: Opt<Chunk>;
 
-    if (cur.next && !cur.async) {
-      let html = "";
-      let effects = "";
-      let scripts = "";
-      let lastEffect = "";
-      do {
-        cur.flushPlaceholder();
-        needsWalk ||= cur.needsWalk;
-        html += cur.html;
+    while (cur.next && !cur.async) {
+      cur.flushPlaceholder();
+      needsWalk ||= cur.needsWalk;
+      html += cur.html;
+      if (cur.serializeState.readyId) {
+        deferredReady = push(deferredReady, cur);
+      } else {
         effects = concatEffects(effects, cur.effects);
         scripts = concatScripts(scripts, cur.scripts);
         lastEffect = cur.lastEffect || lastEffect;
-        cur.consumed = true;
-        cur = cur.next;
-      } while (cur.next && !cur.async);
-
-      cur.needsWalk = needsWalk;
-      cur.html = html + cur.html;
-      cur.effects = concatEffects(effects, cur.effects);
-      cur.scripts = concatScripts(scripts, cur.scripts);
-      cur.lastEffect = lastEffect;
+      }
+      deferredReady = concat(deferredReady, cur.takeDeferredReady());
+      cur.consumed = true;
+      cur = cur.next;
     }
 
+    cur.deferOwnReady();
+    cur.deferredReady = concat(deferredReady, cur.deferredReady);
+    cur.needsWalk ||= needsWalk;
+    cur.html = html + cur.html;
+    cur.effects = concatEffects(effects, cur.effects);
+    cur.scripts = concatScripts(scripts, cur.scripts);
+    cur.lastEffect ||= lastEffect;
     return cur;
   }
 
@@ -1123,13 +1208,93 @@ export class Chunk {
     }
   }
 
+  flushReadyScripts(reservations?: string[]) {
+    const { boundary, serializeState } = this;
+    const { readyId } = serializeState;
+    let scripts = "";
+    forEach(this.takeDeferredReady(), (chunk) => {
+      scripts = concatScripts(scripts, chunk.flushReadyScripts(reservations));
+    });
+
+    if (readyId && !this.async) {
+      const { state } = boundary;
+      flushSerializer(boundary, serializeState);
+      const deps = state.serializer.takeChannelDeps();
+      const { effects } = this;
+      const { resumes } = serializeState;
+      const chunkScripts = this.scripts;
+      serializeState.resumes = "";
+      this.effects = this.scripts = "";
+      this.lastEffect = "";
+      if (resumes || effects) {
+        state.needsMainRuntime = true;
+        const batch = concatSequence(
+          depsMarker(deps),
+          concatSequence(resumes, effects && `"${effects}"`),
+        );
+        if (reservations) {
+          // A ready batch written from a reorder script only executes once
+          // its reordered content arrives, which can be after later
+          // main-stream scripts run — inverting the stream's entry order.
+          // Instead, the main-stream script (always ordered) reserves the
+          // batch's slot with a numeric gate sentinel (a number is never an
+          // effects string, deps marker, or payload, so the browser halts
+          // the stream there), and the reorder script swaps the gate for
+          // the batch when the content arrives.
+          const gate = state.readyGate++;
+          reservations.push(state.writeReady(readyId, gate + ""));
+          scripts = concatScripts(
+            scripts,
+            "(b=>b.splice(b.indexOf(" +
+              gate +
+              "),1," +
+              batch +
+              "))(" +
+              state.readyAccess(toObjectKey(readyId)) +
+              ")",
+          );
+        } else {
+          scripts = concatScripts(scripts, state.writeReady(readyId, batch));
+        }
+      }
+      scripts = concatScripts(scripts, chunkScripts);
+    }
+
+    return scripts;
+  }
+
   flushScript() {
-    const { boundary, effects } = this;
+    const { boundary } = this;
     const { state } = boundary;
     const { $global, runtimePrefix, nonceAttr } = state;
-    let { html, scripts } = this;
     let needsWalk = state.walkOnNextFlush;
     if (needsWalk) state.walkOnNextFlush = false;
+
+    let readyResumeScripts = this.flushReadyScripts();
+    for (let channel; (channel = state.serializer.pendingReadyChannel()); ) {
+      const resumes = state.serializer.stringifyScopes(
+        [],
+        0,
+        boundary,
+        channel,
+      );
+      const deps = state.serializer.takeChannelDeps();
+      state.needsMainRuntime = true;
+      readyResumeScripts = concatScripts(
+        readyResumeScripts,
+        state.writeReady(
+          channel.readyId!,
+          concatSequence(depsMarker(deps), resumes),
+        ),
+      );
+    }
+
+    if (readyResumeScripts) {
+      needsWalk = true;
+    }
+
+    const { effects } = this;
+    let { html, scripts } = this;
 
     if (state.needsMainRuntime && !state.hasMainRuntime) {
       state.hasMainRuntime = true;
@@ -1144,35 +1309,7 @@ export class Chunk {
       );
     }
 
-    if (state.ensureReady && state.hasMainRuntime) {
-      let first = true;
-      for (const id in state.ensureReady) {
-        if (state.ensureReady[id]) {
-          state.ensureReady[id] = 0;
-          if (first) {
-            scripts = concatScripts(
-              scripts,
-              "(" +
-                runtimePrefix +
-                RuntimeKey.Blocking +
-                "={})" +
-                toAccess(toObjectKey(id)) +
-                "=1",
-            );
-          } else {
-            scripts = concatScripts(
-              scripts,
-              runtimePrefix +
-                RuntimeKey.Blocking +
-                toAccess(toObjectKey(id)) +
-                "=1",
-            );
-          }
-        }
-
-        first = false;
-      }
-    }
+    scripts = concatScripts(scripts, readyResumeScripts);
 
     if (effects) {
       needsWalk = true;
@@ -1214,6 +1351,7 @@ export class Chunk {
 
       for (const reorderedChunk of state.writeReorders) {
         const { reorderId } = reorderedChunk;
+        const readyReservations: string[] = [];
         let reorderHTML = "";
         let reorderEffects = "";
         let reorderScripts = "";
@@ -1222,11 +1360,20 @@ export class Chunk {
 
         for (;;) {
           cur.flushPlaceholder();
+          cur.deferOwnReady();
           const { next } = cur;
+          // These scripts execute when the reordered content arrives, which
+          // may be after later main-stream scripts; ready batches written
+          // here reserve their stream slot in the ordered main-stream
+          // script (below) and only fill it in place.
+          const readyResumeScripts = cur.flushReadyScripts(readyReservations);
           cur.consumed = true;
           reorderHTML += cur.html;
           reorderEffects = concatEffects(reorderEffects, cur.effects);
-          reorderScripts = concatScripts(reorderScripts, cur.scripts);
+          reorderScripts = concatScripts(
+            reorderScripts,
+            concatScripts(readyResumeScripts, cur.scripts),
+          );
 
           if (cur.async) {
             reorderHTML += state.mark(
@@ -1257,6 +1404,10 @@ export class Chunk {
             reorderScripts,
             '_.push("' + reorderEffects + '")',
           );
+        }
+
+        for (const reservation of readyReservations) {
+          scripts = concatScripts(scripts, reservation);
         }
 
         scripts = concatScripts(
@@ -1325,51 +1476,87 @@ export class Chunk {
   }
 }
 
-function flushSerializer(boundary: Boundary) {
+function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
   const { state } = boundary;
-  const { writeScopes, serializer } = state;
-  const { flushed } = serializer;
-  if (writeScopes || flushed) {
-    let shouldSerialize = false;
-    const serializeData: [
-      $global?: ReturnType<typeof getFilteredGlobals>,
-      ...(number | PartialScope)[],
-    ] = [];
-    let { lastSerializedScopeId } = state;
+  const { serializer } = state;
+  const pending = serializer.pending(serializeState);
+  if (serializeState.flushScopes || pending) {
+    const { writeScopes, passiveScopes } = serializeState;
+    const isBlockingState = serializeState !== state;
+    const flushes: ScopeFlush[] = [];
+    let globals: ReturnType<typeof getFilteredGlobals> = 0;
 
-    if (!state.hasGlobals) {
-      state.hasGlobals = true;
-      serializeData.push(getFilteredGlobals(state.$global));
-      shouldSerialize = true;
-    }
-
-    for (const key in writeScopes) {
-      const scope = writeScopes[key as unknown as number];
-      if (
-        scopeHasReference(scope) ||
-        Object.getOwnPropertyNames(scope).length
-      ) {
-        const scopeId = getScopeId(scope)!;
-        const scopeIdDelta = scopeId - lastSerializedScopeId;
-        lastSerializedScopeId = scopeId + 1;
-        if (scopeIdDelta) serializeData.push(scopeIdDelta);
-        serializeData.push(scope);
-        shouldSerialize = true;
+    if (passiveScopes) {
+      // Passive props ride along with scopes this state is flushing anyway.
+      for (const key in passiveScopes) {
+        const props = writeScopes[key as unknown as number];
+        if (props) {
+          writeScopes[key as unknown as number] = Object.assign(
+            passiveScopes[key as unknown as number],
+            props,
+          );
+          delete passiveScopes[key as unknown as number];
+        }
       }
     }
 
-    if (shouldSerialize) {
-      state.resumes = concatSequence(
-        state.resumes,
-        serializer.stringify(serializeData, boundary),
+    if (!isBlockingState && !state.hasGlobals) {
+      state.hasGlobals = true;
+      globals = getFilteredGlobals(state.$global);
+    }
+
+    for (const key in writeScopes) {
+      const scopeId = +key;
+      const props = writeScopes[scopeId];
+      // Only props written by this state are transmitted; scopes that were
+      // merely referenced are resolved by id wherever they are used.
+      if (Object.getOwnPropertyNames(props).length) {
+        flushes.push([scopeId, state.scopes.get(scopeId)!, props]);
+      }
+    }
+
+    if (flushes.length || globals || pending) {
+      if (isBlockingState && !state.hasGlobals) {
+        // Globals must be stringified before any ready data so that ready
+        // data may reference them, never the reverse — ready data is only
+        // deserialized in the browser once its module loads.
+        flushSerializerGlobals(boundary);
+      }
+      serializeState.resumes = concatSequence(
+        serializeState.resumes,
+        serializer.stringifyScopes(flushes, globals, boundary, serializeState),
       );
     }
-    state.lastSerializedScopeId = lastSerializedScopeId;
-    state.writeScopes = null;
-    if (flushed) {
+    serializeState.writeScopes = {};
+    serializeState.flushScopes = false;
+    if (pending) {
       state.walkOnNextFlush = true;
     }
   }
+}
+
+function flushSerializerGlobals(boundary: Boundary) {
+  const { state } = boundary;
+  const globals = getFilteredGlobals(state.$global);
+  if (globals) {
+    state.hasGlobals = true;
+    state.needsMainRuntime = true;
+    state.resumes = concatSequence(
+      state.resumes,
+      state.serializer.stringifyScopes([], globals, boundary),
+    );
+  }
+}
+
+function depsMarker(deps: Set<string> | null) {
+  let marker = "";
+  if (deps) {
+    for (const dep of deps) {
+      marker += (marker ? "," : "[") + quote(dep, 0);
+    }
+    marker += "]";
+  }
+  return marker;
 }
 
 export function _trailers(html: string) {
@@ -1470,7 +1657,18 @@ export function _subscribe(
   scope: ScopeInternals,
 ) {
   if (subscribers) {
-    $chunk.boundary.state.serializer.writeCall(scope, subscribers, "add");
+    const { serializer } = $chunk.boundary.state;
+    if (!$chunk.serializeState.readyId && !serializer.written(subscribers)) {
+      // The subscriber rides the set's literal when it has not been
+      // serialized yet (both deserialize in the same main payload, before
+      // any effects run).
+      subscribers.add(scope);
+    } else {
+      // Already flushed sets — and subscribers from lazy streams, which
+      // must not be notified before their module loads and hydrates the
+      // scope — are added through a channel gated call instead.
+      serializer.writeCall(scope, subscribers, "add", $chunk.serializeState);
+    }
   }
-  return referenceScope(scope);
+  return scope;
 }

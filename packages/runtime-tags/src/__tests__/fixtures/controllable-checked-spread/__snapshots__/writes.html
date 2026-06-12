@@ -1,13 +1,15 @@
 <input type=checkbox><!--M_*2 a--><span>false<!--M_*1 b--></span>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.c = [0, _.d = {
-    a: _.a = {
-      Fa: 0,
-      c: _.b = {
-        checked: !1
-      }
+  M._.r = [_ => [1, {
+    a: _(2)
+  }, {
+    Fa: 0,
+    Ea: _.a = _(1, "a0"),
+    c: {
+      checked: !1,
+      checkedChange: _.a
     }
-  }, _.a], _.a.Ea = _.b.checkedChange = _._.a0(_.d), _.c), "b0 2"];
+  }], "b0 2"];
   M._.w()
 </script>

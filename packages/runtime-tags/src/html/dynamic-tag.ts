@@ -140,7 +140,7 @@ export let _dynamic_tag = (
         ]);
 
     if (needsScript) {
-      childScope[AccessorProp.Renderer] = renderer;
+      _scope(branchId, { [AccessorProp.Renderer]: renderer });
       _script(branchId, DYNAMIC_TAG_SCRIPT_REGISTER_ID);
     }
 

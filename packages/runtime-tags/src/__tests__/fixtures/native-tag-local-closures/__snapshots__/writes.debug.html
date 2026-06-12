@@ -2,20 +2,21 @@
 <!--M_*3 #div/0--><!--M_|2 #text/0 3--><button>Add</button><!--M_*1 #button/1-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.d = [0, _.e = {
+  M._.r = [_ => [1, {
       size: 1,
-      "#childScope/0": _.a = {}
-    }, _.a, {
-      "BranchScopes:#div/0": _.c = {},
+      "#childScope/0": _(2)
+    }, 1, {
+      "BranchScopes:#div/0": _(4),
       "ConditionalRenderer:#div/0": "packages/runtime-tags/src/__tests__/fixtures/native-tag-local-closures/template.marko_3_content",
-      item: _.b = {
+      item: {
+        content: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/native-tag-local-closures/template.marko_3_content"
+          ),
         *[Symbol.iterator]() {
           yield this
         }
       }
-    }, _.c], _.b.content = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/native-tag-local-closures/template.marko_3_content"
-      ](_.e), _.d),
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/native-tag-local-closures/template.marko_2_item 3 packages/runtime-tags/src/__tests__/fixtures/native-tag-local-closures/template.marko_0_size 1"
   ];
   M._.w()

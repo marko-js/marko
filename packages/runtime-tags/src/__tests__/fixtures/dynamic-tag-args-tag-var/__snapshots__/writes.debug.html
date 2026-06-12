@@ -3,13 +3,15 @@
 <div>Parent: <!>1<!--M_*1 #text/4--></div>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, _.c = {
-      "ConditionalRenderer:#text/2": "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/tags/custom-tag.marko",
+  M._.r = [_ => [1, {
       "#scopeOffset/3": 3,
+      "ConditionalRenderer:#text/2": "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/tags/custom-tag.marko",
       x: 1
-    }, _.a = {}], _.a["#TagVariable"] = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/template.marko_0_y/var"
-      ](_.c), _.b),
+    }, {
+      "#TagVariable": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/template.marko_0_y/var"
+        )
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/template.marko_0_x 1"
   ];
   M._.w()

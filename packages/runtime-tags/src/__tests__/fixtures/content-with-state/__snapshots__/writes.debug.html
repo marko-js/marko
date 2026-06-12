@@ -2,12 +2,12 @@
   id=increment>click</button><!--M_*1 #button/1-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, _.a = {
+  M._.r = [_ => [1, {
       count: 0,
-      "ClosureScopes:count": _.c = new Set
-    }, 2, {}, _.d = {
-      _: _.a
-    }], (_.c).add(_.d), _.b),
+      "ClosureScopes:count": new Set([_(5)])
+    }, 3, {
+      _: _(1)
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/content-with-state/tags/outer.marko_1 4 packages/runtime-tags/src/__tests__/fixtures/content-with-state/template.marko_0_count 1"
   ];
   M._.w()

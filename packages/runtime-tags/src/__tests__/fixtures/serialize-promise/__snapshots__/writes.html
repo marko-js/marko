@@ -1,7 +1,7 @@
 <div id=ref>0</div>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, {
+  M._.r = [_ => [1, {
     a: (p => p = new Promise((f, r) => _.a = {
       f,
       r(e) {
@@ -9,6 +9,6 @@
         r(e)
       }
     }))()
-  }]), "a0 1"];
+  }], _ => (_.a.f("hello"), 0), "a0 1"];
   M._.w()
 </script>

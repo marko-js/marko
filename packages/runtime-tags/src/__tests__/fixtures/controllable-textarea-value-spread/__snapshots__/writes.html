@@ -1,13 +1,15 @@
 <textarea>hello</textarea><!--M_*2 a--><span>hello<!--M_*1 b--></span>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.c = [0, _.d = {
-    a: _.a = {
-      Fa: 2,
-      c: _.b = {
-        value: "hello"
-      }
+  M._.r = [_ => [1, {
+    a: _(2)
+  }, {
+    Fa: 2,
+    Ea: _.a = _(1, "a0"),
+    c: {
+      value: "hello",
+      valueChange: _.a
     }
-  }, _.a], _.a.Ea = _.b.valueChange = _._.a0(_.d), _.c), "b0 2"];
+  }], "b0 2"];
   M._.w()
 </script>

@@ -3,19 +3,21 @@
   type=radio><!--M_*1 #input/2--><span>a<!--M_*1 #text/3--></span><button>Toggle</button><!--M_*1 #button/4-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.c = [0, _.a = {
+  M._.r = [_ => [1, {
       "ControlledType:#input/0": 1,
+      "ControlledHandler:#input/0": _.a = _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-dynamic-checkbox-checked-value/template.marko_0/checkedValueChange2"
+        ),
       "ControlledType:#input/2": 1,
+      "ControlledHandler:#input/2": _.a,
       show: !0,
-      checkedValue: "a"
-    }, _.b = {
+      checkedValue: "a",
+      $checkedValueChange: _.a
+    }, {
       "ControlledType:#input/0": 1,
-      _: _.a
-    }], _.a["ControlledHandler:#input/0"] = _.a[
-      "ControlledHandler:#input/2"] = _.a.$checkedValueChange = _.b[
-      "ControlledHandler:#input/0"] = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/controllable-dynamic-checkbox-checked-value/template.marko_0/checkedValueChange2"
-      ](_.a), _.c),
+      "ControlledHandler:#input/0": _.a,
+      _: _(1)
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/controllable-dynamic-checkbox-checked-value/template.marko_1 2 packages/runtime-tags/src/__tests__/fixtures/controllable-dynamic-checkbox-checked-value/template.marko_0_show 1 packages/runtime-tags/src/__tests__/fixtures/controllable-dynamic-checkbox-checked-value/template.marko_0 1"
   ];
   M._.w()

@@ -3,20 +3,23 @@
   type=checkbox><!--M_*1 #input/2--><span>1<!--M_*1 #text/3--></span><button>Reset</button><!--M_*1 #button/4-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.c = [0, _.a = {
+  M._.r = [_ => [1, {
       "ControlledType:#input/0": 1,
-      "ControlledValue:#input/0": _.b = [],
+      "ControlledValue:#input/0": _.a = [],
+      "ControlledHandler:#input/0": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-checked-value-multiple-number/template.marko_0/checkedValueChange"
+        ),
       "ControlledType:#input/1": 1,
-      "ControlledValue:#input/1": _.b,
+      "ControlledValue:#input/1": _.a,
+      "ControlledHandler:#input/1": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-checked-value-multiple-number/template.marko_0/checkedValueChange2"
+        ),
       "ControlledType:#input/2": 1,
-      "ControlledValue:#input/2": _.b
-    }], _.a["ControlledHandler:#input/0"] = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/controllable-checked-value-multiple-number/template.marko_0/checkedValueChange"
-      ](_.a), _.a["ControlledHandler:#input/1"] = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/controllable-checked-value-multiple-number/template.marko_0/checkedValueChange2"
-      ](_.a), _.a["ControlledHandler:#input/2"] = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/controllable-checked-value-multiple-number/template.marko_0/checkedValueChange3"
-      ](_.a), _.c),
+      "ControlledValue:#input/2": _.a,
+      "ControlledHandler:#input/2": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-checked-value-multiple-number/template.marko_0/checkedValueChange3"
+        )
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/controllable-checked-value-multiple-number/template.marko_0 1"
   ];
   M._.w()

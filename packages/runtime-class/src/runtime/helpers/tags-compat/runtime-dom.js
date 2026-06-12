@@ -50,7 +50,7 @@ exports.p = function (domCompat) {
   const defDeserialize = ComponentDef.___deserialize;
   ComponentDef.___deserialize = function (o, types, global, registry) {
     if (typeof o[2] === "number") {
-      o[2] = self[global.runtimeId][global.renderId].s[o[2]].m5i;
+      o[2] = domCompat.getScope(global, o[2]).m5i;
     }
     return defDeserialize(o, types, global, registry);
   };
@@ -122,6 +122,7 @@ exports.p = function (domCompat) {
               renderAndMorph(scope, rendererFromAnywhere, renderer, input),
             () => ___createFragmentNode(),
           );
+          domCompat.setRendererId(newRenderer, renderer);
           rendererCache.set(renderer, newRenderer);
         }
       }
@@ -129,7 +130,6 @@ exports.p = function (domCompat) {
     return newRenderer;
   }
 
-  domCompat.registerRenderer(create5to6Renderer);
   domCompat.init(noopRenderer);
 
   function renderAndMorph(scope, renderer, renderBody, input) {

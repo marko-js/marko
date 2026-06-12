@@ -2,15 +2,17 @@
   content<!--M_]2 #span/0 3--></span><!--M_'1 #text/0 2-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, _.c = {
+  M._.r = [_ => [1, {
     "ConditionalRenderer:#text/0": "span",
     tagName: "span"
   }, {
-    "EventAttributes:#span/0": _.a = {},
+    "EventAttributes:#span/0": {
+      click: _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/dynamic-native-tag-events/template.marko_0/onClick"
+        )
+    },
     "ConditionalRenderer:#span/0": "packages/runtime-tags/src/__tests__/fixtures/dynamic-native-tag-events/template.marko_1_content",
     "#Renderer": "span"
-  }], _.a.click = _._[
-    "packages/runtime-tags/src/__tests__/fixtures/dynamic-native-tag-events/template.marko_0/onClick"
-    ](_.c), _.b), "_dynamicTagScript 2"];
+  }], "_dynamicTagScript 2"];
   M._.w()
 </script>
