@@ -10,7 +10,7 @@ import {
   ResumeSymbol,
   type Scope,
 } from "../common/types";
-import { runEffects } from "./queue";
+import { runEffects, skipDestroyedRenders } from "./queue";
 import { setParentBranch } from "./renderer";
 import { destroyScope } from "./scope";
 import { _el_read, type Signal } from "./signals";
@@ -62,7 +62,10 @@ let branchesEnabled: undefined | 1;
 let embedEnabled: undefined | 1;
 
 export function enableBranches() {
-  branchesEnabled = 1;
+  if (!branchesEnabled) {
+    branchesEnabled = 1;
+    skipDestroyedRenders();
+  }
 }
 
 export const ready = /*@__PURE__*/ ((_) => (id: string) => {

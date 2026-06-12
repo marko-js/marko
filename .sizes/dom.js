@@ -1,4 +1,4 @@
-// size: 21255 (min) 7975 (brotli)
+// size: 21300 (min) 7980 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -456,7 +456,7 @@ function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
 function flushAndWaitFrame() {
-  (run(), requestAnimationFrame(triggerMacroTask));
+  (requestAnimationFrame(triggerMacroTask), run());
 }
 function triggerMacroTask() {
   (channel ||
@@ -738,7 +738,7 @@ function createCloneableHTML(html, ns) {
   );
 }
 function enableBranches() {
-  branchesEnabled = 1;
+  branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
 }
 function initEmbedded(readyId, runtimeId) {
   ((embedEnabled = 1),
@@ -2008,10 +2008,15 @@ function runRenders() {
       }
       pendingRenders[i] = item;
     }
-    render.b.F?.I || runRender(render);
+    runRender(render);
   }
   for (let scope of pendingScopes) scope.H = 0;
   pendingScopes = [];
+}
+function skipDestroyedRenders() {
+  runRender = ((runRender) => (render) => {
+    render.b.F?.I || runRender(render);
+  })(runRender);
 }
 function _enable_catch() {
   if (!catchEnabled) {

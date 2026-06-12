@@ -20,13 +20,13 @@ export function schedule() {
 }
 
 function flushAndWaitFrame() {
+  requestAnimationFrame(triggerMacroTask);
+
   if (MARKO_DEBUG) {
     runTask!();
   } else {
     run();
   }
-
-  requestAnimationFrame(triggerMacroTask);
 }
 
 function triggerMacroTask() {
