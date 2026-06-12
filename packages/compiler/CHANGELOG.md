@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.39.64
+
+### Patch Changes
+
+- [#3210](https://github.com/marko-js/marko/pull/3210) [`5005d96`](https://github.com/marko-js/marko/commit/5005d96ed13d9f898dcca2a185210a533aae7666) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add compiler entry compilation and native asset handling for bundler integrations.
+  - `entry: "page" | "load"` compiles a template as a top level page entry or a lazily loaded entry, replacing the deprecated `output: "hydrate"`.
+  - `linkAssets: { runtime, onAsset }` connects the bundler: `onAsset(kind, file, id)` is called for every discovered page and load entry, and `runtime` names a module whose `flush` function resolves an asset id into the HTML for its tags while rendering.
+
+  With `linkAssets` configured the server tracks the assets needed by each page, writing their script tags into the streamed HTML (at the end of `<head>` when rendered, otherwise before the first flush).
+
+- [#3210](https://github.com/marko-js/marko/pull/3210) [`5005d96`](https://github.com/marko-js/marko/commit/5005d96ed13d9f898dcca2a185210a533aae7666) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add version APIs for tooling: `@marko/compiler` now exports its `version`, translators export theirs, and `getRuntimeVersion(translator)` returns the resolved translator's version.
+
 ## 5.39.63
 
 ### Patch Changes
