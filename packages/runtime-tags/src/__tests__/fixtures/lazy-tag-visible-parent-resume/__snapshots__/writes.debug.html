@@ -1,0 +1,27 @@
+<button class=parent>parent <!>
+    1<!--M_*1 #text/1--></button><!--M_*1 #button/0--><button class=child>child
+  <!>1<!--M_*2 #text/1--></button><!--M_*2 #button/0-->
+<script>
+  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (e =>
+    e && new IntersectionObserver((e, i) => e.some(e => e.isIntersecting) && i
+      .disconnect() + l(), {
+        rootMargin: "100px"
+      }).observe(e))(document.querySelector("body") || l()))(document
+    .currentScript,
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-parent-resume/child.marko": [
+      _ => [2, {
+        count: 1
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-parent-resume/child.marko_0_count 2"
+    ]
+  };
+  M._.r = [_ => [1, {
+      count: 1
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-visible-parent-resume/template.marko_0_count 1"
+  ];
+  M._.w()
+</script>

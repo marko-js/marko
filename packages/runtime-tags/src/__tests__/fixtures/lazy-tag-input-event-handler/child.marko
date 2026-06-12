@@ -1,0 +1,12 @@
+export interface Input {
+  data: Record<string, unknown>;
+  report: (o: unknown) => boolean;
+}
+
+<let/data=input.data/>
+<let/verified="?"/>
+<button.child onClick() {
+  verified = String(input.report(data));
+}>
+  child:${verified}
+</button>

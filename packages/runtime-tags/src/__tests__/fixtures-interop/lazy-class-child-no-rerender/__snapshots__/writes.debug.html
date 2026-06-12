@@ -1,0 +1,20 @@
+<!--M#s0-0--><span id=child>1</span><!--M/-->
+<script>
+  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (self
+    .requestIdleCallback || l)(l, {
+    "timeout": 100
+  }))(document.currentScript,
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  $MC = (window.$MC || []).concat({
+    "w": [
+      ["s0-0", 0, {
+        "value": 1
+      }, {
+        "f": 1
+      }]
+    ],
+    "t": [
+      "packages/runtime-tags/src/__tests__/fixtures-interop/lazy-class-child-no-rerender/components/child.marko"
+    ]
+  })
+</script>

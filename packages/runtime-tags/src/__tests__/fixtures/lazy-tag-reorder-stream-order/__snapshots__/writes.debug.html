@@ -1,0 +1,65 @@
+<!--M_[--><!--M_!^2-->loading<!--M_!2--><!--M_]1 #text/0 2-->
+<style M_>
+  t {
+    display: none
+  }
+</style>
+<t M_=2><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+    "#BranchAccessor": "#text/0",
+    "#PlaceholderContent": _(1,
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-reorder-stream-order/template.marko_4_content"
+      )
+  }]];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t M_=b>
+  <script async type=module src="child.marko.load.mjs"></script><button
+    class=reordered>reordered:<!>
+      0<!--M_*5 #text/2--></button><!--M_*5 #button/0-->
+</t>
+<script>
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-reorder-stream-order/child.marko": [
+      1
+    ]
+  };
+  M._.j.b = _ => {
+    (b => b.splice(b.indexOf(1), 1, _ => [5, {
+        input_label: "reordered",
+        shared: {
+          reordered: 1,
+          streamed: 2
+        },
+        count: 0
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-reorder-stream-order/child.marko_0_input_label_shared_count 5"
+      ))(M._.b[
+      "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-reorder-stream-order/child.marko"
+      ])
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<button class=streamed>streamed:<!>
+    0<!--M_*7 #text/2--></button><!--M_*7 #button/0-->
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-reorder-stream-order/child.marko"
+    ].push(_ => [7, {
+      input_label: "streamed",
+      shared: _.a = _(5).shared,
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-reorder-stream-order/child.marko_0_input_label_shared_count 7"
+    );
+  M._.w()
+</script>

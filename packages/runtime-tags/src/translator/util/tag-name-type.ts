@@ -7,6 +7,7 @@ import {
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
+import type { LoadImportConfig } from "../visitors/import-declaration";
 import { isCoreTag } from "./is-core-tag";
 
 declare module "@marko/compiler/dist/types" {
@@ -18,6 +19,7 @@ declare module "@marko/compiler/dist/types" {
     tagNameNullable?: boolean;
     tagNameDynamic?: boolean;
     tagNameImported?: string;
+    tagNameLoad?: LoadImportConfig;
     featureType?: ProgramExtra["featureType"];
   }
 }
@@ -93,6 +95,7 @@ function analyzeExpressionTagName(
   let type: TagNameType | undefined;
   let nullable = false;
   let tagNameImported: string | false | undefined;
+  let tagNameLoad: LoadImportConfig | undefined;
 
   while ((path = pending.pop()) && type !== TagNameType.DynamicTag) {
     if (path.isConditionalExpression()) {
@@ -148,6 +151,7 @@ function analyzeExpressionTagName(
           if (type === undefined) {
             type = TagNameType.CustomTag;
             tagNameImported = resolvedImport;
+            tagNameLoad = decl.extra?.loadImport;
           } else if (type === TagNameType.NativeTag) {
             type = TagNameType.DynamicTag;
             tagNameImported = undefined;
@@ -200,5 +204,6 @@ function analyzeExpressionTagName(
 
   if (type === TagNameType.CustomTag && tagNameImported) {
     extra.tagNameImported = tagNameImported;
+    extra.tagNameLoad = tagNameLoad;
   }
 }

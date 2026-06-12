@@ -1,0 +1,12 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<script async type=module src="grand-child.marko.load.mjs"></script>
+<span>1</span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested/grand-child.marko": [
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-nested/grand-child.marko_0 3"
+    ]
+  };
+  M._.w()
+</script>

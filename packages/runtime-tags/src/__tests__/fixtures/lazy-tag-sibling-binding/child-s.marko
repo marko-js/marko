@@ -1,0 +1,11 @@
+export interface Input {
+  holder: Record<string, unknown>;
+  isShared: (o: unknown) => boolean;
+}
+
+<const/isShared=input.isShared/>
+<let/holder=input.holder/>
+<let/verified="?"/>
+<button.s onClick() { verified = String(isShared(holder)) }>
+  s:${verified}
+</button>

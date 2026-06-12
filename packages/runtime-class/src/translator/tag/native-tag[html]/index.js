@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import {
   getTagDef,
   importDefault,
+  importNamed,
   normalizeTemplateString,
 } from "@marko/compiler/babel-utils";
 import { resolve } from "path";
@@ -205,22 +206,47 @@ export default function (path, isNullable) {
     );
   }
 
-  path.replaceWithMultiple(
-    [writeStartNode]
-      .concat(
-        needsIIFE
-          ? t.expressionStatement(
-              t.callExpression(
-                t.arrowFunctionExpression([], t.blockStatement(body)),
-                [],
-              ),
-            )
-          : needsBlock
-            ? t.blockStatement(body)
-            : body,
-      )
-      .concat(writeEndNode),
-  );
+  const nodes = [writeStartNode];
+
+  if (needsIIFE) {
+    nodes.push(
+      t.expressionStatement(
+        t.callExpression(
+          t.arrowFunctionExpression([], t.blockStatement(body)),
+          [],
+        ),
+      ),
+    );
+  } else if (needsBlock) {
+    nodes.push(t.blockStatement(body));
+  } else {
+    for (const node of body) {
+      nodes.push(node);
+    }
+  }
+
+  if (
+    t.isStringLiteral(name) &&
+    name.value === "head" &&
+    file.markoOpts.linkAssets
+  ) {
+    nodes.push(
+      t.expressionStatement(
+        t.callExpression(
+          importNamed(
+            file,
+            "marko/src/runtime/helpers/load-tag.js",
+            "flushHead",
+            "marko_flush_head",
+          ),
+          [t.identifier("out")],
+        ),
+      ),
+    );
+  }
+
+  nodes.push(writeEndNode);
+  path.replaceWithMultiple(nodes);
 }
 
 function isPreserved(path) {

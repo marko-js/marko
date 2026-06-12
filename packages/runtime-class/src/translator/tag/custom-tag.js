@@ -3,11 +3,11 @@ import {
   assertNoArgs,
   getTagDef,
   importDefault,
-  loadFileForTag,
   resolveRelativePath,
   resolveTagImport,
 } from "@marko/compiler/babel-utils";
 
+import { translateLoadTag } from "../util/load-import";
 import withPreviousLocation from "../util/with-previous-location";
 import dynamicTag from "./dynamic-tag";
 import nativeTag from "./native-tag";
@@ -53,7 +53,9 @@ export default function (path, isNullable) {
     if (binding && !binding.identifier.loc) binding = null;
 
     if (relativePath) {
-      tagIdentifier = importDefault(file, relativePath, tagName);
+      tagIdentifier = node.extra?.tagNameLoad
+        ? translateLoadTag(path, tagName, relativePath)
+        : importDefault(file, relativePath, tagName);
     } else if (binding) {
       path.set("name", t.identifier(tagName));
       return dynamicTag(path);

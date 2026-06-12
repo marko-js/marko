@@ -1,0 +1,15 @@
+<span>1</span>
+<script>
+  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (e =>
+    e && new IntersectionObserver((e, i) => e.some(e => e.isIntersecting) && i
+      .disconnect() + l(), {
+        rootMargin: "100px"
+      }).observe(e))(document.querySelector("body") || l()))(document
+    .currentScript,
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: ["a0 2"]
+  };
+  M._.w()
+</script>

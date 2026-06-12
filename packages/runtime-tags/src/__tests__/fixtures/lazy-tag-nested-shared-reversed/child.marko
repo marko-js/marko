@@ -1,0 +1,7 @@
+import GrandChild from "./grand-child.marko" with { load: "render" }
+
+<let/obj={ name: "shared" }>
+<button.child onClick() { obj = { ...obj, name: obj.name + "!" } }>
+  child:${obj.name}
+</button>
+<GrandChild obj=obj/>

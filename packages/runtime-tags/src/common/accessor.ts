@@ -30,6 +30,7 @@ export enum AccessorProp {
   DetachedAwait = "V",
   EndNode = "K",
   Id = "L",
+  Load = "X",
   LoopKey = "M",
   ParentBranch = "N",
   PendingEffects = "J",
@@ -65,4 +66,9 @@ export enum ClosureSignalProp {
   ScopeInstancesAccessor = "a",
   SignalIndexAccessor = "b",
   Index = "c",
+}
+
+export enum LoadSignalValue {
+  Value = "a",
+  Signal = "b",
 }

@@ -1,0 +1,24 @@
+import Child from "<child>" with { load: "render" }
+
+class {
+  onCreate() {
+    this.state = { show: false, error: "" };
+  }
+  onMount() {
+    this.on("error", (err) => {
+      this.state.error = err.message;
+    });
+  }
+  toggle() {
+    this.state.show = !this.state.show;
+  }
+}
+
+<button id="toggle" onClick("toggle")>toggle</button>
+<if(state.error)>
+  <div id="error">${state.error}</div>
+</if>
+<if(state.show)>
+  <Child value=42/>
+</if>
+<init-components/>

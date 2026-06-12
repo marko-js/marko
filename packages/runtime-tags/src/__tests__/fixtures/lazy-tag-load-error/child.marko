@@ -1,0 +1,7 @@
+client {
+  // Simulates a failed lazy chunk load: rejects the browser side dynamic
+  // import while leaving the server render untouched.
+  throw new Error("load failed");
+}
+
+<span id="child">${input.value}</span>

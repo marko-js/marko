@@ -1,0 +1,16 @@
+import Child from "<child>" with { load: "render" }
+
+class {
+  onCreate() {
+    this.state = { show: true };
+  }
+  toggle() {
+    this.state.show = !this.state.show;
+  }
+}
+
+<button id="toggle" onClick("toggle")>toggle</button>
+<if(state.show)>
+  <Child value=42/>
+</if>
+<init-components/>

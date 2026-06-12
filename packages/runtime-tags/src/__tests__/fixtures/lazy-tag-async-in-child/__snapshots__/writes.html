@@ -1,0 +1,23 @@
+<div id=before>before</div>
+<script async type=module src="child.marko.load.mjs"></script>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [_ => [2, {
+      e: 1,
+      Be: new Set
+    }]]
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[--><button>1<!--M_*3 b-->:10</button><!--M_*3 a--><!--M_]2 a 3-->
+<div id=after>after</div>
+<script>
+  M._.b._a.push(_ => (_([3, {
+    _: _(2)
+  }]), (_.a = _(2).Be).add(_(3)), 0), "a0 3");
+  M._.w()
+</script>

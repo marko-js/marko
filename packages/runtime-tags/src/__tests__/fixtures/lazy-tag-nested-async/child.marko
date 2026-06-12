@@ -1,0 +1,9 @@
+import GrandChild from "./grand-child.marko" with { load: "render" }
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=input.value/>
+<button id="child" onClick() { count++ }>child:${count}</button>
+<await|value|=resolveAfter(10, 1)>
+  <span id="child-await">${value}</span>
+  <GrandChild value=count/>
+</await>

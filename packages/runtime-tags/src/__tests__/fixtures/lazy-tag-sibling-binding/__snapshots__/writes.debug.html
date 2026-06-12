@@ -1,0 +1,40 @@
+<button class=main>main:<!>0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<script async type=module src="child-s.marko.load.mjs"></script><button
+  class=s>s:<!>?<!--M_*2 #text/1--></button><!--M_*2 #button/0-->
+<script async type=module src="child-b.marko.load.mjs"></script><button
+  class=b>b:<!>?<!--M_*3 #text/1--></button><!--M_*3 #button/0-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-sibling-binding/child-s.marko": [
+      _ => [2, {
+        isShared: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-sibling-binding/template.marko_0/isShared"
+          ),
+        holder: _.a = _(1).shared
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-sibling-binding/child-s.marko_0_isShared_holder 2"
+    ]
+  };
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-sibling-binding/child-b.marko"
+    ] = [_ => [3, {
+      isInner: _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-sibling-binding/template.marko_0/isInner"
+        ),
+      inner: _.b = _(1).shared.inner
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-sibling-binding/child-b.marko_0_isInner_inner 3"
+  ];
+  M._.r = [_ => [1, {
+      shared: {
+        inner: {
+          value: 1
+        }
+      },
+      count: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-sibling-binding/template.marko_0_shared_count 1"
+  ];
+  M._.w()
+</script>
