@@ -44,16 +44,16 @@ export default {
       }
     }
 
-    const loadAttrValuePath = (
-      importDecl.get("attributes") as t.NodePath<t.ImportAttribute>[]
-    )
-      .find(
-        (p) =>
-          (p.node.key.type === "Identifier"
-            ? p.node.key.name
-            : p.node.key.value) === "load",
-      )
-      ?.get("value");
+    const loadAttrValuePath =
+      node.attributes?.length &&
+      (importDecl.get("attributes") as t.NodePath<t.ImportAttribute>[])
+        .find(
+          (p) =>
+            (p.node.key.type === "Identifier"
+              ? p.node.key.name
+              : p.node.key.value) === "load",
+        )
+        ?.get("value");
     if (loadAttrValuePath) {
       (node.extra ??= {}).loadImport = getLoadImportConfig(loadAttrValuePath);
       const { file } = importDecl.hub;

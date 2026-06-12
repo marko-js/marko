@@ -9,6 +9,8 @@ const triggerRegExp = /\s*([\w-]+)\s*([^?|]+?)?\s*(?:\?([^|]*?))?\s*(?:\||$)/g;
 const loadTagsByFile = new WeakMap();
 
 export function analyzeLoadImport(importDecl, tagEntry) {
+  if (!importDecl.node.attributes?.length) return;
+
   const loadAttrValuePath = importDecl
     .get("attributes")
     .find(
