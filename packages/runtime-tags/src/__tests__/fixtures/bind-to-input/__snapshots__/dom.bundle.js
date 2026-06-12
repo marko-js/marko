@@ -2,7 +2,7 @@
 const $x__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$x$1($scope, $scope.j + 1);
 }));
-const $x$1 = /* @__PURE__ */ _let(9, ($scope) => {
+const $x$1 = /* @__PURE__ */ _let_change(9, ($scope) => {
 	_attr($scope.a, "data-internal", $scope.j);
 	$x__script($scope);
 });

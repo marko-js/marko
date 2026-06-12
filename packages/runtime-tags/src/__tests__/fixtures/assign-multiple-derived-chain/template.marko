@@ -1,0 +1,17 @@
+<let/items=[1, 2, 3, 4]/>
+<let/min=0/>
+<let/max=4/>
+<let/index=0/>
+<const/filtered=items.filter(item => item >= min && item <= max)>
+<const/selected=filtered[index]>
+
+<div>${filtered.join(" ")} selected ${selected}</div>
+
+// Updates every upstream of the derived chain in one batch: `selected`
+// must settle against the recomputed `filtered`, not the previous one.
+<button id="update" onClick() {
+  min = 2;
+  max = 3;
+  index = 1;
+}>update</button>
+<button id="reselect" onClick() { index = 0 }>reselect</button>

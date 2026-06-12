@@ -26,7 +26,7 @@ const $store = _var_resume("a0", ($scope, store) => {
 	$store_clear($scope, store?.clear);
 });
 const $for = /* @__PURE__ */ _for_of(3, "<li> </li>", "D l", 0, $for_content__$params);
-const $list = /* @__PURE__ */ _let(9, ($scope) => $for($scope, [$scope.j]));
+const $list = /* @__PURE__ */ _let_change(9, ($scope) => $for($scope, [$scope.j]));
 const $store_list__OR__store_listChange = /* @__PURE__ */ _or(7, ($scope) => $list($scope, $scope.f, $scope.g), 1, 1);
 const $store_list = /* @__PURE__ */ _const(5, $store_list__OR__store_listChange);
 const $store_listChange = /* @__PURE__ */ _const(6, $store_list__OR__store_listChange);

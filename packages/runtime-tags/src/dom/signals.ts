@@ -16,33 +16,61 @@ import { _resume } from "./resume";
 import { schedule } from "./schedule";
 
 export type SignalFn = (scope: Scope) => void;
-export type Signal<T> = (scope: Scope, value: T) => void;
+export type Signal<T = unknown, U extends Scope = Scope> = (
+  scope: U,
+  value: T,
+) => void;
 
 export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
   const valueAccessor = MARKO_DEBUG
     ? (id as string).slice(0, (id as string).lastIndexOf("/"))
     : decodeAccessor(id as number);
-  const valueChangeAccessor = AccessorPrefix.TagVariableChange + valueAccessor;
 
   if (MARKO_DEBUG) {
     id = +(id as string).slice((id as string).lastIndexOf("/") + 1);
   }
 
-  return (scope: Scope, value: T, valueChange?: (v: T) => void) => {
+  return (scope: Scope, value: T) => {
     if (rendering) {
-      if (
-        ((scope[valueChangeAccessor] = valueChange) &&
-          scope[valueAccessor] !== value) ||
-        scope[AccessorProp.Creating]
-      ) {
+      if (scope[AccessorProp.Creating]) {
         scope[valueAccessor] = value;
         fn?.(scope);
       }
-    } else if (scope[valueChangeAccessor]) {
-      scope[valueChangeAccessor](value);
-    } else if (scope[valueAccessor] !== (scope[valueAccessor] = value) && fn) {
+    } else if (
+      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+      ((scope[valueAccessor] = value), fn)
+    ) {
       schedule();
       queueRender(scope, fn, id as number);
+    }
+    return value;
+  };
+}
+
+// The `<let>` with a change handler (`:=` / `valueChange=`); statically
+// known per tag, so plain lets use the slim `_let` above.
+export function _let_change<T>(id: EncodedAccessor, fn?: SignalFn) {
+  const valueAccessor = MARKO_DEBUG
+    ? (id as string).slice(0, (id as string).lastIndexOf("/"))
+    : decodeAccessor(id as number);
+  const valueChangeAccessor = AccessorPrefix.TagVariableChange + valueAccessor;
+  const base = _let<T>(id, fn);
+
+  return (scope: Scope, value: T, valueChange?: (v: T) => void) => {
+    if (rendering) {
+      if (
+        (scope[valueChangeAccessor] = valueChange) &&
+        (scope[valueAccessor] !== value || !(valueAccessor in scope))
+      ) {
+        scope[valueAccessor] = value;
+        fn?.(scope);
+      } else {
+        base(scope, value);
+      }
+    } else if (scope[valueChangeAccessor]) {
+      scope[valueChangeAccessor](value);
+    } else {
+      base(scope, value);
     }
     return value;
   };
@@ -53,12 +81,12 @@ export function _const<T>(
   fn?: SignalFn,
 ): Signal<T> {
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
-  return (scope, value) => {
-    if (scope[AccessorProp.Creating] || scope[valueAccessor] !== value) {
+  return ((scope: Scope, value: T | undefined) => {
+    if (scope[valueAccessor] !== value || !(valueAccessor in scope)) {
       scope[valueAccessor] = value;
       fn?.(scope);
     }
-  };
+  }) as Signal<T>;
 }
 
 export function _or(

@@ -348,7 +348,7 @@ export function initValue(binding: Binding, isLet = false) {
     }
 
     return callRuntime(
-      isLet ? "_let" : "_const",
+      isLet ? (signal.extraArgs ? "_let_change" : "_let") : "_const",
       getScopeAccessorLiteral(binding, true, isLet),
       fn,
     );
@@ -411,28 +411,41 @@ export function getSignalFn(signal: Signal): t.Expression {
       const aliasSignal = getSignal(alias.section, alias);
       if (signalHasStatements(aliasSignal)) {
         if (alias.excludeProperties !== undefined) {
-          const props: t.ObjectPattern["properties"] = [];
           const aliasId = t.identifier(alias.name);
-          forEach(alias.excludeProperties, (name) => {
-            const propId = toPropertyName(name);
-            const shorthand =
-              propId.type === "Identifier" && t.isValidIdentifier(name);
-            props.push(
-              t.objectProperty(
-                propId,
-                shorthand ? propId : generateUidIdentifier(name),
-                false,
-                shorthand,
-              ),
+          let pattern: t.ArrayPattern | t.ObjectPattern;
+          if (alias.restOffset) {
+            // A shifted array rest must destructure as an array to keep
+            // true indices/length, with holes for the leading params.
+            pattern = t.arrayPattern(
+              new Array<null | t.RestElement>(alias.restOffset)
+                .fill(null)
+                .concat(t.restElement(aliasId)),
             );
-          });
+          } else {
+            const props: t.ObjectPattern["properties"] = [];
+            forEach(alias.excludeProperties, (name) => {
+              const propId = toPropertyName(name);
+              const shorthand =
+                propId.type === "Identifier" && t.isValidIdentifier(name);
+              props.push(
+                t.objectProperty(
+                  propId,
+                  shorthand ? propId : generateUidIdentifier(name),
+                  false,
+                  shorthand,
+                ),
+              );
+            });
 
-          props.push(t.restElement(aliasId));
+            props.push(t.restElement(aliasId));
+            pattern = t.objectPattern(props);
+          }
+
           signal.render.push(
             t.expressionStatement(
               t.callExpression(
                 t.arrowFunctionExpression(
-                  [t.objectPattern(props)],
+                  [pattern],
                   t.callExpression(aliasSignal.identifier, [
                     scopeIdentifier,
                     aliasId,
@@ -444,7 +457,9 @@ export function getSignalFn(signal: Signal): t.Expression {
                     ? t.logicalExpression(
                         "||",
                         createScopeReadExpression(binding),
-                        t.objectExpression([]),
+                        alias.restOffset
+                          ? t.arrayExpression([])
+                          : t.objectExpression([]),
                       )
                     : createScopeReadExpression(binding),
                 ],

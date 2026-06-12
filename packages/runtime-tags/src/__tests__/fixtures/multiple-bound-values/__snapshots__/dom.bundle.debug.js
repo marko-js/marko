@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $count__script = _script("__tests__/tags/2counters.marko_0_count1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count$1($scope, $scope.count1 + 1);
 }));
-const $count$1 = /* @__PURE__ */ _let("count1/12", ($scope) => {
+const $count$1 = /* @__PURE__ */ _let_change("count1/12", ($scope) => {
 	_text($scope["#text/1"], $scope.count1);
 	$count__script($scope);
 });
@@ -15,7 +15,7 @@ const $input_count1Change = /* @__PURE__ */ _const("input_count1Change", $input_
 const $count2__script = _script("__tests__/tags/2counters.marko_0_count2", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count2$1($scope, $scope.count2 + 1);
 }));
-const $count2$1 = /* @__PURE__ */ _let("count2/13", ($scope) => {
+const $count2$1 = /* @__PURE__ */ _let_change("count2/13", ($scope) => {
 	_text($scope["#text/3"], $scope.count2);
 	$count2__script($scope);
 });

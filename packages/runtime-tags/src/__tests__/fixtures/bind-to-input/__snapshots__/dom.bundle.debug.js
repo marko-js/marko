@@ -5,7 +5,7 @@ const $setup$1 = () => {};
 const $x__script = _script("__tests__/tags/counter.marko_0_x", ($scope) => _on($scope["#button/0"], "click", function() {
 	$x$1($scope, $scope.x + 1);
 }));
-const $x$1 = /* @__PURE__ */ _let("x/9", ($scope) => {
+const $x$1 = /* @__PURE__ */ _let_change("x/9", ($scope) => {
 	_attr($scope["#button/0"], "data-internal", $scope.x);
 	$x__script($scope);
 });
