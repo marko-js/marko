@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.39.4
+
+### Patch Changes
+
+- [#3211](https://github.com/marko-js/marko/pull/3211) [`2999ffc`](https://github.com/marko-js/marko/commit/2999ffcb59082b7405fe2641586b5c7bd19781e1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Forward the runtime `version` through the interop translator's exports so `getRuntimeVersion` reports the installed marko version (instead of "0.0.0"). This lets bundler integrations that gate on the runtime version (like @marko/vite's `linkAssets` support) detect the feature for class API and interop apps.
+
+- [#3211](https://github.com/marko-js/marko/pull/3211) [`2999ffc`](https://github.com/marko-js/marko/commit/2999ffcb59082b7405fe2641586b5c7bd19781e1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix import analysis crashing on `ImportDeclaration` nodes that have no `attributes` array, such as imports inserted by babel plugins or taglib transformers using the `@babel/types` builders (which omit the array).
+
+- Updated dependencies [[`2999ffc`](https://github.com/marko-js/marko/commit/2999ffcb59082b7405fe2641586b5c7bd19781e1)]:
+  - @marko/runtime-tags@6.1.5
+
 ## 5.39.3
 
 ### Patch Changes
