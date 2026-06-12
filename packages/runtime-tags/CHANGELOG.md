@@ -1,5 +1,23 @@
 # @marko/runtime-tags
 
+## 6.1.3
+
+### Patch Changes
+
+- [#3207](https://github.com/marko-js/marko/pull/3207) [`6e26d78`](https://github.com/marko-js/marko/commit/6e26d78c4ff1010f73379c05730379a8c547e0b8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix derived value intersections updating in a non-deterministic order, which could render a stale downstream derived value after an update.
+
+- [#3207](https://github.com/marko-js/marko/pull/3207) [`5764948`](https://github.com/marko-js/marko/commit/576494819e95700e2977ade541cb86dd235c5711) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Shrink the inlined walker runtime bootstrap slightly.
+
+- [#3205](https://github.com/marko-js/marko/pull/3205) [`ec8aa26`](https://github.com/marko-js/marko/commit/ec8aa265b73adb1315c8ef020cd080f34d756033) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix reference tracking for array rest elements in tag params and destructuring patterns (reads through the rest were tracked against shifted indices).
+
+  Fix assigning `undefined` to `<let>` and derived values not applying when the value had never been set, and only handle `valueChange` for `<let>` tags that statically use it.
+
+- [#3207](https://github.com/marko-js/marko/pull/3207) [`06dd990`](https://github.com/marko-js/marko/commit/06dd99093557a451e8a8a142025f9ccca2434a07) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reduce serialized output size: serialize dates in epoch form, dedupe strings starting at 13 characters, skip the backing array binding for Map/Set values that can never be referenced again, and serialize self-yielding iterables (attr tags) with `yield this` instead of a deferred circular assignment.
+
+- [#3207](https://github.com/marko-js/marko/pull/3207) [`ef30af9`](https://github.com/marko-js/marko/commit/ef30af9ab391f4cd439234f3547c01736ede5287) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Accumulate referenced hoists per section instead of overwriting them per expression, and remove unused reference tracking metadata.
+
+- [#3207](https://github.com/marko-js/marko/pull/3207) [`4aeb437`](https://github.com/marko-js/marko/commit/4aeb4373b2f77bafe6ded48afccfc2b048953513) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Only check for destroyed branches when flushing renders in apps that use branches, request the next frame before flushing scheduled renders, and simplify an internal renderer type cast.
+
 ## 6.1.2
 
 ### Patch Changes
