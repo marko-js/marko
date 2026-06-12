@@ -6,14 +6,12 @@ var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 var kAssets = Symbol();
 var kBlockIndex = Symbol();
 var kDeferIndex = Symbol();
-var kOriginal = Symbol();
 var assetFlush;
 
 exports.withPageAssets = function withPageAssets(typeId, template, runtime) {
   assetFlush = runtime;
-  var render = template[kOriginal] || (template[kOriginal] = template._);
   var flushBeforeInput = { renderBody: flush };
-  template._ = function (input, out) {
+  return createFacade(template, function (input, out) {
     var hasAssets = !!out.global[kAssets];
     var key = out.___assignedKey;
     var def = out.___assignedComponentDef;
@@ -32,15 +30,12 @@ exports.withPageAssets = function withPageAssets(typeId, template, runtime) {
       flushHereAndAfter(flushBeforeInput, out);
     }
 
-    render(input, out);
-  };
-  return template;
+    template._(input, out);
+  });
 };
 
 exports.withLoadAssets = function withLoadAssets(typeId, template, triggers) {
-  if (template[kOriginal]) return template;
-  var render = (template[kOriginal] = template._);
-  template._ = function (input, out) {
+  return createFacade(template, function (input, out) {
     var key = out.___assignedKey;
     var def = out.___assignedComponentDef;
     addAsset(out.global, typeId, triggers);
@@ -50,15 +45,22 @@ exports.withLoadAssets = function withLoadAssets(typeId, template, triggers) {
       flush(out);
       out.ef();
       out.bf(key, def.___component, true);
-      render(input, out);
+      template._(input, out);
       out.ef();
     } else {
       flush(out);
-      render(input, out);
+      template._(input, out);
     }
-  };
-  return template;
+  });
 };
+
+function createFacade(template, render) {
+  // Under hot reload the template's `_` is an accessor, which a normal
+  // assignment through the facade's prototype chain would invoke (storing
+  // the wrapped render as the template's own render fn), so the facade's
+  // render is defined as an own property instead.
+  return Object.create(template, { _: { value: render } });
+}
 
 exports.flushHead = function flushHead(out) {
   if (out.global[kAssets]) {
