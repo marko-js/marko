@@ -5,14 +5,14 @@ const $setup$1 = () => {};
 const $state__script = _script("__tests__/tags/child.marko_0_state", ($scope) => _on($scope["#button/0"], "click", function() {
 	$state($scope, $scope.state + 1);
 }));
-const $state = /* @__PURE__ */ _let("state/14", ($scope) => {
+const $state = /* @__PURE__ */ _let_change("state/14", ($scope) => {
 	_text($scope["#text/2"], $scope.state);
 	$state__script($scope);
 });
 const $thirdState__script = _script("__tests__/tags/child.marko_0_thirdState", ($scope) => _on($scope["#button/6"], "click", function() {
 	$thirdState($scope, $scope.thirdState + 1);
 }));
-const $thirdState = /* @__PURE__ */ _let("thirdState/16", ($scope) => {
+const $thirdState = /* @__PURE__ */ _let_change("thirdState/16", ($scope) => {
 	_text($scope["#text/8"], $scope.thirdState);
 	$thirdState__script($scope);
 });
@@ -30,7 +30,7 @@ const $input_valueChange = /* @__PURE__ */ _const("input_valueChange", $input_va
 const $otherState__script = _script("__tests__/tags/child.marko_0_otherState", ($scope) => _on($scope["#button/3"], "click", function() {
 	$otherState($scope, $scope.otherState + 1);
 }));
-const $otherState = /* @__PURE__ */ _let("otherState/15", ($scope) => {
+const $otherState = /* @__PURE__ */ _let_change("otherState/15", ($scope) => {
 	_text($scope["#text/5"], $scope.otherState);
 	$otherState__script($scope);
 });

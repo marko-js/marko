@@ -1,4 +1,4 @@
-// size: 4053 (min) 1802 (brotli)
+// size: 4023 (min) 1785 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -127,7 +127,7 @@ function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
 function flushAndWaitFrame() {
-  (requestAnimationFrame(triggerMacroTask), run());
+  (run(), requestAnimationFrame(triggerMacroTask));
 }
 function triggerMacroTask() {
   (channel ||
@@ -138,19 +138,13 @@ function triggerMacroTask() {
     channel.port2.postMessage(0));
 }
 function _let(id, fn) {
-  let valueAccessor = decodeAccessor(id),
-    valueChangeAccessor = "M" + valueAccessor;
-  return (scope, value, valueChange) => (
+  let valueAccessor = decodeAccessor(id);
+  return (scope, value) => (
     rendering
-      ? (((scope[valueChangeAccessor] = valueChange) &&
-          scope[valueAccessor] !== value) ||
-          scope.H) &&
-        ((scope[valueAccessor] = value), fn?.(scope))
-      : scope[valueChangeAccessor]
-        ? scope[valueChangeAccessor](value)
-        : scope[valueAccessor] !== (scope[valueAccessor] = value) &&
-          fn &&
-          (schedule(), queueRender(scope, fn, id)),
+      ? scope.H && ((scope[valueAccessor] = value), fn?.(scope))
+      : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+        ((scope[valueAccessor] = value), fn) &&
+        (schedule(), queueRender(scope, fn, id)),
     value
   );
 }

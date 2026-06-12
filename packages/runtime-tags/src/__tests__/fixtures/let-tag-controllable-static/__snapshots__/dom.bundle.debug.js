@@ -4,7 +4,7 @@ const $walks = " D%c%l";
 const $y__script = _script("__tests__/template.marko_0_y", ($scope) => _on($scope["#button/0"], "click", function() {
 	$y($scope, $scope.y + 1);
 }));
-const $y = /* @__PURE__ */ _let("y/4", ($scope) => {
+const $y = /* @__PURE__ */ _let_change("y/4", ($scope) => {
 	_text($scope["#text/2"], $scope.y);
 	$y__script($scope);
 });

@@ -2,7 +2,7 @@
 const $template = "<button>Before</button><div> </div>";
 const $walks = " bD l";
 const $liveCount = /* @__PURE__ */ _let("liveCount/2", ($scope) => _text($scope["#text/1"], $scope.liveCount));
-const $count = /* @__PURE__ */ _let("count/3");
+const $count = /* @__PURE__ */ _let_change("count/3");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function(_, el) {
 	el.textContent = "" + $count($scope, 1);
 }));

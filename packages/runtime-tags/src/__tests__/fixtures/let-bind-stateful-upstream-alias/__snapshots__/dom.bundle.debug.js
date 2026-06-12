@@ -34,7 +34,7 @@ const $store = _var_resume("__tests__/template.marko_0_store/var", ($scope, stor
 	$store_clear($scope, store?.clear);
 });
 const $for = /* @__PURE__ */ _for_of("#ul/3", "<li> </li>", "D l", 0, $for_content__$params);
-const $list = /* @__PURE__ */ _let("list/9", ($scope) => $for($scope, [$scope.list]));
+const $list = /* @__PURE__ */ _let_change("list/9", ($scope) => $for($scope, [$scope.list]));
 const $store_list__OR__store_listChange = /* @__PURE__ */ _or(7, ($scope) => $list($scope, $scope.store_list, $scope.store_listChange), 1, "#scopeOffset/1");
 const $store_list = /* @__PURE__ */ _const("store_list", $store_list__OR__store_listChange);
 const $store_listChange = /* @__PURE__ */ _const("store_listChange", $store_list__OR__store_listChange);

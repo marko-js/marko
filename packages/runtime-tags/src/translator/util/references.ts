@@ -106,6 +106,7 @@ export interface Binding {
   propertyAliases: Map<string, Binding>;
   excludeProperties: Opt<string>;
   upstreamAlias: Binding | undefined;
+  restOffset: number | undefined;
   scopeOffset: Binding | undefined;
   scopeAccessor: string | undefined;
   export: string | undefined;
@@ -214,6 +215,7 @@ export function createBinding(
     getters: new Map(),
     propertyAliases: new Map(),
     upstreamAlias,
+    restOffset: undefined,
     scopeOffset: undefined,
     scopeAccessor: undefined,
     export: undefined,
@@ -390,7 +392,8 @@ export function trackParamsReferences(
           section,
           paramsBinding,
           undefined,
-          i > 0 ? addNumericPropertiesUntil(undefined, i - 1) : undefined,
+          i > 0 ? addNumericPropertiesUntil(undefined, i) : undefined,
+          i,
         );
       } else if (t.isLVal(param)) {
         createBindingsAndTrackReferences(
@@ -590,23 +593,24 @@ function createBindingsAndTrackReferences(
   upstreamAlias: Binding["upstreamAlias"] | undefined,
   property: string | undefined,
   excludeProperties: Opt<string>,
+  restOffset?: number,
 ) {
   switch (lVal.type) {
-    case "Identifier":
-      trackReferencesForBinding(
-        scope.getBinding(lVal.name)!,
-        ((lVal.extra ??= {}).binding = createBinding(
-          lVal.name,
-          type,
-          section,
-          upstreamAlias,
-          property,
-          excludeProperties,
-          lVal.loc,
-          true,
-        )),
-      );
+    case "Identifier": {
+      const binding = ((lVal.extra ??= {}).binding = createBinding(
+        lVal.name,
+        type,
+        section,
+        upstreamAlias,
+        property,
+        excludeProperties,
+        lVal.loc,
+        true,
+      ));
+      if (restOffset) binding.restOffset = restOffset;
+      trackReferencesForBinding(scope.getBinding(lVal.name)!, binding);
       break;
+    }
     case "ObjectPattern": {
       const patternBinding =
         (property
@@ -695,7 +699,7 @@ function createBindingsAndTrackReferences(
           if (element.type === "RestElement") {
             excludeProperties =
               i > 0
-                ? addNumericPropertiesUntil(excludeProperties, i - 1)
+                ? addNumericPropertiesUntil(excludeProperties, i)
                 : undefined;
             createBindingsAndTrackReferences(
               element.argument,
@@ -705,6 +709,7 @@ function createBindingsAndTrackReferences(
               patternBinding,
               property,
               excludeProperties,
+              i,
             );
           } else if (t.isLVal(element)) {
             createBindingsAndTrackReferences(
@@ -739,15 +744,20 @@ function trackReference(
     if (!t.isMemberExpression(parent) && !t.isOptionalMemberExpression(parent))
       break;
 
-    const prop = getMemberExpressionPropString(parent);
+    let prop = getMemberExpressionPropString(parent);
     if (prop === undefined) break;
 
-    if (
-      reference.upstreamAlias &&
-      reference.excludeProperties !== undefined &&
-      !propsUtil.has(reference.excludeProperties, prop)
-    ) {
-      reference = reference.upstreamAlias;
+    if (reference.upstreamAlias && reference.excludeProperties !== undefined) {
+      if (reference.restOffset) {
+        // A shifted array rest only mirrors the source at offset indices;
+        // anything else (length, methods) belongs to the rest array itself.
+        if (/^\d+$/.test(prop)) {
+          prop = `${+prop + reference.restOffset}`;
+          reference = reference.upstreamAlias;
+        }
+      } else if (!propsUtil.has(reference.excludeProperties, prop)) {
+        reference = reference.upstreamAlias;
+      }
     }
 
     if (isInvokedFunction(root.parentPath) && !isEventOrChangeHandler(prop)) {

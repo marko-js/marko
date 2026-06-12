@@ -7,7 +7,7 @@ const $x = /* @__PURE__ */ _let("x/3", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
 	$x__OR__y($scope);
 });
-const $y = /* @__PURE__ */ _let("y/4", ($scope) => {
+const $y = /* @__PURE__ */ _let_change("y/4", ($scope) => {
 	_text($scope["#text/2"], $scope.y);
 	$x__OR__y($scope);
 });
