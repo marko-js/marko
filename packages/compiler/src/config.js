@@ -5,6 +5,14 @@ const config = {
   // The default output mode for compiled templates
   output: "html",
 
+  // Specifies whether this is a page or load entry point.
+  entry: undefined,
+
+  /**
+   * Provides browser asset resolution and runtime hooks for lazy loading and server entries.
+   */
+  linkAssets: undefined,
+
   // Override the runtimeid used when calling `marko/components.init` in the `hydrate` output.
   runtimeId: null,
 

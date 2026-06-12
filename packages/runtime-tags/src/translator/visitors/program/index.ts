@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
+  getTemplateId,
   loadFileForImport,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
@@ -12,6 +13,7 @@ import entryBuilder from "../../util/entry-builder";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import {
   getMarkoOpts,
+  getReadyId,
   isOutputDOM,
   isOutputHTML,
 } from "../../util/marko-config";
@@ -21,7 +23,7 @@ import {
   trackParamsReferences,
 } from "../../util/references";
 import { resolveRelativeToEntry } from "../../util/resolve-relative-to-entry";
-import { getCompatRuntimeFile } from "../../util/runtime";
+import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
 import { startSection } from "../../util/sections";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
@@ -90,27 +92,130 @@ export default {
       scopeIdentifier = isOutputDOM()
         ? generateUidIdentifier("scope")
         : (null as any as t.Identifier);
-      if (getMarkoOpts().output === "hydrate") {
-        const entryFile = program.hub.file;
-        const visitedFiles = new Set([
-          resolveRelativePath(entryFile, entryFile.opts.filename),
-        ]);
-        entryBuilder.visit(entryFile, entryFile, function visitChild(resolved) {
-          if (!visitedFiles.has(resolved)) {
-            visitedFiles.add(resolved);
-            const file = loadFileForImport(entryFile, resolved);
-            if (file) {
-              entryBuilder.visit(file, entryFile, (id) =>
-                visitChild(resolveRelativeToEntry(entryFile, file, id)),
-              );
-            }
-          }
-        });
+      {
+        const markoOpts = getMarkoOpts();
+        const { output, entry, runtimeId } = markoOpts;
+        const isLoadEntry = entry === "load";
+        const isDOMPageEntry =
+          (output === "dom" && entry === "page") || output === "hydrate";
+        const isServerEntry = output === "html" && entry === "page";
 
-        program.node.body = entryBuilder.build(entryFile);
-        program.skip();
-        return;
+        if (entry && !markoOpts.linkAssets) {
+          throw program.buildCodeFrameError(
+            'The "entry" option requires the `linkAssets` compiler option to be configured.',
+          );
+        }
+
+        // Validated at compile time since entry wrappers bake the value in
+        // (the server side applies it before the render time check runs).
+        if (runtimeId && !/^[_$a-z][_$a-z0-9]*$/i.test(runtimeId)) {
+          throw program.buildCodeFrameError(
+            `Invalid runtimeId: "${runtimeId}". The runtimeId must be a valid JavaScript identifier.`,
+          );
+        }
+
+        if (isLoadEntry) {
+          const entryFile = program.hub.file;
+          const { filename } = entryFile.opts;
+          const readyArgs = [t.stringLiteral(getReadyId(entryFile)!)];
+          if (runtimeId) {
+            readyArgs.push(t.stringLiteral(runtimeId));
+          }
+          program.node.body = [
+            t.importDeclaration(
+              [t.importSpecifier(t.identifier("ready"), t.identifier("ready"))],
+              t.stringLiteral(getRuntimePath("dom")),
+            ),
+            t.expressionStatement(
+              t.callExpression(
+                t.memberExpression(
+                  t.callExpression(t.import(), [
+                    t.stringLiteral(resolveRelativePath(entryFile, filename)),
+                  ]),
+                  t.identifier("then"),
+                ),
+                [
+                  t.arrowFunctionExpression(
+                    [],
+                    t.callExpression(t.identifier("ready"), readyArgs),
+                  ),
+                ],
+              ),
+            ),
+          ];
+          program.skip();
+          return;
+        }
+
+        if (isDOMPageEntry) {
+          const entryFile = program.hub.file;
+          const { filename } = entryFile.opts;
+          const visitedFiles = new Set([
+            resolveRelativePath(entryFile, filename),
+          ]);
+          entryBuilder.visit(
+            entryFile,
+            entryFile,
+            function visitChild(resolved) {
+              if (!visitedFiles.has(resolved)) {
+                visitedFiles.add(resolved);
+                const file = loadFileForImport(entryFile, resolved);
+                if (file) {
+                  entryBuilder.visit(file, entryFile, (id) =>
+                    visitChild(resolveRelativeToEntry(entryFile, file, id)),
+                  );
+                }
+              }
+            },
+          );
+
+          program.node.body = entryBuilder.build(entryFile);
+          program.skip();
+          return;
+        }
+
+        if (isServerEntry) {
+          const entryFile = program.hub.file;
+          const { filename } = entryFile.opts;
+          const relativeImport = resolveRelativePath(entryFile, filename);
+          const templateId = getTemplateId(markoOpts, filename);
+          const pageAssetArgs = [
+            t.identifier("template"),
+            t.identifier("flush"),
+            t.stringLiteral(templateId),
+          ];
+          if (runtimeId) {
+            pageAssetArgs.push(t.stringLiteral(runtimeId));
+          }
+          markoOpts.linkAssets.onAsset("page", filename, templateId);
+          program.node.body = [
+            t.importDeclaration(
+              [t.importSpecifier(t.identifier("flush"), t.identifier("flush"))],
+              t.stringLiteral(markoOpts.linkAssets.runtime),
+            ),
+            t.importDeclaration(
+              [t.importDefaultSpecifier(t.identifier("template"))],
+              t.stringLiteral(relativeImport),
+            ),
+            t.importDeclaration(
+              [
+                t.importSpecifier(
+                  t.identifier("withPageAssets"),
+                  t.identifier("withPageAssets"),
+                ),
+              ],
+              t.stringLiteral(getRuntimePath("html")),
+            ),
+            t.exportAllDeclaration(t.stringLiteral(relativeImport)),
+            t.exportDefaultDeclaration(
+              t.callExpression(t.identifier("withPageAssets"), pageAssetArgs),
+            ),
+          ];
+          program.skip();
+          return;
+        }
       }
+
       if (isOutputHTML()) {
         programHTML.translate.enter();
       } else {

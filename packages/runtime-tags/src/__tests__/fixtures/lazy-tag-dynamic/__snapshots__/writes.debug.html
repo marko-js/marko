@@ -1,0 +1,15 @@
+<button class=toggle>Toggle</button><!--M_*1 #button/0--><button
+  class=inc>Inc</button><!--M_*1 #button/1--><!--M_[-->
+<script async type=module src="child.marko.load.mjs"></script>
+<div>x<!--M_*2 #text/0-->: <!>1<!--M_*2 #text/1--></div><!--M_]1 #text/2 2-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "ConditionalRenderer:#text/2": "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic/child.marko",
+      show: !0,
+      value: 1
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic/template.marko_0_value 1 packages/runtime-tags/src/__tests__/fixtures/lazy-tag-dynamic/template.marko_0_show 1"
+  ];
+  M._.w()
+</script>

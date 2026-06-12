@@ -1,0 +1,12 @@
+import Child from "./child.marko" with { load: "render" }
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Head Flush Test</title>
+</head>
+<body>
+  <Child value=input.value/>
+  <init-components/>
+</body>
+</html>

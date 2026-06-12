@@ -1,0 +1,15 @@
+import Child from "./child.marko" with { load: "render" }
+import { resolveAfter } from "../../utils/resolve"
+
+<const/shared={ reordered: 1, streamed: 2 }/>
+<try>
+  <await|label|=resolveAfter("reordered", 1)>
+    <Child label=label shared=shared/>
+  </await>
+  <@placeholder>
+    loading
+  </@placeholder>
+</try>
+<await|label|=resolveAfter("streamed", 2)>
+  <Child label=label shared=shared/>
+</await>

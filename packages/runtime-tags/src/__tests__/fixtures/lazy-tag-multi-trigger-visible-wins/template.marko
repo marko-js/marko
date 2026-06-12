@@ -1,0 +1,5 @@
+import Child from "./child.marko" with { load: "visible body|idle?timeout=100" }
+
+<let/value=0>
+<button id="inc" onClick() { value++ }>Inc</button>
+<Child value=value/>

@@ -28,9 +28,11 @@ import MarkoTag from "./tag";
 import MarkoText from "./text";
 import addDependencies from "./util/add-dependencies";
 import getComponentFiles from "./util/get-component-files";
+import { analyzeLoadImport } from "./util/load-import";
 import { optimizeHTMLWrites } from "./util/optimize-html-writes";
 import { analyzeStaticVDOM } from "./util/optimize-vdom-create";
 
+export { version } from "../../package.json";
 export const tagDiscoveryDirs = ["components"];
 export { optionalTaglibs, default as taglibs } from "./taglib";
 export { entryBuilder as internalEntryBuilder } from "./util/add-dependencies";
@@ -127,6 +129,9 @@ export const analyze = {
         relativePath = resolveTagImport(tag, importSource) || importSource;
         tag.node.extra = tag.node.extra || {};
         tag.node.extra.tagNameImported = relativePath;
+        if (binding.path.parentPath?.node.extra?.loadImport !== undefined) {
+          tag.node.extra.tagNameLoad = true;
+        }
       }
     }
 
@@ -196,6 +201,7 @@ export const analyze = {
     exit(path) {
       const source = path.get("source");
       const tagEntry = resolveTagImport(source, source.node.value);
+      analyzeLoadImport(path, tagEntry);
 
       if (tagEntry) {
         const meta = path.hub.file.metadata.marko;
@@ -230,7 +236,50 @@ export const translate = {
         hub: { file },
       } = path;
 
-      if (file.markoOpts.output === "hydrate") {
+      if (file.markoOpts.entry && !file.markoOpts.linkAssets) {
+        throw path.buildCodeFrameError(
+          'The "entry" option requires the `linkAssets` compiler option to be configured.',
+        );
+      }
+
+      if (file.markoOpts.output === "html" && file.markoOpts.entry === "page") {
+        const { linkAssets } = file.markoOpts;
+        const templateId = file.metadata.marko.id;
+        const relPath = resolveRelativePath(file, file.opts.filename);
+        linkAssets.onAsset("page", file.opts.filename, templateId);
+        path.node.body = [
+          t.importDeclaration(
+            [t.importSpecifier(t.identifier("flush"), t.identifier("flush"))],
+            t.stringLiteral(linkAssets.runtime),
+          ),
+          t.importDeclaration(
+            [t.importDefaultSpecifier(t.identifier("template"))],
+            t.stringLiteral(relPath),
+          ),
+          t.importDeclaration(
+            [
+              t.importSpecifier(
+                t.identifier("withPageAssets"),
+                t.identifier("withPageAssets"),
+              ),
+            ],
+            t.stringLiteral("marko/src/runtime/helpers/load-tag.js"),
+          ),
+          t.exportAllDeclaration(t.stringLiteral(relPath)),
+          t.exportDefaultDeclaration(
+            t.callExpression(t.identifier("withPageAssets"), [
+              t.stringLiteral(templateId),
+              t.identifier("template"),
+              t.identifier("flush"),
+            ]),
+          ),
+        ];
+        path.skip();
+        return;
+      } else if (
+        (file.markoOpts.output === "dom" && file.markoOpts.entry) ||
+        file.markoOpts.output === "hydrate"
+      ) {
         addDependencies(file, true);
         return;
       } else if (

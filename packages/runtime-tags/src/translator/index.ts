@@ -16,6 +16,8 @@ import MarkoScriptlet from "./visitors/scriptlet";
 import MarkoTag from "./visitors/tag";
 import MarkoText from "./visitors/text";
 
+export { version } from "../../package.json";
+
 const visitors = extractVisitors({
   Program,
   Function,

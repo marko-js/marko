@@ -1,0 +1,29 @@
+<script async type=module src="child.marko.load.mjs"></script>
+<div id=ref>0</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-serialize-promise/child.marko": [
+      _ => [2, {
+        promise: (p => p = new Promise((f, r) => _.a = {
+          f,
+          r(e) {
+            p.catch(_ => 0);
+            r(e)
+          }
+        }))()
+      }],
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-serialize-promise/child.marko_0_promise 2"
+    ]
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-serialize-promise/child.marko"
+    ].push(_ => (_.a.f("hello"), 0));
+  M._.w()
+</script>

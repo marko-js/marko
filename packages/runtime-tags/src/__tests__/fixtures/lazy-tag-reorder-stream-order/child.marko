@@ -1,0 +1,10 @@
+export interface Input {
+  label: string;
+  shared: Record<string, number>;
+}
+
+<let/shared=input.shared/>
+<let/count=0/>
+<button class=input.label onClick() { count += shared[input.label] }>
+  ${input.label}:${count}
+</button>

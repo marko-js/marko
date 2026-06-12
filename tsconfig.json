@@ -4,6 +4,7 @@
     "lib": ["dom", "ESNext"],
     "strict": true,
     "allowJs": true,
+    "checkJs": false,
     "outDir": "dist",
     "composite": true,
     "target": "ESNext",

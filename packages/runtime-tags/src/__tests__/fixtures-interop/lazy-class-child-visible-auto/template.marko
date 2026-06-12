@@ -1,0 +1,10 @@
+import Child from "<child>" with { load: "visible.nonexistent" }
+
+class {
+  onCreate() {
+    this.state = { value: 0 };
+  }
+}
+
+<Child value=state.value/>
+<init-components/>

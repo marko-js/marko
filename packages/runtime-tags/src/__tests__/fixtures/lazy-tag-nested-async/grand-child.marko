@@ -1,0 +1,7 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/n=input.value/>
+<button id="grand" onClick() { n++ }>grand:${n}:${input.value}</button>
+<await|v|=resolveAfter(20, 2)>
+  <span id="grand-await">${v}</span>
+</await>

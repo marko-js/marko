@@ -1,0 +1,51 @@
+<!--M_[--><!--M_!^2-->loading<!--M_!2--><!--M_]1 a 2-->
+<style M_>
+  t {
+    display: none
+  }
+</style>
+<t M_=2><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+    C: "a",
+    Q: _(1, "b0")
+  }]];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t M_=b>
+  <script async type=module src="child.marko.load.mjs"></script><button
+    class=reordered>reordered:<!>0<!--M_*5 c--></button><!--M_*5 a-->
+</t>
+<script>
+  M._.b = {
+    _a: [1]
+  };
+  M._.j.b = _ => {
+    (b => b.splice(b.indexOf(1), 1, _ => [5, {
+      g: "reordered",
+      h: {
+        reordered: 1,
+        streamed: 2
+      },
+      i: 0
+    }], "a0 5"))(M._.b._a)
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<button class=streamed>streamed:<!>0<!--M_*7 c--></button><!--M_*7 a-->
+<script>
+  M._.b._a.push(_ => [7, {
+    g: "streamed",
+    h: _.a = _(5).h,
+    i: 0
+  }], "a0 7");
+  M._.w()
+</script>

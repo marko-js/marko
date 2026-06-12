@@ -1,0 +1,39 @@
+<div id=before>before</div>
+<script async type=module src="child.marko.load.mjs"></script><button
+  id=child>child:<!>1<!--M_*2 b--></button><!--M_*2 a-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: [_ => [2, {
+      g: 1,
+      Bg: new Set
+    }]]
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[--><span id=child-await>10</span>
+<script async type=module src="grand-child.marko.load.mjs"></script><button
+  id=grand>grand:<!>1<!--M_*4 b-->:<!>1<!--M_*4 c--></button><!--M_*4 a-->
+<script>
+  M._.b._a.push(_ => (_([3, {
+    _: _(2),
+    c: _(4)
+  }]), (_.a = _(2).Bg).add(_(3)), 0));
+  M._.b._b = [_ => [4, {
+    h: 1
+  }]];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<span id=grand-await>20</span><!--M_]2 c 3-->
+<div id=after>after</div>
+<script>
+  M._.b._b.push("b0 4");
+  M._.b._a.push("a0 2");
+  M._.w()
+</script>

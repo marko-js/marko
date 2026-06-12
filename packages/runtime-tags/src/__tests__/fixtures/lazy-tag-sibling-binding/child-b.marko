@@ -1,0 +1,11 @@
+export interface Input {
+  inner: Record<string, unknown>;
+  isInner: (o: unknown) => boolean;
+}
+
+<const/isInner=input.isInner/>
+<let/inner=input.inner/>
+<let/verified="?"/>
+<button.b onClick() { verified = String(isInner(inner)) }>
+  b:${verified}
+</button>

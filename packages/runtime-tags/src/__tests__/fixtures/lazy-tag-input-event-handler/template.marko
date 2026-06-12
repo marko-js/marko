@@ -1,0 +1,8 @@
+import Child from "./child.marko" with { load: "render" }
+
+<let/shared={ value: 1 }/>
+<let/count=0/>
+<button.main onClick() { count += Object.keys(shared).length }>
+  main:${count}
+</button>
+<Child data=shared report(o) { return o === shared }/>

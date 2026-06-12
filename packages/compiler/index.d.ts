@@ -39,6 +39,8 @@ export interface CompileResult {
   meta: MarkoMeta;
 }
 
+export const version: string;
+
 export const globalConfig: Config;
 
 export function configure(config: Config): void;
@@ -69,6 +71,8 @@ export function getRuntimeEntryFiles(
   output: string,
   translator?: string | undefined,
 ): string[];
+
+export function getRuntimeVersion(translator?: unknown): string;
 
 export namespace taglib {
   export function resolveOptionalTaglibs(

@@ -1,4 +1,4 @@
-// size: 22082 (min) 8197 (brotli)
+// size: 23615 (min) 8740 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2227,5 +2227,160 @@ function mount(input = {}, reference, position) {
       },
     }
   );
+}
+function _load_template(id, load) {
+  _enable_catch();
+  let pending,
+    lazyTemplate = _template(
+      id,
+      0,
+      0,
+      (branch) => {
+        let awaitCounter = addAwaitCounter(branch);
+        ((branch.X ||= /* @__PURE__ */ new Map()),
+          (pending ||= load()).then(
+            (renderer) => {
+              (Object.assign(lazyTemplate, renderer),
+                queueAsyncRender(branch, (branch) =>
+                  insertLoaded(renderer, branch, branch.S, awaitCounter),
+                ));
+            },
+            loadFailed(branch, awaitCounter),
+          ));
+      },
+      _load_signal(() => (pending ||= load()).then((r) => ({ _: r.d }))),
+    );
+  return lazyTemplate;
+}
+function _load_setup(nodeAccessor, childScopeAccessor, load) {
+  ((nodeAccessor = decodeAccessor(nodeAccessor)),
+    (childScopeAccessor = decodeAccessor(childScopeAccessor)));
+  let pending, renderer;
+  return (
+    _enable_catch(),
+    (owner) => {
+      let child = owner[childScopeAccessor];
+      if (renderer) insertLoaded(renderer, child, owner[nodeAccessor]);
+      else {
+        let awaitCounter = addAwaitCounter(owner);
+        ((child.X ||= /* @__PURE__ */ new Map()),
+          (pending ||= load()).then(
+            (mod) => {
+              ((renderer = _content("", ...mod._)()),
+                queueAsyncRender(child, (child) =>
+                  insertLoaded(
+                    renderer,
+                    child,
+                    owner[nodeAccessor],
+                    awaitCounter,
+                  ),
+                ));
+            },
+            loadFailed(child, awaitCounter),
+          ));
+      }
+    }
+  );
+}
+function insertLoaded(renderer, branch, marker, awaitCounter) {
+  let parent = marker.parentNode;
+  ((branch.H = 1),
+    renderer.b(branch, parent.namespaceURI),
+    setupBranch(renderer, branch),
+    applyLoad(branch, () => {
+      (insertBranchBefore(branch, parent, marker),
+        marker.remove(),
+        pendingScopes.push(branch),
+        awaitCounter?.c());
+    }));
+}
+function loadFailed(scope, awaitCounter) {
+  return (error) => {
+    (awaitCounter && (awaitCounter.i = 0),
+      queueAsyncRender(scope, renderCatch, error));
+  };
+}
+function applyLoad(scope, insert) {
+  let values = scope.X,
+    remaining;
+  if (((scope.X = 0), (remaining = values?.size)))
+    for (let [promise, entry] of values)
+      promise.then(
+        (signal) => {
+          ((entry.b = signal),
+            --remaining ||
+              ((scope.H = 1),
+              pendingScopes.push(scope),
+              queueAsyncRender(scope, (scope) => {
+                (values.forEach((e) => e.b._(scope, e.a)), insert());
+              })));
+        },
+        () => 0,
+      );
+  else insert();
+}
+function _load_signal(load) {
+  let pending, signal;
+  return (scope, value) => {
+    ((pending ||= load()),
+      scope.X || (!("X" in scope) && scope.H)
+        ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, { a: value })
+        : signal
+          ? signal(scope, value)
+          : pending.then(
+              (mod) => queueAsyncRender(scope, (signal = mod._), value),
+              () => 0,
+            ));
+  };
+}
+function _load_visible_trigger(selector, options) {
+  let pending, el;
+  return (load) => () =>
+    (pending ||= new Promise(
+      (resolve) =>
+        (el = getSelectorOrResolve(selector, resolve)) &&
+        new IntersectionObserver(
+          (entries, io) =>
+            entries.some((entry) => entry.isIntersecting) &&
+            resolve(io.disconnect()),
+          options,
+        ).observe(el),
+    )).then(load);
+}
+function _load_idle_trigger(options) {
+  let pending;
+  return (load) => () =>
+    (pending ||= new Promise((resolve) =>
+      (self.requestIdleCallback || resolve)(resolve, options),
+    )).then(load);
+}
+function _load_event_trigger(event, selector) {
+  let pending;
+  return (load) => () =>
+    (pending ||= new Promise((resolve) =>
+      getSelectorOrResolve(selector, resolve)?.addEventListener(
+        event,
+        resolve,
+        { once: !0 },
+      ),
+    )).then(load);
+}
+function _load_media_trigger(query) {
+  let pending, mql;
+  return (load) => () =>
+    (pending ||= new Promise((resolve) =>
+      (mql = matchMedia(query)).matches
+        ? resolve()
+        : mql.addEventListener("change", resolve, { once: !0 }),
+    )).then(load);
+}
+function _load_race_trigger(...triggers) {
+  let noop = () => Promise.resolve(),
+    pending;
+  return (load) => () =>
+    (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);
+}
+function getSelectorOrResolve(selector, resolve) {
+  return document.querySelector(selector) || resolve();
 }
 //#endregion

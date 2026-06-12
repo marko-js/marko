@@ -1,0 +1,29 @@
+<div id=before>before</div>
+<script async type=module src="child.marko.load.mjs"></script>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-async-in-child/child.marko": [
+      _ => [2, {
+        count: 1,
+        "ClosureScopes:count": new Set
+      }]
+    ]
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[--><button>1<!--M_*3 #text/1-->:10</button><!--M_*3 #button/0--><!--M_]2 #text/0 3-->
+<div id=after>after</div>
+<script>
+  M._.b[
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-async-in-child/child.marko"
+    ].push(_ => (_([3, {
+      _: _(2)
+    }]), (_.a = _(2)["ClosureScopes:count"]).add(_(3)), 0),
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-async-in-child/child.marko_1_count 3"
+    );
+  M._.w()
+</script>

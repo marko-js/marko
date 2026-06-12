@@ -15,6 +15,7 @@ type Taglibs = [taglibId: string, taglib: Record<string, unknown>][];
 
 export function createInteropTranslator(translate5: any) {
   return {
+    version: translate5.version ?? "0.0.0",
     preferAPI: translate5.preferAPI,
     transform: mergeVisitors(translate5.transform, translate6.transform),
     analyze: mergeVisitors(translate5.analyze, translate6.analyze),
@@ -130,7 +131,10 @@ export function createInteropTranslator(translate5: any) {
       Program: {
         enter(program, state) {
           const entryFile = program.hub.file;
-          if (entryFile.markoOpts.output !== "hydrate") {
+          const { output, entry } = entryFile.markoOpts;
+          const isDOMPageEntry =
+            (output === "dom" && entry === "page") || output === "hydrate";
+          if (!isDOMPageEntry) {
             return enterProgram?.call(this, program, state);
           }
 

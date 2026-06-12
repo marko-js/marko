@@ -30,6 +30,7 @@ export enum AccessorProp {
   DetachedAwait = "#DetachedAwait",
   EndNode = "#EndNode",
   Id = "#Id",
+  Load = "#Load",
   LoopKey = "#LoopKey",
   ParentBranch = "#ParentBranch",
   PendingEffects = "#PendingEffects",
@@ -65,4 +66,9 @@ export enum ClosureSignalProp {
   ScopeInstancesAccessor = "scopeInstancesAccessor",
   SignalIndexAccessor = "signalIndexAccessor",
   Index = "index",
+}
+
+export enum LoadSignalValue {
+  Value = "value",
+  Signal = "signal",
 }
