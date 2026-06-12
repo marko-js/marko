@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.1.5
+
+### Patch Changes
+
+- [#3211](https://github.com/marko-js/marko/pull/3211) [`2999ffc`](https://github.com/marko-js/marko/commit/2999ffcb59082b7405fe2641586b5c7bd19781e1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix import analysis crashing on `ImportDeclaration` nodes that have no `attributes` array, such as imports inserted by babel plugins or taglib transformers using the `@babel/types` builders (which omit the array).
+
 ## 6.1.4
 
 ### Patch Changes
