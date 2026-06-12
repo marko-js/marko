@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.5
+
+### Patch Changes
+
+- [#3213](https://github.com/marko-js/marko/pull/3213) [`9dcb9e4`](https://github.com/marko-js/marko/commit/9dcb9e46df0ebd60cf71b71699dc834ff2c9ca94) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix infinite recursion when rendering a page entry (`withPageAssets`) or lazily loaded tag (`withLoadAssets`) with hot reload enabled.
+
 ## 5.39.4
 
 ### Patch Changes
