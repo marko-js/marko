@@ -3,33 +3,38 @@
   type=checkbox><!--M_*4 a--><span>a,b<!--M_*1 d--></span>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.j = [0, _.a = {
-      a: _.b = {
-        Fa: 1,
-        Ga: _.d = [],
-        c: _.c = {
-          checkedValue: _.f = ["a", "b"],
-          value: "a"
-        }
-      },
-      b: _.e = {
-        Fa: 1,
-        Ga: _.d,
-        c: _.g = {
-          checkedValue: _.f,
-          value: "b"
-        }
-      },
-      c: _.h = {
-        Fa: 1,
-        Ga: _.d,
-        c: _.i = {
-          checkedValue: _.f,
-          value: "c"
-        }
-      }
-    }, _.b, _.e, _.h], _.a.f = _.b.Ea = _.c.checkedValueChange = _.e.Ea = _
-    .g.checkedValueChange = _.h.Ea = _.i.checkedValueChange = _._.a0(_.a), _
-    .j), "b0 2 3 4"];
+  M._.r = [_ => [1, {
+    f: _.a = _(1, "a0"),
+    a: _(2),
+    b: _(3),
+    c: _(4)
+  }, {
+    Fa: 1,
+    Ga: _.b = [],
+    Ea: _.a,
+    c: {
+      checkedValue: _.c = ["a", "b"],
+      checkedValueChange: _.a,
+      value: "a"
+    }
+  }, {
+    Fa: 1,
+    Ga: _.b,
+    Ea: _.a,
+    c: {
+      checkedValue: _.c,
+      checkedValueChange: _.a,
+      value: "b"
+    }
+  }, {
+    Fa: 1,
+    Ga: _.b,
+    Ea: _.a,
+    c: {
+      checkedValue: _.c,
+      checkedValueChange: _.a,
+      value: "c"
+    }
+  }], "b0 2 3 4"];
   M._.w()
 </script>

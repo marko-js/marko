@@ -41,7 +41,7 @@ export enum ResumeSymbol {
 }
 
 export interface AwaitCounter {
-  m?: () => unknown[];
+  m?: (effects: unknown[]) => unknown[];
   i: number;
   c: () => void | 1;
 }

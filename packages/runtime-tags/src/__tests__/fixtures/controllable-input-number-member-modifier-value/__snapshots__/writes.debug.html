@@ -3,15 +3,17 @@
 </span>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, _.c = {
-      "#childScope/0": _.a = {
-        "ControlledType:#input/0": 2
-      }
-    }, _.a], _.a.input_valueChange = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/controllable-input-number-member-modifier-value/template.marko_0/valueChange"
-      ](_.c), _.a["ControlledHandler:#input/0"] = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/controllable-input-number-member-modifier-value/tags/custom-input.marko_0/valueChange"
-      ](_.a), _.b),
+  M._.r = [_ => [1, {
+      "#childScope/0": _(2)
+    }, {
+      "ControlledType:#input/0": 2,
+      "ControlledHandler:#input/0": _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-input-number-member-modifier-value/tags/custom-input.marko_0/valueChange"
+        ),
+      input_valueChange: _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-input-number-member-modifier-value/template.marko_0/valueChange"
+        )
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/controllable-input-number-member-modifier-value/tags/custom-input.marko_0 2"
   ];
   M._.w()

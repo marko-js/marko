@@ -1,14 +1,18 @@
 <button>Click</button><!--M_*2 a-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.d = [0, _.e = {
+  M._.r = [_ => [1, {
     b: "foo"
   }, {
-    Ia: _.a = {},
-    Aa: _.c = {},
+    Ia: {
+      click: _.a = _(1, "a0")
+    },
+    Aa: _(3),
     Da: "a1",
-    c: _.b = {}
-  }, _.c], _.a.click = _.b.onClick = _._.a0(_.e), _.b.content = _._.a1(_
-    .e), _.d), "b0 2"];
+    c: {
+      onClick: _.a,
+      content: _(1, "a1")
+    }
+  }], "b0 2"];
   M._.w()
 </script>

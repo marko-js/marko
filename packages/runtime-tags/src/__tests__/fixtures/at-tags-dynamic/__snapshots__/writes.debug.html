@@ -11,96 +11,103 @@
 <div class=row row=-1>Outside</div><!--M_*23 #div/0-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.o = [0, 2, {
+  M._.r = [_ => [3, {
       item: {
         style: {
           color: "red"
         },
-        content: _._[
+        content: _(1,
           "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_1_content"
-          ](_.a = {}),
-        *[(_.b = [_.c = {
+          ),
+        *[(_.a = [_.b = {
           style: {
             color: "blue"
-          }
-        }, _.d = {
+          },
+          content: _(1,
+            "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_2_content"
+            )
+        }, _.c = {
           style: {
             color: "green"
-          }
+          },
+          content: _(1,
+            "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_2_content"
+            )
         }], Symbol.iterator)]() {
           yield this;
-          yield* _.b
+          yield* _.a
         }
       }
     }, 1, {
-      item: _.c
+      item: _.b
     }, 1, {
-      item: _.d
+      item: _.c
     }, 1, {
       col: {
         x: 0,
-        row: _.e = {
+        row: _.g = {
           row: "a",
-          *[(_.f = [_.g = {
-            row: "b"
+          content: _(1,
+            "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_3_content"
+            ),
+          *[(_.d = [_.h = {
+            row: "b",
+            content: _(1,
+              "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_3_content"
+              )
           }], Symbol.iterator)]() {
             yield this;
-            yield* _.f
+            yield* _.d
           }
         },
-        *[(_.h = [_.m = {
+        *[(_.e = [_.i = {
           x: 1,
-          row: _.i = {
+          row: _.j = {
             row: "c",
-            *[(_.j = [_.k = {
-              row: "d"
+            content: _(1,
+              "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_3_content"
+              ),
+            *[(_.f = [_.k = {
+              row: "d",
+              content: _(1,
+                "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_3_content"
+                )
             }], Symbol.iterator)]() {
               yield this;
-              yield* _.j
+              yield* _.f
             }
           }
-        }, _.n = {
+        }, _.l = {
           outside: !0,
-          row: _.l = {
+          row: _.m = {
             row: -1,
+            content: _(1,
+              "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_4_content"
+              ),
             *[Symbol.iterator]() {
               yield this
             }
           }
         }], Symbol.iterator)]() {
           yield this;
-          yield* _.h
+          yield* _.e
         }
       }
     }, 1, {
-      row: _.e
-    }, 1, {
       row: _.g
     }, 1, {
-      col: _.m
+      row: _.h
     }, 1, {
-      row: _.i
+      col: _.i
+    }, 1, {
+      row: _.j
     }, 1, {
       row: _.k
     }, 1, {
-      col: _.n
+      col: _.l
     }, 1, {
-      row: _.l
-    }], _.c.content = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_2_content"
-      ](_.a), _.d.content = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_2_content"
-      ](_.a), _.e.content = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_3_content"
-      ](_.a), _.g.content = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_3_content"
-      ](_.a), _.i.content = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_3_content"
-      ](_.a), _.k.content = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_3_content"
-      ](_.a), _.l.content = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_4_content"
-      ](_.a), _.o),
+      row: _.m
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_1_item 3 5 7 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_3_row 11 13 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_2_col 9 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_3_row 17 19 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_2_col 15 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_3_row 23 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_2_col 21"
   ];
   M._.w()

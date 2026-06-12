@@ -3,12 +3,14 @@
 </button><!--M_*2 #button/0-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, _.c = {
+  M._.r = [_ => [1, {
       clickCount: 0,
-      "#childScope/0": _.a = {}
-    }, _.a], _.a.onClick = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/basic-component-input-same-source-alias/template.marko_0/onClick"
-      ](_.c), _.b),
+      "#childScope/0": _(2)
+    }, {
+      onClick: _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/basic-component-input-same-source-alias/template.marko_0/onClick"
+        )
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/basic-component-input-same-source-alias/tags/my-button.marko_0_onClick 2"
   ];
   M._.w()

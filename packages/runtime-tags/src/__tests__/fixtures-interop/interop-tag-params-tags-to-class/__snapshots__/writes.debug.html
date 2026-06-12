@@ -6,19 +6,21 @@
 </div><!--M/-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.c = [0, _.b = {
+  M._.r = [_ => [1, {
       multiplier: 1,
-      "ClosureScopes:multiplier": _.d = new Set
+      "ClosureScopes:multiplier": new Set([_(3)])
     }, {
       m5c: "_0",
-      m5i: _.a = {}
-    }, _.e = {
+      m5i: {
+        renderBody: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures-interop/interop-tag-params-tags-to-class/template.marko_1_content"
+          )
+      }
+    }, {
       m5c: "_0-2",
       baseCount: 0,
-      _: _.b
-    }], _.a.renderBody = _._[
-      "packages/runtime-tags/src/__tests__/fixtures-interop/interop-tag-params-tags-to-class/template.marko_1_content"
-      ](_.b), (_.d).add(_.e), _.c), _ => (_.f = [-3, _.b]),
+      _: _(1)
+    }],
     "$compat_setScope 3 packages/runtime-tags/src/__tests__/fixtures-interop/interop-tag-params-tags-to-class/template.marko_1_multiplier 3"
   ];
   M._.w();
@@ -37,6 +39,6 @@
       "packages/runtime-tags/src/__tests__/fixtures-interop/interop-tag-params-tags-to-class/components/class-layout.marko"
     ]
   });
-  M._.r.push("$compat_setScope 2");
+  M._.r.push("$compat_setScope 2 1");
   M._.w()
 </script>

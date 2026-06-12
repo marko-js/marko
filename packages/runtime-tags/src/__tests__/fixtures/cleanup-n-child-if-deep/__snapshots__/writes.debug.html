@@ -14,29 +14,33 @@
 </div><!--M_|1 #text/4 2-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.g = [0, _.a = {
+  M._.r = [_ => [1, {
       showOuter: !0,
       showMiddle: !0,
       showInner: !0,
-      "ClosureScopes:showInner": _.h = new Set
-    }, _.c = {
-      _: _.a
-    }, _.b = {
+      write: _.a = _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_0/write"
+        ),
+      "ClosureScopes:showInner": new Set([_(4)])
+    }, {
+      _: _(1)
+    }, {
       name: "Outer",
+      write: _.a,
       "#ClosestBranchId": 2
-    }, _.e = {
-      _: _.c
-    }, _.d = {
+    }, {
+      _: _(2)
+    }, {
       name: "Middle",
+      write: _.a,
       "#ClosestBranchId": 4
     }, {
-      _: _.e
-    }, _.f = {
+      _: _(4)
+    }, {
       name: "Inner",
+      write: _.a,
       "#ClosestBranchId": 6
-    }], _.a.write = _.b.write = _.d.write = _.f.write = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_0/write"
-      ](_.a), (_.h).add(_.e), _.g),
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/tags/child.marko_0_name_write 3 5 7 packages/runtime-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_0_showInner 1 packages/runtime-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_0_showMiddle 1 packages/runtime-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_0_showOuter 1"
   ];
   M._.w()

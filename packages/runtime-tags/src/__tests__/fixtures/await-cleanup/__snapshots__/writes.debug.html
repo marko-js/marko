@@ -10,17 +10,18 @@
 <t M_=3><!--M_#b--><!--M_#c--></t>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.d = [0, _.a = {
+  M._.r = [_ => [1, {
       show: 1,
       "ClosureScopes:show": new Set
-    }, _.b = {
-      _: _.a
-    }, _.c = {
-      _: _.b,
-      "#BranchAccessor": "#text/0"
-    }], _.c["#PlaceholderContent"] = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/await-cleanup/template.marko_4_content"
-      ](_.b), _.d),
+    }, {
+      _: _(1)
+    }, {
+      _: _(2),
+      "#BranchAccessor": "#text/0",
+      "#PlaceholderContent": _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/await-cleanup/template.marko_4_content"
+        )
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/await-cleanup/template.marko_0 1"
   ];
   REORDER_RUNTIME(M._);
@@ -32,12 +33,12 @@
 <t M_=b><!--M_[-->1<!--M_*5 #text/0--><!--M_]3 #text/0 5--></t>
 <t M_=c></t>
 <script>
-  M._.r.push(_ => (_.e = [1, {
+  M._.r.push(_ => [5, {
     "#ClosestBranchId": 2,
-    _: _.c
-  }]), _ => (_.f = [{
+    _: _(3)
+  }], _ => [6, {
     "#ClosestBranchId": 2
-  }]));
+  }]);
   M._.j.b = _ => {
     _.push(
       "packages/runtime-tags/src/__tests__/fixtures/await-cleanup/template.marko_3_show/pending 5 packages/runtime-tags/src/__tests__/fixtures/await-cleanup/template.marko_3 5"

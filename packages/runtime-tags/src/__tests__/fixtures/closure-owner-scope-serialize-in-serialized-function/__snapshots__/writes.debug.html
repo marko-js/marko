@@ -1,15 +1,16 @@
 <div></div><!--M_*2 #div/0-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.c = [0, _.b = {
+  M._.r = [_ => [1, {
       text: _._[
         "packages/runtime-tags/src/__tests__/fixtures/closure-owner-scope-serialize-in-serialized-function/template.marko_0/text"
         ]
-    }, _.a = {
-      _: _.b
-    }], _.a.run = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/closure-owner-scope-serialize-in-serialized-function/template.marko_1/run"
-      ](_.a), _.c),
+    }, {
+      run: _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/closure-owner-scope-serialize-in-serialized-function/template.marko_1/run"
+        ),
+      _: _(1)
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/closure-owner-scope-serialize-in-serialized-function/template.marko_1_run 2"
   ];
   M._.w()

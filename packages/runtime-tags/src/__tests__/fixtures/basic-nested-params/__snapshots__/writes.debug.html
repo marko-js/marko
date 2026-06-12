@@ -6,22 +6,23 @@
 </div>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.d = [0, _.b = {
+  M._.r = [_ => [1, {
       x: 1,
       y: 2,
-      "#childScope/1": _.a = {
-        "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/basic-nested-params/template.marko_1_content"
-      }
-    }, _.a, _.c = {
+      "#childScope/1": _(2)
+    }, {
+      "ConditionalRenderer:#text/0": "packages/runtime-tags/src/__tests__/fixtures/basic-nested-params/template.marko_1_content",
+      content: _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/basic-nested-params/template.marko_1_content"
+        )
+    }, {
       outer: 1,
-      _: _.b,
-      "ClosureScopes:outer": _.e = new Set
-    }, 1, _.f = {
-      _: _.c,
+      _: _(1),
+      "ClosureScopes:outer": new Set([_(5)])
+    }, 1, {
+      _: _(3),
       "#ClosestBranchId": 3
-    }], _.a.content = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/basic-nested-params/template.marko_1_content"
-      ](_.b), (_.e).add(_.f), _.d),
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/basic-nested-params/template.marko_0_x 1"
   ];
   M._.w()

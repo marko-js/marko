@@ -9,8 +9,11 @@
   option</button><!--M_*1 #button/3-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, _.a = {
+  M._.r = [_ => [1, {
       "ControlledType:#select/0": 3,
+      "ControlledHandler:#select/0": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-select-mutated-option/template.marko_0/valueChange"
+        ),
       options: [1, 2, 3]
     }, {
       "#LoopKey": 1
@@ -18,9 +21,7 @@
       "#LoopKey": 2
     }, {
       "#LoopKey": 3
-    }], _.a["ControlledHandler:#select/0"] = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/controllable-select-mutated-option/template.marko_0/valueChange"
-      ](_.a), _.b),
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/controllable-select-mutated-option/template.marko_0_options 1 packages/runtime-tags/src/__tests__/fixtures/controllable-select-mutated-option/template.marko_0 1"
   ];
   M._.w()

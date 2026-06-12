@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import { inspect } from "node:util";
 
-import { register, Serializer, stringify } from "../html/serializer";
+import type { ScopeFlush } from "../html/serializer";
+import { K_SCOPE_ID, register, Serializer } from "../html/serializer";
 import type { Boundary } from "../html/writer";
 
 const [major, minor] = process.version
@@ -32,7 +33,7 @@ describe("serializer", () => {
 
     assertStringify(
       data,
-      `{strings:"hello\\nworld",numbers:[1,NaN,Infinity],booleans:[!0,!1],void:[null,$],regexps:/abc/g,maps:new Map([[1,2]]),sets:new Set([1,2]),nested:{object:_.b={"special-keys":1}}},_.b.cyclical=_.a`,
+      `_.a={strings:"hello\\nworld",numbers:[1,NaN,Infinity],booleans:[!0,!1],void:[null,$],regexps:/abc/g,maps:new Map([[1,2]]),sets:new Set([1,2]),nested:{object:_.b={"special-keys":1}}},_.b.cyclical=_.a`,
     );
   });
 
@@ -185,7 +186,10 @@ describe("serializer", () => {
       const map = new Map<unknown, unknown>([[1, 2]]);
       map.set(3, { nested: map });
 
-      assertStringify(map, `new Map(_.a=[[1,2],[3,_.c={}]]),_.c.nested=_.b`);
+      assertStringify(
+        map,
+        `_.b=new Map(_.a=[[1,2],[3,_.c={}]]),_.c.nested=_.b`,
+      );
     });
 
     it("large circular key", () => {
@@ -227,7 +231,7 @@ describe("serializer", () => {
 
       assertStringify(
         map,
-        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,3,_.c={}]),_.c.nested=_.b`,
+        `_.b=(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,3,_.c={}]),_.c.nested=_.b`,
       );
     });
 
@@ -238,11 +242,11 @@ describe("serializer", () => {
       const map = new Map<unknown, unknown>([[objA, objB]]);
 
       serializer.assertStringify(map, `new Map(_.a=[[{a:1},{b:2}]])`);
-      serializer.assertStringify({ c: objA }, `{c:_.c=_.a[0][0]}`);
-      serializer.assertStringify({ d: objB }, `{d:_.e=_.a[0][1]}`);
+      serializer.assertStringify({ c: objA }, `{c:_.b=_.a[0][0]}`);
+      serializer.assertStringify({ d: objB }, `{d:_.c=_.a[0][1]}`);
       serializer.assertStringify(
         { e: map, f: objA, g: objB },
-        `{e:_.b,f:_.c,g:_.e}`,
+        `{e:_.d=_(1).value,f:_.b,g:_.c}`,
       );
     });
   });
@@ -263,7 +267,7 @@ describe("serializer", () => {
       const set = new Set<unknown>([1]);
       set.add({ nested: set });
 
-      assertStringify(set, `new Set(_.a=[1,_.c={}]),_.c.nested=_.b`);
+      assertStringify(set, `_.b=new Set(_.a=[1,_.c={}]),_.c.nested=_.b`);
     });
     it("dedupe values across flushes", () => {
       const serializer = assertSerializer();
@@ -271,11 +275,11 @@ describe("serializer", () => {
       const objB = { b: 2 };
       const set = new Set<unknown>([objA, objB]);
       serializer.assertStringify(set, `new Set(_.a=[{a:1},{b:2}])`);
-      serializer.assertStringify({ c: objA }, `{c:_.c=_.a[0]}`);
-      serializer.assertStringify({ d: objB }, `{d:_.e=_.a[1]}`);
+      serializer.assertStringify({ c: objA }, `{c:_.b=_.a[0]}`);
+      serializer.assertStringify({ d: objB }, `{d:_.c=_.a[1]}`);
       serializer.assertStringify(
         { e: set, f: objA, g: objB },
-        `{e:_.b,f:_.c,g:_.e}`,
+        `{e:_.d=_(1).value,f:_.b,g:_.c}`,
       );
     });
   });
@@ -289,12 +293,12 @@ describe("serializer", () => {
     it("circular", () => {
       const obj: any = { a: 1 };
       obj.obj = obj;
-      assertStringify(obj, `{a:1},_.a.obj=_.a`);
+      assertStringify(obj, `_.a={a:1},_.a.obj=_.a`);
     });
     it("circular nested", () => {
       const obj: any = { a: 1 };
       obj.b = { nested: obj };
-      assertStringify(obj, `{a:1,b:_.b={}},_.b.nested=_.a`);
+      assertStringify(obj, `_.a={a:1,b:_.b={}},_.b.nested=_.a`);
     });
     it("circular object", () => {
       const parent = {
@@ -367,12 +371,12 @@ describe("serializer", () => {
     it("circular", () => {
       const arr: any = [1];
       arr.push(arr);
-      assertStringify(arr, `[1,],_.a[1]=_.a`);
+      assertStringify(arr, `_.a=[1,],_.a[1]=_.a`);
     });
     it("circular nested", () => {
       const arr: any = [1];
       arr.push({ nested: arr });
-      assertStringify(arr, `[1,_.b={}],_.b.nested=_.a`);
+      assertStringify(arr, `_.a=[1,_.b={}],_.b.nested=_.a`);
     });
     it("circular combined assignments", () => {
       const a: any = [];
@@ -381,7 +385,7 @@ describe("serializer", () => {
       a.push(2);
       a.push(b);
 
-      assertStringify(a, `[_.b=[,1,],2,_.b],_.b[0]=_.b[2]=_.a`);
+      assertStringify(a, `_.a=[_.b=[,1,],2,_.b],_.b[0]=_.b[2]=_.a`);
     });
 
     it("circular with empty", () => {
@@ -391,7 +395,7 @@ describe("serializer", () => {
       a.push(2);
       a.push(undefined);
 
-      assertStringify(a, `[_.b=[,1,],2,$],_.b[0]=_.b[2]=_.a`);
+      assertStringify(a, `_.a=[_.b=[,1,],2,$],_.b[0]=_.b[2]=_.a`);
     });
   });
 
@@ -500,7 +504,7 @@ describe("serializer", () => {
 
       assertStringify(
         obj,
-        `{x:1,*[(_.a=[1,2,],Symbol.iterator)](){yield*_.a}},_.a[2]=_.b`,
+        `_.b={x:1,*[(_.a=[1,2,],Symbol.iterator)](){yield*_.a}},_.a[2]=_.b`,
       );
     });
 
@@ -900,94 +904,90 @@ describe("serializer", () => {
     });
 
     it("scoped reference", () => {
+      // Registered values invoke their factory through the serialize
+      // context (`_(1,"fn")`), which resolves the scope by id. The factory
+      // receives the scope before its fill applies, so it must not read
+      // from it eagerly.
+      const scope = { [K_SCOPE_ID]: 1, value: 1 };
       const builder = (s: typeof scope) => () => s.value;
-      const scope = { value: 1 };
-      const obj = { fn: builder(scope) };
-      register("fn", obj.fn, scope);
-      assertStringify(obj, `{fn:_._.fn(_.a={value:1})}`, {
-        _: { fn: builder },
-      });
-    });
-
-    it("circular scoped reference", () => {
-      const scope = { value: 1 } as any;
-      const builder =
-        ({ value }: typeof scope) =>
-        () =>
-          value;
-      scope.fn = builder(scope);
-      register("fn", scope.fn, scope);
-      assertStringify(scope, `{value:1},_.a.fn=_._.fn(_.a)`, {
-        _: { fn: builder },
-      });
-    });
-
-    it("read after circular scoped reference", () => {
-      const scope = { value: 1 } as any;
-      const builder =
-        ({ value }: typeof scope) =>
-        () =>
-          value;
-      scope.fn = builder(scope);
-      register("fn", scope.fn, scope);
-      assertStringify(
-        {
-          scope,
-          fn: scope.fn,
-        },
-        `{scope:_.a={value:1}},_.a.fn=_.b.fn=_._.fn(_.a)`,
-        {
-          _: { fn: builder },
-        },
+      const fn = builder(scope);
+      register("fn", fn, scope);
+      const scopes = assertStringifyScopes(
+        [
+          [1, scope, { value: 1 }],
+          [2, {}, { fn }],
+        ],
+        `_=>[1,{value:1},{fn:_(1,"fn")}]`,
+        { _: { fn: builder } },
       );
+      assert.equal((scopes.get(2)!.fn as () => number)(), 1);
     });
 
-    it("inline scoped reference where scope has fn back-reference", () => {
-      // obj.fn and scope.fn are the same closure; scope is not yet in refs when fn is
-      // encountered, so the inline path is taken. Inside the scope write, scope.fn
-      // triggers the deferred path (scope is now in refs), producing a second builder call.
-      const scope = { value: 1 } as any;
-      const builder =
-        ({ value }: typeof scope) =>
-        () =>
-          value;
+    it("scoped reference referenced from own scope", () => {
+      // scope.fn and the serialized fn are the same closure; the first use
+      // claims a binding so the repeat shares one factory call (and one
+      // identity).
+      const scope = { [K_SCOPE_ID]: 1, value: 1 } as any;
+      const builder = (s: typeof scope) => () => s.value;
       scope.fn = builder(scope);
       register("fn", scope.fn, scope);
-      assertStringify(
-        { fn: scope.fn },
-        `{fn:_._.fn(_.a={value:1})},_.a.fn=_._.fn(_.a)`,
-        {
-          _: { fn: builder },
-        },
+      const scopes = assertStringifyScopes(
+        [
+          [1, scope, { value: 1, fn: scope.fn }],
+          [2, {}, { fn: scope.fn }],
+        ],
+        `_=>[1,{value:1,fn:_.a=_(1,"fn")},{fn:_.a}]`,
+        { _: { fn: builder } },
       );
+      assert.equal(scopes.get(1)!.fn, scopes.get(2)!.fn);
+      assert.equal((scopes.get(2)!.fn as () => number)(), 1);
     });
 
     it("scoped reference repeated", () => {
-      // Same registered fn appears twice. First hit: inline path (scope not in refs).
-      // Second hit: deferred path (scope now in refs). Produces two builder calls.
-      const scope = { value: 1 };
+      const scope = { [K_SCOPE_ID]: 1, value: 1 };
       const builder = (s: typeof scope) => () => s.value;
       const fn = builder(scope);
       register("fn", fn, scope);
-      assertStringify(
-        { fn1: fn, fn2: fn },
-        `{fn1:_._.fn(_.a={value:1})},_.b.fn2=_._.fn(_.a)`,
-        {
-          _: { fn: builder },
-        },
+      const scopes = assertStringifyScopes(
+        [
+          [1, scope, { value: 1 }],
+          [2, {}, { fn1: fn, fn2: fn }],
+        ],
+        `_=>[1,{value:1},{fn1:_.a=_(1,"fn"),fn2:_.a}]`,
+        { _: { fn: builder } },
       );
+      assert.equal(scopes.get(2)!.fn1, scopes.get(2)!.fn2);
+      assert.equal((scopes.get(2)!.fn1 as () => number)(), 1);
     });
 
     it("scoped reference scope reused across flushes", () => {
-      // fn is written inline in flush 1 (scope gets an id via ensureId).
-      // flush 2 references scope directly — must find the id without crashing.
-      const scope = { value: 1 };
+      // flush 2 references the scope directly — it must resolve through
+      // the serialize context rather than claiming a binding.
+      const scope = { [K_SCOPE_ID]: 1, value: 1 };
       const builder = (s: typeof scope) => () => s.value;
       const fn = builder(scope);
       register("fn", fn, scope);
-      const serializer = assertSerializer({ _: { fn: builder } });
-      serializer.assertStringify({ fn }, `{fn:_._.fn(_.a={value:1})}`);
-      serializer.assertStringify({ scope }, `{scope:_.a}`);
+      const { scopes, apply } = createSerializeContext({ _: { fn: builder } });
+      const serializer = new Serializer();
+      const boundary = { signal: { aborted: false } } as any as Boundary;
+      const first = serializer.stringifyScopes(
+        [
+          [1, scope, { value: 1 }],
+          [2, {}, { fn }],
+        ],
+        0,
+        boundary,
+      );
+      assert.equal(first, `_=>[1,{value:1},{fn:_(1,"fn")}]`);
+      apply(first);
+      const second = serializer.stringifyScopes(
+        [[3, {}, { scope }]],
+        0,
+        boundary,
+      );
+      assert.equal(second, `_=>[3,{scope:_(1)}]`);
+      apply(second);
+      assert.equal(scopes.get(3)!.scope, scopes.get(1));
     });
   });
 
@@ -1002,7 +1002,7 @@ describe("serializer", () => {
       const serializer = assertSerializer();
       const obj = { a: 1 };
       serializer.assertStringify(obj, `{a:1}`);
-      serializer.assertStringify(obj, `_.a`);
+      serializer.assertStringify(obj, `_.a=_(1).value`);
     });
 
     it("multiple flushes with shared references and nested", () => {
@@ -1010,8 +1010,8 @@ describe("serializer", () => {
       const nested = { b: 1 };
       const obj = { a: nested };
       serializer.assertStringify(obj, `{a:{b:1}}`);
-      serializer.assertStringify({ c: nested }, `{c:_.b=_.a.a}`);
-      serializer.assertStringify({ d: nested }, `{d:_.b}`);
+      serializer.assertStringify({ c: nested }, `{c:_.a=_(1).value.a}`);
+      serializer.assertStringify({ d: nested }, `{d:_.a}`);
     });
   });
 
@@ -1054,9 +1054,9 @@ describe("serializer", () => {
           return returned;
         })(),
         `(async function*(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()])){for(i of a)v=await i,i!=l&&(yield v);return v})(_.a={})`,
-        `_.a.f(_.c={x:1})`,
-        `_.a.f(_.d={y:2})`,
-        `_.a.r(_.e={z:3})`,
+        `_.a.f(_.b={x:1})`,
+        `_.a.f(_.c={y:2})`,
+        `_.a.r(_.d={z:3})`,
       );
 
       assert.deepEqual(await consumeIterator(result), {
@@ -1076,9 +1076,9 @@ describe("serializer", () => {
           throw errored;
         })(),
         `(async function*(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()])){for(i of a)v=await i,i!=l&&(yield v);return v})(_.a={})`,
-        `_.a.f(_.c={x:1})`,
-        `_.a.f(_.d={y:2})`,
-        `_.a.j(_.e=new Error("boom"))`,
+        `_.a.f(_.b={x:1})`,
+        `_.a.f(_.c={y:2})`,
+        `_.a.j(_.d=new Error("boom"))`,
       );
 
       assert.deepEqual(await consumeIterator(result), {
@@ -1104,7 +1104,7 @@ describe("serializer", () => {
       const [result] = await serializer.assertStringify(
         stream,
         `new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}})`,
-        `_.a.f(_.c={x:1}),_.a.f(_.d={y:2})`,
+        `_.a.f(_.b={x:1}),_.a.f(_.c={y:2})`,
         `_.a.r()`,
       );
 
@@ -1130,8 +1130,8 @@ describe("serializer", () => {
       const [result] = await serializer.assertStringify(
         stream,
         `new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}})`,
-        `_.a.f(_.c={x:1})`,
-        `_.a.f(_.d={y:2})`,
+        `_.a.f(_.b={x:1})`,
+        `_.a.f(_.c={y:2})`,
         `_.a.r()`,
       );
 
@@ -1157,7 +1157,7 @@ describe("serializer", () => {
       const [result] = await serializer.assertStringify(
         stream,
         `new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}})`,
-        `_.a.j(_.c=new Error("boom"))`,
+        `_.a.j(_.b=new Error("boom"))`,
       );
 
       assert.deepEqual(await consumeReader(result.getReader()), {
@@ -1183,8 +1183,8 @@ describe("serializer", () => {
       const [result] = await serializer.assertStringify(
         stream,
         `new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}})`,
-        `_.a.f(_.c={x:1})`,
-        `_.a.j(_.d=new Error("boom"))`,
+        `_.a.f(_.b={x:1})`,
+        `_.a.j(_.c=new Error("boom"))`,
       );
 
       assert.deepEqual(await consumeReader(result.getReader()), {
@@ -1283,7 +1283,7 @@ describe("serializer", () => {
         const [result] = await serializer.assertStringify(
           request,
           `new Request("https://ebay.com/",{body:new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}}),duplex:"half",headers:{"content-type":"text/plain;charset=UTF-8"},method:"POST"})`,
-          `_.a.f(_.c=new Uint8Array([123,34,97,34,58,49,125])),_.a.r()`,
+          `_.a.f(_.b=new Uint8Array([123,34,97,34,58,49,125])),_.a.r()`,
         );
 
         assert.deepEqual(await result.json(), obj);
@@ -1319,7 +1319,7 @@ describe("serializer", () => {
         const [result] = await serializer.assertStringify(
           response,
           `new Response(new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}}))`,
-          `_.a.f(_.c=new Uint8Array([116,101,115,116])),_.a.r()`,
+          `_.a.f(_.b=new Uint8Array([116,101,115,116])),_.a.r()`,
         );
 
         assert.deepEqual(await consumeReader(result.body!.getReader()), {
@@ -1348,9 +1348,9 @@ describe("serializer", () => {
       const [result] = await serializer.assertStringify(
         response,
         `new Response(new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}}))`,
-        `_.a.f(_.c=new Uint8Array([102,105,114,115,116,32]))`,
-        `_.a.f(_.d=new Uint8Array([115,101,99,111,110,100,32]))`,
-        `_.a.f(_.e=new Uint8Array([116,104,105,114,100])),_.a.r()`,
+        `_.a.f(_.b=new Uint8Array([102,105,114,115,116,32]))`,
+        `_.a.f(_.c=new Uint8Array([115,101,99,111,110,100,32]))`,
+        `_.a.f(_.d=new Uint8Array([116,104,105,114,100])),_.a.r()`,
       );
 
       assert.equal(await result.text(), "first second third");
@@ -1365,19 +1365,119 @@ describe("serializer", () => {
         const [result] = await serializer.assertStringify(
           response,
           `new Response(new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(_.a={}).catch(e=>c.error(e))}}),{headers:{"content-type":"application/json"}})`,
-          `_.a.f(_.c=new Uint8Array([123,34,97,34,58,49,125])),_.a.r()`,
+          `_.a.f(_.b=new Uint8Array([123,34,97,34,58,49,125])),_.a.r()`,
         );
 
         assert.deepEqual(await result.json(), { a: 1 });
       });
   });
+
+  it("elides scopes that serialize no props", () => {
+    // Empty slots fold into the next slot's skip count; the browser
+    // creates (and initializes) scopes on demand.
+    const scopes = assertStringifyScopes(
+      [
+        [1, {}, {}],
+        [2, {}, { a: 1 }],
+        [3, {}, { b: undefined }],
+        [4, {}, { c: 3 }],
+      ],
+      `_=>[2,{a:1},1,{c:3}]`,
+    );
+    assert.equal(scopes.get(2)!.a, 1);
+    assert.equal(scopes.get(4)!.c, 3);
+    assert.equal(scopes.get(1), undefined);
+    assert.equal(scopes.get(3), undefined);
+  });
+
+  it("skips the payload entirely when every scope is empty", () => {
+    const serializer = new Serializer();
+    const boundary = { signal: { aborted: false } } as any as Boundary;
+    assert.equal(serializer.stringifyScopes([[1, {}, {}]], 0, boundary), "");
+  });
+
+  it("handles very large scope flushes within call argument limits", () => {
+    const serializer = new Serializer();
+    const boundary = { signal: { aborted: false } } as any as Boundary;
+    const flushes: [number, object, object][] = [];
+    for (let i = 1; i <= 25000; i++) {
+      flushes.push([i, {}, { i }]);
+    }
+
+    // A data-only payload returns its fill as an array literal (no call
+    // arguments involved), so even huge flushes stay within engine
+    // argument limits.
+    const partials = (0, eval)(
+      serializer.stringifyScopes(flushes, 0, boundary),
+    )(() => {});
+    assert.ok(Array.isArray(partials));
+    assert.equal(partials[0], 1);
+    assert.equal(partials.length, 25001);
+  });
 });
+
+// Minimal stand-in for the browser's per render serialize context: a
+// callable that resolves scopes by id (optionally invoking a registered
+// factory), applies fill arrays with adopt-or-merge semantics, and carries
+// reference bindings/registry as properties.
+function createSerializeContext(ctx: Record<PropertyKey, unknown> = {}) {
+  const scopes = new Map<number, Record<PropertyKey, unknown>>();
+  const context = Object.assign(
+    (data: number | unknown[], registryId?: string) => {
+      if (typeof data === "number") {
+        let scope = scopes.get(data);
+        if (!scope) scopes.set(data, (scope = {}));
+        return registryId
+          ? (
+              (context as Record<string, any>)._[registryId] as (
+                scope: unknown,
+              ) => unknown
+            )(scope)
+          : scope;
+      }
+
+      let id = data[0] as number;
+      for (let i = 1; i < data.length; i++) {
+        const item = data[i];
+        if (typeof item === "number") {
+          id += item;
+        } else {
+          const scope = scopes.get(id);
+          if (scope) {
+            Object.assign(scope, item);
+          } else {
+            scopes.set(id, item as Record<PropertyKey, unknown>);
+          }
+          id++;
+        }
+      }
+    },
+    ctx,
+  );
+
+  return {
+    context,
+    scopes,
+    apply(payload: string) {
+      // A payload may be empty when every scope was elided.
+      if (!payload) return;
+      // Call-form payloads end in `,0`, so only return-form payloads can
+      // produce an array here.
+      const result = (0, eval)(payload)(context);
+      if (Array.isArray(result)) context(result);
+      return result;
+    },
+  };
+}
 
 function assertSerializer(ctx: Record<PropertyKey, unknown> = {}) {
   const serializer = new Serializer();
+  const { context, scopes, apply } = createSerializeContext(ctx);
+  let scopeId = 0;
+
   return {
     get<T = any>(key: string) {
-      return ctx[key] as T;
+      return (context as Record<PropertyKey, unknown>)[key] as T;
     },
     assertStringify<T>(
       val: T,
@@ -1407,24 +1507,26 @@ function assertSerializer(ctx: Record<PropertyKey, unknown> = {}) {
           promises[promiseIndex++].resolve();
         },
       } as any as Boundary;
-      const result = assertSerializedIsActual(
-        val,
-        serializer.stringify(val, boundary),
-        first,
-        ctx,
+
+      const id = ++scopeId;
+      const actual = serializer.stringifyScopes(
+        [[id, {}, { value: val }]],
+        0,
+        boundary,
       );
+      assert.equal(normalizePayload(actual), first);
+      apply(actual);
+      const result = scopes.get(id)?.value as T;
+      assertIsDeepSubset(result, val);
 
       if (flushes.length) {
         return (async () => {
           let promiseIndex = 0;
           for (const flush of flushes) {
             await promises[promiseIndex++];
-            const actual = serializer.stringify(undefined, boundary);
-            assert.equal(
-              actual?.replace(/^(?:_|\(_,\$\))=>[({](.*?)[})]$/, "$1"),
-              flush,
-            );
-            (0, eval)(actual)(ctx);
+            const actual = serializer.stringifyScopes([], 0, boundary);
+            assert.equal(normalizePayload(actual), flush);
+            apply(actual);
           }
 
           return [result];
@@ -1441,25 +1543,47 @@ function assertStringify(
   serialized: string,
   ctx?: Record<PropertyKey, unknown>,
 ) {
-  assertSerializedIsActual(val, stringify(val), serialized, ctx);
+  assertSerializer(ctx).assertStringify(val, serialized);
 }
 
-function assertSerializedIsActual(
-  val: unknown,
-  actual: string,
+function assertStringifyScopes(
+  flushes: ScopeFlush[],
   serialized: string,
-  ctx: Record<PropertyKey, unknown> = {},
+  ctx?: Record<PropertyKey, unknown>,
 ) {
-  assert.equal(
-    actual.replace(
-      /^(?:_|\(_,\$\))=>[({](?:(_\.[^=]+)=)?(.*?)(?:,\1)?[})]$/,
-      "$2",
-    ),
-    serialized,
-  );
-  const actualValue = (0, eval)(actual)(ctx);
-  assertIsDeepSubset(actualValue, val);
-  return actualValue;
+  const { scopes, apply } = createSerializeContext(ctx);
+  const serializer = new Serializer();
+  const boundary = { signal: { aborted: false } } as any as Boundary;
+  const actual = serializer.stringifyScopes(flushes, 0, boundary);
+  assert.equal(actual, serialized);
+  apply(actual);
+  return scopes;
+}
+
+// Strips the production payload framing (`_=>[id,{value:X}]`,
+// `_=>(_([id,{value:X}]),EXTRAS,0)` or `_=>(EXTRAS,0)`) so expectations
+// only encode the serialization of the value under test.
+function normalizePayload(actual: string) {
+  if (!actual) return "";
+  let value = "";
+  let extras = "";
+  let m = actual.match(/^(?:_|\(_,\$\))=>\[\d+,\{(?:value:([\s\S]*))?\}\]$/);
+  if (m) {
+    value = m[1] || "";
+  } else if (
+    (m = actual.match(
+      /^(?:_|\(_,\$\))=>\(_\(\[\d+,\{(?:value:([\s\S]*))?\}\]\),([\s\S]*),0\)$/,
+    ))
+  ) {
+    value = m[1] || "";
+    extras = m[2];
+  } else if ((m = actual.match(/^(?:_|\(_,\$\))=>\(([\s\S]*),0\)$/))) {
+    extras = m[1];
+  } else {
+    assert.fail(`unexpected payload form: ${actual}`);
+  }
+
+  return value && extras ? value + "," + extras : value + extras;
 }
 
 function assertIsDeepSubset(

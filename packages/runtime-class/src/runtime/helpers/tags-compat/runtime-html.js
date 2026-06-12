@@ -230,7 +230,7 @@ exports.p = function (htmlCompat) {
     };
   });
 
-  return htmlCompat.registerRenderer;
+  return htmlCompat.register;
 };
 
 function concatScripts(a, b) {

@@ -5,15 +5,17 @@
 </ul>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, _.c = {
+  M._.r = [_ => [1, {
       "#scopeOffset/1": 3,
-      clear: _._[
+      clear: _(2,
         "packages/runtime-tags/src/__tests__/fixtures/destructure-stateful-upstream-alias/tags/store.marko_0/_return2"
-        ](_.a = {}),
-      "#childScope/0": _.a
-    }, _.a], _.a["#TagVariable"] = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/destructure-stateful-upstream-alias/template.marko_0_store/var"
-      ](_.c), _.b),
+        ),
+      "#childScope/0": _(2)
+    }, {
+      "#TagVariable": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/destructure-stateful-upstream-alias/template.marko_0_store/var"
+        )
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/destructure-stateful-upstream-alias/template.marko_0_clear 1"
   ];
   M._.w()

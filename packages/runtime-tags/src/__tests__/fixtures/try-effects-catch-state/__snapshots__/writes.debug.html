@@ -2,15 +2,16 @@
 -- <!><!--M_*2 #text/1--><!--M_]1 #text/1 2-->
   <script>
     WALKER_RUNTIME("M")("_");
-    M._.r = [_ => (_.c = [0, _.a = {
+    M._.r = [_ => [1, {
         clickCount: 0,
-        "ClosureScopes:clickCount": _.d = new Set
-      }, _.b = {
-        _: _.a,
-        "#BranchAccessor": "#text/1"
-      }], _.b["#CatchContent"] = _._[
-        "packages/runtime-tags/src/__tests__/fixtures/try-effects-catch-state/template.marko_2_content"
-        ](_.a), (_.d).add(_.b), _.c),
+        "ClosureScopes:clickCount": new Set([_(2)])
+      }, {
+        _: _(1),
+        "#BranchAccessor": "#text/1",
+        "#CatchContent": _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/try-effects-catch-state/template.marko_2_content"
+          )
+      }],
       "packages/runtime-tags/src/__tests__/fixtures/try-effects-catch-state/template.marko_1_clickCount 2"
     ];
     M._.w()

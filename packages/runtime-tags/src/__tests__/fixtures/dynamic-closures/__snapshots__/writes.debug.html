@@ -3,16 +3,16 @@
 <div>1 2 <!>3<!--M_*5 #text/2--></div>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.c = [0, _.a = {
-      "ClosureScopes:c": _.d = new Set
-    }, 1, _.e = {
-      _: _.a
-    }, _.b = {
-      _: _.a
-    }, _.f = {
-      _: _.b,
+  M._.r = [_ => [1, {
+      "ClosureScopes:c": new Set([_(3), _(5)])
+    }, 1, {
+      _: _(1)
+    }, {
+      _: _(1)
+    }, {
+      _: _(4),
       "ClosureSignalIndex:c": 1
-    }], (_.d).add(_.e), _.d.add(_.f), _.c),
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/dynamic-closures/template.marko_0 1"
   ];
   M._.w()

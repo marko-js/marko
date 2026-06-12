@@ -1,0 +1,20 @@
+<button>inc:<!>1<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<div id=ref>0</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      count: 1,
+      promise: (p => p = new Promise((f, r) => _.a = {
+        f,
+        r(e) {
+          p.catch(_ => 0);
+          r(e)
+        }
+      }))()
+    }], _ => (_.a.f(_.a = _(1,
+      "packages/runtime-tags/src/__tests__/fixtures/serialize-promise-scoped-function/template.marko_0/getCount"
+      )), 0),
+    "packages/runtime-tags/src/__tests__/fixtures/serialize-promise-scoped-function/template.marko_0_count 1 packages/runtime-tags/src/__tests__/fixtures/serialize-promise-scoped-function/template.marko_0_promise 1"
+  ];
+  M._.w()
+</script>

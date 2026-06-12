@@ -7,15 +7,16 @@
 <t M_=2><!--M_#b--></t>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.c = [0, _.a = {
+  M._.r = [_ => [1, {
     value: 0,
     "ClosureScopes:value": new Set
-  }, _.b = {
-    _: _.a,
-    "#BranchAccessor": "#text/0"
-  }], _.b["#PlaceholderContent"] = _._[
-    "packages/runtime-tags/src/__tests__/fixtures/await-closure-function/template.marko_3_content"
-    ](_.a), _.c)];
+  }, {
+    _: _(1),
+    "#BranchAccessor": "#text/0",
+    "#PlaceholderContent": _(1,
+      "packages/runtime-tags/src/__tests__/fixtures/await-closure-function/template.marko_3_content"
+      )
+  }]];
   REORDER_RUNTIME(M._);
   M._.w()
 </script>
@@ -24,9 +25,9 @@
 
 <t M_=b><!--M_[-->0<!--M_*4 #text/0--><!--M_]2 #text/0 4--></t>
 <script>
-  M._.r.push(_ => (_.d = [1, {
-    _: _.b
-  }]));
+  M._.r.push(_ => [4, {
+    _: _(2)
+  }]);
   M._.j.b = _ => {
     _.push(
       "packages/runtime-tags/src/__tests__/fixtures/await-closure-function/template.marko_2_value/pending 4 packages/runtime-tags/src/__tests__/fixtures/await-closure-function/template.marko_2_value 4"

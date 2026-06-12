@@ -2,19 +2,19 @@
   <!>2<!--M_*1 #text/2--></button><!--M_*1 #button/1-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, _.a = {
+  M._.r = [_ => [1, {
       mult: 2,
-      "ClosureScopes:mult": _.c = new Set
-    }, 2, _.d = {
+      "ClosureScopes:mult": new Set([_(4), _(6), _(8)])
+    }, 2, {
       item: 1,
-      _: _.a
-    }, 1, _.e = {
+      _: _(1)
+    }, 1, {
       item: 2,
-      _: _.a
-    }, 1, _.f = {
+      _: _(1)
+    }, 1, {
       item: 3,
-      _: _.a
-    }], (_.c).add(_.d), _.c.add(_.e), _.c.add(_.f), _.b),
+      _: _(1)
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/at-tags-for-loop-param-intersection-closure/template.marko_0_mult 1"
   ];
   M._.w()

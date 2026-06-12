@@ -12,24 +12,26 @@
 </div>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.e = [0, 2, {
+  M._.r = [_ => [3, {
     d: "foo",
     e: {}
   }, 2, {
     d: "foo",
     e: {}
   }, 2, {
-    Aa: _.b = {},
+    Aa: _(10),
     Da: "a0",
     d: "foo",
     e: {
-      content: _._.a0(_.a = {})
+      content: _(1, "a0")
     }
-  }, _.b, 1, {
-    Aa: _.d = {},
+  }, 2, {
+    Aa: _(13),
     Da: "a1",
     d: "bar",
-    e: _.c = {}
-  }, _.d], _.c.content = _._.a1(_.a), _.e), "b0 3 6 9 12"];
+    e: {
+      content: _(1, "a1")
+    }
+  }], "b0 3 6 9 12"];
   M._.w()
 </script>

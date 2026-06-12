@@ -3,16 +3,19 @@
 </div><!--M_*1 #div/0-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.e = [0, _.a = {
-      "BranchScopes:#div/0": [_.b = {
-        "#LoopKey": 0
-      }, _.c = {
-        "#LoopKey": 1
-      }, _.d = {
-        "#LoopKey": 2
-      }],
+  M._.r = [_ => [1, {
+      "BranchScopes:#div/0": [_(2), _(3), _(4)],
       selected: 0
-    }, _.b, _.c, _.d], _.b._ = _.c._ = _.d._ = _.a, _.e),
+    }, {
+      "#LoopKey": 0,
+      _: _(1)
+    }, {
+      "#LoopKey": 1,
+      _: _(1)
+    }, {
+      "#LoopKey": 2,
+      _: _(1)
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/inert-control-flow-only-child-event/template.marko_0_selected 1"
   ];
   M._.w()

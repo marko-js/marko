@@ -4,22 +4,24 @@
   data-internal=0>0<!--M_*5 #text/0--></button><!--M_*4 #button/0-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.d = [0, _.b = {
-      "ClosureScopes:x": _.e = new Set,
-      "#childScope/0": _.a = {
-        x: 0
-      },
-      "#childScope/1": _.c = {
-        x: 0
-      }
-    }, _.a, _.f = {
-      _: _.b
-    }, _.c, _.g = {
-      _: _.b,
+  M._.r = [_ => [1, {
+      "ClosureScopes:x": new Set([_(3), _(5)]),
+      "#childScope/0": _(2),
+      "#childScope/1": _(4)
+    }, {
+      $countChange: _.a = _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/bind-to-input/template.marko_0/countChange"
+        ),
+      x: 0,
+      "TagVariableChange:x": _.a
+    }, {
+      _: _(1)
+    }, {
+      x: 0
+    }, {
+      _: _(1),
       "ClosureSignalIndex:x": 1
-    }], _.a.$countChange = _.a["TagVariableChange:x"] = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/bind-to-input/template.marko_0/countChange"
-      ](_.b), (_.e).add(_.f), _.e.add(_.g), _.d),
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/bind-to-input/tags/counter.marko_0_x 2 4"
   ];
   M._.w()

@@ -1,18 +1,23 @@
 <button>Click</button><!--M_*2 #button/0-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.d = [0, _.e = {
+  M._.r = [_ => [1, {
       test: "foo"
     }, {
-      "EventAttributes:#button/0": _.a = {},
-      "BranchScopes:#button/0": _.c = {},
+      "EventAttributes:#button/0": {
+        click: _.a = _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/pure-signal-resume-function/template.marko_0/onClick"
+          )
+      },
+      "BranchScopes:#button/0": _(3),
       "ConditionalRenderer:#button/0": "packages/runtime-tags/src/__tests__/fixtures/pure-signal-resume-function/template.marko_1_content",
-      input: _.b = {}
-    }, _.c], _.a.click = _.b.onClick = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/pure-signal-resume-function/template.marko_0/onClick"
-      ](_.e), _.b.content = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/pure-signal-resume-function/template.marko_1_content"
-      ](_.e), _.d),
+      input: {
+        onClick: _.a,
+        content: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/pure-signal-resume-function/template.marko_1_content"
+          )
+      }
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/pure-signal-resume-function/tags/my-button.marko_0_input 2"
   ];
   M._.w()

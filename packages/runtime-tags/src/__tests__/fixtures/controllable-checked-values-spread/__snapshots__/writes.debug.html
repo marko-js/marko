@@ -3,37 +3,41 @@
   type=checkbox><!--M_*4 #input/0--><span>a,b<!--M_*1 #text/3--></span>
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.j = [0, _.a = {
-      "#childScope/0": _.b = {
-        "ControlledType:#input/0": 1,
-        "ControlledValue:#input/0": _.d = [],
-        input: _.c = {
-          checkedValue: _.f = ["a", "b"],
-          value: "a"
-        }
-      },
-      "#childScope/1": _.e = {
-        "ControlledType:#input/0": 1,
-        "ControlledValue:#input/0": _.d,
-        input: _.g = {
-          checkedValue: _.f,
-          value: "b"
-        }
-      },
-      "#childScope/2": _.h = {
-        "ControlledType:#input/0": 1,
-        "ControlledValue:#input/0": _.d,
-        input: _.i = {
-          checkedValue: _.f,
-          value: "c"
-        }
+  M._.r = [_ => [1, {
+      $checkedValueChange: _.a = _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange2"
+        ),
+      "#childScope/0": _(2),
+      "#childScope/1": _(3),
+      "#childScope/2": _(4)
+    }, {
+      "ControlledType:#input/0": 1,
+      "ControlledValue:#input/0": _.b = [],
+      "ControlledHandler:#input/0": _.a,
+      input: {
+        checkedValue: _.c = ["a", "b"],
+        checkedValueChange: _.a,
+        value: "a"
       }
-    }, _.b, _.e, _.h], _.a.$checkedValueChange = _.b[
-      "ControlledHandler:#input/0"] = _.c.checkedValueChange = _.e[
-      "ControlledHandler:#input/0"] = _.g.checkedValueChange = _.h[
-      "ControlledHandler:#input/0"] = _.i.checkedValueChange = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange2"
-      ](_.a), _.j),
+    }, {
+      "ControlledType:#input/0": 1,
+      "ControlledValue:#input/0": _.b,
+      "ControlledHandler:#input/0": _.a,
+      input: {
+        checkedValue: _.c,
+        checkedValueChange: _.a,
+        value: "b"
+      }
+    }, {
+      "ControlledType:#input/0": 1,
+      "ControlledValue:#input/0": _.b,
+      "ControlledHandler:#input/0": _.a,
+      input: {
+        checkedValue: _.c,
+        checkedValueChange: _.a,
+        value: "c"
+      }
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/controllable-checked-values-spread/tags/checkbox.marko_0_input 2 3 4"
   ];
   M._.w()

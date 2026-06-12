@@ -1,8 +1,4 @@
-import {
-  RENDER_BODY_ID,
-  RENDERER_REGISTER_ID,
-  SET_SCOPE_REGISTER_ID,
-} from "../common/compat-meta";
+import { RENDER_BODY_ID, SET_SCOPE_REGISTER_ID } from "../common/compat-meta";
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import { RendererProp, type Scope } from "../common/types";
 import { patchDynamicTag } from "./dynamic-tag";
@@ -24,7 +20,6 @@ import {
   getScopeId,
   isInResumedBranch,
   State,
-  writeScopeToState,
   writeScript,
 } from "./writer";
 
@@ -71,7 +66,7 @@ export const compat = {
     _scope(branchId, { m5c, m5i });
     _script(branchId, SET_SCOPE_REGISTER_ID);
   },
-  toJSON(state: State) {
+  toJSON() {
     return function toJSON(this: WeakKey) {
       let compatRegistered = COMPAT_REGISTRY.get(this);
       if (!compatRegistered) {
@@ -81,7 +76,7 @@ export const compat = {
             ? getScopeId(registered.scope as Scope)
             : undefined;
           if (scopeId !== undefined) {
-            writeScopeToState(state, scopeId, {});
+            _script(scopeId, SET_SCOPE_REGISTER_ID);
           }
           COMPAT_REGISTRY.set(
             this,
@@ -94,14 +89,15 @@ export const compat = {
     };
   },
   flushScript($global: any) {
-    const boundary = new Boundary(this.ensureState($global));
+    const state = this.ensureState($global);
+    const boundary = new Boundary(state);
     if (boundary.flush() === FlushStatus.continue) {
       throw new Error(
         "Cannot serialize promise across tags/class compat layer.",
       );
     }
 
-    return new Chunk(boundary, null, null).flushScript().scripts;
+    return new Chunk(boundary, null, null, state).flushScript().scripts;
   },
   render(
     renderer: ServerRenderer,
@@ -111,11 +107,13 @@ export const compat = {
     input: any,
     completeChunks: Chunk[],
   ) {
-    const boundary = new Boundary(this.ensureState(classAPIOut.global));
+    const state = this.ensureState(classAPIOut.global);
+    const boundary = new Boundary(state);
     let head = new Chunk(
       boundary,
       null,
       null /* TODO: this should grab the context from the previous chunk */,
+      state,
     );
     let normalizedInput = input;
     if ("renderBody" in input) {
@@ -159,13 +157,7 @@ export const compat = {
       });
     });
   },
-  registerRenderer(renderer: any, id: string) {
-    return register(
-      RENDERER_REGISTER_ID,
-      renderer,
-      register(id, () => {}),
-    );
-  },
+  register,
   registerRenderBody(fn: any) {
     register(RENDER_BODY_ID, fn);
   },

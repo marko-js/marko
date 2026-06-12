@@ -3,17 +3,17 @@
 <div>0<!--M_*3 #text/1--></div><!--M_]1 #text/1 2-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.c = [0, _.a = {
+  M._.r = [_ => [1, {
       a: 0,
       b: 0,
-      "ClosureScopes:a": _.d = new Set,
-      "ClosureScopes:b": _.f = new Set
-    }, _.b = {
-      _: _.a,
+      "ClosureScopes:a": new Set([_(3)]),
+      "ClosureScopes:b": new Set([_(3)])
+    }, {
+      _: _(1),
       "#BranchAccessor": "#text/1"
-    }, _.e = {
-      _: _.b
-    }], (_.d).add(_.e), (_.f).add(_.e), _.c),
+    }, {
+      _: _(2)
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/dynamic-closure-multiple/template.marko_0_a_b 1"
   ];
   M._.w()

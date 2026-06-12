@@ -1,16 +1,17 @@
 <div></div><!--M_*1 #div/0-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.c = [0, _.d = {
+  M._.r = [_ => [1, {
       foo: _.a = {
         bar: "bar"
       },
-      baz: _.b = {
-        foo: _.a
+      baz: {
+        foo: _.a,
+        bar: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/function-references-normalize/template.marko_0/baz"
+          )
       }
-    }], _.b.bar = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/function-references-normalize/template.marko_0/baz"
-      ](_.d), _.c),
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/function-references-normalize/template.marko_0_baz 1"
   ];
   M._.w()

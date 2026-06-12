@@ -1,9 +1,11 @@
 <button>Before</button><!--M_*1 #button/0-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, _.a = {}], _.a.$fooChange = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/change-handler-alias-assignment/template.marko_0/fooBar"
-      ](_.a), _.b),
+  M._.r = [_ => [1, {
+      $fooChange: _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/change-handler-alias-assignment/template.marko_0/fooBar"
+        )
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/change-handler-alias-assignment/template.marko_0_$fooChange 1"
   ];
   M._.w()

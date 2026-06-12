@@ -2,14 +2,16 @@
     value=0><!--M_*1 #input/2--></button><!--M_*1 #button/0-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => (_.b = [0, _.a = {
+  M._.r = [_ => [1, {
       "ControlledType:#input/1": 2,
+      "ControlledHandler:#input/1": _.a = _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/multiple-binds/template.marko_0/valueChange2"
+        ),
       "ControlledType:#input/2": 2,
-      count: 0
-    }], _.a["ControlledHandler:#input/1"] = _.a[
-      "ControlledHandler:#input/2"] = _.a.$valueChange = _._[
-      "packages/runtime-tags/src/__tests__/fixtures/multiple-binds/template.marko_0/valueChange2"
-      ](_.a), _.b),
+      "ControlledHandler:#input/2": _.a,
+      count: 0,
+      $valueChange: _.a
+    }],
     "packages/runtime-tags/src/__tests__/fixtures/multiple-binds/template.marko_0 1 packages/runtime-tags/src/__tests__/fixtures/multiple-binds/template.marko_0_count 1"
   ];
   M._.w()
