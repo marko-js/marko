@@ -19,8 +19,8 @@ var template_default = _template("a", (input) => {
 		e: items,
 		f: min,
 		g: max,
-		h: index,
-		i: filtered
+		i: index,
+		j: filtered
 	});
 	_resume_branch($scope0_id);
 }, 1);

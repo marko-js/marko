@@ -1196,10 +1196,34 @@ export function finalizeReferences() {
   });
 
   forEachSection((section) => {
-    let intersectionIndex = 0;
-    const intersections = intersectionsBySection.get(section) || [];
     const { id, bindings } = section;
     const isOwnedBinding = ({ section }: Binding) => section.id === id;
+    let intersections = intersectionsBySection.get(section) || [];
+    if (intersections.length) {
+      const anchors = new Map<Intersection, Binding | undefined>();
+      for (const intersection of intersections) {
+        for (let i = intersection.length; i--; ) {
+          if (isOwnedBinding(intersection[i])) {
+            anchors.set(intersection, intersection[i]);
+            break;
+          }
+        }
+      }
+
+      intersections = [...intersections].sort((a, b) => {
+        const aAnchor = anchors.get(a);
+        const bAnchor = anchors.get(b);
+        return aAnchor
+          ? bAnchor
+            ? bindingUtil.compare(aAnchor, bAnchor)
+            : -1
+          : bAnchor
+            ? 1
+            : 0;
+      });
+    }
+
+    let intersectionIndex = 0;
     let lastBindingIndex = 0;
     let intersection: Intersection;
     forEach(filter(bindings, isOwnedBinding), (binding, bindingIndex) => {
