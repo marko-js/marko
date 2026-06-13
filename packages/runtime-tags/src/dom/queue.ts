@@ -45,19 +45,11 @@ export function queueRender<T, U extends Scope = Scope>(
   if (render) {
     render[PendingRenderProp.Value] = value;
   } else {
-    if ((render = freeRenders.pop()!)) {
-      render[PendingRenderProp.Key] = key;
-      render[PendingRenderProp.Scope] = scope;
-      render[PendingRenderProp.Signal] = signal;
-      render[PendingRenderProp.Value] = value;
-    } else {
-      render = {
-        [PendingRenderProp.Key]: key,
-        [PendingRenderProp.Scope]: scope,
-        [PendingRenderProp.Signal]: signal,
-        [PendingRenderProp.Value]: value,
-      };
-    }
+    render = freeRenders.pop() || ({} as PendingRender);
+    render[PendingRenderProp.Key] = key;
+    render[PendingRenderProp.Scope] = scope;
+    render[PendingRenderProp.Signal] = signal;
+    render[PendingRenderProp.Value] = value;
     queuePendingRender(render);
     signalKey >= 0 && (pendingRendersLookup[key] = render);
   }
