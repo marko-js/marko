@@ -17,8 +17,8 @@ export type PendingRender = {
 };
 
 let pendingRenders: PendingRender[] = [];
-let pendingRendersLookup: Record<number, PendingRender> = {};
-let asyncRendersLookup: typeof pendingRendersLookup | undefined | 0;
+let pendingRendersLookup = new Map<number, PendingRender>();
+let asyncRendersLookup: Map<number, PendingRender> | undefined;
 export const caughtError = new WeakSet<unknown[]>();
 export const placeholderShown = new WeakSet<unknown[]>();
 export let pendingEffects: unknown[] = [];
@@ -34,7 +34,7 @@ export function queueRender<T, U extends Scope = Scope>(
   scopeKey = scope[AccessorProp.Id],
 ) {
   const key = scopeKey * scopeKeyOffset + signalKey;
-  let render = signalKey >= 0 && pendingRendersLookup[key];
+  let render = signalKey >= 0 ? pendingRendersLookup.get(key) : undefined;
   if (render) {
     render[PendingRenderProp.Value] = value;
   } else {
@@ -46,7 +46,7 @@ export function queueRender<T, U extends Scope = Scope>(
         [PendingRenderProp.Value]: value,
       }),
     );
-    signalKey >= 0 && (pendingRendersLookup[key] = render);
+    if (signalKey >= 0) pendingRendersLookup.set(key, render);
   }
 }
 
@@ -72,14 +72,15 @@ export function queueEffect<S extends Scope, T extends ExecFn<S>>(
 
 export function run() {
   const effects = pendingEffects;
-  asyncRendersLookup = {};
+  asyncRendersLookup = new Map();
   try {
     rendering = 1;
     runRenders();
   } finally {
     pendingRendersLookup = asyncRendersLookup;
-    asyncRendersLookup = rendering = 0;
-    pendingRenders = [];
+    asyncRendersLookup = undefined;
+    rendering = 0;
+    pendingRenders.length = 0;
     pendingEffects = [];
   }
   runEffects(effects);
@@ -101,7 +102,7 @@ export function prepareEffects(fn: () => void): unknown[] {
   const preparedEffects = (pendingEffects = []);
   pendingRenders = [];
   asyncRendersLookup = pendingRendersLookup;
-  pendingRendersLookup = {};
+  pendingRendersLookup = new Map();
 
   try {
     rendering = 1;
@@ -237,9 +238,7 @@ export function _enable_catch() {
           render[PendingRenderProp.Scope][AccessorProp.ClosestBranch];
         while (branch) {
           if (branch[AccessorProp.PendingRenders]) {
-            (asyncRendersLookup as typeof pendingRendersLookup)[
-              render[PendingRenderProp.Key]
-            ] = render;
+            asyncRendersLookup!.set(render[PendingRenderProp.Key], render);
             return branch[AccessorProp.PendingRenders].push(render);
           }
           branch = branch![AccessorProp.ParentBranch];

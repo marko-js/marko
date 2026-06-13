@@ -39,6 +39,7 @@
   "scripts": {
     "benchmark": "cd ../.. && node -r ~ts packages/runtime-tags/benchmark/scripts/serve.ts",
     "benchmark:build": "cd ../.. && node -r ~ts packages/runtime-tags/benchmark/scripts/serve.ts --build",
+    "benchmark:queue": "cd ../.. && node -r ~ts packages/runtime-tags/benchmark/scripts/queue-bench.ts",
     "build": "node -r ~ts ./scripts/bundle.mts"
   },
   "dependencies": {
