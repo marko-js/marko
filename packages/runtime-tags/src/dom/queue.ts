@@ -17,6 +17,13 @@ export type PendingRender = {
 };
 
 let pendingRenders: PendingRender[] = [];
+// Render objects are recycled across flushes so large cross-branch updates
+// (one queued render per branch) don't allocate. A render returns to the pool
+// only after the flush that ran it completes, and only while no `catch`
+// boundary is active (an async try can hold a render across flushes), so it is
+// never reused while still referenced.
+const freeRenders: PendingRender[] = [];
+const processedRenders: PendingRender[] = [];
 let pendingRendersLookup: Record<number, PendingRender> = {};
 let asyncRendersLookup: typeof pendingRendersLookup | undefined | 0;
 export const caughtError = new WeakSet<unknown[]>();
@@ -38,14 +45,20 @@ export function queueRender<T, U extends Scope = Scope>(
   if (render) {
     render[PendingRenderProp.Value] = value;
   } else {
-    queuePendingRender(
-      (render = {
+    if ((render = freeRenders.pop()!)) {
+      render[PendingRenderProp.Key] = key;
+      render[PendingRenderProp.Scope] = scope;
+      render[PendingRenderProp.Signal] = signal;
+      render[PendingRenderProp.Value] = value;
+    } else {
+      render = {
         [PendingRenderProp.Key]: key,
         [PendingRenderProp.Scope]: scope,
         [PendingRenderProp.Signal]: signal,
         [PendingRenderProp.Value]: value,
-      }),
-    );
+      };
+    }
+    queuePendingRender(render);
     signalKey >= 0 && (pendingRendersLookup[key] = render);
   }
 }
@@ -81,6 +94,10 @@ export function run() {
     asyncRendersLookup = rendering = 0;
     pendingRenders = [];
     pendingEffects = [];
+    for (let i = processedRenders.length; i--; ) {
+      freeRenders.push(processedRenders[i]);
+    }
+    processedRenders.length = 0;
   }
   runEffects(effects);
 }
@@ -158,6 +175,9 @@ function runRenders() {
     }
 
     runRender(render);
+    if (!catchEnabled) {
+      processedRenders.push(render);
+    }
   }
 
   for (const scope of pendingScopes) {
