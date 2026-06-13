@@ -3,6 +3,13 @@
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json",
   "words": [
     "marko",
+    "jumbotron",
+    "smallpad",
+    "runlots",
+    "swaprows",
+    "preloadicon",
+    "glyphicon",
+    "colours",
     "markoc",
     "markojs",
     "taglib",

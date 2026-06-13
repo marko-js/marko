@@ -1,5 +1,6 @@
 __snapshots__
 !packages/runtime-class/src/node_modules
+packages/runtime-tags/benchmark/public/css
 .cache
 .nvm
 .sizes

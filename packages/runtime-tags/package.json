@@ -37,6 +37,8 @@
     "!**/*.tsbuildinfo"
   ],
   "scripts": {
+    "benchmark": "cd ../.. && node -r ~ts packages/runtime-tags/benchmark/scripts/serve.ts",
+    "benchmark:build": "cd ../.. && node -r ~ts packages/runtime-tags/benchmark/scripts/serve.ts --build",
     "build": "node -r ~ts ./scripts/bundle.mts"
   },
   "dependencies": {
