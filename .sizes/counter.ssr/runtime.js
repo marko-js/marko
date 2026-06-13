@@ -1,4 +1,4 @@
-// size: 2518 (min) 1266 (brotli)
+// size: 2528 (min) 1270 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -82,9 +82,10 @@ function init(runtimeId = "M") {
             walk = render.w,
             scopeLookup = {},
             getScope = (id) =>
-              scopeLookup[id] || initScope((scopeLookup[id] = { L: +id })),
+              scopeLookup[id] ||
+              (+id ? initScope((scopeLookup[id] = { L: +id })) : initGlobal()),
             initGlobal = () =>
-              ($global ||= {
+              (scopeLookup[0] ||= {
                 runtimeId,
                 renderId,
               }),
@@ -140,7 +141,6 @@ function init(runtimeId = "M") {
               }
               return (resumes.splice(0, i), i);
             },
-            $global,
             lastEffect,
             visits,
             visit,

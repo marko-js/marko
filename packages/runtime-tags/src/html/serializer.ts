@@ -346,14 +346,13 @@ export class Serializer {
   }
   stringifyScopes(
     flushes: ScopeFlush[],
-    globals: object | 0,
     boundary: Boundary,
     channel?: SerializeChannel,
   ) {
     try {
       this.#state.boundary = boundary;
       this.#state.channel = channel;
-      return writeScopesRoot(this.#state, flushes, globals);
+      return writeScopesRoot(this.#state, flushes);
     } finally {
       this.#state.flush++;
       this.#state.buf = [];
@@ -409,20 +408,10 @@ export function getRegistered(val: WeakKey) {
 // context instead and the payload ends in `,0` so an arbitrary value from
 // its last expression can never be misread as a fill — the browser only
 // applies a payload's return value when it is an array.
-function writeScopesRoot(
-  state: State,
-  flushes: ScopeFlush[],
-  globals: object | 0,
-) {
+function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   const { buf } = state;
   let nextSlotId = -1;
   let fillIndex = -1;
-
-  if (globals) {
-    fillIndex = buf.push("[0,") - 1;
-    writeProp(state, globals, null, "");
-    nextSlotId = 1;
-  }
 
   for (const flush of flushes) {
     const scopeId = flush[0];

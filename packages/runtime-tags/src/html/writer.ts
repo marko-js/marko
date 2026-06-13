@@ -1272,12 +1272,7 @@ export class Chunk {
 
     let readyResumeScripts = this.flushReadyScripts();
     for (let channel; (channel = state.serializer.pendingReadyChannel()); ) {
-      const resumes = state.serializer.stringifyScopes(
-        [],
-        0,
-        boundary,
-        channel,
-      );
+      const resumes = state.serializer.stringifyScopes([], boundary, channel);
       const deps = state.serializer.takeChannelDeps();
       state.needsMainRuntime = true;
       readyResumeScripts = concatScripts(
@@ -1484,7 +1479,6 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
     const { writeScopes, passiveScopes } = serializeState;
     const isBlockingState = serializeState !== state;
     const flushes: ScopeFlush[] = [];
-    let globals: ReturnType<typeof getFilteredGlobals> = 0;
 
     if (passiveScopes) {
       // Passive props ride along with scopes this state is flushing anyway.
@@ -1502,7 +1496,9 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
 
     if (!isBlockingState && !state.hasGlobals) {
       state.hasGlobals = true;
-      globals = getFilteredGlobals(state.$global);
+      const globals = getFilteredGlobals(state.$global);
+      // Globals become scope 0 so we can reference them as `_(0)`.
+      if (globals) flushes.push([0, globals, globals]);
     }
 
     for (const key in writeScopes) {
@@ -1515,7 +1511,7 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
       }
     }
 
-    if (flushes.length || globals || pending) {
+    if (flushes.length || pending) {
       if (isBlockingState && !state.hasGlobals) {
         // Globals must be stringified before any ready data so that ready
         // data may reference them, never the reverse — ready data is only
@@ -1524,7 +1520,7 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
       }
       serializeState.resumes = concatSequence(
         serializeState.resumes,
-        serializer.stringifyScopes(flushes, globals, boundary, serializeState),
+        serializer.stringifyScopes(flushes, boundary, serializeState),
       );
     }
     serializeState.writeScopes = {};
@@ -1543,7 +1539,7 @@ function flushSerializerGlobals(boundary: Boundary) {
     state.needsMainRuntime = true;
     state.resumes = concatSequence(
       state.resumes,
-      state.serializer.stringifyScopes([], globals, boundary),
+      state.serializer.stringifyScopes([[0, globals, globals]], boundary),
     );
   }
 }
