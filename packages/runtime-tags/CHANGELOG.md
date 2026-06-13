@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.1.6
+
+### Patch Changes
+
+- [#3215](https://github.com/marko-js/marko/pull/3215) [`2b69f2d`](https://github.com/marko-js/marko/commit/2b69f2d63b2f173e013666d0c54099c708083650) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where a global with deduped or shared references existed across flushed chunks.
+
 ## 6.1.5
 
 ### Patch Changes
