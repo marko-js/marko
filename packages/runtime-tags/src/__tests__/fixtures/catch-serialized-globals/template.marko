@@ -1,0 +1,14 @@
+import { rejectAfter } from "../../utils/resolve"
+
+<try>
+  <await|data|=rejectAfter(new Error("ERROR!"), 1)>
+    ${data}
+  </await>
+  <@catch|error|>
+    <const/message=$global.settings.message/>
+    <let/clicked=false/>
+    <button onClick() { clicked = true }>
+      ${clicked ? message : error.message}
+    </button>
+  </@catch>
+</try>

@@ -975,16 +975,11 @@ describe("serializer", () => {
           [1, scope, { value: 1 }],
           [2, {}, { fn }],
         ],
-        0,
         boundary,
       );
       assert.equal(first, `_=>[1,{value:1},{fn:_(1,"fn")}]`);
       apply(first);
-      const second = serializer.stringifyScopes(
-        [[3, {}, { scope }]],
-        0,
-        boundary,
-      );
+      const second = serializer.stringifyScopes([[3, {}, { scope }]], boundary);
       assert.equal(second, `_=>[3,{scope:_(1)}]`);
       apply(second);
       assert.equal(scopes.get(3)!.scope, scopes.get(1));
@@ -1012,6 +1007,74 @@ describe("serializer", () => {
       serializer.assertStringify(obj, `{a:{b:1}}`);
       serializer.assertStringify({ c: nested }, `{c:_.a=_(1).value.a}`);
       serializer.assertStringify({ d: nested }, `{d:_.a}`);
+    });
+  });
+
+  describe("globals", () => {
+    it("references a string first serialized in globals from a later flush", () => {
+      const { scopes, apply } = createSerializeContext();
+      const serializer = new Serializer();
+      const boundary = { signal: { aborted: false } } as any as Boundary;
+      const msg = "this string is long enough to dedup";
+      const globals = { settings: { msg } };
+      const first = serializer.stringifyScopes(
+        [[0, globals, globals]],
+        boundary,
+      );
+      assert.equal(
+        first,
+        `_=>[0,{settings:{msg:"this string is long enough to dedup"}}]`,
+      );
+      apply(first);
+      const second = serializer.stringifyScopes(
+        [[1, {}, { data: { text: msg } }]],
+        boundary,
+      );
+      assert.equal(second, `_=>[1,{data:{text:_.a=_(0).settings.msg}}]`);
+      apply(second);
+      assert.equal(
+        (scopes.get(1)!.data as { text: string }).text,
+        (scopes.get(0)!.settings as { msg: string }).msg,
+      );
+    });
+
+    it("references an object first serialized in globals from a later flush", () => {
+      const { scopes, apply } = createSerializeContext();
+      const serializer = new Serializer();
+      const boundary = { signal: { aborted: false } } as any as Boundary;
+      const settings = { msg: 1 };
+      const globals = { settings };
+      const first = serializer.stringifyScopes(
+        [[0, globals, globals]],
+        boundary,
+      );
+      assert.equal(first, `_=>[0,{settings:{msg:1}}]`);
+      apply(first);
+      const second = serializer.stringifyScopes(
+        [[1, {}, { settings }]],
+        boundary,
+      );
+      assert.equal(second, `_=>[1,{settings:_.a=_(0).settings}]`);
+      apply(second);
+      assert.equal(scopes.get(1)!.settings, scopes.get(0)!.settings);
+    });
+
+    it("references a value shared with globals within the same flush", () => {
+      const { scopes, apply } = createSerializeContext();
+      const serializer = new Serializer();
+      const boundary = { signal: { aborted: false } } as any as Boundary;
+      const settings = { msg: 1 };
+      const globals = { settings };
+      const payload = serializer.stringifyScopes(
+        [
+          [0, globals, globals],
+          [1, {}, { settings }],
+        ],
+        boundary,
+      );
+      assert.equal(payload, `_=>[0,{settings:_.a={msg:1}},{settings:_.a}]`);
+      apply(payload);
+      assert.equal(scopes.get(1)!.settings, scopes.get(0)!.settings);
     });
   });
 
@@ -1393,7 +1456,7 @@ describe("serializer", () => {
   it("skips the payload entirely when every scope is empty", () => {
     const serializer = new Serializer();
     const boundary = { signal: { aborted: false } } as any as Boundary;
-    assert.equal(serializer.stringifyScopes([[1, {}, {}]], 0, boundary), "");
+    assert.equal(serializer.stringifyScopes([[1, {}, {}]], boundary), "");
   });
 
   it("handles very large scope flushes within call argument limits", () => {
@@ -1407,9 +1470,9 @@ describe("serializer", () => {
     // A data-only payload returns its fill as an array literal (no call
     // arguments involved), so even huge flushes stay within engine
     // argument limits.
-    const partials = (0, eval)(
-      serializer.stringifyScopes(flushes, 0, boundary),
-    )(() => {});
+    const partials = (0, eval)(serializer.stringifyScopes(flushes, boundary))(
+      () => {},
+    );
     assert.ok(Array.isArray(partials));
     assert.equal(partials[0], 1);
     assert.equal(partials.length, 25001);
@@ -1511,7 +1574,6 @@ function assertSerializer(ctx: Record<PropertyKey, unknown> = {}) {
       const id = ++scopeId;
       const actual = serializer.stringifyScopes(
         [[id, {}, { value: val }]],
-        0,
         boundary,
       );
       assert.equal(normalizePayload(actual), first);
@@ -1524,7 +1586,7 @@ function assertSerializer(ctx: Record<PropertyKey, unknown> = {}) {
           let promiseIndex = 0;
           for (const flush of flushes) {
             await promises[promiseIndex++];
-            const actual = serializer.stringifyScopes([], 0, boundary);
+            const actual = serializer.stringifyScopes([], boundary);
             assert.equal(normalizePayload(actual), flush);
             apply(actual);
           }
@@ -1554,7 +1616,7 @@ function assertStringifyScopes(
   const { scopes, apply } = createSerializeContext(ctx);
   const serializer = new Serializer();
   const boundary = { signal: { aborted: false } } as any as Boundary;
-  const actual = serializer.stringifyScopes(flushes, 0, boundary);
+  const actual = serializer.stringifyScopes(flushes, boundary);
   assert.equal(actual, serialized);
   apply(actual);
   return scopes;

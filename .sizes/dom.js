@@ -1,4 +1,4 @@
-// size: 23615 (min) 8740 (brotli)
+// size: 23622 (min) 8721 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -776,9 +776,10 @@ function init(runtimeId = "M") {
             walk = render.w,
             scopeLookup = {},
             getScope = (id) =>
-              scopeLookup[id] || initScope((scopeLookup[id] = { L: +id })),
+              scopeLookup[id] ||
+              (+id ? initScope((scopeLookup[id] = { L: +id })) : initGlobal()),
             initGlobal = () =>
-              ($global ||= {
+              (scopeLookup[0] ||= {
                 runtimeId,
                 renderId,
               }),
@@ -921,7 +922,6 @@ function init(runtimeId = "M") {
               }
               return (resumes.splice(0, i), i);
             },
-            $global,
             lastEffect,
             visits,
             visit,

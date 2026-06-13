@@ -1,0 +1,37 @@
+<!--M_[--><!--M_!^b-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [0, {
+    settings: {
+      message: "a globals message long enough to dedup"
+    }
+  }, 1, {
+    "#BranchAccessor": "#text/0",
+    "#CatchContent": _(1,
+      "packages/runtime-tags/src/__tests__/fixtures/catch-serialized-globals/template.marko_2_content"
+      )
+  }]]
+</script>
+
+<!-- FLUSH -->
+
+<!--M_!b--><!--M_]1 #text/0 2-->
+<style M_>
+  t {
+    display: none
+  }
+</style>
+<t M_=b><button>ERROR!<!--M_*3 #text/1--></button><!--M_*3 #button/0--></t>
+<script>
+  M._.r.push(_ => [3, {
+    error_message: "ERROR!",
+    message: _.a = _(0).settings.message
+  }]);
+  REORDER_RUNTIME(M._);
+  M._.j.b = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/catch-serialized-globals/template.marko_2 3"
+      )
+  };
+  M._.w()
+</script>

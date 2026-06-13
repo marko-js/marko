@@ -122,14 +122,18 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         // Scopes initialize on creation so a scope that serialized no
         // props (elided from the fill entirely) is indistinguishable from
         // an empty one when reached through visits/effects/references.
+        // Globals are scope 0, so `_(0)` lets payloads reference values
+        // first serialized within them.
         const getScope = (id: string | number) =>
           scopeLookup[id] ||
-          initScope((scopeLookup[id] = { [AccessorProp.Id]: +id } as Scope));
+          (+id
+            ? initScope((scopeLookup[id] = { [AccessorProp.Id]: +id } as Scope))
+            : (initGlobal() as unknown as Scope));
         const initGlobal = () =>
-          ($global ||= {
+          (scopeLookup[0] ||= {
             runtimeId,
             renderId,
-          } as Scope[AccessorProp.Global]);
+          } as unknown as Scope) as unknown as Scope[AccessorProp.Global];
         const initScope = (scope: Scope) => {
           scope[AccessorProp.Global] = initGlobal();
           if (branchesEnabled && scope[AccessorProp.ClosestBranchId]) {
@@ -327,7 +331,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           resumes.splice(0, i);
           return i;
         };
-        let $global: Scope[AccessorProp.Global] | undefined;
         let lastEffect: unknown;
         let visits: RenderData["v"];
         let visit: Comment;
