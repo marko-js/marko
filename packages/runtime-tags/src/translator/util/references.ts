@@ -279,7 +279,7 @@ export function trackDomVarReferences(
         ? ref
             .get("var")
             .buildCodeFrameError(
-              `Duplicate declaration ${JSON.stringify(binding.name)}`,
+              `Duplicate declaration ${JSON.stringify(binding.originalName)}`,
             )
         : ref.buildCodeFrameError(
             "Tag variables on native elements cannot be assigned to.",

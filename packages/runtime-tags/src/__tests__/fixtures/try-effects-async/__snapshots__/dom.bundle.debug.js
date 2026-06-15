@@ -33,8 +33,8 @@ const $try = /* @__PURE__ */ _try("#text/2", "<!><!><!>", "b%c", $try_content__s
 function $setup($scope) {
 	$clickCount($scope, 0);
 	$try($scope, {
-		catch: attrTag({ content: $catch_content($scope) }),
-		placeholder: attrTag({ content: $placeholder_content($scope) })
+		placeholder: attrTag({ content: $placeholder_content($scope) }),
+		catch: attrTag({ content: $catch_content($scope) })
 	});
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

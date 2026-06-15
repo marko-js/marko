@@ -20,16 +20,16 @@ var template_default = _template("b", (input) => {
 		_subscribe($show__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), {
+		placeholder: attrTag({ content: _content_resume("b0", () => {
+			_scope_reason();
+			_scope_id();
+			_html("<div id=loading>loading</div>");
+		}, $scope0_id) }),
 		catch: attrTag({ content: _content_resume("b1", (err) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`<div id=error>${_escape(err.message)}${_el_resume($scope3_id, "a", _serialize_guard($scope3_reason, 0))}</div>`);
 			_serialize_if($scope3_reason, 0) && writeScope($scope3_id, {});
-		}, $scope0_id) }),
-		placeholder: attrTag({ content: _content_resume("b0", () => {
-			_scope_reason();
-			_scope_id();
-			_html("<div id=loading>loading</div>");
 		}, $scope0_id) })
 	});
 	_script($scope0_id, "b3");

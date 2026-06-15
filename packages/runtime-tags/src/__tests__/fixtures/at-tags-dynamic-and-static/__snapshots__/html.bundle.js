@@ -28,11 +28,11 @@ var template_default = _template("a", (input) => {
 		}) });
 	});
 	hello_default({
+		item: $item,
 		other: attrTag({ content: _content("a1", () => {
 			_scope_reason();
 			_scope_id();
 			_html("other");
-		}) }),
-		item: $item
+		}) })
 	});
 }, 1);

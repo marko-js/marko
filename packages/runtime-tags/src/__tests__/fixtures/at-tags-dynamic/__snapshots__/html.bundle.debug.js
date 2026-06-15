@@ -90,7 +90,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		})
 	});
 	hello_default({
-		list: attrTag({ item: $item }),
-		col: $col
+		col: $col,
+		list: attrTag({ item: $item })
 	});
 }, 1);

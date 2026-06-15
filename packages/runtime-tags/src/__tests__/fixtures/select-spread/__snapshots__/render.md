@@ -1,0 +1,21 @@
+# Render `{"rest":{"aria-label":"pick"}}`
+```html
+<button>
+  swap
+</button>
+<select
+  aria-label="pick"
+>
+  <option
+    selected=""
+    value="a"
+  >
+    a
+  </option>
+  <option
+    value="b"
+  >
+    dyn
+  </option>
+</select>
+```

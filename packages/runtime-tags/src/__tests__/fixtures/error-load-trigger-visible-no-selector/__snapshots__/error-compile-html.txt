@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-load-trigger-visible-no-selector/template.marko:1:48
+    > 1 | import Child from "./child.marko" with { load: "visible" }
+        |                                                ^^^^^^^^^ A selector is required for the "visible" trigger. (e.g. "visible.my-element")
+      2 |
+      3 | <Child/>
+      4 |

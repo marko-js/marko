@@ -1,0 +1,12 @@
+// `value:=state[key]` binds the change handler to `state[key + "Change"]`
+// (here `state.vChange`), so typing updates `v` (not `wrong`).
+<let/v = "v1"/>
+<let/wrong = ""/>
+<const/key = "v"/>
+<const/state = {
+  v,
+  vChange(x) { v = x },
+  keyChange(x) { wrong = x },
+}/>
+<div>v=${v}|wrong=${wrong}</div>
+<input value:=state[key]/>

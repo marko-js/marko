@@ -233,7 +233,7 @@ function getChangeHandler(
     if (!t.isPrivateName(attr.value.property)) {
       const memberObj = t.cloneNode(attr.value.object);
       const memberProp =
-        prop.type === "Identifier"
+        !attr.value.computed && prop.type === "Identifier"
           ? withPreviousLocation(t.identifier(prop.name + "Change"), prop)
           : t.binaryExpression(
               "+",

@@ -415,10 +415,10 @@ function unionSortedRepeatable<T>(
 ): Many<T> {
   const aLen = a.length;
   const bLen = b.length;
+  const result = [] as unknown as Many<T>;
   let aIndex = 0;
   let bIndex = 0;
-
-  const result = [] as unknown as Many<T>;
+  let same = true;
 
   while (aIndex < aLen && bIndex < bLen) {
     const aValue = a[aIndex];
@@ -429,17 +429,17 @@ function unionSortedRepeatable<T>(
       bIndex++;
       result.push(aValue);
     } else if (delta < 0) {
+      same = false;
       aIndex++;
       result.push(aValue);
     } else {
+      same = false;
       bIndex++;
       result.push(bValue);
     }
   }
 
-  if (aLen === bLen && aIndex === aLen) {
-    // If the arrays are the same length and we consumed all of `a` then the data
-    // is the same and we return `a` the original array.
+  if (same && aLen === bLen) {
     return a;
   }
 

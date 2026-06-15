@@ -1,0 +1,1 @@
+Unable to serialize "obj.go" in packages/runtime-tags/src/__tests__/fixtures/error-serialize-private-method-handler/template.marko:1:8

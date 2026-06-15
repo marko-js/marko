@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-await-multiple-params/template.marko:1:2
+    > 1 | <await|a, b|=Promise.resolve(1)>
+        |  ^^^^^ The [`<await>` tag](https://markojs.com/docs/reference/core-tag#await) only supports a single parameter.
+      2 |   ${a} ${b}
+      3 | </await>
+      4 |

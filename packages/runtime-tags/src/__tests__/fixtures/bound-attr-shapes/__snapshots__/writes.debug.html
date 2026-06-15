@@ -1,0 +1,24 @@
+<div>a1<!--M_*1 #text/0-->|<!>b1<!--M_*1 #text/1--></div><input
+  value=a1><!--M_*1 #input/2--><input value=b1><!--M_*1 #input/3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "ControlledType:#input/2": 2,
+      "ControlledHandler:#input/2": _.a = _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/bound-attr-shapes/template.marko_0/state"
+        ),
+      "ControlledType:#input/3": 2,
+      "ControlledHandler:#input/3": _.b = _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/bound-attr-shapes/template.marko_0/state2"
+        ),
+      a: "a1",
+      b: "b1",
+      state_a: "a1",
+      state_aChange: _.a,
+      state_b: "b1",
+      state_bChange: _.b
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/bound-attr-shapes/template.marko_0 1"
+  ];
+  M._.w()
+</script>

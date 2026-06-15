@@ -1,0 +1,27 @@
+<button>inc <!>2<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
+<div>d<!>2<!--M_*2 #text/0-->
+    <div>d<!>1<!--M_*4 #text/0-->
+        <div>d<!>0<!--M_*6 #text/0--><!--M_|6 #text/1--></div>
+        <!--M_|4 #text/1 5--></div><!--M_|2 #text/1 3--></div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      n: 2,
+      "#childScope/2": _(2)
+    }, {
+      input_depth: 2
+    }, {
+      _: _(2),
+      "#childScope/0": _(4)
+    }, {
+      input_depth: 1
+    }, {
+      _: _(4),
+      "#childScope/0": _(6)
+    }, {
+      input_depth: 0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/tags-dir-recursive/template.marko_0_n 1"
+  ];
+  M._.w()
+</script>

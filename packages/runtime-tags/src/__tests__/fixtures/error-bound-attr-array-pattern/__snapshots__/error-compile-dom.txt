@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-bound-attr-array-pattern/template.marko:2:15
+      1 | <const/[ a ] = [1]/>
+    > 2 | <input value:=a/>
+        |               ^ Unable to bind to value.
+      3 |

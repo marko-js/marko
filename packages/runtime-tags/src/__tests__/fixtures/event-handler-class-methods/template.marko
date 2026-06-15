@@ -1,0 +1,10 @@
+static class Helper {
+  static go() {
+    Helper.count = (Helper.count || 0) + 1;
+  }
+}
+<const/obj = { go() {} }/>
+<let/n = 1/>
+<button#a onClick=Helper.go>a ${n}</button>
+<button#b onClick=obj.go>b</button>
+<button#c onClick() { n++ }>c</button>

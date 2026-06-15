@@ -28,11 +28,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}) });
 	});
 	hello_default({
+		item: $item,
 		other: attrTag({ content: _content("__tests__/template.marko_2_content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html("other");
-		}) }),
-		item: $item
+		}) })
 	});
 }, 1);

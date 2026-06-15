@@ -25,8 +25,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 function $setup($scope) {
 	$show($scope, false);
 	$try($scope, {
-		catch: attrTag({ content: $catch_content($scope) }),
-		placeholder: attrTag({ content: $placeholder_content($scope) })
+		placeholder: attrTag({ content: $placeholder_content($scope) }),
+		catch: attrTag({ content: $catch_content($scope) })
 	});
 	$setup__script($scope);
 }

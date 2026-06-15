@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-for-no-iteration-attr/template.marko:1:1
+    > 1 | <for foo=1>
+        | ^ The [`<for>` tag](https://markojs.com/docs/reference/core-tag#for) requires an `of=`, `in=`, or `to=` attribute.
+      2 |   Hello
+      3 | </for>
+      4 |

@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-await-no-body/template.marko:1:2
+    > 1 | <await|value|=Promise.resolve(1)/>
+        |  ^^^^^ The [`<await>` tag](https://markojs.com/docs/reference/core-tag#await) requires [content](https://markojs.com/docs/reference/language#tag-content).
+      2 |

@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-script-shorthand-and-value-attr/template.marko:1:13
+    > 1 | <script="a" value="b"/>
+        |             ^^^^^^^^^ Invalid duplicate value attribute.
+      2 |

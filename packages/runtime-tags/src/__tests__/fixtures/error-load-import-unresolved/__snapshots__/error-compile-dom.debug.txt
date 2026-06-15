@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-load-import-unresolved/template.marko:1:1
+    > 1 | import helper from "./helper.js" with { load: "render" }
+        | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unable to resolve marko file for load import.
+      2 |
+      3 | <div>${helper}</div>
+      4 |

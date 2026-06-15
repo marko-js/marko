@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-out-member/template.marko:1:8
+    > 1 | <div>${out.stream}</div>
+        |        ^^^ Only `out.global` is supported for compatibility.
+      2 |

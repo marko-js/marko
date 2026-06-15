@@ -1,0 +1,8 @@
+<let/d = "dyn"/>
+<const/more = ["m1"]/>
+<const/moreStyles = ["display:block"]/>
+<const/obj = { o: true }/>
+<const/k = "computed"/>
+<button onClick() { d += "2" }>inc</button>
+<div class=["a", ["b", d], ...more, ...["n1", d], { [k]: d, ...obj, "q": d }]/>
+<div style=["color:red", ["margin:0", d && "padding:0"], ...moreStyles]/>

@@ -1,0 +1,15 @@
+<let/n = 1/>
+<button onClick() { n++ }>inc ${n}</button>
+<child a=n>
+  <@junk foo=2/>
+  <if=true>
+    <@junk2 bar=3/>
+  </if>
+  <else-if=false>
+    <@junk2 bar=4/>
+  </else-if>
+  <else>
+    <@junk2 bar=5/>
+  </else>
+  <@junk3 baz=6/>
+</child>

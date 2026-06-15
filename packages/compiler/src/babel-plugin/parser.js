@@ -629,6 +629,16 @@ export function parseMarko(file) {
         }
 
         if (isControlFlow) {
+          if (!parentTag) {
+            onNext();
+            throw file.buildCodeFrameError(
+              attributeTags.find(
+                (child) => t.isMarkoTag(child) && isAttrTag(child),
+              )?.name || node.name,
+              "@tags must be nested within another element.",
+            );
+          }
+
           currentTag.remove();
           parentTag.pushContainer("attributeTags", node);
         }

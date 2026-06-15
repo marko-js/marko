@@ -28,16 +28,16 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($show__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2"));
 		_resume_branch($scope1_id);
 	}, $scope0_id), {
+		placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2_content", () => {
+			_scope_reason();
+			const $scope2_id = _scope_id();
+			_html("<div id=loading>loading</div>");
+		}, $scope0_id) }),
 		catch: attrTag({ content: _content_resume("__tests__/template.marko_3_content", (err) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`<div id=error>${_escape(err.message)}${_el_resume($scope3_id, "#text/0", _serialize_guard($scope3_reason, 0))}</div>`);
 			_serialize_if($scope3_reason, 0) && writeScope($scope3_id, {}, "__tests__/template.marko", "12:4");
-		}, $scope0_id) }),
-		placeholder: attrTag({ content: _content_resume("__tests__/template.marko_2_content", () => {
-			_scope_reason();
-			const $scope2_id = _scope_id();
-			_html("<div id=loading>loading</div>");
 		}, $scope0_id) })
 	});
 	_script($scope0_id, "__tests__/template.marko_0");
