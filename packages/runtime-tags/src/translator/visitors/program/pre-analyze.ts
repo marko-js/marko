@@ -172,7 +172,7 @@ function getChangeHandler(
         changeAttrExpr = t.logicalExpression(
           "&&",
           changeAttrExpr,
-          buildChangeHandlerFunction(attr.value, modifier),
+          buildModifierForwarder(t.cloneNode(changeAttrExpr), modifier),
         );
       }
 
@@ -246,20 +246,12 @@ function getChangeHandler(
         : t.memberExpression(memberObj, memberProp, computed);
 
       if (modifier) {
-        const newValueId = generateUid("next");
         changeAttrExpr = t.logicalExpression(
           "&&",
           changeAttrExpr,
-          t.arrowFunctionExpression(
-            [t.identifier(newValueId)],
-            t.blockStatement([
-              t.expressionStatement(
-                t.callExpression(
-                  t.memberExpression(memberObj, memberProp, computed),
-                  [t.callExpression(modifier, [t.identifier(newValueId)])],
-                ),
-              ),
-            ]),
+          buildModifierForwarder(
+            t.memberExpression(memberObj, memberProp, computed),
+            modifier,
           ),
         );
       }
@@ -270,6 +262,23 @@ function getChangeHandler(
   throw tag.hub.buildError(
     attr.value,
     "Attributes may only be bound to identifiers or member expressions",
+  );
+}
+
+function buildModifierForwarder(
+  changeHandler: t.Expression,
+  modifier: t.Identifier,
+) {
+  const newValueId = generateUid("next");
+  return t.arrowFunctionExpression(
+    [t.identifier(newValueId)],
+    t.blockStatement([
+      t.expressionStatement(
+        t.callExpression(changeHandler, [
+          t.callExpression(t.cloneNode(modifier), [t.identifier(newValueId)]),
+        ]),
+      ),
+    ]),
   );
 }
 
