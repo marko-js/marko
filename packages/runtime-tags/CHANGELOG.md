@@ -1,5 +1,26 @@
 # @marko/runtime-tags
 
+## 6.1.8
+
+### Patch Changes
+
+- [#3222](https://github.com/marko-js/marko/pull/3222) [`c6166b0`](https://github.com/marko-js/marko/commit/c6166b01111fab993ff00bef922f888c0756d422) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where if a lazy loaded chunk loaded before the entry chunk it could cause a runtime error around missing serializable functions. Defers lazy load chunk initialization until after the main entry chunk.
+
+- [#3219](https://github.com/marko-js/marko/pull/3219) [`ddaf642`](https://github.com/marko-js/marko/commit/ddaf642defeaffc8bdc6d8710cc809737667f914) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with bound dynamic/computed member expression getting incorrect change handler property.
+
+- [#3219](https://github.com/marko-js/marko/pull/3219) [`ddaf642`](https://github.com/marko-js/marko/commit/ddaf642defeaffc8bdc6d8710cc809737667f914) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with spread tag arguments to a known tag in csr.
+
+- [#3221](https://github.com/marko-js/marko/pull/3221) [`9941ac5`](https://github.com/marko-js/marko/commit/9941ac5d16b1647a3ffb951169903f9bd6827b59) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix serialization of a known child's scope when it receives a reactive value through a `...rest` destructure that is forwarded to descendants. The parent now propagates a serialize reason for the rest binding, so the child (and its descendants) resume correctly instead of crashing on the first hydrated update.
+
+- [#3219](https://github.com/marko-js/marko/pull/3219) [`ddaf642`](https://github.com/marko-js/marko/commit/ddaf642defeaffc8bdc6d8710cc809737667f914) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure consistent attribute ordering across server and client renders.
+
+- [#3219](https://github.com/marko-js/marko/pull/3219) [`ddaf642`](https://github.com/marko-js/marko/commit/ddaf642defeaffc8bdc6d8710cc809737667f914) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with native tag change handlers not always causing the server render to output a visit marker.
+
+- [#3221](https://github.com/marko-js/marko/pull/3221) [`91fbe09`](https://github.com/marko-js/marko/commit/91fbe09a9a60e7ec81817a81dd8fc8efc60a3e47) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix bound attribute refinement modifier on a destructured value forwarding the modified value through the change handler instead of reassigning the destructured `const` binding.
+
+- Updated dependencies [[`ddaf642`](https://github.com/marko-js/marko/commit/ddaf642defeaffc8bdc6d8710cc809737667f914)]:
+  - @marko/compiler@5.39.65
+
 ## 6.1.7
 
 ### Patch Changes

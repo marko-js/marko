@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.65
+
+### Patch Changes
+
+- [#3219](https://github.com/marko-js/marko/pull/3219) [`ddaf642`](https://github.com/marko-js/marko/commit/ddaf642defeaffc8bdc6d8710cc809737667f914) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add parse time compile error for attribute tags used in top level control flow.
+
 ## 5.39.64
 
 ### Patch Changes
