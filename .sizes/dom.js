@@ -1,4 +1,4 @@
-// size: 23622 (min) 8721 (brotli)
+// size: 23618 (min) 8718 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -745,8 +745,8 @@ function createCloneableHTML(html, ns) {
 function enableBranches() {
   branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
 }
-function ready(readyId, runtimeId) {
-  ((readyIds ||= /* @__PURE__ */ new Set()).add(readyId), init(runtimeId));
+function ready(readyId) {
+  (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
 }
 function initEmbedded(readyId, runtimeId) {
@@ -762,7 +762,8 @@ function initEmbedded(readyId, runtimeId) {
       childList: !0,
       subtree: !0,
     })),
-    ready(readyId, runtimeId));
+    ready(readyId),
+    init(runtimeId));
 }
 function init(runtimeId = "M") {
   if (curRenders) return;
