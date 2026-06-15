@@ -149,7 +149,7 @@ function triggerScript(html, triggers) {
     }
   });
   return (
-    '((p,h,d,l=$=>d||p.insertAdjacentHTML("afterend",d=h))=>' +
+    "((p,h,d,l=$=>d||p.after(new Range().createContextualFragment(d=h)))=>" +
     (exprs.length > 1 ? "{" + exprs.join(";") + "}" : exprs[0]) +
     ")(document.currentScript," +
     htmlStr +

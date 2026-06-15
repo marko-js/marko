@@ -1,9 +1,9 @@
 <button>Inc</button><!--M_*1 #button/0--><span>0<!--M_*2 #text/0--></span>
 <script>
-  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (self
-    .requestIdleCallback || l)(l, {
-    timeout: 100
-  }))(document.currentScript,
+  ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
+    h))) => (self.requestIdleCallback || l)(l, {
+      timeout: 100
+    }))(document.currentScript,
     "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {

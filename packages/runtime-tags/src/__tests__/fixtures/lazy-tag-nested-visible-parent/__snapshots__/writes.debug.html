@@ -3,10 +3,10 @@
 <script async type=module src="grand-child.marko.load.mjs"></script><button
   class=grand>grand:<!>shared<!--M_*3 #text/1--></button><!--M_*3 #button/0-->
 <script>
-  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (e =>
-    e && new IntersectionObserver((e, i) => e.some(e => e.isIntersecting) && i
-      .disconnect() + l()).observe(e))(document.querySelector("body") || l()))(
-    document.currentScript,
+  ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
+    h))) => (e => e && new IntersectionObserver((e, i) => e.some(e => e
+      .isIntersecting) && i.disconnect() + l()).observe(e))(document
+      .querySelector("body") || l()))(document.currentScript,
     "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.b = {

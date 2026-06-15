@@ -1,7 +1,7 @@
 <span>1</span>
 <script>
-  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (m => m
-    .matches ? l() : m.addEventListener("change", l, {
+  ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
+    h))) => (m => m.matches ? l() : m.addEventListener("change", l, {
       once: 1
     }))(matchMedia("(width <= 600px)")))(document.currentScript,
     "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
