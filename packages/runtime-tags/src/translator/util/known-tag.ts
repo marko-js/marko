@@ -19,7 +19,7 @@ import {
   getAttrTagPaths,
 } from "./nested-attribute-tags";
 import {
-  filterMap,
+  concat,
   forEach,
   fromIter,
   includes,
@@ -1416,35 +1416,53 @@ function mapParamReasonToExpr(
 ) {
   if (reason) {
     if (reason === true) return true;
-    return filterMap(reason, (prop) => {
-      if (exprs) {
-        let curExpr = exprs;
-        let curBinding = prop;
-        if (curBinding.property) {
-          const props: string[] = [];
-          do {
-            props.push(curBinding.property);
-          } while (
-            (curBinding = curBinding.upstreamAlias as
-              | InputBinding
-              | ParamBinding) &&
-            curBinding.property
-          );
-
-          for (let i = props.length; i--; ) {
-            const nestedExpr = curExpr.known?.[props[i]];
-            if (nestedExpr) {
-              curExpr = nestedExpr;
-            } else {
-              break;
-            }
-          }
-        }
-
-        return curExpr.value;
-      }
+    const result = new Set<t.NodeExtra>();
+    forEach(reason, (prop) => {
+      forEach(mapParamBindingToExpr(exprs, prop), (expr) => {
+        result.add(expr);
+      });
     });
+    return fromIter(result);
   }
+}
+
+function mapParamBindingToExpr(
+  exprs: KnownExprs,
+  binding: InputBinding | ParamBinding,
+): Opt<t.NodeExtra> {
+  const isRest =
+    binding.property === undefined && binding.excludeProperties !== undefined;
+  const props: string[] = [];
+  let curBinding: Binding | undefined = isRest
+    ? binding.upstreamAlias
+    : binding;
+  while (curBinding && curBinding.property !== undefined) {
+    props.push(curBinding.property);
+    curBinding = curBinding.upstreamAlias;
+  }
+
+  let curExpr = exprs;
+  for (let i = props.length; i--; ) {
+    const nestedExpr = curExpr.known?.[props[i]];
+    if (!nestedExpr) {
+      return curExpr.value;
+    }
+    curExpr = nestedExpr;
+  }
+
+  if (isRest) {
+    let result: Opt<t.NodeExtra> = curExpr.value;
+    if (curExpr.known) {
+      for (const key in curExpr.known) {
+        if (!includes(binding.excludeProperties, key)) {
+          result = concat(result, curExpr.known[key].value);
+        }
+      }
+    }
+    return result;
+  }
+
+  return curExpr.value;
 }
 
 function callStatement(

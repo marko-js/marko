@@ -1,14 +1,16 @@
 <button>toggle</button><!--M_*1 a-->
 <h1>t</h1>
-<div>row 1</div>
-<div>row 2</div>
-<div>other 1</div>
-<div>cond 1</div>
+<div>row <!>1<!--M_*4 a--></div>
+<div>row <!>2<!--M_*5 a--></div><!--M_|3 a 5 4-->
+<div>other <!>1<!--M_*3 b--></div>
+<div>cond <!>1<!--M_*3 c--></div>
 <script>
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
     c: !0,
     b: _(2)
+  }, {
+    b: _(3)
   }], "a0 1"];
   M._.w()
 </script>

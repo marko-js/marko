@@ -51,7 +51,8 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input,
-		2: $sg__input
+		2: $sg__input,
+		3: $sg__input
 	});
 	wrap_default({
 		"data-one": 2,
