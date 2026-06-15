@@ -117,10 +117,6 @@ export default {
         if (isLoadEntry) {
           const entryFile = program.hub.file;
           const { filename } = entryFile.opts;
-          const readyArgs = [t.stringLiteral(getReadyId(entryFile)!)];
-          if (runtimeId) {
-            readyArgs.push(t.stringLiteral(runtimeId));
-          }
           program.node.body = [
             t.importDeclaration(
               [t.importSpecifier(t.identifier("ready"), t.identifier("ready"))],
@@ -137,7 +133,9 @@ export default {
                 [
                   t.arrowFunctionExpression(
                     [],
-                    t.callExpression(t.identifier("ready"), readyArgs),
+                    t.callExpression(t.identifier("ready"), [
+                      t.stringLiteral(getReadyId(entryFile)!),
+                    ]),
                   ),
                 ],
               ),

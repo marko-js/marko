@@ -71,9 +71,8 @@ export function enableBranches() {
   }
 }
 
-export function ready(readyId: string, runtimeId?: string) {
+export function ready(readyId: string) {
   (readyIds ||= new Set()).add(readyId);
-  init(runtimeId);
   for (const renderId in curRenders) {
     runResumeEffects(curRenders[renderId]);
   }
@@ -94,7 +93,8 @@ export function initEmbedded(readyId: string, runtimeId?: string) {
       }
     }).observe(document, { childList: true, subtree: true });
   }
-  ready(readyId, runtimeId);
+  ready(readyId);
+  init(runtimeId);
 }
 export function init(runtimeId = DEFAULT_RUNTIME_ID) {
   if (curRenders) {
