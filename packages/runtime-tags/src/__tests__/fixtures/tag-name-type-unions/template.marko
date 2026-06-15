@@ -1,0 +1,11 @@
+import A from "./tags/a/index.marko";
+import B from "./tags/b/index.marko";
+static const localTag = A;
+<let/x = true/>
+<button onClick() { x = !x }>toggle</button>
+<${x ? "div" : undefined} id="d1">u</>
+<${x ? "div" : "span"}>n</>
+<${navigator}>g</>
+<${x ? A : B} label="ab"/>
+<${x ? "div" : A} label="ad">m</>
+<${x ? localTag : A} label="la"/>

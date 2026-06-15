@@ -1,0 +1,11 @@
+<let/a = "a1"/>
+<let/b = "b1"/>
+<const/state = {
+  a,
+  aChange(v) { a = v },
+  b,
+  bChange(v) { b = v },
+}/>
+<div>${a}|${b}</div>
+<input value:=state.a/>
+<input value:=state?.b/>

@@ -1,0 +1,7 @@
+<define/Wrap|[ a = 1, b ]|>
+  <div>${a}|${b}</div>
+</define>
+<let/n = 2/>
+<button onClick() { n++ }>inc</button>
+<Wrap([undefined, n])/>
+<Wrap([n, 10])/>

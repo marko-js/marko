@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-await-no-value/template.marko:1:2
+    > 1 | <await>
+        |  ^^^^^ The [`<await>` tag](https://markojs.com/docs/reference/core-tag#await) requires a [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).
+      2 |   Hello
+      3 | </await>
+      4 |

@@ -1,0 +1,13 @@
+<let/cond = true/>
+<button onClick() { cond = !cond }>toggle</button>
+<child title="t">
+  <@row x=1/>
+  <@row x=2/>
+  <@other y=1/>
+  <if=cond>
+    <@cond a=1/>
+  </if>
+  <else>
+    <@cond a=2/>
+  </else>
+</child>

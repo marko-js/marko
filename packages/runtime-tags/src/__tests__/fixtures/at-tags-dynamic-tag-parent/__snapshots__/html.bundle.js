@@ -18,20 +18,20 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	_dynamic_tag($scope0_id, "a", x, {
-		footer: attrTag({
-			class: "my-footer",
-			content: _content_resume("a1", () => {
-				_scope_reason();
-				_scope_id();
-				_html("Footer content");
-			}, $scope0_id)
-		}),
 		header: attrTag({
 			class: "my-header",
 			content: _content_resume("a0", () => {
 				_scope_reason();
 				_scope_id();
 				_html("Header content");
+			}, $scope0_id)
+		}),
+		footer: attrTag({
+			class: "my-footer",
+			content: _content_resume("a1", () => {
+				_scope_reason();
+				_scope_id();
+				_html("Footer content");
 			}, $scope0_id)
 		})
 	}, _content_resume("a2", () => {

@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-load-trigger-unknown/template.marko:1:48
+    > 1 | import Child from "./child.marko" with { load: "hover.foo" }
+        |                                                ^^^^^^^^^^^ Unknown trigger type "hover". Supported triggers are "visible", "idle", "media", and "on*".
+      2 |
+      3 | <Child/>
+      4 |

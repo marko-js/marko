@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-load-no-triggers/template.marko:1:48
+    > 1 | import Child from "./child.marko" with { load: "" }
+        |                                                ^^ The "load" attribute requires "render" or at least one trigger (e.g. "visible.my-element").
+      2 |
+      3 | <Child/>
+      4 |

@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-bound-attr-static-repeated/template.marko:3:15
+      1 | static let s = 1;
+      2 | <input value:=s/>
+    > 3 | <input value:=s/>
+        |               ^ Unable to bind to value.
+      4 |

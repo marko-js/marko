@@ -40,7 +40,7 @@ export function translateAttrs(
   statements: t.Statement[] = [],
   contentKey: ContentKey = "content",
 ) {
-  const properties: t.ObjectExpression["properties"] = [];
+  const contentProperties: t.ObjectExpression["properties"] = [];
   const attrTagLookup = tag.node.extra?.attributeTags;
   const seen = new Set(skip);
   if (attrTagLookup) {
@@ -57,7 +57,7 @@ export function translateAttrs(
               t.variableDeclarator(getAttrTagIdentifier(attrTagMeta)),
             ]),
           );
-          properties.push(
+          contentProperties.push(
             toObjectProperty(
               attrTagMeta.name,
               getAttrTagIdentifier(attrTagMeta),
@@ -95,7 +95,10 @@ export function translateAttrs(
             );
 
             if (attrTagMeta.repeated) {
-              const prevProp = findObjectProperty(attrTagMeta.name, properties);
+              const prevProp = findObjectProperty(
+                attrTagMeta.name,
+                contentProperties,
+              );
               if (prevProp) {
                 prevProp.value = callRuntime(
                   "attrTags",
@@ -103,7 +106,7 @@ export function translateAttrs(
                   propsToExpression(translatedAttrTag.properties),
                 );
               } else {
-                properties.push(
+                contentProperties.push(
                   toObjectProperty(
                     attrTagMeta.name,
                     callRuntime(
@@ -114,7 +117,7 @@ export function translateAttrs(
                 );
               }
             } else {
-              properties.push(
+              contentProperties.push(
                 toObjectProperty(
                   attrTagMeta.name,
                   callRuntime(
@@ -148,28 +151,30 @@ export function translateAttrs(
       );
       seen.add(contentKey);
       contentProps.add(contentProp);
-      properties.push(contentProp);
+      contentProperties.push(contentProp);
     }
   }
 
   const { attributes } = tag.node;
+  const attrProperties: t.ObjectExpression["properties"] = [];
   for (let i = attributes.length; i--; ) {
     const attr = attributes[i];
     const { value } = attr;
     if (t.isMarkoSpreadAttribute(attr)) {
-      properties.push(t.spreadElement(value));
+      attrProperties.push(t.spreadElement(value));
     } else if (
       !seen.has(attr.name) &&
       getKnownFromPropTree(propTree, attr.name)
     ) {
       seen.add(attr.name);
-      properties.push(toObjectProperty(attr.name, value));
+      attrProperties.push(toObjectProperty(attr.name, value));
     }
   }
 
-  properties.reverse();
-
-  return { properties, statements };
+  return {
+    properties: attrProperties.reverse().concat(contentProperties),
+    statements,
+  };
 }
 
 export function getTranslatedBodyContentProperty(

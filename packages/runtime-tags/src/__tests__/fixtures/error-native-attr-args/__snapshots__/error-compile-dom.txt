@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-attr-args/template.marko:1:6
+    > 1 | <div foo(1)="bar"/>
+        |      ^^^^^^^^^^^^ Unsupported arguments on the `foo` attribute.
+      2 |

@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-tag-var-assign/template.marko:3:3
+      1 | <div/el/>
+      2 | <script>
+    > 3 |   el = 1;
+        |   ^^^^^^ Tag variables on native elements cannot be assigned to.
+      4 | </script>
+      5 |

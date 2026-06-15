@@ -1,0 +1,7 @@
+<const/obj = new (class {
+  #hidden() {}
+  go = this.#hidden;
+})()/>
+<let/n = 1/>
+<button#a onClick=obj.go>a</button>
+<button#b onClick() { n++ }>b ${n}</button>

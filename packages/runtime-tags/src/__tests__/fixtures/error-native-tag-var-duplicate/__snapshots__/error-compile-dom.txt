@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-tag-var-duplicate/template.marko:2:7
+      1 | <div/el/>
+    > 2 | <span/el/>
+        |       ^^ Duplicate declaration "el"
+      3 | <script>
+      4 |   console.log(el);
+      5 | </script>

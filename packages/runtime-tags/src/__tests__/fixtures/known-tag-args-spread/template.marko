@@ -1,0 +1,18 @@
+<let/x = 1/>
+<const/args = [x, 2]/>
+<define/MyTag|a, b|>
+  <div>${a}|${b}|${JSON.stringify(input)}</div>
+</define>
+
+<MyTag(...args)/>
+<MyTag(7, 8, 9)/>
+<MyTag(...args)>
+  <@row r=x/>
+  <if=x>
+    <@cgrp y=1/>
+  </if>
+  <else>
+    <@cgrp y=2/>
+  </else>
+</MyTag>
+<button onClick() { x++ }>inc ${x}</button>

@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-load-trigger-idle-unknown-param/template.marko:1:48
+    > 1 | import Child from "./child.marko" with { load: "idle?foo=1" }
+        |                                                ^^^^^^^^^^^^ Unknown param "foo" for the "idle" trigger. Supported params: "timeout".
+      2 |
+      3 | <Child/>
+      4 |

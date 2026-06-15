@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-load-trigger-visible-unknown-param/template.marko:1:48
+    > 1 | import Child from "./child.marko" with { load: "visible.foo?bar=1" }
+        |                                                ^^^^^^^^^^^^^^^^^^^ Unknown param "bar" for the "visible" trigger. Supported params: "rootMargin".
+      2 |
+      3 | <Child/>
+      4 |

@@ -1,6 +1,6 @@
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_b = _serialize_guard($scope0_reason, 5), $sg__input_a = _serialize_guard($scope0_reason, 4), $si__input_a__OR__input_b = _serialize_if($scope0_reason, 1), $si__input_c = _serialize_if($scope0_reason, 3), $si__input_c__OR__input_a__OR__input_b = _serialize_if($scope0_reason, 2);
+	const $scope0_reason = _scope_reason(), $sg__input_b = _serialize_guard($scope0_reason, 5), $si__input_c__OR__input_a__OR__input_b = _serialize_if($scope0_reason, 2), $sg__input_a = _serialize_guard($scope0_reason, 4), $si__input_a__OR__input_b = _serialize_if($scope0_reason, 1), $si__input_c = _serialize_if($scope0_reason, 3);
 	const $scope0_id = _scope_id();
 	const $bar2__closures = new Set();
 	const bar = _resume(function(test) {
@@ -18,8 +18,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					return 0;
 				}
 			}, $scope1_id, "#text/0", $sg__input_b, $sg__input_b, $sg__input_b, 0, 1);
-			_serialize_if($scope0_reason, 0) && writeScope($scope1_id, {
-				foo,
+			$si__input_c__OR__input_a__OR__input_b && writeScope($scope1_id, {
+				foo: _serialize_if($scope0_reason, 0) && foo,
 				_: _scope_with_id($scope0_id)
 			}, "__tests__/template.marko", "3:1", { foo: "4:9" });
 			return 0;

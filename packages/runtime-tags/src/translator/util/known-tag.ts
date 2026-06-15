@@ -773,14 +773,11 @@ function writeParamsToSignals(
       );
     }
 
-    let renderArgs: (t.Expression | t.SpreadElement)[] = [
-      createScopeReadExpression(info.childScopeBinding, info.tagSection),
-    ];
-    if (tag.node.arguments) {
-      renderArgs = [...renderArgs, ...tag.node.arguments];
-    }
+    const renderParams: (t.Expression | t.SpreadElement)[] = tag.node.arguments
+      ? [...tag.node.arguments]
+      : [];
     if (!tag.node.arguments?.length || translatedAttrs.properties.length) {
-      renderArgs.push(propsToExpression(translatedAttrs.properties));
+      renderParams.push(propsToExpression(translatedAttrs.properties));
     }
 
     addStatement(
@@ -788,7 +785,10 @@ function writeParamsToSignals(
       info.tagSection,
       referencedBindings,
       t.expressionStatement(
-        t.callExpression(tagInputIdentifier, [t.arrayExpression(renderArgs)]),
+        t.callExpression(tagInputIdentifier, [
+          createScopeReadExpression(info.childScopeBinding, info.tagSection),
+          t.arrayExpression(renderParams),
+        ]),
       ),
     );
 
@@ -1279,7 +1279,10 @@ function writeAttrsToSignals(
         true,
       );
     }
-  } else if (spreadProps) {
+  } else if (
+    spreadProps &&
+    (remaining.size || (propTree.rest && !propTree.rest.props))
+  ) {
     const spreadExpr = propsToExpression(spreadProps.reverse());
     let spreadId = spreadExpr;
 

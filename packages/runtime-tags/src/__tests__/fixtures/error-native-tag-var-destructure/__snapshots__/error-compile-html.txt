@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-tag-var-destructure/template.marko:1:6
+    > 1 | <div/{ el }/>
+        |      ^^^^^^ Tag variables on [native tags](https://markojs.com/docs/reference/native-tag) cannot be destructured.
+      2 |

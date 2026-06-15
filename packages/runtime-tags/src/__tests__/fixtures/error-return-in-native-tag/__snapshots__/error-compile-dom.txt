@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-return-in-native-tag/template.marko:2:4
+      1 | <div>
+    > 2 |   <return=1/>
+        |    ^^^^^^ The [`<return>` tag](https://markojs.com/docs/reference/core-tag#return) can not be used in a [native tag](https://markojs.com/docs/reference/native-tag).
+      3 | </div>
+      4 |

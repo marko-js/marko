@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-load-trigger-media-no-query/template.marko:1:48
+    > 1 | import Child from "./child.marko" with { load: "media" }
+        |                                                ^^^^^^^ A media query is required for the "media" trigger. (e.g. "media(max-width:768px)")
+      2 |
+      3 | <Child/>
+      4 |

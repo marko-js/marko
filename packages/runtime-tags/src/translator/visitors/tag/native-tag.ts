@@ -163,13 +163,18 @@ export default {
         }
       }
 
+      relatedControllable ||= getRelatedControllable(tagName, seen);
+      if (relatedControllable && relatedControllable.attrs[1]) {
+        hasEventHandlers = true;
+      }
+
       if (
         node.var ||
         hasDynamicAttributes ||
         hasEventHandlers ||
         textPlaceholders ||
         injectNonce ||
-        isDynamicControllable(getRelatedControllable(tagName, seen))
+        isDynamicControllable(relatedControllable)
       ) {
         const tagExtra = (node.extra ??= {});
         const tagSection = getOrCreateSection(tag);
@@ -407,17 +412,7 @@ export default {
           }
         }
 
-        if (isOpenOnly) {
-          switch (tagDef.htmlType) {
-            case "svg":
-            case "math":
-              write`/>`;
-              break;
-            default:
-              write`>`;
-              break;
-          }
-        } else if (isTextOnly) {
+        if (isOpenOnly || isTextOnly) {
           write`>`;
         } else if (staticContentAttr) {
           write`>`;
@@ -817,19 +812,7 @@ export default {
           );
         }
 
-        if (isOpenOnly) {
-          switch (tagDef.htmlType) {
-            case "svg":
-            case "math":
-              write`/>`;
-              break;
-            default:
-              write`>`;
-              break;
-          }
-        } else {
-          write`>`;
-        }
+        write`>`;
 
         walks.enter(tag);
       },
