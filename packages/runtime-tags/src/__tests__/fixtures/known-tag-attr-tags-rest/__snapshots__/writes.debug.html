@@ -1,14 +1,16 @@
 <button>toggle</button><!--M_*1 #button/0-->
 <h1>t</h1>
-<div>row 1</div>
-<div>row 2</div>
-<div>other 1</div>
-<div>cond 1</div>
+<div>row <!>1<!--M_*4 #text/0--></div>
+<div>row <!>2<!--M_*5 #text/0--></div><!--M_|3 #text/0 5 4-->
+<div>other <!>1<!--M_*3 #text/1--></div>
+<div>cond <!>1<!--M_*3 #text/2--></div>
 <script>
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
       cond: !0,
       "#childScope/1": _(2)
+    }, {
+      "#childScope/1": _(3)
     }],
     "packages/runtime-tags/src/__tests__/fixtures/known-tag-attr-tags-rest/template.marko_0_cond 1"
   ];
