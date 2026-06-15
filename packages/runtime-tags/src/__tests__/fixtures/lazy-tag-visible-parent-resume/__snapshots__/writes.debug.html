@@ -2,11 +2,11 @@
     1<!--M_*1 #text/1--></button><!--M_*1 #button/0--><button class=child>child
   <!>1<!--M_*2 #text/1--></button><!--M_*2 #button/0-->
 <script>
-  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (e =>
-    e && new IntersectionObserver((e, i) => e.some(e => e.isIntersecting) && i
-      .disconnect() + l(), {
-        rootMargin: "100px"
-      }).observe(e))(document.querySelector("body") || l()))(document
+  ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
+    h))) => (e => e && new IntersectionObserver((e, i) => e.some(e => e
+      .isIntersecting) && i.disconnect() + l(), {
+      rootMargin: "100px"
+    }).observe(e))(document.querySelector("body") || l()))(document
     .currentScript,
     "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");

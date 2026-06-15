@@ -1,8 +1,8 @@
 <!--M#s0--><button id=inc>Inc</button><!--F#1s--><!--F/--><!--F#1--><span
   id=child>0</span><!--F/--><!--M/-->
 <script>
-  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (m => m
-    .matches ? l() : m.addEventListener("change", l, {
+  ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
+    h))) => (m => m.matches ? l() : m.addEventListener("change", l, {
       once: 1
     }))(matchMedia("(width <= 600px)")))(document.currentScript,
     "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");

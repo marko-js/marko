@@ -1,13 +1,14 @@
 <button id=inc>Inc</button><!--M_*1 a--><span>0<!--M_*2 a--></span>
 <script>
-  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => {
-    (e => e && new IntersectionObserver((e, i) => e.some(e => e
-      .isIntersecting) && i.disconnect() + l()).observe(e))(document
-      .querySelector("body") || l());
-    (self.requestIdleCallback || l)(l, {
-      timeout: 100
-    })
-  })(document.currentScript,
+  ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
+    h))) => {
+      (e => e && new IntersectionObserver((e, i) => e.some(e => e
+        .isIntersecting) && i.disconnect() + l()).observe(e))(document
+        .querySelector("body") || l());
+      (self.requestIdleCallback || l)(l, {
+        timeout: 100
+      })
+    })(document.currentScript,
     "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {

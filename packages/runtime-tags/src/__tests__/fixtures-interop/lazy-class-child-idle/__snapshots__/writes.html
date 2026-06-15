@@ -1,10 +1,10 @@
 <!--M#s0--><button id=inc>Inc</button><!--F#1s--><!--F/--><!--F#1--><span
   id=child>0</span><!--F/--><!--M/-->
 <script>
-  ((p, h, d, l = $ => d || p.insertAdjacentHTML("afterend", d = h)) => (self
-    .requestIdleCallback || l)(l, {
-    "timeout": 100
-  }))(document.currentScript,
+  ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
+    h))) => (self.requestIdleCallback || l)(l, {
+      "timeout": 100
+    }))(document.currentScript,
     "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
   $MC = (window.$MC || []).concat({
     "w": [
