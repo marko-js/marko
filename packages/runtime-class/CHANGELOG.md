@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.39.7
+
+### Patch Changes
+
+- [#3217](https://github.com/marko-js/marko/pull/3217) [`44c5e86`](https://github.com/marko-js/marko/commit/44c5e868940930f0e560bac73a44f6833026d509) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with injected asset lazy load scripts not being evaluated.
+
+- Updated dependencies [[`44c5e86`](https://github.com/marko-js/marko/commit/44c5e868940930f0e560bac73a44f6833026d509)]:
+  - @marko/runtime-tags@6.1.7
+
 ## 5.39.6
 
 ### Patch Changes
