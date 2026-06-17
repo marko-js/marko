@@ -14,11 +14,12 @@ export type PendingRender = {
   [PendingRenderProp.Scope]: Scope;
   [PendingRenderProp.Signal]: Signal<any, any>;
   [PendingRenderProp.Value]: unknown;
+  [PendingRenderProp.Gen]: number;
+  [PendingRenderProp.Pending]?: 0 | 1;
 };
 
+let runId = 1;
 let pendingRenders: PendingRender[] = [];
-let pendingRendersLookup: Record<number, PendingRender> = {};
-let asyncRendersLookup: typeof pendingRendersLookup | undefined | 0;
 export const caughtError = new WeakSet<unknown[]>();
 export const placeholderShown = new WeakSet<unknown[]>();
 export let pendingEffects: unknown[] = [];
@@ -33,21 +34,27 @@ export function queueRender<T, U extends Scope = Scope>(
   value?: T,
   scopeKey = scope[AccessorProp.Id],
 ) {
-  const key = scopeKey * scopeKeyOffset + signalKey;
-  let render = signalKey >= 0 && pendingRendersLookup[key];
-  if (render) {
+  let render: PendingRender | undefined;
+  if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
     render[PendingRenderProp.Value] = value;
+    if (
+      render[PendingRenderProp.Gen] === runId ||
+      (catchEnabled && render[PendingRenderProp.Pending])
+    ) {
+      return;
+    }
+    render[PendingRenderProp.Gen] = runId;
   } else {
-    queuePendingRender(
-      (render = {
-        [PendingRenderProp.Key]: key,
-        [PendingRenderProp.Scope]: scope,
-        [PendingRenderProp.Signal]: signal,
-        [PendingRenderProp.Value]: value,
-      }),
-    );
-    signalKey >= 0 && (pendingRendersLookup[key] = render);
+    render = {
+      [PendingRenderProp.Key]: scopeKey * scopeKeyOffset + signalKey,
+      [PendingRenderProp.Scope]: scope,
+      [PendingRenderProp.Signal]: signal,
+      [PendingRenderProp.Value]: value,
+      [PendingRenderProp.Gen]: runId,
+    };
+    if (signalKey >= 0) scope[signalKey + scopeKeyOffset] = render;
   }
+  queuePendingRender(render);
 }
 
 export function queuePendingRender(render: PendingRender) {
@@ -72,13 +79,12 @@ export function queueEffect<S extends Scope, T extends ExecFn<S>>(
 
 export function run() {
   const effects = pendingEffects;
-  asyncRendersLookup = {};
   try {
     rendering = 1;
     runRenders();
   } finally {
-    pendingRendersLookup = asyncRendersLookup;
-    asyncRendersLookup = rendering = 0;
+    runId++;
+    rendering = 0;
     pendingRenders = [];
     pendingEffects = [];
   }
@@ -97,20 +103,16 @@ export function queueAsyncRender<T, U extends Scope = Scope>(
 export function prepareEffects(fn: () => void): unknown[] {
   const prevRenders = pendingRenders;
   const prevEffects = pendingEffects;
-  const prevLookup = asyncRendersLookup;
   const preparedEffects = (pendingEffects = []);
   pendingRenders = [];
-  asyncRendersLookup = pendingRendersLookup;
-  pendingRendersLookup = {};
 
   try {
     rendering = 1;
     fn();
     runRenders();
   } finally {
+    runId++;
     rendering = 0;
-    pendingRendersLookup = asyncRendersLookup;
-    asyncRendersLookup = prevLookup;
     pendingRenders = prevRenders;
     pendingEffects = prevEffects;
   }
@@ -237,13 +239,12 @@ export function _enable_catch() {
           render[PendingRenderProp.Scope][AccessorProp.ClosestBranch];
         while (branch) {
           if (branch[AccessorProp.PendingRenders]) {
-            (asyncRendersLookup as typeof pendingRendersLookup)[
-              render[PendingRenderProp.Key]
-            ] = render;
+            render[PendingRenderProp.Pending] = 1;
             return branch[AccessorProp.PendingRenders].push(render);
           }
           branch = branch![AccessorProp.ParentBranch];
         }
+        render[PendingRenderProp.Pending] = 0;
         runRender(render);
       } catch (error) {
         renderCatch(render[PendingRenderProp.Scope], error);

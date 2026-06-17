@@ -60,6 +60,8 @@ export enum PendingRenderProp {
   Scope = "scope",
   Signal = "signal",
   Value = "value",
+  Gen = "gen",
+  Pending = "pending",
 }
 
 export enum ClosureSignalProp {

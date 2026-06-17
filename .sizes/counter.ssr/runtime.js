@@ -1,4 +1,4 @@
-// size: 2528 (min) 1270 (brotli)
+// size: 2563 (min) 1279 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -8,16 +8,17 @@ let decodeAccessor = (num) =>
   registeredValues = {},
   curRenders,
   readyIds,
+  runId = 1,
   pendingRenders = [],
-  pendingRendersLookup = {},
-  asyncRendersLookup,
   pendingEffects = [],
   pendingScopes = [],
   rendering,
+  scopeKeyOffset = 1e3,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
   },
-  runRender = (render) => render.c(render.b, render.d);
+  runRender = (render) => render.c(render.b, render.d),
+  catchEnabled;
 function _on(element, type, handler) {
   (element["$" + type] === void 0 &&
     defaultDelegator(element, type, handleDelegated),
@@ -204,19 +205,20 @@ function _text(node, value) {
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
-  let key = scopeKey * 1e3 + signalKey,
-    render = signalKey >= 0 && pendingRendersLookup[key];
-  render
-    ? (render.d = value)
-    : (queuePendingRender(
-        (render = {
-          a: key,
-          b: scope,
-          c: signal,
-          d: value,
-        }),
-      ),
-      signalKey >= 0 && (pendingRendersLookup[key] = render));
+  let render;
+  if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
+    if (((render.d = value), render.e === runId || catchEnabled)) return;
+    render.e = runId;
+  } else
+    ((render = {
+      a: scopeKey * scopeKeyOffset + signalKey,
+      b: scope,
+      c: signal,
+      d: value,
+      e: runId,
+    }),
+      signalKey >= 0 && (scope[signalKey + scopeKeyOffset] = render));
+  queuePendingRender(render);
 }
 function queuePendingRender(render) {
   let i = pendingRenders.push(render) - 1;
@@ -233,14 +235,10 @@ function queueEffect(scope, fn) {
 }
 function run() {
   let effects = pendingEffects;
-  asyncRendersLookup = {};
   try {
     ((rendering = 1), runRenders());
   } finally {
-    ((pendingRendersLookup = asyncRendersLookup),
-      (asyncRendersLookup = rendering = 0),
-      (pendingRenders = []),
-      (pendingEffects = []));
+    (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
   }
   runEffects(effects);
 }
