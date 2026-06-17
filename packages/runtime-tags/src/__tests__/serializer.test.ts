@@ -1389,6 +1389,23 @@ describe("serializer", () => {
 
         assert.deepEqual(await result.json(), obj);
       });
+
+    shouldTestRequestAndResponse &&
+      it("unserializable body stays valid JS", () => {
+        // A locked body stream cannot be serialized; the body is dropped, but
+        // the result must remain syntactically valid — `new Request(url,{...})`,
+        // never `new Request(url})`.
+        const request = new Request("https://ebay.com/", {
+          method: "POST",
+          duplex: "half",
+          body: new ReadableStream({ start: (c) => c.close() }),
+        } as any);
+        request.body!.getReader(); // lock the stream so it fails to serialize
+        assertStringify(
+          request,
+          `new Request("https://ebay.com/",{method:"POST"})`,
+        );
+      });
   });
 
   describe("response", () => {
@@ -1412,6 +1429,18 @@ describe("serializer", () => {
         `{res:_.b=new Response(null,{headers:{a:"1",b:"2"}}),headers:_.a=_.b.headers}`,
       );
     });
+
+    shouldTestRequestAndResponse &&
+      it("unserializable body falls back to null", () => {
+        // A locked body stream cannot be serialized; unlike Request, Response
+        // already falls back to `null` as the first arg, staying valid JS.
+        const response = new Response(
+          new ReadableStream({ start: (c) => c.close() }),
+          { status: 201 },
+        );
+        response.body!.getReader(); // lock the stream so it fails to serialize
+        assertStringify(response, `new Response(null,{status:201})`);
+      });
 
     shouldTestRequestAndResponse &&
       it("buffer", async () => {
