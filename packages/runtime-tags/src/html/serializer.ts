@@ -1153,9 +1153,14 @@ function writeArrayBuffer(state: State, val: ArrayBuffer) {
 
 function writeTypedArray(state: State, val: TypedArray, ref: Reference) {
   if (val.byteOffset || state.refs.has(val.buffer)) {
+    const needsLength = val.byteOffset + val.byteLength < val.buffer.byteLength;
     state.buf.push("new " + val.constructor.name + "(");
     writeProp(state, val.buffer, ref, "buffer");
-    state.buf.push(val.byteOffset ? "," + val.byteOffset + ")" : ")");
+    state.buf.push(
+      (val.byteOffset || needsLength
+        ? "," + val.byteOffset + (needsLength ? "," + val.length : "")
+        : "") + ")",
+    );
   } else {
     state.refs.set(val.buffer, new Reference(ref, "buffer", state.flush, null));
     state.buf.push(

@@ -705,6 +705,37 @@ describe("serializer", () => {
       );
     });
 
+    it("partial view with byte offset and length", () => {
+      const buffer = new ArrayBuffer(16);
+      const view = new Int32Array(buffer, 4, 2);
+      view[0] = 7;
+      view[1] = 9;
+
+      const [result] = assertSerializer().assertStringify(
+        view,
+        `new Int32Array(new Int8Array([0,0,0,0,7,0,0,0,9,0,0,0,0,0,0,0]).buffer,4,2)`,
+      ) as [Int32Array];
+      assert.equal(result.length, 2);
+      assert.equal(result.byteOffset, 4);
+      assert.deepEqual([...result], [7, 9]);
+    });
+
+    it("partial view at offset 0 of a shared buffer", () => {
+      const buffer = new ArrayBuffer(16);
+      const full = new Int32Array(buffer);
+      const partial = new Int32Array(buffer, 0, 2);
+      full[3] = 5;
+      partial[1] = 9;
+
+      const [result] = assertSerializer().assertStringify(
+        { full, partial },
+        `{full:_.b=new Int32Array([0,9,0,5]),partial:new Int32Array(_.a=_.b.buffer,0,2)}`,
+      ) as [{ full: Int32Array; partial: Int32Array }];
+      assert.equal(result.partial.length, 2);
+      assert.deepEqual([...result.partial], [0, 9]);
+      assert.equal(result.partial.buffer, result.full.buffer);
+    });
+
     // it("BigInt64Array", () =>
     //   assertStringify(new BigInt64Array([1n, 2n, 3n]), `new BigInt64Array([1n,2n,3n])`));
     // it("BigUint64Array", () =>
