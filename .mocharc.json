@@ -5,6 +5,5 @@
   "enable-source-maps": true,
   "experimental-vm-modules": true,
   "require": ["~ts"],
-  "spec": ["packages/*/@(src|test)/**/*.test.@(js|ts)"],
-  "watchFiles": ["src/**/*.@(js|ts|marko)", "!**/__snapshots__/**"]
+  "spec": ["packages/*/@(src|test)/**/*.test.@(js|ts)"]
 }

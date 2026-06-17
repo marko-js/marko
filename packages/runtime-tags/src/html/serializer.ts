@@ -1247,7 +1247,7 @@ function writeFormData(state: State, val: FormData) {
     state.buf.push("new FormData");
   } else {
     state.buf.push(
-      valStr + "].reduce((f,v,i,a)=>i%2&&f.append(v,a[i+1])||f,new FormData)",
+      valStr + "].reduce((f,v,i,a)=>i%2&&f.append(a[i-1],v)||f,new FormData)",
     );
   }
 

@@ -762,9 +762,16 @@ describe("serializer", () => {
       const formData = new FormData();
       formData.append("a", "1");
       formData.append("b", "2");
-      assertStringify(
+      const [result] = assertSerializer().assertStringify(
         formData,
-        `["a","1","b","2"].reduce((f,v,i,a)=>i%2&&f.append(v,a[i+1])||f,new FormData)`,
+        `["a","1","b","2"].reduce((f,v,i,a)=>i%2&&f.append(a[i-1],v)||f,new FormData)`,
+      ) as [FormData];
+      assert.deepEqual(
+        [...result.entries()],
+        [
+          ["a", "1"],
+          ["b", "2"],
+        ],
       );
     });
     it("duplicated", () => {
@@ -773,11 +780,11 @@ describe("serializer", () => {
       formData.append("b", "2");
       assertStringify(
         formData,
-        `["a","1","b","2"].reduce((f,v,i,a)=>i%2&&f.append(v,a[i+1])||f,new FormData)`,
+        `["a","1","b","2"].reduce((f,v,i,a)=>i%2&&f.append(a[i-1],v)||f,new FormData)`,
       );
       assertStringify(
         [formData, formData],
-        `[_.a=["a","1","b","2"].reduce((f,v,i,a)=>i%2&&f.append(v,a[i+1])||f,new FormData),_.a]`,
+        `[_.a=["a","1","b","2"].reduce((f,v,i,a)=>i%2&&f.append(a[i-1],v)||f,new FormData),_.a]`,
       );
     });
   });
