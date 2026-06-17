@@ -1261,6 +1261,7 @@ function writeFormData(state: State, val: FormData) {
 
 function writeRequest(state: State, val: Request, ref: Reference) {
   let sep = "";
+  let bodySerialized = false;
   const hasBody = val.body && !val.bodyUsed && (val as any).duplex === "half";
   state.buf.push("new Request(" + quote(val.url, 0));
 
@@ -1269,6 +1270,7 @@ function writeRequest(state: State, val: Request, ref: Reference) {
     if (writeProp(state, val.body, ref, "body")) {
       state.buf.push(',duplex:"half"');
       sep = ",";
+      bodySerialized = true;
     } else {
       state.buf.pop();
     }
@@ -1327,7 +1329,7 @@ function writeRequest(state: State, val: Request, ref: Reference) {
   }
 
   state.buf.push(
-    hasBody ? options + "})" : options ? ",{" + options + "})" : ")",
+    bodySerialized ? options + "})" : options ? ",{" + options + "})" : ")",
   );
 
   return true;
