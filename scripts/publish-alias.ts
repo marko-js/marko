@@ -2,19 +2,35 @@ import cp from "child_process";
 import fs from "fs";
 import path from "path";
 
-const relativeRuntimeTagsDir = "packages/runtime-tags";
-const runtimeTagsDir = path.resolve(relativeRuntimeTagsDir);
-const runtimeTagsPkgFile = path.join(runtimeTagsDir, "package.json");
-const originalPkgSource = fs.readFileSync(runtimeTagsPkgFile, "utf-8");
-const pkg = JSON.parse(originalPkgSource);
+publishAsMarko("runtime-tags");
+publishAsMarko("runtime-class", "m5");
 
-pkg.name = "marko";
+function publishAsMarko(name: string, tag = "latest") {
+  const dir = path.join("packages", name);
+  const pkgFile = path.resolve(dir, "package.json");
+  const originalPkgSource = fs.readFileSync(pkgFile, "utf-8");
+  const pkg = JSON.parse(originalPkgSource);
 
-try {
-  fs.writeFileSync(runtimeTagsPkgFile, JSON.stringify(pkg, null, 2) + "\n");
-  cp.execSync(
-    `node scripts/pkg-override && npm publish --tag next ./${relativeRuntimeTagsDir} && node scripts/pkg-override`,
-  );
-} finally {
-  fs.writeFileSync(runtimeTagsPkgFile, originalPkgSource);
+  if (isPublished("marko", pkg.version)) return;
+
+  Object.assign(pkg, { name: "marko", private: false });
+
+  try {
+    fs.writeFileSync(pkgFile, JSON.stringify(pkg, null, 2) + "\n");
+    cp.execSync(`npm publish ${dir} --tag ${tag}`, { stdio: "inherit" });
+  } finally {
+    fs.writeFileSync(pkgFile, originalPkgSource);
+  }
+}
+
+function isPublished(name: string, version: string) {
+  try {
+    cp.execSync(`npm view ${name}@${version} version`, {
+      stdio: ["ignore", "ignore", "pipe"],
+    });
+    return true;
+  } catch (err) {
+    if (`${(err as { stderr?: string }).stderr}`.includes("E404")) return false;
+    throw err;
+  }
 }
