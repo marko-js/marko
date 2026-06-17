@@ -1,4 +1,4 @@
-// size: 23618 (min) 8718 (brotli)
+// size: 23647 (min) 8745 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -192,14 +192,14 @@ let empty = [],
     ([until, from, step, by = byFirstArg], cb) =>
       forUntil(until, from, step, (v) => cb(by(v), [v])),
   ),
+  runId = 1,
   pendingRenders = [],
-  pendingRendersLookup = {},
-  asyncRendersLookup,
   caughtError = /* @__PURE__ */ new WeakSet(),
   placeholderShown = /* @__PURE__ */ new WeakSet(),
   pendingEffects = [],
   pendingScopes = [],
   rendering,
+  scopeKeyOffset = 1e3,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
   },
@@ -2013,19 +2013,21 @@ function byFirstArg(name) {
   return name;
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
-  let key = scopeKey * 1e3 + signalKey,
-    render = signalKey >= 0 && pendingRendersLookup[key];
-  render
-    ? (render.d = value)
-    : (queuePendingRender(
-        (render = {
-          a: key,
-          b: scope,
-          c: signal,
-          d: value,
-        }),
-      ),
-      signalKey >= 0 && (pendingRendersLookup[key] = render));
+  let render;
+  if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
+    if (((render.d = value), render.e === runId || (catchEnabled && render.f)))
+      return;
+    render.e = runId;
+  } else
+    ((render = {
+      a: scopeKey * scopeKeyOffset + signalKey,
+      b: scope,
+      c: signal,
+      d: value,
+      e: runId,
+    }),
+      signalKey >= 0 && (scope[signalKey + scopeKeyOffset] = render));
+  queuePendingRender(render);
 }
 function queuePendingRender(render) {
   let i = pendingRenders.push(render) - 1;
@@ -2042,14 +2044,10 @@ function queueEffect(scope, fn) {
 }
 function run() {
   let effects = pendingEffects;
-  asyncRendersLookup = {};
   try {
     ((rendering = 1), runRenders());
   } finally {
-    ((pendingRendersLookup = asyncRendersLookup),
-      (asyncRendersLookup = rendering = 0),
-      (pendingRenders = []),
-      (pendingEffects = []));
+    (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
   }
   runEffects(effects);
 }
@@ -2059,17 +2057,13 @@ function queueAsyncRender(scope, signal, value) {
 function prepareEffects(fn) {
   let prevRenders = pendingRenders,
     prevEffects = pendingEffects,
-    prevLookup = asyncRendersLookup,
     preparedEffects = (pendingEffects = []);
-  ((pendingRenders = []),
-    (asyncRendersLookup = pendingRendersLookup),
-    (pendingRendersLookup = {}));
+  pendingRenders = [];
   try {
     ((rendering = 1), fn(), runRenders());
   } finally {
-    ((rendering = 0),
-      (pendingRendersLookup = asyncRendersLookup),
-      (asyncRendersLookup = prevLookup),
+    (runId++,
+      (rendering = 0),
       (pendingRenders = prevRenders),
       (pendingEffects = prevEffects));
   }
@@ -2138,14 +2132,10 @@ function _enable_catch() {
         try {
           let branch = render.b.F;
           for (; branch; ) {
-            if (branch.W)
-              return (
-                (asyncRendersLookup[render.a] = render),
-                branch.W.push(render)
-              );
+            if (branch.W) return ((render.f = 1), branch.W.push(render));
             branch = branch.N;
           }
-          runRender(render);
+          ((render.f = 0), runRender(render));
         } catch (error) {
           renderCatch(render.b, error);
         }
