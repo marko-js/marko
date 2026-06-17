@@ -17,7 +17,7 @@ function publishAsMarko(name: string, tag = "latest") {
 
   try {
     fs.writeFileSync(pkgFile, JSON.stringify(pkg, null, 2) + "\n");
-    cp.execSync(`npm publish ${dir} --tag ${tag}`, { stdio: "inherit" });
+    cp.execSync(`npm publish ./${dir} --tag ${tag}`, { stdio: "inherit" });
   } finally {
     fs.writeFileSync(pkgFile, originalPkgSource);
   }

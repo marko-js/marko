@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.1.9
+
+### Patch Changes
+
+- [#3223](https://github.com/marko-js/marko/pull/3223) [`e6553d7`](https://github.com/marko-js/marko/commit/e6553d744e2f63b045a0c2afc0dd67617b0fef4d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Release marko@5 as `m5` dist-tag and marko@6 as `latest` dist-tag.
+
 ## 6.1.8
 
 ### Patch Changes
