@@ -46,7 +46,7 @@ var my_div_default = /* @__PURE__ */ _template("__tests__/tags/my-div.marko", $t
 // template.marko
 const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)($walks$1);
-const $mydiv_content = _content_resume("__tests__/template.marko_1_content", "Hello", "b");
+const $mydiv_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "Hello", "b");
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], { content: $mydiv_content($scope) });

@@ -1,0 +1,11 @@
+<let/show=false />
+
+<div ...input />
+
+<button.toggle type="button" onClick() { show = !show }>toggle</button>
+
+<div.echo>
+  <if=show>
+    <render-input data=input />
+  </if>
+</div>

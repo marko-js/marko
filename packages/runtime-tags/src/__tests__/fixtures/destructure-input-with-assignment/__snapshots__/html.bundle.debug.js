@@ -8,13 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_rest");
 	_script($scope0_id, "__tests__/tags/child.marko_0_$valueChange");
-	writeScope($scope0_id, {
-		$valueChange,
-		rest
-	}, "__tests__/tags/child.marko", 0, {
-		$valueChange: "3:11",
-		rest: "1:19"
-	});
+	writeScope($scope0_id, { $valueChange }, "__tests__/tags/child.marko", 0, { $valueChange: "3:11" });
 });
 
 // template.marko

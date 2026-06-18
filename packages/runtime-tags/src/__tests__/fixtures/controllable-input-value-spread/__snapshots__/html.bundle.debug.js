@@ -4,7 +4,7 @@ var my_input_default = _template("__tests__/tags/my-input.marko", (input) => {
 	const $scope0_id = _scope_id();
 	_html(`<input${_attrs(input, "#input/0", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/0")}`);
 	_script($scope0_id, "__tests__/tags/my-input.marko_0_input");
-	writeScope($scope0_id, { input }, "__tests__/tags/my-input.marko", 0, { input: 0 });
+	writeScope($scope0_id, {}, "__tests__/tags/my-input.marko", 0);
 });
 
 // template.marko

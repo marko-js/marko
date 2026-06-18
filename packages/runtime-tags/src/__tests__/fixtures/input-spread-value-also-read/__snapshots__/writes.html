@@ -1,0 +1,15 @@
+<input value=hi><!--M_*2 a--><span>hi<!--M_*2 b--></span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    a: _(2)
+  }, {
+    Fa: 2,
+    Ea: _.a = _(1, "a0"),
+    d: {
+      value: "hi",
+      valueChange: _.a
+    }
+  }], "b0 2"];
+  M._.w()
+</script>

@@ -3,7 +3,7 @@ import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { getTagName } from "./get-tag-name";
 import { analyzeAttributeTags, getAttrTagPaths } from "./nested-attribute-tags";
-import { concat, type Opt } from "./optional";
+import { concat, forEach, includes, type Opt } from "./optional";
 import type { Binding } from "./references";
 import { getSection, getSectionForBody, type Section } from "./sections";
 import { createSectionState } from "./state";
@@ -37,10 +37,16 @@ function crawlSectionsAndSetBinding(
   if (!skip) {
     const contentSection = getSectionForBody(tag.get("body"));
     if (contentSection) {
-      contentSection.downstreamBinding = {
-        binding,
-        properties: concat(properties, "content"),
-      };
+      let target: Binding | undefined = binding;
+      forEach(properties, (property) => {
+        target = target?.propertyAliases.get(property);
+      });
+      contentSection.downstreamBinding =
+        target &&
+        (target.noSerialize ||
+          includes(target.noSerializeProperties, "content"))
+          ? false
+          : { binding, properties: concat(properties, "content") };
     }
   }
 

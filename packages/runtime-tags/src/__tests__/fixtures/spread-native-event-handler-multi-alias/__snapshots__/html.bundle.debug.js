@@ -12,7 +12,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1_input");
 		_script($scope1_id, "__tests__/template.marko_1_input_onClick");
 		writeScope($scope1_id, {
-			input,
+			input: {
+				...input,
+				content: undefined
+			},
 			input_onClick: input.onClick
 		}, "__tests__/template.marko", "2:2", {
 			input: "2:18",
@@ -26,10 +29,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		onClick: _resume(function() {
 			document.getElementById("el").textContent += "[onClick(parent)]";
 		}, "__tests__/template.marko_0/onClick"),
-		content: _content_resume("__tests__/template.marko_2_content", () => {
+		content: _content("__tests__/template.marko_2_content", () => {
 			_scope_reason();
 			const $scope2_id = _scope_id();
 			_html("Click Me");
-		}, $scope0_id)
+		})
 	});
 }, 1);

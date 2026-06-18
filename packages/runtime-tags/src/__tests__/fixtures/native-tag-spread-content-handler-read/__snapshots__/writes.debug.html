@@ -1,0 +1,20 @@
+<div class=x>Hello</div><!--M_*2 #div/0--><button type=button
+  class=cap>check</button><!--M_*2 #button/1-->
+<div class=out>(unchecked)<!--M_*2 #text/2--></div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+      "BranchScopes:#div/0": _(3),
+      "ConditionalRenderer:#div/0": "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content-handler-read/template.marko_1_content",
+      input: {
+        class: "x",
+        content: _.a = _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content-handler-read/template.marko_1_content"
+          )
+      },
+      input_content: _.a
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content-handler-read/tags/my-box.marko_0_input_content 2 packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content-handler-read/tags/my-box.marko_0_input 2"
+  ];
+  M._.w()
+</script>

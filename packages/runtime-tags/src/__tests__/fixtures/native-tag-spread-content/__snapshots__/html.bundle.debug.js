@@ -29,22 +29,16 @@ var my_div_default = _template("__tests__/tags/my-div.marko", (input) => {
 	_html("</em>");
 	_script($scope0_id, "__tests__/tags/my-div.marko_0_input_CustomContent_content");
 	_script($scope0_id, "__tests__/tags/my-div.marko_0_input");
-	writeScope($scope0_id, {
-		input,
-		CustomContent_content: CustomContent?.content
-	}, "__tests__/tags/my-div.marko", 0, {
-		input: 0,
-		CustomContent_content: ["CustomContent.content", "10:8"]
-	});
+	writeScope($scope0_id, { CustomContent_content: CustomContent?.content }, "__tests__/tags/my-div.marko", 0, { CustomContent_content: ["CustomContent.content", "10:8"] });
 });
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	my_div_default({ content: _content_resume("__tests__/template.marko_1_content", () => {
+	my_div_default({ content: _content("__tests__/template.marko_1_content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html("Hello");
-	}, $scope0_id) });
+	}) });
 }, 1);

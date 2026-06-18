@@ -17,7 +17,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		$si__input_button && writeScope($scope1_id, { button }, "__tests__/tags/child.marko", "3:4", { button: "3:8" });
 	}, 0, $scope0_id, "#div/0", $sg__input_button, 1, $sg__input_button, "</div>");
 	_script($scope0_id, "__tests__/tags/child.marko_0_htmlInput");
-	writeScope($scope0_id, { htmlInput }, "__tests__/tags/child.marko", 0, { htmlInput: "1:30" });
+	writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
 // template.marko

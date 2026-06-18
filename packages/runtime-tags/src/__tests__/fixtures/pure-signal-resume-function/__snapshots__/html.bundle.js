@@ -6,7 +6,7 @@ var my_button_default = _template("b", (input) => {
 	_attrs_content(input, "a", $scope0_id, "button");
 	_html(`</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { c: input });
+	writeScope($scope0_id, {});
 });
 
 // template.marko
@@ -18,11 +18,11 @@ var template_default = _template("a", (input) => {
 		onClick: _resume(function() {
 			console.log(test);
 		}, "a0", $scope0_id),
-		content: _content_resume("a1", () => {
+		content: _content("a1", () => {
 			_scope_reason();
 			_scope_id();
 			_html("Click");
-		}, $scope0_id)
+		})
 	});
 	writeScope($scope0_id, { b: test });
 }, 1);

@@ -26,6 +26,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/2", 1, 1, 1, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_spreadAttrs");
-	writeScope($scope0_id, { spreadAttrs }, "__tests__/template.marko", 0, { spreadAttrs: "10:8" });
+	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

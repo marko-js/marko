@@ -24,7 +24,10 @@ var hello_default = _template("__tests__/tags/hello/index.marko", (input) => {
 			writeScope($scope3_id, { row }, "__tests__/tags/hello/index.marko", "7:3", { row: "7:7" });
 		}, 0, $scope2_id, "#text/1", $sg__input_col, $sg__input_col, $sg__input_col, 0, 1);
 		_script($scope2_id, "__tests__/tags/hello/index.marko_2_col");
-		writeScope($scope2_id, { col }, "__tests__/tags/hello/index.marko", "5:1", { col: "5:5" });
+		writeScope($scope2_id, { col: {
+			...col,
+			content: undefined
+		} }, "__tests__/tags/hello/index.marko", "5:1", { col: "5:5" });
 	}, 0, $scope0_id, "#text/1", $sg__input_col, $sg__input_col, $sg__input_list_item__OR__input_col);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/hello/index.marko", 0);
 });

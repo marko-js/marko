@@ -12,7 +12,7 @@ var my_select_default = /* @__PURE__ */ _template("__tests__/tags/my-select.mark
 // template.marko
 const $template = /* @__PURE__ */ ((_w0) => `${_w0}<span> </span>`)($template$1);
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&D l`)(" b");
-const $myselect_content = _content_resume("__tests__/template.marko_1_content", "<option value=a>A</option><option value=b>B</option><option value=c>C</option>", "d");
+const $myselect_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "<option value=a>A</option><option value=b>B</option><option value=c>C</option>", "d");
 const $value = /* @__PURE__ */ _let("value/2", ($scope) => {
 	$input($scope["#childScope/0"], {
 		value: $scope.value,

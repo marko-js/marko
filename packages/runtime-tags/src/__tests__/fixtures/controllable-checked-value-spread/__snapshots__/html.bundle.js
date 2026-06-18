@@ -7,7 +7,7 @@ var radio_default = _template("b", (input) => {
 		...input
 	}, "a", $scope0_id, "input")}>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { c: input });
+	writeScope($scope0_id, {});
 });
 
 // template.marko

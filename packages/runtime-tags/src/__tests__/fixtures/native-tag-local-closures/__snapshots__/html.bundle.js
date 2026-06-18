@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			_attrs_content(item, "a", $scope2_id, "div");
 			_html(`</div>${_el_resume($scope2_id, "a")}`);
 			_script($scope2_id, "a0");
-			writeScope($scope2_id, { c: item });
+			writeScope($scope2_id, {});
 		}, 0, $scope1_id, "a", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
 	}) };

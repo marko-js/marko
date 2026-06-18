@@ -5,7 +5,7 @@ var my_textarea_default = _template("b", (input) => {
 	const $textarea_input = input;
 	_html(`<textarea${_attrs($textarea_input, "a", $scope0_id, "textarea")}>${_attr_textarea_value($scope0_id, "a", $textarea_input.value, $textarea_input.valueChange)}</textarea>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { c: input });
+	writeScope($scope0_id, {});
 });
 
 // template.marko

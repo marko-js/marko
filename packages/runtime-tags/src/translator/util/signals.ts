@@ -1156,13 +1156,22 @@ export function writeHTMLResumeStatements(
   const writeSerializedBinding = (binding: Binding) => {
     const reason = getSerializeReason(section, binding);
     if (!reason) return;
+    if (binding.noSerialize) {
+      serializedLookup.delete(getScopeAccessor(binding));
+      return;
+    }
     const accessor = getScopeAccessor(binding);
     serializedLookup.delete(accessor);
+    let expr: t.Expression = getDeclaredBindingExpression(binding);
+    if (binding.noSerializeProperties) {
+      const props: t.ObjectExpression["properties"] = [t.spreadElement(expr)];
+      forEach(binding.noSerializeProperties, (prop) => {
+        props.push(toObjectProperty(prop, t.identifier("undefined")));
+      });
+      expr = t.objectExpression(props);
+    }
     serializedProperties.push(
-      toObjectProperty(
-        accessor,
-        ifSerialized(reason, getDeclaredBindingExpression(binding)),
-      ),
+      toObjectProperty(accessor, ifSerialized(reason, expr)),
     );
 
     if (debug) {

@@ -7,29 +7,13 @@
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [4, {
     Aa: _(5),
-    Da: "a3",
-    c: {
-      value: 1,
-      content: _(1, "a3"),
-      *[(_.a = [_.b = {
-        value: 2,
-        content: _(1, "a4")
-      }, _.c = {
-        value: 3,
-        content: _(1, "a5")
-      }], Symbol.iterator)]() {
-        yield this;
-        yield* _.a
-      }
-    }
+    Da: "a3"
   }, 1, {
     Aa: _(7),
-    Da: "a4",
-    c: _.b
+    Da: "a4"
   }, 1, {
     Aa: _(9),
-    Da: "a5",
-    c: _.c
+    Da: "a5"
   }], "a0 4 6 8"];
   M._.w()
 </script>

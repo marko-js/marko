@@ -7,7 +7,7 @@ var FancyButton_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "b", content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 	_html(`</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { f: attrs });
+	writeScope($scope0_id, {});
 });
 
 // template.marko

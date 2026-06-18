@@ -8,6 +8,3 @@ const $input__script = _script("b2", ($scope) => {
 	_attrs_script($scope, "d");
 	_attrs_script($scope, "e");
 });
-
-// template.marko
-const $mydiv_content = _content_resume("a0", "Hello", "b");

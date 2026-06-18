@@ -104,6 +104,8 @@ export interface Binding {
   property: string | undefined;
   propertyAliases: Map<string, Binding>;
   excludeProperties: Opt<string>;
+  noSerialize: boolean;
+  noSerializeProperties: Opt<string>;
   upstreamAlias: Binding | undefined;
   restOffset: number | undefined;
   scopeOffset: Binding | undefined;
@@ -158,6 +160,8 @@ declare module "@marko/compiler/dist/types" {
     pruned?: true;
     isEffect?: true;
     spreadFrom?: Binding;
+    nativeTagSpread?: true;
+    nativeTagSpreadMerged?: true;
     merged?: NodeExtra;
   }
 
@@ -203,6 +207,8 @@ export function createBinding(
     closureSections: undefined,
     assignmentSections: undefined,
     excludeProperties,
+    noSerialize: false,
+    noSerializeProperties: undefined,
     sources: undefined,
     reads: new Set(),
     aliases: new Set(),
@@ -918,6 +924,26 @@ export function finalizeReferences() {
     if (binding.type !== BindingType.dom) {
       if (pruneBinding(binding)) {
         bindings.delete(binding);
+      }
+    }
+
+    if (binding.noSerialize) {
+      if (isPureSpreadResolved(binding)) {
+        if (hasAnyMemberAccess(binding)) {
+          let kept: Opt<string> = undefined;
+          binding.noSerialize = false;
+          forEach(binding.noSerializeProperties, (property) => {
+            if (!isPropertyMemberAccessed(binding, property)) {
+              kept = push(kept, property);
+            }
+          });
+          binding.noSerializeProperties = kept;
+        } else {
+          binding.noSerializeProperties = undefined;
+        }
+      } else {
+        binding.noSerialize = false;
+        binding.noSerializeProperties = undefined;
       }
     }
   }
@@ -2391,6 +2417,50 @@ export function getAllSerializeReasonsForBinding(
   }
 
   return reason;
+}
+
+function isPureSpreadResolved(binding: Binding): boolean {
+  for (const read of binding.reads) {
+    if (!read.nativeTagSpread || read.nativeTagSpreadMerged) {
+      return false;
+    }
+  }
+
+  for (const alias of binding.aliases) {
+    if (!isPureSpreadResolved(alias)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function hasAnyMemberAccess(binding: Binding): boolean {
+  if (binding.propertyAliases.size) {
+    return true;
+  }
+
+  for (const alias of binding.aliases) {
+    if (hasAnyMemberAccess(alias)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function isPropertyMemberAccessed(binding: Binding, property: string): boolean {
+  if (binding.propertyAliases.has(property)) {
+    return true;
+  }
+
+  for (const alias of binding.aliases) {
+    if (isPropertyMemberAccessed(alias, property)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function addNumericPropertiesUntil(props: Opt<string>, len: number) {
