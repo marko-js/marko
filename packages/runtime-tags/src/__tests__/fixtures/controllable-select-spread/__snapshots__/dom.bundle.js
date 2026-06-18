@@ -6,7 +6,7 @@ const $input = /* @__PURE__ */ _const(2, ($scope) => {
 });
 
 // template.marko
-const $myselect_content = _content_resume("a1", "<option value=a>A</option><option value=b>B</option><option value=c>C</option>", "d");
+const $myselect_content = /* @__PURE__ */ _content("a1", "<option value=a>A</option><option value=b>B</option><option value=c>C</option>", "d");
 const $value = /* @__PURE__ */ _let(2, ($scope) => {
 	$input($scope.a, {
 		value: $scope.c,

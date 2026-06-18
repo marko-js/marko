@@ -60,14 +60,14 @@
             yield* _.d
           }
         },
-        *[(_.e = [_.i = {
+        *[(_.e = [{
           x: 1,
-          row: _.j = {
+          row: _.i = {
             row: "c",
             content: _(1,
               "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_3_content"
               ),
-            *[(_.f = [_.k = {
+            *[(_.f = [_.j = {
               row: "d",
               content: _(1,
                 "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_3_content"
@@ -77,9 +77,9 @@
               yield* _.f
             }
           }
-        }, _.l = {
+        }, {
           outside: !0,
-          row: _.m = {
+          row: _.k = {
             row: -1,
             content: _(1,
               "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_4_content"
@@ -98,15 +98,21 @@
     }, 1, {
       row: _.h
     }, 1, {
-      col: _.i
+      col: {
+        x: 1,
+        row: _.i
+      }
+    }, 1, {
+      row: _.i
     }, 1, {
       row: _.j
     }, 1, {
+      col: {
+        outside: !0,
+        row: _.k
+      }
+    }, 1, {
       row: _.k
-    }, 1, {
-      col: _.l
-    }, 1, {
-      row: _.m
     }],
     "packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_1_item 3 5 7 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_3_row 11 13 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_2_col 9 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_3_row 17 19 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_2_col 15 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_3_row 23 packages/runtime-tags/src/__tests__/fixtures/at-tags-dynamic/tags/hello/index.marko_2_col 21"
   ];

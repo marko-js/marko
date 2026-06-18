@@ -17,7 +17,7 @@ var child_default = _template("b", (input) => {
 		$si__input_button && writeScope($scope1_id, { c: button });
 	}, 0, $scope0_id, "a", $sg__input_button, 1, $sg__input_button, "</div>");
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { e: htmlInput });
+	writeScope($scope0_id, {});
 });
 
 // template.marko

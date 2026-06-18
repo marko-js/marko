@@ -7,7 +7,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/1", content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/tags/child.marko_0_rest");
-	writeScope($scope0_id, { rest }, "__tests__/tags/child.marko", 0, { rest: "1:22" });
+	writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 
 // template.marko

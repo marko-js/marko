@@ -11,7 +11,7 @@
            yield this
          }
        },
-       *[(_.a = [_.c = {
+       *[(_.a = [{
          value: 1,
          desc: {
            content: _(1, "a1"),
@@ -26,18 +26,6 @@
      }
    }, 1, {
      _: _(2)
-   }, 1, {
-     f: {
-       value: 1,
-       *[(_.b = [_.c], Symbol.iterator)]() {
-         yield this;
-         yield* _.b
-       }
-     }
-   }, 1, {
-     f: {
-       value: 1
-     }
    }], "b0 6 8"];
    M._.w()
  </script>

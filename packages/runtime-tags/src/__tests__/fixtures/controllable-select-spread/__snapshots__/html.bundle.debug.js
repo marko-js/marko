@@ -10,7 +10,7 @@ var my_select_default = _template("__tests__/tags/my-select.marko", (input) => {
 	});
 	_html(_el_resume($scope0_id, "#select/0"));
 	_script($scope0_id, "__tests__/tags/my-select.marko_0_input");
-	writeScope($scope0_id, { input }, "__tests__/tags/my-select.marko", 0, { input: 0 });
+	writeScope($scope0_id, {}, "__tests__/tags/my-select.marko", 0);
 });
 
 // template.marko
@@ -24,11 +24,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		valueChange: _resume(function(v) {
 			value = v;
 		}, "__tests__/template.marko_0/valueChange", $scope0_id),
-		content: _content_resume("__tests__/template.marko_1_content", () => {
+		content: _content("__tests__/template.marko_1_content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`<option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option><option${_attr_option_value("c")}>C</option>`);
-		}, $scope0_id)
+		})
 	});
 	_html(`<span>${_escape(value)}${_el_resume($scope0_id, "#text/1")}</span>`);
 	writeScope($scope0_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", 0);

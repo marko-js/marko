@@ -50,12 +50,12 @@
           yield* _.d
         }
       },
-      *[(_.e = [_.i = {
+      *[(_.e = [{
         x: 1,
-        row: _.j = {
+        row: _.i = {
           row: "c",
           content: _(1, "a2"),
-          *[(_.f = [_.k = {
+          *[(_.f = [_.j = {
             row: "d",
             content: _(1, "a2")
           }], Symbol.iterator)]() {
@@ -63,9 +63,9 @@
             yield* _.f
           }
         }
-      }, _.l = {
+      }, {
         outside: !0,
-        row: _.m = {
+        row: _.k = {
           row: -1,
           content: _(1, "a3"),
           *[Symbol.iterator]() {
@@ -82,15 +82,21 @@
   }, 1, {
     d: _.h
   }, 1, {
+    d: {
+      x: 1,
+      row: _.i
+    }
+  }, 1, {
     d: _.i
   }, 1, {
     d: _.j
   }, 1, {
+    d: {
+      outside: !0,
+      row: _.k
+    }
+  }, 1, {
     d: _.k
-  }, 1, {
-    d: _.l
-  }, 1, {
-    d: _.m
   }], "b0 3 5 7 b1 11 13 b2 9 b1 17 19 b2 15 b1 23 b2 21"];
   M._.w()
 </script>

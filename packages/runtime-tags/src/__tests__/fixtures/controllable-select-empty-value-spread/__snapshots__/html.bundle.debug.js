@@ -12,6 +12,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`${_el_resume($scope0_id, "#select/0")}<output>${_escape(value === undefined ? "undefined" : "value=" + value)}${_el_resume($scope0_id, "#text/2")}</output>`);
 	_script($scope0_id, "__tests__/template.marko_0_placeholder");
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { placeholder }, "__tests__/template.marko", 0, { placeholder: "2:8" });
+	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 	_resume_branch($scope0_id);
 }, 1);

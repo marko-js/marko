@@ -1,0 +1,21 @@
+<div class=h>Hello</div><!--M_*2 #div/0-->
+<div class=echo>Hello</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+      "BranchScopes:#div/0": _(3),
+      "ConditionalRenderer:#div/0": "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-attr-tag-also-custom/template.marko_1_content",
+      input_head: {
+        class: "h",
+        content: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-attr-tag-also-custom/template.marko_1_content"
+          ),
+        *[Symbol.iterator]() {
+          yield this
+        }
+      }
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-attr-tag-also-custom/tags/my-box.marko_0_input_head 2"
+  ];
+  M._.w()
+</script>

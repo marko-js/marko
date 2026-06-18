@@ -71,7 +71,10 @@ export interface Section {
   returnSerializeReason: SerializeReason | undefined;
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
-  downstreamBinding: { binding: Binding; properties: Opt<string> } | undefined;
+  downstreamBinding:
+    | { binding: Binding; properties: Opt<string> }
+    | false
+    | undefined;
   hasAbortSignal: boolean;
   readsOwner: boolean;
   isBranch: boolean;

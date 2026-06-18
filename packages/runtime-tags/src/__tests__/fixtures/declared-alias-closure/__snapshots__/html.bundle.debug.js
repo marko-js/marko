@@ -10,9 +10,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_attrs_content(input, "#div/0", $scope3_id, "div");
 		_html(`</div>${_el_resume($scope3_id, "#div/0")}`);
 		_script($scope3_id, "__tests__/template.marko_3_input");
-		writeScope($scope3_id, { input }, "__tests__/template.marko", "2:2", { input: "2:15" });
+		writeScope($scope3_id, {}, "__tests__/template.marko", "2:2");
 	}) };
-	Child.content({ content: _content_resume("__tests__/template.marko_1_content", () => {
+	Child.content({ content: _content("__tests__/template.marko_1_content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		if (value) {
@@ -23,7 +23,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 		writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
 		_resume_branch($scope1_id);
-	}, $scope0_id) });
+	}) });
 	writeScope($scope0_id, {
 		value,
 		value_class: value?.class,

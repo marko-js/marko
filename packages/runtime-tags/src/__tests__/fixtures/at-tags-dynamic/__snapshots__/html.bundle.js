@@ -24,7 +24,10 @@ var hello_default = _template("b", (input) => {
 			writeScope($scope3_id, { d: row });
 		}, 0, $scope2_id, "b", $sg__input_col, $sg__input_col, $sg__input_col, 0, 1);
 		_script($scope2_id, "b2");
-		writeScope($scope2_id, { d: col });
+		writeScope($scope2_id, { d: {
+			...col,
+			content: void 0
+		} });
 	}, 0, $scope0_id, "b", $sg__input_col, $sg__input_col, $sg__input_list_item__OR__input_col);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
 });

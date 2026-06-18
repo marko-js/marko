@@ -1,0 +1,19 @@
+<input value=hi><!--M_*2 #input/0--><span>hi<!--M_*2 #text/1--></span>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "#childScope/0": _(2)
+    }, {
+      "ControlledType:#input/0": 2,
+      "ControlledHandler:#input/0": _.a = _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/input-spread-value-also-read/template.marko_0/valueChange"
+        ),
+      input: {
+        value: "hi",
+        valueChange: _.a
+      }
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/input-spread-value-also-read/tags/my-input.marko_0_input 2"
+  ];
+  M._.w()
+</script>

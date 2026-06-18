@@ -17,7 +17,7 @@ import { getAccessorProp } from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
 import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
 import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
-import { type Opt, push } from "../../util/optional";
+import { includes, type Opt, push } from "../../util/optional";
 import {
   type Binding,
   BindingType,
@@ -194,6 +194,7 @@ export default {
         }
 
         if (spreadReferenceNodes) {
+          const isMergedSpread = !!relatedControllable;
           if (
             relatedControllable &&
             !relatedControllable.attrs.every(Boolean)
@@ -205,7 +206,48 @@ export default {
             }
             relatedControllable = undefined;
           }
-          mergeReferences(tagSection, tag.node, spreadReferenceNodes);
+          const spreadExtra = mergeReferences(
+            tagSection,
+            tag.node,
+            spreadReferenceNodes,
+          );
+
+          spreadExtra.nativeTagSpread = true;
+          if (isMergedSpread) {
+            spreadExtra.nativeTagSpreadMerged = true;
+          }
+
+          let carveProperties = getSpreadControllableValueProps(tagName);
+          if (
+            !tag.node.body.body.length &&
+            !isTextOnly &&
+            !getTagDef(tag)?.parseOptions?.openTagOnly &&
+            !seen.content
+          ) {
+            if (carveProperties) {
+              carveProperties.push("content");
+            } else {
+              carveProperties = ["content"];
+            }
+          }
+          for (const node of spreadReferenceNodes) {
+            const spreadBinding = node.extra?.spreadFrom;
+            if (spreadBinding) {
+              spreadBinding.noSerialize = true;
+              if (carveProperties) {
+                for (const property of carveProperties) {
+                  if (
+                    !includes(spreadBinding.noSerializeProperties, property)
+                  ) {
+                    spreadBinding.noSerializeProperties = push(
+                      spreadBinding.noSerializeProperties,
+                      property,
+                    );
+                  }
+                }
+              }
+            }
+          }
         } else {
           relatedControllable = getRelatedControllable(tagName, seen);
         }
@@ -859,6 +901,19 @@ export default {
     },
   }),
 } satisfies TemplateVisitor<t.MarkoTag>;
+
+function getSpreadControllableValueProps(tagName: string) {
+  switch (tagName) {
+    case "input":
+      return ["value", "checked", "checkedValue"];
+    case "select":
+    case "textarea":
+      return ["value"];
+    case "details":
+    case "dialog":
+      return ["open"];
+  }
+}
 
 type RelatedControllable = ReturnType<typeof getRelatedControllable>;
 function getRelatedControllable(
