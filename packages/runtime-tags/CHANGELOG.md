@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.1.11
+
+### Patch Changes
+
+- [#3229](https://github.com/marko-js/marko/pull/3229) [`e22546b`](https://github.com/marko-js/marko/commit/e22546b86f26a997afa06cecc630e13d256176a6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reduce serialization when providing spread content to a native tag.
+
+- [#3228](https://github.com/marko-js/marko/pull/3228) [`8ff8a5d`](https://github.com/marko-js/marko/commit/8ff8a5dc786e4c39dc9908871a7f73810bb501f4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Normalize void and empty-string attribute values consistently across SSR and CSR. A generic dynamic attribute with an empty string now renders as a present (bare) attribute matching the server output, instead of being removed on the client. For controllable form values (`checkedValue`, `<select>`/`<option>` value), `null`/`undefined`/`false`/`""` are all treated as the same empty value, so a void binding matches an empty `value` or `<option value="">` placeholder — the same on the server and the client.
+
 ## 6.1.10
 
 ### Patch Changes
