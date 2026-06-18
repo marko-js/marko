@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 6.1.10
+
+### Patch Changes
+
+- [#3225](https://github.com/marko-js/marko/pull/3225) [`5b1c199`](https://github.com/marko-js/marko/commit/5b1c199049f857628d7e9ad3c2fd1a038fd98334) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue serialized array buffers which are duplicated in the stream.
+
+- [#3225](https://github.com/marko-js/marko/pull/3225) [`43ec366`](https://github.com/marko-js/marko/commit/43ec3666ac44a2bb529359486d0ad0a9dfcd189d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with unserializable whatwg request body.
+
+- [#3226](https://github.com/marko-js/marko/pull/3226) [`ff4df2d`](https://github.com/marko-js/marko/commit/ff4df2d9d6595af46c54b184d282c64b9285bbef) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve client side render queue performance.
+
+- [#3225](https://github.com/marko-js/marko/pull/3225) [`ca8bb7a`](https://github.com/marko-js/marko/commit/ca8bb7ab640e0ac19ce6594dc35746e67ab9a349) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix serializing formdata key value order.
+
 ## 6.1.9
 
 ### Patch Changes
