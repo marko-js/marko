@@ -1,0 +1,8 @@
+<let/value = ""/>
+<const/placeholder = { value: "" }/>
+<select value=value valueChange(v) { value = v }>
+  <option ...placeholder>-- choose --</option>
+  <option value="a">A</option>
+  <option value="b">B</option>
+</>
+<output>${value === undefined ? "undefined" : "value=" + value}</output>

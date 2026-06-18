@@ -1,3 +1,4 @@
+import { isNotVoid } from "../common/helpers";
 import {
   type Accessor,
   AccessorPrefix,
@@ -20,7 +21,7 @@ export function _attr_input_checked_default(
   checked: boolean,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
-  const normalizedChecked = normalizeBoolProp(checked);
+  const normalizedChecked = isNotVoid(checked);
   if (el.defaultChecked !== normalizedChecked) {
     const restoreValue = scope[AccessorProp.Creating]
       ? normalizedChecked
@@ -38,7 +39,7 @@ export function _attr_input_checked(
   checkedChange: unknown,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
-  const normalizedChecked = normalizeBoolProp(checked);
+  const normalizedChecked = isNotVoid(checked);
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = checkedChange;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = checkedChange
     ? ControlledType.InputChecked
@@ -80,7 +81,7 @@ export function _attr_input_checkedValue_default(
     ? checkedValue.map(normalizeStrProp)
     : normalizeStrProp(checkedValue);
 
-  _attr(scope[nodeAccessor] as HTMLInputElement, "value", normalizedValue);
+  _attr(scope[nodeAccessor] as HTMLInputElement, "value", value);
   _attr_input_checked_default(
     scope,
     nodeAccessor,
@@ -98,13 +99,11 @@ export function _attr_input_checkedValue(
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
   const multiple = Array.isArray(checkedValue);
-  const normalizedValue = normalizeStrProp(value);
   const normalizedCheckedValue = (scope[
     AccessorPrefix.ControlledValue + nodeAccessor
   ] = multiple
     ? checkedValue.map(normalizeStrProp)
     : normalizeStrProp(checkedValue));
-  _attr(el, "value", normalizedValue);
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = checkedValueChange;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = checkedValueChange
     ? ControlledType.InputCheckedValue
@@ -112,15 +111,11 @@ export function _attr_input_checkedValue(
 
   if (checkedValueChange && !scope[AccessorProp.Creating]) {
     el.checked = multiple
-      ? normalizedCheckedValue.includes(normalizedValue)
-      : normalizedValue === normalizedCheckedValue;
+      ? normalizedCheckedValue.includes(normalizeStrProp(value))
+      : normalizeStrProp(value) === normalizedCheckedValue;
+    _attr(el, "value", value);
   } else {
-    _attr_input_checkedValue_default(
-      scope,
-      nodeAccessor,
-      normalizedCheckedValue,
-      normalizedValue,
-    );
+    _attr_input_checkedValue_default(scope, nodeAccessor, checkedValue, value);
   }
 }
 export function _attr_input_checkedValue_script(
@@ -177,7 +172,7 @@ export function _attr_input_value_default(
   value: unknown,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
-  const normalizedValue = normalizeStrProp(value);
+  const normalizedValue = normalizeAttrValue(value) || "";
   if (el.defaultValue !== normalizedValue) {
     const restoreValue = scope[AccessorProp.Creating]
       ? normalizedValue
@@ -193,7 +188,7 @@ export function _attr_input_value(
   valueChange: unknown,
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
-  const normalizedValue = normalizeStrProp(value);
+  const normalizedValue = normalizeAttrValue(value) || "";
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = valueChange;
   scope[AccessorPrefix.ControlledValue + nodeAccessor] = normalizedValue;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = valueChange
@@ -374,7 +369,7 @@ export function _attr_details_or_dialog_open_default(
   open: unknown,
 ) {
   if (scope[AccessorProp.Creating]) {
-    (scope[nodeAccessor] as HTMLDetailsElement).open = normalizeBoolProp(open);
+    (scope[nodeAccessor] as HTMLDetailsElement).open = isNotVoid(open);
   }
 }
 export function _attr_details_or_dialog_open(
@@ -384,7 +379,7 @@ export function _attr_details_or_dialog_open(
   openChange: unknown,
 ) {
   const normalizedOpen = (scope[AccessorPrefix.ControlledValue + nodeAccessor] =
-    normalizeBoolProp(open));
+    isNotVoid(open));
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = openChange;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = openChange
     ? ControlledType.DetailsOrDialogOpen
@@ -482,10 +477,6 @@ function hasFormElementChanged(el: Element) {
 
 function normalizeStrProp(value: unknown) {
   return normalizeAttrValue(value) || "";
-}
-
-function normalizeBoolProp(value: unknown) {
-  return value != null && value !== false;
 }
 
 function updateList(arr: unknown[], val: unknown, push: boolean) {

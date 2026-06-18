@@ -1,0 +1,8 @@
+<let/selected = null/>
+
+<input type="checkbox" checkedValue:=selected value=""/>
+<output>${selected === undefined
+  ? "undefined"
+  : selected === null
+    ? "null"
+    : "value=" + selected}</output>

@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 
-import { isVoid } from "../../common/helpers";
+import { isNotVoid, isVoid } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
 import evaluate from "../util/evaluate";
 import { isNonHTMLText } from "../util/is-non-html-text";
@@ -222,7 +222,7 @@ function isStaticText(node?: t.Node) {
     case "MarkoPlaceholder": {
       if (node.escape) {
         const { confident, computed } = evaluate(node.value);
-        return confident && !isVoid(computed);
+        return confident && isNotVoid(computed);
       } else {
         return false;
       }

@@ -3,6 +3,7 @@ import {
   getEventHandlerName,
   htmlAttrNameReg,
   isEventHandler,
+  isNotVoid,
   normalizeDynamicRenderer,
   stringifyClassObject,
   stringifyStyleObject,
@@ -410,7 +411,7 @@ function normalizeClientRender(value: any) {
 }
 
 export function normalizeAttrValue(value: unknown) {
-  if (value || value === 0) {
+  if (isNotVoid(value)) {
     return value === true ? "" : value + "";
   }
 }

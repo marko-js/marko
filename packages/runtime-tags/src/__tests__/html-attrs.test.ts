@@ -94,6 +94,30 @@ describe("runtime-tags/html/attrs", () => {
     });
   });
 
+  describe("checkedValue", () => {
+    const checkedValue = (checkedValue: unknown, value: unknown) =>
+      helpers._attr_input_checkedValue(0, "a", checkedValue, undefined, value);
+
+    it("checks the input when the value matches", () => {
+      assert.equal(checkedValue("x", "x"), " value=x checked");
+    });
+
+    it("treats a void or empty-string checkedValue and value as the same", () => {
+      for (const empty of [null, undefined, false, ""]) {
+        assert.equal(checkedValue(empty, ""), " value checked");
+        assert.equal(checkedValue(empty, "x"), " value=x");
+      }
+      assert.equal(checkedValue("", null), " checked");
+    });
+
+    it("matches a member of a checkedValue array", () => {
+      assert.equal(checkedValue(["a", "b"], "b"), " value=b checked");
+      assert.equal(checkedValue(["a", "b"], "c"), " value=c");
+      assert.equal(checkedValue([], ""), " value");
+      assert.equal(checkedValue([null], ""), " value checked");
+    });
+  });
+
   describe("classAttr", () => {
     it("should return empty string for empty values", () => {
       for (const value of emptyValues) {
