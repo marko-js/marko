@@ -60,6 +60,10 @@ export function isVoid(value: unknown) {
   return value == null || value === false;
 }
 
+export function isNotVoid(value: unknown) {
+  return value != null && value !== false;
+}
+
 export function normalizeDynamicRenderer<Renderer>(
   value: any,
 ): Renderer | string | undefined {

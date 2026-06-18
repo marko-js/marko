@@ -1,4 +1,4 @@
-// size: 2735 (min) 1333 (brotli)
+// size: 2768 (min) 1352 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -19,6 +19,9 @@ let decodeAccessor = (num) =>
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled;
+function isNotVoid(value) {
+  return value != null && value !== !1;
+}
 function _on(element, type, handler) {
   (element["$" + type] === void 0 &&
     defaultDelegator(element, type, handleDelegated),
@@ -214,7 +217,7 @@ function _text(node, value) {
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function normalizeAttrValue(value) {
-  if (value || value === 0) return value === !0 ? "" : value + "";
+  if (isNotVoid(value)) return value === !0 ? "" : value + "";
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;

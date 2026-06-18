@@ -3,6 +3,7 @@ import {
   getEventHandlerName,
   htmlAttrNameReg,
   isEventHandler,
+  isNotVoid,
   isVoid,
   stringifyClassObject,
   stringifyStyleObject,
@@ -115,7 +116,7 @@ export function _attr_input_checked(
       checkedChange,
     );
   }
-  return normalizeBoolAttrValue(checked) ? " checked" : "";
+  return isNotVoid(checked) ? " checked" : "";
 }
 
 export function _attr_input_checkedValue(
@@ -161,13 +162,13 @@ export function _attr_details_or_dialog_open(
   open: unknown,
   openChange: unknown,
 ) {
-  const normalizedOpen = normalizeBoolAttrValue(open);
+  const normalizedOpen = isNotVoid(open);
   if (openChange) {
     writeControlledScope(
       ControlledType.DetailsOrDialogOpen,
       scopeId,
       nodeAccessor,
-      normalizedOpen,
+      normalizedOpen || undefined,
       openChange,
     );
   }
@@ -205,7 +206,7 @@ export function _attrs(
           data.checked,
           data.checkedChange,
         );
-      } else if (data.checkedValue || data.checkedValueChange) {
+      } else if ("checkedValue" in data || data.checkedValueChange) {
         result += _attr_input_checkedValue(
           scopeId,
           nodeAccessor,
@@ -227,12 +228,12 @@ export function _attrs(
       break;
     case "select":
     case "textarea":
-      if (data.value || data.valueChange) {
+      if ("value" in data || data.valueChange) {
         skip = /^value(?:Change)?$|[\s/>"'=]/;
       }
       break;
     case "option":
-      if (data.value) {
+      if ("value" in data) {
         result += _attr_option_value(data.value);
         skip = /^value$|[\s/>"'=]/;
       }
@@ -429,10 +430,4 @@ function normalizedValueMatches(a: unknown, b: unknown) {
 
 function normalizeStrAttrValue(value: unknown) {
   return (value && value !== true) || value === 0 ? value + "" : "";
-}
-
-function normalizeBoolAttrValue(value: unknown) {
-  if (value != null && value !== false) {
-    return true;
-  }
 }
