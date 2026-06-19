@@ -20,7 +20,6 @@ import {
   caughtError,
   pendingEffects,
   type PendingRender,
-  pendingScopes,
   placeholderShown,
   prepareEffects,
   queueAsyncRender,
@@ -39,10 +38,12 @@ import {
 } from "./renderer";
 import { _resume, enableBranches } from "./resume";
 import {
+  collectScopes,
   destroyBranch,
   findBranchWithKey,
   insertBranchBefore,
   removeAndDestroyBranch,
+  syncGen,
   tempDetachBranch,
 } from "./scope";
 import { type Signal, subscribeToScopeSet } from "./signals";
@@ -139,7 +140,8 @@ export function _await_promise(
                 AccessorProp.DetachedAwait
               ]
             ) {
-              pendingScopes.push(awaitBranch);
+              awaitBranch[AccessorProp.PendingScopes] =
+                awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
               setupBranch(awaitBranch[AccessorProp.DetachedAwait], awaitBranch);
               awaitBranch[AccessorProp.DetachedAwait] = 0;
 
@@ -204,13 +206,17 @@ export function _await_content(
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
   const renderer = _content("", template, walks, setup)();
   return (scope: Scope) => {
-    (scope[branchAccessor] = createBranch(
-      scope[AccessorProp.Global],
-      renderer,
-      scope,
-      (scope[nodeAccessor] as ChildNode).parentNode!,
-    ))[AccessorProp.DetachedAwait] = renderer;
-    pendingScopes.pop();
+    const pendingScopes = collectScopes(
+      () =>
+        ((scope[branchAccessor] = createBranch(
+          scope[AccessorProp.Global],
+          renderer,
+          scope,
+          (scope[nodeAccessor] as ChildNode).parentNode!,
+        ))[AccessorProp.DetachedAwait] = renderer),
+    );
+    (scope[branchAccessor] as BranchScope)[AccessorProp.PendingScopes] =
+      pendingScopes;
   };
 }
 

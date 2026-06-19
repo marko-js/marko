@@ -1,4 +1,4 @@
-// size: 2563 (min) 1279 (brotli)
+// size: 2543 (min) 1278 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -8,11 +8,10 @@ let decodeAccessor = (num) =>
   registeredValues = {},
   curRenders,
   readyIds,
-  runId = 1,
-  pendingRenders = [],
-  pendingEffects = [],
-  pendingScopes = [],
   rendering,
+  runId = 2,
+  pendingEffects = [],
+  pendingRenders = [],
   scopeKeyOffset = 1e3,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
@@ -56,7 +55,7 @@ function _let(id, fn) {
   let valueAccessor = decodeAccessor(id);
   return (scope, value) => (
     rendering
-      ? scope.H && ((scope[valueAccessor] = value), fn?.(scope))
+      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
       : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
         ((scope[valueAccessor] = value), fn) &&
         (schedule(), queueRender(scope, fn, id)),
@@ -90,7 +89,11 @@ function init(runtimeId = "M") {
                 runtimeId,
                 renderId,
               }),
-            initScope = (scope) => ((scope.$ = initGlobal()), scope),
+            initScope = (scope) => (
+              (scope.H = 1),
+              (scope.$ = initGlobal()),
+              scope
+            ),
             applyScopes = (partials) => {
               let scopeId = partials[0];
               for (let i = 1; i < partials.length; i++) {
@@ -266,7 +269,5 @@ function runRenders() {
     }
     runRender(render);
   }
-  for (let scope of pendingScopes) scope.H = 0;
-  pendingScopes = [];
 }
 //#endregion

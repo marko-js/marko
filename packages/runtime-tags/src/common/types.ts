@@ -6,7 +6,6 @@ export interface BranchScope extends Scope {
   [AccessorProp.StartNode]: ChildNode;
   [AccessorProp.EndNode]: ChildNode;
   [AccessorProp.ParentBranch]: BranchScope | undefined;
-  [AccessorProp.Destroyed]: 1 | undefined;
   [AccessorProp.AbortScopes]: Set<Scope> | undefined;
   [AccessorProp.BranchScopes]: Set<BranchScope> | undefined;
   [AccessorProp.Renderer]: ClientRenderer | string;
@@ -15,12 +14,13 @@ export interface BranchScope extends Scope {
   [AccessorProp.PlaceholderBranch]: BranchScope | undefined | 0;
   [AccessorProp.PendingRenders]: PendingRender[] | 0 | undefined;
   [AccessorProp.DetachedAwait]: Renderer | 0 | undefined;
+  [AccessorProp.PendingScopes]: Scope[] | void;
 }
 export interface Scope {
   [AccessorProp.Owner]: Scope | undefined;
   [AccessorProp.Global]: Record<string, unknown>;
   [AccessorProp.Id]: number;
-  [AccessorProp.Creating]: 1 | 0 | undefined;
+  [AccessorProp.Gen]: number;
   [AccessorProp.AbortControllers]:
     | Record<string | number, AbortController | void>
     | undefined;
