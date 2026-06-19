@@ -72,19 +72,27 @@ In priority order:
 Every node in a page falls into one tier (the reactive vs server‑only split is the
 existing `kStateful` axis):
 
-| Tier | Structure decided by | Render code | Per‑nav transport |
-| --- | --- | --- | --- |
-| **Reactive** | client signals | primary bundle | **state only** |
-| **Server‑only (default)** | server | none on client | **streamed compressed HTML** for the changed subtree |
-| **Server‑only (optimized)** *(opt‑in, §6)* | server → serialized discriminant | lazy per‑route **`updates` chunk** (logic stripped) | **state + discriminant — no HTML** once warm |
-| Static / invariant | — | — | 0 (skipped) |
+| Tier | Structure decided by | Render code | Per‑nav transport | Continuity |
+| --- | --- | --- | --- | --- |
+| **Reactive** | client signals | primary bundle | **state only** | fine‑grained (reconcile) |
+| **Server‑only (optimized)** *(§6)* | server → serialized discriminant | lazy per‑route **`updates` chunk** (logic stripped) | **state + discriminant — no HTML** | fine‑grained (reconcile) |
+| **Server‑only (HTML)** *(default / cold)* | server | none on client | **streamed HTML** for the changed subtree | page‑level only (subtree torn down) |
+| Static / invariant | — | — | 0 (skipped) | n/a |
 
 Reactive and optimized‑server‑only share **one warm apply path**: feed new serialized
 scope state into the live tree; every boundary reconciles via `_if`/`_for`/
 `_content_resume`, differing only in input source (live signal vs serialized decision).
-The default server‑only path streams HTML — which is simple, needs no extra client JS,
-works everywhere, and (importantly) is parsed by the browser's highly‑optimized
-streaming HTML parser rather than costing main‑thread JS.
+The HTML tier is simple, needs no extra client JS, works cold, and is parsed by the
+browser's optimized streaming parser rather than costing main‑thread JS.
+
+**Continuity is often the deciding axis — not bytes (prototype, §17).** The reconcile
+tiers preserve *within‑subtree* state: interactive islands, focus, scroll position,
+in‑flight media. The HTML tier **replaces** the changed subtree, so any stateful islands
+inside it reset. And on content‑heavy pages the HTML tier's byte win over a full reload is
+modest (the prototype measured a re‑sorted list fragment at ~90% of the full page) — its
+real value is avoiding a *document* reload, not subtree bytes. So: prefer a reconcile tier
+for regions with interactive content or on common navigation paths; use the HTML tier as
+the universal cold/fallback.
 
 ## 5. Stream the response + render only what changed
 
@@ -92,9 +100,12 @@ The navigation response is produced with the existing `Chunk`/`Boundary`/reorder
 machinery:
 
 * **Partial render.** Using the request's view signature (§9), the server renders only
-  the **changed subtree**; shell/persistent regions are skipped entirely. This cuts
-  both server CPU/TTFB and bytes, and is the main structural byte‑saver (more than the
-  updates chunk for typical pages).
+  the **changed subtree**; shell/persistent regions are skipped entirely. Its dominant
+  wins are server CPU/TTFB and **skipping unchanged regions outright**. Note (prototype,
+  §17): for the *changed subtree itself*, streamed HTML is only modestly smaller than a
+  full reload on content‑heavy pages — the per‑region byte win comes from the **state
+  tier** (§6), not from HTML. Partial render is therefore primarily a *latency* and
+  *skip‑unchanged* lever, not a per‑region byte lever.
 * **Streaming.** Fast regions flush immediately; slow/async regions stream in via the
   existing reorder protocol, so first meaningful paint of the new content is gated by
   the *fastest* region, not the slowest data dependency.
@@ -126,13 +137,20 @@ export const profile = _template("p", /* … */ (scope) =>
 );
 ```
 
-**It is not applied universally.** Compressed HTTP already makes repeated HTML structure
-cheap, while an updates chunk costs total JS + a build target. So the compiler opts a
-route/component in **only when analysis projects a net win** — high structural repetition
-(large lists/tables), high navigation frequency between structurally similar pages — or
-when explicitly annotated. Otherwise the default streamed‑HTML path (§5) is used. This
-keeps content sites lean while still capturing the data‑dense‑app case. The opt‑in
-decision is a natural extension of the existing serialize‑reason / reference analysis.
+**It is not applied universally** (it costs total JS + a build target). The compiler opts
+a route/region in when **either** criterion holds:
+
+1. **Byte economics** — expected inbound navigations × per‑nav saving > chunk size. The
+   prototype's chunk (~1.9 KB gz) amortized after **~3 navigations** (§17), so any route on
+   a common navigation path qualifies — this is broader than "data‑dense apps only."
+2. **Within‑subtree continuity** — the region contains **stateful interactive islands** (or
+   list rows the user interacts with). Here the reconcile tier is preferred *regardless of
+   bytes*, because the HTML tier would tear the subtree down and reset those islands
+   (§4, §17).
+
+Otherwise the streamed‑HTML path (§5) is the default — it needs no chunk and works cold.
+Both criteria extend the existing serialize‑reason / reference analysis, which already
+knows island placement and value flow.
 
 ## 7. Serializing the server's decision (optimized tier)
 
@@ -251,9 +269,14 @@ lazy, per‑route, build‑hash‑cached, and never loaded for non‑navigating 
 
 * **Latency vs bytes** — *Chosen:* attack latency first (prefetch §8, streaming §5);
   treat byte‑shaving (updates chunk) as secondary and adaptive.
-* **Updates chunk: total JS vs per‑nav bytes** — *Chosen:* not universal; analysis‑gated
-  (§6), with compressed HTML streaming as the default. Protects content sites; captures
-  data‑dense apps.
+* **Updates chunk: total JS vs per‑nav bytes** — *Chosen:* analysis‑gated (§6); HTML
+  streaming is the cold/universal default. Validated economics: the chunk amortized after
+  ~3 navigations (§17), so it is the right default for **common navigation paths**, not
+  just data‑dense apps.
+* **Continuity vs simplicity (prototype‑driven)** — *Chosen:* prefer a reconcile tier for
+  regions with stateful islands even when bytes are similar. The HTML tier keeps
+  *page‑level* continuity (no document reload) but tears down the changed subtree, resetting
+  islands/focus inside it (§4, §17).
 * **Cold first nav** — *Chosen:* don't block; stream HTML once, lazily warm the chunk;
   prefetch‑on‑intent usually hides it anyway.
 * **Granularity** — *Chosen:* per page/route chunk + `_shared`.
@@ -368,6 +391,13 @@ large, stable collections (lists/tables/feeds): the client adds a compact key/ve
 hint to `X-Marko-View`; the server sends discriminant order + holes only for keys the
 client lacks. It stays stateless (the hint is request-carried) and degrades to plain
 tier C when absent.
+
+Use it **selectively**: the hint has a request cost (the prototype's 48‑key hint was
+~280 B raw, net‑positive only because the response saved more), so encode keys compactly
+(id ranges / deltas) and skip it for small collections. Conceptually it extends the
+view‑signature spectrum already in §9: a **content hash** per region (cheap, already sent)
+detects *unchanged → skip*; adding a **key set** additionally enables *partial reuse /
+reorder‑only*. Bound it to large, stable collections so the request stays small.
 
 ## 18. Forms, head, history (brief)
 
