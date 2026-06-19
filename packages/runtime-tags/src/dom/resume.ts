@@ -135,6 +135,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             renderId,
           } as unknown as Scope) as unknown as Scope[AccessorProp.Global];
         const initScope = (scope: Scope) => {
+          scope[AccessorProp.Gen] = 1;
           scope[AccessorProp.Global] = initGlobal();
           if (branchesEnabled && scope[AccessorProp.ClosestBranchId]) {
             scope[AccessorProp.ClosestBranch] = getScope(

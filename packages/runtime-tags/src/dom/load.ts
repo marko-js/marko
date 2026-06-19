@@ -9,9 +9,9 @@ import {
   type Template,
 } from "../common/types";
 import { addAwaitCounter, renderCatch } from "./control-flow";
-import { _enable_catch, pendingScopes, queueAsyncRender } from "./queue";
+import { _enable_catch, queueAsyncRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
-import { insertBranchBefore } from "./scope";
+import { insertBranchBefore, syncGen } from "./scope";
 import type { Signal } from "./signals";
 import { _template } from "./template";
 
@@ -108,13 +108,12 @@ function insertLoaded(
   awaitCounter?: ReturnType<typeof addAwaitCounter>,
 ) {
   const parent = marker.parentNode as Element;
-  branch[AccessorProp.Creating] = 1;
+  syncGen(branch);
   renderer[RendererProp.Clone]!(branch, parent.namespaceURI!);
   setupBranch(renderer, branch);
   applyLoad(branch, () => {
     insertBranchBefore(branch, parent, marker);
     marker.remove();
-    pendingScopes.push(branch);
     awaitCounter?.c();
   });
 }
@@ -139,9 +138,8 @@ function applyLoad(scope: BranchScope, insert: () => void) {
         (signal) => {
           entry[LoadSignalValue.Signal] = signal;
           if (!--remaining) {
-            scope[AccessorProp.Creating] = 1;
-            pendingScopes.push(scope);
             queueAsyncRender(scope, (scope) => {
+              syncGen(scope);
               values.forEach((e) =>
                 e[LoadSignalValue.Signal]!._(scope, e[LoadSignalValue.Value]),
               );
@@ -164,7 +162,7 @@ export function _load_signal(load: () => Promise<LoadSignal>): Signal {
     pending ||= load();
     if (
       scope[AccessorProp.Load] ||
-      (!(AccessorProp.Load in scope) && scope[AccessorProp.Creating])
+      (!(AccessorProp.Load in scope) && scope[AccessorProp.Gen] === runId)
     ) {
       (scope[AccessorProp.Load] ||= new Map() as LoadValues).set(pending, {
         [LoadSignalValue.Value]: value,

@@ -1,9 +1,10 @@
 import { AccessorProp, type BranchScope, type Scope } from "../common/types";
 import { $signalReset } from "./abort-signal";
 import { insertChildNodes, removeChildNodes } from "./dom";
-import { pendingScopes } from "./queue";
+import { runId } from "./queue";
 
 let nextScopeId = 1e6; // Intentionally high to avoid conflict with server rendered ids.
+let collectingScopes: Scope[] | undefined;
 
 export function createScope(
   $global: Scope[AccessorProp.Global],
@@ -11,13 +12,48 @@ export function createScope(
 ): Scope {
   const scope = {
     [AccessorProp.Id]: nextScopeId++,
-    [AccessorProp.Creating]: 1,
+    [AccessorProp.Gen]: runId,
     [AccessorProp.ClosestBranch]: closestBranch,
     [AccessorProp.Global]: $global,
   } as Scope;
 
-  pendingScopes.push(scope);
+  collectingScopes?.push(scope);
   return scope;
+}
+
+export function syncGen(scope: Scope) {
+  scope[AccessorProp.Gen] = runId;
+}
+
+export function _assert_init(scope: Scope, accessor: string) {
+  if (
+    MARKO_DEBUG &&
+    (scope[AccessorProp.Gen] === runId || !(accessor in scope))
+  ) {
+    try {
+      // @ts-expect-error create a browser uninitialized variable error, and then update the message.
+      __UNINITIALIZED__;
+      const __UNINITIALIZED__ = 1;
+    } catch (err: any) {
+      err.message = err.message.replaceAll("__UNINITIALIZED__", accessor);
+      throw err;
+    }
+    throw new ReferenceError(
+      `Cannot access '${accessor}' before initialization`,
+    );
+  }
+  return scope[accessor];
+}
+
+export function collectScopes(fn: () => void) {
+  const prev = collectingScopes;
+  collectingScopes = [];
+  try {
+    fn();
+    return collectingScopes;
+  } finally {
+    collectingScopes = prev;
+  }
 }
 
 export function skipScope() {
@@ -43,7 +79,7 @@ export function destroyBranch(branch: BranchScope) {
 }
 
 export function destroyScope(scope: Scope) {
-  if (!scope[AccessorProp.Destroyed]) {
+  if (scope[AccessorProp.Gen]) {
     destroyNestedScopes(scope);
     resetControllers(scope);
   }
@@ -51,7 +87,7 @@ export function destroyScope(scope: Scope) {
 
 // TODO: turn into normal function declaration when resolved: https://github.com/oxc-project/oxc/issues/17364?issue=rolldown%7Crolldown%7C7666
 const destroyNestedScopes = function destroyNestedScopes(scope: Scope) {
-  scope[AccessorProp.Destroyed] = 1;
+  scope[AccessorProp.Gen] = 0;
   scope[AccessorProp.BranchScopes]?.forEach(destroyNestedScopes);
   scope[AccessorProp.AbortScopes]?.forEach(resetControllers);
 };

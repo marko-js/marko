@@ -8,7 +8,7 @@ import {
 } from "../common/types";
 import { _attr, normalizeAttrValue } from "./dom";
 import { createDelegator } from "./event";
-import { pendingEffects, run } from "./queue";
+import { pendingEffects, run, runId } from "./queue";
 import { resolveCursorPosition } from "./resolve-cursor-position";
 import { isResuming } from "./resume";
 
@@ -23,9 +23,8 @@ export function _attr_input_checked_default(
   const el = scope[nodeAccessor] as HTMLInputElement;
   const normalizedChecked = isNotVoid(checked);
   if (el.defaultChecked !== normalizedChecked) {
-    const restoreValue = scope[AccessorProp.Creating]
-      ? normalizedChecked
-      : el.checked;
+    const restoreValue =
+      scope[AccessorProp.Gen] < runId ? el.checked : normalizedChecked;
     el.defaultChecked = normalizedChecked;
     if (restoreValue !== normalizedChecked) {
       el.checked = restoreValue;
@@ -45,7 +44,7 @@ export function _attr_input_checked(
     ? ControlledType.InputChecked
     : ControlledType.None;
 
-  if (checkedChange && !scope[AccessorProp.Creating]) {
+  if (checkedChange && scope[AccessorProp.Gen] < runId) {
     el.checked = normalizedChecked;
   } else {
     _attr_input_checked_default(scope, nodeAccessor, normalizedChecked);
@@ -109,7 +108,7 @@ export function _attr_input_checkedValue(
     ? ControlledType.InputCheckedValue
     : ControlledType.None;
 
-  if (checkedValueChange && !scope[AccessorProp.Creating]) {
+  if (checkedValueChange && scope[AccessorProp.Gen] < runId) {
     el.checked = multiple
       ? normalizedCheckedValue.includes(normalizeStrProp(value))
       : normalizeStrProp(value) === normalizedCheckedValue;
@@ -174,9 +173,8 @@ export function _attr_input_value_default(
   const el = scope[nodeAccessor] as HTMLInputElement;
   const normalizedValue = normalizeAttrValue(value) || "";
   if (el.defaultValue !== normalizedValue) {
-    const restoreValue = scope[AccessorProp.Creating]
-      ? normalizedValue
-      : el.value;
+    const restoreValue =
+      scope[AccessorProp.Gen] < runId ? el.value : normalizedValue;
     el.defaultValue = normalizedValue;
     setInputValue(el, restoreValue);
   }
@@ -195,7 +193,7 @@ export function _attr_input_value(
     ? ControlledType.InputValue
     : ControlledType.None;
 
-  if (valueChange && !scope[AccessorProp.Creating]) {
+  if (valueChange && scope[AccessorProp.Gen] < runId) {
     setInputValue(el, normalizedValue);
   } else {
     _attr_input_value_default(scope, nodeAccessor, normalizedValue);
@@ -241,7 +239,7 @@ export function _attr_select_value_default(
 ) {
   let restoreValue: undefined | string | string[];
   const el = scope[nodeAccessor] as HTMLSelectElement;
-  const existing = !scope[AccessorProp.Creating];
+  const live = scope[AccessorProp.Gen] < runId;
   const multiple = Array.isArray(value);
   const normalizedValue = multiple
     ? value.map(normalizeStrProp)
@@ -253,7 +251,7 @@ export function _attr_select_value_default(
         ? normalizedValue.includes(opt.value)
         : opt.value === normalizedValue;
       if (opt.defaultSelected !== selected) {
-        if (existing) {
+        if (live) {
           restoreValue ??= getSelectValue(el, multiple);
         }
         opt.defaultSelected = selected;
@@ -272,7 +270,7 @@ export function _attr_select_value(
   valueChange: unknown,
 ) {
   const el = scope[nodeAccessor] as HTMLSelectElement;
-  const existing = !scope[AccessorProp.Creating];
+  const existing = scope[AccessorProp.Gen] < runId;
   const multiple = Array.isArray(value);
   const normalizedValue = (scope[
     AccessorPrefix.ControlledValue + nodeAccessor
@@ -368,7 +366,7 @@ export function _attr_details_or_dialog_open_default(
   nodeAccessor: Accessor,
   open: unknown,
 ) {
-  if (scope[AccessorProp.Creating]) {
+  if (scope[AccessorProp.Gen] === runId) {
     (scope[nodeAccessor] as HTMLDetailsElement).open = isNotVoid(open);
   }
 }
@@ -385,7 +383,7 @@ export function _attr_details_or_dialog_open(
     ? ControlledType.DetailsOrDialogOpen
     : ControlledType.None;
 
-  if (openChange && !scope[AccessorProp.Creating]) {
+  if (openChange && scope[AccessorProp.Gen] < runId) {
     (scope[nodeAccessor] as HTMLDetailsElement).open = normalizedOpen;
   } else {
     _attr_details_or_dialog_open_default(scope, nodeAccessor, normalizedOpen);

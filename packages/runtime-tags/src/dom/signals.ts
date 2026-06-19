@@ -11,7 +11,7 @@ import {
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
-import { queueEffect, queueRender, rendering } from "./queue";
+import { queueEffect, queueRender, rendering, runId } from "./queue";
 import { _resume } from "./resume";
 import { schedule } from "./schedule";
 
@@ -32,7 +32,7 @@ export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
 
   return (scope: Scope, value: T) => {
     if (rendering) {
-      if (scope[AccessorProp.Creating]) {
+      if (scope[AccessorProp.Gen] === runId) {
         scope[valueAccessor] = value;
         fn?.(scope);
       }
@@ -100,7 +100,7 @@ export function _or(
   }
 
   return (scope) => {
-    if (scope[AccessorProp.Creating]) {
+    if (scope[AccessorProp.Gen] === runId) {
       if (id in scope) {
         if (!--scope[id]) {
           fn(scope);
@@ -129,8 +129,8 @@ export function _for_closure(
         () => {
           for (const scope of scopes as BranchScope[]) {
             if (
-              !scope[AccessorProp.Creating] &&
-              !scope[AccessorProp.Destroyed]
+              scope[AccessorProp.Gen] > 0 &&
+              scope[AccessorProp.Gen] < runId
             ) {
               fn(scope);
             }
@@ -163,7 +163,8 @@ export function _if_closure(
     const ifScope = scope[scopeAccessor] as Scope | undefined;
     if (
       ifScope &&
-      !ifScope[AccessorProp.Creating] &&
+      ifScope[AccessorProp.Gen] > 0 &&
+      ifScope[AccessorProp.Gen] < runId &&
       (scope[branchAccessor] || 0) === branch
     ) {
       queueRender(ifScope, fn, -1);
@@ -198,7 +199,10 @@ export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {
   return (scope: Scope) => {
     if (scope[scopeInstances]) {
       for (const childScope of scope[scopeInstances] as Set<Scope>) {
-        if (!childScope[AccessorProp.Creating]) {
+        if (
+          childScope[AccessorProp.Gen] > 0 &&
+          childScope[AccessorProp.Gen] < runId
+        ) {
           queueRender(
             childScope,
             closureSignals[childScope[signalIndex] || 0],

@@ -1,12 +1,13 @@
-// size: 6520 (min) 2837 (brotli)
+// size: 6514 (min) 2852 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   defaultDelegator = /* @__PURE__ */ createDelegator(),
   parsers = {},
   nextScopeId = 1e6,
+  collectingScopes,
   destroyNestedScopes = function destroyNestedScopes(scope) {
-    ((scope.I = 1),
+    ((scope.H = 0),
       scope.D?.forEach(destroyNestedScopes),
       scope.B?.forEach(resetControllers));
   },
@@ -67,11 +68,10 @@ let decodeAccessor = (num) =>
       ? forOf(all, (item, i) => cb(item[by], [item, i]))
       : forOf(all, (item, i) => cb(by(item, i), [item, i]));
   }),
-  runId = 1,
-  pendingRenders = [],
-  pendingEffects = [],
-  pendingScopes = [],
   rendering,
+  runId = 2,
+  pendingEffects = [],
+  pendingRenders = [],
   scopeKeyOffset = 1e3,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
@@ -124,11 +124,11 @@ function parseHTML(html, ns) {
 function createScope($global, closestBranch) {
   let scope = {
     L: nextScopeId++,
-    H: 1,
+    H: runId,
     F: closestBranch,
     $: $global,
   };
-  return (pendingScopes.push(scope), scope);
+  return (collectingScopes?.push(scope), scope);
 }
 function skipScope() {
   return nextScopeId++;
@@ -163,7 +163,7 @@ function _let(id, fn) {
   let valueAccessor = decodeAccessor(id);
   return (scope, value) => (
     rendering
-      ? scope.H && ((scope[valueAccessor] = value), fn?.(scope))
+      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
       : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
         ((scope[valueAccessor] = value), fn) &&
         (schedule(), queueRender(scope, fn, id)),
@@ -188,7 +188,8 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
         queueRender(
           ownerScope,
           () => {
-            for (let scope of scopes) !scope.H && !scope.I && fn(scope);
+            for (let scope of scopes)
+              scope.H > 0 && scope.H < runId && fn(scope);
           },
           -1,
           0,
@@ -204,7 +205,8 @@ function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
     ownerSignal = (scope) => {
       let ifScope = scope[scopeAccessor];
       ifScope &&
-        !ifScope.H &&
+        ifScope.H > 0 &&
+        ifScope.H < runId &&
         (scope[branchAccessor] || 0) === branch &&
         queueRender(ifScope, fn, -1);
     };
@@ -588,12 +590,10 @@ function runRenders() {
     }
     runRender(render);
   }
-  for (let scope of pendingScopes) scope.H = 0;
-  pendingScopes = [];
 }
 function skipDestroyedRenders() {
   runRender = ((runRender) => (render) => {
-    render.b.F?.I || runRender(render);
+    render.b.F?.H !== 0 && runRender(render);
   })(runRender);
 }
 function $signalReset(scope, id) {

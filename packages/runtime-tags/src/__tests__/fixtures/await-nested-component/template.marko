@@ -1,0 +1,7 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<await|value|=resolveAfter("X", 1)>
+  <child x=value/>
+  <input value=value/>
+  <span>got: ${value}</span>
+</await>

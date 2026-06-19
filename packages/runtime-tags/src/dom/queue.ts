@@ -18,13 +18,12 @@ export type PendingRender = {
   [PendingRenderProp.Pending]?: 0 | 1;
 };
 
-let runId = 1;
-let pendingRenders: PendingRender[] = [];
+export let rendering: undefined | 0 | 1;
+export let runId = 2; // resumed scopes get `1`
 export const caughtError = new WeakSet<unknown[]>();
 export const placeholderShown = new WeakSet<unknown[]>();
 export let pendingEffects: unknown[] = [];
-export let pendingScopes: Scope[] = [];
-export let rendering: undefined | 0 | 1;
+let pendingRenders: PendingRender[] = [];
 
 const scopeKeyOffset = 1e3;
 export function queueRender<T, U extends Scope = Scope>(
@@ -161,12 +160,6 @@ function runRenders() {
 
     runRender(render);
   }
-
-  for (const scope of pendingScopes) {
-    scope[AccessorProp.Creating] = 0;
-  }
-
-  pendingScopes = [];
 }
 
 let runRender = (render: PendingRender) =>
@@ -180,9 +173,9 @@ let runRender = (render: PendingRender) =>
 export function skipDestroyedRenders() {
   runRender = ((runRender) => (render: PendingRender) => {
     if (
-      !render[PendingRenderProp.Scope][AccessorProp.ClosestBranch]?.[
-        AccessorProp.Destroyed
-      ]
+      render[PendingRenderProp.Scope][AccessorProp.ClosestBranch]?.[
+        AccessorProp.Gen
+      ] !== 0
     ) {
       runRender(render);
     }
@@ -220,9 +213,10 @@ export function _enable_catch() {
           for (; i < effects.length; ) {
             fn = effects[i++] as SignalFn;
             scope = effects[i++] as Scope;
-            branch = scope[AccessorProp.ClosestBranch];
             if (
-              !branch?.[AccessorProp.Destroyed] &&
+              (branch = scope[AccessorProp.ClosestBranch])?.[
+                AccessorProp.Gen
+              ] !== 0 &&
               !(checkPending && handlePendingTry(fn, scope, branch))
             ) {
               fn(scope);
