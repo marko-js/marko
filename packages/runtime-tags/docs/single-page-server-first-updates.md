@@ -336,7 +336,40 @@ dist/assets/
     search.<hash>.js          # /search opted-in server-only renderers, logic stripped
 ```
 
-## 17. Forms, head, history (brief)
+## 17. Prototype validation
+
+A dependency-free benchmark in [`prototype/spa-server-updates/`](../../../prototype/spa-server-updates/)
+models a storefront (persistent shell + reactive islands + server-only `<for>`/`<if>`)
+and measures the tiers across realistic navigations. Headline results (gzip):
+
+* **The mechanism is correct.** The client reconstructs the *exact* target outlet from
+  `(discriminant + final hole values)` using only the shared templates — verified
+  byte-identical to server SSR. Server-only logic never crosses the wire.
+* **State-only navigations ≈ ⅓ the bytes of a full reload** (31–38%), with no HTML —
+  and the prototype uses plain JSON, so Marko's tighter format would do better.
+* **Partial HTML fragments (tier B) are a weak win on list-heavy pages** (only 10–30%
+  smaller; 90% in a re-sort), confirming that partial-render + streaming is mainly a
+  *latency* play and the *byte* win comes from the state tier.
+* **The DOM-work/UX win is real and byte-independent:** re-sorting a 48-item list reused
+  all 48 rows (0 created, 47 moved) — preserving island state, images, focus, scroll —
+  where a full reload recreates everything.
+* **The adaptive updates-chunk tradeoff holds:** the one-time chunk (~1.9 KB gzip,
+  lazy/per-route) amortizes after ~3 navigations.
+
+### 17.1 Refinement surfaced by the prototype — optional list/version hint
+
+The base design's "send all changed-subtree state, equality-skip on the client" is
+optimal for *DOM work* but **not for wire bytes** on reuse/reorder-heavy navigations: a
+stateless server re-sends every row's holes even when only the order changed (re-sort:
+1076 B). Letting the client include a cheap **hint of the keys it currently shows** lets
+the server omit holes for reused keys, collapsing the response to **216 B (7.7% of a full
+reload)** for ~280 B of extra request. Recommended as an **optional optimization** for
+large, stable collections (lists/tables/feeds): the client adds a compact key/version
+hint to `X-Marko-View`; the server sends discriminant order + holes only for keys the
+client lacks. It stays stateless (the hint is request-carried) and degrades to plain
+tier C when absent.
+
+## 18. Forms, head, history (brief)
 
 * **Server‑first actions**: a `<form>` POST replies with the same patch‑stream; a mutation
   changing a deep server‑only region is a warm state+keys patch (optimized) or a streamed
