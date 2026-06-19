@@ -299,6 +299,35 @@ lazy, per‑route, build‑hash‑cached, and never loaded for non‑navigating 
 * **Stateless server** — every decision is a pure function of (request context, build
   constants, target render).
 
+## 14a. MVP implemented in‑repo (HTML tier)
+
+A first slice of the **client apply path** ships as a real, host‑agnostic runtime module:
+[`src/dom/navigate.ts`](../src/dom/navigate.ts), with a functional jsdom test in
+[`src/__tests__/spa-navigate.test.ts`](../src/__tests__/spa-navigate.test.ts).
+
+Run it:
+
+```sh
+npx mocha --grep "SPA server-first update MVP"   # from repo root
+```
+
+It covers the **streamed‑HTML tier** end‑to‑end against a real DOM:
+
+* `applyServerUpdate(update, opts)` — build‑hash guard with always‑correct full‑reload
+  fallback (stale build / explicit `reload`), outlet content swap **with document
+  continuity** (a sentinel + a live shell event listener survive the navigation), title
+  update, and a `resume(target)` hook where `init`/`initEmbedded` get wired in.
+* `executeScripts(container, doc)` — re‑creates `<script>`s from injected HTML so a
+  streamed resume payload actually runs (innerHTML never executes scripts). The test
+  asserts the payload executes after the swap.
+* `navigate(url, opts)` — fetches a navigation update with the `x-marko-*` headers,
+  guards the build, applies in place, records history, and falls back to
+  `location.assign` on a reload header, a build mismatch, or any fetch error.
+
+Deliberately *not* in the MVP (tracked as future work below): the state+discriminant
+tier and the `updates` chunk, partial‑render generation on the server, prefetch‑on‑intent,
+and link/`popstate` interception glue.
+
 ## 15. Compiler / runtime surface (sketch)
 
 Config: a `serverUpdates` flag in `packages/compiler/src/config.js`.
