@@ -8,36 +8,34 @@
 > branch/control‑flow machinery, and the streaming writer almost entirely
 > as‑is.
 
-## 1. Goals and non‑goals
+## 1. Goals and the governing principle
 
-Goals (from the request, restated as design constraints):
+Goals (from the request):
 
 1. **Low initial JS.** First paint stays (nearly) as cheap as today's resume.
-   The SPA layer is opt‑in and adds only a small navigation controller on top of
-   code the page already ships.
-2. **Low bytes over the wire per navigation.** A navigation sends the *smallest*
-   representation the client can turn back into a correct DOM + reactive tree,
-   preferring serialized **state** over rendered **HTML**, and sending **nothing**
-   for regions that did not change.
+2. **Low bytes over the wire per navigation.** Send the *smallest* representation
+   the client can turn back into a correct DOM + reactive tree; send **nothing**
+   for unchanged regions.
 3. **Incremental JS/HTML.** Reuse already‑loaded runtime and component chunks;
-   fetch only route‑specific chunks the client lacks, keyed by build hash so they
-   cache forever.
-4. **Stateless.** Servers keep **no** per‑client session state. Everything the
-   server needs to produce an optimal update is carried *in the request*
-   (build hash, structural signature, target URL) and compared against build‑time
-   constants.
-5. **Leverage cross‑template analysis.** The compiler already knows static
-   template HTML, walk codes, the section tree, serialize‑reasons, and stable
-   template/registry IDs. Use that whole‑program knowledge to decide, **per
-   section**, what travels as HTML, what travels as pure state, and what need not
-   travel at all.
-6. **Always‑correct fallback.** On any uncertainty — build hash mismatch,
-   incompatible structure, server‑only invariant, or error — fall back to a normal
-   full‑document navigation (`location.assign`).
+   stream HTML/state for changes; fetch only route chunks the client lacks, keyed
+   by build hash so they cache forever.
+4. **Stateless.** Servers keep **no** per‑client session state; the client carries
+   what's needed in the request, compared against build‑time constants.
+5. **Leverage cross‑template analysis** to choose optimization points per section.
+6. **Always‑correct fallback** to a full document navigation on any uncertainty.
 
-Non‑goals: a routing/data layer (this integrates with one, e.g. `@marko/run`, but
-does not define routes); client‑only SPAs (this is *server‑first*); changing the
-initial‑load resume wire format.
+### The governing principle: never ship server‑only logic
+
+> **The client bundle never contains control‑flow/business logic that the
+> compiler classified as server‑only.** That logic is tree‑shaken out. The client
+> is only ever two things: (a) a *renderer* of **bundled reactive templates**, and
+> (b) an *adopter* of **HTML the server sends**. It never evaluates a server‑only
+> `if` condition or `for` iteration — it only ever receives their *output* as HTML.
+
+Everything below follows from this principle. The client cannot synthesize
+server‑only structure, so any navigation that changes server‑only structure must
+receive HTML (or fall back to reload). Conversely, anything bundled for the browser
+can be updated by sending **state only** and letting the bundled paths run.
 
 ## 2. The existing machinery we build on
 
@@ -45,156 +43,139 @@ This design is deliberately *additive*. The load‑bearing primitives already ex
 
 | Concern | Today | File(s) |
 | --- | --- | --- |
-| Serialize scope state + effects | `Serializer.stringifyScopes`, scope‑fill `[id,{props},Δ,{props}]`, effect token strings `"regId scopeId …"`, `_(id)` refs, deferred mutations `$.x.f(v)` | `src/html/serializer.ts`, `src/html/writer.ts` |
-| Resume a server render | `init(runtimeId)` → `serializeContext`, `applyScopes`, `getScope`, `processResumes`, comment‑marker walk | `src/dom/resume.ts`, `src/html/inlined-runtimes.ts` |
-| Reactive updates | signals `(scope,value)=>void`, min‑heap queue keyed `scopeId*1000+signalKey`, microtask `schedule()` | `src/dom/signals.ts`, `src/dom/queue.ts` |
-| Materialize fresh content | `_content`/`_template` clone cache, `walk` codes, `createBranch`, `mount()` | `src/dom/renderer.ts`, `src/dom/walker.ts`, `src/dom/template.ts` |
-| Swap/splice a subtree | conditional renderer / branch swap, keyed list reconcile (LIS), `removeAndDestroyBranch` + abort lifecycle, branch `StartNode`/`EndNode` | `src/dom/control-flow.ts`, `src/dom/scope.ts` |
-| Branch resume markers, gated by statefulness | `ResumeSymbol.BranchStart`/`BranchEnd`, `writeBranch*` with a `serializeBranch` flag (`0` = no resume) | `src/html/writer.ts`, `src/common/types.ts` |
-| Per‑section "ship to browser?" decision | `serializeReason` / `kStatefulReason` / `kBranchSerializeReason`; only stateful control flow emits a DOM `_if`/`_for` + branch markers | `src/translator/core/if.ts`, `core/for.ts`, `util/serialize-reasons.ts` |
+| Serialize scope state + effects | `Serializer.stringifyScopes`, scope‑fill `[id,{props},Δ,{props}]`, effect tokens `"regId scopeId …"`, `_(id)` refs | `src/html/serializer.ts`, `src/html/writer.ts` |
+| **Resume from self‑describing HTML** | `init` → walk reads **embedded comment markers** (`ResumeSymbol.Node`=`*`, `BranchStart`=`[`, `BranchEnd`=`]` + scope/accessor tokens) to find holes; `applyScopes`/`processResumes` fill them | `src/dom/resume.ts`, `src/common/types.ts` |
+| **Render bundled templates** (clone + walk) | `_content`/`_template` clone cache + `walk` codes attach reactive bindings to a freshly‑cloned template | `src/dom/renderer.ts`, `src/dom/walker.ts`, `src/dom/template.ts` |
+| Reactive updates | signals `(scope,value)=>void`, min‑heap queue, microtask `schedule()`; signals **skip when `value===current`** | `src/dom/signals.ts`, `src/dom/queue.ts` |
+| Splice a subtree | branch scope `StartNode`/`EndNode`, `createBranch`, `removeAndDestroyBranch` + abort lifecycle, keyed reconcile (LIS) | `src/dom/control-flow.ts`, `src/dom/scope.ts` |
+| Branch markers gated by statefulness | `writeBranch*` with a `serializeBranch` flag; today only **stateful** control flow emits markers | `src/html/writer.ts`, `src/translator/core/if.ts`,`core/for.ts` |
 | Stream after first byte; gate on readiness | `Chunk`/`Boundary`/`State`, reorder runtime (`<t>`), `ready(readyId)` | `src/html/writer.ts`, `src/dom/load.ts` |
-| Stable identity across server & client builds | `getTemplateId`, `getResumeRegisterId` (`templateId_sectionId_binding/type`), content `Hash` | `packages/compiler/src/babel-utils/tags.js`, `src/translator/util/signals.ts` |
+| Stable identity across builds | `getTemplateId`, `getResumeRegisterId`, content `Hash` | `packages/compiler/src/babel-utils/tags.js`, `src/translator/util/signals.ts` |
 
-**Two key observations.**
+**The unifying observation.** `walk` already serves both faces of rendering: it
+walks **freshly‑cloned bundled templates** (client render) *and* **server HTML via
+embedded markers** (resume). A "hole" — a position where a reactive value or a
+nested island lives — is the attach point in both. So the same machinery can render
+a bundled template into a hole *or* resume a server‑sent fragment into the DOM. The
+only thing missing is to (1) mark **all** control flow so every region is
+self‑describing and addressable, and (2) deliver HTML+state incrementally over a
+fetch instead of only in the initial document.
 
-1. Marko's resume payload is *already a patch*: "given this server DOM, here is the
-   state + effects to make it live." A navigation is the same problem at a higher
-   level. We reuse the same serializer and the same `applyScopes`/branch‑swap.
+## 3. Templates are `HTML + walks + holes`; the source is the bundle *or* the wire
 
-2. **The compiler already classifies every control flow as reactive or
-   server‑only**, and only reactive control flow ships a client signal + branch
-   markers. A reactive `<if>` whose condition is `kStatefulReason` compiles to a
-   DOM `_if` that reconciles itself; a non‑stateful `<if>` compiles to **pure HTML
-   with no markers and no client code**. That existing classification is exactly
-   the axis the request asks us to split on — "if it's bundled for the browser,
-   make those paths run; otherwise send minimal scope/HTML."
+A Marko renderer is essentially `(templateHTML, walkCodes, setup, params)`:
 
-## 3. Core model: reactive scopes *replay*, server‑only branches *splice* — at any level
+* For **reactive** content, all of these live in the **JS bundle**. The client can
+  produce the HTML itself (clone the bundled string) and fill holes from state.
+* For **server‑only** content, the *generating logic* is tree‑shaken — the client
+  has **no template string** for it. But a *specific render's* output is just: an
+  **HTML string** (self‑describing via markers) + the **hole state**. The server
+  streams that; the client adopts the HTML and walks it.
 
-A page is one tree of scopes containing two kinds of mutable regions, which the
-compiler **already** distinguishes. On navigation we update each in the cheapest
-way, **wherever it sits in the tree** — there is no privileged single outlet.
-
-### 3.1 Reactive regions → transmit **state**, replay on the client
-
-Any scope/value/control‑flow the compiler shipped to the browser (it is
-`kStateful`/interactive) is updated by sending **only new state**. The client
-feeds the values into the *existing* signals and the compiled DOM paths run:
-
-* a reactive `<text>`/`<attr>` → the `_let`/derived signal sets the new value;
-* a reactive `<if>` whose condition depends on the route → the `_if` signal runs,
-  creates/destroys branches using its **bundled** renderers (clone + walk);
-* a reactive `<for>` → the `_for` signal runs keyed reconciliation (LIS) using its
-  bundled renderer.
-
-The reactive queue computes the minimal DOM mutation. Because signals already skip
-when `value === current` (`src/dom/signals.ts`), the server can transmit reactive
-state **without diffing** — the client's equality checks make it an effective diff,
-which is what keeps the **server stateless**. Cost over the wire: the changed
-values only; **no HTML, no component JS**.
-
-> Interactivity propagation guarantees this composes downward: if a reactive `<if>`
-> can *recreate* a branch on the client, the compiler has already bundled the
-> renderers for everything structurally inside that branch (including nested
-> `<for>`/`<if>`). So "a reactive control flow that needs to recreate server‑only
-> content" cannot occur — the server‑only case below only arises in regions the
-> client never structurally recreates during the page's lifetime.
-
-### 3.2 Server‑only regions → transmit **HTML**, splice via a *passive branch*
-
-Server‑only control flow (a non‑stateful `<if>`/`<for>`, or any subtree whose
-structure the client has no code to reproduce) cannot be replayed from state. On
-navigation its structure may change anyway (different route, different data). We
-make each such boundary an addressable **passive branch** and splice it.
-
-A *passive branch* is a normal Marko **branch scope** — it has `StartNode`/
-`EndNode`, parent linkage, and participates in `removeAndDestroyBranch` + the abort
-lifecycle — **but it has no client `_if`/`_for` signal.** Its structure is decided
-by the *server* (via a navigation patch), not by a client signal. Concretely, in
-SPA mode the compiler emits branch resume markers for these boundaries
-(`serializeBranch = 1`, the same `ResumeSymbol.BranchStart`/`BranchEnd` already
-used for stateful branches) even though no signal is shipped.
-
-This means **reactive branches and server‑only branches are the same runtime
-object** (`BranchScope`); they differ only in *who decides the structure* and *what
-is transmitted*:
-
-| | decided by | transmitted as | applied by |
-| --- | --- | --- | --- |
-| reactive branch | client signal | state | `_if`/`_for` (existing) |
-| passive branch | server | HTML + resume payload | navigation splice (new) |
-
-Splicing a passive branch reuses existing code end‑to‑end:
-`removeAndDestroyBranch(old)` (fires `onDestroy`/aborts, removes DOM between
-`StartNode`/`EndNode`) → insert the new HTML fragment → `walk` + `applyScopes` +
-resume effects to bring up any **reactive islands inside** the fragment → link the
-new branch to its parent. That is the initial‑resume path applied to a fragment.
-
-### 3.3 The general picture
+Either way the client uses the **same** clone/walk/resume code. The difference is
+purely *where the HTML comes from* — and we never send the logic, only its output.
 
 ```
- document
- ├─ layout (mostly reactive + invariant server‑only → usually unchanged)
- │   ├─ <nav>            reactive: active link  → STATE patch (or no‑op)
- │   └─ server‑only <if> "logged in?"  invariant → not marked, not sent
- └─ page content (the changed subtree)
-     ├─ reactive <for> comments         → STATE patch (keyed reconcile runs)
-     ├─ server‑only <for> search‑results (route‑varying) → HTML splice (passive branch)
-     │     └─ reactive <button> per row  → resumed inside the spliced fragment
-     └─ server‑only <if> "has banner?"   (route‑varying) → HTML splice (passive branch)
+                         ┌────────────── a region/branch ──────────────┐
+ reactive (bundled)      │ HTML+walks in JS bundle → client CLONES it,  │  state only
+                         │ fills holes from sent state (paths run)      │  over the wire
+                         ├──────────────────────────────────────────────┤
+ server‑only (wire)      │ HTML streamed from server (logic tree‑shaken)│  HTML + hole
+                         │ → client ADOPTS + WALKS it, fills holes       │  state over wire
+                         └──────────────────────────────────────────────┘
 ```
 
-The old "shell stays, outlet swaps" idea is just the **common case** of this model:
-one persistent reactive layout + one large passive (or reactive) branch for page
-content. The general model additionally handles a route‑varying server‑only `<if>`
-three levels deep, independently, by addressing its passive‑branch marker.
+## 4. All control flow serializes markers
 
-## 4. Which server‑only boundaries are even patchable (cross‑template analysis)
+In SPA mode the compiler emits resume/branch markers for **every** control‑flow
+boundary, including server‑only `<if>`/`<for>` that emit none today
+(`serializeBranch = 1` everywhere). This buys two things directly:
 
-Marking *every* server‑only control flow as a passive branch would add markers
-(bytes) to the initial HTML for regions that never change. The compiler avoids this
-using analysis it already has — does the boundary's condition/items derive from
-**navigation‑varying** input (route params, page data) or from **build‑invariant**
-data?
+1. **Self‑describing HTML.** Any HTML the server streams for a region carries the
+   embedded markers the resume walker already knows how to read, so the client can
+   walk it and find its holes with **zero extra walk‑code payload** — the markers
+   are the structure description.
+2. **Addressability.** Every boundary has a stable ID (reuse the
+   `getResumeRegisterId` scheme), so a navigation can say "replace region X" and the
+   surrounding resume walk knows where X starts/ends.
 
-* **Invariant server‑only control flow** (condition/items derive only from
-  constants / build‑time data, identical on every page) → **not** marked, **never**
-  patched. It is part of the reusable static shell.
-* **Navigation‑varying server‑only control flow** (derives from route/page input) →
-  emit a passive‑branch marker; eligible for HTML splice on navigation.
+Cost: extra comment markers in the *initial* HTML for server‑only regions (a handful
+of bytes per boundary). This is HTML, not JS, so it does not regress goal #1 (low
+initial JS); it is a small, bounded HTML cost that the request explicitly accepts
+("it's fine to incrementally send html"). *Optional optimization:* a boundary that
+the compiler proves **invariant across navigations** (condition/items derive only
+from build‑constant data) and that contains no holes can elide its marker, since it
+will never be patched — this stays correct because it is never addressed.
 
-This is the request's "template structure and cross‑template analysis inform
-optimization points": the dependency tracking in `util/references.ts` /
-`serialize-reasons.ts` already knows whether a binding flows from page input, so the
-compiler can tag each server‑only boundary `navVarying` vs `invariant` and only pay
-marker cost where it can actually save a reload.
+## 5. Holes: the per‑island state‑vs‑HTML choice
 
-## 5. Per‑section transport classification (the unifying rule)
+Within a server‑only region's streamed HTML, each **hole** (a reactive island, or a
+nested boundary) is delivered in whichever form is cheaper — this is the knob that
+keeps bytes minimal:
 
-Putting §3–4 together, the compiler tags each section with how it travels on a
-navigation. This is a pure function of compile‑time facts:
+* **Empty hole** → the server streams a placeholder marker and the island's **state
+  only**; the client *renders* the **bundled reactive template** into the hole
+  (clone + walk + mount). Chosen when the island is fully client‑renderable and its
+  bundled HTML would otherwise be duplicated in the payload. *Smallest bytes.*
+* **Filled hole** → the server streams the island's **rendered HTML**; the client
+  *resumes* it in place (walk the inserted DOM). Chosen when the island isn't
+  client‑renderable, or when its HTML is small/streaming‑friendly. *No client render
+  cost; no bundled template needed.*
 
-| Section kind | Travels as | Client applies via | Cost |
-| --- | --- | --- | --- |
-| Reactive value/attr/text | state | existing signal | changed values |
-| Reactive `<if>`/`<for>` | state | existing `_if`/`_for` (paths run) | changed values |
-| Server‑only, navigation‑varying | HTML + resume payload | passive‑branch splice | fragment HTML |
-| Server‑only, invariant | — (skipped) | — | 0 |
-| Not‑yet‑loaded route chunk | state (+ optional first‑paint HTML) | `ready(readyId)` then mount | chunk once + state |
-| Anything unrepresentable / mismatch | — | full reload | reload |
+This subsumes the whole spectrum with one concept:
 
-The classification composes recursively, and the cases nest cleanly because each
-patch targets a distinct, stably‑addressed marker:
+| Region shape | = | Delivered as |
+| --- | --- | --- |
+| Fully reactive region | all holes empty, no static HTML | **state only** (client renders everything) |
+| Static server‑only region | no holes | **solid HTML** |
+| Mixed server‑only region | HTML scaffold + holes (each empty or filled) | **HTML + per‑hole state/HTML** |
 
-* **server‑only branch containing reactive islands** → HTML splice carries the
-  fragment + the islands' resume payload; the client splices then resumes the
-  islands (offset‑rebased, §7).
-* **reactive branch containing server‑only navigation‑varying sub‑branches** → the
-  outer reactive `_if` runs from its state patch; the inner passive branches are
-  patched by their own HTML‑splice frames. The two are independent markers and do
-  not interfere.
+Note the top row: a fully reactive `<if>`/`<for>` is just "one big empty hole" — the
+client clones the bundled branch/row templates and the bundled `_if`/`_for` paths
+run from the sent state. **No HTML over the wire for reactive control flow**, exactly
+as the request wants ("if it's bundled for the browser, make those paths run").
 
-## 6. The stateless request/response contract
+The choice is driven by cross‑template analysis the compiler already has
+(`serialize-reasons.ts` / `references.ts` know whether an island is fully
+client‑renderable and whether a value flows from navigation‑varying input), with a
+server‑side size heuristic to break ties.
+
+## 6. Applying an update: replay reactive, splice server‑only — at any level
+
+A navigation update is a set of per‑boundary patches applied in tree order. Each
+boundary is either reactive or server‑only, and they nest freely:
+
+* **Reactive boundary → replay from state.** Feed the boundary's scope state into
+  the existing signals; `_if`/`_for`/`_let` run and reconcile (clone bundled
+  templates for new branches/rows, keyed LIS, equality‑skip unchanged values). The
+  reactive queue computes the minimal DOM mutation, and because signals skip when
+  `value===current`, the server transmits state **without diffing** — client
+  equality makes it an effective diff, which is what keeps the server **stateless**.
+
+* **Server‑only boundary → splice HTML‑with‑holes.** The boundary is a **branch
+  scope** (`StartNode`/`EndNode`, parent linkage, `removeAndDestroyBranch` +
+  aborts) with **no client signal** — its structure is decided by the server. Apply
+  = `removeAndDestroyBranch(old)` → insert the streamed HTML scaffold → for each
+  hole, *render* (empty) or *resume* (filled) the island → relink to parent. This is
+  the initial‑resume path applied to a streamed fragment, reusing existing code.
+
+Because every boundary is independently addressed (§4) and the client never needs
+server‑only logic (§1), the cases compose cleanly:
+
+* server‑only `<for>` of cards, each card a reactive `<button>` → stream the cards'
+  HTML scaffold with an **empty hole** per button; client adopts the scaffold and
+  renders the bundled button island into each hole from sent state. (Server‑only
+  structure as HTML; reactive behavior as state — never the `for` logic.)
+* reactive `<if>` whose branch contains a server‑only `<for>` → the outer `_if`
+  replays from state; the inner server‑only `<for>` is its own splice patch on its
+  own marker. Independent, non‑interfering.
+
+The old "shell stays, outlet swaps" idea is just the common case: one persistent
+reactive layout (state patches / no‑ops) plus one large server‑only or reactive page
+boundary. The general model additionally patches a route‑varying server‑only `<if>`
+three levels deep, on its own marker.
+
+## 7. The stateless request/response contract
 
 The client carries just enough context for the server to compute an optimal update
 against build‑time constants — no server memory.
@@ -205,51 +186,43 @@ against build‑time constants — no server memory.
 GET /target/url
 X-Marko-Nav: 1
 X-Marko-Build: <buildHash>      # client's loaded build
-X-Marko-View: <viewSignature>   # see below
+X-Marko-View: <viewSignature>   # mounted layout templateIds + content hashes of
+                                #   persistent (layout‑level) server‑only boundaries
 ```
 
-`viewSignature` is a compact descriptor of what the client currently has mounted,
-so the server can skip re‑sending unchanged regions **without remembering
-anything**:
-
-* the ordered list of mounted **persistent template IDs** (layout chain), and
-* a bounded set of **content hashes** for the client's *persistent* passive
-  branches (layout‑level server‑only regions) keyed by their stable boundary ID.
-
-The server renders the target and, for each persistent passive branch, compares its
-freshly computed content hash to the client's; **matching ⇒ skip**, differing ⇒ emit
-an HTML‑splice frame. Reactive state is always emitted for the changed subtree and
-filtered by client equality (§3.1). We hash only *persistent* (layout‑level)
-boundaries so the request stays small; passive branches **inside the changed page
-subtree** are sent wholesale because they changed anyway. This is the optimal middle
-ground between a truly stateless server (can't know what the client holds) and small
-payloads (need to know what the client holds): a tiny, bounded request context plus
-build‑time knowledge of base‑vs‑code‑split chunks.
+The server renders the target and, for each *persistent* server‑only boundary,
+compares its freshly computed content hash to the client's; **matching ⇒ skip**.
+Reactive state is always emitted for the changed subtree and filtered by client
+equality (§6). We hash only persistent layout‑level boundaries so the request stays
+small; boundaries **inside the changed page subtree** are streamed wholesale because
+they changed anyway. This is the optimal middle ground between a truly stateless
+server (can't know what the client holds) and minimal payloads (need to know what the
+client holds).
 
 ### Response
 
-* **Reload directive** (`X-Marko-Reload: 1`): build hash mismatch (stale deploy),
-  `viewSignature` incompatible with the target's structure, or a route opting out.
-  Client does `location.assign(url)`.
-* **Navigation update**: a framed stream of per‑boundary patches (§7).
+* **Reload directive** (`X-Marko-Reload: 1`): build hash mismatch, incompatible
+  view signature, or a route opting out → client `location.assign(url)`.
+* **Navigation update**: a framed, streamable set of per‑boundary patches (§8).
 
-## 7. Wire format — a stream of per‑boundary patches
+## 8. Wire format — a stream of per‑boundary patches
 
-To maximize reuse, payloads use the **same serialized shapes** the streaming
-serializer already emits; only delivery (fetch + controlled apply) and addressing
-(per boundary) differ. Newline‑framed so async/lazy parts arrive out of order,
-mirroring the HTML reorder protocol.
+Same serialized shapes the streaming serializer already emits; only delivery (fetch
++ controlled apply) and addressing (per boundary) differ. Newline‑framed so async
+parts arrive out of order, mirroring the HTML reorder protocol.
 
 ```
 # header (always first)
 { "v":"<buildHash>", "url":"/target", "title":"…" }
 
-# STATE patch — reactive scopes; identical to Serializer output, offset‑rebased on apply
-_=>[1,{…},2,{…}]                         # scope‑fill
-"regId 1 regId 2"                        # effects (attach/run signals)
+# STATE patch — reactive scopes (incl. empty holes); identical to Serializer output,
+# offset‑rebased on apply (§9). Reactive control flow needs only this.
+_=>[1,{…},2,{…}]
+"regId 1 regId 2"
 
-# HTML SPLICE patch — replace a passive branch addressed by its stable boundary id
-{ "splice": "<boundaryId>", "html": "<…fragment…>", "resume": <payloadRef?> }
+# SPLICE patch — server‑only boundary: stream self‑describing HTML (embedded markers),
+# plus state for its filled/empty holes (filled holes' HTML is inside the fragment).
+{ "splice":"<boundaryId>", "html":"<…markers…>", "holes":<stateRef?> }
 
 # LAZY gate — code‑split route chunk; reuse readyId machinery
 { "ready":"<readyId>", "chunk":"/assets/route.<buildHash>.js" }
@@ -258,84 +231,79 @@ _=>[1,{…},2,{…}]                         # scope‑fill
 { "assets":["/assets/route.<buildHash>.css"] }
 ```
 
-`boundaryId` is the passive branch's compile‑time address (templateId + section +
-accessor) — the same family of stable IDs as `getResumeRegisterId`. The STATE and
-effect frames are fed straight into the **existing** `applyScopes` / resume‑effect
-routines; we are not adding a second deserializer.
+`boundaryId` is the boundary's compile‑time address (same family as
+`getResumeRegisterId`). STATE/hole frames feed the **existing** `applyScopes` /
+resume‑effect routines; SPLICE HTML is resumed by the **existing** marker walker. No
+second deserializer.
 
-## 8. Client apply path (the only genuinely new runtime code)
+## 9. Client apply path (the only genuinely new runtime code)
 
 A small **opt‑in** module, imported only when the page entry enables SPA mode. It is
 the "slight initial‑JS regression" the request anticipates; everything it calls
 already ships.
 
-1. **Intercept** in‑app `<a>` clicks and `popstate`; manage history, scroll, focus.
-2. **Fetch** the target with §6 headers. Optionally prefetch on hover/idle using the
-   existing load‑trigger primitives (`src/dom/load.ts`); payloads are
-   build‑hash‑keyed and cacheable.
-3. **Guard**: if `X-Marko-Reload` or `header.v !== __MARKO_BUILD__`, abort to
+1. **Intercept** in‑app `<a>` clicks and `popstate`; manage history/scroll/focus.
+2. **Fetch** the target with §7 headers; optionally prefetch on hover/idle via the
+   existing load‑trigger primitives. Payloads are build‑hash‑keyed and cacheable.
+3. **Guard**: if `X-Marko-Reload` or `header.v !== __MARKO_BUILD__` →
    `location.assign(url)`. A stale client never applies mismatched state.
-4. **Rebase scope IDs.** Payload scopes are numbered locally; allocate a fresh
-   non‑colliding range in the client's scope space (client scopes already start at
-   `1e6`, see `createScope`/`nextScopeId`) and resolve payload id `i → base + i` — a
-   tiny additive offset in `serializeContext`/`applyScopes`. Cross‑references into
-   the live tree (a splice's parent branch) are passed as real existing ids.
-5. **Apply patches in tree order**:
-   * STATE frames → `applyScopes` + resume‑effect path; reactive signals run and
-     reconcile (§3.1).
-   * HTML‑SPLICE frames → locate the passive branch by `boundaryId`,
-     `removeAndDestroyBranch(old)`, insert fragment HTML, `walk` + resume the
-     islands inside, relink to parent (§3.2).
-   * LAZY frames → gate through `ready(readyId)` unchanged; apply the gated state
-     once the chunk loads (optionally after painting an inline first‑paint
-     fragment).
-6. **Finalize**: ensure new `assets` (idempotent), set `document.title`, update the
-   route signal so reactive layout regions react locally.
+4. **Rebase scope IDs**: payload scopes are numbered locally; allocate a fresh range
+   in the client's scope space (client scopes already start at `1e6`) and resolve
+   `i → base + i` — a tiny additive offset in `serializeContext`/`applyScopes`.
+   Splice‑parent references are passed as real existing ids.
+5. **Apply in tree order**:
+   * STATE → `applyScopes` + resume effects; reactive signals run (§6).
+   * SPLICE → `removeAndDestroyBranch(old)`, insert HTML, then per hole *render*
+     (empty: clone bundled template + mount) or *resume* (filled: walk inserted
+     DOM), relink to parent.
+   * LAZY → gate through `ready(readyId)`; apply once the chunk loads.
+6. **Finalize**: ensure `assets` (idempotent), set `title`, update the route signal
+   so reactive layout regions react locally.
 7. **Fallback** on any thrown error mid‑apply: `location.assign(url)`.
 
-Estimated incremental client cost ≈ **~1–2 KB** min+gz: history/link interception +
-fetch + frame parse + offset rebase + STATE apply (reuses `applyScopes`) + passive
-splice (reuses `removeAndDestroyBranch` + walk/resume) + guard. The heavy lifting is
-reused verbatim.
+Estimated incremental client cost ≈ **~1–2 KB** min+gz: interception + fetch + frame
+parse + offset rebase + STATE apply (reuses `applyScopes`) + SPLICE (reuses
+`removeAndDestroyBranch` + walk/clone/resume) + guard. Heavy lifting is reused
+verbatim, and **no server‑only logic is ever added to the bundle**.
 
-## 9. Tradeoffs and chosen middle grounds
+## 10. Tradeoffs and chosen middle grounds
 
-* **State vs HTML, per section** — not a global toggle. State minimizes bytes and
-  reuses bundled paths but only works for reactive sections; HTML works for
-  server‑only structure but costs bytes. *Chosen:* the compiler's existing
-  reactive/server‑only classification decides per section; a server‑side
-  size/throughput heuristic may override a reactive section to HTML when state +
-  client reconcile would be larger or slower (huge static lists).
-* **Marker cost vs patchability** — marking every server‑only branch as patchable
-  bloats initial HTML. *Chosen:* mark only **navigation‑varying** server‑only
-  boundaries (§4); invariant ones stay marker‑free.
+* **Universal markers vs initial HTML bytes** — marking all control flow adds comment
+  markers to initial HTML. *Chosen:* accept it (it's HTML not JS, and it makes server
+  HTML self‑describing + every boundary addressable); allow eliding markers only on
+  provably invariant, hole‑free regions.
+* **Empty vs filled holes** — empty minimizes bytes but costs a client render and
+  needs the bundled template; filled needs no bundled template and no client render
+  but ships HTML. *Chosen:* compiler picks per island (client‑renderable? navigation‑
+  varying?), server size‑heuristic breaks ties; reactive control flow is "all empty
+  holes" (state only).
 * **Diff granularity vs request size** — per‑boundary content hashes give true
-  server‑only diffing but grow the request. *Chosen:* hash only **persistent
-  layout‑level** passive branches; send page‑subtree passive branches wholesale.
+  server‑only diffing but grow the request. *Chosen:* hash only persistent
+  layout‑level boundaries; stream page‑subtree boundaries wholesale.
 * **Statelessness vs minimal bytes** — *Chosen:* tiny request context (build hash +
-  view signature) + build‑time chunk knowledge ⇒ near‑optimal payloads, zero server
-  memory.
-* **Initial load vs navigation speed** — *Chosen:* accept a small, bounded
-  first‑load regression (opt‑in controller); never regress the resume format or base
-  bundle.
+  view signature) + build‑time chunk knowledge ⇒ near‑optimal payloads, zero memory.
+* **Initial load vs navigation speed** — *Chosen:* accept a small, bounded first‑load
+  regression (opt‑in controller); never regress the resume format or base bundle.
 * **Eager vs lazy route chunks** — *Chosen:* lazy + `ready` gate + optional inline
   first‑paint HTML + hover/idle prefetch.
 
-## 10. Build‑hash & correctness invariants
+## 11. Correctness invariants
 
-* **One build hash, checked every navigation.** `templateId`s, registry IDs, walk
-  codes, and the serialized scope schema are only stable *within* a build.
-  Build‑hash gating (request header vs server constant, re‑verified before apply)
-  guarantees a stale client reloads rather than mis‑applying.
-* **Stable IDs server↔client within a build** (already true).
-* **Non‑colliding scope IDs** via the apply‑time offset (§8.4).
-* **Lifecycle correctness**: passive‑branch splice routes through the existing
-  branch‑destroy/abort path, so `onDestroy`/aborts fire on the old branch and
-  `onMount`/effects on the new — identical to a control‑flow change today.
-* **Stateless server**: every decision is a pure function of (request context, build
+* **No server‑only logic on the client** (§1) — the client cannot synthesize
+  server‑only structure, so structural changes there always arrive as HTML or reload.
+  This is the backbone that makes "send state and let paths run" safe: it is only
+  ever applied to genuinely bundled paths.
+* **One build hash, checked every navigation** — templateIds, registry IDs, markers,
+  and the scope schema are stable only within a build; mismatch ⇒ reload.
+* **Self‑describing HTML** — streamed fragments carry the same markers the resume
+  walker reads, so client adoption is identical to initial resume.
+* **Non‑colliding scope IDs** via the apply‑time offset (§9.4).
+* **Lifecycle correctness** — server‑only splice routes through the existing
+  branch‑destroy/abort path; `onDestroy`/aborts fire on old, `onMount`/effects on new.
+* **Stateless server** — every decision is a pure function of (request context, build
   constants, target render).
 
-## 11. Compiler / runtime surface (implementation sketch)
+## 12. Compiler / runtime surface (implementation sketch)
 
 Opt‑in config (additive): a `serverUpdates` (a.k.a. `singlePage`) flag in
 `packages/compiler/src/config.js` / translator. When enabled for `entry:"page"`
@@ -343,70 +311,67 @@ templates, the page imports the navigation controller and emits SPA metadata.
 
 Translator (`src/translator/`):
 
-* **Passive‑branch emission**: in SPA mode, set `serializeBranch = 1` for
-  navigation‑varying server‑only `<if>`/`<for>` (and unrepresentable subtrees) so
-  they get `BranchStart`/`BranchEnd` markers and a resumable branch scope — *without*
-  emitting a client `_if`/`_for` signal.
-* **`navVarying` vs `invariant` classification** (§4): extend the dependency/
-  serialize‑reason analysis to tag each server‑only boundary.
-* **Boundary IDs**: assign each passive branch a stable address (reuse the
-  `getResumeRegisterId` scheme) and record persistent (layout‑level) ones in
-  `file.metadata.marko` for the view signature.
-* **Navigation render entry**: per page, a server function that renders the target
-  and emits the §7 patch stream (reusing `State`/`Serializer.stringifyScopes` and
-  the reorder/`ready` writer paths), computing content hashes for persistent passive
-  branches and skipping those matching the request's view signature.
+* **Universal markers**: in SPA mode set `serializeBranch = 1` for *all* control flow
+  (incl. server‑only `<if>`/`<for>`), with optional elision for provably
+  invariant/hole‑free boundaries.
+* **Boundary IDs**: stable address per boundary (reuse `getResumeRegisterId`); record
+  persistent (layout‑level) ones in `file.metadata.marko` for the view signature.
+* **Hole classification**: extend `serialize-reasons.ts`/`references.ts` to tag each
+  island empty‑hole (client‑renderable) vs filled‑hole, and each server‑only boundary
+  navigation‑varying vs invariant.
+* **Navigation render entry**: per page, a server function that renders the target and
+  streams the §8 patch set (reusing `State`/`Serializer`/reorder/`ready`), computing
+  content hashes for persistent boundaries and skipping matches from the view
+  signature.
 
 HTML runtime (`src/html/`):
 
-* `renderNavigation(template, input, { viewSignature, buildHash })` → builds the
-  framed NavigationUpdate; emits a reload directive on hash/structure mismatch.
+* `renderNavigation(template, input, { viewSignature, buildHash })` → builds/streams
+  the framed update; emits a reload directive on mismatch.
 
 DOM runtime (`src/dom/`):
 
-* **Navigation controller** module (opt‑in import): §8.
-* Small extensions to `resume.ts` `serializeContext`/`applyScopes` for the scope‑id
-  **offset** and a **target parent branch**; a `spliceBranch(boundaryId, html,
-  resume)` helper composing `removeAndDestroyBranch` + insert + walk/resume.
-* Reuse `ready(readyId)`, `createBranch`, branch destroy/abort, resume effects, and
-  asset ensuring unchanged.
+* **Navigation controller** module (opt‑in import): §9.
+* Small `resume.ts` extensions: scope‑id **offset** + **target parent branch**; a
+  `spliceBoundary(boundaryId, html, holes)` helper composing `removeAndDestroyBranch`
+  + insert + per‑hole render/resume.
+* Reuse `ready`, `createBranch`, branch destroy/abort, resume effects, `mount`,
+  asset ensuring — unchanged.
 
-## 12. Forms, actions, head, history (brief)
+## 13. Forms, actions, head, history (brief)
 
-* **Server‑first actions**: a `<form>` POST replies with the same patch‑stream
-  format, so mutations and navigations share one path — and a mutation that changes
-  a server‑only `<for>` three levels down is just an HTML‑splice patch on that
-  boundary.
+* **Server‑first actions**: a `<form>` POST replies with the same patch‑stream format,
+  so a mutation that changes a server‑only `<for>` three levels down is just a SPLICE
+  patch on that boundary.
 * **Head/title**: title in the header frame; new route CSS/JS as build‑hash‑stamped
   idempotent asset frames; reuse `assets.ts`.
-* **History/scroll/focus**: standard SPA controller duties; restore scroll on
-  `popstate`, move focus to the changed region for a11y.
+* **History/scroll/focus**: standard controller duties; restore scroll on `popstate`,
+  move focus to the changed region for a11y.
 
-## 13. End‑to‑end example (mixed levels)
+## 14. End‑to‑end example (holes at mixed levels)
 
-Navigating `/search?q=a` → `/search?q=b` under a shared layout. The results list is
-a **server‑only, navigation‑varying `<for>`** (rendered on the server, not bundled),
-and each result row contains a reactive `<button>` (a client island). A "did you
-mean" notice is a **server‑only, navigation‑varying `<if>`** at a different level.
+`/search?q=a` → `/search?q=b` under a shared layout. The results list is a
+**server‑only `<for>`** (logic tree‑shaken from the bundle); each row has a reactive
+`<button>` island (bundled). A "did you mean" notice is a **server‑only `<if>`** at a
+different level.
 
-1. Controller intercepts the click, fetches `/search?q=b` with `X-Marko-Nav`,
-   `X-Marko-Build: h7`, and a `viewSignature` listing the layout chain + content
-   hashes of the two persistent layout passive branches.
-2. Server renders `/search?q=b`. Layout hashes match → skipped. It emits:
+1. Controller fetches `/search?q=b` with `X-Marko-Nav`, `X-Marko-Build: h7`, and a
+   view signature (layout chain + hashes of persistent layout boundaries).
+2. Server renders `/search?q=b`; layout hashes match → skipped. It streams:
    * `{ v:"h7", url:"/search?q=b", title:"Search: b" }`
-   * STATE patch: the reactive search‑box `<input value>` and result‑count text →
-     `_=>[1,{q:"b",count:5}]`, `"reg_box 1"` (no HTML).
-   * HTML SPLICE for the results `<for>` boundary: the new rows' HTML **+** the
-     resume payload for the per‑row reactive buttons.
-   * HTML SPLICE for the "did you mean" `<if>` boundary: its new branch HTML (now
-     present where it was absent).
-3. Client (build hash matches): applies the STATE patch (search box + count update
-   in place via signals); splices the results `<for>` passive branch
-   (`removeAndDestroyBranch` old rows → insert new rows → resume the new buttons);
-   splices the `<if>` passive branch; sets the title.
-4. Bytes over the wire: the rows' HTML + the buttons' tiny resume payload + a couple
-   of changed values. **No runtime JS, no component JS, no layout HTML**, and the
-   reactive parts updated without any HTML at all.
+   * STATE: reactive search box + result count → `_=>[1,{q:"b",count:5}]`,
+     `"reg_box 1"` (**no HTML**).
+   * SPLICE for the results `<for>` boundary: the rows' **HTML scaffold** with one
+     **empty hole per button**, plus each button's state. (Server‑only structure as
+     HTML; button behavior as state — never the `for` logic.)
+   * SPLICE for the "did you mean" `<if>` boundary: its new branch HTML (now present
+     where it was absent).
+3. Client (build matches): applies STATE (search box/count update in place);
+   splices the `<for>` (destroys old rows → inserts scaffold → **renders the bundled
+   button island into each empty hole** from state); splices the `<if>`; sets title.
+4. Bytes over the wire: the rows' static HTML scaffold + tiny per‑button state + a few
+   changed values. **No runtime JS, no `for`/`if` logic, no layout HTML**, and the
+   reactive parts updated with no HTML at all.
 
-If `h7 !== server build`, the server returns `X-Marko-Reload: 1` and the client does
-a normal full navigation — always correct.
+If `h7 !== server build`, the server returns `X-Marko-Reload: 1` and the client does a
+normal full navigation — always correct.
