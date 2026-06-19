@@ -4,6 +4,7 @@ import { JSDOM } from "jsdom";
 
 import {
   applyServerUpdate,
+  createNavigator,
   executeScripts,
   fetchUpdate,
   navigate,
@@ -284,6 +285,92 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
 
       const update = await fetchUpdate("/b", { build: "build-1", fetchImpl });
       assert.deepEqual(update, { build: "build-1", reload: true });
+    });
+  });
+
+  describe("createNavigator()", () => {
+    function countingFetch(body: () => any) {
+      let calls = 0;
+      const fetchImpl = (async (url: string) => {
+        calls++;
+        return {
+          headers: new Map<string, string>(),
+          json: async () => ({ build: "build-1", url, ...body() }),
+        };
+      }) as unknown as typeof fetch;
+      return {
+        fetchImpl,
+        get calls() {
+          return calls;
+        },
+      };
+    }
+
+    it("prefetch warms the cache so navigate does not refetch", async () => {
+      const { document } = setup(`<main id="outlet"><p>A</p></main>`);
+      const outlet = document.getElementById("outlet")!;
+      const f = countingFetch(() => ({ html: "<p>B</p>" }));
+      const pushed: string[] = [];
+
+      const nav = createNavigator({
+        build: "build-1",
+        target: outlet,
+        fetchImpl: f.fetchImpl,
+        host: {
+          history: { pushState: (_s, _t, u) => pushed.push(String(u)) },
+          location: { assign: () => assert.fail("should not reload") },
+        },
+      });
+
+      nav.prefetch("/b");
+      await Promise.resolve(); // let the prefetch settle
+      const ok = await nav.navigate("/b");
+
+      assert.equal(ok, true);
+      assert.equal(f.calls, 1); // fetched once (by prefetch), not again by navigate
+      assert.match(outlet.innerHTML, /B/);
+      assert.deepEqual(pushed, ["/b"]);
+    });
+
+    it("navigate falls back when a prefetch failed (and refetches/falls back)", async () => {
+      const { document } = setup(`<main id="outlet"><p>A</p></main>`);
+      const outlet = document.getElementById("outlet")!;
+      let assigned: string | undefined;
+      const fetchImpl = (async () => {
+        throw new Error("offline");
+      }) as unknown as typeof fetch;
+
+      const nav = createNavigator({
+        build: "build-1",
+        target: outlet,
+        fetchImpl,
+        host: { location: { assign: (u) => (assigned = String(u)) } },
+      });
+
+      nav.prefetch("/b"); // rejects in the background, handled
+      await Promise.resolve();
+      const ok = await nav.navigate("/b");
+
+      assert.equal(ok, false);
+      assert.equal(assigned, "/b");
+      assert.match(outlet.innerHTML, /A/);
+    });
+
+    it("apply() applies an already-obtained (e.g. streamed) update and records history", () => {
+      const { document } = setup(`<main id="outlet"><p>A</p></main>`);
+      const outlet = document.getElementById("outlet")!;
+      const pushed: string[] = [];
+      const nav = createNavigator({
+        build: "build-1",
+        target: outlet,
+        host: { history: { pushState: (_s, _t, u) => pushed.push(String(u)) } },
+      });
+
+      const ok = nav.apply({ build: "build-1", url: "/c", html: "<p>C</p>" });
+
+      assert.equal(ok, true);
+      assert.match(outlet.innerHTML, /C/);
+      assert.deepEqual(pushed, ["/c"]);
     });
   });
 });

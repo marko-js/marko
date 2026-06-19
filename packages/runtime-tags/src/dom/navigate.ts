@@ -6,16 +6,18 @@
 // and the client swaps it in without reloading the document — guarding on the build
 // hash and falling back to a full navigation whenever it cannot safely apply.
 //
-// Layering (most→least important): the shared wire contract lives in `common/spa`;
-// this module is the DOM-side pipeline split into three seams —
-//   navigate()          orchestration: fetch → apply → history, with fallback
-//   fetchUpdate()       transport: turn a request into a ServerUpdate
-//   applyServerUpdate() apply: guard, swap, run resume scripts, update title
-// plus executeScripts() (run injected resume payloads). The seams let a prefetched
-// or streamed update be applied without re-fetching, and keep apply host-agnostic.
+// Layering (most→least important): the shared wire contract lives in `common/spa`.
+// This module is the DOM-side pipeline:
+//   createNavigator()   public API: configure once → { navigate, prefetch, apply }
+//   navigate()          one-shot sugar over a transient navigator
+//   fetchUpdate()       transport seam: turn a request into a ServerUpdate
+//   applyServerUpdate() apply seam: guard, swap, run resume scripts, update title
+//   executeScripts()    run resume payloads contained in injected HTML
+// The seams let a prefetched or streamed update be applied without re-fetching, and
+// keep apply host-agnostic.
 //
 // Out of MVP scope (future work): the state+discriminant tier and `updates` chunk,
-// partial-render generation on the server, prefetch-on-intent, and link/popstate glue.
+// partial-render generation on the server, link/popstate interception glue.
 
 import {
   isReloadRequired,
@@ -27,19 +29,22 @@ import {
 
 export type { ServerUpdate } from "../common/spa";
 
-export interface NavigateOptions {
+/** The document/history/location a navigator drives (defaults to globals). */
+export interface NavHost {
+  doc?: Document;
+  history?: Pick<History, "pushState">;
+  location?: Pick<Location, "assign">;
+}
+
+export interface NavigatorOptions {
   /** The build hash the loaded client was built with. */
   build: string;
   /** The outlet element (or selector) to update. */
   target: Element | string;
+  /** Document/history/location to drive (defaults to globals). */
+  host?: NavHost;
   /** `fetch` implementation (defaults to global). */
   fetchImpl?: typeof fetch;
-  /** Document (defaults to global). */
-  doc?: Document;
-  /** History (defaults to global). */
-  history?: Pick<History, "pushState">;
-  /** Location used for the full-reload fallback (defaults to global). */
-  location?: Pick<Location, "assign">;
   /** Resume hook for reactive islands in the new content. */
   resume?: (target: Element) => void;
   /** Execute injected resume <script>s. Default: true. */
@@ -48,39 +53,100 @@ export interface NavigateOptions {
   headers?: Record<string, string>;
 }
 
+export interface SpaNavigator {
+  /** Fetch (or reuse a prefetch), apply in place, record history; falls back to reload. */
+  navigate(url: string): Promise<boolean>;
+  /** Warm the update for `url` in the background (prefetch-on-intent). Errors are swallowed. */
+  prefetch(url: string): void;
+  /** Apply an already-obtained update (e.g. prefetched or streamed). */
+  apply(update: ServerUpdate, url?: string): boolean;
+}
+
 /**
- * Navigate to `url` server-first: fetch a navigation update, guard the build hash,
- * apply it in place, and record history — falling back to a full document
+ * Create a navigator bound to a build, an outlet, and a host. This is the single
+ * orchestrator; `navigate()` below is one-shot sugar over it.
+ */
+export function createNavigator(options: NavigatorOptions): SpaNavigator {
+  // Pending/warmed updates keyed by url, populated by prefetch and consumed by navigate.
+  const cache = new Map<string, Promise<ServerUpdate>>();
+  const host = options.host || {};
+
+  const apply: SpaNavigator["apply"] = (update, url = update.url || "") => {
+    const applied = applyServerUpdate(update, {
+      build: options.build,
+      target: options.target,
+      doc: host.doc,
+      runScripts: options.runScripts,
+      resume: options.resume,
+      onReload: () => (host.location || location).assign(url),
+    });
+    if (applied) {
+      (host.history || history).pushState({}, "", update.url || url);
+    }
+    return applied;
+  };
+
+  return {
+    apply,
+
+    prefetch(url) {
+      if (cache.has(url)) return;
+      const pending = fetchUpdate(url, options);
+      cache.set(url, pending);
+      // Drop a failed prefetch (and mark it handled) so navigate refetches/falls back.
+      pending.catch(() => cache.delete(url));
+    },
+
+    async navigate(url) {
+      let update: ServerUpdate;
+      try {
+        update = await (cache.get(url) || fetchUpdate(url, options));
+      } catch {
+        cache.delete(url);
+        (host.location || location).assign(url);
+        return false;
+      }
+      cache.delete(url); // single-consume the warmed entry
+      return apply(update, url);
+    },
+  };
+}
+
+export interface NavigateOptions {
+  build: string;
+  target: Element | string;
+  fetchImpl?: typeof fetch;
+  doc?: Document;
+  history?: Pick<History, "pushState">;
+  location?: Pick<Location, "assign">;
+  resume?: (target: Element) => void;
+  runScripts?: boolean;
+  headers?: Record<string, string>;
+}
+
+/**
+ * Navigate to `url` server-first in one shot: fetch a navigation update, guard the
+ * build hash, apply it in place, and record history — falling back to a full document
  * navigation on a reload directive, a build mismatch, or any error.
  * Returns `true` if the navigation was applied in place.
  */
-export async function navigate(
+export function navigate(
   url: string,
   options: NavigateOptions,
 ): Promise<boolean> {
-  const loc = options.location || location;
-
-  let update: ServerUpdate;
-  try {
-    update = await fetchUpdate(url, options);
-  } catch {
-    loc.assign(url);
-    return false;
-  }
-
-  const applied = applyServerUpdate(update, {
+  return createNavigator({
     build: options.build,
     target: options.target,
-    doc: options.doc,
-    runScripts: options.runScripts,
+    host: {
+      doc: options.doc,
+      history: options.history,
+      location: options.location,
+    },
+    fetchImpl: options.fetchImpl,
     resume: options.resume,
-    onReload: () => loc.assign(url),
-  });
-
-  if (applied) {
-    (options.history || history).pushState({}, "", update.url || url);
-  }
-  return applied;
+    runScripts: options.runScripts,
+    headers: options.headers,
+  }).navigate(url);
 }
 
 export interface FetchUpdateOptions {
