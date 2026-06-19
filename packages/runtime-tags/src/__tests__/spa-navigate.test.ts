@@ -2,7 +2,12 @@ import assert from "node:assert/strict";
 
 import { JSDOM } from "jsdom";
 
-import { applyServerUpdate, executeScripts, navigate } from "../dom/navigate";
+import {
+  applyServerUpdate,
+  executeScripts,
+  fetchUpdate,
+  navigate,
+} from "../dom/navigate";
 
 function setup(bodyHtml: string) {
   const dom = new JSDOM(
@@ -250,6 +255,35 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
       assert.equal(ok, false);
       assert.equal(assigned, "/b");
       assert.match(outlet.innerHTML, /A/);
+    });
+  });
+
+  describe("fetchUpdate()", () => {
+    it("sends nav headers and parses the JSON update", async () => {
+      const sent: Record<string, string> = {};
+      const fetchImpl = (async (_url: string, init: any) => {
+        Object.assign(sent, init.headers);
+        return {
+          headers: new Map<string, string>(),
+          json: async () => ({ build: "build-1", html: "<p>B</p>" }),
+        };
+      }) as unknown as typeof fetch;
+
+      const update = await fetchUpdate("/b", { build: "build-1", fetchImpl });
+
+      assert.deepEqual(update, { build: "build-1", html: "<p>B</p>" });
+      assert.equal(sent["x-marko-nav"], "1");
+      assert.equal(sent["x-marko-build"], "build-1");
+    });
+
+    it("normalizes a reload header into a reload update", async () => {
+      const fetchImpl = (async () => ({
+        headers: new Map([["x-marko-reload", "1"]]),
+        json: async () => assert.fail("should not read body on reload"),
+      })) as unknown as typeof fetch;
+
+      const update = await fetchUpdate("/b", { build: "build-1", fetchImpl });
+      assert.deepEqual(update, { build: "build-1", reload: true });
     });
   });
 });
