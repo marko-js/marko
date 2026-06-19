@@ -9,92 +9,115 @@
 
 ## 1. Goals and the governing principle
 
-1. **Low initial JS.** First paint stays as cheap as today's resume; the SPA layer
-   is opt‑in and the new "updates" code is a *separate, lazy* bundle (§4).
-2. **Low bytes over the wire per navigation.** Prefer **state + structural
-   decisions** over HTML; send **nothing** for unchanged regions.
-3. **Incremental JS/HTML.** Reuse loaded runtime/components; per‑route update chunks
-   load lazily and cache by build hash; HTML streams only as a cold‑start fallback.
-4. **Stateless.** The server keeps no per‑client state; the client carries what's
-   needed in the request (build hash, view signature, warm‑chunk set) and the server
-   compares against build‑time constants.
+1. **Low initial JS.** First paint stays as cheap as today's resume; the SPA layer is
+   opt‑in and its heavier parts (the navigation controller and any "updates" code) are
+   *lazy* and kept out of the base bundle's critical path (§11).
+2. **Low bytes over the wire per navigation.** Prefer **state + structural decisions**
+   over HTML where it pays off; send **nothing** for unchanged regions.
+3. **Incremental JS/HTML.** Reuse loaded runtime/components; stream changes; load extra
+   route code lazily and cache by build hash.
+4. **Stateless.** The server keeps no per‑client state; the client carries what's needed
+   in the request and the server compares against build‑time constants.
 5. **Leverage cross‑template analysis** to pick optimization points per section.
 6. **Always‑correct fallback** to a full document navigation on any uncertainty.
 
-### Governing principle — never ship server‑only logic
+**Governing principle — never ship server‑only logic.** The client bundle never
+contains control‑flow/business logic the compiler classified as server‑only. The
+client only ever (a) *renders* compiled templates and (b) *adopts* server output. It
+receives the *decision* (which branch / which keys) and *final hole values*, never the
+logic that produced them.
 
-> **The client bundle never contains control‑flow/business logic the compiler
-> classified as server‑only.** The client is only ever (a) a *renderer* of compiled
-> templates and (b) an *adopter* of server output. It never evaluates a server‑only
-> `if` condition or `for` iteration — it only receives the *decision* (which branch /
-> which keys) and the *final hole values*, and rebuilds DOM from **compiled templates
-> it already has**, not from logic.
+**Non‑goals / deferred:** a routing/data layer (this integrates with one); client‑only
+SPAs; **edge/CDN caching of navigation payloads** (considered, intentionally out of
+scope here).
 
-The crucial consequence (your insight): the rendering *templates* for server‑only
-components **can** be bundled — just not in the primary bundle, and with the *logic*
-stripped. Then the server need not re‑send HTML; it sends only the decision + values.
+## 2. Performance priorities (the lens for everything below)
 
-## 2. The machinery we build on (all additive)
+On modern connections **round‑trip latency and main‑thread work dominate raw byte
+count**, so this design optimizes those first and treats byte‑shaving as secondary.
+In priority order:
+
+1. **Hide the round trip — prefetch on intent.** Fetch the navigation payload (and warm
+   any route‑specific code) on hover/`touchstart`/viewport *before* the click. This is
+   the largest perceived‑latency win and is independent of payload size (§8).
+2. **Don't block on slow data — stream the response + partially render.** Flush fast
+   regions immediately and stream slow ones; render only the *changed* subtree on the
+   server (§5). Pages paint at the speed of their fastest region, and server TTFB/CPU
+   drop.
+3. **Protect the cheap path — minimize main‑thread cost and base‑bundle weight.** The
+   durable win of state‑only updates is *avoiding HTML parsing* and doing minimal keyed
+   DOM mutation; and the SPA layer must not leak into initial JS, or it regresses every
+   first paint (§11, §14).
+4. **Shave bytes adaptively, not universally.** Compressed HTML streaming is the
+   default for server‑only regions; the heavier "updates chunk" optimization is applied
+   **only where cross‑template analysis projects a real win** (§6).
+
+## 3. The machinery we build on (all additive)
 
 | Concern | Today | File(s) |
 | --- | --- | --- |
 | Serialize scope state + effects | `Serializer.stringifyScopes`, scope‑fill `[id,{props},Δ,{props}]`, effect tokens, `_(id)` refs | `src/html/serializer.ts`, `src/html/writer.ts` |
 | Resume from self‑describing HTML | `init` → walk reads embedded markers (`*`,`[`,`]` + tokens); `applyScopes`/`processResumes` fill holes | `src/dom/resume.ts` |
-| Render compiled templates | `_content`/`_template` clone cache + `walk` codes attach bindings | `src/dom/renderer.ts`, `src/dom/walker.ts`, `src/dom/template.ts` |
-| **Compare‑then‑swap‑or‑update control flow** | `_if` (`newBranch !== scope[branchAccessor]` → swap else holes), `_for` keyed LIS, `_content_resume` pick‑by‑id | `src/dom/control-flow.ts`, `src/dom/dynamic-tag.ts` |
+| Render compiled templates | `_content`/`_template` clone cache + `walk` codes attach bindings | `src/dom/renderer.ts`, `src/dom/walker.ts` |
+| Compare‑then‑swap‑or‑update control flow | `_if` (`newBranch !== scope[branchAccessor]` → swap else holes), `_for` keyed LIS, `_content_resume` pick‑by‑id | `src/dom/control-flow.ts`, `src/dom/dynamic-tag.ts` |
 | Reactive updates | signals `(scope,value)=>void`, min‑heap queue, **skip when `value===current`** | `src/dom/signals.ts`, `src/dom/queue.ts` |
 | Splice lifecycle | branch `StartNode`/`EndNode`, `createBranch`, `removeAndDestroyBranch` + aborts | `src/dom/control-flow.ts`, `src/dom/scope.ts` |
-| Per‑section "ship to browser?" | `serializeReason`/`kStatefulReason`; only stateful control flow ships a DOM signal today | `src/translator/core/if.ts`,`core/for.ts`, `util/serialize-reasons.ts` |
-| Code‑split entries | `entry:"page"|"load"`, `init`/`initEmbedded`, `ready(readyId)` | `src/translator/util/entry-builder.ts`, `src/dom/load.ts` |
-| Stream + reorder + readiness | `Chunk`/`Boundary`/`State`, `<t>` reorder, `ready` | `src/html/writer.ts` |
+| **Stream + reorder + readiness** | `Chunk`/`Boundary`/`State`, `<t>` reorder, `ready(readyId)` | `src/html/writer.ts`, `src/dom/load.ts` |
+| Per‑section "ship to browser?" | `serializeReason`/`kStatefulReason` | `src/translator/core/if.ts`, `util/serialize-reasons.ts` |
+| Code‑split entries | `entry:"page"|"load"`, `init`/`initEmbedded`, `ready` | `src/translator/util/entry-builder.ts` |
 | Stable identity across builds | `getTemplateId`, `getResumeRegisterId`, content `Hash` | `babel-utils/tags.js`, `util/signals.ts` |
 
-**Key reuse:** your "check if the renderer is the same, then apply holes, else
-replace" is *exactly* what `_if`/`_for`/`_content_resume` already do. A server‑only
-control flow becomes a reactive one whose **discriminant is read from serialized
-state (the server's decision)** instead of a reactive expression.
+## 4. Render tiers
 
-## 3. Three tiers of render code
+Every node in a page falls into one tier (the reactive vs server‑only split is the
+existing `kStateful` axis):
 
-Every node in a page's render tree falls into one tier. The compiler already knows
-which (reactive vs server‑only is the existing `kStateful` axis):
-
-| Tier | Structure decided by | Render code lives in | Per‑nav wire cost |
+| Tier | Structure decided by | Render code | Per‑nav transport |
 | --- | --- | --- | --- |
-| **Reactive** | client signals | **primary** bundle | state only |
-| **Server‑only (warm)** | **server** → serialized discriminant | **per‑route `updates` chunk** (logic stripped) | **state + discriminant — no HTML** |
-| **Server‑only (cold)** | server | not yet loaded | HTML once (then becomes warm) |
-| Static / invariant | — | — (just DOM) | 0 |
+| **Reactive** | client signals | primary bundle | **state only** |
+| **Server‑only (default)** | server | none on client | **streamed compressed HTML** for the changed subtree |
+| **Server‑only (optimized)** *(opt‑in, §6)* | server → serialized discriminant | lazy per‑route **`updates` chunk** (logic stripped) | **state + discriminant — no HTML** once warm |
+| Static / invariant | — | — | 0 (skipped) |
 
-The reactive and server‑only‑warm tiers share **one apply path**: feed new
-serialized scope state into the live tree; every control‑flow boundary reconciles via
-`_if`/`_for`/`_content_resume`. The only difference is the *input source* — a live
-signal vs the serialized server decision. HTML over the wire is reduced to the
-cold‑start fallback (§6).
+Reactive and optimized‑server‑only share **one warm apply path**: feed new serialized
+scope state into the live tree; every boundary reconciles via `_if`/`_for`/
+`_content_resume`, differing only in input source (live signal vs serialized decision).
+The default server‑only path streams HTML — which is simple, needs no extra client JS,
+works everywhere, and (importantly) is parsed by the browser's highly‑optimized
+streaming HTML parser rather than costing main‑thread JS.
 
-## 4. The `updates` compilation target (the new, lazy bundle)
+## 5. Stream the response + render only what changed
 
-Alongside today's `html` and `dom` outputs, the compiler produces a third output for
-an **`updates` entry**, code‑split **per page/route** (shared server‑only components
-factored into a common `_shared` chunk), aligned with the existing `page`/`load`
-entry splitting in `entry-builder.ts`.
+The navigation response is produced with the existing `Chunk`/`Boundary`/reorder
+machinery:
 
-An `updates` chunk is the **CSR render tree for the route's server‑only components,
-with server logic removed**. Precisely:
+* **Partial render.** Using the request's view signature (§9), the server renders only
+  the **changed subtree**; shell/persistent regions are skipped entirely. This cuts
+  both server CPU/TTFB and bytes, and is the main structural byte‑saver (more than the
+  updates chunk for typical pages).
+* **Streaming.** Fast regions flush immediately; slow/async regions stream in via the
+  existing reorder protocol, so first meaningful paint of the new content is gated by
+  the *fastest* region, not the slowest data dependency.
 
-* **Kept:** template HTML strings + walk codes; hole *assignment* from final values
-  (`_text`/`_attr`/…); control‑flow reconciliation (`_if`/`_for`/`_content_resume`)
-  **driven by a serialized discriminant** rather than a condition.
-* **Stripped (tree‑shaken):** conditions, derivations, lifecycle/effects, and
-  server‑only imports/data access. A `${formatDate(x)}` whose `formatDate` is
-  server‑only ships its **final string** as a hole value; even `$!{rawHtml}` ships as
-  a string hole. The chunk therefore pulls in **no** server‑only code.
+This reuses infrastructure that already exists for initial render, so its cost‑to‑impact
+ratio is excellent — and it is tier‑independent (benefits HTML‑default and updates‑chunk
+regions alike).
 
-So a server‑only `<if>` compiles in the `updates` chunk to nearly the same shape as a
-reactive one:
+## 6. The `updates` chunk — an *adaptive*, analysis‑gated optimization
+
+For routes/components where it pays off, the compiler emits a third output (an `updates`
+entry, code‑split **per page/route** with a shared `_shared` chunk, aligned with
+existing `page`/`load` splitting). It is the **CSR render tree for server‑only
+components with server logic tree‑shaken out**:
+
+* **Kept:** template HTML + walk codes; hole *assignment* from final values; control‑flow
+  reconciliation driven by a **serialized discriminant** instead of a condition.
+* **Stripped:** conditions, derivations, lifecycle/effects, server‑only imports.
+  `${formatDate(x)}` ships its final string; `$!{raw}` ships as a string hole. The chunk
+  pulls in **no** server‑only code.
 
 ```js
-// updates/profile.<hash>.js  — logic stripped: no isAdmin check
+// updates/profile.<hash>.js — logic stripped: no isAdmin check
 export const profile = _template("p", /* … */ (scope) =>
   _if("a",
     ["<h1>Welcome </h1>", WALKS_A, (s) => _text(s, /*name hole*/)],  // branch 0
@@ -103,57 +126,50 @@ export const profile = _template("p", /* … */ (scope) =>
 );
 ```
 
-This is the answer to "the HTML always exists in client assets": the **templates are
-cached client‑side** in the updates chunk; the server transmits only decisions +
-values. It costs more total JS (lazy, cached, never loaded for one‑page visits) in
-exchange for near‑zero per‑navigation bytes (§11).
+**It is not applied universally.** Compressed HTTP already makes repeated HTML structure
+cheap, while an updates chunk costs total JS + a build target. So the compiler opts a
+route/component in **only when analysis projects a net win** — high structural repetition
+(large lists/tables), high navigation frequency between structurally similar pages — or
+when explicitly annotated. Otherwise the default streamed‑HTML path (§5) is used. This
+keeps content sites lean while still capturing the data‑dense‑app case. The opt‑in
+decision is a natural extension of the existing serialize‑reason / reference analysis.
 
-## 5. Serializing the server's decision
+## 7. Serializing the server's decision (optimized tier)
 
-Server‑only scopes are serialized (in streamed HTML, §6) with a **discriminant** —
-your "renderer id" — generalized per control‑flow:
+Optimized server‑only scopes serialize a **discriminant** — your "renderer id" —
+generalized per control‑flow: `<if>` → branch index; `<for>` → item keys (+ optional
+per‑item renderer id) → keyed LIS reconcile; dynamic `<${tag}>` → template id →
+`_content_resume` pick‑by‑id — plus **final hole values** and child‑scope refs. On a warm
+navigation the client compares the new discriminant to the live scope's current one:
+**same ⇒ update holes** (changed values only, equality‑skipped); **different ⇒
+`removeAndDestroyBranch(old)` + instantiate the new renderer from the chunk + fill
+holes**. Identical to `_if`/`_for` today, but the discriminant is data.
 
-* `<if>` → **branch index**
-* `<for>` → **item keys** (+ optional per‑item renderer id) → reuse keyed LIS reconcile
-* dynamic `<${tag}>` → **template id** → reuse `_content_resume`'s pick‑by‑id
+## 8. Lifecycle: prefetch on intent → stream → (optionally) warm
 
-…plus the **final hole values** and child‑scope references. On a warm navigation the
-client compares the new discriminant to the live scope's current one at each boundary:
-**same ⇒ update holes in place** (changed values only, equality‑skipped); **different
-⇒ `removeAndDestroyBranch(old)` + instantiate the new renderer from the updates chunk
-+ fill holes**. Identical to `_if`/`_for` today, but the discriminant is data.
-
-## 6. Lifecycle: cold first navigation → warm thereafter
-
-Chosen strategy: **lazy‑load per‑route update chunks on first navigation, but never
-block — stream HTML once for instant paint, go state‑only once warm.**
-
-**Initial load** (cost ≈ today). SSR HTML; reactive islands resumed via the primary
+**Initial load** (cost ≈ today): SSR HTML; reactive islands resumed via the primary
 bundle; server‑only regions are static resumed DOM. No `updates` chunk loaded; no
-server‑only scope state serialized (keeps initial bytes lean). Only minimal boundary
-markers are emitted initially — enough to address the route outlet(s) and persistent
-(layout‑level) regions (§10).
+server‑only scope state serialized initially (lean initial bytes). Minimal initial
+markers only (§12).
 
-**First navigation to route R (R's chunk cold):**
+**Prefetch on intent (highest‑impact, §2.1):** on hover/`touchstart`/viewport, the
+controller (a) fetches the navigation payload and caches it briefly, and (b) warms the
+route's `updates` chunk if that route is updates‑optimized. The actual click then usually
+resolves against an in‑flight or completed prefetch — hiding the RTT and the chunk load.
 
-1. Controller fetches R with §7 headers (R is not in the warm‑chunk set) **and**
-   kicks off a lazy import of `updates/R.<hash>.js`.
-2. Server streams R's changed subtree as **self‑describing HTML** (embedded markers +
-   serialized scopes incl. discriminants/holes) — instant paint, no waiting. Reactive
-   islands inside resume via the primary bundle immediately.
-3. When `updates/R.<hash>.js` finishes loading, it **resumes the just‑streamed
-   server‑only DOM** (walk markers + the serialized discriminants/holes already in
-   that HTML) → those regions become *live* in the updates tier. The streamed HTML
-   thus does double duty: paint now + the data the chunk needs to go live.
+**On navigate:**
 
-**Subsequent navigation to R (warm):** the client declares R warm; the server sends
-**state + discriminants only**; the live updates tree reconciles (swap renderers from
-the chunk / update holes) and reactive islands take new state. **No HTML.**
+* *Reactive + HTML‑default regions:* apply the (possibly prefetched, streamed) payload —
+  state for reactive scopes, streamed HTML splice for server‑only regions.
+* *Updates‑optimized region, cold (chunk not yet warm):* stream its HTML once for instant
+  paint while the chunk loads lazily; when the chunk lands it resumes over that DOM and
+  goes live. *Warm:* the server sends **state + discriminants only**, no HTML; the live
+  updates tree reconciles.
 
-Navigating R→S (S cold) repeats the cold path for S's subtree; shared layout regions
-covered by a warm `_shared` chunk go state‑only, others are hash‑skipped (§7).
+Prefetch‑on‑intent largely collapses the cold/warm distinction in practice: by the time
+the user clicks, the chunk is typically already warming.
 
-## 7. The stateless request/response contract
+## 9. The stateless request/response contract
 
 ### Request
 
@@ -161,173 +177,170 @@ covered by a warm `_shared` chunk go state‑only, others are hash‑skipped (§
 GET /target/url
 X-Marko-Nav: 1
 X-Marko-Build: <buildHash>      # client's loaded build
-X-Marko-View: <viewSignature>   # mounted layout templateIds + content hashes of
-                                #   persistent server-only regions
-X-Marko-Warm: <routeChunkSet>   # update-chunk route ids the client has cached
+X-Marko-View: <viewSignature>   # mounted layout templateIds + content hashes of persistent regions
+X-Marko-Warm: <routeChunkSet>   # updates-chunk route ids the client has cached
 ```
 
-`X-Marko-Warm` is what lets the **stateless** server choose, per region, between
-state‑only (region's chunk is warm) and streamed HTML (cold) — the client declares
-its warm set; the server never remembers it. It is bounded (routes visited this
-build) and compact (route ids / a small signature). This is the request's "clients
-and servers can send data to each other to facilitate optimal performance."
+`X-Marko-View` enables partial render + region skipping (§5); `X-Marko-Warm` lets the
+stateless server choose, per optimized region, between state‑only (warm) and streamed
+HTML (cold). Both are client‑declared, bounded, and compact — the server remembers
+nothing.
 
 ### Response
 
 * **Reload directive** (`X-Marko-Reload: 1`): build hash mismatch, incompatible view
   signature, or route opt‑out → client `location.assign(url)`.
-* **Navigation update**: a framed, streamable set of per‑boundary patches (§8).
+* **Navigation update**: a framed, streamable set of per‑boundary patches (§10).
 
-## 8. Wire format — per‑boundary patches
-
-Same serialized shapes the streaming serializer already emits; newline‑framed for
-out‑of‑order/streamed parts.
+## 10. Wire format — per‑boundary patches
 
 ```
 { "v":"<buildHash>", "url":"/target", "title":"…" }      # header (first)
 
-# WARM server-only region & all reactive scopes: state + discriminant only — NO HTML
-_=>[5,{ [branch]:1, [name]:"Bob" }]                       # discriminant + holes
-"regId 7"                                                 # reactive effects
+# reactive + warm optimized server-only: state (+ discriminant), no HTML
+_=>[5,{ [branch]:1, [name]:"Bob" }]
+"regId 7"
 
-# COLD server-only region: self-describing HTML once (carries its own markers + scopes)
+# default / cold server-only: self-describing streamed HTML (carries its own markers)
 { "splice":"<boundaryId>", "html":"<…markers…>" }
 
 { "ready":"<readyId>", "chunk":"/assets/updates/route.<hash>.js" }   # lazy gate
 { "assets":["/assets/route.<hash>.css"] }                            # head deltas
 ```
 
-State/discriminant frames feed the **existing** `applyScopes`/reconcile path; cold
-HTML is resumed by the **existing** marker walker. No second deserializer.
+State/discriminant frames feed the existing `applyScopes`/reconcile path; streamed HTML
+is resumed by the existing marker walker. No second deserializer. Frames stream
+out‑of‑order via the existing reorder protocol (§5).
 
-## 9. Client apply path (the new runtime code, opt‑in)
+## 11. Client controller (the new code) — and keeping it off the critical path
 
-A small module imported only in SPA mode — the bounded initial‑JS cost.
+The navigation controller is **lazily loaded** and is **not** part of the base bundle's
+critical path; initial paint/resume never waits on it. Its route‑signal plumbing is kept
+minimal so it does not bloat initial JS (violating this would regress *every* page's
+first paint — the most likely way the whole effort goes net‑negative).
 
-1. **Intercept** `<a>` clicks / `popstate`; manage history/scroll/focus.
-2. **Fetch** with §7 headers; lazily `import()` the target route's updates chunk if
-   cold (non‑blocking).
+Responsibilities:
+
+1. **Prefetch on intent** (§8) — hover/`touchstart`/viewport; cache payloads briefly;
+   warm route chunks.
+2. **Intercept** `<a>`/`popstate`; manage history/scroll/focus.
 3. **Guard**: `X-Marko-Reload` or `header.v !== __MARKO_BUILD__` → `location.assign`.
-4. **Rebase scope IDs**: payload scopes numbered locally → allocate a fresh range in
-   the client's `1e6+` space, resolve `i → base + i` (a tiny offset in
-   `serializeContext`/`applyScopes`); splice parents passed as real ids.
-5. **Apply in tree order:**
-   * **state/discriminant** → `applyScopes` + reconcile; reactive signals and
-     warm server‑only `_if`/`_for` both run (§3).
-   * **cold HTML splice** → `removeAndDestroyBranch(old)` + insert self‑describing
-     HTML + resume; when the route chunk arrives it attaches/goes live (§6.3).
-6. **Finalize**: ensure `assets`, set `title`, update the route signal so reactive
-   layout regions react locally.
+4. **Rebase scope IDs**: allocate a fresh range in the client's `1e6+` space; resolve
+   `i → base + i` (small offset in `serializeContext`/`applyScopes`); splice parents
+   passed as real ids.
+5. **Apply (streamed, in tree order)**: state/discriminant → `applyScopes` + reconcile;
+   HTML splice → `removeAndDestroyBranch(old)` + insert self‑describing HTML + resume.
+   The warm path **avoids HTML parsing entirely** — its main‑thread cost is just keyed
+   reconcile + equality‑skipped hole writes.
+6. **Finalize**: ensure `assets`, set `title`, update the route signal so reactive layout
+   regions react locally.
 7. **Fallback** on any thrown error: `location.assign(url)`.
 
-Estimated incremental client cost ≈ **~1–2 KB** min+gz (interception, fetch, frame
-parse, offset rebase); everything heavy is reused. The `updates` chunks are extra JS
-but lazy, cached, and never loaded for non‑navigating visitors.
+Incremental client cost ≈ **~1–2 KB** min+gz, lazy; `updates` chunks are extra JS but
+lazy, per‑route, build‑hash‑cached, and never loaded for non‑navigating visitors.
 
-## 10. Markers: self‑describing updates, lean initial HTML
+## 12. Markers: self‑describing updates, lean initial HTML
 
-* **Streamed update HTML always carries full markers** (it must be resumable by the
-  client/updates chunk) — your "all control flow serializes markers" applies here.
-* **Initial document HTML keeps markers minimal** — only at route‑outlet and
-  persistent‑region granularity (enough to splice the first cold update and to
-  hash‑skip shared regions). Once a route's chunk is warm, the live updates tree holds
-  the branch‑scope/node references directly, so deep DOM markers are unnecessary for
-  the state‑only path. This preserves "low initial bytes."
+* **Streamed update HTML always carries full markers** (must be resumable).
+* **Initial document HTML keeps markers minimal** — outlet/persistent‑region granularity
+  only. Once a route's chunk is warm, the live updates tree holds node references
+  directly, so deep DOM markers aren't needed on the state‑only path. Preserves low
+  initial bytes.
 
-## 11. Tradeoffs and chosen middle grounds
+## 13. Tradeoffs and chosen middle grounds
 
-* **Total JS vs per‑nav bytes** — the `updates` tier duplicates template strings as
-  cached JS to eliminate per‑navigation HTML. *Chosen:* worth it; chunks are lazy +
-  per‑route + build‑hash‑cached, and cost nothing for one‑page visitors.
-* **Cold first nav** — *Chosen (your answers):* don't block; **stream HTML once** for
-  paint while the route chunk loads **lazily**, then state‑only when warm.
-* **Granularity** — *Chosen:* **per page/route** chunk + a shared chunk; aligns with
-  existing entry splitting; few requests, good incrementality.
-* **Initial markers vs addressability** — *Chosen:* minimal initial markers
-  (outlet/persistent), full markers only in streamed HTML (§10).
-* **Statelessness vs minimal bytes** — *Chosen:* tiny client‑declared context (build
-  hash + view signature + warm set) drives near‑optimal payloads with zero memory.
-* **Reactive vs server‑only paths** — *Chosen:* one unified warm apply path; HTML is
-  the cold fallback only.
+* **Latency vs bytes** — *Chosen:* attack latency first (prefetch §8, streaming §5);
+  treat byte‑shaving (updates chunk) as secondary and adaptive.
+* **Updates chunk: total JS vs per‑nav bytes** — *Chosen:* not universal; analysis‑gated
+  (§6), with compressed HTML streaming as the default. Protects content sites; captures
+  data‑dense apps.
+* **Cold first nav** — *Chosen:* don't block; stream HTML once, lazily warm the chunk;
+  prefetch‑on‑intent usually hides it anyway.
+* **Granularity** — *Chosen:* per page/route chunk + `_shared`.
+* **Initial markers** — *Chosen:* minimal initial, full in streamed HTML.
+* **SPA layer weight** — *Chosen:* lazy controller, off the base‑bundle critical path.
+* **Statelessness vs bytes** — *Chosen:* tiny client‑declared context (build hash + view
+  signature + warm set) drives partial render and per‑region transport with zero memory.
 
-## 12. Correctness invariants
+## 14. Correctness & performance invariants
 
-* **No server‑only logic on the client** — the updates chunk contains templates +
-  hole assignment + discriminant‑driven reconcile only; conditions/derivations/effects
-  are tree‑shaken. Structural decisions always come from the server.
-* **One build hash, checked every navigation** — gates templates, registry/discriminant
-  ids, and the updates chunks (build‑hash in the chunk URL); mismatch ⇒ reload.
-* **Self‑describing streamed HTML** — cold fragments resume identically to initial load.
-* **Non‑colliding scope IDs** via the apply‑time offset (§9.4).
+* **No server‑only logic on the client** — optimized chunks contain templates + hole
+  assignment + discriminant‑driven reconcile only.
+* **SPA layer never blocks initial paint/resume** — lazy, off the critical path.
+* **One build hash, checked every navigation** — gates templates, ids, and chunk URLs;
+  mismatch ⇒ reload.
+* **Self‑describing streamed HTML** — cold/default fragments resume identically to initial
+  load.
+* **Non‑colliding scope IDs** via the apply‑time offset (§11.4).
 * **Lifecycle correctness** — swaps route through `removeAndDestroyBranch` + aborts.
 * **Stateless server** — every decision is a pure function of (request context, build
   constants, target render).
 
-## 13. Compiler / runtime surface (sketch)
+## 15. Compiler / runtime surface (sketch)
 
 Config: a `serverUpdates` flag in `packages/compiler/src/config.js`.
 
 Translator:
 
-* **New `updates` output/entry** (`entry-builder.ts`): emit the CSR render tree for
-  server‑only components with logic stripped; control flow reads its discriminant from
-  serialized state; code‑split per route + `_shared`.
-* **Discriminant serialization**: extend the HTML output to serialize server‑only
-  scopes with branch index / keys / template id + final hole values (only in
-  navigation/streamed payloads, not in the lean initial load).
-* **Boundary IDs & markers**: stable per‑boundary addresses (reuse
-  `getResumeRegisterId`); minimal initial markers, full markers in streamed HTML.
-* **Hole/region classification**: extend `serialize-reasons.ts`/`references.ts` for
-  empty‑vs‑filled holes and navigation‑varying vs invariant regions.
+* **Partial‑render entry**: per page, a server function that renders only the changed
+  subtree and streams §10 patches (reusing `State`/`Serializer`/reorder/`ready`), skipping
+  regions matched by the view signature.
+* **Adaptive `updates` output/entry** (`entry-builder.ts`): emit the logic‑stripped CSR
+  render tree **only for routes/components analysis opts in**; control flow reads its
+  discriminant from serialized state; per‑route + `_shared` split.
+* **Discriminant serialization** for optimized server‑only scopes (navigation/streamed
+  payloads only, not initial load).
+* **Boundary IDs & markers**: stable per‑boundary addresses (reuse `getResumeRegisterId`);
+  minimal initial markers, full markers in streamed HTML.
+* **Opt‑in analysis**: extend `serialize-reasons.ts`/`references.ts` to flag high‑repetition
+  / high‑navigation regions for the updates chunk, and empty‑vs‑filled holes.
 
-HTML runtime: `renderNavigation(template, input, { viewSignature, warmSet,
-buildHash })` → streams state+discriminant for warm/reactive regions and
-self‑describing HTML for cold regions; reload directive on mismatch.
+HTML runtime: `renderNavigation(template, input, { viewSignature, warmSet, buildHash })`
+→ partial + streamed; state+discriminant for warm/reactive, self‑describing HTML for
+default/cold; reload directive on mismatch.
 
-DOM runtime: the navigation controller (§9); `resume.ts` scope‑offset + parent‑branch
-extensions; a routine for an `updates` chunk to **resume/attach** over existing
-server‑only DOM. Reuse `_if`/`_for`/`_content_resume`, `ready`, `createBranch`,
-destroy/abort, `mount`, asset ensuring — unchanged.
+DOM runtime: the lazy navigation controller (§11), incl. prefetch‑on‑intent; `resume.ts`
+scope‑offset + parent‑branch extensions; a routine for an `updates` chunk to resume/attach
+over existing server‑only DOM. Reuse `_if`/`_for`/`_content_resume`, `ready`,
+`createBranch`, destroy/abort, `mount`, asset ensuring — unchanged.
 
-## 14. Examples
+## 16. Examples
 
-**(a) Server‑only `<if>`** — see the compiled `updates/profile` chunk in §4.
-*Warm nav, admin→guest, same name:* `_=>[5,{[branch]:1}]` → client `_if` swaps to the
-guest renderer from the chunk. *Warm nav, name only:* `_=>[5,{[name]:"Bob"}]` →
-`_text` updates in place (~10 bytes). *No HTML either way.* *Cold first nav:* the §6
-HTML stream paints, the chunk loads and goes live.
+**(a) Server‑only `<if>`** (updates‑optimized) — compiled chunk in §6. *Warm,
+admin→guest, same name:* `_=>[5,{[branch]:1}]` → `_if` swaps renderer from the chunk.
+*Warm, name only:* `_=>[5,{[name]:"Bob"}]` → `_text` in place (~10 bytes). *Cold first
+nav (or non‑optimized route):* streamed HTML paints; if optimized, the chunk then goes
+live.
 
-**(b) Server‑only `<for>` with a reactive island**
+**(b) Server‑only `<for>` + reactive island** (a strong updates‑chunk candidate — high
+repetition):
 
 ```marko
-<for|item| of=input.results>                 <!-- list is a server-only query -->
-  <li>${item.title} <like-button postId=item.id/></li>   <!-- like-button: reactive -->
+<for|item| of=input.results>                 <!-- server-only query -->
+  <li>${item.title} <like-button postId=item.id/></li>   <!-- reactive island -->
 </for>
 ```
-Primary bundle: `like-button`. `updates/<route>` chunk: the `<for>` + row template,
-iteration driven by **server‑provided keys**. *Warm nav:* server sends new `keys` +
-changed `title` holes + each `like-button`'s state. Client `_for` keyed‑reconciles —
-same‑key rows reused (update title hole), new rows cloned from the chunk with
-`like-button` mounted from the primary bundle, removed rows destroyed. **Zero HTML;**
-server‑only structure from the cached chunk, reactive behavior from state.
+Primary bundle: `like-button`. `updates/<route>` chunk: the `<for>` + row template, driven
+by **server‑provided keys**. *Warm nav:* server sends new `keys` + changed `title` holes +
+each button's state; `_for` keyed‑reconciles (reuse same‑key rows, clone new rows from the
+chunk + mount `like-button` from the primary bundle, destroy removed). **Zero HTML.**
 
 **(c) Asset layout**
 
 ```
 dist/assets/
   page.<hash>.js              # primary: runtime + reactive islands (initial JS unchanged)
+  nav-controller.<hash>.js    # lazy SPA controller (not on the critical path)
   updates/
-    _shared.<hash>.js         # server-only components shared across routes
-    search.<hash>.js          # /search server-only renderers, logic stripped
-    profile.<hash>.js
+    _shared.<hash>.js         # opted-in server-only components shared across routes
+    search.<hash>.js          # /search opted-in server-only renderers, logic stripped
 ```
 
-## 15. Forms, head, history (brief)
+## 17. Forms, head, history (brief)
 
-* **Server‑first actions**: a `<form>` POST replies with the same patch‑stream; a
-  mutation changing a deep server‑only `<for>` is a warm state+keys patch (or a cold
-  HTML splice if its chunk isn't warm).
-* **Head/title**: title in the header frame; route CSS/JS as build‑hash‑stamped
-  idempotent asset frames; reuse `assets.ts`.
-* **History/scroll/focus**: restore scroll on `popstate`; move focus to the changed
-  region for a11y.
+* **Server‑first actions**: a `<form>` POST replies with the same patch‑stream; a mutation
+  changing a deep server‑only region is a warm state+keys patch (optimized) or a streamed
+  HTML splice (default).
+* **Head/title**: title in the header frame; route CSS/JS as build‑hash‑stamped idempotent
+  asset frames; reuse `assets.ts`.
+* **History/scroll/focus**: restore scroll on `popstate`; move focus to the changed region.
