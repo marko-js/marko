@@ -51,19 +51,29 @@ v1: detect and fall back; lifting is a later enhancement.
   (Alternative: integrate with a router that designates the boundary; the core tag is the
   router‑agnostic primitive and what `@marko/run` would target.)
 
-> **Validated finding (do not use a transparent passthrough).** An attempt to implement
-> `<update-outlet>` as a passthrough that unwraps its body (`replaceWithMultiple`) was tried
-> and **fails**: the analyze phase compiles the body as its own _content section_
-> (`template.marko_<n>_content` with `_closure_get(...)` for references to outer state), so
-> unwrapping in `translate` makes the **HTML** output transparent while the **DOM** output
-> keeps the content section → hydration mismatch (observed as `run is not a function`, i.e.
-> resume never completes). The body of an outlet is inherently a separate renderable
-> section. Therefore `<update-outlet>` must **render that body section via a runtime
-> primitive on both targets** — like `<try>` calling `_try` (HTML) / `getBranchRendererArgs`
-> (DOM) — not unwrap it. This needs a new lean `_outlet` runtime fn (a single
-> always‑rendered, resumable branch — `<try>` without the catch/placeholder machinery) added
-> to **both** `src/html/` and `src/dom/`, plus the tag wiring. Model the tag's
-> `translate.html`/`translate.dom` directly on `core/try.ts`.
+> **Validated findings.**
+>
+> 1. A transparent passthrough (unwrap the body via `replaceWithMultiple`) **fails**: the
+>    analyze phase compiles the body as its own _content section_, so unwrapping diverges
+>    HTML (transparent) vs DOM (keeps the section) → hydration mismatch (`run is not a
+function`). An outlet body is inherently a separate renderable branch.
+> 2. A tag must be recognized as producing **`ContentType.Dynamic`** in
+>    `util/sections.ts` `getContentType` (the `for`/`if`/`await`/`try` switch) — otherwise
+>    the parent never reserves the branch start/end marker nodes and the branch renders
+>    empty on a cold client mount. **`"update-outlet"` is added to that switch.**
+>
+> **✅ v1 landed.** `<update-outlet>` renders its body as a resumable, replaceable branch by
+> **reusing `<try>`'s proven analyze/translate** (`core/update-outlet.ts` re-exports `TryTag`
+> with its own `types`/autocomplete) plus the `getContentType` registration above. Verified
+> across html/dom/ssr/csr (fixture `update-outlet-basic`): the body hydrates and is
+> interactive in both SSR and CSR (`count: 0 → 1` on click). It currently inherits `<try>`'s
+> catch/placeholder support and `_enable_catch` cost.
+>
+> **Follow-up (optimization, not blocking):** replace the `<try>` reuse with a lean `_outlet`
+> runtime primitive (a single always-rendered resumable branch — `<try>` without
+> catch/placeholder) on both `src/html/` and `src/dom/`, and a dedicated tag. A from-scratch
+> attempt is viable but must reserve the branch start/end markers exactly as `_try` does
+> (the node-count parity that `getContentType` + the writer markers provide).
 
 ### 1.3 Compile‑time analysis (`analyze` phase)
 

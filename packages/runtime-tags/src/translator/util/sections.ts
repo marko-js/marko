@@ -285,6 +285,7 @@ export function getNodeContentType(
           case "if":
           case "await":
           case "try":
+          case "update-outlet":
             return ContentType.Dynamic;
           default:
             return null;

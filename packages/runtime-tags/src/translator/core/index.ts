@@ -23,6 +23,7 @@ import ServerTag from "./server";
 import StaticTag from "./static";
 import StyleTag from "./style";
 import TryTag from "./try";
+import UpdateOutletTag from "./update-outlet";
 
 export default {
   taglibId: runtimeInfo.taglibId,
@@ -52,4 +53,5 @@ export default {
   "<static>": StaticTag,
   "<style>": StyleTag,
   "<try>": TryTag,
+  "<update-outlet>": UpdateOutletTag,
 };
