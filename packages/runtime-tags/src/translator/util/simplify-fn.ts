@@ -16,8 +16,8 @@ export function simplifyFunction(
         null,
         fn.params as t.FunctionDeclaration["params"],
         fn.body,
-        fn.async,
         fn.generator,
+        fn.async,
       );
   }
 }

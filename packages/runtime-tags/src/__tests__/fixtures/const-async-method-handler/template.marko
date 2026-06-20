@@ -1,0 +1,7 @@
+export interface Input {}
+
+<let/loaded="no"/>
+<const/handlers={
+  async load() { loaded = await Promise.resolve("yes"); }
+}/>
+<button onClick=handlers.load>${loaded}</button>
