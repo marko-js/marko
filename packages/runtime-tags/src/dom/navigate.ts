@@ -12,14 +12,15 @@
 // location are dependency-injected. The real-runtime binding lives in browser-only
 // `./spa-runtime` (which is why this file imports no runtime modules that touch
 // `document` at load, keeping it unit-testable off the DOM).
-//   createNavigator()   public API: configure once → { navigate, prefetch, apply }
-//   navigate()          one-shot sugar over a transient navigator
-//   fetchUpdate()       transport seam: turn a request into a ServerUpdate
-//   applyServerUpdate() apply seam: guard, swap, run resume scripts, resume, title
-//   executeScripts()    run resume payloads contained in injected HTML
+//   createNavigator()    public API: configure once → { navigate, prefetch, apply }
+//   navigate()           one-shot sugar over a transient navigator
+//   startSpaNavigation() wire a navigator to link clicks / back-forward / hover intent
+//   fetchUpdate()        transport seam: turn a request into a ServerUpdate
+//   applyServerUpdate()  apply seam: guard, swap, run resume scripts, resume, title
+//   executeScripts()     run resume payloads contained in injected HTML
 //
 // Out of scope here (future work): the state+discriminant tier and `updates` chunk,
-// partial-render generation on the server, link/popstate interception glue.
+// and partial-render generation on the server.
 
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import {
@@ -72,12 +73,17 @@ export interface NavigatorOptions {
   headers?: Record<string, string>;
 }
 
+export interface NavigateControl {
+  /** Whether to push a new history entry. Default `true`; `false` for `popstate`. */
+  history?: boolean;
+}
+
 export interface SpaNavigator {
   /** Fetch (or reuse a prefetch), apply in place, record history; falls back to reload. */
-  navigate(url: string): Promise<boolean>;
+  navigate(url: string, control?: NavigateControl): Promise<boolean>;
   /** Warm the update for `url` in the background (prefetch-on-intent). Errors are swallowed. */
   prefetch(url: string): void;
-  /** Apply an already-obtained update (e.g. prefetched or streamed). */
+  /** Apply an already-obtained update (e.g. prefetched or streamed) and record history. */
   apply(update: ServerUpdate, url?: string): boolean;
 }
 
@@ -94,7 +100,11 @@ export function createNavigator(options: NavigatorOptions): SpaNavigator {
     return false;
   };
 
-  const apply: SpaNavigator["apply"] = (update, url = update.url || "") => {
+  const applyUpdate = (
+    update: ServerUpdate,
+    url: string,
+    pushHistory: boolean,
+  ): boolean => {
     const applied = applyServerUpdate(update, {
       build: options.build,
       target: options.target,
@@ -105,14 +115,14 @@ export function createNavigator(options: NavigatorOptions): SpaNavigator {
       resume: options.resume,
       onReload: () => reloadTo(url),
     });
-    if (applied) {
+    if (applied && pushHistory) {
       (host.history || history).pushState({}, "", update.url || url);
     }
     return applied;
   };
 
   return {
-    apply,
+    apply: (update, url = update.url || "") => applyUpdate(update, url, true),
 
     prefetch(url) {
       if (cache.has(url)) return;
@@ -122,7 +132,7 @@ export function createNavigator(options: NavigatorOptions): SpaNavigator {
       pending.catch(() => cache.delete(url));
     },
 
-    async navigate(url) {
+    async navigate(url, control) {
       let update: ServerUpdate;
       try {
         update = await (cache.get(url) || fetchUpdate(url, options));
@@ -132,7 +142,7 @@ export function createNavigator(options: NavigatorOptions): SpaNavigator {
       }
       cache.delete(url); // single-consume the warmed entry
       try {
-        return apply(update, url);
+        return applyUpdate(update, url, control?.history !== false);
       } catch {
         // The outlet may be half-swapped; a full navigation is the safe recovery.
         return reloadTo(url);
@@ -153,6 +163,112 @@ export function navigate(
   options: NavigatorOptions,
 ): Promise<boolean> {
   return createNavigator(options).navigate(url);
+}
+
+/** Minimal window surface the SPA glue drives (injectable for testing). */
+export interface NavWindow {
+  document: Document;
+  location: Pick<Location, "href" | "origin" | "pathname" | "search" | "hash">;
+  addEventListener(type: string, listener: (ev: Event) => void): void;
+  removeEventListener(type: string, listener: (ev: Event) => void): void;
+}
+
+export interface StartNavigationOptions {
+  /** Window to attach listeners to (default: global `window`). */
+  window?: NavWindow;
+  /** Prefetch the target on pointer/focus intent. Default: true. */
+  prefetch?: boolean;
+  /** Decide whether a same-origin link should be handled (default: always). */
+  shouldHandle?: (url: URL, anchor: HTMLAnchorElement) => boolean;
+}
+
+/**
+ * Wire a navigator to the document: intercept in-app `<a>` clicks (→ navigate),
+ * browser back/forward (→ navigate without pushing history), and pointer/focus intent
+ * (→ prefetch). Returns a `stop()` that removes the listeners.
+ */
+export function startSpaNavigation(
+  navigator: SpaNavigator,
+  options: StartNavigationOptions = {},
+): () => void {
+  const win = options.window || (window as unknown as NavWindow);
+  const doc = win.document;
+  const loc = win.location;
+  const shouldHandle = options.shouldHandle;
+
+  const linkFor = (target: EventTarget | null): HTMLAnchorElement | null => {
+    const el = target as Element | null;
+    return el && el.closest
+      ? (el.closest("a[href]") as HTMLAnchorElement | null)
+      : null;
+  };
+
+  const resolve = (anchor: HTMLAnchorElement): string | null => {
+    if (
+      (anchor.target && anchor.target !== "_self") ||
+      anchor.hasAttribute("download") ||
+      /(?:^|\s)external(?:\s|$)/.test(anchor.rel)
+    ) {
+      return null;
+    }
+    const url = new URL(anchor.href, loc.href);
+    // Cross-origin, or a pure in-page hash change, is left to the browser.
+    if (
+      url.origin !== loc.origin ||
+      (url.hash && url.pathname + url.search === loc.pathname + loc.search)
+    ) {
+      return null;
+    }
+    if (shouldHandle && !shouldHandle(url, anchor)) return null;
+    return url.pathname + url.search + url.hash;
+  };
+
+  const onClick = (ev: Event) => {
+    const e = ev as MouseEvent;
+    if (
+      e.defaultPrevented ||
+      e.button !== 0 ||
+      e.metaKey ||
+      e.ctrlKey ||
+      e.shiftKey ||
+      e.altKey
+    ) {
+      return;
+    }
+    const anchor = linkFor(e.target);
+    const href = anchor && resolve(anchor);
+    if (href) {
+      e.preventDefault();
+      void navigator.navigate(href);
+    }
+  };
+
+  const onIntent = (ev: Event) => {
+    const anchor = linkFor(ev.target);
+    const href = anchor && resolve(anchor);
+    if (href) navigator.prefetch(href);
+  };
+
+  const onPopState = () => {
+    void navigator.navigate(loc.pathname + loc.search + loc.hash, {
+      history: false,
+    });
+  };
+
+  doc.addEventListener("click", onClick);
+  win.addEventListener("popstate", onPopState);
+  if (options.prefetch !== false) {
+    // pointerover/focusin both bubble, so plain delegation catches hover/focus intent.
+    doc.addEventListener("pointerover", onIntent);
+    doc.addEventListener("focusin", onIntent);
+  }
+
+  return () => {
+    doc.removeEventListener("click", onClick);
+    win.removeEventListener("popstate", onPopState);
+    doc.removeEventListener("pointerover", onIntent);
+    doc.removeEventListener("focusin", onIntent);
+  };
 }
 
 export interface FetchUpdateOptions {

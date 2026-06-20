@@ -307,7 +307,7 @@ Modules (reachable via the package's `./*` subpath exports):
 | Module | Role |
 | --- | --- |
 | [`src/common/spa.ts`](../src/common/spa.ts) | shared wire contract — headers, `ServerUpdate` (`html`/`readyId`/`runtimeId`/`reload`), `isReloadRequired` |
-| [`src/dom/navigate.ts`](../src/dom/navigate.ts) | runtime‑ & host‑agnostic client pipeline: `createNavigator` / `navigate` / `fetchUpdate` / `applyServerUpdate` / `executeScripts`; the `SpaRuntime` and document/history/location are **dependency‑injected** |
+| [`src/dom/navigate.ts`](../src/dom/navigate.ts) | runtime‑ & host‑agnostic client pipeline: `createNavigator` / `navigate` / `startSpaNavigation` / `fetchUpdate` / `applyServerUpdate` / `executeScripts`; the `SpaRuntime` and document/history/location are **dependency‑injected** |
 | [`src/dom/spa-runtime.ts`](../src/dom/spa-runtime.ts) | browser‑only binding: `domRuntime = { init, initEmbedded, ready, run }` and `createDomNavigator()` |
 | [`src/html/navigation.ts`](../src/html/navigation.ts) | server helper: `renderNavigationUpdate(template, input, opts)` collects an embedded render into a `ServerUpdate`; `reloadDirective()` |
 
@@ -320,6 +320,12 @@ ready‑gated (`.b[readyId]`) resume data; `run()` then flushes so the new conte
 interactive synchronously. Non‑embedded fragments use `init(runtimeId)`. The previous
 fragment's scopes are cleaned up by `initEmbedded`'s `MutationObserver` when its nodes
 leave the DOM. A custom `resume` hook overrides this for advanced cases.
+
+User‑facing glue: `startSpaNavigation(navigator, opts)` intercepts in‑app `<a>` clicks
+(→ `navigate`), browser back/forward (→ `navigate` **without** pushing history), and
+pointer/focus intent (→ `prefetch`), returning a `stop()`. It ignores modified clicks,
+new‑tab/`download`/`rel=external`/cross‑origin/pure‑hash links, and honors a `shouldHandle`
+veto.
 
 Robustness: build‑hash mismatch and explicit reload directives short‑circuit to a full
 navigation before touching the DOM; a transport failure **or** a resume failure (which can
@@ -339,8 +345,9 @@ server helper.
 > and is structured so an e2e fixture drops in once the compiler builds in CI.
 
 Deliberately *not* yet implemented (tracked above): the state+discriminant tier and the
-`updates` chunk, partial‑render generation on the server, prefetch‑on‑intent triggers, and
-link/`popstate` interception glue.
+`updates` chunk, automatic partial‑render generation / `readyId` emission from page
+templates on the server (the `entry`/config integration), and the full compile→hydrate→
+navigate e2e (now unblocked — see the env note above).
 
 ## 15. Compiler / runtime surface (sketch)
 

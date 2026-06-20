@@ -8,6 +8,9 @@ import {
   executeScripts,
   fetchUpdate,
   navigate,
+  type NavWindow,
+  type SpaNavigator,
+  startSpaNavigation,
 } from "../dom/navigate";
 
 function setup(bodyHtml: string) {
@@ -530,6 +533,131 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
       nav.apply({ build: "b1", html: "<p>B</p>", readyId: "rid", url: "/n" });
 
       assert.deepEqual(calls, [["initEmbedded", "rid", "R"], ["run"]]);
+    });
+  });
+
+  describe("startSpaNavigation (link/popstate/intent glue)", () => {
+    function glueSetup(bodyHtml: string) {
+      const dom = new JSDOM(`<!doctype html><body>${bodyHtml}</body>`, {
+        url: "https://app.test/start",
+      });
+      const navigated: Array<[string, boolean | undefined]> = [];
+      const prefetched: string[] = [];
+      const navigator: SpaNavigator = {
+        navigate: async (url, control) => {
+          navigated.push([url, control?.history]);
+          return true;
+        },
+        prefetch: (url) => prefetched.push(url),
+        apply: () => true,
+      };
+      const win = dom.window as unknown as NavWindow;
+      return {
+        dom,
+        win,
+        document: dom.window.document,
+        navigated,
+        prefetched,
+        navigator,
+      };
+    }
+
+    function clickAnchor(
+      dom: JSDOM,
+      anchor: Element,
+      init: Partial<MouseEventInit> = {},
+    ) {
+      const ev = new dom.window.MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+        button: 0,
+        ...init,
+      });
+      anchor.dispatchEvent(ev);
+      return ev;
+    }
+
+    it("intercepts an in-app link click and navigates (preventing default)", () => {
+      const { dom, win, document, navigated, navigator } = glueSetup(
+        `<a id="l" href="/next">next</a>`,
+      );
+      startSpaNavigation(navigator, { window: win });
+
+      const ev = clickAnchor(dom, document.getElementById("l")!);
+      assert.equal(ev.defaultPrevented, true);
+      assert.deepEqual(navigated, [["/next", undefined]]);
+    });
+
+    it("ignores modified clicks, new-tab/download/external, cross-origin and pure-hash links", () => {
+      const { dom, win, document, navigated, navigator } = glueSetup(
+        `<a id="plain" href="/p">p</a>
+         <a id="blank" href="/b" target="_blank">b</a>
+         <a id="dl" href="/d" download>d</a>
+         <a id="ext" href="/e" rel="external">e</a>
+         <a id="cross" href="https://other.test/x">x</a>
+         <a id="hash" href="/start#sec">h</a>`,
+      );
+      startSpaNavigation(navigator, { window: win });
+
+      clickAnchor(dom, document.getElementById("plain")!, { metaKey: true });
+      clickAnchor(dom, document.getElementById("blank")!);
+      clickAnchor(dom, document.getElementById("dl")!);
+      clickAnchor(dom, document.getElementById("ext")!);
+      clickAnchor(dom, document.getElementById("cross")!);
+      clickAnchor(dom, document.getElementById("hash")!);
+
+      assert.deepEqual(navigated, []); // none handled
+    });
+
+    it("navigates without pushing history on popstate", () => {
+      const { dom, win, navigated, navigator } = glueSetup(``);
+      startSpaNavigation(navigator, { window: win });
+
+      dom.window.dispatchEvent(new dom.window.Event("popstate"));
+      assert.deepEqual(navigated, [["/start", false]]);
+    });
+
+    it("prefetches on hover and focus intent", () => {
+      const { dom, win, document, prefetched, navigator } = glueSetup(
+        `<a id="l" href="/next">next</a>`,
+      );
+      startSpaNavigation(navigator, { window: win });
+      const a = document.getElementById("l")!;
+
+      a.dispatchEvent(new dom.window.Event("pointerover", { bubbles: true }));
+      a.dispatchEvent(new dom.window.Event("focusin", { bubbles: true }));
+      assert.deepEqual(prefetched, ["/next", "/next"]);
+    });
+
+    it("does not prefetch when disabled, and stop() removes all listeners", () => {
+      const { dom, win, document, navigated, prefetched, navigator } =
+        glueSetup(`<a id="l" href="/next">next</a>`);
+      const stop = startSpaNavigation(navigator, {
+        prefetch: false,
+        window: win,
+      });
+      const a = document.getElementById("l")!;
+
+      a.dispatchEvent(new dom.window.Event("pointerover", { bubbles: true }));
+      assert.deepEqual(prefetched, []); // prefetch disabled
+
+      stop();
+      clickAnchor(dom, a);
+      dom.window.dispatchEvent(new dom.window.Event("popstate"));
+      assert.deepEqual(navigated, []); // listeners removed
+    });
+
+    it("respects a shouldHandle veto", () => {
+      const { dom, win, document, navigated, navigator } = glueSetup(
+        `<a id="l" href="/admin">admin</a>`,
+      );
+      startSpaNavigation(navigator, {
+        window: win,
+        shouldHandle: (url) => !url.pathname.startsWith("/admin"),
+      });
+
+      clickAnchor(dom, document.getElementById("l")!);
+      assert.deepEqual(navigated, []);
     });
   });
 });
