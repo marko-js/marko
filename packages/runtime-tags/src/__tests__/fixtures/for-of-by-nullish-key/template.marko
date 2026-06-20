@@ -1,0 +1,10 @@
+<let/items=[
+  { id: "a", text: "first" },
+  { id: null, text: "second" },
+]/>
+<ul>
+  <for|item| of=items by="id">
+    <li>${item.text}</li>
+  </for>
+</ul>
+<button onClick() { items = [...items] }>refresh</button>
