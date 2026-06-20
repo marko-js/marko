@@ -375,7 +375,7 @@ function nonVoidAttr(name: string, value: unknown) {
 
 const singleQuoteAttrReplacements = /'|&(?=#?\w+;)/g;
 const doubleQuoteAttrReplacements = /"|&(?=#?\w+;)/g;
-const needsQuotedAttr = /["'>\s]|&#?\w+;|\/$/g;
+const needsQuotedAttr = /["'>\s=`]|&#?\w+;|\/$/g;
 export function attrAssignment(value: string) {
   return value
     ? needsQuotedAttr.test(value)
