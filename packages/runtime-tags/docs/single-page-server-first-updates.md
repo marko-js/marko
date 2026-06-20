@@ -331,23 +331,22 @@ Robustness: build‑hash mismatch and explicit reload directives short‑circuit
 navigation before touching the DOM; a transport failure **or** a resume failure (which can
 leave the outlet half‑swapped) also falls back to `location.assign`.
 
-Tests (27 across two suites, run `npx mocha --grep "SPA server-first update MVP|SPA server helper"`):
-controller swap + document continuity, build‑hash / reload‑directive / transport / resume
-fallbacks, `executeScripts` execution + ordering, prefetch dedupe, the `SpaRuntime` resume
-wiring (`initEmbedded` vs `init`, id precedence, custom‑override, reload no‑touch), and the
-server helper.
+Tests (34, run `npx mocha --grep "SPA server-first update MVP|SPA server helper|spa-navigate e2e"`):
 
-> **Environment note:** the full compile→render→hydrate end‑to‑end test (driving the real
-> `init`/`initEmbedded` with compiler‑generated HTML) is **not runnable in this sandbox** —
-> `@marko/compiler`'s `build-babel-types` step is broken here (`markoText is not a
-> function`), so `.marko` files cannot be compiled. The integration is therefore verified
-> at the unit/wiring level against the real runtime's contract (with `SpaRuntime` injected),
-> and is structured so an e2e fixture drops in once the compiler builds in CI.
+* **Unit / contract** — controller swap + document continuity, build‑hash / reload‑directive
+  / transport / resume fallbacks, `executeScripts` execution + ordering, prefetch dedupe, the
+  `SpaRuntime` resume wiring (`initEmbedded` vs `init`, id precedence, custom‑override, reload
+  no‑touch), the link/`popstate`/intent glue, and the server helper.
+* **End‑to‑end** (`spa-navigate-e2e.test.ts`) — **compiles a real Marko page, hydrates it,
+  then injects a second real server render through `applyServerUpdate`** and asserts it
+  resumes to interactive via the **real runtime** (the fragment's inline resume scripts run
+  through `executeScripts`), the injected control increments on click, and the original render
+  keeps its own independent live state (continuity).
 
 Deliberately *not* yet implemented (tracked above): the state+discriminant tier and the
-`updates` chunk, automatic partial‑render generation / `readyId` emission from page
-templates on the server (the `entry`/config integration), and the full compile→hydrate→
-navigate e2e (now unblocked — see the env note above).
+`updates` chunk, and automatic partial‑render generation / `readyId` emission from page
+templates on the server (the `entry`/config integration that would let the server produce the
+embedded outlet fragment automatically, rather than the app calling `renderNavigationUpdate`).
 
 ## 15. Compiler / runtime surface (sketch)
 
