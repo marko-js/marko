@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-let-duplicate-value/template.marko:1:16
+    > 1 | <let/x value=1 value=2/>
+        |                ^^^^^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports a single [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).
+      2 |

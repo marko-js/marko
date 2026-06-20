@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-for-range-extra-params/template.marko:1:13
+    > 1 | <for|index, extra| to=3>
+        |             ^^^^^ The [`<for>` tag](https://markojs.com/docs/reference/core-tag#for) with a `to=` attribute only provides an `index` parameter.
+      2 |   ${index}
+      3 | </for>
+      4 |

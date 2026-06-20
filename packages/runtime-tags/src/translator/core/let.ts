@@ -42,8 +42,22 @@ export default {
     for (const attr of node.attributes) {
       if (t.isMarkoAttribute(attr)) {
         if (attr.name === "value") {
+          if (valueAttr) {
+            throw tag.hub.buildError(
+              attr,
+              "The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports a single [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
+              Error,
+            );
+          }
           valueAttr = attr;
         } else if (attr.name === "valueChange") {
+          if (valueChangeAttr) {
+            throw tag.hub.buildError(
+              attr,
+              "The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports a single [`valueChange=` attribute](https://markojs.com/docs/reference/core-tag#controllable-let).",
+              Error,
+            );
+          }
           valueChangeAttr = attr;
         } else {
           const start = attr.loc?.start;

@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-for-of-extra-params/template.marko:1:20
+    > 1 | <for|value, index, extra| of=[1, 2]>
+        |                    ^^^^^ The [`<for>` tag](https://markojs.com/docs/reference/core-tag#for) with an `of=` attribute only provides `value, index` parameters.
+      2 |   ${value}
+      3 | </for>
+      4 |

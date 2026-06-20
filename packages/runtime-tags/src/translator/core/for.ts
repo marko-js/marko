@@ -97,6 +97,24 @@ export default {
 
     assertAllowedAttributes(tag, allowAttrs);
 
+    const params = tag.node.body.params;
+    const maxParams = forType === "to" || forType === "until" ? 1 : 2;
+    if (params.length > maxParams) {
+      throw tag.hub.buildError(
+        params[maxParams],
+        `The [\`<for>\` tag](https://markojs.com/docs/reference/core-tag#for) with ${
+          maxParams === 1
+            ? `a \`${forType}=\` attribute only provides an \`index\` parameter`
+            : `${
+                forType === "of" ? "an `of=`" : "an `in=`"
+              } attribute only provides ${
+                forType === "of" ? "`value, index`" : "`name, value`"
+              } parameters`
+        }.`,
+        Error,
+      );
+    }
+
     if (isAttrTag) return;
 
     const bodySection = startSection(tagBody);
