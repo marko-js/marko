@@ -216,6 +216,10 @@ function attrsInternal(
   nextAttrs: Record<string, unknown>,
 ) {
   const el = scope[nodeAccessor] as Element;
+  const eventsAccessor = AccessorPrefix.EventAttributes + nodeAccessor;
+  const prevEvents = scope[eventsAccessor] as
+    | undefined
+    | Record<string, unknown>;
   let events: undefined | Record<string, unknown>;
   let skip: RegExp | undefined;
   switch (el.tagName) {
@@ -304,8 +308,7 @@ function attrsInternal(
         }
 
         if (isEventHandler(name)) {
-          (events ||= scope[AccessorPrefix.EventAttributes + nodeAccessor] =
-            {})[getEventHandlerName(name)] = value;
+          (events ||= {})[getEventHandlerName(name)] = value;
         } else if (
           !(skip?.test(name) || (name === "content" && el.tagName !== "META"))
         ) {
@@ -315,6 +318,12 @@ function attrsInternal(
       }
     }
   }
+
+  // Clear handlers attached on a previous render that are no longer present.
+  for (const name in prevEvents) {
+    if (!(events && name in events)) (events ||= {})[name] = undefined;
+  }
+  scope[eventsAccessor] = events;
 }
 
 export function _attr_content(
