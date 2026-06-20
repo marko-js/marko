@@ -634,7 +634,12 @@ function loop<T extends unknown[] = unknown[]>(
 
       forEach(value, (key, args) => {
         if (MARKO_DEBUG) {
-          if (seenKeys.has(key)) {
+          if (typeof key !== "string" && typeof key !== "number") {
+            console.error(
+              `A <for> tag's \`by\` attribute must return a string or number, but it returned:`,
+              key,
+            );
+          } else if (seenKeys.has(key)) {
             console.error(
               `A <for> tag's \`by\` attribute must return a unique value for each item, but a duplicate was found matching:`,
               key,
