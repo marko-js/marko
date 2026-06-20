@@ -216,8 +216,11 @@ function attrsInternal(
   nextAttrs: Record<string, unknown>,
 ) {
   const el = scope[nodeAccessor] as Element;
-  let events: undefined | Record<string, unknown>;
+  let events = scope[AccessorPrefix.EventAttributes + nodeAccessor] as
+    | undefined
+    | Record<string, unknown>;
   let skip: RegExp | undefined;
+  for (const name in events) events[name] = 0;
   switch (el.tagName) {
     case "INPUT":
       if ("checked" in nextAttrs || "checkedChange" in nextAttrs) {

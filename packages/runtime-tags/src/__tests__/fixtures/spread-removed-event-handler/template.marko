@@ -1,0 +1,9 @@
+export interface Input {}
+
+<let/phase=0/>
+<let/log=""/>
+<const/attrs = phase === 0
+  ? { onClick() { phase = 1 }, onMouseOver() { log = `${log}M` } }
+  : { onClick() { phase = 0 } }
+/>
+<div ...attrs>${phase}:${log}</div>
