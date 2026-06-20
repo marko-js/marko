@@ -12,6 +12,14 @@ export const SPA_NAV_HEADER = "x-marko-nav";
 export const SPA_BUILD_HEADER = "x-marko-build";
 /** Response header directing the client to perform a full reload instead. */
 export const SPA_RELOAD_HEADER = "x-marko-reload";
+/** Response header: canonical URL to record in history (percent-encoded). */
+export const SPA_URL_HEADER = "x-marko-url";
+/** Response header: new document title (percent-encoded). */
+export const SPA_TITLE_HEADER = "x-marko-title";
+/** Response header: the embedded render's ready id. */
+export const SPA_READY_HEADER = "x-marko-ready";
+/** Response header: runtime id of the render. */
+export const SPA_RUNTIME_HEADER = "x-marko-runtime";
 
 /** A navigation update produced by the server for the streamed-HTML tier. */
 export interface ServerUpdate {
@@ -45,6 +53,56 @@ export function isReloadRequired(
   clientBuild: string,
 ): boolean {
   return !!update.reload || update.build !== clientBuild;
+}
+
+/**
+ * Serialize a navigation update's metadata as response headers — the HTML travels as
+ * the raw response body. This avoids JSON-escaping the fragment (~24% gzip overhead
+ * measured) and a client-side `JSON.parse` of a large string. `build` is intentionally
+ * omitted on success: the client already declared it on the request and the server only
+ * returns an update when it matches (otherwise a reload directive), so re-echoing it is
+ * wasted bytes.
+ */
+export function updateResponseHeaders(
+  update: ServerUpdate,
+): Record<string, string> {
+  const headers: Record<string, string> = {};
+  if (update.reload) headers[SPA_RELOAD_HEADER] = "1";
+  if (update.url != null)
+    headers[SPA_URL_HEADER] = encodeURIComponent(update.url);
+  if (update.title != null)
+    headers[SPA_TITLE_HEADER] = encodeURIComponent(update.title);
+  if (update.readyId != null) headers[SPA_READY_HEADER] = update.readyId;
+  if (update.runtimeId != null) headers[SPA_RUNTIME_HEADER] = update.runtimeId;
+  return headers;
+}
+
+/**
+ * Reconstruct a `ServerUpdate` from a fetched response: metadata from `X-Marko-*`
+ * headers and the HTML from the raw body. The build is taken from `clientBuild` — a
+ * successful (non-reload) response is, by construction, on the client's build.
+ */
+export function updateFromResponse(
+  headers: SpaRequestHeaders,
+  body: string,
+  clientBuild: string,
+): ServerUpdate {
+  const url = decode(readHeader(headers, SPA_URL_HEADER));
+  if (readHeader(headers, SPA_RELOAD_HEADER)) {
+    return { build: clientBuild, reload: true, url };
+  }
+  return {
+    build: clientBuild,
+    url,
+    title: decode(readHeader(headers, SPA_TITLE_HEADER)),
+    readyId: readHeader(headers, SPA_READY_HEADER),
+    runtimeId: readHeader(headers, SPA_RUNTIME_HEADER),
+    html: body,
+  };
+}
+
+function decode(value: string | undefined): string | undefined {
+  return value == null ? undefined : decodeURIComponent(value);
 }
 
 /**

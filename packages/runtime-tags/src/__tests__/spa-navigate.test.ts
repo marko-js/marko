@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 
 import { JSDOM } from "jsdom";
 
+import { type ServerUpdate, updateResponseHeaders } from "../common/spa";
 import {
   applyServerUpdate,
   createNavigator,
@@ -24,9 +25,21 @@ function setup(bodyHtml: string) {
 
 type MockInit = { headers: Record<string, string> };
 
-/** A `Response`-shaped value with header `get` and a json body. */
-function jsonResponse(body: unknown, headers: Record<string, string> = {}) {
-  return { headers: new Map(Object.entries(headers)), json: async () => body };
+/** A `Response`-shaped value: metadata in `X-Marko-*` headers, HTML in the raw body. */
+function htmlResponse(body: string, headers: Record<string, string> = {}) {
+  return { headers: new Map(Object.entries(headers)), text: async () => body };
+}
+
+/**
+ * Build a `Response`-shaped value the way the server wire would for an update: HTML in
+ * the body, metadata serialized via `updateResponseHeaders`. Exercises the real
+ * round-trip (`updateResponseHeaders` → `updateFromResponse`) on every fetch test.
+ */
+function updateResponse(update: Partial<ServerUpdate>) {
+  return htmlResponse(
+    update.html ?? "",
+    updateResponseHeaders(update as ServerUpdate),
+  );
 }
 
 /** Wrap a handler as a `fetch`, localizing the single unavoidable cast. */
@@ -181,8 +194,7 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
 
       const fetchImpl = mockFetch((url, init) => {
         Object.assign(sentHeaders, init.headers);
-        return jsonResponse({
-          build: "build-1",
+        return updateResponse({
           url,
           title: "B",
           html: "<p>From server B</p>",
@@ -214,7 +226,7 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
       let assigned: string | undefined;
 
       const fetchImpl = mockFetch(() =>
-        jsonResponse({ build: "build-1" }, { "x-marko-reload": "1" }),
+        htmlResponse("", { "x-marko-reload": "1" }),
       );
 
       const ok = await navigate("/b", {
@@ -255,12 +267,14 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
       assert.equal(assigned, "/b");
     });
 
-    it("falls back when the server build differs from the client build", async () => {
+    it("falls back to a full reload when the server rejects the build (reload directive)", async () => {
       const { document } = setup(`<main id="outlet"><p>A</p></main>`);
       const outlet = document.getElementById("outlet")!;
       let assigned: string | undefined;
+      // A stale client's build no longer matches: the server answers with a reload
+      // directive (carrying the canonical url) rather than mismatched HTML.
       const fetchImpl = mockFetch((url) =>
-        jsonResponse({ build: "build-2", url, html: "<p>B</p>" }),
+        updateResponse({ reload: true, url }),
       );
 
       const ok = await navigate("/b", {
@@ -281,37 +295,42 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
   });
 
   describe("fetchUpdate()", () => {
-    it("sends nav headers and parses the JSON update", async () => {
+    it("sends nav headers and reads the HTML body + metadata headers", async () => {
       const sent: Record<string, string> = {};
       const fetchImpl = mockFetch((_url, init) => {
         Object.assign(sent, init.headers);
-        return jsonResponse({ build: "build-1", html: "<p>B</p>" });
+        return updateResponse({ title: "B", html: "<p>B</p>" });
       });
 
       const update = await fetchUpdate("/b", { build: "build-1", fetchImpl });
 
-      assert.deepEqual(update, { build: "build-1", html: "<p>B</p>" });
+      // The build is taken from the client (the wire omits it on success).
+      assert.equal(update.build, "build-1");
+      assert.equal(update.html, "<p>B</p>");
+      assert.equal(update.title, "B");
+      assert.equal(update.reload, undefined);
       assert.equal(sent["x-marko-nav"], "1");
       assert.equal(sent["x-marko-build"], "build-1");
     });
 
     it("normalizes a reload header into a reload update", async () => {
-      const fetchImpl = mockFetch(() => ({
-        headers: new Map([["x-marko-reload", "1"]]),
-        json: async () => assert.fail("should not read body on reload"),
-      }));
+      const fetchImpl = mockFetch(() =>
+        htmlResponse("", { "x-marko-reload": "1" }),
+      );
 
       const update = await fetchUpdate("/b", { build: "build-1", fetchImpl });
-      assert.deepEqual(update, { build: "build-1", reload: true });
+      assert.equal(update.build, "build-1");
+      assert.equal(update.reload, true);
+      assert.equal(update.html, undefined);
     });
   });
 
   describe("createNavigator()", () => {
-    function countingFetch(body: () => Record<string, unknown>) {
+    function countingFetch(body: () => Partial<ServerUpdate>) {
       let calls = 0;
       const fetchImpl = mockFetch((url) => {
         calls++;
-        return jsonResponse({ build: "build-1", url, ...body() });
+        return updateResponse({ url, ...body() });
       });
       return {
         fetchImpl,
@@ -491,7 +510,7 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
       const outlet = document.getElementById("outlet")!;
       let assigned: string | undefined;
       const fetchImpl = mockFetch((url) =>
-        jsonResponse({ build: "b1", url, html: "<p>B</p>", readyId: "rid" }),
+        updateResponse({ url, html: "<p>B</p>", readyId: "rid" }),
       );
       const throwingRuntime = {
         init() {},

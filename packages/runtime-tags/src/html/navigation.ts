@@ -14,6 +14,7 @@ import {
   requestBuild,
   type ServerUpdate,
   type SpaRequestHeaders,
+  updateResponseHeaders,
 } from "../common/spa";
 
 /** The minimal shape of a Marko render result this helper consumes. */
@@ -68,10 +69,27 @@ export function reloadDirective(url?: string): ServerUpdate {
 }
 
 /**
+ * Serialize a `ServerUpdate` for the HTTP layer: metadata as `X-Marko-*` response
+ * headers and the outlet HTML as the raw body. This mirrors `updateFromResponse` on
+ * the client, keeping the fragment out of a JSON string (avoiding escape overhead and
+ * a client-side parse). The caller writes `headers` and `body` onto its response.
+ */
+export function navigationResponse(update: ServerUpdate): {
+  headers: Record<string, string>;
+  body: string;
+} {
+  return {
+    headers: updateResponseHeaders(update),
+    body: update.html || "",
+  };
+}
+
+/**
  * The stateless server decision for a request, discriminated for the HTTP layer:
  *   "full"   — not a navigation request; render and respond with the full document.
  *   "reload" — a navigation request from a stale build; respond with `X-Marko-Reload`.
- *   "update" — a navigation request on the current build; respond with the JSON update.
+ *   "update" — a navigation request on the current build; respond with the rendered
+ *              update (serialize it with `navigationResponse` → headers + HTML body).
  */
 export type NavigationResult =
   | { kind: "full" }

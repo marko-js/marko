@@ -1,9 +1,16 @@
 import assert from "node:assert/strict";
 
-import { isNavigationRequest, readHeader, requestBuild } from "../common/spa";
+import {
+  isNavigationRequest,
+  readHeader,
+  requestBuild,
+  type ServerUpdate,
+  updateFromResponse,
+} from "../common/spa";
 import {
   handleNavigation,
   type NavigationRenderable,
+  navigationResponse,
   reloadDirective,
   renderNavigationUpdate,
 } from "../html/navigation";
@@ -97,6 +104,88 @@ describe("html/navigation (SPA server helper)", () => {
     it("treats a request without the nav header as a full document", () => {
       assert.equal(isNavigationRequest({}), false);
       assert.equal(isNavigationRequest(new Map()), false);
+    });
+  });
+
+  describe("navigationResponse() wire round-trip", () => {
+    /** Re-read a serialized response the way the client's fetch path would. */
+    function roundTrip(
+      update: ServerUpdate,
+      clientBuild: string,
+    ): ServerUpdate {
+      const { headers, body } = navigationResponse(update);
+      return updateFromResponse(
+        new Map(Object.entries(headers)),
+        body,
+        clientBuild,
+      );
+    }
+
+    it("carries HTML in the body and metadata in headers", () => {
+      const { headers, body } = navigationResponse({
+        build: "b1",
+        url: "/p/1",
+        title: "Detail",
+        readyId: "tpl_detail",
+        runtimeId: "M",
+        html: "<main><p>hi</p></main>",
+      });
+
+      assert.equal(body, "<main><p>hi</p></main>");
+      assert.equal(headers["x-marko-url"], encodeURIComponent("/p/1"));
+      assert.equal(headers["x-marko-title"], encodeURIComponent("Detail"));
+      assert.equal(headers["x-marko-ready"], "tpl_detail");
+      assert.equal(headers["x-marko-runtime"], "M");
+      // The build is intentionally not echoed on success.
+      assert.equal(headers["x-marko-build"], undefined);
+    });
+
+    it("round-trips an update back to the client (build taken from the client)", () => {
+      const back = roundTrip(
+        {
+          build: "b1",
+          url: "/p/1",
+          title: "Detail",
+          readyId: "tpl_detail",
+          runtimeId: "M",
+          html: "<main><p>hi</p></main>",
+        },
+        "b1",
+      );
+      assert.deepEqual(back, {
+        build: "b1",
+        url: "/p/1",
+        title: "Detail",
+        readyId: "tpl_detail",
+        runtimeId: "M",
+        html: "<main><p>hi</p></main>",
+      });
+    });
+
+    it("preserves a title that needs percent-encoding", () => {
+      const back = roundTrip(
+        { build: "b1", title: "Q&A — 50% off", html: "<p>x</p>" },
+        "b1",
+      );
+      assert.equal(back.title, "Q&A — 50% off");
+    });
+
+    it("serializes a reload directive (no HTML body)", () => {
+      const { headers, body } = navigationResponse(
+        reloadDirective("/somewhere"),
+      );
+      assert.equal(headers["x-marko-reload"], "1");
+      assert.equal(headers["x-marko-url"], encodeURIComponent("/somewhere"));
+      assert.equal(body, "");
+
+      const back = updateFromResponse(
+        new Map(Object.entries(headers)),
+        body,
+        "b1",
+      );
+      assert.equal(back.reload, true);
+      assert.equal(back.url, "/somewhere");
+      assert.equal(back.html, undefined);
     });
   });
 

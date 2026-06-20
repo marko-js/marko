@@ -28,7 +28,7 @@ import {
   type ServerUpdate,
   SPA_BUILD_HEADER,
   SPA_NAV_HEADER,
-  SPA_RELOAD_HEADER,
+  updateFromResponse,
 } from "../common/spa";
 
 export type { ServerUpdate } from "../common/spa";
@@ -281,9 +281,10 @@ export interface FetchUpdateOptions {
 }
 
 /**
- * Transport seam: request a navigation update for `url`. A reload directive header
- * is normalized into a `reload` update so callers only deal with `ServerUpdate`.
- * Throws on network/parse failure (the caller decides the fallback).
+ * Transport seam: request a navigation update for `url`. The update's HTML is the raw
+ * response body and its metadata is read from `X-Marko-*` headers (a reload directive
+ * header becomes a `reload` update), so callers only deal with `ServerUpdate`.
+ * Throws on network failure (the caller decides the fallback).
  */
 export async function fetchUpdate(
   url: string,
@@ -298,11 +299,7 @@ export async function fetchUpdate(
     },
   });
 
-  if (res.headers.get(SPA_RELOAD_HEADER)) {
-    return { build: options.build, reload: true };
-  }
-
-  return (await res.json()) as ServerUpdate;
+  return updateFromResponse(res.headers, await res.text(), options.build);
 }
 
 export interface ApplyOptions {
