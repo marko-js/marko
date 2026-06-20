@@ -1,5 +1,4 @@
 // template.marko
-_enable_catch();
 const $updateoutlet_content__n__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$n($scope._, $scope._.b + 1);
 }));

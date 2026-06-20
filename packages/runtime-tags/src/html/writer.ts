@@ -814,6 +814,31 @@ export function _try(
   );
 }
 
+/**
+ * The single-page server-first update boundary (SSR side): write the body inside a
+ * resumable branch (start/end markers + a scope carrying the branch accessor) so the
+ * client can resume it and the navigation controller can swap it. This is `_try` minus
+ * the catch/placeholder forking — the content renders straight through.
+ */
+export function _outlet(
+  scopeId: number,
+  accessor: Accessor,
+  content: () => void,
+) {
+  const branchId = _peek_scope_id();
+  $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
+  content();
+  writeScope(branchId, {
+    [AccessorProp.BranchAccessor]: accessor,
+  });
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(
+      ResumeSymbol.BranchEnd,
+      scopeId + " " + accessor + " " + branchId,
+    ),
+  );
+}
+
 function tryPlaceholder(
   content: () => void,
   placeholder: () => void,

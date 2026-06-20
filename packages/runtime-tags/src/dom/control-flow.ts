@@ -315,6 +315,39 @@ export function _try(
   };
 }
 
+/**
+ * The single-page server-first update boundary: a `<try>`-shaped branch without the
+ * catch/placeholder cost. It renders its body once into a resumable branch (so reactive
+ * content inside hydrates in both SSR and CSR) whose start/end markers let the navigation
+ * controller destroy and recreate it to swap route content. Unlike `_try` it pulls in no
+ * `_enable_catch`/await machinery — just `enableBranches()`, like `_if`/`_for`.
+ */
+export function _outlet(
+  nodeAccessor: EncodedAccessor,
+  template?: string | 0,
+  walks?: string | 0,
+  setup?: SetupFn | 0,
+) {
+  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
+  const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+  const renderer = _content("", template, walks, setup)();
+  enableBranches();
+  return (scope: Scope) => {
+    if (!scope[branchAccessor]) {
+      setConditionalRenderer(
+        scope,
+        nodeAccessor as string,
+        renderer,
+        createAndSetupBranch,
+      );
+    }
+    const branch = scope[branchAccessor];
+    if (branch) {
+      branch[AccessorProp.BranchAccessor] = nodeAccessor;
+    }
+  };
+}
+
 export function renderCatch(scope: Scope, error: unknown) {
   const tryWithCatch = findBranchWithKey(scope, AccessorProp.CatchContent);
   if (!tryWithCatch) {

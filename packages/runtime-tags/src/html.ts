@@ -56,6 +56,7 @@ export {
   _html,
   _id,
   _if,
+  _outlet,
   _peek_scope_id,
   _resume,
   _resume_branch,
