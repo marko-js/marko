@@ -1,24 +1,27 @@
-// MVP of the single-page server-first update controller (HTML tier).
+// Single-page server-first update controller (HTML tier) — client apply path.
 //
-// See ../../docs/single-page-server-first-updates.md. This implements the *client
-// apply path* for the "streamed HTML" tier: the server sends a navigation update
-// describing the new outlet HTML (self-contained, including any resume <script>s),
-// and the client swaps it in without reloading the document — guarding on the build
-// hash and falling back to a full navigation whenever it cannot safely apply.
+// See ../../docs/single-page-server-first-updates.md. The server sends a navigation
+// update describing the new outlet HTML (self-describing, including any resume
+// <script>s); the client swaps it in without reloading the document, resumes the
+// fragment through the real runtime, guards on the build hash, and falls back to a
+// full navigation whenever it cannot safely apply.
 //
 // Layering (most→least important): the shared wire contract lives in `common/spa`.
-// This module is the DOM-side pipeline:
+// This module is the DOM-side pipeline and is intentionally runtime- and host-
+// agnostic — the `SpaRuntime` (init/initEmbedded/ready/run) and document/history/
+// location are dependency-injected. The real-runtime binding lives in browser-only
+// `./spa-runtime` (which is why this file imports no runtime modules that touch
+// `document` at load, keeping it unit-testable off the DOM).
 //   createNavigator()   public API: configure once → { navigate, prefetch, apply }
 //   navigate()          one-shot sugar over a transient navigator
 //   fetchUpdate()       transport seam: turn a request into a ServerUpdate
-//   applyServerUpdate() apply seam: guard, swap, run resume scripts, update title
+//   applyServerUpdate() apply seam: guard, swap, run resume scripts, resume, title
 //   executeScripts()    run resume payloads contained in injected HTML
-// The seams let a prefetched or streamed update be applied without re-fetching, and
-// keep apply host-agnostic.
 //
-// Out of MVP scope (future work): the state+discriminant tier and `updates` chunk,
+// Out of scope here (future work): the state+discriminant tier and `updates` chunk,
 // partial-render generation on the server, link/popstate interception glue.
 
+import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import {
   isReloadRequired,
   type ServerUpdate,
@@ -28,6 +31,18 @@ import {
 } from "../common/spa";
 
 export type { ServerUpdate } from "../common/spa";
+
+/**
+ * The slice of the Marko DOM runtime the controller needs to resume a swapped-in
+ * fragment. Injected so the controller stays testable off the DOM; the real binding
+ * is `domRuntime` in `./spa-runtime`.
+ */
+export interface SpaRuntime {
+  init(runtimeId?: string): void;
+  initEmbedded(readyId: string, runtimeId?: string): void;
+  ready(readyId: string): void;
+  run(): void;
+}
 
 /** The document/history/location a navigator drives (defaults to globals). */
 export interface NavHost {
@@ -43,9 +58,13 @@ export interface NavigatorOptions {
   target: Element | string;
   /** Document/history/location to drive (defaults to globals). */
   host?: NavHost;
+  /** The Marko DOM runtime used to resume swapped-in fragments. */
+  runtime?: SpaRuntime;
+  /** Runtime id to resume under (defaults to the framework default). */
+  runtimeId?: string;
   /** `fetch` implementation (defaults to global). */
   fetchImpl?: typeof fetch;
-  /** Resume hook for reactive islands in the new content. */
+  /** Override the resume step entirely (advanced; bypasses `runtime`). */
   resume?: (target: Element) => void;
   /** Execute injected resume <script>s. Default: true. */
   runScripts?: boolean;
@@ -70,15 +89,21 @@ export function createNavigator(options: NavigatorOptions): SpaNavigator {
   // Pending/warmed updates keyed by url, populated by prefetch and consumed by navigate.
   const cache = new Map<string, Promise<ServerUpdate>>();
   const host = options.host || {};
+  const reloadTo = (url: string): false => {
+    (host.location || location).assign(url);
+    return false;
+  };
 
   const apply: SpaNavigator["apply"] = (update, url = update.url || "") => {
     const applied = applyServerUpdate(update, {
       build: options.build,
       target: options.target,
       doc: host.doc,
+      runtime: options.runtime,
+      runtimeId: options.runtimeId,
       runScripts: options.runScripts,
       resume: options.resume,
-      onReload: () => (host.location || location).assign(url),
+      onReload: () => reloadTo(url),
     });
     if (applied) {
       (host.history || history).pushState({}, "", update.url || url);
@@ -103,11 +128,15 @@ export function createNavigator(options: NavigatorOptions): SpaNavigator {
         update = await (cache.get(url) || fetchUpdate(url, options));
       } catch {
         cache.delete(url);
-        (host.location || location).assign(url);
-        return false;
+        return reloadTo(url); // transport failure → full navigation
       }
       cache.delete(url); // single-consume the warmed entry
-      return apply(update, url);
+      try {
+        return apply(update, url);
+      } catch {
+        // The outlet may be half-swapped; a full navigation is the safe recovery.
+        return reloadTo(url);
+      }
     },
   };
 }
@@ -167,16 +196,21 @@ export interface ApplyOptions {
   target: Element | string;
   /** Document used for title updates / selector resolution. Defaults to the target's. */
   doc?: Document;
+  /** The Marko DOM runtime used to resume the swapped-in fragment. */
+  runtime?: SpaRuntime;
+  /** Runtime id to resume under (defaults to the framework default). */
+  runtimeId?: string;
   /** Execute <script>s found in the injected HTML (resume payloads). Default: true. */
   runScripts?: boolean;
-  /** Hook to resume reactive islands in the swapped subtree (wire init/initEmbedded). */
+  /** Override the resume step entirely (advanced; bypasses `runtime`). */
   resume?: (target: Element) => void;
   /** Called instead of applying when the update cannot be safely applied. */
   onReload: (url?: string) => void;
 }
 
 /**
- * Apply seam: apply a server navigation update to the live document.
+ * Apply seam: apply a server navigation update to the live document — swap the outlet
+ * HTML, run its resume <script>s, then resume the fragment through the runtime.
  * Returns `true` if applied in place, `false` if it fell back to a reload.
  */
 export function applyServerUpdate(
@@ -196,7 +230,7 @@ export function applyServerUpdate(
     if (options.runScripts !== false) {
       executeScripts(target, doc);
     }
-    options.resume?.(target);
+    resumeFragment(update, options, target);
   }
 
   if (update.title != null) {
@@ -204,6 +238,36 @@ export function applyServerUpdate(
   }
 
   return true;
+}
+
+/**
+ * Bring the swapped-in fragment to life. A custom `resume` overrides everything;
+ * otherwise, with a runtime present, resume the fragment's render — embedded renders
+ * (`readyId`) gate their resume data behind `initEmbedded(readyId)`, others use
+ * `init()` — then flush so the new content is interactive synchronously. With no
+ * runtime and no override the fragment is treated as static (nothing to resume).
+ */
+function resumeFragment(
+  update: ServerUpdate,
+  options: ApplyOptions,
+  target: Element,
+): void {
+  if (options.resume) {
+    options.resume(target);
+    return;
+  }
+
+  const runtime = options.runtime;
+  if (runtime) {
+    const runtimeId =
+      update.runtimeId || options.runtimeId || DEFAULT_RUNTIME_ID;
+    if (update.readyId != null) {
+      runtime.initEmbedded(update.readyId, runtimeId);
+    } else {
+      runtime.init(runtimeId);
+    }
+    runtime.run();
+  }
 }
 
 /**

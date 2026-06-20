@@ -299,34 +299,48 @@ lazy, per‑route, build‑hash‑cached, and never loaded for non‑navigating 
 * **Stateless server** — every decision is a pure function of (request context, build
   constants, target render).
 
-## 14a. MVP implemented in‑repo (HTML tier)
+## 14a. Implemented in‑repo (HTML tier, real runtime integration)
 
-A first slice of the **client apply path** ships as a real, host‑agnostic runtime module:
-[`src/dom/navigate.ts`](../src/dom/navigate.ts), with a functional jsdom test in
-[`src/__tests__/spa-navigate.test.ts`](../src/__tests__/spa-navigate.test.ts).
+The **streamed‑HTML tier** is implemented and wired into the real Marko resume runtime.
+Modules (reachable via the package's `./*` subpath exports):
 
-Run it:
+| Module | Role |
+| --- | --- |
+| [`src/common/spa.ts`](../src/common/spa.ts) | shared wire contract — headers, `ServerUpdate` (`html`/`readyId`/`runtimeId`/`reload`), `isReloadRequired` |
+| [`src/dom/navigate.ts`](../src/dom/navigate.ts) | runtime‑ & host‑agnostic client pipeline: `createNavigator` / `navigate` / `fetchUpdate` / `applyServerUpdate` / `executeScripts`; the `SpaRuntime` and document/history/location are **dependency‑injected** |
+| [`src/dom/spa-runtime.ts`](../src/dom/spa-runtime.ts) | browser‑only binding: `domRuntime = { init, initEmbedded, ready, run }` and `createDomNavigator()` |
+| [`src/html/navigation.ts`](../src/html/navigation.ts) | server helper: `renderNavigationUpdate(template, input, opts)` collects an embedded render into a `ServerUpdate`; `reloadDirective()` |
 
-```sh
-npx mocha --grep "SPA server-first update MVP"   # from repo root
-```
+How resume actually works (traced from `resume.ts`): after the outlet HTML is swapped
+in and its inline scripts re‑executed (`executeScripts` — innerHTML never runs scripts),
+the controller resumes the fragment through the runtime. Because `init()` is a no‑op once
+the page is initialized, a **post‑load** fragment is resumed via
+`initEmbedded(readyId, runtimeId)` → `ready(readyId)`, which drains the fragment's
+ready‑gated (`.b[readyId]`) resume data; `run()` then flushes so the new content is
+interactive synchronously. Non‑embedded fragments use `init(runtimeId)`. The previous
+fragment's scopes are cleaned up by `initEmbedded`'s `MutationObserver` when its nodes
+leave the DOM. A custom `resume` hook overrides this for advanced cases.
 
-It covers the **streamed‑HTML tier** end‑to‑end against a real DOM:
+Robustness: build‑hash mismatch and explicit reload directives short‑circuit to a full
+navigation before touching the DOM; a transport failure **or** a resume failure (which can
+leave the outlet half‑swapped) also falls back to `location.assign`.
 
-* `applyServerUpdate(update, opts)` — build‑hash guard with always‑correct full‑reload
-  fallback (stale build / explicit `reload`), outlet content swap **with document
-  continuity** (a sentinel + a live shell event listener survive the navigation), title
-  update, and a `resume(target)` hook where `init`/`initEmbedded` get wired in.
-* `executeScripts(container, doc)` — re‑creates `<script>`s from injected HTML so a
-  streamed resume payload actually runs (innerHTML never executes scripts). The test
-  asserts the payload executes after the swap.
-* `navigate(url, opts)` — fetches a navigation update with the `x-marko-*` headers,
-  guards the build, applies in place, records history, and falls back to
-  `location.assign` on a reload header, a build mismatch, or any fetch error.
+Tests (27 across two suites, run `npx mocha --grep "SPA server-first update MVP|SPA server helper"`):
+controller swap + document continuity, build‑hash / reload‑directive / transport / resume
+fallbacks, `executeScripts` execution + ordering, prefetch dedupe, the `SpaRuntime` resume
+wiring (`initEmbedded` vs `init`, id precedence, custom‑override, reload no‑touch), and the
+server helper.
 
-Deliberately *not* in the MVP (tracked as future work below): the state+discriminant
-tier and the `updates` chunk, partial‑render generation on the server, prefetch‑on‑intent,
-and link/`popstate` interception glue.
+> **Environment note:** the full compile→render→hydrate end‑to‑end test (driving the real
+> `init`/`initEmbedded` with compiler‑generated HTML) is **not runnable in this sandbox** —
+> `@marko/compiler`'s `build-babel-types` step is broken here (`markoText is not a
+> function`), so `.marko` files cannot be compiled. The integration is therefore verified
+> at the unit/wiring level against the real runtime's contract (with `SpaRuntime` injected),
+> and is structured so an e2e fixture drops in once the compiler builds in CI.
+
+Deliberately *not* yet implemented (tracked above): the state+discriminant tier and the
+`updates` chunk, partial‑render generation on the server, prefetch‑on‑intent triggers, and
+link/`popstate` interception glue.
 
 ## 15. Compiler / runtime surface (sketch)
 

@@ -385,4 +385,151 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
       assert.deepEqual(pushed, ["/c"]);
     });
   });
+
+  describe("resume wiring (SpaRuntime)", () => {
+    type Call = [string, ...unknown[]];
+    function spyRuntime() {
+      const calls: Call[] = [];
+      const runtime = {
+        init: (id?: string) => calls.push(["init", id]),
+        initEmbedded: (readyId: string, id?: string) =>
+          calls.push(["initEmbedded", readyId, id]),
+        ready: (readyId: string) => calls.push(["ready", readyId]),
+        run: () => calls.push(["run"]),
+      };
+      return { runtime, calls };
+    }
+
+    it("resumes an embedded fragment via initEmbedded(readyId, runtimeId) + run", () => {
+      const { document } = setup(`<main id="outlet"></main>`);
+      const outlet = document.getElementById("outlet")!;
+      const { runtime, calls } = spyRuntime();
+
+      applyServerUpdate(
+        { build: "b1", html: "<p>B</p>", readyId: "tpl_x", runtimeId: "R" },
+        { build: "b1", target: outlet, doc: document, runtime, onReload() {} },
+      );
+
+      assert.deepEqual(calls, [["initEmbedded", "tpl_x", "R"], ["run"]]);
+    });
+
+    it("resumes a non-embedded fragment via init(runtimeId) + run", () => {
+      const { document } = setup(`<main id="outlet"></main>`);
+      const outlet = document.getElementById("outlet")!;
+      const { runtime, calls } = spyRuntime();
+
+      applyServerUpdate(
+        { build: "b1", html: "<p>B</p>" },
+        {
+          build: "b1",
+          target: outlet,
+          doc: document,
+          runtime,
+          runtimeId: "R2",
+          onReload() {},
+        },
+      );
+
+      assert.deepEqual(calls, [["init", "R2"], ["run"]]);
+    });
+
+    it("defaults the runtime id to the framework default", () => {
+      const { document } = setup(`<main id="outlet"></main>`);
+      const outlet = document.getElementById("outlet")!;
+      const { runtime, calls } = spyRuntime();
+
+      applyServerUpdate(
+        { build: "b1", html: "<p>B</p>", readyId: "rid" },
+        { build: "b1", target: outlet, doc: document, runtime, onReload() {} },
+      );
+
+      assert.deepEqual(calls, [["initEmbedded", "rid", "M"], ["run"]]);
+    });
+
+    it("does not touch the runtime on a reload fallback", () => {
+      const { document } = setup(`<main id="outlet"><p>A</p></main>`);
+      const outlet = document.getElementById("outlet")!;
+      const { runtime, calls } = spyRuntime();
+
+      const ok = applyServerUpdate(
+        { build: "b2", html: "<p>B</p>", readyId: "rid", url: "/x" },
+        { build: "b1", target: outlet, doc: document, runtime, onReload() {} },
+      );
+
+      assert.equal(ok, false);
+      assert.deepEqual(calls, []);
+      assert.match(outlet.innerHTML, /A/);
+    });
+
+    it("a custom resume hook overrides the runtime path", () => {
+      const { document } = setup(`<main id="outlet"></main>`);
+      const outlet = document.getElementById("outlet")!;
+      const { runtime, calls } = spyRuntime();
+      let resumed: Element | undefined;
+
+      applyServerUpdate(
+        { build: "b1", html: "<p>B</p>", readyId: "rid" },
+        {
+          build: "b1",
+          target: outlet,
+          doc: document,
+          runtime,
+          resume: (t) => (resumed = t),
+          onReload() {},
+        },
+      );
+
+      assert.equal(resumed, outlet);
+      assert.deepEqual(calls, []); // runtime bypassed
+    });
+
+    it("navigate falls back to a full reload when resume throws (half-applied DOM)", async () => {
+      const { document } = setup(`<main id="outlet"><p>A</p></main>`);
+      const outlet = document.getElementById("outlet")!;
+      let assigned: string | undefined;
+      const fetchImpl = mockFetch((url) =>
+        jsonResponse({ build: "b1", url, html: "<p>B</p>", readyId: "rid" }),
+      );
+      const throwingRuntime = {
+        init() {},
+        initEmbedded() {
+          throw new Error("resume blew up");
+        },
+        ready() {},
+        run() {},
+      };
+
+      const ok = await navigate("/b", {
+        build: "b1",
+        target: outlet,
+        runtime: throwingRuntime,
+        fetchImpl,
+        host: {
+          doc: document,
+          history: { pushState: () => assert.fail("should not push history") },
+          location: { assign: (u) => (assigned = String(u)) },
+        },
+      });
+
+      assert.equal(ok, false);
+      assert.equal(assigned, "/b");
+    });
+
+    it("createNavigator threads the runtime through to resume", () => {
+      const { document } = setup(`<main id="outlet"></main>`);
+      const outlet = document.getElementById("outlet")!;
+      const { runtime, calls } = spyRuntime();
+
+      const nav = createNavigator({
+        build: "b1",
+        target: outlet,
+        runtime,
+        runtimeId: "R",
+        host: { doc: document, history: { pushState() {} } },
+      });
+      nav.apply({ build: "b1", html: "<p>B</p>", readyId: "rid", url: "/n" });
+
+      assert.deepEqual(calls, [["initEmbedded", "rid", "R"], ["run"]]);
+    });
+  });
 });

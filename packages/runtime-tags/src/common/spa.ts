@@ -23,6 +23,14 @@ export interface ServerUpdate {
   title?: string;
   /** New outlet HTML (self-describing; may contain resume <script>s). */
   html?: string;
+  /**
+   * The embedded render's ready id. When present, the client resumes the swapped
+   * fragment with `initEmbedded(readyId, runtimeId)`; when absent it resumes via
+   * `init(runtimeId)`. Omitted entirely for static (non-resumable) fragments.
+   */
+  readyId?: string;
+  /** Runtime id of the render (defaults to the client's). */
+  runtimeId?: string;
   /** Explicit request to do a full reload instead of applying. */
   reload?: boolean;
 }
