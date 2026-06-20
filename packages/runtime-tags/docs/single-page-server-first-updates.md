@@ -311,6 +311,25 @@ Modules (reachable via the package's `./*` subpath exports):
 | [`src/dom/spa-runtime.ts`](../src/dom/spa-runtime.ts) | browser‑only binding: `domRuntime = { init, initEmbedded, ready, run }` and `createDomNavigator()` |
 | [`src/html/navigation.ts`](../src/html/navigation.ts) | server: `handleNavigation(template, input, { headers, build, … })` — the stateless turnkey decision returning `{ kind: "full" | "reload" | "update" }`; `renderNavigationUpdate` collects a render into a `ServerUpdate`; `reloadDirective()` |
 
+Usage (client SPA from `@marko/runtime-tags/dom/spa-runtime`, server from `…/html/navigation`):
+
+```js
+// server — one decision for every request to a route
+import { handleNavigation } from "@marko/runtime-tags/html/navigation";
+const res = await handleNavigation(routeContent, input, {
+  headers: req.headers, build: BUILD, url: req.url, readyId: routeContent.id,
+});
+switch (res.kind) {
+  case "full":   return renderFullDocument(input);                 // normal request
+  case "reload": return reply.header("x-marko-reload", "1").send(); // stale build
+  case "update": return reply.json(res.update);                    // apply in place
+}
+
+// client — wire link clicks / back-forward / hover-prefetch to an outlet
+import { createDomNavigator, startSpaNavigation } from "@marko/runtime-tags/dom/spa-runtime";
+startSpaNavigation(createDomNavigator({ build: BUILD, target: "#outlet" }));
+```
+
 How resume actually works (traced from `resume.ts`): after the outlet HTML is swapped
 in and its inline scripts re‑executed (`executeScripts` — innerHTML never runs scripts),
 the controller resumes the fragment through the runtime. Because `init()` is a no‑op once
