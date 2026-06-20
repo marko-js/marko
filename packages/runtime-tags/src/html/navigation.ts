@@ -9,7 +9,12 @@
 // async-iterable chunk stream, so it neither imports the HTML runtime internals nor
 // touches the DOM, and is unit-testable with any chunk source.
 
-import type { ServerUpdate } from "../common/spa";
+import {
+  isNavigationRequest,
+  requestBuild,
+  type ServerUpdate,
+  type SpaRequestHeaders,
+} from "../common/spa";
 
 /** The minimal shape of a Marko render result this helper consumes. */
 export interface NavigationRenderable {
@@ -60,4 +65,42 @@ export async function renderNavigationUpdate(
 /** Build a reload directive for the stateless full-reload fallback. */
 export function reloadDirective(url?: string): ServerUpdate {
   return { build: "", url, reload: true };
+}
+
+/**
+ * The stateless server decision for a request, discriminated for the HTTP layer:
+ *   "full"   — not a navigation request; render and respond with the full document.
+ *   "reload" — a navigation request from a stale build; respond with `X-Marko-Reload`.
+ *   "update" — a navigation request on the current build; respond with the JSON update.
+ */
+export type NavigationResult =
+  | { kind: "full" }
+  | { kind: "reload"; update: ServerUpdate }
+  | { kind: "update"; update: ServerUpdate };
+
+export interface HandleNavigationOptions extends RenderNavigationOptions {
+  /** The incoming request headers (web `Headers`, a `Map`, or a record). */
+  headers: SpaRequestHeaders;
+}
+
+/**
+ * Turnkey server entry: given a request, decide whether to serve a full document, a
+ * reload directive, or a rendered navigation update. Pure over (request, build,
+ * render) — the server keeps no per-client state.
+ */
+export async function handleNavigation(
+  template: NavigationRenderable,
+  input: unknown,
+  options: HandleNavigationOptions,
+): Promise<NavigationResult> {
+  if (!isNavigationRequest(options.headers)) {
+    return { kind: "full" };
+  }
+  if (requestBuild(options.headers) !== options.build) {
+    return { kind: "reload", update: reloadDirective(options.url) };
+  }
+  return {
+    kind: "update",
+    update: await renderNavigationUpdate(template, input, options),
+  };
 }

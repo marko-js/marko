@@ -13,9 +13,12 @@ import path from "node:path";
 import * as compiler from "@marko/compiler";
 
 import { applyServerUpdate } from "../dom/navigate";
+import { handleNavigation } from "../html/navigation";
 import * as tagsTranslator from "../translator";
 import { createClientRunner, createServerRunner } from "./utils/bundle";
 import createBrowser from "./utils/create-browser";
+
+const NAV = { "x-marko-nav": "1", "x-marko-build": "b1" };
 
 const FIXTURE = path.join(__dirname, "spa-e2e");
 
@@ -78,17 +81,21 @@ describe("spa-navigate e2e (real compile → hydrate → navigate → resume)", 
     run();
     assert.equal(original.textContent, "A:1", "original render is interactive");
 
-    // --- server-first navigation: inject a second real render ("B", unique renderId) ---
-    const navHtml = await render(template, {
-      label: "B",
-      $global: { renderId: "nav1" },
-    });
+    // --- server-first navigation through the real server handler ---
     const navRoot = document.createElement("div");
     navRoot.id = "nav-root";
     document.body.appendChild(navRoot);
 
+    const result = await handleNavigation(
+      template,
+      { label: "B", $global: { renderId: "nav1" } },
+      { headers: NAV, build: "b1", url: "/b" },
+    );
+    assert.equal(result.kind, "update");
+    const update = result.kind === "update" ? result.update : assert.fail();
+
     const applied = applyServerUpdate(
-      { build: "b1", html: bodyFragment(navHtml) },
+      { ...update, html: bodyFragment(update.html!) },
       {
         build: "b1",
         target: navRoot,
@@ -127,6 +134,31 @@ describe("spa-navigate e2e (real compile → hydrate → navigate → resume)", 
       original.textContent,
       "A:2",
       "original render still interactive",
+    );
+
+    // --- a stale-build navigation falls back to a full reload (no DOM change) ---
+    const stale = await handleNavigation(
+      template,
+      { label: "C" },
+      {
+        headers: { "x-marko-nav": "1", "x-marko-build": "old-build" },
+        build: "b1",
+        url: "/c",
+      },
+    );
+    assert.equal(stale.kind, "reload");
+    let reloadedTo = "";
+    applyServerUpdate(stale.kind === "reload" ? stale.update : { build: "" }, {
+      build: "b1",
+      target: navRoot,
+      doc: document,
+      onReload: (u) => (reloadedTo = u ?? ""),
+    });
+    assert.equal(reloadedTo, "/c", "stale build triggers full-reload fallback");
+    assert.equal(
+      injected.textContent,
+      "B:1",
+      "DOM untouched on reload fallback",
     );
 
     browser.window.close();

@@ -306,10 +306,10 @@ Modules (reachable via the package's `./*` subpath exports):
 
 | Module | Role |
 | --- | --- |
-| [`src/common/spa.ts`](../src/common/spa.ts) | shared wire contract — headers, `ServerUpdate` (`html`/`readyId`/`runtimeId`/`reload`), `isReloadRequired` |
+| [`src/common/spa.ts`](../src/common/spa.ts) | shared wire contract — headers, `ServerUpdate` (`html`/`readyId`/`runtimeId`/`reload`), `isReloadRequired`, and request‑side helpers (`isNavigationRequest`, `requestBuild`, `readHeader`) |
 | [`src/dom/navigate.ts`](../src/dom/navigate.ts) | runtime‑ & host‑agnostic client pipeline: `createNavigator` / `navigate` / `startSpaNavigation` / `fetchUpdate` / `applyServerUpdate` / `executeScripts`; the `SpaRuntime` and document/history/location are **dependency‑injected** |
 | [`src/dom/spa-runtime.ts`](../src/dom/spa-runtime.ts) | browser‑only binding: `domRuntime = { init, initEmbedded, ready, run }` and `createDomNavigator()` |
-| [`src/html/navigation.ts`](../src/html/navigation.ts) | server helper: `renderNavigationUpdate(template, input, opts)` collects an embedded render into a `ServerUpdate`; `reloadDirective()` |
+| [`src/html/navigation.ts`](../src/html/navigation.ts) | server: `handleNavigation(template, input, { headers, build, … })` — the stateless turnkey decision returning `{ kind: "full" | "reload" | "update" }`; `renderNavigationUpdate` collects a render into a `ServerUpdate`; `reloadDirective()` |
 
 How resume actually works (traced from `resume.ts`): after the outlet HTML is swapped
 in and its inline scripts re‑executed (`executeScripts` — innerHTML never runs scripts),
@@ -331,22 +331,32 @@ Robustness: build‑hash mismatch and explicit reload directives short‑circuit
 navigation before touching the DOM; a transport failure **or** a resume failure (which can
 leave the outlet half‑swapped) also falls back to `location.assign`.
 
-Tests (34, run `npx mocha --grep "SPA server-first update MVP|SPA server helper|spa-navigate e2e"`):
+A full server‑first round trip is turnkey: the HTTP layer calls
+`handleNavigation(template, input, { headers, build, url })` and maps the discriminated
+result — `"full"` (render the document), `"reload"` (respond with `X-Marko-Reload`), or
+`"update"` (respond with the JSON `ServerUpdate`) — and the client drives it with
+`startSpaNavigation(createDomNavigator({ build, target }))`.
+
+Tests (40, run `npx mocha --grep "SPA server-first update MVP|SPA server helper|spa-navigate e2e"`):
 
 * **Unit / contract** — controller swap + document continuity, build‑hash / reload‑directive
   / transport / resume fallbacks, `executeScripts` execution + ordering, prefetch dedupe, the
   `SpaRuntime` resume wiring (`initEmbedded` vs `init`, id precedence, custom‑override, reload
-  no‑touch), the link/`popstate`/intent glue, and the server helper.
+  no‑touch), the link/`popstate`/intent glue, the request‑header helpers, and
+  `handleNavigation` (`full`/`reload`/`update`).
 * **End‑to‑end** (`spa-navigate-e2e.test.ts`) — **compiles a real Marko page, hydrates it,
-  then injects a second real server render through `applyServerUpdate`** and asserts it
-  resumes to interactive via the **real runtime** (the fragment's inline resume scripts run
-  through `executeScripts`), the injected control increments on click, and the original render
-  keeps its own independent live state (continuity).
+  then runs a navigation through the real `handleNavigation` → `applyServerUpdate` pipeline**
+  and asserts the injected render resumes to interactive via the **real runtime** (its inline
+  resume scripts run through `executeScripts`), the injected control increments on click, the
+  original render keeps its own independent live state (continuity), and a stale‑build request
+  falls back to a full reload without touching the DOM.
 
 Deliberately *not* yet implemented (tracked above): the state+discriminant tier and the
-`updates` chunk, and automatic partial‑render generation / `readyId` emission from page
-templates on the server (the `entry`/config integration that would let the server produce the
-embedded outlet fragment automatically, rather than the app calling `renderNavigationUpdate`).
+`updates` chunk, and **compiler‑level outlet extraction** — emitting, from a single page
+template, a render of *just* the route subtree as an embedded fragment (so shell continuity
+comes for free without the app structuring the route content as its own renderable). Today
+the app supplies the route content to `handleNavigation`/`renderNavigationUpdate`; the
+client can target any outlet element.
 
 ## 15. Compiler / runtime surface (sketch)
 

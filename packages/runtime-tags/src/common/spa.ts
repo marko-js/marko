@@ -46,3 +46,41 @@ export function isReloadRequired(
 ): boolean {
   return !!update.reload || update.build !== clientBuild;
 }
+
+/**
+ * Request headers, as a web `Headers`/`Map` (anything with `get`) or a plain record
+ * (e.g. Node's `IncomingMessage.headers`). Header names are matched lower-case.
+ */
+export type SpaRequestHeaders =
+  | { get(name: string): string | null | undefined }
+  | Record<string, string | string[] | undefined>;
+
+/** Read a single header value across the supported header shapes. */
+export function readHeader(
+  headers: SpaRequestHeaders,
+  name: string,
+): string | undefined {
+  const getter = headers as { get?(n: string): string | null | undefined };
+  if (typeof getter.get === "function") {
+    const value = getter.get(name);
+    return value == null ? undefined : String(value);
+  }
+  const value = (headers as Record<string, string | string[] | undefined>)[
+    name
+  ];
+  return Array.isArray(value)
+    ? value[0]
+    : value == null
+      ? undefined
+      : String(value);
+}
+
+/** Whether the request asked for a navigation update (vs a full document). */
+export function isNavigationRequest(headers: SpaRequestHeaders): boolean {
+  return !!readHeader(headers, SPA_NAV_HEADER);
+}
+
+/** The client's loaded build hash, as declared in the request. */
+export function requestBuild(headers: SpaRequestHeaders): string | undefined {
+  return readHeader(headers, SPA_BUILD_HEADER);
+}
