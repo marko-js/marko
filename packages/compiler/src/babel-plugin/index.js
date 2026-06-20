@@ -229,10 +229,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
     });
 
     parseMarko(file);
-    // Note: we intentionally do not eagerly `scope.crawl()` here. Babel
-    // initializes scope bindings lazily on the first scope access during the
-    // subsequent traversals, so crawling the entire program up front was
-    // redundant work (a full extra scope crawl for every compiled file).
+    file.path.scope.crawl(); // Initialize bindings.
 
     if (isSource) {
       if (markoOpts.stripTypes) {
