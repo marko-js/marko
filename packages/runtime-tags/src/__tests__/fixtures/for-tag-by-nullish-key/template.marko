@@ -1,0 +1,7 @@
+<let/items=[{ id: "a" }, { id: undefined }, { id: "b" }]/>
+<ul>
+  <for|item| of=items by=(item => item.id)>
+    <li>${item.id ?? "?"}</li>
+  </for>
+</ul>
+<button onClick() { items = [...items] }>same</button>

@@ -632,6 +632,7 @@ function loop<T extends unknown[] = unknown[]>(
         var seenKeys = new Set<unknown>();
       }
 
+      let index = 0;
       forEach(value, (key, args) => {
         if (MARKO_DEBUG) {
           if (seenKeys.has(key)) {
@@ -644,14 +645,17 @@ function loop<T extends unknown[] = unknown[]>(
           }
         }
 
+        // A nullish key falls back to its position, matching how the lookup
+        // map is built below, so such items keep their scope across renders.
+        const lookupKey = key ?? index;
         let branch =
           oldLen &&
           (oldScopesByKey ||= oldScopes.reduce(
             (map, scope, i) => map.set(scope[AccessorProp.LoopKey] ?? i, scope),
             new Map<unknown, BranchScope>(),
-          )).get(key);
+          )).get(lookupKey);
         if (branch) {
-          hasPotentialMoves = oldScopesByKey!.delete(key);
+          hasPotentialMoves = oldScopesByKey!.delete(lookupKey);
         } else {
           branch = createAndSetupBranch(
             scope[AccessorProp.Global],
@@ -663,6 +667,7 @@ function loop<T extends unknown[] = unknown[]>(
         branch[AccessorProp.LoopKey] = key;
         newScopes.push(branch);
         params?.(branch, args);
+        index++;
       });
 
       const newLen = newScopes.length;

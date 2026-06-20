@@ -1,0 +1,22 @@
+<ul>
+  <li>a<!--M_*2 #text/0--></li>
+  <li>?<!--M_*3 #text/0--></li>
+  <li>b<!--M_*4 #text/0--></li><!--M_}1 #ul/0 4 3 2-->
+</ul><button>same</button><!--M_*1 #button/1-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      items: [{
+        id: "a"
+      }, {}, {
+        id: "b"
+      }]
+    }, {
+      "#LoopKey": "a"
+    }, 1, {
+      "#LoopKey": "b"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/for-tag-by-nullish-key/template.marko_0_items 1"
+  ];
+  M._.w()
+</script>
