@@ -1,0 +1,434 @@
+# Render
+```html
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          a
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          b
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          c
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button
+  class="remove"
+>
+  remove selected
+</button>
+<button
+  class="rotate"
+>
+  rotate
+</button>
+<button
+  class="clear"
+>
+  clear
+</button>
+```
+
+# Update
+```js
+container.querySelectorAll("button.select")[n].click();
+```
+```html
+<table>
+  <tbody>
+    <tr
+      class="danger"
+    >
+      <td>
+        <button
+          class="select"
+        >
+          a
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          b
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          c
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button
+  class="remove"
+>
+  remove selected
+</button>
+<button
+  class="rotate"
+>
+  rotate
+</button>
+<button
+  class="clear"
+>
+  clear
+</button>
+```
+## Change
+```
+UPDATE: .danger[class] null => "danger"
+```
+
+# Update
+```js
+container.querySelectorAll("button.select")[n].click();
+```
+```html
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          a
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          b
+        </button>
+      </td>
+    </tr>
+    <tr
+      class="danger"
+    >
+      <td>
+        <button
+          class="select"
+        >
+          c
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button
+  class="remove"
+>
+  remove selected
+</button>
+<button
+  class="rotate"
+>
+  rotate
+</button>
+<button
+  class="clear"
+>
+  clear
+</button>
+```
+## Change
+```
+UPDATE: table > tbody > tr:nth-of-type(1)[class] "danger" => null
+UPDATE: .danger[class] null => "danger"
+```
+
+# Update
+```js
+container.querySelector(selector).click();
+```
+```html
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          b
+        </button>
+      </td>
+    </tr>
+    <tr
+      class="danger"
+    >
+      <td>
+        <button
+          class="select"
+        >
+          c
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          a
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button
+  class="remove"
+>
+  remove selected
+</button>
+<button
+  class="rotate"
+>
+  rotate
+</button>
+<button
+  class="clear"
+>
+  clear
+</button>
+```
+## Change
+```
+REMOVE: table > tbody > tr
+INSERT: .danger + tr
+```
+
+# Update
+```js
+container.querySelectorAll("button.select")[n].click();
+```
+```html
+<table>
+  <tbody>
+    <tr
+      class="danger"
+    >
+      <td>
+        <button
+          class="select"
+        >
+          b
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          c
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          a
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button
+  class="remove"
+>
+  remove selected
+</button>
+<button
+  class="rotate"
+>
+  rotate
+</button>
+<button
+  class="clear"
+>
+  clear
+</button>
+```
+## Change
+```
+UPDATE: .danger[class] null => "danger"
+UPDATE: table > tbody > tr:nth-of-type(2)[class] "danger" => null
+```
+
+# Update
+```js
+container.querySelector(selector).click();
+```
+```html
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          c
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          a
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button
+  class="remove"
+>
+  remove selected
+</button>
+<button
+  class="rotate"
+>
+  rotate
+</button>
+<button
+  class="clear"
+>
+  clear
+</button>
+```
+## Change
+```
+REMOVE: table > tbody > tr
+```
+
+# Update
+```js
+container.querySelectorAll("button.select")[n].click();
+```
+```html
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          c
+        </button>
+      </td>
+    </tr>
+    <tr
+      class="danger"
+    >
+      <td>
+        <button
+          class="select"
+        >
+          a
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button
+  class="remove"
+>
+  remove selected
+</button>
+<button
+  class="rotate"
+>
+  rotate
+</button>
+<button
+  class="clear"
+>
+  clear
+</button>
+```
+## Change
+```
+UPDATE: .danger[class] null => "danger"
+```
+
+# Update
+```js
+container.querySelector(selector).click();
+```
+```html
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          c
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          a
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button
+  class="remove"
+>
+  remove selected
+</button>
+<button
+  class="rotate"
+>
+  rotate
+</button>
+<button
+  class="clear"
+>
+  clear
+</button>
+```
+## Change
+```
+UPDATE: table > tbody > tr:nth-of-type(2)[class] "danger" => null
+```

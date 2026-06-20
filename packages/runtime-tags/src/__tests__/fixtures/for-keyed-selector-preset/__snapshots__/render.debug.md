@@ -1,0 +1,126 @@
+# Render
+```html
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          a
+        </button>
+      </td>
+    </tr>
+    <tr
+      class="danger"
+    >
+      <td>
+        <button
+          class="select"
+        >
+          b
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          c
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+```
+
+# Update
+```js
+container.querySelectorAll("button.select")[n].click();
+```
+```html
+<table>
+  <tbody>
+    <tr
+      class="danger"
+    >
+      <td>
+        <button
+          class="select"
+        >
+          a
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          b
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          c
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+```
+## Change
+```
+UPDATE: .danger[class] null => "danger"
+UPDATE: table > tbody > tr:nth-of-type(2)[class] "danger" => null
+```
+
+# Update
+```js
+container.querySelectorAll("button.select")[n].click();
+```
+```html
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          a
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <button
+          class="select"
+        >
+          b
+        </button>
+      </td>
+    </tr>
+    <tr
+      class="danger"
+    >
+      <td>
+        <button
+          class="select"
+        >
+          c
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+```
+## Change
+```
+UPDATE: table > tbody > tr:nth-of-type(1)[class] "danger" => null
+UPDATE: .danger[class] null => "danger"
+```

@@ -1,4 +1,4 @@
-// size: 23767 (min) 8781 (brotli)
+// size: 24210 (min) 8960 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -553,6 +553,55 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
         );
     };
   return ((ownerSignal._ = fn), ownerSignal);
+}
+function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn) {
+  ((ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
+    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)));
+  let scopeAccessor = "A" + ownerLoopNodeAccessor,
+    mapAccessor = "O" + ownerLoopNodeAccessor,
+    lastKeyAccessor = "N" + ownerLoopNodeAccessor,
+    ownerSignal = (ownerScope) => {
+      let nextKey = ownerScope[ownerValueAccessor],
+        prevKey = ownerScope[lastKeyAccessor],
+        canSelect = lastKeyAccessor in ownerScope;
+      if (ownerScope.H < runId && prevKey !== nextKey) {
+        let scopes = toArray(ownerScope[scopeAccessor]);
+        scopes.length &&
+          queueRender(
+            ownerScope,
+            () => {
+              let map = getKeyedScopes(ownerScope, scopeAccessor, mapAccessor);
+              if (map && canSelect)
+                (runSelectorRow(map.get(prevKey), fn),
+                  runSelectorRow(map.get(nextKey), fn));
+              else for (let scope of scopes) runSelectorRow(scope, fn);
+            },
+            -1,
+            0,
+            scopes[0].L,
+          );
+      }
+      ownerScope[lastKeyAccessor] = nextKey;
+    };
+  return ((ownerSignal._ = fn), ownerSignal);
+}
+function getKeyedScopes(ownerScope, scopeAccessor, mapAccessor) {
+  let branches = ownerScope[scopeAccessor],
+    cache = branches,
+    map = cache?.[mapAccessor];
+  if (!map) {
+    map = /* @__PURE__ */ new Map();
+    for (let scope of toArray(branches)) {
+      let key = scope.M;
+      if (key === void 0) return;
+      map.set(key, scope);
+    }
+    cache && (cache[mapAccessor] = map);
+  }
+  return map;
+}
+function runSelectorRow(scope, fn) {
+  scope && scope.H > 0 && scope.H < runId && fn(scope);
 }
 function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
   ownerConditionalNodeAccessor = decodeAccessor(ownerConditionalNodeAccessor);

@@ -89,6 +89,7 @@ export {
   _const,
   _el_read,
   _for_closure,
+  _for_selector,
   _hoist,
   _hoist_resume,
   _id,

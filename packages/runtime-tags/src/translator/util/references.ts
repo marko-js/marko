@@ -66,7 +66,10 @@ import {
   type Signal,
 } from "./signals";
 import { createProgramState } from "./state";
-import { toMemberExpression } from "./to-property-name";
+import {
+  getMemberExpressionPropString,
+  toMemberExpression,
+} from "./to-property-name";
 import withPreviousLocation from "./with-previous-location";
 
 export const kBranchSerializeReason = Symbol("branch serialize reason");
@@ -2224,20 +2227,6 @@ export function createGetterRead(
   getter: Getter,
 ): ExtraRead {
   return { binding, props, ownVar: false, getter };
-}
-
-function getMemberExpressionPropString(
-  expr: t.MemberExpression | t.OptionalMemberExpression,
-) {
-  switch (expr.property.type) {
-    case "StringLiteral":
-      return expr.property.value;
-    case "NumericLiteral":
-      return "" + expr.property.value;
-    case "Identifier":
-      if (expr.computed) return;
-      return expr.property.name;
-  }
 }
 
 export interface ReferencedExtra extends t.NodeExtra {

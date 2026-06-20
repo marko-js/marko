@@ -1,0 +1,9 @@
+<let/selected=undefined/>
+
+<table><tbody>
+  <for|i| to=4>
+    <tr class=(selected === i && "danger")>
+      <td><button.select onClick() { selected = i }>${i}</button></td>
+    </tr>
+  </for>
+</tbody></table>

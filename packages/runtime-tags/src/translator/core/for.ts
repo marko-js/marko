@@ -8,6 +8,7 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { detectForSelector, isForSelectorClosure } from "../util/for-selector";
 import { getAccessorPrefix, getAccessorProp } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
@@ -16,6 +17,7 @@ import {
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import {
+  type Binding,
   BindingType,
   dropNodes,
   getAllTagReferenceNodes,
@@ -48,6 +50,7 @@ import {
   setClosureSignalBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -261,6 +264,15 @@ export default {
 
         setSectionParentIsOwner(bodySection, true);
 
+        const keyBinding = getLoopKeyBinding(
+          tag.node,
+          tagBody.node.extra?.binding,
+          getForType(tag.node)!,
+        );
+        if (keyBinding) {
+          detectForSelector(tagBody, bodySection, keyBinding);
+        }
+
         if (!getOnlyChildParentTagName(tag)) {
           walks.visit(tag, WalkCode.Replace);
           walks.enterShallow(tag);
@@ -276,7 +288,15 @@ export default {
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
         const nodeRef = getOptimizedOnlyChildNodeBinding(tag, tagSection);
-        setClosureSignalBuilder(tag, (_closure, render) => {
+        setClosureSignalBuilder(tag, (closure, render) => {
+          if (isForSelectorClosure(bodySection, closure)) {
+            return callRuntime(
+              "_for_selector",
+              getScopeAccessorLiteral(nodeRef, true),
+              getScopeAccessorLiteral(closure, true),
+              render,
+            );
+          }
           return callRuntime(
             "_for_closure",
             getScopeAccessorLiteral(nodeRef, true),
@@ -413,6 +433,73 @@ export function getForType(tag: t.MarkoTag): ForType | undefined {
           return attr.name;
       }
     }
+  }
+}
+function getLoopKeyBinding(
+  node: t.MarkoTag,
+  paramsBinding: Binding | undefined,
+  forType: ForType,
+): Binding | undefined {
+  if (!paramsBinding) return;
+  const byAttr = getKnownAttrValues(node).by;
+  if (byAttr) {
+    const keyChain = getByKeyChain(byAttr);
+    if (!keyChain) return;
+    let keyBinding = paramsBinding.propertyAliases.get("0");
+    for (const property of keyChain) {
+      keyBinding = keyBinding?.propertyAliases.get(property);
+    }
+    return keyBinding;
+  }
+  return paramsBinding.propertyAliases.get(forType === "of" ? "1" : "0");
+}
+
+function getByKeyChain(byAttr: t.Expression): string[] | undefined {
+  if (byAttr.type === "StringLiteral") {
+    return [byAttr.value];
+  }
+  if (
+    byAttr.type === "ArrowFunctionExpression" ||
+    byAttr.type === "FunctionExpression"
+  ) {
+    const itemParam = byAttr.params[0];
+    const body =
+      byAttr.body.type === "BlockStatement"
+        ? getSingleReturnArgument(byAttr.body)
+        : byAttr.body;
+    if (itemParam?.type === "Identifier" && body) {
+      return getStaticMemberChain(body, itemParam.name);
+    }
+  }
+}
+
+function getStaticMemberChain(
+  node: t.Node,
+  rootName: string,
+): string[] | undefined {
+  const chain: string[] = [];
+  let cur = node;
+  while (
+    cur.type === "MemberExpression" ||
+    cur.type === "OptionalMemberExpression"
+  ) {
+    const property = getMemberExpressionPropString(cur);
+    if (property === undefined) return;
+    chain.push(property);
+    cur = cur.object;
+  }
+
+  if (cur.type === "Identifier" && cur.name === rootName) {
+    return chain.reverse();
+  }
+}
+
+function getSingleReturnArgument(
+  block: t.BlockStatement,
+): t.Expression | undefined | null {
+  const [statement] = block.body;
+  if (block.body.length === 1 && statement.type === "ReturnStatement") {
+    return statement.argument;
   }
 }
 

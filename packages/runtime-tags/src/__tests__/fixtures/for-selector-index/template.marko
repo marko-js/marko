@@ -1,0 +1,10 @@
+<let/selected=undefined/>
+<let/rows=["a", "b", "c"]/>
+
+<table><tbody>
+  <for|label, i| of=rows>
+    <tr class=(selected === i && "danger")>
+      <td><button.select onClick() { selected = i }>${label}</button></td>
+    </tr>
+  </for>
+</tbody></table>
