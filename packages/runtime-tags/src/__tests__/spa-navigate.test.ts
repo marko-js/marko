@@ -19,6 +19,21 @@ function setup(bodyHtml: string) {
   return { dom, window: dom.window, document };
 }
 
+type MockInit = { headers: Record<string, string> };
+
+/** A `Response`-shaped value with header `get` and a json body. */
+function jsonResponse(body: unknown, headers: Record<string, string> = {}) {
+  return { headers: new Map(Object.entries(headers)), json: async () => body };
+}
+
+/** Wrap a handler as a `fetch`, localizing the single unavoidable cast. */
+function mockFetch(
+  handler: (url: string, init: MockInit) => unknown,
+): typeof fetch {
+  return (async (url: string, init: MockInit) =>
+    handler(url, init)) as unknown as typeof fetch;
+}
+
 describe("dom/navigate (SPA server-first update MVP)", () => {
   it("swaps the outlet from a server HTML update without reloading the document", () => {
     const { window, document } = setup(
@@ -161,26 +176,25 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
       const sentHeaders: Record<string, string> = {};
       const pushed: string[] = [];
 
-      const fetchImpl = (async (url: string, init: any) => {
+      const fetchImpl = mockFetch((url, init) => {
         Object.assign(sentHeaders, init.headers);
-        return {
-          headers: new Map<string, string>(),
-          json: async () => ({
-            build: "build-1",
-            url,
-            title: "B",
-            html: "<p>From server B</p>",
-          }),
-        };
-      }) as unknown as typeof fetch;
+        return jsonResponse({
+          build: "build-1",
+          url,
+          title: "B",
+          html: "<p>From server B</p>",
+        });
+      });
 
       const ok = await navigate("/b", {
         build: "build-1",
         target: outlet,
-        doc: document,
         fetchImpl,
-        history: { pushState: (_s, _t, u) => pushed.push(String(u)) },
-        location: { assign: () => assert.fail("should not have reloaded") },
+        host: {
+          doc: document,
+          history: { pushState: (_s, _t, u) => pushed.push(String(u)) },
+          location: { assign: () => assert.fail("should not have reloaded") },
+        },
       });
 
       assert.equal(ok, true);
@@ -196,18 +210,19 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
       const outlet = document.getElementById("outlet")!;
       let assigned: string | undefined;
 
-      const fetchImpl = (async () => ({
-        headers: new Map([["x-marko-reload", "1"]]),
-        json: async () => ({ build: "build-1" }),
-      })) as unknown as typeof fetch;
+      const fetchImpl = mockFetch(() =>
+        jsonResponse({ build: "build-1" }, { "x-marko-reload": "1" }),
+      );
 
       const ok = await navigate("/b", {
         build: "build-1",
         target: outlet,
-        doc: document,
         fetchImpl,
-        history: { pushState: () => assert.fail("should not push history") },
-        location: { assign: (u) => (assigned = String(u)) },
+        host: {
+          doc: document,
+          history: { pushState: () => assert.fail("should not push history") },
+          location: { assign: (u) => (assigned = String(u)) },
+        },
       });
 
       assert.equal(ok, false);
@@ -219,16 +234,18 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
       const { document } = setup(`<main id="outlet"><p>A</p></main>`);
       const outlet = document.getElementById("outlet")!;
       let assigned: string | undefined;
-      const fetchImpl = (async () => {
+      const fetchImpl = mockFetch(() => {
         throw new Error("network down");
-      }) as unknown as typeof fetch;
+      });
 
       const ok = await navigate("/b", {
         build: "build-1",
         target: outlet,
-        doc: document,
         fetchImpl,
-        location: { assign: (u) => (assigned = String(u)) },
+        host: {
+          doc: document,
+          location: { assign: (u) => (assigned = String(u)) },
+        },
       });
 
       assert.equal(ok, false);
@@ -239,18 +256,19 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
       const { document } = setup(`<main id="outlet"><p>A</p></main>`);
       const outlet = document.getElementById("outlet")!;
       let assigned: string | undefined;
-      const fetchImpl = (async (url: string) => ({
-        headers: new Map<string, string>(),
-        json: async () => ({ build: "build-2", url, html: "<p>B</p>" }),
-      })) as unknown as typeof fetch;
+      const fetchImpl = mockFetch((url) =>
+        jsonResponse({ build: "build-2", url, html: "<p>B</p>" }),
+      );
 
       const ok = await navigate("/b", {
         build: "build-1",
         target: outlet,
-        doc: document,
         fetchImpl,
-        history: { pushState: () => assert.fail("should not push history") },
-        location: { assign: (u) => (assigned = String(u)) },
+        host: {
+          doc: document,
+          history: { pushState: () => assert.fail("should not push history") },
+          location: { assign: (u) => (assigned = String(u)) },
+        },
       });
 
       assert.equal(ok, false);
@@ -262,13 +280,10 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
   describe("fetchUpdate()", () => {
     it("sends nav headers and parses the JSON update", async () => {
       const sent: Record<string, string> = {};
-      const fetchImpl = (async (_url: string, init: any) => {
+      const fetchImpl = mockFetch((_url, init) => {
         Object.assign(sent, init.headers);
-        return {
-          headers: new Map<string, string>(),
-          json: async () => ({ build: "build-1", html: "<p>B</p>" }),
-        };
-      }) as unknown as typeof fetch;
+        return jsonResponse({ build: "build-1", html: "<p>B</p>" });
+      });
 
       const update = await fetchUpdate("/b", { build: "build-1", fetchImpl });
 
@@ -278,10 +293,10 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
     });
 
     it("normalizes a reload header into a reload update", async () => {
-      const fetchImpl = (async () => ({
+      const fetchImpl = mockFetch(() => ({
         headers: new Map([["x-marko-reload", "1"]]),
         json: async () => assert.fail("should not read body on reload"),
-      })) as unknown as typeof fetch;
+      }));
 
       const update = await fetchUpdate("/b", { build: "build-1", fetchImpl });
       assert.deepEqual(update, { build: "build-1", reload: true });
@@ -289,15 +304,12 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
   });
 
   describe("createNavigator()", () => {
-    function countingFetch(body: () => any) {
+    function countingFetch(body: () => Record<string, unknown>) {
       let calls = 0;
-      const fetchImpl = (async (url: string) => {
+      const fetchImpl = mockFetch((url) => {
         calls++;
-        return {
-          headers: new Map<string, string>(),
-          json: async () => ({ build: "build-1", url, ...body() }),
-        };
-      }) as unknown as typeof fetch;
+        return jsonResponse({ build: "build-1", url, ...body() });
+      });
       return {
         fetchImpl,
         get calls() {
@@ -336,9 +348,9 @@ describe("dom/navigate (SPA server-first update MVP)", () => {
       const { document } = setup(`<main id="outlet"><p>A</p></main>`);
       const outlet = document.getElementById("outlet")!;
       let assigned: string | undefined;
-      const fetchImpl = (async () => {
+      const fetchImpl = mockFetch(() => {
         throw new Error("offline");
-      }) as unknown as typeof fetch;
+      });
 
       const nav = createNavigator({
         build: "build-1",

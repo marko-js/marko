@@ -112,41 +112,18 @@ export function createNavigator(options: NavigatorOptions): SpaNavigator {
   };
 }
 
-export interface NavigateOptions {
-  build: string;
-  target: Element | string;
-  fetchImpl?: typeof fetch;
-  doc?: Document;
-  history?: Pick<History, "pushState">;
-  location?: Pick<Location, "assign">;
-  resume?: (target: Element) => void;
-  runScripts?: boolean;
-  headers?: Record<string, string>;
-}
-
 /**
  * Navigate to `url` server-first in one shot: fetch a navigation update, guard the
  * build hash, apply it in place, and record history — falling back to a full document
  * navigation on a reload directive, a build mismatch, or any error.
- * Returns `true` if the navigation was applied in place.
+ * Returns `true` if the navigation was applied in place. Sugar over a transient
+ * `createNavigator`; for repeated navigations (and prefetch) create one navigator.
  */
 export function navigate(
   url: string,
-  options: NavigateOptions,
+  options: NavigatorOptions,
 ): Promise<boolean> {
-  return createNavigator({
-    build: options.build,
-    target: options.target,
-    host: {
-      doc: options.doc,
-      history: options.history,
-      location: options.location,
-    },
-    fetchImpl: options.fetchImpl,
-    resume: options.resume,
-    runScripts: options.runScripts,
-    headers: options.headers,
-  }).navigate(url);
+  return createNavigator(options).navigate(url);
 }
 
 export interface FetchUpdateOptions {
@@ -176,7 +153,7 @@ export async function fetchUpdate(
     },
   });
 
-  if (headerValue(res, SPA_RELOAD_HEADER)) {
+  if (res.headers.get(SPA_RELOAD_HEADER)) {
     return { build: options.build, reload: true };
   }
 
@@ -250,12 +227,4 @@ function resolveTarget(target: Element | string, doc?: Document): Element {
   const el = (doc || document).querySelector(target);
   if (!el) throw new Error(`Navigation target not found: ${target}`);
   return el;
-}
-
-function headerValue(res: unknown, name: string): string | null {
-  const headers = (res as { headers?: { get?(n: string): string | null } })
-    .headers;
-  return headers && typeof headers.get === "function"
-    ? headers.get(name)
-    : null;
 }
