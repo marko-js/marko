@@ -12,17 +12,15 @@ var my_button_default = _template("b", (input) => {
 // template.marko
 var template_default = _template("a", (input) => {
 	_scope_reason();
-	const $scope0_id = _scope_id();
-	const test = "foo";
+	_scope_id();
 	my_button_default({
 		onClick: _resume(function() {
-			console.log(test);
-		}, "a0", $scope0_id),
+			console.log("foo");
+		}, "a0"),
 		content: _content("a1", () => {
 			_scope_reason();
 			_scope_id();
 			_html("Click");
 		})
 	});
-	writeScope($scope0_id, { b: test });
 }, 1);

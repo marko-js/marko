@@ -13,16 +13,14 @@ var my_button_default = _template("__tests__/tags/my-button.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const test = "foo";
 	my_button_default({
 		onClick: _resume(function() {
-			console.log(test);
-		}, "__tests__/template.marko_0/onClick", $scope0_id),
+			console.log("foo");
+		}, "__tests__/template.marko_0/onClick"),
 		content: _content("__tests__/template.marko_1_content", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html("Click");
 		})
 	});
-	writeScope($scope0_id, { test }, "__tests__/template.marko", 0, { test: "1:7" });
 }, 1);

@@ -110,6 +110,7 @@ export interface Binding {
   restOffset: number | undefined;
   scopeOffset: Binding | undefined;
   scopeAccessor: string | undefined;
+  constValue: unknown;
   export: string | undefined;
   declared: boolean;
   nullable: boolean;
@@ -219,6 +220,7 @@ export function createBinding(
     restOffset: undefined,
     scopeOffset: undefined,
     scopeAccessor: undefined,
+    constValue: undefined,
     export: undefined,
     nullable: !sameSection || excludeProperties === undefined,
     pruned: undefined,
@@ -1008,7 +1010,10 @@ export function finalizeReferences() {
             section.referencedLocalClosures,
             binding,
           );
-        } else if (binding.type !== BindingType.dom) {
+        } else if (
+          binding.type !== BindingType.dom &&
+          !isInlinedConstant(binding)
+        ) {
           const canonicalUpstreamAlias = getCanonicalBinding(binding);
           canonicalUpstreamAlias.closureSections = sectionUtil.add(
             canonicalUpstreamAlias.closureSections,
@@ -1774,14 +1779,17 @@ export function getReadReplacement(
 
   if (read) {
     const readBinding = read.binding;
+    const constValueNode = isInlinedConstant(readBinding)
+      ? constValueToNode(readBinding.constValue)
+      : undefined;
     let replacement: t.Expression | undefined;
 
     if (read.props === undefined) {
-      if (read.getter?.invoked) {
+      if (constValueNode) {
+        replacement = constValueNode;
+      } else if (read.getter?.invoked) {
         return;
-      }
-
-      if (isOutputDOM()) {
+      } else if (isOutputDOM()) {
         if (
           signal?.referencedBindings === readBinding &&
           !signal.hasSideEffect
@@ -1904,6 +1912,18 @@ export function getReadReplacement(
   ) {
     node.name = binding.name;
   }
+}
+
+export function isInlinedConstant(binding: Binding) {
+  return (
+    binding.type === BindingType.constant && binding.scopeAccessor === undefined
+  );
+}
+
+function constValueToNode(value: unknown): t.Expression {
+  return value === undefined
+    ? t.unaryExpression("void", t.numericLiteral(0))
+    : t.valueToNode(value);
 }
 
 export function hasNonConstantPropertyAlias(ref: Binding) {

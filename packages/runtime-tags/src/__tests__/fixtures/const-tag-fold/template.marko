@@ -1,0 +1,14 @@
+<let/count=0/>
+<const/step=2/>
+<const/label="step"/>
+<const/total=step + 3/>
+<const/info={ label, total }/>
+<const/big=2n ** 64n/>
+<const/ratio=1 / 0/>
+<const/missing=undefined/>
+
+<button onClick() { count += step }>+${step}</button>
+<div class=label data-total=total>
+  ${label}: ${count} / ${total}
+</div>
+<pre>${info.total} ${big} ${ratio} ${missing ?? count}</pre>

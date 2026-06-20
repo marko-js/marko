@@ -3,7 +3,6 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let count = 0;
-	const a = "abc";
 	const Foo = { content: _content("a0", (input) => {
 		const $scope3_id = _scope_id();
 		const $scope3_reason = _scope_reason();
@@ -22,23 +21,22 @@ var template_default = _template("a", (input) => {
 	Foo.content({
 		value: count,
 		content: _content_resume("a1", (v) => {
-			const $sg__v = _serialize_guard(_scope_reason(), 0);
+			const $scope1_reason = _scope_reason(), $sg__v = _serialize_guard($scope1_reason, 0), $si__v = _serialize_if($scope1_reason, 0);
 			const $scope1_id = _scope_id();
 			_if(() => {
 				if (v) {
 					const $scope2_id = _scope_id();
-					_html(_escape(a));
-					writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
+					_html("abc");
+					$si__v && writeScope($scope2_id, {});
 					return 0;
 				}
 			}, $scope1_id, "a", $sg__v, $sg__v, $sg__v, 0, 1);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			$si__v && writeScope($scope1_id, {});
 		}, $scope0_id)
 	});
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
 		c: count,
-		d: a,
 		b: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

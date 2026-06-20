@@ -13,18 +13,15 @@ var my_button_default = /* @__PURE__ */ _template("__tests__/tags/my-button.mark
 const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)(" b");
 const $mybutton_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "Click", "b");
-const $test = /* @__PURE__ */ _const("test", ($scope) => $input($scope["#childScope/0"], {
-	onClick: $onClick($scope),
-	content: $mybutton_content($scope)
-}));
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-	$test($scope, "foo");
+	$input($scope["#childScope/0"], {
+		onClick: $onClick,
+		content: $mybutton_content($scope)
+	});
 }
-function $onClick($scope) {
-	return function() {
-		console.log($scope.test);
-	};
+function $onClick() {
+	console.log("foo");
 }
 _resume("__tests__/template.marko_0/onClick", $onClick);
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -14,11 +14,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const value = 1;
 	child_default({ content: _content("__tests__/template.marko_1_content", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
-		_html(_escape(value));
-		_resume_branch($scope1_id);
+		_html("1");
 	}) });
 }, 1);

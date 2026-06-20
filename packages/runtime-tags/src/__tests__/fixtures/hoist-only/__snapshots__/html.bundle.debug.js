@@ -9,7 +9,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if (1) {
 			const $scope1_id = _scope_id();
-			const y = 2;
 			const hoist2 = () => input.value;
 			_if(() => {
 				if (1) {

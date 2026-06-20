@@ -12,6 +12,7 @@ import {
   compareSources,
   getCanonicalBinding,
   type InputBinding,
+  isInlinedConstant,
   isReferencedExtra,
   mergeSources,
   type ParamBinding,
@@ -65,6 +66,9 @@ export function addSerializeReason(
   prefix?: AccessorPrefix | symbol,
 ) {
   if (reason) {
+    if (typeof prop === "object" && isInlinedConstant(prop)) {
+      return;
+    }
     if (prop) {
       const key = getPropKey(section, prop, prefix);
       const curReason = section.serializeReasons.get(key);

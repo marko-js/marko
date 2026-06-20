@@ -1,13 +1,11 @@
 <button>Click</button><!--M_*2 #button/0-->
 <script>
   WALKER_RUNTIME("M")("_");
-  M._.r = [_ => [1, {
-      test: "foo"
-    }, {
+  M._.r = [_ => [2, {
       "EventAttributes:#button/0": {
-        click: _(1,
+        click: _._[
           "packages/runtime-tags/src/__tests__/fixtures/pure-signal-resume-function/template.marko_0/onClick"
-          )
+          ]
       },
       "BranchScopes:#button/0": _(3),
       "ConditionalRenderer:#button/0": "packages/runtime-tags/src/__tests__/fixtures/pure-signal-resume-function/template.marko_1_content"
