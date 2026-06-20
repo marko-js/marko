@@ -16,29 +16,27 @@ const abortIdsByExpressionForSection = new WeakMap<
 >();
 
 export default {
-  migrate(identifier) {
-    const { name } = identifier.node;
-    if (identifier.scope.hasBinding(name)) return;
-    switch (name) {
-      case "out":
-        if (
-          t.isMemberExpression(identifier.parent) &&
-          t.isIdentifier(identifier.parent.property) &&
-          identifier.parent.property.name === "global"
-        ) {
-          identifier.parentPath.replaceWith(t.identifier("$global"));
-        } else {
-          throw identifier.buildCodeFrameError(
-            "Only `out.global` is supported for compatibility.",
-          );
-        }
-        break;
-    }
-  },
   analyze(identifier) {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
-    if (name === "$global") {
+    if (name === "out") {
+      // Legacy `out.global` compatibility. This was previously handled in a
+      // dedicated `migrate` pass, but is done here in `analyze` (the first
+      // JavaScript-visiting stage) so the `migrate` stage can stay limited to
+      // tag (MarkoTag) visitors. Replacing the `out.global` member with a
+      // `$global` identifier re-queues it so the `$global` branch below runs.
+      if (
+        t.isMemberExpression(identifier.parent) &&
+        t.isIdentifier(identifier.parent.property) &&
+        identifier.parent.property.name === "global"
+      ) {
+        identifier.parentPath.replaceWith(t.identifier("$global"));
+      } else {
+        throw identifier.buildCodeFrameError(
+          "Only `out.global` is supported for compatibility.",
+        );
+      }
+    } else if (name === "$global") {
       setReferencesScope(identifier);
     } else if (name === "$signal") {
       const section = getOrCreateSection(identifier);
