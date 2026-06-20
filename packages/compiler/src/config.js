@@ -9,6 +9,14 @@ const config = {
   entry: undefined,
 
   /**
+   * Opt in to the single-page server-first update system (runtime-tags). When enabled,
+   * page templates emit navigation-boundary metadata and the SPA navigation controller
+   * so reloads/navigations can be applied without a full document reload.
+   * See packages/runtime-tags/docs/single-page-server-first-updates.md.
+   */
+  serverUpdates: undefined,
+
+  /**
    * Provides browser asset resolution and runtime hooks for lazy loading and server entries.
    */
   linkAssets: undefined,

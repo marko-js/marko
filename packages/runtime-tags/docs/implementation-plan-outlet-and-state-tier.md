@@ -41,15 +41,29 @@ v1: detect and fall back; lifting is a later enhancement.
 ### 1.2 Outlet marker + config
 
 - **Config** (`packages/compiler/src/config.js`): add `serverUpdates?: boolean` (already
-  referenced in the RFC). Thread through `markoOpts`.
+  referenced in the RFC). Thread through `markoOpts`. ✅ **Landed & verified** — the option
+  is accepted by the compiler and reaches `markoOpts`.
 - **Core tag** `<update-outlet>` — new file
   `packages/runtime-tags/src/translator/core/update-outlet.ts`, modeled on
-  [`core/if.ts`](../src/translator/core/if.ts) / [`core/await.ts`](../src/translator/core/await.ts).
+  [`core/try.ts`](../src/translator/core/try.ts) (the simplest branch‑rendering core tag).
   Its body is the route content. Marks the body section as a navigation boundary.
+  Register it in `core/index.ts` (`"<update-outlet>": …`) and add a `tags/update-outlet.d.marko`.
   (Alternative: integrate with a router that designates the boundary; the core tag is the
   router‑agnostic primitive and what `@marko/run` would target.)
-- Register it in the runtime‑tags taglib (`marko.json` / core tag registration) so
-  `<update-outlet>` resolves.
+
+> **Validated finding (do not use a transparent passthrough).** An attempt to implement
+> `<update-outlet>` as a passthrough that unwraps its body (`replaceWithMultiple`) was tried
+> and **fails**: the analyze phase compiles the body as its own _content section_
+> (`template.marko_<n>_content` with `_closure_get(...)` for references to outer state), so
+> unwrapping in `translate` makes the **HTML** output transparent while the **DOM** output
+> keeps the content section → hydration mismatch (observed as `run is not a function`, i.e.
+> resume never completes). The body of an outlet is inherently a separate renderable
+> section. Therefore `<update-outlet>` must **render that body section via a runtime
+> primitive on both targets** — like `<try>` calling `_try` (HTML) / `getBranchRendererArgs`
+> (DOM) — not unwrap it. This needs a new lean `_outlet` runtime fn (a single
+> always‑rendered, resumable branch — `<try>` without the catch/placeholder machinery) added
+> to **both** `src/html/` and `src/dom/`, plus the tag wiring. Model the tag's
+> `translate.html`/`translate.dom` directly on `core/try.ts`.
 
 ### 1.3 Compile‑time analysis (`analyze` phase)
 
