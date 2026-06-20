@@ -78,7 +78,7 @@ function isNullableExpr(expr: t.Expression): boolean {
           );
         case "&&=":
           return (
-            isNullableExpr(expr.left as t.Expression) &&
+            isNullableExpr(expr.left as t.Expression) ||
             isNullableExpr(expr.right)
           );
         default:
@@ -87,14 +87,14 @@ function isNullableExpr(expr: t.Expression): boolean {
     case "AwaitExpression":
       return isNullableExpr(expr.argument);
     case "ConditionalExpression":
-      return isNullableExpr(expr.consequent) && isNullableExpr(expr.alternate);
+      return isNullableExpr(expr.consequent) || isNullableExpr(expr.alternate);
     case "LogicalExpression":
       switch (expr.operator) {
         case "||":
         case "??":
           return isNullableExpr(expr.right) || isNullableExpr(expr.left);
         case "&&":
-          return isNullableExpr(expr.left) && isNullableExpr(expr.right);
+          return isNullableExpr(expr.left) || isNullableExpr(expr.right);
         default:
           return true;
       }

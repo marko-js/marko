@@ -1,0 +1,13 @@
+export interface Input {}
+
+<let/on=true/>
+<const/viaAnd=(on && { label: "and" })/>
+<const/viaTernary=(on ? { label: "ternary" } : null)/>
+<const/box=({ inner: on ? { label: "assign" } : null })/>
+<const/viaAndAssign=(box.inner &&= { label: "andassign" })/>
+<ul>
+  <li>${viaAnd.label ?? "none"}</li>
+  <li>${viaTernary.label ?? "none"}</li>
+  <li>${viaAndAssign.label ?? "none"}</li>
+</ul>
+<button onClick() { on = on ? null : true }>toggle</button>
