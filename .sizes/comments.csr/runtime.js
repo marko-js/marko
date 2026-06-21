@@ -1,4 +1,4 @@
-// size: 6531 (min) 2849 (brotli)
+// size: 6531 (min) 2851 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -86,14 +86,14 @@ let decodeAccessor = (num) =>
       _resume(id, renderer)
     );
   };
-function isNotVoid(value) {
-  return value != null && value !== !1;
-}
 function forOf(list, cb) {
   if (list) {
     let i = 0;
     for (let item of list) cb(item, i++);
   }
+}
+function isNotVoid(value) {
+  return value != null && value !== !1;
 }
 function toArray(opt) {
   return opt ? (Array.isArray(opt) ? opt : [opt]) : [];

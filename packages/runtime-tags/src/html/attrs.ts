@@ -1,5 +1,6 @@
 import {
   assertExclusiveAttrs,
+  assertHandlerIsFunction,
   assertValidEventHandlerAttr,
 } from "../common/errors";
 import {
@@ -350,6 +351,10 @@ function writeControlledScope(
   value: unknown,
   valueChange: unknown,
 ) {
+  if (MARKO_DEBUG) {
+    assertHandlerIsFunction("valueChange", valueChange);
+  }
+
   _scope(scopeId, {
     [AccessorPrefix.ControlledType + nodeAccessor]: type,
     [AccessorPrefix.ControlledValue + nodeAccessor]: value,

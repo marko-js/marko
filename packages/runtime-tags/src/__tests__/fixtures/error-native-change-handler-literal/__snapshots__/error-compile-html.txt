@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-change-handler-literal/template.marko:1:38
+    > 1 | <input value=input.value valueChange=42>
+        |                                      ^^ The `valueChange` change handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).
+      2 |
