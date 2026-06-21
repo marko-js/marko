@@ -76,7 +76,7 @@ export function appendLiteral(arr: unknown[], str: string) {
   arr[arr.length - 1] += str;
 }
 
-function escapeTemplateRaw(raw: string) {
+export function escapeTemplateRaw(raw: string) {
   return raw
     .replace(/\\/g, "\\\\")
     .replace(/`/g, "\\`")

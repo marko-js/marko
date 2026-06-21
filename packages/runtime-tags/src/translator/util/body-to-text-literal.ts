@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 
+import { escapeTemplateRaw } from "./normalize-string-expression";
 import { callRuntime } from "./runtime";
 
 export function bodyToTextLiteral(body: t.MarkoTagBody) {
@@ -29,7 +30,7 @@ export function bodyToTextLiteral(body: t.MarkoTagBody) {
 function templateElement(value: string, tail: boolean) {
   return t.templateElement(
     {
-      raw: value.replace(/`/g, "\\`"),
+      raw: escapeTemplateRaw(value),
       cooked: value,
     },
     tail,
