@@ -1,7 +1,7 @@
 
     at packages/runtime-tags/src/__tests__/fixtures/error-native-tag-svelte-directive/template.marko:1:6
     > 1 | <div class:active=input.isActive>
-        |      ^^^^^^^^^^^^ `class:active` is not a valid attribute, did you mean `class={ active: condition }`?
+        |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^ `class:active` is not a valid attribute, did you mean `class={ active: condition }`?
       2 |   Hello
       3 | </div>
       4 |

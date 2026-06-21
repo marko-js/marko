@@ -309,7 +309,7 @@ function attrsInternal(
         break;
       default: {
         if (MARKO_DEBUG) {
-          assertValidAttrName(name);
+          assertValidAttrName(name, el.tagName.toLowerCase());
         }
 
         if (isEventHandler(name)) {

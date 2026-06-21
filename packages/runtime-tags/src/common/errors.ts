@@ -1,8 +1,12 @@
-import { getWrongAttrSuggestion, htmlAttrNameReg } from "./helpers";
+import {
+  getControllableAttrError,
+  getWrongAttrSuggestion,
+  htmlAttrNameReg,
+} from "./helpers";
 
 const lowercaseEventHandlerReg = /^on[a-z]/;
 
-export function assertValidAttrName(name: string) {
+export function assertValidAttrName(name: string, tagName: string) {
   if (htmlAttrNameReg.test(name)) {
     throw new Error(`Invalid attribute name: ${JSON.stringify(name)}`);
   }
@@ -11,6 +15,10 @@ export function assertValidAttrName(name: string) {
     throw new Error(
       `\`${name}\` is not a valid attribute, did you mean \`${suggestion}\`?`,
     );
+  }
+  const controllableError = getControllableAttrError(name, tagName);
+  if (controllableError) {
+    throw new Error(controllableError);
   }
 }
 

@@ -10,6 +10,7 @@ import {
 
 import { assertExclusiveAttrs } from "../../../common/errors";
 import {
+  getControllableAttrError,
   getEventHandlerName,
   getWrongAttrSuggestion,
   isEventHandler,
@@ -125,6 +126,7 @@ export default {
 
           seen[attr.name] = attr;
           assertValidNativeAttrName(tag, attr);
+          assertNativeControllableAttr(tag, attr, tagName);
 
           if (injectNonce && attr.name === "nonce") {
             injectNonce = false;
@@ -1127,19 +1129,21 @@ function assertValidNativeAttrName(
   const suggestion = getWrongAttrSuggestion(attr.name);
   if (suggestion) {
     throw tag.hub.buildError(
-      attr.loc?.end &&
-        ({
-          loc: {
-            start: attr.loc.start,
-            end: {
-              line: attr.loc.start.line,
-              column: attr.loc.start.column + attr.name.length,
-            },
-          },
-        } as any),
+      attr,
       `\`${attr.name}\` is not a valid attribute, did you mean \`${suggestion}\`?`,
       Error,
     );
+  }
+}
+
+function assertNativeControllableAttr(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoAttribute,
+  tagName: string,
+) {
+  const error = getControllableAttrError(attr.name, tagName);
+  if (error) {
+    throw tag.hub.buildError(attr, error, Error);
   }
 }
 

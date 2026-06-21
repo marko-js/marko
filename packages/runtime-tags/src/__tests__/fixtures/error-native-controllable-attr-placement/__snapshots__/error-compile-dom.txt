@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-controllable-attr-placement/template.marko:1:6
+    > 1 | <div valueChange=input.onChange>
+        |      ^^^^^^^^^^^^^^^^^^^^^^^^^^ The `valueChange` attribute is only supported on `<input>`, `<select>` and `<textarea>`.
+      2 |   Hello
+      3 | </div>
+      4 |

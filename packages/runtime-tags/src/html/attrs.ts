@@ -279,7 +279,7 @@ export function _attrs(
           )
         ) {
           if (MARKO_DEBUG) {
-            assertValidAttrName(name);
+            assertValidAttrName(name, tagName);
           }
 
           if (isEventHandler(name)) {

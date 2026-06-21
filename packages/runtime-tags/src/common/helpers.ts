@@ -48,6 +48,29 @@ export function getWrongAttrSuggestion(name: string): string | undefined {
   }
 }
 
+const controllableHandlerAttrs: Record<string, string[]> = {
+  valueChange: ["input", "select", "textarea"],
+  checkedChange: ["input"],
+  checkedValue: ["input"],
+  checkedValueChange: ["input"],
+  openChange: ["details", "dialog"],
+};
+
+export function getControllableAttrError(
+  name: string,
+  tagName: string,
+): string | undefined {
+  const allowed = controllableHandlerAttrs[name];
+  if (allowed && !allowed.includes(tagName)) {
+    const tags = allowed.map((tag) => `\`<${tag}>\``);
+    return `The \`${name}\` attribute is only supported on ${
+      tags.length === 1
+        ? tags[0]
+        : `${tags.slice(0, -1).join(", ")} and ${tags[tags.length - 1]}`
+    }.`;
+  }
+}
+
 export function _call<T>(fn: (v: T) => unknown, v: T): T {
   fn(v);
   return v;

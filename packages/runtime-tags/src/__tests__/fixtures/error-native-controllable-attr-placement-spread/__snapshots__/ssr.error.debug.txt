@@ -1,0 +1,1 @@
+The `checkedChange` attribute is only supported on `<input>`.
