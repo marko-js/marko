@@ -293,6 +293,13 @@ export function _attr_select_value(
     ? ControlledType.SelectValue
     : ControlledType.None;
 
+  if (MARKO_DEBUG && valueChange) {
+    pendingEffects.unshift(
+      () => assertSelectValueMatchesOption(el, normalizedValue, value),
+      scope,
+    );
+  }
+
   if (valueChange && existing) {
     pendingEffects.unshift(
       () => setSelectValue(el, normalizedValue, multiple),
@@ -372,6 +379,28 @@ function getSelectValue(el: HTMLSelectElement, multiple: boolean) {
   return multiple
     ? Array.from(el.selectedOptions, (opt) => opt.value)
     : el.value;
+}
+function assertSelectValueMatchesOption(
+  el: HTMLSelectElement,
+  normalizedValue: string | string[],
+  value: unknown,
+) {
+  const multiple = Array.isArray(normalizedValue);
+  if (multiple ? normalizedValue.some(Boolean) : normalizedValue) {
+    for (const opt of el.options) {
+      if (
+        multiple
+          ? normalizedValue.includes(opt.value)
+          : opt.value === normalizedValue
+      ) {
+        return;
+      }
+    }
+    console.error(
+      "A controlled `<select>`'s `value` has no matching `<option>`:",
+      value,
+    );
+  }
 }
 
 export function _attr_details_or_dialog_open_default(

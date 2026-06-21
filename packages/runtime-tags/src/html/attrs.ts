@@ -40,12 +40,22 @@ export function _attr_style(value: unknown) {
 
 export function _attr_option_value(value: unknown) {
   const valueAttr = _attr("value", value);
-  return normalizedValueMatches(getContext(kSelectedValue), value)
-    ? valueAttr + " selected"
-    : valueAttr;
+  if (normalizedValueMatches(getContext(kSelectedValue), value)) {
+    if (MARKO_DEBUG) {
+      const matched = getContext(kSelectedValueMatched) as
+        | { value: boolean }
+        | undefined;
+      if (matched) {
+        matched.value = true;
+      }
+    }
+    return valueAttr + " selected";
+  }
+  return valueAttr;
 }
 
 const kSelectedValue = Symbol("selectedValue");
+const kSelectedValueMatched = Symbol("selectedValueMatched");
 export function _attr_select_value(
   scopeId: number,
   nodeAccessor: Accessor,
@@ -64,7 +74,25 @@ export function _attr_select_value(
   }
 
   if (content) {
-    withContext(kSelectedValue, value, content);
+    if (MARKO_DEBUG && valueChange) {
+      const matched = { value: false };
+      withContext(kSelectedValue, value, () =>
+        withContext(kSelectedValueMatched, matched, content),
+      );
+      if (
+        !matched.value &&
+        (Array.isArray(value)
+          ? value.some((v) => normalizeStrAttrValue(v) !== "")
+          : normalizeStrAttrValue(value) !== "")
+      ) {
+        console.error(
+          "A controlled `<select>`'s `value` has no matching `<option>`:",
+          value,
+        );
+      }
+    } else {
+      withContext(kSelectedValue, value, content);
+    }
   }
 }
 
