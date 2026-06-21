@@ -37,7 +37,7 @@ function $setup($scope) {
 	$setup$1($scope["#childScope/1"]);
 	$setup__script($scope);
 }
-const $api = _var_resume("__tests__/template.marko_0_api/var", /* @__PURE__ */ _const("api", ($scope) => _assert_hoist($scope.api)));
+const $api = /* @__PURE__ */ _const("api", ($scope) => _assert_hoist($scope.api));
 function $action($scope) {
 	return function() {
 		$api_getter($scope)().addClass("child");

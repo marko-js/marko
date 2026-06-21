@@ -323,34 +323,42 @@ export function knownTagTranslateDOM(
 
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
-    const source = initValue(
-      // TODO: support destructuring
-      varBinding,
-    );
-    source.register = true;
-    source.buildAssignment = (valueSection, value) => {
-      const changeArgs = [
-        createScopeReadExpression(childScopeBinding, valueSection),
-        value,
-      ];
-      if (!isOptimize()) {
-        changeArgs.push(t.stringLiteral(varBinding.name));
-      }
-      return t.callExpression(importRuntime("_var_change"), changeArgs);
-    };
-    addStatement(
-      "render",
-      tagSection,
-      undefined,
-      t.expressionStatement(
-        callRuntime(
-          "_var",
-          scopeIdentifier,
-          getScopeAccessorLiteral(childScopeBinding, true),
-          source.identifier,
+    // Only register the var for resumption when the child scope is serialized,
+    // mirroring the HTML output (knownTagTranslateHTML). A var produced by a
+    // tag whose scope never resumes can use the tree-shakeable `_var`.
+    const register = !!getSerializeReason(tagSection, childScopeBinding);
+    // A pruned (unread) var that also never resumes is dead: emitting neither
+    // the `_var` wiring nor a resume registration lets it tree-shake entirely.
+    if (register || !varBinding.pruned) {
+      const source = initValue(
+        // TODO: support destructuring
+        varBinding,
+      );
+      source.register = register;
+      source.buildAssignment = (valueSection, value) => {
+        const changeArgs = [
+          createScopeReadExpression(childScopeBinding, valueSection),
+          value,
+        ];
+        if (!isOptimize()) {
+          changeArgs.push(t.stringLiteral(varBinding.name));
+        }
+        return t.callExpression(importRuntime("_var_change"), changeArgs);
+      };
+      addStatement(
+        "render",
+        tagSection,
+        undefined,
+        t.expressionStatement(
+          callRuntime(
+            "_var",
+            scopeIdentifier,
+            getScopeAccessorLiteral(childScopeBinding, true),
+            source.identifier,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
   callSetup(tagSection, childScopeBinding);
 

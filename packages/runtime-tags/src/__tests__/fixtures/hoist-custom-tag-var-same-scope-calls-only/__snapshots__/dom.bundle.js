@@ -17,7 +17,6 @@ _resume("c0", $_return);
 // template.marko
 const $api_getter = _hoist(3);
 const $setup__script = _script("a1", ($scope) => $api_getter($scope)().setHtml("works"));
-const $api = _var_resume("a2", /* @__PURE__ */ _const(3));
 function $action($scope) {
 	return function() {
 		$api_getter($scope)().addClass("child");

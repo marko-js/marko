@@ -23,7 +23,7 @@ const $for_content2__setup = ($scope) => {
 	$input_value($scope["#childScope/0"], `${$scope._["#LoopKey"]},${$scope["#LoopKey"]}`);
 	$for_content2__setup__script($scope);
 };
-const $for_content2__ref = _var_resume("__tests__/template.marko_2_ref/var", /* @__PURE__ */ _const("ref", ($scope) => _assert_hoist($scope.ref)));
+const $for_content2__ref = /* @__PURE__ */ _const("ref", ($scope) => _assert_hoist($scope.ref));
 const $for_content__for = /* @__PURE__ */ _for_to("#text/0", "", /* @__PURE__ */ ((_w0) => `0${_w0}&`)(""), $for_content2__setup);
 const $for_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _el_read($scope._["#pre/1"]).innerHTML += `${[...$for_content__ref_getter($scope)].length}; ${$for_content__ref_getter($scope)()}\n\t`);
 const $for_content__setup = ($scope) => {
