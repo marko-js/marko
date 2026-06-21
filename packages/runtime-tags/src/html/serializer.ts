@@ -1660,6 +1660,13 @@ export function toObjectKey(name: string) {
     return '""';
   }
 
+  if (name === "__proto__") {
+    // A bare or quoted `__proto__` object key sets the prototype rather than
+    // creating an own property; a computed key keeps it a normal property
+    // (`toAccess` passes the `[...]` form through).
+    return '["__proto__"]';
+  }
+
   const startChar = name[0];
   if (isDigit(startChar)) {
     if (startChar === "0") {
@@ -1688,9 +1695,11 @@ export function toObjectKey(name: string) {
 
 export function toAccess(accessor: string) {
   const start = accessor[0];
-  return start === '"' || (start >= "0" && start <= "9")
-    ? "[" + accessor + "]"
-    : "." + accessor;
+  return start === "["
+    ? accessor
+    : start === '"' || (start >= "0" && start <= "9")
+      ? "[" + accessor + "]"
+      : "." + accessor;
 }
 
 // Creates a JavaScript double quoted string and escapes all characters not listed as DoubleStringCharacters on
