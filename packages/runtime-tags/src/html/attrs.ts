@@ -14,7 +14,7 @@ import {
   toDelimitedString,
 } from "../common/helpers";
 import { type Accessor, AccessorPrefix, ControlledType } from "../common/types";
-import { _escape } from "./content";
+import { _escape, _escape_textarea } from "./content";
 import {
   _attr_content,
   _html,
@@ -112,7 +112,7 @@ export function _attr_textarea_value(
     );
   }
 
-  return _escape(value);
+  return _escape_textarea(value);
 }
 
 export function _attr_input_value(

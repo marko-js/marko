@@ -2,5 +2,5 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	_scope_id();
-	_html(`<textarea>${_escape_textarea("hello")}</textarea>`);
+	_html(`<textarea>${_escape_textarea("\nhello")}</textarea>`);
 }, 1);

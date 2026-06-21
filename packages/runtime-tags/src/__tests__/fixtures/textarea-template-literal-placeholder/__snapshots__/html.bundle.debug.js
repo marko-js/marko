@@ -3,7 +3,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let n = 1;
-	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}<textarea>${_escape(`premid-${n}-postend`)}</textarea>${_el_resume($scope0_id, "#textarea/2")}`);
+	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}<textarea>${_escape_textarea(`premid-${n}-postend`)}</textarea>${_el_resume($scope0_id, "#textarea/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0_n");
 	writeScope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "1:6" });
 	_resume_branch($scope0_id);

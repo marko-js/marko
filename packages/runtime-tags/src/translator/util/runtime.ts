@@ -10,6 +10,7 @@ import {
   _escape_comment,
   _escape_script,
   _escape_style,
+  _escape_textarea,
   _unescaped,
 } from "../../html";
 import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
@@ -79,6 +80,7 @@ export function getHTMLRuntime() {
     _attr_style,
     _escape_script,
     _escape_style,
+    _escape_textarea,
   };
 }
 

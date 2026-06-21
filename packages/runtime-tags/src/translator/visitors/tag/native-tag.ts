@@ -401,7 +401,7 @@ export default {
               valueChange,
             );
           } else if (value) {
-            writeAtStartOfBody = callRuntime("_escape", value);
+            writeAtStartOfBody = callRuntime("_escape_textarea", value);
           }
         }
 
