@@ -115,6 +115,23 @@ export function normalizeDynamicRenderer<Renderer>(
   if (value) {
     if (typeof value === "string") return value;
     const normalized = value.content || value.default || value;
+    if (MARKO_DEBUG) {
+      const isRenderer =
+        (typeof normalized === "object" || typeof normalized === "function") &&
+        RendererProp.Id in normalized;
+      if (!isRenderer) {
+        if (value.content) {
+          throw new Error(
+            `A dynamic tag must be a string tag name (like \`"div"\`) or a Marko template/component, but received an object whose \`content\` is not a template/component.`,
+          );
+        }
+        if (typeof value !== "object" && typeof value !== "function") {
+          throw new Error(
+            `A dynamic tag must be a string tag name (like \`"div"\`) or a Marko template/component, but received a ${typeof value}.`,
+          );
+        }
+      }
+    }
     if (RendererProp.Id in normalized) {
       return normalized;
     }

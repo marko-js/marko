@@ -44,17 +44,6 @@ export let _dynamic_tag = (
 ) => {
   const shouldResume = serializeReason !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
-
-  if (MARKO_DEBUG) {
-    if (
-      renderer &&
-      typeof renderer !== "function" &&
-      typeof renderer !== "string"
-    ) {
-      throw new Error(`Invalid renderer passed for dynamic tag: ${renderer}`);
-    }
-  }
-
   const state = getState()!;
   const branchId = _peek_scope_id();
   let rendered: boolean;
