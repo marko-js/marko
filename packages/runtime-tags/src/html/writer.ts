@@ -407,13 +407,15 @@ export function _for_to(
 ): void {
   forBranches(
     by,
-    (each) =>
-      each
-        ? forTo(to, from, step, (i) => {
-            const itemKey = forStepBy(by, i);
-            each(itemKey, itemKey === i, () => cb(i));
+    (each) => {
+      let index = 0;
+      return each
+        ? forTo(to, from, step, (value) => {
+            const itemKey = forStepBy(by, value);
+            each(itemKey, itemKey === index++, () => cb(value));
           })
-        : forTo(to, from, step, cb),
+        : forTo(to, from, step, cb);
+    },
     scopeId,
     accessor,
     serializeBranch,
@@ -440,13 +442,15 @@ export function _for_until(
 ): void {
   forBranches(
     by,
-    (each) =>
-      each
-        ? forUntil(to, from, step, (i) => {
-            const itemKey = forStepBy(by, i);
-            each(itemKey, itemKey === i, () => cb(i));
+    (each) => {
+      let index = 0;
+      return each
+        ? forUntil(to, from, step, (value) => {
+            const itemKey = forStepBy(by, value);
+            each(itemKey, itemKey === index++, () => cb(value));
           })
-        : forUntil(to, from, step, cb),
+        : forUntil(to, from, step, cb);
+    },
     scopeId,
     accessor,
     serializeBranch,
