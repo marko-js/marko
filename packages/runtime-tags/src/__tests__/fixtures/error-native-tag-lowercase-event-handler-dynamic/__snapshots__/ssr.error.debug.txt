@@ -1,1 +1,1 @@
-The `onclick` attribute must be a string, null, undefined, or false, but received type "function". To attach an event listener, use the `onClick` event handler instead.
+The `onclick` attribute must be a string or a falsey value (`null`, `undefined`, `false`, `0`, …), but received type "function". To attach an event listener, use the `onClick` event handler instead.

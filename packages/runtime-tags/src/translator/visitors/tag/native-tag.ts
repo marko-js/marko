@@ -3,6 +3,7 @@ import {
   assertNoArgs,
   assertNoAttributeTags,
   assertNoParams,
+  computeNode,
   getProgram,
   getTagDef,
 } from "@marko/compiler/babel-utils";
@@ -15,6 +16,7 @@ import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorProp } from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
+import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
 import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
 import { includes, type Opt, push } from "../../util/optional";
@@ -121,6 +123,10 @@ export default {
 
           if (injectNonce && attr.name === "nonce") {
             injectNonce = false;
+          }
+
+          if (isEventOrChangeHandler(attr.name)) {
+            assertNativeHandlerAttr(tag, attr);
           }
 
           if (isEventHandler(attr.name)) {
@@ -1109,6 +1115,21 @@ function isInjectNonceTag(tagName: string) {
   }
 }
 
+function assertNativeHandlerAttr(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoAttribute,
+) {
+  if (computeNode(attr.value)?.value) {
+    throw tag.hub.buildError(
+      attr.value,
+      `The \`${attr.name}\` ${
+        isEventHandler(attr.name) ? "event handler" : "change handler"
+      } on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (\`null\`, \`undefined\`, \`false\`, \`0\`, …).`,
+      Error,
+    );
+  }
+}
+
 const lowercaseEventHandlerReg = /^on[a-z]/;
 
 function assertValidNativeEventHandlerAttr(
@@ -1121,16 +1142,14 @@ function assertValidNativeEventHandlerAttr(
   let invalid = t.isFunction(value);
   if (!invalid) {
     const { confident, computed } = evaluate(value);
-    invalid =
-      confident &&
-      !(computed == null || computed === false || typeof computed === "string");
+    invalid = confident && !!computed && typeof computed !== "string";
   }
 
   if (invalid) {
     const suggestion = "on" + attr.name[2].toUpperCase() + attr.name.slice(3);
     throw tag.hub.buildError(
       value,
-      `The \`${attr.name}\` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string, \`null\`, \`undefined\`, or \`false\`. ` +
+      `The \`${attr.name}\` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (\`null\`, \`undefined\`, \`false\`, \`0\`, …). ` +
         `To attach an event listener, use the \`${suggestion}\` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.`,
       Error,
     );

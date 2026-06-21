@@ -1,0 +1,1 @@
+The `onClick` handler must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …), but received type "number".

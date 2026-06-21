@@ -1,3 +1,4 @@
+import { assertHandlerIsFunction } from "../common/errors";
 import { rendering } from "./queue";
 
 type EventNames = keyof GlobalEventHandlersEventMap;
@@ -11,6 +12,13 @@ export function _on<
     | undefined
     | ((ev: GlobalEventHandlersEventMap[T], target: Element) => void),
 >(element: Element, type: T, handler: H) {
+  if (MARKO_DEBUG) {
+    assertHandlerIsFunction(
+      "on" + type[0].toUpperCase() + type.slice(1),
+      handler,
+    );
+  }
+
   if ((element as any)["$" + type] === undefined) {
     defaultDelegator(element, type, handleDelegated);
   }

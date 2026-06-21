@@ -1,3 +1,4 @@
+import { assertHandlerIsFunction } from "../common/errors";
 import { isNotVoid } from "../common/helpers";
 import {
   type Accessor,
@@ -39,6 +40,9 @@ export function _attr_input_checked(
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
   const normalizedChecked = isNotVoid(checked);
+  if (MARKO_DEBUG) {
+    assertHandlerIsFunction("checkedChange", checkedChange);
+  }
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = checkedChange;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = checkedChange
     ? ControlledType.InputChecked
@@ -103,6 +107,9 @@ export function _attr_input_checkedValue(
   ] = multiple
     ? checkedValue.map(normalizeStrProp)
     : normalizeStrProp(checkedValue));
+  if (MARKO_DEBUG) {
+    assertHandlerIsFunction("checkedValueChange", checkedValueChange);
+  }
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = checkedValueChange;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = checkedValueChange
     ? ControlledType.InputCheckedValue
@@ -187,6 +194,9 @@ export function _attr_input_value(
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
   const normalizedValue = normalizeAttrValue(value) || "";
+  if (MARKO_DEBUG) {
+    assertHandlerIsFunction("valueChange", valueChange);
+  }
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = valueChange;
   scope[AccessorPrefix.ControlledValue + nodeAccessor] = normalizedValue;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = valueChange
@@ -275,6 +285,9 @@ export function _attr_select_value(
   const normalizedValue = (scope[
     AccessorPrefix.ControlledValue + nodeAccessor
   ] = multiple ? value.map(normalizeStrProp) : normalizeStrProp(value));
+  if (MARKO_DEBUG) {
+    assertHandlerIsFunction("valueChange", valueChange);
+  }
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = valueChange;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = valueChange
     ? ControlledType.SelectValue
@@ -378,6 +391,9 @@ export function _attr_details_or_dialog_open(
 ) {
   const normalizedOpen = (scope[AccessorPrefix.ControlledValue + nodeAccessor] =
     isNotVoid(open));
+  if (MARKO_DEBUG) {
+    assertHandlerIsFunction("openChange", openChange);
+  }
   scope[AccessorPrefix.ControlledHandler + nodeAccessor] = openChange;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = openChange
     ? ControlledType.DetailsOrDialogOpen
