@@ -374,7 +374,13 @@ export function _if(
   }
   enableBranches();
   return (scope: Scope, newBranch: number) => {
-    if (newBranch !== (scope[branchAccessor] as number)) {
+    // Resume elides a renderer index of 0, so a resumed scope's absent index
+    // means 0 -- gated on having branch scopes so a fresh scope still renders.
+    if (
+      newBranch !==
+      ((scope[branchAccessor] as number) ??
+        (scope[AccessorPrefix.BranchScopes + nodeAccessor] && 0))
+    ) {
       setConditionalRenderer(
         scope,
         nodeAccessor as string,

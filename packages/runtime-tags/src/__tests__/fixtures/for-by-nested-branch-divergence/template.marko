@@ -1,0 +1,14 @@
+export interface Input {}
+
+<let/list=[{ id: 1, on: true }, { id: 2, on: false }, { id: 3, on: true }]/>
+<div>
+  <for|item| of=list by="id">
+    <if=item.on>
+      <span>A${item.id}</span>
+    </if>
+    <else>
+      <b>B${item.id}</b>
+    </else>
+  </for>
+</div>
+<button onClick() { list = [list[2], list[0], list[1]]; }>rot</button>

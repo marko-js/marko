@@ -1,4 +1,4 @@
-// size: 23798 (min) 8818 (brotli)
+// size: 23815 (min) 8839 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1821,7 +1821,8 @@ function _if(nodeAccessor, ...branchesArgs) {
   return (
     enableBranches(),
     (scope, newBranch) => {
-      newBranch !== scope[branchAccessor] &&
+      newBranch !==
+        (scope[branchAccessor] ?? (scope["A" + nodeAccessor] && 0)) &&
         setConditionalRenderer(
           scope,
           nodeAccessor,
