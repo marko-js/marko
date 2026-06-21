@@ -14,6 +14,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
+const $input_what_direct = /* @__PURE__ */ _dynamic_tag_content("#text/0");
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
 const $input_what = ($scope, input_what) => $dynamicTag($scope, input_what);
 const $input = ($scope, input) => $input_what($scope, input.what);

@@ -312,6 +312,7 @@ export function knownTagTranslateDOM(
   getBindingIdentifier: (
     binding: Binding,
     preferredName?: string,
+    directContent?: boolean,
   ) => t.Identifier,
   callSetup: (section: Section, childBinding: Binding) => void,
 ) {
@@ -734,6 +735,7 @@ type TranslateDOMInfo = {
   getBindingIdentifier: (
     binding: Binding,
     preferredName?: string,
+    directContent?: boolean,
   ) => t.Identifier;
   childScopeBinding: Binding;
   attrTagCallsByTag:
@@ -1168,6 +1170,9 @@ function writeAttrsToSignals(
         (restProps ||= []).push(toObjectProperty("content", bodyValue));
       } else {
         remaining.delete("content");
+        // The direct content signal applies no parameters, so it can only be
+        // used when the body declares none.
+        const directContent = !bodySection.params;
         addStatement(
           "render",
           info.tagSection,
@@ -1177,6 +1182,7 @@ function writeAttrsToSignals(
               info.getBindingIdentifier(
                 contentExport.binding,
                 `${importAlias}_content`,
+                directContent,
               ),
               [
                 createScopeReadExpression(

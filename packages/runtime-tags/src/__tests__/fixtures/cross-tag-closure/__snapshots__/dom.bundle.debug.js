@@ -19,6 +19,7 @@ var my_let_default = /* @__PURE__ */ _template("__tests__/tags/my-let.marko", ""
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
+const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/0");
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
 const $input_content = ($scope, input_content) => $dynamicTag($scope, input_content);
 const $input = ($scope, input) => $input_content($scope, input.content);
@@ -43,6 +44,6 @@ function $setup($scope) {
 	$setup$2($scope["#childScope/0"]);
 	$input_value($scope["#childScope/0"], 0);
 	/* @__PURE__ */ $setup$1($scope["#childScope/2"]);
-	$input_content($scope["#childScope/2"], $mytag_content($scope));
+	$input_content_direct($scope["#childScope/2"], $mytag_content($scope));
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -2,6 +2,7 @@
 const $template$2 = "<div class=echo><!></div>";
 const $walks$2 = "D%l";
 const $setup$2 = () => {};
+const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/0");
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
 const $input_content$1 = ($scope, input_content) => $dynamicTag($scope, input_content);
 const $input$1 = ($scope, input) => $input_content$1($scope, input.content);

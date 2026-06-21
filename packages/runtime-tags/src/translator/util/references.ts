@@ -111,6 +111,7 @@ export interface Binding {
   scopeOffset: Binding | undefined;
   scopeAccessor: string | undefined;
   export: string | undefined;
+  directContentExport: string | undefined;
   declared: boolean;
   nullable: boolean;
   pruned: boolean | undefined;
@@ -220,6 +221,7 @@ export function createBinding(
     scopeOffset: undefined,
     scopeAccessor: undefined,
     export: undefined,
+    directContentExport: undefined,
     nullable: !sameSection || excludeProperties === undefined,
     pruned: undefined,
   };

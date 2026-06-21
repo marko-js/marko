@@ -544,6 +544,48 @@ export let _dynamic_tag = function dynamicTag(
   };
 };
 
+// Specialized `_dynamic_tag` for a content passthrough. The caller guarantees a
+// normalized content `Renderer` (or undefined) rendered with no input or
+// parameters.
+export function _dynamic_tag_content(
+  nodeAccessor: EncodedAccessor,
+): Signal<Renderer | undefined> {
+  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
+  const childScopeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+  const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
+  enableBranches();
+  return (scope, renderer) => {
+    if (
+      scope[rendererAccessor] !==
+      (scope[rendererAccessor] = renderer?.[RendererProp.Id] || renderer)
+    ) {
+      setConditionalRenderer(
+        scope,
+        nodeAccessor as string,
+        renderer,
+        createAndSetupBranch,
+      );
+
+      if (renderer?.[RendererProp.Accessor]) {
+        subscribeToScopeSet(
+          renderer[RendererProp.Owner]!,
+          renderer[RendererProp.Accessor],
+          scope[childScopeAccessor],
+        );
+      }
+    }
+
+    if (renderer) {
+      for (const accessor in renderer[RendererProp.LocalClosures]) {
+        renderer[RendererProp.LocalClosures]![accessor](
+          scope[childScopeAccessor] as Scope,
+          renderer[RendererProp.LocalClosureValues]![accessor],
+        );
+      }
+    }
+  };
+}
+
 export function _resume_dynamic_tag() {
   _resume(DYNAMIC_TAG_SCRIPT_REGISTER_ID, dynamicTagScript);
 }

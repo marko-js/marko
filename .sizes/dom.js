@@ -1,4 +1,4 @@
-// size: 24021 (min) 8886 (brotli)
+// size: 24183 (min) 8953 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1876,6 +1876,35 @@ function _if(nodeAccessor, ...branchesArgs) {
 }
 function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);
+}
+function _dynamic_tag_content(nodeAccessor) {
+  nodeAccessor = decodeAccessor(nodeAccessor);
+  let childScopeAccessor = "A" + nodeAccessor,
+    rendererAccessor = "D" + nodeAccessor;
+  return (
+    enableBranches(),
+    (scope, renderer) => {
+      if (
+        (scope[rendererAccessor] !==
+          (scope[rendererAccessor] = renderer?.a || renderer) &&
+          (setConditionalRenderer(
+            scope,
+            nodeAccessor,
+            renderer,
+            createAndSetupBranch,
+          ),
+          renderer?.f &&
+            subscribeToScopeSet(
+              renderer.e,
+              renderer.f,
+              scope[childScopeAccessor],
+            )),
+        renderer)
+      )
+        for (let accessor in renderer.g)
+          renderer.g[accessor](scope[childScopeAccessor], renderer.h[accessor]);
+    }
+  );
 }
 function _resume_dynamic_tag() {
   _resume("d", dynamicTagScript);

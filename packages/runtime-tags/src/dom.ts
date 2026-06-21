@@ -8,6 +8,7 @@ export {
   _await_content,
   _await_promise,
   _dynamic_tag,
+  _dynamic_tag_content,
   _for_in,
   _for_of,
   _for_to,

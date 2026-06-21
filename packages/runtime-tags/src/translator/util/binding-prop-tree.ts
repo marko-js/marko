@@ -13,6 +13,14 @@ export type BindingPropTree = {
   rest: BindingPropTree | undefined;
 };
 
+// Set during analyze on a `<${x}/>` that renders content with no input.
+export const kDirectContent = Symbol("direct content");
+declare module "@marko/compiler/dist/types" {
+  export interface NodeExtra {
+    [kDirectContent]?: true;
+  }
+}
+
 export function getBindingPropTree(binding: Binding) {
   if (pruneBinding(binding)) {
     return undefined;
@@ -54,7 +62,25 @@ export function getBindingPropTree(binding: Binding) {
     binding.export ??= generateUid(binding.name);
   }
 
+  if (isDirectContentBinding(binding)) {
+    binding.directContentExport ??= generateUid(`${binding.name}_direct`);
+  }
+
   return props;
+}
+
+// Whether a binding's only consumer is a no-input content passthrough
+// (`<${binding}/>`) in the section the value is received in. Only params
+// supplied by a known parent (template `input` or a `<define>` body) reach
+// here, so such content is always a `_content(...)` renderer and can use the
+// leaner `_dynamic_tag_content` signal.
+function isDirectContentBinding(binding: Binding) {
+  if (binding.reads.size !== 1) {
+    return false;
+  }
+
+  const [read] = binding.reads;
+  return read[kDirectContent] && read.section === binding.section;
 }
 
 function hasSupersetExcludeProperties(

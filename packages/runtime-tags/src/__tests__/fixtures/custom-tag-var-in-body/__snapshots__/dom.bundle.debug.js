@@ -1,6 +1,7 @@
 // tags/child.marko
 const $template$1 = "<!><!><div></div>";
 const $walks$1 = "b%b b";
+const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/0");
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
 const $input_content = ($scope, input_content) => $dynamicTag($scope, input_content);
 function $setup$1($scope) {
@@ -24,6 +25,6 @@ const $setHtml = _var_resume("__tests__/template.marko_0_setHtml/var", /* @__PUR
 function $setup($scope) {
 	_var($scope, "#childScope/0", $setHtml);
 	$setup$1($scope["#childScope/0"]);
-	$input_content($scope["#childScope/0"], $child_content($scope));
+	$input_content_direct($scope["#childScope/0"], $child_content($scope));
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

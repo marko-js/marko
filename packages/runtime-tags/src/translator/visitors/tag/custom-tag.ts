@@ -289,11 +289,11 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     knownTagTranslateDOM(
       tag,
       childExports.params,
-      (binding, preferredName) =>
+      (binding, preferredName, directContent) =>
         importOrSelfReferenceName(
           tag.hub.file,
           relativePath,
-          binding.export!,
+          (directContent && binding.directContentExport) || binding.export!,
           preferredName,
         ),
       (section, childBinding) => {
