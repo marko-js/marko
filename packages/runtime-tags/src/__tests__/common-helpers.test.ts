@@ -1,6 +1,7 @@
 import * as assert from "assert/strict";
 
 import {
+  getWrongAttrSuggestion,
   stringifyClassObject,
   stringifyStyleObject,
   toDelimitedString,
@@ -90,6 +91,57 @@ describe("runtime-tags/common/helpers", () => {
           styleValue([{ color: "red", border: value }, { background: "blue" }]),
           "color:red;background:blue",
         );
+      }
+    });
+  });
+
+  describe("getWrongAttrSuggestion", () => {
+    it("suggests the Marko equivalent for known framework idioms", () => {
+      const cases: Record<string, string> = {
+        className: "class",
+        classList: "class",
+        htmlFor: "for",
+        acceptCharset: "accept-charset",
+        httpEquiv: "http-equiv",
+        defaultValue: "value",
+        defaultChecked: "checked",
+        dangerouslySetInnerHTML: "$!{html}",
+        key: "<for by>",
+        ref: "<tag/ref>",
+        "v-if": "<if>",
+        "v-else": "<else>",
+        "v-else-if": "<else if>",
+        "v-for": "<for>",
+        "v-show": "<if>",
+        "v-model": "value:=state",
+        "v-bind": "...attrs",
+        "v-html": "$!{html}",
+        "v-text": "${text}",
+        "class:active": "class={ active: condition }",
+        "style:color": "style={ color: value }",
+        "on:click": "onClick",
+        "v-on:click": "onClick",
+        "bind:value": "value:=state",
+        "v-model:value": "value:=state",
+        "v-bind:class": "class",
+      };
+      for (const name in cases) {
+        assert.equal(getWrongAttrSuggestion(name), cases[name]);
+      }
+    });
+
+    it("returns undefined for valid attribute names", () => {
+      for (const name of [
+        "class",
+        "for",
+        "onClick",
+        "value",
+        "tabIndex",
+        "xlink:href",
+        "xml:lang",
+        "data-foo",
+      ]) {
+        assert.equal(getWrongAttrSuggestion(name), undefined);
       }
     });
   });
