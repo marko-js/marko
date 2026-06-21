@@ -2,6 +2,59 @@ import { getWrongAttrSuggestion, htmlAttrNameReg } from "./helpers";
 
 const lowercaseEventHandlerReg = /^on[a-z]/;
 
+export function assertValidAttrValue(name: string, value: unknown) {
+  if (
+    value &&
+    typeof value !== "string" &&
+    lowercaseEventHandlerReg.test(name)
+  ) {
+    throw new Error(
+      `The \`${name}\` attribute must be a string or a falsey value (\`null\`, \`undefined\`, \`false\`, \`0\`, …), but received type "${typeof value}". To attach an event listener, use the \`on${name[2].toUpperCase()}${name.slice(3)}\` event handler instead.`,
+    );
+  }
+
+  if (typeof value === "function") {
+    if (name === "content" || /^on/i.test(name) || /Change$/.test(name)) {
+      return;
+    }
+    throw new Error(`The \`${name}\` attribute cannot be a function.`);
+  }
+
+  const unrenderable = describeUnrenderable(value);
+  if (unrenderable) {
+    throw new Error(`The \`${name}\` attribute cannot be ${unrenderable}.`);
+  }
+}
+
+export function assertValidTextValue(value: unknown) {
+  const unrenderable = describeUnrenderable(value);
+  if (unrenderable) {
+    throw new Error(`Text content cannot be ${unrenderable}.`);
+  }
+}
+
+function describeUnrenderable(value: unknown) {
+  if (typeof value === "symbol") {
+    return "a symbol";
+  }
+
+  if (typeof value === "object" && value !== null) {
+    let stringified;
+    try {
+      stringified = `${value}`;
+    } catch {
+      stringified = "[object Object]";
+    }
+    if (/^\[object \w+\]$/.test(stringified)) {
+      return stringified === "[object Promise]"
+        ? "a promise (use the `<await>` tag to render its resolved value)"
+        : stringified === "[object Object]"
+          ? "a plain object (it would render as `[object Object]`)"
+          : `a value that renders as \`${stringified}\``;
+    }
+  }
+}
+
 export function assertValidAttrName(name: string) {
   if (htmlAttrNameReg.test(name)) {
     throw new Error(`Invalid attribute name: ${JSON.stringify(name)}`);
@@ -70,18 +123,6 @@ export function assertExclusiveAttrs(
         `The attributes ${joinWithAnd(exclusiveAttrs)} are mutually exclusive.`,
       );
     }
-  }
-}
-
-export function assertValidEventHandlerAttr(name: string, value: unknown) {
-  if (
-    value &&
-    typeof value !== "string" &&
-    lowercaseEventHandlerReg.test(name)
-  ) {
-    throw new Error(
-      `The \`${name}\` attribute must be a string or a falsey value (\`null\`, \`undefined\`, \`false\`, \`0\`, …), but received type "${typeof value}". To attach an event listener, use the \`on${name[2].toUpperCase()}${name.slice(3)}\` event handler instead.`,
-    );
   }
 }
 

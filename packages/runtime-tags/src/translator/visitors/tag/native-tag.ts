@@ -125,6 +125,7 @@ export default {
 
           seen[attr.name] = attr;
           assertValidNativeAttrName(tag, attr);
+          assertNativeAttrValueType(tag, attr);
 
           if (injectNonce && attr.name === "nonce") {
             injectNonce = false;
@@ -1138,6 +1139,38 @@ function assertValidNativeAttrName(
           },
         } as any),
       `\`${attr.name}\` is not a valid attribute, did you mean \`${suggestion}\`?`,
+      Error,
+    );
+  }
+}
+
+function assertNativeAttrValueType(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoAttribute,
+) {
+  const { name } = attr;
+  if (
+    name === "class" ||
+    name === "style" ||
+    name === "content" ||
+    isEventOrChangeHandler(name) ||
+    lowercaseEventHandlerReg.test(name)
+  ) {
+    return;
+  }
+
+  if (t.isFunction(attr.value)) {
+    throw tag.hub.buildError(
+      attr,
+      `The \`${name}\` attribute cannot be a function.`,
+      Error,
+    );
+  }
+
+  if (t.isObjectExpression(attr.value)) {
+    throw tag.hub.buildError(
+      attr,
+      `The \`${name}\` attribute cannot be a plain object (it would render as \`[object Object]\`).`,
       Error,
     );
   }

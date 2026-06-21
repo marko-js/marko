@@ -20,7 +20,6 @@
 </div>
 <div
   class="col"
-  row="[object Object]"
   x="0"
 />
 <div
@@ -37,7 +36,6 @@
 </div>
 <div
   class="col"
-  row="[object Object]"
   x="1"
 />
 <div
@@ -55,7 +53,6 @@
 <div
   class="col"
   outside=""
-  row="[object Object]"
 />
 <div
   class="row"

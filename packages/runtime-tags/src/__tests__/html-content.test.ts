@@ -24,7 +24,7 @@ describe("runtime-tags/html/content", () => {
       assert.equal(helpers._escape(42), "42");
       assert.equal(helpers._escape(true), "true");
       assert.equal(helpers._escape("foo"), "foo");
-      assert.equal(helpers._escape({}), "[object Object]");
+      assert.equal(helpers._escape({ toString: () => "custom" }), "custom");
     });
   });
 
@@ -54,7 +54,10 @@ describe("runtime-tags/html/content", () => {
       assert.equal(helpers._escape_script(42), "42");
       assert.equal(helpers._escape_script(true), "true");
       assert.equal(helpers._escape_script("foo"), "foo");
-      assert.equal(helpers._escape_script({}), "[object Object]");
+      assert.equal(
+        helpers._escape_script({ toString: () => "custom" }),
+        "custom",
+      );
     });
   });
 
@@ -88,7 +91,10 @@ describe("runtime-tags/html/content", () => {
       assert.equal(helpers._escape_style(42), "42");
       assert.equal(helpers._escape_style(true), "true");
       assert.equal(helpers._escape_style("foo"), "foo");
-      assert.equal(helpers._escape_style({}), "[object Object]");
+      assert.equal(
+        helpers._escape_style({ toString: () => "custom" }),
+        "custom",
+      );
     });
   });
 
@@ -126,7 +132,10 @@ describe("runtime-tags/html/content", () => {
       assert.equal(helpers._escape_comment(42), "42");
       assert.equal(helpers._escape_comment(true), "true");
       assert.equal(helpers._escape_comment("foo"), "foo");
-      assert.equal(helpers._escape_comment({}), "[object Object]");
+      assert.equal(
+        helpers._escape_comment({ toString: () => "custom" }),
+        "custom",
+      );
     });
   });
 });

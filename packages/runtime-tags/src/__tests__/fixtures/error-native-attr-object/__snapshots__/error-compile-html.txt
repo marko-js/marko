@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-attr-object/template.marko:1:6
+    > 1 | <div title={ key: "value" }>
+        |      ^^^^^^^^^^^^^^^^^^^^^^ The `title` attribute cannot be a plain object (it would render as `[object Object]`).
+      2 |   Hello
+      3 | </div>
+      4 |
