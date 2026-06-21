@@ -1,4 +1,7 @@
-import { assertExclusiveAttrs } from "../common/errors";
+import {
+  assertExclusiveAttrs,
+  assertValidEventHandlerAttr,
+} from "../common/errors";
 import {
   getEventHandlerName,
   htmlAttrNameReg,
@@ -41,6 +44,9 @@ export function _to_text(value: unknown) {
 }
 
 export function _attr(element: Element, name: string, value: unknown) {
+  if (MARKO_DEBUG) {
+    assertValidEventHandlerAttr(name, value);
+  }
   setAttribute(element, name, normalizeAttrValue(value));
 }
 

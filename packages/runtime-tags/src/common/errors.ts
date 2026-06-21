@@ -1,3 +1,7 @@
+import { isVoid } from "./helpers";
+
+const lowercaseEventHandlerReg = /^on[a-z]/;
+
 export function _el_read_error() {
   if (MARKO_DEBUG) {
     throw new Error(
@@ -54,6 +58,18 @@ export function assertExclusiveAttrs(
         `The attributes ${joinWithAnd(exclusiveAttrs)} are mutually exclusive.`,
       );
     }
+  }
+}
+
+export function assertValidEventHandlerAttr(name: string, value: unknown) {
+  if (
+    !isVoid(value) &&
+    typeof value !== "string" &&
+    lowercaseEventHandlerReg.test(name)
+  ) {
+    throw new Error(
+      `The \`${name}\` attribute must be a string, null, undefined, or false, but received type "${typeof value}". To attach an event listener, use the \`on${name[2].toUpperCase()}${name.slice(3)}\` event handler instead.`,
+    );
   }
 }
 

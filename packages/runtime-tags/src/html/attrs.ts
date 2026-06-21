@@ -1,4 +1,7 @@
-import { assertExclusiveAttrs } from "../common/errors";
+import {
+  assertExclusiveAttrs,
+  assertValidEventHandlerAttr,
+} from "../common/errors";
 import {
   getEventHandlerName,
   htmlAttrNameReg,
@@ -181,6 +184,9 @@ export function _attr_nonce() {
 }
 
 export function _attr(name: string, value: unknown) {
+  if (MARKO_DEBUG) {
+    assertValidEventHandlerAttr(name, value);
+  }
   return isVoid(value) ? "" : nonVoidAttr(name, value);
 }
 

@@ -126,8 +126,11 @@ export default {
           if (isEventHandler(attr.name)) {
             valueExtra.isEffect = true;
             hasEventHandlers = true;
-          } else if (!evaluate(attr.value).confident) {
-            hasDynamicAttributes = true;
+          } else {
+            assertValidNativeEventHandlerAttr(tag, attr);
+            if (!evaluate(attr.value).confident) {
+              hasDynamicAttributes = true;
+            }
           }
         } else if (t.isMarkoSpreadAttribute(attr)) {
           valueExtra.isEffect = true;
@@ -1103,6 +1106,34 @@ function isInjectNonceTag(tagName: string) {
       return true;
     default:
       return false;
+  }
+}
+
+const lowercaseEventHandlerReg = /^on[a-z]/;
+
+function assertValidNativeEventHandlerAttr(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoAttribute,
+) {
+  if (!lowercaseEventHandlerReg.test(attr.name)) return;
+
+  const { value } = attr;
+  let invalid = t.isFunction(value);
+  if (!invalid) {
+    const { confident, computed } = evaluate(value);
+    invalid =
+      confident &&
+      !(computed == null || computed === false || typeof computed === "string");
+  }
+
+  if (invalid) {
+    const suggestion = "on" + attr.name[2].toUpperCase() + attr.name.slice(3);
+    throw tag.hub.buildError(
+      value,
+      `The \`${attr.name}\` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string, \`null\`, \`undefined\`, or \`false\`. ` +
+        `To attach an event listener, use the \`${suggestion}\` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.`,
+      Error,
+    );
   }
 }
 
