@@ -2,6 +2,51 @@ import { RendererProp } from "./accessor.debug";
 
 export const htmlAttrNameReg = /^[^a-z_]|[^a-z0-9._:-]/i;
 export const userAttrNameReg = /^[^a-z_$]|[^a-z0-9._:-]/i;
+const knownWrongAttrs: Record<string, string> = {
+  className: "class",
+  classList: "class",
+  htmlFor: "for",
+  acceptCharset: "accept-charset",
+  httpEquiv: "http-equiv",
+  defaultValue: "value",
+  defaultChecked: "checked",
+  dangerouslySetInnerHTML: "$!{html}",
+  key: "<for by>",
+  ref: "<tag/ref>",
+  "v-if": "<if>",
+  "v-else": "<else>",
+  "v-else-if": "<else if>",
+  "v-for": "<for>",
+  "v-show": "<if>",
+  "v-model": "value:=state",
+  "v-bind": "...attrs",
+  "v-html": "$!{html}",
+  "v-text": "${text}",
+};
+
+export function getWrongAttrSuggestion(name: string): string | undefined {
+  const exact = knownWrongAttrs[name];
+  if (exact) return exact;
+
+  const colon = name.indexOf(":");
+  if (colon > 0) {
+    const rest = name.slice(colon + 1);
+    switch (name.slice(0, colon)) {
+      case "class":
+        return `class={ ${rest}: condition }`;
+      case "style":
+        return `style={ ${rest}: value }`;
+      case "on":
+      case "v-on":
+        return `on${rest.charAt(0).toUpperCase()}${rest.slice(1)}`;
+      case "bind":
+      case "v-model":
+        return `${rest}:=state`;
+      case "v-bind":
+        return rest;
+    }
+  }
+}
 
 export function _call<T>(fn: (v: T) => unknown, v: T): T {
   fn(v);

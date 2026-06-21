@@ -1,4 +1,18 @@
+import { getWrongAttrSuggestion, htmlAttrNameReg } from "./helpers";
+
 const lowercaseEventHandlerReg = /^on[a-z]/;
+
+export function assertValidAttrName(name: string) {
+  if (htmlAttrNameReg.test(name)) {
+    throw new Error(`Invalid attribute name: ${JSON.stringify(name)}`);
+  }
+  const suggestion = getWrongAttrSuggestion(name);
+  if (suggestion) {
+    throw new Error(
+      `\`${name}\` is not a valid attribute, did you mean \`${suggestion}\`?`,
+    );
+  }
+}
 
 export function _el_read_error() {
   if (MARKO_DEBUG) {

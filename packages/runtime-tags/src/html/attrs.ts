@@ -1,11 +1,11 @@
 import {
   assertExclusiveAttrs,
   assertHandlerIsFunction,
+  assertValidAttrName,
   assertValidEventHandlerAttr,
 } from "../common/errors";
 import {
   getEventHandlerName,
-  htmlAttrNameReg,
   isEventHandler,
   isNotVoid,
   isVoid,
@@ -279,11 +279,7 @@ export function _attrs(
           )
         ) {
           if (MARKO_DEBUG) {
-            if (htmlAttrNameReg.test(name)) {
-              throw new Error(
-                `Invalid attribute name: ${JSON.stringify(name)}`,
-              );
-            }
+            assertValidAttrName(name);
           }
 
           if (isEventHandler(name)) {

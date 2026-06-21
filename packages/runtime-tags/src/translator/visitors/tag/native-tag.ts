@@ -9,7 +9,11 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertExclusiveAttrs } from "../../../common/errors";
-import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
+import {
+  getEventHandlerName,
+  getWrongAttrSuggestion,
+  isEventHandler,
+} from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import { bodyToTextLiteral } from "../../util/body-to-text-literal";
 import evaluate from "../../util/evaluate";
@@ -120,6 +124,7 @@ export default {
           }
 
           seen[attr.name] = attr;
+          assertValidNativeAttrName(tag, attr);
 
           if (injectNonce && attr.name === "nonce") {
             injectNonce = false;
@@ -1112,6 +1117,29 @@ function isInjectNonceTag(tagName: string) {
       return true;
     default:
       return false;
+  }
+}
+
+function assertValidNativeAttrName(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.MarkoAttribute,
+) {
+  const suggestion = getWrongAttrSuggestion(attr.name);
+  if (suggestion) {
+    throw tag.hub.buildError(
+      attr.loc?.end &&
+        ({
+          loc: {
+            start: attr.loc.start,
+            end: {
+              line: attr.loc.start.line,
+              column: attr.loc.start.column + attr.name.length,
+            },
+          },
+        } as any),
+      `\`${attr.name}\` is not a valid attribute, did you mean \`${suggestion}\`?`,
+      Error,
+    );
   }
 }
 

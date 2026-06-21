@@ -1,4 +1,4 @@
-// size: 23837 (min) 8812 (brotli)
+// size: 23837 (min) 8807 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -318,28 +318,6 @@ function attrTags(first, attrs) {
 function* attrTagIterator() {
   (yield this, yield* this[rest]);
 }
-function _assert_hoist(value) {}
-function forIn(obj, cb) {
-  for (let key in obj) cb(key, obj[key]);
-}
-function forOf(list, cb) {
-  if (list) {
-    let i = 0;
-    for (let item of list) cb(item, i++);
-  }
-}
-function forTo(to, from, step, cb) {
-  let start = from || 0,
-    delta = step || 1;
-  for (let steps = (to - start) / delta, i = 0; i <= steps; i++)
-    cb(start + i * delta);
-}
-function forUntil(until, from, step, cb) {
-  let start = from || 0,
-    delta = step || 1;
-  for (let steps = (until - start) / delta, i = 0; i < steps; i++)
-    cb(start + i * delta);
-}
 function _call(fn, v) {
   return (fn(v), v);
 }
@@ -364,6 +342,28 @@ function normalizeDynamicRenderer(value) {
     let normalized = value.content || value.default || value;
     if ("a" in normalized) return normalized;
   }
+}
+function _assert_hoist(value) {}
+function forIn(obj, cb) {
+  for (let key in obj) cb(key, obj[key]);
+}
+function forOf(list, cb) {
+  if (list) {
+    let i = 0;
+    for (let item of list) cb(item, i++);
+  }
+}
+function forTo(to, from, step, cb) {
+  let start = from || 0,
+    delta = step || 1;
+  for (let steps = (to - start) / delta, i = 0; i <= steps; i++)
+    cb(start + i * delta);
+}
+function forUntil(until, from, step, cb) {
+  let start = from || 0,
+    delta = step || 1;
+  for (let steps = (until - start) / delta, i = 0; i < steps; i++)
+    cb(start + i * delta);
 }
 function toArray(opt) {
   return opt ? (Array.isArray(opt) ? opt : [opt]) : [];
