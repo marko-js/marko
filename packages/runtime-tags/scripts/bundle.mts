@@ -35,7 +35,7 @@ await Promise.all([
       const minify = isProd
         ? { mangle: false, codegen: false, compress: true }
         : ("dce-only" as const);
-      await using bundle = await rolldown({
+      const bundle = await rolldown({
         cwd,
         input: `src/${name}.ts`,
         platform: name === "dom" ? "browser" : "node",
@@ -46,21 +46,25 @@ await Promise.all([
         plugins: isProd ? [debugPlugin(), declHoistPlugin()] : undefined,
       });
 
-      await Promise.all([
-        bundle.write({
-          file: `${file}.mjs`,
-          format: "esm",
-          minify,
-          sourcemap: false,
-        }),
-        bundle.write({
-          file: `${file}.js`,
-          format: "cjs",
-          strict: true,
-          minify,
-          sourcemap: false,
-        }),
-      ]);
+      try {
+        await Promise.all([
+          bundle.write({
+            file: `${file}.mjs`,
+            format: "esm",
+            minify,
+            sourcemap: false,
+          }),
+          bundle.write({
+            file: `${file}.js`,
+            format: "cjs",
+            strict: true,
+            minify,
+            sourcemap: false,
+          }),
+        ]);
+      } finally {
+        await bundle.close();
+      }
     }),
   ),
 ]);

@@ -1,4 +1,4 @@
-// size: 23767 (min) 8781 (brotli)
+// size: 23798 (min) 8832 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1426,8 +1426,9 @@ function _attrs_partial_content(scope, nodeAccessor, nextAttrs, skip) {
 }
 function attrsInternal(scope, nodeAccessor, nextAttrs) {
   let el = scope[nodeAccessor],
-    events,
+    events = scope["I" + nodeAccessor],
     skip;
+  for (let name in events) events[name] = 0;
   switch (el.tagName) {
     case "INPUT":
       if ("checked" in nextAttrs || "checkedChange" in nextAttrs)
