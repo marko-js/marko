@@ -1,4 +1,4 @@
-// size: 24210 (min) 8960 (brotli)
+// size: 26081 (min) 9459 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -183,13 +183,32 @@ let empty = [],
       ? forOf(all, (item, i) => cb(item[by], [item, i]))
       : forOf(all, (item, i) => cb(by(item, i), [item, i]));
   }),
+  _for_of_selector = /* @__PURE__ */ selectorLoop(
+    ([all, by = bySecondArg], cb) => {
+      typeof by == "string"
+        ? forOf(all, (item, i) => cb(item[by], [item, i]))
+        : forOf(all, (item, i) => cb(by(item, i), [item, i]));
+    },
+  ),
   _for_in = /* @__PURE__ */ loop(([obj, by = byFirstArg], cb) =>
     forIn(obj, (key, value) => cb(by(key, value), [key, value])),
+  ),
+  _for_in_selector = /* @__PURE__ */ selectorLoop(
+    ([obj, by = byFirstArg], cb) =>
+      forIn(obj, (key, value) => cb(by(key, value), [key, value])),
   ),
   _for_to = /* @__PURE__ */ loop(([to, from, step, by = byFirstArg], cb) =>
     forTo(to, from, step, (v) => cb(by(v), [v])),
   ),
+  _for_to_selector = /* @__PURE__ */ selectorLoop(
+    ([to, from, step, by = byFirstArg], cb) =>
+      forTo(to, from, step, (v) => cb(by(v), [v])),
+  ),
   _for_until = /* @__PURE__ */ loop(
+    ([until, from, step, by = byFirstArg], cb) =>
+      forUntil(until, from, step, (v) => cb(by(v), [v])),
+  ),
+  _for_until_selector = /* @__PURE__ */ selectorLoop(
     ([until, from, step, by = byFirstArg], cb) =>
       forUntil(until, from, step, (v) => cb(by(v), [v])),
   ),
@@ -554,54 +573,115 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
     };
   return ((ownerSignal._ = fn), ownerSignal);
 }
-function _for_selector(ownerLoopNodeAccessor, ownerValueAccessor, fn) {
+function _for_selector(
+  ownerLoopNodeAccessor,
+  ownerValueAccessor,
+  keyValueAccessor,
+  fn,
+) {
   ((ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
-    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)));
+    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)),
+    (keyValueAccessor = decodeAccessor(keyValueAccessor)));
   let scopeAccessor = "A" + ownerLoopNodeAccessor,
     mapAccessor = "O" + ownerLoopNodeAccessor,
-    lastKeyAccessor = "N" + ownerLoopNodeAccessor,
+    activeAccessor = "P" + ownerLoopNodeAccessor,
     ownerSignal = (ownerScope) => {
       let nextKey = ownerScope[ownerValueAccessor],
-        prevKey = ownerScope[lastKeyAccessor],
-        canSelect = lastKeyAccessor in ownerScope;
-      if (ownerScope.H < runId && prevKey !== nextKey) {
+        map = getKeyedScopes(
+          ownerScope,
+          scopeAccessor,
+          mapAccessor,
+          keyValueAccessor,
+        ),
+        prevScope = map?.$,
+        canSelect = !!map && "_" in map,
+        nextScope = map?.get(nextKey);
+      if (ownerScope.H < runId && prevScope !== nextScope) {
         let scopes = toArray(ownerScope[scopeAccessor]);
         scopes.length &&
           queueRender(
             ownerScope,
             () => {
-              let map = getKeyedScopes(ownerScope, scopeAccessor, mapAccessor);
+              let map = getKeyedScopes(
+                  ownerScope,
+                  scopeAccessor,
+                  mapAccessor,
+                  keyValueAccessor,
+                ),
+                nextScope = map?.get(nextKey);
               if (map && canSelect)
-                (runSelectorRow(map.get(prevKey), fn),
-                  runSelectorRow(map.get(nextKey), fn));
-              else for (let scope of scopes) runSelectorRow(scope, fn);
+                (runSelectorRow(prevScope, fn, activeAccessor, !1),
+                  runSelectorRow(nextScope, fn, activeAccessor, !0));
+              else
+                for (let scope of scopes)
+                  runSelectorRow(
+                    scope,
+                    fn,
+                    activeAccessor,
+                    scope.M === nextKey,
+                  );
+              map && ((map._ = nextKey), (map.$ = nextScope));
             },
             -1,
             0,
             scopes[0].L,
           );
       }
-      ownerScope[lastKeyAccessor] = nextKey;
+      map && ((map._ = nextKey), (map.$ = nextScope));
     };
-  return ((ownerSignal._ = fn), ownerSignal);
+  return (
+    (ownerSignal._ = (scope) => {
+      let ownerScope = scope._,
+        key = scope.M ?? scope[keyValueAccessor];
+      if (key === void 0) {
+        fn(scope);
+        return;
+      }
+      let map = (ownerScope[mapAccessor] ||= /* @__PURE__ */ new Map()),
+        active = ownerScope[ownerValueAccessor] === key;
+      (map.set(key, scope),
+        (scope[activeAccessor] = active),
+        (map._ = ownerScope[ownerValueAccessor]),
+        active && (map.$ = scope),
+        fn(scope));
+    }),
+    ownerSignal
+  );
 }
-function getKeyedScopes(ownerScope, scopeAccessor, mapAccessor) {
-  let branches = ownerScope[scopeAccessor],
-    cache = branches,
-    map = cache?.[mapAccessor];
-  if (!map) {
-    map = /* @__PURE__ */ new Map();
-    for (let scope of toArray(branches)) {
-      let key = scope.M;
-      if (key === void 0) return;
-      map.set(key, scope);
+function getKeyedScopes(
+  ownerScope,
+  scopeAccessor,
+  mapAccessor,
+  keyValueAccessor,
+) {
+  let map = ownerScope[mapAccessor];
+  if (
+    (map || (ownerScope[mapAccessor] = map = /* @__PURE__ */ new Map()),
+    !map.size)
+  ) {
+    let branches = toArray(ownerScope[scopeAccessor]);
+    if (branches.length) {
+      let hasActiveKey = "_" in map,
+        activeKey = map._,
+        keyedScopes = /* @__PURE__ */ new Map();
+      hasActiveKey && (keyedScopes._ = activeKey);
+      for (let scope of branches) {
+        let key = scope.M ?? scope[keyValueAccessor];
+        if (key === void 0) return;
+        ((scope.M = key),
+          hasActiveKey && activeKey === key && (keyedScopes.$ = scope),
+          keyedScopes.set(key, scope));
+      }
+      ownerScope[mapAccessor] = map = keyedScopes;
     }
-    cache && (cache[mapAccessor] = map);
   }
   return map;
 }
-function runSelectorRow(scope, fn) {
-  scope && scope.H > 0 && scope.H < runId && fn(scope);
+function runSelectorRow(scope, fn, activeAccessor, active) {
+  scope &&
+    scope.H > 0 &&
+    scope.H < runId &&
+    ((scope[activeAccessor] = active), fn(scope));
 }
 function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
   ownerConditionalNodeAccessor = decodeAccessor(ownerConditionalNodeAccessor);
@@ -1952,6 +2032,151 @@ function loop(forEach) {
             (branch.M = key),
             newScopes.push(branch),
             params?.(branch, args));
+        });
+        let newLen = newScopes.length,
+          hasSiblings = referenceNode !== parentNode,
+          afterReference = null,
+          oldEnd = oldLen - 1,
+          newEnd = newLen - 1,
+          start = 0;
+        if (
+          (hasSiblings &&
+            (oldLen
+              ? ((afterReference = oldScopes[oldEnd].K.nextSibling),
+                newLen ||
+                  parentNode.insertBefore(referenceNode, afterReference))
+              : newLen &&
+                ((afterReference = referenceNode.nextSibling),
+                referenceNode.remove())),
+          !hasPotentialMoves)
+        ) {
+          oldLen &&
+            (oldScopes.forEach(
+              hasSiblings ? removeAndDestroyBranch : destroyBranch,
+            ),
+            hasSiblings || (parentNode.textContent = ""));
+          for (let newScope of newScopes)
+            insertBranchBefore(newScope, parentNode, afterReference);
+          return;
+        }
+        for (let branch of oldScopesByKey.values())
+          removeAndDestroyBranch(branch);
+        for (
+          ;
+          start < oldLen &&
+          start < newLen &&
+          oldScopes[start] === newScopes[start];
+        )
+          start++;
+        for (
+          ;
+          oldEnd >= start &&
+          newEnd >= start &&
+          oldScopes[oldEnd] === newScopes[newEnd];
+        )
+          (oldEnd--, newEnd--);
+        if (
+          (oldEnd + 1 < oldLen && (afterReference = oldScopes[oldEnd + 1].S),
+          start > oldEnd)
+        ) {
+          if (start <= newEnd)
+            for (let i = start; i <= newEnd; i++)
+              insertBranchBefore(newScopes[i], parentNode, afterReference);
+          return;
+        } else if (start > newEnd) return;
+        let diffLen = newEnd - start + 1,
+          oldPos = /* @__PURE__ */ new Map(),
+          sources = Array(diffLen),
+          pred = Array(diffLen),
+          tails = [],
+          tail = -1,
+          lo,
+          hi,
+          mid;
+        for (let i = start; i <= oldEnd; i++) oldPos.set(oldScopes[i], i);
+        for (let i = diffLen; i--; )
+          sources[i] = oldPos.get(newScopes[start + i]) ?? -1;
+        for (let i = 0; i < diffLen; i++)
+          if (~sources[i])
+            if (tail < 0 || sources[tails[tail]] < sources[i])
+              (~tail && (pred[i] = tails[tail]), (tails[++tail] = i));
+            else {
+              for (lo = 0, hi = tail; lo < hi; )
+                ((mid = ((lo + hi) / 2) | 0),
+                  sources[tails[mid]] < sources[i]
+                    ? (lo = mid + 1)
+                    : (hi = mid));
+              sources[i] < sources[tails[lo]] &&
+                (lo > 0 && (pred[i] = tails[lo - 1]), (tails[lo] = i));
+            }
+        for (hi = tails[tail], lo = tail + 1; lo-- > 0; )
+          ((tails[lo] = hi), (hi = pred[hi]));
+        for (let i = diffLen; i--; )
+          (~tail && i === tails[tail]
+            ? tail--
+            : insertBranchBefore(
+                newScopes[start + i],
+                parentNode,
+                afterReference,
+              ),
+            (afterReference = newScopes[start + i].S));
+      }
+    );
+  };
+}
+/* @__NO_SIDE_EFFECTS__ */
+function selectorLoop(forEach) {
+  return (nodeAccessor, template, walks, setup, params) => {
+    nodeAccessor = decodeAccessor(nodeAccessor);
+    let scopesAccessor = "A" + nodeAccessor,
+      mapAccessor = "O" + nodeAccessor,
+      activeAccessor = "P" + nodeAccessor,
+      renderer = _content("", template, walks, setup)();
+    return (
+      enableBranches(),
+      (scope, value) => {
+        let referenceNode = scope[nodeAccessor],
+          oldScopes = toArray(scope[scopesAccessor]),
+          newScopes = (scope[scopesAccessor] = []),
+          keyedScopes = scope[mapAccessor],
+          hasActiveKey = !!keyedScopes && "_" in keyedScopes,
+          activeKey = keyedScopes?._,
+          newKeyedScopes = keyedScopes
+            ? (scope[mapAccessor] = /* @__PURE__ */ new Map())
+            : void 0;
+        hasActiveKey && (newKeyedScopes._ = activeKey);
+        let oldLen = oldScopes.length,
+          parentNode =
+            referenceNode.nodeType > 1
+              ? referenceNode.parentNode || oldScopes[0]?.S.parentNode
+              : referenceNode,
+          oldScopesByKey = keyedScopes,
+          hasPotentialMoves;
+        forEach(value, (key, args) => {
+          let branch =
+            oldLen &&
+            (oldScopesByKey ||= oldScopes.reduce(
+              (map, scope, i) => map.set(scope.M ?? i, scope),
+              /* @__PURE__ */ new Map(),
+            )).get(key);
+          if (
+            (branch
+              ? (hasPotentialMoves = oldScopesByKey.delete(key))
+              : (branch = createAndSetupBranch(
+                  scope.$,
+                  renderer,
+                  scope,
+                  parentNode,
+                )),
+            (branch.M = key),
+            newKeyedScopes)
+          ) {
+            let active = hasActiveKey && activeKey === key;
+            ((branch[activeAccessor] = active),
+              active && (newKeyedScopes.$ = branch),
+              newKeyedScopes.set(key, branch));
+          }
+          (newScopes.push(branch), params?.(branch, args));
         });
         let newLen = newScopes.length,
           hasSiblings = referenceNode !== parentNode,

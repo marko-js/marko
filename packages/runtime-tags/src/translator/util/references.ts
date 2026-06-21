@@ -137,11 +137,18 @@ export interface Getter {
   invoked: boolean;
 }
 
-interface Read {
+export interface Read {
   binding: Binding;
   extra: t.NodeExtra;
   ownVar: boolean;
   getter: Getter | undefined;
+  comparison: ReadComparison | undefined;
+}
+
+export interface ReadComparison {
+  extra: t.NodeExtra;
+  operator: "===" | "!==";
+  reads: Read[];
 }
 
 interface ExtraRead {
@@ -882,6 +889,7 @@ export function finalizeReferences() {
 
   for (const [expr, reads] of readsByExpression) {
     if (isReferencedExtra(expr)) {
+      expr.reads = reads;
       const exprBindings = resolveReferencedBindings(
         expr,
         reads,
@@ -1283,6 +1291,10 @@ export function finalizeReferences() {
     );
   }
 
+  for (const finalize of getReferenceFinalizers()) {
+    finalize();
+  }
+
   readsByExpression.clear();
   fnReadsByExpression.clear();
 }
@@ -1497,6 +1509,14 @@ const [getReadsByExpression] = createProgramState(
 const [getFunctionReadsByExpression] = createProgramState(
   () => new Map<ReferencedExtra, Map<ReferencedFunctionExtra, OneMany<Read>>>(),
 );
+const [getReferenceFinalizers] = createProgramState<(() => void)[]>(() => []);
+const [getReadComparisons] = createProgramState(
+  () => new WeakMap<t.BinaryExpression, ReadComparison>(),
+);
+
+export function onFinalizeReferences(finalize: () => void) {
+  getReferenceFinalizers().push(finalize);
+}
 
 export function addRead(
   exprExtra: ReferencedExtra,
@@ -1506,7 +1526,13 @@ export function addRead(
   getter: Getter | undefined,
 ) {
   const readsByExpression = getReadsByExpression();
-  const read: Read = { binding, extra, getter, ownVar: false };
+  const read: Read = {
+    binding,
+    extra,
+    getter,
+    ownVar: false,
+    comparison: undefined,
+  };
   binding.reads.add(exprExtra);
   exprExtra.section = section;
   readsByExpression.set(
@@ -1536,6 +1562,7 @@ function dropExtra(exprExtra: ReferencedExtra) {
   exprExtra.pruned = true;
   if (reads) {
     readsByExpr.delete(exprExtra);
+    exprExtra.reads = undefined;
     forEach(reads, (read) => {
       read.binding.reads.delete(exprExtra);
     });
@@ -1555,13 +1582,9 @@ function addReadToExpression(
   const exprRoot = getExprRoot(fnRoot || root);
   const section = getOrCreateSection(exprRoot);
   const exprExtra = (exprRoot.node.extra ??= { section }) as ReferencedExtra;
-  const read = addRead(
-    exprExtra,
-    (node.extra ??= {}),
-    binding,
-    section,
-    getter,
-  );
+  const nodeExtra = (node.extra ??= {});
+  const read = addRead(exprExtra, nodeExtra, binding, section, getter);
+  addReadRelationships(root, read);
 
   if (!getter && binding.type === BindingType.derived) {
     const babelBinding = root.scope.getBinding(binding.name);
@@ -1585,6 +1608,46 @@ function addReadToExpression(
     fnExtra.section = section;
     exprFnReads.set(fnExtra, push(exprFnReads.get(fnExtra), read));
   }
+}
+
+function addReadRelationships(
+  root:
+    | t.NodePath<t.Identifier>
+    | t.NodePath<t.MemberExpression>
+    | t.NodePath<t.OptionalMemberExpression>,
+  read: Read,
+) {
+  const parent = root.parentPath;
+  if (
+    parent &&
+    t.isBinaryExpression(parent.node) &&
+    (parent.node.operator === "===" || parent.node.operator === "!==") &&
+    isReadRoot(
+      parent.node.left === root.node ? parent.node.right : parent.node.left,
+    )
+  ) {
+    let comparison = getReadComparisons().get(parent.node);
+    if (!comparison) {
+      getReadComparisons().set(
+        parent.node,
+        (comparison = {
+          extra: (parent.node.extra ??= {}),
+          operator: parent.node.operator,
+          reads: [],
+        }),
+      );
+    }
+    read.comparison = comparison;
+    comparison.reads.push(read);
+  }
+}
+
+function isReadRoot(node: t.Expression | t.PrivateName) {
+  return (
+    t.isIdentifier(node) ||
+    t.isMemberExpression(node) ||
+    t.isOptionalMemberExpression(node)
+  );
 }
 
 export function getCanonicalBinding(binding: Binding) {
@@ -2231,6 +2294,7 @@ export function createGetterRead(
 
 export interface ReferencedExtra extends t.NodeExtra {
   section: Section;
+  reads?: Opt<Read>;
 }
 export function isReferencedExtra(
   extra: t.NodeExtra | undefined,

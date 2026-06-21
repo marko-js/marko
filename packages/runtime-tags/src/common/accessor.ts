@@ -12,7 +12,7 @@ export enum AccessorPrefix {
   KeyedScopes = "O",
   Lifecycle = "K",
   Promise = "L",
-  SelectorLastKey = "N",
+  SelectorActive = "P",
   TagVariableChange = "M",
 }
 

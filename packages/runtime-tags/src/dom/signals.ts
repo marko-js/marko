@@ -15,11 +15,18 @@ import { queueEffect, queueRender, rendering, runId } from "./queue";
 import { _resume } from "./resume";
 import { schedule } from "./schedule";
 
-export type SignalFn = (scope: Scope) => void;
+export type SignalFn<T = unknown, U extends Scope = Scope> = (
+  scope: U,
+  value?: T,
+) => void;
 export type Signal<T = unknown, U extends Scope = Scope> = (
   scope: U,
   value: T,
 ) => void;
+type KeyedScopes = Map<unknown, BranchScope> & {
+  _: unknown;
+  $?: BranchScope;
+};
 
 export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
   const valueAccessor = MARKO_DEBUG
@@ -149,24 +156,32 @@ export function _for_closure(
 export function _for_selector(
   ownerLoopNodeAccessor: EncodedAccessor,
   ownerValueAccessor: EncodedAccessor,
-  fn: SignalFn,
+  keyValueAccessor: EncodedAccessor,
+  fn: SignalFn<unknown, BranchScope>,
 ): SignalFn {
   if (!MARKO_DEBUG) {
     ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor as number);
     ownerValueAccessor = decodeAccessor(ownerValueAccessor as number);
+    keyValueAccessor = decodeAccessor(keyValueAccessor as number);
   }
   const scopeAccessor = AccessorPrefix.BranchScopes + ownerLoopNodeAccessor;
   const mapAccessor = AccessorPrefix.KeyedScopes + ownerLoopNodeAccessor;
-  const lastKeyAccessor =
-    AccessorPrefix.SelectorLastKey + ownerLoopNodeAccessor;
+  const activeAccessor = AccessorPrefix.SelectorActive + ownerLoopNodeAccessor;
   const ownerSignal = (ownerScope: Scope) => {
     const nextKey = ownerScope[ownerValueAccessor];
-    const prevKey = ownerScope[lastKeyAccessor];
-    const canSelect = lastKeyAccessor in ownerScope;
+    const map = getKeyedScopes(
+      ownerScope,
+      scopeAccessor,
+      mapAccessor,
+      keyValueAccessor,
+    );
+    const prevScope = map?.$;
+    const canSelect = !!map && "_" in map;
+    const nextScope = map?.get(nextKey);
     // Skip while the owner scope is still being created (`Gen === runId`); its
     // rows already render the binding on the create path. Only react to later
     // changes of the owner value.
-    if (ownerScope[AccessorProp.Gen] < runId && prevKey !== nextKey) {
+    if (ownerScope[AccessorProp.Gen] < runId && prevScope !== nextScope) {
       const scopes = toArray(
         ownerScope[scopeAccessor] as BranchScope,
       ) as BranchScope[];
@@ -176,21 +191,32 @@ export function _for_selector(
         queueRender(
           ownerScope,
           () => {
-            // Build (and cache) the key map even on the first change, so it is
-            // warm for subsequent O(1) selections. The first change has no
-            // recorded previous key (`canSelect` false), so fan out for
-            // correctness this once; the cache is now primed.
-            const map = getKeyedScopes(ownerScope, scopeAccessor, mapAccessor);
+            const map = getKeyedScopes(
+              ownerScope,
+              scopeAccessor,
+              mapAccessor,
+              keyValueAccessor,
+            );
+            const nextScope = map?.get(nextKey);
             if (map && canSelect) {
               // O(1): re-run only the rows losing and gaining the key.
-              runSelectorRow(map.get(prevKey), fn);
-              runSelectorRow(map.get(nextKey), fn);
+              runSelectorRow(prevScope, fn, activeAccessor, false);
+              runSelectorRow(nextScope, fn, activeAccessor, true);
             } else {
-              // No usable key map yet (a resumed loop before its first
-              // reconcile), or first change: fan out, which is always correct.
+              // No usable key map/previous active state yet (notably the first
+              // post-resume change): fan out once, which is always correct.
               for (const scope of scopes) {
-                runSelectorRow(scope, fn);
+                runSelectorRow(
+                  scope,
+                  fn,
+                  activeAccessor,
+                  scope[AccessorProp.LoopKey] === nextKey,
+                );
               }
+            }
+            if (map) {
+              map._ = nextKey;
+              map.$ = nextScope;
             }
           },
           -1,
@@ -199,49 +225,81 @@ export function _for_selector(
         );
       }
     }
-    // Record the applied key (seeds it on create) for the next change.
-    ownerScope[lastKeyAccessor] = nextKey;
+    if (map) {
+      map._ = nextKey;
+      map.$ = nextScope;
+    }
   };
-  ownerSignal._ = fn;
+  ownerSignal._ = (scope: BranchScope) => {
+    const ownerScope = scope[AccessorProp.Owner]!;
+    const key = scope[AccessorProp.LoopKey] ?? scope[keyValueAccessor];
+    if (key === undefined) {
+      fn(scope);
+      return;
+    }
+    const map = (ownerScope[mapAccessor] ||= new Map()) as KeyedScopes;
+    const active = ownerScope[ownerValueAccessor] === key;
+    map.set(key, scope);
+    scope[activeAccessor] = active;
+    map._ = ownerScope[ownerValueAccessor];
+    if (active) {
+      map.$ = scope;
+    }
+    fn(scope);
+  };
   return ownerSignal;
 }
 
-// Lazily build (and cache on the current branch collection) a key→branch lookup
-// from the `LoopKey` each branch carries, so a selector resolves its rows in
-// O(1). Each reconcile assigns a fresh branch collection, so stale maps are
-// released with the previous branches. Returns undefined when a branch isn't
-// keyed yet (e.g. a resumed loop before its first reconcile), so the caller fans
-// out.
+// Lazily build the key→branch lookup when the loop hasn't rendered since the
+// selector was created (notably resume). Resumed branches can recover `LoopKey`
+// from the already-serialized key binding without adding HTML payload.
 function getKeyedScopes(
   ownerScope: Scope,
   scopeAccessor: string,
   mapAccessor: string,
+  keyValueAccessor: EncodedAccessor,
 ) {
-  const branches = ownerScope[scopeAccessor];
-  const cache = branches as
-    | { [x: string]: Map<unknown, BranchScope> | undefined }
-    | undefined;
-  let map = cache?.[mapAccessor];
+  let map = ownerScope[mapAccessor] as KeyedScopes | undefined;
   if (!map) {
-    map = new Map();
-    for (const scope of toArray(branches as BranchScope) as BranchScope[]) {
-      const key = scope[AccessorProp.LoopKey];
-      if (key === undefined) return;
-      map.set(key, scope);
-    }
-    if (cache) cache[mapAccessor] = map;
+    ownerScope[mapAccessor] = map = new Map() as KeyedScopes;
   }
+
+  if (!map.size) {
+    const branches = toArray(
+      ownerScope[scopeAccessor] as BranchScope,
+    ) as BranchScope[];
+    if (branches.length) {
+      const hasActiveKey = "_" in map;
+      const activeKey = map._;
+      const keyedScopes = new Map<unknown, BranchScope>() as KeyedScopes;
+      if (hasActiveKey) keyedScopes._ = activeKey;
+      for (const scope of branches) {
+        const key = scope[AccessorProp.LoopKey] ?? scope[keyValueAccessor];
+        if (key === undefined) return;
+        scope[AccessorProp.LoopKey] = key;
+        if (hasActiveKey && activeKey === key) keyedScopes.$ = scope;
+        keyedScopes.set(key, scope);
+      }
+      ownerScope[mapAccessor] = map = keyedScopes;
+    }
+  }
+
   return map;
 }
 
 // Matches `_for_closure`'s row guard: skip an absent row (a `map.get` miss) and
 // rows still being created (`Gen === runId`) or already destroyed (`Gen === 0`).
-function runSelectorRow(scope: BranchScope | undefined, fn: SignalFn) {
+function runSelectorRow(
+  scope: BranchScope | undefined,
+  fn: SignalFn<unknown, BranchScope>,
+  activeAccessor: string,
+  active: boolean,
+) {
   if (scope && scope[AccessorProp.Gen] > 0 && scope[AccessorProp.Gen] < runId) {
+    scope[activeAccessor] = active;
     fn(scope);
   }
 }
-
 export function _if_closure(
   ownerConditionalNodeAccessor: EncodedAccessor,
   branch: number,

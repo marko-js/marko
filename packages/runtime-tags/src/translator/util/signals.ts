@@ -596,11 +596,14 @@ export function getSignalFn(signal: Signal): t.Expression {
     signal.hasSideEffect = true;
   }
 
+  const params =
+    !signal.hasSideEffect && isValue
+      ? [scopeIdentifier, getSignalValueIdentifier(signal)]
+      : [scopeIdentifier];
+
   if (!signal.hasSideEffect) {
     return t.arrowFunctionExpression(
-      isValue
-        ? [scopeIdentifier, getSignalValueIdentifier(signal)]
-        : [scopeIdentifier],
+      params,
       toFirstExpressionOrBlock(signal.render),
     );
   }
@@ -627,10 +630,7 @@ export function getSignalFn(signal: Signal): t.Expression {
     }
   }
 
-  return t.arrowFunctionExpression(
-    [scopeIdentifier],
-    t.blockStatement(signal.render),
-  );
+  return t.arrowFunctionExpression(params, t.blockStatement(signal.render));
 }
 
 const hasTranslatedExtraArgs = new WeakSet<{ extraArgs?: t.Expression[] }>();
@@ -1326,12 +1326,36 @@ function replaceRenderNode(node: t.Node, signal?: Signal) {
   );
 }
 
+function createForSelectorActiveRead({
+  forSelectorActiveAccessor,
+  forSelectorActiveNegated,
+}: t.NodeExtra) {
+  if (!forSelectorActiveAccessor) return;
+
+  const prop = toPropertyName(forSelectorActiveAccessor);
+  const replacement = t.memberExpression(
+    scopeIdentifier,
+    prop,
+    prop.type !== "Identifier",
+  );
+  return forSelectorActiveNegated
+    ? t.unaryExpression("!", replacement, true)
+    : replacement;
+}
+
 function replaceEffectNode(node: t.Node) {
   return replaceAssignedNode(node) || replaceBindingReadNode(node);
 }
 
 function replaceBindingReadNode(node: t.Node, signal?: Signal) {
   switch (node.type) {
+    case "BinaryExpression": {
+      const { extra } = node;
+      if (extra?.forSelectorActiveAccessor) {
+        return createForSelectorActiveRead(extra);
+      }
+      break;
+    }
     case "Identifier":
     case "MemberExpression":
     case "OptionalMemberExpression": {

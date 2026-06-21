@@ -8,7 +8,6 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
-import { detectForSelector, isForSelectorClosure } from "../util/for-selector";
 import { getAccessorPrefix, getAccessorProp } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
@@ -16,14 +15,21 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { forEach } from "../util/optional";
 import {
   type Binding,
   BindingType,
   dropNodes,
   getAllTagReferenceNodes,
+  getCanonicalBinding,
+  getScopeAccessor,
   getScopeAccessorLiteral,
   kBranchSerializeReason,
   mergeReferences,
+  onFinalizeReferences,
+  type Read,
+  type ReadComparison,
+  type ReferencedExtra,
   setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
@@ -35,6 +41,8 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  type Section,
+  sectionUtil,
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
@@ -58,6 +66,26 @@ import { kSkipEndTag } from "../visitors/tag/native-tag";
 
 type ForType = "in" | "of" | "to" | "until";
 const kStatefulReason = Symbol("<for> stateful reason");
+
+interface SelectorReadState {
+  closure: Binding;
+  bodySection: Section;
+  keyBinding: Binding;
+  selectorBindings: Set<Binding>;
+  nonSelectorBindings: Set<Binding>;
+  expressions: Set<ReferencedExtra>;
+  selectorComparisons: Set<ReadComparison>;
+  found: boolean;
+}
+
+declare module "@marko/compiler/dist/types" {
+  export interface NodeExtra {
+    forSelectorActiveAccessor?: string;
+    forSelectorActiveNegated?: true;
+  }
+}
+
+const selectorClosureBySection = new WeakMap<Section, Binding>();
 
 export default {
   analyze(tag) {
@@ -137,6 +165,15 @@ export default {
 
     bodySection.upstreamExpression = tagExtra;
     bodySection.isBranch = true;
+
+    const selectorKeyBinding = getLoopKeyBinding(
+      tag.node,
+      paramsBinding,
+      forType,
+    );
+    if (selectorKeyBinding) {
+      registerForSelector(bodySection, selectorKeyBinding, nodeBinding);
+    }
   },
   translate: translateByTarget({
     html: {
@@ -264,15 +301,6 @@ export default {
 
         setSectionParentIsOwner(bodySection, true);
 
-        const keyBinding = getLoopKeyBinding(
-          tag.node,
-          tagBody.node.extra?.binding,
-          getForType(tag.node)!,
-        );
-        if (keyBinding) {
-          detectForSelector(tagBody, bodySection, keyBinding);
-        }
-
         if (!getOnlyChildParentTagName(tag)) {
           walks.visit(tag, WalkCode.Replace);
           walks.enterShallow(tag);
@@ -288,12 +316,20 @@ export default {
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
         const nodeRef = getOptimizedOnlyChildNodeBinding(tag, tagSection);
+        const forType = getForType(node)!;
+        const keyBinding = getLoopKeyBinding(
+          node,
+          tagBody.node.extra?.binding,
+          forType,
+        );
+        const hasSelector = !!keyBinding && hasForSelector(bodySection);
         setClosureSignalBuilder(tag, (closure, render) => {
-          if (isForSelectorClosure(bodySection, closure)) {
+          if (keyBinding && isForSelectorClosure(bodySection, closure)) {
             return callRuntime(
               "_for_selector",
               getScopeAccessorLiteral(nodeRef, true),
               getScopeAccessorLiteral(closure, true),
+              getScopeAccessorLiteral(keyBinding, true),
               render,
             );
           }
@@ -304,11 +340,10 @@ export default {
           );
         });
 
-        const forType = getForType(node)!;
         const signal = getSignal(tagSection, nodeRef, "for");
         signal.build = () => {
           return callRuntime(
-            forTypeToDOMRuntime(forType),
+            forTypeToDOMRuntime(forType, hasSelector),
             getScopeAccessorLiteral(nodeRef, true),
             ...replaceNullishAndEmptyFunctionsWith0(
               getBranchRendererArgs(bodySection),
@@ -435,6 +470,29 @@ export function getForType(tag: t.MarkoTag): ForType | undefined {
     }
   }
 }
+
+function hasForSelector(bodySection: Section): boolean {
+  return selectorClosureBySection.has(bodySection);
+}
+
+function isForSelectorClosure(bodySection: Section, closure: Binding): boolean {
+  return selectorClosureBySection.get(bodySection) === closure;
+}
+
+function registerForSelector(
+  bodySection: Section,
+  keyBinding: Binding,
+  nodeBinding: Binding,
+): void {
+  onFinalizeReferences(() => {
+    detectForSelector(
+      bodySection,
+      keyBinding,
+      getAccessorPrefix().SelectorActive + getScopeAccessor(nodeBinding),
+    );
+  });
+}
+
 function getLoopKeyBinding(
   node: t.MarkoTag,
   paramsBinding: Binding | undefined,
@@ -451,6 +509,7 @@ function getLoopKeyBinding(
     }
     return keyBinding;
   }
+
   return paramsBinding.propertyAliases.get(forType === "of" ? "1" : "0");
 }
 
@@ -503,6 +562,197 @@ function getSingleReturnArgument(
   }
 }
 
+function detectForSelector(
+  bodySection: Section,
+  keyBinding: Binding,
+  activeAccessor: string,
+): void {
+  if (!bodySection.referencedClosures) return;
+
+  forEach(bodySection.referencedClosures, (closure) => {
+    if (
+      !selectorClosureBySection.has(bodySection) &&
+      isEligibleSelectorClosure(
+        closure,
+        bodySection,
+        keyBinding,
+        activeAccessor,
+      )
+    ) {
+      selectorClosureBySection.set(bodySection, closure);
+    }
+  });
+}
+
+function isEligibleSelectorClosure(
+  closure: Binding,
+  bodySection: Section,
+  keyBinding: Binding,
+  activeAccessor: string,
+): boolean {
+  if (
+    closure.property !== undefined ||
+    closure.type === BindingType.constant ||
+    !isClosureInto(closure, bodySection)
+  ) {
+    return false;
+  }
+
+  const state: SelectorReadState = {
+    closure,
+    bodySection,
+    keyBinding,
+    selectorBindings: new Set(),
+    nonSelectorBindings: new Set(),
+    expressions: new Set(),
+    selectorComparisons: new Set(),
+    found: false,
+  };
+
+  if (hasOnlySelectorReads(closure, state) && state.found) {
+    markSelectorComparisons(state, activeAccessor);
+    return true;
+  }
+
+  return false;
+}
+
+function hasOnlySelectorReads(
+  binding: Binding,
+  state: SelectorReadState,
+): boolean {
+  if (state.selectorBindings.has(binding)) return true;
+  state.selectorBindings.add(binding);
+
+  const { closure, bodySection } = state;
+  if (!sameBinding(binding, closure)) {
+    return !hasNonSelectorRead(binding, state);
+  }
+
+  for (const expression of binding.reads) {
+    if (
+      isInSection(expression, bodySection) &&
+      !state.expressions.has(expression)
+    ) {
+      state.expressions.add(expression);
+      if (!hasOnlySelectorExpressionReads(expression, state)) {
+        return false;
+      }
+    }
+  }
+
+  for (const alias of binding.aliases) {
+    if (!hasOnlySelectorReads(alias, state)) return false;
+  }
+
+  for (const alias of binding.propertyAliases.values()) {
+    if (hasNonSelectorRead(alias, state)) return false;
+  }
+
+  return true;
+}
+
+function hasOnlySelectorExpressionReads(
+  expression: ReferencedExtra,
+  state: SelectorReadState,
+): boolean {
+  const reads = expression.reads;
+  if (!reads) return false;
+
+  const { closure, keyBinding } = state;
+  let ok = true;
+  forEach(reads, (read) => {
+    if (isAliasOf(read.binding, closure)) {
+      const { comparison } = read;
+      if (
+        !comparison ||
+        !isSelectorComparison(comparison, closure, keyBinding)
+      ) {
+        ok = false;
+        return;
+      }
+      state.found = true;
+      state.found = true;
+      state.selectorComparisons.add(comparison);
+    }
+  });
+
+  return ok;
+}
+
+function hasNonSelectorRead(
+  binding: Binding,
+  state: SelectorReadState,
+): boolean {
+  if (state.nonSelectorBindings.has(binding)) return false;
+  state.nonSelectorBindings.add(binding);
+
+  for (const expression of binding.reads) {
+    if (isInSection(expression, state.bodySection)) return true;
+  }
+
+  for (const alias of binding.aliases) {
+    if (hasNonSelectorRead(alias, state)) return true;
+  }
+
+  for (const alias of binding.propertyAliases.values()) {
+    if (hasNonSelectorRead(alias, state)) return true;
+  }
+
+  return false;
+}
+
+function markSelectorComparisons(
+  { selectorComparisons }: SelectorReadState,
+  activeAccessor: string,
+): void {
+  for (const { extra, operator } of selectorComparisons) {
+    extra.forSelectorActiveAccessor = activeAccessor;
+    if (operator === "!==") {
+      extra.forSelectorActiveNegated = true;
+    }
+  }
+}
+
+function isSelectorComparison(
+  { reads }: ReadComparison,
+  closure: Binding,
+  key: Binding,
+) {
+  return (
+    reads.length === 2 &&
+    ((isReadFor(reads[0], closure) && isReadFor(reads[1], key)) ||
+      (isReadFor(reads[0], key) && isReadFor(reads[1], closure)))
+  );
+}
+
+function isReadFor(read: Read, binding: Binding) {
+  return !read.getter && sameBinding(read.binding, binding);
+}
+
+function isClosureInto(binding: Binding, bodySection: Section): boolean {
+  return (
+    binding.type !== BindingType.constant &&
+    binding.section !== bodySection &&
+    sectionUtil.has(binding.closureSections, bodySection)
+  );
+}
+
+function isInSection(expression: ReferencedExtra, section: Section): boolean {
+  return expression.section === section && !expression.pruned;
+}
+
+function isAliasOf(binding: Binding, root: Binding): boolean {
+  do {
+    if (sameBinding(binding, root)) return true;
+  } while ((binding = binding.upstreamAlias!));
+  return false;
+}
+
+function sameBinding(a: Binding, b: Binding): boolean {
+  return getCanonicalBinding(a) === getCanonicalBinding(b);
+}
+
 function forTypeToRuntime(type: ForType) {
   switch (type) {
     case "of":
@@ -529,16 +779,16 @@ function forTypeToHTMLResumeRuntime(type: ForType) {
   }
 }
 
-function forTypeToDOMRuntime(type: ForType) {
+function forTypeToDOMRuntime(type: ForType, selector = false) {
   switch (type) {
     case "of":
-      return "_for_of";
+      return selector ? "_for_of_selector" : "_for_of";
     case "in":
-      return "_for_in";
+      return selector ? "_for_in_selector" : "_for_in";
     case "to":
-      return "_for_to";
+      return selector ? "_for_to_selector" : "_for_to";
     case "until":
-      return "_for_until";
+      return selector ? "_for_until_selector" : "_for_until";
   }
 }
 

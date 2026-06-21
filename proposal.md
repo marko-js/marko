@@ -143,44 +143,45 @@ key→scope map.
    delete on `removeAndDestroyBranch`). Only allocated for loops that need it, so
    non-selector loops pay nothing.
 
-2. **`_for_selector(ownerLoopNodeAccessor, render)`** replacing `_for_closure`
-   for the eligible binding. On an owner-value change it re-runs `render` for the
-   previously-matching scope and the newly-matching scope only:
+2. **`_for_selector(ownerLoopNodeAccessor, ownerValueAccessor, keyValueAccessor, render)`**
+   replacing `_for_closure` for the eligible binding. On an owner-value change it
+   re-runs `render` for the previously-matching scope and the newly-matching scope
+   only:
 
    ```js
    // sketch
    (ownerScope) => {
      const map = ownerScope[KeyToScope];
-     const prev = ownerScope[SelectorLastKey]; // value we last applied
+     const prevScope = map && map.$; // scope we last applied
      const next = ownerScope[ownerValueAccessor]; // value _let just wrote
-     ownerScope[SelectorLastKey] = next;
-     const prevScope = map && map.get(prev);
      const nextScope = map && map.get(next);
      if (prevScope) queueRender(prevScope, render, -1);
      if (nextScope) queueRender(nextScope, render, -1);
+     if (map) {
+       map._ = next;
+       map.$ = nextScope;
+     }
    };
    ```
 
    Note: `_let` overwrites `scope[valueAccessor]` _before_ invoking the change
-   handler, so the handler cannot read the previous value from the scope. Two
-   options:
-   - (a) Track the last-applied key on the owner scope (`SelectorLastKey` above).
-     Robust against rows being added/removed/reordered while selected, since
-     `map.get` returns `undefined` for absent keys. Mirrors `createSelector`'s
-     internal value tracking. **Preferred.**
-   - (b) Have the selected `_let` pass `(prev, next)` to its change handler.
-     Slightly cheaper but requires a `_let` variant/codegen change.
+   handler, so the handler cannot read the previous value from the scope. The
+   selector map therefore keeps the last-applied key (`map._`) and last-applied
+   branch scope (`map.$`) directly on the map object. This avoids extra owner
+   scope accessors and lets loop reconciliation refresh `map.$` when a selected
+   key is removed and later re-added.
 
-   When `render` re-runs for `prevScope`, it recomputes `selected === key` with
-   the _new_ `selected`; since that row's key no longer matches, the class
-   clears. For `nextScope` it now matches and the class is set. No prev/next
-   branching inside `render` is required — it stays the same pure binding.
+   Each branch stores the selector result at `scope[SelectorActive:<loop>]`.
+   When `render` re-runs for `prevScope`, that slot is set to `false`; for
+   `nextScope`, it is set to `true`. The generated binding reads that slot
+   directly, so it does not recompute `selected === key` inside the row.
 
 3. **Initial match on create.** If `selected` is already set when rows are
    created (or a matching row is appended later), the per-row create path already
    runs the binding (via the `row_id` `_const`), so the matching row renders
    correctly; the key→scope map is populated as rows are inserted, so a later
-   change finds them. `SelectorLastKey` is initialized to the current owner value.
+   change finds them. The selector map's last-applied key is initialized to the
+   current owner value.
 
 ## Correctness conditions / edge cases
 
@@ -267,13 +268,18 @@ compiled output. The mechanism held up; the notable details:
   render fn, so each row's create/setup runs the same binding regardless;
   `_for_selector` only changes the owner-change edge and sets `ownerSignal._ = fn`.
 
-Runtime: `_for_selector(loopNodeAccessor, ownerValueAccessor, render)` in
-`dom/signals.ts`. **The loop is untouched** — on an owner-value change
+Runtime: `_for_selector(loopNodeAccessor, ownerValueAccessor, keyValueAccessor, render)` in
+`dom/signals.ts`, paired with a selector-specific `_for_*_selector` loop runtime.
+Normal loops keep the base `_for_*` helpers, so selector map bookkeeping
+tree-shakes out of non-selector bundles. The selector loop opts into maintaining
+the selector map once `_for_selector` has initialized it; on an owner-value change
 `_for_selector` resolves the two affected rows in **O(1)** through a key→branch
 map lazily built from the `LoopKey` each branch already carries (`getKeyedScopes`),
-cached on the current branch collection (each reconcile assigns a fresh one, so
-stale maps are released with the old branches). Only loops with a selector build
-it, and the build amortizes across selections until the next reconcile. Like
+cached on the owner scope (each selector-loop reconcile assigns a fresh map, so
+stale branch references are released with the old branches). The map also stores the
+last-applied key (`map._`) and active branch (`map.$`), so no separate
+`SelectorLastKey` owner-scope slot is needed. Only loops with a selector build
+the map, and the build amortizes across selections until the next reconcile. Like
 `_for_closure`, the matched rows are re-run from a deferred `queueRender` (the
 binding's `render` may write the DOM synchronously — e.g. a constant-key loop
 where the binding has no `_or` — so it must run after any same-batch reconcile),
@@ -282,9 +288,8 @@ destroyed). A resumed loop whose branches aren't keyed yet (`getKeyedScopes`
 returns undefined), or a change with no recorded previous key (`canSelect`), falls
 back to the full fan-out, which is always correct; CSR seeds the previous key on
 the `_let` create path (the owner scope's `Gen` distinguishes create from update).
-Non-selector loops pay **zero** bytes/work and `_for_selector` tree-shakes out
-when unused. Two new accessor prefixes: `SelectorLastKey` (owner last-applied key)
-and `KeyedScopes` (the cached key→branch map). Detection lives in
+Two new accessor prefixes: `SelectorActive` (the branch active flag) and
+`KeyedScopes` (the cached key→branch map). Detection lives in
 `translator/util/for-selector.ts`, driven from `core/for.ts`.
 
 A compiler pre-filter bails before the body scan when the loop body has no
@@ -294,11 +299,11 @@ Notable unifications considered and rejected (each would net-pessimize the
 common `_for_closure`-only template, since the closure variants are intentionally
 self-contained so they tree-shake independently): folding the selector into
 `_for_closure` behind a flag; extracting a shared fan-out/guard helper;
-delegating the selector's fallback to `_for_closure`; and repurposing the
-reconcile's transient `oldScopesByKey` (built from _old_ scopes and consumed to
-track removals — not a current key→scope map).
+delegating the selector's fallback to `_for_closure`; and putting selector map
+maintenance in the shared base `loop()` helper instead of the tree-shakable
+selector-specific loop helpers.
 
-**v1 scope:** one selector per loop (keeps the `SelectorLastKey` slot, keyed by
+**v1 scope:** one selector per loop (keeps one `KeyedScopes` map, keyed by
 loop-node accessor, unique); multiple `===`/`!==` reads of the same owner value
 are supported (they all flip together).
 
