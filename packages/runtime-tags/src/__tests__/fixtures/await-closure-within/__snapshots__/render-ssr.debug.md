@@ -35,9 +35,7 @@ container.querySelector("button").click();
 ## Change
 ```
 UPDATE: button::text "1" => "2"
-INSERT: button + span
-REMOVE: span + span
-UPDATE: span::text " " => "2"
+UPDATE: span::text "1" => "2"
 ```
 
 # Update

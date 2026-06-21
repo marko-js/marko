@@ -1,4 +1,4 @@
-// size: 6514 (min) 2842 (brotli)
+// size: 6531 (min) 2849 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -344,7 +344,8 @@ function _if(nodeAccessor, ...branchesArgs) {
   return (
     enableBranches(),
     (scope, newBranch) => {
-      newBranch !== scope[branchAccessor] &&
+      newBranch !==
+        (scope[branchAccessor] ?? (scope["A" + nodeAccessor] && 0)) &&
         setConditionalRenderer(
           scope,
           nodeAccessor,

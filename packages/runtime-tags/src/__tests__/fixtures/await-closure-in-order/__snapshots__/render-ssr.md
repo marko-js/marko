@@ -53,7 +53,5 @@ container.querySelector("button").click();
 ## Change
 ```
 UPDATE: button::text "1" => "2"
-INSERT: span:nth-of-type(1) + span
-REMOVE: span:nth-of-type(2) + span
-UPDATE: span:nth-of-type(2)::text " " => "2"
+UPDATE: span:nth-of-type(2)::text "1" => "2"
 ```
