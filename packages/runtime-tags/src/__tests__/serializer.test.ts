@@ -290,6 +290,14 @@ describe("serializer", () => {
     it("dashed-keys", () => assertStringify({ "a-b": 1 }, `{"a-b":1}`));
     it("invalid-keys", () =>
       assertStringify({ "0": 1, "a:": 2, "[": 3 }, `{0:1,"a:":2,"[":3}`));
+    // An own `__proto__` data property (e.g. from `JSON.parse`) must serialize
+    // as a computed key so it round-trips as a normal property rather than
+    // mutating the prototype (`assertStringify` also deserializes + compares).
+    it("__proto__ key", () =>
+      assertStringify(
+        JSON.parse('{"__proto__":{"x":1}}'),
+        `{["__proto__"]:{x:1}}`,
+      ));
     it("circular", () => {
       const obj: any = { a: 1 };
       obj.obj = obj;
