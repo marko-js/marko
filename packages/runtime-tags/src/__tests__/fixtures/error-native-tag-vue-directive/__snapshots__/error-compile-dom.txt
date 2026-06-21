@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-tag-vue-directive/template.marko:1:9
+    > 1 | <button v-on:click=input.onClick>
+        |         ^^^^^^^^^^ `v-on:click` is not a valid attribute, did you mean `onClick`?
+      2 |   Click
+      3 | </button>
+      4 |
