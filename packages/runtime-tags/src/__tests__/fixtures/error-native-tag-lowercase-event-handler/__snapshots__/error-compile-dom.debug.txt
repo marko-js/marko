@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-tag-lowercase-event-handler/template.marko:1:17
+    > 1 | <button onclick=() => console.log("clicked")>
+        |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The `onclick` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string, `null`, `undefined`, or `false`. To attach an event listener, use the `onClick` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.
+      2 |   Click me
+      3 | </button>
+      4 |
