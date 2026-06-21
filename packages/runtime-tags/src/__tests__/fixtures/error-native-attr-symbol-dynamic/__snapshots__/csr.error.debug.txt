@@ -1,0 +1,1 @@
+The `title` attribute cannot be a symbol.

@@ -2,7 +2,7 @@ import {
   assertExclusiveAttrs,
   assertHandlerIsFunction,
   assertValidAttrName,
-  assertValidEventHandlerAttr,
+  assertValidAttrValue,
 } from "../common/errors";
 import {
   getEventHandlerName,
@@ -213,9 +213,6 @@ export function _attr_nonce() {
 }
 
 export function _attr(name: string, value: unknown) {
-  if (MARKO_DEBUG) {
-    assertValidEventHandlerAttr(name, value);
-  }
   return isVoid(value) ? "" : nonVoidAttr(name, value);
 }
 
@@ -391,6 +388,9 @@ function stringAttr(name: string, value: string) {
 }
 
 function nonVoidAttr(name: string, value: unknown) {
+  if (MARKO_DEBUG) {
+    assertValidAttrValue(name, value);
+  }
   switch (typeof value) {
     case "string":
       return " " + name + attrAssignment(value);

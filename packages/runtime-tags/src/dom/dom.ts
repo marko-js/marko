@@ -1,7 +1,8 @@
 import {
   assertExclusiveAttrs,
   assertValidAttrName,
-  assertValidEventHandlerAttr,
+  assertValidAttrValue,
+  assertValidTextValue,
 } from "../common/errors";
 import {
   getEventHandlerName,
@@ -40,12 +41,15 @@ import { createAndSetupBranch, type Renderer } from "./renderer";
 import { subscribeToScopeSet } from "./signals";
 
 export function _to_text(value: unknown) {
+  if (MARKO_DEBUG) {
+    assertValidTextValue(value);
+  }
   return value || value === 0 ? value + "" : "";
 }
 
 export function _attr(element: Element, name: string, value: unknown) {
   if (MARKO_DEBUG) {
-    assertValidEventHandlerAttr(name, value);
+    assertValidAttrValue(name, value);
   }
   setAttribute(element, name, normalizeAttrValue(value));
 }

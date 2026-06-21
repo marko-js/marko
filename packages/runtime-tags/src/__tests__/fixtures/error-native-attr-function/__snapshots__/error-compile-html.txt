@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-native-attr-function/template.marko:1:6
+    > 1 | <div title=() => doThing()>
+        |      ^^^^^^^^^^^^^^^^^^^^^ The `title` attribute cannot be a function.
+      2 |   Hello
+      3 | </div>
+      4 |

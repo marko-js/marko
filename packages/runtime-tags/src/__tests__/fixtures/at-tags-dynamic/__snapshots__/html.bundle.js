@@ -2,32 +2,29 @@
 var hello_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_list_item = _serialize_guard($scope0_reason, 1), $sg__input_col = _serialize_guard($scope0_reason, 2), $sg__input_list_item__OR__input_col = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_for_of(input.list.item, (item) => {
+	_for_of(input.list.item, ({ content, ...attrs }) => {
 		const $scope1_id = _scope_id();
-		_html(`<div class=item${_attrs_partial(item, { class: 1 }, "a", $scope1_id, "div")}>`);
-		_dynamic_tag($scope1_id, "b", item.content, {}, 0, 0, $sg__input_list_item);
+		_html(`<div class=item${_attrs_partial(attrs, { class: 1 }, "a", $scope1_id, "div")}>`);
+		_dynamic_tag($scope1_id, "b", content, {}, 0, 0, $sg__input_list_item);
 		_html(`</div>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
-		writeScope($scope1_id, { d: item });
+		writeScope($scope1_id, {});
 	}, 0, $scope0_id, "a", $sg__input_list_item, $sg__input_list_item, $sg__input_list_item__OR__input_col, 0, 1);
-	_for_of(input.col, (col) => {
+	_for_of(input.col, ({ content, row, ...attrs }) => {
 		const $scope2_id = _scope_id();
 		_html("<div class=col");
-		_attrs_partial_content(col, { class: 1 }, "a", $scope2_id, "div");
+		_attrs_partial_content(attrs, { class: 1 }, "a", $scope2_id, "div");
 		_html(`</div>${_el_resume($scope2_id, "a")}`);
-		_for_of(col.row, (row) => {
+		_for_of(row, ({ content, ...attrs }) => {
 			const $scope3_id = _scope_id();
-			_html(`<div class=row${_attrs_partial(row, { class: 1 }, "a", $scope3_id, "div")}>`);
-			_dynamic_tag($scope3_id, "b", row.content, {}, 0, 0, $sg__input_col);
+			_html(`<div class=row${_attrs_partial(attrs, { class: 1 }, "a", $scope3_id, "div")}>`);
+			_dynamic_tag($scope3_id, "b", content, {}, 0, 0, $sg__input_col);
 			_html(`</div>${_el_resume($scope3_id, "a")}`);
 			_script($scope3_id, "b1");
-			writeScope($scope3_id, { d: row });
+			writeScope($scope3_id, {});
 		}, 0, $scope2_id, "b", $sg__input_col, $sg__input_col, $sg__input_col, 0, 1);
 		_script($scope2_id, "b2");
-		writeScope($scope2_id, { d: {
-			...col,
-			content: void 0
-		} });
+		writeScope($scope2_id, {});
 	}, 0, $scope0_id, "b", $sg__input_col, $sg__input_col, $sg__input_list_item__OR__input_col);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
 });

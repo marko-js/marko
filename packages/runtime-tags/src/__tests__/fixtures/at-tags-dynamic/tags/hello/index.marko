@@ -1,9 +1,9 @@
-for|item| of=input.list.item
-  div.item ...item
-    ${item.content}
+for|{ content, ...attrs }| of=input.list.item
+  div.item ...attrs
+    ${content}
 
-for|col| of=input.col
-  div.col ...col
-  for|row| of=col.row
-    div.row ...row
-      ${row.content}
+for|{ content, row, ...attrs }| of=input.col
+  div.col ...attrs
+  for|{ content, ...attrs }| of=row
+    div.row ...attrs
+      ${content}
