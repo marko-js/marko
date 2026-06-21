@@ -1,4 +1,4 @@
-// size: 23815 (min) 8831 (brotli)
+// size: 23837 (min) 8812 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1429,7 +1429,11 @@ function attrsInternal(scope, nodeAccessor, nextAttrs) {
     events = scope["I" + nodeAccessor],
     skip;
   for (let name in events) events[name] = 0;
-  switch (el.tagName) {
+  switch (
+    ((scope["F" + nodeAccessor] = 5),
+    (scope["E" + nodeAccessor] = 0),
+    el.tagName)
+  ) {
     case "INPUT":
       if ("checked" in nextAttrs || "checkedChange" in nextAttrs)
         _attr_input_checked(
