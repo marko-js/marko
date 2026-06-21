@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.39.9
+
+### Patch Changes
+
+- [#3264](https://github.com/marko-js/marko/pull/3264) [`d3055ef`](https://github.com/marko-js/marko/commit/d3055efc6072d5cf92749cb58b8a2bf7efa8a555) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `<lifecycle>` `onDestroy` not running after resume when it is the only interactive feature of a component nested in control flow. The lifecycle cleanup is registered through `$signal` at runtime, which requires the scope to resume with its closest branch linked; the section is now marked so that link is serialized.
+
+- Updated dependencies [[`c467f09`](https://github.com/marko-js/marko/commit/c467f09fb8098ad8ca94423fa9490993a4f87612), [`ce92da6`](https://github.com/marko-js/marko/commit/ce92da60f04ce5b0e9bf5fa6a61eb4b07cbb3154), [`8fb0bd7`](https://github.com/marko-js/marko/commit/8fb0bd7e01f4819141837377ebd7e3bb8faae1c4), [`d3055ef`](https://github.com/marko-js/marko/commit/d3055efc6072d5cf92749cb58b8a2bf7efa8a555), [`262f277`](https://github.com/marko-js/marko/commit/262f277212fe5a17eb4df09060e35cbff3c07d63), [`e9f04e3`](https://github.com/marko-js/marko/commit/e9f04e3e76152d7088315e1312551184f6535749), [`cbf7a49`](https://github.com/marko-js/marko/commit/cbf7a49fe5f63e0c27b40ca697bd53b59f06d5c7), [`e8c75db`](https://github.com/marko-js/marko/commit/e8c75dbe69492bfb5e403f69febcf13fd25cbc9e), [`e8b06b5`](https://github.com/marko-js/marko/commit/e8b06b516c6d520e8a047503ef0e94f722077d07)]:
+  - @marko/runtime-tags@6.1.14
+
 ## 5.39.8
 
 ### Patch Changes
