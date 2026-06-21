@@ -1,0 +1,7 @@
+export interface Input {}
+
+<let/value = "init"/>
+<let/attrs = { value, valueChange(next) { value = next } }/>
+<input ...attrs>
+<span>value=[${value}]</span>
+<button onClick() { attrs = { type: "text" } }>drop</button>

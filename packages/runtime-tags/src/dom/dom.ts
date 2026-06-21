@@ -227,6 +227,8 @@ function attrsInternal(
     | Record<string, unknown>;
   let skip: RegExp | undefined;
   for (const name in events) events[name] = 0;
+  scope[AccessorPrefix.ControlledType + nodeAccessor] = ControlledType.None;
+  scope[AccessorPrefix.ControlledHandler + nodeAccessor] = 0;
   switch (el.tagName) {
     case "INPUT":
       if ("checked" in nextAttrs || "checkedChange" in nextAttrs) {
