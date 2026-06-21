@@ -7,21 +7,11 @@ export function forOfBy(
   item: unknown,
   index: number,
 ) {
-  if (by) {
-    const key =
-      typeof by === "string"
-        ? (item as Record<string, unknown>)[by]
-        : by(item, index);
-    if (MARKO_DEBUG && typeof key !== "string" && typeof key !== "number") {
-      console.error(
-        `A <for> tag's \`by\` attribute must return a string or number, but it returned:`,
-        key,
-      );
-    }
-    return key;
-  }
-
-  return index;
+  return by
+    ? typeof by === "string"
+      ? (item as Record<string, unknown>)[by]
+      : by(item, index)
+    : index;
 }
 
 export function forInBy(
@@ -29,34 +19,12 @@ export function forInBy(
   name: string,
   value: unknown,
 ) {
-  if (by) {
-    const key = by(name, value);
-    if (MARKO_DEBUG && typeof key !== "string" && typeof key !== "number") {
-      console.error(
-        `A <for> tag's \`by\` attribute must return a string or number, but it returned:`,
-        key,
-      );
-    }
-    return key;
-  }
-
-  return name;
+  return by ? by(name, value) : name;
 }
 
 export function forStepBy(
   by: Falsy | ((index: number) => unknown),
   index: number,
 ) {
-  if (by) {
-    const key = by(index);
-    if (MARKO_DEBUG && typeof key !== "string" && typeof key !== "number") {
-      console.error(
-        `A <for> tag's \`by\` attribute must return a string or number, but it returned:`,
-        key,
-      );
-    }
-    return key;
-  }
-
-  return index;
+  return by ? by(index) : index;
 }

@@ -4,4 +4,5 @@ export const config: TestConfig = {
   error_html: true,
   error_dom: true,
   skip_optimize: true,
+  steps: [{ items: [{ id: 1 }, { id: 2 }] }],
 };

@@ -55,6 +55,23 @@ function describeUnrenderable(value: unknown) {
   }
 }
 
+export function assertValidLoopKey(key: unknown, seenKeys?: Set<unknown>) {
+  if (typeof key !== "string" && typeof key !== "number") {
+    throw new Error(
+      `A \`<for>\` tag's \`by\` attribute must return a string or number for each item, but received ${key === null ? "null" : `type "${typeof key}"`}.`,
+    );
+  }
+
+  if (seenKeys) {
+    if (seenKeys.has(key)) {
+      throw new Error(
+        `A \`<for>\` tag's \`by\` attribute must return a unique value for each item, but \`${key}\` was used more than once.`,
+      );
+    }
+    seenKeys.add(key);
+  }
+}
+
 export function assertValidAttrName(name: string) {
   if (htmlAttrNameReg.test(name)) {
     throw new Error(`Invalid attribute name: ${JSON.stringify(name)}`);

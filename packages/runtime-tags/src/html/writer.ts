@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
-import { _el_read_error, _hoist_read_error } from "../common/errors";
+import {
+  _el_read_error,
+  _hoist_read_error,
+  assertValidLoopKey,
+} from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
 import { normalizeDynamicRenderer } from "../common/helpers";
 import { concat, forEach, type Opt, push } from "../common/opt";
@@ -464,8 +468,8 @@ export function _for_until(
 // Shared driver for the `_for_*` loop variants: writes branch start/end
 // markers, branch scopes (with the loop key when it differs from the
 // positional index), and the branch scope list when markers are disabled.
-// When the branch is not serialized, `iterate` receives `0` and runs the
-// raw loop. `by` is only read for the MARKO_DEBUG duplicate key check.
+// When the branch is not serialized, `iterate` runs the raw loop (still
+// validating keys under MARKO_DEBUG when a `by` is present).
 function forBranches(
   by: unknown,
   iterate: (
@@ -481,8 +485,20 @@ function forBranches(
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
 ) {
+  if (MARKO_DEBUG) {
+    // eslint-disable-next-line no-var
+    var seenKeys = new Set<unknown>();
+  }
+
   if (serializeBranch === 0) {
-    iterate(0);
+    if (MARKO_DEBUG && by) {
+      iterate((itemKey, _sameAsIndex, render) => {
+        assertValidLoopKey(itemKey, seenKeys);
+        render();
+      });
+    } else {
+      iterate(0);
+    }
     writeBranchEnd(
       scopeId,
       accessor,
@@ -501,23 +517,11 @@ function forBranches(
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
   let flushBranchIds = "";
   let loopScopes: Opt<ScopeInternals>;
-  if (MARKO_DEBUG) {
-    // eslint-disable-next-line no-var
-    var seenKeys = new Set<unknown>();
-  }
 
   iterate((itemKey, sameAsIndex, render) => {
     const branchId = _peek_scope_id();
-    if (MARKO_DEBUG) {
-      if (by) {
-        if (seenKeys.has(itemKey)) {
-          console.error(
-            `A <for> tag's \`by\` attribute must return a unique value for each item, but a duplicate was found matching:`,
-            itemKey,
-          );
-        }
-        seenKeys.add(itemKey);
-      }
+    if (MARKO_DEBUG && by) {
+      assertValidLoopKey(itemKey, seenKeys);
     }
     if (resumeMarker) {
       if (singleNode) {

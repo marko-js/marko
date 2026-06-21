@@ -1,0 +1,4 @@
+<let/items=input.items>
+<for|item| of=items by=(item) => item>
+  <button onClick() { items = [] }>${item.id}</button>
+</for>

@@ -1,4 +1,4 @@
-import { assertValidTagName } from "../common/errors";
+import { assertValidLoopKey, assertValidTagName } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
 import { decodeAccessor, normalizeDynamicRenderer } from "../common/helpers";
 import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
@@ -640,19 +640,7 @@ function loop<T extends unknown[] = unknown[]>(
 
       forEach(value, (key, args) => {
         if (MARKO_DEBUG) {
-          if (typeof key !== "string" && typeof key !== "number") {
-            console.error(
-              `A <for> tag's \`by\` attribute must return a string or number, but it returned:`,
-              key,
-            );
-          } else if (seenKeys.has(key)) {
-            console.error(
-              `A <for> tag's \`by\` attribute must return a unique value for each item, but a duplicate was found matching:`,
-              key,
-            );
-          } else {
-            seenKeys.add(key);
-          }
+          assertValidLoopKey(key, seenKeys);
         }
 
         let branch =
