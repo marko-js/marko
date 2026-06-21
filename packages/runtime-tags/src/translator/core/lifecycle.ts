@@ -35,6 +35,9 @@ export default {
       getAllTagReferenceNodes(tag.node),
     );
     tagExtra.isEffect = true;
+    // `_lifecycle` registers cleanup via `$signal` at runtime, so the scope
+    // must resume with its closest branch linked.
+    section.hasAbortSignal = true;
 
     if (node.attributes.length === 0) {
       throw tag
