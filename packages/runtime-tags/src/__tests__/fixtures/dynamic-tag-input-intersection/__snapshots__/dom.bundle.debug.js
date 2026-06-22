@@ -10,7 +10,7 @@ const $input_as__OR__input_class__OR__htmlInput__OR__content = /* @__PURE__ */ _
 	content: $scope.content
 })), 3);
 const $content = /* @__PURE__ */ _let("content/8", $input_as__OR__input_class__OR__htmlInput__OR__content);
-const $startContent = ($scope, startContent) => $content($scope, startContent);
+const $startContent = $content;
 function $setup$1($scope) {
 	$startContent($scope, { content: $startContent_content($scope) });
 }

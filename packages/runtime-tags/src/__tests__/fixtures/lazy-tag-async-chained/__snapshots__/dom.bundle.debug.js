@@ -36,7 +36,7 @@ const $count = /* @__PURE__ */ _let("count/6", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$count__script($scope);
 });
-const $input_value = ($scope, input_value) => $count($scope, input_value);
+const $input_value = $count;
 const $input_id = ($scope, input_id) => _attr($scope["#button/0"], "id", input_id);
 const $input = ($scope, input) => {
 	$input_value($scope, input.value);

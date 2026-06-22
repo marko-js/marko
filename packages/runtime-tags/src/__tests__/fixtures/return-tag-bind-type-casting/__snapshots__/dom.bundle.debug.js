@@ -2,7 +2,7 @@
 const $template$2 = "";
 const $walks$2 = "";
 const $value = /* @__PURE__ */ _let("value/3", ($scope) => _return($scope, $scope.value));
-const $input_value = ($scope, input_value) => $value($scope, input_value);
+const $input_value = $value;
 function $setup$2($scope) {
 	_return_change($scope, $valueChange($scope));
 }
@@ -21,7 +21,7 @@ const $walks$1 = "b%c";
 const $setup$1 = () => {};
 const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/0");
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
-const $input_content = ($scope, input_content) => $dynamicTag($scope, input_content);
+const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
 var my_tag_default = /* @__PURE__ */ _template("__tests__/tags/my-tag.marko", $template$1, "b%c", $setup$1, $input);
 

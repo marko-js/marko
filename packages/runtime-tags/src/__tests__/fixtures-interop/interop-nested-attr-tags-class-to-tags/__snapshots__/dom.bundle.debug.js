@@ -15,7 +15,7 @@ function $setup($scope) {
 	$count($scope, 0);
 }
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/2");
-const $input_stuff_content = ($scope, input_stuff_content) => $dynamicTag($scope, input_stuff_content);
+const $input_stuff_content = $dynamicTag;
 const $input = ($scope, input) => $input_stuff($scope, input.stuff);
 const $input_stuff = ($scope, input_stuff) => $input_stuff_content($scope, input_stuff?.content);
 var tags_layout_default = /* @__PURE__ */ _template("__tests__/components/tags-layout.marko", $template, $walks, $setup, $input);

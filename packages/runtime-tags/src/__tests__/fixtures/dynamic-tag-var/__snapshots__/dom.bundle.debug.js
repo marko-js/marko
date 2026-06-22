@@ -23,7 +23,7 @@ const $input_show = ($scope, input_show) => {
 };
 const $dynamicTag2 = /* @__PURE__ */ _dynamic_tag("#text/4", 0, () => $data3);
 const $data3 = _var_resume("__tests__/template.marko_0_data3/var", ($scope, data3) => {});
-const $input_dynamic = ($scope, input_dynamic) => $dynamicTag2($scope, input_dynamic);
+const $input_dynamic = $dynamicTag2;
 const $el = _var_resume("__tests__/template.marko_0_el1/var", ($scope, el1) => {});
 const $input = ($scope, input) => {
 	$input_show($scope, input.show);

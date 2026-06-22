@@ -16,7 +16,7 @@ const $walks$1 = "b%c";
 const $setup$1 = () => {};
 const $input_what_direct = /* @__PURE__ */ _dynamic_tag_content("#text/0");
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
-const $input_what = ($scope, input_what) => $dynamicTag($scope, input_what);
+const $input_what = $dynamicTag;
 const $input = ($scope, input) => $input_what($scope, input.what);
 var thing_default = /* @__PURE__ */ _template("__tests__/tags/thing.marko", $template$1, "b%c", $setup$1, $input);
 

@@ -25,4 +25,4 @@ const $copy = /* @__PURE__ */ _let(5, ($scope) => {
 	$copy__script($scope);
 });
 const $copy_name = /* @__PURE__ */ _const(6, ($scope) => _text($scope.b, $scope.g));
-const $input_obj = ($scope, input_obj) => $copy($scope, input_obj);
+const $input_obj = $copy;

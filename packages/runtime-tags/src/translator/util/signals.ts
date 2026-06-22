@@ -597,6 +597,24 @@ export function getSignalFn(signal: Signal): t.Expression {
   }
 
   if (!signal.hasSideEffect) {
+    if (isValue && signal.render.length === 1) {
+      const render = signal.render[0];
+      if (render.type === "ExpressionStatement") {
+        const { expression } = render;
+        if (
+          expression.type === "CallExpression" &&
+          expression.callee.type === "Identifier" &&
+          expression.arguments.length === 2 &&
+          expression.arguments[0] === scopeIdentifier &&
+          isOwnValueRead(expression.arguments[1], binding as Binding)
+        ) {
+          // The signal only forwards its scope and value to another signal:
+          // `(scope, value) => fn(scope, value)` is equivalent to `fn`.
+          return expression.callee;
+        }
+      }
+    }
+
     return t.arrowFunctionExpression(
       isValue
         ? [scopeIdentifier, getSignalValueIdentifier(signal)]
@@ -653,6 +671,18 @@ export function getSignalValueIdentifier(signal: Signal) {
     signal.referencedBindings as Binding,
   );
   return t.identifier(canonicalBinding.name);
+}
+
+function isOwnValueRead(node: t.Node, binding: Binding) {
+  const extra = (node as { extra?: t.NodeExtra }).extra;
+  const read = extra?.read;
+  return (
+    !!read &&
+    !extra!.assignment &&
+    read.binding === binding &&
+    read.props === undefined &&
+    !read.getter?.invoked
+  );
 }
 
 function subscribe(references: ReferencedBindings, subscriber: Signal) {

@@ -15,7 +15,7 @@ const $countChange2 = /* @__PURE__ */ _const("$countChange", $input_countChange_
 const $count = /* @__PURE__ */ _const("count", $input_countChange__OR__input_count);
 const $input_id = ($scope, input_id) => _attr($scope["#button/0"], "id", input_id);
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
-const $input_content = ($scope, input_content) => $dynamicTag($scope, input_content);
+const $input_content = $dynamicTag;
 const $input = ($scope, input) => {
 	$input_id($scope, input.id);
 	$input_content($scope, input.content);

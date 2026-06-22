@@ -9,7 +9,7 @@ const $attrs = /* @__PURE__ */ _const("attrs", ($scope) => {
 	$attrs__script($scope);
 });
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
-const $content = ($scope, content) => $dynamicTag($scope, content);
+const $content = $dynamicTag;
 const $input = ($scope, input) => {
 	(({ content, ...attrs }) => $attrs($scope, attrs))(input);
 	$content($scope, input.content);

@@ -39,7 +39,7 @@ const $input__OR__data__script = _script("__tests__/child.marko_0_input_data", (
 }));
 const $input__OR__data = /* @__PURE__ */ _or(6, $input__OR__data__script);
 const $data = /* @__PURE__ */ _let("data/5", $input__OR__data);
-const $input_data = ($scope, input_data) => $data($scope, input_data);
+const $input_data = $data;
 const $verified = /* @__PURE__ */ _let("verified/7", ($scope) => _text($scope["#text/1"], $scope.verified));
 function $setup($scope) {
 	$verified($scope, "?");

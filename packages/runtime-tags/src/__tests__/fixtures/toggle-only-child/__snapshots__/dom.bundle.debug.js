@@ -9,7 +9,7 @@ const $value = /* @__PURE__ */ _let("value/5", ($scope) => {
 	$if($scope, $scope.value ? 0 : 1);
 	$if_content__value($scope);
 });
-const $input_value = ($scope, input_value) => $value($scope, input_value);
+const $input_value = $value;
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_input_value_script($scope, "#input/1"));
 const $setup = $setup__script;
 const $input = ($scope, input) => $input_value($scope, input.value);

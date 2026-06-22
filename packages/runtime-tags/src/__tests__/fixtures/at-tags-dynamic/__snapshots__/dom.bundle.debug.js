@@ -8,7 +8,7 @@ const $for_content3__attrs = /* @__PURE__ */ _const("attrs", ($scope) => {
 	$for_content3__attrs__script($scope);
 });
 const $for_content3__dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
-const $for_content3__content = ($scope, content) => $for_content3__dynamicTag($scope, content);
+const $for_content3__content = $for_content3__dynamicTag;
 const $for_content3__$params = ($scope, $params4) => $for_content3__$temp($scope, $params4?.[0]);
 const $for_content3__$temp = ($scope, $temp3) => {
 	(({ content, ...attrs }) => $for_content3__attrs($scope, attrs))($temp3);
@@ -32,7 +32,7 @@ const $for_content__attrs = /* @__PURE__ */ _const("attrs", ($scope) => {
 	$for_content__attrs__script($scope);
 });
 const $for_content__dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
-const $for_content__content = ($scope, content) => $for_content__dynamicTag($scope, content);
+const $for_content__content = $for_content__dynamicTag;
 const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2?.[0]);
 const $for_content__$temp = ($scope, $temp) => {
 	(({ content, ...attrs }) => $for_content__attrs($scope, attrs))($temp);

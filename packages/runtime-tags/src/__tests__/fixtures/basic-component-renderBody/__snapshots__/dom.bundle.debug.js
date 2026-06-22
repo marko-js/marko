@@ -6,7 +6,7 @@ const $content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/1");
 const $onClick__script = _script("__tests__/tags/my-button.marko_0_onClick", ($scope) => _on($scope["#button/0"], "click", $scope.onClick));
 const $onClick$1 = /* @__PURE__ */ _const("onClick", $onClick__script);
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
-const $content = ($scope, content) => $dynamicTag($scope, content);
+const $content = $dynamicTag;
 const $input = ($scope, input) => {
 	$onClick$1($scope, input.onClick);
 	$content($scope, input.content);

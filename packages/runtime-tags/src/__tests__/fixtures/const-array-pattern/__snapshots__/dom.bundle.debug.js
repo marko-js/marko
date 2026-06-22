@@ -10,7 +10,7 @@ const $others = ($scope, others) => _text($scope["#text/4"], others.join(","));
 const $first = ($scope, first) => _text($scope["#text/2"], first);
 const $second3 = ($scope, second) => _text($scope["#text/3"], second);
 const $second2 = ($scope, $second) => $second3($scope, void 0 !== $second ? $second : "dflt");
-const $input_list = ($scope, input_list) => $pattern2($scope, input_list);
+const $input_list = $pattern2;
 const $n__script = _script("__tests__/template.marko_0_n", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, $scope.n + 1);
 }));

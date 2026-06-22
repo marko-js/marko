@@ -44,7 +44,7 @@ const $copy = /* @__PURE__ */ _let("copy/5", ($scope) => {
 	$copy__script($scope);
 });
 const $copy_name = /* @__PURE__ */ _const("copy_name", ($scope) => _text($scope["#text/1"], $scope.copy_name));
-const $input_obj = ($scope, input_obj) => $copy($scope, input_obj);
+const $input_obj = $copy;
 const $input = ($scope, input) => $input_obj($scope, input.obj);
 var grand_child_default = /* @__PURE__ */ _template("__tests__/grand-child.marko", $template, $walks, $setup, $input);
 

@@ -51,9 +51,9 @@ const $isInner__OR__inner__script = _script("__tests__/child-b.marko_0_isInner_i
 }));
 const $isInner__OR__inner = /* @__PURE__ */ _or(8, $isInner__OR__inner__script);
 const $isInner = /* @__PURE__ */ _const("isInner", $isInner__OR__inner);
-const $input_isInner = ($scope, input_isInner) => $isInner($scope, input_isInner);
+const $input_isInner = $isInner;
 const $inner = /* @__PURE__ */ _let("inner/7", $isInner__OR__inner);
-const $input_inner = ($scope, input_inner) => $inner($scope, input_inner);
+const $input_inner = $inner;
 const $verified = /* @__PURE__ */ _let("verified/9", ($scope) => _text($scope["#text/1"], $scope.verified));
 function $setup($scope) {
 	$verified($scope, "?");
@@ -72,9 +72,9 @@ const $isShared__OR__holder__script = _script("__tests__/child-s.marko_0_isShare
 }));
 const $isShared__OR__holder = /* @__PURE__ */ _or(8, $isShared__OR__holder__script);
 const $isShared = /* @__PURE__ */ _const("isShared", $isShared__OR__holder);
-const $input_isShared = ($scope, input_isShared) => $isShared($scope, input_isShared);
+const $input_isShared = $isShared;
 const $holder = /* @__PURE__ */ _let("holder/7", $isShared__OR__holder);
-const $input_holder = ($scope, input_holder) => $holder($scope, input_holder);
+const $input_holder = $holder;
 const $verified = /* @__PURE__ */ _let("verified/9", ($scope) => _text($scope["#text/1"], $scope.verified));
 function $setup($scope) {
 	$verified($scope, "?");

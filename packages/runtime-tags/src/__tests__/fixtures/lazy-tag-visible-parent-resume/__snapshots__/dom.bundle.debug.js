@@ -30,7 +30,7 @@ const $count = /* @__PURE__ */ _let("count/5", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$count__script($scope);
 });
-const $input_value = ($scope, input_value) => $count($scope, input_value);
+const $input_value = $count;
 const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /* @__PURE__ */ _template("__tests__/child.marko", $template, $walks, $setup, $input);
 
