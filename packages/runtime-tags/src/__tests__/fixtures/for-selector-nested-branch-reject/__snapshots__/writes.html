@@ -1,0 +1,20 @@
+<ul>
+  <li class=danger><button class=select>a</button><!--M_*3 b--></li>
+  <!--M_*3 a-->
+  <li><button class=select>b</button><!--M_*4 b--></li><!--M_*4 a-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    Be: new Set([_(3), _(4)])
+  }, {
+    _: _(1)
+  }, {
+    f: 1,
+    _: _(2)
+  }, {
+    f: 2,
+    _: _(2)
+  }], "a0 3 4"];
+  M._.w()
+</script>

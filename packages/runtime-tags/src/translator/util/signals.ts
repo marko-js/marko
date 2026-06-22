@@ -9,6 +9,7 @@ import { type AccessorPrefix, AccessorProp } from "../../common/types";
 import { getSectionReturnValueIdentifier } from "../core/return";
 import { scopeIdentifier } from "../visitors/program";
 import { forEachIdentifier } from "./for-each-identifier";
+import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
@@ -434,6 +435,7 @@ function isPureMemberForwarder(binding: Binding): boolean {
     binding.exposed ||
     binding.aliases.size ||
     binding.assignmentSections ||
+    isForSelectorValue(binding) ||
     getSerializeReason(binding.section, binding) ||
     getSignal(binding.section, binding).hasSideEffect
   ) {

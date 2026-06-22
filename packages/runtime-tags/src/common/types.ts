@@ -50,6 +50,7 @@ export {
   AccessorPrefix,
   AccessorProp,
   ClosureSignalProp,
+  KeyedScopesProp,
   PendingRenderProp,
   RendererProp,
 } from "./accessor.debug";

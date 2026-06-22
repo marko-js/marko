@@ -1,5 +1,19 @@
 import { types as t } from "@marko/compiler";
 
+export function getMemberExpressionPropString(
+  expr: t.MemberExpression | t.OptionalMemberExpression,
+) {
+  switch (expr.property.type) {
+    case "StringLiteral":
+      return expr.property.value;
+    case "NumericLiteral":
+      return "" + expr.property.value;
+    case "Identifier":
+      if (expr.computed) return;
+      return expr.property.name;
+  }
+}
+
 export function isValidPropertyIdentifier(name: string) {
   return /^[a-z_$][a-z0-9_$]*$/i.test(name);
 }

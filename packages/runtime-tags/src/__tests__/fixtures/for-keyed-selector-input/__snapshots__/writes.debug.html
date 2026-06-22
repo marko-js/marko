@@ -1,0 +1,26 @@
+<button class=flip>flip</button><!--M_*1 #button/0-->
+<ul>
+  <li>a</li><!--M_*2 #li/0-->
+  <li class=sel>b</li><!--M_*3 #li/0-->
+  <li>c</li><!--M_*4 #li/0-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "BranchScopes:#ul/1": [_(2), _(3), _(4)],
+      input_selected: 2,
+      enabled: !0
+    }, {
+      row_id: 1,
+      _: _(1)
+    }, {
+      row_id: 2,
+      _: _(1)
+    }, {
+      row_id: 3,
+      _: _(1)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/for-keyed-selector-input/template.marko_0_enabled 1"
+  ];
+  M._.w()
+</script>

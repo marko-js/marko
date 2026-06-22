@@ -66,7 +66,10 @@ import {
   type Signal,
 } from "./signals";
 import { createProgramState } from "./state";
-import { toMemberExpression } from "./to-property-name";
+import {
+  getMemberExpressionPropString,
+  toMemberExpression,
+} from "./to-property-name";
 import withPreviousLocation from "./with-previous-location";
 
 export const kBranchSerializeReason = Symbol("branch serialize reason");
@@ -141,6 +144,7 @@ interface Read {
   extra: t.NodeExtra;
   ownVar: boolean;
   getter: Getter | undefined;
+  comparedTo: t.Node | undefined;
 }
 
 interface ExtraRead {
@@ -1295,6 +1299,10 @@ export function finalizeReferences() {
     );
   }
 
+  for (const finalize of getReferenceFinalizers()) {
+    finalize();
+  }
+
   readsByExpression.clear();
   fnReadsByExpression.clear();
 }
@@ -1539,6 +1547,15 @@ const [getReadsByExpression] = createProgramState(
 const [getFunctionReadsByExpression] = createProgramState(
   () => new Map<ReferencedExtra, Map<ReferencedFunctionExtra, OneMany<Read>>>(),
 );
+const [getReferenceFinalizers] = createProgramState<(() => void)[]>(() => []);
+
+export function onFinalizeReferences(finalize: () => void) {
+  getReferenceFinalizers().push(finalize);
+}
+
+export function getExpressionReads(exprExtra: ReferencedExtra) {
+  return getReadsByExpression().get(exprExtra);
+}
 
 export function addRead(
   exprExtra: ReferencedExtra,
@@ -1548,7 +1565,13 @@ export function addRead(
   getter: Getter | undefined,
 ) {
   const readsByExpression = getReadsByExpression();
-  const read: Read = { binding, extra, getter, ownVar: false };
+  const read: Read = {
+    binding,
+    extra,
+    getter,
+    ownVar: false,
+    comparedTo: undefined,
+  };
   binding.reads.add(exprExtra);
   exprExtra.section = section;
   readsByExpression.set(
@@ -1604,6 +1627,14 @@ function addReadToExpression(
     section,
     getter,
   );
+
+  const { parent } = root;
+  if (
+    parent.type === "BinaryExpression" &&
+    (parent.operator === "===" || parent.operator === "!==")
+  ) {
+    read.comparedTo = parent.left === node ? parent.right : parent.left;
+  }
 
   if (!getter && binding.type === BindingType.derived) {
     const babelBinding = root.scope.getBinding(binding.name);
@@ -2273,20 +2304,6 @@ export function createGetterRead(
   getter: Getter,
 ): ExtraRead {
   return { binding, props, ownVar: false, getter };
-}
-
-function getMemberExpressionPropString(
-  expr: t.MemberExpression | t.OptionalMemberExpression,
-) {
-  switch (expr.property.type) {
-    case "StringLiteral":
-      return expr.property.value;
-    case "NumericLiteral":
-      return "" + expr.property.value;
-    case "Identifier":
-      if (expr.computed) return;
-      return expr.property.name;
-  }
 }
 
 export interface ReferencedExtra extends t.NodeExtra {

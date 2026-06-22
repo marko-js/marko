@@ -1,0 +1,49 @@
+<table>
+  <tbody>
+    <tr>
+      <td><button
+          class=select>a<!--M_*2 #text/2--></button><!--M_*2 #button/1--></td>
+    </tr><!--M_*2 #tr/0-->
+    <tr>
+      <td><button
+          class=select>b<!--M_*3 #text/2--></button><!--M_*3 #button/1--></td>
+    </tr><!--M_*3 #tr/0-->
+    <tr>
+      <td><button
+          class=select>c<!--M_*4 #text/2--></button><!--M_*4 #button/1--></td>
+    </tr><!--M_*4 #tr/0--><!--M_}1 #tbody/0 4 3 2-->
+  </tbody>
+</table><button class=remove>remove
+  selected</button><!--M_*1 #button/1--><button
+  class=rotate>rotate</button><!--M_*1 #button/2--><button
+  class=clear>clear</button><!--M_*1 #button/3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      rows: [{
+        id: 1,
+        label: "a"
+      }, {
+        id: 2,
+        label: "b"
+      }, {
+        id: 3,
+        label: "c"
+      }]
+    }, {
+      row_id: 1,
+      _: _(1),
+      "#LoopKey": 1
+    }, {
+      row_id: 2,
+      _: _(1),
+      "#LoopKey": 2
+    }, {
+      row_id: 3,
+      _: _(1),
+      "#LoopKey": 3
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/for-keyed-selector-class/template.marko_1_row_id 2 3 4 packages/runtime-tags/src/__tests__/fixtures/for-keyed-selector-class/template.marko_0 1 packages/runtime-tags/src/__tests__/fixtures/for-keyed-selector-class/template.marko_0_rows 1 packages/runtime-tags/src/__tests__/fixtures/for-keyed-selector-class/template.marko_0_selected_rows 1"
+  ];
+  M._.w()
+</script>

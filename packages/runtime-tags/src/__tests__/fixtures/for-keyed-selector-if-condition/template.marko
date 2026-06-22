@@ -1,0 +1,12 @@
+<let/selected=1/>
+<let/rows=[{ id: 1, label: "a" }, { id: 2, label: "b" }, { id: 3, label: "c" }]/>
+<ul>
+  <for|row| of=rows by="id">
+    <li>
+      <if=selected === row.id>
+        <strong>*</strong>
+      </if>
+      <button.select onClick() { selected = row.id }>${row.label}</button>
+    </li>
+  </for>
+</ul>

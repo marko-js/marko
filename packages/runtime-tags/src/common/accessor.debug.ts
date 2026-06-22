@@ -9,6 +9,7 @@ export enum AccessorPrefix {
   DynamicHTMLLastChild = "DynamicHTMLLastChild:",
   EventAttributes = "EventAttributes:",
   Getter = "Getter:",
+  KeyedScopes = "KeyedScopes:",
   Lifecycle = "Lifecycle:",
   Promise = "Promise:",
   TagVariableChange = "TagVariableChange:",
@@ -68,6 +69,10 @@ export enum ClosureSignalProp {
   ScopeInstancesAccessor = "scopeInstancesAccessor",
   SignalIndexAccessor = "signalIndexAccessor",
   Index = "index",
+}
+
+export enum KeyedScopesProp {
+  PreviousKey = "PreviousKey:",
 }
 
 export enum LoadSignalValue {

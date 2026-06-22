@@ -1,0 +1,14 @@
+<let/selected=undefined/>
+<let/rows=[
+  { user: { id: 1 }, label: "a" },
+  { user: { id: 2 }, label: "b" },
+  { user: { id: 3 }, label: "c" },
+]/>
+
+<table><tbody>
+  <for|row| of=rows by=(item) => item.user.id>
+    <tr class=(selected === row.user.id && "danger")>
+      <td><button.select onClick() { selected = row.user.id }>${row.label}</button></td>
+    </tr>
+  </for>
+</tbody></table>
