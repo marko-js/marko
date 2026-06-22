@@ -2,7 +2,6 @@ import { types as t } from "@marko/compiler";
 import { importDefault } from "@marko/compiler/babel-utils";
 
 import { bindingHasProperty } from "../../util/binding-has-prop";
-import getStyleFile from "../../util/get-style-file";
 import { forEach } from "../../util/optional";
 import {
   BindingType,
@@ -82,7 +81,7 @@ export default {
           ? initValue(inputBinding)
           : undefined;
       let extraDecls = decls;
-      const styleFile = getStyleFile(program.hub.file);
+      const styleFile = program.node.extra.styleFile;
       if (styleFile) {
         importDefault(program.hub.file, styleFile);
       }

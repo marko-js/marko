@@ -8,6 +8,7 @@ import {
 
 import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import type { LoadTrigger } from "../../html/assets";
+import { addAssetImport, isClientAssetImport } from "../util/asset-imports";
 import { generateUid } from "../util/generate-uid";
 import { getMarkoOpts, getReadyId, isOutputHTML } from "../util/marko-config";
 import { callRuntime } from "../util/runtime";
@@ -35,6 +36,18 @@ export default {
     const { node } = importDecl;
     const { source } = node;
     const { value } = source;
+
+    // Link known client side asset imports (eg css) into the page entry so that
+    // server only templates still ship them. Only top level imports are linked;
+    // imports within a `client` statement already mark the program interactive
+    // (pulling their template in), and `server` imports never run on the client.
+    if (
+      t.isProgram(importDecl.parent) &&
+      isClientAssetImport(importDecl.hub.file, value)
+    ) {
+      addAssetImport(importDecl.hub.file, value);
+    }
+
     const tagImport = resolveTagImport(importDecl, value);
     if (tagImport) {
       (node.extra ??= {}).tagImport = tagImport;

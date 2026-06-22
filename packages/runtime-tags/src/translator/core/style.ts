@@ -12,7 +12,14 @@ import {
 import MagicString, { type SourceMap } from "magic-string";
 import path from "path";
 
-import { getMarkoOpts, isOutputDOM } from "../util/marko-config";
+import { addAssetImport } from "../util/asset-imports";
+import { isOutputDOM } from "../util/marko-config";
+
+declare module "@marko/compiler/dist/types" {
+  export interface NodeExtra {
+    styleImportPath?: string | null;
+  }
+}
 
 const STYLE_EXT_REG = /^style((?:\.[a-zA-Z0-9$_-]+)+)?/;
 const htmlStyleTagAlternateMsg =
@@ -24,7 +31,10 @@ export default {
     assertNoParams(tag);
     assertNoAttributeTags(tag);
 
-    const { node } = tag;
+    const {
+      node,
+      hub: { file },
+    } = tag;
     const ext = STYLE_EXT_REG.exec(node.rawValue || "")?.[1]?.slice(1);
     for (const attr of node.attributes) {
       if (
@@ -53,65 +63,22 @@ export default {
         );
       }
     }
+
+    // Resolve the style up front so the page entry builder can link it in for
+    // server only templates (which never reach translate). The path is cached
+    // on the node for translate to reuse.
+    const importPath = getStyleImportPath(file, node);
+    (node.extra ??= {}).styleImportPath = importPath;
+    if (importPath) {
+      addAssetImport(file, importPath);
+    }
   },
   translate(tag) {
     const {
       node,
       hub: { file },
     } = tag;
-    const { filename, sourceMaps } = file.opts;
-    let ext = STYLE_EXT_REG.exec(node.rawValue || "")?.[1] || ".css";
-
-    if (node.var && !/\.module\./.test(ext)) {
-      ext = ".module" + ext;
-    }
-
-    const { resolveVirtualDependency } = getMarkoOpts();
-    const createMap = !!(resolveVirtualDependency && sourceMaps);
-    let magicString: MagicString | undefined;
-    let code = "";
-    let last = 0;
-    let map: SourceMap | undefined;
-
-    for (const child of node.body.body as t.MarkoText[]) {
-      code += child.value;
-
-      if (createMap) {
-        const start = getStart(file, child);
-        if (start !== null) {
-          magicString ||= new MagicString(file.code, { filename });
-          if (start > last) {
-            magicString.remove(last, start);
-          }
-          last = getEnd(file, child)!;
-        }
-      }
-    }
-
-    if (magicString) {
-      if (file.code.length > last) {
-        magicString.remove(last, file.code.length);
-      }
-
-      map = magicString.generateMap({
-        source: filename,
-        includeContent: true,
-      });
-
-      if (sourceMaps === "inline" || sourceMaps === "both") {
-        code += `\n/*# sourceMappingURL=${map.toUrl()}*/`;
-
-        if (sourceMaps === "inline") {
-          map = undefined;
-        }
-      }
-    }
-
-    const importPath = resolveVirtualDependency?.(filename, {
-      virtualPath: `./${path.basename(filename) + ext}`,
-      code,
-      map,
-    });
+    const importPath = node.extra?.styleImportPath;
 
     if (importPath) {
       if (!node.var) {
@@ -145,3 +112,70 @@ export default {
   },
   attributes: {},
 } as Tag;
+
+/**
+ * Resolves a `<style>` block's text content to its client side import path
+ * (eg `./template.marko.css`) by handing the css off to the configured
+ * `resolveVirtualDependency` hook.
+ */
+function getStyleImportPath(
+  file: t.BabelFile,
+  node: t.MarkoTag,
+): string | null | undefined {
+  const { resolveVirtualDependency } = file.markoOpts;
+  if (!resolveVirtualDependency) {
+    return undefined;
+  }
+
+  const { filename, sourceMaps } = file.opts;
+  let ext = STYLE_EXT_REG.exec(node.rawValue || "")?.[1] || ".css";
+
+  if (node.var && !/\.module\./.test(ext)) {
+    ext = ".module" + ext;
+  }
+
+  let magicString: MagicString | undefined;
+  let code = "";
+  let last = 0;
+  let map: SourceMap | undefined;
+
+  for (const child of node.body.body as t.MarkoText[]) {
+    code += child.value;
+
+    if (sourceMaps) {
+      const start = getStart(file, child);
+      if (start !== null) {
+        magicString ||= new MagicString(file.code, { filename });
+        if (start > last) {
+          magicString.remove(last, start);
+        }
+        last = getEnd(file, child)!;
+      }
+    }
+  }
+
+  if (magicString) {
+    if (file.code.length > last) {
+      magicString.remove(last, file.code.length);
+    }
+
+    map = magicString.generateMap({
+      source: filename,
+      includeContent: true,
+    });
+
+    if (sourceMaps === "inline" || sourceMaps === "both") {
+      code += `\n/*# sourceMappingURL=${map.toUrl()}*/`;
+
+      if (sourceMaps === "inline") {
+        map = undefined;
+      }
+    }
+  }
+
+  return resolveVirtualDependency(filename, {
+    virtualPath: `./${path.basename(filename) + ext}`,
+    code,
+    map,
+  });
+}

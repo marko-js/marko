@@ -3,6 +3,7 @@ import path from "node:path";
 import { types as t } from "@marko/compiler";
 import { getTemplateId } from "@marko/compiler/babel-utils";
 
+import { resolveRelativeToEntry } from "./resolve-relative-to-entry";
 import type { DOMRuntimeHelpers } from "./runtime";
 import runtimeInfo from "./runtime-info";
 
@@ -14,10 +15,12 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
+interface EntryState {
+  init: boolean;
+  assets: Set<string>;
+}
 type EntryFile = t.BabelFile & {
-  [kState]?: {
-    init: boolean;
-  };
+  [kState]?: EntryState;
 };
 const kState: unique symbol = Symbol();
 
@@ -33,6 +36,9 @@ export default {
     if (state.init) {
       const isPage = entryFile.path.node.extra.page;
       const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
+      // The main entry import below pulls in every template (and therefore each
+      // of their client assets) transitively, so the collected asset imports
+      // are not needed here.
       body.push(
         t.importDeclaration(
           [
@@ -73,12 +79,21 @@ export default {
             )
           : t.expressionStatement(initExpression),
       );
-    } else if (exportInit) {
-      body.push(
-        t.exportDefaultDeclaration(
-          t.arrowFunctionExpression([], t.blockStatement([])),
-        ),
-      );
+    } else {
+      // A server only page has no runtime to initialize, so its client assets
+      // (which an interactive page receives transitively through the main entry
+      // import) must be linked in directly.
+      for (const asset of state.assets) {
+        body.push(t.importDeclaration([], t.stringLiteral(asset)));
+      }
+
+      if (exportInit) {
+        body.push(
+          t.exportDefaultDeclaration(
+            t.arrowFunctionExpression([], t.blockStatement([])),
+          ),
+        );
+      }
     }
     return body;
   },
@@ -89,12 +104,22 @@ export default {
   ) {
     const state = (entryFile[kState] ||= {
       init: false,
+      assets: new Set(),
     });
     const programExtra = file.path.node.extra;
-    const { analyzedTags } = file.metadata.marko;
+    const { analyzedTags, assetImports } = file.metadata.marko;
 
     if (programExtra.isInteractive || programExtra.needsCompat) {
       state.init = true;
+    }
+
+    // Link the template's known client side assets (styles, css imports, etc)
+    // into the page entry so that static routes still ship them. These are
+    // collected onto the metadata during analyze.
+    if (assetImports) {
+      for (const request of assetImports) {
+        state.assets.add(resolveRelativeToEntry(entryFile, file, request));
+      }
     }
 
     for (const tag of analyzedTags || []) {
