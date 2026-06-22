@@ -5,12 +5,14 @@ import {
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 
+import { addAssetImport } from "../../util/asset-imports";
 import {
   type BindingPropTree,
   getBindingPropTree,
 } from "../../util/binding-prop-tree";
 import entryBuilder from "../../util/entry-builder";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
+import getStyleFile from "../../util/get-style-file";
 import {
   getMarkoOpts,
   getReadyId,
@@ -43,6 +45,7 @@ declare module "@marko/compiler/dist/types" {
       setup: string;
       params: BindingPropTree | undefined;
     };
+    styleFile?: string;
   }
 }
 
@@ -76,6 +79,14 @@ export default {
         setup: generateUid("setup"),
         params: undefined,
       };
+
+      // Resolve any colocated style file (eg `template.style.css`) once so the
+      // dom output and the page entry builder can both link it in.
+      const styleFile = getStyleFile(program.hub.file);
+      if (styleFile) {
+        programExtra.styleFile = styleFile;
+        addAssetImport(program.hub.file, styleFile);
+      }
     },
 
     exit(program) {
