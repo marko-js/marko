@@ -33,6 +33,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  sectionSubtreeMayCleanup,
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
@@ -224,16 +225,26 @@ export default {
             statefulSerializeArg,
           );
 
+          // The loop body cannot register cleanup ⇒ a client-created branch
+          // need not join the branch tree, so skip linking its closest branch
+          // on resume. Trailing arg, so `parentEndTag`/`singleNode` are filled
+          // with placeholders when absent.
+          const branchCleanupFree = !sectionSubtreeMayCleanup(bodySection);
+
           if (skipParentEnd) {
             getParentTag(tag)!.node.extra![kSkipEndTag] = true;
             forTagArgs.push(t.stringLiteral(`</${onlyChildParentTagName}>`));
+          } else if (singleChild || branchCleanupFree) {
+            forTagArgs.push(t.numericLiteral(0));
           }
 
           if (singleChild) {
-            if (!skipParentEnd) {
-              forTagArgs.push(t.numericLiteral(0));
-            }
+            forTagArgs.push(t.numericLiteral(1));
+          } else if (branchCleanupFree) {
+            forTagArgs.push(t.numericLiteral(0));
+          }
 
+          if (branchCleanupFree) {
             forTagArgs.push(t.numericLiteral(1));
           }
         }

@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$si__input_value && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", $sg__input_value, $sg__input_value, $sg__input_value, 0, 1);
+	}, $scope0_id, "#text/0", $sg__input_value, $sg__input_value, $sg__input_value, 0, 1, 1);
 	_html("<span></span><span></span></div>");
 	$si__input_value && writeScope($scope0_id, { value }, "__tests__/template.marko", 0, { value: "1:10" });
 }, 1);

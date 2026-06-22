@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html("Child");
 		writeScope($scope1_id, {}, "__tests__/template.marko", "4:4");
-	}, 0, $scope0_id, "#text/1");
+	}, 0, $scope0_id, "#text/1", void 0, void 0, void 0, 0, 0, 1);
 	_html(`</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_children");
 	writeScope($scope0_id, { children }, "__tests__/template.marko", 0, { children: "1:6" });

@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`${_escape(n)}, `);
 		$si__input_from__OR__input_to__OR__input_step && writeScope($scope1_id, {});
-	}, 0, $scope0_id, "a", $sg__input_from__OR__input_to__OR__input_step, $sg__input_from__OR__input_to__OR__input_step, $sg__input_from__OR__input_to__OR__input_step, "</div>");
+	}, 0, $scope0_id, "a", $sg__input_from__OR__input_to__OR__input_step, $sg__input_from__OR__input_to__OR__input_step, $sg__input_from__OR__input_to__OR__input_step, "</div>", 0, 1);
 	$si__input_from__OR__input_to__OR__input_step && writeScope($scope0_id, {
 		d: _serialize_if($scope0_reason, 2) && input.from,
 		e: _serialize_if($scope0_reason, 1) && input.to,

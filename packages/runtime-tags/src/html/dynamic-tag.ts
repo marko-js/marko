@@ -14,6 +14,7 @@ import {
   _html,
   _peek_scope_id,
   _resume,
+  _resume_branch,
   _scope,
   _scope_id,
   _script,
@@ -41,8 +42,18 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
+  branchCleanupFree?: 1,
 ) => {
   const shouldResume = serializeReason !== 0;
+  // The owning scope creates this branch at runtime (passing itself as the
+  // parent scope), so when it is itself inside a branch it must resume with its
+  // closest branch linked, or a client-created branch would be orphaned from
+  // the branch tree. `_resume_branch` is a no-op outside a branch, and is
+  // skipped entirely when the rendered content provably has no cleanup to
+  // cascade (`branchCleanupFree`).
+  if (shouldResume && !branchCleanupFree) {
+    _resume_branch(scopeId);
+  }
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
   const state = getState()!;
   const branchId = _peek_scope_id();
@@ -220,6 +231,7 @@ export const patchDynamicTag = (
       content,
       inputIsArgs,
       resume,
+      branchCleanupFree,
     ) => {
       const patched = patch(tag, scopeId, accessor);
       if (patched !== tag)
@@ -232,6 +244,7 @@ export const patchDynamicTag = (
         content,
         inputIsArgs,
         resume,
+        branchCleanupFree,
       );
     };
   }

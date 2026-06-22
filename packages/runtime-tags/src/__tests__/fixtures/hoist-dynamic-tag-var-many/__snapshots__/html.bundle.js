@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 		let setHtml = _dynamic_tag($scope1_id, "a", child_default, {});
 		_var($scope1_id, "b", $Child_scope, "a1");
 		writeScope($scope1_id, { c: setHtml });
-	}, 0, $scope0_id, "a", 1, 0, 0);
+	}, 0, $scope0_id, "a", 1, 0, 0, 0, 0, 1);
 	let to = 3;
 	_html("<hr>");
 	_for_to(to, 0, 1, () => {
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		let setHtml2 = _dynamic_tag($scope2_id, "a", child_default, {});
 		_var($scope2_id, "b", $Child_scope2, "a2");
 		writeScope($scope2_id, { c: setHtml2 });
-	}, 0, $scope0_id, "b", 1, 0, 0);
+	}, 0, $scope0_id, "b", 1, 0, 0, 0, 0, 1);
 	_html("<hr>");
 	_for_to(3, 0, 1, (i) => {
 		const $scope3_id = _scope_id();
@@ -39,10 +39,10 @@ var template_default = _template("a", (input) => {
 			let setHtml3 = _dynamic_tag($scope4_id, "a", child_default, {});
 			_var($scope4_id, "b", $Child_scope3, "a3");
 			writeScope($scope4_id, { c: setHtml3 });
-		}, 0, $scope3_id, "a", 1, 0, 0);
+		}, 0, $scope3_id, "a", 1, 0, 0, 0, 0, 1);
 		_html("</ul>");
 		writeScope($scope3_id, {});
-	}, 0, $scope0_id, "c", 1, 0, 0, 0, 1);
+	}, 0, $scope0_id, "c", 1, 0, 0, 0, 1, 1);
 	_script($scope0_id, "a4");
 	_resume_branch($scope0_id);
 }, 1);

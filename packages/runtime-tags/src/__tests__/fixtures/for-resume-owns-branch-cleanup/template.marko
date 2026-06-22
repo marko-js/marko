@@ -1,0 +1,8 @@
+<let/outer=true/>
+<let/count=0/>
+<div#ref>init</div>
+<button#o onClick() { outer = !outer }>O</button>
+<button#a onClick() { count++ }>A</button>
+<if=outer>
+  <child count=count/>
+</if>

@@ -9,7 +9,7 @@ var my_for_default = _template("__tests__/tags/my-for.marko", (input) => {
 			$params2: _serialize_if($scope0_reason, 2) && $params2,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/tags/my-for.marko", "1:2", { $params2: "1:6" });
-	}, 0, $scope0_id, "#text/0", $sg__input_to__OR__input_content, $sg__input_to, $sg__input_to);
+	}, 0, $scope0_id, "#text/0", $sg__input_to__OR__input_content, $sg__input_to, $sg__input_to, 0, 0, 1);
 	_serialize_if($scope0_reason, 1) && writeScope($scope0_id, { input_content: input.content }, "__tests__/tags/my-for.marko", 0, { input_content: ["input.content"] });
 });
 

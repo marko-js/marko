@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			index,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "4:4", { index: "4:17" });
-	}, (f) => f, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
+	}, (f) => f, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1, 1);
 	_if(() => {
 		if (last !== undefined) {
 			const $scope2_id = _scope_id();
@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "15:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1, 1);
 	writeScope($scope0_id, {
 		messages,
 		last

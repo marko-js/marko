@@ -31,9 +31,9 @@ var template_default = _template("a", (input) => {
 				writeScope($scope3_id, { _: _scope_with_id($scope1_id) });
 				return 1;
 			}
-		}, $scope1_id, "a", 1, 1, 1, 0, 1);
+		}, $scope1_id, "a", 1, 1, 1, 0, 1, 1);
 		writeScope($scope1_id, { e: item?.id });
-	}, "id", $scope0_id, "a", 1, 1, 1, "</div>");
+	}, "id", $scope0_id, "a", 1, 1, 1, "</div>", 0, 1);
 	_html(`<button>rot</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {

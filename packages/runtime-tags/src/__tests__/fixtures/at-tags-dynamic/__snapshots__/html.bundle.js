@@ -9,7 +9,7 @@ var hello_default = _template("b", (input) => {
 		_html(`</div>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		writeScope($scope1_id, {});
-	}, 0, $scope0_id, "a", $sg__input_list_item, $sg__input_list_item, $sg__input_list_item__OR__input_col, 0, 1);
+	}, 0, $scope0_id, "a", $sg__input_list_item, $sg__input_list_item, $sg__input_list_item__OR__input_col, 0, 1, 1);
 	_for_of(input.col, ({ content, row, ...attrs }) => {
 		const $scope2_id = _scope_id();
 		_html("<div class=col");
@@ -22,10 +22,10 @@ var hello_default = _template("b", (input) => {
 			_html(`</div>${_el_resume($scope3_id, "a")}`);
 			_script($scope3_id, "b1");
 			writeScope($scope3_id, {});
-		}, 0, $scope2_id, "b", $sg__input_col, $sg__input_col, $sg__input_col, 0, 1);
+		}, 0, $scope2_id, "b", $sg__input_col, $sg__input_col, $sg__input_col, 0, 1, 1);
 		_script($scope2_id, "b2");
 		writeScope($scope2_id, {});
-	}, 0, $scope0_id, "b", $sg__input_col, $sg__input_col, $sg__input_list_item__OR__input_col);
+	}, 0, $scope0_id, "b", $sg__input_col, $sg__input_col, $sg__input_list_item__OR__input_col, 0, 0, 1);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
 });
 

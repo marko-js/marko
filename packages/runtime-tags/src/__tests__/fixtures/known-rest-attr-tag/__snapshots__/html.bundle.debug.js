@@ -13,9 +13,9 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 				$si__input_button && writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/tags/child.marko", "4:8");
 				return 0;
 			}
-		}, $scope1_id, "#text/0", $sg__input_button, $sg__input_button, $sg__input_button);
+		}, $scope1_id, "#text/0", $sg__input_button, $sg__input_button, $sg__input_button, void 0, void 0, 1);
 		$si__input_button && writeScope($scope1_id, { button }, "__tests__/tags/child.marko", "3:4", { button: "3:8" });
-	}, 0, $scope0_id, "#div/0", $sg__input_button, 1, $sg__input_button, "</div>");
+	}, 0, $scope0_id, "#div/0", $sg__input_button, 1, $sg__input_button, "</div>", 0, 1);
 	_script($scope0_id, "__tests__/tags/child.marko_0_htmlInput");
 	writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });

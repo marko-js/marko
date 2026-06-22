@@ -10,6 +10,6 @@ var template_default = _template("a", (input) => {
 		$si__input_children && writeScope($scope1_id, {});
 	}, function(c) {
 		return c.id;
-	}, $scope0_id, "a", $sg__input_children, $sg__input_children, $sg__input_children, "</div>", 1);
+	}, $scope0_id, "a", $sg__input_children, $sg__input_children, $sg__input_children, "</div>", 1, 1);
 	$si__input_children && writeScope($scope0_id, {});
 }, 1);

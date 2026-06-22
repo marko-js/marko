@@ -33,11 +33,11 @@ var template_default = _template("a", (input) => {
 					writeScope($scope2_id, { c: setHtml });
 					return 0;
 				}
-			}, $scope1_id, "a", 1, $sg__input_show, $sg__input_show);
+			}, $scope1_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, 1);
 			writeScope($scope1_id, { _: $si__input_show && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, void 0, void 0, 1);
 	thing_default({ value: $setHtml_getter });
 	_if(() => {
 		{
@@ -48,7 +48,7 @@ var template_default = _template("a", (input) => {
 			writeScope($scope3_id, { c: setHtml2 });
 			return 0;
 		}
-	}, $scope0_id, "c", 1, 0, $sg__input_show);
+	}, $scope0_id, "c", 1, 0, $sg__input_show, void 0, void 0, 1);
 	_if(() => {
 		{
 			const $scope4_id = _scope_id();
@@ -58,7 +58,7 @@ var template_default = _template("a", (input) => {
 			writeScope($scope4_id, { c: setHtml3 });
 			return 0;
 		}
-	}, $scope0_id, "d", 1, 0, $sg__input_show);
+	}, $scope0_id, "d", 1, 0, $sg__input_show, void 0, void 0, 1);
 	{
 		const $scope5_id = _scope_id();
 		_script($scope5_id, "a4");

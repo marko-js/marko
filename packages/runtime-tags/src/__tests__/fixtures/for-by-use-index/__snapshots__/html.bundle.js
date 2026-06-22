@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 			e: index,
 			_: _scope_with_id($scope0_id)
 		});
-	}, (f) => f, $scope0_id, "a", 1, 1, 1, "</div>", 1);
+	}, (f) => f, $scope0_id, "a", 1, 1, 1, "</div>", 1, 1);
 	_if(() => {
 		if (last !== void 0) {
 			const $scope2_id = _scope_id();
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 			writeScope($scope2_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", 1, 1, 1, 0, 1);
+	}, $scope0_id, "b", 1, 1, 1, 0, 1, 1);
 	writeScope($scope0_id, {
 		c: messages,
 		d: last

@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 					writeScope($scope4_id, { _: _scope_with_id($scope3_id) });
 					return 0;
 				}
-			}, $scope3_id, "c", 1, 1, 1, 0, 1);
+			}, $scope3_id, "c", 1, 1, 1, 0, 1, 1);
 			_script($scope3_id, "a0");
 			writeScope($scope3_id, { d: value });
 			_resume_branch($scope3_id);

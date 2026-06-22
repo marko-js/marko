@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$si__input_a__OR__input_b && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", $sg__input_a__OR__input_b, $sg__input_a__OR__input_b, $sg__input_a__OR__input_b__OR__input_x__OR__input_y);
+	}, $scope0_id, "#text/0", $sg__input_a__OR__input_b, $sg__input_a__OR__input_b, $sg__input_a__OR__input_b__OR__input_x__OR__input_y, void 0, void 0, 1);
 	_if(() => {
 		if (input.a, input.b) {
 			const $scope2_id = _scope_id();
@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$si__input_a__OR__input_b && writeScope($scope2_id, {}, "__tests__/template.marko", "5:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", $sg__input_a__OR__input_b, $sg__input_a__OR__input_b, $sg__input_a__OR__input_b__OR__input_x__OR__input_y);
+	}, $scope0_id, "#text/1", $sg__input_a__OR__input_b, $sg__input_a__OR__input_b, $sg__input_a__OR__input_b__OR__input_x__OR__input_y, void 0, void 0, 1);
 	_html("<div>");
 	_if(() => {
 		if (input.x) {
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$si__input_x__OR__input_y && writeScope($scope5_id, {}, "__tests__/template.marko", "16:4");
 			return 2;
 		}
-	}, $scope0_id, "#div/2", $sg__input_x__OR__input_y, $sg__input_x__OR__input_y, $sg__input_a__OR__input_b__OR__input_x__OR__input_y, "</div>");
+	}, $scope0_id, "#div/2", $sg__input_x__OR__input_y, $sg__input_x__OR__input_y, $sg__input_a__OR__input_b__OR__input_x__OR__input_y, "</div>", void 0, 1);
 	_serialize_if($scope0_reason, 2) && writeScope($scope0_id, {
 		input_a: _serialize_if($scope0_reason, 4) && input.a,
 		input_b: _serialize_if($scope0_reason, 3) && input.b,

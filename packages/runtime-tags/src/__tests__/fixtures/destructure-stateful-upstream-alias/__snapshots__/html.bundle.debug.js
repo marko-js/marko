@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<li>${_escape(item)}${_el_resume($scope1_id, "#text/0")}</li>`);
 		writeScope($scope1_id, {}, "__tests__/template.marko", "10:4");
-	}, 0, $scope0_id, "#ul/3", 1, 1, 1, "</ul>", 1);
+	}, 0, $scope0_id, "#ul/3", 1, 1, 1, "</ul>", 1, 1);
 	_script($scope0_id, "__tests__/template.marko_0_clear");
 	writeScope($scope0_id, {
 		clear,

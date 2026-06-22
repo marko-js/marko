@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 			writeScope($scope2_id, { _: _scope_with_id($scope0_id) });
 			return 1;
 		}
-	}, $scope0_id, "a", 1, 1, 1, 0, 1);
+	}, $scope0_id, "a", 1, 1, 1, 0, 1, 1);
 	_html("</div>");
 	writeScope($scope0_id, { b: clickCount });
 	_resume_branch($scope0_id);

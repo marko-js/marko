@@ -11,7 +11,7 @@ var consumer_default = _template("__tests__/tags/consumer.marko", (input) => {
 			writeScope($scope1_id, { _: _serialize_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/tags/consumer.marko", "3:2");
 			return 0;
 		}
-	}, $scope0_id, "#text/1");
+	}, $scope0_id, "#text/1", void 0, void 0, void 0, void 0, void 0, 1);
 	_script($scope0_id, "__tests__/tags/consumer.marko_0_show");
 	writeScope($scope0_id, {
 		input_content: input.content,

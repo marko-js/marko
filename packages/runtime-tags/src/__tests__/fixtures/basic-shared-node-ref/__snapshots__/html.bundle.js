@@ -15,7 +15,7 @@ var template_default = _template("a", (input) => {
 		writeScope($scope1_id, {});
 	}, function(x) {
 		return x;
-	}, $scope0_id, "a", 1, 1, 1, "</ul>", 1);
+	}, $scope0_id, "a", 1, 1, 1, "</ul>", 1, 1);
 	_html(`<button id=toggle>Toggle</button>${_el_resume($scope0_id, "b")}<button id=reverse>Reverse</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");

@@ -10,6 +10,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_assert_hoist(x);
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, 0, 0);
+	}, $scope0_id, "#text/0", 1, 0, 0, void 0, void 0, 1);
 	_html(`<div>${_escape(((x) => x())(_hoist_read_error))}</div>`);
 }, 1);

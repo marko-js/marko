@@ -9,7 +9,7 @@ var child_default = _template("b", (input) => {
 			$si__input_value && writeScope($scope1_id, {});
 			return 0;
 		}
-	}, $scope0_id, "a", $sg__input_value, $sg__input_value, $sg__input_value, 0, 1);
+	}, $scope0_id, "a", $sg__input_value, $sg__input_value, $sg__input_value, 0, 1, 1);
 	const $return = 1;
 	$si__input_value && writeScope($scope0_id, {});
 	return $return;

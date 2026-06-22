@@ -13,10 +13,10 @@ var template_default = _template("a", (input) => {
 			_html(`<div${_attr_class(`${i}, ${j}`)}></div>${_el_resume($scope2_id, "a")}`);
 			_script($scope2_id, "a3");
 			writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
-		}, 0, $scope1_id, "a", 1, 0, 0, 0, 1);
+		}, 0, $scope1_id, "a", 1, 0, 0, 0, 1, 1);
 		_script($scope1_id, "a4");
 		writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
-	}, 0, $scope0_id, "d", 1, 0, 0);
+	}, 0, $scope0_id, "d", 1, 0, 0, 0, 0, 1);
 	_script($scope0_id, "a5");
 	writeScope($scope0_id, {});
 }, 1);

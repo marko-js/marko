@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			_html(`<option${_attr_option_value(opt)}>${_escape(opt)}${_el_resume($scope1_id, "#text/1")}</option>${_el_resume($scope1_id, "#option/0")}`);
 			writeScope($scope1_id, {}, "__tests__/template.marko", "5:6");
-		}, (v) => v, $scope0_id, "#select/0", 1, 1, 1, "</select>", 1);
+		}, (v) => v, $scope0_id, "#select/0", 1, 1, 1, "</select>", 1, 1);
 	});
 	_html(`<button type=reset>reset</button></form><div>${_escape(value)}${_el_resume($scope0_id, "#text/1")}</div><button class=remove>Remove option</button>${_el_resume($scope0_id, "#button/2")}<button class=add>Add option</button>${_el_resume($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0_options");

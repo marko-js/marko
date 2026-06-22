@@ -13,9 +13,9 @@ var child_default = _template("b", (input) => {
 				$si__input_button && writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", $sg__input_button, $sg__input_button, $sg__input_button);
+		}, $scope1_id, "a", $sg__input_button, $sg__input_button, $sg__input_button, void 0, void 0, 1);
 		$si__input_button && writeScope($scope1_id, { c: button });
-	}, 0, $scope0_id, "a", $sg__input_button, 1, $sg__input_button, "</div>");
+	}, 0, $scope0_id, "a", $sg__input_button, 1, $sg__input_button, "</div>", 0, 1);
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, {});
 });

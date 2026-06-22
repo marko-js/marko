@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:3");
 			return 0;
 		}
-	}, $scope0_id, "#div/0", 1, 1, 1, "</div>");
+	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", void 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { mounted }, "__tests__/template.marko", 0, { mounted: "1:5" });
 	_resume_branch($scope0_id);

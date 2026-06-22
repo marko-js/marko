@@ -10,6 +10,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		$si__input_children && writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
 	}, function(c) {
 		return c.id;
-	}, $scope0_id, "#div/0", $sg__input_children, $sg__input_children, $sg__input_children, "</div>", 1);
+	}, $scope0_id, "#div/0", $sg__input_children, $sg__input_children, $sg__input_children, "</div>", 1, 1);
 	$si__input_children && writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

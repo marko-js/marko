@@ -15,6 +15,6 @@ var template_default = _template("a", (input) => {
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", $sg__input_value, $sg__input_value, $sg__input_value);
+	}, $scope0_id, "a", $sg__input_value, $sg__input_value, $sg__input_value, void 0, void 0, 1);
 	writeScope($scope0_id, { e: _serialize_if($scope0_reason, 0) && value?.foo });
 }, 1);

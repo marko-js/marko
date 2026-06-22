@@ -9,7 +9,7 @@ var my_for_default = _template("b", (input) => {
 			b: _serialize_if($scope0_reason, 2) && $params2,
 			_: _scope_with_id($scope0_id)
 		});
-	}, 0, $scope0_id, "a", $sg__input_to__OR__input_content, $sg__input_to, $sg__input_to);
+	}, 0, $scope0_id, "a", $sg__input_to__OR__input_content, $sg__input_to, $sg__input_to, 0, 0, 1);
 	_serialize_if($scope0_reason, 1) && writeScope($scope0_id, { e: input.content });
 });
 

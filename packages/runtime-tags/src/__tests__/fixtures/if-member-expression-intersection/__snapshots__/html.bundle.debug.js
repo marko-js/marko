@@ -13,7 +13,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "6:4");
 			return 0;
 		}
-	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
+	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1, 1);
 	_script($scope0_id, "__tests__/tags/child.marko_0_id");
 	writeScope($scope0_id, {
 		hide,

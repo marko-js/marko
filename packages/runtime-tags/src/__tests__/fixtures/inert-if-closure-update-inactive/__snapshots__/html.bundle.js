@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, 0, 1);
+	}, $scope0_id, "a", 1, $sg__input_show, $sg__input_show, 0, 1, 1);
 	_html(`<button>Update</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, { f: _serialize_if($scope0_reason, 0) && value });

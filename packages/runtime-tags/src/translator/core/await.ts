@@ -59,6 +59,9 @@ export default {
     const { node } = tag;
     const tagBody = tag.get("body");
     const section = getOrCreateSection(tag);
+    // `<await>` registers async cleanup, so its enclosing branch must resume
+    // linked.
+    section.hasOpaqueChild = true;
     const [valueAttr] = node.attributes;
     const tagExtra = (tag.node.extra ??= {});
     tagExtra[kDOMBinding] = createBinding("#text", BindingType.dom, section);

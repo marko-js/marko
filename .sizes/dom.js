@@ -1,4 +1,4 @@
-// size: 23837 (min) 8807 (brotli)
+// size: 23891 (min) 8858 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1616,13 +1616,16 @@ function _await_promise(nodeAccessor, params) {
                   i: 0,
                   c() {
                     if (--awaitCounter.i) return 1;
-                    (tryBranch === scope[branchAccessor]
-                      ? scope[nodeAccessor].parentNode &&
-                        scope[nodeAccessor].replaceWith(
-                          scope[branchAccessor].S.parentNode,
-                        )
-                      : dismissPlaceholder(tryBranch),
-                      queueEffect(tryBranch, runPendingEffects));
+                    if (tryBranch === scope[branchAccessor]) {
+                      let anchor = scope[nodeAccessor];
+                      if (anchor.parentNode) {
+                        let detachedParent = scope[branchAccessor].S.parentNode;
+                        detachedParent === anchor.parentNode
+                          ? anchor.remove()
+                          : anchor.replaceWith(detachedParent);
+                      }
+                    } else dismissPlaceholder(tryBranch);
+                    queueEffect(tryBranch, runPendingEffects);
                   },
                 }),
             scope[promiseAccessor] ||

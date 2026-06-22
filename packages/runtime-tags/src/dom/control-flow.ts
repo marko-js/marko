@@ -82,11 +82,21 @@ export function _await_promise(
           c() {
             if (--awaitCounter!.i) return 1;
             if (tryBranch === scope[branchAccessor]) {
-              if ((scope[nodeAccessor] as ChildNode).parentNode) {
-                (scope[nodeAccessor] as ChildNode).replaceWith(
-                  (scope[branchAccessor] as BranchScope)[AccessorProp.StartNode]
-                    .parentNode!,
-                );
+              const anchor = scope[nodeAccessor] as ChildNode;
+              if (anchor.parentNode) {
+                const detachedParent = (scope[branchAccessor] as BranchScope)[
+                  AccessorProp.StartNode
+                ].parentNode!;
+                if (detachedParent === anchor.parentNode) {
+                  // The re-await detach (scheduled in a rAF) raced with the
+                  // promise resolving, so the branch was never moved to a
+                  // detached fragment and is still in place beside the anchor.
+                  // Swapping the anchor for its own parent would cycle; just
+                  // drop the leftover anchor.
+                  anchor.remove();
+                } else {
+                  anchor.replaceWith(detachedParent);
+                }
               }
             } else {
               dismissPlaceholder(tryBranch);

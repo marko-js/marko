@@ -10,7 +10,7 @@ var child_default = _template("b", (input) => {
 		_html(`</option>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "b0");
 		writeScope($scope1_id, {});
-	}, 0, $scope0_id, "a", $sg__input_option, _serialize_guard($scope0_reason, 0), $sg__input_option, "</select>", 1);
+	}, 0, $scope0_id, "a", $sg__input_option, _serialize_guard($scope0_reason, 0), $sg__input_option, "</select>", 1, 1);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});
 });
 

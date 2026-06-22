@@ -63,6 +63,9 @@ export default {
     assertNoAttributes(tag);
     analyzeAttributeTags(tag);
     const section = getOrCreateSection(tag);
+    // `<try>` registers async/catch cleanup, so its enclosing branch must
+    // resume linked.
+    section.hasOpaqueChild = true;
     const tagExtra = mergeReferences(
       section,
       tag.node,

@@ -13,7 +13,7 @@ var template_default = _template("a", (input) => {
 			_html(`</div>${_el_resume($scope2_id, "a")}`);
 			_script($scope2_id, "a0");
 			writeScope($scope2_id, {});
-		}, 0, $scope1_id, "a", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
+		}, 0, $scope1_id, "a", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1, 1);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {});
 	}) };
 	const $childScope = _peek_scope_id();

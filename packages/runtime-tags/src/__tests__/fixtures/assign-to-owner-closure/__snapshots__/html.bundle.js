@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", 1, 1, 1, 0, 1);
+	}, $scope0_id, "a", 1, 1, 1, 0, 1, 1);
 	writeScope($scope0_id, {});
 	_resume_branch($scope0_id);
 }, 1);

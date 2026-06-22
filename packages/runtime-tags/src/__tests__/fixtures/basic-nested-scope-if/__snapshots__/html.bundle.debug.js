@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			writeScope($scope2_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "8:4");
 			return 1;
 		}
-	}, $scope0_id, "#text/0", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/0", 1, 1, 1, 0, 1, 1);
 	_html("</div>");
 	writeScope($scope0_id, { clickCount }, "__tests__/template.marko", 0, { clickCount: "2:8" });
 	_resume_branch($scope0_id);

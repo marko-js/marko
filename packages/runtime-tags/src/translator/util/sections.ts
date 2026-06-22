@@ -76,6 +76,7 @@ export interface Section {
     | false
     | undefined;
   hasAbortSignal: boolean;
+  hasOpaqueChild: boolean;
   readsOwner: boolean;
   isBranch: boolean;
   content: null | {
@@ -150,6 +151,7 @@ export function startSection(
       upstreamExpression: undefined,
       downstreamBinding: undefined,
       hasAbortSignal: false,
+      hasOpaqueChild: false,
       readsOwner: false,
       isBranch: false,
     };
@@ -220,6 +222,52 @@ export function forEachSectionReverse(fn: (section: Section) => void) {
   for (let i = sections!.length; i--; ) {
     fn(sections![i]);
   }
+}
+
+// Whether a section's subtree could register cleanup that must run when an
+// ancestor branch is destroyed. This is the only reason a (non-branch) owning
+// scope needs its closest branch linked on resume: a branch it creates on the
+// client must join the branch tree so the cleanup cascades. Cleanup is always
+// registered through `$signal` — directly (`hasAbortSignal`, which also covers
+// `<lifecycle>`), through dynamic closures (`referencedClosures`), or inside an
+// opaque/async child (`hasOpaqueChild`: a custom/dynamic tag, `<await>`, or
+// `<try>`, whose internals we can't see and so must assume). Only *dynamic*
+// closures register cleanup (via `subscribeToScopeSet`); a direct/static
+// closure (e.g. an `<if>` reading a value from its immediate parent) does not.
+// Defaults to `true` for anything not provably free, so a missed case links
+// rather than leaks.
+let branchCleanupChildren: Map<Section, Section[]> | undefined;
+let branchCleanupChildrenFor: unknown;
+const branchCleanupCache = new WeakMap<Section, boolean>();
+export function sectionSubtreeMayCleanup(section: Section): boolean {
+  const { sections } = getProgram().node.extra;
+  if (branchCleanupChildrenFor !== sections) {
+    branchCleanupChildrenFor = sections;
+    branchCleanupChildren = new Map();
+    for (const s of sections!) {
+      if (s.parent) {
+        const siblings = branchCleanupChildren.get(s.parent);
+        if (siblings) siblings.push(s);
+        else branchCleanupChildren.set(s.parent, [s]);
+      }
+    }
+  }
+  return subtreeMayCleanup(section);
+}
+function subtreeMayCleanup(section: Section): boolean {
+  let result = branchCleanupCache.get(section);
+  if (result === undefined) {
+    branchCleanupCache.set(section, true); // guard re-entrancy safely
+    result =
+      section.hasAbortSignal ||
+      section.hasOpaqueChild ||
+      !!find(section.referencedClosures, (closure) =>
+        isDynamicClosure(section, closure),
+      ) ||
+      !!branchCleanupChildren!.get(section)?.some(subtreeMayCleanup);
+    branchCleanupCache.set(section, result);
+  }
+  return result;
 }
 
 function getContentInfo(path: t.NodePath<t.Program | t.MarkoTagBody>) {

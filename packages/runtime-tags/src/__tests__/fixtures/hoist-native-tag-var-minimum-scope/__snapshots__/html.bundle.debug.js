@@ -13,10 +13,10 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`<div${_attr_class(`${i}, ${j}`)}></div>${_el_resume($scope2_id, "#div/0")}`);
 			_script($scope2_id, "__tests__/template.marko_2");
 			writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "7:4");
-		}, 0, $scope1_id, "#text/0", 1, 0, 0, 0, 1);
+		}, 0, $scope1_id, "#text/0", 1, 0, 0, 0, 1, 1);
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
-	}, 0, $scope0_id, "#text/3", 1, 0, 0);
+	}, 0, $scope0_id, "#text/3", 1, 0, 0, 0, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 }, 1);

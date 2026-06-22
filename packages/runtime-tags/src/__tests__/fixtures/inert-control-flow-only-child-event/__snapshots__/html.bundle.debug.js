@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#LoopKey": i,
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "3:3", { "#LoopKey": "3:7" });
-	}, 0, $scope0_id, "#div/0", 1, 1, 0, "</div>", 1);
+	}, 0, $scope0_id, "#div/0", 1, 1, 0, "</div>", 1, 1);
 	_script($scope0_id, "__tests__/template.marko_0_selected");
 	writeScope($scope0_id, { selected }, "__tests__/template.marko", 0, { selected: "1:5" });
 	_resume_branch($scope0_id);

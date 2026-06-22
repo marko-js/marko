@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`</option>${_el_resume($scope3_id, "#option/0")}`);
 			_script($scope3_id, "__tests__/template.marko_3_option");
 			writeScope($scope3_id, {}, "__tests__/template.marko", "3:6");
-		}, 0, $scope1_id, "#select/0", $sg__input_option, _serialize_guard($scope1_reason, 0), $sg__input_option, "</select>", 1);
+		}, 0, $scope1_id, "#select/0", $sg__input_option, _serialize_guard($scope1_reason, 0), $sg__input_option, "</select>", 1, 1);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
 	}) };
 	const Wrap = { content: _content("__tests__/template.marko_2_content", ({ class: _class, ...rest }) => {

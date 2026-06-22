@@ -118,6 +118,9 @@ export function knownTagAnalyze(
   analyzeAttributeTags(tag);
 
   const section = getOrCreateSection(tag);
+  // A custom/dynamic tag renders a separately-compiled child whose cleanup we
+  // can't see, so its enclosing branch must always resume linked.
+  section.hasOpaqueChild = true;
   const tagBody = tag.get("body");
   const tagExtra = (tag.node.extra ??= {});
   const childScopeBinding = (tagExtra[kChildScopeBinding] = createBinding(

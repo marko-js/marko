@@ -11,9 +11,9 @@ var sections_default = _template("b", (input) => {
 				$si__input_section && writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
 				return 0;
 			}
-		}, $scope1_id, "a", $sg__input_section, $sg__input_section, $sg__input_section);
+		}, $scope1_id, "a", $sg__input_section, $sg__input_section, $sg__input_section, void 0, void 0, 1);
 		$si__input_section && writeScope($scope1_id, { d: content });
-	}, 0, $scope0_id, "a", $sg__input_section, $sg__input_section, $sg__input_section);
+	}, 0, $scope0_id, "a", $sg__input_section, $sg__input_section, $sg__input_section, 0, 0, 1);
 	$si__input_section && writeScope($scope0_id, {});
 });
 

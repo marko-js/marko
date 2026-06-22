@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 				states = newStates;
 			}, "a0", $scope1_id) || void 0
 		});
-	}, 0, $scope0_id, "a", 1, 1, 1, 0, 1);
+	}, 0, $scope0_id, "a", 1, 1, 1, 0, 1, 1);
 	_html(`<div>${_escape(states.join(","))}${_el_resume($scope0_id, "b")}</div>`);
 	writeScope($scope0_id, { c: states });
 	_resume_branch($scope0_id);

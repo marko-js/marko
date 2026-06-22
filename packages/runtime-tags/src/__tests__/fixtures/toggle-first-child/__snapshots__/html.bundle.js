@@ -11,7 +11,7 @@ var template_default = _template("a", (input) => {
 			$si__input_value && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "a", $sg__input_value, $sg__input_value, $sg__input_value, 0, 1);
+	}, $scope0_id, "a", $sg__input_value, $sg__input_value, $sg__input_value, 0, 1, 1);
 	_html("<span></span><span></span></div>");
 	$si__input_value && writeScope($scope0_id, { d: value });
 }, 1);

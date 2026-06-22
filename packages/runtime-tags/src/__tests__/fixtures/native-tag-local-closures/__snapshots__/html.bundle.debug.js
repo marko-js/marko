@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_html(`</div>${_el_resume($scope2_id, "#div/0")}`);
 			_script($scope2_id, "__tests__/template.marko_2_item");
 			writeScope($scope2_id, {}, "__tests__/template.marko", "4:4");
-		}, 0, $scope1_id, "#text/0", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1);
+		}, 0, $scope1_id, "#text/0", $sg__input_item, $sg__input_item, $sg__input_item, 0, 1, 1);
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "3:2");
 	}) };
 	const $childScope = _peek_scope_id();

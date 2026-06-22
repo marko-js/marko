@@ -32,6 +32,7 @@ import {
   getSection,
   getSectionForBody,
   type Section,
+  sectionSubtreeMayCleanup,
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
@@ -228,6 +229,13 @@ export const IfTag = {
               [],
               t.blockStatement([statement!]),
             );
+            // No branch body can register cleanup ⇒ a client-created branch
+            // need not join the branch tree, so skip linking its closest
+            // branch on resume.
+            const branchCleanupFree = !branches.some(
+              ([, branchBody]) =>
+                branchBody && sectionSubtreeMayCleanup(branchBody),
+            );
 
             statement = t.expressionStatement(
               callRuntime(
@@ -248,6 +256,7 @@ export const IfTag = {
                     ? t.numericLiteral(0)
                     : undefined,
                 singleChild ? t.numericLiteral(1) : undefined,
+                branchCleanupFree ? t.numericLiteral(1) : undefined,
               ),
             );
           }

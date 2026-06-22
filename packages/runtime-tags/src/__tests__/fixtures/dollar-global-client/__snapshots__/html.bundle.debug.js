@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/0", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/0", 1, 1, 1, 0, 1, 1);
 	_if(() => {
 		if (!show) {
 			const $scope2_id = _scope_id();
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			writeScope($scope2_id, {}, "__tests__/template.marko", "7:4");
 			return 0;
 		}
-	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
+	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1, 1);
 	_html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/2")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0_show");
 	writeScope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "2:8" });

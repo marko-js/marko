@@ -10,7 +10,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		_html(`</span>${_el_resume($scope1_id, "#span/0")}`);
 		_script($scope1_id, "__tests__/tags/child.marko_1_item");
 		writeScope($scope1_id, {}, "__tests__/tags/child.marko", "2:2");
-	}, 0, $scope0_id, "#text/0", $sg__input_foo, $sg__input_foo, $sg__input_foo, 0, 1);
+	}, 0, $scope0_id, "#text/0", $sg__input_foo, $sg__input_foo, $sg__input_foo, 0, 1, 1);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
 

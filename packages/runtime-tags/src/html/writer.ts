@@ -343,6 +343,7 @@ export function _for_of(
   serializeStateful?: 0 | 1,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  branchCleanupFree?: 1,
 ): void {
   forBranches(
     by,
@@ -360,6 +361,7 @@ export function _for_of(
     serializeStateful,
     parentEndTag,
     singleNode,
+    branchCleanupFree,
   );
 }
 
@@ -374,6 +376,7 @@ export function _for_in(
   serializeStateful?: 0 | 1,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  branchCleanupFree?: 1,
 ): void {
   forBranches(
     by,
@@ -392,6 +395,7 @@ export function _for_in(
     serializeStateful,
     parentEndTag,
     singleNode,
+    branchCleanupFree,
   );
 }
 
@@ -408,6 +412,7 @@ export function _for_to(
   serializeStateful?: 0 | 1,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  branchCleanupFree?: 1,
 ): void {
   forBranches(
     by,
@@ -427,6 +432,7 @@ export function _for_to(
     serializeStateful,
     parentEndTag,
     singleNode,
+    branchCleanupFree,
   );
 }
 
@@ -443,6 +449,7 @@ export function _for_until(
   serializeStateful?: 0 | 1,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  branchCleanupFree?: 1,
 ): void {
   forBranches(
     by,
@@ -462,6 +469,7 @@ export function _for_until(
     serializeStateful,
     parentEndTag,
     singleNode,
+    branchCleanupFree,
   );
 }
 
@@ -484,6 +492,7 @@ function forBranches(
   serializeStateful: undefined | 0 | 1,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
+  branchCleanupFree?: 1,
 ) {
   if (MARKO_DEBUG) {
     // eslint-disable-next-line no-var
@@ -517,6 +526,15 @@ function forBranches(
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
   let flushBranchIds = "";
   let loopScopes: Opt<ScopeInternals>;
+
+  // The owning scope creates these branches at runtime (passing itself as the
+  // parent scope), so when it is itself inside a branch it must resume with its
+  // closest branch linked, or a client-created branch would be orphaned from
+  // the branch tree. `_resume_branch` is a no-op outside a branch, and is
+  // skipped entirely when the loop body provably has no cleanup to cascade.
+  if (!branchCleanupFree) {
+    _resume_branch(scopeId);
+  }
 
   iterate((itemKey, sameAsIndex, render) => {
     const branchId = _peek_scope_id();
@@ -570,6 +588,7 @@ export function _if(
   serializeStateful?: 0 | 1,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  branchCleanupFree?: 1,
 ) {
   const { state } = $chunk.boundary;
   const resumeBranch = serializeBranch !== 0;
@@ -578,6 +597,16 @@ export function _if(
   const branchId = _peek_scope_id();
   if (resumeMarker && resumeBranch && !singleNode) {
     $chunk.writeHTML(state.mark(ResumeSymbol.BranchStart, ""));
+  }
+
+  // The owning scope creates this branch at runtime (passing itself as the
+  // parent scope), so when it is itself inside a branch it must resume with its
+  // closest branch linked, or a client-created branch would be orphaned from
+  // the branch tree. `_resume_branch` is a no-op outside a branch, and is
+  // skipped entirely when the branch subtree provably has no cleanup to cascade
+  // (`branchCleanupFree`).
+  if (resumeBranch && !branchCleanupFree) {
+    _resume_branch(scopeId);
   }
 
   const branchIndex = resumeBranch ? withBranchId(branchId, cb) : cb();

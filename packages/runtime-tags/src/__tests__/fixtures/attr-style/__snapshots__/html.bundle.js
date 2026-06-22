@@ -12,7 +12,7 @@ var custom_tag_default = _template("b", (input) => {
 			$si__input_test && writeScope($scope1_id, { _: _serialize_if($scope0_reason, 1) && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "b", $sg__input_test, $sg__input_test, $sg__input_test, 0, 1);
+	}, $scope0_id, "b", $sg__input_test, $sg__input_test, $sg__input_test, 0, 1, 1);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {
 		g: $si__input_test && input.test?.style,
 		h: $si__input_test && input.test?.content

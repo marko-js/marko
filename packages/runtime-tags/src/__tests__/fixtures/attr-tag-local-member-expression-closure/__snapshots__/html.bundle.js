@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 			const $scope3_id = _scope_id();
 			_dynamic_tag($scope3_id, "a", item, {}, 0, 0, $sg__items);
 			$si__items && writeScope($scope3_id, {});
-		}, 0, $scope1_id, "a", $sg__items, $sg__items, $sg__items);
+		}, 0, $scope1_id, "a", $sg__items, $sg__items, $sg__items, 0, 0, 1);
 		$si__items && writeScope($scope1_id, {});
 	}) };
 	forOf([[{ text: "hello" }, { text: "world" }]], (texts) => {

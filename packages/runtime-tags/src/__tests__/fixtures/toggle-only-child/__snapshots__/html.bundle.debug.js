@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4");
 			return 0;
 		}
-	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
+	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1, 1);
 	_html(`<input${_attr_input_value($scope0_id, "#input/1", value, _resume((_new_value) => {
 		value = _new_value;
 	}, "__tests__/template.marko_0/valueChange", $scope0_id))}>${_el_resume($scope0_id, "#input/1")}`);
