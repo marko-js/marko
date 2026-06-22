@@ -109,6 +109,12 @@ export function isNotVoid(value: unknown) {
   return value != null && value !== false;
 }
 
+export function isPromise(value: unknown): value is Promise<unknown> {
+  return (
+    value != null && typeof (value as Promise<unknown>).then === "function"
+  );
+}
+
 export function normalizeDynamicRenderer<Renderer>(
   value: any,
 ): Renderer | string | undefined {

@@ -1,6 +1,10 @@
 import { assertValidLoopKey, assertValidTagName } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
-import { decodeAccessor, normalizeDynamicRenderer } from "../common/helpers";
+import {
+  decodeAccessor,
+  isPromise,
+  normalizeDynamicRenderer,
+} from "../common/helpers";
 import { DYNAMIC_TAG_SCRIPT_REGISTER_ID } from "../common/meta";
 import { toArray } from "../common/opt";
 import {
@@ -57,7 +61,21 @@ export function _await_promise(
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
   _enable_catch();
   return (scope: Scope, promise: Promise<unknown>) => {
-    // TODO: !isPromise, render synchronously
+    if (!isPromise(promise)) {
+      if (scope[branchAccessor] && !scope[promiseAccessor]) {
+        resolveAwait(
+          scope,
+          branchAccessor,
+          nodeAccessor,
+          scope[nodeAccessor] as ChildNode,
+          params,
+          promise,
+        );
+        return;
+      }
+      promise = Promise.resolve(promise);
+    }
+
     let awaitBranch = scope[branchAccessor] as BranchScope;
     const tryPlaceholder = findBranchWithKey(
       scope,
@@ -135,25 +153,14 @@ export function _await_promise(
           scope[promiseAccessor] = 0;
 
           queueAsyncRender(scope, () => {
-            if (
-              (awaitBranch = scope[branchAccessor] as BranchScope)[
-                AccessorProp.DetachedAwait
-              ]
-            ) {
-              awaitBranch[AccessorProp.PendingScopes] =
-                awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
-              setupBranch(awaitBranch[AccessorProp.DetachedAwait], awaitBranch);
-              awaitBranch[AccessorProp.DetachedAwait] = 0;
-
-              insertBranchBefore(
-                awaitBranch,
-                (scope[nodeAccessor] as ChildNode).parentNode!,
-                scope[nodeAccessor] as ChildNode,
-              );
-              referenceNode.remove();
-            }
-
-            params?.(awaitBranch as BranchScope, [data]);
+            awaitBranch = resolveAwait(
+              scope,
+              branchAccessor,
+              nodeAccessor,
+              referenceNode,
+              params,
+              data,
+            );
 
             const pendingRenders = awaitBranch[AccessorProp.PendingRenders] as
               | PendingRender[]
@@ -194,6 +201,32 @@ export function _await_promise(
       },
     ));
   };
+}
+
+function resolveAwait(
+  scope: Scope,
+  branchAccessor: string,
+  nodeAccessor: EncodedAccessor,
+  referenceNode: ChildNode,
+  params: Signal<unknown> | undefined,
+  value: unknown,
+) {
+  const awaitBranch = scope[branchAccessor] as BranchScope;
+  if (awaitBranch[AccessorProp.DetachedAwait]) {
+    awaitBranch[AccessorProp.PendingScopes] =
+      awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
+    setupBranch(awaitBranch[AccessorProp.DetachedAwait], awaitBranch);
+    awaitBranch[AccessorProp.DetachedAwait] = 0;
+
+    insertBranchBefore(
+      awaitBranch,
+      (scope[nodeAccessor] as ChildNode).parentNode!,
+      scope[nodeAccessor] as ChildNode,
+    );
+    referenceNode.remove();
+  }
+  params?.(awaitBranch, [value]);
+  return awaitBranch;
 }
 
 export function _await_content(
