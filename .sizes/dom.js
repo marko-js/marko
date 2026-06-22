@@ -1,4 +1,4 @@
-// size: 23837 (min) 8807 (brotli)
+// size: 24021 (min) 8886 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -335,6 +335,9 @@ function getEventHandlerName(name) {
 }
 function isNotVoid(value) {
   return value != null && value !== !1;
+}
+function isPromise(value) {
+  return value != null && typeof value.then == "function";
 }
 function normalizeDynamicRenderer(value) {
   if (value) {
@@ -1601,6 +1604,20 @@ function _await_promise(nodeAccessor, params) {
   return (
     _enable_catch(),
     (scope, promise) => {
+      if (!isPromise(promise)) {
+        if (scope[branchAccessor] && !scope[promiseAccessor]) {
+          resolveAwait(
+            scope,
+            branchAccessor,
+            nodeAccessor,
+            scope[nodeAccessor],
+            params,
+            promise,
+          );
+          return;
+        }
+        promise = Promise.resolve(promise);
+      }
       let awaitBranch = scope[branchAccessor],
         tryPlaceholder = findBranchWithKey(scope, "Q"),
         tryBranch = tryPlaceholder || awaitBranch,
@@ -1654,17 +1671,14 @@ function _await_promise(nodeAccessor, params) {
             let referenceNode = scope[nodeAccessor];
             ((scope[promiseAccessor] = 0),
               queueAsyncRender(scope, () => {
-                ((awaitBranch = scope[branchAccessor]).V &&
-                  ((awaitBranch.Y = awaitBranch.Y?.forEach(syncGen)),
-                  setupBranch(awaitBranch.V, awaitBranch),
-                  (awaitBranch.V = 0),
-                  insertBranchBefore(
-                    awaitBranch,
-                    scope[nodeAccessor].parentNode,
-                    scope[nodeAccessor],
-                  ),
-                  referenceNode.remove()),
-                  params?.(awaitBranch, [data]));
+                awaitBranch = resolveAwait(
+                  scope,
+                  branchAccessor,
+                  nodeAccessor,
+                  referenceNode,
+                  params,
+                  data,
+                );
                 let pendingRenders = awaitBranch.W;
                 if (
                   ((awaitBranch.W = 0),
@@ -1698,6 +1712,30 @@ function _await_promise(nodeAccessor, params) {
         },
       ));
     }
+  );
+}
+function resolveAwait(
+  scope,
+  branchAccessor,
+  nodeAccessor,
+  referenceNode,
+  params,
+  value,
+) {
+  let awaitBranch = scope[branchAccessor];
+  return (
+    awaitBranch.V &&
+      ((awaitBranch.Y = awaitBranch.Y?.forEach(syncGen)),
+      setupBranch(awaitBranch.V, awaitBranch),
+      (awaitBranch.V = 0),
+      insertBranchBefore(
+        awaitBranch,
+        scope[nodeAccessor].parentNode,
+        scope[nodeAccessor],
+      ),
+      referenceNode.remove()),
+    params?.(awaitBranch, [value]),
+    awaitBranch
   );
 }
 function _await_content(nodeAccessor, template, walks, setup) {

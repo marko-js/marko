@@ -5,7 +5,7 @@ import {
   assertValidLoopKey,
 } from "../common/errors";
 import { forIn, forOf, forTo, forUntil } from "../common/for";
-import { normalizeDynamicRenderer } from "../common/helpers";
+import { isPromise, normalizeDynamicRenderer } from "../common/helpers";
 import { concat, forEach, type Opt, push } from "../common/opt";
 import {
   type $Global,
@@ -1608,13 +1608,6 @@ function flushTickQueue() {
     cb(true);
   }
 }
-
-function isPromise(value: unknown): value is Promise<unknown> {
-  return (
-    value != null && typeof (value as Promise<unknown>).then === "function"
-  );
-}
-
 function getFilteredGlobals($global: Record<string, unknown>) {
   if (!$global) return 0;
 

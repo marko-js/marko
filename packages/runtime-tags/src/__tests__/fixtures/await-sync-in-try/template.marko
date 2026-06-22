@@ -1,0 +1,11 @@
+<try>
+  <await|value|=input.value>
+    Got: ${value}
+  </await>
+  <@catch|err|>
+    Error: ${err.message}
+  </@catch>
+  <@placeholder>
+    Loading...
+  </@placeholder>
+</try>

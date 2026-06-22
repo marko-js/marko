@@ -1,0 +1,6 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/showAsync = true/>
+<await|value|=showAsync ? resolveAfter("ASYNC") : "SYNC">
+  Got: ${value}
+</await>
+<button onClick() { showAsync = !showAsync }>toggle</button>
