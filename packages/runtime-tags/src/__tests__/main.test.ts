@@ -55,15 +55,25 @@ export type TestConfig = {
   runtime_id?: string;
 };
 
-describe("runtime-tags/translator", () => {
-  testFixtures();
-});
+// Registers one shard of the fixture suites. The full suite is split across
+// several spec files (main.shard-*.test.ts) so that `mocha --parallel` can run
+// the fixtures — by far the largest part of the suite — across worker
+// processes. `shardCount === 1` (the default) registers everything.
+export function registerShard(shardIndex = 0, shardCount = 1) {
+  describe("runtime-tags/translator", () => {
+    testFixtures(false, shardIndex, shardCount);
+  });
 
-describe("translator-interop", () => {
-  testFixtures(true);
-});
+  describe("translator-interop", () => {
+    testFixtures(true, shardIndex, shardCount);
+  });
+}
 
-function testFixtures(interop?: true) {
+function testFixtures(
+  interop: boolean,
+  shardIndex: number,
+  shardCount: number,
+) {
   const translator = interop
     ? require.resolve("marko/translator")
     : tagsTranslator;
@@ -73,6 +83,7 @@ function testFixtures(interop?: true) {
   );
   for (const entry of fs.readdirSync(fixturesDir)) {
     if (entry.endsWith(".skip")) continue;
+    if (!inShard(entry, shardIndex, shardCount)) continue;
 
     describe(entry, () => {
       const fixtureDir = path.join(fixturesDir, entry);
@@ -437,4 +448,15 @@ function once<T>(fn: () => T) {
       cached = undefined;
     },
   });
+}
+
+// Assigns a fixture to a shard by hashing its name, so each shard file gets a
+// stable, roughly even slice of the fixtures independent of directory order.
+function inShard(name: string, shardIndex: number, shardCount: number) {
+  if (shardCount <= 1) return true;
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = (Math.imul(hash, 31) + name.charCodeAt(i)) | 0;
+  }
+  return ((hash % shardCount) + shardCount) % shardCount === shardIndex;
 }

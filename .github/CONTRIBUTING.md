@@ -91,8 +91,11 @@ Expected failures won't cause [Travis CI](https://travis-ci.org/marko-js/marko) 
 
 If you need to dig a bit deeper into a failing test, use the `--inspect-brk` flag, open Chrome DevTools, and click on the green nodejs icon (<img height="16" src="https://user-images.githubusercontent.com/1958812/37050480-d53e4276-2128-11e8-8c7a-f5d842956c98.png"/>) to start debugging. Learn more about [debugging node](https://www.youtube.com/watch?v=Xb_0awoShR8&t=103s) from this video.
 
+Use `test:serial` when debugging: `npm test` runs the suite in parallel worker
+processes, which the inspector can't attach to cleanly.
+
 ```
-npm test -- --grep=test-name --inspect-brk
+npm run test:serial -- --grep=test-name --inspect-brk
 ```
 
 In addition to [setting breakpoints](https://developers.google.com/web/tools/chrome-devtools/javascript/breakpoints), you can also add [`debugger;`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger) statements in both your JavaScript files and Marko templates:
@@ -106,10 +109,10 @@ $ debugger;
 
 A number of the test suites make use snapshot comparisons. For example, the `render` tests compare the rendered html against a stored snapshot. Similarly, the `compiler` tests compare the generated JavaScript module againt a stored snapshot. Any changes compared to the snapshot should be looked at closely, but there are some cases where it is fine that the output has changed and the snapshot needs to be updated.
 
-To update a snapshot, you can copy the contents from the `actual` file to the `expected` file in the fixture directory. You can also use the `UPDATE_EXPECTATIONS` env variable to cause the test runner to update the `expected` file for all currently failing tests in a suite:
+To update a snapshot, you can copy the contents from the `actual` file to the `expected` file in the fixture directory. You can also run `test:update` to update the `expected` file for all currently failing tests in a suite (it sets `UPDATE_EXPECTATIONS` and runs serially):
 
 ```
-UPDATE_EXPECTATIONS=1 npm test
+npm run test:update
 ```
 
 ## Tackling an existing issue

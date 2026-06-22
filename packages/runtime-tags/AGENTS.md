@@ -195,4 +195,16 @@ npm run test:update -- --grep "runtime-tags.* <fixture> " # fixture snapshot upd
 npm test -- --grep "translator-interop.*" # interop tests (run after the base tags runtime tests pass)
 ```
 
-Prefer running specific fixtures when possible. Running the entire suite takes time!
+The fixture suite is the bulk of the test run, so it is split into
+`main.shard-*.test.ts` files (each registers a slice of the fixtures via
+`registerShard` in `main.test.ts`) and `npm test` runs in parallel across CPU
+cores (configured in `.mocharc.cjs`). Snapshot updates and debugging run
+serially:
+
+```sh
+npm run test:serial -- --grep "<fixture> " # serial run (easier to debug)
+npm run test:update -- --grep "<fixture> "  # update snapshots (always serial)
+```
+
+Prefer running specific fixtures when iterating; the full suite still does a lot
+of compiling and bundling.
