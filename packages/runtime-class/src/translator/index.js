@@ -8,6 +8,7 @@ import {
   isDynamicTag,
   isMacroTag,
   isNativeTag,
+  loadFileForImport,
   loadFileForTag,
   parseExpression,
   parseStatements,
@@ -147,6 +148,39 @@ export const analyze = {
       if (childFile?.ast.program.extra?.featureType === "tags") {
         tag.node.extra.featureType = "tags";
         (file.path.node.extra ??= {}).needsCompat = true;
+      }
+    } else if (isDynamicTag(tag)) {
+      // A dynamic `<${expr}/>` whose name references an imported Tags API
+      // template crosses the interop boundary and must be rendered through the
+      // compat dynamic tag, the same as a statically named tags import. This
+      // mirrors the Tags API translator, which resolves the whole name
+      // expression (identifiers, conditionals, etc.) to detect the boundary.
+      const markIfTagsImport = (scope, name) => {
+        const binding = name && scope.getBinding(name);
+        if (binding && binding.kind === "module" && binding.identifier.loc) {
+          const childFile = loadFileForImport(
+            file,
+            binding.path.parent.source.value,
+          );
+          if (childFile?.ast.program.extra?.featureType === "tags") {
+            (tag.node.extra ??= {}).featureType = "tags";
+            (file.path.node.extra ??= {}).needsCompat = true;
+            return true;
+          }
+        }
+      };
+
+      const namePath = tag.get("name");
+      if (namePath.isIdentifier()) {
+        markIfTagsImport(namePath.scope, namePath.node.name);
+      } else {
+        namePath.traverse({
+          ReferencedIdentifier(idPath) {
+            if (markIfTagsImport(idPath.scope, idPath.node.name)) {
+              idPath.stop();
+            }
+          },
+        });
       }
     }
 
