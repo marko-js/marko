@@ -1,0 +1,8 @@
+<let/show=false/>
+<define/Layout|{ content }|>
+  <section><${content}/></section>
+</define>
+<button#toggle onClick() { show = !show }>toggle</button>
+<if=show>
+  <Layout>shown content</Layout>
+</if>

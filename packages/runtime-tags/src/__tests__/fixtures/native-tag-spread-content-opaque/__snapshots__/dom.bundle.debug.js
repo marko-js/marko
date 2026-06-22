@@ -2,6 +2,7 @@
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 const $setup$2 = () => {};
+const $input_data_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/0");
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
 const $input_data_content = ($scope, input_data_content) => $dynamicTag($scope, input_data_content);
 const $input$1 = ($scope, input) => $input_data($scope, input.data);

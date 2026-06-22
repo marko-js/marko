@@ -9,7 +9,10 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../../common/types";
-import { getBindingPropTree } from "../../util/binding-prop-tree";
+import {
+  getBindingPropTree,
+  kDirectContent,
+} from "../../util/binding-prop-tree";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
   getAccessorPrefix,
@@ -142,6 +145,15 @@ export default {
       startSection(tagBody);
       trackParamsReferences(tagBody, BindingType.param);
       addSerializeExpr(tagSection, hasVar || tagExtra, nodeBinding);
+
+      if (
+        !hasVar &&
+        !node.arguments &&
+        !node.attributes.length &&
+        !node.body.body.length
+      ) {
+        tagExtra[kDirectContent] = true;
+      }
     },
   },
   translate: {
@@ -194,8 +206,11 @@ export default {
           knownTagTranslateDOM(
             tag,
             propTree,
-            (binding, preferredName) =>
-              getSignal(definedBodySection, binding, preferredName).identifier,
+            (binding, preferredName, directContent) =>
+              directContent && binding.directContentExport
+                ? t.identifier(binding.directContentExport)
+                : getSignal(definedBodySection, binding, preferredName)
+                    .identifier,
             (section, childBinding) => {
               const signal = getSignal(definedBodySection, undefined);
               if (signalHasStatements(signal)) {
@@ -464,6 +479,29 @@ export default {
             hasTagArgs && t.numericLiteral(1),
           );
         };
+
+        // Additional optimized export a known parent calls instead of the
+        // general `_dynamic_tag` signal above.
+        const directBinding = tagExtra.referencedBindings;
+        if (
+          directBinding &&
+          !Array.isArray(directBinding) &&
+          directBinding.directContentExport
+        ) {
+          getProgram().node.body.push(
+            t.exportNamedDeclaration(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(
+                  t.identifier(directBinding.directContentExport),
+                  callRuntime(
+                    "_dynamic_tag_content",
+                    getScopeAccessorLiteral(nodeBinding, true),
+                  ),
+                ),
+              ]),
+            ),
+          );
+        }
 
         if (args.length) {
           const argsOrInput = hasTagArgs

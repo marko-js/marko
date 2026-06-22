@@ -2,6 +2,7 @@
 var import_vdom = require_vdom();
 const $template = "<button id=tags> </button><div><!></div>";
 const $walks = " D lD%l";
+const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/2");
 const $count__script = _script("__tests__/components/tags-layout.marko_0_count", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

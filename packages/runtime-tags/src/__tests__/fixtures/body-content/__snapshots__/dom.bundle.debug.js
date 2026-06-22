@@ -2,6 +2,7 @@
 const $template$1 = "<button><!></button>";
 const $walks$1 = " D%l";
 const $setup$1 = () => {};
+const $content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/1");
 const $attrs__script = _script("__tests__/tags/FancyButton.marko_0_attrs", ($scope) => _attrs_script($scope, "#button/0"));
 const $attrs = /* @__PURE__ */ _const("attrs", ($scope) => {
 	_attrs($scope, "#button/0", $scope.attrs);
@@ -28,7 +29,7 @@ const $clickCount = /* @__PURE__ */ _let("clickCount/1", ($scope) => {
 });
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-	$content($scope["#childScope/0"], $FancyButton_content($scope));
+	$content_direct($scope["#childScope/0"], $FancyButton_content($scope));
 	$clickCount($scope, 0);
 }
 function $onClick($scope) {

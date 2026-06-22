@@ -2,6 +2,7 @@
 const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
+const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/0");
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
 const $input_content = ($scope, input_content) => $dynamicTag($scope, input_content);
 const $input = ($scope, input) => $input_content($scope, input.content);
@@ -23,7 +24,7 @@ const $count__closure = /* @__PURE__ */ _closure($child_content__count);
 const $count = /* @__PURE__ */ _let("count/1", $count__closure);
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-	$input_content($scope["#childScope/0"], $child_content($scope));
+	$input_content_direct($scope["#childScope/0"], $child_content($scope));
 	$count($scope, 0);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

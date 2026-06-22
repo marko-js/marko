@@ -2,6 +2,7 @@
 const $template$2 = "<!><!><!>";
 const $walks$2 = "b%c";
 const $setup$2 = () => {};
+const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/0");
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
 const $input_content$1 = ($scope, input_content) => $dynamicTag($scope, input_content);
 const $input$1 = ($scope, input) => $input_content$1($scope, input.content);
@@ -22,7 +23,7 @@ const $inner_content__setup = ($scope) => {
 const $inner_content = /* @__PURE__ */ _content("__tests__/tags/outer.marko_1_content", "<button>click</button><!><!>", " b%c", $inner_content__setup);
 function $setup$1($scope) {
 	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
-	$input_content$1($scope["#childScope/0"], $inner_content($scope));
+	$input_content_direct($scope["#childScope/0"], $inner_content($scope));
 }
 const $input = ($scope, input) => $input_content($scope, input.content);
 const $input_content__closure = /* @__PURE__ */ _closure($inner_content__input_content);

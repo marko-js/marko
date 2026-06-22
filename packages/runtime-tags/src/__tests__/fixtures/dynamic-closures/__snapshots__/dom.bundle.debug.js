@@ -2,6 +2,7 @@
 const $template$1 = "<div><!></div>";
 const $walks$1 = "D%l";
 const $setup$1 = () => {};
+const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/0");
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
 const $input_content = ($scope, input_content) => $dynamicTag($scope, input_content);
 const $input = ($scope, input) => $input_content($scope, input.content);
@@ -37,7 +38,7 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 }));
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
-	$input_content($scope["#childScope/1"], $customtag_content($scope));
+	$input_content_direct($scope["#childScope/1"], $customtag_content($scope));
 	$b($scope, 2);
 	$c($scope, 3);
 	$if($scope, Math.random() ? 0 : 1);
