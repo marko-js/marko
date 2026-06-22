@@ -18,7 +18,7 @@ const $count = /* @__PURE__ */ _let("count/5", ($scope) => {
 	$count__closure($scope);
 	$count__script($scope);
 });
-const $input_value = ($scope, input_value) => $count($scope, input_value);
+const $input_value = $count;
 const $try = /* @__PURE__ */ _try("#text/0", "<!><!><!><!>", "b%/&c", $try_content__setup);
 function $setup($scope) {
 	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });

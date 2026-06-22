@@ -11,6 +11,6 @@ const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $
 const $for_content__item = ($scope, item) => $for_content__item_id($scope, item?.id);
 const $for = /* @__PURE__ */ _for_of("#text/0", "<button> </button>", " D l", $for_content__setup, $for_content__$params);
 const $items = /* @__PURE__ */ _let("items/4", ($scope) => $for($scope, [$scope.items, () => "dup"]));
-const $input_items = ($scope, input_items) => $items($scope, input_items);
+const $input_items = $items;
 const $input = ($scope, input) => $input_items($scope, input.items);
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, "b%c", $setup, $input);

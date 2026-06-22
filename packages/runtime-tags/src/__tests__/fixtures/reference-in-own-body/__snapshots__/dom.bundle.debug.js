@@ -8,7 +8,7 @@ const $Tag_content2__name = /* @__PURE__ */ _closure_get("name", $Tag_content2__
 const $Tag_content2__setup = $Tag_content2__name;
 const $Tag_content2 = /* @__PURE__ */ _content("__tests__/template.marko_2_content", 0, 0, $Tag_content2__setup);
 const $Tag_content__dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
-const $Tag_content__input_content = ($scope, input_content) => $Tag_content__dynamicTag($scope, input_content);
+const $Tag_content__input_content = $Tag_content__dynamicTag;
 const $Tag_content__setup = /* @__PURE__ */ _child_setup(($scope) => _return($scope, "A"));
 const $Tag_content__$params = ($scope, $params2) => $Tag_content__input($scope, $params2[0]);
 const $Tag_content__input = ($scope, input) => $Tag_content__input_content($scope, input.content);

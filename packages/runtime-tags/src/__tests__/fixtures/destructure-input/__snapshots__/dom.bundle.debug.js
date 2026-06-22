@@ -9,7 +9,7 @@ const $rest = /* @__PURE__ */ _const("rest", ($scope) => {
 	$rest__script($scope);
 });
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
-const $content = ($scope, content) => $dynamicTag($scope, content);
+const $content = $dynamicTag;
 const $input = ($scope, input) => {
 	(({ content, ...rest }) => $rest($scope, rest))(input);
 	$content($scope, input.content);

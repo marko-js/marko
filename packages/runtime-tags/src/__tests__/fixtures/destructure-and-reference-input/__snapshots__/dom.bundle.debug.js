@@ -8,7 +8,7 @@ const $rest = /* @__PURE__ */ _const("rest", ($scope) => {
 	$rest__script($scope);
 });
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
-const $input_content = ($scope, content) => $dynamicTag($scope, content);
+const $input_content = $dynamicTag;
 const $input = ($scope, input) => {
 	_text($scope["#text/2"], Object.keys(input));
 	(({ content, ...rest }) => $rest($scope, rest))(input);

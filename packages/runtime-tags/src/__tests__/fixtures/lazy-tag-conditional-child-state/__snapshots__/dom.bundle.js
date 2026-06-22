@@ -29,7 +29,7 @@ const $count = /* @__PURE__ */ _let(7, ($scope) => {
 	_text($scope.c, $scope.h);
 	$count__script($scope);
 });
-const $input_value = ($scope, input_value) => $count($scope, input_value);
+const $input_value = $count;
 const $input_label = ($scope, input_label) => _text($scope.b, input_label);
 
 // v:child.marko.setup.js

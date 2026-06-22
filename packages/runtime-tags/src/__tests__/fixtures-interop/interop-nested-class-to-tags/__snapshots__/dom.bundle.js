@@ -13,7 +13,7 @@ function $setup($scope) {
 	$count($scope, 0);
 }
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(2);
-const $input_content = ($scope, input_content) => $dynamicTag($scope, input_content);
+const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
 var tags_layout_default = /* @__PURE__ */ _template("b", $template, $walks, $setup, $input);
 

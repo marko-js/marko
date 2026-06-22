@@ -4,7 +4,7 @@ const $walks$1 = "b1c";
 const $setup$1 = () => {};
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0", 0, () => $r);
 const $r = _var_resume("__tests__/tags/child.marko_0_r/var", /* @__PURE__ */ _const("r", ($scope) => _return($scope, $scope.r)));
-const $input_content = ($scope, input_content) => $dynamicTag($scope, input_content);
+const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
 var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $template$1, "b1c", $setup$1, $input);
 

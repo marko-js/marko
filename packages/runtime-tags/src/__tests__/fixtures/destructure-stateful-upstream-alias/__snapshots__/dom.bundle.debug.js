@@ -7,7 +7,7 @@ const $list$1 = /* @__PURE__ */ _let("list/3", ($scope) => _return($scope, {
 	listChange: $_return($scope),
 	clear: $_return2($scope)
 }));
-const $input_value = ($scope, input_value) => $list$1($scope, input_value);
+const $input_value = $list$1;
 const $input = ($scope, input) => $input_value($scope, input.value);
 function $_return2($scope) {
 	return function() {

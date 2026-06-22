@@ -2,7 +2,7 @@
 const $template = "<!><!><!>";
 const $setup = () => {};
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0);
-const $input_data_content = ($scope, input_data_content) => $dynamicTag($scope, input_data_content);
+const $input_data_content = $dynamicTag;
 const $input_data = ($scope, input_data) => $input_data_content($scope, input_data?.content);
 
 // tags/my-box.marko

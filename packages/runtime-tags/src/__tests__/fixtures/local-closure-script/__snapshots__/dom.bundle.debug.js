@@ -3,7 +3,7 @@ const $template$1 = "<!><!><!>";
 const $walks$1 = "b%c";
 const $setup$1 = () => {};
 const $for_content__dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
-const $for_content__item_content = ($scope, item_content) => $for_content__dynamicTag($scope, item_content);
+const $for_content__item_content = $for_content__dynamicTag;
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for_content__item = ($scope, item) => $for_content__item_content($scope, item?.content);
 const $for = /* @__PURE__ */ _for_of("#text/0", "<!><!><!>", "b%c", 0, $for_content__$params);

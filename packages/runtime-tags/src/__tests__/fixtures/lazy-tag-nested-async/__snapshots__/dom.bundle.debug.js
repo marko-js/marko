@@ -29,7 +29,7 @@ const $count = /* @__PURE__ */ _let("count/6", ($scope) => {
 	$count__closure($scope);
 	$count__script($scope);
 });
-const $input_value = ($scope, input_value) => $count($scope, input_value);
+const $input_value = $count;
 const $await_content = /* @__PURE__ */ _await_content("#text/2", "<span id=child-await> </span><!><!><!>", "D l%/&c", $await_content__setup);
 const $await_promise = /* @__PURE__ */ _await_promise("#text/2", $await_content__$params);
 function $setup($scope) {

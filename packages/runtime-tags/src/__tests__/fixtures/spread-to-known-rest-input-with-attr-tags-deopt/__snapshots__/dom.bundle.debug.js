@@ -8,7 +8,7 @@ const $for_content__item = /* @__PURE__ */ _const("item", ($scope) => {
 	$for_content__item__script($scope);
 });
 const $for_content__dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
-const $for_content__desc = ($scope, desc) => $for_content__dynamicTag($scope, desc);
+const $for_content__desc = $for_content__dynamicTag;
 const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2?.[0]);
 const $for_content__$temp = ($scope, $temp) => {
 	(({ desc, ...item }) => $for_content__item($scope, item))($temp);

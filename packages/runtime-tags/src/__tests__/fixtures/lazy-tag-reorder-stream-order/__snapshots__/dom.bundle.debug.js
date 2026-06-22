@@ -50,7 +50,7 @@ const $input_label__OR__shared__OR__count__script = _script("__tests__/child.mar
 }));
 const $input_label__OR__shared__OR__count = /* @__PURE__ */ _or(9, $input_label__OR__shared__OR__count__script, 2);
 const $shared = /* @__PURE__ */ _let("shared/7", $input_label__OR__shared__OR__count);
-const $input_shared = ($scope, input_shared) => $shared($scope, input_shared);
+const $input_shared = $shared;
 const $count = /* @__PURE__ */ _let("count/8", ($scope) => {
 	_text($scope["#text/2"], $scope.count);
 	$input_label__OR__shared__OR__count($scope);
