@@ -21,6 +21,7 @@
     "prepare": "husky && patch-package && npm run build-babel-types -w @marko/compiler",
     "report": "open ./coverage/lcov-report/index.html",
     "test": "mocha",
+    "test:fast": "node scripts/test.js",
     "test:serial": "mocha --no-parallel",
     "test:update": "UPDATE_EXPECTATIONS=1 mocha --no-parallel"
   },

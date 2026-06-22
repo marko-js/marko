@@ -69,6 +69,15 @@ export function registerShard(shardIndex = 0, shardCount = 1) {
   });
 }
 
+// The custom parallel runner (scripts/test.js, `npm run test:fast`) shards by
+// running this file directly with `MARKO_TEST_SHARD=<index>/<count>` instead of
+// the per-shard spec files, so register the requested shard when it is set.
+// Under plain `npm test` the variable is unset and the shard files do the work.
+if (process.env.MARKO_TEST_SHARD) {
+  const [index, count] = process.env.MARKO_TEST_SHARD.split("/", 2).map(Number);
+  registerShard(index, count);
+}
+
 function testFixtures(
   interop: boolean,
   shardIndex: number,
