@@ -1,0 +1,8 @@
+import TagsChild from "<tags-child>";
+class {
+  onCreate() { this.state = { show: true }; }
+  toggle() { this.state.show = !this.state.show; }
+}
+<button id="class" onClick("toggle")>toggle</button>
+<${state.show && TagsChild}/>
+<init-components/>

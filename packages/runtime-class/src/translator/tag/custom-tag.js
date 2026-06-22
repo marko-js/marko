@@ -26,12 +26,16 @@ export default function (path, isNullable) {
   let tagIdentifier;
 
   if (node.extra?.featureType === "tags") {
-    path.set(
-      "name",
-      path.scope.hasBinding(name.value)
-        ? t.identifier(name.value)
-        : importDefault(file, node.extra.relativePath, name.value),
-    );
+    // A dynamic `<${tagName}>` already references the imported template
+    // binding directly; only a static tag name needs to be resolved to one.
+    if (t.isStringLiteral(name)) {
+      path.set(
+        "name",
+        path.scope.hasBinding(name.value)
+          ? t.identifier(name.value)
+          : importDefault(file, node.extra.relativePath, name.value),
+      );
+    }
     return dynamicTag(path);
   }
 

@@ -1,0 +1,8 @@
+import TagsChild from "<tags-child>";
+class {
+  onCreate() { this.state = { n: 0 }; }
+  inc() { this.state.n++; }
+}
+<button id="class" onClick("inc")>${state.n}</button>
+<${TagsChild}/>
+<init-components/>
