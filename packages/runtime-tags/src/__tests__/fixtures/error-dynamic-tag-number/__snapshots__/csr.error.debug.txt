@@ -1,0 +1,1 @@
+A dynamic tag must be a string tag name (like `"div"`) or a Marko template/component, but received a number.
