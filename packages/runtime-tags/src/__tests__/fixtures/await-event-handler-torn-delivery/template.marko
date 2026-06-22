@@ -1,0 +1,17 @@
+import { resolveAfter } from "../../utils/resolve";
+
+// A <try>/<await> boundary whose streamed content binds an event handler.
+// With `tear_stream: true` the chunk is delivered partially so the boundary's
+// resume effects run before all of its node markers are present, modelling a
+// torn/partial network delivery.
+
+<div id="start">start</div>
+
+<try>
+  <@placeholder>loading</@placeholder>
+  <await|v|=resolveAfter("v", 1)>
+    <button id="a" onClick() { console.log("clicked"); }>${v}</button>
+  </await>
+</try>
+
+<div id="end">end</div>

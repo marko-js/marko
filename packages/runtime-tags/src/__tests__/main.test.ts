@@ -53,6 +53,12 @@ export type TestConfig = {
   error_compiler?: true | string[];
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
+  /**
+   * Streams each chunk's resume `<script>` before its content nodes (after
+   * the initial flush), modelling a torn/partial network delivery where a
+   * resume payload runs against DOM that is not yet fully present.
+   */
+  tear_stream?: boolean;
 };
 
 describe("runtime-tags/translator", () => {
@@ -269,7 +275,7 @@ function testFixtures(interop?: true) {
             const browser = createBrowser(runner.assets, config.load_order);
             browsers.push(browser);
             const { window } = browser;
-            const flushNext = browser.stream(chunks);
+            const flushNext = browser.stream(chunks, config.tear_stream);
             const flushAndRun = async () => {
               hasFlush = flushNext();
               await browser.runAsyncScripts();

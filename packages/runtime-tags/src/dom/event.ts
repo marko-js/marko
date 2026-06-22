@@ -12,6 +12,20 @@ export function _on<
     | undefined
     | ((ev: GlobalEventHandlersEventMap[T], target: Element) => void),
 >(element: Element, type: T, handler: H) {
+  if (!element) {
+    // The element can be unresolved when a streamed boundary's resume
+    // effects run before its nodes were walked (a torn/partial delivery
+    // desync). Binding to a missing node is meaningless, so skip rather
+    // than throwing — which would otherwise abort the remaining resume
+    // effects and leave the rest of the page un-hydrated.
+    if (MARKO_DEBUG) {
+      console.error(
+        `Skipped binding "on${type[0].toUpperCase() + type.slice(1)}": its target element was not resolved during resume.`,
+      );
+    }
+    return;
+  }
+
   if (MARKO_DEBUG) {
     assertHandlerIsFunction(
       "on" + type[0].toUpperCase() + type.slice(1),

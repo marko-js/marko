@@ -1,4 +1,4 @@
-// size: 6531 (min) 2849 (brotli)
+// size: 6536 (min) 2855 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -99,8 +99,9 @@ function toArray(opt) {
   return opt ? (Array.isArray(opt) ? opt : [opt]) : [];
 }
 function _on(element, type, handler) {
-  (element["$" + type] === void 0 &&
-    defaultDelegator(element, type, handleDelegated),
+  element &&
+    (element["$" + type] === void 0 &&
+      defaultDelegator(element, type, handleDelegated),
     (element["$" + type] = handler || null));
 }
 /* @__NO_SIDE_EFFECTS__ */

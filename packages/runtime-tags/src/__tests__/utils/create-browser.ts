@@ -166,7 +166,7 @@ export default function createBrowser(dir?: string, loadOrder?: string[]) {
         deferred.forEach(qmt);
       }
     },
-    stream(chunks: string[]): () => boolean {
+    stream(chunks: string[], tear?: boolean): () => boolean {
       const { document } = window;
       document.open();
 
@@ -178,27 +178,61 @@ export default function createBrowser(dir?: string, loadOrder?: string[]) {
         const walker = parsed.createTreeWalker(parsed);
         const targetNodes = new WeakMap<Node, Node>([[parsed, document]]);
         let node: Node | null;
+        let flushCount = 0;
+
+        const appendClone = (src: Node) => {
+          // Appending an inline <script> to a `runScripts: "dangerously"`
+          // document executes it synchronously, so the order in which these
+          // are appended is the order in which resume payloads run.
+          const clone = document.importNode(src, isInlineScript(src));
+          targetNodes.set(src, clone);
+          (targetNodes.get(src.parentNode!) as ParentNode).appendChild(clone);
+        };
 
         return () => {
+          // Collect this flush's nodes (TreeWalker yields parents before
+          // children, so the order is safe to replay).
+          const collected: Node[] = [];
+          let hitFlush = false;
           while ((node = walker.nextNode())) {
             if (
               node.nodeType === 8 /* Node.COMMENT_NODE */ &&
               (node as Comment).data === "%%FLUSH%%"
             ) {
-              return true;
+              hitFlush = true;
+              break;
             }
-
-            const isInline = isInlineScript(node);
-            const clone = document.importNode(node, isInline);
-            targetNodes.set(node, clone);
-            (targetNodes.get(node.parentNode!) as ParentNode).appendChild(
-              clone,
-            );
-
-            if (isInline) {
+            collected.push(node);
+            if (isInlineScript(node)) {
+              // The inline script's text child is deep-cloned with it; skip
+              // it so it isn't appended (and re-executed) on its own.
               walker.nextNode();
             }
           }
+
+          if (tear && flushCount++ > 0) {
+            // Partial delivery: deliver this flush's content and its branch
+            // markers, but drop the element-resume markers (`<!--M_*N …-->`).
+            // The branch still resumes (its end marker arrives, un-gating the
+            // boundary's effects), but the element accessors those markers
+            // would populate stay unwalked — so an effect (e.g. an event
+            // binding via `_on`) runs against a scope whose node is undefined.
+            // Models a real browser where a chunk is torn mid-content. The
+            // first flush (initial render setup) is left intact.
+            for (const n of collected) {
+              if (
+                n.nodeType === 8 /* Node.COMMENT_NODE */ &&
+                /\w+_\*/.test((n as Comment).data)
+              ) {
+                continue;
+              }
+              appendClone(n);
+            }
+          } else {
+            for (const n of collected) appendClone(n);
+          }
+
+          if (hitFlush) return true;
           document.close();
           return false;
         };
