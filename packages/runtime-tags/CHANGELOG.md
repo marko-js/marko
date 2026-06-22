@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.1.15
+
+### Patch Changes
+
+- [#3266](https://github.com/marko-js/marko/pull/3266) [`69e199d`](https://github.com/marko-js/marko/commit/69e199d4608f9cc6ee3c7a201858c8ff7ff7bc09) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Error in development when a dynamic tag (`<${value}>`) receives a non-renderable value — a primitive, or an object without a valid `content` renderer. `MARKO_DEBUG`-only and stripped from production.
+
 ## 6.1.14
 
 ### Patch Changes
