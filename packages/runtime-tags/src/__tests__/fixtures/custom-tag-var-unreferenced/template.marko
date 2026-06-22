@@ -1,0 +1,7 @@
+<let/count=0/>
+<button onClick() { count++ }>${count}</button>
+
+// `result` is never read, so the tag var is pruned. Because the child scope
+// also never resumes, neither the `_var` wiring nor a resume registration
+// should be emitted for it — it tree-shakes away entirely.
+<child/result/>

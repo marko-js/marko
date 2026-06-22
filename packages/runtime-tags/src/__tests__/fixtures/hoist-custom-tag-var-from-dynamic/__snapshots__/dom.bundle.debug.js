@@ -27,14 +27,14 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 const $template = /* @__PURE__ */ ((_w0) => `<!>${_w0}<!><!><!>`)($template$2);
 const $walks = /* @__PURE__ */ ((_w0) => `b/${_w0}&%b%c`)($walks$2);
 const $setHtml3_getter = _hoist("setHtml3", "ClosureScopes:4");
-const $inputshowsectionnull_content__setHtml = _var_resume("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */ _const("setHtml3", ($scope) => _assert_hoist($scope.setHtml3)));
+const $inputshowsectionnull_content__setHtml = /* @__PURE__ */ _const("setHtml3", ($scope) => _assert_hoist($scope.setHtml3));
 const $inputshowsectionnull_content__setup = ($scope) => {
 	_var($scope, "#childScope/0", $inputshowsectionnull_content__setHtml);
 	$setup$1($scope["#childScope/0"]);
 };
 const $inputshowsectionnull_content = _content_resume("__tests__/template.marko_4_content", $template$1, /* @__PURE__ */ ((_w0) => `0${_w0}&`)(" b"), $inputshowsectionnull_content__setup, 0, "ClosureScopes:4");
 const $setHtml2_getter = _hoist("setHtml2", "ClosureScopes:3", "ClosureScopes:2");
-const $thing_content2__setHtml = _var_resume("__tests__/template.marko_3_setHtml2/var", /* @__PURE__ */ _const("setHtml2", ($scope) => _assert_hoist($scope.setHtml2)));
+const $thing_content2__setHtml = /* @__PURE__ */ _const("setHtml2", ($scope) => _assert_hoist($scope.setHtml2));
 const $thing_content2__setup = ($scope) => {
 	_var($scope, "#childScope/0", $thing_content2__setHtml);
 	$setup$1($scope["#childScope/0"]);
@@ -46,7 +46,7 @@ const $inputshowThingnull_content__setup = ($scope) => {
 };
 const $inputshowThingnull_content = _content_resume("__tests__/template.marko_2_content", /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($template$2), /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)($walks$2), $inputshowThingnull_content__setup, 0, "ClosureScopes:2");
 const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml/hoist", "setHtml", "ClosureScopes:1");
-const $thing_content__setHtml = _var_resume("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */ _const("setHtml", ($scope) => _assert_hoist($scope.setHtml)));
+const $thing_content__setHtml = /* @__PURE__ */ _const("setHtml", ($scope) => _assert_hoist($scope.setHtml));
 const $thing_content__setup = ($scope) => {
 	_var($scope, "#childScope/0", $thing_content__setHtml);
 	$setup$1($scope["#childScope/0"]);

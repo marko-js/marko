@@ -12,7 +12,7 @@ const $Tag_content__input_content = ($scope, input_content) => $Tag_content__dyn
 const $Tag_content__setup = /* @__PURE__ */ _child_setup(($scope) => _return($scope, "A"));
 const $Tag_content__$params = ($scope, $params2) => $Tag_content__input($scope, $params2[0]);
 const $Tag_content__input = ($scope, input) => $Tag_content__input_content($scope, input.content);
-const $name = _var_resume("__tests__/template.marko_0_name/var", /* @__PURE__ */ _const("name"));
+const $name = /* @__PURE__ */ _const("name");
 function $setup($scope) {
 	_var($scope, "#childScope/0", $name);
 	$Tag_content__setup._($scope["#childScope/0"], $scope);

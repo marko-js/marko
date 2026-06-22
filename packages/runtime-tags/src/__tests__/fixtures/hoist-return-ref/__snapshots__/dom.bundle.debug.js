@@ -28,5 +28,5 @@ function $setup($scope) {
 	_var($scope, "#childScope/1", $x);
 	$setup$1($scope["#childScope/1"]);
 }
-const $x = _var_resume("__tests__/template.marko_0_x/var", /* @__PURE__ */ _const("x", ($scope) => _assert_hoist($scope.x)));
+const $x = /* @__PURE__ */ _const("x", ($scope) => _assert_hoist($scope.x));
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

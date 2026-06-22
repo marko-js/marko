@@ -6,13 +6,13 @@
         "brotli": 2606
       },
       "files": {
-        "tags/hello/index.marko": 316,
+        "tags/hello/index.marko": 321,
         "template.marko": 351
       }
     }
   },
   "html": {
-    "min": 1662,
-    "brotli": 579
+    "min": 898,
+    "brotli": 371
   }
 }

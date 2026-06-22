@@ -21,7 +21,7 @@ const $child_content__setHtml__script = _script("__tests__/template.marko_1_setH
 const $child_content__setHtml = /* @__PURE__ */ _closure_get("setHtml", $child_content__setHtml__script);
 const $child_content__setup = $child_content__setHtml;
 const $child_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", 0, 0, $child_content__setup);
-const $setHtml = _var_resume("__tests__/template.marko_0_setHtml/var", /* @__PURE__ */ _const("setHtml"));
+const $setHtml = /* @__PURE__ */ _const("setHtml");
 function $setup($scope) {
 	_var($scope, "#childScope/0", $setHtml);
 	$setup$1($scope["#childScope/0"]);
