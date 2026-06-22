@@ -1,4 +1,4 @@
-// size: 24183 (min) 8953 (brotli)
+// size: 24257 (min) 8956 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1605,15 +1605,19 @@ function _await_promise(nodeAccessor, params) {
     _enable_catch(),
     (scope, promise) => {
       if (!isPromise(promise)) {
-        if (scope[branchAccessor] && !scope[promiseAccessor]) {
-          resolveAwait(
-            scope,
-            branchAccessor,
-            nodeAccessor,
-            scope[nodeAccessor],
-            params,
-            promise,
-          );
+        if (!scope[promiseAccessor]) {
+          let resolve = () =>
+            resolveAwait(
+              scope,
+              branchAccessor,
+              nodeAccessor,
+              scope[nodeAccessor],
+              params,
+              promise,
+            );
+          scope[branchAccessor]
+            ? resolve()
+            : (scope[promiseAccessor] = resolve);
           return;
         }
         promise = Promise.resolve(promise);
@@ -1741,6 +1745,7 @@ function resolveAwait(
 function _await_content(nodeAccessor, template, walks, setup) {
   nodeAccessor = decodeAccessor(nodeAccessor);
   let branchAccessor = "A" + nodeAccessor,
+    promiseAccessor = "L" + nodeAccessor,
     renderer = _content("", template, walks, setup)();
   return (scope) => {
     let pendingScopes = collectScopes(
@@ -1753,6 +1758,9 @@ function _await_content(nodeAccessor, template, walks, setup) {
         )).V = renderer),
     );
     scope[branchAccessor].Y = pendingScopes;
+    let resolveSync = scope[promiseAccessor];
+    typeof resolveSync == "function" &&
+      ((scope[promiseAccessor] = 0), resolveSync());
   };
 }
 function addAwaitCounter(scope, tryBranch = findBranchWithKey(scope, "Q")) {
