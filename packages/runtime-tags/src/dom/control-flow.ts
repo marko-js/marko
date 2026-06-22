@@ -62,15 +62,21 @@ export function _await_promise(
   _enable_catch();
   return (scope: Scope, promise: Promise<unknown>) => {
     if (!isPromise(promise)) {
-      if (scope[branchAccessor] && !scope[promiseAccessor]) {
-        resolveAwait(
-          scope,
-          branchAccessor,
-          nodeAccessor,
-          scope[nodeAccessor] as ChildNode,
-          params,
-          promise,
-        );
+      if (!scope[promiseAccessor]) {
+        const resolve = () =>
+          resolveAwait(
+            scope,
+            branchAccessor,
+            nodeAccessor,
+            scope[nodeAccessor] as ChildNode,
+            params,
+            promise,
+          );
+        if (scope[branchAccessor]) {
+          resolve();
+        } else {
+          scope[promiseAccessor] = resolve;
+        }
         return;
       }
       promise = Promise.resolve(promise);
@@ -237,6 +243,7 @@ export function _await_content(
 ) {
   if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+  const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const renderer = _content("", template, walks, setup)();
   return (scope: Scope) => {
     const pendingScopes = collectScopes(
@@ -250,6 +257,12 @@ export function _await_content(
     );
     (scope[branchAccessor] as BranchScope)[AccessorProp.PendingScopes] =
       pendingScopes;
+
+    const resolveSync = scope[promiseAccessor];
+    if (typeof resolveSync === "function") {
+      scope[promiseAccessor] = 0;
+      resolveSync();
+    }
   };
 }
 
