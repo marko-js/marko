@@ -5,6 +5,7 @@ import { WalkCode } from "../../common/types";
 import evaluate from "../util/evaluate";
 import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML } from "../util/marko-config";
+import normalizeStringExpression from "../util/normalize-string-expression";
 import {
   type Binding,
   BindingType,
@@ -130,7 +131,11 @@ export default {
         }
 
         if (isHTML) {
-          write`${callRuntime(method as HTMLMethod | DOMMethod, value)}`;
+          write`${
+            method === "_escape"
+              ? buildEscapedTextExpression(value)
+              : callRuntime(method as HTMLMethod | DOMMethod, value)
+          }`;
           if (nodeBinding) {
             writer.markNode(placeholder, nodeBinding, markerSerializeReason);
           }
@@ -166,6 +171,56 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.MarkoPlaceholder>;
+
+// Produces an expression equivalent to `_escape(value)` but only escapes the
+// parts that need it: static strings are escaped at compile time and dynamic
+// leaves are wrapped individually, recursing through the branches of a
+// conditional and the parts of a template literal so we escape as little as
+// possible.
+function buildEscapedTextExpression(value: t.Expression): t.Expression {
+  const { _escape } = getHTMLRuntime();
+  switch (value.type) {
+    case "StringLiteral":
+    case "NumericLiteral":
+    case "BooleanLiteral":
+      return t.stringLiteral(_escape(value.value));
+    case "NullLiteral":
+      return t.stringLiteral("");
+    case "ConditionalExpression":
+      return t.conditionalExpression(
+        value.test,
+        buildEscapedTextExpression(value.consequent),
+        buildEscapedTextExpression(value.alternate),
+      );
+    case "TemplateLiteral": {
+      const parts: (string | t.Expression)[] = [];
+      value.quasis.forEach((quasi, i) => {
+        parts.push(_escape(quasi.value.cooked ?? ""));
+        const expression = value.expressions[i];
+        if (expression) {
+          // Match the coercion a template literal would apply (e.g. `null`
+          // stringifies to `"null"`, not `""`) before escaping, so this stays
+          // equivalent to escaping the whole template literal.
+          parts.push(
+            callRuntime(
+              "_escape",
+              t.templateLiteral(
+                [
+                  t.templateElement({ raw: "" }),
+                  t.templateElement({ raw: "" }, true),
+                ],
+                [expression as t.Expression],
+              ),
+            ),
+          );
+        }
+      });
+      return normalizeStringExpression(parts) ?? t.stringLiteral("");
+    }
+    default:
+      return callRuntime("_escape", value);
+  }
+}
 
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const placeholderExtra = placeholder.node.extra!;

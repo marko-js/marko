@@ -10,9 +10,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		_await($scope1_id, "#text/0", resolveAfter(clickCount), (value) => {
 			const $scope4_id = _scope_id();
-			_html(`Async: <!>${_escape(value > 1 ? (() => {
+			_html(`Async: <!>${value > 1 ? _escape((() => {
 				throw new Error("ERROR!");
-			})() : value)}${_el_resume($scope4_id, "#text/0")}`);
+			})()) : _escape(value)}${_el_resume($scope4_id, "#text/0")}`);
 			writeScope($scope4_id, {}, "__tests__/template.marko", "11:4");
 		});
 		_script($scope1_id, "__tests__/template.marko_1_clickCount");

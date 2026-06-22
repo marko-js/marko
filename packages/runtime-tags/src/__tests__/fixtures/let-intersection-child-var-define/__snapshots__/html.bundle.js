@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 	let a = Let.content({});
 	_var($scope0_id, "b", $childScope, "a2");
 	let b = 0;
-	_html(`<button>${_escape(`${a},${b}`)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button>${_escape(`${a}`)},${_escape(`${b}`)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
 		e: a,

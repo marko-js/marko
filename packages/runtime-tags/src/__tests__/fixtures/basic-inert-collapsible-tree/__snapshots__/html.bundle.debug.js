@@ -7,7 +7,7 @@ const $content = (input) => {
 		const $scope1_id = _scope_id();
 		const id = `${input.path || "c"}-${i}`;
 		let open = true;
-		_html(`<li${_attr("id", id)}${_attr("hidden", !open)}><span>${_escape(comment.text)}${_el_resume($scope1_id, "#text/1", $sg__input_comments)}</span><button>${_escape(open ? "[-]" : "[+]")}${_el_resume($scope1_id, "#text/3")}</button>${_el_resume($scope1_id, "#button/2")}`);
+		_html(`<li${_attr("id", id)}${_attr("hidden", !open)}><span>${_escape(comment.text)}${_el_resume($scope1_id, "#text/1", $sg__input_comments)}</span><button>${open ? "[-]" : "[+]"}${_el_resume($scope1_id, "#text/3")}</button>${_el_resume($scope1_id, "#button/2")}`);
 		_if(() => {
 			if (comment.comments) {
 				const $scope2_id = _scope_id();

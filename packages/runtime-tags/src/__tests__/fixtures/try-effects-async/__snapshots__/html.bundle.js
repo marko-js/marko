@@ -10,9 +10,9 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_await($scope1_id, "a", resolveAfter(clickCount), (value) => {
 			const $scope4_id = _scope_id();
-			_html(`Async: <!>${_escape(value > 1 ? (() => {
+			_html(`Async: <!>${value > 1 ? _escape((() => {
 				throw new Error("ERROR!");
-			})() : value)}${_el_resume($scope4_id, "a")}`);
+			})()) : _escape(value)}${_el_resume($scope4_id, "a")}`);
 			writeScope($scope4_id, {});
 		});
 		_script($scope1_id, "a3");

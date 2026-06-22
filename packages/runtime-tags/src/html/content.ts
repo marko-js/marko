@@ -1,5 +1,12 @@
 import { assertValidTextValue } from "../common/errors";
 
+export function _to_text(val: unknown) {
+  if (MARKO_DEBUG) {
+    assertValidTextValue(val);
+  }
+  return val || val === 0 ? val + "" : "";
+}
+
 export function _unescaped(val: unknown) {
   if (MARKO_DEBUG) {
     assertValidTextValue(val);
