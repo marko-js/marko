@@ -17,7 +17,7 @@ exports.p = function (htmlCompat) {
   const writeClassAPIResultToTagsAPI = ({ out }) => {
     const { writer } = out._state;
     htmlCompat.write(writer._content);
-    htmlCompat.writeScript(writer._script);
+    htmlCompat.writeScript(writer._scripts);
     writer._content = writer._scripts = "";
 
     if (out.___components) {
