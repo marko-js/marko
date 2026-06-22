@@ -14,5 +14,4 @@
 ## Change
 ```
 INSERT: div > div
-UPDATE: div > div::text " " => "123"
 ```

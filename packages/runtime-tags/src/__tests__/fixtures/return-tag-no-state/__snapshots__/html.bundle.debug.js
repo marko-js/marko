@@ -2,9 +2,8 @@
 var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const x = 1;
 	_html("<span>child</span>");
-	const $return = x;
+	const $return = 1;
 	return $return;
 });
 

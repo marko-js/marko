@@ -23,7 +23,7 @@ var tag_b_default = _template("__tests__/tags/tag-b/index.marko", (input) => {
 // template.marko
 const foo = "";
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_show__OR__input_other = _serialize_guard($scope0_reason, 2), $sg__input_showTagA__OR__input_other = _serialize_guard($scope0_reason, 3), $sg__input_isLarge__OR__input_other = _serialize_guard($scope0_reason, 4), $sg__input_level__OR__input_other = _serialize_guard($scope0_reason, 6), $sg__input_other = _serialize_guard($scope0_reason, 9), $si__input_other = _serialize_if($scope0_reason, 9);
+	const $scope0_reason = _scope_reason(), $sg__input_show__OR__input_other = _serialize_guard($scope0_reason, 2), $sg__input_showTagA__OR__input_other = _serialize_guard($scope0_reason, 3), $sg__input_isLarge__OR__input_other = _serialize_guard($scope0_reason, 4), $sg__input_level__OR__input_other = _serialize_guard($scope0_reason, 6), $sg__input_other = _serialize_guard($scope0_reason, 7), $si__input_other = _serialize_if($scope0_reason, 7);
 	const $scope0_id = _scope_id();
 	const { content, x, show, showTagA, isLarge, tag, level, other } = input;
 	_dynamic_tag($scope0_id, "#text/0", content, {
@@ -83,8 +83,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		class: ["a", "b"],
 		other
 	}, 0, 0, $sg__input_level__OR__input_other);
-	const tagConstA = "a";
-	_dynamic_tag($scope0_id, "#text/13", tagConstA, {
+	_dynamic_tag($scope0_id, "#text/13", "a", {
 		class: ["a", "b"],
 		other
 	}, 0, 0, $sg__input_other);
@@ -97,7 +96,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/16", foo || "div", {}, 0, 0, 0);
 	_dynamic_tag($scope0_id, "#text/17", foo + "div", {}, 0, 0, 0);
 	_dynamic_tag($scope0_id, "#text/18", "d" + "iv", {}, 0, 0, 0);
-	_serialize_if($scope0_reason, 8) && writeScope($scope0_id, {
+	writeScope($scope0_id, {
 		content: $si__input_other && content,
 		x: $si__input_other && x,
 		show: $si__input_other && show,
@@ -105,9 +104,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		isLarge: $si__input_other && isLarge,
 		tag: $si__input_other && tag,
 		level: $si__input_other && level,
-		other: _serialize_if($scope0_reason, 7) && other,
+		other,
 		largeHeading: $si__input_other && largeHeading,
-		tagConstA: $si__input_other && tagConstA,
 		tagConstB: $si__input_other && tagConstB
 	}, "__tests__/template.marko", 0, {
 		content: "5:10",
@@ -119,7 +117,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		level: "5:52",
 		other: "5:59",
 		largeHeading: "23:8",
-		tagConstA: "30:8",
 		tagConstB: "33:8"
 	});
 }, 1);

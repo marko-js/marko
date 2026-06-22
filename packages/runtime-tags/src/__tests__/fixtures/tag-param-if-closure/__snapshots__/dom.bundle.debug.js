@@ -11,9 +11,7 @@ const $Foo_content2__input = ($scope, input) => {
 	$Foo_content2__input_content($scope, input.content);
 	$Foo_content2__input_value($scope, input.value);
 };
-const $if_content__a = /* @__PURE__ */ _closure_get("a", ($scope) => _text($scope["#text/0"], $scope._._.a), ($scope) => $scope._._);
-const $if_content__setup = $if_content__a;
-const $Foo_content__if = /* @__PURE__ */ _if("#text/0", " ", " b", $if_content__setup);
+const $Foo_content__if = /* @__PURE__ */ _if("#text/0", "abc", "b");
 const $Foo_content__v = ($scope, v) => $Foo_content__if($scope, v ? 0 : 1);
 const $Foo_content__$params = ($scope, $params3) => $Foo_content__v($scope, $params3[0]);
 const $Foo_content = _content_resume("__tests__/template.marko_1_content", "<!><!><!>", "b%c", 0, $Foo_content__$params);
@@ -24,10 +22,8 @@ const $count = /* @__PURE__ */ _let("count/2", ($scope) => {
 	$Foo_content2__input_value($scope["#childScope/1"], $scope.count);
 	$count__script($scope);
 });
-const $a = /* @__PURE__ */ _const("a");
 function $setup($scope) {
 	$Foo_content2__input_content($scope["#childScope/1"], $Foo_content($scope));
 	$count($scope, 0);
-	$a($scope, "abc");
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

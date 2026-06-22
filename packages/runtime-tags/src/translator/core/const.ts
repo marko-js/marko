@@ -11,6 +11,7 @@ import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
   dropNodes,
+  isReferenceHoisted,
   setBindingDownstream,
   trackVarReferences,
 } from "../util/references";
@@ -67,23 +68,47 @@ export default {
     const binding = trackVarReferences(tag, BindingType.derived, upstreamAlias);
 
     if (binding) {
-      if (node.var!.type === "Identifier") {
-        const constantViolations = tag.scope.getBinding(
-          node.var.name,
-        )?.constantViolations;
-        if (constantViolations?.length) {
-          for (const assignment of constantViolations) {
-            if (assignment.type !== "MarkoTag") {
-              // Ignore duplicate declaration violations.
-              throw assignment.buildCodeFrameError(
-                `${node.var.name} is readonly and cannot be mutated.`,
-              );
-            }
+      if (!valueExtra.nullable) binding.nullable = false;
+
+      const babelBinding =
+        node.var.type === "Identifier"
+          ? tag.scope.getBinding(node.var.name)
+          : undefined;
+
+      if (babelBinding?.constantViolations.length) {
+        for (const assignment of babelBinding.constantViolations) {
+          if (assignment.type !== "MarkoTag") {
+            // Ignore duplicate declaration violations.
+            throw assignment.buildCodeFrameError(
+              `${(node.var as t.Identifier).name} is readonly and cannot be mutated.`,
+            );
           }
         }
       }
-      if (!valueExtra.nullable) binding.nullable = false;
-      if (!upstreamAlias) setBindingDownstream(binding, valueExtra);
+
+      if (
+        babelBinding &&
+        !upstreamAlias &&
+        !binding.aliases.size &&
+        !binding.propertyAliases.size &&
+        valueExtra.confident &&
+        canInlineValue(valueExtra.computed) &&
+        !babelBinding.referencePaths.some((ref) =>
+          isReferenceHoisted(babelBinding.path, ref),
+        )
+      ) {
+        binding.type = BindingType.constant;
+        binding.constValue = valueExtra.computed;
+
+        for (const ref of babelBinding.referencePaths) {
+          const refExtra = (ref.node.extra ??= {});
+          refExtra.confident = true;
+          refExtra.computed = valueExtra.computed;
+          refExtra.nullable = valueExtra.nullable;
+        }
+      } else if (!upstreamAlias) {
+        setBindingDownstream(binding, valueExtra);
+      }
     }
   },
   translate: {
@@ -91,17 +116,23 @@ export default {
       const { node } = tag;
       const [valueAttr] = node.attributes;
       const { value } = valueAttr;
+      const varBinding = node.var!.extra?.binding;
 
-      if (isOutputDOM()) {
-        const section = getSection(tag);
-        const varBinding = node.var!.extra?.binding;
-
-        if (varBinding && !varBinding.upstreamAlias) {
-          const derivation = initValue(varBinding)!;
-          addValue(section, value.extra?.referencedBindings, derivation, value);
+      if (varBinding?.type !== BindingType.constant) {
+        if (isOutputDOM()) {
+          const section = getSection(tag);
+          if (varBinding && !varBinding.upstreamAlias) {
+            const derivation = initValue(varBinding)!;
+            addValue(
+              section,
+              value.extra?.referencedBindings,
+              derivation,
+              value,
+            );
+          }
+        } else {
+          translateVar(tag, value);
         }
-      } else {
-        translateVar(tag, value);
       }
 
       tag.remove();
@@ -119,3 +150,16 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/const.d.marko",
 } as Tag;
+
+function canInlineValue(value: unknown) {
+  switch (typeof value) {
+    case "string":
+    case "number":
+    case "boolean":
+    case "bigint":
+    case "undefined":
+      return true;
+    default:
+      return value === null;
+  }
+}

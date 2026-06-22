@@ -6,14 +6,13 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const more = ["m1"];
 	const moreStyles = ["display:block"];
 	const obj = { o: true };
-	const k = "computed";
 	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}<div${_attr_class([
 		"a",
 		["b", d],
 		...more,
 		...["n1", d],
 		{
-			[k]: d,
+			["computed"]: d,
 			...obj,
 			"q": d
 		}
@@ -27,14 +26,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		d,
 		more,
 		moreStyles,
-		obj,
-		k
+		obj
 	}, "__tests__/template.marko", 0, {
 		d: "1:6",
 		more: "2:8",
 		moreStyles: "3:8",
-		obj: "4:8",
-		k: "5:8"
+		obj: "4:8"
 	});
 	_resume_branch($scope0_id);
 }, 1);

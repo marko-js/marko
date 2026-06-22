@@ -12,7 +12,6 @@ const $if_content__input_value = /* @__PURE__ */ _if_closure("#text/0", 0, ($sco
 const $if_content__if = /* @__PURE__ */ _if("#text/0", 0, 0, $if_content2__setup);
 const $if_content__setup = ($scope) => {
 	$if_content__input_value._($scope);
-	2;
 	$if_content__if($scope, 1 ? 0 : 1);
 };
 const $hoist1_getter = _hoist_resume("__tests__/template.marko_0_hoist1/hoist", "hoist1");
