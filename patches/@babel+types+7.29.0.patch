@@ -294,7 +294,7 @@ index 3dff037..0f8f53b 100644
  var _deprecatedAliases = require("./deprecated-aliases.js");
 diff --git a/node_modules/@babel/types/lib/definitions/marko.js b/node_modules/@babel/types/lib/definitions/marko.js
 new file mode 100644
-index 0000000..e14efd5
+index 0000000..ad1f6c5
 --- /dev/null
 +++ b/node_modules/@babel/types/lib/definitions/marko.js
 @@ -0,0 +1,247 @@
@@ -467,7 +467,7 @@ index 0000000..e14efd5
 +});
 +
 +defineType("MarkoTagBody", {
-+  aliases: ["Marko", "BlockParent", "FunctionParent", "Scope"],
++  aliases: ["Marko", "BlockParent", "FunctionParent", "Scope", "Scopable"],
 +  builder: ["body", "params"],
 +  visitor: ["typeParameters", "params", "body"],
 +  fields: {
@@ -546,7 +546,7 @@ index 0000000..e14efd5
 +  },
 +});
 diff --git a/node_modules/@babel/types/lib/index.d.ts b/node_modules/@babel/types/lib/index.d.ts
-index efa49cb..b5023dc 100644
+index efa49cb..d22ec43 100644
 --- a/node_modules/@babel/types/lib/index.d.ts
 +++ b/node_modules/@babel/types/lib/index.d.ts
 @@ -364,6 +364,8 @@ interface SourceLocation {
@@ -580,7 +580,7 @@ index efa49cb..b5023dc 100644
      directives: Directive[];
      sourceType: "script" | "module";
      interpreter?: InterpreterDirective | null;
-@@ -1805,12 +1809,15 @@ interface TSTypeParameter extends BaseNode {
+@@ -1805,12 +1809,16 @@ interface TSTypeParameter extends BaseNode {
      out?: boolean | null;
  }
  type Standardized = ArrayExpression | AssignmentExpression | BinaryExpression | InterpreterDirective | Directive | DirectiveLiteral | BlockStatement | BreakStatement | CallExpression | CatchClause | ConditionalExpression | ContinueStatement | DebuggerStatement | DoWhileStatement | EmptyStatement | ExpressionStatement | File | ForInStatement | ForStatement | FunctionDeclaration | FunctionExpression | Identifier | IfStatement | LabeledStatement | StringLiteral | NumericLiteral | NullLiteral | BooleanLiteral | RegExpLiteral | LogicalExpression | MemberExpression | NewExpression | Program | ObjectExpression | ObjectMethod | ObjectProperty | RestElement | ReturnStatement | SequenceExpression | ParenthesizedExpression | SwitchCase | SwitchStatement | ThisExpression | ThrowStatement | TryStatement | UnaryExpression | UpdateExpression | VariableDeclaration | VariableDeclarator | WhileStatement | WithStatement | AssignmentPattern | ArrayPattern | ArrowFunctionExpression | ClassBody | ClassExpression | ClassDeclaration | ExportAllDeclaration | ExportDefaultDeclaration | ExportNamedDeclaration | ExportSpecifier | ForOfStatement | ImportDeclaration | ImportDefaultSpecifier | ImportNamespaceSpecifier | ImportSpecifier | ImportExpression | MetaProperty | ClassMethod | ObjectPattern | SpreadElement | Super | TaggedTemplateExpression | TemplateElement | TemplateLiteral | YieldExpression | AwaitExpression | Import | BigIntLiteral | ExportNamespaceSpecifier | OptionalMemberExpression | OptionalCallExpression | ClassProperty | ClassAccessorProperty | ClassPrivateProperty | ClassPrivateMethod | PrivateName | StaticBlock | ImportAttribute;
@@ -588,8 +588,10 @@ index efa49cb..b5023dc 100644
 +type Expression = ArrayExpression | AssignmentExpression | BinaryExpression | CallExpression | ConditionalExpression | FunctionExpression | Identifier | StringLiteral | NumericLiteral | NullLiteral | BooleanLiteral | RegExpLiteral | LogicalExpression | MemberExpression | NewExpression | ObjectExpression | SequenceExpression | ParenthesizedExpression | ThisExpression | UnaryExpression | UpdateExpression | ArrowFunctionExpression | ClassExpression | ImportExpression | MetaProperty | Super | TaggedTemplateExpression | TemplateLiteral | YieldExpression | AwaitExpression | Import | BigIntLiteral | OptionalMemberExpression | OptionalCallExpression | TypeCastExpression | JSXElement | JSXFragment | BindExpression | DoExpression | RecordExpression | TupleExpression | DecimalLiteral | ModuleExpression | TopicReference | PipelineTopicExpression | PipelineBareFunction | PipelinePrimaryTopicReference | TSInstantiationExpression | TSAsExpression | TSSatisfiesExpression | TSTypeAssertion | TSNonNullExpression
 +| MarkoParseError;
  type Binary = BinaryExpression | LogicalExpression;
- type Scopable = BlockStatement | CatchClause | DoWhileStatement | ForInStatement | ForStatement | FunctionDeclaration | FunctionExpression | Program | ObjectMethod | SwitchStatement | WhileStatement | ArrowFunctionExpression | ClassExpression | ClassDeclaration | ForOfStatement | ClassMethod | ClassPrivateMethod | StaticBlock | TSModuleBlock;
+-type Scopable = BlockStatement | CatchClause | DoWhileStatement | ForInStatement | ForStatement | FunctionDeclaration | FunctionExpression | Program | ObjectMethod | SwitchStatement | WhileStatement | ArrowFunctionExpression | ClassExpression | ClassDeclaration | ForOfStatement | ClassMethod | ClassPrivateMethod | StaticBlock | TSModuleBlock;
 -type BlockParent = BlockStatement | CatchClause | DoWhileStatement | ForInStatement | ForStatement | FunctionDeclaration | FunctionExpression | Program | ObjectMethod | SwitchStatement | WhileStatement | ArrowFunctionExpression | ForOfStatement | ClassMethod | ClassPrivateMethod | StaticBlock | TSModuleBlock;
++type Scopable = BlockStatement | CatchClause | DoWhileStatement | ForInStatement | ForStatement | FunctionDeclaration | FunctionExpression | Program | ObjectMethod | SwitchStatement | WhileStatement | ArrowFunctionExpression | ClassExpression | ClassDeclaration | ForOfStatement | ClassMethod | ClassPrivateMethod | StaticBlock | TSModuleBlock
++| MarkoTagBody;
 +type BlockParent = BlockStatement | CatchClause | DoWhileStatement | ForInStatement | ForStatement | FunctionDeclaration | FunctionExpression | Program | ObjectMethod | SwitchStatement | WhileStatement | ArrowFunctionExpression | ForOfStatement | ClassMethod | ClassPrivateMethod | StaticBlock | TSModuleBlock
 +| MarkoTagBody;
  type Block = BlockStatement | Program | TSModuleBlock;
@@ -599,7 +601,7 @@ index efa49cb..b5023dc 100644
  type Terminatorless = BreakStatement | ContinueStatement | ReturnStatement | ThrowStatement | YieldExpression | AwaitExpression;
  type CompletionStatement = BreakStatement | ContinueStatement | ReturnStatement | ThrowStatement;
  type Conditional = ConditionalExpression | IfStatement;
-@@ -1820,7 +1827,8 @@ type ExpressionWrapper = ExpressionStatement | ParenthesizedExpression | TypeCas
+@@ -1820,7 +1828,8 @@ type ExpressionWrapper = ExpressionStatement | ParenthesizedExpression | TypeCas
  type For = ForInStatement | ForStatement | ForOfStatement;
  type ForXStatement = ForInStatement | ForOfStatement;
  type Function = FunctionDeclaration | FunctionExpression | ObjectMethod | ArrowFunctionExpression | ClassMethod | ClassPrivateMethod;
@@ -609,7 +611,7 @@ index efa49cb..b5023dc 100644
  type Pureish = FunctionDeclaration | FunctionExpression | StringLiteral | NumericLiteral | NullLiteral | BooleanLiteral | RegExpLiteral | ArrowFunctionExpression | BigIntLiteral | DecimalLiteral;
  type Declaration = FunctionDeclaration | VariableDeclaration | ClassDeclaration | ExportAllDeclaration | ExportDefaultDeclaration | ExportNamedDeclaration | ImportDeclaration | DeclareClass | DeclareFunction | DeclareInterface | DeclareModule | DeclareModuleExports | DeclareTypeAlias | DeclareOpaqueType | DeclareVariable | DeclareExportDeclaration | DeclareExportAllDeclaration | InterfaceDeclaration | OpaqueType | TypeAlias | EnumDeclaration | TSDeclareFunction | TSInterfaceDeclaration | TSTypeAliasDeclaration | TSEnumDeclaration | TSModuleDeclaration | TSImportEqualsDeclaration;
  type FunctionParameter = Identifier | RestElement | AssignmentPattern | ArrayPattern | ObjectPattern | VoidPattern;
-@@ -1835,7 +1843,8 @@ type ObjectMember = ObjectMethod | ObjectProperty;
+@@ -1835,7 +1844,8 @@ type ObjectMember = ObjectMethod | ObjectProperty;
  type Property = ObjectProperty | ClassProperty | ClassAccessorProperty | ClassPrivateProperty;
  type UnaryLike = UnaryExpression | SpreadElement;
  type Pattern = AssignmentPattern | ArrayPattern | ObjectPattern | VoidPattern;
@@ -619,7 +621,7 @@ index efa49cb..b5023dc 100644
  type ImportOrExportDeclaration = ExportAllDeclaration | ExportDefaultDeclaration | ExportNamedDeclaration | ImportDeclaration;
  type ExportDeclaration = ExportAllDeclaration | ExportDefaultDeclaration | ExportNamedDeclaration;
  type ModuleSpecifier = ExportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier | ImportSpecifier | ExportNamespaceSpecifier | ExportDefaultSpecifier;
-@@ -1907,6 +1916,8 @@ interface Aliases {
+@@ -1907,6 +1917,8 @@ interface Aliases {
      TSType: TSType;
      TSBaseType: TSBaseType;
      ModuleDeclaration: ModuleDeclaration;
@@ -628,7 +630,7 @@ index efa49cb..b5023dc 100644
  }
  type DeprecatedAliases = NumberLiteral$1 | RegexLiteral$1 | RestProperty$1 | SpreadProperty$1;
  interface ParentMaps {
-@@ -3614,4 +3625,138 @@ declare const react: {
+@@ -3614,4 +3626,138 @@ declare const react: {
      buildChildren: typeof buildChildren;
  };
  
