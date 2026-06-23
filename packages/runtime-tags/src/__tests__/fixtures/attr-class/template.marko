@@ -1,11 +1,13 @@
 import CustomTag from "<custom-tag>";
 static const TestTag = CustomTag;
 
-<const/{ c, d }=input/>
+<const/{ c, d, e, f, g, h }=input/>
 
 <div class=["a", { b: c, d }]/>
 <div class=["a", false, "b"]/>
 <div class="a b c"/>
+<div class=c && "active"/>
+<div class=["base", { c, d, e, f, g, h }]/>
 
 <custom-tag class=["a", { b: c, d }]/>
 <custom-tag class=["a", false, "b"]/>

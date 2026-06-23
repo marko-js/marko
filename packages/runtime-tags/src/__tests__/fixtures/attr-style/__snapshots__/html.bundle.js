@@ -24,7 +24,7 @@ const TestTag = custom_tag_default;
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_color = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_style({ color: input.color })}></div>${_el_resume($scope0_id, "a", $sg__input_color)}<div style=width:100px></div><div style="color: green"></div>`);
+	_html(`<div${_attr_style({ color: input.color })}></div>${_el_resume($scope0_id, "a", $sg__input_color)}<div style=width:100px></div><div style="color: green"></div><div${input.color ? " style=color:red" : ""}></div>${_el_resume($scope0_id, "b", $sg__input_color)}`);
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input_color,
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 	custom_tag_default({ style: { color: input.color } });
 	custom_tag_default({ style: { width: "100px" } });
 	custom_tag_default({ style: "color: green" });
-	_dynamic_tag($scope0_id, "e", TestTag, {
+	_dynamic_tag($scope0_id, "f", TestTag, {
 		style: { color: "green" },
 		test: attrTag({
 			style: { color: "green" },
@@ -44,5 +44,5 @@ var template_default = _template("a", (input) => {
 			}, $scope0_id)
 		})
 	}, 0, 0, 0);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { b: _existing_scope($childScope) });
+	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { c: _existing_scope($childScope) });
 }, 1);

@@ -24,14 +24,17 @@ var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) =>
 
 // template.marko
 const TestTag = custom_tag_default;
+const $class = [
+	"a",
+	"\"a b\"",
+	"\"a d\"",
+	"\"a b d\""
+];
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_c__OR__input_d = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const { c, d } = input;
-	_html(`<div${_attr_class(["a", {
-		b: c,
-		d
-	}])}></div>${_el_resume($scope0_id, "#div/0", $sg__input_c__OR__input_d)}<div class="a b"></div><div class="a b c"></div>`);
+	const { c, d, e, f, g, h } = input;
+	_html(`<div class=${$class[(c ? 1 : 0) + (d ? 2 : 0)]}></div>${_el_resume($scope0_id, "#div/0", $sg__input_c__OR__input_d)}<div class="a b"></div><div class="a b c"></div><div${c ? " class=active" : ""}></div>${_el_resume($scope0_id, "#div/1", _serialize_guard($scope0_reason, 8))}<div${_attr_class("base" + (c ? " c" : "") + (d ? " d" : "") + (e ? " e" : "") + (f ? " f" : "") + (g ? " g" : "") + (h ? " h" : ""))}></div>${_el_resume($scope0_id, "#div/2", _serialize_guard($scope0_reason, 7))}`);
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input_c__OR__input_d,
@@ -46,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		false,
 		"b"
 	] });
-	_dynamic_tag($scope0_id, "#text/3", TestTag, {
+	_dynamic_tag($scope0_id, "#text/5", TestTag, {
 		class: ["a", {
 			b: c,
 			d
@@ -63,12 +66,20 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope0_id)
 		})
 	}, 0, 0, $sg__input_c__OR__input_d);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {
-		c: _serialize_if($scope0_reason, 2) && c,
-		d: _serialize_if($scope0_reason, 1) && d,
-		"#childScope/1": _existing_scope($childScope)
+	_serialize_if($scope0_reason, 7) && writeScope($scope0_id, {
+		c: _serialize_if($scope0_reason, 6) && c,
+		d: _serialize_if($scope0_reason, 5) && d,
+		e: _serialize_if($scope0_reason, 4) && e,
+		f: _serialize_if($scope0_reason, 3) && f,
+		g: _serialize_if($scope0_reason, 2) && g,
+		h: _serialize_if($scope0_reason, 1) && h,
+		"#childScope/3": _serialize_if($scope0_reason, 0) && _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		c: "4:10",
-		d: "4:13"
+		d: "4:13",
+		e: "4:16",
+		f: "4:19",
+		g: "4:22",
+		h: "4:25"
 	});
 }, 1);

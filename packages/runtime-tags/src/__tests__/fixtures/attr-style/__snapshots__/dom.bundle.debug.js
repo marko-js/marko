@@ -25,24 +25,25 @@ const $input_test_content = /* @__PURE__ */ _const("input_test_content", $if_con
 var custom_tag_default = /* @__PURE__ */ _template("__tests__/tags/custom-tag.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
-const $template = /* @__PURE__ */ ((_w0, _w1, _w2) => `<div></div><div style=width:100px></div><div style="color: green"></div>${_w0}${_w1}${_w2}<!><!>`)($template$1, $template$1, $template$1);
-const $walks = /* @__PURE__ */ ((_w0, _w1, _w2) => ` d/${_w0}&/${_w1}&/${_w2}&%c`)($walks$1, $walks$1, $walks$1);
+const $template = /* @__PURE__ */ ((_w0, _w1, _w2) => `<div></div><div style=width:100px></div><div style="color: green"></div><div></div>${_w0}${_w1}${_w2}<!><!>`)($template$1, $template$1, $template$1);
+const $walks = /* @__PURE__ */ ((_w0, _w1, _w2) => ` d b/${_w0}&/${_w1}&/${_w2}&%c`)($walks$1, $walks$1, $walks$1);
 const TestTag = custom_tag_default;
 const $test_content = _content_resume("__tests__/template.marko_1_content", "Hello", "b");
 const $input_color = /* @__PURE__ */ _const("input_color", ($scope) => {
 	_attr_style_item($scope["#div/0"], "color", $scope.input_color);
-	$input_style($scope["#childScope/1"], { color: $scope.input_color });
+	_attr_style($scope["#div/1"], $scope.input_color && "color:red");
+	$input_style($scope["#childScope/2"], { color: $scope.input_color });
 });
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/4");
+const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/5");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
-	$input_test($scope["#childScope/1"]);
 	/* @__PURE__ */ $setup$1($scope["#childScope/2"]);
-	$input_style($scope["#childScope/2"], { width: "100px" });
 	$input_test($scope["#childScope/2"]);
 	/* @__PURE__ */ $setup$1($scope["#childScope/3"]);
-	$input_style($scope["#childScope/3"], "color: green");
+	$input_style($scope["#childScope/3"], { width: "100px" });
 	$input_test($scope["#childScope/3"]);
+	/* @__PURE__ */ $setup$1($scope["#childScope/4"]);
+	$input_style($scope["#childScope/4"], "color: green");
+	$input_test($scope["#childScope/4"]);
 	$dynamicTag($scope, TestTag, () => ({
 		style: { color: "green" },
 		test: attrTag({

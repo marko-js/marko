@@ -13,6 +13,9 @@
   style="color:red"
 />
 <div
+  style="color:red"
+/>
+<div
   style="width:100px"
 />
 <div
@@ -41,6 +44,9 @@
   style="color:green"
 />
 <div
+  style="color:red"
+/>
+<div
   style="color:purple"
 />
 <div
@@ -62,5 +68,5 @@
 ## Change
 ```
 UPDATE: div:nth-of-type(1)[style] "color: red;" => "color: purple;"
-UPDATE: div:nth-of-type(4)[style] "color:red" => "color:purple"
+UPDATE: div:nth-of-type(5)[style] "color:red" => "color:purple"
 ```

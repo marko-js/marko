@@ -1,0 +1,15 @@
+<div
+  title=input.x ? "active" : "idle"
+  data-n=input.y ? 1 : 2
+  aria-hidden=input.z ? true : null
+  lang=input.x ? "en" : input.fallback
+  class=input.x ? "on" : "off"
+  style=input.y ? "color:red" : input.s
+  data-and=input.z && "true"
+  data-and-dyn=input.x && "on"
+  data-or=input.x || "fallback"
+  data-or-dyn=input.z || "q"
+  data-nullish=input.s ?? "none"
+  data-nullish-dyn=input.z ?? "q"
+  data-and-expr=input.z && input.fallback
+>content</div>

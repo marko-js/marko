@@ -27,7 +27,7 @@ const TestTag = custom_tag_default;
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_color = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<div${_attr_style({ color: input.color })}></div>${_el_resume($scope0_id, "#div/0", $sg__input_color)}<div style=width:100px></div><div style="color: green"></div>`);
+	_html(`<div${_attr_style({ color: input.color })}></div>${_el_resume($scope0_id, "#div/0", $sg__input_color)}<div style=width:100px></div><div style="color: green"></div><div${input.color ? " style=color:red" : ""}></div>${_el_resume($scope0_id, "#div/1", $sg__input_color)}`);
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason({
 		0: $sg__input_color,
@@ -36,7 +36,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	custom_tag_default({ style: { color: input.color } });
 	custom_tag_default({ style: { width: "100px" } });
 	custom_tag_default({ style: "color: green" });
-	_dynamic_tag($scope0_id, "#text/4", TestTag, {
+	_dynamic_tag($scope0_id, "#text/5", TestTag, {
 		style: { color: "green" },
 		test: attrTag({
 			style: { color: "green" },
@@ -47,5 +47,5 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			}, $scope0_id)
 		})
 	}, 0, 0, 0);
-	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { "#childScope/1": _existing_scope($childScope) }, "__tests__/template.marko", 0);
+	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, { "#childScope/2": _existing_scope($childScope) }, "__tests__/template.marko", 0);
 }, 1);

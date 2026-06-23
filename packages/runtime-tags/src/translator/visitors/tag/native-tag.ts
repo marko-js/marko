@@ -13,6 +13,8 @@ import {
   getEventHandlerName,
   getWrongAttrSuggestion,
   isEventHandler,
+  stringifyClassObject,
+  toDelimitedString,
 } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import { bodyToTextLiteral } from "../../util/body-to-text-literal";
@@ -23,6 +25,7 @@ import { getTagName } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
 import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
 import {
   type Binding,
@@ -430,7 +433,21 @@ export default {
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
               } else {
-                write`${callRuntime(helper, value)}`;
+                write`${factorAttrConditional(
+                  buildAttrExpression(
+                    value,
+                    (branch) => {
+                      const { confident, computed } = evaluate(branch);
+                      return confident
+                        ? getHTMLRuntime()[helper](computed)
+                        : undefined;
+                    },
+                    (branch) =>
+                      buildStringAttrAnd(helper, branch) ||
+                      (name === "class" && buildClassAttrExpression(branch)) ||
+                      callRuntime(helper, branch),
+                  ),
+                )}`;
               }
               break;
             }
@@ -440,7 +457,20 @@ export default {
               } else if (isEventHandler(name)) {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
-                write`${callRuntime("_attr", t.stringLiteral(name), value)}`;
+                write`${factorAttrConditional(
+                  buildAttrExpression(
+                    value,
+                    (branch) => {
+                      const { confident, computed } = evaluate(branch);
+                      return confident
+                        ? getHTMLRuntime()._attr(name, computed)
+                        : undefined;
+                    },
+                    (branch) =>
+                      buildLogicalAttr(name, branch) ||
+                      callRuntime("_attr", t.stringLiteral(name), branch),
+                  ),
+                )}`;
               }
 
               break;
@@ -1246,6 +1276,219 @@ function getTextOnlyEscapeHelper(tagName: string) {
     default:
       return "_escape";
   }
+}
+
+// Distribute the attr helper through a conditional, serializing literal branches
+// at build time: `_attr("a", x ? "b" : dyn)` -> `x ? ' a="b"' : _attr("a", dyn)`.
+function buildAttrExpression(
+  value: t.Expression,
+  serialize: (value: t.Expression) => string | undefined,
+  dynamic: (value: t.Expression) => t.Expression,
+): t.Expression {
+  if (value.type === "ConditionalExpression") {
+    return t.conditionalExpression(
+      value.test,
+      buildAttrExpression(value.consequent, serialize, dynamic),
+      buildAttrExpression(value.alternate, serialize, dynamic),
+    );
+  }
+
+  const serialized = serialize(value);
+  return serialized === undefined
+    ? dynamic(value)
+    : t.stringLiteral(serialized);
+}
+
+// Hoist a shared `name=` prefix out of a conditional with two literal branches
+// so it folds into the static HTML, e.g. `x ? ' class=on' : ' class=off'` ->
+// ` class=${x ? "on" : "off"}`. Each value keeps its own quoting.
+function factorAttrConditional(value: t.Expression): t.Expression {
+  if (value.type !== "ConditionalExpression") {
+    return value;
+  }
+
+  const consequent = factorAttrConditional(value.consequent);
+  const alternate = factorAttrConditional(value.alternate);
+  if (
+    consequent.type === "StringLiteral" &&
+    alternate.type === "StringLiteral"
+  ) {
+    const a = consequent.value;
+    const b = alternate.value;
+    const end = commonAttrPrefixEnd([a, b]);
+    if (end) {
+      return normalizeStringExpression([
+        a.slice(0, end),
+        t.conditionalExpression(
+          value.test,
+          t.stringLiteral(a.slice(end)),
+          t.stringLiteral(b.slice(end)),
+        ),
+      ])!;
+    }
+  }
+
+  return t.conditionalExpression(value.test, consequent, alternate);
+}
+
+// Length of the shared `name=` prefix of serialized attr strings (0 if none).
+function commonAttrPrefixEnd(strings: string[]) {
+  let prefix = strings[0];
+  for (let i = 1; i < strings.length && prefix; i++) {
+    const s = strings[i];
+    const len = Math.min(prefix.length, s.length);
+    let j = 0;
+    while (j < len && prefix[j] === s[j]) j++;
+    prefix = prefix.slice(0, j);
+  }
+  return prefix.lastIndexOf("=") + 1;
+}
+
+// `x && lit` / `x || lit` / `x ?? lit`: serialize the literal and pass the
+// operand to a helper once, e.g. `_attr("a", x && "b")` -> `_attr_and("a", x, ' a="b"')`.
+function buildLogicalAttr(name: string, value: t.Expression) {
+  if (value.type !== "LogicalExpression") {
+    return;
+  }
+
+  const { confident, computed } = evaluate(value.right);
+  if (!confident) {
+    return;
+  }
+
+  const attr = getHTMLRuntime()._attr(name, computed);
+  const helper =
+    value.operator === "&&"
+      ? "_attr_and"
+      : value.operator === "||"
+        ? "_attr_or"
+        : "_attr_nullish";
+  return callRuntime(
+    helper,
+    t.stringLiteral(name),
+    value.left,
+    t.stringLiteral(attr),
+  );
+}
+
+// class/style omit a falsy value, so `x && val` is just `x ? val : ""` — the
+// operand is used once and no helper is needed (unlike `_attr`).
+function buildStringAttrAnd(
+  helper: "_attr_class" | "_attr_style",
+  value: t.Expression,
+) {
+  if (value.type === "LogicalExpression" && value.operator === "&&") {
+    const { confident, computed } = evaluate(value.right);
+    if (confident) {
+      return t.conditionalExpression(
+        value.left,
+        t.stringLiteral(getHTMLRuntime()[helper](computed)),
+        t.stringLiteral(""),
+      );
+    }
+  }
+}
+
+// Resolve a static-base `class` object/array at build time, referencing each
+// toggle once: 1 toggle picks a precomputed literal; a few index a hoisted table
+// packed from the toggles; more concatenate the string for `_attr_class`.
+const MAX_PRECOMPUTED_CLASS_TOGGLES = 4;
+function buildClassAttrExpression(value: t.Expression) {
+  if (value.type !== "ObjectExpression" && value.type !== "ArrayExpression") {
+    return;
+  }
+
+  const meta: DelimitedAttrMeta = {
+    staticItems: undefined,
+    dynamicItems: undefined,
+    dynamicValues: undefined,
+  };
+  trackDelimitedAttrValue(value, meta);
+  if (meta.dynamicItems || !meta.staticItems || !meta.dynamicValues) {
+    return;
+  }
+
+  const base = toDelimitedString(meta.staticItems, " ", stringifyClassObject);
+  if (!base) {
+    return;
+  }
+
+  const { _attr_class } = getHTMLRuntime();
+  const keys = Object.keys(meta.dynamicValues);
+  if (keys.length === 1) {
+    const [key] = keys;
+    return t.conditionalExpression(
+      meta.dynamicValues[key],
+      t.stringLiteral(_attr_class(base + " " + key)),
+      t.stringLiteral(_attr_class(base)),
+    );
+  }
+
+  if (keys.length <= MAX_PRECOMPUTED_CLASS_TOGGLES) {
+    // Each combination's class string, indexed by the toggles bit-packed.
+    const combos: string[] = [];
+    for (let mask = 0; mask < 1 << keys.length; mask++) {
+      let classes = base;
+      for (let i = 0; i < keys.length; i++) {
+        if (mask & (1 << i)) classes += " " + keys[i];
+      }
+      combos.push(_attr_class(classes));
+    }
+
+    // Hoist the shared `class=` prefix; the table holds only the value parts.
+    const end = commonAttrPrefixEnd(combos);
+    const table = generateUidIdentifier("class");
+    getProgram().node.body.push(
+      t.markoScriptlet(
+        [
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              table,
+              t.arrayExpression(
+                combos.map((combo) => t.stringLiteral(combo.slice(end))),
+              ),
+            ),
+          ]),
+        ],
+        true,
+      ),
+    );
+
+    let index: t.Expression = t.conditionalExpression(
+      meta.dynamicValues[keys[0]],
+      t.numericLiteral(1),
+      t.numericLiteral(0),
+    );
+    for (let i = 1; i < keys.length; i++) {
+      index = t.binaryExpression(
+        "+",
+        index,
+        t.conditionalExpression(
+          meta.dynamicValues[keys[i]],
+          t.numericLiteral(1 << i),
+          t.numericLiteral(0),
+        ),
+      );
+    }
+
+    const lookup = t.memberExpression(t.cloneNode(table), index, true);
+    return normalizeStringExpression([combos[0].slice(0, end), lookup])!;
+  }
+
+  let classes: t.Expression = t.stringLiteral(base);
+  for (const key of keys) {
+    classes = t.binaryExpression(
+      "+",
+      classes,
+      t.conditionalExpression(
+        meta.dynamicValues[key],
+        t.stringLiteral(" " + key),
+        t.stringLiteral(""),
+      ),
+    );
+  }
+
+  return callRuntime("_attr_class", classes);
 }
 
 interface DelimitedAttrMeta {
