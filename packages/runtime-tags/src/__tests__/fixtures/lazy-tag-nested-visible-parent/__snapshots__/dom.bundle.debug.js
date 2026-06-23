@@ -1,11 +1,3 @@
-// template.marko
-const $template = "<!><!><!><!>";
-const $walks = "b%/&c";
-const $load_Child_trigger = /* @__PURE__ */ _load_visible_trigger("body");
-let $load_Child_setup = /* @__PURE__ */ _load_setup("#text/0", "#childScope/1", /* @__PURE__ */ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
-const $setup = $load_Child_setup;
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
-
 // child.marko
 const $template = "<button class=child>child:<!></button><!><!><!>";
 const $walks = " Db%l%/&c";
@@ -47,6 +39,14 @@ const $copy_name = /* @__PURE__ */ _const("copy_name", ($scope) => _text($scope[
 const $input_obj = $copy;
 const $input = ($scope, input) => $input_obj($scope, input.obj);
 var grand_child_default = /* @__PURE__ */ _template("__tests__/grand-child.marko", $template, $walks, $setup, $input);
+
+// template.marko
+const $template = "<!><!><!><!>";
+const $walks = "b%/&c";
+const $load_Child_trigger = /* @__PURE__ */ _load_visible_trigger("body");
+let $load_Child_setup = /* @__PURE__ */ _load_setup("#text/0", "#childScope/1", /* @__PURE__ */ $load_Child_trigger(() => import("./v:child.marko.setup.mjs")));
+const $setup = $load_Child_setup;
+var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
 
 // v:child.marko.setup.js
 const _ = [

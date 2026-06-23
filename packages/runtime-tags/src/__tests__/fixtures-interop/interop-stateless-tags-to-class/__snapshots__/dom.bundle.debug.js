@@ -1,3 +1,11 @@
+// v:template.marko.hydrate-6.js
+var v_template_marko_hydrate_6_default = () => init$1();
+
+// v:template.marko.hydrate-5.js
+var import_components = require_components();
+(0, import_components.register)("__tests__/components/my-button/index.marko", component_browser_default);
+var v_template_marko_hydrate_5_default = () => (0, import_components.init)();
+
 // components/my-button/component-browser.js
 var import_registry = require_registry();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
@@ -42,11 +50,3 @@ function $onClick() {
 }
 _resume("__tests__/template.marko_0/onClick", $onClick);
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, "b%c", $setup);
-
-// v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init$1();
-
-// v:template.marko.hydrate-5.js
-var import_components = require_components();
-(0, import_components.register)("__tests__/components/my-button/index.marko", component_browser_default);
-var v_template_marko_hydrate_5_default = () => (0, import_components.init)();

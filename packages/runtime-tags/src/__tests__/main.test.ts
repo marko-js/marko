@@ -7,7 +7,6 @@ import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
 import {
   type ChunkSizes,
-  createClientRunner,
   createServerRunner,
   getSizes,
   type Sizes,
@@ -107,7 +106,8 @@ function testFixtures(interop?: true) {
           const equivalent = config.equivalent !== false;
           const skipSSR =
             hasCompilerError || skipDOM || skipHTML || config.skip_ssr;
-          const skipCSR = hasCompilerError || skipDOM || config.skip_csr;
+          const skipCSR =
+            optimize || hasCompilerError || skipDOM || config.skip_csr;
           const stats: {
             dom?: Record<string, ChunkSizes | Sizes>;
             html?: Sizes;
@@ -213,11 +213,7 @@ function testFixtures(interop?: true) {
             resetResolveState();
             const browser = createBrowser();
             browsers.push(browser);
-            const runClient = await createClientRunner(
-              templateFile,
-              getModeOpts(),
-              interop,
-            );
+            const runClient = (await ssrRunner()).clientRunner!;
             const { document } = browser.window;
             const { input, steps } = await getSteps(config);
             const tracker = createMutationTracker(browser);

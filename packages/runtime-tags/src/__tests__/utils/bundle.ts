@@ -14,68 +14,12 @@ const markoExt = ".marko";
 const markoRe = /\.marko$/;
 const pageExt = ".page.mjs";
 const loadExt = ".load.mjs";
-const entryRe = /\.marko\.(load|page)?\.mjs$/;
+const csrExt = ".csr.mjs";
+const entryRe = /\.marko\.(load|page|csr)?\.mjs$/;
 const assetRuntimeId = "\0asset-runtime";
 const assetRuntimeIdRe = /\0asset-runtime$/;
 const virtualFilePrefix = "v:";
 const virtualRe = /(?:^|\/)v:/;
-
-export async function createClientRunner(
-  template: string,
-  config: compiler.Config,
-  interop?: boolean,
-) {
-  const optimize = !!config.optimize;
-  const cwd = path.dirname(template);
-  const out = path.join(cwd, "dist", "csr", optimize ? "optimize" : "debug");
-  const virtual = virtualPlugin(cwd);
-  const compileOpts: compiler.Config = {
-    ...config,
-    cache: new Map(),
-    resolveVirtualDependency: virtual.resolveVirtualDependency,
-    linkAssets: { runtime: assetRuntimeId, onAsset() {} },
-  };
-  await build({
-    cwd,
-    input: {
-      main: virtual.toVirtualFile(
-        template + pageExt,
-        `export { default as template } from "./${path.basename(template)}";\n${
-          interop
-            ? `import { run as _run } from "@marko/runtime-tags/dom";
-import { ___componentLookup } from "marko/src/node_modules/@internal/components-util";
-export function run() { _run(); Object.values(___componentLookup).forEach((c) => c.update()); };
-`
-            : `export { run } from "@marko/runtime-tags/dom";`
-        }`,
-      ),
-    },
-    platform: "browser",
-    treeshake: optimize,
-    experimental: { nativeMagicString: true },
-    transform: { define: { MARKO_DEBUG: String(!optimize) } },
-    moduleTypes: { ".css": "text" },
-    plugins: [
-      virtual.plugin,
-      optimize && remapDebugPlugin(),
-      optimize && interop && remapDistPlugin(),
-      markoPlugin({ ...compileOpts, output: "dom" }),
-    ],
-    output: {
-      dir: out,
-      cleanDir: true,
-      sourcemap: true,
-      sourcemapExcludeSources: true,
-      entryFileNames: "[name].mjs",
-    },
-  });
-  return (
-    ctx: any,
-  ): Promise<{
-    template: Template;
-    run: RunDOM;
-  }> => importWithContext(path.join(out, "main.mjs"), { browser: true }, ctx);
-}
 
 export async function createServerRunner<T extends Record<string, string>>(
   cwd: string,
@@ -85,16 +29,20 @@ export async function createServerRunner<T extends Record<string, string>>(
 ): Promise<{
   assets: string;
   runServer(): Promise<Record<keyof T, Template>>;
+  clientRunner?: (ctx: any) => Promise<{ template: Template; run: RunDOM }>;
   domBundle(): Promise<SnapshotResult>;
   htmlBundle(): Promise<SnapshotResult>;
 }> {
   const optimize = !!config.optimize;
-  const out = path.join(cwd, "dist", "ssr", optimize ? "optimize" : "debug");
+  const out = path.join(cwd, "dist", optimize ? "optimize" : "debug");
   const htmlOut = path.join(out, "html");
   const domOut = path.join(out, "dom");
   const virtual = virtualPlugin(cwd);
   const domEntry = entryPlugin();
   const entryNames = Object.keys(entries);
+  const csrEntryId = optimize
+    ? undefined
+    : path.join(cwd, path.basename(entries[entryNames[0]])) + csrExt;
   const compileOpts: compiler.Config = {
     ...config,
     cache: new Map(),
@@ -109,6 +57,7 @@ export async function createServerRunner<T extends Record<string, string>>(
 
   const domBuilt = build({
     cwd,
+    ...(csrEntryId ? { input: { csr: csrEntryId } } : {}),
     platform: "browser",
     treeshake: optimize,
     experimental: { nativeMagicString: true },
@@ -130,7 +79,18 @@ export async function createServerRunner<T extends Record<string, string>>(
           filter: { id: entryRe },
           handler(id) {
             const file = id.replace(entryRe, markoExt);
-            const isPage = entryRe.exec(id)![1] === "page";
+            const kind = entryRe.exec(id)![1];
+            if (kind === "csr") {
+              return `export { default as template } from "./${path.basename(file)}";\n${
+                interop
+                  ? `import { run as _run } from "@marko/runtime-tags/dom";
+import { ___componentLookup } from "marko/src/node_modules/@internal/components-util";
+export function run() { _run(); Object.values(___componentLookup).forEach((c) => c.update()); };`
+                  : `export { run } from "@marko/runtime-tags/dom";`
+              }`;
+            }
+
+            const isPage = kind === "page";
             const { code } = compiler.compileFileSync(file, {
               ...compileOpts,
               output: "dom",
@@ -259,12 +219,26 @@ export async function createServerRunner<T extends Record<string, string>>(
   const domResult = await domBuilt;
   const htmlResult = await htmlBuilt;
 
+  const csrFileName =
+    csrEntryId &&
+    domResult.output.find((c) => c.type === "chunk" && c.name === "csr")
+      ?.fileName;
+  const clientRunner = csrFileName
+    ? (ctx: any): Promise<{ template: Template; run: RunDOM }> =>
+        importWithContext(
+          path.join(domOut, csrFileName),
+          { browser: true },
+          ctx,
+        )
+    : undefined;
+
   return {
     assets: domOut,
     runServer: () =>
       import(path.join(htmlOut, "main.mjs")) as Promise<
         Record<keyof T, Template>
       >,
+    clientRunner,
     domBundle: () => buildSnapshot(domResult, cwd, optimize),
     htmlBundle: () => buildSnapshot(htmlResult, cwd),
   };
