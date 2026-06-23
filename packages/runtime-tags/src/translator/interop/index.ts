@@ -45,6 +45,11 @@ export function createInteropTranslator(translate5: any) {
       [kState]?: {
         has5: boolean;
         has6: boolean;
+        // Relative import paths of the topmost Tags API (Marko 6) templates that
+        // are rendered by a Class API (Marko 5) ancestor. When the entry root is
+        // a Class API template, these are imported in its place so a server only
+        // class root (and the Marko 5 runtime it would pull in) can be dropped.
+        islandRoots6: Set<string>;
       };
     };
     const { Program } = visitor;
@@ -82,10 +87,21 @@ export function createInteropTranslator(translate5: any) {
                 ),
               );
             };
+            // When the entry root is itself a Tags API template, importing it
+            // pulls in its whole subtree (as before). When it is a Class API
+            // template it can be dropped: the Marko 6 hydrate program imports
+            // the Tags API island roots it renders directly instead.
+            const importTargets6 = isTagsAPI(entryFile)
+              ? undefined
+              : [...state.islandRoots6];
             return [
               importHydrateProgram(
                 "6",
-                translate6.internalEntryBuilder.build(entryFile, true),
+                translate6.internalEntryBuilder.build(
+                  entryFile,
+                  true,
+                  importTargets6,
+                ),
               ),
               importHydrateProgram(
                 "5",
@@ -108,15 +124,24 @@ export function createInteropTranslator(translate5: any) {
       visit(
         file: t.BabelFile,
         entryFile: EntryFile,
+        parentIsTags: boolean | undefined,
         visitChild: (id: string) => void,
       ) {
         const state = (entryFile[kState] ||= {
           has5: false,
           has6: false,
+          islandRoots6: new Set(),
         });
 
         if (isTagsAPI(file)) {
           state.has6 = true;
+          // The topmost Tags API template under a Class API ancestor: importing
+          // it covers its statically rendered Tags API subtree.
+          if (parentIsTags === false) {
+            state.islandRoots6.add(
+              resolveRelativePath(entryFile, file.opts.filename as string),
+            );
+          }
           translate6.internalEntryBuilder.visit(file, entryFile, visitChild);
         } else {
           state.has5 = true;
@@ -141,20 +166,22 @@ export function createInteropTranslator(translate5: any) {
           const visitedFiles = new Set([
             resolveRelativePath(entryFile, entryFile.opts.filename as string),
           ]);
-          entryBuilder.visit(
-            entryFile,
-            entryFile,
-            function visitChild(resolved) {
-              if (!visitedFiles.has(resolved)) {
-                visitedFiles.add(resolved);
-                const file = loadFileForImport(entryFile, resolved);
-                if (file) {
-                  entryBuilder.visit(file, entryFile, (id) =>
-                    visitChild(resolveRelativeToEntry(entryFile, file, id)),
-                  );
-                }
+          const walkChild = (resolved: string, parentIsTags: boolean) => {
+            if (!visitedFiles.has(resolved)) {
+              visitedFiles.add(resolved);
+              const file = loadFileForImport(entryFile, resolved);
+              if (file) {
+                entryBuilder.visit(file, entryFile, parentIsTags, (id) =>
+                  walkChild(
+                    resolveRelativeToEntry(entryFile, file, id),
+                    isTagsAPI(file),
+                  ),
+                );
               }
-            },
+            }
+          };
+          entryBuilder.visit(entryFile, entryFile, undefined, (id) =>
+            walkChild(id, isTagsAPI(entryFile)),
           );
 
           program.node.body = entryBuilder.build(entryFile);

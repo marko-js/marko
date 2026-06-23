@@ -25,7 +25,16 @@ type EntryFile = t.BabelFile & {
 const kState: unique symbol = Symbol();
 
 export default {
-  build(entryFile: EntryFile, exportInit?: boolean) {
+  build(
+    entryFile: EntryFile,
+    exportInit?: boolean,
+    // When provided (eg the interop builder dropping a server only class api
+    // root), the listed templates are imported directly instead of the entry
+    // root. Importing each pulls in its statically rendered subtree, so the
+    // (foreign runtime) root and anything it only renders server side can be
+    // dead code eliminated. When omitted the entry root is imported as before.
+    importTargets?: readonly string[],
+  ) {
     const state = entryFile[kState];
     if (!state) {
       throw entryFile.path.buildCodeFrameError(
@@ -33,12 +42,25 @@ export default {
       );
     }
     const body: t.Statement[] = [];
-    if (state.init) {
+    const useTargets = importTargets !== undefined;
+    // Nothing to initialize unless the tree is interactive. When importing
+    // island templates in place of the root, there must also be at least one to
+    // import (a fully server only island subtree needs no client runtime).
+    const hasInit = state.init && (!useTargets || importTargets.length > 0);
+
+    // The entry root import pulls in every template (and therefore each of
+    // their client assets) transitively, so the collected asset imports are
+    // only needed when the root is not imported: a server only page, or one
+    // whose runtime island roots are imported in the root's place.
+    if (useTargets || !state.init) {
+      for (const asset of state.assets) {
+        body.push(t.importDeclaration([], t.stringLiteral(asset)));
+      }
+    }
+
+    if (hasInit) {
       const isPage = entryFile.path.node.extra.page;
       const initHelper: DOMRuntimeHelpers = isPage ? "init" : "initEmbedded";
-      // The main entry import below pulls in every template (and therefore each
-      // of their client assets) transitively, so the collected asset imports
-      // are not needed here.
       body.push(
         t.importDeclaration(
           [
@@ -53,11 +75,24 @@ export default {
             }dom`,
           ),
         ),
-        t.importDeclaration(
-          [],
-          t.stringLiteral(`./${path.basename(entryFile.opts.filename)}`),
-        ),
       );
+
+      if (useTargets) {
+        // Each island template self registers its resume handlers as a side
+        // effect when imported, so the client can resume it regardless of which
+        // (foreign runtime, server only) ancestor rendered it.
+        for (const target of importTargets) {
+          body.push(t.importDeclaration([], t.stringLiteral(target)));
+        }
+      } else {
+        body.push(
+          t.importDeclaration(
+            [],
+            t.stringLiteral(`./${path.basename(entryFile.opts.filename)}`),
+          ),
+        );
+      }
+
       const { runtimeId } = entryFile.markoOpts;
       const readyId =
         !isPage && getTemplateId(entryFile.markoOpts, entryFile.opts.filename);
@@ -79,21 +114,13 @@ export default {
             )
           : t.expressionStatement(initExpression),
       );
-    } else {
-      // A server only page has no runtime to initialize, so its client assets
-      // (which an interactive page receives transitively through the main entry
-      // import) must be linked in directly.
-      for (const asset of state.assets) {
-        body.push(t.importDeclaration([], t.stringLiteral(asset)));
-      }
-
-      if (exportInit) {
-        body.push(
-          t.exportDefaultDeclaration(
-            t.arrowFunctionExpression([], t.blockStatement([])),
-          ),
-        );
-      }
+    } else if (exportInit) {
+      // A server only page has no runtime to initialize.
+      body.push(
+        t.exportDefaultDeclaration(
+          t.arrowFunctionExpression([], t.blockStatement([])),
+        ),
+      );
     }
     return body;
   },
