@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	let a = let_global_default({ value: "count" });
 	_var($scope0_id, "b", $childScope, "a0");
 	let b = a + 1;
-	_html(`<div>${_escape(a)}${_el_resume($scope0_id, "c")}</div><div>${_escape(b)}${_el_resume($scope0_id, "d")}</div><button>${_escape(`${a},${b}`)}${_el_resume($scope0_id, "f")}</button>${_el_resume($scope0_id, "e")}`);
+	_html(`<div>${_escape(a)}${_el_resume($scope0_id, "c")}</div><div>${_escape(b)}${_el_resume($scope0_id, "d")}</div><button>${_escape(`${a}`)},${_escape(`${b}`)}${_el_resume($scope0_id, "f")}</button>${_el_resume($scope0_id, "e")}`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		g: a,

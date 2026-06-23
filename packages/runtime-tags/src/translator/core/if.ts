@@ -8,6 +8,7 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { bodyToTextLiteral } from "../util/body-to-text-literal";
 import { getAccessorPrefix } from "../util/get-accessor-char";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
@@ -23,7 +24,7 @@ import {
   kBranchSerializeReason,
   mergeReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
+import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import {
   ContentType,
   getBranchRendererArgs,
@@ -51,6 +52,7 @@ import {
   setClosureSignalBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
@@ -364,6 +366,95 @@ export const ElseTag = {
     },
   ],
 };
+
+// An `<if>`/`<else-if>`/`<else>` chain whose branches only render text can be
+// collapsed into a single text placeholder, e.g.
+//   <if=show>Hi</><else>Bye</>  ->  ${show ? "Hi" : "Bye"}
+// This avoids the branch scopes and `_if` runtime entirely.
+export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
+  if (!isCoreTagName(rootTag, "if")) return;
+
+  // Only convert when the conditional renders inside a native element. There it
+  // becomes a normal text node; at the root of a template or component body the
+  // content is instead treated as a dynamic renderer (with different SSR/CSR
+  // hydration), so the placeholder rewrite would not be equivalent.
+  const tagBody = rootTag.parentPath;
+  if (!tagBody.isMarkoTagBody()) return;
+  const parentTag = tagBody.parentPath;
+  if (
+    !parentTag.isMarkoTag() ||
+    analyzeTagNameType(parentTag) !== TagNameType.NativeTag
+  ) {
+    return;
+  }
+
+  const { _escape } = getHTMLRuntime();
+  const branches: t.NodePath<t.MarkoTag>[] = [];
+  let cur: t.NodePath<any> = rootTag;
+
+  do {
+    const tag = cur as t.NodePath<t.MarkoTag>;
+    const { node } = tag;
+    const body = node.body.body;
+
+    // Attribute tags or empty bodies fall back to the normal `<if>` handling.
+    if (node.body.attributeTags || !body.length) return;
+
+    const [attr] = node.attributes;
+    if (isCoreTagName(tag, "else")) {
+      // An `<else if=...>` is conditional, so leave it to the normal handling.
+      if (node.attributes.length) return;
+    } else if (
+      node.attributes.length !== 1 ||
+      !t.isMarkoAttribute(attr) ||
+      !attr.default
+    ) {
+      return;
+    }
+
+    for (const child of body) {
+      if (t.isMarkoText(child)) {
+        // A placeholder escapes its value, so only collapse static text that
+        // is unaffected by escaping (otherwise e.g. `&amp;` would change).
+        if (_escape(child.value) !== child.value) return;
+      } else if (!t.isMarkoPlaceholder(child) || !child.escape) {
+        // An unescaped placeholder would render raw, but the flattened
+        // placeholder always escapes, so leave the chain alone.
+        return;
+      }
+    }
+
+    branches.push(tag);
+
+    let next = cur.getNextSibling();
+    while (next.node && next.isMarkoComment()) next = next.getNextSibling();
+    cur = next;
+  } while (
+    cur.node &&
+    (isCoreTagName(cur, "else-if") || isCoreTagName(cur, "else"))
+  );
+
+  // Converting bypasses the analyze phase (and its validation), so ensure the
+  // chain is well formed before doing so; invalid chains fall through to the
+  // normal handling where the appropriate error is reported.
+  for (const branchTag of branches) {
+    assertValidCondition(branchTag);
+  }
+
+  let expr: t.Expression = t.stringLiteral("");
+  for (let i = branches.length; i--; ) {
+    const branchTag = branches[i];
+    const text = bodyToTextLiteral(branchTag.node.body);
+    expr = isCoreTagName(branchTag, "else")
+      ? text
+      : t.conditionalExpression(branchTag.node.attributes[0].value, text, expr);
+  }
+
+  for (let i = branches.length; i-- > 1; ) {
+    branches[i].remove();
+  }
+  rootTag.replaceWith(t.markoPlaceholder(expr, true));
+}
 
 function assertValidCondition(tag: t.NodePath<t.MarkoTag>) {
   assertNoVar(tag);

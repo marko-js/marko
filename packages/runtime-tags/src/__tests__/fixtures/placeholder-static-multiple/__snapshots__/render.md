@@ -11,6 +11,5 @@
 ```
 ## Change
 ```
-INSERT: div > :is(::text("AB"), ::text("C"), ::text("D"))
-UPDATE: div::text@2 "" => "C"
+UPDATE: div::text "" => "ABCD"
 ```

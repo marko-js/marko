@@ -1,8 +1,3 @@
 // template.marko
-const $if_content__mounted = /* @__PURE__ */ _if_closure(0, 0, ($scope) => _text($scope.a, $scope._.b && "C"));
-const $if = /* @__PURE__ */ _if(0, "AB<!>D", "b%c", $if_content__mounted);
-const $mounted = /* @__PURE__ */ _let(1, ($scope) => {
-	$if($scope, $scope.b ? 0 : 1);
-	$if_content__mounted($scope);
-});
-const $setup__script = _script("a0", ($scope) => $mounted($scope, true));
+const $mounted = /* @__PURE__ */ _let(1, ($scope) => _text($scope.a, $scope.b ? `${_to_text("A")}B${_to_text($scope.b && "C")}D` : ""));
+const $setup__script = _script$1("a0", ($scope) => $mounted($scope, true));

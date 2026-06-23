@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	}, "a0", $scope0_id), () => {
 		_html(`<select><option${_attrs(placeholder, "b", $scope0_id, "option")}>-- choose --</option>${_el_resume($scope0_id, "b")}<option${_attr_option_value("a")}>A</option><option${_attr_option_value("b")}>B</option></select>`);
 	});
-	_html(`${_el_resume($scope0_id, "a")}<output>${_escape(value === void 0 ? "undefined" : "value=" + value)}${_el_resume($scope0_id, "c")}</output>`);
+	_html(`${_el_resume($scope0_id, "a")}<output>${value === void 0 ? "undefined" : _escape("value=" + value)}${_el_resume($scope0_id, "c")}</output>`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, {});

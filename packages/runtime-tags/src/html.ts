@@ -29,6 +29,7 @@ export {
   _escape_comment,
   _escape_script,
   _escape_style,
+  _to_text,
   _unescaped,
 } from "./html/content";
 export { _content, _content_resume, _dynamic_tag } from "./html/dynamic-tag";

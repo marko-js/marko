@@ -2,9 +2,12 @@ import { types as t } from "@marko/compiler";
 import { isNativeTag } from "@marko/compiler/babel-utils";
 
 import { htmlAttrNameReg, userAttrNameReg } from "../../../common/helpers";
+import { flattenTextOnlyConditional } from "../../core/if";
 import { preAnalyze as preAnalyzeTextarea } from "../../core/textarea";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getMarkoRoot, isMarko } from "../../util/get-root";
+import normalizeStringExpression from "../../util/normalize-string-expression";
+import { getHTMLRuntime } from "../../util/runtime";
 import withPreviousLocation from "../../util/with-previous-location";
 
 type StringOrIdPath = t.NodePath<t.StringLiteral> | t.NodePath<t.Identifier>;
@@ -31,9 +34,64 @@ function normalizeBody(
   if (body?.length) {
     for (const child of body) {
       if (child.isMarkoTag()) {
-        normalizeTag(child);
+        // May replace a text-only `<if>` chain with a single placeholder.
+        flattenTextOnlyConditional(child);
+        if (child.isMarkoTag()) {
+          normalizeTag(child);
+        }
+      } else if (child.isMarkoPlaceholder()) {
+        hoistStaticPlaceholderText(child);
       }
     }
+  }
+}
+
+// Pulls the unconditional leading/trailing static parts of a template literal
+// placeholder into adjacent text nodes so they can be written statically (and
+// tree-shaken) instead of escaped at runtime, e.g.
+//   ${`Message ${data}`}  ->  Message ${data}
+// Only escape-invariant text is moved, since a text node is written raw.
+function hoistStaticPlaceholderText(
+  placeholder: t.NodePath<t.MarkoPlaceholder>,
+) {
+  const { node } = placeholder;
+  const normalized = normalizeStringExpression([node.value]);
+  if (!normalized || !t.isTemplateLiteral(normalized)) return;
+  node.value = normalized;
+
+  const { _escape } = getHTMLRuntime();
+  const { quasis } = normalized;
+  const lastIndex = quasis.length - 1;
+  const leading = quasis[0].value.cooked ?? "";
+  const trailing = quasis[lastIndex].value.cooked ?? "";
+
+  if (leading && _escape(leading) === leading) {
+    insertStaticText(placeholder, leading, true);
+    quasis[0].value = { raw: "", cooked: "" };
+  }
+
+  if (trailing && _escape(trailing) === trailing) {
+    insertStaticText(placeholder, trailing, false);
+    quasis[lastIndex].value = { raw: "", cooked: "" };
+  }
+}
+
+function insertStaticText(
+  placeholder: t.NodePath<t.MarkoPlaceholder>,
+  value: string,
+  before: boolean,
+) {
+  const sibling = before
+    ? placeholder.getPrevSibling()
+    : placeholder.getNextSibling();
+  if (sibling.isMarkoText()) {
+    sibling.node.value = before
+      ? sibling.node.value + value
+      : value + sibling.node.value;
+  } else if (before) {
+    placeholder.insertBefore(t.markoText(value));
+  } else {
+    placeholder.insertAfter(t.markoText(value));
   }
 }
 
