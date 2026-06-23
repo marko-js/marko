@@ -1,3 +1,12 @@
+// child.marko
+const $template = "<span id=child> </span>";
+const $walks = "D l";
+const $setup = () => {};
+throw new Error("load failed");
+const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
+const $input = ($scope, input) => $input_value($scope, input.value);
+var child_default = /* @__PURE__ */ _template("__tests__/child.marko", $template, "D l", $setup, $input);
+
 // template.marko
 const $template = "<button id=toggle>toggle</button><!><!>";
 const $walks = " b%c";
@@ -31,15 +40,6 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
-
-// child.marko
-const $template = "<span id=child> </span>";
-const $walks = "D l";
-const $setup = () => {};
-throw new Error("load failed");
-const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
-const $input = ($scope, input) => $input_value($scope, input.value);
-var child_default = /* @__PURE__ */ _template("__tests__/child.marko", $template, "D l", $setup, $input);
 
 // v:child.marko.setup.js
 const _ = [

@@ -1,3 +1,22 @@
+// child.marko
+const $template = "<button> </button>";
+const $walks = " D l";
+const $setup = () => {};
+const $count__script = _script("__tests__/child.marko_0_count", ($scope) => _on($scope["#button/0"], "click", function() {
+	$count($scope, $scope.count + 1);
+}));
+const $count = /* @__PURE__ */ _let("count/6", ($scope) => {
+	_text($scope["#text/1"], $scope.count);
+	$count__script($scope);
+});
+const $input_value = $count;
+const $input_id = ($scope, input_id) => _attr($scope["#button/0"], "id", input_id);
+const $input = ($scope, input) => {
+	$input_value($scope, input.value);
+	$input_id($scope, input.id);
+};
+var child_default = /* @__PURE__ */ _template("__tests__/child.marko", $template, $walks, $setup, $input);
+
 // template.marko
 const $template = "<!><!><!><!><!>";
 const $walks = "b%/&b%c";
@@ -24,25 +43,6 @@ const $input_value = ($scope, input_value) => {
 };
 const $input = ($scope, input) => $input_value($scope, input.value);
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup, $input);
-
-// child.marko
-const $template = "<button> </button>";
-const $walks = " D l";
-const $setup = () => {};
-const $count__script = _script("__tests__/child.marko_0_count", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
-}));
-const $count = /* @__PURE__ */ _let("count/6", ($scope) => {
-	_text($scope["#text/1"], $scope.count);
-	$count__script($scope);
-});
-const $input_value = $count;
-const $input_id = ($scope, input_id) => _attr($scope["#button/0"], "id", input_id);
-const $input = ($scope, input) => {
-	$input_value($scope, input.value);
-	$input_id($scope, input.id);
-};
-var child_default = /* @__PURE__ */ _template("__tests__/child.marko", $template, $walks, $setup, $input);
 
 // v:child.marko.setup.js
 const _ = [

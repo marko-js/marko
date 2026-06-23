@@ -1,5 +1,4 @@
 // template.marko
-var import_components = require_components();
 var import_vdom = require_vdom();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();

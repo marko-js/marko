@@ -1,3 +1,15 @@
+// child.marko
+const $template = "<div><!>: <!></div>";
+const $walks = "D%c%l";
+const $setup = () => {};
+const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
+const $input_value = ($scope, input_value) => _text($scope["#text/1"], input_value);
+const $input = ($scope, input) => {
+	$input_label($scope, input.label);
+	$input_value($scope, input.value);
+};
+var child_default = /* @__PURE__ */ _template("__tests__/child.marko", $template, $walks, $setup, $input);
+
 // template.marko
 const $template = "<button>Inc</button><!><!>";
 const $walks = " b%c";
@@ -23,18 +35,6 @@ function $setup($scope) {
 	$count($scope, 0);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
-
-// child.marko
-const $template = "<div><!>: <!></div>";
-const $walks = "D%c%l";
-const $setup = () => {};
-const $input_label = ($scope, input_label) => _text($scope["#text/0"], input_label);
-const $input_value = ($scope, input_value) => _text($scope["#text/1"], input_value);
-const $input = ($scope, input) => {
-	$input_label($scope, input.label);
-	$input_value($scope, input.value);
-};
-var child_default = /* @__PURE__ */ _template("__tests__/child.marko", $template, $walks, $setup, $input);
 
 // v:child.marko.setup.js
 const _ = [
