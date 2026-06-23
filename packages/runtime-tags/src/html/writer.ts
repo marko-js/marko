@@ -14,6 +14,7 @@ import {
   AccessorProp,
   type Falsy,
   ResumeSymbol,
+  RuntimeKey,
 } from "../common/types";
 import { RendererProp } from "../common/types";
 import { attrAssignment } from "./attrs";
@@ -58,12 +59,6 @@ enum Mark {
   ReorderMarker = "#",
 }
 
-enum RuntimeKey {
-  Walk = ".w",
-  Resume = ".r",
-  Ready = ".b",
-  Scripts = ".j",
-}
 export function getChunk(): Chunk | undefined {
   return $chunk;
 }
@@ -971,6 +966,7 @@ export class State implements SerializeState {
     this.hasReadyRuntime = true;
     return (
       this.runtimePrefix +
+      "." +
       RuntimeKey.Ready +
       "={" +
       readyKey +
@@ -981,7 +977,7 @@ export class State implements SerializeState {
   }
 
   readyAccess(readyKey: string) {
-    return this.runtimePrefix + RuntimeKey.Ready + toAccess(readyKey);
+    return this.runtimePrefix + "." + RuntimeKey.Ready + toAccess(readyKey);
   }
 
   nextReorderId() {
@@ -1325,13 +1321,18 @@ export class Chunk {
       if (state.hasWrittenResume) {
         scripts = concatScripts(
           scripts,
-          runtimePrefix + RuntimeKey.Resume + ".push(" + state.resumes + ")",
+          runtimePrefix +
+            "." +
+            RuntimeKey.Resume +
+            ".push(" +
+            state.resumes +
+            ")",
         );
       } else {
         state.hasWrittenResume = true;
         scripts = concatScripts(
           scripts,
-          runtimePrefix + RuntimeKey.Resume + "=[" + state.resumes + "]",
+          runtimePrefix + "." + RuntimeKey.Resume + "=[" + state.resumes + "]",
         );
       }
     }
@@ -1399,7 +1400,7 @@ export class Chunk {
             state.hasWrittenResume = true;
             scripts = concatScripts(
               scripts,
-              runtimePrefix + RuntimeKey.Resume + "=[]",
+              runtimePrefix + "." + RuntimeKey.Resume + "=[]",
             );
           }
 
@@ -1417,6 +1418,7 @@ export class Chunk {
           scripts,
           reorderScripts &&
             runtimePrefix +
+              "." +
               RuntimeKey.Scripts +
               toAccess(reorderId!) +
               "=_=>{" +
@@ -1438,7 +1440,10 @@ export class Chunk {
     }
 
     if (needsWalk) {
-      scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");
+      scripts = concatScripts(
+        scripts,
+        runtimePrefix + "." + RuntimeKey.Walk + "()",
+      );
     }
 
     this.html = html;

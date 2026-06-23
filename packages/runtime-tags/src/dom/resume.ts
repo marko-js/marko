@@ -8,6 +8,7 @@ import {
   type BranchScope,
   type EncodedAccessor,
   ResumeSymbol,
+  RuntimeKey,
   type Scope,
 } from "../common/types";
 import { runEffects, skipDestroyedRenders } from "./queue";
@@ -32,13 +33,13 @@ export interface RenderData {
   // Marked nodes to visit
   v: Comment[];
   // Resumes
-  r?: ResumeData;
+  [RuntimeKey.Resume]?: ResumeData;
   // Walk
-  w(): void;
+  [RuntimeKey.Walk](): void;
   // Deserialize scopes and run scripts ("m" for marko)
   m?(effects: unknown[]): unknown[];
   // Blocking resumes keyed by ready id.
-  b?: Record<string, ResumeData>;
+  [RuntimeKey.Ready]?: Record<string, ResumeData>;
   /* --- Used by inline runtime --- */
 
   // Document
@@ -48,7 +49,7 @@ export interface RenderData {
   // Reorder-runtime
   x: never;
   // Reordered scripts
-  j?: never;
+  [RuntimeKey.Scripts]?: never;
   // Await counter lookup
   p?: Record<string | number, AwaitCounter>;
 }

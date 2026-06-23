@@ -40,6 +40,16 @@ export enum ResumeSymbol {
   BranchEndSingleNodeOnlyChildInParent = "}",
 }
 
+// Property names on the inline runtime object. The HTML writer concatenates
+// these (prefixed with ".") into resume scripts while the DOM `RenderData`
+// reads them back, so both sides must agree — keep them in this one place.
+export enum RuntimeKey {
+  Walk = "w",
+  Resume = "r",
+  Ready = "b",
+  Scripts = "j",
+}
+
 export interface AwaitCounter {
   m?: (effects: unknown[]) => unknown[];
   i: number;
