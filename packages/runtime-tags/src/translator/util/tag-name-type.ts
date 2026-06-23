@@ -9,6 +9,8 @@ import {
 
 import type { LoadImportConfig } from "../visitors/import-declaration";
 import { isCoreTag } from "./is-core-tag";
+import { isEventOrChangeHandler } from "./is-event-or-change-handler";
+import { isOutputHTML } from "./marko-config";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -21,6 +23,7 @@ declare module "@marko/compiler/dist/types" {
     tagNameImported?: string;
     tagNameLoad?: LoadImportConfig;
     featureType?: ProgramExtra["featureType"];
+    serverOnlyClass?: boolean;
   }
 }
 
@@ -73,7 +76,22 @@ export default function analyzeTagNameType(
         extra.tagNameType = TagNameType.DynamicTag;
         extra.tagNameDynamic = true;
         extra.featureType = "class";
-        (getProgram().node.extra ??= {}).needsCompat = true;
+        // A Class API child with no interactive component anywhere in its
+        // subtree only renders on the server. It is emitted as static content
+        // on the client and skipped during resume, so the compat layer (and
+        // the Class API runtime it pulls in) is only needed for the server
+        // (HTML) build, never the browser bundle.
+        const childMeta = childFile?.metadata.marko;
+        const serverOnly = !!(
+          childMeta &&
+          !childMeta.component &&
+          !childMeta.tags?.length &&
+          hasOnlyStaticInput(tag)
+        );
+        extra.serverOnlyClass = serverOnly;
+        if (!serverOnly || isOutputHTML()) {
+          (getProgram().node.extra ??= {}).needsCompat = true;
+        }
       } else if (!childFile) {
         extra.tagNameType = TagNameType.DynamicTag;
         extra.tagNameDynamic = true;
@@ -84,6 +102,37 @@ export default function analyzeTagNameType(
   return !allowDynamic && extra.tagNameDynamic
     ? TagNameType.DynamicTag
     : extra.tagNameType!;
+}
+
+// A Class API child can only stay server-only if the Tags API parent passes it
+// purely static input — no event handlers, spreads, arguments, reactive
+// attribute values, or non-text body content would all require it to be
+// rendered/updated on the client.
+function hasOnlyStaticInput(tag: t.NodePath<t.MarkoTag>) {
+  const { node } = tag;
+  if (node.arguments?.length) return false;
+
+  for (const attr of node.attributes) {
+    if (!t.isMarkoAttribute(attr) || isEventOrChangeHandler(attr.name)) {
+      return false;
+    }
+
+    switch (attr.value.type) {
+      case "StringLiteral":
+      case "NumericLiteral":
+      case "BooleanLiteral":
+      case "NullLiteral":
+        break;
+      default:
+        return false;
+    }
+  }
+
+  for (const child of node.body.body) {
+    if (child.type !== "MarkoText") return false;
+  }
+
+  return true;
 }
 
 function analyzeExpressionTagName(

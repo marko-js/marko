@@ -41,6 +41,7 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
+  serverOnly?: 1,
 ) => {
   const shouldResume = serializeReason !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
@@ -154,6 +155,7 @@ export let _dynamic_tag = (
           _set_serialize_reason(
             shouldResume && inputOrArgs !== undefined ? 1 : 0,
           );
+          state.serverOnly = serverOnly;
           return inputIsArgs
             ? renderer(...(inputOrArgs as unknown[]))
             : renderer(
@@ -163,6 +165,7 @@ export let _dynamic_tag = (
               );
         } finally {
           _set_serialize_reason(undefined);
+          state.serverOnly = undefined;
         }
       } else if (content) {
         return content();
@@ -220,6 +223,7 @@ export const patchDynamicTag = (
       content,
       inputIsArgs,
       resume,
+      serverOnly,
     ) => {
       const patched = patch(tag, scopeId, accessor);
       if (patched !== tag)
@@ -232,6 +236,7 @@ export const patchDynamicTag = (
         content,
         inputIsArgs,
         resume,
+        serverOnly,
       );
     };
   }

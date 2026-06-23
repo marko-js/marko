@@ -162,7 +162,7 @@ export default {
       if (
         tagExtra?.featureType === "class" &&
         !isOutputHTML() &&
-        !getTagTemplate(tag)
+        (!getTagTemplate(tag) || tagExtra.serverOnlyClass)
       ) {
         tag.remove();
         return;
@@ -279,7 +279,10 @@ export default {
         // We use the dynamic tag when a custom tag from the class runtime is used
 
         if (getTagTemplate(tag)) {
-          if (getSerializeReason(tagSection, nodeBinding)) {
+          if (
+            !tagExtra.serverOnlyClass &&
+            getSerializeReason(tagSection, nodeBinding)
+          ) {
             if (isOutputHTML()) {
               getProgram().node.body.push(
                 t.markoScriptlet(
@@ -362,11 +365,22 @@ export default {
       if (isOutputHTML()) {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
-        const serializeArg = getSerializeGuard(
-          tagSection,
-          getSerializeReason(tagSection, nodeBinding),
-          true,
-        );
+        // A server-only Class API child renders to static HTML and is never
+        // resumed on the client, so its dynamic tag skips serializing a resume
+        // marker/renderer (`serializeReason = 0`) and flags the compat layer to
+        // render it without a component (the trailing `serverOnly` argument).
+        const serverOnly = isClassAPI && tagExtra.serverOnlyClass;
+        const serverOnlyArg = serverOnly ? t.numericLiteral(1) : undefined;
+        const serializeArg = serverOnly
+          ? undefined
+          : getSerializeGuard(
+              tagSection,
+              getSerializeReason(tagSection, nodeBinding),
+              true,
+            );
+        const serializeReasonArg = serverOnly
+          ? t.numericLiteral(0)
+          : serializeArg;
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -376,7 +390,8 @@ export default {
               t.arrayExpression(args),
               t.numericLiteral(0),
               t.numericLiteral(1),
-              serializeArg,
+              serializeReasonArg,
+              serverOnlyArg,
             )
           : callRuntime(
               "_dynamic_tag",
@@ -386,7 +401,8 @@ export default {
               args[0],
               args[1] || (serializeArg ? t.numericLiteral(0) : undefined),
               serializeArg ? t.numericLiteral(0) : undefined,
-              serializeArg,
+              serializeReasonArg,
+              serverOnlyArg,
             );
 
         if (node.var) {

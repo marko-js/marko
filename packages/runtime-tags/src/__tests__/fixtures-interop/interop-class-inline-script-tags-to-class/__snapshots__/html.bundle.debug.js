@@ -20,6 +20,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let n = 0;
 	_html(`<div id=tags-api>${_escape(n)}</div>`);
-	_dynamic_tag($scope0_id, "#text/1", _marko_template, {}, 0, 0, 0);
+	_dynamic_tag($scope0_id, "#text/1", _marko_template, {}, void 0, void 0, 0, 1);
 	_resume_branch($scope0_id);
 }, 1);

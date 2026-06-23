@@ -8,6 +8,7 @@ import {
   _await,
   _html,
   _peek_scope_id,
+  _peek_server_only,
   _scope,
   _scope_id,
   _script,
@@ -37,6 +38,12 @@ export const compat = {
   nextScopeId: _scope_id,
   peekNextScopeId: _peek_scope_id,
   isInResumedBranch,
+  // True when the compiler determined this Class API child is server-only (a
+  // presentational child the Tags API parent never updates on the client), so
+  // the compat layer must not register/serialize it for client resume.
+  isServerOnlyRender() {
+    return _peek_server_only() === 1;
+  },
   ensureState($global: any) {
     let state: State | undefined = ($global[K_TAGS_API_STATE] ||=
       getChunk()?.boundary.state);

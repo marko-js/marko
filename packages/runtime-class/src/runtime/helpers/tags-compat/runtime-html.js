@@ -194,7 +194,11 @@ exports.p = function (htmlCompat) {
           }
         }
 
-        componentsContext.___forceBoundary = true;
+        // When the Tags API parent will not update this child on the client we
+        // avoid forcing a component boundary: a presentational child then has
+        // no component to serialize and stays server-only, while a child with
+        // its own component is still serialized and hydrates independently.
+        componentsContext.___forceBoundary = !htmlCompat.isServerOnlyRender();
         renderer5(input, out);
 
         const componentDef = componentsContext.___components[0];

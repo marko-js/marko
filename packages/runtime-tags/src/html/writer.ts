@@ -264,6 +264,10 @@ export function _set_serialize_reason(reason: undefined | 0 | 1) {
   $chunk.boundary.state.serializeReason = reason;
 }
 
+export function _peek_server_only() {
+  return $chunk.boundary.state.serverOnly;
+}
+
 export function _scope_reason() {
   const reason = $chunk.boundary.state.serializeReason;
   $chunk.boundary.state.serializeReason = undefined;
@@ -930,6 +934,9 @@ export class State implements SerializeState {
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;
   public serializeReason: undefined | 0 | 1;
+  // Set by a dynamic tag rendering a server-only Class API child so the compat
+  // layer knows not to register/serialize it for the client.
+  public serverOnly: undefined | 1;
   constructor(
     public $global: $Global & { renderId: string; runtimeId: string },
   ) {
