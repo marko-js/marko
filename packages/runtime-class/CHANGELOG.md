@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.39.10
+
+### Patch Changes
+
+- [#3275](https://github.com/marko-js/marko/pull/3275) [`fdf5656`](https://github.com/marko-js/marko/commit/fdf565679eab4be30c8f3acbad2a1457ecdf22a1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix Class API inline scripts (`out.script(...)`) being dropped when a Class API component renders inside a Tags API parent.
+
+- [#3277](https://github.com/marko-js/marko/pull/3277) [`4350a7f`](https://github.com/marko-js/marko/commit/4350a7f4202012ff106bf95d242a1fe6a7f5780b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a crash when a Class API component renders an imported Tags API component through a dynamic tag (`<${TagsComponent}/>`).
+
+- Updated dependencies [[`bf09dab`](https://github.com/marko-js/marko/commit/bf09dab75d4acc08940e99c758d64bbbe8988079), [`fdb5627`](https://github.com/marko-js/marko/commit/fdb56274e6ba9986d5398427dbdc9c17bf3c3844), [`47bbd04`](https://github.com/marko-js/marko/commit/47bbd04f707b1dd0eb0d68e766b7d5b7a1ff0aba), [`3a66e8b`](https://github.com/marko-js/marko/commit/3a66e8b8a08db82f9a7d51ec6a01335684f4032f), [`8b34976`](https://github.com/marko-js/marko/commit/8b3497645b7fc684a4aec0a08b4305eb19a7f34b), [`d043f9c`](https://github.com/marko-js/marko/commit/d043f9c778bd7964b23471e1d8668511b23936d0)]:
+  - @marko/runtime-tags@6.1.16
+
 ## 5.39.9
 
 ### Patch Changes
