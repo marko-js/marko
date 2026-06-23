@@ -1,5 +1,21 @@
 # @marko/runtime-tags
 
+## 6.1.16
+
+### Patch Changes
+
+- [#3271](https://github.com/marko-js/marko/pull/3271) [`bf09dab`](https://github.com/marko-js/marko/commit/bf09dab75d4acc08940e99c758d64bbbe8988079) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Render a non-promise `<await>` value synchronously even when the `<await>` is inside a `<try>`. Previously the browser runtime could only render it synchronously at the top level and deferred to the next tick inside a `<try>` (because the await value is resolved before its content branch is created); it now renders in the same pass.
+
+- [#3269](https://github.com/marko-js/marko/pull/3269) [`fdb5627`](https://github.com/marko-js/marko/commit/fdb56274e6ba9986d5398427dbdc9c17bf3c3844) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Render a `<await>` tag synchronously when its value is not a promise, instead of crashing with `value.then is not a function`. This matches the server runtime, which already renders non-promise values synchronously.
+
+- [#3273](https://github.com/marko-js/marko/pull/3273) [`47bbd04`](https://github.com/marko-js/marko/commit/47bbd04f707b1dd0eb0d68e766b7d5b7a1ff0aba) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Collapse value signals that only forward their scope and value to another signal (`(scope, value) => fn(scope, value)`) down to the target signal itself, removing the redundant wrapper closure from the generated output.
+
+- [#3265](https://github.com/marko-js/marko/pull/3265) [`3a66e8b`](https://github.com/marko-js/marko/commit/3a66e8b8a08db82f9a7d51ec6a01335684f4032f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Render known tag content passthroughs (`<${input.x}/>` with no tag variable, arguments, attributes or body) through a leaner `_dynamic_tag_content` signal instead of the general `_dynamic_tag`. When a known custom tag or `<define>` tag forwards statically known body content, the parent now calls this specialized signal, which skips renderer normalization, the native (string) tag branch, tag variables and parameter handling. Where that content branch is included in the client build (e.g. mounted inside a client-toggled `<if>`), this drops the heavy `_dynamic_tag` dependencies and roughly halves the bundled cost of that code. Server-rendered content is tree-shaken from the client as before, so those bundles and resume behavior are unchanged.
+
+- [#3278](https://github.com/marko-js/marko/pull/3278) [`8b34976`](https://github.com/marko-js/marko/commit/8b3497645b7fc684a4aec0a08b4305eb19a7f34b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize text rendering: collapse text-only `<if>`/`<else>` chains in native elements to a single placeholder, escape only the dynamic parts of a placeholder (static strings are escaped at compile time), and hoist static leading/trailing text out of placeholders into static text nodes.
+
+- [#3274](https://github.com/marko-js/marko/pull/3274) [`d043f9c`](https://github.com/marko-js/marko/commit/d043f9c778bd7964b23471e1d8668511b23936d0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix static (server only) pages not linking their client side assets. Colocated style files (eg `template.style.css`), `<style>` blocks, and imports matching the `hydrateIncludeImports` option are now included in a page's client entry even when nothing in its template tree is interactive, so completely static routes are no longer rendered unstyled.
+
 ## 6.1.15
 
 ### Patch Changes
