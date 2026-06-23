@@ -1,4 +1,8 @@
+// v:template.marko.hydrate-6.js
+var v_template_marko_hydrate_6_default = () => {};
+
 // tags/components/hello-internal.marko
+var import_components = require_components();
 var import_vdom = require_vdom();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
 var import_registry = require_registry();
@@ -16,26 +20,5 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 }, _marko_component);
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
-// tags/hello.marko
-const $template$1 = "<!><!><!>";
-const $walks$1 = "b%c";
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
-function $setup$1($scope) {
-	$dynamicTag($scope, _marko_template);
-}
-var hello_default = /* @__PURE__ */ _template("__tests__/tags/hello.marko", $template$1, "b%c", $setup$1);
-
-// template.marko
-const $template = /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($template$1);
-const $walks = /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c");
-function $setup($scope) {
-	$setup$1($scope["#childScope/0"]);
-}
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
-
-// v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init$1();
-
 // v:template.marko.hydrate-5.js
-var import_components = require_components();
 var v_template_marko_hydrate_5_default = () => (0, import_components.init)();

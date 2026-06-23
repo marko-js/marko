@@ -136,7 +136,12 @@ export default {
     const programExtra = file.path.node.extra;
     const { analyzedTags, assetImports } = file.metadata.marko;
 
-    if (programExtra.isInteractive || programExtra.needsCompat) {
+    // Only actual interactivity requires client runtime. Notably `needsCompat`
+    // (rendering a Class API child) does not: that is needed to render the child
+    // server side, but an inert/server only class child has no client behavior,
+    // and a stateful one hydrates through the Marko 5 runtime independently. So
+    // a Tags API page rendering only server only class children ships nothing.
+    if (programExtra.isInteractive) {
       state.init = true;
     }
 

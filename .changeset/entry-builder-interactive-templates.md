@@ -2,4 +2,9 @@
 "@marko/runtime-tags": patch
 ---
 
-When a Class API (Marko 5) page renders interactive Tags API (Marko 6) templates through interop, the client entry now imports those Tags API island templates directly instead of importing the Class API entry root. A server only Class API root (and the Marko 5 runtime it would otherwise pull in) can then be dead code eliminated, so a page whose only Class API templates are server only ships no Marko 5 runtime. Pure Tags API pages are unaffected.
+The interop client entry now only ships runtime for templates that actually run on the client, dead code eliminating server only templates of either API and the runtime they would otherwise pull in:
+
+- A Tags API (Marko 6) page that renders only inert/server only Class API (Marko 5) children no longer forces client hydration, so it ships no Marko 5 runtime. Stateful class children continue to hydrate through the Marko 5 runtime independently.
+- When a Class API page renders interactive Tags API templates, the client entry imports those Tags API island templates directly instead of the Class API entry root, so a server only class root (and its Marko 5 runtime) can be dropped.
+
+Pure Tags API pages are unaffected.
