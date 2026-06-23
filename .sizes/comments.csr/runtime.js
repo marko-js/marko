@@ -1,4 +1,4 @@
-// size: 6531 (min) 2849 (brotli)
+// size: 6545 (min) 2866 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -400,22 +400,23 @@ function loop(forEach) {
               ? referenceNode.parentNode || oldScopes[0]?.S.parentNode
               : referenceNode,
           oldScopesByKey,
-          hasPotentialMoves;
+          start = 0;
         forEach(value, (key, args) => {
-          let branch =
-            oldLen &&
-            (oldScopesByKey ||= oldScopes.reduce(
-              (map, scope, i) => map.set(scope.M ?? i, scope),
-              /* @__PURE__ */ new Map(),
-            )).get(key);
-          (branch
-            ? (hasPotentialMoves = oldScopesByKey.delete(key))
-            : (branch = createAndSetupBranch(
-                scope.$,
-                renderer,
-                scope,
-                parentNode,
-              )),
+          let branch;
+          (start < oldLen &&
+            (!oldScopesByKey && (oldScopes[start].M ?? start) === key
+              ? (branch = oldScopes[start++])
+              : (branch = (oldScopesByKey ||= oldScopes.reduce(
+                  (map, scope, i) =>
+                    i < start ? map : map.set(scope.M ?? i, scope),
+                  /* @__PURE__ */ new Map(),
+                )).get(key)) && oldScopesByKey.delete(key)),
+            (branch ||= createAndSetupBranch(
+              scope.$,
+              renderer,
+              scope,
+              parentNode,
+            )),
             (branch.M = key),
             newScopes.push(branch),
             params?.(branch, args));
@@ -424,8 +425,7 @@ function loop(forEach) {
           hasSiblings = referenceNode !== parentNode,
           afterReference = null,
           oldEnd = oldLen - 1,
-          newEnd = newLen - 1,
-          start = 0;
+          newEnd = newLen - 1;
         if (
           (hasSiblings &&
             (oldLen
@@ -435,7 +435,7 @@ function loop(forEach) {
               : newLen &&
                 ((afterReference = referenceNode.nextSibling),
                 referenceNode.remove())),
-          !hasPotentialMoves)
+          oldScopesByKey ? oldScopesByKey.size >= oldLen : !start)
         ) {
           oldLen &&
             (oldScopes.forEach(
@@ -446,17 +446,10 @@ function loop(forEach) {
             insertBranchBefore(newScope, parentNode, afterReference);
           return;
         }
-        for (let branch of oldScopesByKey.values())
-          removeAndDestroyBranch(branch);
         for (
-          ;
-          start < oldLen &&
-          start < newLen &&
-          oldScopes[start] === newScopes[start];
-        )
-          start++;
-        for (
-          ;
+          (oldScopesByKey || oldScopes.slice(start)).forEach(
+            removeAndDestroyBranch,
+          );
           oldEnd >= start &&
           newEnd >= start &&
           oldScopes[oldEnd] === newScopes[newEnd];
@@ -489,7 +482,7 @@ function loop(forEach) {
               (~tail && (pred[i] = tails[tail]), (tails[++tail] = i));
             else {
               for (lo = 0, hi = tail; lo < hi; )
-                ((mid = ((lo + hi) / 2) | 0),
+                ((mid = (lo + hi) >> 1),
                   sources[tails[mid]] < sources[i]
                     ? (lo = mid + 1)
                     : (hi = mid));

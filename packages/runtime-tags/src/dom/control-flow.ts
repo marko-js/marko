@@ -719,7 +719,11 @@ function loop<T extends unknown[] = unknown[]>(
           : referenceNode
       ) as Element;
       let oldScopesByKey: Map<unknown, BranchScope> | undefined;
-      let hasPotentialMoves: boolean | undefined;
+      // Length of the common prefix matched so far. Updates that preserve key
+      // order (mutating data in place, appending) consume this prefix without
+      // ever building or probing a key `Map`, and it doubles as the reconcile's
+      // `start` cursor below — so there is no separate prefix rescan.
+      let start = 0;
 
       if (MARKO_DEBUG) {
         // eslint-disable-next-line no-var
@@ -731,22 +735,34 @@ function loop<T extends unknown[] = unknown[]>(
           assertValidLoopKey(key, seenKeys);
         }
 
-        let branch =
-          oldLen &&
-          (oldScopesByKey ||= oldScopes.reduce(
-            (map, scope, i) => map.set(scope[AccessorProp.LoopKey] ?? i, scope),
-            new Map<unknown, BranchScope>(),
-          )).get(key);
-        if (branch) {
-          hasPotentialMoves = oldScopesByKey!.delete(key);
-        } else {
-          branch = createAndSetupBranch(
-            scope[AccessorProp.Global],
-            renderer,
-            scope,
-            parentNode,
-          );
+        let branch: BranchScope | undefined;
+        if (start < oldLen) {
+          if (
+            !oldScopesByKey &&
+            (oldScopes[start][AccessorProp.LoopKey] ?? start) === key
+          ) {
+            // Matches the next old scope in order: reuse it without a key map.
+            branch = oldScopes[start++];
+          } else if (
+            // Out of order: lazily index the still-unmatched old scopes by key.
+            (branch = (oldScopesByKey ||= oldScopes.reduce(
+              (map, scope, i) =>
+                i < start
+                  ? map
+                  : map.set(scope[AccessorProp.LoopKey] ?? i, scope),
+              new Map<unknown, BranchScope>(),
+            )).get(key))
+          ) {
+            oldScopesByKey.delete(key);
+          }
         }
+
+        branch ||= createAndSetupBranch(
+          scope[AccessorProp.Global],
+          renderer,
+          scope,
+          parentNode,
+        );
         branch[AccessorProp.LoopKey] = key;
         newScopes.push(branch);
         params?.(branch, args);
@@ -757,7 +773,6 @@ function loop<T extends unknown[] = unknown[]>(
       let afterReference: null | Node = null;
       let oldEnd = oldLen - 1;
       let newEnd = newLen - 1;
-      let start = 0;
 
       if (hasSiblings) {
         if (oldLen) {
@@ -771,8 +786,10 @@ function loop<T extends unknown[] = unknown[]>(
         }
       }
 
-      if (!hasPotentialMoves) {
-        // Fast path: if we never match an existing branch, we can directly add or remove all scopes.
+      // No reuse at all (pure create / replace / clear): bulk add/remove without
+      // diffing. "No reuse" means we neither matched a scope in order nor removed
+      // any entry from the key map.
+      if (oldScopesByKey ? oldScopesByKey.size >= oldLen : !start) {
         if (oldLen) {
           oldScopes.forEach(
             hasSiblings ? removeAndDestroyBranch : destroyBranch,
@@ -789,18 +806,13 @@ function loop<T extends unknown[] = unknown[]>(
         return;
       }
 
-      for (const branch of oldScopesByKey!.values()) {
-        removeAndDestroyBranch(branch);
-      }
-
-      // Skip common prefix
-      while (
-        start < oldLen &&
-        start < newLen &&
-        oldScopes[start] === newScopes[start]
-      ) {
-        start++;
-      }
+      // Destroy the old scopes that weren't reused: either the unmatched entries
+      // left in the key map, or — when we stayed in order and never built one —
+      // the in-order tail that was dropped from the end. `Map` and `Array` both
+      // expose a compatible `forEach`.
+      (oldScopesByKey || oldScopes.slice(start)).forEach(
+        removeAndDestroyBranch,
+      );
 
       // Skip common suffix
       while (
@@ -859,7 +871,7 @@ function loop<T extends unknown[] = unknown[]>(
             lo = 0;
             hi = tail;
             while (lo < hi) {
-              mid = ((lo + hi) / 2) | 0;
+              mid = (lo + hi) >> 1;
               if (sources[tails[mid]] < sources[i]) lo = mid + 1;
               else hi = mid;
             }
