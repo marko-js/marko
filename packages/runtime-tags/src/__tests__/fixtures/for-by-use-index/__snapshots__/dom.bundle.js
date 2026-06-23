@@ -5,8 +5,7 @@ const $for_content__messages__OR__index = /* @__PURE__ */ _or(5, _script("a0", (
 	$messages($scope._, $scope._.c.toSpliced($scope.e, 1));
 	$last($scope._, $scope.e);
 })));
-const $for_content__messages = /* @__PURE__ */ _for_closure(0, $for_content__messages__OR__index);
-const $for_content__setup = $for_content__messages;
+const $for_content__setup = /* @__PURE__ */ _for_closure(0, $for_content__messages__OR__index);
 const $for_content__index = /* @__PURE__ */ _const(4, $for_content__messages__OR__index);
 const $for_content__message = ($scope, message) => _html($scope, message, "b");
 const $for_content__$params = ($scope, $params2) => {
@@ -14,10 +13,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__index($scope, $params2[1]);
 };
 const $for = /* @__PURE__ */ _for_of(0, "<button> </button>", " D l", $for_content__setup, $for_content__$params);
-const $messages = /* @__PURE__ */ _let(2, ($scope) => {
-	$for($scope, [$scope.c, (f) => f]);
-	$for_content__messages($scope);
-});
+const $messages = /* @__PURE__ */ _let(2, ($scope) => $for($scope, [$scope.c, (f) => f]));
 const $if = /* @__PURE__ */ _if(1, "<div> </div>", "D l", $if_content__setup);
 const $last = /* @__PURE__ */ _let(3, ($scope) => {
 	$if($scope, $scope.d !== void 0 ? 0 : 1);

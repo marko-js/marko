@@ -95,6 +95,10 @@ export interface Binding {
   loc: t.SourceLocation | null;
   section: Section;
   closureSections: Opt<Section>;
+  // Subset of `closureSections` where every read of this binding is a native
+  // event handler. Such reads are evaluated live when the handler fires, so the
+  // value signal does not need to re-run their closure when it changes.
+  liveHandlerClosureSections: Opt<Section>;
   assignmentSections: Opt<Section>;
   sources: undefined | Sources;
   reads: Set<ReferencedExtra>;
@@ -160,6 +164,9 @@ declare module "@marko/compiler/dist/types" {
     read?: ExtraRead;
     pruned?: true;
     isEffect?: true;
+    // Marks a native-tag event handler value. Reads inside the handler run live
+    // when it fires, so cross-section reads never need to re-bind the handler.
+    isEventHandler?: true;
     spreadFrom?: Binding;
     nativeTagSpread?: true;
     nativeTagSpreadMerged?: true;
@@ -206,6 +213,7 @@ export function createBinding(
     property,
     declared,
     closureSections: undefined,
+    liveHandlerClosureSections: undefined,
     assignmentSections: undefined,
     excludeProperties,
     noSerialize: false,
@@ -787,7 +795,7 @@ export function mergeReferences<T extends t.Node>(
   const fnReadsByExpression = getFunctionReadsByExpression();
   let reads = readsByExpression.get(targetExtra);
   let exprFnReads = fnReadsByExpression.get(targetExtra);
-  let { isEffect } = targetExtra;
+  let { isEffect, isEventHandler } = targetExtra;
 
   for (const node of nodes) {
     if (!node) continue;
@@ -797,6 +805,9 @@ export function mergeReferences<T extends t.Node>(
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);
       isEffect ||= extra.isEffect;
+      // Only a fully-event-handler expression keeps reads "live"; any
+      // non-handler contributor means the merged value must subscribe normally.
+      isEventHandler &&= extra.isEventHandler;
       if (additionalReads) {
         forEach(additionalReads, (read) => {
           read.binding.reads.delete(extra);
@@ -826,6 +837,7 @@ export function mergeReferences<T extends t.Node>(
 
   readsByExpression.set(targetExtra, reads);
   targetExtra.isEffect = isEffect;
+  targetExtra.isEventHandler = isEventHandler;
   targetExtra.section = section;
 
   return targetExtra as NonNullable<T["extra"]> & ReferencedExtra;
@@ -1003,7 +1015,12 @@ export function finalizeReferences() {
       getCanonicalBinding(binding),
     );
 
-    for (const { isEffect, section } of binding.reads) {
+    // Track, per closure section, whether every read came from an event
+    // handler. A section with any non-handler read is "mixed" and disqualified.
+    let liveHandlerSections: Set<Section> | undefined;
+    let mixedSections: Set<Section> | undefined;
+    let liveHandlerCanonical: Binding | undefined;
+    for (const { isEffect, isEventHandler, section } of binding.reads) {
       if (section.depth > binding.section.depth) {
         if (binding.type === BindingType.local) {
           section.referencedLocalClosures = bindingUtil.add(
@@ -1027,7 +1044,24 @@ export function finalizeReferences() {
             canonicalUpstreamAlias.section,
             !!isEffect || canonicalUpstreamAlias.sources,
           );
+
+          liveHandlerCanonical = canonicalUpstreamAlias;
+          if (isEventHandler && !mixedSections?.has(section)) {
+            (liveHandlerSections ||= new Set()).add(section);
+          } else if (!isEventHandler) {
+            (mixedSections ||= new Set()).add(section);
+            liveHandlerSections?.delete(section);
+          }
         }
+      }
+    }
+
+    if (liveHandlerSections?.size && liveHandlerCanonical) {
+      for (const section of liveHandlerSections) {
+        liveHandlerCanonical.liveHandlerClosureSections = sectionUtil.add(
+          liveHandlerCanonical.liveHandlerClosureSections,
+          section,
+        );
       }
     }
   }

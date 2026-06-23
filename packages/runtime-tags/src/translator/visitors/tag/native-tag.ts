@@ -137,6 +137,7 @@ export default {
 
           if (isEventHandler(attr.name)) {
             valueExtra.isEffect = true;
+            valueExtra.isEventHandler = true;
             hasEventHandlers = true;
           } else {
             assertValidNativeEventHandlerAttr(tag, attr);

@@ -10,14 +10,11 @@ const $for_content__setup = ($scope) => {
 	_text($scope["#text/1"], $scope["#LoopKey"]);
 };
 const $for = /* @__PURE__ */ _for_to("#text/0", "<button> </button>", " D l", $for_content__setup);
-const $num = /* @__PURE__ */ _let("num/1", ($scope) => {
-	$for($scope, [
-		$scope.num,
-		0,
-		1
-	]);
-	$for_content__num($scope);
-});
+const $num = /* @__PURE__ */ _let("num/1", ($scope) => $for($scope, [
+	$scope.num,
+	0,
+	1
+]));
 function $setup($scope) {
 	$num($scope, 0);
 }

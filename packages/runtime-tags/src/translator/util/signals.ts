@@ -543,6 +543,13 @@ export function getSignalFn(signal: Signal): t.Expression {
     let dynamicClosureArgs: t.Expression[] | undefined;
     let dynamicClosureSignalIdentifier: t.Identifier | undefined;
     forEach(binding.closureSections, (closureSection) => {
+      if (sectionUtil.has(binding.liveHandlerClosureSections, closureSection)) {
+        // Every read of this binding in `closureSection` is a native event
+        // handler, which reads its values live when it fires. The handler is
+        // bound once as the branch is created; it never needs to re-run when
+        // this value changes, so skip wiring the owner-change re-invocation.
+        return;
+      }
       if (isDynamicClosure(closureSection, binding)) {
         if (!dynamicClosureArgs) {
           dynamicClosureArgs = [];

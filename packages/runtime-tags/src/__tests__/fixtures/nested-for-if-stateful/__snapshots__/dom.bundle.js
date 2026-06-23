@@ -33,8 +33,4 @@ const $for_content__count = /* @__PURE__ */ _const(2, ($scope) => {
 	$else_content__count($scope);
 });
 const $for = /* @__PURE__ */ _for_of(0, "<!><!><!>", "b%c", $for_content__setup, $for_content__$params);
-const $counts__closure = /* @__PURE__ */ _closure($if_content__counts);
-const $counts = /* @__PURE__ */ _let(1, ($scope) => {
-	$for($scope, [$scope.b]);
-	$counts__closure($scope);
-});
+const $counts = /* @__PURE__ */ _let(1, ($scope) => $for($scope, [$scope.b]));
