@@ -1,7 +1,11 @@
 "use strict";
 
+const Module = require("module");
 const { createBrowser } = require("jsdom-context-require");
 const compiler = require("../../compiler");
+// The outer (real) module cache, captured before `context-require` ever swaps
+// `Module._cache` to a jsdom context's private cache.
+const outerModuleCache = Module._cache;
 const globals = [
   "console",
   "__coverage__",
@@ -44,8 +48,17 @@ module.exports = function (dir, html, options) {
 };
 
 function compileMarkoModule(module, filename) {
-  return module._compile(
-    compiler.compileFile(filename, {
+  // `context-require` runs this extension hook while `Module._cache` is swapped
+  // to the jsdom context's cache. Compiling here would resolve the compiler's
+  // lazily-loaded internals (e.g. the translator) into the browser realm,
+  // creating a second @marko/compiler instance. Restore the outer cache so the
+  // compile happens entirely in the outer realm, then evaluate only the
+  // compiled output back in the context.
+  const contextCache = Module._cache;
+  Module._cache = outerModuleCache;
+  let code;
+  try {
+    code = compiler.compileFile(filename, {
       writeToDisk: false,
       output: "vdom",
       browser: true,
@@ -56,7 +69,9 @@ function compileMarkoModule(module, filename) {
         configFile: false,
         browserslistConfigFile: false,
       },
-    }),
-    filename,
-  );
+    });
+  } finally {
+    Module._cache = contextCache;
+  }
+  return module._compile(code, filename);
 }
