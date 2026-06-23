@@ -67,6 +67,11 @@ export function compileFileSync(
   config?: Config,
 ): CompileResult;
 
+export function getTemplateApi(
+  filename: string,
+  translator?: unknown,
+): "tags" | "class";
+
 export function getRuntimeEntryFiles(
   output: string,
   translator?: string | undefined,

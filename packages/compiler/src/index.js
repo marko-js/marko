@@ -14,7 +14,9 @@ import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
 import * as taglib from "./taglib";
 import { buildCodeFrameError } from "./util/build-code-frame";
+import getTagsDir from "./util/get-tags-dir";
 import throwAggregateError from "./util/merge-errors";
+import scanTemplateApi from "./util/scan-template-api";
 import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
 export { version } from "../package.json";
@@ -59,6 +61,47 @@ export async function compileFile(filename, config) {
 export function compileFileSync(filename, config) {
   const src = getFs(config).readFileSync(filename, "utf-8");
   return compileSync(src, filename, config);
+}
+
+export function getTemplateApi(filename, requestedTranslator) {
+  const translator = tryLoadTranslator(requestedTranslator);
+
+  // The Tags API runtime (marko@6) only ever produces Tags API templates, so
+  // we can answer synchronously without touching the file system.
+  if (translator.preferAPI === "tags") {
+    return "tags";
+  }
+
+  // Otherwise this is an interop translator (marko@5) that supports both the
+  // Class API and the Tags API. Detect which is used, doing the least amount
+  // of work possible and only parsing the template as a last resort.
+  const lookup = taglib.buildLookup(path.dirname(filename), translator);
+
+  // 1. A template inside a `tags/` directory uses the Tags API, unless that
+  //    directory was explicitly registered as a manual taglib.
+  const tagsDir = getTagsDir(filename);
+  if (tagsDir && !lookup.manualTagsDirs?.has(tagsDir)) {
+    return "tags";
+  }
+
+  // 2. Parse the template (parsing is not cached, so this avoids the
+  //    transform/translate phases entirely) and scan it for a feature that is
+  //    exclusive to one of the two APIs.
+  const { ast } = compileFileSync(filename, {
+    translator,
+    output: "source",
+    ast: true,
+    code: false,
+  });
+  const detected = scanTemplateApi(ast.program.body);
+  if (detected) {
+    return detected;
+  }
+
+  // 3. Nothing API-specific was found, so fall back to the taglib's
+  //    tag-discovery configuration: when tags are discovered exclusively from
+  //    `tags/` directories the project is using the Tags API.
+  return lookup.exclusiveTagDiscoveryDirs === "tags" ? "tags" : "class";
 }
 
 export function getRuntimeEntryFiles(output, requestedTranslator) {
