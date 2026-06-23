@@ -423,7 +423,14 @@ export default {
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
               } else {
-                write`${callRuntime(helper, value)}`;
+                write`${buildAttrExpression(
+                  value,
+                  (branch) => {
+                    const literal = getAttrLiteralValue(branch);
+                    return literal && getHTMLRuntime()[helper](literal.value);
+                  },
+                  (branch) => callRuntime(helper, branch),
+                )}`;
               }
               break;
             }
@@ -433,7 +440,14 @@ export default {
               } else if (isEventHandler(name)) {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
-                write`${callRuntime("_attr", t.stringLiteral(name), value)}`;
+                write`${buildAttrExpression(
+                  value,
+                  (branch) => {
+                    const literal = getAttrLiteralValue(branch);
+                    return literal && getHTMLRuntime()._attr(name, literal.value);
+                  },
+                  (branch) => callRuntime("_attr", t.stringLiteral(name), branch),
+                )}`;
               }
 
               break;
@@ -1237,6 +1251,43 @@ function getTextOnlyEscapeHelper(tagName: string) {
       return "_escape_style";
     default:
       return "_escape";
+  }
+}
+
+// The attribute helpers are distributive over a conditional, so push the helper
+// down to the branches of a conditional value and render any literal branches at
+// compile time, e.g. `_attr("a", x ? "b" : dyn)` becomes
+// `x ? ' a="b"' : _attr("a", dyn)`. This avoids the runtime helper work for the
+// static branches. `serialize` returns the compile-time string for a literal
+// branch (or `undefined` to leave it dynamic), `dynamic` wraps a dynamic branch.
+function buildAttrExpression(
+  value: t.Expression,
+  serialize: (value: t.Expression) => string | undefined,
+  dynamic: (value: t.Expression) => t.Expression,
+): t.Expression {
+  if (value.type === "ConditionalExpression") {
+    return t.conditionalExpression(
+      value.test,
+      buildAttrExpression(value.consequent, serialize, dynamic),
+      buildAttrExpression(value.alternate, serialize, dynamic),
+    );
+  }
+
+  const serialized = serialize(value);
+  return serialized === undefined
+    ? dynamic(value)
+    : t.stringLiteral(serialized);
+}
+
+// `_attr`/`_attr_class`/`_attr_style` accept literal branches of these types.
+function getAttrLiteralValue(value: t.Expression) {
+  switch (value.type) {
+    case "StringLiteral":
+    case "NumericLiteral":
+    case "BooleanLiteral":
+      return { value: value.value as unknown };
+    case "NullLiteral":
+      return { value: null };
   }
 }
 
