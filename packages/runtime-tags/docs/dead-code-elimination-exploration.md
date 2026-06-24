@@ -3,14 +3,17 @@
 > Status: exploration / design notes. No runtime or translator behavior is
 > changed by this document.
 >
-> **Empirical update:** the claims below were measured with a reproducible
-> rolldown harness — see `experiments/dce/` (`RESULTS.md`). Key result: under
-> untouched ESM + a modern bundler, template-level DCE is already near-optimal
-> (a fully static page ships **0** client bytes; static children, static `<for>`
-> loops, and server-only reactive bindings are all eliminated; only interactive
-> islands survive). The directions below therefore matter mainly as
-> **robustness** against pipelines that downlevel ESM→CJS or strip `@__PURE__`,
-> which collapse DCE ~6–9×. See §5.
+> **Empirical update (ESM):** the directions in §2–§4 below were the original
+> hypothesis. Measuring them with a reproducible rolldown harness
+> (`experiments/dce/`, `RESULTS.md`) **overturned that hypothesis**: under ESM
+> (the only in-scope target), Marko's dead-server-code elimination is already
+> _essentially complete_, so B/C/D produce no byte savings. A fully static page
+> ships **0** client bytes; static children, static `<for>` loops, and
+> server-only reactive bindings are all eliminated; and `$setup` itself is
+> tree-shaken for resumed roots, so even a static `<const>` computed from a heavy
+> import does not ship. The only residual client leak is third-party _dependency
+> hygiene_, not Marko's output. See §5 for the corrected conclusion; §2–§4 are
+> kept as the original (now superseded) design exploration.
 
 ## 1. How it works today
 
@@ -204,33 +207,47 @@ compiler-authored virtual modules as the **linker**, and reserve `@__PURE__`
 tree-shaking for the genuinely local, single-expression cases — not as the
 primary mechanism for whole-template/server-only elimination.
 
-## 5. What the measurements changed (`experiments/dce/`)
+## 5. Corrected conclusion (ESM measurements — `experiments/dce/`)
 
-The experiments revise priorities. Findings:
+The experiments overturned the §2 premise. Under ESM (the in-scope target),
+tree-shaking + the compiler already achieve essentially complete dead-server-code
+elimination, so the directions above are not needed for byte savings. Findings:
 
-- **Under realistic ESM bundling, B/C/D produce no byte savings** — tree-shaking
-  already reaches the ideal. Static children, deep static layouts, static
-  `<for>` loops, and server-only reactive bindings all drop; a fully static page
-  ships 0 client bytes (decided by the entry builder, not the bundler). So B/C/D
-  are **robustness** investments, not size wins, under clean ESM.
+- **B/C/D produce no byte savings under ESM** — tree-shaking already reaches the
+  ideal. Static children, deep static layouts, static `<for>` loops, and
+  server-only reactive bindings all drop; a fully static page ships 0 client
+  bytes (decided by the entry builder, not the bundler).
 
-- **The dominant real-world risk is losing the ESM + `@__PURE__` invariant before
-  the bundler.** Passing compiled output through an ESM→CJS downlevel (or a
-  pure-comment strip) collapses DCE ~6–9×: the runtime stops tree-shaking
-  entirely (~26 KB floor) _and_ every static template module ships.
+- **`$setup` is itself eliminated for resumed roots.** A resumed page restores
+  state from the serialized payload and never calls a template's `$setup` on the
+  client, so it is tree-shaken — including a static child's `$setup` and any
+  static `<const>` initialization in it. Even `<const x=renderMarkdown(BIG)>`
+  consumed only by static output does not ship Marko-side: the use is fully
+  removed. (This refutes §2.2/§2.4: the "static child anchored into an
+  interactive parent" case does _not_ leak under ESM.)
 
-- **`sideEffects: false` on the runtime package is unsafe** (the tempting quick
-  fix). The HTML runtime has load-bearing module-level monkeypatches
-  (`html/dynamic-tag.ts:238`), so a sideEffects-aware bundler could drop them.
+- **The only residual client leak is third-party dependency hygiene.** A
+  server-only npm dep imported into a `.marko` file leaks only when it is not
+  `sideEffects: false` (or has unprovable-pure top-level code), in which case the
+  bundler correctly keeps its bare import edge. Marking the dep `sideEffects:
+false` removes the leak. Marko emits no dead server code here.
 
-### Revised ranking (by real-world ROI)
+- **`sideEffects: false` on the _runtime_ package is unsafe** as a blanket fix:
+  the HTML runtime has load-bearing module-level monkeypatches
+  (`html/dynamic-tag.ts:238`), which a sideEffects-aware bundler could drop.
 
-1. **Guard the ESM + `@__PURE__` invariant end-to-end** (cheap, ~6–9× cliff):
-   keep the loader/plugin output untouched ESM; warn when Marko output is
-   detected as CJS or has pure annotations stripped.
-2. **B/D as robustness**: make the page entry a per-interactive-module
-   include-list / track interactivity per section, so the mixed case survives a
-   degraded `@__PURE__` pipeline.
-3. **Attack the runtime floor**: once template DCE is solved, the per-island
-   runtime baseline and control-flow machinery dominate (one `<if>` ≈ +1.2 KB
-   brotli). Finer-grained resume/runtime entry points trim feature-subset pages.
+### Where the real bytes are (ESM, ROI order)
+
+1. **The runtime floor — the only large reducible cost.** `build:sizes` shows the
+   `counter` bundle is 1,894 b brotli, of which **1,774 is runtime**. Once
+   template DCE is done (it is), the per-island runtime baseline and control-flow
+   machinery dominate (one `<if>` ≈ +1.2 KB brotli). Finer-grained resume/runtime
+   entry points — so a page using only `_on` doesn't pull branch/await machinery
+   — are where bytes actually live.
+2. **Server-only dependency hygiene.** Document it; have the bundler plugin treat
+   `.marko`-originated server-only imports as side-effect-free at the point of
+   use; or keep heavy server work in `<server>`/server-only modules the compiler
+   already strips from the dom output.
+3. **Lean on `load:`** for large interactive subtrees — it already code-splits
+   interactive code into separate chunks via compiler-minted virtual modules,
+   keeping the main entry tiny (`lazy-tag*` fixtures: 62 b entries).

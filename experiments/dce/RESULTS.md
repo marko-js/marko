@@ -1,108 +1,99 @@
-# Empirical dead-server-code elimination study (Marko 6 / runtime-tags)
+# Dead-server-code elimination study (Marko 6 / runtime-tags) — ESM
 
-Reproducible measurements of the **client (DOM) bundle** for representative page
-shapes, built with the repo's rolldown harness (`createServerRunner`,
-`optimize: true`, tree-shaking on). Sizes include the runtime. Run with:
+Scope: modern ESM bundling only (Vite/rollup/rolldown/esbuild/webpack). Reproducible
+measurements of the **client (DOM) bundle**, built with the repo's rolldown
+harness (`createServerRunner`, `optimize: true`, tree-shaking on). Sizes include
+the runtime. Run with:
 
 ```
-node -r ~ts experiments/dce/floor.ts      # zero-island / runtime floor
-node -r ~ts experiments/dce/sweep.ts       # ESM vs CJS across shapes
+node experiments/dce/setup-deps.mjs       # one-time: creates the server-dep fixture
+node -r ~ts experiments/dce/floor.ts       # static-zero + runtime floor
 node -r ~ts experiments/dce/sweep3.ts      # static <for> list
+node -r ~ts experiments/dce/serverdep.ts   # server-only dependency leak
+node experiments/dce/corpus.mjs            # aggregate the repo's 574-fixture corpus
 ```
 
-## Headline numbers
+## Headline
 
-| Page shape                         | format | min    | brotli | surviving fixture modules             |
-| ---------------------------------- | ------ | ------ | ------ | ------------------------------------- |
-| fully static (no island)           | ESM    | 0      | 0      | — (no client JS emitted at all)       |
-| 1 button island                    | ESM    | 3,418  | 1,700  | Counter                               |
-| button + 8 server-only `${input}`  | ESM    | 6,463  | 2,939  | Dashboard (reactive texts pruned)     |
-| static `<for>` list + button       | ESM    | 3,418  | 1,697  | (only button; `_for_of` not bundled)  |
-| deep static Layout (Nav/Sidebar/…) | ESM    | 3,418  | 1,699  | Counter                               |
-| 1 button island                    | CJS    | 30,591 | 11,090 | Header, Counter, Footer, page         |
-| deep static Layout                 | CJS    | 31,253 | 11,216 | Nav, Sidebar, Footer, Counter, Layout |
-| island-only page                   | CJS    | 29,326 | 10,763 | Counter, islandonly                   |
+Under ESM, Marko's dead-server-code elimination is **essentially complete**.
+Across every shape tested and the repo's own 574-fixture corpus, the client
+bundle contains no dead server code that Marko itself emits.
 
-"CJS" = the compiled Marko output passed through `@babel/preset-env`
-(`modules: "commonjs"`) before bundling — i.e. a pipeline that downlevels ESM or
-strips `@__PURE__` before the bundler sees it.
+| Page shape                        | brotli | what survives                               |
+| --------------------------------- | ------ | ------------------------------------------- |
+| fully static (no island)          | 0      | nothing — no client JS emitted at all       |
+| 1 button island                   | 1,700  | the island                                  |
+| button + 8 server-only `${input}` | 2,939  | island only (reactive texts pruned)         |
+| static `<for>` list + button      | 1,697  | island only (`_for_of` not even bundled)    |
+| deep static Layout + island       | 1,699  | island only                                 |
+| interactive parent + static child | 1,738  | island only (child `$setup`/imports shaken) |
 
 ## What the data shows
 
-1. **Whole-page elimination is already compiler-driven and perfect.** A page
-   with no interactivity emits **0 bytes** of client JS. This is decided by the
-   entry builder (`entry-builder.ts`: `state.init` stays false → no runtime
-   import), _not_ by tree-shaking. This is exactly the "let the compiler / page
-   entry control the output" model — and it gives the cleanest possible result.
+1. **Whole-page elimination is compiler-driven.** A page with no interactivity
+   emits **0 bytes** of client JS — decided by the entry builder
+   (`entry-builder.ts`: `state.init` stays false → no runtime import), not by
+   tree-shaking.
 
-2. **Mixed pages: ESM tree-shaking already eliminates all dead server code at the
-   template level.** Static children, deep static layouts, static `<for>` loops,
-   and server-only reactive bindings (`${input.*}` never mutated on the client)
-   are all removed. Only modules containing a real interactive anchor
-   (`_script`/`_resume`/event registration, which self-registers on module eval)
-   survive. The `_for_of` / branch helpers aren't even pulled into the runtime
-   when unused.
+2. **Mixed pages: everything server-only is eliminated.** Static children, deep
+   static layouts, static `<for>` loops, and server-only reactive bindings
+   (`${input.*}` never mutated on the client) all drop. Only modules with a real
+   interactive anchor (`_script`/`_resume`/event registration, which
+   self-registers on module eval) survive.
 
-3. **The whole strategy hinges on untouched ESM + intact `@__PURE__` reaching the
-   bundler.** Downleveling to CJS (or stripping pure comments) collapses DCE
-   ~6–9x. The regression has two parts:
-   - the **runtime** stops tree-shaking entirely (~26 KB ships regardless of how
-     little is used — island-only CJS keeps only 2 tiny fixture modules yet is
-     29 KB), and
-   - every static template module ships.
+3. **`$setup` is tree-shaken for resumed roots — even for embedded children.** A
+   resumed page restores state from the serialized payload, so the template's
+   `$setup` is never called on the client and is dropped entirely. That includes
+   a static child's `$setup` and any static `<const>` initialization in it. So
+   even a static value computed from a heavy import (`renderMarkdown(BIG)` in a
+   `<const>`) does not ship — Marko's use of it is fully eliminated.
 
-4. **`sideEffects: false` on the runtime package is NOT a safe shortcut.** The
-   HTML runtime contains load-bearing module-level monkeypatches, e.g.
-   `html/dynamic-tag.ts:238` (`_dynamic_tag = (…)(_dynamic_tag)` executed at
-   import). A sideEffects-aware bundler told the package is pure could drop that
-   statement and break dynamic tags. This is why the flag is (correctly) absent.
+4. **The only residual client leak is dependency hygiene.** `serverdep.ts` shows
+   a server-only npm dep (`heavy-lib`) leaking 138 b into the client bundle —
+   _not_ because Marko emits dead code (it shook out `$setup`, `renderMarkdown`,
+   and the input path), but because `heavy-lib` is not marked `sideEffects:
+false` and has an unprovable-pure top-level `const`. rolldown therefore keeps
+   the bare import edge. Marking the dep `sideEffects: false` drops it to the
+   1,700 baseline. This is the dependency's responsibility, and keeping a module
+   with genuine top-level side effects is _correct_ conservatism.
 
 ## Validation against the repo's own 574-fixture corpus
 
-The synthetic results above are confirmed by the project's existing test
-snapshots (`packages/runtime-tags/src/__tests__/fixtures/*/sizes.json` +
-`__snapshots__/dom.bundle.js`), which are real compiled+rolldown-bundled
-outputs produced by the same harness:
+`packages/runtime-tags/src/__tests__/fixtures/*/sizes.json` +
+`__snapshots__/dom.bundle.js` are real compiled+bundled outputs:
 
-- **574** fixtures carry recorded sizes. **148 (26%)** ship **0** client bytes —
-  whole-page elimination, decided by the entry builder, not tree-shaking.
+- **148 / 574 (26%)** fixtures ship **0** client bytes.
 - The **426** interactive fixtures are small: client brotli **min 62, p25 1336,
-  median 1514, p75 2851, p95 5132, max 6057**. The bundle is dominated by the
-  runtime floor + per-feature machinery, not by leaked content. The largest are
-  all `dynamic-tag*` cases (they pull in `_dynamic_tag`).
-- **No dead static-HTML leak.** Only 17/426 optimized `dom.bundle.js` files
-  contain any HTML-ish string literal >25 chars, and every one inspected is
-  legitimately client-rendered — e.g. `basic-nested-scope-if` keeps
-  `"<span>The button was clicked <!> times.</span>"` because it's an `<else>`
-  branch rendered on the client; `controllable-select-spread` keeps its
-  `<option>`s because the `<select>` is controllable. Static top-level structure
-  never survives.
-- The smallest nonzero bundles (62–111 b) are `lazy-tag*`: the page entry holds
-  only the trigger, and the interactive `_script` is code-split into a separate
-  chunk via `load:` — confirming the `load:`/virtual-module path already moves
-  interactive code out of the main entry deterministically.
+  median 1514, p75 2851, p95 5132, max 6057** — dominated by the runtime floor +
+  per-feature machinery, not leaked content. The largest are all `dynamic-tag*`.
+- **No dead static-HTML leak.** Only 17/426 optimized bundles contain any HTML
+  literal >25 chars, and every one is legitimately client-rendered (e.g. an
+  `<else>` branch, a controllable `<select>`'s options).
+- The smallest nonzero bundles (62–111 b) are `lazy-tag*`: the interactive
+  `_script` is code-split into a separate chunk via `load:`, leaving a tiny page
+  entry.
 
-This is the strongest evidence: across a large real corpus, the client bundles
-contain essentially no dead server code under ESM.
+## Conclusion / ranked recommendations (ESM)
 
-## Conclusion / ranked recommendations
+Template/server-code elimination is already solved. The remaining real-world
+levers, in ROI order:
 
-Template-level DCE is effectively solved under realistic ESM bundling. The
-highest-value real-world work is therefore **robustness and the runtime floor**,
-not a new elimination mechanism:
+1. **Runtime floor — the only large reducible cost.** Marko's own `build:sizes`
+   benchmark: the `counter` bundle is 1,894 b brotli, of which **1,774 is
+   runtime**. Once template DCE is done (it is), the per-island runtime baseline
+   and control-flow machinery dominate (a single `<if>` ≈ +1.2 KB brotli).
+   Finer-grained resume/runtime entry points so a page that uses only `_on`
+   doesn't pull branch/await machinery are where bytes actually live.
+2. **Server-only dependency hygiene.** A server-only dep imported into a `.marko`
+   file leaks only if it isn't `sideEffects: false` (or has impure top-level
+   code). Options: document this; have the Marko bundler plugin treat
+   `.marko`-originated server-only imports as side-effect-free at the point of
+   use; or keep heavy server work behind `<server>`/server-only modules that the
+   compiler already strips from the dom output.
+3. **`load:` for large interactive subtrees.** Already excellent — it code-splits
+   interactive code into separate chunks via compiler-minted virtual modules,
+   keeping the main entry tiny. Lean on it more for big islands.
 
-1. **Protect the ESM + `@__PURE__` invariant end-to-end** (highest ROI). Ensure
-   the loader/plugin feeds untouched ESM to the bundler; warn when Marko output
-   is detected as CJS or has pure annotations stripped. This single cliff is
-   worth ~6–9x.
-2. **Push the compiler's page-entry authority downward** (the "rely less on
-   tree-shaking" path). The entry builder already produces the ideal (0 bytes)
-   for fully-static pages by _deciding_ rather than shaking. Extending that to
-   per-interactive-module include-lists / per-section interactivity makes the
-   mixed case robust even when `@__PURE__` is degraded. Note: under clean ESM
-   this does not change the byte count — tree-shaking already reaches the same
-   result — so it is a _robustness_ investment, not an ESM byte win.
-3. **Attack the runtime floor.** With template DCE solved, the dominant
-   reducible cost is the per-island runtime baseline and control-flow machinery
-   (a single `<if>` adds ~1.2 KB brotli). Finer-grained resume/runtime entry
-   points would trim pages that use only a subset of features.
+> Out of scope (per direction): pipelines that downlevel ESM→CJS or strip
+> `@__PURE__` before the bundler. Those collapse DCE, but are a misconfiguration
+> rather than a property of Marko.
