@@ -1,0 +1,14 @@
+import { resolveAfter } from "./resolve.mjs"
+<let/n=0/>
+<button onClick() { n++ }>${n}</button>
+<try>
+  <await|value|=resolveAfter(n)>
+    <div>Loaded: ${value}</div>
+  </await>
+  <@placeholder>
+    <div class="spinner">Loading...</div>
+  </@placeholder>
+  <@catch|err|>
+    <div class="error">Error: ${err.message}</div>
+  </@catch>
+</try>

@@ -1,0 +1,12 @@
+import { resolveAfter } from "./resolve.mjs"
+<try>
+  <await|value|=resolveAfter(input.x)>
+    <div>Loaded: ${value}</div>
+  </await>
+  <@placeholder>
+    <div class="spinner">Loading...</div>
+  </@placeholder>
+  <@catch|err|>
+    <div class="error">Error: ${err.message}</div>
+  </@catch>
+</try>

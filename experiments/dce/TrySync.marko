@@ -1,0 +1,8 @@
+<try>
+  <div>Static content that cannot throw on the client.</div>
+  <@catch|err|>
+    <div class="error">Error boundary: ${err.message}</div>
+  </@catch>
+</try>
+<let/n=0/>
+<button onClick() { n++ }>${n}</button>

@@ -1,0 +1,14 @@
+import { resolveAfter } from "./resolve.mjs"
+<try>
+  <await|value|=resolveAfter(input.x)>
+    <div>Loaded: ${value}</div>
+  </await>
+  <@placeholder>
+    <div class="spinner">Loading, please wait a moment...</div>
+  </@placeholder>
+  <@catch|err|>
+    <div class="error">Something went wrong: ${err.message}. Contact support.</div>
+  </@catch>
+</try>
+<let/n=0/>
+<button onClick() { n++ }>${n}</button>
