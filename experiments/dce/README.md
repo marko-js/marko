@@ -21,3 +21,9 @@ Scripts (run from repo root):
 
 All use the repo's rolldown bundling harness
 (`packages/runtime-tags/src/__tests__/utils/bundle.ts`) with `optimize: true`.
+
+## Real-corpus validation
+
+- `node experiments/dce/corpus.mjs` — aggregates the repo's own 574 fixture
+  `sizes.json` snapshots (real compiled+bundled output) to characterize the
+  real-world client-DCE distribution. See `RESULTS.md` for the analysis.

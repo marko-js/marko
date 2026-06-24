@@ -57,6 +57,34 @@ strips `@__PURE__` before the bundler sees it.
    import). A sideEffects-aware bundler told the package is pure could drop that
    statement and break dynamic tags. This is why the flag is (correctly) absent.
 
+## Validation against the repo's own 574-fixture corpus
+
+The synthetic results above are confirmed by the project's existing test
+snapshots (`packages/runtime-tags/src/__tests__/fixtures/*/sizes.json` +
+`__snapshots__/dom.bundle.js`), which are real compiled+rolldown-bundled
+outputs produced by the same harness:
+
+- **574** fixtures carry recorded sizes. **148 (26%)** ship **0** client bytes —
+  whole-page elimination, decided by the entry builder, not tree-shaking.
+- The **426** interactive fixtures are small: client brotli **min 62, p25 1336,
+  median 1514, p75 2851, p95 5132, max 6057**. The bundle is dominated by the
+  runtime floor + per-feature machinery, not by leaked content. The largest are
+  all `dynamic-tag*` cases (they pull in `_dynamic_tag`).
+- **No dead static-HTML leak.** Only 17/426 optimized `dom.bundle.js` files
+  contain any HTML-ish string literal >25 chars, and every one inspected is
+  legitimately client-rendered — e.g. `basic-nested-scope-if` keeps
+  `"<span>The button was clicked <!> times.</span>"` because it's an `<else>`
+  branch rendered on the client; `controllable-select-spread` keeps its
+  `<option>`s because the `<select>` is controllable. Static top-level structure
+  never survives.
+- The smallest nonzero bundles (62–111 b) are `lazy-tag*`: the page entry holds
+  only the trigger, and the interactive `_script` is code-split into a separate
+  chunk via `load:` — confirming the `load:`/virtual-module path already moves
+  interactive code out of the main entry deterministically.
+
+This is the strongest evidence: across a large real corpus, the client bundles
+contain essentially no dead server code under ESM.
+
 ## Conclusion / ranked recommendations
 
 Template-level DCE is effectively solved under realistic ESM bundling. The
