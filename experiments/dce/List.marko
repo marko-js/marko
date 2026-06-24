@@ -1,0 +1,8 @@
+// Static list (server data, never mutated client-side) + one interactive button.
+<ul>
+  <for|item| of=input.items>
+    <li class="row">${item.name}: ${item.value}</li>
+  </for>
+</ul>
+<let/n=0/>
+<button onClick() { n++ }>Count: ${n}</button>

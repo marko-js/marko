@@ -2,6 +2,15 @@
 
 > Status: exploration / design notes. No runtime or translator behavior is
 > changed by this document.
+>
+> **Empirical update:** the claims below were measured with a reproducible
+> rolldown harness — see `experiments/dce/` (`RESULTS.md`). Key result: under
+> untouched ESM + a modern bundler, template-level DCE is already near-optimal
+> (a fully static page ships **0** client bytes; static children, static `<for>`
+> loops, and server-only reactive bindings are all eliminated; only interactive
+> islands survive). The directions below therefore matter mainly as
+> **robustness** against pipelines that downlevel ESM→CJS or strip `@__PURE__`,
+> which collapse DCE ~6–9×. See §5.
 
 ## 1. How it works today
 
@@ -9,7 +18,7 @@ Marko 6 compiles each `.marko` file **twice** — once for `output: "html"` (the
 SSR module) and once for `output: "dom"` (the client module). Because the page
 is rendered and resumed (not re-rendered) on the client, the only client code
 that should ever ship is the code needed to make the already-rendered HTML
-*interactive*. Everything else is "server-only" and must be eliminated from the
+_interactive_. Everything else is "server-only" and must be eliminated from the
 client bundle.
 
 Today that elimination is achieved almost entirely through **bundler
@@ -27,21 +36,21 @@ tree-shaking**, driven by two compiler outputs:
 
 So the structural scaffolding a template emits on the client
 (`export default _template(id, template, walks, setup, input)` in
-`visitors/program/dom.ts:213`) is *advisory-pure*: a minifier may drop it if its
+`visitors/program/dom.ts:213`) is _advisory-pure_: a minifier may drop it if its
 result is unused.
 
 ### 1b. Interactivity is a per-program boolean
 
 A template is flagged interactive when it contains a genuine client anchor:
 
-| Source of interactivity | Location |
-| --- | --- |
-| `<script>` effect | `core/script.ts:82` |
-| event/change handler on a native tag | `visitors/tag/native-tag.ts:208` |
-| `<lifecycle>` | `core/lifecycle.ts:60` |
-| client `<script>`/scriptlet (`$ client`) | `visitors/scriptlet.ts:25` |
-| dynamic tag with handlers/spread | `visitors/tag/dynamic-tag.ts:135` |
-| registered (resumed) function | `visitors/function.ts:203` |
+| Source of interactivity                  | Location                          |
+| ---------------------------------------- | --------------------------------- |
+| `<script>` effect                        | `core/script.ts:82`               |
+| event/change handler on a native tag     | `visitors/tag/native-tag.ts:208`  |
+| `<lifecycle>`                            | `core/lifecycle.ts:60`            |
+| client `<script>`/scriptlet (`$ client`) | `visitors/scriptlet.ts:25`        |
+| dynamic tag with handlers/spread         | `visitors/tag/dynamic-tag.ts:135` |
+| registered (resumed) function            | `visitors/function.ts:203`        |
 
 These anchors emit **non-pure** statements (effect `setup`, `_resume(...)`,
 `_on(...)`) that reference the scope/walks, so the bundler must keep them — and
@@ -51,8 +60,8 @@ all-`@__PURE__` body, so the whole client module can shake away.
 
 ### 1c. The page entry decides init-vs-nothing
 
-`entry-builder.ts` is the one place the compiler already *acts on its own
-knowledge* instead of delegating. For a DOM page entry it walks the whole tag
+`entry-builder.ts` is the one place the compiler already _acts on its own
+knowledge_ instead of delegating. For a DOM page entry it walks the whole tag
 tree (`analyzedTags`) transitively and:
 
 - if **any** template in the tree is `isInteractive`, sets `state.init = true`
@@ -61,14 +70,14 @@ tree (`analyzedTags`) transitively and:
 - otherwise emits **only the collected CSS/asset imports** and no runtime import
   at all (`entry-builder.ts:82`–`97`).
 
-So at the *page* granularity the compiler is already the linker. Below that, the
+So at the _page_ granularity the compiler is already the linker. Below that, the
 per-template body is left to tree-shaking.
 
 ## 2. Why leaning on tree-shaking is fragile
 
 1. **`@__PURE__` is advisory and bundler-specific.** esbuild, Rollup/Terser and
    webpack each treat purity and cross-module retention differently. The
-   compiler *knows* the answer at build time but ships a hint instead of a
+   compiler _knows_ the answer at build time but ships a hint instead of a
    guarantee.
 
 2. **Cross-module purity has to cascade.** A static child pulled into an
@@ -80,7 +89,7 @@ per-template body is left to tree-shaking.
    walks.injectWalks(tag, tagName, importNamed(file, …, childExports.walks, …));
    ```
 
-   Because the page is interactive, the parent's default export is *live*, so
+   Because the page is interactive, the parent's default export is _live_, so
    `Child_template` / `Child_walks` are genuinely referenced. Whether the static
    child's strings get dropped now depends on the minifier proving an entire
    chain of pure expressions dead across several modules. This is exactly where
@@ -93,7 +102,7 @@ per-template body is left to tree-shaking.
 
 4. **Interactivity is whole-template, not per-section.** `isInteractive` is one
    boolean per program. A 500-line static template with a single
-   `<button onClick>` anchors its *entire* DOM scaffolding; tree-shaking cannot
+   `<button onClick>` anchors its _entire_ DOM scaffolding; tree-shaking cannot
    partially retain one module's internal signal graph.
 
 The throughline: **the compiler already computes precise interactivity and
@@ -131,7 +140,7 @@ The page entry — which the compiler fully controls — then imports the payloa
 
 ```js
 import { init } from "@marko/runtime-tags/dom";
-import "./Counter.marko.effects.js";   // compiler-selected, interactive only
+import "./Counter.marko.effects.js"; // compiler-selected, interactive only
 import "./Layout.marko.effects.js";
 init();
 ```
@@ -144,13 +153,13 @@ client at all.
 
 Open question to resolve: resumable hydration still needs an interactive
 template's own `walks` to attach to the resumed DOM, so the effects module must
-re-export / pull the structural pieces it needs. The point is that *non-included*
+re-export / pull the structural pieces it needs. The point is that _non-included_
 templates contribute nothing, deterministically.
 
 ### Direction C — Compiler-collapsed walks for static subtrees
 
 Tree-shaking can never do this: when an interactive parent contains a fully
-static child, the child's *internal* walk codes only need to advance the cursor
+static child, the child's _internal_ walk codes only need to advance the cursor
 past its DOM. The compiler (which knows the child is non-interactive) can replace
 the child's walk contribution with a single skip/`over` (`util/walks.ts`,
 `WalkCode.Over`) and inline the child's static HTML string at compile time
@@ -170,12 +179,12 @@ fundamentally cannot express.
 
 Resume registrations are already keyed by a stable `registerId`
 (`getResumeRegisterId`, `_resume` in `visitors/program/html.ts:239`–`300`).
-Today they are emitted *inline* in the template module, which anchors it.
+Today they are emitted _inline_ in the template module, which anchors it.
 Instead the registry could be assembled in the page entry / effects virtual
 module from compiler knowledge, leaving template bodies free of side-effecting
 anchors and therefore unconditionally droppable.
 
-## 4. Recommendation
+## 4. Recommendation (theory)
 
 Pursue **B + C first**:
 
@@ -194,3 +203,34 @@ of what is interactive and how templates compose. Treat the page entry plus
 compiler-authored virtual modules as the **linker**, and reserve `@__PURE__`
 tree-shaking for the genuinely local, single-expression cases — not as the
 primary mechanism for whole-template/server-only elimination.
+
+## 5. What the measurements changed (`experiments/dce/`)
+
+The experiments revise priorities. Findings:
+
+- **Under realistic ESM bundling, B/C/D produce no byte savings** — tree-shaking
+  already reaches the ideal. Static children, deep static layouts, static
+  `<for>` loops, and server-only reactive bindings all drop; a fully static page
+  ships 0 client bytes (decided by the entry builder, not the bundler). So B/C/D
+  are **robustness** investments, not size wins, under clean ESM.
+
+- **The dominant real-world risk is losing the ESM + `@__PURE__` invariant before
+  the bundler.** Passing compiled output through an ESM→CJS downlevel (or a
+  pure-comment strip) collapses DCE ~6–9×: the runtime stops tree-shaking
+  entirely (~26 KB floor) _and_ every static template module ships.
+
+- **`sideEffects: false` on the runtime package is unsafe** (the tempting quick
+  fix). The HTML runtime has load-bearing module-level monkeypatches
+  (`html/dynamic-tag.ts:238`), so a sideEffects-aware bundler could drop them.
+
+### Revised ranking (by real-world ROI)
+
+1. **Guard the ESM + `@__PURE__` invariant end-to-end** (cheap, ~6–9× cliff):
+   keep the loader/plugin output untouched ESM; warn when Marko output is
+   detected as CJS or has pure annotations stripped.
+2. **B/D as robustness**: make the page entry a per-interactive-module
+   include-list / track interactivity per section, so the mixed case survives a
+   degraded `@__PURE__` pipeline.
+3. **Attack the runtime floor**: once template DCE is solved, the per-island
+   runtime baseline and control-flow machinery dominate (one `<if>` ≈ +1.2 KB
+   brotli). Finer-grained resume/runtime entry points trim feature-subset pages.

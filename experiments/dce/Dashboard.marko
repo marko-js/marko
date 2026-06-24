@@ -1,0 +1,17 @@
+// A mostly server-rendered dashboard: lots of reactive text bound to input
+// (never mutated on the client) plus a single interactive button island.
+<section class="stats">
+  <div>Revenue: ${input.revenue}</div>
+  <div>Users: ${input.users}</div>
+  <div>Growth: ${input.growth}</div>
+  <div>Churn: ${input.churn}</div>
+  <div>NPS: ${input.nps}</div>
+  <div>Latency: ${input.latency}</div>
+  <div>Uptime: ${input.uptime}</div>
+  <div>Errors: ${input.errors}</div>
+</section>
+<let/open=false/>
+<button onClick() { open = !open }>Toggle details</button>
+<if=open>
+  <p>Extra interactive detail panel.</p>
+</if>
