@@ -54,6 +54,9 @@ export const compat = {
   getStartNode(branch: any) {
     return branch[AccessorProp.StartNode];
   },
+  getEndNode(branch: any) {
+    return branch[AccessorProp.EndNode];
+  },
   setScopeNodes(branch: any, startNode: Node, endNode: Node) {
     branch[AccessorProp.StartNode] = startNode;
     branch[AccessorProp.EndNode] = endNode;

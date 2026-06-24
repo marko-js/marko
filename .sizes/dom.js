@@ -1,4 +1,4 @@
-// size: 24257 (min) 8956 (brotli)
+// size: 24283 (min) 8960 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -236,6 +236,9 @@ let empty = [],
     },
     getStartNode(branch) {
       return branch.S;
+    },
+    getEndNode(branch) {
+      return branch.K;
     },
     setScopeNodes(branch, startNode, endNode) {
       ((branch.S = startNode), (branch.K = endNode));
