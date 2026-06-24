@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.39.12
+
+### Patch Changes
+
+- [#3289](https://github.com/marko-js/marko/pull/3289) [`45fb443`](https://github.com/marko-js/marko/commit/45fb44378e0838be35db9a701be44b2d1ac9efc9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve dead code and serialization reductions when using the tags/class compat layer
+
+- [`167712c`](https://github.com/marko-js/marko/commit/167712c069f3efae7efc94651aee8e80110278e9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a crash when re-rendering an inert (server only) Class API child rendered by a Tags API parent.
+
+- Updated dependencies [[`45fb443`](https://github.com/marko-js/marko/commit/45fb44378e0838be35db9a701be44b2d1ac9efc9), [`167712c`](https://github.com/marko-js/marko/commit/167712c069f3efae7efc94651aee8e80110278e9)]:
+  - @marko/runtime-tags@6.1.18
+
 ## 5.39.11
 
 ### Patch Changes
