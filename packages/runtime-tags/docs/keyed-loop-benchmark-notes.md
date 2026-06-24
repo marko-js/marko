@@ -83,19 +83,21 @@ the create gap is architectural.
 A fourth attempt — **`DocumentFragment` batching** of the bulk-create / append
 inserts (assemble N rows off-tree, one live insertion instead of N) — _is_
 correct (full suite passes; every snapshot delta is a benign `N inserts → 1
-batched insert` with identical DOM end-state) and is the standard fast-create
-pattern. It was **reverted only on the bundle constraint**: it adds ~33 bytes
-brotli to the runtime (for-using apps only). It's a legitimate optimization to
-land once a small bundle budget is acceptable — see "not taken" below.
+batched insert` with identical DOM end-state) and is the textbook fast-create
+pattern. But an A/B measurement (committed vs committed+fragment, same machine
+conditions, 25 counts) showed **no measurable improvement**: `01_run1k` was flat
+and `07_create10k` script went 112.8 → 111.9 ms — inside the noise (that
+benchmark's stddev is ~39 ms). The insertion calls are not the create
+bottleneck: Chrome already defers layout, single `<tr>` inserts are cheap, and
+create time is dominated by per-row work (clone, scope, reactive binding) and
+paint (~917 ms total vs ~113 ms script). It was reverted — it costs ~33 bytes
+brotli and buys nothing here.
 
 ## Approaches deliberately not taken (and why)
 
-- **`DocumentFragment`-batched bulk insert** (the create lever): correct and
-  bundle-cheap (~+33 B brotli), and the right move _if_ the strict
-  "no bundle compromise" rule is relaxed. Held back here only because (a) it
-  breaches that rule, and (b) the sandbox was too noisy/degraded to confirm the
-  create gain and justify even 33 bytes. Recommended as the first thing to try
-  under a small bundle budget, measured on a stable machine.
+- **`DocumentFragment`-batched bulk insert**: tried and **measured** — no
+  reliable speedup (insertion isn't the create bottleneck; see above). Costs
+  ~33 B brotli for no gain, so not worth it regardless of bundle budget.
 - **Per-row label signals for `03_update`** (Solid's model: each row's label is
   its own signal, so update fires N signals and never reconciles). In Marko this
   requires per-row scope state (`<let>`) plus a `<script>`/effect registry
