@@ -33,6 +33,9 @@ import { analyzeLoadImport } from "./util/load-import";
 import { optimizeHTMLWrites } from "./util/optimize-html-writes";
 import { analyzeStaticVDOM } from "./util/optimize-vdom-create";
 
+const CLASS_HYDRATION_SELF = "self";
+const CLASS_HYDRATION_DESCENDANT = "descendant";
+
 export { version } from "../../package.json";
 export const tagDiscoveryDirs = ["components"];
 export { optionalTaglibs, default as taglibs } from "./taglib";
@@ -90,6 +93,7 @@ export const analyze = {
           ? resolveRelativePath(file, filename)
           : filename,
       );
+      meta.classHydration = getClassHydrationMode(file);
     },
   },
   MarkoTag(tag) {
@@ -696,4 +700,32 @@ function resolveRelativeTagEntry(file, tagDef) {
   // TODO: support transform and other entries.
   const entry = tagDef.template || tagDef.renderer;
   return entry && resolveRelativePath(file, entry);
+}
+
+function getClassHydrationMode(file, visited = new Set()) {
+  const fileName = file.opts.filename;
+  const meta = file.metadata.marko;
+
+  if (Object.hasOwn(meta, "classHydration")) {
+    return meta.classHydration;
+  }
+
+  if (visited.has(fileName)) {
+    return;
+  }
+
+  visited.add(fileName);
+
+  if (meta.component) {
+    return (meta.classHydration = CLASS_HYDRATION_SELF);
+  }
+
+  for (const tag of meta.tags) {
+    if (tag.endsWith(".marko")) {
+      const childFile = loadFileForImport(file, tag);
+      if (childFile && getClassHydrationMode(childFile, visited)) {
+        return (meta.classHydration = CLASS_HYDRATION_DESCENDANT);
+      }
+    }
+  }
 }

@@ -8,9 +8,11 @@ const {
 const createRenderer = require("../../components/renderer");
 const defaultCreateOut = require("../../createOut");
 const dynamicTag5 = require("../dynamic-tag");
+const PRESERVE_BOUNDARY = "preserve";
 
 exports.p = function (htmlCompat) {
   const writersByGlobal = new WeakMap();
+  const boundaryModeByRenderer = new WeakMap();
   const isMarko6 = (fn) => typeof fn !== "function" || htmlCompat.isTagsAPI(fn);
   const isMarko5 = (fn) =>
     typeof fn !== "function" || !htmlCompat.isTagsAPI(fn);
@@ -172,6 +174,7 @@ exports.p = function (htmlCompat) {
       const state = htmlCompat.ensureState($global);
       const out = defaultCreateOut($global);
       const branchId = htmlCompat.nextScopeId();
+      let forceBoundary = boundaryModeByRenderer.get(tag);
 
       if (renderer5) {
         const componentsContext = ___getComponentsContext(out);
@@ -187,6 +190,7 @@ exports.p = function (htmlCompat) {
                 key[2] === "-" ? key.slice(3) : key.slice(2).toLowerCase(),
                 value,
               ]);
+              forceBoundary = true;
               value.toJSON = htmlCompat.toJSON(state);
             }
           } else {
@@ -194,11 +198,11 @@ exports.p = function (htmlCompat) {
           }
         }
 
-        componentsContext.___forceBoundary = true;
+        componentsContext.___forceBoundary = forceBoundary;
         renderer5(input, out);
 
         const componentDef = componentsContext.___components[0];
-        if (componentDef) {
+        if (componentDef && forceBoundary) {
           const rawInput = componentDef.___component.___input;
           const { toJSON: _, ...serializeInput } = rawInput;
           componentDef.___component.___customEvents = customEvents;
@@ -230,7 +234,10 @@ exports.p = function (htmlCompat) {
     };
   });
 
-  return htmlCompat.register;
+  return function register(id, renderer, boundaryMode) {
+    boundaryModeByRenderer.set(renderer, boundaryMode || true);
+    return htmlCompat.register(id, renderer);
+  };
 };
 
 function concatScripts(a, b) {

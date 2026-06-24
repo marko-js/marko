@@ -1,9 +1,3 @@
-// v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init();
-
-// v:template.marko.hydrate-5.js
-var v_template_marko_hydrate_5_default = () => {};
-
 // components/class-script.marko
 var import_vdom = require_vdom();
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
@@ -34,3 +28,9 @@ function $setup($scope) {
 	$dynamicTag($scope, _marko_template);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+
+// v:template.marko.hydrate-6.js
+var v_template_marko_hydrate_6_default = () => {};
+
+// v:template.marko.hydrate-5.js
+var v_template_marko_hydrate_5_default = () => {};

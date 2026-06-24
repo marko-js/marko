@@ -22,7 +22,6 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-_resume_dynamic_tag();
 const $count = /* @__PURE__ */ _let(2, ($scope) => _text($scope.b, $scope.c));
 function $onCount($scope) {
 	return function(newCount) {

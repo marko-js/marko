@@ -1,4 +1,8 @@
+// v:template.marko.hydrate-6.js
+var v_template_marko_hydrate_6_default = () => {};
+
 // tags/components/hello-internal.marko
+var import_components = require_components();
 var import_vdom = require_vdom();
 var import_const_element = /* @__PURE__ */ __toESM(require_const_element());
 var import_renderer = /* @__PURE__ */ __toESM(require_renderer());
@@ -13,9 +17,5 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 }, { t: _marko_componentType }, _marko_component);
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
-// v:template.marko.hydrate-6.js
-var v_template_marko_hydrate_6_default = () => init$1();
-
 // v:template.marko.hydrate-5.js
-var import_components = require_components();
 var v_template_marko_hydrate_5_default = () => (0, import_components.init)();

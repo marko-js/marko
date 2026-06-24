@@ -39,7 +39,6 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<!><!><span id=display></span>";
 const $walks = "b%c";
-_resume_dynamic_tag();
 const $mybutton_content = _content_resume("__tests__/template.marko_1_content", "Say Hi", "b");
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0", $mybutton_content);
 function $setup($scope) {
