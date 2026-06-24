@@ -137,9 +137,24 @@ exports.p = function (domCompat) {
     let host = domCompat.getStartNode(scope);
     let rootNode = host.fragment;
     if (!rootNode) {
+      // An inert/server only class child has no client instance in
+      // ___componentLookup; once it has been re-rendered once it is tracked on
+      // the scope instead.
       const component = (scope.___marko5Component =
-        ___componentLookup[scope.m5c]);
-      rootNode = component.___rootNode;
+        ___componentLookup[scope.m5c] || scope.___marko5Component);
+      if (component) {
+        rootNode = component.___rootNode;
+      } else {
+        // First re-render of such a child: wrap its existing DOM (between the
+        // scope's start and end nodes) in a fragment so the new render can be
+        // morphed in place. The morph + ___initComponents below registers a
+        // component that the branch above reuses for subsequent re-renders.
+        rootNode = ___createFragmentNode(
+          host.nextSibling,
+          domCompat.getEndNode(scope),
+          host.parentNode,
+        );
+      }
       host = rootNode.startNode;
       domCompat.setScopeNodes(host, rootNode.startNode, rootNode.endNode);
     }
