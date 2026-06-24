@@ -229,3 +229,31 @@ the try's own branch-resume serialization on `bodyCanThrowOrPendOnClient`). That
 is the deeper async/branch-resume change the maintainer flagged; left for a
 focused follow-up. The `_enable_catch` gate (landed) is the safe, validated
 increment.
+
+## Follow-up #1 LANDED: catch/placeholder content + boundary-serialization pruning
+
+Resolved the serialization-coupling blocker. A `<try>` is _fully client-static_
+when its body can't throw/pend on the client (`bodyCanThrowOrPendOnClient` is
+false) **and** every `@catch`/`@placeholder` branch is itself static (no
+`isInteractive`/`isAsync`/closures). For such a try the compiler now:
+
+- emits the body + branch content as pure `_content` (via
+  `downstreamBinding = false` on those sections — DOM: tree-shakeable), and
+- passes a `serializeMarker = 0` to the HTML `_try`, which then renders inline
+  (with `catch` still guarding server-side render errors) and **skips the branch
+  resume scope + marks** — mirroring the existing `_await` `serializeMarker`
+  pattern.
+
+Results:
+
+- `TrySync` (static try next to an island): DOM **2,363 → 1,697** brotli — the
+  catch fully tree-shakes; the static `<try>` now adds **zero** client bytes
+  (−47% from the original 3,206).
+- Static-try HTML payload: `catch-single-success-sync` **247 → 7** brotli;
+  `placeholder-skipped` **249 → 9** brotli — the dead try resume serialization
+  (`M._.r = [...]` + branch markers) is gone (symptom #3).
+- Async / interactive / reactive tries unchanged.
+
+Validation: full `runtime-tags` (4,745) and `translator-interop` (254) suites
+pass; two correct fixture updates (`catch-single-success-sync`,
+`placeholder-skipped`) with unchanged rendered output.

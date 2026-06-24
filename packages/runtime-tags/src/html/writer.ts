@@ -784,13 +784,28 @@ export function _try(
     placeholder?: { content?(): void };
     catch?: { content?(err: unknown): void };
   },
+  serializeMarker?: 0 | 1,
 ) {
-  const branchId = _peek_scope_id();
-  $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
-
   const catchContent = input.catch
     ? (normalizeDynamicRenderer(input.catch) as ServerRenderer | undefined) || 0
     : undefined;
+
+  // A client-static try (sync body that cannot throw/pend on the client, with
+  // static branches) is never resumed: the client never re-renders it or
+  // switches branches. Render it inline — `catch` still guards server-side
+  // render errors — without the branch resume marks or scope serialization.
+  if (serializeMarker === 0) {
+    if (catchContent !== undefined) {
+      tryCatch(content, catchContent || (() => {}));
+    } else {
+      content();
+    }
+    return;
+  }
+
+  const branchId = _peek_scope_id();
+  $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
+
   const placeholderContent = normalizeDynamicRenderer(input.placeholder) as
     | ServerRenderer
     | undefined;
