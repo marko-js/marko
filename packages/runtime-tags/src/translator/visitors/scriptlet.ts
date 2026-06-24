@@ -3,7 +3,7 @@ import { getProgram } from "@marko/compiler/babel-utils";
 
 import { isOutputHTML } from "../util/marko-config";
 import { mergeReferences } from "../util/references";
-import { getOrCreateSection } from "../util/sections";
+import { getOrCreateSection, markSectionInteractive } from "../util/sections";
 import { replaceRegisteredFunctionNode } from "../util/signals";
 import { traverseReplace } from "../util/traverse";
 import type { TemplateVisitor } from "../util/visitors";
@@ -15,14 +15,12 @@ export default {
         "Scriptlets are not supported when using the tags api.",
       );
     }
-    mergeReferences(
-      getOrCreateSection(scriptlet),
-      scriptlet.node,
-      scriptlet.node.body,
-    );
+    const section = getOrCreateSection(scriptlet);
+    mergeReferences(section, scriptlet.node, scriptlet.node.body);
 
     if (scriptlet.node.target === "client") {
       getProgram().node.extra.isInteractive = true;
+      markSectionInteractive(section);
     }
   },
   translate: {

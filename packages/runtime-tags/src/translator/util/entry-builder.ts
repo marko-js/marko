@@ -11,6 +11,7 @@ declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     needsCompat?: boolean;
     isInteractive?: boolean;
+    isAsync?: boolean;
     page?: boolean;
   }
 }

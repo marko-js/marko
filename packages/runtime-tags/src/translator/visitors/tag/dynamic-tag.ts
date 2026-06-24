@@ -51,6 +51,8 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  markSectionAsync,
+  markSectionInteractive,
   type Section,
   startSection,
 } from "../../util/sections";
@@ -134,6 +136,13 @@ export default {
       ) {
         getProgram().node.extra.isInteractive = true;
       }
+
+      // A dynamic tag can render any content, so its section always deopts: it
+      // may be interactive and/or async on the client. This keeps boundaries
+      // like `<try>` conservative when they wrap a dynamic tag.
+      markSectionInteractive(tagSection);
+      markSectionAsync(tagSection);
+      getProgram().node.extra.isAsync = true;
 
       if (hasVar) {
         trackVarReferences(tag, BindingType.derived);

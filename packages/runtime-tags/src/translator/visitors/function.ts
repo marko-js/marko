@@ -17,7 +17,7 @@ import {
   getCanonicalExtra,
   type RegisteredFnExtra,
 } from "../util/references";
-import { getSection } from "../util/sections";
+import { getSection, markSectionInteractive } from "../util/sections";
 import {
   mergeSerializeReasons,
   type SerializeReason,
@@ -201,6 +201,7 @@ function registerFunction(fnExtra: RegisteredFnExtra, reason: SerializeReason) {
     opts: { filename },
   } = getFile();
   program.node.extra.isInteractive = true;
+  markSectionInteractive(fnExtra.section);
   fnExtra.registerReason = reason;
   fnExtra.name = generateUid(fnExtra.name);
   fnExtra.registerId = getTemplateId(

@@ -12,7 +12,11 @@ import { isOutputDOM } from "../util/marko-config";
 import { getAllTagReferenceNodes, mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
-import { getOrCreateSection, getSection } from "../util/sections";
+import {
+  getOrCreateSection,
+  getSection,
+  markSectionInteractive,
+} from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { createSectionState } from "../util/state";
 import { propsToExpression, translateAttrs } from "../util/translate-attrs";
@@ -58,6 +62,7 @@ export default {
     }
 
     getProgram().node.extra.isInteractive = true;
+    markSectionInteractive(section);
   },
   translate: {
     exit(tag) {

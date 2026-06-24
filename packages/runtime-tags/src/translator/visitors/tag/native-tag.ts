@@ -39,6 +39,7 @@ import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  markSectionInteractive,
 } from "../../util/sections";
 import { getSerializeGuard } from "../../util/serialize-guard";
 import {
@@ -206,6 +207,7 @@ export default {
 
         if (hasEventHandlers) {
           getProgram().node.extra.isInteractive = true;
+          markSectionInteractive(tagSection);
         }
 
         if (spreadReferenceNodes) {

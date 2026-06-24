@@ -32,7 +32,11 @@ import {
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
-import { getOrCreateSection } from "../../util/sections";
+import {
+  getOrCreateSection,
+  markSectionAsync,
+  markSectionInteractive,
+} from "../../util/sections";
 import { addStatement, getSignal } from "../../util/signals";
 import { createProgramState } from "../../util/state";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -82,6 +86,16 @@ export default {
 
       if (childExtra.page) {
         programExtra.page ??= true;
+      }
+
+      // Propagate the child template's interactivity/async-ness onto the section
+      // that hosts this tag, so boundaries like `<try>` know their subtree can be
+      // interactive or go pending/throw on the client even when the relevant
+      // `<await>`/effect lives inside the child module.
+      if (childExtra.isInteractive || childExtra.isAsync) {
+        const hostSection = getOrCreateSection(tag);
+        if (childExtra.isInteractive) markSectionInteractive(hostSection);
+        if (childExtra.isAsync) markSectionAsync(hostSection);
       }
 
       if (tagExtra.tagNameLoad) {

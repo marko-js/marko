@@ -3,6 +3,7 @@ import {
   assertNoArgs,
   assertNoAttributeTags,
   assertNoVar,
+  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
@@ -25,6 +26,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  markSectionAsync,
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
@@ -59,6 +61,8 @@ export default {
     const { node } = tag;
     const tagBody = tag.get("body");
     const section = getOrCreateSection(tag);
+    markSectionAsync(section);
+    getProgram().node.extra.isAsync = true;
     const [valueAttr] = node.attributes;
     const tagExtra = (tag.node.extra ??= {});
     tagExtra[kDOMBinding] = createBinding("#text", BindingType.dom, section);

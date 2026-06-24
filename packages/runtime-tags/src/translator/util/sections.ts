@@ -78,6 +78,20 @@ export interface Section {
   hasAbortSignal: boolean;
   readsOwner: boolean;
   isBranch: boolean;
+  /**
+   * True when this section's subtree contains client-side interactivity
+   * (event handlers, `<script>`/lifecycle effects, client scriptlets, registered
+   * functions, or a dynamic tag — which always deopts). Propagated up to owner
+   * sections so an ancestor knows its subtree is interactive.
+   */
+  isInteractive: boolean;
+  /**
+   * True when this section's subtree contains an async boundary (`<await>`, or a
+   * dynamic tag which always deopts). Propagated up to owner sections. An async
+   * boundary may be flushed pending and resolve/reject via streaming after
+   * hydration, so it always needs the client resume machinery.
+   */
+  isAsync: boolean;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -152,6 +166,8 @@ export function startSection(
       hasAbortSignal: false,
       readsOwner: false,
       isBranch: false,
+      isInteractive: false,
+      isAsync: false,
     };
     sections.push(section);
   }
@@ -313,6 +329,26 @@ export function getNodeContentType(
   }
 
   return ContentType.Dynamic;
+}
+
+export function markSectionInteractive(section: Section) {
+  for (
+    let cur: Section | undefined = section;
+    cur && !cur.isInteractive;
+    cur = cur.parent
+  ) {
+    cur.isInteractive = true;
+  }
+}
+
+export function markSectionAsync(section: Section) {
+  for (
+    let cur: Section | undefined = section;
+    cur && !cur.isAsync;
+    cur = cur.parent
+  ) {
+    cur.isAsync = true;
+  }
 }
 
 export function getSectionRegisterReasons(section: Section) {

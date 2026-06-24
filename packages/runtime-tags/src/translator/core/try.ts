@@ -193,12 +193,30 @@ export default {
           );
         }
 
-        const program = getProgram().node;
-        if (!hasEnabledCatch.has(program)) {
-          hasEnabledCatch.add(program);
-          program.body.push(
-            t.expressionStatement(callRuntime("_enable_catch")),
-          );
+        // The catch runtime only needs to be enabled when this try can actually
+        // go pending or throw on the *client*. That happens when its body subtree
+        // is async (an `<await>` — including one inside a child component — may
+        // resolve/reject via streaming after hydration), interactive (an effect
+        // could throw), or otherwise runs client code that could throw during a
+        // (re-)render. A body that renders to fully static markup with no client
+        // signals can only ever catch/pend on the server, so the client never
+        // needs the catch machinery and we can drop `_enable_catch`.
+        const bodyCanThrowOrPendOnClient =
+          bodySection.isAsync ||
+          bodySection.isInteractive ||
+          !!bodySection.bindings ||
+          !!bodySection.referencedClosures ||
+          !!bodySection.referencedLocalClosures ||
+          !!bodySection.serializeReason ||
+          bodySection.serializeReasons.size > 0;
+        if (bodyCanThrowOrPendOnClient) {
+          const program = getProgram().node;
+          if (!hasEnabledCatch.has(program)) {
+            hasEnabledCatch.add(program);
+            program.body.push(
+              t.expressionStatement(callRuntime("_enable_catch")),
+            );
+          }
         }
 
         addValue(

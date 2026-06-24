@@ -162,3 +162,41 @@ maintainer's streaming-resume semantics and are left conservative.
 The prototype was reverted (no source change is committed); this section records
 the validated magnitude and the exact safety constraints so the real fix can skip
 the trap.
+
+## Implemented (landed in this branch)
+
+Added `section.isInteractive` and `section.isAsync` to the Section model
+(`util/sections.ts`), marked + propagated up the section tree at the sources:
+
+- `isAsync`: `<await>` (`core/await.ts`); dynamic tags deopt to both
+  (`visitors/tag/dynamic-tag.ts`).
+- `isInteractive`: `<script>` effects, `<lifecycle>`, client scriptlets,
+  registered functions, native-tag event handlers; dynamic tags deopt to both.
+- Cross-module propagation: a custom tag marks its host section
+  interactive/async when the child template is (`visitors/tag/custom-tag.ts`),
+  so a `<try>` wrapping an async/interactive child stays conservative.
+- Program-level `isAsync` added alongside the existing `isInteractive`.
+
+`core/try.ts` now only emits `_enable_catch()` when the try body can actually
+pend/throw on the client:
+
+```
+bodyCanThrowOrPendOnClient =
+  bodySection.isAsync || bodySection.isInteractive ||
+  bodySection.bindings || referencedClosures || referencedLocalClosures ||
+  serializeReason || serializeReasons.size
+```
+
+A fully client-static try body (no client signals, no async, no interactivity)
+drops `_enable_catch()`. Because that call is non-pure, removing it also unblocks
+tree-shaking of the whole module when nothing else anchors it.
+
+Result: `TrySync` 3,206 → **2,363** brotli (−26%) in optimize mode; async /
+interactive / reactive tries are unchanged. Full `runtime-tags` suite green
+(4,745 passing) with two correct snapshot updates (`catch-single-success-sync`,
+`placeholder-skipped` — both static-body tries whose `_enable_catch` was dead).
+
+Follow-ups (not yet landed): the catch/placeholder _content_ `_content_resume`
+→ `_content` + serialization pruning (needs the server-rendered-branch resume
+nuance), and extending the gate to the async case per the maintainer's
+"all awaits server-only" rule.
