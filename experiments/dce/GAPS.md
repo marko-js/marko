@@ -123,3 +123,42 @@ Validation: the 748-fixture suite has render + resume + serialize snapshots
 and the `await`/`async` subsets; expect smaller `dom.bundle.js` + `sizes.json` +
 serialized-HTML snapshots for the client-static cases and **no change** for the
 reactive ones. Then a broad run before landing.
+
+### Prototype result (validated, then reverted) — the predicate must be stricter
+
+A first prototype gated only `_enable_catch()` on
+`bodySection.serializeReason || bodySection.serializeReasons.size`
+(the try body section). Measured win on the client-static repros:
+
+| fixture                 |        before | after `_enable_catch` gate |
+| ----------------------- | ------------: | -------------------------: |
+| TrySync                 |         3,206 |           **2,363** (−26%) |
+| TryConst                |         3,235 |                  **2,383** |
+| TryStatic / TryReactive | 3,255 / 4,072 |        unchanged (correct) |
+
+But the full suite caught a real regression in
+`async-reject-then-resolve-before-and-after-isolated-boundaries`: `_enable_catch`
+was dropped from a template whose awaits are all server-only (constant args) yet
+which (a) streams a **rejection** the client must handle and (b) has an
+interactive `<button>` whose `_script` lives in the **`<await>` body section** — a
+_descendant_ of the try body section. So the predicate was wrong on two counts:
+
+1. **Descendants matter.** The try body section's `serializeReason` does not
+   aggregate its descendant sections (e.g. the `<await>` content where an island
+   lives). A correct predicate must consider the whole subtree.
+2. **Server-only async still resumes via streaming.** Even an await with no
+   client-reactive inputs can be flushed _pending_ and have its resolve/reject
+   streamed after hydration, which the client handles through the same
+   catch/pending machinery `_enable_catch()` enables. So "all awaits server-only"
+   is **not** sufficient to drop `_enable_catch`.
+
+**Refined safe predicate** (for dropping `_enable_catch` + catch/placeholder
+resume): the try must be **sync** (no `<await>` anywhere in the subtree) _and_ the
+entire try-body subtree must be client-static (no section under it has a client
+serialize reason). That cleanly covers `TrySync` (the pure sync error-boundary
+case) without touching any async/streaming path. The async cases need the
+maintainer's streaming-resume semantics and are left conservative.
+
+The prototype was reverted (no source change is committed); this section records
+the validated magnitude and the exact safety constraints so the real fix can skip
+the trap.
