@@ -200,3 +200,32 @@ Follow-ups (not yet landed): the catch/placeholder _content_ `_content_resume`
 → `_content` + serialization pruning (needs the server-rendered-branch resume
 nuance), and extending the gate to the async case per the maintainer's
 "all awaits server-only" rule.
+
+## Follow-up #1 attempt: catch/placeholder content pruning — blocked by serialization coupling
+
+Tried to extend the win to the catch/placeholder _content_ (make it pure
+`_content` so the DOM bundle drops the branch HTML string, and skip its HTML
+resume serialization) for a client-static try whose branch content is itself
+client-static. Predicate that distinguishes the cases cleanly: a branch is
+prunable when the body can't throw/pend on the client AND the branch section has
+no `isInteractive` / `isAsync` / referenced closures (the `err`-param serialize
+reason and a static `${err.message}` setup do **not** require client resume).
+
+Implemented by marking the branch section's `downstreamBinding = false` (flips
+`getSectionRegisterReasons` off, behaves like `undefined` elsewhere). Result on
+`TrySync`: 2,363 → **1,697** brotli — the catch fully tree-shakes, matching the
+bare-island baseline (the static `<try>` adds zero client bytes).
+
+But this **breaks SSR**: `catch-single-success-sync` fails with
+`Unable to serialize (reading ["#CatchContent"])`. The DOM content registration
+and the HTML resume serialization are **coupled by the resume id** — the `<try>`
+boundary serializes a reference to its catch/placeholder content as part of its
+own resumable state, independent of the branch's own client behavior. Dropping
+the branch registration leaves the boundary's serialized value dangling.
+
+So this follow-up is not a localized content change: it needs the `<try>`
+boundary's value serialization to also skip the dead branch references (i.e. gate
+the try's own branch-resume serialization on `bodyCanThrowOrPendOnClient`). That
+is the deeper async/branch-resume change the maintainer flagged; left for a
+focused follow-up. The `_enable_catch` gate (landed) is the safe, validated
+increment.
