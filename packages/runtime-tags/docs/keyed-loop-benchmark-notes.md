@@ -103,14 +103,6 @@ land once a small bundle budget is acceptable — see "not taken" below.
   map entry to _every_ row at create — regressing the entire create family — and
   grows the app bundle. With `03_update` already measuring ~1.00 (parity), the
   upside is ~zero and the cost is real: **net-negative on the composite**, plus
-
-- **Per-row label signals for `03_update`** (Solid's model: each row's label is
-  its own signal, so update fires N signals and never reconciles). In Marko this
-  requires per-row scope state (`<let>`) plus a `<script>`/effect registry
-  exposing setters to the parent. That **adds** a lifecycle instance + closure +
-  map entry to _every_ row at create — regressing the entire create family — and
-  grows the app bundle. With `03_update` already measuring ~1.00 (parity), the
-  upside is ~zero and the cost is real: **net-negative on the composite**, plus
   bundle. Not worth it for this goal.
 - **Reconciler bidirectional-trim rewrite** for swap/remove: the key map isn't
   the cost (~0.05 ms; suffix-skip already keeps the LIS middle tiny), and swap is
