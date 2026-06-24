@@ -1,5 +1,5 @@
 // template.marko
-const $value = /* @__PURE__ */ _let(7, ($scope) => {
+const $value = /*@__PURE__*/ _let(7, ($scope) => {
 	_attr_input_value_default($scope, "c", $scope.h);
 	_attr_input_value_default($scope, "d", $scope.h);
 	_attr_input_value($scope, "e", $scope.h, void 0);

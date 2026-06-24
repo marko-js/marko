@@ -1,5 +1,5 @@
 // tags/store.marko
-const $list$1 = /* @__PURE__ */ _let(3, ($scope) => _return($scope, {
+const $list$1 = /*@__PURE__*/ _let(3, ($scope) => _return($scope, {
 	list: $scope.d,
 	listChange: $_return($scope),
 	clear: $_return2($scope)
@@ -25,9 +25,9 @@ const $store = _var_resume("a0", ($scope, store) => {
 	$store_listChange($scope, store?.listChange);
 	$store_clear($scope, store?.clear);
 });
-const $for = /* @__PURE__ */ _for_of(3, "<li> </li>", "D l", 0, $for_content__$params);
-const $list = /* @__PURE__ */ _let_change(9, ($scope) => $for($scope, [$scope.j]));
-const $store_list__OR__store_listChange = /* @__PURE__ */ _or(7, ($scope) => $list($scope, $scope.f, $scope.g), 1, 1);
-const $store_list = /* @__PURE__ */ _const(5, $store_list__OR__store_listChange);
-const $store_listChange = /* @__PURE__ */ _const(6, $store_list__OR__store_listChange);
-const $store_clear = /* @__PURE__ */ _const(8, _script("a1", ($scope) => _on($scope.c, "click", $scope.i)));
+const $for = /*@__PURE__*/ _for_of(3, "<li> </li>", "D l", 0, $for_content__$params);
+const $list = /*@__PURE__*/ _let_change(9, ($scope) => $for($scope, [$scope.j]));
+const $store_list__OR__store_listChange = /*@__PURE__*/ _or(7, ($scope) => $list($scope, $scope.f, $scope.g), 1, 1);
+const $store_list = /*@__PURE__*/ _const(5, $store_list__OR__store_listChange);
+const $store_listChange = /*@__PURE__*/ _const(6, $store_list__OR__store_listChange);
+const $store_clear = /*@__PURE__*/ _const(8, _script("a1", ($scope) => _on($scope.c, "click", $scope.i)));

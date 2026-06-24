@@ -25,18 +25,18 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $classlayout_content__multiplier__OR__baseCount = /* @__PURE__ */ _or(7, ($scope) => _text($scope.e, $scope._.b * $scope.g));
+const $classlayout_content__multiplier__OR__baseCount = /*@__PURE__*/ _or(7, ($scope) => _text($scope.e, $scope._.b * $scope.g));
 const $classlayout_content__multiplier__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$multiplier($scope._, $scope._.b + 1);
 }));
-const $classlayout_content__multiplier = /* @__PURE__ */ _closure_get(1, ($scope) => {
+const $classlayout_content__multiplier = /*@__PURE__*/ _closure_get(1, ($scope) => {
 	_text($scope.c, $scope._.b);
 	$classlayout_content__multiplier__OR__baseCount($scope);
 	$classlayout_content__multiplier__script($scope);
 });
 const $classlayout_content__setup = $classlayout_content__multiplier;
 const $classlayout_content__message = ($scope, message) => _text($scope.a, message);
-const $classlayout_content__baseCount = /* @__PURE__ */ _const(6, ($scope) => {
+const $classlayout_content__baseCount = /*@__PURE__*/ _const(6, ($scope) => {
 	_text($scope.d, $scope.g);
 	$classlayout_content__multiplier__OR__baseCount($scope);
 });
@@ -45,7 +45,7 @@ const $classlayout_content__$params = ($scope, $params2) => {
 	$classlayout_content__message($scope, $params2[1]);
 };
 const $classlayout_content = _content_resume("a0", "<h1> </h1><button id=tags><!> * <!> = <!></button>", "D l D%c%c%l", $classlayout_content__setup, $classlayout_content__$params);
-const $multiplier = /* @__PURE__ */ _let(1, /* @__PURE__ */ _closure($classlayout_content__multiplier));
+const $multiplier = /*@__PURE__*/ _let(1, /* @__PURE__ */ _closure($classlayout_content__multiplier));
 
 // v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => init$1();

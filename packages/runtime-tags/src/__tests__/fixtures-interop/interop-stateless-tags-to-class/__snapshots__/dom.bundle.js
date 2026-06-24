@@ -26,7 +26,7 @@ component_browser_default.renderer = _marko_template._ = (0, import_renderer.def
 _marko_template.Component = (0, import_defineComponent.default)(_marko_component, _marko_template._);
 
 // template.marko
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0, _content_resume("a1", "Say Hi", "b"));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("a1", "Say Hi", "b"));
 function $onClick() {
 	document.getElementById("display").innerHTML = "Hi!";
 }

@@ -1,5 +1,5 @@
 // template.marko
-const $onClick3 = /* @__PURE__ */ _const(3, _script("a1", ($scope) => _on($scope.a, "click", $scope.d)));
+const $onClick3 = /*@__PURE__*/ _const(3, _script("a1", ($scope) => _on($scope.a, "click", $scope.d)));
 function $updateText(ev) {
 	ev.target.textContent = "after";
 }

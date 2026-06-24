@@ -9,10 +9,10 @@ const $try_content__clickCount__script = _script("a2", ($scope) => {
 	});
 	$scope._.a.textContent = $scope._.c;
 });
-const $try_content__clickCount = /* @__PURE__ */ _closure_get(2, ($scope) => {
+const $try_content__clickCount = /*@__PURE__*/ _closure_get(2, ($scope) => {
 	_text($scope.b, (() => {
 		if ($scope._.c > 1) throw new Error("ERROR!");
 	})());
 	$try_content__clickCount__script($scope);
 });
-const $clickCount = /* @__PURE__ */ _let(2, /* @__PURE__ */ _closure($try_content__clickCount));
+const $clickCount = /*@__PURE__*/ _let(2, /* @__PURE__ */ _closure($try_content__clickCount));

@@ -1,6 +1,6 @@
 // template.marko
-const $a = /* @__PURE__ */ _let(5, ($scope) => _text($scope.a, $scope.f));
-const $b = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g));
+const $a = /*@__PURE__*/ _let(5, ($scope) => _text($scope.a, $scope.f));
+const $b = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g));
 const $input_value__script = _script("a0", ($scope) => {
 	{
 		const previousValue = $a($scope, $scope.e + 1);

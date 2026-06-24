@@ -14,8 +14,8 @@ const $x__script = _script("__tests__/template.marko_0_x", ($scope) => {
 		$x($scope, $scope.x + 1);
 	});
 });
-const $x = /* @__PURE__ */ _let("x/1", $x__script);
+const $x = /*@__PURE__*/ _let("x/1", $x__script);
 function $setup($scope) {
 	$x($scope, 0);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, "b b", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b b", $setup);

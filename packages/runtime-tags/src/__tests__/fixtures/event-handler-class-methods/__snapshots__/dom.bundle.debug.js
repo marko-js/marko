@@ -8,11 +8,11 @@ var Helper = class Helper {
 };
 const $obj2 = ($scope, obj) => $obj_go($scope, obj.go);
 const $obj_go__script = _script("__tests__/template.marko_0_obj_go", ($scope) => _on($scope["#button/2"], "click", $scope.obj_go));
-const $obj_go = /* @__PURE__ */ _const("obj_go", $obj_go__script);
+const $obj_go = /*@__PURE__*/ _const("obj_go", $obj_go__script);
 const $n__script = _script("__tests__/template.marko_0_n", ($scope) => _on($scope["#button/3"], "click", function() {
 	$n($scope, $scope.n + 1);
 }));
-const $n = /* @__PURE__ */ _let("n/6", ($scope) => {
+const $n = /*@__PURE__*/ _let("n/6", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$n__script($scope);
 });
@@ -24,4 +24,4 @@ function $setup($scope) {
 }
 function $obj() {}
 _resume("__tests__/template.marko_0/obj", $obj);
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

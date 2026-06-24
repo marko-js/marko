@@ -7,8 +7,8 @@ const $clickCount__script = _script("__tests__/template.marko_0_clickCount", ($s
 		$clickCount($scope, $scope.clickCount + 1);
 	});
 });
-const $clickCount = /* @__PURE__ */ _let("clickCount/1", $clickCount__script);
+const $clickCount = /*@__PURE__*/ _let("clickCount/1", $clickCount__script);
 function $setup($scope) {
 	$clickCount($scope, 0);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, "D l", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "D l", $setup);

@@ -20,15 +20,15 @@ const $for_content2__$temp = ($scope, $temp2) => $for_content2__text($scope, $te
 const $for_content__text = ($scope, text) => _text($scope.a, text);
 const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2?.[0]);
 const $for_content__$temp = ($scope, $temp) => $for_content__text($scope, $temp.text);
-const $for = /* @__PURE__ */ _for_of(0, " ", " b", 0, $for_content__$params);
-const $for2 = /* @__PURE__ */ _for_of(1, " ", " b", 0, $for_content2__$params);
-const $for3 = /* @__PURE__ */ _for_of(2, " ", " b", 0, $for_content3__$params);
-const $for4 = /* @__PURE__ */ _for_of(3, " ", " b", 0, $for_content4__$params);
-const $for5 = /* @__PURE__ */ _for_of(4, " ", " b", 0, $for_content5__$params);
+const $for = /*@__PURE__*/ _for_of(0, " ", " b", 0, $for_content__$params);
+const $for2 = /*@__PURE__*/ _for_of(1, " ", " b", 0, $for_content2__$params);
+const $for3 = /*@__PURE__*/ _for_of(2, " ", " b", 0, $for_content3__$params);
+const $for4 = /*@__PURE__*/ _for_of(3, " ", " b", 0, $for_content4__$params);
+const $for5 = /*@__PURE__*/ _for_of(4, " ", " b", 0, $for_content5__$params);
 const $items__script = _script("a0", ($scope) => _on($scope.f, "click", function() {
 	$items($scope, [...$scope.g.slice(1), $scope.g?.[0]]);
 }));
-const $items = /* @__PURE__ */ _let(6, ($scope) => {
+const $items = /*@__PURE__*/ _let(6, ($scope) => {
 	$for($scope, [$scope.g, "id"]);
 	$for2($scope, [$scope.g, (item) => item.id]);
 	$for3($scope, [$scope.g, getStringBy()]);

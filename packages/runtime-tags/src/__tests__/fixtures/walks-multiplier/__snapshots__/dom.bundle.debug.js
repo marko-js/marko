@@ -4,7 +4,7 @@ const $walks = " Db%lDwfD lvcD m";
 const $n__script = _script("__tests__/template.marko_0_n", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, $scope.n + 1);
 }));
-const $n = /* @__PURE__ */ _let("n/4", ($scope) => {
+const $n = /*@__PURE__*/ _let("n/4", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	_text($scope["#text/2"], $scope.n);
 	_text($scope["#text/3"], $scope.n + 1);
@@ -13,4 +13,4 @@ const $n = /* @__PURE__ */ _let("n/4", ($scope) => {
 function $setup($scope) {
 	$n($scope, 1);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

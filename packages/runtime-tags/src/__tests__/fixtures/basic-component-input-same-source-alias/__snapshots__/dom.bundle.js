@@ -1,6 +1,6 @@
 // tags/my-button.marko
 const $onClick__script = _script("b0", ($scope) => _on($scope.a, "click", $scope.f));
-const $onClick$1 = /* @__PURE__ */ _const(5, $onClick__script);
+const $onClick$1 = /*@__PURE__*/ _const(5, $onClick__script);
 const $text = ($scope, text) => {
 	_text($scope.b, text);
 	$input_text($scope, text);
@@ -8,7 +8,7 @@ const $text = ($scope, text) => {
 const $input_text = ($scope, text) => _text($scope.c, text);
 
 // template.marko
-const $clickCount = /* @__PURE__ */ _let(1, ($scope) => {
+const $clickCount = /*@__PURE__*/ _let(1, ($scope) => {
 	$text($scope.a, $scope.b);
 	$onClick$1($scope.a, $onClick($scope));
 });

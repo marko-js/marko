@@ -12,13 +12,13 @@ const $input__script = _script("__tests__/tags/child.marko_0_input", ($scope) =>
 		console.log(updated, $scope.input.value);
 	}
 });
-const $input = /* @__PURE__ */ _const("input", $input__script);
-var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", "", "", $setup$1, $input);
+const $input = /*@__PURE__*/ _const("input", $input__script);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$1, $input);
 
 // template.marko
 const $template = "";
-const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)("");
-const $count = /* @__PURE__ */ _let("count/1", ($scope) => $input($scope["#childScope/0"], {
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)("");
+const $count = /*@__PURE__*/ _let("count/1", ($scope) => $input($scope["#childScope/0"], {
 	value: $scope.count,
 	valueChange: $valueChange($scope)
 }));
@@ -32,4 +32,4 @@ function $valueChange($scope) {
 	};
 }
 _resume("__tests__/template.marko_0/valueChange", $valueChange);
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

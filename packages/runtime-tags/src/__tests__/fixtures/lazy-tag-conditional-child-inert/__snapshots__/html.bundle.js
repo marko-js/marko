@@ -14,7 +14,7 @@ var template_default = _template("b", (input) => {
 	let count = 0;
 	_html(`<button>Inc</button>${_el_resume($scope0_id, "a")}`);
 	_if(() => {
-		if (count % 2 === 0) {
+		{
 			const $scope1_id = _scope_id();
 			const $childScope = _peek_scope_id();
 			_set_serialize_reason({

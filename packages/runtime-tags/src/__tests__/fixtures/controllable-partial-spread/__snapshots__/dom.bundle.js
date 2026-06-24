@@ -3,7 +3,7 @@ const $v__OR__rest__script = _script("a3", ($scope) => {
 	_attrs_script($scope, "b");
 	_attrs_script($scope, "c");
 });
-const $v__OR__rest = /* @__PURE__ */ _or(6, ($scope) => {
+const $v__OR__rest = /*@__PURE__*/ _or(6, ($scope) => {
 	_attrs($scope, "b", {
 		checkedValue: $scope.e,
 		...$scope.f
@@ -17,7 +17,7 @@ const $v__OR__rest = /* @__PURE__ */ _or(6, ($scope) => {
 const $v__script = _script("a4", ($scope) => _on($scope.a, "click", function() {
 	$v($scope, $scope.e + "!");
 }));
-const $v = /* @__PURE__ */ _let(4, ($scope) => {
+const $v = /*@__PURE__*/ _let(4, ($scope) => {
 	_attr_input_value($scope, "d", $scope.e, $valueChange($scope));
 	$v__OR__rest($scope);
 	$v__script($scope);

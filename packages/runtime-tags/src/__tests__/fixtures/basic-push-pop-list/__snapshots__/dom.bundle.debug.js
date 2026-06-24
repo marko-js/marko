@@ -8,13 +8,13 @@ const $id__OR__items__script = _script("__tests__/template.marko_0_id_items", ($
 	$id($scope, nextId);
 	$items($scope, [...$scope.items, nextId]);
 }));
-const $id__OR__items = /* @__PURE__ */ _or(5, $id__OR__items__script);
-const $id = /* @__PURE__ */ _let("id/3", $id__OR__items);
-const $for = /* @__PURE__ */ _for_of("#text/0", " ", " b", 0, $for_content__$params);
+const $id__OR__items = /*@__PURE__*/ _or(5, $id__OR__items__script);
+const $id = /*@__PURE__*/ _let("id/3", $id__OR__items);
+const $for = /*@__PURE__*/ _for_of("#text/0", " ", " b", 0, $for_content__$params);
 const $items__script = _script("__tests__/template.marko_0_items", ($scope) => _on($scope["#button/2"], "click", function() {
 	$items($scope, $scope.items.slice(0, -1));
 }));
-const $items = /* @__PURE__ */ _let("items/4", ($scope) => {
+const $items = /*@__PURE__*/ _let("items/4", ($scope) => {
 	$for($scope, [$scope.items]);
 	$id__OR__items($scope);
 	$items__script($scope);
@@ -23,4 +23,4 @@ function $setup($scope) {
 	$id($scope, 0);
 	$items($scope, []);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

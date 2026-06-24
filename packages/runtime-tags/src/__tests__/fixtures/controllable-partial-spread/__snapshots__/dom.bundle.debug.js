@@ -5,7 +5,7 @@ const $v__OR__rest__script = _script("__tests__/template.marko_0_v_rest", ($scop
 	_attrs_script($scope, "#input/1");
 	_attrs_script($scope, "#input/2");
 });
-const $v__OR__rest = /* @__PURE__ */ _or(6, ($scope) => {
+const $v__OR__rest = /*@__PURE__*/ _or(6, ($scope) => {
 	_attrs($scope, "#input/1", {
 		checkedValue: $scope.v,
 		...$scope.rest
@@ -19,13 +19,13 @@ const $v__OR__rest = /* @__PURE__ */ _or(6, ($scope) => {
 const $v__script = _script("__tests__/template.marko_0_v", ($scope) => _on($scope["#button/0"], "click", function() {
 	$v($scope, $scope.v + "!");
 }));
-const $v = /* @__PURE__ */ _let("v/4", ($scope) => {
+const $v = /*@__PURE__*/ _let("v/4", ($scope) => {
 	_attr_input_value($scope, "#input/3", $scope.v, $valueChange($scope));
 	$v__OR__rest($scope);
 	$v__script($scope);
 });
 const $rest__script = _script("__tests__/template.marko_0_rest", ($scope) => _attrs_script($scope, "#input/3"));
-const $rest = /* @__PURE__ */ _const("rest", ($scope) => {
+const $rest = /*@__PURE__*/ _const("rest", ($scope) => {
 	_attrs_partial($scope, "#input/3", $scope.rest, {
 		value: 1,
 		valueChange: 1
@@ -45,4 +45,4 @@ function $valueChange($scope) {
 	};
 }
 _resume("__tests__/template.marko_0/valueChange", $valueChange);
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

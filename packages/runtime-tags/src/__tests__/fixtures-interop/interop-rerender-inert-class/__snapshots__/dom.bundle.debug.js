@@ -27,15 +27,15 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 const $template = "<button id=tags>Tags</button><!><!>";
 const $walks = " b%c";
 _resume("__tests__/components/class-display.marko", _marko_template);
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 const $msg__script = _script("__tests__/template.marko_0_msg", ($scope) => _on($scope["#button/0"], "click", function() {
 	$msg($scope, $scope.msg + "!");
 }));
-const $msg = /* @__PURE__ */ _let("msg/2", ($scope) => {
+const $msg = /*@__PURE__*/ _let("msg/2", ($scope) => {
 	$dynamicTag($scope, _marko_template, () => ({ value: $scope.msg }));
 	$msg__script($scope);
 });
 function $setup($scope) {
 	$msg($scope, "hi");
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

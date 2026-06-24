@@ -12,7 +12,7 @@ const $count__script = _script("__tests__/template.marko_0_count", ($scope) => {
 		$count($scope, $scope.count ** 3);
 	});
 });
-const $count = /* @__PURE__ */ _let("count/6", ($scope) => {
+const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	_text($scope["#text/3"], $scope.count);
 	_text($scope["#text/5"], $scope.count);
@@ -21,4 +21,4 @@ const $count = /* @__PURE__ */ _let("count/6", ($scope) => {
 function $setup($scope) {
 	$count($scope, 0);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

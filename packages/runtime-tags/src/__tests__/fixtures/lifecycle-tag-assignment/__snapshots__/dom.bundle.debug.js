@@ -15,13 +15,13 @@ const $x__script = _script("__tests__/template.marko_0_x", ($scope) => {
 		$x($scope, $scope.x + 1);
 	});
 });
-const $x = /* @__PURE__ */ _let("x/3", ($scope) => {
+const $x = /*@__PURE__*/ _let("x/3", ($scope) => {
 	_text($scope["#text/0"], $scope.x);
 	$x__script($scope);
 });
-const $prev = /* @__PURE__ */ _let("prev/4", ($scope) => _text($scope["#text/1"], $scope.prev));
+const $prev = /*@__PURE__*/ _let("prev/4", ($scope) => _text($scope["#text/1"], $scope.prev));
 function $setup($scope) {
 	$x($scope, 0);
 	$prev($scope, false);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

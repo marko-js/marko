@@ -14,7 +14,7 @@ const $input_list = $pattern2;
 const $n__script = _script("__tests__/template.marko_0_n", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, $scope.n + 1);
 }));
-const $n = /* @__PURE__ */ _let("n/13", ($scope) => {
+const $n = /*@__PURE__*/ _let("n/13", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$n__script($scope);
 });
@@ -22,4 +22,4 @@ function $setup($scope) {
 	$n($scope, 1);
 }
 const $input = ($scope, input) => $input_list($scope, input.list);
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

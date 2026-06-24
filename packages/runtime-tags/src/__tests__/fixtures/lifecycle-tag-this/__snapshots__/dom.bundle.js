@@ -1,5 +1,5 @@
 // template.marko
-const $x = /* @__PURE__ */ _let(1, _script("a0", ($scope) => {
+const $x = /*@__PURE__*/ _let(1, _script("a0", ($scope) => {
 	_lifecycle($scope, {
 		onMount: function() {
 			this.onUpdate();

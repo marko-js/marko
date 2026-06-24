@@ -2,32 +2,32 @@
 const $state__script = _script("b2", ($scope) => _on($scope.a, "click", function() {
 	$state($scope, $scope.o + 1);
 }));
-const $state = /* @__PURE__ */ _let_change(14, ($scope) => {
+const $state = /*@__PURE__*/ _let_change(14, ($scope) => {
 	_text($scope.c, $scope.o);
 	$state__script($scope);
 });
 const $thirdState__script = _script("b0", ($scope) => _on($scope.g, "click", function() {
 	$thirdState($scope, $scope.q + 1);
 }));
-const $thirdState = /* @__PURE__ */ _let_change(16, ($scope) => {
+const $thirdState = /*@__PURE__*/ _let_change(16, ($scope) => {
 	_text($scope.i, $scope.q);
 	$thirdState__script($scope);
 });
-const $input_value__OR__input_valueChange = /* @__PURE__ */ _or(13, ($scope) => {
+const $input_value__OR__input_valueChange = /*@__PURE__*/ _or(13, ($scope) => {
 	$state($scope, $scope.l, $scope.m);
 	$thirdState($scope, $scope.l, $scope.m);
 });
-const $input_value = /* @__PURE__ */ _const(11, ($scope) => {
+const $input_value = /*@__PURE__*/ _const(11, ($scope) => {
 	_text($scope.b, $scope.l);
 	_text($scope.e, $scope.l);
 	_text($scope.h, $scope.l);
 	$input_value__OR__input_valueChange($scope);
 });
-const $input_valueChange = /* @__PURE__ */ _const(12, $input_value__OR__input_valueChange);
+const $input_valueChange = /*@__PURE__*/ _const(12, $input_value__OR__input_valueChange);
 const $otherState__script = _script("b1", ($scope) => _on($scope.d, "click", function() {
 	$otherState($scope, $scope.p + 1);
 }));
-const $otherState = /* @__PURE__ */ _let_change(15, ($scope) => {
+const $otherState = /*@__PURE__*/ _let_change(15, ($scope) => {
 	_text($scope.f, $scope.p);
 	$otherState__script($scope);
 });
@@ -38,7 +38,7 @@ const $input = ($scope, input) => {
 };
 
 // template.marko
-const $source = /* @__PURE__ */ _let(2, ($scope) => {
+const $source = /*@__PURE__*/ _let(2, ($scope) => {
 	$input($scope.a, {
 		value: $scope.c,
 		valueChange: $valueChange($scope)

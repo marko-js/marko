@@ -2,11 +2,11 @@
 const $template = "<button><pre>a    1    <!></pre><pre>b    2    <!></pre><pre>c  {c:4}  <!></pre><pre>d    7    <!></pre><pre>f   [9]   <!></pre></button>";
 const $walks = " Eb%lDb%lDb%lDb%lDb%m";
 function noop(_) {}
-const $a = /* @__PURE__ */ _let("a/6", ($scope) => _text($scope["#text/1"], $scope.a));
-const $b = /* @__PURE__ */ _let("b/7", ($scope) => _text($scope["#text/2"], $scope.b));
-const $c = /* @__PURE__ */ _let("c/8", ($scope) => _text($scope["#text/3"], JSON.stringify($scope.c)));
-const $d = /* @__PURE__ */ _let("d/9", ($scope) => _text($scope["#text/4"], $scope.d));
-const $e = /* @__PURE__ */ _let("e/10", ($scope) => _text($scope["#text/5"], JSON.stringify($scope.e)));
+const $a = /*@__PURE__*/ _let("a/6", ($scope) => _text($scope["#text/1"], $scope.a));
+const $b = /*@__PURE__*/ _let("b/7", ($scope) => _text($scope["#text/2"], $scope.b));
+const $c = /*@__PURE__*/ _let("c/8", ($scope) => _text($scope["#text/3"], JSON.stringify($scope.c)));
+const $d = /*@__PURE__*/ _let("d/9", ($scope) => _text($scope["#text/4"], $scope.d));
+const $e = /*@__PURE__*/ _let("e/10", ($scope) => _text($scope["#text/5"], JSON.stringify($scope.e)));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	let local;
 	(($result2, $a2, $b2, unused, $c2) => ({a: $a2, _b: {_b: $b2}, local, unused, ...$c2} = $result2, $a($scope, $a2), $b($scope, $b2), $c($scope, $c2), $result2))({
@@ -31,4 +31,4 @@ function $setup($scope) {
 	0;
 	$setup__script($scope);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

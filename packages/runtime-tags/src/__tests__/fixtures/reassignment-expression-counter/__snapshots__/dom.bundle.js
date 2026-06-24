@@ -10,7 +10,7 @@ const $count__script = _script("a0", ($scope) => {
 		$count($scope, $scope.g ** 3);
 	});
 });
-const $count = /* @__PURE__ */ _let(6, ($scope) => {
+const $count = /*@__PURE__*/ _let(6, ($scope) => {
 	_text($scope.b, $scope.g);
 	_text($scope.d, $scope.g);
 	_text($scope.f, $scope.g);

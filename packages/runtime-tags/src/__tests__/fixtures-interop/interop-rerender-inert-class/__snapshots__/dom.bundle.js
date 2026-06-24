@@ -18,11 +18,11 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 
 // template.marko
 _resume("b", _marko_template);
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag(1);
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
 const $msg__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$msg($scope, $scope.c + "!");
 }));
-const $msg = /* @__PURE__ */ _let(2, ($scope) => {
+const $msg = /*@__PURE__*/ _let(2, ($scope) => {
 	$dynamicTag($scope, _marko_template, () => ({ value: $scope.c }));
 	$msg__script($scope);
 });

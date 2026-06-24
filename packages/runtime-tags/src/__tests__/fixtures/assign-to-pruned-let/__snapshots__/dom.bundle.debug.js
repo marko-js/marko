@@ -8,4 +8,4 @@ function $setup($scope) {
 	0;
 	$setup__script($scope);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, " b", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);

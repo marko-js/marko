@@ -2,13 +2,13 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 67078,
-        "brotli": 20745
+        "min": 67052,
+        "brotli": 20758
       },
       "files": {
         "components/my-button/component-browser.js": 457,
         "components/my-button/index.marko": 909,
-        "template.marko": 233,
+        "template.marko": 231,
         "v:template.marko.hydrate-6.js": 110,
         "v:template.marko.hydrate-5.js": 242
       }

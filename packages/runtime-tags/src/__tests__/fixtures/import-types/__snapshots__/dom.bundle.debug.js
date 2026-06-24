@@ -7,4 +7,4 @@ function $setup($scope) {
 	$foo($scope, true);
 	$bar($scope, true);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

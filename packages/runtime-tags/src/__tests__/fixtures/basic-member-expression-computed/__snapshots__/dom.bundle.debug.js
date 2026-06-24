@@ -6,16 +6,16 @@ const $items__OR__index__script = _script("__tests__/template.marko_0_items_inde
 	$items($scope, newItems);
 	$index($scope, ($scope.index + 1) % newItems.length);
 }));
-const $items__OR__index = /* @__PURE__ */ _or(6, ($scope) => {
+const $items__OR__index = /*@__PURE__*/ _or(6, ($scope) => {
 	_text($scope["#text/1"], $scope.items[$scope.index]);
 	$items__OR__index__script($scope);
 });
-const $items = /* @__PURE__ */ _let("items/3", ($scope) => {
+const $items = /*@__PURE__*/ _let("items/3", ($scope) => {
 	$items_($scope, $scope.items?.[0]);
 	$items__OR__index($scope);
 });
-const $items_ = /* @__PURE__ */ _const("items_0", ($scope) => _text($scope["#text/0"], $scope.items_0));
-const $index = /* @__PURE__ */ _let("index/5", $items__OR__index);
+const $items_ = /*@__PURE__*/ _const("items_0", ($scope) => _text($scope["#text/0"], $scope.items_0));
+const $index = /*@__PURE__*/ _let("index/5", $items__OR__index);
 function $setup($scope) {
 	$items($scope, [
 		"a",
@@ -24,4 +24,4 @@ function $setup($scope) {
 	]);
 	$index($scope, 0);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

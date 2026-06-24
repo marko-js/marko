@@ -17,7 +17,7 @@ var template_default = _template("b", (input) => {
 	let value = 0;
 	_html(`<button class=parent>Inc</button>${_el_resume($scope0_id, "a")}`);
 	_if(() => {
-		if (value % 2 === 0) {
+		{
 			const $scope1_id = _scope_id();
 			const $childScope = _peek_scope_id();
 			$Child_withLoadAssets({

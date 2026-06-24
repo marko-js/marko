@@ -19,4 +19,4 @@ function $setup($scope) {
   `);
 }
 const $input = ($scope, input) => $input_x($scope, input.x);
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

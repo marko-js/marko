@@ -1,11 +1,10 @@
-// size: 6531 (min) 2849 (brotli)
+// size: 6504 (min) 2842 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   defaultDelegator = /* @__PURE__ */ createDelegator(),
   parsers = {},
   nextScopeId = 1e6,
-  collectingScopes,
   destroyNestedScopes = function destroyNestedScopes(scope) {
     ((scope.H = 0),
       scope.D?.forEach(destroyNestedScopes),
@@ -122,13 +121,12 @@ function parseHTML(html, ns) {
   return ((parser.innerHTML = html), parser.content || parser);
 }
 function createScope($global, closestBranch) {
-  let scope = {
+  return {
     L: nextScopeId++,
     H: runId,
     F: closestBranch,
     $: $global,
   };
-  return (collectingScopes?.push(scope), scope);
 }
 function skipScope() {
   return nextScopeId++;

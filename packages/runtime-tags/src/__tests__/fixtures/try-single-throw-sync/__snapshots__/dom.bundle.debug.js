@@ -9,8 +9,8 @@ const $catch_content = _content_resume("__tests__/template.marko_2_content", " "
 const $try_content__setup = ($scope) => _text($scope["#text/0"], (() => {
 	throw new Error("ERROR!");
 })());
-const $try = /* @__PURE__ */ _try("#text/0", "Inside<!>", "b%b", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/0", "Inside<!>", "b%b", $try_content__setup);
 function $setup($scope) {
 	$try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, "b%c", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);

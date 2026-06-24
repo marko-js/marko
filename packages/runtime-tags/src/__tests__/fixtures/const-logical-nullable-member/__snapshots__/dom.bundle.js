@@ -5,7 +5,7 @@ const $box = ($scope, box) => $box_inner($scope, box.inner);
 const $on__script = _script("a0", ($scope) => _on($scope.d, "click", function() {
 	$on($scope, $scope.e ? null : true);
 }));
-const $on = /* @__PURE__ */ _let(4, ($scope) => {
+const $on = /*@__PURE__*/ _let(4, ($scope) => {
 	$viaAnd($scope, $scope.e && { label: "and" });
 	$viaTernary($scope, $scope.e ? { label: "ternary" } : null);
 	$box($scope, { inner: $scope.e ? { label: "assign" } : null });

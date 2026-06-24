@@ -1,4 +1,4 @@
-// size: 24283 (min) 8960 (brotli)
+// size: 24282 (min) 8961 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),

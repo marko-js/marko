@@ -14,14 +14,7 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id)
 		});
 	}, (f) => f, $scope0_id, "a", 1, 1, 1, "</div>", 1);
-	_if(() => {
-		if (last !== void 0) {
-			const $scope2_id = _scope_id();
-			_html(`<div>${_escape(last)}${_el_resume($scope2_id, "a")}</div>`);
-			writeScope($scope2_id, { _: _scope_with_id($scope0_id) });
-			return 0;
-		}
-	}, $scope0_id, "b", 1, 1, 1, 0, 1);
+	_if(() => {}, $scope0_id, "b", 1, 1, 1, 0, 1);
 	writeScope($scope0_id, {
 		c: messages,
 		d: last

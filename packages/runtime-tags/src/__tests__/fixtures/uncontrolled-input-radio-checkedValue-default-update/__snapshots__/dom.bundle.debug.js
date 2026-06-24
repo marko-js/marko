@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<input type=radio><input type=radio><input type=radio><input type=radio><button>Update</button>";
 const $walks = " b b b b b";
-const $value = /* @__PURE__ */ _let("value/5", ($scope) => {
+const $value = /*@__PURE__*/ _let("value/5", ($scope) => {
 	_attr_input_checkedValue_default($scope, "#input/2", $scope.value, "b");
 	_attr_input_checkedValue($scope, "#input/3", $scope.value, undefined, "b");
 });
@@ -17,4 +17,4 @@ function $setup($scope) {
 	$value($scope, "a");
 	$setup__script($scope);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

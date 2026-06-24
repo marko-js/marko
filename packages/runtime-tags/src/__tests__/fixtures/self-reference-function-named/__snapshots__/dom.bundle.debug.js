@@ -5,7 +5,7 @@ const $sum = ($scope, sum) => _text($scope["#text/1"], sum());
 const $items__script = _script("__tests__/template.marko_0_items", ($scope) => _on($scope["#button/0"], "click", function() {
 	$items($scope, [...$scope.items, $scope.items?.length]);
 }));
-const $items = /* @__PURE__ */ _let("items/2", ($scope) => {
+const $items = /*@__PURE__*/ _let("items/2", ($scope) => {
 	$sum($scope, function sum(i = 0) {
 		return i >= $scope.items?.length ? 0 : $scope.items[i] + sum(i + 1);
 	});
@@ -18,4 +18,4 @@ function $setup($scope) {
 		2
 	]);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

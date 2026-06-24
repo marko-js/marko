@@ -14,16 +14,16 @@ const $tagselect_content__setup = ($scope) => {
 	$tagselect_content__setup__script($scope);
 };
 const $tagselect_content = _content_resume("__tests__/template.marko_1_content", "<option>A</option><option>B</option><option>C</option>", " b b b", $tagselect_content__setup);
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0", $tagselect_content);
-const $value__OR__tag = /* @__PURE__ */ _or(4, ($scope) => $dynamicTag($scope, $scope.tag ? "select" : {}, () => ({
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $tagselect_content);
+const $value__OR__tag = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $scope.tag ? "select" : {}, () => ({
 	value: $scope.value,
 	valueChange: $valueChange($scope)
 })));
-const $value = /* @__PURE__ */ _let("value/2", ($scope) => {
+const $value = /*@__PURE__*/ _let("value/2", ($scope) => {
 	_text($scope["#text/1"], $scope.value);
 	$value__OR__tag($scope);
 });
-const $tag = /* @__PURE__ */ _const("tag", $value__OR__tag);
+const $tag = /*@__PURE__*/ _const("tag", $value__OR__tag);
 function $setup($scope) {
 	$value($scope, "b");
 	$tag($scope, "select");
@@ -34,4 +34,4 @@ function $valueChange($scope) {
 	};
 }
 _resume("__tests__/template.marko_0/valueChange", $valueChange);
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

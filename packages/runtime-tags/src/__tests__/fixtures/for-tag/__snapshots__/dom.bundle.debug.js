@@ -15,18 +15,18 @@ const $for_content2__$params = ($scope, $params3) => $for_content2__val($scope, 
 const $for_content__setup = ($scope) => _text($scope["#text/0"], $scope["#LoopKey"]);
 const $for_content__val = ($scope, val) => _text($scope["#text/1"], val);
 const $for_content__$params = ($scope, $params2) => $for_content__val($scope, $params2[0]);
-const $for = /* @__PURE__ */ _for_of("#text/0", "<div><!>: <!></div><div></div><div></div>", "D%c%lc", $for_content__setup, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#text/0", "<div><!>: <!></div><div></div><div></div>", "D%c%lc", $for_content__setup, $for_content__$params);
 const $arr = ($scope, arr) => $for($scope, [arr]);
-const $for2 = /* @__PURE__ */ _for_in("#text/1", "<div><!>: <!></div><div></div><div></div>", "D%c%lc", $for_content2__setup, $for_content2__$params);
+const $for2 = /*@__PURE__*/ _for_in("#text/1", "<div><!>: <!></div><div></div><div></div>", "D%c%lc", $for_content2__setup, $for_content2__$params);
 const $obj = ($scope, obj) => $for2($scope, [obj]);
-const $for3 = /* @__PURE__ */ _for_to("#text/2", " ", " b", $for_content3__setup);
-const $for4 = /* @__PURE__ */ _for_until("#text/3", " ", " b", $for_content4__setup);
-const $for5 = /* @__PURE__ */ _for_to("#text/4", " ", " b", $for_content5__setup);
-const $for6 = /* @__PURE__ */ _for_until("#text/5", " ", " b", $for_content6__setup);
-const $for7 = /* @__PURE__ */ _for_to("#text/6", " ", " b", $for_content7__setup);
-const $for8 = /* @__PURE__ */ _for_until("#text/7", " ", " b", $for_content8__setup);
-const $for9 = /* @__PURE__ */ _for_to("#text/8", "<!> ", "%c", $for_content9__setup);
-const $for10 = /* @__PURE__ */ _for_until("#text/9", "<!> ", "%c", $for_content10__setup);
+const $for3 = /*@__PURE__*/ _for_to("#text/2", " ", " b", $for_content3__setup);
+const $for4 = /*@__PURE__*/ _for_until("#text/3", " ", " b", $for_content4__setup);
+const $for5 = /*@__PURE__*/ _for_to("#text/4", " ", " b", $for_content5__setup);
+const $for6 = /*@__PURE__*/ _for_until("#text/5", " ", " b", $for_content6__setup);
+const $for7 = /*@__PURE__*/ _for_to("#text/6", " ", " b", $for_content7__setup);
+const $for8 = /*@__PURE__*/ _for_until("#text/7", " ", " b", $for_content8__setup);
+const $for9 = /*@__PURE__*/ _for_to("#text/8", "<!> ", "%c", $for_content9__setup);
+const $for10 = /*@__PURE__*/ _for_until("#text/9", "<!> ", "%c", $for_content10__setup);
 function $setup($scope) {
 	$arr($scope, [
 		1,
@@ -79,4 +79,4 @@ function $setup($scope) {
 		-.6
 	]);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

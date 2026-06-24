@@ -5,7 +5,7 @@ const $clickCount__script = _script("a0", ($scope) =>
     $clickCount($scope, $scope.c + 1);
   }),
 );
-const $clickCount = /* @__PURE__ */ _let(2, ($scope) => {
+const $clickCount = /*@__PURE__*/ _let(2, ($scope) => {
   _text($scope.b, $scope.c);
   $clickCount__script($scope);
 });

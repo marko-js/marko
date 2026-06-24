@@ -3,8 +3,8 @@ const $template$2 = "";
 const $walks$2 = "";
 const $setup$2 = () => {};
 const $input__script = _script("__tests__/tags/child.marko_0_input", ($scope) => $scope.input.action());
-const $input = /* @__PURE__ */ _const("input", $input__script);
-var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", "", "", $setup$2, $input);
+const $input = /*@__PURE__*/ _const("input", $input__script);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", "", "", $setup$2, $input);
 
 // tags/source.marko
 const $template$1 = "<div></div>";
@@ -23,11 +23,11 @@ function $_return($scope) {
 	});
 }
 _resume("__tests__/tags/source.marko_0/_return", $_return);
-var source_default = /* @__PURE__ */ _template("__tests__/tags/source.marko", $template$1, " b", $setup$1);
+var source_default = /*@__PURE__*/ _template("__tests__/tags/source.marko", $template$1, " b", $setup$1);
 
 // template.marko
-const $template = /* @__PURE__ */ ((_w0, _w1) => `${_w0}${_w1}`)("", $template$1);
-const $walks = /* @__PURE__ */ ((_w0, _w1) => `/${_w0}&0${_w1}&`)("", " b");
+const $template = /*@__PURE__*/ ((_w0, _w1) => `${_w0}${_w1}`)("", $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1) => `/${_w0}&0${_w1}&`)("", " b");
 const $api_getter = _hoist("api");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => $api_getter($scope)().setHtml("works"));
 function $setup($scope) {
@@ -37,11 +37,11 @@ function $setup($scope) {
 	$setup$1($scope["#childScope/1"]);
 	$setup__script($scope);
 }
-const $api = _var_resume("__tests__/template.marko_0_api/var", /* @__PURE__ */ _const("api", ($scope) => _assert_hoist($scope.api)));
+const $api = _var_resume("__tests__/template.marko_0_api/var", /*@__PURE__*/ _const("api", ($scope) => _assert_hoist($scope.api)));
 function $action($scope) {
 	return function() {
 		$api_getter($scope)().addClass("child");
 	};
 }
 _resume("__tests__/template.marko_0/action", $action);
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

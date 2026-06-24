@@ -25,15 +25,15 @@ const $for_content2__$temp = ($scope, $temp2) => $for_content2__text($scope, $te
 const $for_content__text = ($scope, text) => _text($scope["#text/0"], text);
 const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2?.[0]);
 const $for_content__$temp = ($scope, $temp) => $for_content__text($scope, $temp.text);
-const $for = /* @__PURE__ */ _for_of("#div/0", " ", " b", 0, $for_content__$params);
-const $for2 = /* @__PURE__ */ _for_of("#div/1", " ", " b", 0, $for_content2__$params);
-const $for3 = /* @__PURE__ */ _for_of("#div/2", " ", " b", 0, $for_content3__$params);
-const $for4 = /* @__PURE__ */ _for_of("#div/3", " ", " b", 0, $for_content4__$params);
-const $for5 = /* @__PURE__ */ _for_of("#div/4", " ", " b", 0, $for_content5__$params);
+const $for = /*@__PURE__*/ _for_of("#div/0", " ", " b", 0, $for_content__$params);
+const $for2 = /*@__PURE__*/ _for_of("#div/1", " ", " b", 0, $for_content2__$params);
+const $for3 = /*@__PURE__*/ _for_of("#div/2", " ", " b", 0, $for_content3__$params);
+const $for4 = /*@__PURE__*/ _for_of("#div/3", " ", " b", 0, $for_content4__$params);
+const $for5 = /*@__PURE__*/ _for_of("#div/4", " ", " b", 0, $for_content5__$params);
 const $items__script = _script("__tests__/template.marko_0_items", ($scope) => _on($scope["#button/5"], "click", function() {
 	$items($scope, [...$scope.items.slice(1), $scope.items?.[0]]);
 }));
-const $items = /* @__PURE__ */ _let("items/6", ($scope) => {
+const $items = /*@__PURE__*/ _let("items/6", ($scope) => {
 	$for($scope, [$scope.items, "id"]);
 	$for2($scope, [$scope.items, (item) => item.id]);
 	$for3($scope, [$scope.items, getStringBy()]);
@@ -57,4 +57,4 @@ function $setup($scope) {
 		}
 	]);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

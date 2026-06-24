@@ -13,10 +13,10 @@ const $try_content__setup = ($scope) => {
 	})());
 	$try_content__setup__script($scope);
 };
-const $try = /* @__PURE__ */ _try("#text/1", " ", " b", $try_content__setup);
+const $try = /*@__PURE__*/ _try("#text/1", " ", " b", $try_content__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _el_read($scope["#div/2"]).textContent = "This is good");
 function $setup($scope) {
 	$try($scope, { catch: attrTag({ content: $catch_content($scope) }) });
 	$setup__script($scope);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

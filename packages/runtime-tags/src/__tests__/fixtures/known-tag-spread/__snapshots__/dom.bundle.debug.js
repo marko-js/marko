@@ -10,7 +10,7 @@ const $input$2 = ($scope, input) => {
 	$input_b$1($scope, input.b);
 	$input_c($scope, input.c);
 };
-var child_a_default = /* @__PURE__ */ _template("__tests__/tags/child-a/index.marko", $template$2, $walks$2, $setup$2, $input$2);
+var child_a_default = /*@__PURE__*/ _template("__tests__/tags/child-a/index.marko", $template$2, $walks$2, $setup$2, $input$2);
 
 // tags/child-c/index.marko
 const $template$1 = "<div><!> <!></div>";
@@ -22,12 +22,12 @@ const $input$1 = ($scope, input) => {
 	$input_a($scope, input.a);
 	$input_b($scope, input.b);
 };
-var child_c_default = /* @__PURE__ */ _template("__tests__/tags/child-c/index.marko", $template$1, $walks$1, $setup$1, $input$1);
+var child_c_default = /*@__PURE__*/ _template("__tests__/tags/child-c/index.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
-const $template = /* @__PURE__ */ ((_w0, _w1, _w2) => `<button>inc <!></button>${_w0}${_w1}${_w2}`)($template$2, $template$2, $template$1);
-const $walks = /* @__PURE__ */ ((_w0, _w1, _w2) => ` Db%l/${_w0}&/${_w1}&/${_w2}&`)($walks$2, $walks$2, $walks$1);
-const $extras__OR__n = /* @__PURE__ */ _or(10, ($scope) => {
+const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<button>inc <!></button>${_w0}${_w1}${_w2}`)($template$2, $template$2, $template$1);
+const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => ` Db%l/${_w0}&/${_w1}&/${_w2}&`)($walks$2, $walks$2, $walks$1);
+const $extras__OR__n = /*@__PURE__*/ _or(10, ($scope) => {
 	const $childa_input_spread = {
 		a: $scope.n,
 		...$scope.extras
@@ -36,7 +36,7 @@ const $extras__OR__n = /* @__PURE__ */ _or(10, ($scope) => {
 	$input_b$1($scope["#childScope/2"], $childa_input_spread.b);
 	$input_c($scope["#childScope/2"], $childa_input_spread.c);
 });
-const $extras = /* @__PURE__ */ _const("extras", ($scope) => {
+const $extras = /*@__PURE__*/ _const("extras", ($scope) => {
 	$extras_b($scope, $scope.extras.b);
 	$extras_c($scope, $scope.extras.c);
 	$extras__OR__n($scope);
@@ -46,7 +46,7 @@ const $extras_c = ($scope, extras_c) => $input_c($scope["#childScope/3"], extras
 const $n__script = _script("__tests__/template.marko_0_n", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, $scope.n + 1);
 }));
-const $n = /* @__PURE__ */ _let("n/9", ($scope) => {
+const $n = /*@__PURE__*/ _let("n/9", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$input_a$1($scope["#childScope/3"], $scope.n);
 	$extras__OR__n($scope);
@@ -69,4 +69,4 @@ const $input_settings = ($scope, input_settings) => {
 	$input_settings_a($scope, input_settings?.a);
 	$input_settings_b($scope, input_settings?.b);
 };
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

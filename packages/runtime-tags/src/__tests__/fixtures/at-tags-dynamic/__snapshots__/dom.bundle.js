@@ -5,7 +5,7 @@ const $for_content__attrs__script = _script("b0", ($scope) => _attrs_script($sco
 
 // template.marko
 const $row_content2 = _content_resume("a3", "Outside", "b");
-const $row_content = /* @__PURE__ */ _content_closures(_content_resume("a2", " ", " b"), { 2($scope) {
+const $row_content = /*@__PURE__*/ _content_closures(_content_resume("a2", " ", " b"), { 2($scope) {
 	_text($scope.a, $scope.c);
 } });
 const $item_content2 = _content_resume("a1", "bar", "b");

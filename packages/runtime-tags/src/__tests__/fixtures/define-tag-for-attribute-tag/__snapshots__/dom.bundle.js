@@ -1,6 +1,6 @@
 // tags/child.marko
-const $input_thing_selected = /* @__PURE__ */ _const(5, ($scope) => _attr_class_item($scope.a, "selected", $scope.f));
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag(1);
+const $input_thing_selected = /*@__PURE__*/ _const(5, ($scope) => _attr_class_item($scope.a, "selected", $scope.f));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
 const $input_thing_content = $dynamicTag;
 const $input_thing = ($scope, input_thing) => {
 	$input_thing_selected($scope, input_thing?.selected);
@@ -8,12 +8,12 @@ const $input_thing = ($scope, input_thing) => {
 };
 
 // template.marko
-const $myThing_content = /* @__PURE__ */ _content("a0", "<span>The thing</span>", "b");
+const $myThing_content = /*@__PURE__*/ _content("a0", "<span>The thing</span>", "b");
 const $myThing = ($scope, myThing) => $input_thing($scope.a, myThing);
 const $selected__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$selected($scope, !$scope.c);
 }));
-const $selected = /* @__PURE__ */ _let(2, ($scope) => {
+const $selected = /*@__PURE__*/ _let(2, ($scope) => {
 	$myThing($scope, {
 		selected: $scope.c,
 		content: $myThing_content($scope)

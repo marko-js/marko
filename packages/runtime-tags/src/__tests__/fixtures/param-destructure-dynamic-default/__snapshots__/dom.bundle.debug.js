@@ -1,18 +1,18 @@
 // template.marko
 const $ChildA_content__walks = " D%c%l", $ChildA_content__template = "<div class=a><!> <!></div>", $ChildB_content__walks = " D%c%l", $ChildB_content__template = "<div class=b><!> <!></div>";
-const $template = /* @__PURE__ */ ((_w0, _w1, _w2, _w3, _w4, _w5) => `<!>${_w0}${_w1}${_w2}${_w3}${_w4}${_w5}<button>Increment default</button>`)($ChildA_content__template, $ChildA_content__template, $ChildA_content__template, $ChildB_content__template, $ChildB_content__template, $ChildB_content__template);
-const $walks = /* @__PURE__ */ ((_w0, _w1, _w2, _w3, _w4, _w5) => `b/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}& b`)($ChildA_content__walks, $ChildA_content__walks, $ChildA_content__walks, $ChildB_content__walks, $ChildB_content__walks, $ChildB_content__walks);
+const $template = /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5) => `<!>${_w0}${_w1}${_w2}${_w3}${_w4}${_w5}<button>Increment default</button>`)($ChildA_content__template, $ChildA_content__template, $ChildA_content__template, $ChildB_content__template, $ChildB_content__template, $ChildB_content__template);
+const $walks = /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5) => `b/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}& b`)($ChildA_content__walks, $ChildA_content__walks, $ChildA_content__walks, $ChildB_content__walks, $ChildB_content__walks, $ChildB_content__walks);
 const $ChildB_content__$pattern = ($scope, $pattern2) => $ChildB_content__$bar($scope, $pattern2.bar);
-const $ChildB_content__count__OR__$foo = /* @__PURE__ */ _or(10, ($scope) => $ChildB_content__$pattern($scope, void 0 !== $scope.foo ? $scope.foo : { bar: $scope._.count + 2 }));
+const $ChildB_content__count__OR__$foo = /*@__PURE__*/ _or(10, ($scope) => $ChildB_content__$pattern($scope, void 0 !== $scope.foo ? $scope.foo : { bar: $scope._.count + 2 }));
 const $ChildB_content__bar = ($scope, bar) => _text($scope["#text/1"], bar);
-const $ChildB_content__count__OR__$bar = /* @__PURE__ */ _or(11, ($scope) => $ChildB_content__bar($scope, void 0 !== $scope.$bar2 ? $scope.$bar2 : $scope._.count + 1));
-const $ChildB_content__count = /* @__PURE__ */ _closure_get("count", ($scope) => {
+const $ChildB_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => $ChildB_content__bar($scope, void 0 !== $scope.$bar2 ? $scope.$bar2 : $scope._.count + 1));
+const $ChildB_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => {
 	$ChildB_content__count__OR__$foo($scope);
 	$ChildB_content__count__OR__$bar($scope);
 });
-const $ChildB_content__setup = /* @__PURE__ */ _child_setup($ChildB_content__count);
-const $ChildB_content__$bar = /* @__PURE__ */ _const("$bar2", $ChildB_content__count__OR__$bar);
-const $ChildB_content__foo = /* @__PURE__ */ _const("foo", ($scope) => {
+const $ChildB_content__setup = /*@__PURE__*/ _child_setup($ChildB_content__count);
+const $ChildB_content__$bar = /*@__PURE__*/ _const("$bar2", $ChildB_content__count__OR__$bar);
+const $ChildB_content__foo = /*@__PURE__*/ _const("foo", ($scope) => {
 	_text($scope["#text/2"], typeof $scope.foo);
 	$ChildB_content__count__OR__$foo($scope);
 });
@@ -23,16 +23,16 @@ const $ChildB_content__input = ($scope, input) => {
 	$ChildB_content__foo($scope, input.foo);
 };
 const $ChildA_content__$pattern = ($scope, $pattern) => $ChildA_content__$bar($scope, $pattern.bar);
-const $ChildA_content__count__OR__$foo = /* @__PURE__ */ _or(10, ($scope) => $ChildA_content__$pattern($scope, void 0 !== $scope.foo ? $scope.foo : { bar: $scope._.count + 2 }));
+const $ChildA_content__count__OR__$foo = /*@__PURE__*/ _or(10, ($scope) => $ChildA_content__$pattern($scope, void 0 !== $scope.foo ? $scope.foo : { bar: $scope._.count + 2 }));
 const $ChildA_content__bar = ($scope, bar) => _text($scope["#text/1"], bar);
-const $ChildA_content__count__OR__$bar = /* @__PURE__ */ _or(11, ($scope) => $ChildA_content__bar($scope, void 0 !== $scope.$bar ? $scope.$bar : $scope._.count + 1));
-const $ChildA_content__count = /* @__PURE__ */ _closure_get("count", ($scope) => {
+const $ChildA_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => $ChildA_content__bar($scope, void 0 !== $scope.$bar ? $scope.$bar : $scope._.count + 1));
+const $ChildA_content__count = /*@__PURE__*/ _closure_get("count", ($scope) => {
 	$ChildA_content__count__OR__$foo($scope);
 	$ChildA_content__count__OR__$bar($scope);
 });
-const $ChildA_content__setup = /* @__PURE__ */ _child_setup($ChildA_content__count);
-const $ChildA_content__$bar = /* @__PURE__ */ _const("$bar", $ChildA_content__count__OR__$bar);
-const $ChildA_content__foo = /* @__PURE__ */ _const("foo", ($scope) => {
+const $ChildA_content__setup = /*@__PURE__*/ _child_setup($ChildA_content__count);
+const $ChildA_content__$bar = /*@__PURE__*/ _const("$bar", $ChildA_content__count__OR__$bar);
+const $ChildA_content__foo = /*@__PURE__*/ _const("foo", ($scope) => {
 	_text($scope["#text/2"], typeof $scope.foo);
 	$ChildA_content__count__OR__$foo($scope);
 });
@@ -42,11 +42,11 @@ const $ChildA_content__$temp = ($scope, $temp) => {
 	$ChildA_content__id($scope, $temp.id);
 	$ChildA_content__foo($scope, $temp.foo);
 };
-const $count__closure = /* @__PURE__ */ _closure($ChildA_content__count, $ChildB_content__count);
+const $count__closure = /*@__PURE__*/ _closure($ChildA_content__count, $ChildB_content__count);
 const $count__script = _script("__tests__/template.marko_0_count", ($scope) => _on($scope["#button/6"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
-const $count = /* @__PURE__ */ _let("count/7", ($scope) => {
+const $count = /*@__PURE__*/ _let("count/7", ($scope) => {
 	$count__closure($scope);
 	$count__script($scope);
 });
@@ -71,4 +71,4 @@ function $setup($scope) {
 	$ChildB_content__foo($scope["#childScope/5"]);
 	$count($scope, 0);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -2,8 +2,8 @@
 function num(v) {
 	return +v;
 }
-const $input_countChange__OR__input_count = /* @__PURE__ */ _or(5, ($scope) => _attr_input_value($scope, "a", $scope.e, $scope.d && $valueChange($scope)));
-const $count = /* @__PURE__ */ _const(4, $input_countChange__OR__input_count);
+const $input_countChange__OR__input_count = /*@__PURE__*/ _or(5, ($scope) => _attr_input_value($scope, "a", $scope.e, $scope.d && $valueChange($scope)));
+const $count = /*@__PURE__*/ _const(4, $input_countChange__OR__input_count);
 const $setup__script = _script("b1", ($scope) => _attr_input_value_script($scope, "a"));
 function $valueChange($scope) {
 	return ($next) => {
@@ -13,7 +13,7 @@ function $valueChange($scope) {
 _resume("b0", $valueChange);
 
 // template.marko
-const $value = /* @__PURE__ */ _let(3, ($scope) => {
+const $value = /*@__PURE__*/ _let(3, ($scope) => {
 	$count($scope.a, $scope.d);
 	_text($scope.b, $scope.d);
 	_text($scope.c, typeof $scope.d);

@@ -6,13 +6,13 @@ const $bar__OR__baz__script = _script("__tests__/template.marko_0_bar_baz", ($sc
 	$bar($scope, $scope.bar ? null : "bar");
 	$baz($scope, $scope.baz ? null : "baz");
 }));
-const $bar__OR__baz = /* @__PURE__ */ _or(6, $bar__OR__baz__script);
-const $bar = /* @__PURE__ */ _let("bar/4", ($scope) => {
+const $bar__OR__baz = /*@__PURE__*/ _or(6, $bar__OR__baz__script);
+const $bar = /*@__PURE__*/ _let("bar/4", ($scope) => {
 	$sometimesBar($scope, $scope.bar || _id($scope));
 	$bar__OR__baz($scope);
 });
 const $sometimesBaz = ($scope, sometimesBaz) => _attr($scope["#div/3"], "id", sometimesBaz);
-const $baz = /* @__PURE__ */ _let("baz/5", ($scope) => {
+const $baz = /*@__PURE__*/ _let("baz/5", ($scope) => {
 	$sometimesBaz($scope, $scope.baz || _id($scope));
 	$bar__OR__baz($scope);
 });
@@ -22,4 +22,4 @@ function $setup($scope) {
 	$baz($scope, "baz");
 	$alwaysFoo($scope, "foo" || _id($scope));
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -1,6 +1,6 @@
 // tags/custom-input.marko
-const $input_value__OR__input_valueChange = /* @__PURE__ */ _or(5, ($scope) => _attr_input_value($scope, "a", $scope.d, $scope.e && $valueChange$1($scope)));
-const $input_value = /* @__PURE__ */ _const(3, $input_value__OR__input_valueChange);
+const $input_value__OR__input_valueChange = /*@__PURE__*/ _or(5, ($scope) => _attr_input_value($scope, "a", $scope.d, $scope.e && $valueChange$1($scope)));
+const $input_value = /*@__PURE__*/ _const(3, $input_value__OR__input_valueChange);
 const $setup__script = _script("b1", ($scope) => _attr_input_value_script($scope, "a"));
 function $valueChange$1($scope) {
 	return ($next) => {
@@ -10,7 +10,7 @@ function $valueChange$1($scope) {
 _resume("b0", $valueChange$1);
 
 // template.marko
-const $value = /* @__PURE__ */ _let(3, ($scope) => {
+const $value = /*@__PURE__*/ _let(3, ($scope) => {
 	$input_value($scope.a, $scope.d);
 	_text($scope.b, $scope.d);
 	_text($scope.c, typeof $scope.d);

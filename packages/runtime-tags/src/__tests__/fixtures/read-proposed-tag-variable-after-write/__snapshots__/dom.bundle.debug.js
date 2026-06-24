@@ -5,11 +5,11 @@ const $clickCount__script = _script("__tests__/template.marko_0_clickCount", ($s
 	_el_read($scope["#div/2"]).innerHTML = $clickCount($scope, $scope.clickCount + 1) - 1;
 	_el_read($scope["#div/3"]).innerHTML = $scope.clickCount;
 }));
-const $clickCount = /* @__PURE__ */ _let("clickCount/4", ($scope) => {
+const $clickCount = /*@__PURE__*/ _let("clickCount/4", ($scope) => {
 	_text($scope["#text/1"], $scope.clickCount);
 	$clickCount__script($scope);
 });
 function $setup($scope) {
 	$clickCount($scope, 0);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -4,11 +4,11 @@ const $walks = " D%c%l";
 const $y__script = _script("__tests__/template.marko_0_y", ($scope) => _on($scope["#button/0"], "click", function() {
 	$y($scope, $scope.y + 1);
 }));
-const $y = /* @__PURE__ */ _let_change("y/4", ($scope) => {
+const $y = /*@__PURE__*/ _let_change("y/4", ($scope) => {
 	_text($scope["#text/2"], $scope.y);
 	$y__script($scope);
 });
-const $x = /* @__PURE__ */ _let("x/3", ($scope) => {
+const $x = /*@__PURE__*/ _let("x/3", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
 	$y($scope, $scope.x, $valueChange($scope));
 });
@@ -21,4 +21,4 @@ function $valueChange($scope) {
 	};
 }
 _resume("__tests__/template.marko_0/valueChange", $valueChange);
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

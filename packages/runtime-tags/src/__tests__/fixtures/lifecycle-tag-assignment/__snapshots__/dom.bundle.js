@@ -13,8 +13,8 @@ const $x__script = _script("a0", ($scope) => {
 		$x($scope, $scope.d + 1);
 	});
 });
-const $x = /* @__PURE__ */ _let(3, ($scope) => {
+const $x = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.a, $scope.d);
 	$x__script($scope);
 });
-const $prev = /* @__PURE__ */ _let(4, ($scope) => _text($scope.b, $scope.e));
+const $prev = /*@__PURE__*/ _let(4, ($scope) => _text($scope.b, $scope.e));

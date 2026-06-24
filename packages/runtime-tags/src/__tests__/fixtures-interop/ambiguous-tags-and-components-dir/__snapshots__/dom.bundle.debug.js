@@ -3,7 +3,7 @@ var import_vdom = require_vdom();
 const $template = "<h1>Hello tags</h1>";
 const $walks = "b";
 const $setup = () => {};
-var hello_tags_default = /* @__PURE__ */ _template("__tests__/tags/hello-tags.marko", $template, "b", $setup);
+var hello_tags_default = /*@__PURE__*/ _template("__tests__/tags/hello-tags.marko", $template, "b", $setup);
 
 // components/hello-components.marko
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());

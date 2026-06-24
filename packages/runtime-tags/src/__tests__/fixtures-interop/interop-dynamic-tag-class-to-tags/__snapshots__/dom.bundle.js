@@ -5,14 +5,14 @@ const $walks = " D l";
 const $count__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.c + 1);
 }));
-const $count = /* @__PURE__ */ _let(2, ($scope) => {
+const $count = /*@__PURE__*/ _let(2, ($scope) => {
 	_text($scope.b, $scope.c);
 	$count__script($scope);
 });
 function $setup($scope) {
 	$count($scope, 0);
 }
-var tags_child_default = /* @__PURE__ */ _template("b", $template, $walks, $setup);
+var tags_child_default = /*@__PURE__*/ _template("b", $template, $walks, $setup);
 
 // template.marko
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());

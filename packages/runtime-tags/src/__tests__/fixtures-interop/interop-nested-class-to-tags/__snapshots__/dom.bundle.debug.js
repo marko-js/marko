@@ -2,21 +2,21 @@
 var import_vdom = require_vdom();
 const $template = "<button id=tags> </button><div><!></div>";
 const $walks = " D lD%l";
-const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/2");
+const $input_content_direct = /*@__PURE__*/ _dynamic_tag_content("#text/2");
 const $count__script = _script("__tests__/components/tags-layout.marko_0_count", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
-const $count = /* @__PURE__ */ _let("count/6", ($scope) => {
+const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$count__script($scope);
 });
 function $setup($scope) {
 	$count($scope, 0);
 }
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/2");
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
 const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
-var tags_layout_default = /* @__PURE__ */ _template("__tests__/components/tags-layout.marko", $template, $walks, $setup, $input);
+var tags_layout_default = /*@__PURE__*/ _template("__tests__/components/tags-layout.marko", $template, $walks, $setup, $input);
 
 // template.marko
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());

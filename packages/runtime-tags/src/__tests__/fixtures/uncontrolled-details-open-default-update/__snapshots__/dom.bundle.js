@@ -1,5 +1,5 @@
 // template.marko
-const $open = /* @__PURE__ */ _let(3, ($scope) => {
+const $open = /*@__PURE__*/ _let(3, ($scope) => {
 	_attr_details_or_dialog_open_default($scope, "a", $scope.d);
 	_attr_details_or_dialog_open($scope, "b", $scope.d, void 0);
 });

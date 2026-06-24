@@ -1,9 +1,9 @@
 // template.marko
-let $load_Child_tag_input_value = /* @__PURE__ */ _load_signal(() => import("./v:child.marko.input_value.mjs"));
+let $load_Child_tag_input_value = /*@__PURE__*/ _load_signal(() => import("./v:child.marko.input_value.mjs"));
 const $value__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$value($scope, $scope.e + 1);
 }));
-const $value = /* @__PURE__ */ _let(4, ($scope) => {
+const $value = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.b, $scope.e);
 	$load_Child_tag_input_value($scope.d, $scope.e);
 	$value__script($scope);
@@ -13,7 +13,7 @@ const $value = /* @__PURE__ */ _let(4, ($scope) => {
 const $count__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.g + 1);
 }));
-const $count = /* @__PURE__ */ _let(6, ($scope) => {
+const $count = /*@__PURE__*/ _let(6, ($scope) => {
 	_text($scope.c, $scope.g);
 	$count__script($scope);
 });
