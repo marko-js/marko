@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import type { MarkoTagExtra } from "@marko/compiler/babel-types";
 import {
-  getProgram,
   getTagDef,
   isNativeTag,
   loadFileForTag,
@@ -73,7 +72,6 @@ export default function analyzeTagNameType(
         extra.tagNameType = TagNameType.DynamicTag;
         extra.tagNameDynamic = true;
         extra.featureType = "class";
-        (getProgram().node.extra ??= {}).needsCompat = true;
       } else if (!childFile) {
         extra.tagNameType = TagNameType.DynamicTag;
         extra.tagNameDynamic = true;

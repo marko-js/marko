@@ -268,12 +268,14 @@ async function buildSnapshot(
     let fixtureCode = "";
     for (const id in modules) {
       if (!id.startsWith(cwd) || entryRe.test(id)) continue;
-      const modCode = stripModuleCode(modules[id].code);
-      if (!modCode) continue;
+      const { code, renderedLength } = modules[id];
+      if (!renderedLength) continue;
       const relId = path.relative(cwd, id);
+      const modCode = stripModuleCode(code);
+      if (!modCode) continue;
       if (fixtureCode) fixtureCode += "\n\n";
       fixtureCode += `// ${relId}\n${modCode}`;
-      if (sizes) files[relId] = modules[id].renderedLength;
+      if (sizes) files[relId] = renderedLength;
     }
     if (!fixtureCode) continue;
     parts.push(fixtureCode);

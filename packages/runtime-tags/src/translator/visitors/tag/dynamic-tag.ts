@@ -84,6 +84,16 @@ import { getTagRelativePath } from "./custom-tag";
 const kDOMBinding = Symbol("dynamic tag dom binding");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
 const importedDynamicTagResume = new WeakSet<t.Program>();
+enum ClassHydration {
+  Self = "self",
+  Descendant = "descendant",
+}
+
+declare module "@marko/compiler" {
+  export interface MarkoMeta {
+    classHydration?: ClassHydration;
+  }
+}
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -264,52 +274,83 @@ export default {
       const tagExtra = node.extra!;
       const nodeBinding = tagExtra[kDOMBinding]!;
       const isClassAPI = tagExtra.featureType === "class";
+      const tagsSerializeReason = getSerializeReason(tagSection, nodeBinding);
+      const serializeReason = tagsSerializeReason;
       let tagExpression = node.name;
 
-      if (t.isStringLiteral(tagExpression)) {
-        tagExpression = importDefault(
-          tag.hub.file,
-          getTagRelativePath(tag),
-          tagExpression.value,
-        );
-      }
-
       if (isClassAPI) {
+        const classTagTemplate = getTagTemplate(tag);
+        const classFile = classTagTemplate ? loadFileForTag(tag)! : undefined;
+        const classHydration = classFile?.metadata.marko.classHydration;
+
+        // Optimized page hydration does not need inert Class API children that
+        // have no Tags-side update path; SSR already produced their DOM.
+        if (
+          !isOutputHTML() &&
+          isOptimize() &&
+          classTagTemplate &&
+          !tagsSerializeReason &&
+          !classHydration
+        ) {
+          tag.remove();
+          return;
+        }
+
+        (getProgram().node.extra ??= {}).needsCompat = true;
+
+        if (t.isStringLiteral(tagExpression)) {
+          tagExpression = importDefault(
+            tag.hub.file,
+            getTagRelativePath(tag),
+            tagExpression.value,
+          );
+        }
+
         // This is the interop layer leaking into the translator
         // We use the dynamic tag when a custom tag from the class runtime is used
 
-        if (getTagTemplate(tag)) {
-          if (getSerializeReason(tagSection, nodeBinding)) {
-            if (isOutputHTML()) {
-              getProgram().node.body.push(
-                t.markoScriptlet(
-                  [
-                    t.expressionStatement(
-                      t.callExpression(
-                        importNamed(tag.hub.file, getCompatRuntimeFile(), "s"),
-                        [
-                          t.stringLiteral(
-                            loadFileForTag(tag)!.metadata.marko.id,
+        if (classTagTemplate) {
+          const preserveBoundary =
+            classHydration === ClassHydration.Descendant &&
+            !tagsSerializeReason;
+          if (
+            isOutputHTML()
+              ? serializeReason || preserveBoundary
+              : serializeReason
+          ) {
+            getProgram().node.body.push(
+              isOutputHTML()
+                ? t.markoScriptlet(
+                    [
+                      t.expressionStatement(
+                        t.callExpression(
+                          importNamed(
+                            tag.hub.file,
+                            getCompatRuntimeFile(),
+                            "s",
                           ),
-                          t.identifier((tagExpression as t.Identifier).name),
-                        ],
+                          [
+                            t.stringLiteral(
+                              loadFileForTag(tag)!.metadata.marko.id,
+                            ),
+                            t.identifier((tagExpression as t.Identifier).name),
+                            ...(preserveBoundary
+                              ? [t.stringLiteral("preserve")]
+                              : []),
+                          ],
+                        ),
                       ),
+                    ],
+                    true,
+                  )
+                : t.expressionStatement(
+                    callRuntime(
+                      "_resume",
+                      t.stringLiteral(loadFileForTag(tag)!.metadata.marko.id),
+                      t.identifier((tagExpression as t.Identifier).name),
                     ),
-                  ],
-                  true,
-                ),
-              );
-            } else {
-              getProgram().node.body.push(
-                t.expressionStatement(
-                  callRuntime(
-                    "_resume",
-                    t.stringLiteral(loadFileForTag(tag)!.metadata.marko.id),
-                    t.identifier((tagExpression as t.Identifier).name),
                   ),
-                ),
-              );
-            }
+            );
           }
         } else {
           getProgram().node.body.push(
@@ -330,6 +371,12 @@ export default {
             ),
           );
         }
+      } else if (t.isStringLiteral(tagExpression)) {
+        tagExpression = importDefault(
+          tag.hub.file,
+          getTagRelativePath(tag),
+          tagExpression.value,
+        );
       }
 
       const { properties, statements } = translateAttrs(
@@ -364,7 +411,7 @@ export default {
         writeHTMLResumeStatements(tag.get("body"));
         const serializeArg = getSerializeGuard(
           tagSection,
-          getSerializeReason(tagSection, nodeBinding),
+          serializeReason,
           true,
         );
         const dynamicTagExpr = hasTagArgs
@@ -524,7 +571,9 @@ export default {
           }
         }
 
-        enableDynamicTagResume(tag);
+        if (!isClassAPI) {
+          enableDynamicTagResume(tag);
+        }
         addValue(section, tagExtra.referencedBindings, signal, tagExpression);
         tag.remove();
       }
