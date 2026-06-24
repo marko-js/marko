@@ -108,7 +108,12 @@ export default {
         const { output, entry, runtimeId } = markoOpts;
         const isLoadEntry = entry === "load";
         const isDOMPageEntry =
-          (output === "dom" && entry === "page") || output === "hydrate";
+          // When the interop builder is inlining the render into the hydrate
+          // output it drives this program through the normal dom translation
+          // (rather than replacing it with an import of the root), so skip the
+          // page entry handling and let the render translate.
+          !program.node.extra?.hydrateInlineRender &&
+          ((output === "dom" && entry === "page") || output === "hydrate");
         const isServerEntry = output === "html" && entry === "page";
 
         if (entry && !markoOpts.linkAssets) {

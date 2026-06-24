@@ -264,6 +264,40 @@ export default {
       const tagExtra = node.extra!;
       const nodeBinding = tagExtra[kDOMBinding]!;
       const isClassAPI = tagExtra.featureType === "class";
+
+      if (isClassAPI && getProgram().node.extra.hydrateInlineRender) {
+        // We are inlining this render into the hydrate output. An inert/server
+        // only Class API child ships no client behavior and is rendered inline
+        // on the server (no resume markers), so it is mirrored here: drop its
+        // renderer reference and `importDefault` so the (Marko 5) child module —
+        // and the runtime it would pull in — tree-shakes. The walk was already
+        // recorded in `enter`, keeping resume alignment intact. The child is
+        // inert when it has no component file (the same signal the Class API
+        // entry builder uses to find islands), is passed no events (which would
+        // need client wiring), has no tag var, and is in a non re-rendering
+        // position (root section, no serialize reason) — matching the server's
+        // decision to render it inline rather than as a resumable component.
+        if (
+          getTagTemplate(tag) &&
+          !node.var &&
+          tagSection.parent === undefined &&
+          !getSerializeReason(tagSection, nodeBinding) &&
+          !node.attributes.some(
+            (attr) =>
+              t.isMarkoSpreadAttribute(attr) ||
+              isEventOrChangeHandler(attr.name),
+          ) &&
+          !(loadFileForTag(tag)?.metadata.marko as { component?: string })
+            ?.component
+        ) {
+          tag.remove();
+          return;
+        }
+        // Any class child that survives still mounts/morphs on the client, so
+        // the compat layer (and its Marko 5 runtime) is genuinely required.
+        getProgram().node.extra.hydrateKeptClassChild = true;
+      }
+
       let tagExpression = node.name;
 
       if (t.isStringLiteral(tagExpression)) {

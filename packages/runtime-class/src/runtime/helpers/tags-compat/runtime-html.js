@@ -194,7 +194,7 @@ exports.p = function (htmlCompat) {
           }
         }
 
-        componentsContext.___forceBoundary = true;
+        componentsContext.___forceBoundary = !!customEvents;
         renderer5(input, out);
 
         const componentDef = componentsContext.___components[0];

@@ -12,6 +12,13 @@ declare module "@marko/compiler/dist/types" {
     needsCompat?: boolean;
     isInteractive?: boolean;
     page?: boolean;
+    // Set on the page entry program when its render is being translated inline
+    // for the hydrate output (rather than importing the root module). Tells the
+    // dynamic tag visitor to drop inert/server only class children.
+    hydrateInlineRender?: boolean;
+    // Set during an inline hydrate render translation when a class child
+    // survives (is not dropped), meaning the compat layer is still required.
+    hydrateKeptClassChild?: boolean;
   }
 }
 
@@ -34,6 +41,12 @@ export default {
     // (foreign runtime) root and anything it only renders server side can be
     // dead code eliminated. When omitted the entry root is imported as before.
     importTargets?: readonly string[],
+    // When provided, the entry root's already translated render is inlined in
+    // place of importing it. The render has its server only (inert) class
+    // children stripped, so unlike importing the root module it does not pull
+    // in those children (and the foreign runtime they would carry). Its unused
+    // `_template`/setup tree-shake, leaving just the client interactive roots.
+    inlineRoot?: readonly t.Statement[],
   ) {
     const state = entryFile[kState];
     if (!state) {
@@ -50,9 +63,10 @@ export default {
 
     // The entry root import pulls in every template (and therefore each of
     // their client assets) transitively, so the collected asset imports are
-    // only needed when the root is not imported: a server only page, or one
-    // whose runtime island roots are imported in the root's place.
-    if (useTargets || !state.init) {
+    // only needed when the root is not imported: a server only page, one whose
+    // runtime island roots are imported in the root's place, or one whose
+    // render is inlined (a stripped child no longer carries its assets).
+    if (useTargets || !state.init || inlineRoot) {
       for (const asset of state.assets) {
         body.push(t.importDeclaration([], t.stringLiteral(asset)));
       }
@@ -83,6 +97,35 @@ export default {
         // (foreign runtime, server only) ancestor rendered it.
         for (const target of importTargets) {
           body.push(t.importDeclaration([], t.stringLiteral(target)));
+        }
+      } else if (inlineRoot) {
+        // Inline the render in place of importing the root module. The default
+        // export (the `_template(...)`) is re-exported under a fresh name rather
+        // than as `default` (which the hydrate entry uses for `init`): the call
+        // still needs to run to register the root renderer for resume. Mirroring
+        // the imported module's exported `_template(...)` keeps it in debug
+        // (where that registration is needed) while the `@__PURE__` initializer
+        // still tree-shakes it — and the setup/walks it captures, including any
+        // stripped child references — in optimized builds (where it is not).
+        for (const stmt of inlineRoot) {
+          if (t.isExportDefaultDeclaration(stmt)) {
+            if (t.isExpression(stmt.declaration)) {
+              body.push(
+                t.exportNamedDeclaration(
+                  t.variableDeclaration("const", [
+                    t.variableDeclarator(
+                      t.identifier(
+                        entryFile.path.scope.generateUid("template"),
+                      ),
+                      stmt.declaration,
+                    ),
+                  ]),
+                ),
+              );
+            }
+          } else {
+            body.push(stmt);
+          }
         }
       } else {
         body.push(

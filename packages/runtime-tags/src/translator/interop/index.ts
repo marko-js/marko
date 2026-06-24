@@ -45,6 +45,16 @@ export function createInteropTranslator(translate5: any) {
       [kState]?: {
         has5: boolean;
         has6: boolean;
+        // Whether any visited Tags API template is interactive (needs a client
+        // runtime). When the entry root is an interactive Tags API template that
+        // also renders Class API children, its render is inlined into the hydrate
+        // output so those (server only) children can be dropped.
+        init6: boolean;
+        // Whether any visited Class API template is inert (has no component
+        // file, so nothing to hydrate). Only then is it worth inlining the
+        // render to strip such children; otherwise the root is imported as
+        // before to avoid needless churn.
+        inert5: boolean;
         // Relative import paths of the topmost Tags API (Marko 6) templates that
         // are rendered by a Class API (Marko 5) ancestor. When the entry root is
         // a Class API template, these are imported in its place so a server only
@@ -55,7 +65,7 @@ export function createInteropTranslator(translate5: any) {
     const { Program } = visitor;
     const kState = Symbol();
     const entryBuilder = {
-      build(entryFile: EntryFile) {
+      build(entryFile: EntryFile, inlineRoot?: readonly t.Statement[]) {
         const state = entryFile[kState];
         if (!state) {
           throw entryFile.path.buildCodeFrameError(
@@ -101,6 +111,7 @@ export function createInteropTranslator(translate5: any) {
                   entryFile,
                   true,
                   importTargets6,
+                  inlineRoot,
                 ),
               ),
               importHydrateProgram(
@@ -130,11 +141,16 @@ export function createInteropTranslator(translate5: any) {
         const state = (entryFile[kState] ||= {
           has5: false,
           has6: false,
+          init6: false,
+          inert5: false,
           islandRoots6: new Set(),
         });
 
         if (isTagsAPI(file)) {
           state.has6 = true;
+          if (file.path.node.extra?.isInteractive) {
+            state.init6 = true;
+          }
           // The topmost Tags API template under a Class API ancestor: importing
           // it covers its statically rendered Tags API subtree.
           if (parentIsTags === false) {
@@ -145,17 +161,23 @@ export function createInteropTranslator(translate5: any) {
           translate6.internalEntryBuilder.visit(file, entryFile, visitChild);
         } else {
           state.has5 = true;
+          // A Class API template with no component file is inert (server only):
+          // there is something the inlined render can strip to drop Marko 5.
+          if (!(file.metadata.marko as { component?: string }).component) {
+            state.inert5 = true;
+          }
           translate5.internalEntryBuilder.visit(file, entryFile, visitChild);
         }
       },
     };
     const enterProgram = getVisitorEnter(Program);
+    const exitProgram = getVisitorExit(Program);
 
     return {
       ...visitor,
       Program: {
         enter(program, state) {
-          const entryFile = program.hub.file;
+          const entryFile: EntryFile = program.hub.file;
           const { output, entry } = entryFile.markoOpts;
           const isDOMPageEntry =
             (output === "dom" && entry === "page") || output === "hydrate";
@@ -184,10 +206,47 @@ export function createInteropTranslator(translate5: any) {
             walkChild(id, isTagsAPI(entryFile)),
           );
 
+          const entryState = entryFile[kState]!;
+          // An interactive Tags API root that also renders inert Class API
+          // children. Importing the root module would pull in those children
+          // (and the Marko 5 runtime they carry) even though they are server
+          // only. Instead inline the render with such children stripped: fall
+          // through to the normal dom translation here, then assemble in `exit`.
+          if (
+            entryState.has5 &&
+            entryState.has6 &&
+            entryState.init6 &&
+            entryState.inert5 &&
+            isTagsAPI(entryFile)
+          ) {
+            (program.node.extra ??= {}).hydrateInlineRender = true;
+            return enterProgram?.call(this, program, state);
+          }
+
           program.node.body = entryBuilder.build(entryFile);
           program.skip();
         },
-        exit: getVisitorExit(Program),
+        exit(program, state) {
+          const extra = program.node.extra;
+          if (!extra?.hydrateInlineRender) {
+            return exitProgram?.call(this, program, state);
+          }
+
+          // Every class child in the render was inert/server only (all stripped),
+          // so the compat layer (and the Marko 5 runtime it pulls in) is not
+          // needed to hydrate. Cleared before the dom program exit links it.
+          if (!extra.hydrateKeptClassChild) {
+            extra.needsCompat = false;
+          }
+
+          // Finalize the translated render, then inline it (in place of importing
+          // the root) into the hydrate output.
+          exitProgram?.call(this, program, state);
+          program.node.body = entryBuilder.build(
+            program.hub.file,
+            program.node.body,
+          );
+        },
       },
     };
   }
