@@ -87,3 +87,39 @@ Gap 1 is the clear win: it is real user-code/payload bloat, reproduces in the
 common "static error boundary or static async section next to an island" shape,
 and a single per-section client-reachability gate fixes both the DOM and HTML
 sides. It needs care around async/streaming resume (keep that path conservative).
+
+## Implementation plan (Gap 1)
+
+Maintainer rule: _prune the placeholder when all `<await>` tags under a section
+are server-only_ (extended here to catch + `_enable_catch` + serialization).
+
+The existing signal for "this boundary resumes on the client" is the **try body
+section's `serializeReason`** — already consulted by `<await>` via
+`getSerializeGuard(section, bodySection?.serializeReason, true)`
+(`core/await.ts`). An `<await>` is _server-only_ exactly when its body section is
+not serialized, i.e. its value expression carries no client-reactive sources
+(the same analysis that prunes server-only `${input.*}`). For a try, "all awaits
+under the section are server-only" ⇒ the try body section has no client resume
+reason.
+
+Wiring (all gated on the try body section being client-unreachable):
+
+1. `core/try.ts:197-202` — only emit `_enable_catch()` when the body can be
+   pending/catch on the client.
+2. `core/try.ts` (dom exit) / `visitors/program/dom.ts:119` — emit the
+   catch/placeholder content as pure `_content` (so it tree-shakes) instead of
+   `_content_resume`; or omit the props entirely.
+3. HTML side (`core/try.ts` html exit + `signals.ts` `underTryPlaceholder`,
+   `getResumeRegisterId(..., "pending")`) — skip the catch/placeholder resume
+   serialization and the pending-effect registration for closures under a
+   client-static placeholder.
+
+Keep async conservative by definition: the moment any `<await>` under the section
+is client-reactive, the body section gets a serialize reason and all three gates
+fall back to today's behavior.
+
+Validation: the 748-fixture suite has render + resume + serialize snapshots
+(many `try*`/`await*`/`async*`). Run `npm test -- --grep "runtime-tags.*try"`
+and the `await`/`async` subsets; expect smaller `dom.bundle.js` + `sizes.json` +
+serialized-HTML snapshots for the client-static cases and **no change** for the
+reactive ones. Then a broad run before landing.
