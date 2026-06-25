@@ -1,4 +1,4 @@
-// size: 24192 (min) 8911 (brotli)
+// size: 24178 (min) 8910 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1126,9 +1126,9 @@ function _attr_input_checkedValue_script(scope, nodeAccessor) {
               ? el.value
               : void 0;
         if (el.name && el.type[0] === "r")
-          for (let radio of el
-            .getRootNode()
-            .querySelectorAll(`[type=radio][name=${CSS.escape(el.name)}]`))
+          for (let radio of document.querySelectorAll(
+            `[type=radio][name=${CSS.escape(el.name)}]`,
+          ))
             radio.form === el.form &&
               (radio.checked = Array.isArray(oldValue)
                 ? oldValue.includes(radio.value)
@@ -1173,7 +1173,7 @@ function setInputValue(el, value) {
   if (el.value !== value) {
     let updatedPosition = resolveCursorPosition(
       inputType,
-      el.getRootNode().activeElement === el && el.selectionStart,
+      document.activeElement === el && el.selectionStart,
       el.value,
       (el.value = value),
     );
