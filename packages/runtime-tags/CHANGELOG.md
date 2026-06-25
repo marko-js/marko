@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 6.1.19
+
+### Patch Changes
+
+- [#3296](https://github.com/marko-js/marko/pull/3296) [`df49ad7`](https://github.com/marko-js/marko/commit/df49ad7831546086be1e2828a55f3830aa0dd837) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Resolve controlled radio-group siblings and the focused element against the `document` directly instead of the element's root node, removing the remaining `getRootNode()` lookups from the runtime.
+
+- [#3292](https://github.com/marko-js/marko/pull/3292) [`f368176`](https://github.com/marko-js/marko/commit/f36817678d43fe2c77f8357f70c4575649a1b078) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Skip serializing the controlled `type` for statically-typed controllable form fields, since it is only read back on resume by the spread attribute path. Shrinks the resume payload with no behavior change.
+
+- [#3295](https://github.com/marko-js/marko/pull/3295) [`7458238`](https://github.com/marko-js/marko/commit/7458238e1a52c500ed5c6b2914e52495c0ec2e1a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Always delegate native events from the `document` rather than each element's root node. This removes the `getRootNode()` lookup from the delegation path and shrinks the runtime.
+
+- [#3291](https://github.com/marko-js/marko/pull/3291) [`fb7b08a`](https://github.com/marko-js/marko/commit/fb7b08ad9195edae1de363162a6dd50c6b2f71b7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a Class API child rendered by a Tags API parent not hydrating after SSR when the child hydrates itself (`classHydration: "self"`) but the Tags side passes it no serialize reason (e.g. an interactive or split component like `ebay-button` used without any reactive/event input). Previously only `Descendant` boundaries were serialized in this case, so the child's server-rendered DOM never came alive in the browser.
+
 ## 6.1.18
 
 ### Patch Changes
