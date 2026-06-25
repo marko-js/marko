@@ -7,7 +7,7 @@ var my_select_default = _template("b", (input) => {
 	_attr_select_value($scope0_id, "a", $select_input.value, $select_input.valueChange, () => {
 		_attrs_content($select_input, "a", $scope0_id, "select");
 		_html("</select>");
-	});
+	}, 1);
 	_html(_el_resume($scope0_id, "a"));
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, {});

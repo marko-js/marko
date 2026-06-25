@@ -66,6 +66,9 @@ const htmlSelectArgs = new WeakMap<
   {
     value: t.Expression;
     valueChange: t.Expression;
+    // Spread attrs resume via `_attrs_script`, which reads the controlled type;
+    // statically-typed controllables don't, so the type is only serialized then.
+    serializeType?: t.Expression;
   }
 >();
 
@@ -369,6 +372,7 @@ export default {
                 spreadIdentifier,
                 t.identifier("valueChange"),
               ),
+              serializeType: t.numericLiteral(1),
             });
             spreadExpression = spreadIdentifier;
           }
@@ -400,6 +404,9 @@ export default {
               visitAccessor,
               value,
               valueChange,
+              // Spread attrs resume via `_attrs_script`, which reads the
+              // controlled type; statically-typed controllables don't.
+              staticControllable ? undefined : t.numericLiteral(1),
             );
           } else if (value) {
             writeAtStartOfBody = callRuntime("_escape", value);
@@ -567,6 +574,7 @@ export default {
                   [],
                   t.blockStatement(tag.node.body.body),
                 ),
+                selectArgs.serializeType,
               ),
             ),
           );
