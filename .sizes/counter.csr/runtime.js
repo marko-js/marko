@@ -1,8 +1,9 @@
-// size: 4010 (min) 1774 (brotli)
+// size: 3938 (min) 1744 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
-  defaultDelegator = /* @__PURE__ */ createDelegator(),
+  delegate = (type, handler) =>
+    (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
   parsers = {},
   nextScopeId = 1e6,
   collectingScopes,
@@ -81,17 +82,8 @@ let decodeAccessor = (num) =>
     );
   };
 function _on(element, type, handler) {
-  (element["$" + type] === void 0 &&
-    defaultDelegator(element, type, handleDelegated),
+  (element["$" + type] === void 0 && delegate(type, handleDelegated),
     (element["$" + type] = handler || null));
-}
-/* @__NO_SIDE_EFFECTS__ */
-function createDelegator() {
-  let kEvents = Symbol();
-  return function (node, type, handler) {
-    ((node = node.getRootNode())[kEvents] ||= {})[type] ||=
-      (node.addEventListener(type, handler, !0), 1);
-  };
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
