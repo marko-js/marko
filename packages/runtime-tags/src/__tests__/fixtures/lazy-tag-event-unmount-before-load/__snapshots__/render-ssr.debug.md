@@ -60,10 +60,6 @@ container.querySelector("#toggle").click();
 ```js
 container.querySelector("#load").click();
 ```
-## Console
-```
-LOG "loaded"
-```
 
 # Update
 ```html
@@ -89,6 +85,10 @@ LOG "loaded"
 ## Change
 ```
 INSERT: #toggle + span
+```
+## Console
+```
+LOG "loaded"
 ```
 
 # Update

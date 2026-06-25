@@ -1,4 +1,4 @@
-// size: 24178 (min) 8910 (brotli)
+// size: 24162 (min) 8909 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2364,40 +2364,41 @@ function _load_setup(nodeAccessor, childScopeAccessor, load) {
   );
 }
 function insertLoaded(renderer, branch, marker, awaitCounter) {
-  let parent = marker.parentNode;
-  (syncGen(branch),
-    renderer.b(branch, parent.namespaceURI),
-    setupBranch(renderer, branch),
-    applyLoad(branch, () => {
+  let parent = marker.parentNode,
+    values = branch.X,
+    insert = () => {
       (insertBranchBefore(branch, parent, marker),
         marker.remove(),
         awaitCounter?.c());
-    }));
+    },
+    remaining;
+  if (
+    (syncGen(branch),
+    renderer.b(branch, parent.namespaceURI),
+    (branch.X = 0),
+    (remaining = values?.size))
+  )
+    for (let [promise, entry] of values)
+      promise.then(
+        (signal) => {
+          ((entry.b = signal),
+            --remaining ||
+              queueAsyncRender(branch, (branch) => {
+                (syncGen(branch),
+                  renderer.c?.(branch),
+                  values.forEach((e) => e.b._(branch, e.a)),
+                  insert());
+              }));
+        },
+        () => 0,
+      );
+  else (setupBranch(renderer, branch), insert());
 }
 function loadFailed(scope, awaitCounter) {
   return (error) => {
     (awaitCounter && (awaitCounter.i = 0),
       queueAsyncRender(scope, renderCatch, error));
   };
-}
-function applyLoad(scope, insert) {
-  let values = scope.X,
-    remaining;
-  if (((scope.X = 0), (remaining = values?.size)))
-    for (let [promise, entry] of values)
-      promise.then(
-        (signal) => {
-          ((entry.b = signal),
-            --remaining ||
-              queueAsyncRender(scope, (scope) => {
-                (syncGen(scope),
-                  values.forEach((e) => e.b._(scope, e.a)),
-                  insert());
-              }));
-        },
-        () => 0,
-      );
-  else insert();
 }
 function _load_signal(load) {
   let pending, signal;
