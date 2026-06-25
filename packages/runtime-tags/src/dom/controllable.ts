@@ -151,9 +151,7 @@ export function _attr_input_checkedValue_script(
           : undefined;
 
       if (el.name && el.type[0] === "r") {
-        for (const radio of (
-          el.getRootNode() as Document | ShadowRoot
-        ).querySelectorAll<HTMLInputElement>(
+        for (const radio of document.querySelectorAll<HTMLInputElement>(
           `[type=radio][name=${CSS.escape(el.name)}]`,
         )) {
           if (radio.form === el.form) {
@@ -230,8 +228,7 @@ function setInputValue(el: HTMLInputElement, value: string) {
   if (el.value !== value) {
     const updatedPosition = resolveCursorPosition(
       inputType,
-      (el.getRootNode() as Document | ShadowRoot).activeElement === el &&
-        el.selectionStart,
+      document.activeElement === el && el.selectionStart,
       el.value,
       (el.value = value),
     );
