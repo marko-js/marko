@@ -7,7 +7,14 @@
   M._.r = [_ => [1, {
       count: 0,
       "ClosureScopes:count": new Set([_(3)])
-    }, 1, {
+    }, {
+      m5c: "_0",
+      m5i: {
+        renderBody: _(1,
+          "packages/runtime-tags/src/__tests__/fixtures-interop/interop-nested-tags-to-class/template.marko_1_content"
+          )
+      }
+    }, {
       m5c: "_0-2",
       _: _(1)
     }],
@@ -15,27 +22,20 @@
   ];
   M._.w();
   $MC = (window.$MC || []).concat({
-    "o": {
-      "p": "_",
-      "w": [
-        ["_0", 0, {
-          "renderBody": [
-            "packages/runtime-tags/src/__tests__/fixtures-interop/interop-nested-tags-to-class/template.marko_1_content",
-            1
-          ]
-        }, {
-          "f": 1
-        }]
-      ],
-      "t": [
-        "packages/runtime-tags/src/__tests__/fixtures-interop/interop-nested-tags-to-class/components/class-layout.marko"
-      ]
-    },
-    "$$": [{
-      "l": ["w", 0, 3, "r"],
-      "r": ["w", 0, 2, "renderBody"]
-    }]
+    "p": "_",
+    "w": [
+      ["_0", 0, 2, {
+        "f": 1,
+        "r": [
+          "packages/runtime-tags/src/__tests__/fixtures-interop/interop-nested-tags-to-class/template.marko_1_content",
+          1
+        ]
+      }]
+    ],
+    "t": [
+      "packages/runtime-tags/src/__tests__/fixtures-interop/interop-nested-tags-to-class/components/class-layout.marko"
+    ]
   });
-  M._.r.push("$compat_setScope 1");
+  M._.r.push("$compat_setScope 2 1");
   M._.w()
 </script>

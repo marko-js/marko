@@ -280,6 +280,28 @@ function getErrorStatusString(
 function formatMutationRecord(record: MutationRecord) {
   const { target, oldValue } = record;
 
+  if (record.type === "characterData") {
+    if (nodeInfo.isIgnoredNode(target.parentNode!)) return;
+
+    const newValue = target.nodeValue;
+
+    // if the new value begins with the old value
+    // and whitespace delimits the old value and remaining new value
+    if (
+      newValue?.indexOf(oldValue!) === 0 &&
+      (/\s$/ms.test(oldValue!) || /\s$/ms.test(newValue![oldValue!.length]))
+    ) {
+      // filter out invalid records that jsdom creates
+      // see https://github.com/jsdom/jsdom/issues/3261
+      // TODO: remove if fixed
+      return;
+    }
+
+    return `UPDATE: ${nodeInfo.getNodePath(target)} ${JSON.stringify(
+      oldValue || "",
+    )} => ${JSON.stringify(target.nodeValue || "")}`;
+  }
+
   if (nodeInfo.isIgnoredNode(target)) return;
 
   switch (record.type) {
@@ -291,28 +313,6 @@ function formatMutationRecord(record: MutationRecord) {
       return `UPDATE: ${nodeInfo.getNodePath(target)}[${attributeName}] ${JSON.stringify(
         oldValue,
       )} => ${JSON.stringify(newValue)}`;
-    }
-
-    case "characterData": {
-      if (nodeInfo.isIgnoredNode(target.parentNode!)) return;
-
-      const newValue = target.nodeValue;
-
-      // if the new value begins with the old value
-      // and whitespace delimits the old value and remaining new value
-      if (
-        newValue?.indexOf(oldValue!) === 0 &&
-        (/\s$/ms.test(oldValue!) || /\s$/ms.test(newValue![oldValue!.length]))
-      ) {
-        // filter out invalid records that jsdom creates
-        // see https://github.com/jsdom/jsdom/issues/3261
-        // TODO: remove if fixed
-        return;
-      }
-
-      return `UPDATE: ${nodeInfo.getNodePath(target)} ${JSON.stringify(
-        oldValue || "",
-      )} => ${JSON.stringify(target.nodeValue || "")}`;
     }
 
     case "childList": {

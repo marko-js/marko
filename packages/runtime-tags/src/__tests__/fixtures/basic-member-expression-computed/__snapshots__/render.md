@@ -56,6 +56,18 @@ UPDATE: div:nth-of-type(1)::text "b" => "c"
 ```js
 container.querySelector("button").click();
 ```
+```html
+<div />
+<div />
+<button>
+  Update
+</button>
+```
+## Change
+```
+UPDATE: div:nth-of-type(1)::text "c" => ""
+UPDATE: div:nth-of-type(2)::text "c" => ""
+```
 
 # Update
 ```js

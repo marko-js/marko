@@ -7,6 +7,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 }, { t: _marko_componentType }, {});
 
 // tags/hello.marko
+s("c", _marko_template);
 var hello_default = _template("b", (input) => {
 	_scope_reason();
 	_dynamic_tag(_scope_id(), "a", _marko_template, {}, 0, 0, 0);
