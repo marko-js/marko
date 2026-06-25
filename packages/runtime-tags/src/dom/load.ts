@@ -107,15 +107,40 @@ function insertLoaded(
   marker: ChildNode,
   awaitCounter?: ReturnType<typeof addAwaitCounter>,
 ) {
-  const parent = marker.parentNode as Element;
+  const parent = marker.parentNode as Element,
+    values = branch[AccessorProp.Load] as LoadValues,
+    insert = () => {
+      insertBranchBefore(branch, parent, marker);
+      marker.remove();
+      awaitCounter?.c();
+    };
+  let remaining: number;
   syncGen(branch);
   renderer[RendererProp.Clone]!(branch, parent.namespaceURI!);
-  setupBranch(renderer, branch);
-  applyLoad(branch, () => {
-    insertBranchBefore(branch, parent, marker);
-    marker.remove();
-    awaitCounter?.c();
-  });
+  branch[AccessorProp.Load] = 0;
+  if ((remaining = values?.size as number)) {
+    for (const [promise, entry] of values!) {
+      promise.then(
+        (signal) => {
+          entry[LoadSignalValue.Signal] = signal;
+          if (!--remaining) {
+            queueAsyncRender(branch, (branch) => {
+              syncGen(branch);
+              renderer[RendererProp.Setup]?.(branch);
+              values.forEach((e) =>
+                e[LoadSignalValue.Signal]!._(branch, e[LoadSignalValue.Value]),
+              );
+              insert();
+            });
+          }
+        },
+        () => 0,
+      );
+    }
+  } else {
+    setupBranch(renderer, branch);
+    insert();
+  }
 }
 
 function loadFailed(
@@ -126,33 +151,6 @@ function loadFailed(
     if (awaitCounter) awaitCounter.i = 0;
     queueAsyncRender(scope, renderCatch, error);
   };
-}
-
-function applyLoad(scope: BranchScope, insert: () => void) {
-  const values = scope[AccessorProp.Load] as LoadValues;
-  let remaining: number;
-  scope[AccessorProp.Load] = 0;
-  if ((remaining = values?.size as number)) {
-    for (const [promise, entry] of values!) {
-      promise.then(
-        (signal) => {
-          entry[LoadSignalValue.Signal] = signal;
-          if (!--remaining) {
-            queueAsyncRender(scope, (scope) => {
-              syncGen(scope);
-              values.forEach((e) =>
-                e[LoadSignalValue.Signal]!._(scope, e[LoadSignalValue.Value]),
-              );
-              insert();
-            });
-          }
-        },
-        () => 0,
-      );
-    }
-  } else {
-    insert();
-  }
 }
 
 export function _load_signal(load: () => Promise<LoadSignal>): Signal {
