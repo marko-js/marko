@@ -8,13 +8,12 @@ import {
   type Scope,
 } from "../common/types";
 import { _attr, normalizeAttrValue } from "./dom";
-import { createDelegator } from "./event";
+import { delegate } from "./event";
 import { pendingEffects, run, runId } from "./queue";
 import { resolveCursorPosition } from "./resolve-cursor-position";
 import { isResuming } from "./resume";
 
 let inputType = "";
-const controllableDelegate = createDelegator();
 
 export function _attr_input_checked_default(
   scope: Scope,
@@ -464,9 +463,9 @@ function syncControllableFormInput<
   onChange: (ev?: Event) => void,
 ) {
   (el as any)._ = onChange;
-  controllableDelegate(el, "input", handleChange);
+  delegate("input", handleChange);
   if ((el as any).form) {
-    controllableDelegate((el as any).form, "reset", handleFormReset);
+    delegate("reset", handleFormReset);
   }
 
   if (isResuming && hasChanged(el)) {

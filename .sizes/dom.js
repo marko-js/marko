@@ -1,4 +1,4 @@
-// size: 24283 (min) 8960 (brotli)
+// size: 24192 (min) 8911 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -20,7 +20,8 @@ let empty = [],
   },
   decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
-  defaultDelegator = /* @__PURE__ */ createDelegator(),
+  delegate = (type, handler) =>
+    (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
   R = /[^\p{L}\p{N}]/gu,
   parsers = {},
   nextScopeId = 1e6,
@@ -89,7 +90,6 @@ let empty = [],
   readyIds,
   isResuming,
   inputType = "",
-  controllableDelegate = /* @__PURE__ */ createDelegator(),
   _dynamic_tag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let childScopeAccessor = "A" + nodeAccessor,
@@ -382,17 +382,8 @@ function push(opt, item) {
     : item;
 }
 function _on(element, type, handler) {
-  (element["$" + type] === void 0 &&
-    defaultDelegator(element, type, handleDelegated),
+  (element["$" + type] === void 0 && delegate(type, handleDelegated),
     (element["$" + type] = handler || null));
-}
-/* @__NO_SIDE_EFFECTS__ */
-function createDelegator() {
-  let kEvents = Symbol();
-  return function (node, type, handler) {
-    ((node = node.getRootNode())[kEvents] ||= {})[type] ||=
-      (node.addEventListener(type, handler, !0), 1);
-  };
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
@@ -1301,8 +1292,8 @@ function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
 }
 function syncControllableFormInput(el, hasChanged, onChange) {
   ((el._ = onChange),
-    controllableDelegate(el, "input", handleChange),
-    el.form && controllableDelegate(el.form, "reset", handleFormReset),
+    delegate("input", handleChange),
+    el.form && delegate("reset", handleFormReset),
     isResuming && hasChanged(el) && queueMicrotask(onChange));
 }
 function handleChange(ev) {
