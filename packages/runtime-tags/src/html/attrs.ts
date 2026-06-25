@@ -62,6 +62,7 @@ export function _attr_select_value(
   value: unknown,
   valueChange: unknown,
   content?: () => void,
+  serializeType?: 1,
 ) {
   if (valueChange) {
     writeControlledScope(
@@ -70,6 +71,7 @@ export function _attr_select_value(
       nodeAccessor,
       undefined,
       valueChange,
+      serializeType,
     );
   }
 
@@ -101,6 +103,7 @@ export function _attr_textarea_value(
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
+  serializeType?: 1,
 ) {
   if (valueChange) {
     writeControlledScope(
@@ -109,6 +112,7 @@ export function _attr_textarea_value(
       nodeAccessor,
       undefined,
       valueChange,
+      serializeType,
     );
   }
 
@@ -120,6 +124,7 @@ export function _attr_input_value(
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
+  serializeType?: 1,
 ) {
   if (valueChange) {
     writeControlledScope(
@@ -128,6 +133,7 @@ export function _attr_input_value(
       nodeAccessor,
       undefined,
       valueChange,
+      serializeType,
     );
   }
   return _attr("value", value);
@@ -138,6 +144,7 @@ export function _attr_input_checked(
   nodeAccessor: Accessor,
   checked: unknown,
   checkedChange: unknown,
+  serializeType?: 1,
 ) {
   if (checkedChange) {
     writeControlledScope(
@@ -146,6 +153,7 @@ export function _attr_input_checked(
       nodeAccessor,
       undefined,
       checkedChange,
+      serializeType,
     );
   }
   return isNotVoid(checked) ? " checked" : "";
@@ -157,6 +165,7 @@ export function _attr_input_checkedValue(
   checkedValue: unknown,
   checkedValueChange: unknown,
   value: unknown,
+  serializeType?: 1,
 ) {
   const valueAttr = _attr("value", value);
   if (checkedValueChange) {
@@ -166,6 +175,7 @@ export function _attr_input_checkedValue(
       nodeAccessor,
       getCheckedValueRef(checkedValue),
       checkedValueChange,
+      serializeType,
     );
   }
 
@@ -193,6 +203,7 @@ export function _attr_details_or_dialog_open(
   nodeAccessor: Accessor,
   open: unknown,
   openChange: unknown,
+  serializeType?: 1,
 ) {
   const normalizedOpen = isNotVoid(open);
   if (openChange) {
@@ -202,6 +213,7 @@ export function _attr_details_or_dialog_open(
       nodeAccessor,
       normalizedOpen || undefined,
       openChange,
+      serializeType,
     );
   }
 
@@ -237,6 +249,7 @@ export function _attrs(
           nodeAccessor,
           data.checked,
           data.checkedChange,
+          1,
         );
       } else if ("checkedValue" in data || data.checkedValueChange) {
         result += _attr_input_checkedValue(
@@ -245,6 +258,7 @@ export function _attrs(
           data.checkedValue,
           data.checkedValueChange,
           data.value,
+          1,
         );
       } else if (data.valueChange) {
         result += _attr_input_value(
@@ -252,6 +266,7 @@ export function _attrs(
           nodeAccessor,
           data.value,
           data.valueChange,
+          1,
         );
       } else {
         break;
@@ -278,6 +293,7 @@ export function _attrs(
           nodeAccessor,
           data.open,
           data.openChange,
+          1,
         );
         skip = /^open(?:Change)?$|[\s/>"'=]/;
       }
@@ -371,16 +387,28 @@ function writeControlledScope(
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
+  // The controlled `type` is only read back on resume by the spread resume path
+  // (`_attrs_script`). Statically-typed controllables resume through a typed
+  // `_script` that never reads it, so it is only serialized when requested.
+  serializeType?: 1,
 ) {
   if (MARKO_DEBUG) {
     assertHandlerIsFunction("valueChange", valueChange);
   }
 
-  _scope(scopeId, {
-    [AccessorPrefix.ControlledType + nodeAccessor]: type,
-    [AccessorPrefix.ControlledValue + nodeAccessor]: value,
-    [AccessorPrefix.ControlledHandler + nodeAccessor]: valueChange,
-  });
+  _scope(
+    scopeId,
+    serializeType
+      ? {
+          [AccessorPrefix.ControlledType + nodeAccessor]: type,
+          [AccessorPrefix.ControlledValue + nodeAccessor]: value,
+          [AccessorPrefix.ControlledHandler + nodeAccessor]: valueChange,
+        }
+      : {
+          [AccessorPrefix.ControlledValue + nodeAccessor]: value,
+          [AccessorPrefix.ControlledHandler + nodeAccessor]: valueChange,
+        },
+  );
 }
 
 function stringAttr(name: string, value: string) {

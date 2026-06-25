@@ -6,7 +6,7 @@ var template_default = _template("a", (input) => {
 	const $select_input = input.rest;
 	_attr_select_value($scope0_id, "b", $select_input.value, $select_input.valueChange, () => {
 		_html(`<button>swap</button>${_el_resume($scope0_id, "a")}<select${_attrs($select_input, "b", $scope0_id, "select")}><option${_attr_option_value("a")}>a</option><option${_attr_option_value(n)}>dyn</option>${_el_resume($scope0_id, "c")}</select>`);
-	});
+	}, 1);
 	_html(_el_resume($scope0_id, "b"));
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");

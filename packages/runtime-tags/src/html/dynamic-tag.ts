@@ -78,6 +78,7 @@ export let _dynamic_tag = (
             MARKO_DEBUG ? `#${renderer}/0` : "a",
             input.value,
             input.valueChange,
+            1,
           ),
         );
       } else if (renderContent) {
@@ -96,6 +97,7 @@ export let _dynamic_tag = (
             input.value,
             input.valueChange,
             renderContent,
+            1,
           );
         } else {
           _dynamic_tag(

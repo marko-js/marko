@@ -7,7 +7,7 @@ var my_select_default = _template("__tests__/tags/my-select.marko", (input) => {
 	_attr_select_value($scope0_id, "#select/0", $select_input.value, $select_input.valueChange, () => {
 		_attrs_content($select_input, "#select/0", $scope0_id, "select");
 		_html("</select>");
-	});
+	}, 1);
 	_html(_el_resume($scope0_id, "#select/0"));
 	_script($scope0_id, "__tests__/tags/my-select.marko_0_input");
 	writeScope($scope0_id, {}, "__tests__/tags/my-select.marko", 0);
