@@ -92,6 +92,7 @@ enum ClassHydration {
 declare module "@marko/compiler" {
   export interface MarkoMeta {
     classHydration?: ClassHydration;
+    hasComponentBrowser?: boolean;
   }
 }
 
@@ -311,12 +312,12 @@ export default {
 
         if (classTagTemplate) {
           const preserveBoundary =
-            classHydration === ClassHydration.Descendant &&
-            !tagsSerializeReason;
+            !tagsSerializeReason &&
+            (classHydration === ClassHydration.Descendant ||
+              (classHydration === ClassHydration.Self &&
+                !!classFile?.metadata.marko.hasComponentBrowser));
           if (
-            isOutputHTML()
-              ? serializeReason || preserveBoundary
-              : serializeReason
+            isOutputHTML() ? serializeReason || classHydration : serializeReason
           ) {
             getProgram().node.body.push(
               isOutputHTML()

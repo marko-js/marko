@@ -153,6 +153,7 @@ container.querySelector(".remove").click();
 ## Change
 ```
 REMOVE: form > select > option
+UPDATE: div::text "3" => ""
 ```
 
 # Update

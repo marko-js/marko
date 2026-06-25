@@ -13,6 +13,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 }, _marko_component);
 
 // tags/hello.marko
+s("__tests__/tags/components/hello-internal.marko", _marko_template);
 var hello_default = _template("__tests__/tags/hello.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();

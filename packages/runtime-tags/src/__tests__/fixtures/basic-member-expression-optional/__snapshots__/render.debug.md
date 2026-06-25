@@ -95,3 +95,15 @@ UPDATE: div:nth-of-type(2)::text "Ryan" => "Luke"
 ```js
 container.querySelector("button").click();
 ```
+```html
+<div />
+<div />
+<button>
+  Update
+</button>
+```
+## Change
+```
+UPDATE: div:nth-of-type(1)::text "3" => ""
+UPDATE: div:nth-of-type(2)::text "Luke" => ""
+```

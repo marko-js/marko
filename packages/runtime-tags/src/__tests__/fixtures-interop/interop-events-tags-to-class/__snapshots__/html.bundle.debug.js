@@ -22,6 +22,7 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 }, _marko_component);
 
 // template.marko
+s("__tests__/components/class-counter.marko", _marko_template);
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
