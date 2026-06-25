@@ -1,16 +1,18 @@
 import { types as t } from "@marko/compiler";
 import { isAttributeTag } from "@marko/compiler/babel-utils";
 
+import { createSectionFinalizeState, FinalizePhase } from "./finalize";
 import { getTagName } from "./get-tag-name";
 import { analyzeAttributeTags, getAttrTagPaths } from "./nested-attribute-tags";
 import { concat, forEach, includes, type Opt } from "./optional";
 import type { Binding } from "./references";
 import { getSection, getSectionForBody, type Section } from "./sections";
-import { createSectionState } from "./state";
 
-const [getTagDownstreams] = createSectionState(
+const [getTagDownstreams] = createSectionFinalizeState(
   "tag-downstreams",
+  FinalizePhase.Downstreams,
   () => new Map<t.NodePath<t.MarkoTag>, Binding>(),
+  finalizeTagDownstreams,
 );
 
 export function setTagDownstream(
@@ -22,7 +24,7 @@ export function setTagDownstream(
   }
 }
 
-export function finalizeTagDownstreams(section: Section) {
+function finalizeTagDownstreams(section: Section) {
   for (const [tag, binding] of getTagDownstreams(section)) {
     crawlSectionsAndSetBinding(tag, binding);
   }

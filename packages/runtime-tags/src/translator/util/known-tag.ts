@@ -8,6 +8,7 @@ import {
   getKnownFromPropTree,
   hasAllKnownProps,
 } from "./binding-prop-tree";
+import { createSectionFinalizeState, FinalizePhase } from "./finalize";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
 import { isOptimize } from "./marko-config";
@@ -70,7 +71,6 @@ import {
   setBindingSerializedValue,
   writeHTMLResumeStatements,
 } from "./signals";
-import { createSectionState } from "./state";
 import {
   toMemberExpression,
   toObjectProperty,
@@ -91,9 +91,11 @@ interface KnownExprs {
   value?: t.NodeExtra;
 }
 
-const [getKnownTags] = createSectionState(
+const [getKnownTags] = createSectionFinalizeState(
   "known tags",
+  FinalizePhase.KnownTags,
   () => [] as t.MarkoTagExtra[],
+  finalizeKnownTags,
 );
 
 const kContentSection = Symbol("known tag content section");
@@ -364,7 +366,7 @@ export function knownTagTranslateDOM(
   }
 }
 
-export function finalizeKnownTags(section: Section) {
+function finalizeKnownTags(section: Section) {
   for (const tagExtra of getKnownTags(section)) {
     const scopeBinding = tagExtra[kChildScopeBinding];
     const knownExprs = tagExtra[kKnownExprs];

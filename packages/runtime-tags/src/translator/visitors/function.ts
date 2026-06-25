@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getFile, getTemplateId } from "@marko/compiler/babel-utils";
 
+import { createFinalizeState, FinalizePhase } from "../util/finalize";
 import { generateUid } from "../util/generate-uid";
 import { getAttributeTagParent } from "../util/get-parent-tag";
 import {
@@ -22,12 +23,30 @@ import {
   mergeSerializeReasons,
   type SerializeReason,
 } from "../util/serialize-reasons";
-import { createProgramState } from "../util/state";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import type { TemplateVisitor } from "../util/visitors";
 
-const [getReferencesByFn] = createProgramState(
+const [getReferencesByFn] = createFinalizeState(
+  // Once bindings are resolved, fold each registered function's referenced
+  // serialize reasons into its registration. Colocated with the function visitor
+  // and self-registered so `finalizeReferences` doesn't need to know about it.
+  FinalizePhase.Resolved,
   () => new Map<RegisteredFnExtra, Set<t.NodeExtra>>(),
+  (referencesByFn) => {
+    for (const [fnExtra, exprExtras] of referencesByFn) {
+      let reason: undefined | SerializeReason;
+      for (const exprExtra of exprExtras) {
+        reason = mergeSerializeReasons(
+          reason,
+          getAllSerializeReasonsForExtra(getCanonicalExtra(exprExtra)),
+        );
+      }
+
+      if (reason) {
+        registerFunction(fnExtra, reason);
+      }
+    }
+  },
 );
 
 export default {
@@ -74,22 +93,6 @@ export default {
     }
   },
 } satisfies TemplateVisitor<t.Function>;
-
-export function finalizeFunctionRegistry() {
-  for (const [fnExtra, exprExtras] of getReferencesByFn()) {
-    let reason: undefined | SerializeReason;
-    for (const exprExtra of exprExtras) {
-      reason = mergeSerializeReasons(
-        reason,
-        getAllSerializeReasonsForExtra(getCanonicalExtra(exprExtra)),
-      );
-    }
-
-    if (reason) {
-      registerFunction(fnExtra, reason);
-    }
-  }
-}
 
 function canIgnoreRegister(
   markoRoot: MarkoExprRootPath,

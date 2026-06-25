@@ -4,15 +4,14 @@ import { optimize } from "@marko/compiler/config";
 
 import { decodeAccessor } from "../../common/helpers";
 import { toAccess } from "../../html/serializer";
-import { finalizeFunctionRegistry } from "../visitors/function";
 import { scopeIdentifier } from "../visitors/program";
+import { FinalizePhase, runFinalize, runFinalizeSection } from "./finalize";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-char";
 import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
-import { finalizeKnownTags } from "./known-tag";
 import { isOptimize, isOutputDOM } from "./marko-config";
 import {
   addSorted,
@@ -59,7 +58,6 @@ import {
   mergeSerializeReasons,
   type SerializeReason,
 } from "./serialize-reasons";
-import { finalizeTagDownstreams } from "./set-tag-sections-downstream";
 import {
   getBindingGetterIdentifier,
   getSignalValueIdentifier,
@@ -950,7 +948,9 @@ export function finalizeReferences() {
     }
   }
 
-  forEachSection(finalizeTagDownstreams);
+  forEachSection((section) =>
+    runFinalizeSection(FinalizePhase.Downstreams, section),
+  );
 
   for (const binding of bindings) {
     const { name, section } = binding;
@@ -1173,7 +1173,7 @@ export function finalizeReferences() {
     });
   });
 
-  finalizeFunctionRegistry();
+  runFinalize(FinalizePhase.Resolved);
   const referencedExprs = new Set<ReferencedExtra>();
   for (const binding of bindings) {
     for (const expr of binding.reads) {
@@ -1214,7 +1214,7 @@ export function finalizeReferences() {
 
   forEachSection(finalizeParamSerializeReasonGroups);
   forEachSectionReverse((section) => {
-    finalizeKnownTags(section);
+    runFinalizeSection(FinalizePhase.KnownTags, section);
     finalizeSerializeReason(section);
     // TODO: this duplication is needed when a known tag is circular. We should find a better way.
     finalizeParamSerializeReasonGroups(section);
