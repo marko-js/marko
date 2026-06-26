@@ -1,0 +1,7 @@
+<let/outer=true/>
+<let/n=0/>
+<button#o onClick() { outer = !outer }>O</button>
+<button#n onClick() { n++ }>N</button>
+<if=outer>
+  <leaf n=n/>
+</if>

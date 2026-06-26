@@ -106,11 +106,18 @@ export function _await_promise(
           c() {
             if (--awaitCounter!.i) return 1;
             if (tryBranch === scope[branchAccessor]) {
-              if ((scope[nodeAccessor] as ChildNode).parentNode) {
-                (scope[nodeAccessor] as ChildNode).replaceWith(
-                  (scope[branchAccessor] as BranchScope)[AccessorProp.StartNode]
-                    .parentNode!,
-                );
+              const anchor = scope[nodeAccessor] as ChildNode;
+              if (anchor.parentNode) {
+                const detachedParent = (scope[branchAccessor] as BranchScope)[
+                  AccessorProp.StartNode
+                ].parentNode!;
+                if (detachedParent === anchor.parentNode) {
+                  // Branch never detached (re-await raced its resolution);
+                  // replacing the anchor with its own parent would cycle.
+                  anchor.remove();
+                } else {
+                  anchor.replaceWith(detachedParent);
+                }
               }
             } else {
               dismissPlaceholder(tryBranch);

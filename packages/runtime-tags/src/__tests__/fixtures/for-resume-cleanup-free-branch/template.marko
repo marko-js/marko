@@ -1,0 +1,7 @@
+<let/outer=true/>
+<let/count=2/>
+<button#o onClick() { outer = !outer }>O</button>
+<button#c onClick() { count++ }>C</button>
+<if=outer>
+  <list count=count/>
+</if>

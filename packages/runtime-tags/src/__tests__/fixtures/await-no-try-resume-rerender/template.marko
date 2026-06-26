@@ -1,0 +1,6 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/n=0/>
+<button#a onClick() { n++ }>A</button>
+<await|v|=resolveAfter(n, 0)>
+  <div#out>done ${n}</div>
+</await>

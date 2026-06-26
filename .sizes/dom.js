@@ -1,4 +1,4 @@
-// size: 24226 (min) 8926 (brotli)
+// size: 24357 (min) 8968 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -834,6 +834,7 @@ function init(runtimeId = "M") {
                 branchScopesStack = [],
                 branchStarts = [],
                 orphanBranches = [],
+                deferredOwners = [],
                 curBranchScopes,
               ) =>
               (
@@ -845,6 +846,7 @@ function init(runtimeId = "M") {
                 parent = visit.parentNode,
                 startVisit = visit,
                 i = orphanBranches.length,
+                j = deferredOwners.length,
               ) => {
                 for (
                   visitType !== "[" &&
@@ -886,6 +888,10 @@ function init(runtimeId = "M") {
                           : parent.insertBefore(new Text(), visit)));
                   for (; i && orphanBranches[--i].L > branchId; )
                     setParentBranch(orphanBranches.pop(), branch);
+                  for (; j && deferredOwners[--j].L > branchId; ) {
+                    let owner = deferredOwners.pop();
+                    owner.F !== owner && (owner.F = branch);
+                  }
                   nextToken();
                 }
                 if (endedBranches) {
@@ -896,11 +902,12 @@ function init(runtimeId = "M") {
                         ? endedBranches.reverse()
                         : endedBranches[0]);
                 }
-                visitType === "[" &&
-                  (endedBranches ||
-                    (branchScopesStack.push(curBranchScopes),
-                    (curBranchScopes = void 0)),
-                  branchStarts.push(visit));
+                visitType === "["
+                  ? (endedBranches ||
+                      (branchScopesStack.push(curBranchScopes),
+                      (curBranchScopes = void 0)),
+                    branchStarts.push(visit))
+                  : deferredOwners.push(visitScope);
               },
             nextToken = () =>
               (lastToken = visitText.slice(
@@ -1633,13 +1640,16 @@ function _await_promise(nodeAccessor, params) {
                   i: 0,
                   c() {
                     if (--awaitCounter.i) return 1;
-                    (tryBranch === scope[branchAccessor]
-                      ? scope[nodeAccessor].parentNode &&
-                        scope[nodeAccessor].replaceWith(
-                          scope[branchAccessor].S.parentNode,
-                        )
-                      : dismissPlaceholder(tryBranch),
-                      queueEffect(tryBranch, runPendingEffects));
+                    if (tryBranch === scope[branchAccessor]) {
+                      let anchor = scope[nodeAccessor];
+                      if (anchor.parentNode) {
+                        let detachedParent = scope[branchAccessor].S.parentNode;
+                        detachedParent === anchor.parentNode
+                          ? anchor.remove()
+                          : anchor.replaceWith(detachedParent);
+                      }
+                    } else dismissPlaceholder(tryBranch);
+                    queueEffect(tryBranch, runPendingEffects);
                   },
                 }),
             scope[promiseAccessor] ||

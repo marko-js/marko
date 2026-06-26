@@ -1,0 +1,5 @@
+<const/{ count }=input/>
+<for|i| to=count>
+  <p>item ${i}</p>
+  <lifecycle onDestroy() { document.getElementById("ref").textContent = "item destroyed"; } />
+</for>
