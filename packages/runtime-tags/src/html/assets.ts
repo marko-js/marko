@@ -131,7 +131,7 @@ function flush(g: $Global, html: string) {
     const { id, triggers } = assets[di];
     const deferHTML = assetFlush(g, "defer", id);
     if (triggers) {
-      if (deferHTML) writeTriggerScript(deferHTML, triggers);
+      if (deferHTML) writeTriggerScript(g.runtimeId!, deferHTML, triggers);
     } else {
       result += deferHTML;
     }
@@ -153,7 +153,11 @@ function addAsset(g: $Global, id: string, triggers?: Trigger[]) {
   }
 }
 
-function writeTriggerScript(html: string, triggers: Trigger[]) {
+function writeTriggerScript(
+  runtimeId: string,
+  html: string,
+  triggers: Trigger[],
+) {
   const htmlStr = _escape_script(JSON.stringify(html));
   const exprs = triggers.map((trigger) => {
     const options = trigger.options && toObjectExpression(trigger.options);
@@ -167,14 +171,18 @@ function writeTriggerScript(html: string, triggers: Trigger[]) {
       case "media":
         return `(m=>m.matches?l():m.addEventListener("change",l,{once:1}))(matchMedia(${JSON.stringify(trigger.selector)}))`;
       case "has":
-        // A no-op CSS animation on a sentinel element fires `animationstart`
-        // the first time `:has(selector)` matches anywhere in the document.
-        // `self.__marko_has` only generates a unique sentinel tag per trigger
-        // (-~x is x+1, and -~undefined is 1) so concurrent watchers don't
-        // cross-trigger each other.
-        return `(t=>{document.head.appendChild(document.createElement("style")).append(${JSON.stringify(
-          `:has(${trigger.selector})>`,
-        )}+t+"{animation:1ms marko-has}@keyframes marko-has{}");document.documentElement.appendChild(document.createElement(t)).onanimationstart=l})("marko-has-"+(self.__marko_has=-~self.__marko_has))`;
+        // Installs (once per runtime, via `||=`) a watcher that fires the first
+        // time `:has(selector)` matches anywhere in the document: a no-op CSS
+        // animation on a sentinel element triggers `animationstart`. The watcher
+        // -- keyed on `self` by `runtimeId` so distinct runtimes can't conflict
+        // and matched selectors persist -- is the same one the DOM runtime
+        // shares (`_load_has_trigger`). `self.$i` only hands out globally unique
+        // sentinel tags (`-~x` is `x+1`, `-~undefined` is `1`). The factory
+        // string is identical across triggers, so it compresses away on the
+        // wire. `k` is the selector, `c` the load callback.
+        return `(self.$h${runtimeId}||=((o={},s,D=document)=>(k,c,t,e)=>o[k]===1?c():((e=D.documentElement.appendChild(D.createElement(t="m-"+(self.$i=-~self.$i)))).onanimationstart=()=>(o[k]=1,e.remove(),c()),(s||=D.head.appendChild(D.createElement("style"))).append(":has("+k+")>"+t+"{animation:1ms m-h}@keyframes m-h{}")))())(${JSON.stringify(
+          trigger.selector,
+        )},l)`;
       default:
         return `(e=>e?.addEventListener("${trigger.type.slice("on-".length)}",l,{once:1}))(document.querySelector(${JSON.stringify(trigger.selector)})||l())`;
     }
