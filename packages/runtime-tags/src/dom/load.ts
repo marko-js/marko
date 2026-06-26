@@ -27,8 +27,23 @@ interface LoadValue {
   [LoadSignalValue.Signal]?: LoadSignal;
 }
 export interface LoadTrigger {
-  <T>(load: () => Promise<T>): () => Promise<T>;
+  <T>(load: () => Promise<T>): (scope: Scope) => Promise<T>;
 }
+
+declare global {
+  // Shared counter used only to give `has` sentinel elements globally unique
+  // tag names (see `hasWatcher`). A plain monotonic integer (`-~undefined` is
+  // `1`), so distinct Marko runtimes can share it without conflicting.
+  var $i: number;
+}
+
+// `has` watchers are keyed on `self` by `$h` + the render's `runtimeId` so the
+// SSR inline trigger scripts and this runtime share one watcher per runtime,
+// while distinct runtimes stay isolated.
+const hasWatchers = self as unknown as Record<
+  `$h${string}`,
+  ReturnType<typeof hasWatcher> | undefined
+>;
 
 export function _load_template(id: string, load: () => Promise<Renderer>) {
   _enable_catch();
@@ -65,7 +80,7 @@ export function _load_template(id: string, load: () => Promise<Renderer>) {
 export function _load_setup(
   nodeAccessor: EncodedAccessor,
   childScopeAccessor: EncodedAccessor,
-  load: () => Promise<LoadModule>,
+  load: (scope: Scope) => Promise<LoadModule>,
 ) {
   if (!MARKO_DEBUG) {
     nodeAccessor = decodeAccessor(nodeAccessor as number);
@@ -83,7 +98,7 @@ export function _load_setup(
     } else {
       const awaitCounter = addAwaitCounter(owner);
       child[AccessorProp.Load] ||= new Map() as LoadValues;
-      (pending ||= load()).then(
+      (pending ||= load(owner)).then(
         (mod) => {
           renderer = _content("", ...mod._)();
           queueAsyncRender(child, (child) =>
@@ -153,11 +168,13 @@ function loadFailed(
   };
 }
 
-export function _load_signal(load: () => Promise<LoadSignal>): Signal {
+export function _load_signal(
+  load: (scope: Scope) => Promise<LoadSignal>,
+): Signal {
   let pending: ReturnType<typeof load> | undefined;
   let signal: Signal | undefined;
   return (scope: Scope, value: unknown) => {
-    pending ||= load();
+    pending ||= load(scope);
     if (
       scope[AccessorProp.Load] ||
       (!(AccessorProp.Load in scope) && scope[AccessorProp.Gen] === runId)
@@ -231,59 +248,50 @@ export function _load_media_trigger(query: string): LoadTrigger {
     )).then(load);
 }
 
-// Selectors that have matched at least once on the page stay matched: the
-// entry flips from a list of pending resolvers to `true` so any later watcher
-// resolves synchronously.
-const watchedSelectors = new Map<string, true | (() => void)[]>();
-let watchStyle: HTMLStyleElement | undefined;
-let watchId = 0;
-
+// The `has` trigger watches for a `:has(selector)` match anywhere in the
+// document via a no-op CSS animation on a sentinel element -- the sentinel's
+// animation starts (firing `animationstart` once) the first time the selector
+// matches. The watcher is shared with the SSR inline trigger scripts (same
+// `self` slot, keyed by `runtimeId`) so its matched-selector memory and
+// `<style>` carry across SSR and CSR, and a selector that has ever matched
+// resolves later watchers synchronously.
 export function _load_has_trigger(selector: string): LoadTrigger {
   let pending: Promise<unknown> | undefined;
-  return (load) => () =>
-    (pending ||= new Promise<void>((resolve) =>
-      watchSelector(selector, resolve),
-    )).then(load);
+  return (load) => (scope) =>
+    (pending ||= new Promise<void>((resolve) => {
+      const key = `$h${scope[AccessorProp.Global].runtimeId}` as const;
+      (hasWatchers[key] ||= hasWatcher())(selector, resolve);
+    })).then(load);
 }
 
-// Detects when `:has(selector)` first matches anywhere in the document by
-// attaching a no-op CSS animation to a sentinel element. When the selector
-// matches the sentinel's animation starts, firing `animationstart` once.
-function watchSelector(selector: string, resolve: () => void) {
-  const matched = watchedSelectors.get(selector);
-  if (matched === true) {
-    resolve();
-  } else if (matched) {
-    matched.push(resolve);
-  } else {
-    const resolves = [resolve];
-    const tag = "marko-has-" + watchId++;
-    const sentinel = document.documentElement.appendChild(
-      document.createElement(tag),
-    );
-    watchedSelectors.set(selector, resolves);
-    sentinel.onanimationstart = () => {
-      watchedSelectors.set(selector, true);
-      sentinel.remove();
-      for (const r of resolves) r();
-    };
-    (watchStyle ||= initWatchStyle()).append(
-      `:has(${selector})>${tag}{animation:1ms marko-has}`,
-    );
-  }
-}
-
-function initWatchStyle() {
-  const style = document.head.appendChild(document.createElement("style"));
-  style.append("@keyframes marko-has{}");
-  return style;
+function hasWatcher() {
+  const matched: Record<string, 1> = {};
+  let style: HTMLStyleElement;
+  return (selector: string, cb: () => void) => {
+    if (matched[selector] === 1) {
+      cb();
+    } else {
+      const tag = "m-" + (self.$i = -~self.$i);
+      const sentinel = document.documentElement.appendChild(
+        document.createElement(tag),
+      );
+      sentinel.onanimationstart = () => {
+        matched[selector] = 1;
+        sentinel.remove();
+        cb();
+      };
+      (style ||= document.head.appendChild(
+        document.createElement("style"),
+      )).append(`:has(${selector})>${tag}{animation:1ms m-h}@keyframes m-h{}`);
+    }
+  };
 }
 
 export function _load_race_trigger(...triggers: LoadTrigger[]): LoadTrigger {
   const noop = () => Promise.resolve();
   let pending: Promise<unknown> | undefined;
-  return (load) => () =>
-    (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);
+  return (load) => (scope) =>
+    (pending ||= Promise.race(triggers.map((t) => t(noop)(scope)))).then(load);
 }
 
 function getSelectorOrResolve(

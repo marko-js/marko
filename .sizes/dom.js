@@ -1,4 +1,4 @@
-// size: 24754 (min) 9091 (brotli)
+// size: 24681 (min) 9089 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -303,9 +303,7 @@ let empty = [],
       _resume(id, renderer)
     );
   },
-  watchedSelectors = /* @__PURE__ */ new Map(),
-  watchStyle,
-  watchId = 0;
+  hasWatchers = self;
 function attrTag(attrs) {
   return (
     (attrs[Symbol.iterator] = attrTagIterator),
@@ -2350,7 +2348,7 @@ function _load_setup(nodeAccessor, childScopeAccessor, load) {
       else {
         let awaitCounter = addAwaitCounter(owner);
         ((child.X ||= /* @__PURE__ */ new Map()),
-          (pending ||= load()).then(
+          (pending ||= load(owner)).then(
             (mod) => {
               ((renderer = _content("", ...mod._)()),
                 queueAsyncRender(child, (child) =>
@@ -2408,7 +2406,7 @@ function loadFailed(scope, awaitCounter) {
 function _load_signal(load) {
   let pending, signal;
   return (scope, value) => {
-    ((pending ||= load()),
+    ((pending ||= load(scope)),
       scope.X || (!("X" in scope) && scope.H === runId)
         ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, { a: value })
         : signal
@@ -2462,40 +2460,38 @@ function _load_media_trigger(query) {
 }
 function _load_has_trigger(selector) {
   let pending;
-  return (load) => () =>
-    (pending ||= new Promise((resolve) =>
-      watchSelector(selector, resolve),
-    )).then(load);
+  return (load) => (scope) =>
+    (pending ||= new Promise((resolve) => {
+      let key = `$h${scope.$.runtimeId}`;
+      (hasWatchers[key] ||= hasWatcher())(selector, resolve);
+    })).then(load);
 }
-function watchSelector(selector, resolve) {
-  let matched = watchedSelectors.get(selector);
-  if (matched === !0) resolve();
-  else if (matched) matched.push(resolve);
-  else {
-    let resolves = [resolve],
-      tag = "marko-has-" + watchId++,
-      sentinel = document.documentElement.appendChild(
-        document.createElement(tag),
-      );
-    (watchedSelectors.set(selector, resolves),
-      (sentinel.onanimationstart = () => {
-        (watchedSelectors.set(selector, !0), sentinel.remove());
-        for (let r of resolves) r();
+function hasWatcher() {
+  let matched = {},
+    style;
+  return (selector, cb) => {
+    if (matched[selector] === 1) cb();
+    else {
+      let tag = "m-" + (self.$i = -~self.$i),
+        sentinel = document.documentElement.appendChild(
+          document.createElement(tag),
+        );
+      ((sentinel.onanimationstart = () => {
+        ((matched[selector] = 1), sentinel.remove(), cb());
       }),
-      (watchStyle ||= initWatchStyle()).append(
-        `:has(${selector})>${tag}{animation:1ms marko-has}`,
-      ));
-  }
-}
-function initWatchStyle() {
-  let style = document.head.appendChild(document.createElement("style"));
-  return (style.append("@keyframes marko-has{}"), style);
+        (style ||= document.head.appendChild(
+          document.createElement("style"),
+        )).append(
+          `:has(${selector})>${tag}{animation:1ms m-h}@keyframes m-h{}`,
+        ));
+    }
+  };
 }
 function _load_race_trigger(...triggers) {
   let noop = () => Promise.resolve(),
     pending;
-  return (load) => () =>
-    (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);
+  return (load) => (scope) =>
+    (pending ||= Promise.race(triggers.map((t) => t(noop)(scope)))).then(load);
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();

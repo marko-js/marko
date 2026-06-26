@@ -2,13 +2,12 @@
   B</button><!--M_*1 #button/0--><span>A</span><!--M_[--><!--M_]1 #text/3-->
 <script>
   ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
-    h))) => (t => {
-      document.head.appendChild(document.createElement("style")).append(
-        ":has(.shared)>" + t +
-        "{animation:1ms marko-has}@keyframes marko-has{}");
-      document.documentElement.appendChild(document.createElement(t))
-        .onanimationstart = l
-    })("marko-has-" + (self.__marko_has = -~self.__marko_has)))(document
+    h))) => (self.$hM ||= ((o = {}, s, D = document) => (k, c, t, e) => o[k] ===
+      1 ? c() : ((e = D.documentElement.appendChild(D.createElement(t = "m-" +
+        (self.$i = -~self.$i)))).onanimationstart = () => (o[k] = 1, e
+        .remove(), c()), (s ||= D.head.appendChild(D.createElement(
+        "style"))).append(":has(" + k + ")>" + t +
+        "{animation:1ms m-h}@keyframes m-h{}")))())(".shared", l))(document
     .currentScript,
     "<script async type=module src=\"child-a.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
