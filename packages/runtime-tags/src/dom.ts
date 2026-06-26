@@ -69,6 +69,7 @@ export {
 export { _on } from "./dom/event";
 export {
   _load_event_trigger,
+  _load_has_trigger,
   _load_idle_trigger,
   _load_media_trigger,
   _load_race_trigger,

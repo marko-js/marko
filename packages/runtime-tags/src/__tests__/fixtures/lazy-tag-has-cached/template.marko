@@ -1,0 +1,10 @@
+import ChildA from "./child-a.marko" with { load: "has.shared" }
+import ChildB from "./child-b.marko" with { load: "has.shared" }
+
+<let/showB=false>
+<button onClick() { showB = true }>Show B</button>
+
+<ChildA/>
+<if=showB>
+  <ChildB/>
+</if>

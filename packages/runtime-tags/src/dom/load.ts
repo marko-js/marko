@@ -231,6 +231,54 @@ export function _load_media_trigger(query: string): LoadTrigger {
     )).then(load);
 }
 
+// Selectors that have matched at least once on the page stay matched: the
+// entry flips from a list of pending resolvers to `true` so any later watcher
+// resolves synchronously.
+const watchedSelectors = new Map<string, true | (() => void)[]>();
+let watchStyle: HTMLStyleElement | undefined;
+let watchId = 0;
+
+export function _load_has_trigger(selector: string): LoadTrigger {
+  let pending: Promise<unknown> | undefined;
+  return (load) => () =>
+    (pending ||= new Promise<void>((resolve) =>
+      watchSelector(selector, resolve),
+    )).then(load);
+}
+
+// Detects when `:has(selector)` first matches anywhere in the document by
+// attaching a no-op CSS animation to a sentinel element. When the selector
+// matches the sentinel's animation starts, firing `animationstart` once.
+function watchSelector(selector: string, resolve: () => void) {
+  const matched = watchedSelectors.get(selector);
+  if (matched === true) {
+    resolve();
+  } else if (matched) {
+    matched.push(resolve);
+  } else {
+    const resolves = [resolve];
+    const tag = "marko-has-" + watchId++;
+    const sentinel = document.documentElement.appendChild(
+      document.createElement(tag),
+    );
+    watchedSelectors.set(selector, resolves);
+    sentinel.onanimationstart = () => {
+      watchedSelectors.set(selector, true);
+      sentinel.remove();
+      for (const r of resolves) r();
+    };
+    (watchStyle ||= initWatchStyle()).append(
+      `:has(${selector})>${tag}{animation:1ms marko-has}`,
+    );
+  }
+}
+
+function initWatchStyle() {
+  const style = document.head.appendChild(document.createElement("style"));
+  style.append("@keyframes marko-has{}");
+  return style;
+}
+
 export function _load_race_trigger(...triggers: LoadTrigger[]): LoadTrigger {
   const noop = () => Promise.resolve();
   let pending: Promise<unknown> | undefined;

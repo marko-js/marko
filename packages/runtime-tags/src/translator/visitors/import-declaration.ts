@@ -241,7 +241,7 @@ function getLoadImportConfig(
 
     if (!type) {
       throw attrValue.buildCodeFrameError(
-        `Unknown trigger type "${match[1]}". Supported triggers are "visible", "idle", "media", and "on*".`,
+        `Unknown trigger type "${match[1]}". Supported triggers are "visible", "idle", "media", "has", and "on*".`,
       );
     }
     if (type === "render") {
@@ -318,6 +318,7 @@ function getLoadImportConfig(
 
 function parseTriggerType(type: string) {
   switch (type) {
+    case "has":
     case "idle":
     case "media":
     case "render":

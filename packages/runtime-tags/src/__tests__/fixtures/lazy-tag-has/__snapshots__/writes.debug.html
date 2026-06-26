@@ -1,0 +1,20 @@
+<span>1</span>
+<script>
+  ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
+    h))) => (t => {
+      document.head.appendChild(document.createElement("style")).append(
+        ":has(.my-button:focus)>" + t +
+        "{animation:1ms marko-has}@keyframes marko-has{}");
+      document.documentElement.appendChild(document.createElement(t))
+        .onanimationstart = l
+    })("marko-has-" + (self.__marko_has = -~self.__marko_has)))(document
+    .currentScript,
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-has/child.marko": [
+      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-has/child.marko_0 2"
+    ]
+  };
+  M._.w()
+</script>
