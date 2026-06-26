@@ -886,6 +886,36 @@ describe("serializer", () => {
     it("URIError", () =>
       assertStringify(new URIError("test"), `new URIError("test")`));
 
+    describe("cause", () => {
+      it("truthy", () =>
+        assertStringify(
+          new Error("test", { cause: "x" }),
+          `new Error("test",{cause:"x"})`,
+        ));
+      it("zero", () =>
+        assertStringify(
+          new Error("test", { cause: 0 }),
+          `new Error("test",{cause:0})`,
+        ));
+      it("empty string", () =>
+        assertStringify(
+          new Error("test", { cause: "" }),
+          `new Error("test",{cause:""})`,
+        ));
+      it("false", () =>
+        assertStringify(
+          new Error("test", { cause: false }),
+          `new Error("test",{cause:!1})`,
+        ));
+      it("null", () =>
+        assertStringify(
+          new Error("test", { cause: null }),
+          `new Error("test",{cause:null})`,
+        ));
+      it("absent", () =>
+        assertStringify(new Error("test"), `new Error("test")`));
+    });
+
     describe("AggregateError", () => {
       it("empty", () =>
         assertStringify(new AggregateError([]), `new AggregateError([])`));
@@ -914,6 +944,13 @@ describe("serializer", () => {
         );
       });
     });
+  });
+
+  describe("regexp", () => {
+    it("literal", () => assertStringify(/abc/g, `/abc/g`));
+    it("escapes <", () => assertStringify(/a<b/, `/a\\x3Cb/`));
+    it("escapes < in </script>", () =>
+      assertStringify(new RegExp("x</script>y"), `/x\\x3C\\/script>y/`));
   });
 
   describe("function", () => {

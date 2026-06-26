@@ -84,8 +84,10 @@ export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
 
           let attrTagMeta = lookup[name];
           if (!attrTagMeta) {
-            attrTagMeta = lookup[name] = createAttrTagMeta(name, []);
-            curGroup = attrTagMeta.group;
+            attrTagMeta = lookup[name] = createAttrTagMeta(
+              name,
+              (curGroup ||= []),
+            );
             curGroup.push(name);
           }
 

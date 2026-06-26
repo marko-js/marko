@@ -34,7 +34,7 @@ export function getBindingPropTree(binding: Binding) {
 
   if (!binding.reads.size) {
     if (!binding.aliases.size) {
-      props.props = {};
+      props.props = Object.create(null) as { [prop: string]: BindingPropTree };
       for (const [property, alias] of binding.propertyAliases) {
         props.props[property] = getBindingPropTree(alias)!;
       }
@@ -42,7 +42,9 @@ export function getBindingPropTree(binding: Binding) {
       const [restAlias] = binding.aliases;
       if (hasSupersetExcludeProperties(binding, restAlias.excludeProperties)) {
         props.rest = getBindingPropTree(restAlias);
-        props.props = {};
+        props.props = Object.create(null) as {
+          [prop: string]: BindingPropTree;
+        };
 
         if (restAlias.type === BindingType.input) {
           restAlias.export ??= generateUid(restAlias.name);

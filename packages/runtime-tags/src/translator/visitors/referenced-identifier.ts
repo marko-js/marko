@@ -95,7 +95,7 @@ export default {
             abortIdsByExpressionForSection.set(section, abortIdsByExpression);
           }
 
-          if (!exprId) {
+          if (exprId === undefined) {
             exprId = abortIdsByExpression.size;
             abortIdsByExpression.set(exprRoot, exprId);
             addStatement(

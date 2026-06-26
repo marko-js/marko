@@ -938,8 +938,19 @@ function writeDate(state: State, val: Date) {
   return true;
 }
 
+const unsafeRegExpSourceReg = /\\[\s\S]|</g;
+const replaceUnsafeRegExpSourceChar = (match: string) =>
+  match === "<" || match === "\\<" ? "\\x3C" : match;
 function writeRegExp(state: State, val: RegExp) {
-  state.buf.push(val + "");
+  const { source } = val;
+  state.buf.push(
+    "/" +
+      (source.includes("<")
+        ? source.replace(unsafeRegExpSourceReg, replaceUnsafeRegExpSourceChar)
+        : source) +
+      "/" +
+      val.flags,
+  );
   return true;
 }
 
@@ -1190,7 +1201,7 @@ function writeWeakMap(state: State) {
 function writeError(state: State, val: Error, ref: Reference) {
   const result =
     "new " + val.constructor.name + "(" + quote(val.message + "", 0);
-  if (val.cause) {
+  if (val.cause !== undefined) {
     state.buf.push(result + ",{cause:");
     writeProp(state, val.cause, ref, "cause");
     state.buf.push("})");

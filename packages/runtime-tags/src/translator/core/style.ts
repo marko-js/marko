@@ -36,13 +36,14 @@ export default {
       hub: { file },
     } = tag;
     const ext = STYLE_EXT_REG.exec(node.rawValue || "")?.[1]?.slice(1);
+    const extClass = ext?.replace(/\./g, " ");
     for (const attr of node.attributes) {
       if (
         attr.start == null &&
         attr.type === "MarkoAttribute" &&
         attr.name === "class" &&
         attr.value.type === "StringLiteral" &&
-        attr.value.value === ext
+        attr.value.value === extClass
       ) {
         continue;
       }
