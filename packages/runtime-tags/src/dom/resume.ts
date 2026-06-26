@@ -183,6 +183,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           branchScopesStack: Opt<BranchScope>[] = [],
           branchStarts: Comment[] = [],
           orphanBranches: BranchScope[] = [],
+          deferredOwners: Scope[] = [],
           curBranchScopes?: Opt<BranchScope>,
         ) => {
           return (
@@ -194,6 +195,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             parent = visit.parentNode!,
             startVisit: ChildNode = visit,
             i = orphanBranches.length,
+            j = deferredOwners.length,
           ) => {
             if (visitType !== ResumeSymbol.BranchStart) {
               visitScope[nextToken(/* read accessor */)] =
@@ -251,6 +253,15 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 setParentBranch(orphanBranches.pop()!, branch);
               }
 
+              // Link deferred owners nested in this branch (see push below) so
+              // their client-created branches join the tree; skips own branches.
+              while (j && deferredOwners[--j][AccessorProp.Id] > branchId) {
+                const owner = deferredOwners.pop()!;
+                if (owner[AccessorProp.ClosestBranch] !== owner) {
+                  owner[AccessorProp.ClosestBranch] = branch;
+                }
+              }
+
               nextToken(/* read optional next branchId */);
             }
 
@@ -272,6 +283,10 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 curBranchScopes = undefined;
               }
               branchStarts.push(visit);
+            } else {
+              // Defer this owner so its enclosing branch links it above,
+              // avoiding a serialized closest-branch id.
+              deferredOwners.push(visitScope);
             }
           };
         };

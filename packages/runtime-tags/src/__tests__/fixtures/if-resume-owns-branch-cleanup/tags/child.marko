@@ -1,0 +1,5 @@
+<const/{ show }=input/>
+<if=show>
+  <p>inner</p>
+  <lifecycle onDestroy() { document.getElementById("ref").textContent = "inner destroyed"; } />
+</if>

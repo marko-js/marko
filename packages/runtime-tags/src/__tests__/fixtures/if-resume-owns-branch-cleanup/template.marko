@@ -1,0 +1,8 @@
+<let/outer=true/>
+<let/show=false/>
+<div#ref>init</div>
+<button#o onClick() { outer = !outer }>O</button>
+<button#s onClick() { show = !show }>S</button>
+<if=outer>
+  <child show=show/>
+</if>

@@ -1,0 +1,4 @@
+<const/{ show }=input/>
+<${show ? "div" : null}>
+  <lifecycle onDestroy() { document.getElementById("ref").textContent = "dyn destroyed"; } />
+</>
