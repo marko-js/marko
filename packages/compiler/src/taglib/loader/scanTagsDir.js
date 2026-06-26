@@ -33,6 +33,11 @@ const searchFiles = [
   { name: "transform", type: "transform" },
 ];
 
+// Directories skipped when crawling groups for nested tags: dot-directories
+// (e.g. `.git`) and discovery-root folders (`tags`/`components`), which stay
+// private to their location (e.g. a nested `tags/tags`).
+const ignoredDirName = /^(?:\.|components$|tags$)/;
+
 function createDefaultTagDef() {
   return {
     attributes: {
@@ -106,6 +111,14 @@ function hasFile(tagDef) {
   return false;
 }
 
+function isDirectory(path) {
+  try {
+    return taglibConfig.fs.statSync(path).isDirectory();
+  } catch (_) {
+    return false;
+  }
+}
+
 /**
  * @param {String} tagsConfigPath path to tag definition file
  * @param {String} tagsConfigDirname path to directory of tags config file (should be path.dirname(tagsConfigPath))
@@ -120,9 +133,11 @@ module.exports = function scanTagsDir(
   dependencyChain,
 ) {
   let prefix;
+  let nested;
 
   if (typeof dir === "object") {
     prefix = dir.prefix;
+    nested = dir.nested;
     dir = dir.path;
   }
 
@@ -181,10 +196,26 @@ module.exports = function scanTagsDir(
                 ". Neither a renderer or a template was found for tag. " +
                 JSON.stringify(tagDef, null, 2),
             );
-          } else {
-            // Skip this directory... there doesn't appear to be anything in it
-            continue;
           }
+
+          // Not a tag itself: crawl one level into grouping directories for
+          // nested tags. Dot-directories and `tags`/`components` folders are
+          // skipped so they stay private to their location.
+          if (
+            !nested &&
+            !ignoredDirName.test(childFilename) &&
+            isDirectory(tagDirname)
+          ) {
+            scanTagsDir(
+              tagsConfigPath,
+              tagsConfigDirname,
+              { path: tagDirname, prefix, nested: true },
+              taglib,
+              dependencyChain.append(childFilename),
+            );
+          }
+
+          continue;
         }
       }
     }

@@ -220,9 +220,8 @@ class TaglibLoader {
     // The "tags-dir" property is used to supporting scanning
     // of a directory to discover custom tags. Scanning a directory
     // is a much simpler way for a developer to create custom tags.
-    // Only one tag is allowed per directory and the directory name
-    // corresponds to the tag name. We only search for directories
-    // one level deep.
+    // Each tag is a file or directory named after the tag; non-tag
+    // directories are scanned one level deep for nested tags.
     var taglib = this.taglib;
     var path = this.filePath;
     var dirname = this.dirname;
