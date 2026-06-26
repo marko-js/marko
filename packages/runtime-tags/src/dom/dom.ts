@@ -242,6 +242,7 @@ function attrsInternal(
           nextAttrs.checked,
           nextAttrs.checkedChange,
         );
+        skip = /^checked(?:Value)?(?:Change)?$/;
       } else if (
         "checkedValue" in nextAttrs ||
         "checkedValueChange" in nextAttrs
@@ -253,6 +254,7 @@ function attrsInternal(
           nextAttrs.checkedValueChange,
           nextAttrs.value,
         );
+        skip = /^(?:value|checked(?:Value)?)(?:Change)?$/;
       } else if ("value" in nextAttrs || "valueChange" in nextAttrs) {
         _attr_input_value(
           scope,
@@ -260,10 +262,10 @@ function attrsInternal(
           nextAttrs.value,
           nextAttrs.valueChange,
         );
+        skip = /^value(?:Change)?$/;
       } else {
         break;
       }
-      skip = /^(?:value|checked(?:Value)?)(?:Change)?$/;
       break;
     case "SELECT":
       if ("value" in nextAttrs || "valueChange" in nextAttrs) {

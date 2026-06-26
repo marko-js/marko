@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
-import { optimize } from "@marko/compiler/config";
 
 import { decodeAccessor } from "../../common/helpers";
 import { toAccess } from "../../html/serializer";
@@ -1801,7 +1800,7 @@ export function getReadReplacement(
               [getScopeExpression(extra.section!, readBinding.section)],
             );
           }
-        } else if (!optimize && read.ownVar) {
+        } else if (!isOptimize() && read.ownVar) {
           replacement = callRuntime(
             "_assert_init",
             extra.section

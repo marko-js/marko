@@ -1,4 +1,4 @@
-// size: 24162 (min) 8909 (brotli)
+// size: 24226 (min) 8926 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -271,7 +271,7 @@ let empty = [],
         (!branch &&
           (branch = classIdToBranch.get(component.id)) &&
           ((component.scope = branch), classIdToBranch.delete(component.id)),
-        typeof args[0] == "object" && "renderBody" in args[0])
+        args[0] && typeof args[0] == "object" && "renderBody" in args[0])
       ) {
         let input = args[0],
           normalizedInput = (args[0] = {});
@@ -1433,29 +1433,31 @@ function attrsInternal(scope, nodeAccessor, nextAttrs) {
   ) {
     case "INPUT":
       if ("checked" in nextAttrs || "checkedChange" in nextAttrs)
-        _attr_input_checked(
+        (_attr_input_checked(
           scope,
           nodeAccessor,
           nextAttrs.checked,
           nextAttrs.checkedChange,
-        );
+        ),
+          (skip = /^checked(?:Value)?(?:Change)?$/));
       else if ("checkedValue" in nextAttrs || "checkedValueChange" in nextAttrs)
-        _attr_input_checkedValue(
+        (_attr_input_checkedValue(
           scope,
           nodeAccessor,
           nextAttrs.checkedValue,
           nextAttrs.checkedValueChange,
           nextAttrs.value,
-        );
+        ),
+          (skip = /^(?:value|checked(?:Value)?)(?:Change)?$/));
       else if ("value" in nextAttrs || "valueChange" in nextAttrs)
-        _attr_input_value(
+        (_attr_input_value(
           scope,
           nodeAccessor,
           nextAttrs.value,
           nextAttrs.valueChange,
-        );
+        ),
+          (skip = /^value(?:Change)?$/));
       else break;
-      skip = /^(?:value|checked(?:Value)?)(?:Change)?$/;
       break;
     case "SELECT":
       ("value" in nextAttrs || "valueChange" in nextAttrs) &&

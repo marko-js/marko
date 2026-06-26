@@ -40,7 +40,11 @@ export function _attr_style(value: unknown) {
 
 export function _attr_option_value(value: unknown) {
   const valueAttr = _attr("value", value);
-  if (normalizedValueMatches(getContext(kSelectedValue), value)) {
+  const selectedValue = getContext(kSelectedValue);
+  if (
+    selectedValue !== undefined &&
+    normalizedValueMatches(selectedValue, value)
+  ) {
     if (MARKO_DEBUG) {
       const matched = getContext(kSelectedValueMatched) as
         | { value: boolean }
@@ -251,6 +255,7 @@ export function _attrs(
           data.checkedChange,
           1,
         );
+        skip = /^checked(?:Value)?(?:Change)?$|[\s/>"'=]/;
       } else if ("checkedValue" in data || data.checkedValueChange) {
         result += _attr_input_checkedValue(
           scopeId,
@@ -260,6 +265,7 @@ export function _attrs(
           data.value,
           1,
         );
+        skip = /^(?:value|checked(?:Value)?)(?:Change)?$|[\s/>"'=]/;
       } else if (data.valueChange) {
         result += _attr_input_value(
           scopeId,
@@ -268,10 +274,10 @@ export function _attrs(
           data.valueChange,
           1,
         );
+        skip = /^value(?:Change)?$|[\s/>"'=]/;
       } else {
         break;
       }
-      skip = /^(?:value|checked(?:Value)?)(?:Change)?$|[\s/>"'=]/;
       break;
     case "select":
     case "textarea":

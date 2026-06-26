@@ -106,7 +106,7 @@ export const compat = {
       classIdToBranch.delete(component.id);
     }
 
-    if (typeof args[0] === "object" && "renderBody" in args[0]) {
+    if (args[0] && typeof args[0] === "object" && "renderBody" in args[0]) {
       const input = args[0];
       const normalizedInput = (args[0] = {} as any);
       for (const key in input) {
