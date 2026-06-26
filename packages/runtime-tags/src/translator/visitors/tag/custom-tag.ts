@@ -446,6 +446,11 @@ function toDOMTriggerExpression(trigger: LoadTrigger) {
         "_load_media_trigger",
         t.stringLiteral(trigger.selector),
       );
+    case "has":
+      return callRuntime(
+        "_load_has_trigger",
+        t.stringLiteral(trigger.selector),
+      );
     default:
       return callRuntime(
         "_load_event_trigger",

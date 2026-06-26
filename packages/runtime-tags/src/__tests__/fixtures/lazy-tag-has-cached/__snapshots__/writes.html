@@ -1,0 +1,19 @@
+<button>Show B</button><!--M_*1 a--><span>A</span><!--M_[--><!--M_]1 d-->
+<script>
+  ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
+    h))) => (t => {
+      document.head.appendChild(document.createElement("style")).append(
+        ":has(.shared)>" + t +
+        "{animation:1ms marko-has}@keyframes marko-has{}");
+      document.documentElement.appendChild(document.createElement(t))
+        .onanimationstart = l
+    })("marko-has-" + (self.__marko_has = -~self.__marko_has)))(document
+    .currentScript,
+    "<script async type=module src=\"child-a.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: ["a0 2"]
+  };
+  M._.r = ["c0 1"];
+  M._.w()
+</script>

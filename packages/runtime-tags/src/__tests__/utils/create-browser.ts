@@ -46,6 +46,11 @@ export default function createBrowser(dir?: string, loadOrder?: string[]) {
         else listener.handleEvent({} as MediaQueryListEvent);
       }
     }),
+    // The `has` trigger watches for a `:has(selector)` match via a CSS
+    // animation on a sentinel element. jsdom doesn't run CSS animations, so we
+    // capture the sentinel's `onanimationstart` handler (below) and invoke it
+    // on flush to simulate the selector matching.
+    has: batchQueue<() => void>((onanimationstart) => onanimationstart()),
   };
   window.__RESOLVE_STATE__ = globalThis.__RESOLVE_STATE__;
   window.setImmediate = setImmediate;
@@ -97,6 +102,12 @@ export default function createBrowser(dir?: string, loadOrder?: string[]) {
     if (queues.idle.add(fn)) setTimeout(queues.idle.flush);
     return 0;
   };
+  Object.defineProperty(window.HTMLElement.prototype, "onanimationstart", {
+    configurable: true,
+    set(onanimationstart: () => void) {
+      queues.has.add(onanimationstart);
+    },
+  });
   window.matchMedia = (query) => {
     const entry: MQLEntry = { query, listeners: new Set() };
     queues.media.add(entry);

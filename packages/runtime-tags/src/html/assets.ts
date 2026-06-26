@@ -24,6 +24,11 @@ export interface MediaTrigger {
   selector: string;
   options?: never;
 }
+export interface HasTrigger {
+  type: "has";
+  selector: string;
+  options?: never;
+}
 export interface EventTrigger {
   type: `on-${string}`;
   selector: string;
@@ -33,6 +38,7 @@ export type LoadTrigger =
   | VisibleTrigger
   | IdleTrigger
   | MediaTrigger
+  | HasTrigger
   | EventTrigger;
 type Trigger = LoadTrigger;
 interface Asset {
@@ -160,6 +166,15 @@ function writeTriggerScript(html: string, triggers: Trigger[]) {
         return `(self.requestIdleCallback||l)(l${options ? `,${options}` : ""})`;
       case "media":
         return `(m=>m.matches?l():m.addEventListener("change",l,{once:1}))(matchMedia(${JSON.stringify(trigger.selector)}))`;
+      case "has":
+        // A no-op CSS animation on a sentinel element fires `animationstart`
+        // the first time `:has(selector)` matches anywhere in the document.
+        // `self.__marko_has` only generates a unique sentinel tag per trigger
+        // (-~x is x+1, and -~undefined is 1) so concurrent watchers don't
+        // cross-trigger each other.
+        return `(t=>{document.head.appendChild(document.createElement("style")).append(${JSON.stringify(
+          `:has(${trigger.selector})>`,
+        )}+t+"{animation:1ms marko-has}@keyframes marko-has{}");document.documentElement.appendChild(document.createElement(t)).onanimationstart=l})("marko-has-"+(self.__marko_has=-~self.__marko_has))`;
       default:
         return `(e=>e?.addEventListener("${trigger.type.slice("on-".length)}",l,{once:1}))(document.querySelector(${JSON.stringify(trigger.selector)})||l())`;
     }

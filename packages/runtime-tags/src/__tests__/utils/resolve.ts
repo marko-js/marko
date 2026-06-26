@@ -43,7 +43,7 @@ export function after(id: number): Wait {
   );
 }
 
-export type FlushType = "stream" | "raf" | "idle" | "visible" | "media";
+export type FlushType = "stream" | "raf" | "idle" | "visible" | "media" | "has";
 export type Flush = { flushType: FlushType };
 
 export const flush = Object.assign(() => {}, {
@@ -64,6 +64,10 @@ export const flushVisible = Object.assign(() => {}, {
 
 export const flushMedia = Object.assign(() => {}, {
   flushType: "media" as const,
+});
+
+export const flushHas = Object.assign(() => {}, {
+  flushType: "has" as const,
 });
 
 export type Throws = ReturnType<typeof throws>;

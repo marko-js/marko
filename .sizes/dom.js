@@ -1,4 +1,4 @@
-// size: 24226 (min) 8926 (brotli)
+// size: 24754 (min) 9091 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -302,7 +302,10 @@ let empty = [],
       (renderer._ = renderer),
       _resume(id, renderer)
     );
-  };
+  },
+  watchedSelectors = /* @__PURE__ */ new Map(),
+  watchStyle,
+  watchId = 0;
 function attrTag(attrs) {
   return (
     (attrs[Symbol.iterator] = attrTagIterator),
@@ -2456,6 +2459,37 @@ function _load_media_trigger(query) {
         ? resolve()
         : mql.addEventListener("change", resolve, { once: !0 }),
     )).then(load);
+}
+function _load_has_trigger(selector) {
+  let pending;
+  return (load) => () =>
+    (pending ||= new Promise((resolve) =>
+      watchSelector(selector, resolve),
+    )).then(load);
+}
+function watchSelector(selector, resolve) {
+  let matched = watchedSelectors.get(selector);
+  if (matched === !0) resolve();
+  else if (matched) matched.push(resolve);
+  else {
+    let resolves = [resolve],
+      tag = "marko-has-" + watchId++,
+      sentinel = document.documentElement.appendChild(
+        document.createElement(tag),
+      );
+    (watchedSelectors.set(selector, resolves),
+      (sentinel.onanimationstart = () => {
+        (watchedSelectors.set(selector, !0), sentinel.remove());
+        for (let r of resolves) r();
+      }),
+      (watchStyle ||= initWatchStyle()).append(
+        `:has(${selector})>${tag}{animation:1ms marko-has}`,
+      ));
+  }
+}
+function initWatchStyle() {
+  let style = document.head.appendChild(document.createElement("style"));
+  return (style.append("@keyframes marko-has{}"), style);
 }
 function _load_race_trigger(...triggers) {
   let noop = () => Promise.resolve(),
