@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.40.0
+
+### Minor Changes
+
+- [#3301](https://github.com/marko-js/marko/pull/3301) [`ecc342c`](https://github.com/marko-js/marko/commit/ecc342c136a1a796e982fb17bfb6436fe7f5757c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Discover custom tags grouped one level deep inside non-tag folders under a `tags` directory (e.g. `tags/icons/icon-chevron.marko` exposes `<icon-chevron>`).
+
 ## 5.39.66
 
 ### Patch Changes
