@@ -1,0 +1,19 @@
+# Render `{"x":0,"y":false,"z":"yes","fallback":"de","s":null}`
+```html
+<div
+  aria-hidden=""
+  class="off"
+  data-and="true"
+  data-and-dyn="0"
+  data-and-expr="de"
+  data-n="2"
+  data-nullish="none"
+  data-nullish-dyn="yes"
+  data-or="fallback"
+  data-or-dyn="yes"
+  lang="de"
+  title="idle"
+>
+  content
+</div>
+```

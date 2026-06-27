@@ -7,6 +7,7 @@ export {
 export { _flush_head, withLoadAssets, withPageAssets } from "./html/assets";
 export {
   _attr,
+  _attr_and,
   _attr_class,
   _attr_details_or_dialog_open as _attr_details_open,
   _attr_details_or_dialog_open as _attr_dialog_open,
@@ -14,7 +15,9 @@ export {
   _attr_input_checkedValue,
   _attr_input_value,
   _attr_nonce,
+  _attr_nullish,
   _attr_option_value,
+  _attr_or,
   _attr_select_value,
   _attr_style,
   _attr_textarea_value,

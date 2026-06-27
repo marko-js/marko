@@ -13,6 +13,9 @@
   style="color:red"
 />
 <div
+  style="color:red"
+/>
+<div
   style="width:100px"
 />
 <div

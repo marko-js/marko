@@ -232,6 +232,19 @@ export function _attr(name: string, value: unknown) {
   return isVoid(value) ? "" : nonVoidAttr(name, value);
 }
 
+// `value && attr` / `|| attr` / `?? attr` with the literal side prebuilt as `attr`.
+export function _attr_and(name: string, value: unknown, attr: string) {
+  return value ? attr : _attr(name, value);
+}
+
+export function _attr_or(name: string, value: unknown, attr: string) {
+  return value ? _attr(name, value) : attr;
+}
+
+export function _attr_nullish(name: string, value: unknown, attr: string) {
+  return value == null ? attr : _attr(name, value);
+}
+
 export function _attrs(
   data: Record<string, unknown>,
   nodeAccessor: Accessor,
