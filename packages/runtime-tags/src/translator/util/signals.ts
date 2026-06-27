@@ -334,6 +334,10 @@ export function initValue(binding: Binding, isLet = false) {
   const section = binding.section;
   const signal = getSignal(section, binding);
   signal.build = () => {
+    if (isPureMemberForwarder(binding)) {
+      return undefined;
+    }
+
     const fn = getSignalFn(signal);
     const isDirectAlias =
       binding.upstreamAlias &&
@@ -396,6 +400,57 @@ export function signalHasStatements(signal: Signal): boolean {
     return true;
   }
   return false;
+}
+
+function isPureMemberForwarder(binding: Binding): boolean {
+  if (
+    binding.property === undefined ||
+    binding.reads.size ||
+    binding.exposed ||
+    binding.aliases.size ||
+    binding.assignmentSections ||
+    getSerializeReason(binding.section, binding) ||
+    getSignal(binding.section, binding).hasSideEffect
+  ) {
+    return false;
+  }
+
+  for (const alias of binding.propertyAliases.values()) {
+    if (alias.type !== BindingType.constant) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function pushMemberForwards(
+  renderStatements: t.Statement[],
+  value: t.Expression,
+  alias: Binding,
+) {
+  if (isPureMemberForwarder(alias)) {
+    for (const [key, child] of alias.propertyAliases) {
+      if (child.type !== BindingType.constant) {
+        pushMemberForwards(
+          renderStatements,
+          toMemberExpression(t.cloneNode(value, true), key, alias.nullable),
+          child,
+        );
+      }
+    }
+  } else {
+    const aliasSignal = getSignal(alias.section, alias);
+    renderStatements.push(
+      t.expressionStatement(
+        t.callExpression(aliasSignal.identifier, [
+          scopeIdentifier,
+          value,
+          ...getTranslatedExtraArgs(aliasSignal),
+        ]),
+      ),
+    );
+  }
 }
 
 export function getSignalFn(signal: Signal): t.Expression {
@@ -482,19 +537,14 @@ export function getSignalFn(signal: Signal): t.Expression {
 
     for (const [key, alias] of binding.propertyAliases) {
       if (alias.type !== BindingType.constant) {
-        const aliasSignal = getSignal(alias.section, alias);
-        signal.render.push(
-          t.expressionStatement(
-            t.callExpression(aliasSignal.identifier, [
-              scopeIdentifier,
-              toMemberExpression(
-                createScopeReadExpression(binding),
-                key,
-                binding.nullable,
-              ),
-              ...getTranslatedExtraArgs(aliasSignal),
-            ]),
+        pushMemberForwards(
+          signal.render,
+          toMemberExpression(
+            createScopeReadExpression(binding),
+            key,
+            binding.nullable,
           ),
+          alias,
         );
       }
     }

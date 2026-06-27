@@ -6,8 +6,7 @@ const $for_content__content = /* @__PURE__ */ _const(3, ($scope) => {
 	$for_content__if($scope, $scope.d ? 0 : 1);
 	$if_content__content($scope);
 });
-const $for_content__$params = ($scope, $params2) => $for_content__$temp($scope, $params2?.[0]);
-const $for_content__$temp = ($scope, $temp) => $for_content__content($scope, $temp.content);
+const $for_content__$params = ($scope, $params2) => $for_content__content($scope, ($params2?.[0]).content);
 const $for = /* @__PURE__ */ _for_of(0, "<!><!><!>", "b%c", 0, $for_content__$params);
 const $input_section = ($scope, input_section) => $for($scope, [input_section]);
 

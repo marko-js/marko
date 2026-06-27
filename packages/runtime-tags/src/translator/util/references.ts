@@ -114,6 +114,7 @@ export interface Binding {
   declared: boolean;
   nullable: boolean;
   pruned: boolean | undefined;
+  exposed: boolean;
 }
 
 export interface InputBinding extends Binding {
@@ -223,6 +224,7 @@ export function createBinding(
     directContentExport: undefined,
     nullable: !sameSection || excludeProperties === undefined,
     pruned: undefined,
+    exposed: false,
   };
 
   if (property) {

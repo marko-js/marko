@@ -7,8 +7,7 @@ const $if_content__setup = ($scope) => {
 	$load_Child_tag_input_value($scope.b, 1);
 };
 const $catch_content__err_message = ($scope, err_message) => _text($scope.a, err_message);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
-const $catch_content__err = ($scope, err) => $catch_content__err_message($scope, err?.message);
+const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content_resume("b1", "<div id=error> </div>", "D l", 0, $catch_content__$params);
 const $placeholder_content = _content_resume("b0", "<div id=loading>loading</div>", "b");
 const $try_content__if = /* @__PURE__ */ _if(0, "<!><!><!><!>", "b%/&c", $if_content__setup);

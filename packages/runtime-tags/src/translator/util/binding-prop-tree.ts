@@ -26,6 +26,8 @@ export function getBindingPropTree(binding: Binding) {
     return undefined;
   }
 
+  binding.exposed = true;
+
   const props: BindingPropTree = {
     binding,
     props: undefined,
