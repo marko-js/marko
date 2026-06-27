@@ -1,11 +1,11 @@
 <span>1</span>
 <script>
   ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
-    h))) => (self.$hM ||= ((o = {}, s, D = document) => (k, c, t, e) => o[k] ===
-      1 ? c() : ((e = D.documentElement.appendChild(D.createElement(t = "m-" +
-        (self.$i = -~self.$i)))).onanimationstart = () => (o[k] = 1, e
-        .remove(), c()), (s ||= D.head.appendChild(D.createElement(
-        "style"))).append(":has(" + k + ")>" + t +
+    h))) => (self.$h ||= ((o = {}, s, i = 0, D = document) => (k, c, t, e) => o[
+      k] === 1 ? c() : ((e = D.documentElement.appendChild(D.createElement(
+        t = "m-" + (i += 1)))).onanimationstart = () => (o[k] = 1, e
+      .remove(), c()), (s ||= D.head.appendChild(D.createElement("style")))
+      .append(":has(" + k + ")>" + t +
         "{animation:1ms m-h}@keyframes m-h{}")))())(".my-button:focus", l))(
     document.currentScript,
     "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");

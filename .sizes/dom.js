@@ -1,4 +1,4 @@
-// size: 24681 (min) 9089 (brotli)
+// size: 24634 (min) 9058 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -302,8 +302,7 @@ let empty = [],
       (renderer._ = renderer),
       _resume(id, renderer)
     );
-  },
-  hasWatchers = self;
+  };
 function attrTag(attrs) {
   return (
     (attrs[Symbol.iterator] = attrTagIterator),
@@ -2348,7 +2347,7 @@ function _load_setup(nodeAccessor, childScopeAccessor, load) {
       else {
         let awaitCounter = addAwaitCounter(owner);
         ((child.X ||= /* @__PURE__ */ new Map()),
-          (pending ||= load(owner)).then(
+          (pending ||= load()).then(
             (mod) => {
               ((renderer = _content("", ...mod._)()),
                 queueAsyncRender(child, (child) =>
@@ -2406,7 +2405,7 @@ function loadFailed(scope, awaitCounter) {
 function _load_signal(load) {
   let pending, signal;
   return (scope, value) => {
-    ((pending ||= load(scope)),
+    ((pending ||= load()),
       scope.X || (!("X" in scope) && scope.H === runId)
         ? (scope.X ||= /* @__PURE__ */ new Map()).set(pending, { a: value })
         : signal
@@ -2460,19 +2459,19 @@ function _load_media_trigger(query) {
 }
 function _load_has_trigger(selector) {
   let pending;
-  return (load) => (scope) =>
-    (pending ||= new Promise((resolve) => {
-      let key = `$h${scope.$.runtimeId}`;
-      (hasWatchers[key] ||= hasWatcher())(selector, resolve);
-    })).then(load);
+  return (load) => () =>
+    (pending ||= new Promise((resolve) =>
+      (self.$h ||= hasWatcher())(selector, resolve),
+    )).then(load);
 }
 function hasWatcher() {
   let matched = {},
-    style;
+    style,
+    id = 0;
   return (selector, cb) => {
     if (matched[selector] === 1) cb();
     else {
-      let tag = "m-" + (self.$i = -~self.$i),
+      let tag = "m-" + ++id,
         sentinel = document.documentElement.appendChild(
           document.createElement(tag),
         );
@@ -2490,8 +2489,8 @@ function hasWatcher() {
 function _load_race_trigger(...triggers) {
   let noop = () => Promise.resolve(),
     pending;
-  return (load) => (scope) =>
-    (pending ||= Promise.race(triggers.map((t) => t(noop)(scope)))).then(load);
+  return (load) => () =>
+    (pending ||= Promise.race(triggers.map((t) => t(noop)()))).then(load);
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();

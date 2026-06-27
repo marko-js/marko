@@ -131,7 +131,7 @@ function flush(g: $Global, html: string) {
     const { id, triggers } = assets[di];
     const deferHTML = assetFlush(g, "defer", id);
     if (triggers) {
-      if (deferHTML) writeTriggerScript(g.runtimeId!, deferHTML, triggers);
+      if (deferHTML) writeTriggerScript(deferHTML, triggers);
     } else {
       result += deferHTML;
     }
@@ -153,11 +153,7 @@ function addAsset(g: $Global, id: string, triggers?: Trigger[]) {
   }
 }
 
-function writeTriggerScript(
-  runtimeId: string,
-  html: string,
-  triggers: Trigger[],
-) {
+function writeTriggerScript(html: string, triggers: Trigger[]) {
   const htmlStr = _escape_script(JSON.stringify(html));
   const exprs = triggers.map((trigger) => {
     const options = trigger.options && toObjectExpression(trigger.options);
@@ -171,16 +167,16 @@ function writeTriggerScript(
       case "media":
         return `(m=>m.matches?l():m.addEventListener("change",l,{once:1}))(matchMedia(${JSON.stringify(trigger.selector)}))`;
       case "has":
-        // Installs (once per runtime, via `||=`) a watcher that fires the first
-        // time `:has(selector)` matches anywhere in the document: a no-op CSS
-        // animation on a sentinel element triggers `animationstart`. The watcher
-        // -- keyed on `self` by `runtimeId` so distinct runtimes can't conflict
-        // and matched selectors persist -- is the same one the DOM runtime
-        // shares (`_load_has_trigger`). `self.$i` only hands out globally unique
-        // sentinel tags (`-~x` is `x+1`, `-~undefined` is `1`). The factory
-        // string is identical across triggers, so it compresses away on the
-        // wire. `k` is the selector, `c` the load callback.
-        return `(self.$h${runtimeId}||=((o={},s,D=document)=>(k,c,t,e)=>o[k]===1?c():((e=D.documentElement.appendChild(D.createElement(t="m-"+(self.$i=-~self.$i)))).onanimationstart=()=>(o[k]=1,e.remove(),c()),(s||=D.head.appendChild(D.createElement("style"))).append(":has("+k+")>"+t+"{animation:1ms m-h}@keyframes m-h{}")))())(${JSON.stringify(
+        // Installs (once, via `||=`) a watcher that fires the first time
+        // `:has(selector)` matches anywhere in the document: a no-op CSS
+        // animation on a sentinel element triggers `animationstart`. It's the
+        // same `self.$h` watcher the DOM runtime shares (`_load_has_trigger`),
+        // so its matched selectors and `<style>` persist across SSR and CSR.
+        // The factory string is identical across triggers, so it compresses
+        // away on the wire. `o` is the matched-selector set, `s` the shared
+        // `<style>`, `i` the sentinel-tag counter; `k` is the selector and `c`
+        // the load callback.
+        return `(self.$h||=((o={},s,i=0,D=document)=>(k,c,t,e)=>o[k]===1?c():((e=D.documentElement.appendChild(D.createElement(t="m-"+(i+=1)))).onanimationstart=()=>(o[k]=1,e.remove(),c()),(s||=D.head.appendChild(D.createElement("style"))).append(":has("+k+")>"+t+"{animation:1ms m-h}@keyframes m-h{}")))())(${JSON.stringify(
           trigger.selector,
         )},l)`;
       default:
