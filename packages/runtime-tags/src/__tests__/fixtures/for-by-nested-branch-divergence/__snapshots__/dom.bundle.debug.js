@@ -7,10 +7,9 @@ const $if_content__item_id = /* @__PURE__ */ _if_closure("#text/0", 0, ($scope) 
 const $if_content__setup = $if_content__item_id;
 const $for_content__if = /* @__PURE__ */ _if("#text/0", "<span>A<!></span>", "Db%l", $if_content__setup, "<b>B<!></b>", "Db%l", $else_content__setup);
 const $for_content__item_on = ($scope, item_on) => $for_content__if($scope, item_on ? 0 : 1);
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $for_content__item = ($scope, item) => {
-	$for_content__item_on($scope, item?.on);
-	$for_content__item_id($scope, item?.id);
+const $for_content__$params = ($scope, $params2) => {
+	$for_content__item_on($scope, $params2[0]?.on);
+	$for_content__item_id($scope, $params2[0]?.id);
 };
 const $for_content__item_id = /* @__PURE__ */ _const("item_id", ($scope) => {
 	$if_content__item_id($scope);

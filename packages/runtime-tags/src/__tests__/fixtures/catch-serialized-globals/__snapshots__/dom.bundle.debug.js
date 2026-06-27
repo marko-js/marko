@@ -16,8 +16,7 @@ const $catch_content__setup = ($scope) => {
 	$catch_content__setup__script($scope);
 };
 const $catch_content__error_message = /* @__PURE__ */ _const("error_message", $catch_content__error_message__OR__message__OR__clicked);
-const $catch_content__$params = ($scope, $params2) => $catch_content__error($scope, $params2[0]);
-const $catch_content__error = ($scope, error) => $catch_content__error_message($scope, error?.message);
+const $catch_content__$params = ($scope, $params2) => $catch_content__error_message($scope, $params2[0]?.message);
 const $catch_content = _content_resume("__tests__/template.marko_2_content", "<button> </button>", " D l", $catch_content__setup, $catch_content__$params);
 const $await_content = /* @__PURE__ */ _await_content("#text/0", " ", " b");
 const $try_content__await_promise = /* @__PURE__ */ _await_promise("#text/0", $await_content__$params);

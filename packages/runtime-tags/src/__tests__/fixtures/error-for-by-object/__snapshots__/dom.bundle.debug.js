@@ -7,8 +7,7 @@ const $for_content__setup__script = _script("__tests__/template.marko_1", ($scop
 }));
 const $for_content__setup = $for_content__setup__script;
 const $for_content__item_id = ($scope, item_id) => _text($scope["#text/1"], item_id);
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $for_content__item = ($scope, item) => $for_content__item_id($scope, item?.id);
+const $for_content__$params = ($scope, $params2) => $for_content__item_id($scope, $params2[0]?.id);
 const $for = /* @__PURE__ */ _for_of("#text/0", "<button> </button>", " D l", $for_content__setup, $for_content__$params);
 const $items = /* @__PURE__ */ _let("items/4", ($scope) => $for($scope, [$scope.items, (item) => item]));
 const $input_items = $items;

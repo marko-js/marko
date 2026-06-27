@@ -18,8 +18,7 @@ const $if_content__setup = ($scope) => {
 	$load_Child_tag_input_value($scope["#childScope/1"], 1);
 };
 const $catch_content__err_message = ($scope, err_message) => _text($scope["#text/0"], err_message);
-const $catch_content__$params = ($scope, $params2) => $catch_content__err($scope, $params2[0]);
-const $catch_content__err = ($scope, err) => $catch_content__err_message($scope, err?.message);
+const $catch_content__$params = ($scope, $params2) => $catch_content__err_message($scope, $params2[0]?.message);
 const $catch_content = _content_resume("__tests__/template.marko_3_content", "<div id=error> </div>", "D l", 0, $catch_content__$params);
 const $placeholder_content = _content_resume("__tests__/template.marko_2_content", "<div id=loading>loading</div>", "b");
 const $try_content__if = /* @__PURE__ */ _if("#text/0", "<!><!><!><!>", "b%/&c", $if_content__setup);

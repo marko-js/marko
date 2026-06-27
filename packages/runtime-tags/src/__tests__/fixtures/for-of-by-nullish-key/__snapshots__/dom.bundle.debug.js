@@ -2,8 +2,7 @@
 const $template = "<ul></ul><button>refresh</button>";
 const $walks = " b b";
 const $for_content__item_text = ($scope, item_text) => _text($scope["#text/0"], item_text);
-const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
-const $for_content__item = ($scope, item) => $for_content__item_text($scope, item?.text);
+const $for_content__$params = ($scope, $params2) => $for_content__item_text($scope, $params2[0]?.text);
 const $for = /* @__PURE__ */ _for_of("#ul/0", "<li> </li>", "D l", 0, $for_content__$params);
 const $items__script = _script("__tests__/template.marko_0_items", ($scope) => _on($scope["#button/1"], "click", function() {
 	$items($scope, [...$scope.items]);

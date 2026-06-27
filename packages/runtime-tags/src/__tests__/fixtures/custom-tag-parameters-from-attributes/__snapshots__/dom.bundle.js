@@ -16,9 +16,8 @@ const $x = /* @__PURE__ */ _let(7, ($scope) => {
 // template.marko
 const $customtag_content__name = ($scope, name) => _text($scope.a, name);
 const $customtag_content__count = ($scope, count) => _text($scope.b, count);
-const $customtag_content__$params = ($scope, $params2) => $customtag_content__$temp($scope, $params2?.[0]);
-const $customtag_content__$temp = ($scope, $temp) => {
-	$customtag_content__count($scope, $temp.count);
-	$customtag_content__name($scope, $temp.name);
+const $customtag_content__$params = ($scope, $params2) => {
+	$customtag_content__count($scope, ($params2?.[0]).count);
+	$customtag_content__name($scope, ($params2?.[0]).name);
 };
 const $customtag_content = _content_resume("a0", "<div>Count (<!>): <!></div>", "Db%c%l", 0, $customtag_content__$params);
