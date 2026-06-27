@@ -10,7 +10,8 @@ const $MyTag_content__tag_params = ($scope, $params2) => {
 	$MyTag_content__a($scope, $params2[0]);
 	$MyTag_content__b($scope, $params2[1]);
 };
-const $x__OR__args = /* @__PURE__ */ _or(9, ($scope) => {
+const $args = /* @__PURE__ */ _const("args", ($scope) => $MyTag_content__tag_params($scope["#childScope/0"], [...$scope.args]));
+const $x__OR__args = ($scope) => {
 	let $cgrp;
 	if ($scope.x) {
 		$cgrp = attrTag({ y: 1 });
@@ -21,11 +22,7 @@ const $x__OR__args = /* @__PURE__ */ _or(9, ($scope) => {
 		cgrp: $cgrp,
 		row: attrTag({ r: $scope.x })
 	}]);
-});
-const $args = /* @__PURE__ */ _const("args", ($scope) => {
-	$MyTag_content__tag_params($scope["#childScope/0"], [...$scope.args]);
-	$x__OR__args($scope);
-});
+};
 const $x__script = _script("__tests__/template.marko_0_x", ($scope) => _on($scope["#button/3"], "click", function() {
 	$x($scope, $scope.x + 1);
 }));

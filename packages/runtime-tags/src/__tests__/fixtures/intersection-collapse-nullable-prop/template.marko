@@ -1,0 +1,5 @@
+<let/show=false/>
+<const/obj=show && { label: "hi" }/>
+<const/n=show ? 1 : 2/>
+<button onClick() { show = !show }>toggle</button>
+<div>${(obj?.label ?? "none") + n}</div>

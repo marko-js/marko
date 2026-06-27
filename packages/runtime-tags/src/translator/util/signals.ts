@@ -33,7 +33,9 @@ import {
   intersectionMeta,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
+  mergeSources,
   type ReferencedBindings,
+  type Sources,
 } from "./references";
 import { callRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
@@ -84,6 +86,8 @@ export interface Signal {
   effectReferencedBindings: ReferencedBindings;
   hasDynamicSubscribers: boolean;
   hasSideEffect: boolean;
+  forcePersist: boolean;
+  inline: { value: t.Expression } | undefined;
   export: boolean;
   extraArgs: t.Expression[] | undefined;
   prependStatements: t.Statement[] | undefined;
@@ -262,6 +266,8 @@ export function getSignal(
             referencedBindings.hoists)
         ),
         hasDynamicSubscribers: false,
+        forcePersist: false,
+        inline: undefined,
         extraArgs: undefined,
         prependStatements: undefined,
         buildAssignment: undefined,
@@ -273,19 +279,41 @@ export function getSignal(
     } else if (!referencedBindings) {
       signal.build = () => getSignalFn(signal);
     } else if (Array.isArray(referencedBindings)) {
-      subscribe(referencedBindings, signal);
-      signal.build = () => {
-        const { id, scopeOffset } = intersectionMeta.get(referencedBindings)!;
-        return callRuntime(
-          "_or",
-          t.numericLiteral(id),
-          getSignalFn(signal),
-          scopeOffset || referencedBindings.length > 2
-            ? t.numericLiteral(referencedBindings.length - 1)
-            : undefined,
-          scopeOffset && getScopeAccessorLiteral(scopeOffset, true),
-        );
-      };
+      const collapseSource = getCollapsibleIntersectionSource(
+        referencedBindings,
+        section,
+      );
+      if (collapseSource) {
+        const sourceSignal = getSignal(section, collapseSource);
+        forEach(referencedBindings, (member) => {
+          const memberSignal = getSignal(section, member);
+          const valueEntry = isInlinableIntersectionMember(member)
+            ? sourceSignal.values.find((v) => v.signal === memberSignal)
+            : undefined;
+          if (valueEntry) {
+            memberSignal.inline = valueEntry;
+          } else {
+            memberSignal.hasSideEffect = true;
+            memberSignal.forcePersist = true;
+          }
+        });
+        subscribe(collapseSource, signal);
+        signal.build = () => getSignalFn(signal);
+      } else {
+        subscribe(referencedBindings, signal);
+        signal.build = () => {
+          const { id, scopeOffset } = intersectionMeta.get(referencedBindings)!;
+          return callRuntime(
+            "_or",
+            t.numericLiteral(id),
+            getSignalFn(signal),
+            scopeOffset || referencedBindings.length > 2
+              ? t.numericLiteral(referencedBindings.length - 1)
+              : undefined,
+            scopeOffset && getScopeAccessorLiteral(scopeOffset, true),
+          );
+        };
+      }
     } else if (
       referencedBindings.section !== section &&
       sectionUtil.has(referencedBindings.closureSections, section)
@@ -344,9 +372,8 @@ export function initValue(binding: Binding, isLet = false) {
       binding.property === undefined &&
       binding.excludeProperties === undefined;
     if (
-      isDirectAlias ||
-      !signal.hasSideEffect ||
-      !signalHasStatements(signal)
+      !signal.forcePersist &&
+      (isDirectAlias || !signal.hasSideEffect || !signalHasStatements(signal))
     ) {
       return fn;
     }
@@ -376,6 +403,7 @@ export function initValue(binding: Binding, isLet = false) {
 export function signalHasStatements(signal: Signal): boolean {
   if (
     signal.extraArgs ||
+    signal.forcePersist ||
     signal.render.length ||
     signal.effect.length ||
     signal.values.length ||
@@ -559,6 +587,9 @@ export function getSignalFn(signal: Signal): t.Expression {
   }
 
   for (const value of signal.values) {
+    if (value.signal.inline) {
+      continue;
+    }
     if (signalHasStatements(value.signal)) {
       signal.render.push(
         t.expressionStatement(
@@ -732,6 +763,42 @@ function isOwnValueRead(node: t.Node, binding: Binding) {
     read.binding === binding &&
     read.props === undefined &&
     !read.getter?.invoked
+  );
+}
+
+function getCollapsibleIntersectionSource(
+  members: Binding[],
+  section: Section,
+): Binding | undefined {
+  let sources: Sources | undefined;
+  for (const member of members) {
+    if (!member.sources) return undefined;
+    const isDirectAlias =
+      member.upstreamAlias &&
+      member.property === undefined &&
+      member.excludeProperties === undefined;
+    if (member.section !== section || isDirectAlias) return undefined;
+    sources = mergeSources(sources, member.sources);
+  }
+
+  if (
+    !sources ||
+    sources.param ||
+    !sources.state ||
+    Array.isArray(sources.state)
+  ) {
+    return undefined;
+  }
+
+  const source = sources.state;
+  return source.section === section && !source.scopeOffset ? source : undefined;
+}
+
+function isInlinableIntersectionMember(member: Binding) {
+  return (
+    member.type === BindingType.derived &&
+    !member.upstreamAlias &&
+    member.reads.size === 1
   );
 }
 
@@ -1410,12 +1477,28 @@ function replaceEffectNode(node: t.Node) {
   return replaceAssignedNode(node) || replaceBindingReadNode(node);
 }
 
+function getInlinedReadReplacement(
+  node: t.Identifier | t.MemberExpression | t.OptionalMemberExpression,
+  signal?: Signal,
+): t.Expression | undefined {
+  const read = node.extra?.read;
+  if (!signal || !read || read.props !== undefined || node.extra!.assignment) {
+    return undefined;
+  }
+
+  const inline = getSignals(signal.section).get(read.binding)?.inline;
+  return inline ? (t.cloneNode(inline.value, true) as t.Expression) : undefined;
+}
+
 function replaceBindingReadNode(node: t.Node, signal?: Signal) {
   switch (node.type) {
     case "Identifier":
     case "MemberExpression":
     case "OptionalMemberExpression": {
-      return getReadReplacement(node, signal);
+      return (
+        getInlinedReadReplacement(node, signal) ||
+        getReadReplacement(node, signal)
+      );
     }
     case "CallExpression": {
       const { extra } = node.callee;

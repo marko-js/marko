@@ -16,12 +16,6 @@ const $for_content__item_id = /* @__PURE__ */ _const("item_id", ($scope) => {
 	$else_content__item_id($scope);
 });
 const $for = /* @__PURE__ */ _for_of("#div/0", "<!><!><!>", "b%c", 0, $for_content__$params);
-const $list = /* @__PURE__ */ _let("list/2", ($scope) => {
-	$list_($scope, $scope.list?.[2]);
-	$list_2($scope, $scope.list?.[0]);
-	$list_3($scope, $scope.list?.[1]);
-	$for($scope, [$scope.list, "id"]);
-});
 const $list_2__OR__list_0__OR__list___script = _script("__tests__/template.marko_0_list_2_list_0_list_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$list($scope, [
 		$scope.list_2,
@@ -29,10 +23,17 @@ const $list_2__OR__list_0__OR__list___script = _script("__tests__/template.marko
 		$scope.list_1
 	]);
 }));
-const $list_2__OR__list_0__OR__list_ = /* @__PURE__ */ _or(6, $list_2__OR__list_0__OR__list___script, 2);
-const $list_ = /* @__PURE__ */ _const("list_2", $list_2__OR__list_0__OR__list_);
-const $list_2 = /* @__PURE__ */ _const("list_0", $list_2__OR__list_0__OR__list_);
-const $list_3 = /* @__PURE__ */ _const("list_1", $list_2__OR__list_0__OR__list_);
+const $list_2__OR__list_0__OR__list_ = $list_2__OR__list_0__OR__list___script;
+const $list = /* @__PURE__ */ _let("list/2", ($scope) => {
+	$list_($scope, $scope.list?.[2]);
+	$list_2($scope, $scope.list?.[0]);
+	$list_3($scope, $scope.list?.[1]);
+	$for($scope, [$scope.list, "id"]);
+	$list_2__OR__list_0__OR__list_($scope);
+});
+const $list_ = /* @__PURE__ */ _const("list_2");
+const $list_2 = /* @__PURE__ */ _const("list_0");
+const $list_3 = /* @__PURE__ */ _const("list_1");
 function $setup($scope) {
 	$list($scope, [
 		{
