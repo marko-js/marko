@@ -33,8 +33,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		i: store?.clear,
-		a: _existing_scope($childScope),
-		Mj: store.listChange || void 0
+		a: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);
 }, 1);

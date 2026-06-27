@@ -33,8 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_store_clear");
 	writeScope($scope0_id, {
 		store_clear: store?.clear,
-		"#childScope/0": _existing_scope($childScope),
-		"TagVariableChange:list": store.listChange || void 0
+		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { store_clear: ["store.clear", "1:8"] });
 	_resume_branch($scope0_id);
 }, 1);

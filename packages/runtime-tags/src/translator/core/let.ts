@@ -10,6 +10,7 @@ import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { getAccessorPrefix } from "../util/get-accessor-char";
 import { isOutputDOM } from "../util/marko-config";
 import {
+  type Binding,
   BindingType,
   mergeReferences,
   setBindingDownstream,
@@ -25,11 +26,36 @@ import {
   setBindingSerializedValue,
   signalHasStatements,
 } from "../util/signals";
+import { createProgramState } from "../util/state";
 import translateVar from "../util/translate-var";
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     static?: boolean;
+  }
+}
+
+const [getControllableLetBindings] = createProgramState(
+  () => new Set<Binding>(),
+);
+
+// A controllable `<let>`'s `valueChange` handler is only read back on resume
+// (`_let_change`) when the variable is actually reassigned on the client;
+// reactive `value=` updates run in rendering mode and re-set the handler from the
+// fresh arg. Called from `finalizeReferences` once assignments are resolved, this
+// serializes the `TagVariableChange` accessor only for bindings with assignment
+// sites. It iterates the marked bindings directly (rather than the post-prune
+// binding set) so it still applies when the `<let>`'s value was pruned.
+export function finalizeControllableLetReasons() {
+  for (const binding of getControllableLetBindings()) {
+    if (binding.assignmentSections) {
+      addSerializeReason(
+        binding.section,
+        true,
+        binding,
+        getAccessorPrefix().TagVariableChange,
+      );
+    }
   }
 }
 
@@ -104,13 +130,9 @@ export default {
 
     if (valueChangeAttr) {
       setBindingDownstream(binding, tagExtra);
-      // TODO: could be based on if there are actually assignments.
-      addSerializeReason(
-        tagSection,
-        true,
-        binding,
-        getAccessorPrefix().TagVariableChange,
-      );
+      // Defer the `TagVariableChange` serialize reason until assignments are
+      // resolved (see `finalizeControllableLetReasons`).
+      getControllableLetBindings().add(binding);
     } else {
       setBindingDownstream(binding, false);
     }

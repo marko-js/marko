@@ -3,6 +3,7 @@ import { getProgram } from "@marko/compiler/babel-utils";
 
 import { decodeAccessor } from "../../common/helpers";
 import { toAccess } from "../../html/serializer";
+import { finalizeControllableLetReasons } from "../core/let";
 import { finalizeFunctionRegistry } from "../visitors/function";
 import { scopeIdentifier } from "../visitors/program";
 import { forEachIdentifierPath } from "./for-each-identifier";
@@ -1032,6 +1033,8 @@ export function finalizeReferences() {
       }
     }
   }
+
+  finalizeControllableLetReasons();
 
   forEachSection((section) => {
     if (section.isHoistThrough) {
