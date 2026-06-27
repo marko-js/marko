@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.1.23
+
+### Patch Changes
+
+- [#3306](https://github.com/marko-js/marko/pull/3306) [`bcbd992`](https://github.com/marko-js/marko/commit/bcbd9926359dbbe735370fc023f7791136f78857) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Collapse pass-through signals for `<for>` and tag-body params that are only read by member access, shrinking the generated DOM bundle.
+
 ## 6.1.22
 
 ### Patch Changes

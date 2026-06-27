@@ -1,4 +1,4 @@
-// size: 682 (min) 393 (brotli)
+// size: 665 (min) 384 (brotli)
 //#region packages/runtime-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/tags/comments.marko
 const $template$1 = "<ul></ul>";
 const $if_content__comment_comments = /* @__PURE__ */ _if_closure(
@@ -47,11 +47,9 @@ const $for_content__comment_comments = /* @__PURE__ */ _const(8, ($scope) => {
   $for_content__if($scope, $scope.i ? 0 : 1);
   $if_content__comment_comments($scope);
 });
-const $for_content__$params = ($scope, $params2) =>
-  $for_content__comment($scope, $params2[0]);
-const $for_content__comment = ($scope, comment) => {
-  $for_content__comment_text($scope, comment?.text);
-  $for_content__comment_comments($scope, comment?.comments);
+const $for_content__$params = ($scope, $params2) => {
+  $for_content__comment_text($scope, $params2[0]?.text);
+  $for_content__comment_comments($scope, $params2[0]?.comments);
 };
 const $for = /* @__PURE__ */ _for_of(
   0,
