@@ -1,3 +1,4 @@
+import { decode } from "@jridgewell/sourcemap-codec";
 import * as compiler from "@marko/compiler";
 import * as assert from "assert/strict";
 import path from "path";
@@ -80,6 +81,37 @@ describe("runtime-tags/translator-api", () => {
       assert.ok(!dep.code.includes("sourceMappingURL"));
       assert.ok(dep.map);
     });
+
+    it("maps the generated var() reference back to the source interpolation", () => {
+      const src = `<style>\n  .foo { color: \${input.color} }\n</style>\n<div class="foo"/>\n`;
+      const deps: { code: string; map?: { mappings: string } }[] = [];
+      compiler.compileSync(src, path.join(__dirname, "tmp.marko"), {
+        ...baseConfig,
+        cache: new Map(),
+        output: "html",
+        sourceMaps: true,
+        resolveVirtualDependency(_filename, dep) {
+          deps.push(dep as (typeof deps)[number]);
+          return `./${dep.virtualPath}`;
+        },
+      });
+
+      const { code, map } = deps[0];
+      const codeLines = code.split("\n");
+      const genLine = codeLines.findIndex((line) => line.includes("var("));
+      const genColumn = codeLines[genLine].indexOf("var(");
+      const srcLine = src.split("\n").findIndex((line) => line.includes("${"));
+      const srcColumn = src.split("\n")[srcLine].indexOf("${");
+
+      const mapped = decode(map!.mappings)[genLine].find(
+        ([, , line, column]) => line === srcLine && column === srcColumn,
+      );
+      assert.ok(
+        mapped,
+        "expected a mapping back to the `${...}` interpolation",
+      );
+      assert.equal(mapped[0], genColumn);
+    });
   });
 
   describe("getStyleFile name handling", () => {
@@ -144,16 +176,18 @@ describe("runtime-tags/translator-api", () => {
     });
 
     it("validates the runtimeId option", () => {
-      assert.throws(
-        () =>
-          compiler.compileSync("<div/>", path.join(__dirname, "tmp.marko"), {
-            ...baseConfig,
-            cache: new Map(),
-            output: "html",
-            runtimeId: "123-bad",
-          }),
-        /Invalid runtimeId: "123-bad"\. The runtimeId must be a valid JavaScript identifier\./,
-      );
+      for (const runtimeId of ["123-bad", "$bad"]) {
+        assert.throws(
+          () =>
+            compiler.compileSync("<div/>", path.join(__dirname, "tmp.marko"), {
+              ...baseConfig,
+              cache: new Map(),
+              output: "html",
+              runtimeId,
+            }),
+          /Invalid runtimeId: .* The runtimeId must start with a letter or underscore and only contain letters, numbers, and underscores\./,
+        );
+      }
     });
   });
 });

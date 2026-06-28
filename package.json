@@ -44,6 +44,7 @@
     "@changesets/cli": "^2.31.0",
     "@ebay/browserslist-config": "^2.14.0",
     "@eslint/js": "^10.0.1",
+    "@jridgewell/sourcemap-codec": "^1.5.5",
     "@types/babel__code-frame": "^7.27.0",
     "@types/babel__core": "^7.20.5",
     "@types/babel__generator": "^7.27.0",

@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-style-trailing/template.marko:1:8
+    > 1 | <style>${input.css}</style>
+        |        ^^^^^^^^^^^^ A `${...}` interpolation in a [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) is substituted as a `var(--…)` custom property reference, which only resolves in a declaration value, not in a selector or at-rule prelude. For a native html [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) use the `html-style` core tag instead.
+      2 |
+      3 | <div class="box">Hi</div>
+      4 |

@@ -1,4 +1,4 @@
-// size: 25305 (min) 9298 (brotli)
+// size: 25812 (min) 9489 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -329,6 +329,17 @@ function stringifyClassObject(name, value) {
 }
 function stringifyStyleObject(name, value) {
   return value || value === 0 ? name + ":" + value : "";
+}
+function escapeStyleValue(str) {
+  let closers = "",
+    result = str.replace(/[\\"'{};>]|\/(?=\*)/g, "\\$&").replace(/</g, "\\3C ");
+  for (let c of result)
+    c === "("
+      ? (closers = ")" + closers)
+      : c === "["
+        ? (closers = "]" + closers)
+        : c === closers[0] && (closers = closers.slice(1));
+  return result + closers;
 }
 function isEventHandler(name) {
   return /^on[A-Z-]/.test(name);
@@ -1434,6 +1445,23 @@ function _attr_style_items(element, items) {
 }
 function _attr_style_item(element, name, value) {
   element.style.setProperty(name, _to_text(value));
+}
+function _style_shell(scope, nodeAccessor) {
+  let element = scope[nodeAccessor],
+    id = _id(scope);
+  ((element.className = id), _text_content(element, "." + id + " ~ *{}"));
+}
+function _style_rule_item(element, name, value) {
+  let text = element.textContent,
+    decl = name + ":" + escapeStyleValue(_to_text(value)) + ";",
+    start = text.indexOf("{" + name + ":");
+  if ((start === -1 && (start = text.indexOf(";" + name + ":")), start === -1))
+    element.textContent = text.slice(0, -1) + decl + "}";
+  else {
+    let end = ++start;
+    for (let c; (c = text[end]) && c !== ";"; end++) c === "\\" && end++;
+    element.textContent = text.slice(0, start) + decl + text.slice(end + 1);
+  }
 }
 function _attr_nonce(scope, nodeAccessor) {
   _attr(scope[nodeAccessor], "nonce", scope.$.cspNonce);

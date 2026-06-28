@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-style-glued-unit/template.marko:3:12
+      1 | <style>
+      2 |   .box {
+    > 3 |     width: ${input.size}px;
+        |            ^^^^^^^^^^^^^ A `${...}` interpolation in a [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) is substituted as a `var(--…)` custom property reference, which CSS does not re-tokenize, so a unit written directly after it (eg `${x}px`) becomes the invalid `var(--…)px`. Move the unit into the interpolated value (so it resolves to eg `"10px"`) or use `calc(var(--…) * 1px)`.
+      4 |   }
+      5 | </style>
+      6 |

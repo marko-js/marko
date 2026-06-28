@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-style-prefix-glue/template.marko:3:14
+      1 | <style>
+      2 |   .box {
+    > 3 |     width: 10${input.unit};
+        |              ^^^^^^^^^^^^^ A `${...}` interpolation in a [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) is substituted as a `var(--…)` custom property reference, which CSS does not re-tokenize, so text written directly before it (eg `10${x}`) merges with the `var(--…)` into a single invalid token. Add whitespace before the interpolation or move the text into the interpolated value.
+      4 |   }
+      5 | </style>
+      6 |

@@ -52,15 +52,15 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
     };
 
     if (MARKO_DEBUG) {
-      if (!String($global.runtimeId).match(/^[_$a-z][_$a-z0-9]*$/i)) {
+      if (!String($global.runtimeId).match(/^[_a-z][_a-z0-9]*$/i)) {
         throw new Error(
-          `Invalid runtimeId: "${$global.runtimeId}". The runtimeId must be a valid JavaScript identifier.`,
+          `Invalid runtimeId: "${$global.runtimeId}". The runtimeId must start with a letter or underscore and only contain letters, numbers, and underscores.`,
         );
       }
 
-      if (!String($global.renderId).match(/^[_$a-z][_$a-z0-9]*$/i)) {
+      if (!String($global.renderId).match(/^[_a-z][_a-z0-9]*$/i)) {
         throw new Error(
-          `Invalid renderId: "${$global.renderId}". The renderId must be a valid JavaScript identifier.`,
+          `Invalid renderId: "${$global.renderId}". The renderId must start with a letter or underscore and only contain letters, numbers, and underscores.`,
         );
       }
     }
@@ -90,11 +90,11 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
 function getDefaultRenderId(template: ServerRenderer): string {
   if (template[RendererProp.Embed]) {
     const ENCODE_CHARS =
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789";
     let n = (Math.random() * 0x100000000) >>> 0;
-    let r = ENCODE_CHARS[n % 53]; // first char avoids digits and _
-    for (n = (n / 53) | 0; n; n >>>= 6) {
-      r += ENCODE_CHARS[n & 63];
+    let r = ENCODE_CHARS[n % 52]; // first char avoids digits and _
+    for (n = (n / 52) | 0; n; n = (n / 63) | 0) {
+      r += ENCODE_CHARS[n % 63];
     }
     return r;
   }

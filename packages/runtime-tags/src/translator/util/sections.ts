@@ -281,6 +281,12 @@ export function getNodeContentType(
           case "html-script":
           case "html-style":
             return ContentType.Tag;
+          case "style":
+            return tag.node.body.body.some((child) =>
+              t.isMarkoPlaceholder(child),
+            )
+              ? ContentType.Tag
+              : null;
           case "for":
           case "if":
           case "await":
@@ -491,6 +497,8 @@ function isNativeNode(tag: t.NodePath<t.MarkoTag>) {
       case "html-style":
       case "show":
         return true;
+      case "style":
+        return tag.node.body.body.some((child) => t.isMarkoPlaceholder(child));
       default:
         return false;
     }

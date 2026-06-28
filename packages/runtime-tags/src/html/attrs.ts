@@ -18,6 +18,7 @@ import { _escape } from "./content";
 import {
   _attr_content,
   _html,
+  _id,
   _scope,
   getChunk,
   getContext,
@@ -226,6 +227,11 @@ export function _attr_details_or_dialog_open(
 
 export function _attr_nonce() {
   return getChunk()!.boundary.state.nonceAttr;
+}
+
+export function _style_html(decls: string) {
+  const id = _id();
+  return `<style${_attr_nonce()} class=${id}>.${id} ~ *{${decls}}</style>`;
 }
 
 export function _attr(name: string, value: unknown) {

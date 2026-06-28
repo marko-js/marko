@@ -15,6 +15,7 @@ export function isNonHTMLText(
         case "html-comment":
         case "html-script":
         case "html-style":
+        case "style":
           return true;
       }
     } else if (isTextOnlyNativeTag(parentTag)) {

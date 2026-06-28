@@ -119,9 +119,9 @@ export default {
 
         // Validated at compile time since entry wrappers bake the value in
         // (the server side applies it before the render time check runs).
-        if (runtimeId && !/^[_$a-z][_$a-z0-9]*$/i.test(runtimeId)) {
+        if (runtimeId && !/^[_a-z][_a-z0-9]*$/i.test(runtimeId)) {
           throw program.buildCodeFrameError(
-            `Invalid runtimeId: "${runtimeId}". The runtimeId must be a valid JavaScript identifier.`,
+            `Invalid runtimeId: "${runtimeId}". The runtimeId must start with a letter or underscore and only contain letters, numbers, and underscores.`,
           );
         }
 
