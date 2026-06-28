@@ -986,7 +986,7 @@ export function writeSignals(section: Section) {
 
     let effectDeclarator: t.VariableDeclarator | undefined;
     if (signal.effect.length) {
-      traverseReplace(signal, "effect", replaceEffectNode);
+      traverseReplace(signal, "effect", replaceEffectNode, signal);
       const effectIdentifier = t.identifier(
         `${signal.identifier.name}__script`,
       );
@@ -1473,8 +1473,8 @@ function replaceRenderNode(node: t.Node, signal?: Signal) {
   );
 }
 
-function replaceEffectNode(node: t.Node) {
-  return replaceAssignedNode(node) || replaceBindingReadNode(node);
+function replaceEffectNode(node: t.Node, signal?: Signal) {
+  return replaceAssignedNode(node) || replaceBindingReadNode(node, signal);
 }
 
 function getInlinedReadReplacement(
