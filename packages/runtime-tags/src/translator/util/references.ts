@@ -61,6 +61,7 @@ import {
 import { finalizeTagDownstreams } from "./set-tag-sections-downstream";
 import {
   getBindingGetterIdentifier,
+  getSignals,
   getSignalValueIdentifier,
   type Signal,
 } from "./signals";
@@ -1224,7 +1225,18 @@ export function finalizeReferences() {
   forEachSection((section) => {
     const { id, bindings } = section;
     const isOwnedBinding = ({ section }: Binding) => section.id === id;
-    let intersections = intersectionsBySection.get(section) || [];
+    let intersections = (intersectionsBySection.get(section) || []).filter(
+      (intersection) => {
+        const collapseSource = getCollapsibleIntersectionSource(
+          intersection,
+          section,
+        );
+        if (collapseSource) {
+          collapsedIntersectionSource.set(intersection, collapseSource);
+        }
+        return !collapseSource;
+      },
+    );
     if (intersections.length) {
       const anchors = new Map<Intersection, Binding | undefined>();
       for (const intersection of intersections) {
@@ -1312,6 +1324,36 @@ export const intersectionMeta = new WeakMap<
   Intersection,
   { id: number; scopeOffset: Binding | undefined }
 >();
+
+export const collapsedIntersectionSource = new WeakMap<Intersection, Binding>();
+
+function getCollapsibleIntersectionSource(
+  intersection: Intersection,
+  section: Section,
+) {
+  let sources: Sources | undefined;
+  for (const member of intersection) {
+    if (!member.sources) return undefined;
+    const isDirectAlias =
+      member.upstreamAlias &&
+      member.property === undefined &&
+      member.excludeProperties === undefined;
+    if (member.section !== section || isDirectAlias) return undefined;
+    sources = mergeSources(sources, member.sources);
+  }
+
+  if (!sources || (sources.state && sources.param)) {
+    return undefined;
+  }
+
+  const source = sources.state || sources.param;
+  return source &&
+    !Array.isArray(source) &&
+    source.section === section &&
+    !source.scopeOffset
+    ? source
+    : undefined;
+}
 
 export function setBindingDownstream(
   binding: Binding,
@@ -1785,7 +1827,11 @@ export function getReadReplacement(
       }
 
       if (isOutputDOM()) {
-        if (
+        const inlined = getSignals(extra.section!).get(readBinding)?.inline
+          ?.value;
+        if (inlined) {
+          replacement = t.cloneNode(inlined, true);
+        } else if (
           signal?.referencedBindings === readBinding &&
           !signal.hasSideEffect
         ) {
