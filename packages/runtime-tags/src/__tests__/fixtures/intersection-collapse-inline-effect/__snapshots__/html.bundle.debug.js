@@ -1,0 +1,21 @@
+// template.marko
+var template_default = _template("__tests__/template.marko", (input) => {
+	_scope_reason();
+	const $scope0_id = _scope_id();
+	let count = 1;
+	const y = count + 1;
+	const z = count + 2;
+	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}`);
+	_script($scope0_id, "__tests__/template.marko_0_y_z");
+	_script($scope0_id, "__tests__/template.marko_0_count");
+	writeScope($scope0_id, {
+		count,
+		y,
+		z
+	}, "__tests__/template.marko", 0, {
+		count: "1:6",
+		y: "2:8",
+		z: "3:8"
+	});
+	_resume_branch($scope0_id);
+}, 1);

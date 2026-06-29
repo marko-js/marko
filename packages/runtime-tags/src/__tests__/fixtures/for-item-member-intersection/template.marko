@@ -1,0 +1,7 @@
+<let/list=[{ a: 1, b: 2 }, { a: 3, b: 4 }]/>
+<ul>
+  <for|item| of=list>
+    <li>${item.a + item.b}</li>
+  </for>
+</ul>
+<button onClick() { list = [...list].reverse() }>rev</button>

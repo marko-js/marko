@@ -19,6 +19,7 @@ import {
   type Binding,
   BindingType,
   bindingUtil,
+  collapsedIntersectionSource,
   getCanonicalBinding,
   getDebugName,
   getDebugNames,
@@ -84,6 +85,8 @@ export interface Signal {
   effectReferencedBindings: ReferencedBindings;
   hasDynamicSubscribers: boolean;
   hasSideEffect: boolean;
+  forcePersist: boolean;
+  inline: { value: t.Expression } | undefined;
   export: boolean;
   extraArgs: t.Expression[] | undefined;
   prependStatements: t.Statement[] | undefined;
@@ -96,7 +99,7 @@ type closureSignalBuilder = (
   closure: Binding,
   render: t.Expression,
 ) => t.Expression;
-const [getSignals] = createSectionState<Map<unknown, Signal>>(
+export const [getSignals] = createSectionState<Map<unknown, Signal>>(
   "signals",
   () => new Map(),
 );
@@ -262,6 +265,8 @@ export function getSignal(
             referencedBindings.hoists)
         ),
         hasDynamicSubscribers: false,
+        forcePersist: false,
+        inline: undefined,
         extraArgs: undefined,
         prependStatements: undefined,
         buildAssignment: undefined,
@@ -273,19 +278,39 @@ export function getSignal(
     } else if (!referencedBindings) {
       signal.build = () => getSignalFn(signal);
     } else if (Array.isArray(referencedBindings)) {
-      subscribe(referencedBindings, signal);
-      signal.build = () => {
-        const { id, scopeOffset } = intersectionMeta.get(referencedBindings)!;
-        return callRuntime(
-          "_or",
-          t.numericLiteral(id),
-          getSignalFn(signal),
-          scopeOffset || referencedBindings.length > 2
-            ? t.numericLiteral(referencedBindings.length - 1)
-            : undefined,
-          scopeOffset && getScopeAccessorLiteral(scopeOffset, true),
-        );
-      };
+      const collapseSource =
+        collapsedIntersectionSource.get(referencedBindings);
+      subscribe(collapseSource || referencedBindings, signal);
+      if (collapseSource) {
+        const sourceSignal = getSignal(section, collapseSource);
+        forEach(referencedBindings, (member) => {
+          const memberSignal = getSignal(section, member);
+          const inline =
+            member.type === BindingType.derived &&
+            !member.upstreamAlias &&
+            member.reads.size === 1 &&
+            sourceSignal.values.find((v) => v.signal === memberSignal);
+          if (inline) {
+            memberSignal.inline = inline;
+          } else {
+            memberSignal.hasSideEffect = memberSignal.forcePersist = true;
+          }
+        });
+        signal.build = () => getSignalFn(signal);
+      } else {
+        signal.build = () => {
+          const { id, scopeOffset } = intersectionMeta.get(referencedBindings)!;
+          return callRuntime(
+            "_or",
+            t.numericLiteral(id),
+            getSignalFn(signal),
+            scopeOffset || referencedBindings.length > 2
+              ? t.numericLiteral(referencedBindings.length - 1)
+              : undefined,
+            scopeOffset && getScopeAccessorLiteral(scopeOffset, true),
+          );
+        };
+      }
     } else if (
       referencedBindings.section !== section &&
       sectionUtil.has(referencedBindings.closureSections, section)
@@ -344,9 +369,8 @@ export function initValue(binding: Binding, isLet = false) {
       binding.property === undefined &&
       binding.excludeProperties === undefined;
     if (
-      isDirectAlias ||
-      !signal.hasSideEffect ||
-      !signalHasStatements(signal)
+      !signal.forcePersist &&
+      (isDirectAlias || !signal.hasSideEffect || !signalHasStatements(signal))
     ) {
       return fn;
     }
@@ -376,6 +400,7 @@ export function initValue(binding: Binding, isLet = false) {
 export function signalHasStatements(signal: Signal): boolean {
   if (
     signal.extraArgs ||
+    signal.forcePersist ||
     signal.render.length ||
     signal.effect.length ||
     signal.values.length ||
@@ -559,6 +584,9 @@ export function getSignalFn(signal: Signal): t.Expression {
   }
 
   for (const value of signal.values) {
+    if (value.signal.inline) {
+      continue;
+    }
     if (signalHasStatements(value.signal)) {
       signal.render.push(
         t.expressionStatement(
