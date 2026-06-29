@@ -94,6 +94,7 @@ declare global {
       s: NativeTag<Marko.HTML.S, HTMLElement>;
       samp: NativeTag<Marko.HTML.Samp, HTMLElement>;
       script: NativeTag<Marko.HTML.Script, HTMLScriptElement>;
+      search: NativeTag<Marko.HTML.Search, HTMLElement>;
       section: NativeTag<Marko.HTML.Section, HTMLElement>;
       select: NativeTag<Marko.HTML.Select, HTMLSelectElement>;
       slot: NativeTag<Marko.HTML.Slot, HTMLSlotElement>;
@@ -1984,6 +1985,7 @@ declare global {
         language?: AttrString;
       }
 
+      interface Search extends HTMLAttributes<HTMLElement> {}
       interface Section extends HTMLAttributes<HTMLElement> {}
       interface Select extends HTMLAttributes<HTMLSelectElement> {
         /**

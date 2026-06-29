@@ -735,6 +735,10 @@
     "html": true,
     "attribute-groups": ["html-attributes"]
   },
+  "<search>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
   "<section>": {
     "html": true,
     "attribute-groups": ["html-attributes"]
@@ -754,6 +758,11 @@
         "snippet": "select class=\"$1\" name=\"$2\""
       }
     ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<slot>": {
+    "@name": "#html-name",
+    "html": true,
     "attribute-groups": ["html-attributes"]
   },
   "<small>": {
