@@ -735,6 +735,10 @@
     "html": true,
     "attribute-groups": ["html-attributes"]
   },
+  "<search>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
   "<section>": {
     "html": true,
     "attribute-groups": ["html-attributes"]
