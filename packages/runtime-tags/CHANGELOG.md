@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.1.24
+
+### Patch Changes
+
+- [#3310](https://github.com/marko-js/marko/pull/3310) [`0f6ac28`](https://github.com/marko-js/marko/commit/0f6ac2825e28ad4e7257068ef39eb3e494a409c2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Collapse single-source `_or` intersections onto their source signal and inline members read only by the intersection, shrinking the generated DOM bundle.
+
+- [#3314](https://github.com/marko-js/marko/pull/3314) [`efbc2e9`](https://github.com/marko-js/marko/commit/efbc2e974db2a5a642b4c8355f5b1f27530c9911) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize the common "selected row" pattern: when a value from the loop's parent scope — a `<let>`, a `<const>`, or an `input` member — is compared for equality against a `<for>` loop's unique key (e.g. `class=(selected === row.id && "danger")`, `input.selected === row.id`, or `<if=selected === row.id>`), a change to that value now updates only the two affected rows (the one losing the key and the one gaining it) instead of re-running the binding for every row — turning an O(n) update into O(1). Detected automatically at compile time for `of`/`by`, `of` index, `in` name, and `to`/`until` range keys, including multiple such values per loop; no template changes required.
+
 ## 6.1.23
 
 ### Patch Changes
