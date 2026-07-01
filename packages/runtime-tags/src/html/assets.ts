@@ -54,6 +54,11 @@ declare module "../common/types" {
   }
 }
 
+// Returns the HTML for an asset's tags. Implementations writing script,
+// style, or stylesheet link tags should include `g.cspNonce` (when set) since
+// their HTML is written straight into the page; tags for triggered assets are
+// the exception -- the trigger script stamps its own nonce on them when it
+// inserts them.
 type AssetFlush = (
   g: $Global,
   type: "block" | "defer",
@@ -131,7 +136,7 @@ function flush(g: $Global, html: string) {
     const { id, triggers } = assets[di];
     const deferHTML = assetFlush(g, "defer", id);
     if (triggers) {
-      if (deferHTML) writeTriggerScript(deferHTML, triggers);
+      if (deferHTML) writeTriggerScript(g, deferHTML, triggers);
     } else {
       result += deferHTML;
     }
@@ -153,7 +158,13 @@ function addAsset(g: $Global, id: string, triggers?: Trigger[]) {
   }
 }
 
-function writeTriggerScript(html: string, triggers: Trigger[]) {
+function writeTriggerScript(g: $Global, html: string, triggers: Trigger[]) {
+  // When the page has a CSP nonce the trigger script must carry it onto
+  // everything it creates: the asset tags inserted on load and the `has`
+  // watcher's `<style>` would otherwise be blocked (and the load silently
+  // dropped) under a policy without `unsafe-inline`. Without a nonce these
+  // extra bytes are skipped entirely.
+  const nonce = g.cspNonce;
   const htmlStr = _escape_script(JSON.stringify(html));
   const exprs = triggers.map((trigger) => {
     const options = trigger.options && toObjectExpression(trigger.options);
@@ -172,14 +183,15 @@ function writeTriggerScript(html: string, triggers: Trigger[]) {
         // animation on a sentinel element triggers `animationstart`. It's the
         // same `self.$h` watcher the DOM runtime shares (`_load_has_trigger`),
         // so its matched selectors and `<style>` persist across SSR and CSR.
-        // The `<style>` carries the page's CSP nonce (read off any element
-        // with a nonce, e.g. ones rendered with `$global.cspNonce`) so its
-        // rules apply under a `style-src` policy without `unsafe-inline`. The
-        // factory string is identical across triggers, so it compresses away
-        // on the wire. `o` is the matched-selector set, `s` the shared
+        // The factory string is identical across triggers, so it compresses
+        // away on the wire. `o` is the matched-selector set, `s` the shared
         // `<style>`, `i` the sentinel-tag counter; `k` is the selector and `c`
         // the load callback.
-        return `(self.$h||=((o={},s,i=0,D=document)=>(k,c,t,e)=>o[k]===1?c():((e=D.documentElement.appendChild(D.createElement(t="m-"+(i+=1)))).onanimationstart=()=>(o[k]=1,e.remove(),c()),(s||=D.head.appendChild(Object.assign(D.createElement("style"),{nonce:D.querySelector("[nonce]")?.nonce||""}))).append(":has("+k+")>"+t+"{animation:1ms m-h}@keyframes m-h{}")))())(${JSON.stringify(
+        return `(self.$h||=((o={},s,i=0,D=document)=>(k,c,t,e)=>o[k]===1?c():((e=D.documentElement.appendChild(D.createElement(t="m-"+(i+=1)))).onanimationstart=()=>(o[k]=1,e.remove(),c()),(${
+          nonce
+            ? `(s||=D.head.appendChild(D.createElement("style"))).nonce=${JSON.stringify(nonce)},s`
+            : `s||=D.head.appendChild(D.createElement("style"))`
+        }).append(":has("+k+")>"+t+"{animation:1ms m-h}@keyframes m-h{}")))())(${JSON.stringify(
           trigger.selector,
         )},l)`;
       default:
@@ -187,7 +199,11 @@ function writeTriggerScript(html: string, triggers: Trigger[]) {
     }
   });
   writeScript(
-    `((p,h,d,l=$=>d||p.after(new Range().createContextualFragment(d=h)))=>${
+    `((p,h,d,l=${
+      nonce
+        ? `($,f)=>d||(f=new Range().createContextualFragment(d=h),f.querySelectorAll("script,style,link").forEach(e=>e.nonce=p.nonce),p.after(f))`
+        : `$=>d||p.after(new Range().createContextualFragment(d=h))`
+    })=>${
       exprs.length > 1 ? `{${exprs.join(";")}}` : exprs[0]
     })(document.currentScript,${htmlStr})`,
   );

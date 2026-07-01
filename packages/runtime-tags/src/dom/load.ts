@@ -254,7 +254,7 @@ export function _load_has_trigger(selector: string): LoadTrigger {
 
 function hasWatcher() {
   const matched: Record<string, 1> = {};
-  let style: HTMLStyleElement;
+  let style: HTMLStyleElement | undefined;
   let id = 0;
   return (selector: string, cb: () => void) => {
     if (matched[selector] === 1) {
@@ -269,14 +269,19 @@ function hasWatcher() {
         sentinel.remove();
         cb();
       };
-      // The style carries the page's CSP nonce (read off any element with a
-      // nonce, e.g. ones rendered with `$global.cspNonce`) so its rules apply
-      // under a `style-src` policy without `unsafe-inline`.
-      (style ||= document.head.appendChild(
-        Object.assign(document.createElement("style"), {
-          nonce: document.querySelector<HTMLElement>("[nonce]")?.nonce || "",
-        }),
-      )).append(`:has(${selector})>${tag}{animation:1ms m-h}@keyframes m-h{}`);
+      if (!style) {
+        style = document.head.appendChild(document.createElement("style"));
+        // Unlike the server-written watcher (which inlines the literal
+        // `$global.cspNonce`) there's no render context here, so the page's
+        // CSP nonce is read off any element carrying one; without it the
+        // rules would be blocked under a `style-src` policy without
+        // `unsafe-inline`.
+        style.nonce =
+          document.querySelector<HTMLElement>("[nonce]")?.nonce || "";
+      }
+      style.append(
+        `:has(${selector})>${tag}{animation:1ms m-h}@keyframes m-h{}`,
+      );
     }
   };
 }
