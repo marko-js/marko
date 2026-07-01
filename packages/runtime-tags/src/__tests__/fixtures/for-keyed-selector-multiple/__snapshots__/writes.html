@@ -1,0 +1,25 @@
+<button class=select>select</button><!--M_*1 a--><button
+  class=hover>hover</button><!--M_*1 b-->
+<ul>
+  <li class=sel>a</li><!--M_*2 a-->
+  <li class=hov>b</li><!--M_*3 a-->
+  <li>c</li><!--M_*4 a-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    Ac: [_(2), _(3), _(4)],
+    d: 1,
+    e: 2
+  }, {
+    e: 1,
+    _: _(1)
+  }, {
+    e: 2,
+    _: _(1)
+  }, {
+    e: 3,
+    _: _(1)
+  }], "a0 1"];
+  M._.w()
+</script>

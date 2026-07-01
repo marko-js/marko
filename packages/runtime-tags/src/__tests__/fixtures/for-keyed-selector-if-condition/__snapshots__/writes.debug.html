@@ -1,0 +1,26 @@
+<ul>
+  <li><strong>*</strong><!--M_|2 #text/0 3--><button
+      class=select>a</button><!--M_*2 #button/1--></li>
+  <li><!--M_|4 #text/0--><button class=select>b</button><!--M_*4 #button/1-->
+  </li>
+  <li><!--M_|5 #text/0--><button class=select>c</button><!--M_*5 #button/1-->
+  </li>
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "BranchScopes:#ul/0": [_(2), _(4), _(5)]
+    }, {
+      row_id: 1,
+      _: _(1)
+    }, 1, {
+      row_id: 2,
+      _: _(1)
+    }, {
+      row_id: 3,
+      _: _(1)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/for-keyed-selector-if-condition/template.marko_1_row_id 2 4 5"
+  ];
+  M._.w()
+</script>

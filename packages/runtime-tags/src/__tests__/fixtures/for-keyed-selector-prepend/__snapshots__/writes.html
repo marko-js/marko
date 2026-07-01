@@ -1,0 +1,28 @@
+<button class=add>add</button><!--M_*1 a-->
+<ul>
+  <li class=danger>a<!--M_*2 b--></li><!--M_*2 a-->
+  <li>b<!--M_*3 b--></li><!--M_*3 a--><!--M_}1 b 3 2-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    c: [{
+      id: 1,
+      label: "a"
+    }, {
+      id: 2,
+      label: "b"
+    }],
+    d: 1,
+    e: 3
+  }, {
+    e: 1,
+    _: _(1),
+    M: 1
+  }, {
+    e: 2,
+    _: _(1),
+    M: 2
+  }], "a0 1"];
+  M._.w()
+</script>

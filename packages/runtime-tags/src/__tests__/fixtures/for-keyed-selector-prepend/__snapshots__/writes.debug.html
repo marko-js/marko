@@ -1,0 +1,30 @@
+<button class=add>add</button><!--M_*1 #button/0-->
+<ul>
+  <li class=danger>a<!--M_*2 #text/1--></li><!--M_*2 #li/0-->
+  <li>b<!--M_*3 #text/1--></li><!--M_*3 #li/0--><!--M_}1 #ul/1 3 2-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      rows: [{
+        id: 1,
+        label: "a"
+      }, {
+        id: 2,
+        label: "b"
+      }],
+      selected: 1,
+      nextId: 3
+    }, {
+      row_id: 1,
+      _: _(1),
+      "#LoopKey": 1
+    }, {
+      row_id: 2,
+      _: _(1),
+      "#LoopKey": 2
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/for-keyed-selector-prepend/template.marko_0_rows_nextId 1"
+  ];
+  M._.w()
+</script>

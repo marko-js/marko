@@ -1,4 +1,4 @@
-// size: 6459 (min) 2820 (brotli)
+// size: 6480 (min) 2845 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -379,14 +379,16 @@ function loop(forEach) {
   return (nodeAccessor, template, walks, setup, params) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let scopesAccessor = "A" + nodeAccessor,
+      keyedScopesAccessor = "O" + nodeAccessor,
       renderer = _content("", template, walks, setup)();
     return (
       enableBranches(),
       (scope, value) => {
         let referenceNode = scope[nodeAccessor],
           oldScopes = toArray(scope[scopesAccessor]),
-          newScopes = (scope[scopesAccessor] = []),
-          oldLen = oldScopes.length,
+          newScopes = (scope[scopesAccessor] = []);
+        scope[keyedScopesAccessor] = null;
+        let oldLen = oldScopes.length,
           parentNode =
             referenceNode.nodeType > 1
               ? referenceNode.parentNode || oldScopes[0]?.S.parentNode

@@ -1,0 +1,27 @@
+<button class=select>select</button><!--M_*1 #button/0--><button
+  class=hover>hover</button><!--M_*1 #button/1-->
+<ul>
+  <li class=sel>a</li><!--M_*2 #li/0-->
+  <li class=hov>b</li><!--M_*3 #li/0-->
+  <li>c</li><!--M_*4 #li/0-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "BranchScopes:#ul/2": [_(2), _(3), _(4)],
+      selected: 1,
+      hovered: 2
+    }, {
+      row_id: 1,
+      _: _(1)
+    }, {
+      row_id: 2,
+      _: _(1)
+    }, {
+      row_id: 3,
+      _: _(1)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/for-keyed-selector-multiple/template.marko_0 1"
+  ];
+  M._.w()
+</script>

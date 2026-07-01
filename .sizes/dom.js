@@ -1,4 +1,4 @@
-// size: 24357 (min) 8968 (brotli)
+// size: 24880 (min) 9203 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -550,6 +550,63 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
         );
     };
   return ((ownerSignal._ = fn), ownerSignal);
+}
+function _for_selector(
+  ownerLoopNodeAccessor,
+  ownerValueAccessor,
+  keyValueAccessor,
+  fn,
+) {
+  ((ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor)),
+    (ownerValueAccessor = decodeAccessor(ownerValueAccessor)),
+    keyValueAccessor !== "M" &&
+      (keyValueAccessor = decodeAccessor(keyValueAccessor)));
+  let scopeAccessor = "A" + ownerLoopNodeAccessor,
+    mapAccessor = "O" + ownerLoopNodeAccessor,
+    prevKeyProp = `_${ownerValueAccessor}`,
+    ownerSignal = (ownerScope) => {
+      let scopes = toArray(ownerScope[scopeAccessor]);
+      if (ownerScope.H < runId && scopes.length) {
+        let nextKey = ownerScope[ownerValueAccessor];
+        queueRender(
+          ownerScope,
+          () => {
+            let map = keyedScopes(
+              ownerScope,
+              scopeAccessor,
+              mapAccessor,
+              keyValueAccessor,
+            );
+            if (map && prevKeyProp in map) {
+              let prevScope = map.get(map[prevKeyProp]),
+                nextScope = map.get(nextKey);
+              prevScope !== nextScope &&
+                (runLiveBranch(prevScope, fn), runLiveBranch(nextScope, fn));
+            } else
+              for (let scope of toArray(ownerScope[scopeAccessor]))
+                runLiveBranch(scope, fn);
+            map && (map[prevKeyProp] = nextKey);
+          },
+          -1,
+          0,
+          scopes[0].L,
+        );
+      }
+    };
+  return ((ownerSignal._ = fn), ownerSignal);
+}
+function keyedScopes(ownerScope, scopeAccessor, mapAccessor, keyValueAccessor) {
+  let map = (ownerScope[mapAccessor] ||= /* @__PURE__ */ new Map());
+  if (!map.size)
+    for (let scope of toArray(ownerScope[scopeAccessor])) {
+      let key = scope.M ?? scope[keyValueAccessor];
+      if (key === void 0) return (ownerScope[mapAccessor] = null);
+      ((scope.M = key), map.set(key, scope));
+    }
+  return map;
+}
+function runLiveBranch(scope, fn) {
+  scope && scope.H > 0 && scope.H < runId && fn(scope);
 }
 function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
   ownerConditionalNodeAccessor = decodeAccessor(ownerConditionalNodeAccessor);
@@ -1958,14 +2015,16 @@ function loop(forEach) {
   return (nodeAccessor, template, walks, setup, params) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let scopesAccessor = "A" + nodeAccessor,
+      keyedScopesAccessor = "O" + nodeAccessor,
       renderer = _content("", template, walks, setup)();
     return (
       enableBranches(),
       (scope, value) => {
         let referenceNode = scope[nodeAccessor],
           oldScopes = toArray(scope[scopesAccessor]),
-          newScopes = (scope[scopesAccessor] = []),
-          oldLen = oldScopes.length,
+          newScopes = (scope[scopesAccessor] = []);
+        scope[keyedScopesAccessor] = null;
+        let oldLen = oldScopes.length,
           parentNode =
             referenceNode.nodeType > 1
               ? referenceNode.parentNode || oldScopes[0]?.S.parentNode

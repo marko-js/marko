@@ -1,0 +1,30 @@
+<table>
+  <tbody>
+    <tr>
+      <td><button class=select>a</button><!--M_*2 b--></td>
+    </tr><!--M_*2 a-->
+    <tr>
+      <td><button class=select>b</button><!--M_*3 b--></td>
+    </tr><!--M_*3 a-->
+    <tr>
+      <td><button class=select>c</button><!--M_*4 b--></td>
+    </tr><!--M_*4 a-->
+  </tbody>
+</table><button class=toggle>toggle</button><!--M_*1 b-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    Aa: [_(2), _(3), _(4)],
+    d: !0
+  }, {
+    f: 1,
+    _: _(1)
+  }, {
+    f: 2,
+    _: _(1)
+  }, {
+    f: 3,
+    _: _(1)
+  }], "a0 2 3 4 a1 1"];
+  M._.w()
+</script>

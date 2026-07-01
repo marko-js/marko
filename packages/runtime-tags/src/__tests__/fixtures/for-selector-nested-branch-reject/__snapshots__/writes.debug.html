@@ -1,0 +1,22 @@
+<ul>
+  <li class=danger><button class=select>a</button><!--M_*3 #button/1--></li>
+  <!--M_*3 #li/0-->
+  <li><button class=select>b</button><!--M_*4 #button/1--></li><!--M_*4 #li/0-->
+</ul>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "ClosureScopes:selected": new Set([_(3), _(4)])
+    }, {
+      _: _(1)
+    }, {
+      row_id: 1,
+      _: _(2)
+    }, {
+      row_id: 2,
+      _: _(2)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/for-selector-nested-branch-reject/template.marko_2_row_id 3 4"
+  ];
+  M._.w()
+</script>

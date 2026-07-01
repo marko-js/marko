@@ -8,6 +8,7 @@ import {
   type BranchScope,
   ClosureSignalProp,
   type EncodedAccessor,
+  KeyedScopesProp,
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
@@ -20,6 +21,9 @@ export type Signal<T = unknown, U extends Scope = Scope> = (
   scope: U,
   value: T,
 ) => void;
+type KeyedScopes = Map<unknown, BranchScope> & {
+  [x: `${KeyedScopesProp.PreviousKey}${string}`]: unknown;
+};
 
 export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
   const valueAccessor = MARKO_DEBUG
@@ -146,6 +150,86 @@ export function _for_closure(
   return ownerSignal;
 }
 
+export function _for_selector(
+  ownerLoopNodeAccessor: EncodedAccessor,
+  ownerValueAccessor: EncodedAccessor,
+  keyValueAccessor: EncodedAccessor,
+  fn: SignalFn,
+): SignalFn {
+  if (!MARKO_DEBUG) {
+    ownerLoopNodeAccessor = decodeAccessor(ownerLoopNodeAccessor as number);
+    ownerValueAccessor = decodeAccessor(ownerValueAccessor as number);
+    if (keyValueAccessor !== AccessorProp.LoopKey) {
+      keyValueAccessor = decodeAccessor(keyValueAccessor as number);
+    }
+  }
+  const scopeAccessor = AccessorPrefix.BranchScopes + ownerLoopNodeAccessor;
+  const mapAccessor = AccessorPrefix.KeyedScopes + ownerLoopNodeAccessor;
+  const prevKeyProp: `${KeyedScopesProp.PreviousKey}${string}` = `${KeyedScopesProp.PreviousKey}${ownerValueAccessor as string}`;
+  const ownerSignal = (ownerScope: Scope) => {
+    const scopes = toArray(ownerScope[scopeAccessor] as BranchScope);
+    if (ownerScope[AccessorProp.Gen] < runId && scopes.length) {
+      const nextKey = ownerScope[ownerValueAccessor];
+      queueRender(
+        ownerScope,
+        () => {
+          const map = keyedScopes(
+            ownerScope,
+            scopeAccessor,
+            mapAccessor,
+            keyValueAccessor,
+          );
+          if (map && prevKeyProp in map) {
+            const prevScope = map.get(map[prevKeyProp]);
+            const nextScope = map.get(nextKey);
+            if (prevScope !== nextScope) {
+              runLiveBranch(prevScope, fn);
+              runLiveBranch(nextScope, fn);
+            }
+          } else {
+            for (const scope of toArray(
+              ownerScope[scopeAccessor] as BranchScope,
+            )) {
+              runLiveBranch(scope, fn);
+            }
+          }
+          if (map) map[prevKeyProp] = nextKey;
+        },
+        -1,
+        0,
+        scopes[0][AccessorProp.Id],
+      );
+    }
+  };
+  ownerSignal._ = fn;
+  return ownerSignal;
+}
+
+function keyedScopes(
+  ownerScope: Scope,
+  scopeAccessor: string,
+  mapAccessor: string,
+  keyValueAccessor: EncodedAccessor,
+): KeyedScopes | null {
+  const map = (ownerScope[mapAccessor] ||= new Map()) as KeyedScopes;
+  if (!map.size) {
+    for (const scope of toArray(ownerScope[scopeAccessor] as BranchScope)) {
+      const key = scope[AccessorProp.LoopKey] ?? scope[keyValueAccessor];
+      if (key === undefined) {
+        return (ownerScope[mapAccessor] = null);
+      }
+      scope[AccessorProp.LoopKey] = key;
+      map.set(key, scope);
+    }
+  }
+  return map;
+}
+
+function runLiveBranch(scope: BranchScope | undefined, fn: SignalFn) {
+  if (scope && scope[AccessorProp.Gen] > 0 && scope[AccessorProp.Gen] < runId) {
+    fn(scope);
+  }
+}
 export function _if_closure(
   ownerConditionalNodeAccessor: EncodedAccessor,
   branch: number,

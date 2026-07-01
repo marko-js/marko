@@ -1,0 +1,7 @@
+<let/enabled=true/>
+<button.flip onClick() { enabled = !enabled }>flip</button>
+<ul>
+  <for|row| of=input.rows by="id">
+    <li class=(enabled && input.selected === row.id && "sel")>${row.label}</li>
+  </for>
+</ul>

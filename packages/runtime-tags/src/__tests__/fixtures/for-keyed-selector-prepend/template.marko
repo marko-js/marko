@@ -1,0 +1,13 @@
+<let/rows=[{ id: 1, label: "a" }, { id: 2, label: "b" }]/>
+<let/selected=1/>
+<let/nextId=3/>
+<button.add onClick() {
+  rows = [{ id: nextId, label: "new" }, ...rows];
+  selected = nextId;
+  nextId++;
+}>add</button>
+<ul>
+  <for|row| of=rows by="id">
+    <li class=(selected === row.id && "danger")>${row.label}</li>
+  </for>
+</ul>

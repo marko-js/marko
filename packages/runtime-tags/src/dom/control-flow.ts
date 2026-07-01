@@ -712,12 +712,14 @@ function loop<T extends unknown[] = unknown[]>(
   ) => {
     if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
     const scopesAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+    const keyedScopesAccessor = AccessorPrefix.KeyedScopes + nodeAccessor;
     const renderer = _content("", template, walks, setup)();
     enableBranches();
     return (scope: Scope, value: T) => {
       const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
       const oldScopes = toArray<BranchScope>(scope[scopesAccessor]);
       const newScopes: BranchScope[] = (scope[scopesAccessor] = []);
+      scope[keyedScopesAccessor] = null;
       const oldLen = oldScopes.length;
       const parentNode = (
         referenceNode.nodeType > NodeType.Element

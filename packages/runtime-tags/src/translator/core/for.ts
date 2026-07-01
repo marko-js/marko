@@ -8,6 +8,7 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { detectForSelector, getForSelectorKey } from "../util/for-selector";
 import { getAccessorPrefix, getAccessorProp } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
@@ -16,12 +17,14 @@ import {
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
 import {
+  type Binding,
   BindingType,
   dropNodes,
   getAllTagReferenceNodes,
   getScopeAccessorLiteral,
   kBranchSerializeReason,
   mergeReferences,
+  onFinalizeReferences,
   setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
@@ -48,6 +51,7 @@ import {
   setClosureSignalBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import { getMemberExpressionPropString } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -118,13 +122,14 @@ export default {
     if (paramsBinding) {
       setBindingDownstream(paramsBinding, tagExtra);
 
-      const keyBinding = paramsBinding.propertyAliases.get(
-        forType === "of" ? "1" : "0",
-      );
-
-      if (keyBinding && !getKnownAttrValues(tag.node).by) {
-        keyBinding.type = BindingType.constant;
-        keyBinding.scopeAccessor = getAccessorProp().LoopKey;
+      const byAttr = getKnownAttrValues(tag.node).by;
+      const keyBinding = getLoopKeyBinding(byAttr, paramsBinding, forType!);
+      if (keyBinding) {
+        if (!byAttr) {
+          keyBinding.type = BindingType.constant;
+          keyBinding.scopeAccessor = getAccessorProp().LoopKey;
+        }
+        onFinalizeReferences(() => detectForSelector(bodySection, keyBinding));
       }
     }
     bodySection.sectionAccessor = {
@@ -276,7 +281,17 @@ export default {
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
         const nodeRef = getOptimizedOnlyChildNodeBinding(tag, tagSection);
-        setClosureSignalBuilder(tag, (_closure, render) => {
+        setClosureSignalBuilder(tag, (closure, render) => {
+          const selectorKeyBinding = getForSelectorKey(bodySection, closure);
+          if (selectorKeyBinding) {
+            return callRuntime(
+              "_for_selector",
+              getScopeAccessorLiteral(nodeRef, true),
+              getScopeAccessorLiteral(closure, true),
+              getScopeAccessorLiteral(selectorKeyBinding, true),
+              render,
+            );
+          }
           return callRuntime(
             "_for_closure",
             getScopeAccessorLiteral(nodeRef, true),
@@ -413,6 +428,69 @@ export function getForType(tag: t.MarkoTag): ForType | undefined {
           return attr.name;
       }
     }
+  }
+}
+
+function getLoopKeyBinding(
+  byAttr: t.Expression | undefined,
+  paramsBinding: Binding | undefined,
+  forType: ForType,
+): Binding | undefined {
+  if (!paramsBinding) return;
+  if (byAttr) {
+    const keyChain = getByKeyChain(byAttr);
+    if (!keyChain) return;
+    let keyBinding = paramsBinding.propertyAliases.get("0");
+    for (const property of keyChain) {
+      keyBinding = keyBinding?.propertyAliases.get(property);
+    }
+    return keyBinding;
+  }
+
+  return paramsBinding.propertyAliases.get(forType === "of" ? "1" : "0");
+}
+
+function getByKeyChain(byAttr: t.Expression): string[] | undefined {
+  if (byAttr.type === "StringLiteral") {
+    return [byAttr.value];
+  }
+  if (
+    byAttr.type === "ArrowFunctionExpression" ||
+    byAttr.type === "FunctionExpression"
+  ) {
+    const itemParam = byAttr.params[0];
+    let body: t.Node | null | undefined = byAttr.body;
+    if (body.type === "BlockStatement") {
+      const [statement] = body.body;
+      body =
+        body.body.length === 1 && statement.type === "ReturnStatement"
+          ? statement.argument
+          : undefined;
+    }
+    if (itemParam?.type === "Identifier" && body) {
+      return getStaticMemberChain(body, itemParam.name);
+    }
+  }
+}
+
+function getStaticMemberChain(
+  node: t.Node,
+  rootName: string,
+): string[] | undefined {
+  const chain: string[] = [];
+  let cur = node;
+  while (
+    cur.type === "MemberExpression" ||
+    cur.type === "OptionalMemberExpression"
+  ) {
+    const property = getMemberExpressionPropString(cur);
+    if (property === undefined) return;
+    chain.push(property);
+    cur = cur.object;
+  }
+
+  if (cur.type === "Identifier" && cur.name === rootName) {
+    return chain.reverse();
   }
 }
 
