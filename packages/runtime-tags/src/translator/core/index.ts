@@ -20,6 +20,7 @@ import LogTag from "./log";
 import ReturnTag from "./return";
 import ScriptTag from "./script";
 import ServerTag from "./server";
+import ShowTag from "./show";
 import StaticTag from "./static";
 import StyleTag from "./style";
 import TryTag from "./try";
@@ -49,6 +50,7 @@ export default {
   "<return>": ReturnTag,
   "<script>": ScriptTag,
   "<server>": ServerTag,
+  "<show>": ShowTag,
   "<static>": StaticTag,
   "<style>": StyleTag,
   "<try>": TryTag,

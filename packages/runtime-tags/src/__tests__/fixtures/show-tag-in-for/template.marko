@@ -1,0 +1,11 @@
+<let/compact=false/>
+
+<button onClick() { compact = !compact }>toggle</button>
+
+<ul>
+  <for|label| of=["read", "write", "admin"]>
+    <show=!compact>
+      <li>${label}</li>
+    </show>
+  </for>
+</ul>

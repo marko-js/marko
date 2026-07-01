@@ -1,10 +1,10 @@
-// tags/show/index.marko
+// tags/reveal/index.marko
 const $template$1 = "<div> </div>";
 const $walks$1 = "D l";
 const $setup$1 = () => {};
 const $input_value = ($scope, input_value) => _text($scope["#text/0"], input_value);
 const $input = ($scope, input) => $input_value($scope, input.value);
-var show_default = /* @__PURE__ */ _template("__tests__/tags/show/index.marko", $template$1, "D l", $setup$1, $input);
+var reveal_default = /* @__PURE__ */ _template("__tests__/tags/reveal/index.marko", $template$1, "D l", $setup$1, $input);
 
 // template.marko
 const $template = /* @__PURE__ */ ((_w0, _w1) => `<button>inc <!></button>${_w0}${_w1}`)($template$1, $template$1);

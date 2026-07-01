@@ -641,6 +641,52 @@ function writeBranchEnd(
   }
 }
 
+// These bracket a `<show>` body's statements (rather than taking a content
+// callback, so declarations in the body stay in the parent's scope) and write
+// the marks tracking its node range. The body always renders so it resumes
+// either way; hidden content is wrapped in a `<t hidden>` element, which
+// unlike a `<template>` keeps its children reachable by the resume walker.
+export function _show_start(display: unknown, mark?: unknown) {
+  if (display) {
+    // The wrapper is the range's single node, so the start mark is only
+    // written (and its stack entry only popped) when the body renders in
+    // place.
+    if (mark) {
+      $chunk.writeHTML(
+        $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
+      );
+    }
+  } else {
+    $chunk.writeHTML("<t hidden>");
+  }
+}
+
+export function _show_end(
+  scopeId: number,
+  accessor: Accessor,
+  display: unknown,
+  serializeMarker?: 0 | 1,
+  serializeStateful?: 0 | 1,
+  parentEndTag?: string | 0,
+  singleNode?: 1 | 0,
+) {
+  // Consume a scope id for the range holder the resume marks create.
+  const branchId = _scope_id();
+  const wrap = !display;
+
+  if (wrap) $chunk.writeHTML("</t>");
+
+  writeBranchEnd(
+    scopeId,
+    accessor,
+    serializeStateful,
+    serializeMarker,
+    parentEndTag,
+    wrap || singleNode ? 1 : undefined,
+    " " + branchId,
+  );
+}
+
 let writeScope = (scopeId: number, partialScope: PartialScope) => {
   const { state } = $chunk.boundary;
   const target = $chunk.serializeState;
@@ -1274,7 +1320,7 @@ export class Chunk {
   flushScript() {
     const { boundary } = this;
     const { state } = boundary;
-    const { $global, runtimePrefix, nonceAttr } = state;
+    const { $global, runtimePrefix } = state;
     let needsWalk = state.walkOnNextFlush;
     if (needsWalk) state.walkOnNextFlush = false;
 
@@ -1341,11 +1387,6 @@ export class Chunk {
 
       if (!state.hasReorderRuntime) {
         state.hasReorderRuntime = true;
-        html +=
-          "<style " +
-          state.commentPrefix +
-          nonceAttr +
-          ">t{display:none}</style>";
         scripts = concatScripts(
           scripts,
           REORDER_RUNTIME_CODE + "(" + runtimePrefix + ")",
@@ -1425,7 +1466,7 @@ export class Chunk {
         );
 
         html +=
-          "<t " +
+          "<t hidden " +
           state.commentPrefix +
           "=" +
           reorderId +
