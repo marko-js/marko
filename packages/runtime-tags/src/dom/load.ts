@@ -269,8 +269,13 @@ function hasWatcher() {
         sentinel.remove();
         cb();
       };
+      // The style carries the page's CSP nonce (read off any element with a
+      // nonce, e.g. ones rendered with `$global.cspNonce`) so its rules apply
+      // under a `style-src` policy without `unsafe-inline`.
       (style ||= document.head.appendChild(
-        document.createElement("style"),
+        Object.assign(document.createElement("style"), {
+          nonce: document.querySelector<HTMLElement>("[nonce]")?.nonce || "",
+        }),
       )).append(`:has(${selector})>${tag}{animation:1ms m-h}@keyframes m-h{}`);
     }
   };

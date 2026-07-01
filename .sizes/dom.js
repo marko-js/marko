@@ -1,4 +1,4 @@
-// size: 24634 (min) 9058 (brotli)
+// size: 24702 (min) 9071 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2479,7 +2479,9 @@ function hasWatcher() {
         ((matched[selector] = 1), sentinel.remove(), cb());
       }),
         (style ||= document.head.appendChild(
-          document.createElement("style"),
+          Object.assign(document.createElement("style"), {
+            nonce: document.querySelector("[nonce]")?.nonce || "",
+          }),
         )).append(
           `:has(${selector})>${tag}{animation:1ms m-h}@keyframes m-h{}`,
         ));

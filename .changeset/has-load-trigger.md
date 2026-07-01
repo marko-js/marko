@@ -13,3 +13,5 @@ import Child from "./child.marko" with { load: "has.my-button:focus" }
 ```
 
 It works by attaching a no-op CSS animation to a sentinel element via `:has(<selector>)` and resolving when that animation starts, so it reacts to interaction state changes that a `MutationObserver` could not. Once a selector has matched it stays matched for the lifetime of the page, so any later load using the same selector fires immediately. Like the other triggers it can be combined with `|` (e.g. `has.my-button:focus|idle`) and runs both on the client and via the inline trigger scripts written during streaming SSR.
+
+The watcher's injected `<style>` adopts the page's CSP nonce (read off any element carrying a nonce, such as the tags Marko renders when `$global.cspNonce` is set), so the trigger works under a `style-src` policy without `unsafe-inline`. Note that the trigger requires [`:has()`](https://developer.mozilla.org/en-US/docs/Web/CSS/:has) support (Chrome/Edge 105+, Safari 15.4+, Firefox 121+); in older browsers a `has` trigger never fires.

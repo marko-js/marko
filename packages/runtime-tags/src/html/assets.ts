@@ -172,11 +172,14 @@ function writeTriggerScript(html: string, triggers: Trigger[]) {
         // animation on a sentinel element triggers `animationstart`. It's the
         // same `self.$h` watcher the DOM runtime shares (`_load_has_trigger`),
         // so its matched selectors and `<style>` persist across SSR and CSR.
-        // The factory string is identical across triggers, so it compresses
-        // away on the wire. `o` is the matched-selector set, `s` the shared
+        // The `<style>` carries the page's CSP nonce (read off any element
+        // with a nonce, e.g. ones rendered with `$global.cspNonce`) so its
+        // rules apply under a `style-src` policy without `unsafe-inline`. The
+        // factory string is identical across triggers, so it compresses away
+        // on the wire. `o` is the matched-selector set, `s` the shared
         // `<style>`, `i` the sentinel-tag counter; `k` is the selector and `c`
         // the load callback.
-        return `(self.$h||=((o={},s,i=0,D=document)=>(k,c,t,e)=>o[k]===1?c():((e=D.documentElement.appendChild(D.createElement(t="m-"+(i+=1)))).onanimationstart=()=>(o[k]=1,e.remove(),c()),(s||=D.head.appendChild(D.createElement("style"))).append(":has("+k+")>"+t+"{animation:1ms m-h}@keyframes m-h{}")))())(${JSON.stringify(
+        return `(self.$h||=((o={},s,i=0,D=document)=>(k,c,t,e)=>o[k]===1?c():((e=D.documentElement.appendChild(D.createElement(t="m-"+(i+=1)))).onanimationstart=()=>(o[k]=1,e.remove(),c()),(s||=D.head.appendChild(Object.assign(D.createElement("style"),{nonce:D.querySelector("[nonce]")?.nonce||""}))).append(":has("+k+")>"+t+"{animation:1ms m-h}@keyframes m-h{}")))())(${JSON.stringify(
           trigger.selector,
         )},l)`;
       default:
