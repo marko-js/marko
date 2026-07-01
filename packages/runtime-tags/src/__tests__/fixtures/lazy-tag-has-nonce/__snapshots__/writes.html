@@ -1,0 +1,19 @@
+<span>1</span>
+<script nonce=default-nonce>
+  ((p, h, d, l = ($, f) => d || (f = new Range().createContextualFragment(d =
+    h), f.querySelectorAll("script,style,link").forEach(e => e.nonce = p
+      .nonce), p.after(f))) => (self.$h ||= ((o = {}, s, i = 0, D =
+    document) => (k, c, t, e) => o[k] === 1 ? c() : ((e = D.documentElement
+        .appendChild(D.createElement(t = "m-" + (i += 1))))
+      .onanimationstart = () => (o[k] = 1, e.remove(), c()), ((s ||= D.head
+          .appendChild(D.createElement("style"))).nonce = "default-nonce",
+        s).append(":has(" + k + ")>" + t +
+        "{animation:1ms m-h}@keyframes m-h{}")))())(".my-button:focus", l))(
+    document.currentScript,
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _a: ["a0 2"]
+  };
+  M._.w()
+</script>
