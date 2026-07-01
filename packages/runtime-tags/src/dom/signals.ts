@@ -245,6 +245,67 @@ export function _closure_get(
   return closureSignal;
 }
 
+/**
+ * A named reactive binding shared across every scope of one render root.
+ *
+ * The backing store is `$global[key]` (so `$global` is both the shared anchor
+ * and the value's home — one cell per render root, per `_id`'s precedent of
+ * keying off the `$global` object). `fn` is the calling template's downstream
+ * update for the binding.
+ *
+ * Writes route through `queueRender`, exactly like `_closure`'s owner→reader
+ * fan-out: they coalesce with the current batch, are ordered by scope id, and
+ * cannot be dropped by the generation guard the way a synchronous cross-scope
+ * write during a flush would be. Subscription is idempotent per scope and
+ * cleaned up through the scope's abort signal, mirroring
+ * `subscribeToScopeSet`.
+ *
+ * Calling the returned signal reads/seeds + writes the shared value; calling
+ * its `_` property subscribes without writing (used when hydrating an
+ * instance whose value already arrived via a serialized global).
+ */
+export function _let_global<T>(key: string, fn?: SignalFn) {
+  const subscribe = (scope: Scope) => {
+    const cell = globalCell(scope[AccessorProp.Global], key);
+    if (fn && !cell.has(scope)) {
+      cell.set(scope, fn);
+      $signal(scope, -1).addEventListener("abort", () => cell.delete(scope));
+    }
+  };
+  const signal = ((scope: Scope, value: T) => {
+    const $global = scope[AccessorProp.Global];
+    subscribe(scope);
+    if ($global[key] !== value || !(key in $global)) {
+      $global[key] = value;
+      for (const [subscriber, subscriberFn] of globalCell($global, key)) {
+        if (
+          subscriber[AccessorProp.Gen] > 0 &&
+          subscriber[AccessorProp.Gen] < runId
+        ) {
+          queueRender(subscriber, subscriberFn, -1);
+        }
+      }
+      if (!rendering) schedule();
+    }
+    return value;
+  }) as ((scope: Scope, value: T) => T) & { _: SignalFn };
+  signal._ = subscribe;
+  return signal;
+}
+
+const globalCells = new WeakMap<
+  Scope[AccessorProp.Global],
+  Map<string, Map<Scope, SignalFn>>
+>();
+
+function globalCell($global: Scope[AccessorProp.Global], key: string) {
+  let cells = globalCells.get($global);
+  if (!cells) globalCells.set($global, (cells = new Map()));
+  let cell = cells.get(key);
+  if (!cell) cells.set(key, (cell = new Map()));
+  return cell;
+}
+
 export function _child_setup(setup: Signal<never> & { _: Signal<Scope> }) {
   setup._ = (scope, owner) => {
     scope[AccessorProp.Owner] = owner;

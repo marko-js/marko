@@ -1,4 +1,4 @@
-// size: 24357 (min) 8968 (brotli)
+// size: 24732 (min) 9078 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -33,6 +33,7 @@ let empty = [],
   },
   isScheduled,
   channel,
+  globalCells = /* @__PURE__ */ new WeakMap(),
   _return = (scope, value) => scope.T?.(value),
   _var_change = (scope, value) => scope.U?.(value),
   tagIdsByGlobal = /* @__PURE__ */ new WeakMap(),
@@ -607,6 +608,53 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
     resumeId && _resume(resumeId, closureSignal),
     closureSignal
   );
+}
+/**
+ * A named reactive binding shared across every scope of one render root.
+ *
+ * The backing store is `$global[key]` (so `$global` is both the shared anchor
+ * and the value's home — one cell per render root, per `_id`'s precedent of
+ * keying off the `$global` object). `fn` is the calling template's downstream
+ * update for the binding.
+ *
+ * Writes route through `queueRender`, exactly like `_closure`'s owner→reader
+ * fan-out: they coalesce with the current batch, are ordered by scope id, and
+ * cannot be dropped by the generation guard the way a synchronous cross-scope
+ * write during a flush would be. Subscription is idempotent per scope and
+ * cleaned up through the scope's abort signal, mirroring
+ * `subscribeToScopeSet`.
+ *
+ * Calling the returned signal reads/seeds + writes the shared value; calling
+ * its `_` property subscribes without writing (used when hydrating an
+ * instance whose value already arrived via a serialized global).
+ */
+function _let_global(key, fn) {
+  let subscribe = (scope) => {
+      let cell = globalCell(scope.$, key);
+      fn &&
+        !cell.has(scope) &&
+        (cell.set(scope, fn),
+        $signal(scope, -1).addEventListener("abort", () => cell.delete(scope)));
+    },
+    signal = (scope, value) => {
+      let $global = scope.$;
+      if ((subscribe(scope), $global[key] !== value || !(key in $global))) {
+        $global[key] = value;
+        for (let [subscriber, subscriberFn] of globalCell($global, key))
+          subscriber.H > 0 &&
+            subscriber.H < runId &&
+            queueRender(subscriber, subscriberFn, -1);
+        rendering || schedule();
+      }
+      return value;
+    };
+  return ((signal._ = subscribe), signal);
+}
+function globalCell($global, key) {
+  let cells = globalCells.get($global);
+  cells || globalCells.set($global, (cells = /* @__PURE__ */ new Map()));
+  let cell = cells.get(key);
+  return (cell || cells.set(key, (cell = /* @__PURE__ */ new Map())), cell);
 }
 function _child_setup(setup) {
   return (

@@ -706,6 +706,41 @@ export function $global() {
   return $chunk.boundary.state.$global;
 }
 
+/**
+ * SSR side of a shared named binding backed by `$global[key]`: seeds the
+ * value (first writer wins) and opts the key into `serializedGlobals` so the
+ * rendered value resumes onto the client's `$global` — serialized once as
+ * scope 0, not per instance.
+ *
+ * `serializedGlobals` is replaced, never mutated: the object commonly comes
+ * from app config shared across renders (e.g. a router's per-process default),
+ * so mutation would leak the key into every other render in the process.
+ */
+export function _let_global<T>(key: string, value: T): T {
+  const { state } = $chunk.boundary;
+  const $global = state.$global;
+  const serializedGlobals = $global.serializedGlobals as
+    | string[]
+    | Record<string, boolean>
+    | undefined;
+
+  if (Array.isArray(serializedGlobals)) {
+    if (!serializedGlobals.includes(key)) {
+      $global.serializedGlobals = [...serializedGlobals, key];
+    }
+  } else if (!serializedGlobals?.[key]) {
+    $global.serializedGlobals = { ...serializedGlobals, [key]: true };
+  }
+
+  if (MARKO_DEBUG && state.hasGlobals) {
+    throw new Error(
+      `Cannot register the serialized global "${key}" after globals were already flushed. Shared global bindings must first render before any part of the stream that flushes serialized state.`,
+    );
+  }
+
+  return key in $global ? ($global[key] as T) : (($global[key] = value), value);
+}
+
 export function _await<T>(
   scopeId: number,
   accessor: Accessor,

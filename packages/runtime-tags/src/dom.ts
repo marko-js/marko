@@ -96,6 +96,7 @@ export {
   _if_closure,
   _let,
   _let_change,
+  _let_global,
   _or,
   _return,
   _return_change,

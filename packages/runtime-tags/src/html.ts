@@ -60,6 +60,7 @@ export {
   _html,
   _id,
   _if,
+  _let_global,
   _peek_scope_id,
   _resume,
   _resume_branch,
