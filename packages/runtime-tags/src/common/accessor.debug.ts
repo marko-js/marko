@@ -12,6 +12,7 @@ export enum AccessorPrefix {
   Lifecycle = "Lifecycle:",
   Promise = "Promise:",
   TagVariableChange = "TagVariableChange:",
+  DeferredResume = "DeferredResume:",
 }
 
 export enum AccessorProp {

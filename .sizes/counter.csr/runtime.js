@@ -1,4 +1,4 @@
-// size: 3938 (min) 1744 (brotli)
+// size: 4308 (min) 1887 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -115,6 +115,9 @@ function resetControllers(scope) {
 }
 function removeAndDestroyBranch(branch) {
   (destroyBranch(branch), removeChildNodes(branch.S, branch.K));
+}
+function insertBranchBefore(branch, parentNode, nextSibling) {
+  insertChildNodes(parentNode, nextSibling, branch.S, branch.K);
 }
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
@@ -237,6 +240,40 @@ function toInsertNode(startNode, endNode) {
   }
   return parent;
 }
+function setConditionalRenderer(
+  scope,
+  nodeAccessor,
+  newRenderer,
+  createBranch,
+) {
+  let referenceNode = scope[nodeAccessor],
+    prevBranch = scope["A" + nodeAccessor];
+  if (referenceNode === void 0) {
+    scope["N" + nodeAccessor] = () =>
+      queueAsyncRender(scope, () =>
+        setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch),
+      );
+    return;
+  }
+  let parentNode =
+      referenceNode.nodeType > 1
+        ? (prevBranch?.S || referenceNode).parentNode
+        : referenceNode,
+    newBranch = (scope["A" + nodeAccessor] =
+      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
+  referenceNode === parentNode
+    ? (prevBranch &&
+        (destroyBranch(prevBranch), (referenceNode.textContent = "")),
+      newBranch && insertBranchBefore(newBranch, parentNode, null))
+    : prevBranch
+      ? (newBranch
+          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
+          : parentNode.insertBefore(referenceNode, prevBranch.S),
+        removeAndDestroyBranch(prevBranch))
+      : newBranch &&
+        (insertBranchBefore(newBranch, parentNode, referenceNode),
+        referenceNode.remove());
+}
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
@@ -274,6 +311,9 @@ function run() {
     (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
   }
   runEffects(effects);
+}
+function queueAsyncRender(scope, signal, value) {
+  (queueRender(scope, signal, -1, value), queueMicrotask(run));
 }
 function prepareEffects(fn) {
   let prevRenders = pendingRenders,

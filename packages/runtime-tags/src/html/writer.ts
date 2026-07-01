@@ -293,6 +293,8 @@ export function _el_resume(
 
   const { state } = $chunk.boundary;
   state.needsMainRuntime = true;
+  // This marker must be walked in to bind its node (see `Chunk.hasMarker`).
+  $chunk.hasMarker = true;
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
@@ -619,6 +621,9 @@ function writeBranchEnd(
   if (serializeMarker !== 0) {
     if (!parentEndTag || serializeStateful !== 0) {
       const { state } = $chunk.boundary;
+      // This marker must be walked in to bind its branch (see
+      // `Chunk.hasMarker`).
+      $chunk.hasMarker = true;
       const mark = singleNode
         ? state.mark(
             parentEndTag
@@ -920,6 +925,11 @@ export class State implements SerializeState {
   public hasReorderRuntime = false;
   public hasWrittenResume = false;
   public walkOnNextFlush = false;
+  // A resume marker has been flushed but not yet covered by a walk.
+  public unwalkedMarker = false;
+  // A walk has been emitted in a prior flush (so its persistent walker can
+  // bind markers that trail it in later flushes).
+  public hasWalked = false;
   public trailerHTML = "";
   public resumes = "";
   public nonceAttr = "";
@@ -1071,6 +1081,8 @@ export class Chunk {
   public async = false;
   public consumed = false;
   public needsWalk = false;
+  // The chunk's html contains a resume marker needing a walk to bind it.
+  public hasMarker = false;
   public reorderId: string | null = null;
   public deferredReady: Opt<Chunk> = null;
   public placeholder: {
@@ -1172,11 +1184,13 @@ export class Chunk {
     let scripts = "";
     let lastEffect = "";
     let needsWalk = false;
+    let hasMarker = false;
     let deferredReady: Opt<Chunk>;
 
     while (cur.next && !cur.async) {
       cur.flushPlaceholder();
       needsWalk ||= cur.needsWalk;
+      hasMarker ||= cur.hasMarker;
       html += cur.html;
       if (cur.serializeState.readyId) {
         deferredReady = push(deferredReady, cur);
@@ -1193,6 +1207,7 @@ export class Chunk {
     cur.deferOwnReady();
     cur.deferredReady = concat(deferredReady, cur.deferredReady);
     cur.needsWalk ||= needsWalk;
+    cur.hasMarker ||= hasMarker;
     cur.html = html + cur.html;
     cur.effects = concatEffects(effects, cur.effects);
     cur.scripts = concatScripts(scripts, cur.scripts);
@@ -1437,12 +1452,31 @@ export class Chunk {
       state.writeReorders = null;
     }
 
+    // A walk binds every marker flushed to the client so far (the walker
+    // resumes from where it left off), so it clears the pending marker. When a
+    // marker instead trails a walk emitted in an earlier flush -- e.g. content
+    // after a resolved in-order `<await>`, whose scope and effects flushed and
+    // walked in an earlier chunk -- the final flush must force a walk to bind
+    // it, even though it carries no effects to trigger one on its own.
     if (needsWalk) {
+      state.unwalkedMarker = false;
+    } else if (this.hasMarker || state.unwalkedMarker) {
+      if (!boundary.count && state.hasWalked) {
+        needsWalk = true;
+        state.unwalkedMarker = false;
+      } else {
+        state.unwalkedMarker = true;
+      }
+    }
+
+    if (needsWalk) {
+      state.hasWalked = true;
       scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");
     }
 
     this.html = html;
     this.scripts = scripts;
+    this.hasMarker = false;
     this.effects = this.lastEffect = state.resumes = "";
     return this;
   }

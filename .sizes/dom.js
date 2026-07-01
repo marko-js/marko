@@ -1,4 +1,4 @@
-// size: 24357 (min) 8968 (brotli)
+// size: 24499 (min) 9033 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -847,10 +847,11 @@ function init(runtimeId = "M") {
                 startVisit = visit,
                 i = orphanBranches.length,
                 j = deferredOwners.length,
+                nodeAccessor,
               ) => {
                 for (
                   visitType !== "[" &&
-                  ((visitScope[nextToken()] =
+                  ((visitScope[(nodeAccessor = nextToken())] =
                     visitType === ")" || visitType === "}" ? parent : visit),
                   (accessor = "A" + lastToken),
                   (singleNode = visitType !== "]" && visitType !== ")"),
@@ -907,7 +908,8 @@ function init(runtimeId = "M") {
                       (branchScopesStack.push(curBranchScopes),
                       (curBranchScopes = void 0)),
                     branchStarts.push(visit))
-                  : deferredOwners.push(visitScope);
+                  : (deferredOwners.push(visitScope),
+                    flushResumedRender(visitScope, nodeAccessor));
               },
             nextToken = () =>
               (lastToken = visitText.slice(
@@ -978,11 +980,13 @@ function init(runtimeId = "M") {
                   (visitScope = getScope(nextToken())),
                   visitType === "*")
                 ) {
-                  let prev = visit.previousSibling;
-                  visitScope[nextToken()] =
+                  let prev = visit.previousSibling,
+                    nodeAccessor = nextToken();
+                  ((visitScope[nodeAccessor] =
                     prev && (prev.nodeType < 8 || prev.data)
                       ? prev
-                      : visit.parentNode.insertBefore(new Text(), visit);
+                      : visit.parentNode.insertBefore(new Text(), visit)),
+                    flushResumedRender(visitScope, nodeAccessor));
                 } else
                   branchesEnabled
                     ? (visitBranches ||= createVisitBranches())()
@@ -1018,6 +1022,11 @@ function init(runtimeId = "M") {
       configurable: !0,
       set: initRuntime,
     });
+}
+function flushResumedRender(scope, nodeAccessor) {
+  let accessor = "N" + nodeAccessor,
+    replay = scope[accessor];
+  replay && ((scope[accessor] = void 0), replay());
 }
 function runResumeEffects(render) {
   try {
@@ -1933,8 +1942,15 @@ function setConditionalRenderer(
   createBranch,
 ) {
   let referenceNode = scope[nodeAccessor],
-    prevBranch = scope["A" + nodeAccessor],
-    parentNode =
+    prevBranch = scope["A" + nodeAccessor];
+  if (referenceNode === void 0) {
+    scope["N" + nodeAccessor] = () =>
+      queueAsyncRender(scope, () =>
+        setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch),
+      );
+    return;
+  }
+  let parentNode =
       referenceNode.nodeType > 1
         ? (prevBranch?.S || referenceNode).parentNode
         : referenceNode,

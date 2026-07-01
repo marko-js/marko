@@ -632,6 +632,17 @@ export function setConditionalRenderer<T>(
   const prevBranch = scope[AccessorPrefix.BranchScopes + nodeAccessor] as
     | BranchScope
     | undefined;
+  if ((referenceNode as unknown) === undefined) {
+    // The reference node has not been resumed yet (its markup streams in a
+    // later flush, e.g. behind a still-pending in-order `<await>`). Stash the
+    // update on the scope (latest wins) and let resume replay it once it walks
+    // the node's marker in, so the reactive branch is not lost.
+    scope[AccessorPrefix.DeferredResume + nodeAccessor] = () =>
+      queueAsyncRender(scope, () =>
+        setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch),
+      );
+    return;
+  }
   const parentNode =
     referenceNode.nodeType > NodeType.Element
       ? (prevBranch?.[AccessorProp.StartNode] || referenceNode).parentNode!

@@ -196,9 +196,10 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             startVisit: ChildNode = visit,
             i = orphanBranches.length,
             j = deferredOwners.length,
+            nodeAccessor?: string,
           ) => {
             if (visitType !== ResumeSymbol.BranchStart) {
-              visitScope[nextToken(/* read accessor */)] =
+              visitScope[(nodeAccessor = nextToken(/* read accessor */))] =
                 visitType === ResumeSymbol.BranchEndOnlyChildInParent ||
                 visitType === ResumeSymbol.BranchEndSingleNodeOnlyChildInParent
                   ? parent
@@ -287,6 +288,9 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               // Defer this owner so its enclosing branch links it above,
               // avoiding a serialized closest-branch id.
               deferredOwners.push(visitScope);
+              // Replay any control-flow update that ran before this node
+              // resumed (see `flushResumedRender`).
+              flushResumedRender(visitScope, nodeAccessor!);
             }
           };
         };
@@ -393,12 +397,16 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 
             if (visitType === ResumeSymbol.Node) {
               const prev = visit.previousSibling;
-              visitScope[nextToken(/* read accessor */)] =
+              const nodeAccessor = nextToken(/* read accessor */);
+              visitScope[nodeAccessor] =
                 prev &&
                 (prev.nodeType < 8 /* Node.COMMENT_NODE */ ||
                   (prev as Comment).data)
                   ? prev
                   : visit.parentNode!.insertBefore(new Text(), visit);
+              // Replay any control-flow update that ran before this node
+              // resumed (see `flushResumedRender`).
+              flushResumedRender(visitScope, nodeAccessor);
             } else if (branchesEnabled) {
               (visitBranches ||= createVisitBranches())();
             } else if (render.b) {
@@ -448,6 +456,17 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 }
 
 export let isResuming: undefined | 0 | 1;
+
+// Replay a control-flow update that ran against `nodeAccessor` before its
+// marker resumed (stashed by `setConditionalRenderer`, see `DeferredResume`).
+function flushResumedRender(scope: Scope, nodeAccessor: string) {
+  const accessor = AccessorPrefix.DeferredResume + nodeAccessor;
+  const replay = scope[accessor] as (() => void) | undefined;
+  if (replay) {
+    scope[accessor] = undefined;
+    replay();
+  }
+}
 
 function runResumeEffects(render: RenderData) {
   try {

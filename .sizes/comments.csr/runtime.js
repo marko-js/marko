@@ -1,4 +1,4 @@
-// size: 6459 (min) 2820 (brotli)
+// size: 6566 (min) 2863 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -354,8 +354,15 @@ function setConditionalRenderer(
   createBranch,
 ) {
   let referenceNode = scope[nodeAccessor],
-    prevBranch = scope["A" + nodeAccessor],
-    parentNode =
+    prevBranch = scope["A" + nodeAccessor];
+  if (referenceNode === void 0) {
+    scope["N" + nodeAccessor] = () =>
+      queueAsyncRender(scope, () =>
+        setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch),
+      );
+    return;
+  }
+  let parentNode =
       referenceNode.nodeType > 1
         ? (prevBranch?.S || referenceNode).parentNode
         : referenceNode,
@@ -543,6 +550,9 @@ function run() {
     (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
   }
   runEffects(effects);
+}
+function queueAsyncRender(scope, signal, value) {
+  (queueRender(scope, signal, -1, value), queueMicrotask(run));
 }
 function prepareEffects(fn) {
   let prevRenders = pendingRenders,

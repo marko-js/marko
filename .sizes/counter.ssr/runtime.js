@@ -1,9 +1,14 @@
-// size: 2471 (min) 1246 (brotli)
+// size: 3415 (min) 1612 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
   delegate = (type, handler) =>
     (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
+  destroyNestedScopes = function destroyNestedScopes(scope) {
+    ((scope.H = 0),
+      scope.D?.forEach(destroyNestedScopes),
+      scope.B?.forEach(resetControllers));
+  },
   isScheduled,
   channel,
   registeredValues = {},
@@ -28,6 +33,18 @@ function handleDelegated(ev) {
   for (; target; )
     (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
+}
+function destroyBranch(branch) {
+  (branch.N?.D?.delete(branch), destroyNestedScopes(branch));
+}
+function resetControllers(scope) {
+  for (let id in scope.A) $signalReset(scope, id);
+}
+function removeAndDestroyBranch(branch) {
+  (destroyBranch(branch), removeChildNodes(branch.S, branch.K));
+}
+function insertBranchBefore(branch, parentNode, nextSibling) {
+  insertChildNodes(parentNode, nextSibling, branch.S, branch.K);
 }
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
@@ -158,11 +175,13 @@ function init(runtimeId = "M") {
                   (visitScope = getScope(nextToken())),
                   visitType === "*")
                 ) {
-                  let prev = visit.previousSibling;
-                  visitScope[nextToken()] =
+                  let prev = visit.previousSibling,
+                    nodeAccessor = nextToken();
+                  ((visitScope[nodeAccessor] =
                     prev && (prev.nodeType < 8 || prev.data)
                       ? prev
-                      : visit.parentNode.insertBefore(new Text(), visit);
+                      : visit.parentNode.insertBefore(new Text(), visit)),
+                    flushResumedRender(visitScope, nodeAccessor));
                 } else render.b && (visits[retained++] = visit);
               return ((visits.length = retained), effects);
             }),
@@ -183,6 +202,11 @@ function init(runtimeId = "M") {
       set: initRuntime,
     });
 }
+function flushResumedRender(scope, nodeAccessor) {
+  let accessor = "N" + nodeAccessor,
+    replay = scope[accessor];
+  replay && ((scope[accessor] = void 0), replay());
+}
 function runResumeEffects(render) {
   try {
     runEffects(render.m([]), 1);
@@ -198,6 +222,60 @@ function _to_text(value) {
 function _text(node, value) {
   let normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
+}
+function removeChildNodes(startNode, endNode) {
+  let stop = endNode.nextSibling;
+  for (; startNode !== stop; ) {
+    let next = startNode.nextSibling;
+    (startNode.remove(), (startNode = next));
+  }
+}
+function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
+  parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+}
+function toInsertNode(startNode, endNode) {
+  if (startNode === endNode) return startNode;
+  let parent = new DocumentFragment(),
+    stop = endNode.nextSibling;
+  for (; startNode !== stop; ) {
+    let next = startNode.nextSibling;
+    (parent.appendChild(startNode), (startNode = next));
+  }
+  return parent;
+}
+function setConditionalRenderer(
+  scope,
+  nodeAccessor,
+  newRenderer,
+  createBranch,
+) {
+  let referenceNode = scope[nodeAccessor],
+    prevBranch = scope["A" + nodeAccessor];
+  if (referenceNode === void 0) {
+    scope["N" + nodeAccessor] = () =>
+      queueAsyncRender(scope, () =>
+        setConditionalRenderer(scope, nodeAccessor, newRenderer, createBranch),
+      );
+    return;
+  }
+  let parentNode =
+      referenceNode.nodeType > 1
+        ? (prevBranch?.S || referenceNode).parentNode
+        : referenceNode,
+    newBranch = (scope["A" + nodeAccessor] =
+      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
+  referenceNode === parentNode
+    ? (prevBranch &&
+        (destroyBranch(prevBranch), (referenceNode.textContent = "")),
+      newBranch && insertBranchBefore(newBranch, parentNode, null))
+    : prevBranch
+      ? (newBranch
+          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
+          : parentNode.insertBefore(referenceNode, prevBranch.S),
+        removeAndDestroyBranch(prevBranch))
+      : newBranch &&
+        (insertBranchBefore(newBranch, parentNode, referenceNode),
+        referenceNode.remove());
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
@@ -237,6 +315,9 @@ function run() {
   }
   runEffects(effects);
 }
+function queueAsyncRender(scope, signal, value) {
+  (queueRender(scope, signal, -1, value), queueMicrotask(run));
+}
 function runRenders() {
   for (; pendingRenders.length; ) {
     let render = pendingRenders[0],
@@ -261,5 +342,12 @@ function runRenders() {
     }
     runRender(render);
   }
+}
+function $signalReset(scope, id) {
+  let ctrl = scope.A?.[id];
+  ctrl && (queueEffect(ctrl, abort), (scope.A[id] = void 0));
+}
+function abort(ctrl) {
+  ctrl.abort();
 }
 //#endregion

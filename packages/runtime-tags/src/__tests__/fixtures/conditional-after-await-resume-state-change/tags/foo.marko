@@ -1,0 +1,24 @@
+<cart-state/{ cart }/>
+<const/hasHydrate=cart !== null>
+
+static function loadHeader() {
+  return new Promise(resolve => {
+    setTimeout(resolve, 100, [1,2,3,4])
+  })
+}
+
+<header>
+  <div>
+    <await|collections| value=loadHeader()>
+      <for|collection| of=collections>
+        <a href=`/something/${collection}`>${collection}</a>
+      </for>
+    </await>
+    <a href="/something">Something</a>
+    Test
+    <if=!hasHydrate><a href="/go-to">Go</a></if>
+    <else>
+      <button>Go to</button>
+    </else>
+  </div>
+</header>
