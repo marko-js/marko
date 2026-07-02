@@ -14,18 +14,18 @@
 //   omits a pruned subtree's anchoring prop), and routes them through
 //   per-kind runtime helpers where the check is byte-neutral -- see
 //   "Sparse vs dense merge statements" in the proposals doc.
-const { _text, _attr, _if, _for_of } = require("@marko/runtime-tags/debug/dom");
+const { _text, _attr } = require("@marko/runtime-tags/debug/dom");
+const { _wire_if, _wire_for } = require("../update-runtime.js");
 const { $input_product_featured } = require("../product.marko.dom.cjs");
 const priceTagUpdate = require("./price-tag.update.js");
 
-// From the compiled DOM output ($if / $for args for this template):
-const $if_update = _if("#text/5", "<em>Save <!>%</em>", "Db%l", 0);
-const $for_update = _for_of(
-  "#ul/6",
-  "<li><span class=price>$<!></span> <!></li>",
-  "D/Db%l&b%l",
-  0,
-  (branch, [patchItem]) => $for_content__update(patchItem, branch),
+// Branch markup is wire-delivered (patch `templates` frame) and referenced by
+// content id -- the entry carries no template/walks strings. The underlying
+// signals are the same compiled `_if`/`_for_of` instances, constructed on
+// first use from the client-side content store.
+const $if_update = _wire_if("#text/5", ["product#if1"]);
+const $for_update = _wire_for("#ul/6", "product#for1", (branch, [patchItem]) =>
+  $for_content__update(patchItem, branch),
 );
 
 const $if_content__update = (patch, live) => {

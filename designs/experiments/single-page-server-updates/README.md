@@ -76,7 +76,12 @@ applies the A1 patch for page B through the working B2 persisted entries:
 It asserts placement, intersection re-execution against preserved state,
 branch destruction, keyed reconcile with element identity preserved, fresh
 item creation by clone + merge, state survival against a hostile state prop
-in the payload, and prints the DOM mutation log.
+in the payload, and prints the DOM mutation log. It also exercises two later
+refinements: branch markup arrives via a wire `templates` frame (content-id
+keyed store + `_wire_if`/`_wire_for` in `update-runtime.js` -- entries carry
+no template/walks strings), and a post-patch click proves effects were not
+replayed for matched scopes (a double-bound handler would make the toggle a
+net no-op).
 
 Caveats (also noted in the proposals doc): the harness runs the debug
 runtime even for optimized compiles, and its random 6-char `renderId`

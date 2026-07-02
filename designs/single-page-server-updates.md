@@ -155,12 +155,22 @@ stream**. Each frame is one of:
   chunks and hydrate entries to import.
 - `resume` — a JS-source segment in the **exact existing inline-script resume
   format** (`M._.r.push(fill, "registryId scopeId …")`), executed by injecting
-  a nonce-carrying `<script>` element. Contains scope fills (values) and effect
-  strings (which registered update signals to run against which scopes).
+  a nonce-carrying `<script>` element. Contains scope fills (values) and
+  entry-effect strings (which persisted-entry merges to run against which
+  patch scopes). Effect strings never replay mount effects for matched
+  scopes — those re-run only through the reactive graph when a merged value
+  they depend on changes, or at mount inside fresh subtrees.
+- `templates` — `template`/`walks` pairs, keyed by content id, for
+  server-driven branches this update rendered. The client caches pairs per
+  build (idempotent store), so fresh branches clone client-side without the
+  markup ever living in a JS chunk; hinted servers may omit pairs the client
+  provably holds.
 - `html` — a rendered fragment plus its target address, the fetch-stream
   analog of today's out-of-order `<t hidden M=id>` reorder chunks
   (`html/writer.ts:1385-1479`). Nested resume data for the fragment arrives as
   ordinary `resume` frames, exactly like `<await>` content does today.
+  Narrow after the `templates` frame exists: interop boundaries and
+  non-serializable structure.
 - `end` — terminal frame; anything else (connection drop, parse error) aborts
   into fallback.
 
@@ -402,11 +412,14 @@ its own code-split chunk — contains:
   checks byte-neutral.
 - **Control-flow merges as existing signal instances** — the conditional
   merge is an `_if(...)` and the keyed-loop merge a `_for_of(...)` whose
-  params signal is the body merge function, re-emitting the same
-  template/walks strings the DOM output already bakes into its own calls.
-  Keyed matching, clone + walk creation for fresh branches, and move/remove
-  diffing are the real reconciler; the same merge function fills resumed and
-  freshly-cloned branches.
+  params signal is the body merge function. Keyed matching, clone + walk
+  creation for fresh branches, and move/remove diffing are the real
+  reconciler; the same merge function fills resumed and freshly-cloned
+  branches. Branch `template`/`walks` strings are referenced by content id
+  and **wire-delivered by the patch** (`templates` frame, client-cached per
+  build) rather than compiled into the entry — markup bytes are paid only
+  when a server-driven branch actually (re)renders, keeping entries pure
+  merge logic.
 - **References to existing signals** for everything with a client-side life:
   intersections (`_or`), closure fan-outs — imported from the main DOM module
   where they already exist (an `_or` used by the interactive chain stays in
