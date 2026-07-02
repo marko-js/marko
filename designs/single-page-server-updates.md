@@ -374,13 +374,20 @@ the router for link interception) containing:
    the existing machinery; renders queue through the normal heap and flush in
    batches per frame (no tearing within a frame).
 2. **Fragment applier** — the one genuinely new runtime primitive:
-   `resumeFragment(html, targetAddress)`. Parse via the existing
-   `parseHTML` (`dom/parse-html.ts`), bind its resume markers (the same visit
-   processing `render.m` does, scoped to the fragment), then swap through the
-   existing branch machinery (`setConditionalRenderer` /
-   `insertBranchBefore` + branch destroy, `dom/control-flow.ts:688-738`). The
-   out-of-order reorder runtime and `initEmbedded`
-   (`dom/resume.ts:81-98`) are the two existing precedents; this unifies them
+   `resumeFragment(html, targetAddress)`. Structurally it is the native
+   lazy-load lifecycle with a different fulfillment source: `_load_template` /
+   `insertLoaded` (`dom/load.ts:33-144`) already model a branch that exists
+   before its content does — pending branch + await counter, values queued via
+   `_load_signal` until the content arrives, then insert. A **stream-fulfilled
+   template handle** implements the same `Renderer` surface, but fulfillment
+   _adopts_ the server-rendered fragment (parse via `parseHTML`
+   (`dom/parse-html.ts`), bind its resume markers with fragment-scoped visit
+   processing) instead of cloning a local template string. The final swap goes
+   through the existing branch machinery (`setConditionalRenderer` /
+   `insertBranchBefore` + branch destroy, `dom/control-flow.ts:688-738`), and
+   `<try placeholder>` composes for slow-navigation loading UI at the swap
+   point. The out-of-order reorder runtime and `initEmbedded`
+   (`dom/resume.ts:81-98`) are the other existing precedents this unifies
    behind a fetch-driven entry point.
 3. **Loader** — resolves `assets` frames against the client manifest;
    `import()`s update chunks and hydrate entries; defers dependent `resume`
@@ -403,8 +410,12 @@ low-single-digit kB min+gzip for 1–3, with 4 living in the router package.
 
 Today's codegen nests layouts statically per route (`renderRouteTemplate`), so
 two routes sharing every layout still produce different root templates — the
-worst case for matching. Replace the per-route wrapper with **one shared shell
-template** that composes the chain dynamically:
+worst case for matching. Worse, static custom tags compile to inlined setup
+with **no runtime-swappable identity**: only dynamic tags and `<if>` branches
+have a branch the runtime can replace (`ConditionalRenderer` +
+`setConditionalRenderer`). So wherever two routes may diverge, the composition
+point must be dynamic. That motivates a shared shell that composes the chain
+dynamically:
 
 ```marko
 // conceptually
@@ -413,10 +424,7 @@ template** that composes the chain dynamically:
 </>
 ```
 
-Every route now renders the same root template; the chain of layouts + page
-arrives _as input_ (registered renderer references — the serializer already
-emits those as `_(scopeId, "registryId")`). Navigation becomes, literally, an
-input update to the shell:
+Navigation becomes, literally, an input update to the shell:
 
 - Same layout at position N → dynamic-tag renderer matches → value-update its
   subtree (existing `_dynamic_tag` semantics).
@@ -426,9 +434,60 @@ input update to the shell:
 
 The routing problem reduces to dynamic-tag semantics the runtime already has.
 Cost: the shell itself pays dynamic-tag overhead (branch markers per chain
-level, slightly less static optimization _in the wrapper only_ — the wrapper
-was near-empty anyway); layouts and pages internally keep full static
-optimization.
+level, slightly less static optimization _in the shell only_); layouts and
+pages internally keep full static optimization.
+
+### Cross-route code splitting and the lazy-load machinery
+
+A pure "one shell entry for the whole app" would break today's per-route
+splitting, so the shell is **not** the entry. Each route keeps a thin generated
+wrapper template that statically imports its layouts + page and renders the
+shared shell with the chain as input. This preserves, unchanged:
+
+- per-route **server** entries (each route's server chunk imports only its
+  templates);
+- per-route **hydrate** entries and the `linkAssets` keying that hangs off the
+  server-entry template — the wrapper still plays that role;
+- bundler-level chunk sharing: layouts used by many routes land in shared
+  client chunks automatically, so navigating to a new route fetches only that
+  route's hydrate chunk (plus not-yet-cached update chunks), with shared-layout
+  code already warm.
+
+Wrappers differ per route only in import specifiers — the generated code is
+otherwise identical, so accessor numbering is identical, and the applier can
+hop from any route's wrapper scope to the shell scope by a fixed accessor
+(root-matching convention).
+
+Loading the _new_ page's client code on navigation reuses the native lazy-load
+feature's machinery directly rather than inventing a parallel path:
+
+1. Every route's client entry already has a **ready id** and the
+   `entry: "load"` compile mode already produces the exact shim needed
+   (`import` + `ready(id)`, `translator/visitors/program/index.ts:106-226`).
+   The `assets` frame lists entry ids; the loader `import()`s them; each module
+   announces itself via `ready()`.
+2. Update-stream fills that reference the new page's registrations are written
+   by the server into **blocking ready channels** (`render.b[readyId]`) or
+   behind **deps markers** (`dom/resume.ts:317-336`) — the server knows the
+   template→entry mapping at compile time (`linkAssets.onAsset`). The client
+   drains channels to a fixed point in `render.m` exactly as it does for lazy
+   streamed content today; module-first and data-first arrival orders both
+   already work.
+3. Because gating applies to _resume data_, not markup, **fragment HTML
+   inserts and displays before the new page's JS arrives** — the same
+   progressive behavior as initial SSR streaming, for free.
+4. `import … with { load: … }` inside layouts and pages keeps working, including
+   inside swapped-in fragments: the fragment carries the lazy placeholders, and
+   their triggers (`_load_visible_trigger` etc.) and ready channels operate
+   after insertion. (Needs an explicit fixture.)
+
+One wire nuance: the shell's `chain` slot values are renderer references. If a
+fill carrying a live registered reference (`_(scopeId, "registryId")`) executed
+before the page module loaded, the lookup would miss — so either that fill
+rides the entry's ready channel (option 1 above), or chain entries serialize as
+plain id strings used purely as identity tokens, with the live renderer
+resolved lazily. The second keeps the shell's own fill free of gating; decide during
+implementation.
 
 ### Endpoint & manifest
 
