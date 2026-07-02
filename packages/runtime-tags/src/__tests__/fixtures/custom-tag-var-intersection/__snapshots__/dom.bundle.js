@@ -1,13 +1,12 @@
 // tags/child.marko
 const $input_extra__OR__x = /* @__PURE__ */ _or(6, ($scope) => _return($scope, $scope.f + $scope.e));
-const $x__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$x($scope, $scope.f + 1);
-}));
 const $x = /* @__PURE__ */ _let(5, ($scope) => {
 	_text($scope.b, $scope.f);
 	$input_extra__OR__x($scope);
-	$x__script($scope);
 });
+const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
+	$x($scope, $scope.f + 1);
+}));
 
 // template.marko
 const $message = ($scope, message) => _text($scope.c, message);

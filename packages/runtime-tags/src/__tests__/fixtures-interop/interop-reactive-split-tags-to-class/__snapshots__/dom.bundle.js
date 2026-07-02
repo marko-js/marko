@@ -25,13 +25,10 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 _resume("b", _marko_template);
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(1);
-const $count__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
+const $count = /* @__PURE__ */ _let(2, ($scope) => $dynamicTag($scope, _marko_template, () => ({ value: $scope.c })));
+const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.c + 1);
 }));
-const $count = /* @__PURE__ */ _let(2, ($scope) => {
-	$dynamicTag($scope, _marko_template, () => ({ value: $scope.c }));
-	$count__script($scope);
-});
 
 // v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => init$1();

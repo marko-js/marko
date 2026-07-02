@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $scope1_id = _scope_id();
 			let count = 0;
 			_html(`<button type=button class=inc>increment</button>${_el_resume($scope1_id, "#button/0")}<span class=count>${_escape(count)}${_el_resume($scope1_id, "#text/1")}</span>`);
-			_script($scope1_id, "__tests__/template.marko_1_count");
+			_script($scope1_id, "__tests__/template.marko_1");
 			writeScope($scope1_id, { count }, "__tests__/template.marko", "1:1", { count: "2:8" });
 			_resume_branch($scope1_id);
 		})

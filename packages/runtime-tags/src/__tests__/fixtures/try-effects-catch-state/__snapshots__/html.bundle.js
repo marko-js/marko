@@ -12,6 +12,7 @@ var template_default = _template("a", (input) => {
 			if (clickCount > 1) throw new Error("ERROR!");
 		})())}${_el_resume($scope1_id, "b")}`);
 		_script($scope1_id, "a2");
+		_script($scope1_id, "a3");
 		_subscribe($clickCount__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("a0", (err) => {

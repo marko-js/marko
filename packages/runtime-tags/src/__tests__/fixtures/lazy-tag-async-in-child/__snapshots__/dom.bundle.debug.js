@@ -1,14 +1,14 @@
 // child.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $await_content__count__script = _script("__tests__/child.marko_1_count", ($scope) => _on($scope["#button/0"], "click", function() {
+const $await_content__count = /* @__PURE__ */ _closure_get("count", ($scope) => _text($scope["#text/1"], $scope._.count));
+const $await_content__setup__script = _script("__tests__/child.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope._, $scope._.count + 1);
 }));
-const $await_content__count = /* @__PURE__ */ _closure_get("count", ($scope) => {
-	_text($scope["#text/1"], $scope._.count);
-	$await_content__count__script($scope);
-});
-const $await_content__setup = $await_content__count;
+const $await_content__setup = ($scope) => {
+	$await_content__count($scope);
+	$await_content__setup__script($scope);
+};
 const $await_content__value = ($scope, value) => _text($scope["#text/2"], value);
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $count__closure = /* @__PURE__ */ _closure($await_content__count);

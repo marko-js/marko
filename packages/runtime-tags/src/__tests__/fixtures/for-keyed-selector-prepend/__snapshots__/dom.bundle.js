@@ -9,17 +9,14 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_label($scope, $params2[0]?.label);
 };
 const $for = /* @__PURE__ */ _for_of(1, "<li> </li>", " D l", $for_content__setup, $for_content__$params);
-const $rows__OR__nextId = /* @__PURE__ */ _or(5, _script("a0", ($scope) => _on($scope.a, "click", function() {
+const $rows = /* @__PURE__ */ _let(2, ($scope) => $for($scope, [$scope.c, "id"]));
+const $selected = /* @__PURE__ */ _let(3, $for_content__selected);
+const $nextId = /* @__PURE__ */ _let(4);
+const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$rows($scope, [{
 		id: $scope.e,
 		label: "new"
 	}, ...$scope.c]);
 	$selected($scope, $scope.e);
 	$nextId($scope, $scope.e + 1);
-})));
-const $rows = /* @__PURE__ */ _let(2, ($scope) => {
-	$for($scope, [$scope.c, "id"]);
-	$rows__OR__nextId($scope);
-});
-const $selected = /* @__PURE__ */ _let(3, $for_content__selected);
-const $nextId = /* @__PURE__ */ _let(4, $rows__OR__nextId);
+}));

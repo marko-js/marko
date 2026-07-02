@@ -7,15 +7,13 @@ const formatNumber = (n) => {
 const $template$1 = "<button> </button>";
 const $walks$1 = " D l";
 const $input__OR__count = /* @__PURE__ */ _or(5, ($scope) => _text($scope["#text/1"], $scope.input.format($scope.count)));
-const $count__script = _script("__tests__/tags/counter.marko_0_count", ($scope) => _on($scope["#button/0"], "click", function() {
+const $count = /* @__PURE__ */ _let("count/4", $input__OR__count);
+const $setup__script = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
-const $count = /* @__PURE__ */ _let("count/4", ($scope) => {
-	$input__OR__count($scope);
-	$count__script($scope);
-});
 function $setup$1($scope) {
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $input = /* @__PURE__ */ _const("input", $input__OR__count);
 var counter_default = /* @__PURE__ */ _template("__tests__/tags/counter.marko", $template$1, $walks$1, $setup$1, $input);

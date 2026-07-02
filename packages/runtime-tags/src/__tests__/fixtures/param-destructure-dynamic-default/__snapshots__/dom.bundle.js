@@ -17,11 +17,7 @@ const $ChildA_content__count = /* @__PURE__ */ _closure_get(7, ($scope) => {
 	$ChildA_content__count__OR__$bar($scope);
 });
 const $ChildA_content__$bar = /* @__PURE__ */ _const(8, $ChildA_content__count__OR__$bar);
-const $count__closure = /* @__PURE__ */ _closure($ChildA_content__count, $ChildB_content__count);
-const $count__script = _script("a2", ($scope) => _on($scope.g, "click", function() {
+const $count = /* @__PURE__ */ _let(7, /* @__PURE__ */ _closure($ChildA_content__count, $ChildB_content__count));
+const $setup__script = _script("a2", ($scope) => _on($scope.g, "click", function() {
 	$count($scope, $scope.h + 1);
 }));
-const $count = /* @__PURE__ */ _let(7, ($scope) => {
-	$count__closure($scope);
-	$count__script($scope);
-});

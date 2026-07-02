@@ -13,12 +13,11 @@ const $extras__OR__n = /* @__PURE__ */ _or(10, ($scope) => {
 	$input_b($scope.c, $childa_input_spread.b);
 	$input_c($scope.c, $childa_input_spread.c);
 });
-const $n__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$n($scope, $scope.j + 1);
-}));
 const $n = /* @__PURE__ */ _let(9, ($scope) => {
 	_text($scope.b, $scope.j);
 	$input_a($scope.d, $scope.j);
 	$extras__OR__n($scope);
-	$n__script($scope);
 });
+const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
+	$n($scope, $scope.j + 1);
+}));

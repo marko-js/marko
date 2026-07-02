@@ -6,14 +6,11 @@ const $for_content__compact = /* @__PURE__ */ _for_closure("#ul/1", ($scope) => 
 const $for_content__setup = $for_content__compact;
 const $for_content__label = ($scope, label) => _text($scope["#text/1"], label);
 const $for_content__$params = ($scope, $params2) => $for_content__label($scope, $params2[0]);
-const $compact__script = _script("__tests__/template.marko_0_compact", ($scope) => _on($scope["#button/0"], "click", function() {
+const $compact = /* @__PURE__ */ _let("compact/2", $for_content__compact);
+const $for = /* @__PURE__ */ _for_of("#ul/1", "<!><!><li> </li><!><!>", "b%bD l%c", $for_content__setup, $for_content__$params);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$compact($scope, !$scope.compact);
 }));
-const $compact = /* @__PURE__ */ _let("compact/2", ($scope) => {
-	$for_content__compact($scope);
-	$compact__script($scope);
-});
-const $for = /* @__PURE__ */ _for_of("#ul/1", "<!><!><li> </li><!><!>", "b%bD l%c", $for_content__setup, $for_content__$params);
 function $setup($scope) {
 	$compact($scope, false);
 	$for($scope, [[
@@ -21,5 +18,6 @@ function $setup($scope) {
 		"write",
 		"admin"
 	]]);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

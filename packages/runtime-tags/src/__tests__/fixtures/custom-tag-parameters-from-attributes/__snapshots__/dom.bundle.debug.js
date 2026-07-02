@@ -6,16 +6,16 @@ const $input_content__OR__input_name__OR__x = /* @__PURE__ */ _or(8, ($scope) =>
 	count: $scope.x,
 	name: $scope.input_name
 })), 2);
-const $x__script = _script("__tests__/tags/custom-tag.marko_0_x", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
-}));
 const $x = /* @__PURE__ */ _let("x/7", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
 	$input_content__OR__input_name__OR__x($scope);
-	$x__script($scope);
 });
+const $setup__script = _script("__tests__/tags/custom-tag.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$x($scope, $scope.x + 1);
+}));
 function $setup$1($scope) {
 	$x($scope, 1);
+	$setup__script($scope);
 }
 const $input_content = /* @__PURE__ */ _const("input_content", $input_content__OR__input_name__OR__x);
 const $input_name = /* @__PURE__ */ _const("input_name", $input_content__OR__input_name__OR__x);

@@ -18,7 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_serialize_reason(1);
 	display_intersection_default({ value: count });
 	_html(`<button></button>${_el_resume($scope0_id, "#button/1")}`);
-	_script($scope0_id, "__tests__/template.marko_0_count");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count,
 		"#childScope/0": _existing_scope($childScope)

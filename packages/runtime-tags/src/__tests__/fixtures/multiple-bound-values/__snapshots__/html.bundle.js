@@ -6,7 +6,6 @@ var _2counters_default = _template("b", (input) => {
 	let count2 = input.count2;
 	_html(`<button>${_escape(count1)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}<button>${_escape(count2)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b0");
-	_script($scope0_id, "b1");
 	writeScope($scope0_id, {
 		g: _serialize_if($scope0_reason, 1) && input.count1,
 		h: _serialize_if($scope0_reason, 0) && input.count1Change,

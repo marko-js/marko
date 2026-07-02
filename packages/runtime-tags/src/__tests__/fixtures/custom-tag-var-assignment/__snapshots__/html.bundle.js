@@ -25,7 +25,6 @@ var template_default = _template("a", (input) => {
 	_var($scope0_id, "b", $childScope, "a0");
 	_html(`<button class=inc-parent>${_escape(count)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}<button class=reset>reset</button>${_el_resume($scope0_id, "e")}`);
 	_script($scope0_id, "a1");
-	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
 		f: count,
 		a: _existing_scope($childScope)

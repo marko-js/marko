@@ -23,16 +23,14 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter(undefined, 1));
 };
 const $show__closure = /* @__PURE__ */ _closure($await_content__show);
-const $show__script = _script("__tests__/template.marko_0_show", ($scope) => _on($scope["#button/0"], "click", function() {
+const $show = /* @__PURE__ */ _let("show/2", $show__closure);
+const $try = /* @__PURE__ */ _try("#text/1", "<!><!><!>", "b%c", $try_content__setup);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$show($scope, !$scope.show);
 }));
-const $show = /* @__PURE__ */ _let("show/2", ($scope) => {
-	$show__closure($scope);
-	$show__script($scope);
-});
-const $try = /* @__PURE__ */ _try("#text/1", "<!><!><!>", "b%c", $try_content__setup);
 function $setup($scope) {
 	$show($scope, true);
 	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

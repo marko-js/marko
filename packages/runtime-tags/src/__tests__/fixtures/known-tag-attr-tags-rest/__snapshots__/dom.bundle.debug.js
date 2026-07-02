@@ -35,26 +35,26 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child/index.marko"
 // template.marko
 const $template = /* @__PURE__ */ ((_w0) => `<button>toggle</button>${_w0}`)($template$1);
 const $walks = /* @__PURE__ */ ((_w0) => ` b/${_w0}&`)($walks$1);
-const $cond__script = _script("__tests__/template.marko_0_cond", ($scope) => _on($scope["#button/0"], "click", function() {
-	$cond($scope, !$scope.cond);
-}));
 const $cond = /* @__PURE__ */ _let("cond/2", ($scope) => {
-	let $cond2;
+	let $cond;
 	if ($scope.cond) {
-		$cond2 = attrTag({ a: 1 });
+		$cond = attrTag({ a: 1 });
 	} else {
-		$cond2 = attrTag({ a: 2 });
+		$cond = attrTag({ a: 2 });
 	}
 	$rest($scope["#childScope/1"], {
 		row: attrTags(attrTag({ x: 1 }), { x: 2 }),
 		other: attrTag({ y: 1 }),
-		cond: $cond2
+		cond: $cond
 	});
-	$cond__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$cond($scope, !$scope.cond);
+}));
 function $setup($scope) {
 	$setup$1($scope["#childScope/1"]);
 	$title($scope["#childScope/1"], "t");
 	$cond($scope, true);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

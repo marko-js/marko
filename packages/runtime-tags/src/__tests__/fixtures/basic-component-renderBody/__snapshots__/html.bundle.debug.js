@@ -16,7 +16,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_id = _scope_id();
 	const $clickCount__closures = new Set();
 	let clickCount = 0;
-	const $childScope = _peek_scope_id();
 	my_button_default({
 		onClick: _resume(function() {
 			clickCount++;
@@ -31,8 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	writeScope($scope0_id, {
 		clickCount,
-		"ClosureScopes:clickCount": $clickCount__closures,
-		"#childScope/0": _existing_scope($childScope)
+		"ClosureScopes:clickCount": $clickCount__closures
 	}, "__tests__/template.marko", 0, { clickCount: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

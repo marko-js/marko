@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	];
 	let index = 0;
 	_html(`<div>${_escape(items[0])}${_el_resume($scope0_id, "#text/0")}</div><div>${_escape(items[index])}${_el_resume($scope0_id, "#text/1")}</div><button>Update</button>${_el_resume($scope0_id, "#button/2")}`);
-	_script($scope0_id, "__tests__/template.marko_0_items_index");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		items,
 		index

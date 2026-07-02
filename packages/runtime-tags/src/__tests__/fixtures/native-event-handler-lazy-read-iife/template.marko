@@ -1,0 +1,12 @@
+// IIFE reads happen at render time, so the handler expression stays subscribed to `n`.
+<let/n=0/>
+<let/log=""/>
+
+<button.bump onClick() { n++; }>bump</button>
+<button.snap onClick=(() => {
+  const captured = n;
+  return () => { log = `${log}[${captured}:${n}]`; };
+})()>snap</button>
+
+<div.n>${n}</div>
+<div.log>${log}</div>

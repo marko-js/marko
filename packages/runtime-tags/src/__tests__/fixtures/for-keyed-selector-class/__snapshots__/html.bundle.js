@@ -29,8 +29,6 @@ var template_default = _template("a", (input) => {
 	}, "id", $scope0_id, "a", 1, 1, 1, "</tbody>", 1);
 	_html(`</table><button class=remove>remove selected</button>${_el_resume($scope0_id, "b")}<button class=rotate>rotate</button>${_el_resume($scope0_id, "c")}<button class=clear>clear</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a1");
-	_script($scope0_id, "a2");
-	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
 		e: selected,
 		f: rows

@@ -24,8 +24,8 @@ container.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: div:nth-of-type(2)::text "0" => "1"
 UPDATE: div:nth-of-type(1)::text "0" => "1"
+UPDATE: div:nth-of-type(2)::text "0" => "1"
 ```
 
 # Update
@@ -43,8 +43,8 @@ container.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: div:nth-of-type(2)::text "1" => "2"
 UPDATE: div:nth-of-type(1)::text "1" => "2"
+UPDATE: div:nth-of-type(2)::text "1" => "2"
 ```
 
 # Update
@@ -62,6 +62,6 @@ container.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: div:nth-of-type(2)::text "2" => "3"
 UPDATE: div:nth-of-type(1)::text "2" => "3"
+UPDATE: div:nth-of-type(2)::text "2" => "3"
 ```

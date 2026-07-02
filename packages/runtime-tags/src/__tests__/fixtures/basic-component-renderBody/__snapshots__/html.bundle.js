@@ -16,7 +16,6 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $clickCount__closures = /* @__PURE__ */ new Set();
 	let clickCount = 0;
-	const $childScope = _peek_scope_id();
 	my_button_default({
 		onClick: _resume(function() {
 			clickCount++;
@@ -31,8 +30,7 @@ var template_default = _template("a", (input) => {
 	});
 	writeScope($scope0_id, {
 		b: clickCount,
-		Bb: $clickCount__closures,
-		a: _existing_scope($childScope)
+		Bb: $clickCount__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

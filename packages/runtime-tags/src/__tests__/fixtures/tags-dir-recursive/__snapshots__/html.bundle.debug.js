@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
 	tree_default({ depth: n });
-	_script($scope0_id, "__tests__/template.marko_0_n");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		n,
 		"#childScope/2": _existing_scope($childScope)

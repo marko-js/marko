@@ -19,7 +19,6 @@ var template_default = _template("b", (input) => {
 	$Child_withLoadAssets({ value });
 	_dynamic_tag($scope0_id, "e", $Child_withLoadAssets, { value });
 	_script($scope0_id, "b0");
-	_script($scope0_id, "b1");
 	writeScope($scope0_id, {
 		f: show,
 		g: value,

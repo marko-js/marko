@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		writeScope($scope1_id, {}, "__tests__/template.marko", "3:2");
 	});
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "#button/1")}`);
-	_script($scope0_id, "__tests__/template.marko_0_showAsync");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { showAsync }, "__tests__/template.marko", 0, { showAsync: "2:6" });
 	_resume_branch($scope0_id);
 }, 1);

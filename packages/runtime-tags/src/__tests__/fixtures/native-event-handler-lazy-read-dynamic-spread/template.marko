@@ -1,0 +1,13 @@
+// Conditions read while a spread evaluates stay subscribed and swap the
+// handlers; `count` is only read inside them and stays lazy.
+<let/enabled=true/>
+<let/count=0/>
+<let/log=""/>
+
+<button.toggle onClick() { enabled = !enabled; }>toggle</button>
+<button.bump onClick() { count++; }>bump</button>
+<button.a ...{ onClick: enabled && (() => { log = `${log}a(${count})`; }) }>a</button>
+<button.b ...(enabled && { onClick() { log = `${log}b(${count})`; } })>b</button>
+
+<div.state>${enabled}:${count}</div>
+<div.log>${log}</div>

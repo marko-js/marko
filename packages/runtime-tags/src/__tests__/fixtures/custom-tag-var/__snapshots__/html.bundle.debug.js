@@ -5,7 +5,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	let x = 1;
 	_html(`<button class=inc>${_escape(x)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	const $return = x;
-	_script($scope0_id, "__tests__/tags/child.marko_0_x");
+	_script($scope0_id, "__tests__/tags/child.marko_0");
 	writeScope($scope0_id, { x }, "__tests__/tags/child.marko", 0, { x: "1:6" });
 	_resume_branch($scope0_id);
 	return $return;

@@ -10,14 +10,12 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 const $template = "<button></button><!><!>";
 const $walks = " b%c";
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
-const $tagName__script = _script("__tests__/template.marko_0_tagName", ($scope) => _on($scope["#button/0"], "click", function() {
+const $tagName = /* @__PURE__ */ _let("tagName/2", ($scope) => $dynamicTag($scope, $scope.tagName, () => ({ id: "dynamic" })));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$tagName($scope, $scope.tagName === child_default ? "div" : child_default);
 }));
-const $tagName = /* @__PURE__ */ _let("tagName/2", ($scope) => {
-	$dynamicTag($scope, $scope.tagName, () => ({ id: "dynamic" }));
-	$tagName__script($scope);
-});
 function $setup($scope) {
 	$tagName($scope, child_default);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

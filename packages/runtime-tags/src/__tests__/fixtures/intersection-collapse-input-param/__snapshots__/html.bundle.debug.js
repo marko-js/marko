@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_serialize_reason(1);
 	child_default({ n });
 	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/1")}`);
-	_script($scope0_id, "__tests__/template.marko_0_n");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		n,
 		"#childScope/0": _existing_scope($childScope)

@@ -39,11 +39,11 @@ var template_default = _template("a", (input) => {
 		0: 1,
 		2: 1
 	});
-	let $cond2;
-	$cond2 = attrTag({ a: 1 });
+	let $cond;
+	$cond = attrTag({ a: 1 });
 	child_default({
 		title: "t",
-		cond: $cond2,
+		cond: $cond,
 		row: attrTags(attrTag({ x: 1 }), { x: 2 }),
 		other: attrTag({ y: 1 })
 	});

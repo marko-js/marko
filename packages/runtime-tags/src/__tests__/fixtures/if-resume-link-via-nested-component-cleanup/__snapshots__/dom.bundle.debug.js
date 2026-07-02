@@ -1,10 +1,10 @@
 // tags/leaf.marko
 const $template$2 = "<p>leaf</p>";
 const $walks$2 = "b";
-const $setup__script = _script("__tests__/tags/leaf.marko_0", ($scope) => _lifecycle($scope, { onDestroy: function() {
+const $setup__script$1 = _script("__tests__/tags/leaf.marko_0", ($scope) => _lifecycle($scope, { onDestroy: function() {
 	document.getElementById("ref").textContent = "leaf destroyed";
 } }));
-const $setup$2 = $setup__script;
+const $setup$2 = $setup__script$1;
 var leaf_default = /* @__PURE__ */ _template("__tests__/tags/leaf.marko", $template$2, "b", $setup$2);
 
 // tags/wrapper.marko
@@ -28,22 +28,19 @@ const $if_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 };
 const $if = /* @__PURE__ */ _if("#text/2", /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($template$1), /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
-const $outer__script = _script("__tests__/template.marko_0_outer", ($scope) => _on($scope["#button/0"], "click", function() {
-	$outer($scope, !$scope.outer);
-}));
-const $outer = /* @__PURE__ */ _let("outer/3", ($scope) => {
-	$if($scope, $scope.outer ? 0 : 1);
-	$outer__script($scope);
-});
-const $show__script = _script("__tests__/template.marko_0_show", ($scope) => _on($scope["#button/1"], "click", function() {
-	$show($scope, !$scope.show);
-}));
-const $show = /* @__PURE__ */ _let("show/4", ($scope) => {
-	$if_content__show($scope);
-	$show__script($scope);
+const $outer = /* @__PURE__ */ _let("outer/3", ($scope) => $if($scope, $scope.outer ? 0 : 1));
+const $show = /* @__PURE__ */ _let("show/4", $if_content__show);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	_on($scope["#button/0"], "click", function() {
+		$outer($scope, !$scope.outer);
+	});
+	_on($scope["#button/1"], "click", function() {
+		$show($scope, !$scope.show);
+	});
 });
 function $setup($scope) {
 	$outer($scope, true);
 	$show($scope, false);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

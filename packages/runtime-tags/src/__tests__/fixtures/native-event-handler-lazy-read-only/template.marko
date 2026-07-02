@@ -1,0 +1,8 @@
+// `count` has no subscribers at all; its scope slot must still be written and serialized for the lazy reads.
+<let/count=0/>
+<let/log=""/>
+
+<button.inc onClick() { count++; }>inc</button>
+<button.show onClick() { log = `${log}[${count}]`; }>show</button>
+
+<div.log>${log}</div>

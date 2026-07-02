@@ -21,22 +21,19 @@ const $if_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 };
 const $if = /* @__PURE__ */ _if("#text/2", /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($template$1), /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
-const $outer__script = _script("__tests__/template.marko_0_outer", ($scope) => _on($scope["#button/0"], "click", function() {
-	$outer($scope, !$scope.outer);
-}));
-const $outer = /* @__PURE__ */ _let("outer/3", ($scope) => {
-	$if($scope, $scope.outer ? 0 : 1);
-	$outer__script($scope);
-});
-const $n__script = _script("__tests__/template.marko_0_n", ($scope) => _on($scope["#button/1"], "click", function() {
-	$n($scope, $scope.n + 1);
-}));
-const $n = /* @__PURE__ */ _let("n/4", ($scope) => {
-	$if_content__n($scope);
-	$n__script($scope);
+const $outer = /* @__PURE__ */ _let("outer/3", ($scope) => $if($scope, $scope.outer ? 0 : 1));
+const $n = /* @__PURE__ */ _let("n/4", $if_content__n);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	_on($scope["#button/0"], "click", function() {
+		$outer($scope, !$scope.outer);
+	});
+	_on($scope["#button/1"], "click", function() {
+		$n($scope, $scope.n + 1);
+	});
 });
 function $setup($scope) {
 	$outer($scope, true);
 	$n($scope, 0);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

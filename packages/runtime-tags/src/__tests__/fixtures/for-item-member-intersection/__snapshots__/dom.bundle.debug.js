@@ -9,13 +9,10 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__item_b($scope, $params2[0]?.b);
 };
 const $for = /* @__PURE__ */ _for_of("#ul/0", "<li> </li>", "D l", 0, $for_content__$params);
-const $list__script = _script("__tests__/template.marko_0_list", ($scope) => _on($scope["#button/1"], "click", function() {
+const $list = /* @__PURE__ */ _let("list/2", ($scope) => $for($scope, [$scope.list]));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$list($scope, [...$scope.list].reverse());
 }));
-const $list = /* @__PURE__ */ _let("list/2", ($scope) => {
-	$for($scope, [$scope.list]);
-	$list__script($scope);
-});
 function $setup($scope) {
 	$list($scope, [{
 		a: 1,
@@ -24,5 +21,6 @@ function $setup($scope) {
 		a: 3,
 		b: 4
 	}]);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

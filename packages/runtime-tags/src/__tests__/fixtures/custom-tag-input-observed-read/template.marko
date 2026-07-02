@@ -1,0 +1,6 @@
+// The child calls `get` while rendering, so the attribute is observed and the
+// parent must stay subscribed to `count` for the child to re-render.
+<let/count=0/>
+
+<button.inc onClick() { count++; }>inc</button>
+<show-result get() { return count; }/>

@@ -13,19 +13,19 @@ const $walks = /* @__PURE__ */ ((_w0) => `b/${_w0}& b`)("b%c");
 const $item_content__y = ($scope, y) => _text($scope["#text/0"], y);
 const $item_content__$params = ($scope, $params2) => $item_content__y($scope, $params2[0]);
 const $item_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "y: <!>", "b%b", 0, $item_content__$params);
-const $x__script = _script("__tests__/template.marko_0_x", ($scope) => _on($scope["#button/1"], "click", function() {
-	$x($scope, !$scope.x);
-}));
 const $x = /* @__PURE__ */ _let("x/2", ($scope) => {
 	let $item;
 	if ($scope.x) {
 		$item = attrTag({ content: $item_content($scope) });
 	}
 	$input_item($scope["#childScope/0"], $item);
-	$x__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
+	$x($scope, !$scope.x);
+}));
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$x($scope, true);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

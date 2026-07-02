@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("loading...");
 	}, $scope0_id) }) });
 	_html(`<button>click</button>${_el_resume($scope0_id, "#button/1")}`);
-	_script($scope0_id, "__tests__/template.marko_0_count");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count,
 		"ClosureScopes:count": $count__closures

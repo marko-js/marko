@@ -12,14 +12,14 @@ var my_box_default = /* @__PURE__ */ _template("__tests__/tags/my-box.marko", $t
 // template.marko
 const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)(" b");
-const $mybox_content__count__script = _script("__tests__/template.marko_1_count", ($scope) => _on($scope["#button/0"], "click", function() {
+const $mybox_content__count = /* @__PURE__ */ _let("count/2", ($scope) => _text($scope["#text/1"], $scope.count));
+const $mybox_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$mybox_content__count($scope, $scope.count + 1);
 }));
-const $mybox_content__count = /* @__PURE__ */ _let("count/2", ($scope) => {
-	_text($scope["#text/1"], $scope.count);
-	$mybox_content__count__script($scope);
-});
-const $mybox_content__setup = ($scope) => $mybox_content__count($scope, 0);
+const $mybox_content__setup = ($scope) => {
+	$mybox_content__count($scope, 0);
+	$mybox_content__setup__script($scope);
+};
 const $mybox_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "<button type=button class=inc>increment</button><span class=count> </span>", " bD l", $mybox_content__setup);
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);

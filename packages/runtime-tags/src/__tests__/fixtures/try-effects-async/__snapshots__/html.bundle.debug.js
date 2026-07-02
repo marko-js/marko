@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_serialize_if($scope3_reason, 0) && writeScope($scope3_id, {}, "__tests__/template.marko", "17:4");
 		}, $scope0_id) })
 	});
-	_script($scope0_id, "__tests__/template.marko_0_clickCount");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		clickCount,
 		"ClosureScopes:clickCount": $clickCount__closures

@@ -1,0 +1,9 @@
+// Handlers in a child section read the parent scope lazily - no closure signals are registered.
+<let/total=0/>
+<let/seen=""/>
+<for|i| of=[1, 2, 3]>
+  <button onClick() { seen = `${seen}(${i}:${total})`; }>pick ${i}</button>
+</for>
+<button onClick() { total++ }>inc</button>
+<div.total>${total}</div>
+<div.seen>${seen}</div>

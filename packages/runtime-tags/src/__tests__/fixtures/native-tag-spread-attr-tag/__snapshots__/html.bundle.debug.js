@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				const $scope1_id = _scope_id();
 				let n = 0;
 				_html(`<button>${_escape(n)}${_el_resume($scope1_id, "#text/1")}</button>${_el_resume($scope1_id, "#button/0")}`);
-				_script($scope1_id, "__tests__/template.marko_1_n");
+				_script($scope1_id, "__tests__/template.marko_1");
 				writeScope($scope1_id, { n }, "__tests__/template.marko", "2:4", { n: "3:10" });
 				_resume_branch($scope1_id);
 			})

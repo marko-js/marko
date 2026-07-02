@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_serialize_reason(1);
 	let x = child_default({ value: count });
 	_var($scope0_id, "#scopeOffset/3", $childScope, "__tests__/template.marko_0_x/var");
-	_script($scope0_id, "__tests__/template.marko_0_count");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count,
 		"#childScope/2": _existing_scope($childScope)

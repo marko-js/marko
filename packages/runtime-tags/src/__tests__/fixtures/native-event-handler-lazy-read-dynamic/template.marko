@@ -1,0 +1,11 @@
+// `enabled` is read while the attribute evaluates (stays subscribed, swaps the handler); `other` is only read inside it (lazy).
+<let/enabled=true/>
+<let/other=0/>
+<let/log=""/>
+
+<button.toggle onClick() { enabled = !enabled; }>toggle</button>
+<button.bump onClick() { other++; }>bump</button>
+<button.act onClick=enabled && (() => { log = `${log}(${other})`; })>act</button>
+
+<div.state>${enabled}:${other}</div>
+<div.log>${log}</div>

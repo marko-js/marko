@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		src: "x.png",
 		alt: "pic"
 	});
-	_script($scope0_id, "__tests__/template.marko_0_cls");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		cls,
 		"#childScope/1": _existing_scope($childScope)

@@ -17,8 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		return x;
 	}, $scope0_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 	_html(`<button id=toggle>Toggle</button>${_el_resume($scope0_id, "#button/1")}<button id=reverse>Reverse</button>${_el_resume($scope0_id, "#button/2")}`);
-	_script($scope0_id, "__tests__/template.marko_0_list");
-	_script($scope0_id, "__tests__/template.marko_0_open");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		open,
 		list

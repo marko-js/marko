@@ -1,18 +1,17 @@
 // template.marko
 const $template = "<button>inc <!></button><input>";
 const $walks = " Db%l b";
-const $n__script = _script("__tests__/template.marko_0_n", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
-}));
-const $n = /* @__PURE__ */ _let("n/3", ($scope) => {
-	_text($scope["#text/1"], $scope.n);
-	$n__script($scope);
-});
+const $n = /* @__PURE__ */ _let("n/3", ($scope) => _text($scope["#text/1"], $scope.n));
 const $state = ($scope, state) => {
 	$state_x($scope, state.x);
 	$state_xChange($scope, state.xChange);
 };
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_input_value_script($scope, "#input/2"));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	_on($scope["#button/0"], "click", function() {
+		$n($scope, $scope.n + 1);
+	});
+	_attr_input_value_script($scope, "#input/2");
+});
 function $setup($scope) {
 	$n($scope, 1);
 	$state($scope, { x: "v" });

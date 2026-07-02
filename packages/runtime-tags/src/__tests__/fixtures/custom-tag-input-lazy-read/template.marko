@@ -1,0 +1,9 @@
+// The child only attaches `onPress`, so the parent's handler reads `count`
+// lazily and the child input never updates when it changes.
+<let/count=0/>
+<let/log=""/>
+
+<button.inc onClick() { count++; }>inc</button>
+<press-button onPress() { log = `${log}[${count}]`; }/>
+
+<div.log>${log}</div>

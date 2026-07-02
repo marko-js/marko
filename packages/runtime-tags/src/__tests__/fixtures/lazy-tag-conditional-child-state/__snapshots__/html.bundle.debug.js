@@ -4,7 +4,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	const $scope0_id = _scope_id();
 	let count = input.value;
 	_html(`<button class=child>${_escape(input.label)}${_el_resume($scope0_id, "#text/1", _serialize_guard($scope0_reason, 0))}: <!>${_escape(count)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/child.marko_0_count");
+	_script($scope0_id, "__tests__/child.marko_0");
 	writeScope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 });
@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/1");
-	_script($scope0_id, "__tests__/template.marko_0_value");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { value }, "__tests__/template.marko", 0, { value: "4:6" });
 	_resume_branch($scope0_id);
 }, 1);

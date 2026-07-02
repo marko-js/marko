@@ -5,7 +5,7 @@ var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) =>
 	let x = 1;
 	_html(`<button class=inc>${_escape(x)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_dynamic_tag($scope0_id, "#text/2", input.content, [x], 0, 1);
-	_script($scope0_id, "__tests__/tags/custom-tag.marko_0_x");
+	_script($scope0_id, "__tests__/tags/custom-tag.marko_0");
 	writeScope($scope0_id, {
 		input_content: input.content,
 		x

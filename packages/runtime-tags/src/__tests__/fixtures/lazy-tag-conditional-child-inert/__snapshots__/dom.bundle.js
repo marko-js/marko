@@ -9,14 +9,13 @@ const $if_content__setup = ($scope) => {
 	$load_Child_tag_input_label($scope.b, "x");
 };
 const $if = /* @__PURE__ */ _if(1, "<!><!><!><!>", "b%/&c", $if_content__setup);
-const $count__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.c + 1);
-}));
 const $count = /* @__PURE__ */ _let(2, ($scope) => {
 	$if($scope, $scope.c % 2 === 0 ? 0 : 1);
 	$if_content__count($scope);
-	$count__script($scope);
 });
+const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
+	$count($scope, $scope.c + 1);
+}));
 
 // child.marko
 const $template = "<div><!>: <!></div>";

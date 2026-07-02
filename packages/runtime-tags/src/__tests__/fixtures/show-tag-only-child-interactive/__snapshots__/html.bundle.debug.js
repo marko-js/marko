@@ -8,8 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_show_start(open);
 	_html(`<button id=inc>count <!>${_escape(n)}${_el_resume($scope0_id, "#text/3")}</button>${_el_resume($scope0_id, "#button/2")}`);
 	_show_end($scope0_id, "#div/1", open, 1, 1, "</div>", 1);
-	_script($scope0_id, "__tests__/template.marko_0_n");
-	_script($scope0_id, "__tests__/template.marko_0_open");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		open,
 		n

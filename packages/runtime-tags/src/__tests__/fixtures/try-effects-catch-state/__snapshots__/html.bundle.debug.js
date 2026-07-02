@@ -12,6 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (clickCount > 1) throw new Error("ERROR!");
 		})())}${_el_resume($scope1_id, "#text/1")}`);
 		_script($scope1_id, "__tests__/template.marko_1_clickCount");
+		_script($scope1_id, "__tests__/template.marko_1");
 		_subscribe($clickCount__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"));
 		_resume_branch($scope1_id);
 	}, $scope0_id), { catch: attrTag({ content: _content_resume("__tests__/template.marko_2_content", (err) => {

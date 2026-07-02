@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { isAttributeTag } from "@marko/compiler/babel-utils";
+import { getProgram, isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { scopeIdentifier } from "../visitors/program";
 import {
@@ -38,6 +38,7 @@ import {
   getOrCreatePropertyAlias,
   getScopeAccessorLiteral,
   type InputBinding,
+  isInvokeOnlyBinding,
   mergeReferences,
   type ParamBinding,
   type ReferencedExtra,
@@ -644,6 +645,16 @@ function analyzeAttrs(
         known[attr.name] = { value: attrExtra };
         rootAttrExprs.add(attrExtra);
         setBindingDownstream(templateExportAttr.binding, attrExtra);
+        // A cross template child that only ever invokes this input makes the
+        // attribute `invokeOnly`. Same program prop trees may still be
+        // mid-analysis with incomplete reads, so they are skipped.
+        if (
+          getRootSection(templateExportAttr.binding.section) !==
+            getProgram().node.extra.section &&
+          isInvokeOnlyBinding(templateExportAttr.binding)
+        ) {
+          attrExtra.invokeOnly = true;
+        }
         if (
           knownSpread &&
           !includes(knownSpread.binding.excludeProperties, attr.name)
@@ -1494,4 +1505,9 @@ function isSimpleReference(expr: t.Expression): boolean {
     default:
       return false;
   }
+}
+
+function getRootSection(section: Section) {
+  while (section.parent) section = section.parent;
+  return section;
 }

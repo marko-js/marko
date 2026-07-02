@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		const $scope3_id = _scope_id();
 		_html("Loading...");
 	}, $scope0_id) }) });
-	_script($scope0_id, "__tests__/template.marko_0_show");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		show,
 		"ClosureScopes:show": $show__closures

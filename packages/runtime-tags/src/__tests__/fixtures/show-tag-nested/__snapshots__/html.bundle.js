@@ -13,7 +13,6 @@ var template_default = _template("a", (input) => {
 	_html(" after");
 	_show_end($scope0_id, "f", outer);
 	_script($scope0_id, "a0");
-	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		g: outer,
 		h: inner

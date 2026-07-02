@@ -119,6 +119,7 @@ export interface Binding {
   nullable: boolean;
   pruned: boolean | undefined;
   exposed: boolean;
+  forcePersist: boolean;
 }
 
 export interface InputBinding extends Binding {
@@ -145,6 +146,7 @@ interface Read {
   ownVar: boolean;
   getter: Getter | undefined;
   comparedTo: t.Node | undefined;
+  deferred: boolean;
 }
 
 interface ExtraRead {
@@ -165,6 +167,8 @@ declare module "@marko/compiler/dist/types" {
     read?: ExtraRead;
     pruned?: true;
     isEffect?: true;
+    invokeOnly?: true;
+    lazyBindings?: ReferencedBindings;
     spreadFrom?: Binding;
     nativeTagSpread?: true;
     nativeTagSpreadMerged?: true;
@@ -230,6 +234,7 @@ export function createBinding(
     nullable: !sameSection || excludeProperties === undefined,
     pruned: undefined,
     exposed: false,
+    forcePersist: false,
   };
 
   if (property) {
@@ -893,6 +898,10 @@ export function finalizeReferences() {
         intersectionsBySection,
       );
       expr.referencedBindings = exprBindings.referencedBindings;
+      expr.lazyBindings = exprBindings.lazyBindings;
+      forEach(exprBindings.lazyBindings, (binding) => {
+        binding.forcePersist = true;
+      });
       if (exprBindings.hoistedBindings) {
         expr.section.referencedHoists = bindingUtil.union(
           expr.section.referencedHoists,
@@ -905,6 +914,9 @@ export function finalizeReferences() {
           addSerializeReason(binding.section, true, binding);
         });
         forEach(exprBindings.constantBindings, (binding) => {
+          addSerializeReason(binding.section, true, binding);
+        });
+        forEach(exprBindings.lazyBindings, (binding) => {
           addSerializeReason(binding.section, true, binding);
         });
       }
@@ -920,7 +932,14 @@ export function finalizeReferences() {
                     exprBindings.allBindings,
                     fnReads,
                   );
-            fn.referencedBindingsInFunction = fnBindings.referencedBindings;
+            // The function itself still reads lazy bindings when invoked.
+            fn.referencedBindingsInFunction =
+              fn === expr
+                ? bindingUtil.union(
+                    fnBindings.referencedBindings,
+                    exprBindings.lazyBindings,
+                  )
+                : fnBindings.referencedBindings;
             fn.constantBindingsInFunction = fnBindings.constantBindings;
           }
         }
@@ -1009,7 +1028,8 @@ export function finalizeReferences() {
       getCanonicalBinding(binding),
     );
 
-    for (const { isEffect, section } of binding.reads) {
+    for (const exprExtra of binding.reads) {
+      const { isEffect, section } = exprExtra;
       if (section.depth > binding.section.depth) {
         if (binding.type === BindingType.local) {
           section.referencedLocalClosures = bindingUtil.add(
@@ -1018,14 +1038,17 @@ export function finalizeReferences() {
           );
         } else if (binding.type !== BindingType.dom) {
           const canonicalUpstreamAlias = getCanonicalBinding(binding);
-          canonicalUpstreamAlias.closureSections = sectionUtil.add(
-            canonicalUpstreamAlias.closureSections,
-            section,
-          );
-          section.referencedClosures = bindingUtil.add(
-            section.referencedClosures,
-            canonicalUpstreamAlias,
-          );
+          // Lazy-only reads need the owner scope chain but no closure signal.
+          if (!bindingUtil.has(exprExtra.lazyBindings, binding)) {
+            canonicalUpstreamAlias.closureSections = sectionUtil.add(
+              canonicalUpstreamAlias.closureSections,
+              section,
+            );
+            section.referencedClosures = bindingUtil.add(
+              section.referencedClosures,
+              canonicalUpstreamAlias,
+            );
+          }
 
           setReadsOwner(section, canonicalUpstreamAlias.section);
           addOwnerSerializeReason(
@@ -1571,6 +1594,7 @@ export function addRead(
     getter,
     ownVar: false,
     comparedTo: undefined,
+    deferred: false,
   };
   binding.reads.add(exprExtra);
   exprExtra.section = section;
@@ -1649,6 +1673,10 @@ function addReadToExpression(
   }
 
   if (fnRoot) {
+    // Accessor bodies run when the property is observed, not when a function
+    // is invoked.
+    read.deferred =
+      fnRoot.node.type !== "ObjectMethod" || fnRoot.node.kind === "method";
     const fnReadsByExpr = getFunctionReadsByExpression();
     let exprFnReads = fnReadsByExpr.get(exprExtra);
     if (!exprFnReads) {
@@ -1986,6 +2014,32 @@ export function getReadReplacement(
   }
 }
 
+// A binding whose receiving template can never observe its value: every read
+// is in an `invokeOnly` expression and nothing else (an assignment, hoist,
+// getter, or property access) can see it. An attribute providing such an
+// input is itself `invokeOnly` for the parent.
+export function isInvokeOnlyBinding(binding: Binding): boolean {
+  if (
+    binding.assignmentSections ||
+    binding.hoists ||
+    binding.getters.size ||
+    binding.propertyAliases.size ||
+    binding.excludeProperties
+  ) {
+    return false;
+  }
+
+  for (const expr of binding.reads) {
+    if (!expr.invokeOnly) return false;
+  }
+
+  for (const alias of binding.aliases) {
+    if (!isInvokeOnlyBinding(alias)) return false;
+  }
+
+  return true;
+}
+
 export function hasNonConstantPropertyAlias(ref: Binding) {
   for (const alias of ref.propertyAliases.values()) {
     if (alias.type !== BindingType.constant) {
@@ -2135,8 +2189,31 @@ function addBindingGetter(binding: Binding, { invoked, hoisted }: Getter) {
   }
 }
 
+// A lazy read is excluded from its expression's `referencedBindings` and
+// instead reads the binding's scope slot when its containing function is
+// invoked. Sound when the expression is `invokeOnly`, the read is deferred,
+// and the emitted read is a plain own scope slot that can be kept current
+// without a subscriber (so not a change handler read, an alias slot, or a
+// `local` from an ancestor section).
+function isLazyRead(
+  expr: { section: Section; invokeOnly?: true },
+  read: Read,
+  binding: Binding,
+  isChangeHandlerRead: boolean,
+) {
+  return !!(
+    expr.invokeOnly &&
+    read.deferred &&
+    !isChangeHandlerRead &&
+    !binding.upstreamAlias &&
+    binding.type !== BindingType.dom &&
+    binding.type !== BindingType.constant &&
+    (binding.type !== BindingType.local || binding.section === expr.section)
+  );
+}
+
 function resolveReferencedBindings(
-  expr: { section: Section; isEffect?: boolean },
+  expr: { section: Section; isEffect?: boolean; invokeOnly?: true },
   reads: Opt<Read>,
   intersectionsBySection: Map<Section, Intersection[]>,
 ) {
@@ -2144,6 +2221,7 @@ function resolveReferencedBindings(
   let constantBindings: ReferencedBindings;
   let hoistedBindings: ReferencedBindings;
   let allBindings: ReferencedBindings;
+  let lazyBindings: ReferencedBindings;
 
   if (Array.isArray(reads)) {
     const rootBindings = getRootBindings(reads);
@@ -2160,7 +2238,8 @@ function resolveReferencedBindings(
           hoistedBindings = bindingUtil.add(hoistedBindings, binding);
         }
       } else {
-        if (extra.assignmentTo === binding) {
+        const isChangeHandlerRead = extra.assignmentTo === binding;
+        if (isChangeHandlerRead) {
           const upstreamRoot =
             binding.upstreamAlias &&
             findClosestReference(binding.upstreamAlias, rootBindings);
@@ -2174,7 +2253,9 @@ function resolveReferencedBindings(
             binding,
           ));
         }
-        if (binding.type === BindingType.constant) {
+        if (isLazyRead(expr, read, binding, isChangeHandlerRead)) {
+          lazyBindings = bindingUtil.add(lazyBindings, binding);
+        } else if (binding.type === BindingType.constant) {
           constantBindings = bindingUtil.add(constantBindings, binding);
         } else if (binding.type !== BindingType.dom) {
           referencedBindings = bindingUtil.add(referencedBindings, binding);
@@ -2194,7 +2275,9 @@ function resolveReferencedBindings(
       }
     } else {
       extra.read = createRead(binding, undefined, ownVar);
-      if (binding.type === BindingType.constant) {
+      if (isLazyRead(expr, reads, binding, extra.assignmentTo === binding)) {
+        lazyBindings = binding;
+      } else if (binding.type === BindingType.constant) {
         constantBindings = binding;
       } else if (binding.type !== BindingType.dom) {
         referencedBindings = binding;
@@ -2203,6 +2286,17 @@ function resolveReferencedBindings(
 
     extra.section = expr.section;
     allBindings = binding;
+  }
+
+  if (lazyBindings) {
+    // A binding also read live by this expression stays subscribed.
+    let onlyLazy: ReferencedBindings;
+    forEach(lazyBindings, (binding) => {
+      if (!bindingUtil.has(referencedBindings, binding)) {
+        onlyLazy = bindingUtil.add(onlyLazy, binding);
+      }
+    });
+    lazyBindings = onlyLazy;
   }
 
   if (Array.isArray(referencedBindings)) {
@@ -2250,6 +2344,7 @@ function resolveReferencedBindings(
     constantBindings,
     hoistedBindings,
     allBindings,
+    lazyBindings,
   };
 }
 

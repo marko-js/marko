@@ -1,15 +1,13 @@
 // child.marko
 const $template = "<button>count: <!></button>";
 const $walks = " Db%l";
-const $count__script = _script("__tests__/child.marko_0_count", ($scope) => _on($scope["#button/0"], "click", function() {
+const $count = /* @__PURE__ */ _let("count/2", ($scope) => _text($scope["#text/1"], $scope.count));
+const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + $scope.$global.config.step);
 }));
-const $count = /* @__PURE__ */ _let("count/2", ($scope) => {
-	_text($scope["#text/1"], $scope.count);
-	$count__script($scope);
-});
 function $setup($scope) {
 	$count($scope, 0);
+	$setup__script($scope);
 }
 var child_default = /* @__PURE__ */ _template("__tests__/child.marko", $template, $walks, $setup);
 

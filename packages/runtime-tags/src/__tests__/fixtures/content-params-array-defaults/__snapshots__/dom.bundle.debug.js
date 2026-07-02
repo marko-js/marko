@@ -10,15 +10,15 @@ const $Wrap_content__tag_param_ = ($scope, $temp) => {
 	$Wrap_content__b($scope, $temp[1]);
 };
 const $Wrap_content__$params = ($scope, $params2) => $Wrap_content__tag_param_($scope, $params2?.[0]);
-const $n__script = _script("__tests__/template.marko_0_n", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
-}));
 const $n = /* @__PURE__ */ _let("n/3", ($scope) => {
 	$Wrap_content__tag_param_($scope["#childScope/1"], [undefined, $scope.n]);
 	$Wrap_content__tag_param_($scope["#childScope/2"], [$scope.n, 10]);
-	$n__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$n($scope, $scope.n + 1);
+}));
 function $setup($scope) {
 	$n($scope, 2);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

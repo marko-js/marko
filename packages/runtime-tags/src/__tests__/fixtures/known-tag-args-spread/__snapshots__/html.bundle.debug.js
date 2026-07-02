@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		row: attrTag({ r: x })
 	});
 	_html(`<button>inc <!>${_escape(x)}${_el_resume($scope0_id, "#text/4")}</button>${_el_resume($scope0_id, "#button/3")}`);
-	_script($scope0_id, "__tests__/template.marko_0_x");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		x,
 		"ClosureScopes:input": $si__input && $input__closures,

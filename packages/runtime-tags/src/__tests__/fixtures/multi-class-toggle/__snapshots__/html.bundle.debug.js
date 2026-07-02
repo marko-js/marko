@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		"a b c": true,
 		"d e f": count % 2
 	})}>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/template.marko_0_count");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

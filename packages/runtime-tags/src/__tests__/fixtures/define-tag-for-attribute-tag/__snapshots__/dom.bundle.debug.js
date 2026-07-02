@@ -18,18 +18,16 @@ const $template = /* @__PURE__ */ ((_w0) => `${_w0}<button>Toggle</button>`)($te
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}& b`)($walks$1);
 const $myThing_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "<span>The thing</span>", "b");
 const $myThing = ($scope, myThing) => $input_thing($scope["#childScope/0"], myThing);
-const $selected__script = _script("__tests__/template.marko_0_selected", ($scope) => _on($scope["#button/1"], "click", function() {
+const $selected = /* @__PURE__ */ _let("selected/2", ($scope) => $myThing($scope, {
+	selected: $scope.selected,
+	content: $myThing_content($scope)
+}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$selected($scope, !$scope.selected);
 }));
-const $selected = /* @__PURE__ */ _let("selected/2", ($scope) => {
-	$myThing($scope, {
-		selected: $scope.selected,
-		content: $myThing_content($scope)
-	});
-	$selected__script($scope);
-});
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$selected($scope, false);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

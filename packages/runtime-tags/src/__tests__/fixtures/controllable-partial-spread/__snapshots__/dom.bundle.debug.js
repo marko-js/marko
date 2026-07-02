@@ -16,13 +16,9 @@ const $v__OR__rest = /* @__PURE__ */ _or(6, ($scope) => {
 	});
 	$v__OR__rest__script($scope);
 });
-const $v__script = _script("__tests__/template.marko_0_v", ($scope) => _on($scope["#button/0"], "click", function() {
-	$v($scope, $scope.v + "!");
-}));
 const $v = /* @__PURE__ */ _let("v/4", ($scope) => {
 	_attr_input_value($scope, "#input/3", $scope.v, $valueChange($scope));
 	$v__OR__rest($scope);
-	$v__script($scope);
 });
 const $rest__script = _script("__tests__/template.marko_0_rest", ($scope) => _attrs_script($scope, "#input/3"));
 const $rest = /* @__PURE__ */ _const("rest", ($scope) => {
@@ -33,7 +29,12 @@ const $rest = /* @__PURE__ */ _const("rest", ($scope) => {
 	$v__OR__rest($scope);
 	$rest__script($scope);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_input_value_script($scope, "#input/3"));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	_on($scope["#button/0"], "click", function() {
+		$v($scope, $scope.v + "!");
+	});
+	_attr_input_value_script($scope, "#input/3");
+});
 function $setup($scope) {
 	$v($scope, "a");
 	$rest($scope, { placeholder: "p" });

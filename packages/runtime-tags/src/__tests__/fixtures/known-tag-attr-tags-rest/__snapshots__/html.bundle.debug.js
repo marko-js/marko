@@ -39,19 +39,19 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		0: 1,
 		2: 1
 	});
-	let $cond2;
+	let $cond;
 	if (cond) {
-		$cond2 = attrTag({ a: 1 });
+		$cond = attrTag({ a: 1 });
 	} else {
-		$cond2 = attrTag({ a: 2 });
+		$cond = attrTag({ a: 2 });
 	}
 	child_default({
 		title: "t",
-		cond: $cond2,
+		cond: $cond,
 		row: attrTags(attrTag({ x: 1 }), { x: 2 }),
 		other: attrTag({ y: 1 })
 	});
-	_script($scope0_id, "__tests__/template.marko_0_cond");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		cond,
 		"#childScope/1": _existing_scope($childScope)

@@ -7,8 +7,6 @@ var child_default = _template("b", (input) => {
 	let thirdState = input.value;
 	_html(`<button>${_escape(input.value)}${_el_resume($scope0_id, "b", $sg__input_value)}|<!>${_escape(state)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "a")}<button>${_escape(input.value)}${_el_resume($scope0_id, "e", $sg__input_value)}|<!>${_escape(otherState)}${_el_resume($scope0_id, "f")}</button>${_el_resume($scope0_id, "d")}<button>${_escape(input.value)}${_el_resume($scope0_id, "h", $sg__input_value)}|<!>${_escape(thirdState)}${_el_resume($scope0_id, "i")}</button>${_el_resume($scope0_id, "g")}`);
 	_script($scope0_id, "b0");
-	_script($scope0_id, "b1");
-	_script($scope0_id, "b2");
 	writeScope($scope0_id, {
 		l: _serialize_if($scope0_reason, 1) && input.value,
 		m: _serialize_if($scope0_reason, 0) && input.valueChange,

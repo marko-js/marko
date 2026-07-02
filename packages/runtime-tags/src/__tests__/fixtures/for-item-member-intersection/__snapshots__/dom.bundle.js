@@ -7,10 +7,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__item_b($scope, $params2[0]?.b);
 };
 const $for = /* @__PURE__ */ _for_of(0, "<li> </li>", "D l", 0, $for_content__$params);
-const $list__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
+const $list = /* @__PURE__ */ _let(2, ($scope) => $for($scope, [$scope.c]));
+const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
 	$list($scope, [...$scope.c].reverse());
 }));
-const $list = /* @__PURE__ */ _let(2, ($scope) => {
-	$for($scope, [$scope.c]);
-	$list__script($scope);
-});

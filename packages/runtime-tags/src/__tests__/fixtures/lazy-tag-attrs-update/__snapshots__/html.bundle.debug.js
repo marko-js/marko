@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
 	$Child_withLoadAssets({ value });
-	_script($scope0_id, "__tests__/template.marko_0_value");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		value,
 		"#childScope/2": _existing_scope($childScope)

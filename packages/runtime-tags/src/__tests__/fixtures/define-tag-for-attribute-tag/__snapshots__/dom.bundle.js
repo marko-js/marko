@@ -10,13 +10,10 @@ const $input_thing = ($scope, input_thing) => {
 // template.marko
 const $myThing_content = /* @__PURE__ */ _content("a0", "<span>The thing</span>", "b");
 const $myThing = ($scope, myThing) => $input_thing($scope.a, myThing);
-const $selected__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
+const $selected = /* @__PURE__ */ _let(2, ($scope) => $myThing($scope, {
+	selected: $scope.c,
+	content: $myThing_content($scope)
+}));
+const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$selected($scope, !$scope.c);
 }));
-const $selected = /* @__PURE__ */ _let(2, ($scope) => {
-	$myThing($scope, {
-		selected: $scope.c,
-		content: $myThing_content($scope)
-	});
-	$selected__script($scope);
-});

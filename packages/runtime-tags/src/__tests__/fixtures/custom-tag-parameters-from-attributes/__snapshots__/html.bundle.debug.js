@@ -8,7 +8,7 @@ var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) =>
 		count: x,
 		name: input.name
 	});
-	_script($scope0_id, "__tests__/tags/custom-tag.marko_0_x");
+	_script($scope0_id, "__tests__/tags/custom-tag.marko_0");
 	writeScope($scope0_id, {
 		input_content: input.content,
 		input_name: input.name,

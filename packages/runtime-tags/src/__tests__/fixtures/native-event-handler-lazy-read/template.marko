@@ -1,0 +1,9 @@
+// The handler reads the current `message` lazily from scope; changing it does not re-attach the handler.
+<let/message="hello"/>
+<let/log=""/>
+
+<button onClick() { log = `${log}[${message}]`; }>show</button>
+<button onClick() { message += "!"; }>append</button>
+
+<div.message>${message}</div>
+<div.log>${log}</div>

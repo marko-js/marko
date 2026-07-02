@@ -39,18 +39,17 @@ const $for_content__outerItem = /* @__PURE__ */ _const(3, ($scope) => {
 });
 const $for_content__$params = ($scope, $params2) => $for_content__outerItem($scope, $params2[0]);
 const $for = /* @__PURE__ */ _for_of(2, /* @__PURE__ */ ((_w0) => `<div>${_w0}<!></div>`)($template), /* @__PURE__ */ ((_w0) => `D/${_w0}&%l`)("D l"), $for_content__setup, $for_content__$params);
-const $items__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
+const $items = /* @__PURE__ */ _let(3, ($scope) => {
+	$for($scope, [$scope.d]);
+	$for_content__items($scope);
+});
+const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$items($scope, $scope.d?.length ? $scope.d.slice(0, -1) : [
 		1,
 		2,
 		3
 	]);
 }));
-const $items = /* @__PURE__ */ _let(3, ($scope) => {
-	$for($scope, [$scope.d]);
-	$for_content__items($scope);
-	$items__script($scope);
-});
 function $write($scope) {
 	return function(msg) {
 		$scope.b.innerHTML += "\n" + msg;

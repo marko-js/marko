@@ -12,19 +12,17 @@ var my_img_default = /* @__PURE__ */ _template("__tests__/tags/my-img.marko", $t
 // template.marko
 const $template = /* @__PURE__ */ ((_w0) => `<button>toggle</button>${_w0}`)($template$1);
 const $walks = /* @__PURE__ */ ((_w0) => ` b/${_w0}&`)(" b");
-const $cls__script = _script("__tests__/template.marko_0_cls", ($scope) => _on($scope["#button/0"], "click", function() {
+const $cls = /* @__PURE__ */ _let("cls/2", ($scope) => $input($scope["#childScope/1"], {
+	class: $scope.cls,
+	src: "x.png",
+	alt: "pic"
+}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$cls($scope, $scope.cls === "a" ? "b" : "a");
 }));
-const $cls = /* @__PURE__ */ _let("cls/2", ($scope) => {
-	$input($scope["#childScope/1"], {
-		class: $scope.cls,
-		src: "x.png",
-		alt: "pic"
-	});
-	$cls__script($scope);
-});
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 	$cls($scope, "a");
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

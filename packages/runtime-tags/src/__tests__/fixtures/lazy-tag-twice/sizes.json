@@ -1,8 +1,8 @@
 {
   "dom": {
     "child.mjs": {
-      "min": 138,
-      "brotli": 111
+      "min": 129,
+      "brotli": 104
     }
   },
   "html": {

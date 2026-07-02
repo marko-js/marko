@@ -143,6 +143,8 @@ export default {
 
           if (isEventHandler(attr.name)) {
             valueExtra.isEffect = true;
+            // Attached once and only invoked, so reads inside can be lazy.
+            valueExtra.invokeOnly = true;
             hasEventHandlers = true;
           } else {
             assertValidNativeEventHandlerAttr(tag, attr);
@@ -234,6 +236,9 @@ export default {
           );
 
           spreadExtra.nativeTagSpread = true;
+          // Functions in native tag attrs are only ever invoked (handlers)
+          // or stringified from static source, so reads inside can be lazy.
+          spreadExtra.invokeOnly = true;
           if (isMergedSpread) {
             spreadExtra.nativeTagSpreadMerged = true;
           }

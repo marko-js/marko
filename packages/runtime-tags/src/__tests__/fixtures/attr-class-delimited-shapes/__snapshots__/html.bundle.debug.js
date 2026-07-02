@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		["margin:0", d && "padding:0"],
 		...moreStyles
 	])}></div>${_el_resume($scope0_id, "#div/2")}`);
-	_script($scope0_id, "__tests__/template.marko_0_d");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		d,
 		more,

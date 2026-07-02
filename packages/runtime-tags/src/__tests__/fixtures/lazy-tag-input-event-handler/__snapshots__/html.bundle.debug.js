@@ -5,7 +5,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	let data = input.data;
 	let verified = "?";
 	_html(`<button class=child>child:<!>${_escape(verified)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/child.marko_0_input_data");
+	_script($scope0_id, "__tests__/child.marko_0_input");
 	writeScope($scope0_id, {
 		input,
 		data
@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return o === shared;
 		}, "__tests__/template.marko_0/report", $scope0_id)
 	});
-	_script($scope0_id, "__tests__/template.marko_0_shared_count");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		shared,
 		count

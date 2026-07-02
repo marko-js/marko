@@ -17,28 +17,29 @@ const $Parent__OR__Child__script = _script("__tests__/template.marko_0_Parent_Ch
 	}
 });
 const $Parent__OR__Child = /* @__PURE__ */ _or(13, $Parent__OR__Child__script);
-const $Parent__script = _script("__tests__/template.marko_0_Parent", ($scope) => _on($scope["#button/6"], "click", function() {
-	$Parent($scope, $scope.Parent === "div" ? "svg" : "div");
-}));
 const $Parent = /* @__PURE__ */ _let("Parent/11", ($scope) => {
 	$dynamicTag3($scope, $scope.Parent);
 	$Parent__OR__Child($scope);
-	$Parent__script($scope);
 });
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/2", $Child_content);
 const $dynamicTag2 = /* @__PURE__ */ _dynamic_tag("#text/4", $Child_content2);
-const $Child__script = _script("__tests__/template.marko_0_Child", ($scope) => _on($scope["#button/7"], "click", function() {
-	$Child($scope, $scope.Child === "a" ? null : "a");
-}));
 const $Child = /* @__PURE__ */ _let("Child/12", ($scope) => {
 	$dynamicTag($scope, $scope.Child, () => ({ href: "#bar" }));
 	$dynamicTag2($scope, $scope.Child, () => ({ href: "#bar" }));
 	$Parent__OR__Child($scope);
-	$Child__script($scope);
+});
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	_on($scope["#button/6"], "click", function() {
+		$Parent($scope, $scope.Parent === "div" ? "svg" : "div");
+	});
+	_on($scope["#button/7"], "click", function() {
+		$Child($scope, $scope.Child === "a" ? null : "a");
+	});
 });
 function $setup($scope) {
 	$Parent($scope, "div");
 	$Child($scope, "a");
+	$setup__script($scope);
 }
 const $input_value__closure = /* @__PURE__ */ _closure($Parent_content__input_value);
 const $input_value = /* @__PURE__ */ _const("input_value", ($scope) => {

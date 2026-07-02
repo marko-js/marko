@@ -7,7 +7,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	_html(`<button${_attr("id", input.id)}${_attr("data-internal", x)}>`);
 	_dynamic_tag($scope0_id, "#text/1", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0));
 	_html(`</button>${_el_resume($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/tags/counter.marko_0_x");
+	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	writeScope($scope0_id, {
 		$countChange: _serialize_if($scope0_reason, 2) && $countChange,
 		count: _serialize_if($scope0_reason, 1) && count,

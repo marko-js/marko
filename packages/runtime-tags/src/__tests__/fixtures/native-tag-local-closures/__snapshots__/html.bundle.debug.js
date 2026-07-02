@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	Child.content({ item: $item });
 	_html(`<button>Add</button>${_el_resume($scope0_id, "#button/1")}`);
-	_script($scope0_id, "__tests__/template.marko_0_size");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		size,
 		"#childScope/0": _existing_scope($childScope)

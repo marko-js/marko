@@ -53,34 +53,28 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__write = /* @__PURE__ */ _if_closure("#text/4", 0, ($scope) => $write$1($scope["#childScope/0"], $scope._.write));
 const $if = /* @__PURE__ */ _if("#text/4", /* @__PURE__ */ ((_w0) => `<div>${_w0}<!></div>`)($template$1), /* @__PURE__ */ ((_w0) => `D/${_w0}&%l`)($walks$1), $if_content__setup);
-const $showOuter__script = _script("__tests__/template.marko_0_showOuter", ($scope) => _on($scope["#button/0"], "click", function() {
-	$showOuter($scope, !$scope.showOuter);
-}));
-const $showOuter = /* @__PURE__ */ _let("showOuter/5", ($scope) => {
-	$if($scope, $scope.showOuter ? 0 : 1);
-	$showOuter__script($scope);
-});
-const $showMiddle__script = _script("__tests__/template.marko_0_showMiddle", ($scope) => _on($scope["#button/1"], "click", function() {
-	$showMiddle($scope, !$scope.showMiddle);
-}));
-const $showMiddle = /* @__PURE__ */ _let("showMiddle/6", ($scope) => {
-	$if_content__showMiddle($scope);
-	$showMiddle__script($scope);
-});
+const $showOuter = /* @__PURE__ */ _let("showOuter/5", ($scope) => $if($scope, $scope.showOuter ? 0 : 1));
+const $showMiddle = /* @__PURE__ */ _let("showMiddle/6", $if_content__showMiddle);
 const $showInner__closure = /* @__PURE__ */ _closure($if_content2__showInner);
-const $showInner__script = _script("__tests__/template.marko_0_showInner", ($scope) => _on($scope["#button/2"], "click", function() {
-	$showInner($scope, !$scope.showInner);
-}));
-const $showInner = /* @__PURE__ */ _let("showInner/7", ($scope) => {
-	$showInner__closure($scope);
-	$showInner__script($scope);
-});
+const $showInner = /* @__PURE__ */ _let("showInner/7", $showInner__closure);
 const $write2 = /* @__PURE__ */ _const("write");
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	_on($scope["#button/0"], "click", function() {
+		$showOuter($scope, !$scope.showOuter);
+	});
+	_on($scope["#button/1"], "click", function() {
+		$showMiddle($scope, !$scope.showMiddle);
+	});
+	_on($scope["#button/2"], "click", function() {
+		$showInner($scope, !$scope.showInner);
+	});
+});
 function $setup($scope) {
 	$showOuter($scope, true);
 	$showMiddle($scope, true);
 	$showInner($scope, true);
 	$write2($scope, $write($scope));
+	$setup__script($scope);
 }
 function $write($scope) {
 	return function(msg) {

@@ -14,7 +14,6 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "c");
 	_script($scope0_id, "a0");
-	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		d: show,
 		e: count

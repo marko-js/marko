@@ -20,13 +20,11 @@ const $mybutton_content__clickCount = /* @__PURE__ */ _closure_get("clickCount",
 const $mybutton_content__setup = $mybutton_content__clickCount;
 const $mybutton_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", " ", " b", $mybutton_content__setup);
 const $clickCount__closure = /* @__PURE__ */ _closure($mybutton_content__clickCount);
-const $clickCount = /* @__PURE__ */ _let("clickCount/1", ($scope) => {
-	$onClick$1($scope["#childScope/0"], $onClick($scope));
-	$clickCount__closure($scope);
-});
+const $clickCount = /* @__PURE__ */ _let("clickCount/1", $clickCount__closure);
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$content_direct($scope["#childScope/0"], $mybutton_content($scope));
+	$onClick$1($scope["#childScope/0"], $onClick($scope));
 	$clickCount($scope, 0);
 }
 function $onClick($scope) {

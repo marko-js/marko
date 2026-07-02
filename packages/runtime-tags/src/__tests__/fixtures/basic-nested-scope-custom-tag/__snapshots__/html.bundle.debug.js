@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<button>${_escape(count)}${_el_resume($scope1_id, "#text/1")}</button>${_el_resume($scope1_id, "#button/0")}`);
-		_script($scope1_id, "__tests__/template.marko_1_count");
+		_script($scope1_id, "__tests__/template.marko_1");
 		_subscribe($count__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "2:2"));
 		_resume_branch($scope1_id);
 	}) });

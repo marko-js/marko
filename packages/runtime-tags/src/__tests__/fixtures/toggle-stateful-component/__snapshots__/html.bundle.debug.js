@@ -6,7 +6,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	_html(`<button>${_escape(((() => {
 		if (clickCount > 0) throw new Error("This should not have executed since the parent removes this component when the count is greater than 0");
 	})(), clickCount))}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/tags/counter.marko_0_input_onCount_clickCount");
+	_script($scope0_id, "__tests__/tags/counter.marko_0_input_onCount");
 	writeScope($scope0_id, {
 		input_onCount: input.onCount,
 		clickCount

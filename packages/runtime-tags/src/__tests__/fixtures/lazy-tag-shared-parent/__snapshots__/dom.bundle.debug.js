@@ -30,18 +30,18 @@ var parent_b_default = /* @__PURE__ */ _template("__tests__/tags/parent-b.marko"
 // template.marko
 const $template = /* @__PURE__ */ ((_w0, _w1) => `<button>Inc</button>${_w0}${_w1}<!>`)($template$2, $template$1);
 const $walks = /* @__PURE__ */ ((_w0, _w1) => ` b/${_w0}&/${_w1}&b`)($walks$2, $walks$1);
-const $value__script = _script("__tests__/template.marko_0_value", ($scope) => _on($scope["#button/0"], "click", function() {
-	$value($scope, $scope.value + 1);
-}));
 const $value = /* @__PURE__ */ _let("value/3", ($scope) => {
 	$input_value$1($scope["#childScope/1"], $scope.value);
 	$input_value($scope["#childScope/2"], $scope.value);
-	$value__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$value($scope, $scope.value + 1);
+}));
 function $setup($scope) {
 	$setup$2($scope["#childScope/1"]);
 	$setup$1($scope["#childScope/2"]);
 	$value($scope, 1);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
 

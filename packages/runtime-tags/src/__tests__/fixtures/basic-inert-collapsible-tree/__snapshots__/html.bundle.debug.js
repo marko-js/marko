@@ -29,7 +29,7 @@ const $content = (input) => {
 			}
 		}, $scope1_id, "#text/4", $sg__input_comments__OR__input_path, $sg__input_comments, $sg__input_comments, 0, 1);
 		_html(`</li>${_el_resume($scope1_id, "#li/0")}`);
-		_script($scope1_id, "__tests__/tags/comments.marko_1_open");
+		_script($scope1_id, "__tests__/tags/comments.marko_1");
 		writeScope($scope1_id, {
 			comment_comments: $si__input_comments && comment?.comments,
 			"#LoopKey": _serialize_if($scope0_reason, 2) && i,

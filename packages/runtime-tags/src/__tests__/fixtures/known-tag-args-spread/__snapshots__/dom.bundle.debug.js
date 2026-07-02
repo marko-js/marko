@@ -23,15 +23,14 @@ const $x__OR__args = ($scope) => {
 		row: attrTag({ r: $scope.x })
 	}]);
 };
-const $x__script = _script("__tests__/template.marko_0_x", ($scope) => _on($scope["#button/3"], "click", function() {
-	$x($scope, $scope.x + 1);
-}));
 const $x = /* @__PURE__ */ _let("x/7", ($scope) => {
 	_text($scope["#text/4"], $scope.x);
 	$args($scope, [$scope.x, 2]);
 	$x__OR__args($scope);
-	$x__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
+	$x($scope, $scope.x + 1);
+}));
 function $setup($scope) {
 	$MyTag_content__setup._($scope["#childScope/0"], $scope);
 	$MyTag_content__setup._($scope["#childScope/1"], $scope);
@@ -39,6 +38,7 @@ function $setup($scope) {
 	$MyTag_content__b($scope["#childScope/1"], 8);
 	$MyTag_content__setup._($scope["#childScope/2"], $scope);
 	$x($scope, 1);
+	$setup__script($scope);
 }
 const $input__closure = /* @__PURE__ */ _closure($MyTag_content__input);
 const $input = /* @__PURE__ */ _const("input", $input__closure);

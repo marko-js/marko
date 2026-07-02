@@ -1,15 +1,12 @@
 // child.marko
 const $template = "<button class=child><!>: <!></button>";
 const $walks = " D%c%l";
-const $setup = () => {};
-const $count__script = _script("__tests__/child.marko_0_count", ($scope) => _on($scope["#button/0"], "click", function() {
+const $count = /* @__PURE__ */ _let("count/7", ($scope) => _text($scope["#text/2"], $scope.count));
+const $input_value = $count;
+const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
-const $count = /* @__PURE__ */ _let("count/7", ($scope) => {
-	_text($scope["#text/2"], $scope.count);
-	$count__script($scope);
-});
-const $input_value = $count;
+const $setup = $setup__script;
 const $input_label = ($scope, input_label) => _text($scope["#text/1"], input_label);
 const $input = ($scope, input) => {
 	$input_value($scope, input.value);
@@ -30,17 +27,17 @@ const $if_content__setup = ($scope) => {
 	$load_Child_tag_input_label($scope["#childScope/1"], "child");
 };
 const $if = /* @__PURE__ */ _if("#text/1", "<!><!><!><!>", "b%/&c", $if_content__setup);
-const $value__script = _script("__tests__/template.marko_0_value", ($scope) => _on($scope["#button/0"], "click", function() {
-	$value($scope, $scope.value + 1);
-}));
 const $value = /* @__PURE__ */ _let("value/2", ($scope) => {
 	$if($scope, $scope.value % 2 === 0 ? 0 : 1);
 	$if_content__value($scope);
-	$value__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$value($scope, $scope.value + 1);
+}));
 function $setup($scope) {
 	true;
 	$value($scope, 0);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
 

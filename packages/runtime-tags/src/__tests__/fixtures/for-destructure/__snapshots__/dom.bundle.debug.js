@@ -8,7 +8,8 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__description($scope, ($params2?.[0]).description);
 };
 const $for = /* @__PURE__ */ _for_of("#text/0", "<div><!>: <!></div>", "D%c%l", 0, $for_content__$params);
-const $items__script = _script("__tests__/template.marko_0_items", ($scope) => {
+const $items = /* @__PURE__ */ _let("items/3", ($scope) => $for($scope, [$scope.items]));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {
 		$items($scope, [...$scope.items, {
 			name: "JavaScript",
@@ -19,15 +20,12 @@ const $items__script = _script("__tests__/template.marko_0_items", ($scope) => {
 		$items($scope, $scope.items.slice(0, -1));
 	});
 });
-const $items = /* @__PURE__ */ _let("items/3", ($scope) => {
-	$for($scope, [$scope.items]);
-	$items__script($scope);
-});
 function $setup($scope) {
 	0;
 	$items($scope, [{
 		name: "Marko",
 		description: "HTML Reimagined"
 	}]);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
