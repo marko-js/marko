@@ -1,0 +1,13 @@
+<let/outer=true/>
+<let/inner=false/>
+
+<button id="o" onClick() { outer = !outer }>outer</button>
+<button id="i" onClick() { inner = !inner }>inner</button>
+
+<show=outer>
+  before
+  <show=inner>
+    <em>nested</em>
+  </show>
+  after
+</show>

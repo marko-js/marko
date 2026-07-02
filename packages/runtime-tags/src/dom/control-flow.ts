@@ -444,6 +444,74 @@ export function _if(
   };
 }
 
+// The `<show>` body is inline parent content that always exists, so this
+// signal never renders anything: it only moves the body's node range between
+// the document and a detached fragment. Server rendered hidden content
+// arrives in a `<t hidden>` wrapper that is dissolved the first time the
+// value changes.
+export function _show(
+  nodeAccessor: EncodedAccessor,
+  startNodeAccessor?: EncodedAccessor,
+) {
+  if (!MARKO_DEBUG) {
+    nodeAccessor = decodeAccessor(nodeAccessor as number);
+    if (startNodeAccessor !== undefined) {
+      startNodeAccessor = decodeAccessor(startNodeAccessor as number);
+    }
+  }
+  const rangeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+  enableBranches();
+  return (scope: Scope, display: unknown) => {
+    // The reference node is the parent element when the `<show>` is its only
+    // child, otherwise a marker node just after the body.
+    const referenceNode = scope[nodeAccessor] as ChildNode;
+    const onlyChild = referenceNode.nodeType === NodeType.Element;
+    const parentNode = onlyChild
+      ? (referenceNode as unknown as ParentNode & Element)
+      : referenceNode.parentNode!;
+    let range = scope[rangeAccessor] as BranchScope | undefined;
+
+    if (!range) {
+      // Client render: derive the range from the template's static shape.
+      range = scope[rangeAccessor] = {} as BranchScope;
+      range[AccessorProp.StartNode] = onlyChild
+        ? parentNode.firstChild!
+        : (scope[startNodeAccessor as Accessor] as ChildNode);
+      range[AccessorProp.EndNode] = onlyChild
+        ? parentNode.lastChild!
+        : referenceNode.previousSibling!;
+    }
+
+    let startNode = range[AccessorProp.StartNode];
+    if (
+      range[AccessorProp.Id] &&
+      startNode === range[AccessorProp.EndNode] &&
+      (startNode as Partial<Element>).tagName === "T"
+    ) {
+      // First update after resuming hidden: dissolve the `<t>`
+      // wrapper, leaving its children in place. Only a range resumed from
+      // marks (with a scope id) can hold a wrapper; replacing it with a plain
+      // holder makes this happen at most once so a `<t>` in the body is never
+      // mistaken for the wrapper.
+      const wrapper = startNode as Element;
+      if (!wrapper.firstChild) wrapper.appendChild(new Text());
+      range = scope[rangeAccessor] = {} as BranchScope;
+      range[AccessorProp.StartNode] = startNode = wrapper.firstChild!;
+      range[AccessorProp.EndNode] = wrapper.lastChild!;
+      wrapper.replaceWith(...wrapper.childNodes);
+    }
+
+    const inDom = startNode.parentNode === parentNode;
+    if (display) {
+      if (!inDom) {
+        insertBranchBefore(range, parentNode, onlyChild ? null : referenceNode);
+      }
+    } else if (inDom) {
+      tempDetachBranch(range);
+    }
+  };
+}
+
 export function patchDynamicTag(
   fn: <T extends typeof _dynamic_tag>(cond: T) => T,
 ) {

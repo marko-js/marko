@@ -285,6 +285,7 @@ export function getNodeContentType(
           case "if":
           case "await":
           case "try":
+          case "show":
             return ContentType.Dynamic;
           default:
             return null;
@@ -481,10 +482,14 @@ function compareParamGroups(
 
 function isNativeNode(tag: t.NodePath<t.MarkoTag>) {
   if (isCoreTag(tag)) {
+    // The `<show>` body, like the html-* tags' content, is always rendered
+    // exactly once, so it compiles inline into the parent section rather
+    // than as its own section.
     switch (tag.node.name.value) {
       case "html-comment":
       case "html-script":
       case "html-style":
+      case "show":
         return true;
       default:
         return false;

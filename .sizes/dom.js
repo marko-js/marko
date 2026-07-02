@@ -1,4 +1,4 @@
-// size: 24880 (min) 9203 (brotli)
+// size: 25305 (min) 9298 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1942,6 +1942,47 @@ function _if(nodeAccessor, ...branchesArgs) {
           branches[(scope[branchAccessor] = newBranch)],
           createAndSetupBranch,
         );
+    }
+  );
+}
+function _show(nodeAccessor, startNodeAccessor) {
+  ((nodeAccessor = decodeAccessor(nodeAccessor)),
+    startNodeAccessor !== void 0 &&
+      (startNodeAccessor = decodeAccessor(startNodeAccessor)));
+  let rangeAccessor = "A" + nodeAccessor;
+  return (
+    enableBranches(),
+    (scope, display) => {
+      let referenceNode = scope[nodeAccessor],
+        onlyChild = referenceNode.nodeType === 1,
+        parentNode = onlyChild ? referenceNode : referenceNode.parentNode,
+        range = scope[rangeAccessor];
+      range ||
+        ((range = scope[rangeAccessor] = {}),
+        (range.S = onlyChild
+          ? parentNode.firstChild
+          : scope[startNodeAccessor]),
+        (range.K = onlyChild
+          ? parentNode.lastChild
+          : referenceNode.previousSibling));
+      let startNode = range.S;
+      if (range.L && startNode === range.K && startNode.tagName === "T") {
+        let wrapper = startNode;
+        (wrapper.firstChild || wrapper.appendChild(new Text()),
+          (range = scope[rangeAccessor] = {}),
+          (range.S = startNode = wrapper.firstChild),
+          (range.K = wrapper.lastChild),
+          wrapper.replaceWith(...wrapper.childNodes));
+      }
+      let inDom = startNode.parentNode === parentNode;
+      display
+        ? inDom ||
+          insertBranchBefore(
+            range,
+            parentNode,
+            onlyChild ? null : referenceNode,
+          )
+        : inDom && tempDetachBranch(range);
     }
   );
 }

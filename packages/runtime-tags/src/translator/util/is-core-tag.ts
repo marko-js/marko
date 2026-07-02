@@ -62,6 +62,7 @@ export function isControlFlowTag(
       case "for":
       case "await":
       case "try":
+      case "show":
         return true;
     }
   }

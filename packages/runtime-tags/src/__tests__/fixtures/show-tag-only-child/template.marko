@@ -1,0 +1,16 @@
+<let/open=true/>
+
+<button onClick() { open = !open }>toggle</button>
+
+<div id="a">
+  <show=open>
+    <span>first</span>
+    <span>second</span>
+  </show>
+</div>
+
+<div id="b">
+  <show=!open>
+    fallback <b>content</b>
+  </show>
+</div>

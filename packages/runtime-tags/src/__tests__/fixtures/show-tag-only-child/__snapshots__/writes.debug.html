@@ -1,0 +1,15 @@
+<button>toggle</button><!--M_*1 #button/0-->
+<div id=a><!--M_[--><span>first</span><span>second</span><!--M_)1 #div/1 2-->
+</div>
+<div id=b>
+  <t hidden>fallback <b>content</b></t><!--M_}1 #div/2 3-->
+</div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      open: !0
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/show-tag-only-child/template.marko_0_open 1"
+  ];
+  M._.w()
+</script>
