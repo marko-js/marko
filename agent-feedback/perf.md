@@ -20,12 +20,6 @@ Existing TODO in `_if`, but narrower than it reads: branch index 0 is already el
 
 Existing TODO: `<return value=... valueChange=...>` force-serializes the `TagVariableChange` accessor even when no parent ever assigns the tag variable. Unlike the now-implemented `<let>` equivalent (gated on `binding.assignmentSections` in `core/let.ts`), this needs cross-template information: whether any parent mutates the tag variable is only known at the parent's compile (`mutatesTagVar` in `packages/runtime-tags/src/translator/util/known-tag.ts:147`), so the reason would have to flow through the param serialize reason group protocol rather than a local check.
 
-## Cross-template elision of empty child setup calls (compounding)
-
-`packages/runtime-tags/src/translator/visitors/tag/custom-tag.ts:266` | 2026-07-02 | impact:med | effort:high
-
-A child template whose setup export is empty (`export const $setup = () => {}`, common for presentational leaves where every statement is keyed to an input-driven signal) is still imported and invoked once per instance by every parent (`knownTagTranslateDOM` always calls `callSetup`, `packages/runtime-tags/src/translator/util/known-tag.ts:356`). Eliding it compounds: once a leaf's setup call is dropped, an intermediate component's own setup often becomes empty, letting its parents drop that call too. Needs an analyze-phase-computable `setupEmpty` flag on `domExports` (conservatively provable when no statements will target the `undefined`-keyed signal: no effects/scriptlets without referenced bindings, no tag vars, no static-value signal initializations, and all child custom tags also `setupEmpty`). Related TODO: `packages/runtime-tags/src/translator/visitors/program/index.ts:75` (emit noop exports as undefined).
-
 ## Avoid resume-registering native tag change handlers
 
 `packages/runtime-tags/src/translator/visitors/function.ts:108` | 2026-07-02 | impact:med | effort:high

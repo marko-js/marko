@@ -31,7 +31,6 @@ const $count = /* @__PURE__ */ _let("count/1", ($scope) => {
 	$count__closure($scope);
 });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$count($scope, 0);
 }
 function $onClick($scope) {

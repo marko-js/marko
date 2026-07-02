@@ -15,12 +15,10 @@ function formatNumber2(n) {
 	return "$" + n.toFixed(2);
 }
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], {
 		value: 1,
 		format: formatNumber
 	});
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 	$input($scope["#childScope/1"], {
 		value: 1.1111,
 		format: formatNumber2

@@ -6,7 +6,6 @@ const $if_content__comment_comments = /* @__PURE__ */ _if_closure("#text/4", 0, 
 const $if_content__setup = ($scope) => {
 	$if_content__comment_comments._($scope);
 	$if_content__id._($scope);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 };
 const $if_content__id = /* @__PURE__ */ _if_closure("#text/4", 0, ($scope) => $input_path$1($scope["#childScope/0"], $scope._.id));
 const $for_content__id = /* @__PURE__ */ _const("id", ($scope) => {
@@ -48,9 +47,7 @@ var comments_default = /* @__PURE__ */ _template("__tests__/tags/comments.marko"
 // template.marko
 const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)(" b");
-function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-}
+const $setup = () => {};
 const $input_comments = ($scope, input_comments) => $input_comments$1($scope["#childScope/0"], input_comments);
 const $input_path = ($scope, input_path) => $input_path$1($scope["#childScope/0"], input_path);
 const $input = ($scope, input) => {

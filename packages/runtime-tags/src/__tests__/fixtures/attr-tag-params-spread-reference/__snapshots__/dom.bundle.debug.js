@@ -8,9 +8,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", "<!>
 // template.marko
 const $template = "<!>";
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)("%b");
-function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-}
+const $setup = () => {};
 const $input = /* @__PURE__ */ _const("input", ($scope) => {
 	let $item;
 	forUntil(1, 0, 1, (i) => {

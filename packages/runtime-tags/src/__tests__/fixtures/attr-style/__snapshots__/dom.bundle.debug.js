@@ -36,12 +36,9 @@ const $input_color = /* @__PURE__ */ _const("input_color", ($scope) => {
 });
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/5");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/2"]);
 	$input_test($scope["#childScope/2"]);
-	/* @__PURE__ */ $setup$1($scope["#childScope/3"]);
 	$input_style($scope["#childScope/3"], { width: "100px" });
 	$input_test($scope["#childScope/3"]);
-	/* @__PURE__ */ $setup$1($scope["#childScope/4"]);
 	$input_style($scope["#childScope/4"], "color: green");
 	$input_test($scope["#childScope/4"]);
 	$dynamicTag($scope, TestTag, () => ({

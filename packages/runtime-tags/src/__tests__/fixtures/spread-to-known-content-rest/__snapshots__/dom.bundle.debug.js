@@ -21,9 +21,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 // tags/wrap.marko
 const $template$1 = $template$2;
 const $walks$1 = /* @__PURE__ */ ((_w0) => `/${_w0}&`)(" b");
-function $setup$1($scope) {
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
-}
+const $setup$1 = () => {};
 const $_class = ($scope, _class) => $input_class($scope["#childScope/0"], _class);
 const $rest = ($scope, rest) => $rest$1($scope["#childScope/0"], (({ class: $class, ...rest }) => rest)(rest));
 const $input = ($scope, input) => {
@@ -40,13 +38,10 @@ const $Wrap_content = _content_resume("__tests__/template.marko_2_content", "Hel
 const $wrap_content = _content_resume("__tests__/template.marko_1_content", "Hello World", "b");
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/3", $Wrap_content);
 function $setup($scope) {
-	$setup$1($scope["#childScope/0"]);
 	$_class($scope["#childScope/0"], "foo");
 	$rest($scope["#childScope/0"], {});
-	$setup$1($scope["#childScope/1"]);
 	$_class($scope["#childScope/1"], "foo");
 	$rest($scope["#childScope/1"], { content: undefined });
-	$setup$1($scope["#childScope/2"]);
 	$_class($scope["#childScope/2"], "foo");
 	$rest($scope["#childScope/2"], { content: $wrap_content($scope) });
 	$dynamicTag($scope, Wrap, () => ({ class: "bar" }));

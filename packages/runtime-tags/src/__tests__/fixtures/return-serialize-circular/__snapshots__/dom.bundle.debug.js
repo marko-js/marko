@@ -27,7 +27,6 @@ const $count = /* @__PURE__ */ _let("count/3", ($scope) => {
 });
 function $setup($scope) {
 	_var($scope, "#childScope/0", $setCount);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_valueChange($scope["#childScope/0"], $valueChange($scope));
 	$count($scope, 0);
 }

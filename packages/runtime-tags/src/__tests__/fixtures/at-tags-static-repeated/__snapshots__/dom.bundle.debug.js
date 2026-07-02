@@ -16,7 +16,6 @@ const $walks = /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c");
 const $item_content2 = /* @__PURE__ */ _content("__tests__/template.marko_2_content", "Again", "b");
 const $item_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "Hello", "b");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_item($scope["#childScope/0"], attrTags(attrTag({ content: $item_content($scope) }), { content: $item_content2($scope) }));
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

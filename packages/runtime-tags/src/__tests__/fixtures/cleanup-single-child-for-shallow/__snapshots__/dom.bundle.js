@@ -1,6 +1,5 @@
 // tags/child.marko
 const $template = "<div> </div>";
-const $setup = () => {};
 const $input_name__OR__input_write__script = _script("b0", ($scope) => {
 	$scope.e(`mounted ${$scope.d}`);
 	$signal($scope, 0).onabort = () => {
@@ -18,11 +17,7 @@ const $name = /* @__PURE__ */ _const(3, ($scope) => {
 const $write$1 = /* @__PURE__ */ _const(4, $input_name__OR__input_write);
 
 // template.marko
-const $for_content__write = /* @__PURE__ */ _for_closure(2, ($scope) => $write$1($scope.a, $scope._.e));
-const $for_content__setup = ($scope) => {
-	$for_content__write._($scope);
-	/* @__PURE__ */ $setup($scope.a);
-};
+const $for_content__setup = /* @__PURE__ */ _for_closure(2, ($scope) => $write$1($scope.a, $scope._.e));
 const $for_content__item = ($scope, item) => $name($scope.a, item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for = /* @__PURE__ */ _for_of(2, $template, /* @__PURE__ */ ((_w0) => `/${_w0}&`)("D l"), $for_content__setup, $for_content__$params);

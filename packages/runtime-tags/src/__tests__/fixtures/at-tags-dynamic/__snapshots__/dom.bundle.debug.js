@@ -59,7 +59,6 @@ const $row_content = /* @__PURE__ */ _content_closures(_content_resume("__tests_
 const $item_content2 = _content_resume("__tests__/template.marko_2_content", "bar", "b");
 const $item_content = _content_resume("__tests__/template.marko_1_content", "foo", "b");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	let $item;
 	forOf([
 		"red",

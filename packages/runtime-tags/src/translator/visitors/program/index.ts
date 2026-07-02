@@ -27,6 +27,7 @@ import {
 import { resolveRelativeToEntry } from "../../util/resolve-relative-to-entry";
 import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
 import { startSection } from "../../util/sections";
+import { sectionHasSetupStatements } from "../../util/setup-statements";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
@@ -43,6 +44,7 @@ declare module "@marko/compiler/dist/types" {
       template: string;
       walks: string;
       setup: string;
+      setupEmpty?: true;
       params: BindingPropTree | undefined;
     };
     styleFile?: string;
@@ -95,6 +97,13 @@ export default {
       const paramsBinding = programExtra.binding;
       if (paramsBinding && !paramsBinding.pruned) {
         programExtra.domExports!.params = getBindingPropTree(paramsBinding);
+      }
+
+      const section = programExtra.section!;
+      if (!section.hoistedTo && !sectionHasSetupStatements(section)) {
+        // The setup export will be a noop, letting parent templates skip
+        // importing and calling it (checked when this template translates).
+        programExtra.domExports!.setupEmpty = true;
       }
     },
   },

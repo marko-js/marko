@@ -10,7 +10,6 @@ var hello_default = /* @__PURE__ */ _template("__tests__/hello.marko", $template
 const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)("b%c");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_name($scope["#childScope/0"], "Frank");
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

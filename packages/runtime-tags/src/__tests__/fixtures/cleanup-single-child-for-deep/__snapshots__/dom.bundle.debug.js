@@ -27,7 +27,6 @@ const $for_content2__write = /* @__PURE__ */ _closure_get("write", ($scope) => $
 const $for_content2__setup = ($scope) => {
 	$for_content2__write($scope);
 	$for_content2__outerItem._($scope);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 };
 const $for_content2__outerItem__OR__middleItem = /* @__PURE__ */ _or(3, ($scope) => $name($scope["#childScope/0"], `${$scope._.outerItem}.${$scope.middleItem}`));
 const $for_content2__outerItem = /* @__PURE__ */ _for_closure("#text/1", $for_content2__outerItem__OR__middleItem);
@@ -38,7 +37,6 @@ const $for_content__items = /* @__PURE__ */ _for_closure("#text/2", ($scope) => 
 const $for_content__setup = ($scope) => {
 	$for_content__items._($scope);
 	$for_content__write._($scope);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 };
 const $for_content__write = /* @__PURE__ */ _for_closure("#text/2", ($scope) => $write$1($scope["#childScope/0"], $scope._.write));
 const $for_content__outerItem = /* @__PURE__ */ _const("outerItem", ($scope) => {

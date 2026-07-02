@@ -33,6 +33,7 @@ import {
 import { callRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import { getOrCreateSection } from "../../util/sections";
+import { addSetupStatement } from "../../util/setup-statements";
 import { addStatement, getSignal } from "../../util/signals";
 import { createProgramState } from "../../util/state";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -90,6 +91,14 @@ export default {
           BindingType.dom,
           getOrCreateSection(tag),
         );
+      }
+
+      if (tagExtra.tagNameLoad || !childExtra.domExports?.setupEmpty) {
+        // The child's setup call lands in this section's setup unless the
+        // child template proved its setup export is a noop (a mid analysis
+        // child, eg a circular reference, has no flag yet and is assumed to
+        // have a setup). Load tags always wire up `_load_setup`.
+        addSetupStatement(getOrCreateSection(tag));
       }
 
       knownTagAnalyze(
@@ -269,18 +278,20 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       childExports.params,
       (binding, preferredName) =>
         getSignal(programSection, binding, preferredName).identifier,
-      (section, childBinding) => {
-        addStatement(
-          "render",
-          section,
-          undefined,
-          t.expressionStatement(
-            t.callExpression(t.identifier(childExports.setup), [
-              createScopeReadExpression(childBinding, section),
-            ]),
-          ),
-        );
-      },
+      childExports.setupEmpty
+        ? undefined
+        : (section, childBinding) => {
+            addStatement(
+              "render",
+              section,
+              undefined,
+              t.expressionStatement(
+                t.callExpression(t.identifier(childExports.setup), [
+                  createScopeReadExpression(childBinding, section),
+                ]),
+              ),
+            );
+          },
     );
 
     write`${t.identifier(childExports.template)}`;
@@ -296,24 +307,26 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           (directContent && binding.directContentExport) || binding.export!,
           preferredName,
         ),
-      (section, childBinding) => {
-        addStatement(
-          "render",
-          section,
-          undefined,
-          t.expressionStatement(
-            t.callExpression(
-              importOrSelfReferenceName(
-                file,
-                relativePath,
-                childExports.setup,
-                tagName,
+      childExports.setupEmpty
+        ? undefined
+        : (section, childBinding) => {
+            addStatement(
+              "render",
+              section,
+              undefined,
+              t.expressionStatement(
+                t.callExpression(
+                  importOrSelfReferenceName(
+                    file,
+                    relativePath,
+                    childExports.setup,
+                    tagName,
+                  ),
+                  [createScopeReadExpression(childBinding, section)],
+                ),
               ),
-              [createScopeReadExpression(childBinding, section)],
-            ),
-          ),
-        );
-      },
+            );
+          },
     );
 
     write`${importNamed(file, relativePath, childExports.template, `${tagName}_template`)}`;

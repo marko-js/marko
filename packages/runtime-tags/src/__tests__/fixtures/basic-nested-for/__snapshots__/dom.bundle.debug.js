@@ -11,10 +11,7 @@ const $template = "<button>Push</button><!><!>";
 const $walks = " b%c";
 const $for_content2__outer__OR__inner = /* @__PURE__ */ _or(3, ($scope) => $name($scope["#childScope/0"], `${$scope._.outer}.${$scope.inner}`));
 const $for_content2__outer = /* @__PURE__ */ _for_closure("#text/0", $for_content2__outer__OR__inner);
-const $for_content2__setup = ($scope) => {
-	$for_content2__outer._($scope);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-};
+const $for_content2__setup = $for_content2__outer;
 const $for_content2__inner = /* @__PURE__ */ _const("inner", $for_content2__outer__OR__inner);
 const $for_content2__$params = ($scope, $params3) => $for_content2__inner($scope, $params3[0]);
 const $for_content__for = /* @__PURE__ */ _for_of("#text/0", $template$1, /* @__PURE__ */ ((_w0) => `/${_w0}&`)("D l"), $for_content2__setup, $for_content2__$params);

@@ -1,6 +1,5 @@
 // tags/child.marko
 const $template = "<p> </p>";
-const $setup = () => {};
 const $input_name__OR__input_write__script = _script("b0", ($scope) => {
 	$scope.e(`${$scope.d} mounted`);
 	$signal($scope, 0).onabort = () => {
@@ -21,7 +20,6 @@ const $write$1 = /* @__PURE__ */ _const(4, $input_name__OR__input_write);
 const $if_content3__write = /* @__PURE__ */ _closure_get(8, ($scope) => $write$1($scope.a, $scope._._._.i), ($scope) => $scope._._._);
 const $if_content3__setup = ($scope) => {
 	$if_content3__write($scope);
-	/* @__PURE__ */ $setup($scope.a);
 	$name($scope.a, "Inner");
 };
 const $if_content2__if = /* @__PURE__ */ _if(1, $template, /* @__PURE__ */ ((_w0) => `/${_w0}&`)("D l"), $if_content3__setup);
@@ -29,7 +27,6 @@ const $if_content2__showInner = /* @__PURE__ */ _closure_get(7, ($scope) => $if_
 const $if_content2__setup = ($scope) => {
 	$if_content2__showInner($scope);
 	$if_content2__write($scope);
-	/* @__PURE__ */ $setup($scope.a);
 	$name($scope.a, "Middle");
 };
 const $if_content2__write = /* @__PURE__ */ _closure_get(8, ($scope) => $write$1($scope.a, $scope._._.i), ($scope) => $scope._._);
@@ -38,7 +35,6 @@ const $if_content__showMiddle = /* @__PURE__ */ _if_closure(4, 0, ($scope) => $i
 const $if_content__setup = ($scope) => {
 	$if_content__showMiddle._($scope);
 	$if_content__write._($scope);
-	/* @__PURE__ */ $setup($scope.a);
 	$name($scope.a, "Outer");
 };
 const $if_content__write = /* @__PURE__ */ _if_closure(4, 0, ($scope) => $write$1($scope.a, $scope._.i));

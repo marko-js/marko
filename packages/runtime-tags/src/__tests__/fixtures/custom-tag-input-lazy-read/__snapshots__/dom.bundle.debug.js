@@ -16,7 +16,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$count($scope, $scope.count + 1);
 }));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 	$input_onPress($scope["#childScope/1"], $onPress($scope));
 	$count($scope, 0);
 	$log($scope, "");

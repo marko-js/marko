@@ -19,7 +19,6 @@ const $value = /* @__PURE__ */ _let("value/1", ($scope) => $input($scope["#child
 	valueChange: $valueChange($scope)
 }));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$value($scope, "hi");
 }
 function $valueChange($scope) {

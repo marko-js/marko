@@ -9,7 +9,8 @@ import {
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
 import runtimeInfo from "../util/runtime-info";
-import { getSection } from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
+import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
 import withPreviousLocation from "../util/with-previous-location";
 
@@ -33,6 +34,8 @@ export default {
           "The [`<debug>` tag](https://markojs.com/docs/reference/core-tag#debug) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value).",
         );
     }
+
+    addSetupExpr(getOrCreateSection(tag), valueAttr?.value);
   },
   translate: {
     exit(tag) {

@@ -22,7 +22,6 @@ const $mybox_content__setup = ($scope) => {
 };
 const $mybox_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "<button type=button class=inc>increment</button><span class=count> </span>", " bD l", $mybox_content__setup);
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], {
 		class: "x",
 		content: $mybox_content($scope)

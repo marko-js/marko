@@ -20,7 +20,6 @@ const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)($walks$1);
 const $clickCount = /* @__PURE__ */ _let("clickCount/1", ($scope) => $text($scope["#childScope/0"], $scope.clickCount));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$onClick$1($scope["#childScope/0"], $onClick($scope));
 	$clickCount($scope, 0);
 }

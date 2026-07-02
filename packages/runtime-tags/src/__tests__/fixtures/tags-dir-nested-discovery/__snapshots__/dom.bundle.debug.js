@@ -16,8 +16,6 @@ var greeting_default = /* @__PURE__ */ _template("__tests__/tags/util/greeting.m
 const $template = /* @__PURE__ */ ((_w0, _w1) => `${_w0}${_w1}`)($template$2, $template$1);
 const $walks = /* @__PURE__ */ ((_w0, _w1) => `/${_w0}&/${_w1}&`)("b", $walks$1);
 function $setup($scope) {
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 	$input_name($scope["#childScope/1"], "Marko");
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

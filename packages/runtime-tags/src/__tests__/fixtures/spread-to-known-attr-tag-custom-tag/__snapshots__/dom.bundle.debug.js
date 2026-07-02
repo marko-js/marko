@@ -20,9 +20,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 // tags/wrap.marko
 const $template$1 = $template$2;
 const $walks$1 = /* @__PURE__ */ ((_w0) => `/${_w0}&`)(" b");
-function $setup$1($scope) {
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
-}
+const $setup$1 = () => {};
 const $_class = ($scope, _class) => $input_class($scope["#childScope/0"], _class);
 const $rest_option = ($scope, rest_option) => $input_option($scope["#childScope/0"], rest_option);
 const $input = ($scope, input) => {
@@ -39,7 +37,6 @@ const $option_content3 = _content_resume("__tests__/template.marko_3_content", "
 const $option_content2 = _content_resume("__tests__/template.marko_2_content", "Two", "b");
 const $option_content = _content_resume("__tests__/template.marko_1_content", "One", "b");
 function $setup($scope) {
-	$setup$1($scope["#childScope/0"]);
 	$rest_option($scope["#childScope/0"], attrTags(attrTags(attrTag({
 		value: 1,
 		content: $option_content($scope)

@@ -20,7 +20,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$count($scope, undefined);
 }));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_valueChange($scope["#childScope/0"], $valueChange($scope));
 	$count($scope, 3);
 	$setup__script($scope);

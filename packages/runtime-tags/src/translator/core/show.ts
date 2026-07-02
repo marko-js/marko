@@ -34,6 +34,7 @@ import {
   addSerializeExpr,
   getSerializeReason,
 } from "../util/serialize-reasons";
+import { addSetupStatement } from "../util/setup-statements";
 import { addValue, getSignal } from "../util/signals";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import { translateByTarget } from "../util/visitors";
@@ -101,6 +102,9 @@ export default {
       if (tagExtra[kStaticDisplay] === undefined) {
         mergeReferences(tagSection, tag.node, [display]);
         addSerializeExpr(tagSection, tagExtra, kStatefulReason);
+      } else {
+        // A statically hidden `<show>` still writes its display in setup.
+        addSetupStatement(tagSection);
       }
     },
     exit(tag) {

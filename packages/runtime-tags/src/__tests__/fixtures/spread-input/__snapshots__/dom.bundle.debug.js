@@ -13,9 +13,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 // tags/wrap.marko
 const $template$1 = $template$2;
 const $walks$1 = /* @__PURE__ */ ((_w0) => `/${_w0}&`)(" b");
-function $setup$1($scope) {
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
-}
+const $setup$1 = () => {};
 const $input_class = ($scope, input_class) => $input_class$1($scope["#childScope/0"], input_class);
 const $input_value = ($scope, input_value) => $input_value$1($scope["#childScope/0"], input_value);
 const $input = ($scope, input) => {
@@ -30,7 +28,6 @@ const $walks = /* @__PURE__ */ ((_w0) => `D/${_w0}&lD%l`)($walks$1);
 const Wrap = wrap_default;
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
 function $setup($scope) {
-	$setup$1($scope["#childScope/0"]);
 	$input_class($scope["#childScope/0"], "foo");
 	$input_value($scope["#childScope/0"]);
 	$dynamicTag($scope, Wrap, () => ({ class: "bar" }));

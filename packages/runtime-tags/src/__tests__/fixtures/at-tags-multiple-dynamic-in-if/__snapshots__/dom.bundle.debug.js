@@ -15,9 +15,7 @@ var custom_tag_default = /* @__PURE__ */ _template("__tests__/tags/custom-tag/in
 // template.marko
 const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)($walks$1);
-function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-}
+const $setup = () => {};
 const $cond = /* @__PURE__ */ _const("cond", ($scope) => {
 	let $x$1, $y$1;
 	if ($scope.cond) {

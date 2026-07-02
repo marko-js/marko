@@ -20,7 +20,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$initial($scope, $scope.initial + 1);
 }));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$onValue$1($scope["#childScope/0"], $onValue);
 	$initial($scope, 1);
 	$setup__script($scope);

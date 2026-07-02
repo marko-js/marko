@@ -31,7 +31,6 @@ const $walks = /* @__PURE__ */ ((_w0, _w1) => `/${_w0}&0${_w1}&`)("", " b");
 const $api_getter = /* @__PURE__ */ _hoist("api");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => $api_getter($scope)().setHtml("works"));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], { action: $action($scope) });
 	_var($scope, "#childScope/1", $api);
 	$setup$1($scope["#childScope/1"]);

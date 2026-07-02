@@ -25,6 +25,7 @@ import {
   addSerializeExpr,
   getSerializeReason,
 } from "../util/serialize-reasons";
+import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
 import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
@@ -76,6 +77,7 @@ export default {
         section,
       ));
       analyzeSiblingText(placeholder);
+      addSetupExpr(section, node.value);
       addSerializeExpr(section, valueExtra, nodeBinding);
     }
   },

@@ -16,7 +16,8 @@ import {
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
-import { getSection } from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
+import { addSetupExpr } from "../util/setup-statements";
 import { addValue, initValue } from "../util/signals";
 import { scopeIdentifier } from "../visitors/program";
 
@@ -63,6 +64,9 @@ export default {
     if (binding) {
       setBindingDownstream(binding, !!valueAttr && evaluate(valueAttr.value));
     }
+
+    // The id is initialized in setup unless keyed by the value's references.
+    addSetupExpr(getOrCreateSection(tag), valueAttr?.value);
   },
   translate: {
     exit(tag) {

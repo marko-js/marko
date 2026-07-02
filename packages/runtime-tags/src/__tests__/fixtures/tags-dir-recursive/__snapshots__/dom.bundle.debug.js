@@ -3,10 +3,7 @@ const $template$1 = "<div>d<!><!></div>";
 const $walks$1 = "Db%b%l";
 const $setup$1 = () => {};
 const $if_content__input_depth = /* @__PURE__ */ _if_closure("#text/1", 0, ($scope) => $input_depth($scope["#childScope/0"], $scope._.input_depth - 1));
-const $if_content__setup = ($scope) => {
-	$if_content__input_depth._($scope);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-};
+const $if_content__setup = $if_content__input_depth;
 const $if = /* @__PURE__ */ _if("#text/1", $template$1, /* @__PURE__ */ ((_w0) => `/${_w0}&`)($walks$1), $if_content__setup);
 const $input_depth = /* @__PURE__ */ _const("input_depth", ($scope) => {
 	_text($scope["#text/0"], $scope.input_depth);
@@ -27,7 +24,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$n($scope, $scope.n + 1);
 }));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/2"]);
 	$n($scope, 2);
 	$setup__script($scope);
 }

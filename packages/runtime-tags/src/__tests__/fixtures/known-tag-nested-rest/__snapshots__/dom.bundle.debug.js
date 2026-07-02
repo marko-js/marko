@@ -10,11 +10,9 @@ var leaf_default = /* @__PURE__ */ _template("__tests__/tags/leaf.marko", $templ
 // tags/mid.marko
 const $template$1 = /* @__PURE__ */ ((_w0) => `<p><!> <!></p>${_w0}`)($template$2);
 const $walks$1 = /* @__PURE__ */ ((_w0) => `D%c%l/${_w0}&`)($walks$2);
+const $setup$1 = () => {};
 const $first = ($scope, first) => _text($scope["#text/0"], first);
 const $keep = ($scope, keep) => _text($scope["#text/1"], keep);
-function $setup$1($scope) {
-	/* @__PURE__ */ $setup$2($scope["#childScope/2"]);
-}
 const $rest = ($scope, rest) => $input_data($scope["#childScope/2"], rest);
 const $input = ($scope, input) => {
 	$first($scope, input.first);
@@ -40,7 +38,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$n($scope, $scope.n + 1);
 }));
 function $setup($scope) {
-	$setup$1($scope["#childScope/2"]);
 	$first($scope["#childScope/2"], "f");
 	$n($scope, 1);
 	$setup__script($scope);

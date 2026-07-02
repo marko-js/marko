@@ -21,9 +21,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 // template.marko
 const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)("b b");
-function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-}
+const $setup = () => {};
 const $input = /* @__PURE__ */ _const("input", ($scope) => {
 	const $child_input_spread = {
 		"data-foo": 1,

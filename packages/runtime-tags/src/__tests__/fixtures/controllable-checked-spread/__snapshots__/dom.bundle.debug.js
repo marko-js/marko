@@ -23,7 +23,6 @@ const $checked = /* @__PURE__ */ _let("checked/2", ($scope) => {
 	_text($scope["#text/1"], String($scope.checked));
 });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$checked($scope, false);
 }
 function $checkedChange($scope) {

@@ -1,15 +1,11 @@
 // tags/child.marko
 const $template = "<div> </div>";
-const $setup = () => {};
 const $name = ($scope, name) => _text($scope.a, name);
 
 // template.marko
 const $for_content2__outer__OR__inner = /* @__PURE__ */ _or(3, ($scope) => $name($scope.a, `${$scope._.c}.${$scope.c}`));
 const $for_content2__outer = /* @__PURE__ */ _for_closure(0, $for_content2__outer__OR__inner);
-const $for_content2__setup = ($scope) => {
-	$for_content2__outer._($scope);
-	/* @__PURE__ */ $setup($scope.a);
-};
+const $for_content2__setup = $for_content2__outer;
 const $for_content2__inner = /* @__PURE__ */ _const(2, $for_content2__outer__OR__inner);
 const $for_content2__$params = ($scope, $params3) => $for_content2__inner($scope, $params3[0]);
 const $for_content__for = /* @__PURE__ */ _for_of(0, $template, /* @__PURE__ */ ((_w0) => `/${_w0}&`)("D l"), $for_content2__setup, $for_content2__$params);

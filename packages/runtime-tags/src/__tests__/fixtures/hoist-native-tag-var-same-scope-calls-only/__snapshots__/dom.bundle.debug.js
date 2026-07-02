@@ -11,9 +11,7 @@ const $template = /* @__PURE__ */ ((_w0, _w1) => `${_w0}<div></div>${_w1}`)("", 
 const $walks = /* @__PURE__ */ ((_w0, _w1) => `/${_w0}& b/${_w1}&`)("", "");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _el_read($scope["#div/1"]).innerHTML = "works");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], { action: $action($scope) });
-	/* @__PURE__ */ $setup$1($scope["#childScope/2"]);
 	$input($scope["#childScope/2"], { action: $action2($scope) });
 	$setup__script($scope);
 }

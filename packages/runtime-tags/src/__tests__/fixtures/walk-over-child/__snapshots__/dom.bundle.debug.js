@@ -9,7 +9,6 @@ const $template = /* @__PURE__ */ ((_w0) => `<section>${_w0}</section><div> </di
 const $walks = /* @__PURE__ */ ((_w0) => `D/${_w0}&lD l`)("b");
 const $count = /* @__PURE__ */ _let("count/2", ($scope) => _text($scope["#text/1"], $scope.count));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$count($scope, 0);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

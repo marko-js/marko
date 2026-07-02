@@ -26,7 +26,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$mult($scope, $scope.mult + 1);
 }));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	let $item;
 	forOf([
 		1,

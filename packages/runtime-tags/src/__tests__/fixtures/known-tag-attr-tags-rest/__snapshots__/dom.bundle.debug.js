@@ -21,10 +21,8 @@ var inner_default = /* @__PURE__ */ _template("__tests__/tags/inner/index.marko"
 // tags/child/index.marko
 const $template$1 = /* @__PURE__ */ ((_w0) => `<h1> </h1>${_w0}`)($template$2);
 const $walks$1 = /* @__PURE__ */ ((_w0) => `D l/${_w0}&`)($walks$2);
+const $setup$1 = () => {};
 const $title = ($scope, title) => _text($scope["#text/0"], title);
-function $setup$1($scope) {
-	/* @__PURE__ */ $setup$2($scope["#childScope/1"]);
-}
 const $rest = ($scope, rest) => $input_stuff($scope["#childScope/1"], rest);
 const $input = ($scope, input) => {
 	(({ title, ...rest }) => $rest($scope, rest))(input);
@@ -52,7 +50,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$cond($scope, !$scope.cond);
 }));
 function $setup($scope) {
-	$setup$1($scope["#childScope/1"]);
 	$title($scope["#childScope/1"], "t");
 	$cond($scope, true);
 	$setup__script($scope);

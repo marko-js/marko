@@ -27,7 +27,6 @@ const $myfor_content__i = ($scope, i) => _text($scope["#text/0"], i);
 const $myfor_content__$params = ($scope, $params2) => $myfor_content__i($scope, $params2[0]);
 const $myfor_content = _content_resume("__tests__/template.marko_1_content", " ", " b", 0, $myfor_content__$params);
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $myfor_content($scope));
 	$input_to($scope["#childScope/0"], 5);
 }

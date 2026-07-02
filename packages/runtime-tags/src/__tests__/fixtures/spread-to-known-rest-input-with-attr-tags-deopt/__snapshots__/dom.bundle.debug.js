@@ -25,10 +25,7 @@ const $walks$1 = "b%c";
 const $setup$1 = () => {};
 _resume_dynamic_tag();
 const $_classspandiv_content__input_foo = /* @__PURE__ */ _closure_get("input_foo", ($scope) => $foo($scope["#childScope/0"], $scope._.input_foo));
-const $_classspandiv_content__setup = ($scope) => {
-	$_classspandiv_content__input_foo($scope);
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
-};
+const $_classspandiv_content__setup = $_classspandiv_content__input_foo;
 const $_classspandiv_content = _content_resume("__tests__/tags/wrap.marko_1_content", /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($template$2), /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c"), $_classspandiv_content__setup);
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0", $_classspandiv_content);
 const $input_class__OR__rest = /* @__PURE__ */ _or(6, ($scope) => $dynamicTag($scope, $scope._class ? "span" : "div", () => ({

@@ -14,6 +14,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 const $Child_content__walks = "D lD l", $Child_content__template = "<div> </div><div> </div>";
 const $template = /* @__PURE__ */ ((_w0, _w1) => `${_w0}${_w1}<!>`)($template$1, $Child_content__template);
 const $walks = /* @__PURE__ */ ((_w0, _w1) => `/${_w0}&/${_w1}&b`)($walks$1, $Child_content__walks);
+const $setup = () => {};
 const $Child_content__input_a = ($scope, input_a) => _text($scope["#text/0"], input_a);
 const $Child_content__input_b = ($scope, input_b) => _text($scope["#text/1"], input_b);
 const $Child_content__$params = ($scope, $params2) => $Child_content__input($scope, $params2[0]);
@@ -21,9 +22,6 @@ const $Child_content__input = ($scope, input) => {
 	$Child_content__input_a($scope, input.a);
 	$Child_content__input_b($scope, input.b);
 };
-function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-}
 const $input_a = ($scope, input_a) => {
 	$input_a$1($scope["#childScope/0"], input_a);
 	$Child_content__input_a($scope["#childScope/1"], input_a);

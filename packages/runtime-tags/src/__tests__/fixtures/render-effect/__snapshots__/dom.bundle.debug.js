@@ -9,7 +9,6 @@ var render_effect_default = /* @__PURE__ */ _template("__tests__/tags/render-eff
 const $template = "";
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)("");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], { value: function() {} });
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

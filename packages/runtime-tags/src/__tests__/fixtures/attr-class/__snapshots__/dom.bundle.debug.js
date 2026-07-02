@@ -75,9 +75,7 @@ const $f = /* @__PURE__ */ _const("f", $input_c__OR__input_d__OR__input_e__OR__i
 const $g = /* @__PURE__ */ _const("g", $input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h);
 const $h = /* @__PURE__ */ _const("h", $input_c__OR__input_d__OR__input_e__OR__input_f__OR__input_g__OR__input_h);
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/3"]);
 	$input_test($scope["#childScope/3"]);
-	/* @__PURE__ */ $setup$1($scope["#childScope/4"]);
 	$input_class($scope["#childScope/4"], [
 		"a",
 		false,

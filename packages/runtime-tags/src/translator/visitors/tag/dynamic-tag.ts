@@ -59,6 +59,7 @@ import {
   addSerializeExpr,
   getSerializeReason,
 } from "../../util/serialize-reasons";
+import { addSetupStatement } from "../../util/setup-statements";
 import {
   addStatement,
   addValue,
@@ -109,6 +110,9 @@ export default {
     enter(tag) {
       assertAttributesOrArgs(tag);
       const { node } = tag;
+      // Dynamic tags (and locally invoked define bodies) initialize their
+      // renderer with statements that can land in setup.
+      addSetupStatement(getOrCreateSection(tag));
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
         knownTagAnalyze(

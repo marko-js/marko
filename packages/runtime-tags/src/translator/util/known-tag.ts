@@ -64,6 +64,7 @@ import {
   getSerializeSourcesForExprs,
 } from "./serialize-reasons";
 import { setTagDownstream } from "./set-tag-sections-downstream";
+import { addSetupExpr, addSetupStatement } from "./setup-statements";
 import {
   addStatement,
   getResumeRegisterId,
@@ -144,6 +145,8 @@ export function knownTagAnalyze(
   ));
 
   if (varBinding) {
+    // Tag variables emit a `_var` statement in the parent's setup.
+    addSetupStatement(section);
     const mutatesTagVar = !!(
       tag.node.var!.type === "Identifier" &&
       tag.scope.getBinding(tag.node.var.name)?.constantViolations.length
@@ -338,7 +341,7 @@ export function knownTagTranslateDOM(
     preferredName?: string,
     directContent?: boolean,
   ) => t.Identifier,
-  callSetup: (section: Section, childBinding: Binding) => void,
+  callSetup: ((section: Section, childBinding: Binding) => void) | undefined,
 ) {
   const tagSection = getSection(tag);
   const { node } = tag;
@@ -376,7 +379,7 @@ export function knownTagTranslateDOM(
       ),
     );
   }
-  callSetup(tagSection, childScopeBinding);
+  callSetup?.(tagSection, childScopeBinding);
 
   if (propTree) {
     writeParamsToSignals(tag, propTree, getTagName(tag) || "tag", {
@@ -450,6 +453,7 @@ function analyzeParams(
       const argValueExtra = (arg.extra ??= {});
       known[i++] = { value: argValueExtra };
       rootAttrExprs.add(argValueExtra);
+      addSetupExpr(section, arg);
     }
   }
 
@@ -638,6 +642,8 @@ function analyzeAttrs(
       } else {
         remaining.delete("content");
         known.content = { value: undefined }; // TODO: update when supporting default params
+        // The content signal call is applied unconditionally in setup.
+        addSetupStatement(section);
       }
     }
   }
@@ -667,6 +673,7 @@ function analyzeAttrs(
         remaining.delete(attr.name);
         known[attr.name] = { value: attrExtra };
         rootAttrExprs.add(attrExtra);
+        addSetupExpr(section, attr.value);
         setBindingDownstream(templateExportAttr.binding, attrExtra);
         // A cross template child that only ever invokes this input makes the
         // attribute `invokeOnly`. Same program prop trees may still be
@@ -734,9 +741,21 @@ function analyzeAttrs(
     } else {
       dropNodes(spreadReferenceNodes);
     }
-  } else if (restReferenceNodes) {
-    inputExpr.value = mergeReferences(section, tag.node, restReferenceNodes);
-    setBindingDownstream(propTree.rest!.binding, inputExpr.value);
+  } else {
+    if (restReferenceNodes) {
+      inputExpr.value = mergeReferences(section, tag.node, restReferenceNodes);
+      setBindingDownstream(propTree.rest!.binding, inputExpr.value);
+    }
+
+    if (remaining.size) {
+      // Unset props are applied with no value (and no references) in setup.
+      addSetupStatement(section);
+    }
+
+    if (propTree.rest && !propTree.rest.props) {
+      // The rest signal call is keyed by the tag's merged references.
+      addSetupExpr(section, tag.node);
+    }
   }
 
   dropNodes(dropReferenceNodes);

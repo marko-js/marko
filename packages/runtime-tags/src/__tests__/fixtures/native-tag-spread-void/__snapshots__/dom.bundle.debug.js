@@ -21,7 +21,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($sc
 	$cls($scope, $scope.cls === "a" ? "b" : "a");
 }));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 	$cls($scope, "a");
 	$setup__script($scope);
 }

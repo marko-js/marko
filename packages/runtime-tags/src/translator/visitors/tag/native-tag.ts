@@ -48,6 +48,7 @@ import {
   addSerializeExpr,
   getSerializeReason,
 } from "../../util/serialize-reasons";
+import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
 import { addHTMLEffectCall, addStatement } from "../../util/signals";
 import {
   toMemberExpression,
@@ -297,6 +298,28 @@ export default {
                   textPlaceholders.slice(1),
                 ),
           );
+          addSetupExpr(tagSection, textPlaceholders[0]);
+        }
+
+        if (injectNonce) {
+          // A nonce statement with no references is written in setup.
+          addSetupStatement(tagSection);
+        }
+
+        if (relatedControllable?.attrs[1]) {
+          // Controllable change handlers register an effect in setup.
+          addSetupStatement(tagSection);
+        }
+
+        for (const name in seen) {
+          const attr = seen[name];
+          if (
+            isEventHandler(name) ||
+            name === "content" ||
+            !evaluate(attr.value).confident
+          ) {
+            addSetupExpr(tagSection, attr.value);
+          }
         }
 
         addSerializeExpr(

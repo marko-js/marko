@@ -24,7 +24,6 @@ const $child_content = _content_resume("__tests__/template.marko_1_content", " "
 const $value__closure = /* @__PURE__ */ _closure($child_content__value);
 const $value = /* @__PURE__ */ _let("value/1", $value__closure);
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$valueChange2($scope["#childScope/0"], $valueChange($scope));
 	$rest($scope["#childScope/0"], { content: $child_content($scope) });
 	$value($scope, 1);

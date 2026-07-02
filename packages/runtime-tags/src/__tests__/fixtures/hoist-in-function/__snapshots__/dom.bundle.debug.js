@@ -13,7 +13,6 @@ const $x_getter = /* @__PURE__ */ _hoist("x");
 const $x = /* @__PURE__ */ _const("x", ($scope) => _assert_hoist($scope.x));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => $x_getter($scope)());
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_fn($scope["#childScope/0"], () => $x_getter($scope)());
 	$x($scope, 1);
 	$setup__script($scope);

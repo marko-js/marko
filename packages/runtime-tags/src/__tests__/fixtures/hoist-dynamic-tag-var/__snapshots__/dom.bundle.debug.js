@@ -52,7 +52,6 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	$setHtml2_getter($scope)()("Hello world");
 });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 	$input_value($scope["#childScope/1"], $setHtml_getter($scope));
 	$if2($scope, true ? 0 : 1);
 	$if3($scope, true ? 0 : 1);

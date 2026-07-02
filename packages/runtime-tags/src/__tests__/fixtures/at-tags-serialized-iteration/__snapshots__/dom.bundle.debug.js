@@ -11,9 +11,7 @@ var list_default = /* @__PURE__ */ _template("__tests__/tags/list.marko", $templ
 const $template = /* @__PURE__ */ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $template$1);
 const $walks = /* @__PURE__ */ ((_w0, _w1) => `/${_w0}&/${_w1}&`)(" b", " b");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_item($scope["#childScope/0"], attrTags(attrTags(attrTag({ label: "a" }), { label: "b" }), { label: "c" }));
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 	$input_item($scope["#childScope/1"], attrTag({ label: "solo" }));
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

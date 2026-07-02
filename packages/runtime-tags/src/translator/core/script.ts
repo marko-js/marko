@@ -12,7 +12,8 @@ import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { dropNodes, getAllTagReferenceNodes } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
-import { getSection } from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
+import { addSetupExpr } from "../util/setup-statements";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { skip, traverseContains } from "../util/traverse";
 import { isScopeIdentifier, scopeIdentifier } from "../visitors/program";
@@ -79,6 +80,7 @@ export default {
         }
         seenValueAttr = true;
         (attr.value.extra ??= {}).isEffect = true;
+        addSetupExpr(getOrCreateSection(tag), attr.value);
         getProgram().node.extra.isInteractive = true;
       } else {
         throw tag.hub.buildError(

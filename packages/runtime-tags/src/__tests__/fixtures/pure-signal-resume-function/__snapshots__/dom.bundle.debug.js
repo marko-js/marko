@@ -18,7 +18,6 @@ const $test = /* @__PURE__ */ _const("test", ($scope) => $input($scope["#childSc
 	content: $mybutton_content($scope)
 }));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$test($scope, "foo");
 }
 function $onClick($scope) {

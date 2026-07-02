@@ -38,7 +38,6 @@ const $clear__script = _script("__tests__/template.marko_0_clear", ($scope) => _
 const $clear = /* @__PURE__ */ _const("clear", $clear__script);
 function $setup($scope) {
 	_var($scope, "#childScope/0", $store);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_value($scope["#childScope/0"], ["Learn Marko", "Make a Website"]);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

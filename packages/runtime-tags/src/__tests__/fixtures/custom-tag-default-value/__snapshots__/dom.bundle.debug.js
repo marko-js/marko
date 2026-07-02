@@ -12,9 +12,7 @@ const $template = /* @__PURE__ */ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $t
 const $walks = /* @__PURE__ */ ((_w0, _w1) => `/${_w0}&/${_w1}&`)("%c", "%c");
 const $x = /* @__PURE__ */ _let("x/2", ($scope) => $input_value($scope["#childScope/1"], $scope.x));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_value($scope["#childScope/0"], 3);
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 	$x($scope, "y");
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

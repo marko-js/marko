@@ -38,9 +38,6 @@ const $checkedValue = /* @__PURE__ */ _let("checkedValue/4", ($scope) => {
 });
 const $checkedValueChange3 = /* @__PURE__ */ _const("$checkedValueChange", $checkedValue__OR__$checkedValueChange);
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
-	/* @__PURE__ */ $setup$1($scope["#childScope/2"]);
 	$checkedValue($scope, "a");
 	$checkedValueChange3($scope, $checkedValueChange2($scope));
 }

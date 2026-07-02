@@ -24,7 +24,6 @@ const $template = /* @__PURE__ */ ((_w0, _w1) => `${_w0}${_w1}`)("", $template$1
 const $walks = /* @__PURE__ */ ((_w0, _w1) => `/${_w0}&0${_w1}&`)("", " b");
 const $setHtml_getter = _hoist_resume("__tests__/template.marko_0_setHtml/hoist", "setHtml");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
 	$input_value($scope["#childScope/0"], $setHtml_getter($scope));
 	_var($scope, "#childScope/1", $setHtml);
 	$setup$1($scope["#childScope/1"]);

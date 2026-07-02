@@ -16,10 +16,7 @@ var leaf_default = /* @__PURE__ */ _template("__tests__/tags/leaf.marko", $templ
 const $template = "<button id=o>O</button><button id=n>N</button><!><!>";
 const $walks = " b b%c";
 const $if_content__n = /* @__PURE__ */ _if_closure("#text/2", 0, ($scope) => $n$1($scope["#childScope/0"], $scope._.n));
-const $if_content__setup = ($scope) => {
-	$if_content__n._($scope);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-};
+const $if_content__setup = $if_content__n;
 const $if = /* @__PURE__ */ _if("#text/2", /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($template$1), /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
 const $outer = /* @__PURE__ */ _let("outer/3", ($scope) => $if($scope, $scope.outer ? 0 : 1));
 const $n = /* @__PURE__ */ _let("n/4", $if_content__n);

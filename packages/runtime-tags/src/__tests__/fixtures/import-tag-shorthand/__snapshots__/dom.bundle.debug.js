@@ -7,8 +7,5 @@ var baz_default = /* @__PURE__ */ _template("__tests__/tags/baz.marko", $templat
 // template.marko
 const $template = /* @__PURE__ */ ((_w0, _w1) => `<!>${_w0}${_w1}<!>`)($template$1, $template$1);
 const $walks = /* @__PURE__ */ ((_w0, _w1) => `b/${_w0}&/${_w1}&b`)("b", "b");
-function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
-}
+const $setup = () => {};
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

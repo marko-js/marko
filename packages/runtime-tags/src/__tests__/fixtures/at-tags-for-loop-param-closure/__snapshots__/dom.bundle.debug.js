@@ -17,7 +17,6 @@ const $item_content = /* @__PURE__ */ _content_closures(/* @__PURE__ */ _content
 	_text($scope["#text/0"], $scope.zzz);
 } });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	let $item;
 	forOf([
 		1,

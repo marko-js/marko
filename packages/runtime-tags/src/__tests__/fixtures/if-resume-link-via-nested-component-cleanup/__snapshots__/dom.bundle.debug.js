@@ -23,10 +23,7 @@ var wrapper_default = /* @__PURE__ */ _template("__tests__/tags/wrapper.marko", 
 const $template = "<div id=ref>init</div><button id=o>O</button><button id=s>S</button><!><!>";
 const $walks = "b b b%c";
 const $if_content__show = /* @__PURE__ */ _if_closure("#text/2", 0, ($scope) => $show$1($scope["#childScope/0"], $scope._.show));
-const $if_content__setup = ($scope) => {
-	$if_content__show._($scope);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-};
+const $if_content__setup = $if_content__show;
 const $if = /* @__PURE__ */ _if("#text/2", /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($template$1), /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
 const $outer = /* @__PURE__ */ _let("outer/3", ($scope) => $if($scope, $scope.outer ? 0 : 1));
 const $show = /* @__PURE__ */ _let("show/4", $if_content__show);

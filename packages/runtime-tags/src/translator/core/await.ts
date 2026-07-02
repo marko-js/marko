@@ -29,6 +29,7 @@ import {
   startSection,
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
+import { addSetupStatement } from "../util/setup-statements";
 import {
   addStatement,
   addValue,
@@ -112,6 +113,9 @@ export default {
     }
 
     bodySection.upstreamExpression = valueAttr.value.extra;
+
+    // The content renderer is initialized unconditionally in setup.
+    addSetupStatement(section);
   },
   translate: translateByTarget({
     html: {

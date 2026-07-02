@@ -1,6 +1,5 @@
 // tags/child.marko
 const $template = "<div> </div>";
-const $setup = () => {};
 const $input_name__OR__input_write__script = _script("b0", ($scope) => $signal($scope, 0).onabort = () => {
 	$scope.e(`destroyed ${$scope.d}`);
 });
@@ -19,7 +18,6 @@ const $for_content2__write = /* @__PURE__ */ _closure_get(4, ($scope) => $write$
 const $for_content2__setup = ($scope) => {
 	$for_content2__write($scope);
 	$for_content2__outerItem._($scope);
-	/* @__PURE__ */ $setup($scope.a);
 };
 const $for_content2__outerItem__OR__middleItem = /* @__PURE__ */ _or(3, ($scope) => $name($scope.a, `${$scope._.d}.${$scope.c}`));
 const $for_content2__outerItem = /* @__PURE__ */ _for_closure(1, $for_content2__outerItem__OR__middleItem);
@@ -30,7 +28,6 @@ const $for_content__items = /* @__PURE__ */ _for_closure(2, ($scope) => $for_con
 const $for_content__setup = ($scope) => {
 	$for_content__items._($scope);
 	$for_content__write._($scope);
-	/* @__PURE__ */ $setup($scope.a);
 };
 const $for_content__write = /* @__PURE__ */ _for_closure(2, ($scope) => $write$1($scope.a, $scope._.e));
 const $for_content__outerItem = /* @__PURE__ */ _const(3, ($scope) => {

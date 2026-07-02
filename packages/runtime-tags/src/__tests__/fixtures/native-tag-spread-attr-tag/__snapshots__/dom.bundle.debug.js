@@ -31,7 +31,6 @@ const $head_content__setup = ($scope) => {
 };
 const $head_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "<button> </button>", " D l", $head_content__setup);
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_head($scope["#childScope/0"], attrTag({
 		id: "h",
 		content: $head_content($scope)

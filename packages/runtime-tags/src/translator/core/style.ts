@@ -38,6 +38,7 @@ import {
   addSerializeExpr,
   getSerializeReason,
 } from "../util/serialize-reasons";
+import { addSetupStatement } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
 import {
   checkStyleInterpolations,
@@ -92,6 +93,8 @@ export default {
 
     if (names) {
       analyzeDynamicStyle(tag, names);
+      // Dynamic styles write their shell and nonce statements in setup.
+      addSetupStatement(getOrCreateSection(tag));
     }
   },
   translate: translateByTarget({

@@ -19,7 +19,6 @@ const $for_content2__ref_getter = _hoist_resume("__tests__/template.marko_2_ref/
 const $for_content2__setup__script = _script("__tests__/template.marko_2", ($scope) => _el_read($scope._._["#pre/2"]).innerHTML += `${[...$for_content2__ref_getter($scope)].length}; ${$for_content2__ref_getter($scope)()}\n\t`);
 const $for_content2__setup = ($scope) => {
 	_var($scope, "#childScope/0", $for_content2__ref);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_value($scope["#childScope/0"], `${$scope._["#LoopKey"]},${$scope["#LoopKey"]}`);
 	$for_content2__setup__script($scope);
 };

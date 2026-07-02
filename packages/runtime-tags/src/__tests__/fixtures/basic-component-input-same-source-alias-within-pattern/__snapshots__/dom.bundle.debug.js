@@ -24,9 +24,7 @@ const $clickCount = /* @__PURE__ */ _let("clickCount/2", ($scope) => {
 	$text($scope["#childScope/1"], $scope.clickCount);
 });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$onClick$1($scope["#childScope/0"], $onClick($scope));
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 	$onClick$1($scope["#childScope/1"], $onClick2($scope));
 	$clickCount($scope, 0);
 }

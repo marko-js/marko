@@ -12,7 +12,6 @@ const foo = "div";
 const Bar = "div";
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$dynamicTag($scope, Bar);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

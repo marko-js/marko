@@ -14,9 +14,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 const $template$1 = /* @__PURE__ */ ((_w0, _w1) => `${_w0}${_w1}`)($template$2, $template$2);
 const $walks$1 = /* @__PURE__ */ ((_w0, _w1) => `/${_w0}&/${_w1}&`)(" b", " b");
 function $setup$1($scope) {
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
 	$input_value($scope["#childScope/0"], "override");
-	/* @__PURE__ */ $setup$2($scope["#childScope/1"]);
 }
 const $input_class = ($scope, input_class) => $input_class$1($scope["#childScope/0"], input_class);
 const $input = /* @__PURE__ */ _const("input", ($scope) => {

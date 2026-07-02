@@ -21,7 +21,6 @@ const $value = /* @__PURE__ */ _let("value/2", ($scope) => {
 	_text($scope["#text/1"], $scope.value);
 });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$value($scope, "hello");
 }
 function $valueChange($scope) {

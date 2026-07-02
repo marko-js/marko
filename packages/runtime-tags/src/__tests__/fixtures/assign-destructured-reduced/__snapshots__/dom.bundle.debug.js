@@ -23,7 +23,6 @@ const $count = /* @__PURE__ */ _let("count/1", ($scope) => $input($scope["#child
 	valueChange: $valueChange($scope)
 }));
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$count($scope, 0);
 }
 function $valueChange($scope) {

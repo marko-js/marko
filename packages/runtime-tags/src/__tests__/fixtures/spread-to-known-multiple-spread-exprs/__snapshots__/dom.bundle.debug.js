@@ -15,9 +15,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 // tags/wrap.marko
 const $template$1 = $template$2;
 const $walks$1 = /* @__PURE__ */ ((_w0) => `/${_w0}&`)(" b");
-function $setup$1($scope) {
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
-}
+const $setup$1 = () => {};
 const $input = /* @__PURE__ */ _const("input", ($scope) => {
 	const $child_input_spread = {
 		...$scope.input,
@@ -33,7 +31,6 @@ var wrap_default = /* @__PURE__ */ _template("__tests__/tags/wrap.marko", $templ
 const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)($walks$1);
 function $setup($scope) {
-	$setup$1($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], { class: "foo" });
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

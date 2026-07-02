@@ -12,7 +12,6 @@ const $walks$1 = /* @__PURE__ */ ((_w0) => `0${_w0}&`)("");
 const $x = _var_resume("__tests__/tags/child.marko_0_x/var", /* @__PURE__ */ _const("x"));
 function $setup$1($scope) {
 	_var($scope, "#childScope/0", $x);
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
 }
 const $input_foo = ($scope, input_foo) => $input_value($scope["#childScope/0"], input_foo);
 const $input__OR__x__script = _script("__tests__/tags/child.marko_0_input_x", ($scope) => $scope.input.output().innerHTML = $scope.x);

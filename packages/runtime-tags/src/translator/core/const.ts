@@ -15,7 +15,8 @@ import {
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
-import { getSection } from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
+import { addSetupExpr } from "../util/setup-statements";
 import { addValue, initValue } from "../util/signals";
 import translateVar from "../util/translate-var";
 
@@ -83,7 +84,10 @@ export default {
         }
       }
       if (!valueExtra.nullable) binding.nullable = false;
-      if (!upstreamAlias) setBindingDownstream(binding, valueExtra);
+      if (!upstreamAlias) {
+        setBindingDownstream(binding, valueExtra);
+        addSetupExpr(getOrCreateSection(tag), valueAttr.value);
+      }
     }
   },
   translate: {

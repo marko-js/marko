@@ -22,7 +22,6 @@ const $walks = /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c");
 const $section_content2 = /* @__PURE__ */ _content("__tests__/template.marko_2_content", "<div>that never changes</div>", "b");
 const $section_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "<div>static content</div>", "b");
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$input_section($scope["#childScope/0"], attrTags(attrTag({ content: $section_content($scope) }), { content: $section_content2($scope) }));
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

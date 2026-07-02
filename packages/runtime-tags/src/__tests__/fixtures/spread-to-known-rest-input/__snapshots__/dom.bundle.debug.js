@@ -21,11 +21,9 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 // template.marko
 const $template = /* @__PURE__ */ ((_w0) => `<div id=known>${_w0}</div><div id=dynamic><!></div>`)($template$1);
 const $walks = /* @__PURE__ */ ((_w0) => `D/${_w0}&lD%l`)("b b");
+const $setup = () => {};
 const Child = child_default;
 _resume_dynamic_tag();
-function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-}
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
 const $input = /* @__PURE__ */ _const("input", ($scope) => {
 	$_class($scope["#childScope/0"], $scope.input.class);

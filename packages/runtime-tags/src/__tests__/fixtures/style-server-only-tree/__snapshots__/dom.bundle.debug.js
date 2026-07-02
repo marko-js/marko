@@ -7,9 +7,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/child.marko", $template
 // template.marko
 const $template = /* @__PURE__ */ ((_w0) => `<!>${_w0}<div class=page>Page</div>`)($template$1);
 const $walks = /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b");
-function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-}
+const $setup = () => {};
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
 
 // page.css

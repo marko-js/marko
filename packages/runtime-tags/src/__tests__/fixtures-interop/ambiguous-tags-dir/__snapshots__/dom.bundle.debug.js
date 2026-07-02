@@ -7,7 +7,5 @@ var hello_default = /* @__PURE__ */ _template("__tests__/tags/hello.marko", $tem
 // template.marko
 const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)("b");
-function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-}
+const $setup = () => {};
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

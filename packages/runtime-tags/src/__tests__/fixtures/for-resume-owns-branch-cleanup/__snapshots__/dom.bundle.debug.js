@@ -22,10 +22,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 const $template = "<div id=ref>init</div><button id=o>O</button><button id=a>A</button><!><!>";
 const $walks = "b b b%c";
 const $if_content__count = /* @__PURE__ */ _if_closure("#text/2", 0, ($scope) => $count$1($scope["#childScope/0"], $scope._.count));
-const $if_content__setup = ($scope) => {
-	$if_content__count._($scope);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-};
+const $if_content__setup = $if_content__count;
 const $if = /* @__PURE__ */ _if("#text/2", /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($template$1), /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
 const $outer = /* @__PURE__ */ _let("outer/3", ($scope) => $if($scope, $scope.outer ? 0 : 1));
 const $count = /* @__PURE__ */ _let("count/4", $if_content__count);

@@ -20,7 +20,6 @@ const $open = /* @__PURE__ */ _let("open/2", ($scope) => {
 	_text($scope["#text/1"], String($scope.open));
 });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$open($scope, false);
 }
 function $openChange($scope) {

@@ -16,7 +16,6 @@ const $walks = /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c");
 const $item_content__item__script = _script("__tests__/template.marko_1_item", ($scope) => _el_read($scope["#div/0"]).innerHTML = $scope.item);
 const $item_content = /* @__PURE__ */ _content_closures(/* @__PURE__ */ _content("__tests__/template.marko_1_content", "<div></div>", " b"), { item: $item_content__item__script });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	let $item;
 	forOf([
 		1,

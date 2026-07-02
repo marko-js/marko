@@ -11,10 +11,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", "", 
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $if_content__setter = /* @__PURE__ */ _if_closure("#text/0", 0, ($scope) => $input_valueChange($scope["#childScope/0"], $valueChange($scope)));
-const $if_content__setup = ($scope) => {
-	$if_content__setter._($scope);
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-};
+const $if_content__setup = $if_content__setter;
 const $setter2 = /* @__PURE__ */ _const("setter");
 const $if = /* @__PURE__ */ _if("#text/0", "", /* @__PURE__ */ ((_w0) => `/${_w0}&`)(""), $if_content__setup);
 function $setup($scope) {
