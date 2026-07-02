@@ -100,15 +100,31 @@ live only here so far:
   initially without need.
 - Merge shapes beyond the prototype: dynamic tags, attr tags, `<await>`
   mid-patch, hoists/getters, tag variables, controllable attrs.
-- `$global` promotion (serialized-global reads become param-like bindings) —
-  designed, not built; required for `@marko/run` (`url`/`params`).
-  **Confirmed hard prerequisite for real apps** (measured against the
-  marko-ecommerce example, see below): every dynamic hole in a typical
-  `@marko/run` page derives from `$global.params`/`$global.search` or server
-  data computed from them, so a persisted compile of those pages emits zero
-  markers/spine today — the flag only pays off once `$global` reads join the
-  reactive graph. Pull this forward ahead of (or into) the writer/entry
-  slices when demoing against the examples.
+- `$global` promotion — **implemented** (commit `feat: promote $global reads
+to param-like sources under the persisted option`). Mechanism: under the
+  `persisted` option, `$global` member reads get bindings (program-section
+  root + property aliases) whose `Sources` carry a new `global` flag; guard
+  codegen splits it out — the param part rides the existing per-group
+  `_scope_reason()` guards unchanged while a global part ORs in
+  `_persisted_reason()`, a runtime read of `$global.persisted` itself, so
+  cross-template reads gate with no parent threading (and parents passing
+  $global-derived props thread the persisted bit to children through the
+  existing reason records). Values are untouched: reads bail out of scope-slot
+  rewriting (live member access on the global object), global-sourced props
+  never serialize values (`getExprIfSerialized` returns undefined;
+  `writeSerializedBinding` skips global bindings), and DOM statements
+  referencing only same-section global bindings fold into setup. Verified:
+  non-persisted builds and non-flagged renders byte-identical; fixtures
+  `persisted-global-reads`(+`-opt-out`); full suite 8293 passing; ecommerce
+  app emits full markers/spine (measured: `/item` 44→125 markers, +16% gzip;
+  `/search` 201→802, +50% gzip on that hole-dense worst case — the number
+  the marker-suppression levers must bring down).
+  Remaining from the original design note: per-key granularity for
+  serialized vs non-serialized globals (currently every static `$global.key`
+  read promotes; non-serialized keys cost markers they can't use), and the
+  DOM-side value-signal chains for global keys exist only where reads are
+  cross-section (closures/intersections) — pure setup-folded holes rely on
+  placement for updates, per the placement-only model.
 - Root pairing convention; concurrent navigations (abort between frames);
   `by`-less loop diagnostics; effect ordering confirmation; pair-store
   session persistence; when to enable hint pruning.
@@ -151,9 +167,10 @@ Sibling checkouts on the same branch name carry the integration prototype:
   `@marko/compiler`, and `@marko/vite` tarballs (see its `PROTOTYPE.md` for
   regeneration steps); `vite.config.ts` enables the compile flag and
   `+middleware.ts` sets `$global.persisted` per request (the run context
-  _is_ `$global`; `PERSISTED=0` disables). Verified end to end: the flag
-  reaches both compile and render, non-flag output stays byte-identical —
-  but no markers emit yet because of the `$global`-promotion gap above.
+  _is_ `$global`; `PERSISTED=0` disables). Verified end to end with
+  `$global` promotion: persisted renders emit full markers/spine on every
+  route (measurements in `PROTOTYPE.md`), non-flagged renders stay
+  byte-identical.
 
 ## How to validate everything
 
