@@ -1,4 +1,4 @@
-<button>Show B</button><!--M_*1 a--><span>A</span><!--M_[--><!--M_]1 d-->
+<span>1</span>
 <script>
   ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
     h))) => (self.$h ||= ((o = {}, s, i = 0, D = document) => (k, c, t, e) => o[
@@ -7,13 +7,28 @@
       .cssText = "display:block;position:fixed;visibility:hidden", e
       .onanimationstart = () => (o[k] = 1, e.remove(), c()), (s ||= D.head
         .appendChild(D.createElement("style"))).append(":has(" + k +
-        ")>t[m=" + t + "]{animation:1ms m-h}@keyframes m-h{}")))())(".shared",
-      l))(document.currentScript,
-    "<script async type=module src=\"child-a.marko.load.mjs\">\x3C/script>");
+        ")>t[m=" + t + "]{animation:1ms m-h}@keyframes m-h{}")))())(
+      ".my-button:focus", l))(document.currentScript,
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>")
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[--><button class=a>1<!--M_*3 b--></button><!--M_*3 a--><!--M_]1 c 3-->
+<script>
   WALKER_RUNTIME("M")("_");
-  M._.b = {
-    _a: ["a0 2"]
-  };
-  M._.r = ["c0 1"];
+  M._.r = [_ => [3, {
+    c: 1
+  }], "b0 3"];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[--><button class=b>1<!--M_*4 b--></button><!--M_*4 a--><!--M_]1 d 4-->
+<script>
+  M._.r.push(_ => [4, {
+    c: 1
+  }], "b1 4");
   M._.w()
 </script>

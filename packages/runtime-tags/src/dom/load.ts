@@ -261,16 +261,23 @@ function hasWatcher() {
       cb();
     } else {
       const key = "m" + ++id;
-      const sentinel = document.documentElement.appendChild(
-        document.createElement("t"),
-      );
-      sentinel.setAttribute("m", key);
       // Sentinels are `<t m=mN>` elements (the tag the reorder runtime
       // already claims) kept invisible and out of flow by an inline style.
       // They can't simply be `display:none` -- animations never run on
       // undisplayed elements, and the reorder runtime writes a global
       // `t{display:none}` rule, hence the explicit `display:block`. The
       // inline style is written via CSSOM so `style-src` doesn't apply.
+      // They're inserted before `<body>` (never appended last): the resume
+      // runtime sweeps a live TreeWalker after each streamed chunk and parks
+      // on the last node it accepted. A sentinel appended after `<body>`
+      // would be that last node, leaving everything streamed into `<body>`
+      // afterwards behind the parked position (and removing a parked-on
+      // sentinel detaches the walker entirely).
+      const sentinel = document.documentElement.insertBefore(
+        document.createElement("t"),
+        document.body,
+      );
+      sentinel.setAttribute("m", key);
       sentinel.style.cssText = "display:block;position:fixed;visibility:hidden";
       sentinel.onanimationstart = () => {
         matched[selector] = 1;

@@ -4,8 +4,8 @@
     h), f.querySelectorAll("script,style,link").forEach(e => e.nonce = p
       .nonce), p.after(f))) => (self.$h ||= ((o = {}, s, i = 0, D =
     document) => (k, c, t, e) => o[k] === 1 ? c() : ((e = D.documentElement
-        .appendChild(D.createElement("t"))).setAttribute("m", t = "m" + (
-        i += 1)), e.style.cssText =
+        .insertBefore(D.createElement("t"), D.body)).setAttribute("m", t =
+        "m" + (i += 1)), e.style.cssText =
       "display:block;position:fixed;visibility:hidden", e.onanimationstart =
       () => (o[k] = 1, e.remove(), c()), ((s ||= D.head.appendChild(D
         .createElement("style"))).nonce = "default-nonce", s).append(
