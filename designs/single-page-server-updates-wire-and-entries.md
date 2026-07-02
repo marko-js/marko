@@ -97,6 +97,15 @@ These reshape the implementation estimate more than any format choice:
    only; merge when both), with `_serialize_guard` (markers) accepting both
    and `_serialize_if` (values) accepting only the stateful bit for
    param-only-reasoned props.
+   **Now implemented** behind the `persisted` compile option +
+   `$global.persisted` render flag: `_serialize_if` projects bit 1,
+   `_serialize_guard` passes bits through for propagation, and
+   `writeHTMLResumeStatements` gates spine sites guard-class while binding
+   values stay if-class (same-reason hoisting disabled under the flag).
+   Verified: the leak is gone (`input_product_sale_percent` absent initially,
+   `expanded`/`input_product_featured` unchanged), all markers/spine emit,
+   non-flag output stays byte-identical, and the e2e prototype passes against
+   the real flag with the sed simulation retired.
 3. **Cross-template propagation is free.** The parent already passes its
    guard into children (`_set_serialize_reason($sg__input_related)` before
    `_priceTag(...)`); with the root seeded, the child's holes marked up

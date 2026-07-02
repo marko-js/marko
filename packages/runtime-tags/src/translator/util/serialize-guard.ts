@@ -127,6 +127,22 @@ export function getExprIfSerialized<
   return (guard ? t.logicalExpression("&&", guard, expr) : expr) as R;
 }
 
+// The guard-class sibling of `getExprIfSerialized`: gates on any reason bit
+// (stateful or persisted) instead of requiring the stateful bit. Used under
+// the `persisted` option for spine emission (scope writes, owner links,
+// structural bookkeeping) that updates rely on even when values are elided.
+export function getExprGuardSerialized<
+  T extends undefined | SerializeReason,
+  R extends T extends {} ? t.Expression : undefined,
+>(section: Section, reason: T, expr: t.Expression): R {
+  if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
+    return (reason && expr) as R;
+  }
+
+  const guard = getOrHoist(reason, true);
+  return (guard ? t.logicalExpression("&&", guard, expr) : expr) as R;
+}
+
 function getOrHoist(
   reason: DynamicSerializeReason,
   isGuard: boolean,

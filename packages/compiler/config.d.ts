@@ -32,6 +32,13 @@ declare const Config: {
   hydrateInit?: boolean;
   optimize?: boolean;
   optimizeKnownTemplates?: string[];
+  /**
+   * Compiles output capable of persisted (single-page server-first update)
+   * renders: request-time serialize guards distinguish marker/spine emission
+   * from value emission so a render with `$global.persisted` set serializes
+   * resume markers for request-derived content without their values.
+   */
+  persisted?: boolean;
   cache?: Map<unknown, unknown>;
   hot?: boolean;
   /** @deprecated */

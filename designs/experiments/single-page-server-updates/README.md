@@ -17,20 +17,23 @@ OPT=1 node -r '~ts' $E/compile-cjs.js $E/product.marko $E/tags/price-tag.marko
 # (rename between runs — both write <file>.marko.cjs)
 ```
 
-## 2. Simulate persisted mode
+## 2. Persisted mode
 
-Persisted-mode initial rendering is simulated by seeding the existing
-request-time serialize-reason guard — inject one statement at the top of the
-compiled page renderer:
+Persisted mode is now a real compile option + render flag (this harness
+validated the earlier sed-injection simulation, which is retired):
 
 ```sh
-sed 's|", input => {|", input => {\n  (0, _html2._set_serialize_reason)(1);|' \
-  $E/product.marko.cjs > $E/product.persisted.marko.cjs
+PERSISTED=1 node -r '~ts' $E/compile-cjs.js $E/product.marko $E/tags/price-tag.marko
+PERSISTED=1 TEMPLATE=product.marko.cjs node -r '~ts' $E/render.js
 ```
 
-This is the experiment that showed markers, spine, branch ids, and loop keys
-all emerge from the existing guard machinery with zero translator changes —
-and that param-only slot values leak (the guard-split finding).
+`PERSISTED=1` sets `persisted: true` at compile time and `$global.persisted`
+at render time. The render emits markers, spine, branch ids, and loop keys —
+and, via the guard-split lattice, no param-only slot values (the leak the
+sed experiment exposed is fixed; `input_product_sale_percent` no longer
+serializes initially while `expanded`/`input_product_featured` still do).
+Without `PERSISTED=1` at render time the output is byte-identical to a
+non-persisted build (modulo the random `renderId`).
 
 ## 3. Render and measure
 
@@ -57,14 +60,16 @@ fixed walker-runtime bootstrap stripped (it is identical in both modes).
 ## 5. End-to-end prototype (A1 + B2)
 
 ```sh
+PERSISTED=1 node -r '~ts' $E/compile-cjs.js $E/product.marko $E/tags/price-tag.marko
 OUTPUT=dom node -r '~ts' $E/compile-cjs.js $E/product.marko $E/tags/price-tag.marko
 node -r '~ts' $E/e2e.js
 ```
 
-`e2e.js` server-renders page A in persisted mode, resumes it with the real
-runtime in jsdom (inline scripts run in the DOM realm; the page ready channel
-drains via `ready(pageId)`), clicks the button to diverge client state, then
-applies the A1 patch for page B through the working B2 persisted entries:
+`e2e.js` server-renders page A in persisted mode (real `persisted` compile
+option + `$global.persisted`), resumes it with the real runtime in jsdom
+(inline scripts run in the DOM realm; the page ready channel drains via
+`ready(pageId)`), clicks the button to diverge client state, then applies
+the A1 patch for page B through the working B2 persisted entries:
 
 - `entries/product.update.js` / `entries/price-tag.update.js` — what the
   `?update` codegen would emit. The conditional merge is an `_if` instance

@@ -67,7 +67,9 @@ const patchFill = (_) => [
 
 async function main() {
   // --- 1. Server-render page A in persisted mode -------------------------
-  const htmlA = await renderToString("product.persisted.marko.cjs", inputA);
+  // Requires the artifact compiled with `persisted: true` (PERSISTED=1);
+  // the per-request opt-in is `$global.persisted`.
+  const htmlA = await renderToString("product.marko.cjs", inputA);
 
   // --- 2. Boot a browser and let the real inline scripts run -------------
   const dom = new JSDOM("", { runScripts: "dangerously", pretendToBeVisual: true });
@@ -123,7 +125,7 @@ async function main() {
 
   // Show what page B's persisted render emits today (for the writer-gap
   // comparison in the doc) -- the patch below is what update mode WILL emit.
-  const htmlB = await renderToString("product.persisted.marko.cjs", inputB);
+  const htmlB = await renderToString("product.marko.cjs", inputB);
   console.log("\npage B payload today:", htmlB.match(/M\.\w+\.b=(\{.*\});M\.\w+\.w\(\)/s)?.[1], "\n");
 
   // --- 5. Apply the A1 patch through the B2 merges ------------------------
@@ -175,7 +177,11 @@ async function main() {
 async function renderToString(templateFile, input) {
   const template = require(path.join(E, templateFile)).default;
   let out = "";
-  for await (const chunk of template.render(input)) out += chunk;
+  for await (const chunk of template.render({
+    ...input,
+    $global: { persisted: true },
+  }))
+    out += chunk;
   return out;
 }
 
