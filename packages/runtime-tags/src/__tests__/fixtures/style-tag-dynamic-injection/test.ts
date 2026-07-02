@@ -5,5 +5,7 @@ export const config: TestConfig = {
   steps: [
     { color: "red} :root { display: none } </style><script>alert(1)</script>" },
     { color: "red/* (" },
+    { color: "red; background: blue" },
+    { color: "green" },
   ],
 };

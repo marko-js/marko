@@ -63,9 +63,12 @@ export function stringifyStyleObject(name: string, value: unknown) {
 
 export function escapeStyleValue(str: string) {
   let closers = "";
+  // `;` is hex escaped (unlike the backslash escapes) so escaped values never
+  // contain a raw `;` and `styleRuleItem` can locate declaration ends with it.
   const result = str
-    .replace(/[\\"'{};>]|\/(?=\*)/g, "\\$&")
-    .replace(/</g, "\\3C ");
+    .replace(/[\\"'{}>]|\/(?=\*)/g, "\\$&")
+    .replace(/</g, "\\3C ")
+    .replace(/;/g, "\\3B ");
   for (const c of result) {
     if (c === "(") closers = ")" + closers;
     else if (c === "[") closers = "]" + closers;

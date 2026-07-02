@@ -8,3 +8,7 @@
 ```
 
 # Update `{"color":"red/* ("}`
+
+# Update `{"color":"red; background: blue"}`
+
+# Update `{"color":"green"}`

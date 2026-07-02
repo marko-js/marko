@@ -136,15 +136,13 @@ export function _style_rule_item(
   const decl = name + ":" + escapeStyleValue(_to_text(value)) + ";";
   let start = text.indexOf("{" + name + ":");
   if (start === -1) start = text.indexOf(";" + name + ":");
-  if (start === -1) {
-    element.textContent = text.slice(0, -1) + decl + "}";
-  } else {
-    let end = ++start;
-    for (let c: string | undefined; (c = text[end]) && c !== ";"; end++) {
-      if (c === "\\") end++;
-    }
-    element.textContent = text.slice(0, start) + decl + text.slice(end + 1);
-  }
+  element.textContent =
+    start === -1
+      ? text.slice(0, -1) + decl + "}"
+      : // `escapeStyleValue` never emits a raw `;`, so the next one ends the declaration.
+        text.slice(0, ++start) +
+        decl +
+        text.slice(text.indexOf(";", start) + 1);
 }
 
 export function _attr_nonce(scope: Scope, nodeAccessor: Accessor) {
