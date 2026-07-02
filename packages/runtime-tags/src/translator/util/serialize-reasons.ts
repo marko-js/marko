@@ -149,7 +149,11 @@ export function addOwnerSerializeReason(
 
 export function isReasonDynamic(
   reason: undefined | SerializeReason,
-): reason is { state: undefined; param: OneMany<InputBinding | ParamBinding> } {
+): reason is {
+  state: undefined;
+  param: Opt<InputBinding | ParamBinding>;
+  global: true | undefined;
+} {
   return !!reason && reason !== true && !reason.state;
 }
 

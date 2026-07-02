@@ -282,6 +282,15 @@ export function _scope_reason() {
   return reason;
 }
 
+// The guard for $global-sourced serialization (persisted compile option):
+// reads the render's persisted flag directly rather than the parent-threaded
+// reason, since `$global` is render-wide -- a stateful parent cannot change
+// it, so the stateful bit never applies and no reason record needs to carry
+// per-key entries for it.
+export function _persisted_reason() {
+  return $chunk.boundary.state.$global.persisted ? 2 : 0;
+}
+
 export function _serialize_if(condition: SerializeReasonFlags, key: string) {
   return condition &&
     (typeof condition === "number" ? condition : condition[key] || 0) & 1

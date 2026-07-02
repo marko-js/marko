@@ -34,6 +34,7 @@ import {
   hasNonConstantPropertyAlias,
   intersectionMeta,
   isAssignedBindingExtra,
+  isGlobalBinding,
   isRegisteredFnExtra,
   type ReferencedBindings,
 } from "./references";
@@ -836,6 +837,7 @@ export function addStatement(
   usedReferences?: ReferencedBindings[] | false,
   isPure?: boolean,
 ): void {
+  referencedBindings = stripOwnGlobalRefs(targetSection, referencedBindings);
   const signal = getSignal(targetSection, referencedBindings);
   const statements = (signal[type] ??= []);
   const add = type === "effect" ? addEffectReferences : addRenderReferences;
@@ -881,12 +883,38 @@ function addRenderReferences(
   );
 }
 
+// Promoted `$global` bindings (persisted option) have no client-side value
+// application chain: reads stay live member accesses on the global object,
+// so statements/values referencing only them run once at setup, exactly like
+// unpromoted `$global` reads today. Cross-section reads keep the closure
+// path and mixed intersections keep their `_or` signal.
+function stripOwnGlobalRefs(
+  section: Section,
+  refs: ReferencedBindings,
+): ReferencedBindings {
+  if (refs) {
+    if (Array.isArray(refs)) {
+      if (
+        !refs.some(
+          (binding) => binding.section !== section || !isGlobalBinding(binding),
+        )
+      ) {
+        return undefined;
+      }
+    } else if (refs.section === section && isGlobalBinding(refs)) {
+      return undefined;
+    }
+  }
+  return refs;
+}
+
 export function addValue(
   targetSection: Section,
   referencedBindings: ReferencedBindings,
   signal: Signal,
   value: t.Expression,
 ) {
+  referencedBindings = stripOwnGlobalRefs(targetSection, referencedBindings);
   const parentSignal = getSignal(targetSection, referencedBindings);
   addRenderReferences(parentSignal, referencedBindings);
   parentSignal.values.push({
@@ -1282,7 +1310,10 @@ export function writeHTMLResumeStatements(
   const writeSerializedBinding = (binding: Binding) => {
     const reason = getSerializeReason(section, binding);
     if (!reason) return;
-    if (binding.noSerialize) {
+    // Promoted `$global` bindings (persisted option) never serialize values:
+    // client reads stay member accesses on the live global object, which
+    // serializes through the existing serialized-globals channel.
+    if (binding.noSerialize || isGlobalBinding(binding)) {
       serializedLookup.delete(getScopeAccessor(binding));
       return;
     }
@@ -1296,9 +1327,12 @@ export function writeHTMLResumeStatements(
       });
       expr = t.objectExpression(props);
     }
-    serializedProperties.push(
-      toObjectProperty(accessor, ifSerializedValue(reason, expr)),
-    );
+    // Undefined means the value provably never serializes (purely
+    // global-sourced reason under the persisted option).
+    const serializedValue = ifSerializedValue(reason, expr);
+    if (serializedValue) {
+      serializedProperties.push(toObjectProperty(accessor, serializedValue));
+    }
 
     if (debug) {
       const { root, access } = getDebugScopeAccess(binding);

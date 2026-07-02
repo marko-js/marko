@@ -63,6 +63,7 @@ export {
   _id,
   _if,
   _peek_scope_id,
+  _persisted_reason,
   _resume,
   _resume_branch,
   _scope,
