@@ -61,15 +61,15 @@ function mount(
     };
 
     if (MARKO_DEBUG) {
-      if (!String($global.runtimeId).match(/^[_$a-z][_$a-z0-9]*$/i)) {
+      if (!String($global.runtimeId).match(/^[_a-z][_a-z0-9]*$/i)) {
         throw new Error(
-          `Invalid runtimeId: "${$global.runtimeId}". The runtimeId must be a valid JavaScript identifier.`,
+          `Invalid runtimeId: "${$global.runtimeId}". The runtimeId must start with a letter or underscore and only contain letters, numbers, and underscores.`,
         );
       }
 
-      if (!String($global.renderId).match(/^[_$a-z][_$a-z0-9]*$/i)) {
+      if (!String($global.renderId).match(/^[_a-z][_a-z0-9]*$/i)) {
         throw new Error(
-          `Invalid renderId: "${$global.renderId}". The renderId must be a valid JavaScript identifier.`,
+          `Invalid renderId: "${$global.renderId}". The renderId must start with a letter or underscore and only contain letters, numbers, and underscores.`,
         );
       }
     }

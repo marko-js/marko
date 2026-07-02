@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-style-nested-selector/template.marko:3:11
+      1 | <style>
+      2 |   @media (min-width: 600px) {
+    > 3 |     .card-${input.variant}:hover {
+        |           ^^^^^^^^^^^^^^^^ A `${...}` interpolation in a [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) is substituted as a `var(--…)` custom property reference, which only resolves in a declaration value, not in a selector or at-rule prelude. For a native html [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) use the `html-style` core tag instead.
+      4 |       color: red;
+      5 |     }
+      6 |   }

@@ -1,0 +1,14 @@
+<style>
+  .card {
+    color: ${input.color};
+    padding: calc(${input.pad} * 1px);
+  }
+  .card:hover {
+    color: ${input.hover};
+  }
+  @media (min-width: 600px) {
+    .card { color: ${input.wide} }
+  }
+</style>
+
+<div class="card">Card</div>

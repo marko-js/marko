@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-style-property/template.marko:3:5
+      1 | <style>
+      2 |   .box {
+    > 3 |     ${input.prop}: red;
+        |     ^^^^^^^^^^^^^ A `${...}` interpolation in a [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) is substituted as a `var(--…)` custom property reference, which cannot be used as a property name. For a native html [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) use the `html-style` core tag instead.
+      4 |   }
+      5 | </style>
+      6 |

@@ -5,6 +5,7 @@ import {
   assertValidTextValue,
 } from "../common/errors";
 import {
+  escapeStyleValue,
   getEventHandlerName,
   isEventHandler,
   isNotVoid,
@@ -38,7 +39,7 @@ import {
 import { _on } from "./event";
 import { parseHTML } from "./parse-html";
 import { createAndSetupBranch, type Renderer } from "./renderer";
-import { subscribeToScopeSet } from "./signals";
+import { _id, subscribeToScopeSet } from "./signals";
 
 export function _to_text(value: unknown) {
   if (MARKO_DEBUG) {
@@ -117,6 +118,33 @@ export function _attr_style_item(
   value: unknown,
 ) {
   element.style.setProperty(name, _to_text(value));
+}
+
+export function _style_shell(scope: Scope, nodeAccessor: Accessor) {
+  const element = scope[nodeAccessor] as HTMLStyleElement;
+  const id = _id(scope);
+  element.className = id;
+  _text_content(element, "." + id + " ~ *{}");
+}
+
+export function _style_rule_item(
+  element: HTMLStyleElement,
+  name: string,
+  value: unknown,
+) {
+  const text = element.textContent!;
+  const decl = name + ":" + escapeStyleValue(_to_text(value)) + ";";
+  let start = text.indexOf("{" + name + ":");
+  if (start === -1) start = text.indexOf(";" + name + ":");
+  if (start === -1) {
+    element.textContent = text.slice(0, -1) + decl + "}";
+  } else {
+    let end = ++start;
+    for (let c: string | undefined; (c = text[end]) && c !== ";"; end++) {
+      if (c === "\\") end++;
+    }
+    element.textContent = text.slice(0, start) + decl + text.slice(end + 1);
+  }
 }
 
 export function _attr_nonce(scope: Scope, nodeAccessor: Accessor) {

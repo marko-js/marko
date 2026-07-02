@@ -61,6 +61,19 @@ export function stringifyStyleObject(name: string, value: unknown) {
   return value || value === 0 ? name + ":" + value : "";
 }
 
+export function escapeStyleValue(str: string) {
+  let closers = "";
+  const result = str
+    .replace(/[\\"'{};>]|\/(?=\*)/g, "\\$&")
+    .replace(/</g, "\\3C ");
+  for (const c of result) {
+    if (c === "(") closers = ")" + closers;
+    else if (c === "[") closers = "]" + closers;
+    else if (c === closers[0]) closers = closers.slice(1);
+  }
+  return result + closers;
+}
+
 // TODO: turn into normal function declaration when resolved: https://github.com/oxc-project/oxc/issues/17364?issue=rolldown%7Crolldown%7C7666
 export const toDelimitedString = function toDelimitedString(
   val: unknown,

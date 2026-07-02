@@ -1,4 +1,5 @@
 import { assertValidTextValue } from "../common/errors";
+import { escapeStyleValue } from "../common/helpers";
 
 export function _to_text(val: unknown) {
   if (MARKO_DEBUG) {
@@ -46,6 +47,13 @@ export function _escape_style(val: unknown) {
     assertValidTextValue(val);
   }
   return val ? escapeStyleStr(val + "") : val === 0 ? "0" : "";
+}
+
+export function _escape_style_value(val: unknown) {
+  if (MARKO_DEBUG) {
+    assertValidTextValue(val);
+  }
+  return val || val === 0 ? escapeStyleValue(val + "") : "";
 }
 
 const unsafeCommentReg = />/g;

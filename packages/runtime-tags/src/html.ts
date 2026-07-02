@@ -25,6 +25,7 @@ export {
   _attrs_content,
   _attrs_partial,
   _attrs_partial_content,
+  _style_html,
 } from "./html/attrs";
 export { compat } from "./html/compat";
 export {
@@ -32,6 +33,7 @@ export {
   _escape_comment,
   _escape_script,
   _escape_style,
+  _escape_style_value,
   _to_text,
   _unescaped,
 } from "./html/content";

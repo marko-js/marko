@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-style-string/template.marko:3:15
+      1 | <style>
+      2 |   .box::before {
+    > 3 |     content: "${input.msg}";
+        |               ^^^^^^^^^^^^ A `${...}` interpolation in a [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) is substituted as a `var(--…)` custom property reference, which is not substituted inside a quoted CSS string — the literal text `var(--…)` would be rendered instead of the value. For a native html [`<style>` tag](https://markojs.com/docs/reference/core-tag#style) use the `html-style` core tag instead.
+      4 |   }
+      5 | </style>
+      6 |

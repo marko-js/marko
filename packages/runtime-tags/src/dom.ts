@@ -58,6 +58,8 @@ export {
   _attrs_script,
   _html,
   _lifecycle,
+  _style_rule_item,
+  _style_shell,
   _text,
   _text_content,
   _to_text,
