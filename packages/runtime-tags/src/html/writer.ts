@@ -128,7 +128,7 @@ export function _attr_content(
   nodeAccessor: Accessor,
   scopeId: number,
   content: unknown,
-  serializeReason?: 1 | 0,
+  serializeReason?: number,
 ) {
   const shouldResume = serializeReason !== 0;
   const render = normalizeServerRender(content);
@@ -260,7 +260,19 @@ export function getScopeById(scopeId: number | undefined) {
   }
 }
 
-export function _set_serialize_reason(reason: undefined | 0 | 1) {
+// Serialize reasons form a small bit lattice: bit 1 means a stateful parent
+// could re-render this content client-side (serialize markers and values,
+// today's behavior); bit 2 means the render is persisted (single-page
+// server-first updates) and only markers/spine serialize -- values arrive in
+// update payloads. A plain number applies to every param group; a record
+// carries per-group bits.
+export type SerializeReasonFlags =
+  | undefined
+  | 0
+  | number
+  | Record<string, number>;
+
+export function _set_serialize_reason(reason: SerializeReasonFlags) {
   $chunk.boundary.state.serializeReason = reason;
 }
 
@@ -270,24 +282,25 @@ export function _scope_reason() {
   return reason;
 }
 
-export function _serialize_if(
-  condition: undefined | 1 | Record<string, 1>,
-  key: string,
-) {
-  return condition && (condition === 1 || condition[key]) ? 1 : undefined;
+export function _serialize_if(condition: SerializeReasonFlags, key: string) {
+  return condition &&
+    (typeof condition === "number" ? condition : condition[key] || 0) & 1
+    ? 1
+    : undefined;
 }
 
-export function _serialize_guard(
-  condition: undefined | 1 | Record<string, 1>,
-  key: string,
-) {
-  return _serialize_if(condition, key) || 0;
+export function _serialize_guard(condition: SerializeReasonFlags, key: string) {
+  return (
+    (condition &&
+      (typeof condition === "number" ? condition : condition[key])) ||
+    0
+  );
 }
 
 export function _el_resume(
   scopeId: number,
   accessor: Accessor,
-  shouldResume?: 0 | 1,
+  shouldResume?: number,
 ) {
   if (shouldResume === 0) return "";
 
@@ -296,7 +309,7 @@ export function _el_resume(
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
-export function _sep(shouldResume: 0 | 1) {
+export function _sep(shouldResume: number) {
   return shouldResume === 0 ? "" : "<!>";
 }
 
@@ -338,9 +351,9 @@ export function _for_of(
   by: Falsy | ((item: unknown, index: number) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -369,9 +382,9 @@ export function _for_in(
   by: Falsy | ((key: string, v: unknown) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -403,9 +416,9 @@ export function _for_to(
   by: Falsy | ((v: number) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -438,9 +451,9 @@ export function _for_until(
   by: Falsy | ((v: number) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -479,9 +492,9 @@ function forBranches(
   ) => void,
   scopeId: number,
   accessor: Accessor,
-  serializeBranch: undefined | 0 | 1,
-  serializeMarker: undefined | 0 | 1,
-  serializeStateful: undefined | 0 | 1,
+  serializeBranch: undefined | number,
+  serializeMarker: undefined | number,
+  serializeStateful: undefined | number,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
 ) {
@@ -565,9 +578,9 @@ export function _if(
   cb: () => void | number,
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ) {
@@ -609,8 +622,8 @@ export function _if(
 function writeBranchEnd(
   scopeId: number,
   accessor: Accessor,
-  serializeStateful: undefined | 0 | 1,
-  serializeMarker: undefined | 0 | 1,
+  serializeStateful: undefined | number,
+  serializeMarker: undefined | number,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
   branchIds?: string,
@@ -665,8 +678,8 @@ export function _show_end(
   scopeId: number,
   accessor: Accessor,
   display: unknown,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1 | 0,
 ) {
@@ -757,7 +770,7 @@ export function _await<T>(
   accessor: Accessor,
   promise: Promise<T> | T,
   content: (value: T) => void,
-  serializeMarker?: 0 | 1,
+  serializeMarker?: number,
 ) {
   const resumeMarker = serializeMarker !== 0;
 
@@ -975,12 +988,18 @@ export class State implements SerializeState {
   public flushScopes = false;
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;
-  public serializeReason: undefined | 0 | 1;
+  public serializeReason: SerializeReasonFlags;
   constructor(
     public $global: $Global & { renderId: string; runtimeId: string },
   ) {
     if ($global.cspNonce) {
       this.nonceAttr = " nonce" + attrAssignment($global.cspNonce);
+    }
+    if ($global.persisted) {
+      // Seed the root template's reason: the network is a stateful parent,
+      // but one that always supplies fresh values in its updates, so only
+      // markers and the scope spine serialize (bit 2).
+      this.serializeReason = 2;
     }
   }
 

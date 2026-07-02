@@ -13,7 +13,7 @@ import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
-import { isOptimize, isOutputHTML } from "./marko-config";
+import { isOptimize, isOutputHTML, isPersisted } from "./marko-config";
 import { find, forEach, type Opt, push, some } from "./optional";
 import {
   type AssignedBindingExtra,
@@ -48,7 +48,7 @@ import {
   type Section,
   sectionUtil,
 } from "./sections";
-import { getExprIfSerialized } from "./serialize-guard";
+import { getExprGuardSerialized, getExprIfSerialized } from "./serialize-guard";
 import {
   getSerializeReason,
   isReasonDynamic,
@@ -1158,6 +1158,13 @@ export function writeHTMLResumeStatements(
   const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
     ? true
     : section.serializeReason;
+  // Under the `persisted` option, spine emission (scope writes, owner links,
+  // structural bookkeeping) gates on any reason bit so persisted-only renders
+  // keep an addressable scope tree, while binding values stay gated on the
+  // stateful bit and are elided (updates always supply fresh values).
+  const exprSpineSerialized = isPersisted()
+    ? getExprGuardSerialized
+    : getExprIfSerialized;
   forEach(section.referencedClosures, (closure) => {
     if (closure.sources) {
       if (isDynamicClosure(section, closure)) {
@@ -1203,7 +1210,7 @@ export function writeHTMLResumeStatements(
           if (reason) {
             getHTMLSectionStatements(section).push(
               t.expressionStatement(
-                getExprIfSerialized(
+                exprSpineSerialized(
                   section,
                   reason,
                   callRuntime(
@@ -1226,7 +1233,7 @@ export function writeHTMLResumeStatements(
           const subscribeArg =
             isReasonDynamic(closureScopesReason) &&
             !isSameReason(closureScopesReason, sectionSerializeReason)
-              ? getExprIfSerialized(
+              ? exprSpineSerialized(
                   closure.section,
                   closureScopesReason,
                   identifier,
@@ -1261,8 +1268,15 @@ export function writeHTMLResumeStatements(
   const serializedProperties: t.ObjectProperty[] = [];
   const ifSerialized = (reason: SerializeReason, expr: t.Expression) => {
     if (isSameReason(sectionSerializeReason, reason)) return expr;
-    return getExprIfSerialized(section, reason, expr);
+    return exprSpineSerialized(section, reason, expr);
   };
+  // Binding values require the stateful bit even when their reason matches
+  // the section's (the section gate is spine-class under `persisted`, so the
+  // same-reason hoisting shortcut would leak param-only values initially).
+  const ifSerializedValue = (reason: SerializeReason, expr: t.Expression) =>
+    isPersisted() && isReasonDynamic(reason)
+      ? getExprIfSerialized(section, reason, expr)
+      : ifSerialized(reason, expr);
 
   let debugVars: t.ObjectProperty[] | undefined;
   const writeSerializedBinding = (binding: Binding) => {
@@ -1283,7 +1297,7 @@ export function writeHTMLResumeStatements(
       expr = t.objectExpression(props);
     }
     serializedProperties.push(
-      toObjectProperty(accessor, ifSerialized(reason, expr)),
+      toObjectProperty(accessor, ifSerializedValue(reason, expr)),
     );
 
     if (debug) {
@@ -1373,7 +1387,7 @@ export function writeHTMLResumeStatements(
 
     body.push(
       t.expressionStatement(
-        getExprIfSerialized(
+        exprSpineSerialized(
           section,
           sectionSerializeReason,
           writeScopeBuilder

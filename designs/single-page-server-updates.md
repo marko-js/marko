@@ -1,6 +1,22 @@
 # Single-page server-first updates
 
-Status: design proposal (no implementation yet)
+Status: design + first implementation slice landed behind flags
+
+Implemented so far (see the companion proposals doc and
+`experiments/single-page-server-updates/` for validation):
+
+- The `persisted` compile option (`@marko/compiler` config) paired with the
+  `$global.persisted` render flag.
+- The serialize-reason guard split: reasons are a small bit lattice (bit 1 =
+  stateful parent ⇒ markers + values; bit 2 = persisted ⇒ markers/spine
+  only). `_serialize_if` projects the stateful bit, `_serialize_guard`
+  passes bits through for propagation, and `writeHTMLResumeStatements`
+  gates spine emission (scope writes, owner links, structural bookkeeping,
+  closure subscriptions) guard-class while binding values stay if-class with
+  the same-reason hoisting shortcut disabled under the flag.
+- Verified: non-flag output is byte-identical; persisted renders emit every
+  hole marker, branch marks, and the spine with zero param-only values; the
+  end-to-end prototype passes against the real flag.
 
 A compiler-configured, opt-in runtime that makes reloads and navigations work
 without reloading the page: the client fetches the target URL, the server

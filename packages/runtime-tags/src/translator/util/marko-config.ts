@@ -17,6 +17,10 @@ export function isOptimize() {
   return getMarkoOpts().optimize;
 }
 
+export function isPersisted() {
+  return !!getMarkoOpts().persisted;
+}
+
 export function getReadyId(file: t.BabelFile = getFile()) {
   const { markoOpts } = file;
   if (!markoOpts.linkAssets) return undefined;

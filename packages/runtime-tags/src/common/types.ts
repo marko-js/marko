@@ -108,6 +108,14 @@ export interface $Global {
   cspNonce?: string;
   renderId?: string;
   runtimeId?: string;
+  /**
+   * Enables persisted-mode serialization for this render: resume markers and
+   * the scope spine for request-derived content are emitted so the page can
+   * receive single-page server-first updates. Requires templates compiled
+   * with the `persisted` option; omit (e.g. for crawlers) to serve the
+   * byte-identical non-persisted document.
+   */
+  persisted?: boolean;
   /** @internal */
   __flush__?($global: $Global, html: string): string;
 }
