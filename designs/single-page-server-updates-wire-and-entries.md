@@ -550,11 +550,25 @@ Costs and open choices:
   Repeat visitors re-download pairs once per session.
 - **Server needs the DOM-shape strings.** The HTML output interleaves static
   markup with dynamic writes — the client template literal does not exist in
-  server bundles today. Options: (i) flag-gated emission of the pairs into
-  the HTML output per section; (ii) a build-emitted server-only manifest
-  module (same bytes, centralized); (iii) the server reads them from the
-  client build's chunks at deploy time (zero duplication, requires client
-  assets visible to the server runtime).
+  server bundles today. **Decision: emit the pairs into the HTML output when
+  the persisted flag is on** (the simplest option — one compile, one
+  artifact, no cross-build plumbing; a server-only manifest module or
+  reading the client build's chunks at deploy time were the alternatives).
+  Mechanics:
+  - The translator hoists one module-level const per branch section —
+    `const $for_content_pair = [contentId, template, walks]` — the same
+    strings and deterministic id the same compile hands the persisted entry,
+    so agreement is by construction.
+  - The html-side `_if`/`_for_of`/dynamic-tag calls reference their pair;
+    the writer records "this content id rendered" only in **update mode**
+    (initial renders never emit pairs — the document is the markup).
+  - Per-response dedup on `State` (a rendered-500-times loop body ships its
+    pair once), flushed as a `templates` frame in the same chunk as — and
+    before — the first fill that needs it, mirroring the serializer's
+    existing deps ordering.
+  - Server bundle cost ≈ the branch markup bytes, once, flag-gated (the
+    example's two pairs ≈ 130 chars against a ~4.5 kB compiled server
+    module); no runtime cost outside update renders.
 - **Hints vs statelessness.** v1 sends pairs unconditionally for rendered
   branches (idempotent client store makes that safe, gzip makes it cheap).
   A per-id "already have" list is the cache-hostile extreme (tier-2 only).
@@ -618,11 +632,11 @@ regardless) and the finding-2 guard split on the initial render.
   placeholders mid-patch, hoists/getters, tag variables, controllable
   attrs — each needs its B2 emission shape spelled out (most look like the
   conditional/loop pattern: reuse the existing signal with a merge params).
-- **Branch markup delivery**: the prototype now wire-delivers
-  `template`/`walks` pairs (see the spike); remaining decisions are the
-  server-side source for the DOM-shape strings (emit into HTML output vs
-  server manifest vs reading client chunks), whether pairs persist beyond
-  the session, and when hint-driven pruning is worth enabling.
+- **Branch markup delivery**: the prototype wire-delivers `template`/`walks`
+  pairs and the server-side source is decided (compiled into the HTML output
+  under the flag — see the spike). Remaining: whether pairs persist beyond
+  the session (sessionStorage keyed by build hash?), and when hint-driven
+  pruning is worth enabling.
 - **Effect ordering**: entry effects are emitted in server completion order;
   child-before-owner arrival is handled by lazy owner resolution — confirm no
   case needs stronger ordering (suspected fine given fills always precede the
