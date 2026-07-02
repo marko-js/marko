@@ -8,6 +8,12 @@
 //   IS a `_for_of` signal instance whose params signal is the body merge fn.
 //   Fresh branches clone the same body template/walks the DOM output uses,
 //   and the same merge fn fills resumed and freshly-cloned branches alike.
+// - Presence checks (`"x" in patch`) implement sparse merge semantics:
+//   absence means unchanged. Real codegen emits them only where the server's
+//   own emission is guarded, always for structural props (tier-2 pruning
+//   omits a pruned subtree's anchoring prop), and routes them through
+//   per-kind runtime helpers where the check is byte-neutral -- see
+//   "Sparse vs dense merge statements" in the proposals doc.
 const { _text, _attr, _if, _for_of } = require("@marko/runtime-tags/debug/dom");
 const { $input_product_featured } = require("../product.marko.dom.cjs");
 const priceTagUpdate = require("./price-tag.update.js");
