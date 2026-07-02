@@ -206,17 +206,25 @@ _ => [1, { "BranchScopes:#ul/1": [_(2), _(3), _(4)], input_selected: 2, … },
 ```
 
 Applying an update is therefore a **top-down tree merge** of the patch scope
-tree onto the live scope tree, directed by compiled per-section tables in each
-template's persisted entry (see the compiler section):
+tree onto the live scope tree, performed by compiled per-section merge
+functions in each template's persisted entry (see the compiler section; shape
+validated end-to-end by the prototype in the companion doc):
 
 - The root pairs by convention (`meta` frame / fixed hop from the render
-  root). For each paired `(patchScope, liveScope)`, the section's compiled
-  table classifies every prop: **slot** (write onto the live scope + queue the
-  registered downstream signals — intersections, closures), **placement**
-  (invoke a placement signal against the live scope's bound node), or
-  **structural** (pair child scopes and recurse with the child section's
-  table — crossing into child templates through the persisted entry's imports,
-  or the registry for dynamic tags).
+  root). Each merge function `(patchScope, liveScope)` handles its section's
+  props with plain compiled statements: **slot** props write onto the live
+  scope and invoke the existing dirty-checking value signals (intersections,
+  closures fan out from there), **placement** props fill server-only holes
+  against the live scope's bound nodes (`_text`/`_attr` — the DOM node itself
+  is the old value for dirty-checking), and **structural** props pair child
+  scopes and recurse into the child section's merge — crossing into child
+  templates through the persisted entry's imports, or the registry for
+  dynamic tags.
+- Control-flow merges are not new machinery: the conditional merge is an
+  `_if` signal instance driven by the patch's branch-index outcome, and the
+  keyed-loop merge is a `_for_of` instance whose params signal is the body's
+  merge function — the real reconciler does keyed matching, clone-and-walk
+  branch creation, and move/remove diffing.
 - Child pairing identity: loops by the `by` key (`AccessorProp.LoopKey`) — the
   same key the client reconciler uses (`dom/control-flow.ts:811-828`);
   conditionals by branch index (`ConditionalRenderer` prefix); custom tags by
@@ -245,18 +253,21 @@ consumer differs. The corresponding requirement on the **initial** render is
 the **spine**: every section on a path from the root to an updatable hole must
 serialize (address-only — owner links, branch bookkeeping, keys, node
 bindings; no values), so the merge has live scopes to land on. Subtrees with
-no updatable content are compile-time absent from the tables and stay fully
-elided — "serialize everything" is not required.
+no updatable content are compile-time absent from the merge functions and
+stay fully elided — "serialize everything" is not required.
 
 In `MARKO_DEBUG` builds, update renders additionally serialize each scope's
 template/section id so the merge can assert pairing correctness instead of
 silently mis-merging.
 
 Alternatives rejected: server-emitted address tuples per scope (per-navigation
-wire cost for information that is static per build — compiled tables are paid
-once and cached); client sends its scope-id table so the server emits real ids
-(large requests, cache-hostile, turns a hint into a protocol requirement);
-implicit id-order pairing (unsound under async, above).
+wire cost for information that is static per build — compiled merge code is
+paid once and cached); client sends its scope-id table so the server emits
+real ids (large requests, cache-hostile, turns a hint into a protocol
+requirement); implicit id-order pairing (unsound under async, above);
+opcode-table entries with a shared interpreter (smaller per template, but the
+control-flow reuse above removed most of the interpreter's job — see the
+companion doc's superseded synthesis).
 
 ### What gets serialized in an update render
 
@@ -379,25 +390,31 @@ during its update render; the client's job is placement. Per template, the
 persisted entry — a parallel virtual module, `template.marko?update`, built as
 its own code-split chunk — contains:
 
-- **Per-section merge tables**: which props are slots, placement targets, or
-  structural (the compiled walk that directs the tree merge in the pairing
-  section). This is the scope-tree analog of the `walks` bytecode — structure
-  knowledge encoded at compile time so it never rides the wire.
-- **Placement signals** for pure server-only holes — the same shape the DOM
-  output already generates (`(scope, value) => _text(scope[node], value)`),
-  emitted here instead of the main module so initial bundles never see them.
+- **Per-section merge functions** `(patchScope, liveScope)` — plain compiled
+  statements per prop, in the same style as every other generated signal
+  (this is the scope-tree analog of the `walks` bytecode: structure knowledge
+  compiled once so it never rides the wire). Placement props fill server-only
+  holes via `_text`/`_attr` against nodes the spine bound; slot props write
+  the live scope and invoke existing value signals.
+- **Control-flow merges as existing signal instances** — the conditional
+  merge is an `_if(...)` and the keyed-loop merge a `_for_of(...)` whose
+  params signal is the body merge function, re-emitting the same
+  template/walks strings the DOM output already bakes into its own calls.
+  Keyed matching, clone + walk creation for fresh branches, and move/remove
+  diffing are the real reconciler; the same merge function fills resumed and
+  freshly-cloned branches.
 - **References to existing signals** for everything with a client-side life:
-  intersections (`_or`), closure fan-outs, loop reconcilers — imported from
-  the main DOM module where they already exist (an `_or` used by the
-  interactive chain stays in main; the persisted entry references it). Slot
-  writes trigger these; no code is duplicated.
+  intersections (`_or`), closure fan-outs — imported from the main DOM module
+  where they already exist (an `_or` used by the interactive chain stays in
+  main; the persisted entry references it). Slot writes trigger these; no
+  code is duplicated.
 - **Registrations** with the existing registry scheme:
   `_resume(getResumeRegisterId(section, …, "update"), …)` — the same
   deterministic ids the serializer emits (`translator/util/signals.ts:904-930`),
-  so update frames resolve through `registeredValues` with zero new lookup
-  machinery — plus static imports of child templates' persisted entries
-  (registry lookups at dynamic-tag boundaries), preserving per-template
-  splitting across the composition graph.
+  so update frames' entry effects resolve through `registeredValues` with
+  zero new lookup machinery — plus static imports of child templates'
+  persisted entries (registry lookups at dynamic-tag boundaries), preserving
+  per-template splitting across the composition graph.
 
 Placement-only resolves the derivation tradeoff from the classification
 section by default: derived values arrive computed (the server already did the
@@ -417,7 +434,7 @@ visited templates, each fetched once. Per-route `modulepreload` lists in the
 manifest hide latency.
 
 The compiler already has the complete reactivity graph (that is what
-`finalizeReferences` + the signal writer compute); the merge tables and
+`finalizeReferences` + the signal writer compute); the merge functions and
 placement partition are a new consumer of existing analysis, not new analysis.
 Codegen-wise this is a new `entry`/virtual-module kind alongside
 `hydrate`/`load` (`translator/visitors/program/index.ts:106-226` is the
@@ -452,7 +469,7 @@ the router for link interception) containing:
 
 1. **Stream applier** — frame parser (length-prefixed, `TextDecoder`), script
    injection for `resume` frames, and the merge driver: pairs the patch scope
-   tree onto the live tree using the persisted entries' compiled tables, backed
+   tree onto the live tree using the persisted entries' merge functions, backed
    by a patch-aware variant of `serializeContext` (`dom/resume.ts:173-181`)
    that resolves patch-local ids through the per-navigation map. Fills and
    effect strings are otherwise consumed by the existing machinery; renders

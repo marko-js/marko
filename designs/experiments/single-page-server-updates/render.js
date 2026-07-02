@@ -5,7 +5,7 @@ const input = {
 };
 
 async function main() {
-  const template = require(S + "/" + process.env.TEMPLATE).default;
+  const template = require(require("path").resolve(S, process.env.TEMPLATE)).default;
   let out = "";
   for await (const chunk of template.render(input)) out += chunk;
   console.log(out);

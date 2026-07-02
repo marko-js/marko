@@ -319,27 +319,19 @@ pairing up the chain).
   recursion); pairing paths duplicate structure the owner's props already
   express.
 
-### Synthesis (recommended): B1 tables, B3 entry points
+### Synthesis (superseded — B2 chosen, see the prototype section)
 
-The variants differ on two independent axes — _how a section's props are
-described_ (table vs code) and _who drives descent_ (client recursion vs
-server effects). The measured sweet spot combines them:
-
-- **Within a template**: table-driven recursion (B1) for control flow — loops
-  and conditionals descend via the owner's `k`/`b` entries, so effect bytes
-  do not scale with item count.
-- **Between templates and between frames**: B3-style entry effects — one
-  effect per template-root patch scope per frame (`"<updateId> <patchScopeId>"`),
-  which is also the natural anchor for async frames and for dynamic-tag
-  boundaries (registry lookup instead of import).
-- Direct signal references stay in the tables (`["s", $input_product_featured]`)
-  so slot writes reuse existing dirty-checking `_const`/`_or` machinery, and
-  `MARKO_DEBUG` builds wrap the interpreter with pairing assertions
-  (template/section id echo from finding 2's debug serialization).
-
-Estimated costs on the example: entry ≈ B1's 289 B gzip; per-navigation
-effect overhead ≈ 10–35 B; shared interpreter runtime ≈ 1–2 kB one-time,
-lazy.
+An earlier draft of this doc recommended combining B1 tables with B3 entry
+points. **Decision: A1 + B2.** Two things changed the calculus once B2 was
+actually built (next section): the control-flow merges collapsed into
+instances of the existing `_if`/`_for_of` signals — eliminating most of the
+interpreter runtime B1 was meant to amortize — and compiled merge functions
+kept B3's useful property anyway (entry effects per template root remain the
+between-template/between-frame driver; recursion inside a template is plain
+function calls, so effect bytes still don't scale with loop size). The
+remaining B1 advantage is per-template gzip (~30%), which is real but small
+in absolute terms and buys an opcode ABI + interpreter indirection this
+codebase otherwise avoids everywhere.
 
 ### The loop-body axis (cuts across all B variants)
 
@@ -363,14 +355,136 @@ pick reconcile-by-input when the body's chain is already client-resident.
 
 ---
 
+## Hardening: the A1 + B2 end-to-end prototype
+
+`experiments/single-page-server-updates/e2e.js` runs the chosen shape against
+the real runtime, end to end, in jsdom:
+
+1. Page A (`/products/trailhead-40`) is server-rendered in persisted mode and
+   **resumed by the unmodified runtime** — the inline walker/fill scripts run
+   in the DOM realm, the page's ready channel drains via `ready(pageId)`
+   exactly as the hydrate shim would, and a root entry effect
+   (`"e2e/root 1"` pushed onto the channel) hands the update entry its
+   pairing root — validating the root-pairing convention.
+2. The user clicks: `expanded` flips to `true`, the `_or` intersection adds
+   `class=spotlight`. Client state now diverges from server defaults.
+3. An A1 patch for page B (`/products/summit-65`) is applied through the
+   hand-written B2 persisted entries
+   (`entries/product.update.js`, `entries/price-tag.update.js`) plus a
+   ~20-line patch-scope constructor (`update-runtime.js`), then flushed with
+   the public `run()`.
+
+Everything asserts green: text/attr placement; the intersection re-runs
+against **preserved** client state (`expanded=true && featured=false` ⇒
+spotlight removed — the server contribution met the client's state, the
+original motivating case); the sale branch destroyed via the real
+`setConditionalRenderer` path; the keyed loop reconciled with **element
+identity preserved** for kept items, one fresh item built by clone + merge
+(the walk created its `#childScope/0`, and the _same_ merge function filled
+resumed and fresh branches), one item destroyed; and client state survived —
+including against a deliberately hostile `expanded: false` planted in the
+payload, which the merges ignore because they only read compiled prop lists
+(server-side mode filtering saves the bytes; the client is safe without it).
+
+The mutation log shows near-optimal DOM work — kept items got zero writes
+(node-level dirty checks), and the loop diff avoided a move entirely:
+
+```
+characterData: "Trailhead 40L Pack" -> "Summit 65L Pack"
+attribute href on <a>
+childList in <section> -/+[branch marker]  -[<em>]
+childList in <ul> -[<li>]  +[<li>]
+attribute class on <section>
+```
+
+### Discovery: control-flow merges are existing signals
+
+The prototype's biggest simplification: a B2 persisted entry does not need
+`_pair_branch`/`_pair_keyed` runtime helpers at all. The conditional merge
+**is** an `_if` instance and the keyed-loop merge **is** a `_for_of` instance
+whose params signal is the body merge function:
+
+```js
+const $if_update = _if("#text/5", "<em>Save <!>%</em>", "Db%l", 0);
+const $for_update = _for_of(
+  "#ul/6",
+  "<li><span class=price>$<!></span> <!></li>",
+  "D/Db%l&b%l",
+  0,
+  (branch, [patchItem]) => $for_content__update(patchItem, branch),
+);
+```
+
+Driving `$for_update(live, [patchItems, (item) => item["#LoopKey"]])` runs the
+real reconciler: keyed matching against resumed branches (their `#LoopKey`
+props came from the spine), `createAndSetupBranch` clone + walk for misses,
+move/remove diffing, and the merge-as-params fills each branch. `_if(live,
+index)` drives `setConditionalRenderer`, with out-of-range meaning "no
+branch". The template/walks strings are the same ones the DOM output bakes
+into its own `_if`/`_for_of` calls — the codegen for a persisted entry's
+control flow is a near-verbatim re-emission with the params signal swapped
+for the merge fn. Consequently the shared update runtime shrinks to: fill →
+patch-scope construction, effect dispatch, frame parsing, ready gating,
+`$global` merge, and `run()`.
+
+Measured (esbuild min / gzip, debug-length accessors): `product.update`
+1106 B / 547 B for the busiest-possible template, `price-tag.update` 248 B /
+201 B, patch-scope constructor 458 B / 335 B.
+
+### Confirmed update-render writer gaps (G1–G5)
+
+Page B's persisted render emits today:
+
+```js
+((_) => [
+  1,
+  { input_product_featured: !1, expanded: !1 },
+  { "#childScope/0": _(3), "#LoopKey": 12 },
+  1,
+  { "#childScope/0": _(5), "#LoopKey": 21 },
+  1,
+  { "#childScope/0": _(7), "#LoopKey": 13 },
+],
+  "…/product.marko_0 1");
+```
+
+Diffing that against the patch the merge needs gives the exact mode-gated
+writer work list:
+
+- **G1 — computed hole values as scope props.** Expressions that inline into
+  the HTML string (`#text/0` name, `#a/1` href, item names, prices) must also
+  `writeScope` their computed value under the hole's accessor in update mode.
+- **G2 — conditional outcomes always written.** `_if` elides
+  `ConditionalRenderer` for index 0/none; update mode must write the index
+  explicitly (absence must mean "unchanged", not "no branch").
+- **G3 — branch lists in fills.** `BranchScopes:` arrays for control flow
+  come from HTML end-markers today; patches have no HTML, so update mode
+  writes them as scope props (and loop keys even when positional).
+- **G4 — owner refs for all patched scopes.** Loop item scopes serialize
+  without `_: _(owner)` today; the merge needs them (or infers them from the
+  owning branch list — G3 makes them derivable, so G4 may be free).
+- **G5 — setup effects suppressed for matched scopes.** Page B's payload
+  includes the `_script` event-binding effect for scope 1; replayed against a
+  matched live scope it would double-bind listeners. Update mode emits update
+  entry effects for matched roots and setup effects only within fresh
+  subtrees.
+
+Plus the state filter (drop `expanded:!1` — bytes only; the client ignores it
+regardless) and the finding-2 guard split on the initial render.
+
+---
+
 ## Open questions for review
 
-- **Opcode vocabulary scope** (B1): text, attr(+name), slot, slot+trigger,
-  branch, keyed loop, child scope, hoist/getter, tag-variable… what else is
-  load-bearing enough to freeze into the ABI v1?
-- **`template`/`walks` splitting**: worth a shared module per template, or
-  should persisted entries duplicate the (usually short) body strings for
-  fresh-branch cloning?
+- **Merge coverage beyond the prototype**: dynamic tags (renderer-identity
+  pairing + registry-resolved child entries), attribute tags, `<await>`
+  placeholders mid-patch, hoists/getters, tag variables, controllable
+  attrs — each needs its B2 emission shape spelled out (most look like the
+  conditional/loop pattern: reuse the existing signal with a merge params).
+- **`template`/`walks` splitting**: the prototype duplicated the (short) body
+  strings into the entry; decide duplicate-vs-shared-module per template by
+  measured size, since the strings already exist in the DOM output's own
+  `_if`/`_for_of` calls.
 - **Effect ordering**: entry effects are emitted in server completion order;
   child-before-owner arrival is handled by lazy owner resolution — confirm no
   case needs stronger ordering (suspected fine given fills always precede the
@@ -378,7 +492,13 @@ pick reconcile-by-input when the body's chain is already client-resident.
 - **The guard-split lattice** (finding 2): confirm `2`-bit reason merging
   composes through `addOwnerSerializeReason`/`mergeSerializeReasons` without
   widening every reason type in the translator.
-- **Fill-format extension**: `"D:#text/5": 1` (conditional outcome) rides an
-  existing prefix; loop pairing rides `BranchScopes` arrays — verify no
+- **Fill-format extension** (G1–G4): computed hole values ride the hole's own
+  accessor (collision-free — value in the patch tree, node in the live tree);
+  conditional outcomes and branch lists ride existing prefixes — verify no
   resume-path consumer misreads these on the _initial_ render when the same
   props serialize for the spine.
+- **Fresh-subtree setup semantics**: the prototype ran body `setup` via
+  `createAndSetupBranch` (event handlers, `<let>` defaults) and merged values
+  after — confirm ordering holds for bodies whose setup reads owner slots the
+  same patch is writing (heap ordering says owner-before-branch; the
+  prototype's flip-to-branch-present case should exercise it).

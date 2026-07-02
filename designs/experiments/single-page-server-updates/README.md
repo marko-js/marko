@@ -54,6 +54,30 @@ fixed walker-runtime bootstrap stripped (it is identical in both modes).
   written against the real compiled accessors. Measured with
   `npx esbuild <file> --minify --format=esm` + gzip.
 
+## 5. End-to-end prototype (A1 + B2)
+
+```sh
+OUTPUT=dom node -r '~ts' $E/compile-cjs.js $E/product.marko $E/tags/price-tag.marko
+node -r '~ts' $E/e2e.js
+```
+
+`e2e.js` server-renders page A in persisted mode, resumes it with the real
+runtime in jsdom (inline scripts run in the DOM realm; the page ready channel
+drains via `ready(pageId)`), clicks the button to diverge client state, then
+applies the A1 patch for page B through the working B2 persisted entries:
+
+- `entries/product.update.js` / `entries/price-tag.update.js` — what the
+  `?update` codegen would emit. The conditional merge is an `_if` instance
+  and the keyed-loop merge a `_for_of` instance whose params signal is the
+  body merge function.
+- `update-runtime.js` — the patch-scope constructor (A1 fill → patch scope
+  tree) plus a `run()` flush.
+
+It asserts placement, intersection re-execution against preserved state,
+branch destruction, keyed reconcile with element identity preserved, fresh
+item creation by clone + merge, state survival against a hostile state prop
+in the payload, and prints the DOM mutation log.
+
 Caveats (also noted in the proposals doc): the harness runs the debug
 runtime even for optimized compiles, and its random 6-char `renderId`
 inflates every marker by ~5 bytes vs the default `_`.
