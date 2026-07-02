@@ -1,0 +1,8 @@
+{
+  "bail": false,
+  "timeout": 30000,
+  "no-warnings": true,
+  "enable-source-maps": true,
+  "experimental-vm-modules": true,
+  "require": ["~ts"]
+}

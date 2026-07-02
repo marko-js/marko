@@ -51,6 +51,12 @@ While developing you can run a single test group and use [grep](https://mochajs.
 npm test -- --grep=lifecycle
 ```
 
+To run the whole suite quickly (without coverage), `npm run test:parallel` fans the tests across your CPU cores:
+
+```
+npm run test:parallel
+```
+
 ### Adding tests
 
 Marko makes use of directory based test suites. Take a look at the `render` test suite:

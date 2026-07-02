@@ -16,6 +16,7 @@ All from repo root. Tests and tooling run directly from TS source (`~ts` Babel r
 
 ```sh
 npm test -- --grep "runtime-tags/translator <fixture> "  # scoped test run; bail: stops at first failure
+npm run test:parallel                                    # whole suite fanned across CPU cores (~3x faster than a serial npm test)
 npm run test:update -- --grep "..."                      # regenerate snapshots (review the diff!)
 npm run compile -- -t "" -o dom -d foo.marko             # compiled output -> foo.marko.js (-o html for SSR; omit -d for optimized)
 npm run build                                            # all packages -> dist/ + .d.ts
