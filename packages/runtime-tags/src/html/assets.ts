@@ -185,13 +185,19 @@ function writeTriggerScript(g: $Global, html: string, triggers: Trigger[]) {
         // so its matched selectors and `<style>` persist across SSR and CSR.
         // The factory string is identical across triggers, so it compresses
         // away on the wire. `o` is the matched-selector set, `s` the shared
-        // `<style>`, `i` the sentinel-tag counter; `k` is the selector and `c`
+        // `<style>`, `i` the sentinel counter; `k` is the selector and `c`
         // the load callback.
-        return `(self.$h||=((o={},s,i=0,D=document)=>(k,c,t,e)=>o[k]===1?c():((e=D.documentElement.appendChild(D.createElement(t="m-"+(i+=1)))).onanimationstart=()=>(o[k]=1,e.remove(),c()),(${
+        // Sentinels are `<t m=mN>` elements (the tag the reorder runtime
+        // already claims) kept invisible and out of flow by an inline style.
+        // They can't simply be `display:none` -- animations never run on
+        // undisplayed elements, and the reorder runtime writes a global
+        // `t{display:none}` rule, hence the explicit `display:block`. The
+        // inline style is written via CSSOM so `style-src` doesn't apply.
+        return `(self.$h||=((o={},s,i=0,D=document)=>(k,c,t,e)=>o[k]===1?c():((e=D.documentElement.appendChild(D.createElement("t"))).setAttribute("m",t="m"+(i+=1)),e.style.cssText="display:block;position:fixed;visibility:hidden",e.onanimationstart=()=>(o[k]=1,e.remove(),c()),(${
           nonce
             ? `(s||=D.head.appendChild(D.createElement("style"))).nonce=${JSON.stringify(nonce)},s`
             : `s||=D.head.appendChild(D.createElement("style"))`
-        }).append(":has("+k+")>"+t+"{animation:1ms m-h}@keyframes m-h{}")))())(${JSON.stringify(
+        }).append(":has("+k+")>t[m="+t+"]{animation:1ms m-h}@keyframes m-h{}")))())(${JSON.stringify(
           trigger.selector,
         )},l)`;
       default:

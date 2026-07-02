@@ -9,20 +9,6 @@
 ```
 
 # Update
-```html
-<button>
-  Show B
-</button>
-<span>
-  A
-</span>
-```
-## Change
-```
-REMOVE: body + m-1
-```
-
-# Update
 ## Console
 ```
 LOG "loaded a"
