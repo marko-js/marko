@@ -803,6 +803,10 @@ export function mergeReferences<T extends t.Node>(
   for (const node of nodes) {
     if (!node) continue;
     const extra = (node.extra ??= {});
+    // The target can appear in its own node list (eg related controllable
+    // attrs); merging it into itself would create a `merged` cycle and
+    // double its reads.
+    if (extra === targetExtra) continue;
     extra.merged = targetExtra;
     if (isReferencedExtra(extra)) {
       const additionalReads = readsByExpression.get(extra);
