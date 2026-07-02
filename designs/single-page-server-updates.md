@@ -2,6 +2,11 @@
 
 Status: design + first implementation slice landed behind flags
 
+> [!NOTE]
+> Picking this work up? Start with the
+> [handoff document](./single-page-server-updates-handoff.md) — current
+> state, decision log, open questions, next slices, and validation steps.
+
 Implemented so far (see the companion proposals doc and
 `experiments/single-page-server-updates/` for validation):
 
