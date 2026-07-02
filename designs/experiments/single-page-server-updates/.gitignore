@@ -1,0 +1,3 @@
+*.cjs
+*.min.js
+out.*
