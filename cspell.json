@@ -18,6 +18,8 @@
     "vnode",
     "vnodes",
     "codegen",
+    "codemods",
+    "backticked",
     "morphdom",
     "renderbody",
     "tagname",
