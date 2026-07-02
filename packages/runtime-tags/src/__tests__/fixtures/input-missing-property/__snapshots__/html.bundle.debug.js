@@ -26,10 +26,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "6:2", { input_name: ["input.name", "6:15"] });
 	}) };
 	const $childScope = _peek_scope_id();
-	_set_serialize_reason({
-		0: 1,
-		1: 1
-	});
+	_set_serialize_reason(6);
 	Child.content({ count });
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {

@@ -33,11 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}) };
 	let x = 1;
 	const $childScope = _peek_scope_id();
-	_set_serialize_reason({
-		0: 1,
-		2: 1,
-		3: 1
-	});
+	_set_serialize_reason(26);
 	Wrap.content({
 		as: "div",
 		onClick: _resume(function() {

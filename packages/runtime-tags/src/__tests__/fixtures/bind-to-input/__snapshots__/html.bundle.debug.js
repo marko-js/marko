@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $x__closures = new Set();
 	let x = 0;
 	const $childScope = _peek_scope_id();
-	_set_serialize_reason({ 2: 1 });
+	_set_serialize_reason(8);
 	counter_default({
 		count: x,
 		countChange: _resume((_new_x) => {
@@ -44,7 +44,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		})
 	});
 	const $childScope2 = _peek_scope_id();
-	_set_serialize_reason({ 2: 1 });
+	_set_serialize_reason(8);
 	counter_default({
 		count: x,
 		id: "uncontrolled",

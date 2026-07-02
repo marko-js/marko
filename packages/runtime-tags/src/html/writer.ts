@@ -260,7 +260,16 @@ export function getScopeById(scopeId: number | undefined) {
   }
 }
 
-export function _set_serialize_reason(reason: undefined | 0 | 1) {
+// A serialize reason is `1` (serialize everything), `0`/`undefined` (nothing),
+// a bitmask of reason group indices offset by one bit (so group 0 alone is
+// `2`, never colliding with the `1` sentinel), or an object keyed by group
+// index when any group's guard is dynamic.
+export type SerializeReasonValue =
+  | undefined
+  | number
+  | Partial<Record<string, 0 | 1>>;
+
+export function _set_serialize_reason(reason: SerializeReasonValue) {
   $chunk.boundary.state.serializeReason = reason;
 }
 
@@ -270,17 +279,17 @@ export function _scope_reason() {
   return reason;
 }
 
-export function _serialize_if(
-  condition: undefined | 1 | Record<string, 1>,
-  key: string,
-) {
-  return condition && (condition === 1 || condition[key]) ? 1 : undefined;
+export function _serialize_if(condition: SerializeReasonValue, key: number) {
+  return condition &&
+    (condition === 1 ||
+      (typeof condition === "number"
+        ? (condition >>> (key + 1)) & 1
+        : condition[key]))
+    ? 1
+    : undefined;
 }
 
-export function _serialize_guard(
-  condition: undefined | 1 | Record<string, 1>,
-  key: string,
-) {
+export function _serialize_guard(condition: SerializeReasonValue, key: number) {
   return _serialize_if(condition, key) || 0;
 }
 
@@ -975,7 +984,7 @@ export class State implements SerializeState {
   public flushScopes = false;
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;
-  public serializeReason: undefined | 0 | 1;
+  public serializeReason: SerializeReasonValue;
   constructor(
     public $global: $Global & { renderId: string; runtimeId: string },
   ) {

@@ -10,10 +10,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "2:2");
 	}) };
 	const $childScope = _peek_scope_id();
-	_set_serialize_reason({
-		0: 1,
-		3: 1
-	});
+	_set_serialize_reason(18);
 	MyTag.content(1, "Hello", x);
 	_html(`<button>${_escape(x)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");

@@ -35,10 +35,7 @@ var template_default = _template("a", (input) => {
 	let cond = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
 	const $childScope = _peek_scope_id();
-	_set_serialize_reason({
-		0: 1,
-		2: 1
-	});
+	_set_serialize_reason(10);
 	let $cond;
 	$cond = attrTag({ a: 1 });
 	child_default({
