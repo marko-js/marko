@@ -5,7 +5,6 @@ const $setup = () => {};
 const $if_content__input_color = /* @__PURE__ */ _if_closure("#text/0", 0, ($scope) => _style_rule_item($scope["#style/0"], "--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19conditional-1btemplate-1amarko_0", $scope._.input_color));
 const $if_content__setup = ($scope) => {
 	$if_content__input_color._($scope);
-	_attr_nonce($scope, "#style/0");
 	_style_shell($scope, "#style/0");
 };
 const $if = /* @__PURE__ */ _if("#text/0", "<style></style><div class=box>Hi</div>", " b", $if_content__setup);

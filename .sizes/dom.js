@@ -1,4 +1,4 @@
-// size: 25909 (min) 9531 (brotli)
+// size: 25867 (min) 9506 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -332,7 +332,15 @@ function stringifyStyleObject(name, value) {
 }
 function escapeStyleValue(str) {
   let closers = "",
-    result = str.replace(/[\\"'{};>]|\/(?=\*)/g, "\\$&").replace(/</g, "\\3C ");
+    result = str.replace(/[\\"'{};<>]|\/(?=\*)/g, (c) =>
+      c === "<"
+        ? "\\3C "
+        : c === ";"
+          ? "\\3B "
+          : c === "{"
+            ? "\\7B "
+            : "\\" + c,
+    );
   for (let c of result)
     c === "("
       ? (closers = ")" + closers)
@@ -1459,19 +1467,23 @@ function _attr_style_item(element, name, value) {
 function _style_shell(scope, nodeAccessor) {
   let element = scope[nodeAccessor],
     id = _id(scope);
-  ((element.className = id), _text_content(element, "." + id + " ~ *{}"));
+  (_attr_nonce(scope, nodeAccessor),
+    (element.className = id),
+    _text_content(element, "." + id + "~*{}"));
 }
 function _style_rule_item(element, name, value) {
   let text = element.textContent,
     decl = name + ":" + escapeStyleValue(_to_text(value)) + ";",
     start = text.indexOf("{" + name + ":");
-  if ((start === -1 && (start = text.indexOf(";" + name + ":")), start === -1))
-    element.textContent = text.slice(0, -1) + decl + "}";
-  else {
-    let end = ++start;
-    for (let c; (c = text[end]) && c !== ";"; end++) c === "\\" && end++;
-    element.textContent = text.slice(0, start) + decl + text.slice(end + 1);
-  }
+  (~start || (start = text.indexOf(";" + name + ":")),
+    _text_content(
+      element,
+      ~start
+        ? text.slice(0, ++start) +
+            decl +
+            text.slice(text.indexOf(";", start) + 1)
+        : text.slice(0, -1) + decl + "}",
+    ));
 }
 function _attr_nonce(scope, nodeAccessor) {
   _attr(scope[nodeAccessor], "nonce", scope.$.cspNonce);

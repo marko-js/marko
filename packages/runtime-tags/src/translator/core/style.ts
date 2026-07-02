@@ -93,7 +93,7 @@ export default {
 
     if (names) {
       analyzeDynamicStyle(tag, names);
-      // Dynamic styles write their shell and nonce statements in setup.
+      // Dynamic styles write their shell statement in setup.
       addSetupStatement(getOrCreateSection(tag));
     }
   },
@@ -255,22 +255,13 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       "render",
       section,
       undefined,
-      [
-        t.expressionStatement(
-          callRuntime(
-            "_attr_nonce",
-            scopeIdentifier,
-            getScopeAccessorLiteral(binding),
-          ),
+      t.expressionStatement(
+        callRuntime(
+          "_style_shell",
+          scopeIdentifier,
+          getScopeAccessorLiteral(binding),
         ),
-        t.expressionStatement(
-          callRuntime(
-            "_style_shell",
-            scopeIdentifier,
-            getScopeAccessorLiteral(binding),
-          ),
-        ),
-      ],
+      ),
       undefined,
       true,
     );

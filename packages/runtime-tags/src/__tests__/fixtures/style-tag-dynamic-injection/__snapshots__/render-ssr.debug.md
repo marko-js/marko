@@ -6,3 +6,9 @@
   Hi
 </div>
 ```
+
+# Update
+```js
+const text = container.querySelector("style").textContent;
+_strict.default.equal(text.slice(text.indexOf("{")).replace(/--[^:]+:/, "--x:"), expected);
+```
