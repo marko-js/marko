@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { getAccessorProp } from "../util/get-accessor-char";
 import { getExprRoot } from "../util/get-root";
-import { isOutputHTML } from "../util/marko-config";
+import { isOptimize, isOutputHTML } from "../util/marko-config";
 import { setReferencesScope } from "../util/references";
 import { importRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection, type Section } from "../util/sections";
@@ -48,6 +48,27 @@ export default {
   },
   translate(identifier) {
     const { name } = identifier.node;
+    const serverBinding = identifier.node.extra?.serverScriptletBinding;
+    if (serverBinding && !isOutputHTML() && !isOptimize()) {
+      identifier.replaceWith(
+        t.callExpression(
+          t.arrowFunctionExpression(
+            [],
+            t.blockStatement([
+              t.throwStatement(
+                t.newExpression(t.identifier("ReferenceError"), [
+                  t.stringLiteral(
+                    `"${serverBinding}" was declared in a \`server\` statement and is unavailable in the browser. Use a \`<const>\` tag instead if the value is needed by the template.`,
+                  ),
+                ]),
+              ),
+            ]),
+          ),
+          [],
+        ),
+      );
+      return;
+    }
     if (identifier.scope.hasBinding(name)) return;
     switch (name) {
       case "$global":
