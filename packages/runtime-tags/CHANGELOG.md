@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.2.1
+
+### Patch Changes
+
+- [#3317](https://github.com/marko-js/marko/pull/3317) [`f07a3dc`](https://github.com/marko-js/marko/commit/f07a3dce5a35ed3312bde01f40fa622a1c4c0f02) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reads inside functions whose value can never be observed - native event handlers (including via spread attributes) and inputs a child template only ever invokes - no longer subscribe the expression, which previously re-created and re-attached/re-passed the function on every change. The function reads current values from the scope when invoked.
+
 ## 6.2.0
 
 ### Minor Changes
