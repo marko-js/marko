@@ -102,6 +102,13 @@ live only here so far:
   mid-patch, hoists/getters, tag variables, controllable attrs.
 - `$global` promotion (serialized-global reads become param-like bindings) —
   designed, not built; required for `@marko/run` (`url`/`params`).
+  **Confirmed hard prerequisite for real apps** (measured against the
+  marko-ecommerce example, see below): every dynamic hole in a typical
+  `@marko/run` page derives from `$global.params`/`$global.search` or server
+  data computed from them, so a persisted compile of those pages emits zero
+  markers/spine today — the flag only pays off once `$global` reads join the
+  reactive graph. Pull this forward ahead of (or into) the writer/entry
+  slices when demoing against the examples.
 - Root pairing convention; concurrent navigations (abort between frames);
   `by`-less loop diagnostics; effect ordering confirmation; pair-store
   session persistence; when to enable hint pruning.
@@ -133,6 +140,20 @@ live only here so far:
 4. **Integration** — build hash + `?update` chunks + manifest in
    `@marko/vite`; wrapper-over-shell, patch content negotiation, client
    router in `@marko/run`; `$global` promotion in the translator.
+
+## Example-app prototyping workspace
+
+Sibling checkouts on the same branch name carry the integration prototype:
+
+- **marko-js/vite** — `persisted` plugin option plumbed into the compiler
+  `baseConfig` (the slice-4 plumb, already real).
+- **DylanPiercey/marko-ecommerce** — linked against local `marko`,
+  `@marko/compiler`, and `@marko/vite` tarballs (see its `PROTOTYPE.md` for
+  regeneration steps); `vite.config.ts` enables the compile flag and
+  `+middleware.ts` sets `$global.persisted` per request (the run context
+  _is_ `$global`; `PERSISTED=0` disables). Verified end to end: the flag
+  reaches both compile and render, non-flag output stays byte-identical —
+  but no markers emit yet because of the `$global`-promotion gap above.
 
 ## How to validate everything
 
