@@ -3,13 +3,13 @@
 <script>
   ((p, h, d, l = $ => d || p.after(new Range().createContextualFragment(d =
     h))) => (self.$h ||= ((o = {}, s, i = 0, D = document) => (k, c, t, e) => o[
-      k] === 1 ? c() : ((e = D.documentElement.appendChild(D.createElement(
-        "t"))).setAttribute("m", t = "m" + (i += 1)), e.style.cssText =
-      "display:block;position:fixed;visibility:hidden", e.onanimationstart =
-      () => (o[k] = 1, e.remove(), c()), (s ||= D.head.appendChild(D
-        .createElement("style"))).append(":has(" + k + ")>t[m=" + t +
-        "]{animation:1ms m-h}@keyframes m-h{}")))())(".shared", l))(document
-    .currentScript,
+      k] === 1 ? c() : ((e = D.documentElement.insertBefore(D.createElement(
+        "t"), D.body)).setAttribute("m", t = "m" + (i += 1)), e.style
+      .cssText = "display:block;position:fixed;visibility:hidden", e
+      .onanimationstart = () => (o[k] = 1, e.remove(), c()), (s ||= D.head
+        .appendChild(D.createElement("style"))).append(":has(" + k +
+        ")>t[m=" + t + "]{animation:1ms m-h}@keyframes m-h{}")))())(".shared",
+      l))(document.currentScript,
     "<script async type=module src=\"child-a.marko.load.mjs\">\x3C/script>");
   WALKER_RUNTIME("M")("_");
   M._.b = {

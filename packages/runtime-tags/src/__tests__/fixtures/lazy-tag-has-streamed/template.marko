@@ -1,0 +1,9 @@
+import { resolveAfter } from "../../utils/resolve";
+import Child from "./child.marko" with { load: "has.my-button:focus" }
+<Child value=input.value/>
+await=resolveAfter(1, 1)
+  let/a=1
+  button.a onClick() { a++ } -- ${a}
+await=resolveAfter(2, 2)
+  let/b=1
+  button.b onClick() { b++ } -- ${b}

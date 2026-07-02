@@ -1,4 +1,4 @@
-// size: 24783 (min) 9114 (brotli)
+// size: 24798 (min) 9117 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2472,8 +2472,9 @@ function hasWatcher() {
     if (matched[selector] === 1) cb();
     else {
       let key = "m" + ++id,
-        sentinel = document.documentElement.appendChild(
+        sentinel = document.documentElement.insertBefore(
           document.createElement("t"),
+          document.body,
         );
       (sentinel.setAttribute("m", key),
         (sentinel.style.cssText =

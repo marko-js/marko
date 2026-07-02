@@ -193,7 +193,13 @@ function writeTriggerScript(g: $Global, html: string, triggers: Trigger[]) {
         // undisplayed elements, and the reorder runtime writes a global
         // `t{display:none}` rule, hence the explicit `display:block`. The
         // inline style is written via CSSOM so `style-src` doesn't apply.
-        return `(self.$h||=((o={},s,i=0,D=document)=>(k,c,t,e)=>o[k]===1?c():((e=D.documentElement.appendChild(D.createElement("t"))).setAttribute("m",t="m"+(i+=1)),e.style.cssText="display:block;position:fixed;visibility:hidden",e.onanimationstart=()=>(o[k]=1,e.remove(),c()),(${
+        // They're inserted before `<body>` (never appended last): the resume
+        // runtime sweeps a live TreeWalker after each streamed chunk and
+        // parks on the last node it accepted. A sentinel appended after
+        // `<body>` would be that last node, leaving everything streamed into
+        // `<body>` afterwards behind the parked position (and removing a
+        // parked-on sentinel detaches the walker entirely).
+        return `(self.$h||=((o={},s,i=0,D=document)=>(k,c,t,e)=>o[k]===1?c():((e=D.documentElement.insertBefore(D.createElement("t"),D.body)).setAttribute("m",t="m"+(i+=1)),e.style.cssText="display:block;position:fixed;visibility:hidden",e.onanimationstart=()=>(o[k]=1,e.remove(),c()),(${
           nonce
             ? `(s||=D.head.appendChild(D.createElement("style"))).nonce=${JSON.stringify(nonce)},s`
             : `s||=D.head.appendChild(D.createElement("style"))`

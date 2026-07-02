@@ -9,12 +9,32 @@
         .appendChild(D.createElement("style"))).append(":has(" + k +
         ")>t[m=" + t + "]{animation:1ms m-h}@keyframes m-h{}")))())(
       ".my-button:focus", l))(document.currentScript,
-    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>");
+    "<script async type=module src=\"child.marko.load.mjs\">\x3C/script>")
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[--><button
+  class=a>1<!--M_*3 #text/1--></button><!--M_*3 #button/0--><!--M_]1 #text/2 3-->
+<script>
   WALKER_RUNTIME("M")("_");
-  M._.b = {
-    "ready:packages/runtime-tags/src/__tests__/fixtures/lazy-tag-has/child.marko": [
-      "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-has/child.marko_0 2"
-    ]
-  };
+  M._.r = [_ => [3, {
+      a: 1
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-has-streamed/template.marko_1_a 3"
+  ];
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<!--M_[--><button
+  class=b>1<!--M_*4 #text/1--></button><!--M_*4 #button/0--><!--M_]1 #text/3 4-->
+<script>
+  M._.r.push(_ => [4, {
+      b: 1
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/lazy-tag-has-streamed/template.marko_2_b 4"
+    );
   M._.w()
 </script>
