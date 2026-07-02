@@ -1,0 +1,23 @@
+<header>
+  <div>
+    <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ => [1, {
+        b: 3,
+        a: _(2)
+      }, {
+        T: _(1, "a0")
+      }]]
+    </script>
+
+    <!-- FLUSH -->
+
+    <a href=/something/1>1</a><a href=/something/2>2</a><a
+      href=/something/3>3</a><a href=/something>Something</a> Test <a
+      href=/go-to>Go</a><!--M_|1 d 4-->
+  </div>
+</header>
+<script>
+  M._.r.push("b0 2");
+  M._.w()
+</script>

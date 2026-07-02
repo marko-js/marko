@@ -1,0 +1,15 @@
+static function subscribeCartState(callback: (state: unknown) => void) {
+  Promise.resolve().then(() => {
+    callback({ totalQuantity: 30 });
+  });
+  return () => {};
+}
+<let/cart=null/>
+<script>
+  const unsubscribe = subscribeCartState((state) => {
+    cart = state;
+  });
+  $signal.addEventListener("abort", unsubscribe);
+</script>
+
+<return={ cart }/>

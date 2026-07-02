@@ -1,0 +1,18 @@
+import { resolveAfter } from "../../utils/resolve";
+<cart-state/{ cart }/>
+<const/hasHydrate=cart !== null/>
+<header>
+  <div>
+    <await|collections|=resolveAfter([1, 2, 3])>
+      <for|collection| of=collections>
+        <a href=`/something/${collection}`>${collection}</a>
+      </for>
+    </await>
+    <a href="/something">Something</a>
+    Test
+    <if=!hasHydrate><a href="/go-to">Go</a></if>
+    <else>
+      <button>Go to</button>
+    </else>
+  </div>
+</header>

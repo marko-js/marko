@@ -1351,7 +1351,12 @@ export class Chunk {
       needsWalk = true;
     }
 
-    const { effects } = this;
+    // While the stream is blocked on in-order async content, the resume
+    // markers for everything already rendered after that content have not
+    // been written -- running effects now could cascade state updates into
+    // scopes whose nodes aren't in the document yet. Hold effects on the
+    // blocked chunk so they flush once its async content completes.
+    const effects = this.async ? "" : this.effects;
     let { html, scripts } = this;
 
     if (state.needsMainRuntime && !state.hasMainRuntime) {
@@ -1493,7 +1498,8 @@ export class Chunk {
 
     this.html = html;
     this.scripts = scripts;
-    this.effects = this.lastEffect = state.resumes = "";
+    if (!this.async) this.effects = this.lastEffect = "";
+    state.resumes = "";
     return this;
   }
 
