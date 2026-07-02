@@ -1,5 +1,29 @@
 # @marko/runtime-tags
 
+## 6.2.1
+
+### Patch Changes
+
+- [#3323](https://github.com/marko-js/marko/pull/3323) [`33f21ae`](https://github.com/marko-js/marko/commit/33f21aec205b6fe00790d04d7ec9e30c953b6701) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Skip importing and calling a child template's setup export when compile time analysis proves it is a noop. This compounds: a component whose setup only called such children now exports a noop setup itself, letting its own parents skip the call too.
+
+- [#3320](https://github.com/marko-js/marko/pull/3320) [`281f3b8`](https://github.com/marko-js/marko/commit/281f3b8ef6c3ba68d24155cd9812a2c21e265a7a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Mark `_hoist` calls in compiled DOM output as `@__PURE__` so unused hoisted tag variable getters can be removed by bundlers.
+
+- [#3322](https://github.com/marko-js/marko/pull/3322) [`35ec01b`](https://github.com/marko-js/marko/commit/35ec01baa54a31b2a4144c969cbd58d2902b36fd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a resume crash (`Cannot read properties of undefined (reading 'nodeType')` in `setConditionalRenderer`) when a `<script>` effect flushed before an in-order `<await>` resolved triggered a state update targeting content rendered after the pending `<await>`. Effects are now held on the blocked chunk and flush once its async content completes, so state updates only run against markers that exist in the document.
+
+- [#3317](https://github.com/marko-js/marko/pull/3317) [`f07a3dc`](https://github.com/marko-js/marko/commit/f07a3dce5a35ed3312bde01f40fa622a1c4c0f02) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reads inside functions whose value can never be observed - native event handlers (including via spread attributes) and inputs a child template only ever invokes - no longer subscribe the expression, which previously re-created and re-attached/re-passed the function on every change. The function reads current values from the scope when invoked.
+
+- [#3320](https://github.com/marko-js/marko/pull/3320) [`a031ac5`](https://github.com/marko-js/marko/commit/a031ac5ac8e715709a6252c44753fde287d3501c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid serializing `<let>` change handlers when the tag variable is never assigned.
+
+- [#3323](https://github.com/marko-js/marko/pull/3323) [`62c17be`](https://github.com/marko-js/marko/commit/62c17be31c3961a634216e51231875942f367ac0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix analysis of related controllable attributes merging an expression's references into itself, which duplicated its tracked reads.
+
+- [#3320](https://github.com/marko-js/marko/pull/3320) [`303d3de`](https://github.com/marko-js/marko/commit/303d3de6ad3e7a3a1ce998831b06ae9c5ea6f96d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid serializing the owner scope reference for state driven `<if>` and `<for>` branches; the resume runtime now links branch owners from the markers it already processes.
+
+- [#3320](https://github.com/marko-js/marko/pull/3320) [`4b12581`](https://github.com/marko-js/marko/commit/4b125816ef0c7d47efe2e922f7453c640d1eaa58) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Encode static serialize reason groups as a numeric bitmask instead of an object literal, avoiding an allocation per custom tag instance during SSR.
+
+- [#3324](https://github.com/marko-js/marko/pull/3324) [`eea2ffb`](https://github.com/marko-js/marko/commit/eea2ffbdcf8ae1a35d5e1b808680b7333d286b3e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a placeholder at the edge of a `<show>` body merging with the text adjacent to the `<show>` tag. Because `<show>` inlines its body into the parent, a template like `<strong>+ <show=cond>${value}</show></strong>` serialized the static `+ ` prefix and the placeholder value as a single text node with no `<!>` separator, so the first client-side update overwrote the whole node and deleted the static text. Sibling-text analysis now looks through `<show>` body boundaries in both directions.
+
+- [#3325](https://github.com/marko-js/marko/pull/3325) [`2329b2c`](https://github.com/marko-js/marko/commit/2329b2c653c28b27be1a4f9c2212414eb1cc341f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Shrink and speed up the dynamic `<style>` runtime: `;` and `{` in interpolated values are now hex escaped in a single pass (so a raw `;` always ends a declaration and a raw `{` is always the rule opener, letting the client-side updater splice with `indexOf` instead of an escape-aware scan), the shell selector drops its whitespace, the shell helper applies the `nonce` itself instead of a separate generated statement, and unchanged rule text no longer rewrites the style element.
+
 ## 6.2.0
 
 ### Minor Changes
