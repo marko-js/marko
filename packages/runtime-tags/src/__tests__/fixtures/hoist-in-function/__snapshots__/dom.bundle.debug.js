@@ -9,7 +9,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 // template.marko
 const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)("D l");
-const $x_getter = _hoist("x");
+const $x_getter = /* @__PURE__ */ _hoist("x");
 const $x = /* @__PURE__ */ _const("x", ($scope) => _assert_hoist($scope.x));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => $x_getter($scope)());
 function $setup($scope) {

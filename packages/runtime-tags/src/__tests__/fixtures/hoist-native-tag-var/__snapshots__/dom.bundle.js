@@ -3,7 +3,7 @@ let id = 0;
 const $input__script = _script("b0", ($scope) => $scope.b.value()?.classList.add(`child${id++}`));
 
 // template.marko
-const $el2_getter = _hoist(0, "Ac");
+const $el2_getter = /* @__PURE__ */ _hoist(0, "Ac");
 const $el_getter = _hoist_resume("a0", 0, "Aa", "Aa");
 const $if_content2__$el_getter = _el("a1", 0);
 const $setup__script = _script("a2", ($scope) => {

@@ -20,14 +20,14 @@ function $_return($scope) {
 _resume("b0", $_return);
 
 // template.marko
-const $setHtml3_getter = _hoist(2, "B4");
+const $setHtml3_getter = /* @__PURE__ */ _hoist(2, "B4");
 const $inputshowsectionnull_content__setHtml = _var_resume("a6", /* @__PURE__ */ _const(2));
 const $inputshowsectionnull_content__setup = ($scope) => {
 	_var($scope, 0, $inputshowsectionnull_content__setHtml);
 	$setup($scope.a);
 };
 const $inputshowsectionnull_content = _content_resume("a4", $template, /* @__PURE__ */ ((_w0) => `0${_w0}&`)(" b"), $inputshowsectionnull_content__setup, 0, "B4");
-const $setHtml2_getter = _hoist(2, "B3", "B2");
+const $setHtml2_getter = /* @__PURE__ */ _hoist(2, "B3", "B2");
 const $thing_content2__setHtml = _var_resume("a7", /* @__PURE__ */ _const(2));
 const $thing_content2__setup = ($scope) => {
 	_var($scope, 0, $thing_content2__setHtml);
