@@ -34,6 +34,7 @@ abcd_A_hij
 ```
 INSERT: ::text@0 + :is(::text("b"), ::text("c"), ::text("d"), ::text("_A_"))
 REMOVE: ::text@4 + ::text("_B_")
+UPDATE: ::text@2 " " => "c"
 ```
 
 # Update
@@ -44,4 +45,5 @@ abcdefghij
 ```
 INSERT: ::text@3 + :is(::text("e"), ::text("f"), ::text("g"))
 REMOVE: ::text@6 + ::text("_A_")
+UPDATE: ::text@5 " " => "f"
 ```

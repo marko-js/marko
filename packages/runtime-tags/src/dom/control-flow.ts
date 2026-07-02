@@ -21,7 +21,13 @@ import {
 import { _attrs, _attrs_content, _attrs_script } from "./dom";
 import {
   _enable_catch,
+  _enable_transition,
   caughtError,
+  commitTransition,
+  entangleTransition,
+  fulfillTransition,
+  logOp,
+  opLog,
   pendingEffects,
   type PendingRender,
   placeholderShown,
@@ -30,7 +36,9 @@ import {
   queueEffect,
   queuePendingRender,
   queueRender,
+  rendering,
   runEffects,
+  type Transition,
 } from "./queue";
 import {
   _content,
@@ -59,7 +67,9 @@ export function _await_promise(
   if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
   const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+  const transitionAccessor = AccessorPrefix.Transition + nodeAccessor;
   _enable_catch();
+  _enable_transition();
   return (scope: Scope, promise: Promise<unknown>) => {
     if (!isPromise(promise)) {
       if (!scope[promiseAccessor]) {
@@ -83,6 +93,55 @@ export function _await_promise(
     }
 
     let awaitBranch = scope[branchAccessor] as BranchScope;
+
+    // An update driven by a state write while the await already shows
+    // committed content becomes an async transition: the current UI is held
+    // as-is (no placeholder, no detach) and the write's entangled DOM
+    // updates/effects stay in the transition's hold buffer until this
+    // promise settles.
+    const transition =
+      rendering && awaitBranch && !awaitBranch[AccessorProp.DetachedAwait]
+        ? entangleTransition(scope[transitionAccessor] as Transition | 0)
+        : 0;
+    if (transition) {
+      scope[transitionAccessor] = transition;
+      const thisPromise = (scope[promiseAccessor] = promise.then(
+        (data) => {
+          if (thisPromise === scope[promiseAccessor]) {
+            const referenceNode = scope[nodeAccessor] as ChildNode;
+            scope[promiseAccessor] = 0;
+            queueAsyncRender(scope, () => {
+              scope[transitionAccessor] = 0;
+              fulfillTransition(transition, () => {
+                resolveAwait(
+                  scope,
+                  branchAccessor,
+                  nodeAccessor,
+                  referenceNode,
+                  params,
+                  data,
+                );
+              });
+            });
+          }
+        },
+        (error) => {
+          if (thisPromise === scope[promiseAccessor]) {
+            scope[promiseAccessor] = 0;
+            queueAsyncRender(scope, () => {
+              // State is already latest (values are eager), so first make
+              // the UI consistent with the state that produced the failing
+              // promise, then let the catch boundary take over.
+              scope[transitionAccessor] = 0;
+              commitTransition(transition);
+              renderCatch(scope, error);
+            });
+          }
+        },
+      ));
+      return;
+    }
+
     const tryPlaceholder = findBranchWithKey(
       scope,
       AccessorProp.PlaceholderContent,
@@ -617,6 +676,23 @@ function dynamicTagScript(branch: Scope) {
   );
 }
 
+// The DOM half of a branch swap that is deferred while the op log is
+// active. `v` is the branch actually visible in the DOM (which lags the
+// eager scope bookkeeping while a swap is deferred or held), `p` is the
+// latest offscreen pending branch, `d` marks the slot as applied.
+type SwapSlot = {
+  v: BranchScope | undefined;
+  p: BranchScope | undefined | 0;
+  d: 0 | 1;
+};
+
+// Splits into an eager phase (branch creation + scope bookkeeping — control
+// flow keeps running against latest state) and a DOM phase (insert/remove/
+// destroy). While the op log is active the DOM phase is recorded as a
+// slot-keyed op: superseding swaps destroy the never-inserted pending branch
+// and replace it, so the eventual apply performs a single visible→latest
+// swap. The visible branch is only destroyed when the swap applies, keeping
+// the on-screen UI live (and updatable by unrelated state) while held.
 export function setConditionalRenderer<T>(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -632,13 +708,55 @@ export function setConditionalRenderer<T>(
   const prevBranch = scope[AccessorPrefix.BranchScopes + nodeAccessor] as
     | BranchScope
     | undefined;
+  const slotAccessor = AccessorPrefix.TransitionSlot + nodeAccessor;
+  let slot = opLog && (scope[slotAccessor] as SwapSlot | 0 | undefined);
+  const visibleBranch = slot ? slot.v : prevBranch;
   const parentNode =
     referenceNode.nodeType > NodeType.Element
-      ? (prevBranch?.[AccessorProp.StartNode] || referenceNode).parentNode!
+      ? (visibleBranch?.[AccessorProp.StartNode] || referenceNode).parentNode!
       : (referenceNode as ParentNode);
   const newBranch = (scope[AccessorPrefix.BranchScopes + nodeAccessor] =
     newRenderer &&
     createBranch(scope[AccessorProp.Global], newRenderer, scope, parentNode));
+  if (opLog) {
+    if (slot) {
+      if (slot.p) destroyBranch(slot.p);
+      slot.p = newBranch;
+    } else {
+      slot = scope[slotAccessor] = {
+        v: prevBranch,
+        p: newBranch,
+        d: 0,
+      } as SwapSlot;
+    }
+    logOp(commitSwap, scope, nodeAccessor, slot);
+  } else {
+    applySwap(referenceNode, parentNode, prevBranch, newBranch);
+  }
+}
+
+function commitSwap(scope: Scope, nodeAccessor: Accessor, slot: SwapSlot) {
+  // Multiple logged quads can reference one slot (re-runs within a flush, or
+  // a held quad plus a fresh one); the first to apply wins and performs the
+  // visible→latest swap.
+  if (!slot.d) {
+    slot.d = 1;
+    scope[AccessorPrefix.TransitionSlot + nodeAccessor] = 0;
+    const referenceNode = scope[nodeAccessor] as Comment | Element;
+    const parentNode =
+      referenceNode.nodeType > NodeType.Element
+        ? (slot.v?.[AccessorProp.StartNode] || referenceNode).parentNode!
+        : (referenceNode as ParentNode);
+    applySwap(referenceNode, parentNode, slot.v, slot.p);
+  }
+}
+
+function applySwap(
+  referenceNode: Comment | Element,
+  parentNode: ParentNode,
+  prevBranch: BranchScope | undefined,
+  newBranch: BranchScope | undefined | 0,
+) {
   if (referenceNode === parentNode) {
     if (prevBranch) {
       destroyBranch(prevBranch);

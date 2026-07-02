@@ -28,24 +28,12 @@ INSERT: button + ::text("LOADING...")
 ```
 INSERT: button + ::text("0")
 REMOVE: ::text + ::text("LOADING...")
+UPDATE: ::text " " => "0"
 ```
 
 # Update
 ```js
 container.querySelector("button").click();
-```
-
-# Update
-```html
-<button>
-  inc
-</button>
-LOADING...
-```
-## Change
-```
-INSERT: button + ::text("LOADING...")
-REMOVE: ::text + ::text("0")
 ```
 
 # Update
@@ -57,8 +45,7 @@ REMOVE: ::text + ::text("0")
 ```
 ## Change
 ```
-INSERT: button + ::text("1")
-REMOVE: ::text + ::text("LOADING...")
+UPDATE: ::text "0" => "1"
 ```
 
 # Update
@@ -71,23 +58,9 @@ container.querySelector("button").click();
 <button>
   inc
 </button>
-LOADING...
-```
-## Change
-```
-INSERT: button + ::text("LOADING...")
-REMOVE: ::text + ::text("1")
-```
-
-# Update
-```html
-<button>
-  inc
-</button>
 2
 ```
 ## Change
 ```
-INSERT: button + ::text("2")
-REMOVE: ::text + ::text("LOADING...")
+UPDATE: ::text "1" => "2"
 ```

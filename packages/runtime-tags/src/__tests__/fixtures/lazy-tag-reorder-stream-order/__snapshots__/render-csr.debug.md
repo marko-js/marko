@@ -26,6 +26,9 @@ REMOVE: ::text("loading")
 ## Change
 ```
 INSERT: .reordered
+UPDATE: .reordered::text@10 "" => "0"
+UPDATE: .reordered[class] null => "reordered"
+UPDATE: .reordered::text@0 "" => "reordered"
 ```
 
 # Update
@@ -44,6 +47,9 @@ INSERT: .reordered
 ## Change
 ```
 INSERT: .reordered + .streamed
+UPDATE: .streamed::text@9 "" => "0"
+UPDATE: .streamed[class] null => "streamed"
+UPDATE: .streamed::text@0 "" => "streamed"
 ```
 
 # Update

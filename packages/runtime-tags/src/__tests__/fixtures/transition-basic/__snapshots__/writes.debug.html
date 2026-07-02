@@ -1,0 +1,36 @@
+<button id=inc>inc</button><!--M_*1 #button/0--><button
+  id=other>other</button><!--M_*1 #button/1-->
+<div>count: <!>0<!--M_*1 #text/2--></div>
+<div>other: <!>0<!--M_*1 #text/3--></div>
+<!--M_[--><!--M_!^2-->LOADING...<!--M_!2--><!--M_]1 #text/4 2-->
+<style M_>
+  t {
+    display: none
+  }
+</style>
+<t M_=2><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      count: 0,
+      other: 0,
+      "ClosureScopes:count": new Set([_(2)])
+    }, {
+      _: _(1),
+      "#BranchAccessor": "#text/4",
+      "#PlaceholderContent": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/transition-basic/template.marko_2_content"
+        )
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/transition-basic/template.marko_0_other 1 packages/runtime-tags/src/__tests__/fixtures/transition-basic/template.marko_0_count 1"
+  ];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t M_=b><!--M_[-->resolved: <!>0<!--M_*4 #text/0--><!--M_]2 #text/0 4--></t>
+<script>
+  M._.w()
+</script>

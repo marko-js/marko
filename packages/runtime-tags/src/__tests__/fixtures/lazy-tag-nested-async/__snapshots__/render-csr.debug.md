@@ -33,6 +33,7 @@
 ## Change
 ```
 INSERT: #before + #child
+UPDATE: #child::text@6 "" => "1"
 ```
 
 # Update
@@ -95,6 +96,8 @@ UPDATE: #child-await::text " " => "10"
 ## Change
 ```
 INSERT: #child-await + #grand
+UPDATE: #grand::text@8 "" => "1"
+UPDATE: #grand::text@6 "" => "1"
 ```
 
 # Update

@@ -33,6 +33,7 @@ Async: 0
 ```
 INSERT: div + :is(::text("Async: "), ::text("0"))
 REMOVE: ::text@7 + ::text("LOADING...")
+UPDATE: ::text@7 "" => "0"
 INSERT: div::text("0")
 ```
 
@@ -47,31 +48,13 @@ container.querySelector("button").click();
   inc
 </button>
 <div>
-  0
-</div>
-LOADING...
-```
-## Change
-```
-INSERT: div + ::text("LOADING...")
-REMOVE: ::text + ::text("Async: ")
-REMOVE: ::text + ::text("0")
-```
-
-# Update
-```html
-<button>
-  inc
-</button>
-<div>
   1
 </div>
 Async: 1
 ```
 ## Change
 ```
-INSERT: div + :is(::text("Async: "), ::text("1"))
-REMOVE: ::text@7 + ::text("LOADING...")
+UPDATE: ::text@7 "0" => "1"
 REMOVE: div::text("0")
 INSERT: div::text("1")
 ```
@@ -89,28 +72,12 @@ container.querySelector("button").click();
 <div>
   1
 </div>
-LOADING...
-```
-## Change
-```
-INSERT: div + ::text("LOADING...")
-REMOVE: ::text + ::text("Async: ")
-REMOVE: ::text + ::text("1")
-```
-
-# Update
-```html
-<button>
-  inc
-</button>
-<div>
-  1
-</div>
 Error: ERROR!
 ```
 ## Change
 ```
 INSERT: div + ::text("Error: ERROR!")
-REMOVE: ::text + ::text("LOADING...")
+REMOVE: ::text + ::text("Async: ")
+REMOVE: ::text + ::text("1")
 UPDATE: ::text " " => "Error: ERROR!"
 ```

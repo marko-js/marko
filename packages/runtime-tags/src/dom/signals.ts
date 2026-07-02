@@ -12,7 +12,13 @@ import {
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
-import { queueEffect, queueRender, rendering, runId } from "./queue";
+import {
+  queueEffect,
+  queueRender,
+  rendering,
+  runId,
+  setPendingRoot,
+} from "./queue";
 import { _resume } from "./resume";
 import { schedule } from "./schedule";
 
@@ -45,6 +51,7 @@ export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
       ((scope[valueAccessor] = value), fn)
     ) {
       schedule();
+      setPendingRoot();
       queueRender(scope, fn, id as number);
     }
     return value;
@@ -128,22 +135,17 @@ export function _for_closure(
   const ownerSignal = (ownerScope: Scope) => {
     const scopes = toArray(ownerScope[scopeAccessor] as BranchScope);
     if (scopes.length) {
-      queueRender(
-        ownerScope,
-        () => {
-          for (const scope of scopes as BranchScope[]) {
-            if (
-              scope[AccessorProp.Gen] > 0 &&
-              scope[AccessorProp.Gen] < runId
-            ) {
-              fn(scope);
-            }
+      // `_` gives the fresh wrapper a stable unit identity across re-runs
+      // for the transition hold buffer.
+      const render: SignalFn & { _?: SignalFn } = () => {
+        for (const scope of scopes as BranchScope[]) {
+          if (scope[AccessorProp.Gen] > 0 && scope[AccessorProp.Gen] < runId) {
+            fn(scope);
           }
-        },
-        -1,
-        0,
-        scopes[0][AccessorProp.Id],
-      );
+        }
+      };
+      render._ = fn;
+      queueRender(ownerScope, render, -1, 0, scopes[0][AccessorProp.Id]);
     }
   };
   ownerSignal._ = fn;
@@ -170,35 +172,31 @@ export function _for_selector(
     const scopes = toArray(ownerScope[scopeAccessor] as BranchScope);
     if (ownerScope[AccessorProp.Gen] < runId && scopes.length) {
       const nextKey = ownerScope[ownerValueAccessor];
-      queueRender(
-        ownerScope,
-        () => {
-          const map = keyedScopes(
-            ownerScope,
-            scopeAccessor,
-            mapAccessor,
-            keyValueAccessor,
-          );
-          if (map && prevKeyProp in map) {
-            const prevScope = map.get(map[prevKeyProp]);
-            const nextScope = map.get(nextKey);
-            if (prevScope !== nextScope) {
-              runLiveBranch(prevScope, fn);
-              runLiveBranch(nextScope, fn);
-            }
-          } else {
-            for (const scope of toArray(
-              ownerScope[scopeAccessor] as BranchScope,
-            )) {
-              runLiveBranch(scope, fn);
-            }
+      const render: SignalFn & { _?: SignalFn } = () => {
+        const map = keyedScopes(
+          ownerScope,
+          scopeAccessor,
+          mapAccessor,
+          keyValueAccessor,
+        );
+        if (map && prevKeyProp in map) {
+          const prevScope = map.get(map[prevKeyProp]);
+          const nextScope = map.get(nextKey);
+          if (prevScope !== nextScope) {
+            runLiveBranch(prevScope, fn);
+            runLiveBranch(nextScope, fn);
           }
-          if (map) map[prevKeyProp] = nextKey;
-        },
-        -1,
-        0,
-        scopes[0][AccessorProp.Id],
-      );
+        } else {
+          for (const scope of toArray(
+            ownerScope[scopeAccessor] as BranchScope,
+          )) {
+            runLiveBranch(scope, fn);
+          }
+        }
+        if (map) map[prevKeyProp] = nextKey;
+      };
+      render._ = fn;
+      queueRender(ownerScope, render, -1, 0, scopes[0][AccessorProp.Id]);
     }
   };
   ownerSignal._ = fn;

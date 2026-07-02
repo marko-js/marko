@@ -13,18 +13,6 @@ container.querySelector("button").click();
 
 # Update
 ```html
-<button>
-  toggle
-</button>
-```
-## Change
-```
-REMOVE: ::text("Got: ")
-REMOVE: ::text("SYNC")
-```
-
-# Update
-```html
 Got: ASYNC
 <button>
   toggle
@@ -32,7 +20,7 @@ Got: ASYNC
 ```
 ## Change
 ```
-INSERT: ::text("Got: "), ::text("ASYNC")
+UPDATE: ::text@5 "SYNC" => "ASYNC"
 ```
 
 # Update

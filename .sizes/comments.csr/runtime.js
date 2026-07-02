@@ -1,4 +1,4 @@
-// size: 6480 (min) 2845 (brotli)
+// size: 6885 (min) 3008 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -79,6 +79,8 @@ let decodeAccessor = (num) =>
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled,
+  opLog,
+  unitLog = [],
   _template = (id, template, walks, setup, inputSignal) => {
     let renderer = _content(id, template, walks, setup, inputSignal)();
     return (
@@ -176,17 +178,12 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
   let scopeAccessor = "A" + ownerLoopNodeAccessor,
     ownerSignal = (ownerScope) => {
       let scopes = toArray(ownerScope[scopeAccessor]);
-      scopes.length &&
-        queueRender(
-          ownerScope,
-          () => {
-            for (let scope of scopes)
-              scope.H > 0 && scope.H < runId && fn(scope);
-          },
-          -1,
-          0,
-          scopes[0].L,
-        );
+      if (scopes.length) {
+        let render = () => {
+          for (let scope of scopes) scope.H > 0 && scope.H < runId && fn(scope);
+        };
+        ((render._ = fn), queueRender(ownerScope, render, -1, 0, scopes[0].L));
+      }
     };
   return ((ownerSignal._ = fn), ownerSignal);
 }
@@ -292,12 +289,20 @@ function _attr(element, name, value) {
   setAttribute(element, name, normalizeAttrValue(value));
 }
 function setAttribute(element, name, value) {
+  opLog
+    ? logOp(applySetAttribute, element, name, value)
+    : applySetAttribute(element, name, value);
+}
+function applySetAttribute(element, name, value) {
   element.getAttribute(name) != value &&
     (value === void 0
       ? element.removeAttribute(name)
       : element.setAttribute(name, value));
 }
 function _text(node, value) {
+  opLog ? logOp(applyText, node, value) : applyText(node, value);
+}
+function applyText(node, value) {
   let normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
@@ -355,12 +360,42 @@ function setConditionalRenderer(
 ) {
   let referenceNode = scope[nodeAccessor],
     prevBranch = scope["A" + nodeAccessor],
+    slotAccessor = "P" + nodeAccessor,
+    slot = opLog && scope[slotAccessor],
+    visibleBranch = slot ? slot.v : prevBranch,
     parentNode =
       referenceNode.nodeType > 1
-        ? (prevBranch?.S || referenceNode).parentNode
+        ? (visibleBranch?.S || referenceNode).parentNode
         : referenceNode,
     newBranch = (scope["A" + nodeAccessor] =
       newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
+  opLog
+    ? (slot
+        ? (slot.p && destroyBranch(slot.p), (slot.p = newBranch))
+        : (slot = scope[slotAccessor] =
+            {
+              v: prevBranch,
+              p: newBranch,
+              d: 0,
+            }),
+      logOp(commitSwap, scope, nodeAccessor, slot))
+    : applySwap(referenceNode, parentNode, prevBranch, newBranch);
+}
+function commitSwap(scope, nodeAccessor, slot) {
+  if (!slot.d) {
+    ((slot.d = 1), (scope["P" + nodeAccessor] = 0));
+    let referenceNode = scope[nodeAccessor];
+    applySwap(
+      referenceNode,
+      referenceNode.nodeType > 1
+        ? (slot.v?.S || referenceNode).parentNode
+        : referenceNode,
+      slot.v,
+      slot.p,
+    );
+  }
+}
+function applySwap(referenceNode, parentNode, prevBranch, newBranch) {
   referenceNode === parentNode
     ? (prevBranch &&
         (destroyBranch(prevBranch), (referenceNode.textContent = "")),
@@ -509,10 +544,11 @@ function bySecondArg(_item, index) {
   return index;
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
-  let render;
+  let render,
+    roots = 0;
   if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
     if (((render.d = value), render.e === runId || catchEnabled)) return;
-    render.e = runId;
+    ((render.e = runId), (render.g = roots));
   } else
     ((render = {
       a: scopeKey * scopeKeyOffset + signalKey,
@@ -520,6 +556,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
       c: signal,
       d: value,
       e: runId,
+      g: roots,
     }),
       signalKey >= 0 && (scope[signalKey + scopeKeyOffset] = render));
   queuePendingRender(render);
@@ -542,13 +579,19 @@ function run() {
   try {
     ((rendering = 1), runRenders());
   } finally {
-    (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
+    (runId++,
+      (rendering = 0),
+      (pendingRenders = []),
+      (pendingEffects = []),
+      (opLog = void 0));
   }
   runEffects(effects);
 }
 function prepareEffects(fn) {
   let prevRenders = pendingRenders,
     prevEffects = pendingEffects,
+    prevOpLog = opLog,
+    prevUnitLog = unitLog,
     preparedEffects = (pendingEffects = []);
   pendingRenders = [];
   try {
@@ -557,7 +600,9 @@ function prepareEffects(fn) {
     (runId++,
       (rendering = 0),
       (pendingRenders = prevRenders),
-      (pendingEffects = prevEffects));
+      (pendingEffects = prevEffects),
+      (opLog = prevOpLog),
+      (unitLog = prevUnitLog));
   }
   return preparedEffects;
 }
@@ -590,6 +635,9 @@ function skipDestroyedRenders() {
   runRender = ((runRender) => (render) => {
     render.b.F?.H !== 0 && runRender(render);
   })(runRender);
+}
+function logOp(fn, a, b, c) {
+  opLog.push(fn, a, b, c);
 }
 function $signalReset(scope, id) {
   let ctrl = scope.A?.[id];

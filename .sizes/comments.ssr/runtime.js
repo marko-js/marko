@@ -1,4 +1,4 @@
-// size: 2676 (min) 1317 (brotli)
+// size: 2807 (min) 1362 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -18,7 +18,8 @@ let decodeAccessor = (num) =>
     for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
-  catchEnabled;
+  catchEnabled,
+  opLog;
 function isNotVoid(value) {
   return value != null && value !== !1;
 }
@@ -202,12 +203,20 @@ function _attr(element, name, value) {
   setAttribute(element, name, normalizeAttrValue(value));
 }
 function setAttribute(element, name, value) {
+  opLog
+    ? logOp(applySetAttribute, element, name, value)
+    : applySetAttribute(element, name, value);
+}
+function applySetAttribute(element, name, value) {
   element.getAttribute(name) != value &&
     (value === void 0
       ? element.removeAttribute(name)
       : element.setAttribute(name, value));
 }
 function _text(node, value) {
+  opLog ? logOp(applyText, node, value) : applyText(node, value);
+}
+function applyText(node, value) {
   let normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
@@ -215,10 +224,11 @@ function normalizeAttrValue(value) {
   if (isNotVoid(value)) return value === !0 ? "" : value + "";
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
-  let render;
+  let render,
+    roots = 0;
   if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
     if (((render.d = value), render.e === runId || catchEnabled)) return;
-    render.e = runId;
+    ((render.e = runId), (render.g = roots));
   } else
     ((render = {
       a: scopeKey * scopeKeyOffset + signalKey,
@@ -226,6 +236,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
       c: signal,
       d: value,
       e: runId,
+      g: roots,
     }),
       signalKey >= 0 && (scope[signalKey + scopeKeyOffset] = render));
   queuePendingRender(render);
@@ -248,7 +259,11 @@ function run() {
   try {
     ((rendering = 1), runRenders());
   } finally {
-    (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
+    (runId++,
+      (rendering = 0),
+      (pendingRenders = []),
+      (pendingEffects = []),
+      (opLog = void 0));
   }
   runEffects(effects);
 }
@@ -276,5 +291,15 @@ function runRenders() {
     }
     runRender(render);
   }
+}
+function logOp(fn, a, b, c) {
+  opLog.push(fn, a, b, c);
+}
+function $signalReset(scope, id) {
+  let ctrl = scope.A?.[id];
+  ctrl && (queueEffect(ctrl, abort), (scope.A[id] = void 0));
+}
+function abort(ctrl) {
+  ctrl.abort();
 }
 //#endregion

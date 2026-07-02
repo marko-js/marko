@@ -13,6 +13,8 @@ export enum AccessorPrefix {
   Lifecycle = "K",
   Promise = "L",
   TagVariableChange = "M",
+  Transition = "N",
+  TransitionSlot = "P",
 }
 
 export enum AccessorProp {
@@ -42,6 +44,7 @@ export enum AccessorProp {
   StartNode = "S",
   TagVariable = "T",
   TagVariableChange = "U",
+  TransitionUnits = "I",
 }
 
 export enum RendererProp {
@@ -63,6 +66,7 @@ export enum PendingRenderProp {
   Value = "d",
   Gen = "e",
   Pending = "f",
+  Roots = "g",
 }
 
 export enum ClosureSignalProp {

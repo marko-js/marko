@@ -37,6 +37,7 @@ import {
 } from "./controllable";
 import { _on } from "./event";
 import { parseHTML } from "./parse-html";
+import { logOp, opLog } from "./queue";
 import { createAndSetupBranch, type Renderer } from "./renderer";
 import { subscribeToScopeSet } from "./signals";
 
@@ -55,6 +56,18 @@ export function _attr(element: Element, name: string, value: unknown) {
 }
 
 function setAttribute(
+  element: Element,
+  name: string,
+  value: string | undefined,
+) {
+  if (opLog) {
+    logOp(applySetAttribute, element, name, value);
+  } else {
+    applySetAttribute(element, name, value);
+  }
+}
+
+function applySetAttribute(
   element: Element,
   name: string,
   value: string | undefined,
@@ -91,6 +104,14 @@ export function _attr_class_item(
   name: string,
   value: unknown,
 ) {
+  if (opLog) {
+    logOp(applyClassItem, element, name, value);
+  } else {
+    applyClassItem(element, name, value);
+  }
+}
+
+function applyClassItem(element: Element, name: string, value: unknown) {
   element.classList.toggle(name, !!value);
 }
 
@@ -116,6 +137,14 @@ export function _attr_style_item(
   name: string,
   value: unknown,
 ) {
+  if (opLog) {
+    logOp(applyStyleItem, element, name, value);
+  } else {
+    applyStyleItem(element, name, value);
+  }
+}
+
+function applyStyleItem(element: HTMLElement, name: string, value: unknown) {
   element.style.setProperty(name, _to_text(value));
 }
 
@@ -124,6 +153,14 @@ export function _attr_nonce(scope: Scope, nodeAccessor: Accessor) {
 }
 
 export function _text(node: Text | Comment, value: unknown) {
+  if (opLog) {
+    logOp(applyText, node, value);
+  } else {
+    applyText(node, value);
+  }
+}
+
+function applyText(node: Text | Comment, value: unknown) {
   const normalizedValue = _to_text(value);
   // TODO: benchmark if it is actually faster to check data first
   if (node.data !== normalizedValue) {
@@ -132,6 +169,14 @@ export function _text(node: Text | Comment, value: unknown) {
 }
 
 export function _text_content(node: ParentNode, value: unknown) {
+  if (opLog) {
+    logOp(applyTextContent, node, value);
+  } else {
+    applyTextContent(node, value);
+  }
+}
+
+function applyTextContent(node: ParentNode, value: unknown) {
   const normalizedValue = _to_text(value);
   // TODO: benchmark if it is actually faster to check data first
   if (node.textContent !== normalizedValue) {
@@ -150,7 +195,7 @@ export function _attrs(
     if (
       !(nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs)))
     ) {
-      el.removeAttribute(name);
+      setAttribute(el, name, undefined);
     }
   }
 
@@ -194,7 +239,7 @@ export function _attrs_partial(
   for (let i = el.attributes.length; i--; ) {
     const { name } = el.attributes.item(i)!;
     if (!skip[name] && !(nextAttrs && name in nextAttrs)) {
-      el.removeAttribute(name);
+      setAttribute(el, name, undefined);
     }
   }
 
@@ -391,7 +436,18 @@ export function _attrs_script(scope: Scope, nodeAccessor: Accessor) {
   }
 }
 
+// Deferred as a whole call: its scope reads are DOM-position bookkeeping
+// (not reactive state), so replaying later with the passed value is correct
+// and duplicate replays converge (last value wins).
 export function _html(scope: Scope, value: unknown, accessor: Accessor) {
+  if (opLog) {
+    logOp(applyHtml, scope, value, accessor);
+  } else {
+    applyHtml(scope, value, accessor);
+  }
+}
+
+function applyHtml(scope: Scope, value: unknown, accessor: Accessor) {
   const firstChild = scope[accessor] as ChildNode;
   const parentNode = firstChild.parentNode!;
   const lastChild = (scope[AccessorPrefix.DynamicHTMLLastChild + accessor] ||
@@ -431,7 +487,24 @@ export function normalizeAttrValue(value: unknown) {
   }
 }
 
+// Deferred as a whole call so onMount/onUpdate only observe committed state.
 export function _lifecycle(
+  scope: Scope,
+  thisObj: Record<string, unknown> & {
+    onMount?: (this: unknown) => void;
+    onUpdate?: (this: unknown) => void;
+    onDestroy?: (this: unknown) => void;
+  },
+  index: number = 0,
+) {
+  if (opLog) {
+    logOp(applyLifecycle, scope, thisObj, index);
+  } else {
+    applyLifecycle(scope, thisObj, index);
+  }
+}
+
+function applyLifecycle(
   scope: Scope,
   thisObj: Record<string, unknown> & {
     onMount?: (this: unknown) => void;

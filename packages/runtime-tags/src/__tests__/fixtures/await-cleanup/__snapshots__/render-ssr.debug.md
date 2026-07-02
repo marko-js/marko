@@ -54,7 +54,7 @@ container.querySelector("button").click();
 ```
 ## Change
 ```
-REMOVE: #two + ::text("1")
+REMOVE: #two + ::text("0")
 REMOVE: #one::text("Fail")
 INSERT: #one::text("Pass")
 REMOVE: #two::text("Fail")

@@ -48,6 +48,7 @@ container.querySelector("button").click();
 ## Change
 ```
 INSERT: button + span
+UPDATE: span::text " " => "1"
 ```
 ## Console
 ```

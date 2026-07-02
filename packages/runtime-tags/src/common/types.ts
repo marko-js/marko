@@ -1,4 +1,4 @@
-import type { PendingRender } from "../dom/queue";
+import type { HeldUnit, PendingRender } from "../dom/queue";
 import type { Renderer as ClientRenderer, Renderer } from "../dom/renderer";
 import type { AccessorProp } from "./accessor.debug";
 export type Falsy = undefined | null | false | 0 | "";
@@ -26,6 +26,7 @@ export interface Scope {
     | undefined;
   [AccessorProp.ClosestBranch]: BranchScope | undefined;
   [AccessorProp.ClosestBranchId]: number | undefined;
+  [AccessorProp.TransitionUnits]: Map<unknown, HeldUnit> | undefined;
   [x: `___${string}`]: never;
   [x: string | number]: any;
 }

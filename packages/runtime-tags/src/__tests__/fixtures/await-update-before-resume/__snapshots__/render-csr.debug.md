@@ -52,6 +52,7 @@ UPDATE: #outside::text "0" => "1"
 ```
 INSERT: #outside + #inside
 REMOVE: #inside + ::text("loading...")
+UPDATE: #inside::text " " => "1"
 ```
 ## Console
 ```

@@ -1,4 +1,4 @@
-// size: 24880 (min) 9203 (brotli)
+// size: 27343 (min) 10013 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -205,6 +205,11 @@ let empty = [],
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled,
+  transitionsEnabled,
+  currentRender,
+  nextRoot = 0,
+  opLog,
+  unitLog = [],
   classIdToBranch = /* @__PURE__ */ new Map(),
   scopesByRender = /* @__PURE__ */ new WeakMap(),
   getRenderScopes = ($global) => {
@@ -490,7 +495,7 @@ function _let(id, fn) {
       ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
       : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
         ((scope[valueAccessor] = value), fn) &&
-        (schedule(), queueRender(scope, fn, id)),
+        (schedule(), setPendingRoot(), queueRender(scope, fn, id)),
     value
   );
 }
@@ -537,17 +542,12 @@ function _for_closure(ownerLoopNodeAccessor, fn) {
   let scopeAccessor = "A" + ownerLoopNodeAccessor,
     ownerSignal = (ownerScope) => {
       let scopes = toArray(ownerScope[scopeAccessor]);
-      scopes.length &&
-        queueRender(
-          ownerScope,
-          () => {
-            for (let scope of scopes)
-              scope.H > 0 && scope.H < runId && fn(scope);
-          },
-          -1,
-          0,
-          scopes[0].L,
-        );
+      if (scopes.length) {
+        let render = () => {
+          for (let scope of scopes) scope.H > 0 && scope.H < runId && fn(scope);
+        };
+        ((render._ = fn), queueRender(ownerScope, render, -1, 0, scopes[0].L));
+      }
     };
   return ((ownerSignal._ = fn), ownerSignal);
 }
@@ -567,10 +567,8 @@ function _for_selector(
     ownerSignal = (ownerScope) => {
       let scopes = toArray(ownerScope[scopeAccessor]);
       if (ownerScope.H < runId && scopes.length) {
-        let nextKey = ownerScope[ownerValueAccessor];
-        queueRender(
-          ownerScope,
-          () => {
+        let nextKey = ownerScope[ownerValueAccessor],
+          render = () => {
             let map = keyedScopes(
               ownerScope,
               scopeAccessor,
@@ -586,11 +584,8 @@ function _for_selector(
               for (let scope of toArray(ownerScope[scopeAccessor]))
                 runLiveBranch(scope, fn);
             map && (map[prevKeyProp] = nextKey);
-          },
-          -1,
-          0,
-          scopes[0].L,
-        );
+          };
+        ((render._ = fn), queueRender(ownerScope, render, -1, 0, scopes[0].L));
       }
     };
   return ((ownerSignal._ = fn), ownerSignal);
@@ -1404,6 +1399,11 @@ function _attr(element, name, value) {
   setAttribute(element, name, normalizeAttrValue(value));
 }
 function setAttribute(element, name, value) {
+  opLog
+    ? logOp(applySetAttribute, element, name, value)
+    : applySetAttribute(element, name, value);
+}
+function applySetAttribute(element, name, value) {
   element.getAttribute(name) != value &&
     (value === void 0
       ? element.removeAttribute(name)
@@ -1420,6 +1420,11 @@ function _attr_class_items(element, items) {
   for (let key in items) _attr_class_item(element, key, items[key]);
 }
 function _attr_class_item(element, name, value) {
+  opLog
+    ? logOp(applyClassItem, element, name, value)
+    : applyClassItem(element, name, value);
+}
+function applyClassItem(element, name, value) {
   element.classList.toggle(name, !!value);
 }
 function _attr_style(element, value) {
@@ -1433,16 +1438,27 @@ function _attr_style_items(element, items) {
   for (let key in items) _attr_style_item(element, key, items[key]);
 }
 function _attr_style_item(element, name, value) {
+  opLog
+    ? logOp(applyStyleItem, element, name, value)
+    : applyStyleItem(element, name, value);
+}
+function applyStyleItem(element, name, value) {
   element.style.setProperty(name, _to_text(value));
 }
 function _attr_nonce(scope, nodeAccessor) {
   _attr(scope[nodeAccessor], "nonce", scope.$.cspNonce);
 }
 function _text(node, value) {
+  opLog ? logOp(applyText, node, value) : applyText(node, value);
+}
+function applyText(node, value) {
   let normalizedValue = _to_text(value);
   node.data !== normalizedValue && (node.data = normalizedValue);
 }
 function _text_content(node, value) {
+  opLog ? logOp(applyTextContent, node, value) : applyTextContent(node, value);
+}
+function applyTextContent(node, value) {
   let normalizedValue = _to_text(value);
   node.textContent !== normalizedValue && (node.textContent = normalizedValue);
 }
@@ -1451,7 +1467,7 @@ function _attrs(scope, nodeAccessor, nextAttrs) {
   for (let i = el.attributes.length; i--; ) {
     let { name } = el.attributes.item(i);
     (nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))) ||
-      el.removeAttribute(name);
+      setAttribute(el, name, void 0);
   }
   attrsInternal(scope, nodeAccessor, nextAttrs);
 }
@@ -1473,7 +1489,7 @@ function _attrs_partial(scope, nodeAccessor, nextAttrs, skip) {
     let { name } = el.attributes.item(i);
     !skip[name] &&
       !(nextAttrs && name in nextAttrs) &&
-      el.removeAttribute(name);
+      setAttribute(el, name, void 0);
   }
   for (let name in nextAttrs) {
     let key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
@@ -1608,6 +1624,11 @@ function _attrs_script(scope, nodeAccessor) {
   for (let name in events) _on(el, name, events[name]);
 }
 function _html(scope, value, accessor) {
+  opLog
+    ? logOp(applyHtml, scope, value, accessor)
+    : applyHtml(scope, value, accessor);
+}
+function applyHtml(scope, value, accessor) {
   let firstChild = scope[accessor],
     parentNode = firstChild.parentNode,
     lastChild = scope["H" + accessor] || firstChild,
@@ -1629,6 +1650,11 @@ function normalizeAttrValue(value) {
   if (isNotVoid(value)) return value === !0 ? "" : value + "";
 }
 function _lifecycle(scope, thisObj, index = 0) {
+  opLog
+    ? logOp(applyLifecycle, scope, thisObj, index)
+    : applyLifecycle(scope, thisObj, index);
+}
+function applyLifecycle(scope, thisObj, index = 0) {
   let accessor = "K" + index,
     instance = scope[accessor];
   instance
@@ -1660,9 +1686,11 @@ function toInsertNode(startNode, endNode) {
 function _await_promise(nodeAccessor, params) {
   nodeAccessor = decodeAccessor(nodeAccessor);
   let promiseAccessor = "L" + nodeAccessor,
-    branchAccessor = "A" + nodeAccessor;
+    branchAccessor = "A" + nodeAccessor,
+    transitionAccessor = "N" + nodeAccessor;
   return (
     _enable_catch(),
+    _enable_transition(),
     (scope, promise) => {
       if (!isPromise(promise)) {
         if (!scope[promiseAccessor]) {
@@ -1683,7 +1711,45 @@ function _await_promise(nodeAccessor, params) {
         promise = Promise.resolve(promise);
       }
       let awaitBranch = scope[branchAccessor],
-        tryPlaceholder = findBranchWithKey(scope, "Q"),
+        transition =
+          rendering && awaitBranch && !awaitBranch.V
+            ? entangleTransition(scope[transitionAccessor])
+            : 0;
+      if (transition) {
+        scope[transitionAccessor] = transition;
+        let thisPromise = (scope[promiseAccessor] = promise.then(
+          (data) => {
+            if (thisPromise === scope[promiseAccessor]) {
+              let referenceNode = scope[nodeAccessor];
+              ((scope[promiseAccessor] = 0),
+                queueAsyncRender(scope, () => {
+                  ((scope[transitionAccessor] = 0),
+                    fulfillTransition(transition, () => {
+                      resolveAwait(
+                        scope,
+                        branchAccessor,
+                        nodeAccessor,
+                        referenceNode,
+                        params,
+                        data,
+                      );
+                    }));
+                }));
+            }
+          },
+          (error) => {
+            thisPromise === scope[promiseAccessor] &&
+              ((scope[promiseAccessor] = 0),
+              queueAsyncRender(scope, () => {
+                ((scope[transitionAccessor] = 0),
+                  commitTransition(transition),
+                  renderCatch(scope, error));
+              }));
+          },
+        ));
+        return;
+      }
+      let tryPlaceholder = findBranchWithKey(scope, "Q"),
         tryBranch = tryPlaceholder || awaitBranch,
         awaitCounter = tryBranch.O;
       (placeholderShown.add(pendingEffects),
@@ -1991,12 +2057,42 @@ function setConditionalRenderer(
 ) {
   let referenceNode = scope[nodeAccessor],
     prevBranch = scope["A" + nodeAccessor],
+    slotAccessor = "P" + nodeAccessor,
+    slot = opLog && scope[slotAccessor],
+    visibleBranch = slot ? slot.v : prevBranch,
     parentNode =
       referenceNode.nodeType > 1
-        ? (prevBranch?.S || referenceNode).parentNode
+        ? (visibleBranch?.S || referenceNode).parentNode
         : referenceNode,
     newBranch = (scope["A" + nodeAccessor] =
       newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
+  opLog
+    ? (slot
+        ? (slot.p && destroyBranch(slot.p), (slot.p = newBranch))
+        : (slot = scope[slotAccessor] =
+            {
+              v: prevBranch,
+              p: newBranch,
+              d: 0,
+            }),
+      logOp(commitSwap, scope, nodeAccessor, slot))
+    : applySwap(referenceNode, parentNode, prevBranch, newBranch);
+}
+function commitSwap(scope, nodeAccessor, slot) {
+  if (!slot.d) {
+    ((slot.d = 1), (scope["P" + nodeAccessor] = 0));
+    let referenceNode = scope[nodeAccessor];
+    applySwap(
+      referenceNode,
+      referenceNode.nodeType > 1
+        ? (slot.v?.S || referenceNode).parentNode
+        : referenceNode,
+      slot.v,
+      slot.p,
+    );
+  }
+}
+function applySwap(referenceNode, parentNode, prevBranch, newBranch) {
   referenceNode === parentNode
     ? (prevBranch &&
         (destroyBranch(prevBranch), (referenceNode.textContent = "")),
@@ -2177,11 +2273,23 @@ function byFirstArg(name) {
   return name;
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
-  let render;
-  if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
-    if (((render.d = value), render.e === runId || (catchEnabled && render.f)))
+  let render,
+    roots = transitionsEnabled
+      ? rendering
+        ? currentRender && currentRender.g
+        : nextRoot
+      : 0;
+  if (
+    ((nextRoot = 0),
+    signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset]))
+  ) {
+    if (
+      ((render.d = value), render.e === runId || (catchEnabled && render.f))
+    ) {
+      roots && (render.g = mergeRoots(render.g, roots));
       return;
-    render.e = runId;
+    }
+    ((render.e = runId), (render.g = roots));
   } else
     ((render = {
       a: scopeKey * scopeKeyOffset + signalKey,
@@ -2189,6 +2297,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
       c: signal,
       d: value,
       e: runId,
+      g: roots,
     }),
       signalKey >= 0 && (scope[signalKey + scopeKeyOffset] = render));
   queuePendingRender(render);
@@ -2209,9 +2318,16 @@ function queueEffect(scope, fn) {
 function run() {
   let effects = pendingEffects;
   try {
-    ((rendering = 1), runRenders());
+    ((rendering = 1),
+      transitionsEnabled && ((opLog = []), (unitLog = [])),
+      runRenders(),
+      transitionsEnabled && partitionAndApplyOps());
   } finally {
-    (runId++, (rendering = 0), (pendingRenders = []), (pendingEffects = []));
+    (runId++,
+      (rendering = 0),
+      (pendingRenders = []),
+      (pendingEffects = []),
+      (opLog = void 0));
   }
   runEffects(effects);
 }
@@ -2221,15 +2337,22 @@ function queueAsyncRender(scope, signal, value) {
 function prepareEffects(fn) {
   let prevRenders = pendingRenders,
     prevEffects = pendingEffects,
+    prevOpLog = opLog,
+    prevUnitLog = unitLog,
     preparedEffects = (pendingEffects = []);
-  pendingRenders = [];
+  ((pendingRenders = []), transitionsEnabled && ((opLog = []), (unitLog = [])));
   try {
-    ((rendering = 1), fn(), runRenders());
+    ((rendering = 1),
+      fn(),
+      runRenders(),
+      transitionsEnabled && partitionAndApplyOps());
   } finally {
     (runId++,
       (rendering = 0),
       (pendingRenders = prevRenders),
-      (pendingEffects = prevEffects));
+      (pendingEffects = prevEffects),
+      (opLog = prevOpLog),
+      (unitLog = prevUnitLog));
   }
   return preparedEffects;
 }
@@ -2302,6 +2425,147 @@ function _enable_catch() {
         }
       })(runRender)));
   }
+}
+function _enable_transition() {
+  transitionsEnabled ||
+    ((transitionsEnabled = 1),
+    (runRender = ((runRender) => (render) => {
+      let prevRender = currentRender,
+        opStart = opLog ? opLog.length : 0,
+        fxStart = pendingEffects.length;
+      currentRender = render;
+      try {
+        runRender(render);
+      } finally {
+        ((currentRender = prevRender),
+          opLog &&
+            (opLog.length > opStart || pendingEffects.length > fxStart) &&
+            unitLog.push(
+              render,
+              opStart,
+              opLog.length,
+              fxStart,
+              pendingEffects.length,
+            ));
+      }
+    })(runRender)));
+}
+function setPendingRoot() {
+  transitionsEnabled && (nextRoot = { t: 0 });
+}
+function logOp(fn, a, b, c) {
+  opLog.push(fn, a, b, c);
+}
+function applyOps(ops) {
+  for (let i = 0; i < ops.length; ) {
+    let fn = ops[i++];
+    fn ? fn(ops[i++], ops[i++], ops[i++]) : (i += 3);
+  }
+}
+function mergeRoots(current, added) {
+  if (!current || current === added) return added;
+  if (!added) return current;
+  let result = current;
+  for (let root of toArray(added))
+    result !== root &&
+      !(Array.isArray(result) && result.includes(root)) &&
+      (result = Array.isArray(result)
+        ? (result.push(root), result)
+        : [result, root]);
+  return result;
+}
+function resolveTransition(t) {
+  for (; t.m; ) t = t.m;
+  return t;
+}
+function mergeTransitions(a, b) {
+  return ((b.m = a), (a.i += b.i), a.u.push(...b.u), a.a.push(...b.a), a);
+}
+function entangleTransition(existing) {
+  let roots = currentRender && currentRender.g;
+  if (!roots) return 0;
+  let t = existing ? resolveTransition(existing) : 0;
+  for (let root of toArray(roots))
+    if (root.t) {
+      let rootT = resolveTransition(root.t);
+      t = t && t !== rootT ? mergeTransitions(t, rootT) : rootT;
+    }
+  t ||= {
+    i: 0,
+    m: 0,
+    u: [],
+    a: [],
+  };
+  for (let root of toArray(roots)) root.t = t;
+  return (existing || t.i++, t);
+}
+function fulfillTransition(t, resolve) {
+  ((t = resolveTransition(t)),
+    t.a.push(resolve),
+    t.i <= 1 ? commitTransition(t) : t.i--);
+}
+function commitTransition(t) {
+  ((t = resolveTransition(t)), (t.i = 0));
+  let units = t.u,
+    resolves = t.a;
+  ((t.u = []), (t.a = []));
+  for (let [scope, key] of units) {
+    let marks = scope.I,
+      held = marks?.get(key);
+    if (
+      held &&
+      resolveTransition(held.t) === t &&
+      (marks.delete(key), scope.F?.H !== 0)
+    ) {
+      applyOps(held.o);
+      for (let i = 0; i < held.e.length; i += 2)
+        queueEffect(held.e[i + 1], held.e[i]);
+    }
+  }
+  for (let fn of resolves) fn();
+}
+function partitionAndApplyOps() {
+  let log = opLog,
+    units = unitLog;
+  unitLog = [];
+  for (let i = 0; i < units.length; ) {
+    let render = units[i++],
+      opStart = units[i++],
+      opEnd = units[i++],
+      fxStart = units[i++],
+      fxEnd = units[i++],
+      scope = render.b,
+      signal = render.c,
+      key = signal._ || signal,
+      held = scope.I?.get(key),
+      t = held ? resolveTransition(held.t) : 0;
+    for (let root of toArray(render.g))
+      if (root.t) {
+        let rootT = resolveTransition(root.t);
+        t = t && t !== rootT ? mergeTransitions(t, rootT) : rootT;
+      }
+    if (t) {
+      let ops = log.slice(opStart, opEnd),
+        fx = pendingEffects.slice(fxStart, fxEnd);
+      held
+        ? ((held.t = t), (held.o = ops), (held.e = fx))
+        : ((scope.I ||= /* @__PURE__ */ new Map()).set(key, {
+            t,
+            o: ops,
+            e: fx,
+          }),
+          t.u.push([scope, key]));
+      for (let j = opStart; j < opEnd; j += 4) log[j] = 0;
+      for (let j = fxStart; j < fxEnd; j += 2) pendingEffects[j] = 0;
+    }
+  }
+  applyOps(log);
+  let write = 0;
+  for (let read = 0; read < pendingEffects.length; read += 2)
+    pendingEffects[read] &&
+      ((pendingEffects[write++] = pendingEffects[read]),
+      (pendingEffects[write++] = pendingEffects[read + 1]));
+  pendingEffects.length = write;
 }
 function $signalReset(scope, id) {
   let ctrl = scope.A?.[id];

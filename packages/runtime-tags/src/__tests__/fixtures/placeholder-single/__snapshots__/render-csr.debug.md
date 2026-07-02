@@ -32,4 +32,5 @@ abcdefg
 ```
 INSERT: ::text@0 + :is(::text("b"), ::text("c"), ::text("d"))
 REMOVE: ::text@3 + ::text("_A_")
+UPDATE: ::text@2 " " => "c"
 ```

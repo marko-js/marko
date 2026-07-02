@@ -58,64 +58,6 @@ INSERT: p:nth-of-type(5)::text@5 + ::text("10")
 ```js
 container.querySelector("button").click();
 ```
-```html
-<button>
-  increment
-</button>
-<p>
-  1 * 3 = 2
-</p>
-<p>
-  2 * 3 = 4
-</p>
-<p>
-  3 * 3 = 6
-</p>
-<p>
-  4 * 3 = 8
-</p>
-<p>
-  5 * 3 = 10
-</p>
-```
-## Change
-```
-UPDATE: p:nth-of-type(1)::text@4 "2" => "3"
-UPDATE: p:nth-of-type(2)::text@4 "2" => "3"
-UPDATE: p:nth-of-type(3)::text@4 "2" => "3"
-UPDATE: p:nth-of-type(4)::text@4 "2" => "3"
-UPDATE: p:nth-of-type(5)::text@4 "2" => "3"
-```
-
-# Update
-```html
-<button>
-  increment
-</button>
-<p>
-  1 * 3 = 
-</p>
-<p>
-  2 * 3 = 
-</p>
-<p>
-  3 * 3 = 
-</p>
-<p>
-  4 * 3 = 
-</p>
-<p>
-  5 * 3 = 
-</p>
-```
-## Change
-```
-REMOVE: p:nth-of-type(1)::text@5 + ::text("2")
-REMOVE: p:nth-of-type(2)::text@5 + ::text("4")
-REMOVE: p:nth-of-type(3)::text@5 + ::text("6")
-REMOVE: p:nth-of-type(4)::text@5 + ::text("8")
-REMOVE: p:nth-of-type(5)::text@5 + ::text("10")
-```
 
 # Update
 ```html
@@ -140,9 +82,14 @@ REMOVE: p:nth-of-type(5)::text@5 + ::text("10")
 ```
 ## Change
 ```
-INSERT: p:nth-of-type(1)::text@5 + ::text("3")
-INSERT: p:nth-of-type(5)::text@5 + ::text("15")
-INSERT: p:nth-of-type(4)::text@5 + ::text("12")
-INSERT: p:nth-of-type(3)::text@5 + ::text("9")
-INSERT: p:nth-of-type(2)::text@5 + ::text("6")
+UPDATE: p:nth-of-type(1)::text@4 "2" => "3"
+UPDATE: p:nth-of-type(2)::text@4 "2" => "3"
+UPDATE: p:nth-of-type(3)::text@4 "2" => "3"
+UPDATE: p:nth-of-type(4)::text@4 "2" => "3"
+UPDATE: p:nth-of-type(5)::text@4 "2" => "3"
+UPDATE: p:nth-of-type(1)::text@8 "2" => "3"
+UPDATE: p:nth-of-type(5)::text@8 "10" => "15"
+UPDATE: p:nth-of-type(4)::text@8 "8" => "12"
+UPDATE: p:nth-of-type(3)::text@8 "6" => "9"
+UPDATE: p:nth-of-type(2)::text@8 "4" => "6"
 ```

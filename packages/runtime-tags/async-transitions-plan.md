@@ -16,7 +16,7 @@ State propagation runs exactly as it does today — eagerly, once, with the
 latest values. `<let>` writes mutate scopes immediately, downstream signals
 recompute immediately, control flow reconciles immediately (new branch scopes
 are created and set up, loop diffs are computed). **No signal work is ever
-re-executed or rolled back.** What changes is that the *observable tail* of
+re-executed or rolled back.** What changes is that the _observable tail_ of
 that work — DOM node swaps, attribute/text writes, effects — is recorded into
 a commit log instead of applied directly, and the log is partitioned at the
 end of the flush:
@@ -32,7 +32,7 @@ committed state until the promise resolves.
 
 ### Why a commit log is required
 
-Entanglement is discovered at the *end* of a chain: `_await_promise` receives
+Entanglement is discovered at the _end_ of a chain: `_await_promise` receives
 the new promise only after every upstream render already ran. Since signal
 functions interleave computation with DOM writes (`_text`, `_attr`, branch
 swaps are called inline from render fns), the only way to "un-apply" without
@@ -45,14 +45,14 @@ iteration.
 
 ## Entanglement rules
 
-**Definition.** A *unit* is a (scope, stable signal fn) pair — the granularity
-at which renders execute and at which reads happen. A *root* is a `<let>`
+**Definition.** A _unit_ is a (scope, stable signal fn) pair — the granularity
+at which renders execute and at which reads happen. A _root_ is a `<let>`
 write that initiated propagation this flush.
 
 1. **Discovery.** Every queued render carries its provenance roots (see
    Provenance below). When `_await_promise` receives a new promise during a
    flush, the current render's roots become entangled in a `Transition`.
-   Everything *fanned out from those roots* — not just the path to the await —
+   Everything _fanned out from those roots_ — not just the path to the await —
    is entangled, because it read the new values.
 2. **Partition.** At flush end, log entries recorded by units whose roots are
    entangled move to the transition's hold buffer. Each held unit is also
@@ -63,11 +63,11 @@ write that initiated propagation this flush.
    entangled value must be entangled": any unit subscribed to an entangled
    value necessarily ran during the entangling flush (that's how
    subscriptions fire) and got marked, so a later re-run triggered by an
-   *unrelated* root through the same unit is still held — it would otherwise
+   _unrelated_ root through the same unit is still held — it would otherwise
    paint the new entangled value it reads.
 4. **Last-run-wins.** The hold buffer is keyed by unit. When an entangled unit
    re-runs (a newer write, or an unrelated trigger), its newly logged entries
-   *replace* its held entries. Values are eager, so the latest run always
+   _replace_ its held entries. Values are eager, so the latest run always
    reflects the latest state; on commit, each unit applies exactly once.
 5. **Join / merge.** One flush entangling several awaits produces one
    transition with a counter (`i`/`c`, the existing `AwaitCounter` pattern);
@@ -82,7 +82,7 @@ write that initiated propagation this flush.
 ### Entangled-values registry
 
 Unit marks cover units that already exist, but three consumers need to ask
-"is this *value* entangled?" for values they are about to read: fresh
+"is this _value_ entangled?" for values they are about to read: fresh
 branches setting up closures, `$pending()`, and `$eager()` (below). Roots give
 us the source `<let>`s, but derived values (`_const`, params) written
 downstream must be queryable too.
@@ -97,7 +97,7 @@ registries — the list is almost always length 0 or 1.
 
 ### Fresh branches that render entangled values
 
-A branch mounted mid-transition by *unrelated* control flow would otherwise
+A branch mounted mid-transition by _unrelated_ control flow would otherwise
 render latest values next to frozen siblings. Instead: when closure setup /
 `subscribeToScopeSet` in a new branch resolves an owner `(scope, accessor)`
 that `isEntangled(...)`, the branch's mounting unit — the parent's
@@ -123,7 +123,7 @@ check, so a branch can opt into mounting immediately with torn values.
   (`_closure`, `_for_closure`, `_for_selector`, `_if_closure`) queue fresh
   wrapper fns with `signalKey -1`, but each holds its stable underlying fn as
   `._`; they additionally iterate child scopes. These helpers set the
-  *current unit* to `(childScope, fn)` around each child invocation so ops are
+  _current unit_ to `(childScope, fn)` around each child invocation so ops are
   attributed per child scope with a stable identity across re-runs.
 
 ## The commit log
@@ -158,8 +158,8 @@ Branch swaps can't be logged as raw DOM mutations (insert/remove aren't
 idempotent and interleave badly across re-runs). Instead each structural
 helper splits into an **eager phase** (scope bookkeeping, branch creation —
 `createBranch` already builds offscreen, `setupBranch` runs and its writes log
-against detached nodes harmlessly) and a **DOM phase** that records *target
-state* into a slot:
+against detached nodes harmlessly) and a **DOM phase** that records _target
+state_ into a slot:
 
 - `setConditionalRenderer` (`_if`, `_dynamic_tag`, `_attr_content`, `_try`):
   eager: create + set up the new branch, update
@@ -246,7 +246,7 @@ Two `$`-prefixed compiler-known identifiers (the `$signal`/`$global`
 convention) give users control over entanglement:
 
 - `$eager(() => expr)` — evaluate the thunk against current (eager) state and
-  render its result immediately, *without* entangling the containing
+  render its result immediately, _without_ entangling the containing
   expression. This is the deliberate-tearing escape hatch: the canonical use
   is a search input whose `query` drives an `<await>` — the results list
   freezes during the transition while `value=$eager(() => query)` keeps the
@@ -262,7 +262,7 @@ convention) give users control over entanglement:
 ### Why they are compiler-known, not plain runtime functions
 
 Reads are plain property accesses, so a runtime-only wrapper cannot learn
-*which* values a thunk read, and by the time an outer helper like `_text`
+_which_ values a thunk read, and by the time an outer helper like `_text`
 records its op, a reads-flag set during the thunk has already been cleared.
 The compiler, however, statically knows every thunk's
 `extra.referencedBindings` (the same analysis every signal uses). Handling
@@ -277,12 +277,12 @@ identifier, keep normal subscription wiring, but
 ### Runtime semantics
 
 - An `$eager()` unit still subscribes and re-runs normally (tearing means
-  *showing* latest, so it must update immediately). At partition time its
+  _showing_ latest, so it must update immediately). At partition time its
   entangled provenance roots and read values are checked against the excused
   bindings: if fully covered, its ops apply now and the unit is never
   marked; if it mixes eager and non-eager entangled reads, it holds (debug
   warning in `MARKO_DEBUG`).
-- A `$pending()` unit is *inherently* eager (a frozen spinner is useless).
+- A `$pending()` unit is _inherently_ eager (a frozen spinner is useless).
   Its value is `isEntangled(...)` over the bound values via the registry.
   Reactivity needs transitions to be observable state changes: when roots or
   registry values become entangled (discovery happens mid-drain, so
@@ -296,7 +296,7 @@ identifier, keep normal subscription wiring, but
 Controllable writes (`controllable.ts`) bypass the hold and apply
 immediately, without needing `$eager()`:
 
-- For user input, the DOM element is the *source* of the value — the browser
+- For user input, the DOM element is the _source_ of the value — the browser
   already displays the keystroke natively; holding the write-back only risks
   DOM and state disagreeing (e.g. formatting corrections applying a
   transition later).
@@ -341,6 +341,40 @@ await.)
   this.
 - The `sizes.json` budget tests will need updating; keep the log fast-path
   allocation-light (flat arrays, index ranges per unit).
+
+## Implementation status (first draft)
+
+Implemented (phases 1–6 below, minus the registry):
+
+- Provenance (`WriteRecord` roots on `PendingRender`, merge-on-dedupe,
+  `currentRender` tracking) and `_enable_transition()` gating — all installed
+  from the `_await_promise` factory, so await-free apps pay nothing.
+- Commit log for value ops (`setAttribute`, `_text`, `_text_content`,
+  class/style items, `_html`, `_lifecycle`, the `_attrs` stale-attribute
+  removal loops) with flush-end partition/apply in `run()`/`prepareEffects`.
+- Slot-keyed branch-swap deferral in `setConditionalRenderer` (deferred
+  destroy of the visible branch, superseded-pending cleanup).
+- Transition entangle/merge/fulfill/commit, unit marks with last-run-wins
+  replacement, held effects replayed at commit, reject commits then
+  `renderCatch`. Controllable writes stay eager (per decision).
+- `transition-basic` fixture covering hold, unrelated commit, atomic commit,
+  supersede, and eager handler reads.
+
+Not yet implemented (TODOs):
+
+- Loop (`<for>`) DOM-phase deferral — entangled loop reconciliation still
+  applies immediately.
+- Entangled-values registry, fresh-branch deferral, `$eager` / `$pending`.
+- Await-region-destroyed-mid-transition commit hook; effect dedupe between
+  held and commit-flush effects (event wiring is naturally idempotent via
+  `_on`'s property assignment, `_script` bodies may run twice).
+- Multi-await transitions currently hold each await's _resolution_ until all
+  fulfill via the shared counter, but a rejected member force-commits the
+  whole transition.
+
+Known snapshot artifacts (reviewed, benign): ops targeting branches inserted
+in the same flush now apply after attachment (pre-paint), and a branch
+destroyed by a deferred swap can receive one final unpainted update.
 
 ## Implementation phases
 
