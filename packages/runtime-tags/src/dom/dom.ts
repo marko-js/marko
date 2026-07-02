@@ -123,8 +123,9 @@ export function _attr_style_item(
 export function _style_shell(scope: Scope, nodeAccessor: Accessor) {
   const element = scope[nodeAccessor] as HTMLStyleElement;
   const id = _id(scope);
+  _attr_nonce(scope, nodeAccessor);
   element.className = id;
-  _text_content(element, "." + id + " ~ *{}");
+  _text_content(element, "." + id + "~*{}");
 }
 
 export function _style_rule_item(
@@ -136,13 +137,15 @@ export function _style_rule_item(
   const decl = name + ":" + escapeStyleValue(_to_text(value)) + ";";
   let start = text.indexOf("{" + name + ":");
   if (start === -1) start = text.indexOf(";" + name + ":");
-  element.textContent =
+  _text_content(
+    element,
     start === -1
       ? text.slice(0, -1) + decl + "}"
       : // `escapeStyleValue` never emits a raw `;`, so the next one ends the declaration.
         text.slice(0, ++start) +
-        decl +
-        text.slice(text.indexOf(";", start) + 1);
+          decl +
+          text.slice(text.indexOf(";", start) + 1),
+  );
 }
 
 export function _attr_nonce(scope: Scope, nodeAccessor: Accessor) {

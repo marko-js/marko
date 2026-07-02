@@ -231,7 +231,7 @@ export function _attr_nonce() {
 
 export function _style_html(decls: string) {
   const id = _id();
-  return `<style${_attr_nonce()} class=${id}>.${id} ~ *{${decls}}</style>`;
+  return `<style${_attr_nonce()} class=${id}>.${id}~*{${decls}}</style>`;
 }
 
 export function _attr(name: string, value: unknown) {
