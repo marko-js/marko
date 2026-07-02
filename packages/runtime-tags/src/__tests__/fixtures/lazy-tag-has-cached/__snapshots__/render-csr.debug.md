@@ -10,17 +10,6 @@
 <button>
   Show B
 </button>
-```
-## Change
-```
-REMOVE: body + m-1
-```
-
-# Update
-```html
-<button>
-  Show B
-</button>
 <span>
   A
 </span>

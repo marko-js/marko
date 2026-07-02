@@ -260,10 +260,18 @@ function hasWatcher() {
     if (matched[selector] === 1) {
       cb();
     } else {
-      const tag = "m-" + ++id;
+      const key = "m" + ++id;
       const sentinel = document.documentElement.appendChild(
-        document.createElement(tag),
+        document.createElement("t"),
       );
+      sentinel.setAttribute("m", key);
+      // Sentinels are `<t m=mN>` elements (the tag the reorder runtime
+      // already claims) kept invisible and out of flow by an inline style.
+      // They can't simply be `display:none` -- animations never run on
+      // undisplayed elements, and the reorder runtime writes a global
+      // `t{display:none}` rule, hence the explicit `display:block`. The
+      // inline style is written via CSSOM so `style-src` doesn't apply.
+      sentinel.style.cssText = "display:block;position:fixed;visibility:hidden";
       sentinel.onanimationstart = () => {
         matched[selector] = 1;
         sentinel.remove();
@@ -280,7 +288,7 @@ function hasWatcher() {
           document.querySelector<HTMLElement>("[nonce]")?.nonce || "";
       }
       style.append(
-        `:has(${selector})>${tag}{animation:1ms m-h}@keyframes m-h{}`,
+        `:has(${selector})>t[m=${key}]{animation:1ms m-h}@keyframes m-h{}`,
       );
     }
   };
