@@ -79,6 +79,33 @@ write that initiated propagation this flush.
 6. **End.** On commit, apply the hold buffer, clear marks belonging to this
    transition, leave other transitions' marks alone.
 
+### Entangled-values registry
+
+Unit marks cover units that already exist, but three consumers need to ask
+"is this *value* entangled?" for values they are about to read: fresh
+branches setting up closures, `pending()`, and `eager()` (below). Roots give
+us the source `<let>`s, but derived values (`_const`, params) written
+downstream must be queryable too.
+
+Value writes during rendering flow through helpers (`_const`, the
+`rendering` path of `_let`, params/closure setters), so while transitions
+are enabled each unit's written `(scope, accessor)` pairs are appended to
+the flush log alongside its ops. At partition time, values written by
+entangled units are registered as entangled for the transition (cleared on
+commit). `isEntangled(scope, accessor)` consults the active transitions'
+registries — the list is almost always length 0 or 1.
+
+### Fresh branches that render entangled values
+
+A branch mounted mid-transition by *unrelated* control flow would otherwise
+render latest values next to frozen siblings. Instead: when closure setup /
+`subscribeToScopeSet` in a new branch resolves an owner `(scope, accessor)`
+that `isEntangled(...)`, the branch's mounting unit — the parent's
+structural slot op — joins the transition. The branch stays offscreen
+(already built, already set up; its ops sit harmlessly in the hold buffer)
+and inserts at commit. Reads wrapped in `eager()` are excused from this
+check, so a branch can opt into mounting immediately with torn values.
+
 ## Provenance (`queue.ts`)
 
 - `PendingRenderProp.Roots: Opt<WriteRecord>`, where a `WriteRecord` is
@@ -181,9 +208,14 @@ and an already-committed await branch:
   unrelated ones should keep applying (an improvement over today's
   hold-everything).
 - The promise expression evaluated once, eagerly, with latest values — since
-  nothing re-runs, there are no spurious fetches and **no compiler changes are
-  required**. (The earlier rollback design needed a thunked promise argument;
-  this design is runtime-only.)
+  nothing re-runs, there are no spurious fetches. (The earlier rollback
+  design needed a thunked promise argument; the core mechanism no longer
+  requires compiler changes — only the `eager()`/`pending()` helpers do.)
+- **Supersede aborts:** when a newer promise replaces a pending one, fire an
+  abort for the superseded work (via the existing `abort-signal.ts`
+  machinery / a per-await `AbortController` exposed as `$signal` inside the
+  promise expression) so users can cancel stale fetches instead of letting
+  them race to a no-op.
 
 No committed content (initial render, resume) → existing placeholder/detach
 behavior, unchanged.
@@ -208,6 +240,76 @@ behavior, unchanged.
   branch teardown via the abort-signal machinery, but note deferred destroys:
   the check is against pending targets, not just live branches.
 
+## User-facing API: `eager()` and `pending()`
+
+Two template helpers give users control over entanglement (final names TBD —
+they may fit Marko's `$`-prefixed compiler-known identifier convention, like
+`$signal`/`$global`):
+
+- `eager(() => expr)` — evaluate the thunk against current (eager) state and
+  render its result immediately, *without* entangling the containing
+  expression. This is the deliberate-tearing escape hatch: the canonical use
+  is a search input whose `query` drives an `<await>` — the results list
+  freezes during the transition while `value=eager(() => query)` keeps the
+  input reflecting every keystroke.
+- `pending(() => expr)` — reactive boolean: `true` while any value read in
+  the thunk is entangled in a live transition. Enables inline pending UI
+  (`<if=pending(() => results)>` spinner overlays,
+  `style={opacity: pending(() => list) ? 0.5 : 1}`) without freezing the
+  indicator itself.
+
+### Why they are compiler-known, not plain runtime functions
+
+Reads are plain property accesses, so a runtime-only wrapper cannot learn
+*which* values a thunk read, and by the time an outer helper like `_text`
+records its op, a reads-flag set during the thunk has already been cleared.
+The compiler, however, statically knows every thunk's
+`extra.referencedBindings` (the same analysis every signal uses). Handling
+mirrors `$signal` in `visitors/referenced-identifier.ts`: recognize the
+identifier, keep normal subscription wiring, but
+
+1. force the containing expression into a **dedicated signal unit** (the
+   same isolation the translator already performs for `<await>` promise
+   expressions), and
+2. emit the referenced bindings' accessors as metadata on that unit.
+
+### Runtime semantics
+
+- An `eager()` unit still subscribes and re-runs normally (tearing means
+  *showing* latest, so it must update immediately). At partition time its
+  entangled provenance roots and read values are checked against the excused
+  bindings: if fully covered, its ops apply now and the unit is never
+  marked; if it mixes eager and non-eager entangled reads, it holds (debug
+  warning in `MARKO_DEBUG`).
+- A `pending()` unit is *inherently* eager (a frozen spinner is useless).
+  Its value is `isEntangled(...)` over the bound values via the registry.
+  Reactivity needs transitions to be observable state changes: when roots or
+  registry values become entangled (discovery happens mid-drain, so
+  re-queued units run in the same flush) and again at commit, the transition
+  queues renders for subscribed `pending()` units — the same
+  `subscribeToScopeSet` fan-out closures already use.
+- `eager()` reads also excuse the fresh-branch deferral check, per above.
+
+## Controlled inputs: eager by default
+
+Controllable writes (`controllable.ts`) bypass the hold and apply
+immediately, without needing `eager()`:
+
+- For user input, the DOM element is the *source* of the value — the browser
+  already displays the keystroke natively; holding the write-back only risks
+  DOM and state disagreeing (e.g. formatting corrections applying a
+  transition later).
+- For programmatic writes (a clear button setting `query = ""`), applying
+  eagerly gives the standard deferred-value UX: the input clears instantly
+  while the dependent list stays frozen.
+
+Rationale: two-way binding means the element co-owns the state; state a user
+is directly manipulating is inherently "latest". The change handlers
+themselves already see eager values like all handlers. (Alternative — hold
+controllable writes like any op — rejected: it fights native input behavior
+and makes `eager()` mandatory boilerplate on every bound input near an
+await.)
+
 ## What does NOT change
 
 - HTML/SSR runtime, streaming, serialization: untouched.
@@ -215,25 +317,20 @@ behavior, unchanged.
   behavior — a resumed boundary has no committed client content to hold.
 - Initial client render of `<await>` (placeholder/detach), `caughtError`
   flows, the render heap and its ordering.
-- Generated code and the translator. (Optional later: statically pre-marking
-  signals that feed awaits using `valueExpr.extra.referencedBindings` to skip
-  provenance bookkeeping in analyzable cases — a pure optimization.)
+- Generated code for templates that don't use `eager()`/`pending()`.
+  (Optional later: statically pre-marking signals that feed awaits using
+  `valueExpr.extra.referencedBindings` to skip provenance bookkeeping in
+  analyzable cases — a pure optimization.)
 
 ## Caveats to document / audit
 
 - **UI lags state** during a transition (the inverse of React's stale-read
   model): handlers read newer values than what's on screen. This is the
-  explicit contract ("the latest value will eventually be used").
-- **Controlled inputs** bound to entangled state freeze at the old value
-  while the user's handler sees latest — typing into one mid-transition needs
-  an explicit decision (likely: controllable writes bypass the hold, since
-  the user's input *is* the observable source).
-- **Branches mounted fresh during a transition** by *unrelated* control flow
-  render with latest values (their closures read eager state), so a new
-  region can show a newer entangled value than a frozen sibling. Mitigation
-  if needed: `_closure_get` setup in a new scope checks whether its owner
-  (scope, accessor) is an entangled root/value and defers its unit's ops into
-  the transition.
+  explicit contract ("the latest value will eventually be used"), and
+  `eager()` / controllable eagerness are the pressure valves where the lag
+  is unacceptable.
+- **Mixed eager/entangled units** hold (with a debug warning) — users should
+  isolate torn reads into their own expressions/elements.
 - **DOM read-backs during render** (e.g. `_attrs` iterating live
   `el.attributes` to remove stale ones, controllable reads) see pre-commit
   DOM while writes are deferred. Audit each read-back site; `_attrs`' removal
@@ -259,10 +356,14 @@ behavior, unchanged.
    `setConditionalRenderer`, `loop`, `_html`; deferred destroys; superseded
    pending-branch cleanup.
 5. **Effects hold + dedupe-replay; `_lifecycle` logging.**
-6. **Lifecycle edges**: supersede, reject, removal-mid-transition, merge of
-   concurrent transitions.
-7. **API surface**: pending-state exposure and opt-in/opt-out decision (see
-   open questions).
+6. **Entangled-values registry + fresh-branch deferral; controllable
+   eager-bypass.**
+7. **Lifecycle edges**: supersede (+ abort wiring), reject,
+   removal-mid-transition, merge of concurrent transitions.
+8. **`eager()` / `pending()`**: translator intrinsics
+   (`visitors/referenced-identifier.ts` + dedicated-unit isolation in
+   `util/signals.ts`), runtime counterparts, `pending()` re-render
+   notifications.
 
 ## Test plan (fixtures under `src/__tests__/fixtures/`)
 
@@ -285,21 +386,41 @@ behavior, unchanged.
   fires at commit.
 - `transition-reject`, `transition-remove`: catch boundary and unmount
   mid-flight.
+- `transition-fresh-branch`: unrelated `<if>` mounts content reading an
+  entangled value → insertion deferred to commit; with `eager()` → mounts
+  immediately with latest.
+- `transition-controllable`: typing into an input bound to entangled state;
+  programmatic clear applies eagerly while the results list stays frozen.
+- `transition-eager`: torn read updates live; derived (`_const`) entangled
+  value read via `eager()`.
+- `transition-pending`: boolean flips true at entanglement (same flush) and
+  false at commit; works over derived values; indicator not frozen.
+- `transition-abort`: superseded promise's abort signal fires.
 - `transition-placeholder-initial`: placeholder still used on first render;
   resume variants mirroring `await-update-after-resume`.
 - Log-refactor regression: full await/async fixture suite with the commit log
   force-enabled.
+
+## Other ideas (not required for v1)
+
+- **Debug diagnostics**: `MARKO_DEBUG` warning when a transition holds
+  longer than a threshold or when a unit mixes eager and entangled reads;
+  devtools hook listing active transitions with their roots.
+- **Manual transitions**: a `transition(() => { ...writes })` batch API that
+  entangles writes with a user-supplied promise, covering async work that
+  doesn't flow through `<await>` (imperative fetches, animations via the
+  View Transitions API — the commit log's single-apply point is a natural
+  place to wrap `document.startViewTransition`).
+- **Placeholder timeout**: per-`<try>` opt-in to fall back to the
+  placeholder if a transition exceeds a duration.
 
 ## Open questions
 
 1. **Opt-in vs default.** Is holding-the-old-UI the new default for client
    await updates (recommended — placeholder only when there's nothing to
    hold), or opt-in per boundary (`<try transition>`) / per write?
-2. **Pending-state exposure** — an `isPending` equivalent (tag var on
-   `<try>`/`<await>`) so UIs can show inline spinners while frozen?
-3. **Placeholder timeout** — fall back to the placeholder if a transition
-   exceeds a threshold?
-4. **Fresh-branch semantics** (caveat 3): acceptable to show latest values in
-   newly mounted unrelated branches, or must new closures over entangled
-   values also hold?
-5. **Controlled-input policy** during transitions (caveat 2).
+2. **Naming/import form** for `eager()` and `pending()` — `$`-prefixed
+   compiler-known identifiers (like `$signal`) vs imports from `"marko"`;
+   and whether `pending()` should also accept no argument to mean "anything
+   this section renders".
+3. **Placeholder timeout** — include in v1 or defer?
