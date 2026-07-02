@@ -590,6 +590,12 @@ Costs and open choices:
   interactive branch bodies still need their setup/handler code from the
   main module — the compiler knows which branches are placement-only (fully
   wire-servable) vs interactive (chunk-dependent).
+- **Forward-looking**: with pairs + persisted entries in place, even the
+  page-swap divergence case at the router shell could become
+  templates + values instead of a rendered fragment — first visit costs
+  about the same as a fragment, but a _revisited_ page type (A→B→A
+  navigation) would ship only values since its pairs are cached. Not scoped
+  in; falls out naturally if the mechanism proves itself.
 
 ### Confirmed update-render writer gaps (G1–G5)
 
