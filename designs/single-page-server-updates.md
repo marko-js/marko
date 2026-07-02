@@ -89,26 +89,28 @@ from `param` (request-derived). Per section and per prop, serialize reasons
 record _why_ something serializes. The update system adds one classification
 pass on top (no new analysis primitives):
 
-| Class               | Criteria                                                                                                                                                        | Initial page cost                                     | Navigation behavior                                                        |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | -------------------------------------------------------------------------- |
-| **static**          | no referenced bindings                                                                                                                                          | none (in the template string)                         | untouched                                                                  |
-| **client**          | `Sources.state` only                                                                                                                                            | unchanged from today                                  | untouched — client owns it                                                 |
-| **value-update**    | `param` in sources; expression and its downstream render code can run client-side                                                                               | resume marker + scope address bookkeeping (no values) | server sends new slot values; registered update signals apply them         |
-| **fragment-update** | `param` in sources, but the section transitively depends on bindings that cannot ship (non-serializable values, server-only modules) or is explicitly opted out | branch markers (mostly already present)               | server streams rendered HTML + nested resume data; client swaps the branch |
+| Class               | Criteria                                                                                                                                                                                                               | Initial page cost                               | Navigation behavior                                                            |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------ |
+| **static**          | no referenced bindings                                                                                                                                                                                                 | none (in the template string)                   | untouched                                                                      |
+| **client**          | `Sources.state` only                                                                                                                                                                                                   | unchanged from today                            | untouched — client owns it                                                     |
+| **value-update**    | `param` in sources; values (computed server-side) are serializable and the enclosing structure can be paired                                                                                                           | resume marker + spine serialization (no values) | server sends slot/hole values; placement signals + existing signals apply them |
+| **fragment-update** | structure-driving values cannot serialize (e.g. an unkeyed collection of non-serializable items), interop boundaries (class components), a size-heuristic beyond which HTML beats values + tables, or explicit opt-out | branch markers (mostly already present)         | server streams rendered HTML + nested resume data; client swaps the branch     |
 
 Notes on the value/fragment boundary:
 
 - Mixed expressions (input ∩ state) are already serialized and already have an
   `_or` intersection client-side — they are value-update by construction, with
   **zero** new initial cost. This is the case the original proposal identified;
-  it needs only the addressing + trigger mechanism, not new codegen.
-- Derived values pose a real tradeoff: ship the derivation code once (cached
-  JS, smaller per-navigation wire) vs. serialize the derived value every
-  navigation (zero code, more wire). Default: derivations that are pure and
-  client-executable go into the update chunk; derivations touching
-  non-shippable bindings serialize their result. The serialize-reasons
-  machinery already models "serialize the value instead of the inputs" — this
-  reuses that decision structure with a different cost function.
+  it needs only the pairing + trigger mechanism, not new codegen.
+- Derived values pose a tradeoff: ship the derivation code once (cached JS,
+  smaller per-navigation wire) vs. serialize the derived value every
+  navigation (zero code, more wire). The default is the latter — the persisted
+  entry is **placement-only** (see the compiler section): the server already
+  computed everything during the update render, values arrive computed, and
+  derivation code (which may reference server-only imports) never ships. The
+  serializer's string dedup and back-references keep repeated values cheap.
+  Shipping a hot, pure derivation instead is an available optimization, not
+  the default.
 - Fragment-update granularity destroys nested client state when it swaps. The
   compiler knows, per section, whether stateful bindings live under a
   fragment-class section — this should surface as a diagnostic ("this `<let>`
@@ -182,43 +184,79 @@ values until their replacement arrives** (stale-while-streaming) rather than
 flashing placeholders — placeholder HTML only appears inside swapped-in
 fragments, where there is no previous content to keep.
 
-### Scope addressing (the identity problem)
+### Scope pairing (the identity problem)
 
 The update render assigns fresh, patch-local scope ids (its own counter). The
 client cannot resolve those against its live tree by number, and a stateless
-server cannot know the client's numbering. Resolution is **structural,
-top-down**:
+server cannot know the client's numbering. (Nor can pairing be left implicit
+in id _order_: `_scope_id()` increments a shared counter at render-execution
+time (`html/writer.ts:249-251`), and `<await>` bodies execute in
+promise-resolution order, so id assignment order is not structurally
+deterministic under async.)
 
-- Fills in an update stream address scopes either by patch-local id
-  (back-references within the stream, resolved through a per-navigation
-  `patchId → Scope` map in the applier) or by an **address tuple**
-  `(ownerPatchId, accessor[, loopKey])` the first time a scope appears.
-- The client resolves an address against its live tree: owner scope →
-  `BranchScopes`/`KeyedScopes`-prefixed props → match. A hit means "update this
-  existing scope"; a miss means "fresh scope" (new branch/loop item) and the
-  applier allocates a client id (the `1e6+` space, `dom/scope.ts:6`).
-- Loop identity is the `by` key (`AccessorProp.LoopKey`), the only
-  content-derived identity in the system — same key the client reconciler uses
-  (`dom/control-flow.ts:811-828`). Conditionals match by branch index
-  (`ConditionalRenderer` prefix). Custom tags match by child-scope accessor;
-  dynamic tags by registered renderer id.
-- The **server never addresses client-state-driven structure.** State-sourced
+The resolution: **pairing knowledge is compiled, not transmitted.** A patch
+payload in the existing fill format is already a self-describing scope
+_tree_ — an owner's fill carries its structural props (`BranchScopes` arrays
+of patch-scope references, `ConditionalRenderer` branch indices, loop keys,
+owner refs), as the `for-keyed-selector-input` fixture payload shows:
+
+```js
+_ => [1, { "BranchScopes:#ul/1": [_(2), _(3), _(4)], input_selected: 2, … },
+      { row_id: 1, _: _(1) }, …]
+```
+
+Applying an update is therefore a **top-down tree merge** of the patch scope
+tree onto the live scope tree, directed by compiled per-section tables in each
+template's persisted entry (see the compiler section):
+
+- The root pairs by convention (`meta` frame / fixed hop from the render
+  root). For each paired `(patchScope, liveScope)`, the section's compiled
+  table classifies every prop: **slot** (write onto the live scope + queue the
+  registered downstream signals — intersections, closures), **placement**
+  (invoke a placement signal against the live scope's bound node), or
+  **structural** (pair child scopes and recurse with the child section's
+  table — crossing into child templates through the persisted entry's imports,
+  or the registry for dynamic tags).
+- Child pairing identity: loops by the `by` key (`AccessorProp.LoopKey`) — the
+  same key the client reconciler uses (`dom/control-flow.ts:811-828`);
+  conditionals by branch index (`ConditionalRenderer` prefix); custom tags by
+  child-scope accessor; dynamic tags by registered renderer id.
+- A patch child with no live counterpart is fresh (new loop item / flipped
+  branch): value-class sections are created client-side through the existing
+  branch machinery (template clone + walk) and then merged into; fragment-class
+  sections arrive as `html` frames. A live child with no patch counterpart is
+  destroyed (existing branch-destroy path). Unmatched-by-template pairs swap.
+- A per-navigation `patchId → Scope` map (patch ids resolve to _live_ scopes
+  once paired, or freshly allocated ids in the `1e6+` space, `dom/scope.ts:6`)
+  backs the serialize context, so `_(id)` scope references inside values and
+  `"registryId scopeId"` effect strings resolve unchanged. Later frames of the
+  same navigation reuse the map, so cross-frame references keep working.
+- The **server never pairs into client-state-driven structure.** State-sourced
   branches, and the state slots themselves, are excluded from update
   serialization (see below). Server-computed values _read inside_ client-driven
   branches live on the owning scope above the branch and propagate through the
   existing closure fan-out (`_if_closure`/`_for_closure`/`_closure`,
-  `dom/signals.ts:121-299`) — so the server only ever addresses structure its
-  own render produced, which is exactly the structure a structural address can
-  reach.
+  `dom/signals.ts:121-299`) — so the merge only ever descends structure the
+  server's own render produced, which the client spine mirrors.
 
-The writer has (or can trivially be given) owner + accessor at every
-`writeScope`/branch-write site; the translator threads it through under the
-flag. This is bookkeeping, not new analysis.
+This keeps the serializer, the fill format, and the flush/gate machinery
+entirely untouched — the update payload _is_ a resume payload; only the
+consumer differs. The corresponding requirement on the **initial** render is
+the **spine**: every section on a path from the root to an updatable hole must
+serialize (address-only — owner links, branch bookkeeping, keys, node
+bindings; no values), so the merge has live scopes to land on. Subtrees with
+no updatable content are compile-time absent from the tables and stay fully
+elided — "serialize everything" is not required.
 
-An alternative — client sends its scope-id table so the server can emit real
-ids — was rejected: large requests, cache-hostile, and it turns a hint into a
-protocol requirement. Address tuples are a per-scope, gzip-friendly constant
-cost paid only for scopes the update actually touches.
+In `MARKO_DEBUG` builds, update renders additionally serialize each scope's
+template/section id so the merge can assert pairing correctness instead of
+silently mis-merging.
+
+Alternatives rejected: server-emitted address tuples per scope (per-navigation
+wire cost for information that is static per build — compiled tables are paid
+once and cached); client sends its scope-id table so the server emits real ids
+(large requests, cache-hostile, turns a hint into a protocol requirement);
+implicit id-order pairing (unsound under async, above).
 
 ### What gets serialized in an update render
 
@@ -231,6 +269,10 @@ The serialize-reason guards are already request-time-evaluable
   defaults, not truth; sending them would clobber client state;
 - **param-reasoned props are kept** — this is the payload;
 - mixed-reason props are kept (client dirty-check makes over-sending safe);
+- **computed values for pure server-only holes are written as scope props** —
+  expressions that today inline straight into the HTML string additionally
+  write their computed value under the hole's accessor, guarded to update mode
+  (in the initial render those holes cost only a marker, never a value);
 - static HTML output is suppressed entirely except inside fragment capture.
 
 The update render is a full, normal render of the target page (`render()` →
@@ -307,46 +349,65 @@ more visits.
 
 ### The parallel update entry (incremental JS)
 
-This is the refined version of the "new parallel compiler entry" idea. Naively
-registering update signals from the normal DOM module would drag the whole
-input-apply chain into initial bundles (module granularity — exports used only
-by a lazy chunk still load with the module). Instead:
+This is the "new parallel compiler entry" idea, sharpened by one principle:
+**the persisted entry never executes server compute — it only places values
+and triggers existing signals.** The server has already computed everything
+during its update render; the client's job is placement. Per template, the
+persisted entry — a parallel virtual module, `template.marko?update`, built as
+its own code-split chunk — contains:
 
-- The compiler **partitions the signal graph by reachability**: signals
-  reachable from the interactive chain (event handlers, `<let>` effects,
-  intersections with state) stay in the main DOM module exactly as today;
-  signals reachable _only_ from the input-apply chain move to a parallel
-  virtual module — `template.marko?update` — which imports shared signals from
-  the main module where the chains overlap (an `_or` used by both stays in
-  main; the update module references it).
-- The update module registers its entry points with the existing registry
-  scheme: `_resume(getResumeRegisterId(section, binding, "update"), signal)` —
-  the same deterministic ids the serializer emits in effect strings
-  (`translator/util/signals.ts:904-930`), so update frames resolve through
-  `registeredValues` with zero new lookup machinery.
-- For templates with no interactive chain at all (never loaded client-side
-  today), the update module is the _only_ client artifact — and it is loaded
-  only when a navigation actually needs it.
-- Update modules are built as ordinary code-split chunks: hashed filenames,
-  immutable caching. Layouts and shared components resolve to the **same chunk
-  across routes**, so incremental JS across a session converges to the union of
-  visited templates, each fetched once. Per-route `modulepreload` lists in the
-  manifest hide latency.
+- **Per-section merge tables**: which props are slots, placement targets, or
+  structural (the compiled walk that directs the tree merge in the pairing
+  section). This is the scope-tree analog of the `walks` bytecode — structure
+  knowledge encoded at compile time so it never rides the wire.
+- **Placement signals** for pure server-only holes — the same shape the DOM
+  output already generates (`(scope, value) => _text(scope[node], value)`),
+  emitted here instead of the main module so initial bundles never see them.
+- **References to existing signals** for everything with a client-side life:
+  intersections (`_or`), closure fan-outs, loop reconcilers — imported from
+  the main DOM module where they already exist (an `_or` used by the
+  interactive chain stays in main; the persisted entry references it). Slot
+  writes trigger these; no code is duplicated.
+- **Registrations** with the existing registry scheme:
+  `_resume(getResumeRegisterId(section, …, "update"), …)` — the same
+  deterministic ids the serializer emits (`translator/util/signals.ts:904-930`),
+  so update frames resolve through `registeredValues` with zero new lookup
+  machinery — plus static imports of child templates' persisted entries
+  (registry lookups at dynamic-tag boundaries), preserving per-template
+  splitting across the composition graph.
 
-The compiler already has the complete reachability graph (that is what
-`finalizeReferences` + the signal writer compute); the partition is a new
-consumer of existing analysis, not new analysis. Codegen-wise this is a new
-`entry`/virtual-module kind alongside `hydrate`/`load`
-(`translator/visitors/program/index.ts:106-226` is the existing dispatch
-point), not a third full `output` — the HTML and DOM outputs keep their roles,
-which avoids duplicating the per-tag translate layer.
+Placement-only resolves the derivation tradeoff from the classification
+section by default: derived values arrive computed (the server already did the
+work), so derivation code — which may reference server-only imports and can be
+arbitrarily heavy — never ships. The serializer's string dedup and value
+back-references keep repeated derived values cheap on the wire. Where a
+derivation is hot, pure, and its inputs are much smaller than its outputs, the
+compiler may still elect to ship it into the persisted entry as an
+optimization — but that is the exception, not the default.
+
+For templates with no interactive chain at all (never loaded client-side
+today), the persisted entry is the _only_ client artifact — loaded only when a
+navigation actually needs it. Persisted entries are ordinary hashed,
+immutable chunks: layouts and shared components resolve to the **same chunk
+across routes**, so incremental JS across a session converges to the union of
+visited templates, each fetched once. Per-route `modulepreload` lists in the
+manifest hide latency.
+
+The compiler already has the complete reactivity graph (that is what
+`finalizeReferences` + the signal writer compute); the merge tables and
+placement partition are a new consumer of existing analysis, not new analysis.
+Codegen-wise this is a new `entry`/virtual-module kind alongside
+`hydrate`/`load` (`translator/visitors/program/index.ts:106-226` is the
+existing dispatch point), not a third full `output` — the HTML and DOM outputs
+keep their roles, which avoids duplicating the per-tag translate layer.
 
 ### `$global` reads become updatable
 
 Under the flag, member reads of `$global` **on serialized-global keys** are
 promoted to param-like bindings on the reading section: they join the reactive
-graph, get accessors, get update signals in the update chunk, and serialize
-with addresses. Non-serialized global reads stay non-reactive (their values
+graph, get accessors, get placement/trigger entries in the persisted entry,
+and their sections join the serialized spine. Non-serialized global reads stay
+non-reactive (their values
 cannot cross the wire anyway — unchanged behavior, documented).
 
 This is required, not optional, for `@marko/run`, where `url`/`params` arrive
@@ -367,12 +428,13 @@ A new lazy module (working name `@marko/runtime-tags/dom/update`, wrapped by
 the router for link interception) containing:
 
 1. **Stream applier** — frame parser (length-prefixed, `TextDecoder`), script
-   injection for `resume` frames, and the patch-aware serialize context: a
-   variant of `serializeContext` (`dom/resume.ts:173-181`) that resolves
-   patch-local ids through the per-navigation map and address tuples through
-   the structural resolver. Fills and effect strings are otherwise consumed by
-   the existing machinery; renders queue through the normal heap and flush in
-   batches per frame (no tearing within a frame).
+   injection for `resume` frames, and the merge driver: pairs the patch scope
+   tree onto the live tree using the persisted entries' compiled tables, backed
+   by a patch-aware variant of `serializeContext` (`dom/resume.ts:173-181`)
+   that resolves patch-local ids through the per-navigation map. Fills and
+   effect strings are otherwise consumed by the existing machinery; renders
+   queue through the normal heap and flush in batches per frame (no tearing
+   within a frame).
 2. **Fragment applier** — the one genuinely new runtime primitive:
    `resumeFragment(html, targetAddress)`. Structurally it is the native
    lazy-load lifecycle with a different fulfillment source: `_load_template` /
