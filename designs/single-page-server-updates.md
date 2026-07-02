@@ -161,9 +161,12 @@ stream**. Each frame is one of:
   scopes — those re-run only through the reactive graph when a merged value
   they depend on changes, or at mount inside fresh subtrees.
 - `templates` — `template`/`walks` pairs, keyed by content id, for
-  server-driven branches this update rendered. The client caches pairs per
-  build (idempotent store), so fresh branches clone client-side without the
-  markup ever living in a JS chunk; hinted servers may omit pairs the client
+  server-driven branches this update rendered. The pairs are compiled into
+  the **HTML output** under the flag (hoisted per-section consts sharing the
+  persisted entry's content ids by construction) and emitted only by update
+  renders, deduped per response. The client caches pairs per build
+  (idempotent store), so fresh branches clone client-side without the markup
+  ever living in a JS chunk; hinted servers may omit pairs the client
   provably holds.
 - `html` — a rendered fragment plus its target address, the fetch-stream
   analog of today's out-of-order `<t hidden M=id>` reorder chunks
@@ -297,8 +300,12 @@ The serialize-reason guards are already request-time-evaluable
   value (see the invariant in the compiler section). The accessor reuse is
   deliberate and collision-free: the _patch_ scope carries the value at the
   hole's accessor while the _live_ scope carries the bound node at that same
-  accessor; the merge table classifies the prop as placement and bridges the
+  accessor; the merge function applies the prop as placement, bridging the
   two (`_text(liveScope[acc], patchScope[acc])`);
+- **`template`/`walks` pairs for rendered value-class branches are emitted** —
+  also update renders only, deduped per response, flushed as `templates`
+  frames ahead of the fills that reference them (the pairs live as hoisted
+  consts in the compiled HTML output under the flag);
 - static HTML output is suppressed entirely except inside fragment capture.
 
 The update render is a full, normal render of the target page (`render()` →
