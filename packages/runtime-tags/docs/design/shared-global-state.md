@@ -165,7 +165,15 @@ Global } }` augmentation — already the documented way to type `$global`.
 - Serialization becomes compile-time knowledge: a template whose client code
   reads `$global.foo` registers `foo` for serialization exactly like any other
   serialize reason — deleting the entire `serializedGlobals` ceremony for
-  these keys.
+  these keys. This closes a hole userland provably cannot: a key whose FIRST
+  reader mounts client-side (under a stateful `<if>` that flips after
+  hydration) has no SSR'd state to republish it, so it silently seeds
+  `undefined` — and `@marko/run`'s own `$global.data` throws outright there,
+  since `data` isn't in run's default allow-list. At runtime nobody can know
+  whether a conditional client read is reachable; the only userland answers
+  are "serialize everything" (the case-study app's safety net) or "hold an
+  unenforced invariant". Reachability is exactly what the compiler already
+  computes for every other serialize reason.
 - The case-study app's tag, middleware seeding surgery, and both of its
   documented gotchas disappear; `<const/liveHp=$global.combatHp ?? player.hp>`
   simply works.
