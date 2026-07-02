@@ -2,291 +2,304 @@
 
 Goal: when a state write kicks off async work (a new promise flowing into an
 `<await>`), keep the currently rendered UI in place — no placeholder, no
-detach — while still committing unrelated updates immediately. DOM updates and
-effects that are "entangled" with the async work commit only once the promise
-fulfills (and no other entangled work is outstanding).
+detach — while still committing unrelated updates immediately. Anything
+observable (DOM mutations, effects) derived from entangled state is queued and
+applied only once the promise fulfills and no other entangled work is
+outstanding.
 
 This is the client-side analogue of React's `useTransition`, built on Marko's
 existing signal/queue machinery.
 
-## Constraints from the current architecture
+## Model: eager compute, deferred observable commit
 
-These facts (from `src/dom/`) shape the whole design:
+State propagation runs exactly as it does today — eagerly, once, with the
+latest values. `<let>` writes mutate scopes immediately, downstream signals
+recompute immediately, control flow reconciles immediately (new branch scopes
+are created and set up, loop diffs are computed). **No signal work is ever
+re-executed or rolled back.** What changes is that the *observable tail* of
+that work — DOM node swaps, attribute/text writes, effects — is recorded into
+a commit log instead of applied directly, and the log is partitioned at the
+end of the flush:
 
-1. **Eager, interleaved rendering.** A `<let>` write immediately mutates the
-   scope (`signals.ts` → `_let`) and queues one `PendingRender` for its
-   downstream render function. When that runs (`queue.ts` → `runRenders`), it
-   performs DOM writes for its own section *inline* (`_text`, `_attr`, …) and
-   propagates to other scopes by queueing more renders (`_closure`,
-   `_if_closure`, `_for_closure`, `_or`). There is no separate commit phase to
-   hold back.
+- Entries whose provenance is **entangled** with a pending `<await>` are moved
+  into that transition's hold buffer.
+- Everything else applies immediately, in order.
 
-2. **We only learn a chain is "async" at the end of it.** `_await_promise`
-   receives the new promise *after* every upstream render in the chain has
-   already run and written to the DOM. Any design must therefore either
-   (a) undo those writes, or (b) buffer all DOM writes speculatively.
+Scope state is therefore always latest (event handlers, computeds, and new
+promise expressions all see current values — `count++` twice mid-flight yields
+2), while the DOM and effects for entangled regions stay frozen at the last
+committed state until the promise resolves.
 
-3. **The flush is synchronous and pre-paint.** `run()` drains the heap inside
-   a microtask/rAF-message tick (`schedule.ts`). Anything we write *and revert
-   within the same drain* is never painted. This makes an undo approach
-   invisible to the user.
+### Why a commit log is required
 
-4. **Hold/replay primitives already exist.** The pending-await machinery
-   already defers renders targeting a pending branch
-   (`BranchScope[PendingRenders]`, replayed in `_await_promise`'s resolve
-   path), defers effects under an active `AwaitCounter`
-   (`queue.ts` → `handlePendingTry` → `PendingEffects`), dedupes replayed
-   effects (`awaitCounter.m` + the `fnScopes` map in `control-flow.ts`), and
-   parks live DOM off-screen (`tempDetachBranch` / `DetachedAwait`). We reuse
-   all of these patterns.
+Entanglement is discovered at the *end* of a chain: `_await_promise` receives
+the new promise only after every upstream render already ran. Since signal
+functions interleave computation with DOM writes (`_text`, `_attr`, branch
+swaps are called inline from render fns), the only way to "un-apply" without
+re-running signals is to not have applied yet. So while a flush is draining,
+observable operations are logged rather than performed; the flush ends
+(pre-paint, `schedule.ts` guarantees this) with a single pass that applies the
+non-entangled portion. For apps with no in-flight transition and no await hit
+during the flush, the entire log applies — the common case is one extra array
+iteration.
 
-5. **Reads are plain property accesses.** `scope[valueAccessor]` cannot be
-   intercepted per-reader, so "the UI shows old values" is only consistent if
-   the *scope values themselves* are old during the transition. This decides
-   the rollback semantics below.
+## Entanglement rules
 
-## Chosen approach: provenance tracking + same-flush rollback + replay-on-resolve
+**Definition.** A *unit* is a (scope, stable signal fn) pair — the granularity
+at which renders execute and at which reads happen. A *root* is a `<let>`
+write that initiated propagation this flush.
 
-High level: let the write propagate eagerly (so the promise is created with
-the *new* values and async work starts immediately). Track which root writes
-each render was caused by. When an `<await>` receives a new promise during the
-flush, its provenance roots become **entangled**. At the end of the same drain
-— before paint — restore the entangled roots to their previous values and
-re-run their downstream chains, repainting the old UI. The new values are
-parked in a **Transition** record. When the promise fulfills, re-apply the new
-values and re-run, committing for real.
+1. **Discovery.** Every queued render carries its provenance roots (see
+   Provenance below). When `_await_promise` receives a new promise during a
+   flush, the current render's roots become entangled in a `Transition`.
+   Everything *fanned out from those roots* — not just the path to the await —
+   is entangled, because it read the new values.
+2. **Partition.** At flush end, log entries recorded by units whose roots are
+   entangled move to the transition's hold buffer. Each held unit is also
+   marked persistently for the life of the transition.
+3. **Spread by read.** While a transition is live, a unit is entangled if it
+   is already marked **or** any of its current provenance roots is entangled.
+   The marked-unit check is what implements "anything that reads from an
+   entangled value must be entangled": any unit subscribed to an entangled
+   value necessarily ran during the entangling flush (that's how
+   subscriptions fire) and got marked, so a later re-run triggered by an
+   *unrelated* root through the same unit is still held — it would otherwise
+   paint the new entangled value it reads.
+4. **Last-run-wins.** The hold buffer is keyed by unit. When an entangled unit
+   re-runs (a newer write, or an unrelated trigger), its newly logged entries
+   *replace* its held entries. Values are eager, so the latest run always
+   reflects the latest state; on commit, each unit applies exactly once.
+5. **Join / merge.** One flush entangling several awaits produces one
+   transition with a counter (`i`/`c`, the existing `AwaitCounter` pattern);
+   commit fires when the last one fulfills ("no other dependencies
+   entangled"). If a unit or root already held by transition T1 becomes
+   entangled under T2, merge T1 into T2 (union roots/units/buffers, sum
+   counters). Module-level `activeTransitions` list; length is almost always
+   0 or 1.
+6. **End.** On commit, apply the hold buffer, clear marks belonging to this
+   transition, leave other transitions' marks alone.
 
-Because entangled scope values are physically old during the transition,
-unrelated updates that flow through *shared* downstream computeds still render
-consistently (new-unrelated + old-entangled) without any special casing. This
-is the main payoff of value rollback over DOM-write buffering.
+## Provenance (`queue.ts`)
 
-### Semantics (matches React transitions)
-
-- During a transition, event handlers and computeds read the *old* values
-  (the new value only lives in the transition record). `count++` twice during
-  one in-flight transition yields the same "stale read" behavior as React's
-  non-updater `setState` — document this; an updater-form escape hatch can
-  come later.
-- A new write reaching the same `<await>` supersedes: the existing
-  `thisPromise === scope[promiseAccessor]` guard already ignores stale
-  resolutions. The transition's `prev` for a root is kept from the *first*
-  write (roll back to the truly-visible value), `next` is last-write-wins.
-- Unrelated writes commit immediately, always.
-- A placeholder (`<try @placeholder>`) is only used when the await has no
-  committed content yet (initial render / resume). Updates to an await with
-  live content become transitions. (Optional later: a `timeout` after which
-  we fall back to the placeholder.)
-
-## Runtime changes
-
-### 1. Provenance on `PendingRender` (`queue.ts`)
-
-- New `PendingRenderProp.Roots: Opt<WriteRecord>` where
-
-  ```ts
-  type WriteRecord = {
-    scope: Scope;
-    signal: SignalFn;      // the let's downstream render fn
-    accessor: Accessor;    // value accessor
-    prev: unknown;         // captured at first write
-    next: unknown;         // last write wins
-    transition?: Transition; // set once entangled
-  };
-  ```
-
-- Module-level `currentRender` set inside `runRender`. `queueRender` called
-  while `rendering` unions `currentRender[Roots]` into the queued render —
+- `PendingRenderProp.Roots: Opt<WriteRecord>`, where a `WriteRecord` is
+  `{scope, accessor, transition?}` — no `prev` value needed since nothing
+  rolls back.
+- `_let` / `_let_change` (non-`rendering` path) create/reuse the flush's
+  `WriteRecord` and attach it to the queued render.
+- `runRender` exposes the executing render; `queueRender` called while
+  `rendering` unions the current render's roots into the queued render —
   including the dedupe early-return path (a render re-queued from a second
   root must merge root sets). Use the existing `Opt`/`push`/`toArray` helpers
-  from `common/opt.ts` since the single-root case dominates.
-- All of this is installed via a self-modifying `_enable_transition()` (same
-  pattern as `_enable_catch`) referenced by `_await_promise`, so apps without
-  awaits pay nothing.
+  since the single-root case dominates.
+- **Unit identity.** Slot-keyed renders (`signalKey >= 0`) already have a
+  stable key (`scopeId * 1e3 + signalKey`). Closure fan-outs
+  (`_closure`, `_for_closure`, `_for_selector`, `_if_closure`) queue fresh
+  wrapper fns with `signalKey -1`, but each holds its stable underlying fn as
+  `._`; they additionally iterate child scopes. These helpers set the
+  *current unit* to `(childScope, fn)` around each child invocation so ops are
+  attributed per child scope with a stable identity across re-runs.
 
-### 2. Capture writes (`signals.ts`)
+## The commit log
 
-In `_let`'s non-`rendering` branch (and `_let_change`): before assigning,
-create/refresh the `WriteRecord` (capture `prev` only if the accessor isn't
-already recorded this flush or in an active transition) and attach it as the
-root of the queued render. Writes made *during* rendering (re-entrant sync
-writes) inherit `currentRender`'s roots naturally.
+Installed by a self-modifying `_enable_transition()` (same pattern as
+`_enable_catch`), invoked from the `_await_promise` factory — apps without
+awaits pay nothing. Interception uses the codebase's existing
+mutable-exported-binding convention (`_dynamic_tag`, `runEffects`,
+`runRender` are already reassigned this way); internal callers must route
+through the mutable chokepoints.
 
-### 3. Thunked promise expression (translator, small but critical)
+Two op flavors:
 
-Today the compiled call is
-`_await_promise_signal($scope, resolveAfter($scope.clickCount))` — the user's
-expression (often a `fetch`) executes at the call site. Rollback and commit
-both re-run that call site, which would fire spurious fetches.
+### 1. Value ops — append-ordered, replayable triples
 
-Change `core/await.ts` (the `signal.build` / `addValue` wiring around
-`translator/core/await.ts:199-220`) to pass a thunk:
-`_await_promise_signal($scope, () => resolveAfter($scope.clickCount))`.
-`_await_promise` evaluates the thunk only when it actually wants a fresh
-promise — and *skips evaluation entirely* during the rollback and commit
-drains (module flag `replaying`). This is the mechanism that guarantees the
-async work runs exactly once per real write. It also incidentally enables
-future retry/refresh features.
+Flat `(fn, target, ...args)` array per unit (same shape as `pendingEffects`).
+Chokepoints in `dom.ts` / `controllable.ts`:
 
-(Note: the compiler statically knows `valueExpr.extra.referencedBindings` for
-every `<await>` — see "Future optimization" below.)
+- `setAttribute` (covers `_attr`, `_attr_class`, `_attr_style`, spreads)
+- `_attr_class_item`, `_attr_style_item`
+- `_text`, `_text_content`
+- controllable value/checked/open writers
+- `_lifecycle` (constructor/`onMount`/`onUpdate` are user-observable side
+  effects; the whole call is logged as an op)
 
-### 4. Transition creation in `_await_promise` (`control-flow.ts`)
+Applying the log runs the original implementations. Duplicate writes to the
+same node across log entries are harmless — later entries win by order.
 
-When called during `rendering` with a new promise and the await branch already
-has committed content:
+### 2. Structural slot ops — keyed by (scope, nodeAccessor), target-state based
 
-- Walk `currentRender[Roots]`; for each `WriteRecord` not yet entangled, mark
-  it and attach it to a `Transition`:
+Branch swaps can't be logged as raw DOM mutations (insert/remove aren't
+idempotent and interleave badly across re-runs). Instead each structural
+helper splits into an **eager phase** (scope bookkeeping, branch creation —
+`createBranch` already builds offscreen, `setupBranch` runs and its writes log
+against detached nodes harmlessly) and a **DOM phase** that records *target
+state* into a slot:
 
-  ```ts
-  type Transition = {
-    roots: Set<WriteRecord>;
-    i: number;                 // outstanding entangled awaits (AwaitCounter pattern)
-    effects: unknown[];        // held forward-pass effects (for dedupe on commit)
-  };
-  ```
+- `setConditionalRenderer` (`_if`, `_dynamic_tag`, `_attr_content`, `_try`):
+  eager: create + set up the new branch, update
+  `scope[BranchScopes + accessor]`. Slot record: `{visible, pending}`. A
+  superseding re-run destroys the never-inserted `pending` branch (safe:
+  offscreen) and replaces it. Commit: insert `pending`, remove + destroy
+  `visible`. **Destroy of the visible branch is deferred**, which is what
+  keeps the old UI live: its scopes stay subscribed, so unrelated values
+  rendering inside it keep updating on screen, while entangled values inside
+  it are held by rule 3.
+- `loop` (`_for_*`): eager: build `newScopes`, run params, update
+  `scope[scopesAccessor]`. Slot record keeps `visibleScopes` (what the DOM
+  shows) from the first entangled run; re-runs only replace the latest
+  target list. Commit: run the existing diff/LIS DOM phase from
+  `visibleScopes` → latest, destroy branches that are in neither.
+- `_html`: eager: `parseHTML` + scope accessor updates; DOM phase (the
+  `insertChildNodes`/`removeChildNodes` pair) deferred via slot.
+- `_await_promise`'s own branch resolution (`resolveAwait`) participates the
+  same way when nested transitions interact.
 
-  If a root already belongs to a live transition, merge (union roots, keep
-  that transition). Multiple awaits reached from one flush share one
-  transition; `i` counts them; commit fires when `--i === 0` ("no other
-  dependencies entangled").
-- Register the transition on the await scope
-  (`AccessorPrefix.Transition + nodeAccessor`) for supersede/resolve/destroy
-  lookup.
-- **Do not** show the placeholder and **do not** schedule the rAF
-  `tempDetachBranch` — the old content stays live. Keep
-  `awaitBranch[PendingRenders] ||= []` so updates targeting the *inside* of
-  the await branch are held and replayed on resolve (existing behavior).
-- No provenance roots (e.g. initial `queueAsyncRender` flushes, resume) →
-  existing placeholder/detach behavior, unchanged.
+On commit, apply structural slots first, then value ops, then effects —
+though slot semantics make this largely order-insensitive (value ops on nodes
+inside a pending branch work offscreen; ops on nodes inside a
+soon-to-be-removed branch are wasted but harmless).
 
-### 5. Rollback phase in `run()` (`queue.ts`)
+### Effects
 
-After `runRenders()` drains, if any `WriteRecord` became entangled this flush:
+`queueEffect` calls from entangled units go to the unit's hold bucket
+(replaced on re-run like ops). On commit they replay deduped against the
+commit flush's own effects using the same `fnScopes` map technique as the
+existing `awaitCounter.m` handling (`control-flow.ts:188-205`). Event wiring
+(`_attrs_script` → `_on`) rides along since it is already effect-based.
 
-1. `runId++` (so the dedupe-slot `Gen` check doesn't swallow the re-queues).
-2. Set `replaying = 1`; for each newly entangled root: `scope[accessor] = prev`
-   and `queueRender(scope, signal, id)`.
-3. Drain again. Downstream `_const`/`_closure` guards see the value change and
-   repaint the old UI; `_await_promise` thunks are skipped, so no promise is
-   touched. This all happens before the browser paints (constraint 3), so the
-   intermediate new-UI DOM state is never visible.
-4. Effects partition (below), then run effects once.
+## `_await_promise` changes (`control-flow.ts`)
 
-### 6. Effects (`queue.ts`)
+When called during `rendering` with a new promise, provenance roots present,
+and an already-committed await branch:
 
-Forward-pass effects queued by entangled renders reference rolled-back DOM and
-must not run now. In `runRender`, when the render has roots, record
-`[startIndex, roots]` markers into a side array as effects are appended (only
-range bookkeeping — no per-effect allocation). At partition time, move effect
-ranges whose roots are entangled into `transition.effects`; rollback-pass
-effects run normally (they re-wire the restored old UI). On commit, replay
-`transition.effects` deduped against the commit flush's own effects using the
-same `fnScopes` map technique as `_await_promise`'s `awaitCounter.m` handling
-(`control-flow.ts:188-205`).
+- Entangle roots into a transition (create/merge), `t.i++` for this await,
+  register the transition on the await scope
+  (`AccessorPrefix.Transition + nodeAccessor`).
+- **Skip** the placeholder path and the rAF `tempDetachBranch` — old content
+  stays live and interactive.
+- The `awaitBranch[PendingRenders]` mechanism is not needed for transition
+  updates: entangled updates inside the branch are held by unit marks,
+  unrelated ones should keep applying (an improvement over today's
+  hold-everything).
+- The promise expression evaluated once, eagerly, with latest values — since
+  nothing re-runs, there are no spurious fetches and **no compiler changes are
+  required**. (The earlier rollback design needed a thunked promise argument;
+  this design is runtime-only.)
 
-### 7. Commit / supersede / errors
+No committed content (initial render, resume) → existing placeholder/detach
+behavior, unchanged.
 
-- **Fulfill** (in the existing `promise.then` handler): if `--t.i` is 0,
-  inside the `queueAsyncRender` callback: for each root
-  `scope[accessor] = next`, queue its signal, set `replaying = 1` so await
-  thunks don't re-fire; the await itself is driven directly via the existing
-  `resolveAwait(...)` with the fulfilled data + `PendingRenders` replay.
-  Then release held effects (deduped) and clear the transition.
-  If the commit rerun reaches a *different* await (a waterfall), its thunk is
-  not skipped (different node, no transition entry) — a new transition chains
-  and the UI keeps holding. That's the desired cascading behavior.
-- **Supersede**: a later flush whose chain hits the same await joins the
-  transition (step 4), replaces `scope[promiseAccessor]`, and the stale
-  fulfillment is ignored by the existing identity check.
-- **Reject**: commit the entangled values first (state must be consistent with
-  the promise that failed), then the existing `renderCatch` path.
-- **Await branch destroyed mid-transition** (unrelated update removes the
-  subtree): commit immediately — apply `next` values and re-run; there is
-  nothing left to wait for. Hook via the branch abort signal
-  (`abort-signal.ts` / `destroyBranch`), same as `subscribeToScopeSet`
-  cleanup.
+### Lifecycle
 
-### 8. Entangled branch swaps (`<if>` / `<for>` on the entangled path)
-
-Phase 1: accept that rollback re-runs `setConditionalRenderer` / the loop
-reconciler, so a branch toggled by an entangled value is destroyed and
-recreated twice (forward → rollback, and again on commit), losing internal
-`<let>` state. Correct, just not stateful.
-
-Phase 2: when the swap is driven by an entangled render, park the outgoing
-branch with `tempDetachBranch` (the `DetachedAwait` pattern) instead of
-destroying it; rollback re-inserts it (state intact), commit destroys it. Same
-for keyed loop branches.
+- **Fulfill:** existing `thisPromise === scope[promiseAccessor]` identity
+  check ignores superseded promises. On the winning fulfillment,
+  `queueAsyncRender` a commit: mark the transition committing, run
+  `resolveAwait` + params with the data (their downstream applies directly —
+  the committing transition's units no longer hold), apply the hold buffer
+  (slots, ops), replay held effects deduped, `--t.i === 0` gates all of this
+  when several awaits joined; clear marks.
+- **Supersede:** newer entangled write → new promise, replaced hold entries,
+  same transition continues; the stale fulfillment is a no-op.
+- **Reject:** state is already latest (eager), so first apply the hold buffer
+  (UI becomes consistent with the state that produced the failing promise),
+  then the existing `renderCatch` path swaps in the catch boundary.
+- **Await region removed by an unrelated update**, or the await's own slot's
+  pending target no longer contains it (an entangled `<if>` removed its own
+  await): nothing left to wait for — commit the transition immediately. Hook
+  branch teardown via the abort-signal machinery, but note deferred destroys:
+  the check is against pending targets, not just live branches.
 
 ## What does NOT change
 
-- HTML/SSR runtime and streaming: untouched. Resumed pending awaits
-  (`resume.ts` `render.p` → `AwaitCounter`) keep current behavior — a resumed
-  boundary has no committed client content to hold.
-- Initial client render of an `<await>`: placeholder/detach behavior as today.
-- `caughtError`, `placeholderShown` flows.
+- HTML/SSR runtime, streaming, serialization: untouched.
+- Resumed pending awaits (`resume.ts` `render.p` → `AwaitCounter`): current
+  behavior — a resumed boundary has no committed client content to hold.
+- Initial client render of `<await>` (placeholder/detach), `caughtError`
+  flows, the render heap and its ordering.
+- Generated code and the translator. (Optional later: statically pre-marking
+  signals that feed awaits using `valueExpr.extra.referencedBindings` to skip
+  provenance bookkeeping in analyzable cases — a pure optimization.)
 
-## Known caveats to document
+## Caveats to document / audit
 
-- Stale reads during a transition (React parity; see Semantics).
-- Rolling back a controlled `<input>` value same-flush is DOM-invisible for
-  paint but can clobber selection/cursor if the input is focused
-  (`controllable.ts`) — detect and skip rollback writes when the live value
-  already matches, which the `_attr` value guards mostly give us for free.
-- MutationObservers will see the write+rollback churn.
-- `_or`-joined signals must merge provenance like everything else (they go
-  through `queueRender`, so this falls out of step 1, but needs a fixture).
-
-## Future optimization: static entanglement
-
-The translator already knows each await's `referencedBindings` transitively.
-Once the runtime model works, the compiler can pre-mark signals that feed
-awaits, letting `_let` route a write's downstream DOM writes into the held set
-*up front* (no forward render + rollback double-run) for the statically
-analyzable cases — falling back to the runtime provenance mechanism across
-dynamic tags and runtime closure subscriptions. Not needed for correctness.
+- **UI lags state** during a transition (the inverse of React's stale-read
+  model): handlers read newer values than what's on screen. This is the
+  explicit contract ("the latest value will eventually be used").
+- **Controlled inputs** bound to entangled state freeze at the old value
+  while the user's handler sees latest — typing into one mid-transition needs
+  an explicit decision (likely: controllable writes bypass the hold, since
+  the user's input *is* the observable source).
+- **Branches mounted fresh during a transition** by *unrelated* control flow
+  render with latest values (their closures read eager state), so a new
+  region can show a newer entangled value than a frozen sibling. Mitigation
+  if needed: `_closure_get` setup in a new scope checks whether its owner
+  (scope, accessor) is an entangled root/value and defers its unit's ops into
+  the transition.
+- **DOM read-backs during render** (e.g. `_attrs` iterating live
+  `el.attributes` to remove stale ones, controllable reads) see pre-commit
+  DOM while writes are deferred. Audit each read-back site; `_attrs`' removal
+  loop must be logged as part of the unit's ops rather than executed eagerly.
+- **Memory:** pending offscreen branches and held ops live as long as the
+  transition; superseded pending branches are destroyed eagerly to bound
+  this.
+- The `sizes.json` budget tests will need updating; keep the log fast-path
+  allocation-light (flat arrays, index ranges per unit).
 
 ## Implementation phases
 
-1. **Provenance infra** (`queue.ts`): `Roots` on `PendingRender`,
-   `currentRender`, merge-on-dedupe, `_enable_transition()` gating. No
-   behavior change; unit-testable alone.
-2. **Write capture** (`signals.ts`): `WriteRecord` in `_let`/`_let_change`.
-3. **Thunked await value** (`translator/core/await.ts` +
-   `_await_promise` signature): snapshot updates across await fixtures.
-4. **Transition + rollback**: entangle in `_await_promise`, second drain in
-   `run()`, skip placeholder/detach when content exists.
-5. **Effects partition/hold/dedupe-replay.**
-6. **Commit/supersede/reject/destroy paths.**
-7. **Branch parking (phase 2)** for stateful entangled `<if>`/`<for>`.
-8. **API surface decision** (see open questions).
+1. **Provenance infra** (`queue.ts`): `Roots` on `PendingRender`, current
+   render/unit tracking, merge-on-dedupe, `_enable_transition()` gating.
+   No behavior change; unit-testable alone.
+2. **Commit log for value ops**: mutable-binding chokepoints in
+   `dom.ts`/`controllable.ts`, flush-end apply. With no entanglement this is
+   a behavior-preserving refactor (all existing fixtures must pass with
+   transitions force-enabled).
+3. **Transition creation + partition**: entangle in `_await_promise`, hold
+   buffer, unit marks, spread-by-read, join/merge counters.
+4. **Structural slot ops**: eager/DOM phase split for
+   `setConditionalRenderer`, `loop`, `_html`; deferred destroys; superseded
+   pending-branch cleanup.
+5. **Effects hold + dedupe-replay; `_lifecycle` logging.**
+6. **Lifecycle edges**: supersede, reject, removal-mid-transition, merge of
+   concurrent transitions.
+7. **API surface**: pending-state exposure and opt-in/opt-out decision (see
+   open questions).
 
 ## Test plan (fixtures under `src/__tests__/fixtures/`)
 
-- `transition-basic`: `<let>` drives text + `<await>`; while pending, old text
-  and old await content stay; unrelated `<let>` updates commit; on resolve,
-  everything commits together.
-- `transition-supersede`: second click mid-flight; only final state commits.
+- `transition-basic`: `<let>` drives text + `<await>`; while pending, old
+  text and old await content stay; unrelated `<let>` commits immediately; on
+  resolve everything applies together.
+- `transition-latest-value`: two writes mid-flight → single commit with the
+  latest value; handler reads observe eager state (`count++` twice → 2).
+- `transition-shared-computed`: unrelated write through a computed that also
+  reads entangled state → held (spread-by-read), applied on commit.
+- `transition-unrelated-inside-held-branch`: unentangled `<let>` inside the
+  frozen old branch keeps updating live.
 - `transition-multi-await`: one write feeding two awaits; commits only after
-  both fulfill (counter join).
-- `transition-shared-computed`: unrelated write flowing through a computed
-  that also reads entangled state → paints new-unrelated/old-entangled.
-- `transition-if` / `transition-for`: entangled branch swap, both phases.
-- `transition-effects`: `_script`/event wiring held and deduped.
-- `transition-reject`, `transition-destroy`: error and unmount mid-flight.
-- `transition-placeholder-initial`: placeholder still used on first render.
-- Resume variants mirroring `await-update-after-resume`.
+  both fulfill.
+- `transition-if` / `transition-for`: entangled branch swap and keyed loop —
+  old DOM stays, deferred destroy, superseded pending branches, commit diff
+  from visible scopes.
+- `transition-effects`: `_script`/event wiring held, deduped on commit.
+- `transition-lifecycle`: `onUpdate` deferred; `onMount` of pending branches
+  fires at commit.
+- `transition-reject`, `transition-remove`: catch boundary and unmount
+  mid-flight.
+- `transition-placeholder-initial`: placeholder still used on first render;
+  resume variants mirroring `await-update-after-resume`.
+- Log-refactor regression: full await/async fixture suite with the commit log
+  force-enabled.
 
 ## Open questions
 
 1. **Opt-in vs default.** Is holding-the-old-UI the new default for client
    await updates (recommended — placeholder only when there's nothing to
-   hold), or opt-in per boundary (`<try transition>`) / per write
-   (`startTransition`-style batch API)?
-2. **Placeholder timeout** for slow transitions?
-3. **Pending-state exposure** — an equivalent of React's `isPending` (e.g. a
-   tag var on `<try>` or `<await>`) so UIs can show inline spinners?
-4. Phase-2 branch parking: is preserving internal state of entangled branches
-   a requirement or nice-to-have?
+   hold), or opt-in per boundary (`<try transition>`) / per write?
+2. **Pending-state exposure** — an `isPending` equivalent (tag var on
+   `<try>`/`<await>`) so UIs can show inline spinners while frozen?
+3. **Placeholder timeout** — fall back to the placeholder if a transition
+   exceeds a threshold?
+4. **Fresh-branch semantics** (caveat 3): acceptable to show latest values in
+   newly mounted unrelated branches, or must new closures over entangled
+   values also hold?
+5. **Controlled-input policy** during transitions (caveat 2).
