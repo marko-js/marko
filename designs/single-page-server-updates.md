@@ -395,7 +395,11 @@ its own code-split chunk — contains:
   (this is the scope-tree analog of the `walks` bytecode: structure knowledge
   compiled once so it never rides the wire). Placement props fill server-only
   holes via `_text`/`_attr` against nodes the spine bound; slot props write
-  the live scope and invoke existing value signals.
+  the live scope and invoke existing value signals. Merge semantics are
+  sparse — an absent prop means unchanged — with presence checks emitted only
+  where the server's own emission is guarded (and always for structural
+  props, which tier-2 pruning omits); per-kind runtime helpers make the
+  checks byte-neutral.
 - **Control-flow merges as existing signal instances** — the conditional
   merge is an `_if(...)` and the keyed-loop merge a `_for_of(...)` whose
   params signal is the body merge function, re-emitting the same

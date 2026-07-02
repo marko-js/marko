@@ -431,6 +431,52 @@ Measured (esbuild min / gzip, debug-length accessors): `product.update`
 1106 B / 547 B for the busiest-possible template, `price-tag.update` 248 B /
 201 B, patch-scope constructor 458 B / 335 B.
 
+### Sparse vs dense merge statements
+
+The prototype guards every statement with a presence check
+(`"#text/0" in patch && …`). Reviewing that raised the right question: if the
+server always sends every update prop for a serialized scope, unconditional
+statements would be smaller. The premise fails in three ways — a merged
+scope's props are **not** always complete:
+
+1. **Reason/value-guarded emission exists today.** The compiled update render
+   writes `input_product_sale_percent: $si__… && input.product?.sale?.percent`,
+   and the serializer drops `undefined` props — so the prop is present in the
+   trailhead render and absent in the summit render, same template, same
+   mode. Dense codegen cannot distinguish "unchanged" from "became
+   undefined"; sparse semantics can (with an explicit `null` when "became
+   nothing" must be conveyed).
+2. **Tier-2 pruning is prop-sparsity at the parent.** Pruning a subtree
+   manifests as omitting the structural prop that anchors it (the loop's
+   `BranchScopes:` array, a child scope ref) — so structural props must be
+   checked even though pruning is "subtree-granular".
+3. **Multi-frame re-dispatch.** A scope's merge may run again when a later
+   frame adds props. Re-running is safe because every application
+   dirty-checks — but only if absent props are skipped; a dense
+   `_text(node, undefined)` on the first frame clobbers live content with
+   `""` instead of keeping the stale value until its frame arrives.
+
+The byte cost inverts once checks are hoisted into per-kind helpers, because
+uniform call shapes compress better than mixed member expressions (six-prop
+merge, prod-like accessors, min+gzip):
+
+| style                                        | min   | gzip  |
+| -------------------------------------------- | ----- | ----- |
+| sparse, inline `"a" in p && …`               | 149 B | 129 B |
+| dense, unconditional                         | 91 B  | 105 B |
+| sparse via per-kind helpers (`_pt(p,l,"a")`) | 112 B | 98 B  |
+
+(The helper block itself is ~113 B gzip, once, in the shared update runtime.)
+
+Codegen rule: **the compiler mirrors its own server guards.** A prop whose
+update-mode emission is unconditional gets an unconditional statement; a prop
+whose emission is guarded (serialize-reason guards, `&&`-chained values,
+async) gets a checked one; structural props are always checked (pruning).
+Placement/slot statements route through the per-kind helpers either way, so
+the check is byte-neutral-to-negative and the sparse semantics — absence
+means unchanged, matching the G2 decision for conditional outcomes — hold
+uniformly.
+
 ### Confirmed update-render writer gaps (G1–G5)
 
 Page B's persisted render emits today:
