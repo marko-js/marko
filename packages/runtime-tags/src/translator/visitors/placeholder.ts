@@ -3,6 +3,7 @@ import { types as t } from "@marko/compiler";
 import { isNotVoid, isVoid } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
 import evaluate from "../util/evaluate";
+import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
@@ -227,7 +228,19 @@ function buildEscapedTextExpression(value: t.Expression): t.Expression {
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const placeholderExtra = placeholder.node.extra!;
   let prev = placeholder.getPrevSibling();
-  while (prev.node) {
+  let prevParent: t.NodePath = placeholder.parentPath;
+  for (;;) {
+    if (!prev.node) {
+      // A `<show>` body is inlined into its parent, so a placeholder at the
+      // edge of the body renders directly against the tag's own siblings.
+      const showTag = getInlinedBodyTag(prevParent);
+      if (showTag) {
+        prev = showTag.getPrevSibling();
+        prevParent = showTag.parentPath;
+        continue;
+      }
+      break;
+    }
     const contentType = getNodeContentType(
       prev as t.NodePath<t.Statement>,
       "endType",
@@ -244,11 +257,21 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       break;
     }
   }
-  if (!prev.node && t.isProgram(placeholder.parent)) {
+  if (!prev.node && prevParent.isProgram()) {
     return (placeholderExtra[kSiblingText] = SiblingText.Before);
   }
   let next = placeholder.getNextSibling();
-  while (next.node) {
+  let nextParent: t.NodePath = placeholder.parentPath;
+  for (;;) {
+    if (!next.node) {
+      const showTag = getInlinedBodyTag(nextParent);
+      if (showTag) {
+        next = showTag.getNextSibling();
+        nextParent = showTag.parentPath;
+        continue;
+      }
+      break;
+    }
     const contentType = getNodeContentType(
       next as t.NodePath<t.Statement>,
       "startType",
@@ -265,11 +288,23 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       break;
     }
   }
-  if (!next.node && t.isProgram(placeholder.parent)) {
+  if (!next.node && nextParent.isProgram()) {
     return (placeholderExtra[kSiblingText] = SiblingText.After);
   }
 
   return (placeholderExtra[kSiblingText] = SiblingText.None);
+}
+
+// Returns the owner tag when `parent` is the body of a tag that inlines its
+// content into the surrounding section (currently only `<show>`), meaning the
+// body's edge nodes render adjacent to the tag's siblings.
+function getInlinedBodyTag(parent: t.NodePath) {
+  if (parent.isMarkoTagBody()) {
+    const tag = parent.parentPath;
+    if (tag.isMarkoTag() && isCoreTagName(tag, "show")) {
+      return tag;
+    }
+  }
 }
 
 function isStaticText(node?: t.Node) {
