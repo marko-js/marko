@@ -11,7 +11,7 @@ The package is organized into four layers:
 | `src/runtime/vdom/`    | CSR runtime: virtual DOM, morphdom reconciliation, component lifecycle |
 | `src/translator/`      | Babel-based compiler that transforms `.marko` into SSR/CSR JavaScript  |
 
-The compiler/translator entry is `src/translator/index.js`.
+The compiler/translator entry is `src/translator/index.js`, but the package's exported translator (`src/translator.js`) wraps it with `createInteropTranslator` from `@marko/runtime-tags/translator`, so Marko 5 projects can mix in Marko 6 (Tags API) components. Interop behavior changes are usually made in `packages/runtime-tags/src/translator/interop/`, not here.
 
 Note: published as both `marko@5` and `@marko/runtime-class`.
 
