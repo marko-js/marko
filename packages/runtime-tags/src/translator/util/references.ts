@@ -89,6 +89,13 @@ export enum BindingType {
 export interface Sources {
   state: Opt<Binding>;
   param: Opt<InputBinding | ParamBinding>;
+  /**
+   * The value derives from `$global` (only tracked under the `persisted`
+   * compile option). Global sources never contribute to value serialization
+   * (a stateful parent cannot change `$global`); they gate markers/spine on
+   * the render's persisted flag alone, so they carry no per-key bindings.
+   */
+  global: true | undefined;
 }
 
 export interface Binding {
@@ -121,6 +128,8 @@ export interface Binding {
   pruned: boolean | undefined;
   exposed: boolean;
   forcePersist: boolean;
+  /** True only for the per-template `$global` root binding (persisted option). */
+  global: boolean;
 }
 
 export interface InputBinding extends Binding {
@@ -236,6 +245,7 @@ export function createBinding(
     pruned: undefined,
     exposed: false,
     forcePersist: false,
+    global: false,
   };
 
   if (property) {
@@ -598,6 +608,41 @@ export function setReferencesScope(path: t.NodePath<any>) {
   if (fnRoot) {
     ((fnRoot.node.extra ??= {}) as t.FunctionExtra).referencesScope = true;
   }
+}
+
+const [getGlobalBinding, setGlobalBinding] = createProgramState<
+  Binding | undefined
+>(() => undefined);
+
+/**
+ * Under the `persisted` compile option `$global` member reads are promoted to
+ * bindings (rooted at the program section, narrowed per key through the
+ * regular property-alias machinery) so the serialize-reason system treats
+ * $global-derived holes as dynamic: they get resume markers and join the
+ * serialized spine when the render's persisted flag is set. Reads are left
+ * as plain member accesses on the live global object (see the bail in
+ * `getReadReplacement`) and global sources never contribute to value
+ * serialization, so non-persisted renders stay byte-identical.
+ */
+export function trackGlobalReference(identifier: t.NodePath<t.Identifier>) {
+  let binding = getGlobalBinding();
+  if (!binding) {
+    let section = getOrCreateSection(identifier);
+    while (section.parent) section = section.parent;
+    binding = createBinding("$global", BindingType.param, section);
+    binding.global = true;
+    setGlobalBinding(binding);
+  }
+  trackReference(identifier, binding);
+}
+
+export function isGlobalBinding(binding: Binding) {
+  let cur: Binding | undefined = binding;
+  while (cur) {
+    if (cur.global) return true;
+    cur = cur.upstreamAlias;
+  }
+  return false;
 }
 
 function createBindingsAndTrackReferences(
@@ -1389,7 +1434,7 @@ function getCollapsibleIntersectionSource(
     sources = mergeSources(sources, member.sources);
   }
 
-  if (!sources || (sources.state && sources.param)) {
+  if (!sources || sources.global || (sources.state && sources.param)) {
     return undefined;
   }
 
@@ -1418,10 +1463,21 @@ const [getResolvedSources] = createProgramState(() => new Set<Binding>());
 const [getBindingValueExprs] = createProgramState(
   () => new Map<Binding, boolean | Opt<t.NodeExtra>>(),
 );
+const globalSources: Sources = {
+  state: undefined,
+  param: undefined,
+  global: true,
+};
+
 function resolveBindingSources(binding: Binding) {
   const resolvedSources = getResolvedSources();
   if (resolvedSources.has(binding)) return;
   resolvedSources.add(binding);
+
+  if (isGlobalBinding(binding)) {
+    binding.sources = globalSources;
+    return;
+  }
 
   switch (binding.type) {
     case BindingType.let: {
@@ -1499,18 +1555,21 @@ function resolveDerivedSources(binding: Binding) {
 export function createSources(
   state: Sources["state"],
   param: Sources["param"],
+  global?: Sources["global"],
 ): Sources {
-  if (!(state || param)) {
+  if (!(state || param || global)) {
     throw new Error(
       "Cannot create a serialize reason that does not reference state or a param.",
     );
   }
 
-  return { state, param };
+  return { state, param, global };
 }
 
 export function compareSources(a: Sources, b: Sources) {
   let delta: number;
+
+  if (a.global !== b.global) return a.global ? 1 : -1;
 
   if (a.param) {
     if (!b.param) return 1;
@@ -1532,10 +1591,13 @@ export function compareSources(a: Sources, b: Sources) {
 export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
   if (!a) return b;
   if (!b) return a;
-  if (a.state === b.state && a.param === b.param) return a;
+  if (a.state === b.state && a.param === b.param && a.global === b.global)
+    return a;
+  if (a.state === b.state && a.param === b.param) return a.global ? a : b;
   return createSources(
     bindingUtil.union(a.state, b.state),
     unionParamSources(a.param, b.param),
+    a.global || b.global,
   );
 }
 
@@ -1895,6 +1957,12 @@ export function getReadReplacement(
   if (read) {
     const readBinding = read.binding;
     let replacement: t.Expression | undefined;
+
+    // Promoted `$global` reads (persisted option) exist for serialize-reason
+    // classification only: the value lives on the live global object, never
+    // in a scope slot, so the original member access must stay as written
+    // (the `$global` identifier itself is replaced by its visitor).
+    if (isGlobalBinding(readBinding)) return;
 
     if (read.props === undefined) {
       if (read.getter?.invoked) {

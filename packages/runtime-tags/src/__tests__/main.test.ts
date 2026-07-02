@@ -52,6 +52,12 @@ export type TestConfig = {
   error_compiler?: true | string[];
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
+  /**
+   * Compiles the fixture with the `persisted` compiler option (single-page
+   * server-first updates). Pair with `$global.persisted` in the fixture
+   * input to exercise persisted-mode serialization.
+   */
+  persisted?: boolean;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -146,6 +152,7 @@ function testFixtures(interop?: true) {
             (): compiler.Config => ({
               translator,
               runtimeId: config.runtime_id,
+              persisted: config.persisted,
               writeVersionComment: false,
               babelConfig: {
                 babelrc: false,

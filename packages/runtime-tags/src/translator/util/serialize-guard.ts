@@ -29,6 +29,11 @@ const sourcesUtil = new Sorted(compareSources);
 
 type DynamicSerializeReason = {
   state: undefined;
+  param: Opt<InputBinding | ParamBinding>;
+  global: true | undefined;
+};
+
+type DynamicParamSerializeReason = DynamicSerializeReason & {
   param: OneMany<InputBinding | ParamBinding>;
 };
 
@@ -84,7 +89,50 @@ export function getSerializeGuard(
       : t.numericLiteral(0);
   }
 
-  return getOrHoist(reason, true);
+  return withPersistedGuard(reason, getParamGuard(reason, true));
+}
+
+// Splits a dynamic reason for guard building: the param part rides the
+// existing per-group `_scope_reason()` guards (identical to output without
+// global sources, preserving byte-identity), while a global part ORs in
+// `_persisted_reason()`, which reads the render's persisted flag directly --
+// no parent threading, so cross-template $global reads gate correctly even
+// when the parent passes no dynamic props.
+function getParamGuard(reason: DynamicSerializeReason, isGuard: boolean) {
+  return reason.param
+    ? getOrHoist(getParamPart(reason as DynamicParamSerializeReason), isGuard)
+    : undefined;
+}
+
+function withPersistedGuard(
+  reason: DynamicSerializeReason,
+  guard: t.Expression | undefined,
+) {
+  if (!reason.global) return guard;
+  const persisted = callRuntime(
+    "_persisted_reason" satisfies HTMLRuntimeHelpers,
+  );
+  return guard ? t.logicalExpression("||", guard, persisted) : persisted;
+}
+
+const paramPartCache = new WeakMap<
+  DynamicParamSerializeReason,
+  DynamicParamSerializeReason
+>();
+function getParamPart(reason: DynamicParamSerializeReason) {
+  if (!reason.global) return reason;
+  let paramPart = paramPartCache.get(reason);
+  if (!paramPart) {
+    paramPartCache.set(
+      reason,
+      (paramPart = {
+        state: undefined,
+        param: reason.param,
+        global: undefined,
+      }),
+    );
+  }
+  return paramPart;
 }
 
 export function getSerializeGuardForAny(
@@ -123,7 +171,16 @@ export function getExprIfSerialized<
     return (reason && expr) as R;
   }
 
-  const guard = getOrHoist(reason, false);
+  // A purely global-sourced reason never serializes values: a stateful
+  // parent cannot change `$global`, and persisted updates always supply
+  // fresh values. Only reachable under the persisted option, where callers
+  // handle the undefined result.
+  if (!reason.param) return undefined as R;
+
+  const guard = getOrHoist(
+    getParamPart(reason as DynamicParamSerializeReason),
+    false,
+  );
   return (guard ? t.logicalExpression("&&", guard, expr) : expr) as R;
 }
 
@@ -139,12 +196,12 @@ export function getExprGuardSerialized<
     return (reason && expr) as R;
   }
 
-  const guard = getOrHoist(reason, true);
+  const guard = withPersistedGuard(reason, getParamGuard(reason, true));
   return (guard ? t.logicalExpression("&&", guard, expr) : expr) as R;
 }
 
 function getOrHoist(
-  reason: DynamicSerializeReason,
+  reason: DynamicParamSerializeReason,
   isGuard: boolean,
 ): t.Expression | undefined {
   const onlySection = getOnlySection(reason.param);
@@ -194,7 +251,7 @@ function getOrHoist(
 
 function buildGuardExpr(
   paramsSection: Section,
-  params: DynamicSerializeReason["param"],
+  params: DynamicParamSerializeReason["param"],
   isGuard: boolean,
 ) {
   const serializeIdentifier = t.identifier(
