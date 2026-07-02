@@ -270,9 +270,14 @@ The serialize-reason guards are already request-time-evaluable
 - **param-reasoned props are kept** — this is the payload;
 - mixed-reason props are kept (client dirty-check makes over-sending safe);
 - **computed values for pure server-only holes are written as scope props** —
-  expressions that today inline straight into the HTML string additionally
-  write their computed value under the hole's accessor, guarded to update mode
-  (in the initial render those holes cost only a marker, never a value);
+  _in update renders only_: expressions that today inline straight into the
+  HTML string additionally write their computed value under the hole's
+  accessor. Initial renders never do this — those holes cost a marker, never a
+  value (see the invariant in the compiler section). The accessor reuse is
+  deliberate and collision-free: the _patch_ scope carries the value at the
+  hole's accessor while the _live_ scope carries the bound node at that same
+  accessor; the merge table classifies the prop as placement and bridges the
+  two (`_text(liveScope[acc], patchScope[acc])`);
 - static HTML output is suppressed entirely except inside fragment capture.
 
 The update render is a full, normal render of the target page (`render()` →
@@ -324,25 +329,43 @@ through one `baseConfig` and gates features on
 
 ### HTML output additions (initial page cost)
 
-For value-update holes that today serialize nothing:
+The governing invariant: **initial value serialization under the flag is
+byte-identical to today.** A slot's value serializes on the initial render if
+and only if some client-side code reads it — exactly the existing
+serialize-reasons rule. Intersection-feeding slots (input ∩ state) already
+serialize today and continue to, unchanged; pure server-only holes never
+serialize a value, before or after the flag. What the flag adds is only
+_structure_:
 
-- Emit the resume marker comment (`<!--M_*n accessor-->`) so the node binds
-  into a scope at resume — node binding is generic (`dom/resume.ts:388-410`),
-  needing **no per-template JS** on the initial load.
-- Emit the owning scope (and its owner chain) with _addresses but not values_ —
-  the DOM already displays the value; the update supplies the next one. This is
-  a new "address-only" serialization treatment alongside the existing
-  value-guarded one, and it is what keeps the initial resume payload from
-  growing beyond bookkeeping.
-- Sections that were plain `_content` become `_content_resume` when they
-  contain any updatable hole.
+- **Visit markers for every value-update hole** (`<!--M_*n accessor-->`), so
+  the node binds into its scope at resume. Node binding is generic
+  (`dom/resume.ts:388-410` — bind `previousSibling`, or insert an empty
+  `Text`), needing **no per-template JS** and no value on the initial load.
+  No old value ever needs to cross the wire either, because placement
+  dirty-checking reads the live DOM: `_text` compares `node.data`
+  (`dom/dom.ts:157`), `_attr` compares `getAttribute()` (`dom/dom.ts:64`) —
+  the rendered document _is_ the old-value store.
+- **The spine**: the owning scope and its owner chain, with structural
+  bookkeeping but no values (owner links, branch bookkeeping, keys). Sections
+  that were plain `_content` become `_content_resume` when they contain any
+  updatable hole.
 
 This is the accepted initial-HTML regression: roughly one comment (~12–20
-bytes pre-gzip) per param-only dynamic hole plus scope bookkeeping, only under
+bytes pre-gzip) per param-only dynamic hole plus spine bookkeeping, only under
 the flag, only where holes exist, further trimmed by cross-template analysis
 (no markers around fully-static children; no value-level markers inside
 fragment-class regions, since the whole region swaps). Attribute holes on
-elements that already have a bound node need no new marker at all.
+elements that already have a bound node need no new marker at all — one
+element binding serves every attribute hole on it.
+
+The marker/spine emission is a **runtime-evaluable guard**, not baked-in
+output: `_el_resume` already takes a request-time `shouldResume` condition
+(`html/writer.ts:287-293`) and the spine rides the same serialize-guard
+machinery. A render can therefore opt out per request — e.g. serve marker-free
+HTML to crawlers or other contexts that will never navigate-patch — with the
+capability reflected in the payload so the client runtime falls back to full
+reloads. Server code size pays for the guarded statements either way; the
+HTML only pays where persisted mode is actually on.
 
 Initial JS is untouched: no new code runs at resume time beyond binding a few
 more visits.
