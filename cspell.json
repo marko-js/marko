@@ -104,6 +104,8 @@
     "updatable",
     "statelessness",
     "statelessly",
+    "dedup",
+    "dedups",
     "navigations",
     "popstate",
     "hotspots",
