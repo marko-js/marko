@@ -392,6 +392,7 @@
   "ignoreRegExpList": [],
   "files": ["*"],
   "ignorePaths": [
+    "designs/experiments",
     "dist",
     "fixtures",
     "fixtures-interop",

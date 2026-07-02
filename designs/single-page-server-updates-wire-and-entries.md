@@ -7,7 +7,8 @@ Everything below is grounded in a real example compiled and rendered against
 the current translator/runtime (debug runtime via the `~ts` register hook;
 both debug and `optimize` compiles). Payloads and persisted-entry modules are
 hand-authored against the real compiled accessors and then measured
-(`esbuild --minify`, gzip). Caveats: the harness runs the debug runtime even
+(`esbuild --minify`, gzip). The harness and repro steps live in
+[experiments/single-page-server-updates/](./experiments/single-page-server-updates/README.md). Caveats: the harness runs the debug runtime even
 for optimized compiles (so a few props print debug names, e.g. `#LoopKey`
 where prod emits `M`), and the harness's random 6-char `renderId` inflates
 every marker by ~5 bytes vs the default `_`.
