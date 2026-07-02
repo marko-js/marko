@@ -13,9 +13,13 @@ Everything needed to pick this work up cold. Read in this order:
    — the runnable harness: compile/render scripts, payload/entry size
    measurements, and the e2e prototype.
 
-Branch: `claude/single-page-server-updates-ipucp6` (this repo; sibling
-branches of the same name exist on `marko-js/vite`, `marko-js/run`, and
-`marko-js/website` but carry no changes yet).
+Branch: `claude/single-page-server-updates-bimocl` (this repo; sibling
+branches of the same name exist on `marko-js/vite` — carrying the
+`persisted` plugin-option plumb — and on `marko-js/run`,
+`DylanPiercey/marko-ecommerce`, and `DylanPiercey/marko-idle`; the
+ecommerce branch carries the linked prototype app, see
+"Example-app prototyping workspace" below. Work started on
+`claude/single-page-server-updates-ipucp6`, which this branch continues.)
 
 ## What the feature is
 
