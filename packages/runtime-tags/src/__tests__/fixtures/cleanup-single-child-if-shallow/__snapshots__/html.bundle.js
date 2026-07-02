@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 			child_default({ write: _resume(function(state) {
 				((el) => el())(_el_read_error).innerHTML = state;
 			}, "a0", $scope1_id) });
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			writeScope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "c", 1, 1, 1, 0, 1);

@@ -43,12 +43,15 @@ import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  isStateSerializeReason,
+  isStaticSerializeReason,
 } from "../util/serialize-reasons";
 import {
   addValue,
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   setClosureSignalBuilder,
+  setSectionOwnerResumedByMarker,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { getMemberExpressionPropString } from "../util/to-property-name";
@@ -188,6 +191,23 @@ export default {
           tagSection,
           nodeBinding,
         );
+
+        const statefulSerializeReason = getSerializeReason(
+          tagSection,
+          kStatefulReason,
+        );
+        if (
+          isStateSerializeReason(statefulSerializeReason) &&
+          isStaticSerializeReason(branchSerializeReason) &&
+          isStaticSerializeReason(markerSerializeReason)
+        ) {
+          // Every iteration's branch id unconditionally rides a resume
+          // marker with the parent scope id, and the state driven loop
+          // expression keeps the loop signal (which enables branch visits)
+          // in any bundle that can update these scopes, so the owner is
+          // linked at resume instead of serialized.
+          setSectionOwnerResumedByMarker(bodySection);
+        }
 
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);

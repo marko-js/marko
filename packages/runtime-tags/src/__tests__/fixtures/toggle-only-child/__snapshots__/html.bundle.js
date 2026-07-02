@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		if (value) {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_escape(value)}${_el_resume($scope1_id, "a")}</span>`);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			writeScope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "a", 1, 1, 1, "</div>", 1);

@@ -153,6 +153,23 @@ export function isReasonDynamic(
   return !!reason && reason !== true && !reason.state;
 }
 
+// A reason whose serialize guard is statically truthy (`true` or backed by
+// state), meaning whatever it gates is unconditionally emitted at runtime.
+export function isStaticSerializeReason(
+  reason: undefined | SerializeReason,
+): reason is SerializeReason {
+  return !!reason && !isReasonDynamic(reason);
+}
+
+// A reason backed by state sources specifically. State only serializes when
+// it can change client side, which keeps the state's signal (and everything
+// it renders) in the bundle.
+export function isStateSerializeReason(
+  reason: undefined | SerializeReason,
+): reason is Sources {
+  return !!reason && reason !== true && !!reason.state;
+}
+
 export function getSerializeReason(
   section: Section,
   prop?: Binding | AccessorProp | symbol,

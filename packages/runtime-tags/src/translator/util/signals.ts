@@ -118,6 +118,16 @@ export const [getTryHasPlaceholder, setTryHasPlaceholder] = createSectionState<
   true | undefined
 >("tryWithPlaceholder");
 
+// A branch section whose scope ids are guaranteed to ride a resume marker
+// carrying the parent scope id whenever its scopes serialize; the client
+// links the owner from the marker so `_` is not serialized.
+const [getOwnerResumedByMarker, setOwnerResumedByMarker] = createSectionState<
+  true | undefined
+>("ownerResumedByMarker");
+export function setSectionOwnerResumedByMarker(section: Section) {
+  setOwnerResumedByMarker(section, true);
+}
+
 const [getSerializedAccessors] = createSectionState<
   Map<string, { expression: t.Expression; reason: SerializeReason }>
 >("serializedScopeProperties", () => new Map());
@@ -1322,15 +1332,20 @@ export function writeHTMLResumeStatements(
     const ownerReason = getSerializeReason(section, ownerAccessor);
     if (ownerReason) {
       serializedLookup.delete(ownerAccessor);
-      serializedProperties.push(
-        toObjectProperty(
-          ownerAccessor,
-          ifSerialized(
-            ownerReason,
-            callRuntime("_scope_with_id", getScopeIdIdentifier(section.parent)),
+      if (!getOwnerResumedByMarker(section)) {
+        serializedProperties.push(
+          toObjectProperty(
+            ownerAccessor,
+            ifSerialized(
+              ownerReason,
+              callRuntime(
+                "_scope_with_id",
+                getScopeIdIdentifier(section.parent),
+              ),
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
   }
 

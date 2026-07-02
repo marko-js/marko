@@ -8,7 +8,7 @@ var render_input_default = _template("c", (input) => {
 
 // tags/my-box.marko
 var my_box_default = _template("b", (input) => {
-	_serialize_if(_scope_reason(), 0);
+	_scope_reason();
 	const $scope0_id = _scope_id();
 	let show = false;
 	_html("<div");

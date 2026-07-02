@@ -14,14 +14,13 @@ var template_default = _template("a", (input) => {
 				const $scope3_id = _scope_id();
 				_html(`<button>Increment <!>${_escape(count)}${_el_resume($scope3_id, "b")}</button>${_el_resume($scope3_id, "a")}`);
 				_script($scope3_id, "a1");
-				writeScope($scope3_id, { _: _scope_with_id($scope1_id) });
+				writeScope($scope3_id, {});
 				return 1;
 			}
 		}, $scope1_id, "a", 1, 1, 1, 0, 1);
 		writeScope($scope1_id, {
 			c: count,
-			M: i,
-			_: _scope_with_id($scope0_id)
+			M: i
 		});
 	}, 0, $scope0_id, "a");
 	writeScope($scope0_id, { b: counts });

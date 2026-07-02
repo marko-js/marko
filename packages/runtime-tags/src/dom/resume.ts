@@ -1,6 +1,6 @@
 import { decodeAccessor } from "../common/helpers";
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
-import { type Opt, push } from "../common/opt";
+import { forEach, type Opt, push } from "../common/opt";
 import {
   AccessorPrefix,
   AccessorProp,
@@ -226,6 +226,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                     (startVisit = startVisit.previousSibling) as Comment,
                   )
                 );
+                branch[AccessorProp.Owner] ??= visitScope;
                 branch[AccessorProp.EndNode] = branch[AccessorProp.StartNode] =
                   startVisit;
                 if (visitType === ResumeSymbol.BranchEndNativeTag) {
@@ -236,6 +237,14 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 curBranchScopes = push(curBranchScopes, branch);
                 if (accessor) {
                   visitScope[accessor] = curBranchScopes;
+                  // Serialized scope data is applied before visits, so a
+                  // serialized owner (non-lexical content) always wins; the
+                  // marker's scope fills lexical branches whose owner was
+                  // not serialized.
+                  forEach(
+                    curBranchScopes,
+                    (scope) => (scope[AccessorProp.Owner] ??= visitScope),
+                  );
                   curBranchScopes = branchScopesStack.pop();
                 }
                 startVisit = branchStarts.pop()!;

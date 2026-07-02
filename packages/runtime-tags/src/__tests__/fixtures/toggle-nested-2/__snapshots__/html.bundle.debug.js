@@ -16,12 +16,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					const $scope2_id = _scope_id();
 					_html(`<button id=count>${_escape(count)}${_el_resume($scope2_id, "#text/1")}</button>${_el_resume($scope2_id, "#button/0")}`);
 					_script($scope2_id, "__tests__/template.marko_2");
-					_subscribe($count__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "8:6"));
+					_subscribe($count__closures, writeScope($scope2_id, {}, "__tests__/template.marko", "8:6"));
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, 1, 1, 0, 1);
 			_script($scope1_id, "__tests__/template.marko_1");
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4");
+			writeScope($scope1_id, {}, "__tests__/template.marko", "6:4");
 			return 0;
 		}
 	}, $scope0_id, "#text/1");

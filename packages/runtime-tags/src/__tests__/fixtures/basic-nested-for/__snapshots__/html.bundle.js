@@ -20,15 +20,9 @@ var template_default = _template("a", (input) => {
 			const $childScope = _peek_scope_id();
 			_set_serialize_reason(1);
 			child_default({ name: `${outer}.${inner}` });
-			writeScope($scope2_id, {
-				_: _scope_with_id($scope1_id),
-				a: _existing_scope($childScope)
-			});
+			writeScope($scope2_id, { a: _existing_scope($childScope) });
 		}, 0, $scope1_id, "a", 1, 1, 1, 0, 1);
-		writeScope($scope1_id, {
-			c: outer,
-			_: _scope_with_id($scope0_id)
-		});
+		writeScope($scope1_id, { c: outer });
 	}, 0, $scope0_id, "b");
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, { c: items });

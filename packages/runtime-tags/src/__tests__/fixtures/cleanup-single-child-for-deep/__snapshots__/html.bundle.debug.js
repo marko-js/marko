@@ -47,15 +47,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				name: `${outerItem}.${middleItem}`
 			});
 			_html("</div>");
-			writeScope($scope2_id, {
-				_: _scope_with_id($scope1_id),
-				"#childScope/0": _existing_scope($childScope2)
-			}, "__tests__/template.marko", "10:6");
+			writeScope($scope2_id, { "#childScope/0": _existing_scope($childScope2) }, "__tests__/template.marko", "10:6");
 		}, 0, $scope1_id, "#text/1", 1, 1, 1, 0, 1);
 		_html("</div>");
 		writeScope($scope1_id, {
 			outerItem,
-			_: _scope_with_id($scope0_id),
 			"#childScope/0": _existing_scope($childScope)
 		}, "__tests__/template.marko", "7:2", { outerItem: "7:6" });
 	}, 0, $scope0_id, "#text/2", 1, 1, 1, 0, 1);

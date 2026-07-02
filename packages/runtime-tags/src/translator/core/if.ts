@@ -43,6 +43,8 @@ import {
 import {
   addSerializeExpr,
   getSerializeReason,
+  isStateSerializeReason,
+  isStaticSerializeReason,
   type SerializeReasons,
 } from "../util/serialize-reasons";
 import {
@@ -50,6 +52,7 @@ import {
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   setClosureSignalBuilder,
+  setSectionOwnerResumedByMarker,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
@@ -128,6 +131,30 @@ export const IfTag = {
         const bodySection = getSectionForBody(tagBody);
 
         if (bodySection) {
+          const [[ifTag]] = getBranches(tag);
+          const ifTagSection = getSection(ifTag);
+          if (
+            isStateSerializeReason(
+              getSerializeReason(ifTagSection, kStatefulReason),
+            ) &&
+            isStaticSerializeReason(
+              getSerializeReason(bodySection, kBranchSerializeReason),
+            ) &&
+            isStaticSerializeReason(
+              getSerializeReason(
+                ifTagSection,
+                getOptimizedOnlyChildNodeBinding(ifTag, ifTagSection),
+              ),
+            )
+          ) {
+            // This branch always returns its index (so when rendered its id
+            // rides the resume marker), the marker always renders, and the
+            // state driven condition keeps the conditional signal (which
+            // enables branch visits) in any bundle that can update these
+            // scopes, so the owner is linked at resume instead of
+            // serialized.
+            setSectionOwnerResumedByMarker(bodySection);
+          }
           writer.flushInto(tag);
           writeHTMLResumeStatements(tagBody);
         }

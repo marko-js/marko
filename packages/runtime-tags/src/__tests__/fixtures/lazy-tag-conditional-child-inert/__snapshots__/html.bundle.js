@@ -22,10 +22,7 @@ var template_default = _template("b", (input) => {
 				label: "x",
 				value: count
 			});
-			writeScope($scope1_id, {
-				_: _scope_with_id($scope0_id),
-				b: _existing_scope($childScope)
-			});
+			writeScope($scope1_id, { b: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "b");

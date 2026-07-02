@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (value) {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_escape(value)}${_el_resume($scope1_id, "#text/0")}</span>`);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:1");
+			writeScope($scope1_id, {}, "__tests__/template.marko", "6:1");
 			return 0;
 		}
 	}, $scope0_id, "#text/3", 1, 1, 1, 0, 1);
