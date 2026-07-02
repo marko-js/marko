@@ -10,7 +10,7 @@ const $input_content = ($scope, input_content) => {
 };
 
 // template.marko
-const $el3_getter = _hoist(0, "B4");
+const $el3_getter = /* @__PURE__ */ _hoist(0, "B4");
 const $inputshowsectionnull_content = _content_resume("a7", "<p></p>", " b", 0, 0, "B4");
 const $inputshowChildnull_content__$el2_getter = _hoist_resume("a1", 0, "B3");
 const $el2_getter = _hoist_resume("a2", 0, "B3", "B2");

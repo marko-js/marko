@@ -8,7 +8,7 @@ var render_input_default = _template("__tests__/tags/render-input.marko", (input
 
 // tags/my-box.marko
 var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $si__input = _serialize_if($scope0_reason, 0);
+	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	let show = false;
 	_html("<div");
@@ -20,10 +20,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 			const $childScope = _peek_scope_id();
 			_set_serialize_reason(_serialize_guard($scope0_reason, 0));
 			render_input_default({ data: input });
-			writeScope($scope1_id, {
-				_: $si__input && _scope_with_id($scope0_id),
-				"#childScope/0": $si__input && _existing_scope($childScope)
-			}, "__tests__/tags/my-box.marko", "8:4");
+			writeScope($scope1_id, { "#childScope/0": _serialize_if($scope0_reason, 0) && _existing_scope($childScope) }, "__tests__/tags/my-box.marko", "8:4");
 			return 0;
 		}
 	}, $scope0_id, "#div/2", 1, 1, 1, "</div>");

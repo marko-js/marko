@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			child_default({ write: _resume(function(state) {
 				((el) => el())(_el_read_error).innerHTML = state;
 			}, "__tests__/template.marko_1/write", $scope1_id) });
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:2");
+			writeScope($scope1_id, {}, "__tests__/template.marko", "6:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2");

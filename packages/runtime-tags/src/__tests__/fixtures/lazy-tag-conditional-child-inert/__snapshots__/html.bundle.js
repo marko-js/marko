@@ -17,18 +17,12 @@ var template_default = _template("b", (input) => {
 		if (count % 2 === 0) {
 			const $scope1_id = _scope_id();
 			const $childScope = _peek_scope_id();
-			_set_serialize_reason({
-				0: 1,
-				2: 1
-			});
+			_set_serialize_reason(10);
 			$Child_withLoadAssets({
 				label: "x",
 				value: count
 			});
-			writeScope($scope1_id, {
-				_: _scope_with_id($scope0_id),
-				b: _existing_scope($childScope)
-			});
+			writeScope($scope1_id, { b: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "b");

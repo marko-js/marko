@@ -50,17 +50,17 @@ var template_default = _template("__tests__/template.marko", (input) => {
 								write,
 								name: "Inner"
 							});
-							writeScope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "17:10");
+							writeScope($scope3_id, {}, "__tests__/template.marko", "17:10");
 							return 0;
 						}
 					}, $scope2_id, "#text/1");
 					_html("</div>");
-					_subscribe($showInner__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "14:6"));
+					_subscribe($showInner__closures, writeScope($scope2_id, {}, "__tests__/template.marko", "14:6"));
 					return 0;
 				}
 			}, $scope1_id, "#text/1", 1, 1, 1, 0, 1);
 			_html("</div>");
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "11:2");
+			writeScope($scope1_id, {}, "__tests__/template.marko", "11:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/4", 1, 1, 1, 0, 1);

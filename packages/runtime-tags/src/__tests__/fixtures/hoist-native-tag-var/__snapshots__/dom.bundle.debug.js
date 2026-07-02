@@ -10,7 +10,7 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", "", 
 // template.marko
 const $template = /* @__PURE__ */ ((_w0) => `<!><!>${_w0}<hr><!><!>`)("");
 const $walks = /* @__PURE__ */ ((_w0) => `b%b/${_w0}&b%c`)("");
-const $el2_getter = _hoist("#div/0", "BranchScopes:#text/2");
+const $el2_getter = /* @__PURE__ */ _hoist("#div/0", "BranchScopes:#text/2");
 const $el_getter = _hoist_resume("__tests__/template.marko_0_#div/hoist", "#div/0", "BranchScopes:#text/0", "BranchScopes:#text/0");
 const $if_content2__$el_getter = _el("__tests__/template.marko_2_#div", "#div/0");
 const $if_content2__setup = ($scope) => {

@@ -10,7 +10,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		if (!hide && text.length) {
 			const $scope1_id = _scope_id();
 			_html(`<div>${_escape(text)}${_el_resume($scope1_id, "#text/0")}</div>`);
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/child.marko", "6:4");
+			writeScope($scope1_id, {}, "__tests__/tags/child.marko", "6:4");
 			return 0;
 		}
 	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);

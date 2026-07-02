@@ -47,17 +47,17 @@ var template_default = _template("a", (input) => {
 								write,
 								name: "Inner"
 							});
-							writeScope($scope3_id, { _: _scope_with_id($scope2_id) });
+							writeScope($scope3_id, {});
 							return 0;
 						}
 					}, $scope2_id, "b", 1, 1, 1, 0, 1);
 					_html("</div>");
-					_subscribe($showInner__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
+					_subscribe($showInner__closures, writeScope($scope2_id, {}));
 					return 0;
 				}
 			}, $scope1_id, "b", 1, 1, 1, 0, 1);
 			_html("</div>");
-			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			writeScope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "e", 1, 1, 1, 0, 1);

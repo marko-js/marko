@@ -24,10 +24,7 @@ var template_default = _template("b", (input) => {
 			const $childScope = _peek_scope_id();
 			_set_serialize_reason(1);
 			$Child_withLoadAssets({ value });
-			writeScope($scope1_id, {
-				_: _scope_with_id($scope0_id),
-				b: _existing_scope($childScope)
-			});
+			writeScope($scope1_id, { b: _existing_scope($childScope) });
 			return 0;
 		}
 	}, $scope0_id, "b");

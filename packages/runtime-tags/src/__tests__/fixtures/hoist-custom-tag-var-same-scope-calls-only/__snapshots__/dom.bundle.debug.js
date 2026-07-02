@@ -28,7 +28,7 @@ var source_default = /* @__PURE__ */ _template("__tests__/tags/source.marko", $t
 // template.marko
 const $template = /* @__PURE__ */ ((_w0, _w1) => `${_w0}${_w1}`)("", $template$1);
 const $walks = /* @__PURE__ */ ((_w0, _w1) => `/${_w0}&0${_w1}&`)("", " b");
-const $api_getter = _hoist("api");
+const $api_getter = /* @__PURE__ */ _hoist("api");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => $api_getter($scope)().setHtml("works"));
 function $setup($scope) {
 	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);

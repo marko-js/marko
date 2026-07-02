@@ -15,10 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
 		_html(`<li${selected === row.id ? " class=danger" : ""}>${_escape(row.label)}${_el_resume($scope1_id, "#text/1")}</li>${_el_resume($scope1_id, "#li/0")}`);
-		writeScope($scope1_id, {
-			row_id: row?.id,
-			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "10:4", { row_id: ["row.id", "10:8"] });
+		writeScope($scope1_id, { row_id: row?.id }, "__tests__/template.marko", "10:4", { row_id: ["row.id", "10:8"] });
 	}, "id", $scope0_id, "#ul/1", 1, 1, 1, "</ul>", 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {

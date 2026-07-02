@@ -20,15 +20,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id();
 			_set_serialize_reason(1);
 			child_default({ name: `${outer}.${inner}` });
-			writeScope($scope2_id, {
-				_: _scope_with_id($scope1_id),
-				"#childScope/0": _existing_scope($childScope)
-			}, "__tests__/template.marko", "5:4");
+			writeScope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "5:4");
 		}, 0, $scope1_id, "#text/0", 1, 1, 1, 0, 1);
-		writeScope($scope1_id, {
-			outer,
-			_: _scope_with_id($scope0_id)
-		}, "__tests__/template.marko", "4:2", { outer: "4:6" });
+		writeScope($scope1_id, { outer }, "__tests__/template.marko", "4:2", { outer: "4:6" });
 	}, 0, $scope0_id, "#text/1");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { items }, "__tests__/template.marko", 0, { items: "1:6" });

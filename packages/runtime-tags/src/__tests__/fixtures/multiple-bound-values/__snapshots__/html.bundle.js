@@ -26,10 +26,7 @@ var template_default = _template("a", (input) => {
 	let count1 = 0;
 	let count2 = 0;
 	const $childScope = _peek_scope_id();
-	_set_serialize_reason({
-		0: 1,
-		2: 1
-	});
+	_set_serialize_reason(10);
 	_2counters_default({
 		count1,
 		count1Change: _resume((_new_count1) => {

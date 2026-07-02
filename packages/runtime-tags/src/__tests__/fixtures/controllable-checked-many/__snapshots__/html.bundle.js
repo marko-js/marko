@@ -16,7 +16,6 @@ var template_default = _template("a", (input) => {
 		_script($scope1_id, "a2");
 		writeScope($scope1_id, {
 			M: i,
-			_: _scope_with_id($scope0_id),
 			Mg: _resume(function(value) {
 				if (i === void 0) throw new Error("LoopKey is undefined");
 				const newStates = [...states];

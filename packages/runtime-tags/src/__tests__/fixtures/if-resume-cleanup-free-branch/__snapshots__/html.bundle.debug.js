@@ -27,10 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			const $childScope = _peek_scope_id();
 			_set_serialize_reason(1);
 			leaf_default({ n });
-			writeScope($scope1_id, {
-				_: _scope_with_id($scope0_id),
-				"#childScope/0": _existing_scope($childScope)
-			}, "__tests__/template.marko", "5:2");
+			writeScope($scope1_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "5:2");
 			return 0;
 		}
 	}, $scope0_id, "#text/2");

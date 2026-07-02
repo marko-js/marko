@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if (x) {
 			const $scope1_id = _scope_id();
 			_html(`<span>${_escape(getMessage())}${_el_resume($scope1_id, "#text/0", _serialize_guard($scope0_reason, 0))}</span>`);
-			writeScope($scope1_id, { _: _serialize_if($scope0_reason, 0) && _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:4");
+			writeScope($scope1_id, {}, "__tests__/template.marko", "4:4");
 			return 0;
 		}
 	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);

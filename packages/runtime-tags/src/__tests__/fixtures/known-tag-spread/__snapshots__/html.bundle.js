@@ -31,10 +31,7 @@ var template_default = _template("a", (input) => {
 		...extras
 	});
 	const $childScope2 = _peek_scope_id();
-	_set_serialize_reason({
-		0: 1,
-		1: 1
-	});
+	_set_serialize_reason(6);
 	child_a_default({
 		...extras,
 		a: n

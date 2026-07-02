@@ -11,10 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_serialize_if($scope1_reason, 0) && writeScope($scope1_id, {}, "__tests__/template.marko", "6:2");
 	}) };
 	const $childScope = _peek_scope_id();
-	_set_serialize_reason({
-		0: 1,
-		2: 1
-	});
+	_set_serialize_reason(10);
 	MyTag.content({
 		name: "Ryan",
 		count

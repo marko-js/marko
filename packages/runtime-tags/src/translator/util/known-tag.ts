@@ -246,6 +246,12 @@ export function knownTagTranslateHTML(
         reason && getSerializeGuard(section, reason, false);
     } else {
       const props: t.ObjectExpression["properties"] = [];
+      // Reason groups whose guard is statically `1` are encoded as a bitmask
+      // (offset by one bit so a lone group 0 cannot collide with the plain
+      // `1` "serialize everything" sentinel); -1 means a group's guard was
+      // dynamic or out of bit range and an object must be used instead.
+      let bitmask = 0;
+      let bitmaskNames = "";
       let hasDynamicReasons = false;
       let hasSkippedReasons = false;
       for (let i = 0; i < contentSection.paramReasonGroups.length; i++) {
@@ -253,13 +259,29 @@ export function knownTagTranslateHTML(
         const reason = getSerializeReason(section, childScopeBinding, group.id);
         if (reason) {
           hasDynamicReasons ||= reason !== true && !reason.state;
+          const guard = getSerializeGuard(section, reason, false)!;
+          if (bitmask >= 0) {
+            if (
+              guard.type === "NumericLiteral" &&
+              guard.value === 1 &&
+              i < 30
+            ) {
+              bitmask |= 1 << (i + 1);
+              const names = getDebugNames(group.reason);
+              if (names) {
+                bitmaskNames += bitmaskNames ? ` | ${names}` : names;
+              }
+            } else {
+              bitmask = -1;
+            }
+          }
           props.push(
             t.objectProperty(
               withLeadingComment(
                 t.numericLiteral(i),
                 getDebugNames(group.reason),
               ),
-              getSerializeGuard(section, reason, false)!,
+              guard,
             ),
           );
         } else {
@@ -268,10 +290,11 @@ export function knownTagTranslateHTML(
       }
 
       if (props.length) {
-        childSerializeReasonExpr =
-          hasDynamicReasons || hasSkippedReasons
-            ? t.objectExpression(props)
-            : t.numericLiteral(1);
+        childSerializeReasonExpr = !(hasDynamicReasons || hasSkippedReasons)
+          ? t.numericLiteral(1)
+          : bitmask > 0
+            ? withLeadingComment(t.numericLiteral(bitmask), bitmaskNames)
+            : t.objectExpression(props);
       }
     }
 

@@ -16,7 +16,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, {
 			"#LoopKey": i,
-			_: _scope_with_id($scope0_id),
 			"TagVariableChange:checked": _resume(function(value) {
 				if (i === undefined) {
 					throw new Error("LoopKey is undefined");

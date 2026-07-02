@@ -23,12 +23,12 @@ var template_default = _template("a", (input) => {
 			if (item.on) {
 				const $scope2_id = _scope_id();
 				_html(`<span>A<!>${_escape(item.id)}${_el_resume($scope2_id, "a")}</span>`);
-				writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
+				writeScope($scope2_id, {});
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
 				_html(`<b>B<!>${_escape(item.id)}${_el_resume($scope3_id, "a")}</b>`);
-				writeScope($scope3_id, { _: _scope_with_id($scope1_id) });
+				writeScope($scope3_id, {});
 				return 1;
 			}
 		}, $scope1_id, "a", 1, 1, 1, 0, 1);

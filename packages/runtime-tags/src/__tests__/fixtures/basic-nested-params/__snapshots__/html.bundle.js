@@ -20,10 +20,7 @@ var template_default = _template("a", (input) => {
 	let y = 2;
 	_html(`<button>Inc</button>${_el_resume($scope0_id, "a")}`);
 	const $childScope = _peek_scope_id();
-	_set_serialize_reason({
-		0: 1,
-		2: 1
-	});
+	_set_serialize_reason(10);
 	child_default({
 		value: x,
 		content: _content_resume("a1", (outer) => {

@@ -1,4 +1,4 @@
-// size: 25812 (min) 9489 (brotli)
+// size: 25909 (min) 9531 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -384,6 +384,11 @@ function forUntil(until, from, step, cb) {
 }
 function toArray(opt) {
   return opt ? (Array.isArray(opt) ? opt : [opt]) : [];
+}
+function forEach(opt, cb) {
+  if (opt)
+    if (Array.isArray(opt)) for (let item of opt) cb(item);
+    else cb(opt);
 }
 function push(opt, item) {
   return opt
@@ -939,12 +944,17 @@ function init(runtimeId = "M") {
                         (startVisit = startVisit.previousSibling),
                       );
                     );
-                    ((branch.K = branch.S = startVisit),
+                    ((branch._ ??= visitScope),
+                      (branch.K = branch.S = startVisit),
                       visitType === "'" && (branch.a = startVisit));
                   } else
                     ((curBranchScopes = push(curBranchScopes, branch)),
                       accessor &&
                         ((visitScope[accessor] = curBranchScopes),
+                        forEach(
+                          curBranchScopes,
+                          (scope) => (scope._ ??= visitScope),
+                        ),
                         (curBranchScopes = branchScopesStack.pop())),
                       (startVisit = branchStarts.pop()),
                       parent !== startVisit.parentNode &&
