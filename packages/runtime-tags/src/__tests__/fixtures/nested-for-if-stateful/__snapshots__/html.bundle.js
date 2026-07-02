@@ -2,7 +2,6 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $counts__closures = /* @__PURE__ */ new Set();
 	let counts = [
 		0,
 		0,
@@ -25,9 +24,6 @@ var template_default = _template("a", (input) => {
 			_: _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a");
-	writeScope($scope0_id, {
-		b: counts,
-		Bb: $counts__closures
-	});
+	writeScope($scope0_id, { b: counts });
 	_resume_branch($scope0_id);
 }, 1);

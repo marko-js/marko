@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_subscribe($n__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "4:2"));
 		_resume_branch($scope1_id);
 	});
-	_script($scope0_id, "__tests__/template.marko_0_n");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		n,
 		"ClosureScopes:n": $n__closures

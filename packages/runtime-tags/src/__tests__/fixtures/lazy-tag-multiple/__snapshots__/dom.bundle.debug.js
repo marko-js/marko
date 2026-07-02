@@ -23,18 +23,18 @@ let $load_ChildA_setup = /* @__PURE__ */ _load_setup("#text/1", "#childScope/2",
 let $load_ChildA_tag_input_value = /* @__PURE__ */ _load_signal(() => import("./v:child-a.marko.input_value.mjs"));
 let $load_ChildB_setup = /* @__PURE__ */ _load_setup("#text/3", "#childScope/4", () => import("./v:child-b.marko.setup.mjs"));
 let $load_ChildB_tag_input_value = /* @__PURE__ */ _load_signal(() => import("./v:child-b.marko.input_value.mjs"));
-const $value__script = _script("__tests__/template.marko_0_value", ($scope) => _on($scope["#button/0"], "click", function() {
-	$value($scope, $scope.value + 1);
-}));
 const $value = /* @__PURE__ */ _let("value/5", ($scope) => {
 	$load_ChildA_tag_input_value($scope["#childScope/2"], $scope.value);
 	$load_ChildB_tag_input_value($scope["#childScope/4"], $scope.value);
-	$value__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$value($scope, $scope.value + 1);
+}));
 function $setup($scope) {
 	$load_ChildA_setup($scope);
 	$load_ChildB_setup($scope);
 	$value($scope, 0);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
 

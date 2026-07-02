@@ -5,7 +5,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let x = 1;
 	let direction = undefined;
 	_html(`<button class=up>up</button>${_el_resume($scope0_id, "#button/0")}<button class=down>down</button>${_el_resume($scope0_id, "#button/1")}<button class=change>${_escape(x)}${_el_resume($scope0_id, "#text/3")}</button>${_el_resume($scope0_id, "#button/2")}`);
-	_script($scope0_id, "__tests__/template.marko_0_x_direction");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		x,

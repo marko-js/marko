@@ -14,15 +14,13 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_id($scope, $params2[0]?.id);
 	$for_content__row_label($scope, $params2[0]?.label);
 };
-const $enabled__script = _script("__tests__/template.marko_0_enabled", ($scope) => _on($scope["#button/0"], "click", function() {
+const $enabled = /* @__PURE__ */ _let("enabled/6", $for_content__enabled);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$enabled($scope, !$scope.enabled);
 }));
-const $enabled = /* @__PURE__ */ _let("enabled/6", ($scope) => {
-	$for_content__enabled($scope);
-	$enabled__script($scope);
-});
 function $setup($scope) {
 	$enabled($scope, true);
+	$setup__script($scope);
 }
 const $for = /* @__PURE__ */ _for_of("#ul/1", "<li> </li>", " D l", $for_content__setup, $for_content__$params);
 const $input_rows = ($scope, input_rows) => $for($scope, [input_rows, "id"]);

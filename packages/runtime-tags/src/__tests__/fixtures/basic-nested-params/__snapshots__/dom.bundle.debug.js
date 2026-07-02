@@ -30,18 +30,16 @@ const $child_content__$params = ($scope, $params2) => $child_content__outer($sco
 const $child_content__outer__closure = /* @__PURE__ */ _closure($child_content2__outer);
 const $child_content__outer = /* @__PURE__ */ _const("outer", $child_content__outer__closure);
 const $child_content = _content_resume("__tests__/template.marko_1_content", $template$1, /* @__PURE__ */ ((_w0) => `/${_w0}&`)("D%l"), $child_content__setup, $child_content__$params);
-const $x__script = _script("__tests__/template.marko_0_x", ($scope) => _on($scope["#button/0"], "click", function() {
+const $x = /* @__PURE__ */ _let("x/2", ($scope) => $value($scope["#childScope/1"], $scope.x));
+const $y = /* @__PURE__ */ _let("y/3");
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$x($scope, $scope.x + 1);
 }));
-const $x = /* @__PURE__ */ _let("x/2", ($scope) => {
-	$value($scope["#childScope/1"], $scope.x);
-	$x__script($scope);
-});
-const $y = /* @__PURE__ */ _let("y/3");
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
 	$content($scope["#childScope/1"], $child_content($scope));
 	$x($scope, 1);
 	$y($scope, 2);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

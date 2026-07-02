@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "4:4", { row_id: ["row.id", "4:8"] });
 	}, "id", $scope0_id, "#ul/1", 1, $sg__input_rows, $sg__input_rows, "</ul>", 1);
-	_script($scope0_id, "__tests__/template.marko_0_enabled");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		input_selected: input.selected,
 		enabled

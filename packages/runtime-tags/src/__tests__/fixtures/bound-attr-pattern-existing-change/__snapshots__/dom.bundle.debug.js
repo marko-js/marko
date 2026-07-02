@@ -12,13 +12,10 @@ const $walks = /* @__PURE__ */ ((_w0, _w1) => ` Db%l/${_w0}&/${_w1}&`)("D l", "D
 const $pattern3 = ($scope, $pattern) => $a($scope, $pattern.a);
 const $a = ($scope, a) => $input_value($scope["#childScope/2"], a);
 const $pattern4 = ($scope, $pattern2) => $b($scope, $pattern2.b);
-const $n__script = _script("__tests__/template.marko_0_n", ($scope) => _on($scope["#button/0"], "click", function() {
+const $n = /* @__PURE__ */ _let("n/8", ($scope) => _text($scope["#text/1"], $scope.n));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$n($scope, $scope.n + 1);
 }));
-const $n = /* @__PURE__ */ _let("n/8", ($scope) => {
-	_text($scope["#text/1"], $scope.n);
-	$n__script($scope);
-});
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/2"]);
 	/* @__PURE__ */ $setup$1($scope["#childScope/3"]);
@@ -31,6 +28,7 @@ function $setup($scope) {
 		bChange(v) {}
 	});
 	$n($scope, 1);
+	$setup__script($scope);
 }
 const $b = ($scope, b) => $input_value($scope["#childScope/3"], b);
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const z = x + 2;
 	const a = y + z;
 	_html(`<button>${_escape(x)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}${_escape(y)}${_el_resume($scope0_id, "#text/2")} <!>${_escape(z)}${_el_resume($scope0_id, "#text/3")} <!>${_escape(a)}${_el_resume($scope0_id, "#text/4")}`);
-	_script($scope0_id, "__tests__/template.marko_0_x");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

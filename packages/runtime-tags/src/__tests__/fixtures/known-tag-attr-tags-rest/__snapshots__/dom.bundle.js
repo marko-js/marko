@@ -17,17 +17,16 @@ const $input_stuff_cond = ($scope, input_stuff_cond) => $input_stuff_cond_a($sco
 const $rest = ($scope, rest) => $input_stuff($scope.b, rest);
 
 // template.marko
-const $cond__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$cond($scope, !$scope.c);
-}));
 const $cond = /* @__PURE__ */ _let(2, ($scope) => {
-	let $cond2;
-	if ($scope.c) $cond2 = attrTag({ a: 1 });
-	else $cond2 = attrTag({ a: 2 });
+	let $cond;
+	if ($scope.c) $cond = attrTag({ a: 1 });
+	else $cond = attrTag({ a: 2 });
 	$rest($scope.b, {
 		row: attrTags(attrTag({ x: 1 }), { x: 2 }),
 		other: attrTag({ y: 1 }),
-		cond: $cond2
+		cond: $cond
 	});
-	$cond__script($scope);
 });
+const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
+	$cond($scope, !$scope.c);
+}));

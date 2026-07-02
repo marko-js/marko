@@ -37,16 +37,14 @@ const $outer_content__count = /* @__PURE__ */ _closure_get("count", ($scope) => 
 const $outer_content__setup = $outer_content__count;
 const $outer_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "<span> </span>", "D l", $outer_content__setup);
 const $count__closure = /* @__PURE__ */ _closure($outer_content__count);
-const $count__script = _script("__tests__/template.marko_0_count", ($scope) => _on($scope["#button/1"], "click", function() {
+const $count = /* @__PURE__ */ _let("count/2", $count__closure);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
-const $count = /* @__PURE__ */ _let("count/2", ($scope) => {
-	$count__closure($scope);
-	$count__script($scope);
-});
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_content($scope["#childScope/0"], $outer_content($scope));
 	$count($scope, 0);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

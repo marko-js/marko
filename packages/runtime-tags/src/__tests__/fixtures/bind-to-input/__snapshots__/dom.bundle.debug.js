@@ -1,19 +1,16 @@
 // tags/counter.marko
 const $template$1 = "<button><!></button>";
 const $walks$1 = " D%l";
-const $setup$1 = () => {};
 const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/1");
-const $x__script = _script("__tests__/tags/counter.marko_0_x", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x$1($scope, $scope.x + 1);
-}));
-const $x$1 = /* @__PURE__ */ _let_change("x/9", ($scope) => {
-	_attr($scope["#button/0"], "data-internal", $scope.x);
-	$x__script($scope);
-});
+const $x$1 = /* @__PURE__ */ _let_change("x/9", ($scope) => _attr($scope["#button/0"], "data-internal", $scope.x));
 const $input_countChange__OR__input_count = /* @__PURE__ */ _or(8, ($scope) => $x$1($scope, $scope.count, $scope.$countChange));
 const $countChange2 = /* @__PURE__ */ _const("$countChange", $input_countChange__OR__input_count);
 const $count = /* @__PURE__ */ _const("count", $input_countChange__OR__input_count);
 const $input_id = ($scope, input_id) => _attr($scope["#button/0"], "id", input_id);
+const $setup__script = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$x$1($scope, $scope.x + 1);
+}));
+const $setup$1 = $setup__script;
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
 const $input_content = $dynamicTag;
 const $input = ($scope, input) => {
@@ -40,11 +37,11 @@ const $x = /* @__PURE__ */ _let("x/2", ($scope) => {
 	$x__closure($scope);
 });
 function $setup($scope) {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
+	$setup$1($scope["#childScope/0"]);
 	$input_content_direct($scope["#childScope/0"], $counter_content($scope));
 	$countChange2($scope["#childScope/0"], $countChange($scope));
 	$input_id($scope["#childScope/0"], "controlled");
-	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
+	$setup$1($scope["#childScope/1"]);
 	$input_content_direct($scope["#childScope/1"], $counter_content2($scope));
 	$input_id($scope["#childScope/1"], "uncontrolled");
 	$countChange2($scope["#childScope/1"]);

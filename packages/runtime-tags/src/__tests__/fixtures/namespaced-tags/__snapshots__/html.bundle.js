@@ -28,7 +28,6 @@ var template_default = _template("a", (input) => {
 	_html(`<button class=toggle-parent>Toggle Parent</button>${_el_resume($scope0_id, "g")}<button class=toggle-child>Toggle Child</button>${_el_resume($scope0_id, "h")}</div>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a3");
 	_script($scope0_id, "a4");
-	_script($scope0_id, "a5");
 	writeScope($scope0_id, {
 		k: input.value,
 		l: Parent,

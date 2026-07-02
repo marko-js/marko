@@ -32,8 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1");
 	_html(`<button id=load>Load</button><button id=inc>Inc</button>${_el_resume($scope0_id, "#button/2")}`);
-	_script($scope0_id, "__tests__/template.marko_0_value");
-	_script($scope0_id, "__tests__/template.marko_0_show");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		show,
 		value

@@ -359,6 +359,8 @@ function underTryPlaceholder(section: Section) {
 export function initValue(binding: Binding, isLet = false) {
   const section = binding.section;
   const signal = getSignal(section, binding);
+  // Keep persisting the scope slot for lazy reads.
+  if (binding.forcePersist) signal.forcePersist = true;
   signal.build = () => {
     if (isPureMemberForwarder(binding)) {
       return undefined;

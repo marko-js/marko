@@ -5,8 +5,7 @@ var _2counters_default = _template("__tests__/tags/2counters.marko", (input) => 
 	let count1 = input.count1;
 	let count2 = input.count2;
 	_html(`<button>${_escape(count1)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}<button>${_escape(count2)}${_el_resume($scope0_id, "#text/3")}</button>${_el_resume($scope0_id, "#button/2")}`);
-	_script($scope0_id, "__tests__/tags/2counters.marko_0_count2");
-	_script($scope0_id, "__tests__/tags/2counters.marko_0_count1");
+	_script($scope0_id, "__tests__/tags/2counters.marko_0");
 	writeScope($scope0_id, {
 		input_count1: _serialize_if($scope0_reason, 1) && input.count1,
 		input_count1Change: _serialize_if($scope0_reason, 0) && input.count1Change,

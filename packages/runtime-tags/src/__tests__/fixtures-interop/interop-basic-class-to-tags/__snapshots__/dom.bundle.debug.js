@@ -2,15 +2,13 @@
 var import_vdom = require_vdom();
 const $template = "<button id=tags> </button>";
 const $walks = " D l";
-const $count__script = _script("__tests__/components/tags-counter.marko_0_count", ($scope) => _on($scope["#button/0"], "click", function() {
+const $count = /* @__PURE__ */ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
+const $setup__script = _script("__tests__/components/tags-counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
-const $count = /* @__PURE__ */ _let("count/5", ($scope) => {
-	_text($scope["#text/1"], $scope.count);
-	$count__script($scope);
-});
 function $setup($scope) {
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $input_count = ($scope, input_count) => _attr($scope["#button/0"], "data-parent", input_count);
 const $input = ($scope, input) => $input_count($scope, input.count);

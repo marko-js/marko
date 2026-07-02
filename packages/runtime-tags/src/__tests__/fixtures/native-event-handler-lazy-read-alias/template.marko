@@ -1,0 +1,10 @@
+// A destructured alias read (`n`, stays subscribed) and a root property read (`state.tag`, lazy) both observe current values.
+<let/state={ n: 0, tag: "x" }/>
+<const/{ n }=state/>
+<let/log=""/>
+
+<button.bump onClick() { state = { n: state.n + 1, tag: state.tag }; }>bump</button>
+<button.show onClick() { log = `${log}[${n}:${state.tag}]`; }>show</button>
+
+<div.n>${n}</div>
+<div.log>${log}</div>

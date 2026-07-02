@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		2: _serialize_guard($scope0_reason, 2)
 	});
 	child_c_default(input.settings);
-	_script($scope0_id, "__tests__/template.marko_0_n");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		extras,
 		n,

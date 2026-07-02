@@ -9,6 +9,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}<button></button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
+	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
 		d: count,
 		e: resetCount

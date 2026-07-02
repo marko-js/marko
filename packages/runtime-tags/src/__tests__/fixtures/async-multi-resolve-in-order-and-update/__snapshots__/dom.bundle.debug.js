@@ -22,9 +22,6 @@ const $await_content4 = /* @__PURE__ */ _await_content("#text/8", " ", " b");
 const $await_promise4 = /* @__PURE__ */ _await_promise("#text/8", $await_content4__$params);
 const $await_content5 = /* @__PURE__ */ _await_content("#text/10", " ", " b");
 const $await_promise5 = /* @__PURE__ */ _await_promise("#text/10", $await_content5__$params);
-const $n__script = _script("__tests__/template.marko_0_n", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
-}));
 const $n = /* @__PURE__ */ _let("n/11", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	_text($scope["#text/3"], $scope.n);
@@ -36,8 +33,10 @@ const $n = /* @__PURE__ */ _let("n/11", ($scope) => {
 	$await_promise3($scope, multiply(3, $scope.n));
 	$await_promise4($scope, multiply(4, $scope.n));
 	$await_promise5($scope, multiply(5, $scope.n));
-	$n__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$n($scope, $scope.n + 1);
+}));
 function $setup($scope) {
 	$await_content($scope);
 	$await_content2($scope);
@@ -45,5 +44,6 @@ function $setup($scope) {
 	$await_content4($scope);
 	$await_content5($scope);
 	$n($scope, 2);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

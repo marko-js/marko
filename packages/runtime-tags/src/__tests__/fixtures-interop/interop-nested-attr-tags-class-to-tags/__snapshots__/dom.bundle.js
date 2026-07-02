@@ -3,15 +3,13 @@ var import_vdom = require_vdom();
 var import_attr_tag = require_attr_tag();
 const $template = "<button id=tags> </button><div><!></div>";
 const $walks = " D lD%l";
-const $count__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
+const $count = /* @__PURE__ */ _let(7, ($scope) => _text($scope.b, $scope.h));
+const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.h + 1);
 }));
-const $count = /* @__PURE__ */ _let(7, ($scope) => {
-	_text($scope.b, $scope.h);
-	$count__script($scope);
-});
 function $setup($scope) {
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(2);
 const $input_stuff_content = $dynamicTag;

@@ -2,15 +2,13 @@
 var import_vdom = require_vdom();
 const $template = "<button id=tags> </button><div><!></div>";
 const $walks = " D lD%l";
-const $count__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
+const $count = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g));
+const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.g + 1);
 }));
-const $count = /* @__PURE__ */ _let(6, ($scope) => {
-	_text($scope.b, $scope.g);
-	$count__script($scope);
-});
 function $setup($scope) {
 	$count($scope, 0);
+	$setup__script($scope);
 }
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(2);
 const $input_content = $dynamicTag;

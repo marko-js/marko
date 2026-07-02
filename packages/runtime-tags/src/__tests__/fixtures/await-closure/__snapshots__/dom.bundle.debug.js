@@ -12,17 +12,17 @@ const $try_content__setup = ($scope) => {
 	$try_content__await_promise($scope, resolveAfter(0, 4));
 };
 const $value__closure = /* @__PURE__ */ _closure($await_content__value);
-const $value__script = _script("__tests__/template.marko_0_value", ($scope) => _on($scope["#button/0"], "click", function() {
-	$value($scope, $scope.value + 1);
-}));
 const $value = /* @__PURE__ */ _let("value/3", ($scope) => {
 	_text($scope["#text/1"], $scope.value);
 	$value__closure($scope);
-	$value__script($scope);
 });
 const $try = /* @__PURE__ */ _try("#text/2", "<!><!><!>", "b%c", $try_content__setup);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$value($scope, $scope.value + 1);
+}));
 function $setup($scope) {
 	$value($scope, 1);
 	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

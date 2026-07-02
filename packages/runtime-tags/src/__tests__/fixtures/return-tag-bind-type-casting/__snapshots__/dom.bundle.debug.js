@@ -28,14 +28,14 @@ var my_tag_default = /* @__PURE__ */ _template("__tests__/tags/my-tag.marko", $t
 // template.marko
 const $template = /* @__PURE__ */ ((_w0, _w1) => `<!>${_w0}${_w1}<!>`)("", $template$1);
 const $walks = /* @__PURE__ */ ((_w0, _w1) => `b0${_w0}&/${_w1}&b`)("", "b%c");
-const $mytag_content__count__script = _script("__tests__/template.marko_1_count", ($scope) => _on($scope["#button/0"], "click", function() {
+const $mytag_content__count = /* @__PURE__ */ _closure_get("count", ($scope) => _text($scope["#text/1"], $scope._.count));
+const $mytag_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	_var_change($scope._["#childScope/0"], $scope._.count + 1, "count");
 }));
-const $mytag_content__count = /* @__PURE__ */ _closure_get("count", ($scope) => {
-	_text($scope["#text/1"], $scope._.count);
-	$mytag_content__count__script($scope);
-});
-const $mytag_content__setup = $mytag_content__count;
+const $mytag_content__setup = ($scope) => {
+	$mytag_content__count($scope);
+	$mytag_content__setup__script($scope);
+};
 const $mytag_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "<button> </button>", " D l", $mytag_content__setup);
 const $count__closure = /* @__PURE__ */ _closure($mytag_content__count);
 const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _const("count", $count__closure));

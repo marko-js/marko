@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 	writeScope($scope0_id, {
 		c: itemId,
 		d: items,
-		f: items?.length
+		e: items?.length
 	});
 	_resume_branch($scope0_id);
 }, 1);

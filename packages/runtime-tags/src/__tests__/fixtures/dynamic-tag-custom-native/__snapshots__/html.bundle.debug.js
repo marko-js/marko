@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let tagName = child_default;
 	_html(`<button></button>${_el_resume($scope0_id, "#button/0")}`);
 	_dynamic_tag($scope0_id, "#text/1", tagName, { id: "dynamic" });
-	_script($scope0_id, "__tests__/template.marko_0_tagName");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { tagName }, "__tests__/template.marko", 0, { tagName: "3:6" });
 	_resume_branch($scope0_id);
 }, 1);

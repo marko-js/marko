@@ -64,9 +64,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/4", 1, 1, 1, 0, 1);
-	_script($scope0_id, "__tests__/template.marko_0_showInner");
-	_script($scope0_id, "__tests__/template.marko_0_showMiddle");
-	_script($scope0_id, "__tests__/template.marko_0_showOuter");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		showOuter,
 		showMiddle,

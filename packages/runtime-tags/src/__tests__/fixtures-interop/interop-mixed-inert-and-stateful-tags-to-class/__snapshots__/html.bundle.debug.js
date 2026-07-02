@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button id=tags>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_dynamic_tag($scope0_id, "#text/2", _marko_template$1, { value: "Hello World" }, 0, 0, 0);
 	_dynamic_tag($scope0_id, "#text/3", _marko_template, { count });
-	_script($scope0_id, "__tests__/template.marko_0_count");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

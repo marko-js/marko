@@ -1,16 +1,16 @@
 // tags/child.marko
 const $template$1 = "<button class=inc> </button>";
 const $walks$1 = " D l";
-const $x__script = _script("__tests__/tags/child.marko_0_x", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
-}));
 const $x = /* @__PURE__ */ _let("x/2", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
 	_return($scope, $scope.x);
-	$x__script($scope);
 });
+const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$x($scope, $scope.x + 1);
+}));
 function $setup$1($scope) {
 	$x($scope, 1);
+	$setup__script($scope);
 }
 var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $template$1, $walks$1, $setup$1);
 

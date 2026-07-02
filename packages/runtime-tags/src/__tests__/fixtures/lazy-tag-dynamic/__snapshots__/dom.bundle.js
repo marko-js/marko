@@ -5,19 +5,15 @@ const $show__OR__value = /* @__PURE__ */ _or(5, ($scope) => $dynamicTag($scope, 
 	label: "x",
 	value: $scope.e
 })));
-const $show__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
-	$show($scope, !$scope.d);
-}));
-const $show = /* @__PURE__ */ _let(3, ($scope) => {
-	$show__OR__value($scope);
-	$show__script($scope);
-});
-const $value__script = _script("b0", ($scope) => _on($scope.b, "click", function() {
-	$value($scope, $scope.e + 1);
-}));
-const $value = /* @__PURE__ */ _let(4, ($scope) => {
-	$show__OR__value($scope);
-	$value__script($scope);
+const $show = /* @__PURE__ */ _let(3, $show__OR__value);
+const $value = /* @__PURE__ */ _let(4, $show__OR__value);
+const $setup__script = _script("b0", ($scope) => {
+	_on($scope.a, "click", function() {
+		$show($scope, !$scope.d);
+	});
+	_on($scope.b, "click", function() {
+		$value($scope, $scope.e + 1);
+	});
 });
 
 // child.marko

@@ -23,15 +23,15 @@ const $for_content__setup = $for_content__items;
 const $for_content__$params = ($scope, $params2) => $for_content__outer($scope, $params2[0]);
 const $for_content__outer = /* @__PURE__ */ _const("outer", $for_content2__outer);
 const $for = /* @__PURE__ */ _for_of("#text/1", "<!><!><!>", "b%c", $for_content__setup, $for_content__$params);
-const $items__script = _script("__tests__/template.marko_0_items", ($scope) => _on($scope["#button/0"], "click", function() {
-	$items($scope, [...$scope.items, $scope.items?.length]);
-}));
 const $items = /* @__PURE__ */ _let("items/2", ($scope) => {
 	$for($scope, [$scope.items]);
 	$for_content__items($scope);
-	$items__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$items($scope, [...$scope.items, $scope.items?.length]);
+}));
 function $setup($scope) {
 	$items($scope, [0, 1]);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

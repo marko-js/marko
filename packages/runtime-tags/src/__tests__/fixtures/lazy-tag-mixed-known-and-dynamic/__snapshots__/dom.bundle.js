@@ -3,20 +3,18 @@ const Child = /* @__PURE__ */ _load_template("a", () => import("./child.mjs").th
 let $load_Child_tag_input_value = /* @__PURE__ */ _load_signal(() => import("./v:child.marko.input_value.mjs"));
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(4);
 const $show__OR__value = /* @__PURE__ */ _or(7, ($scope) => $dynamicTag($scope, $scope.f ? Child : null, () => ({ value: $scope.g })));
-const $show__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
-	$show($scope, !$scope.f);
-}));
-const $show = /* @__PURE__ */ _let(5, ($scope) => {
-	$show__OR__value($scope);
-	$show__script($scope);
-});
-const $value__script = _script("b0", ($scope) => _on($scope.b, "click", function() {
-	$value($scope, $scope.g + 1);
-}));
+const $show = /* @__PURE__ */ _let(5, $show__OR__value);
 const $value = /* @__PURE__ */ _let(6, ($scope) => {
 	$load_Child_tag_input_value($scope.d, $scope.g);
 	$show__OR__value($scope);
-	$value__script($scope);
+});
+const $setup__script = _script("b0", ($scope) => {
+	_on($scope.a, "click", function() {
+		$show($scope, !$scope.f);
+	});
+	_on($scope.b, "click", function() {
+		$value($scope, $scope.g + 1);
+	});
 });
 
 // child.marko

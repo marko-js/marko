@@ -31,7 +31,6 @@ var template_default = _template("b", (input) => {
 		_html("loading...");
 	}, $scope0_id) }) });
 	_script($scope0_id, "b2");
-	_script($scope0_id, "b3");
 	writeScope($scope0_id, {
 		d: show,
 		e: value,

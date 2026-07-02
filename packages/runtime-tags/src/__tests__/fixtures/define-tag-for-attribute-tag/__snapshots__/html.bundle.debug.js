@@ -25,7 +25,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_serialize_reason(1);
 	child_default({ thing: myThing });
 	_html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/1")}`);
-	_script($scope0_id, "__tests__/template.marko_0_selected");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		selected,
 		"#childScope/0": _existing_scope($childScope)

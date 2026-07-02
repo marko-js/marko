@@ -15,12 +15,11 @@ const $x__OR__args = ($scope) => {
 		row: attrTag({ r: $scope.h })
 	}]);
 };
-const $x__script = _script("a1", ($scope) => _on($scope.d, "click", function() {
-	$x($scope, $scope.h + 1);
-}));
 const $x = /* @__PURE__ */ _let(7, ($scope) => {
 	_text($scope.e, $scope.h);
 	$args($scope, [$scope.h, 2]);
 	$x__OR__args($scope);
-	$x__script($scope);
 });
+const $setup__script = _script("a1", ($scope) => _on($scope.d, "click", function() {
+	$x($scope, $scope.h + 1);
+}));

@@ -18,8 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		label: "x",
 		value
 	});
-	_script($scope0_id, "__tests__/template.marko_0_value");
-	_script($scope0_id, "__tests__/template.marko_0_show");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		show,
 		value

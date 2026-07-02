@@ -27,8 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id));
 	_html(`<button class=toggle-parent>Toggle Parent</button>${_el_resume($scope0_id, "#button/6")}<button class=toggle-child>Toggle Child</button>${_el_resume($scope0_id, "#button/7")}</div>${_el_resume($scope0_id, "#div/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0_Parent_Child");
-	_script($scope0_id, "__tests__/template.marko_0_Child");
-	_script($scope0_id, "__tests__/template.marko_0_Parent");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		input_value: input.value,
 		Parent,

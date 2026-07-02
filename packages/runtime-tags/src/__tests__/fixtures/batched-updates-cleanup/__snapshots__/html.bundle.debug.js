@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
-	_script($scope0_id, "__tests__/template.marko_0_show");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		show,
 		message

@@ -1,12 +1,12 @@
 {
   "dom": {
     "child.mjs": {
-      "min": 423,
-      "brotli": 279
+      "min": 416,
+      "brotli": 273
     },
     "grand-child.mjs": {
-      "min": 220,
-      "brotli": 153
+      "min": 211,
+      "brotli": 149
     }
   },
   "html": {

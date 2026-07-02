@@ -10,17 +10,17 @@ const $MyTag_content__$params = ($scope, $params2) => {
 	$MyTag_content__b($scope, $params2[1]);
 	$MyTag_content__c($scope, $params2[2]);
 };
-const $x__script = _script("__tests__/template.marko_0_x", ($scope) => _on($scope["#button/1"], "click", function() {
-	$x($scope, $scope.x + 1);
-}));
 const $x = /* @__PURE__ */ _let("x/3", ($scope) => {
 	$MyTag_content__c($scope["#childScope/0"], $scope.x);
 	_text($scope["#text/2"], $scope.x);
-	$x__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
+	$x($scope, $scope.x + 1);
+}));
 function $setup($scope) {
 	$MyTag_content__a($scope["#childScope/0"], 1);
 	$MyTag_content__b($scope["#childScope/0"], "Hello");
 	$x($scope, 1);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

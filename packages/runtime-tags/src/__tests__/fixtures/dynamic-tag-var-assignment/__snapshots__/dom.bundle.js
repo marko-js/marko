@@ -1,12 +1,11 @@
 // tags/counter.marko
-const $x__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
-	$x($scope, $scope.c + 1);
-}));
 const $x = /* @__PURE__ */ _let(2, ($scope) => {
 	_text($scope.b, $scope.c);
 	_return($scope, $scope.c);
-	$x__script($scope);
 });
+const $setup__script$1 = _script("b1", ($scope) => _on($scope.a, "click", function() {
+	$x($scope, $scope.c + 1);
+}));
 function $valueChange($scope) {
 	return (_new_x) => {
 		$x($scope, _new_x);

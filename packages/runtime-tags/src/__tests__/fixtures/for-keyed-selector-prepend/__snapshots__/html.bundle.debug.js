@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_: _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "10:4", { row_id: ["row.id", "10:8"] });
 	}, "id", $scope0_id, "#ul/1", 1, 1, 1, "</ul>", 1);
-	_script($scope0_id, "__tests__/template.marko_0_rows_nextId");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		rows,
 		selected,

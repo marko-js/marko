@@ -43,15 +43,14 @@ const $extras = /* @__PURE__ */ _const("extras", ($scope) => {
 });
 const $extras_b = ($scope, extras_b) => $input_b$1($scope["#childScope/3"], extras_b);
 const $extras_c = ($scope, extras_c) => $input_c($scope["#childScope/3"], extras_c);
-const $n__script = _script("__tests__/template.marko_0_n", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
-}));
 const $n = /* @__PURE__ */ _let("n/9", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$input_a$1($scope["#childScope/3"], $scope.n);
 	$extras__OR__n($scope);
-	$n__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$n($scope, $scope.n + 1);
+}));
 function $setup($scope) {
 	/* @__PURE__ */ $setup$2($scope["#childScope/2"]);
 	/* @__PURE__ */ $setup$2($scope["#childScope/3"]);
@@ -61,6 +60,7 @@ function $setup($scope) {
 		c: 3
 	});
 	$n($scope, 1);
+	$setup__script($scope);
 }
 const $input_settings_a = ($scope, input_settings_a) => $input_a($scope["#childScope/4"], input_settings_a);
 const $input_settings_b = ($scope, input_settings_b) => $input_b($scope["#childScope/4"], input_settings_b);

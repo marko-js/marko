@@ -19,7 +19,6 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "b", 1, 1, 1, 0, 1);
 	_html(`<input${_attr_input_checkedValue($scope0_id, "c", checkedValue, $checkedValueChange, "c")} type=radio>${_el_resume($scope0_id, "c")}<span>${_escape(checkedValue)}${_el_resume($scope0_id, "d")}</span><button>Toggle</button>${_el_resume($scope0_id, "e")}`);
 	_script($scope0_id, "a2");
-	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
 		f: show,
 		g: checkedValue,

@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_for_of(messages, (message, index) => {
 		const $scope1_id = _scope_id();
 		_html(`<button>${_unescaped(message)}${_el_resume($scope1_id, "#text/1")}</button>${_el_resume($scope1_id, "#button/0")}`);
-		_script($scope1_id, "__tests__/template.marko_1_messages_index");
+		_script($scope1_id, "__tests__/template.marko_1_index");
 		writeScope($scope1_id, {
 			index,
 			_: _scope_with_id($scope0_id)

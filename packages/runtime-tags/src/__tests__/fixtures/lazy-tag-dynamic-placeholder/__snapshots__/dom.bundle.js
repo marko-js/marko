@@ -9,21 +9,15 @@ const $try_content__show__OR__value = /* @__PURE__ */ _or(1, ($scope) => $try_co
 })));
 const $try_content__show = /* @__PURE__ */ _closure_get(3, $try_content__show__OR__value);
 const $try_content__value = /* @__PURE__ */ _closure_get(4, $try_content__show__OR__value);
-const $show__closure = /* @__PURE__ */ _closure($try_content__show);
-const $show__script = _script("b3", ($scope) => _on($scope.a, "click", function() {
-	$show($scope, !$scope.d);
-}));
-const $show = /* @__PURE__ */ _let(3, ($scope) => {
-	$show__closure($scope);
-	$show__script($scope);
-});
-const $value__closure = /* @__PURE__ */ _closure($try_content__value);
-const $value__script = _script("b2", ($scope) => _on($scope.b, "click", function() {
-	$value($scope, $scope.e + 1);
-}));
-const $value = /* @__PURE__ */ _let(4, ($scope) => {
-	$value__closure($scope);
-	$value__script($scope);
+const $show = /* @__PURE__ */ _let(3, /* @__PURE__ */ _closure($try_content__show));
+const $value = /* @__PURE__ */ _let(4, /* @__PURE__ */ _closure($try_content__value));
+const $setup__script = _script("b2", ($scope) => {
+	_on($scope.a, "click", function() {
+		$show($scope, !$scope.d);
+	});
+	_on($scope.b, "click", function() {
+		$value($scope, $scope.e + 1);
+	});
 });
 
 // child.marko

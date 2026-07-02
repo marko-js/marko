@@ -8,7 +8,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "__tests__/template.marko_0/valueChange2", $scope0_id);
 	_html(`<button><input${_attr_input_value($scope0_id, "#input/1", count, $valueChange)}>${_el_resume($scope0_id, "#input/1")}<input${_attr_input_value($scope0_id, "#input/2", count, $valueChange)}>${_el_resume($scope0_id, "#input/2")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_count");
 	writeScope($scope0_id, {
 		count,
 		$valueChange

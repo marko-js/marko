@@ -34,18 +34,15 @@ const $for_content__setup = ($scope) => {
 const $for_content__item = ($scope, item) => $name($scope["#childScope/0"], item);
 const $for_content__$params = ($scope, $params2) => $for_content__item($scope, $params2[0]);
 const $for = /* @__PURE__ */ _for_of("#text/2", $template$1, /* @__PURE__ */ ((_w0) => `/${_w0}&`)("D l"), $for_content__setup, $for_content__$params);
-const $items__script = _script("__tests__/template.marko_0_items", ($scope) => _on($scope["#button/0"], "click", function() {
+const $items = /* @__PURE__ */ _let("items/3", ($scope) => $for($scope, [$scope.items]));
+const $write2 = /* @__PURE__ */ _const("write");
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$items($scope, $scope.items?.length ? $scope.items.slice(0, -1) : [
 		1,
 		2,
 		3
 	]);
 }));
-const $items = /* @__PURE__ */ _let("items/3", ($scope) => {
-	$for($scope, [$scope.items]);
-	$items__script($scope);
-});
-const $write2 = /* @__PURE__ */ _const("write");
 function $setup($scope) {
 	$items($scope, [
 		1,
@@ -53,6 +50,7 @@ function $setup($scope) {
 		3
 	]);
 	$write2($scope, $write($scope));
+	$setup__script($scope);
 }
 function $write($scope) {
 	return function(msg) {

@@ -31,8 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/2");
-	_script($scope0_id, "__tests__/template.marko_0_count");
-	_script($scope0_id, "__tests__/template.marko_0_outer");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		outer,
 		count

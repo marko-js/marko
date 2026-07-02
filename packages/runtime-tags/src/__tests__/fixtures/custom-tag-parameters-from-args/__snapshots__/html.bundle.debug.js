@@ -6,7 +6,7 @@ var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) =>
 	let y = 10;
 	_html(`<button class=inc>${_escape(x)}${_el_resume($scope0_id, "#text/1")},<!>${_escape(y)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_dynamic_tag($scope0_id, "#text/3", input.content, [x, y], 0, 1);
-	_script($scope0_id, "__tests__/tags/custom-tag.marko_0_x_y");
+	_script($scope0_id, "__tests__/tags/custom-tag.marko_0");
 	writeScope($scope0_id, {
 		input_content: input.content,
 		x,

@@ -27,20 +27,20 @@ const $dynamicTag2 = /* @__PURE__ */ _dynamic_tag("#text/2", $xdivspan_content);
 const $dynamicTag4 = /* @__PURE__ */ _dynamic_tag("#text/4");
 const $dynamicTag5 = /* @__PURE__ */ _dynamic_tag("#text/5", $xdivA_content);
 const $dynamicTag6 = /* @__PURE__ */ _dynamic_tag("#text/6");
-const $x__script = _script("__tests__/template.marko_0_x", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, !$scope.x);
-}));
 const $x = /* @__PURE__ */ _let("x/7", ($scope) => {
 	$dynamicTag($scope, $scope.x ? "div" : undefined, () => ({ id: "d1" }));
 	$dynamicTag2($scope, $scope.x ? "div" : "span");
 	$dynamicTag4($scope, $scope.x ? a_default : b_default, () => ({ label: "ab" }));
 	$dynamicTag5($scope, $scope.x ? "div" : a_default, () => ({ label: "ad" }));
 	$dynamicTag6($scope, $scope.x ? localTag : a_default, () => ({ label: "la" }));
-	$x__script($scope);
 });
 const $dynamicTag3 = /* @__PURE__ */ _dynamic_tag("#text/3", $navigator_content);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$x($scope, !$scope.x);
+}));
 function $setup($scope) {
 	$x($scope, true);
 	$dynamicTag3($scope, navigator);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

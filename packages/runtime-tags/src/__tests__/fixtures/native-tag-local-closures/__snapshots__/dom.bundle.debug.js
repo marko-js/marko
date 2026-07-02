@@ -15,18 +15,18 @@ const $Child_content__for = /* @__PURE__ */ _for_of("#text/0", "<div></div>", " 
 const $Child_content__input_item = ($scope, input_item) => $Child_content__for($scope, [input_item]);
 const $Child_content__$params = ($scope, $params2) => $Child_content__input($scope, $params2[0]);
 const $Child_content__input = ($scope, input) => $Child_content__input_item($scope, input.item);
-const $size__script = _script("__tests__/template.marko_0_size", ($scope) => _on($scope["#button/1"], "click", function() {
-	$size($scope, $scope.size + 1);
-}));
 const $size = /* @__PURE__ */ _let("size/2", ($scope) => {
 	let $item;
 	forUntil($scope.size, 0, 1, (i) => {
 		$item = attrTags($item, { content: $item_content($scope, { i }) });
 	});
 	$Child_content__input_item($scope["#childScope/0"], $item);
-	$size__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
+	$size($scope, $scope.size + 1);
+}));
 function $setup($scope) {
 	$size($scope, 1);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

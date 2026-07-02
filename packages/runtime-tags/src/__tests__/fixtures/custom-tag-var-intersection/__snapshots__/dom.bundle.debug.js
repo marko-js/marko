@@ -2,16 +2,16 @@
 const $template$1 = "<button class=inc> </button>";
 const $walks$1 = " D l";
 const $input_extra__OR__x = /* @__PURE__ */ _or(6, ($scope) => _return($scope, $scope.x + $scope.input_extra));
-const $x__script = _script("__tests__/tags/child.marko_0_x", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
-}));
 const $x = /* @__PURE__ */ _let("x/5", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
 	$input_extra__OR__x($scope);
-	$x__script($scope);
 });
+const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$x($scope, $scope.x + 1);
+}));
 function $setup$1($scope) {
 	$x($scope, 0);
+	$setup__script($scope);
 }
 const $input_extra = /* @__PURE__ */ _const("input_extra", $input_extra__OR__x);
 const $input = ($scope, input) => $input_extra($scope, input.extra);

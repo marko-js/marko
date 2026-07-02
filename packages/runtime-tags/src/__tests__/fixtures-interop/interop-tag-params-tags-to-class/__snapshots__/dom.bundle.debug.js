@@ -38,15 +38,17 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $classlayout_content__multiplier__OR__baseCount = /* @__PURE__ */ _or(7, ($scope) => _text($scope["#text/4"], $scope._.multiplier * $scope.baseCount));
-const $classlayout_content__multiplier__script = _script("__tests__/template.marko_1_multiplier", ($scope) => _on($scope["#button/1"], "click", function() {
-	$multiplier($scope._, $scope._.multiplier + 1);
-}));
 const $classlayout_content__multiplier = /* @__PURE__ */ _closure_get("multiplier", ($scope) => {
 	_text($scope["#text/2"], $scope._.multiplier);
 	$classlayout_content__multiplier__OR__baseCount($scope);
-	$classlayout_content__multiplier__script($scope);
 });
-const $classlayout_content__setup = $classlayout_content__multiplier;
+const $classlayout_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
+	$multiplier($scope._, $scope._.multiplier + 1);
+}));
+const $classlayout_content__setup = ($scope) => {
+	$classlayout_content__multiplier($scope);
+	$classlayout_content__setup__script($scope);
+};
 const $classlayout_content__message = ($scope, message) => _text($scope["#text/0"], message);
 const $classlayout_content__baseCount = /* @__PURE__ */ _const("baseCount", ($scope) => {
 	_text($scope["#text/3"], $scope.baseCount);

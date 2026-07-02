@@ -16,7 +16,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	MyTag.content(1, "Hello", x);
 	_html(`<button>${_escape(x)}${_el_resume($scope0_id, "#text/2")}</button>${_el_resume($scope0_id, "#button/1")}`);
-	_script($scope0_id, "__tests__/template.marko_0_x");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		x,
 		"#childScope/0": _existing_scope($childScope)

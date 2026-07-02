@@ -13,7 +13,6 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "c", 1, 1, 1, 0, 1);
 	_script($scope0_id, "a0");
-	_script($scope0_id, "a1");
 	writeScope($scope0_id, { d: hide });
 	_resume_branch($scope0_id);
 });

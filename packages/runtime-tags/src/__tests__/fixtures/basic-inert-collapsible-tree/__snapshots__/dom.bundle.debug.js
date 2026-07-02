@@ -14,17 +14,17 @@ const $for_content__id = /* @__PURE__ */ _const("id", ($scope) => {
 	$if_content__id($scope);
 });
 const $for_content__input_path = /* @__PURE__ */ _for_closure("#ul/0", ($scope) => $for_content__id($scope, `${$scope._.input_path || "c"}-${$scope["#LoopKey"]}`));
-const $for_content__open__script = _script("__tests__/tags/comments.marko_1_open", ($scope) => _on($scope["#button/2"], "click", function() {
-	$for_content__open($scope, !$scope.open);
-}));
 const $for_content__open = /* @__PURE__ */ _let("open/12", ($scope) => {
 	_attr($scope["#li/0"], "hidden", !$scope.open);
 	_text($scope["#text/3"], $scope.open ? "[-]" : "[+]");
-	$for_content__open__script($scope);
 });
+const $for_content__setup__script = _script("__tests__/tags/comments.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {
+	$for_content__open($scope, !$scope.open);
+}));
 const $for_content__setup = ($scope) => {
 	$for_content__input_path._($scope);
 	$for_content__open($scope, true);
+	$for_content__setup__script($scope);
 };
 const $for_content__comment_text = ($scope, comment_text) => _text($scope["#text/1"], comment_text);
 const $for_content__if = /* @__PURE__ */ _if("#text/4", $template$1, /* @__PURE__ */ ((_w0) => `/${_w0}&`)(" b"), $if_content__setup);

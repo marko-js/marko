@@ -18,11 +18,10 @@ const $for_content__setup = $for_content__items;
 const $for_content__$params = ($scope, $params2) => $for_content__outer($scope, $params2[0]);
 const $for_content__outer = /* @__PURE__ */ _const(2, $for_content2__outer);
 const $for = /* @__PURE__ */ _for_of(1, "<!><!><!>", "b%c", $for_content__setup, $for_content__$params);
-const $items__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$items($scope, [...$scope.c, $scope.c?.length]);
-}));
 const $items = /* @__PURE__ */ _let(2, ($scope) => {
 	$for($scope, [$scope.c]);
 	$for_content__items($scope);
-	$items__script($scope);
 });
+const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
+	$items($scope, [...$scope.c, $scope.c?.length]);
+}));

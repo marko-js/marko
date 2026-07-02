@@ -1,0 +1,6 @@
+// `label` is only read inside the handler; the param's scope slot must still hold it.
+<let/log=""/>
+<for|label| of=["a", "b"]>
+  <button onClick() { log = `${log}[${label}]`; }>pick</button>
+</for>
+<div.log>${log}</div>

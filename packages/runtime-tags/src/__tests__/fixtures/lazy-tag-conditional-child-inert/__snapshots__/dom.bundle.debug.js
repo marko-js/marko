@@ -23,16 +23,16 @@ const $if_content__setup = ($scope) => {
 	$load_Child_tag_input_label($scope["#childScope/1"], "x");
 };
 const $if = /* @__PURE__ */ _if("#text/1", "<!><!><!><!>", "b%/&c", $if_content__setup);
-const $count__script = _script("__tests__/template.marko_0_count", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
-}));
 const $count = /* @__PURE__ */ _let("count/2", ($scope) => {
 	$if($scope, $scope.count % 2 === 0 ? 0 : 1);
 	$if_content__count($scope);
-	$count__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$count($scope, $scope.count + 1);
+}));
 function $setup($scope) {
 	$count($scope, 0);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
 

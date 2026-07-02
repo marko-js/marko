@@ -29,8 +29,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, "id", $scope0_id, "#tbody/0", 1, 1, 1, "</tbody>", 1);
 	_html(`</table><button class=remove>remove selected</button>${_el_resume($scope0_id, "#button/1")}<button class=rotate>rotate</button>${_el_resume($scope0_id, "#button/2")}<button class=clear>clear</button>${_el_resume($scope0_id, "#button/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	_script($scope0_id, "__tests__/template.marko_0_rows");
-	_script($scope0_id, "__tests__/template.marko_0_selected_rows");
 	writeScope($scope0_id, {
 		selected,
 		rows

@@ -13,7 +13,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		...rest
 	}, "#input/1", $scope0_id, "input")}>${_el_resume($scope0_id, "#input/1")}<span>${_escape(v)}${_el_resume($scope0_id, "#text/2")}</span>`);
 	_script($scope0_id, "__tests__/template.marko_0_v_rest");
-	_script($scope0_id, "__tests__/template.marko_0_v");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		v,
 		rest

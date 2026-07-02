@@ -43,13 +43,10 @@ const $ChildA_content__$temp = ($scope, $temp) => {
 	$ChildA_content__foo($scope, $temp.foo);
 };
 const $count__closure = /* @__PURE__ */ _closure($ChildA_content__count, $ChildB_content__count);
-const $count__script = _script("__tests__/template.marko_0_count", ($scope) => _on($scope["#button/6"], "click", function() {
+const $count = /* @__PURE__ */ _let("count/7", $count__closure);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/6"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
-const $count = /* @__PURE__ */ _let("count/7", ($scope) => {
-	$count__closure($scope);
-	$count__script($scope);
-});
 function $setup($scope) {
 	$ChildA_content__setup._($scope["#childScope/0"], $scope);
 	$ChildA_content__foo($scope["#childScope/0"], { bar: 0 });
@@ -70,5 +67,6 @@ function $setup($scope) {
 	$ChildB_content__input_id($scope["#childScope/5"], "f");
 	$ChildB_content__foo($scope["#childScope/5"]);
 	$count($scope, 0);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

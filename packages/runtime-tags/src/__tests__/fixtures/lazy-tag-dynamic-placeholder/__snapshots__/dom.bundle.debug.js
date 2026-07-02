@@ -28,25 +28,22 @@ const $try_content__setup = ($scope) => {
 };
 const $try_content__value = /* @__PURE__ */ _closure_get("value", $try_content__show__OR__value);
 const $show__closure = /* @__PURE__ */ _closure($try_content__show);
-const $show__script = _script("__tests__/template.marko_0_show", ($scope) => _on($scope["#button/0"], "click", function() {
-	$show($scope, !$scope.show);
-}));
-const $show = /* @__PURE__ */ _let("show/3", ($scope) => {
-	$show__closure($scope);
-	$show__script($scope);
-});
+const $show = /* @__PURE__ */ _let("show/3", $show__closure);
 const $value__closure = /* @__PURE__ */ _closure($try_content__value);
-const $value__script = _script("__tests__/template.marko_0_value", ($scope) => _on($scope["#button/1"], "click", function() {
-	$value($scope, $scope.value + 1);
-}));
-const $value = /* @__PURE__ */ _let("value/4", ($scope) => {
-	$value__closure($scope);
-	$value__script($scope);
-});
+const $value = /* @__PURE__ */ _let("value/4", $value__closure);
 const $try = /* @__PURE__ */ _try("#text/2", "<!><!><!>", "b%c", $try_content__setup);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	_on($scope["#button/0"], "click", function() {
+		$show($scope, !$scope.show);
+	});
+	_on($scope["#button/1"], "click", function() {
+		$value($scope, $scope.value + 1);
+	});
+});
 function $setup($scope) {
 	$show($scope, true);
 	$value($scope, 1);
 	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

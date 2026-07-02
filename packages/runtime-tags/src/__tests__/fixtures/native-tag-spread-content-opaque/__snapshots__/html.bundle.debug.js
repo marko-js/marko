@@ -27,7 +27,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#div/2", 1, 1, 1, "</div>");
-	_script($scope0_id, "__tests__/tags/my-box.marko_0_show");
+	_script($scope0_id, "__tests__/tags/my-box.marko_0");
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input");
 	writeScope($scope0_id, {
 		input,

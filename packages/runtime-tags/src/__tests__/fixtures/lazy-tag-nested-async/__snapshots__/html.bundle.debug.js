@@ -8,7 +8,7 @@ var grand_child_default = _template("__tests__/grand-child.marko", (input) => {
 		const $scope1_id = _scope_id();
 		_html(`<span id=grand-await>${_escape(v)}</span>`);
 	}, 0);
-	_script($scope0_id, "__tests__/grand-child.marko_0_n");
+	_script($scope0_id, "__tests__/grand-child.marko_0");
 	writeScope($scope0_id, { n }, "__tests__/grand-child.marko", 0, { n: "3:6" });
 	_resume_branch($scope0_id);
 });
@@ -33,7 +33,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 		}, "__tests__/child.marko", "6:2"));
 		_resume_branch($scope1_id);
 	});
-	_script($scope0_id, "__tests__/child.marko_0_count");
+	_script($scope0_id, "__tests__/child.marko_0");
 	writeScope($scope0_id, {
 		count,
 		"ClosureScopes:count": $count__closures

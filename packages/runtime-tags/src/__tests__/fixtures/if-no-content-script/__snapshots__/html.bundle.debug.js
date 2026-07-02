@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "#text/3");
-	_script($scope0_id, "__tests__/template.marko_0_count");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:5" });
 	_resume_branch($scope0_id);
 }, 1);

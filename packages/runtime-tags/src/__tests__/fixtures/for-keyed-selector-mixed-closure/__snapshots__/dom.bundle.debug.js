@@ -14,16 +14,13 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_id($scope, $params2[0]?.id);
 	$for_content__row_label($scope, $params2[0]?.label);
 };
-const $enabled__script = _script("__tests__/template.marko_0_enabled", ($scope) => _on($scope["#button/0"], "click", function() {
-	$enabled($scope, !$scope.enabled);
-}));
-const $enabled = /* @__PURE__ */ _let("enabled/2", ($scope) => {
-	$for_content__enabled($scope);
-	$enabled__script($scope);
-});
+const $enabled = /* @__PURE__ */ _let("enabled/2", $for_content__enabled);
 const $selected = /* @__PURE__ */ _let("selected/3");
 const $for = /* @__PURE__ */ _for_of("#ul/1", "<li> </li>", " D l", $for_content__setup, $for_content__$params);
 const $rows = /* @__PURE__ */ _let("rows/4", ($scope) => $for($scope, [$scope.rows, "id"]));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$enabled($scope, !$scope.enabled);
+}));
 function $setup($scope) {
 	$enabled($scope, true);
 	$selected($scope, 2);
@@ -41,5 +38,6 @@ function $setup($scope) {
 			label: "c"
 		}
 	]);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

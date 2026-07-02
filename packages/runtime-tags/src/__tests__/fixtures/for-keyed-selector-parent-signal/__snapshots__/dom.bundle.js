@@ -6,10 +6,7 @@ const $for_content__row_id__script = _script("a0", ($scope) => _on($scope.b, "cl
 	$selected($scope._, $scope.f);
 }));
 const $selected = /* @__PURE__ */ _let(2, $for_content__selected);
-const $enabled__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
+const $enabled = /* @__PURE__ */ _let(3, $for_content__enabled);
+const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
 	$enabled($scope, !$scope.d);
 }));
-const $enabled = /* @__PURE__ */ _let(3, ($scope) => {
-	$for_content__enabled($scope);
-	$enabled__script($scope);
-});

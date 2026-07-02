@@ -43,7 +43,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html("m");
 	}, $scope0_id));
 	_dynamic_tag($scope0_id, "#text/6", x ? localTag : a_default, { label: "la" });
-	_script($scope0_id, "__tests__/template.marko_0_x");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "4:6" });
 	_resume_branch($scope0_id);
 }, 1);

@@ -56,7 +56,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		writeScope($scope5_id, {}, "__tests__/template.marko", "33:6");
 	}, getMissingBy(), $scope0_id, "#div/4", 1, 1, 1, "</div>", 1);
 	_html(`<button>Rotate</button>${_el_resume($scope0_id, "#button/5")}</div>`);
-	_script($scope0_id, "__tests__/template.marko_0_items");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { items }, "__tests__/template.marko", 0, { items: "14:8" });
 	_resume_branch($scope0_id);
 }, 1);

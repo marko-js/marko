@@ -8,9 +8,6 @@ var template_default = _template("a", (input) => {
 	let $count3 = 0;
 	_html(`<div><button>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}<div><button>${_escape($count)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}<div><button>${_escape($count2)}${_el_resume($scope0_id, "f")}</button>${_el_resume($scope0_id, "e")}</div></div></div><div><button>${_escape($count3)}${_el_resume($scope0_id, "h")}</button>${_el_resume($scope0_id, "g")}</div>`);
 	_script($scope0_id, "a0");
-	_script($scope0_id, "a1");
-	_script($scope0_id, "a2");
-	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
 		i: count,
 		j: $count,

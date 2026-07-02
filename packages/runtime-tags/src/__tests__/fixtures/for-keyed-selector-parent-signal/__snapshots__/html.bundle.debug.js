@@ -29,7 +29,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko", "6:4", { row_id: ["row.id", "6:8"] });
 	}, "id", $scope0_id, "#tbody/0", 1, 0, 0, 0, 1);
 	_html(`</tbody></table><button class=toggle>toggle</button>${_el_resume($scope0_id, "#button/1")}`);
-	_script($scope0_id, "__tests__/template.marko_0_enabled");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		selected,
 		enabled

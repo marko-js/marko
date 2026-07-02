@@ -21,13 +21,13 @@ const $template = /* @__PURE__ */ ((_w0, _w1) => `${_w0}${_w1}`)($template$1, $t
 const $walks = /* @__PURE__ */ ((_w0, _w1) => `/${_w0}&/${_w1}&`)($walks$1, $walks$1);
 const $clickCount = /* @__PURE__ */ _let("clickCount/2", ($scope) => {
 	$value2($scope["#childScope/0"], { text: $scope.clickCount });
-	$onClick$1($scope["#childScope/0"], $onClick($scope));
 	$text($scope["#childScope/1"], $scope.clickCount);
-	$onClick$1($scope["#childScope/1"], $onClick2($scope));
 });
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
+	$onClick$1($scope["#childScope/0"], $onClick($scope));
 	/* @__PURE__ */ $setup$1($scope["#childScope/1"]);
+	$onClick$1($scope["#childScope/1"], $onClick2($scope));
 	$clickCount($scope, 0);
 }
 function $onClick2($scope) {

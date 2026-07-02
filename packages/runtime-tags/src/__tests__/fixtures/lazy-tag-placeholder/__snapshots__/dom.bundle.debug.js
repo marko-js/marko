@@ -19,17 +19,15 @@ const $try_content__setup = ($scope) => {
 	$load_Child_setup($scope);
 };
 const $count__closure = /* @__PURE__ */ _closure($try_content__count);
-const $count__script = _script("__tests__/template.marko_0_count", ($scope) => _on($scope["#button/1"], "click", function() {
-	$count($scope, $scope.count + 1);
-}));
-const $count = /* @__PURE__ */ _let("count/5", ($scope) => {
-	$count__closure($scope);
-	$count__script($scope);
-});
+const $count = /* @__PURE__ */ _let("count/5", $count__closure);
 const $input_value = $count;
 const $try = /* @__PURE__ */ _try("#text/0", "<!><!><!><!>", "b%/&c", $try_content__setup);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
+	$count($scope, $scope.count + 1);
+}));
 function $setup($scope) {
 	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_value($scope, input.value);
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup, $input);

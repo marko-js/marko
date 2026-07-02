@@ -14,22 +14,17 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_id($scope, $params2[0]?.id);
 	$for_content__row_label($scope, $params2[0]?.label);
 };
-const $selected__OR__rows = /* @__PURE__ */ _or(6, _script("a3", ($scope) => _on($scope.b, "click", function() {
-	$rows($scope, $scope.f.filter((row) => row.id !== $scope.e));
-})));
-const $selected = /* @__PURE__ */ _let(4, ($scope) => {
-	$selected__OR__rows($scope);
-	$for_content__selected($scope);
-});
+const $selected = /* @__PURE__ */ _let(4, $for_content__selected);
 const $for = /* @__PURE__ */ _for_of(0, "<tr><td><button class=select> </button></td></tr>", " E D n", $for_content__setup, $for_content__$params);
-const $rows__script = _script("a2", ($scope) => _on($scope.c, "click", function() {
-	$rows($scope, [...$scope.f.slice(1), $scope.f?.[0]]);
-}));
-const $rows = /* @__PURE__ */ _let(5, ($scope) => {
-	$for($scope, [$scope.f, "id"]);
-	$selected__OR__rows($scope);
-	$rows__script($scope);
+const $rows = /* @__PURE__ */ _let(5, ($scope) => $for($scope, [$scope.f, "id"]));
+const $setup__script = _script("a1", ($scope) => {
+	_on($scope.b, "click", function() {
+		$rows($scope, $scope.f.filter((row) => row.id !== $scope.e));
+	});
+	_on($scope.c, "click", function() {
+		$rows($scope, [...$scope.f.slice(1), $scope.f?.[0]]);
+	});
+	_on($scope.d, "click", function() {
+		$selected($scope, void 0);
+	});
 });
-const $setup__script = _script("a1", ($scope) => _on($scope.d, "click", function() {
-	$selected($scope, void 0);
-}));

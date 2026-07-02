@@ -16,26 +16,20 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__row_id($scope, $params2[0]?.id);
 	$for_content__row_label($scope, $params2[0]?.label);
 };
-const $selected__OR__rows__script = _script("__tests__/template.marko_0_selected_rows", ($scope) => _on($scope["#button/1"], "click", function() {
-	$rows($scope, $scope.rows.filter((row) => row.id !== $scope.selected));
-}));
-const $selected__OR__rows = /* @__PURE__ */ _or(6, $selected__OR__rows__script);
-const $selected = /* @__PURE__ */ _let("selected/4", ($scope) => {
-	$selected__OR__rows($scope);
-	$for_content__selected($scope);
-});
+const $selected = /* @__PURE__ */ _let("selected/4", $for_content__selected);
 const $for = /* @__PURE__ */ _for_of("#tbody/0", "<tr><td><button class=select> </button></td></tr>", " E D n", $for_content__setup, $for_content__$params);
-const $rows__script = _script("__tests__/template.marko_0_rows", ($scope) => _on($scope["#button/2"], "click", function() {
-	$rows($scope, [...$scope.rows.slice(1), $scope.rows?.[0]]);
-}));
-const $rows = /* @__PURE__ */ _let("rows/5", ($scope) => {
-	$for($scope, [$scope.rows, "id"]);
-	$selected__OR__rows($scope);
-	$rows__script($scope);
+const $rows = /* @__PURE__ */ _let("rows/5", ($scope) => $for($scope, [$scope.rows, "id"]));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	_on($scope["#button/1"], "click", function() {
+		$rows($scope, $scope.rows.filter((row) => row.id !== $scope.selected));
+	});
+	_on($scope["#button/2"], "click", function() {
+		$rows($scope, [...$scope.rows.slice(1), $scope.rows?.[0]]);
+	});
+	_on($scope["#button/3"], "click", function() {
+		$selected($scope, undefined);
+	});
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
-	$selected($scope, undefined);
-}));
 function $setup($scope) {
 	$selected($scope, undefined);
 	$rows($scope, [

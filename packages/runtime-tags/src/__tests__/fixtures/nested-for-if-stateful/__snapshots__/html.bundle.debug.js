@@ -2,7 +2,6 @@
 var template_default = _template("__tests__/template.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $counts__closures = new Set();
 	let counts = [
 		0,
 		0,
@@ -15,8 +14,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			if (editing) {
 				const $scope2_id = _scope_id();
 				_html(`<button>Confirm <!>${_escape(count + 1)}${_el_resume($scope2_id, "#text/1")}</button>${_el_resume($scope2_id, "#button/0")}`);
-				_script($scope2_id, "__tests__/template.marko_2_counts_count");
-				_subscribe($counts__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4"));
+				_script($scope2_id, "__tests__/template.marko_2_count");
+				writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "4:4");
 				return 0;
 			} else {
 				const $scope3_id = _scope_id();
@@ -35,9 +34,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			"#LoopKey": "2:13"
 		});
 	}, 0, $scope0_id, "#text/0");
-	writeScope($scope0_id, {
-		counts,
-		"ClosureScopes:counts": $counts__closures
-	}, "__tests__/template.marko", 0, { counts: "1:6" });
+	writeScope($scope0_id, { counts }, "__tests__/template.marko", 0, { counts: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

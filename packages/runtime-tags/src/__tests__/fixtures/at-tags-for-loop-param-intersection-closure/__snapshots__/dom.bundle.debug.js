@@ -18,14 +18,13 @@ const $item_content__mult = /* @__PURE__ */ _closure_get("mult", $item_content__
 const $item_content__setup = $item_content__mult;
 const $item_content = /* @__PURE__ */ _content_closures(/* @__PURE__ */ _content("__tests__/template.marko_1_content", " ", " b", $item_content__setup), { item: $item_content__mult__OR__item });
 const $mult__closure = /* @__PURE__ */ _closure($item_content__mult);
-const $mult__script = _script("__tests__/template.marko_0_mult", ($scope) => _on($scope["#button/1"], "click", function() {
-	$mult($scope, $scope.mult + 1);
-}));
 const $mult = /* @__PURE__ */ _let("mult/3", ($scope) => {
 	_text($scope["#text/2"], $scope.mult);
 	$mult__closure($scope);
-	$mult__script($scope);
 });
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
+	$mult($scope, $scope.mult + 1);
+}));
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	let $item;
@@ -38,5 +37,6 @@ function $setup($scope) {
 	});
 	$input_item($scope["#childScope/0"], $item);
 	$mult($scope, 2);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -6,7 +6,7 @@ var child_s_default = _template("__tests__/child-s.marko", (input) => {
 	let holder = input.holder;
 	let verified = "?";
 	_html(`<button class=s>s:<!>${_escape(verified)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/child-s.marko_0_isShared_holder");
+	_script($scope0_id, "__tests__/child-s.marko_0");
 	writeScope($scope0_id, {
 		isShared,
 		holder
@@ -25,7 +25,7 @@ var child_b_default = _template("__tests__/child-b.marko", (input) => {
 	let inner = input.inner;
 	let verified = "?";
 	_html(`<button class=b>b:<!>${_escape(verified)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
-	_script($scope0_id, "__tests__/child-b.marko_0_isInner_inner");
+	_script($scope0_id, "__tests__/child-b.marko_0");
 	writeScope($scope0_id, {
 		isInner,
 		inner
@@ -57,7 +57,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			return o === Object.values(shared)[0];
 		}, "__tests__/template.marko_0/isInner", $scope0_id)
 	});
-	_script($scope0_id, "__tests__/template.marko_0_shared_count");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		shared,
 		count

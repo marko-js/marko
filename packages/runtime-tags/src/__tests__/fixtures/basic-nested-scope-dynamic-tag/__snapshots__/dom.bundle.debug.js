@@ -11,14 +11,14 @@ var child_default = /* @__PURE__ */ _template("__tests__/tags/child.marko", $tem
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $falseChild_content__count__script = _script("__tests__/template.marko_1_count", ($scope) => _on($scope["#button/0"], "click", function() {
+const $falseChild_content__count = /* @__PURE__ */ _closure_get("count", ($scope) => _text($scope["#text/1"], $scope._.count));
+const $falseChild_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope._, $scope._.count + 1);
 }));
-const $falseChild_content__count = /* @__PURE__ */ _closure_get("count", ($scope) => {
-	_text($scope["#text/1"], $scope._.count);
-	$falseChild_content__count__script($scope);
-});
-const $falseChild_content__setup = $falseChild_content__count;
+const $falseChild_content__setup = ($scope) => {
+	$falseChild_content__count($scope);
+	$falseChild_content__setup__script($scope);
+};
 const $falseChild_content = _content_resume("__tests__/template.marko_1_content", "<button> </button>", " D l", $falseChild_content__setup);
 const $count__closure = /* @__PURE__ */ _closure($falseChild_content__count);
 const $count = /* @__PURE__ */ _let("count/1", $count__closure);

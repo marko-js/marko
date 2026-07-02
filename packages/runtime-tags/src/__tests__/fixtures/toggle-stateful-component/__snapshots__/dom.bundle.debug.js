@@ -1,20 +1,16 @@
 // tags/counter.marko
 const $template$1 = "<button> </button>";
 const $walks$1 = " D l";
-const $input_onCount__OR__clickCount__script = _script("__tests__/tags/counter.marko_0_input_onCount_clickCount", ($scope) => _on($scope["#button/0"], "click", function() {
-	$scope.input_onCount($clickCount($scope, $scope.clickCount + 1));
-}));
-const $input_onCount__OR__clickCount = /* @__PURE__ */ _or(6, $input_onCount__OR__clickCount__script);
-const $clickCount = /* @__PURE__ */ _let("clickCount/5", ($scope) => {
-	_text($scope["#text/1"], ((() => {
-		if ($scope.clickCount > 0) throw new Error("This should not have executed since the parent removes this component when the count is greater than 0");
-	})(), $scope.clickCount));
-	$input_onCount__OR__clickCount($scope);
-});
+const $clickCount = /* @__PURE__ */ _let("clickCount/5", ($scope) => _text($scope["#text/1"], ((() => {
+	if ($scope.clickCount > 0) throw new Error("This should not have executed since the parent removes this component when the count is greater than 0");
+})(), $scope.clickCount)));
 function $setup$1($scope) {
 	$clickCount($scope, 0);
 }
-const $input_onCount = /* @__PURE__ */ _const("input_onCount", $input_onCount__OR__clickCount);
+const $input_onCount__script = _script("__tests__/tags/counter.marko_0_input_onCount", ($scope) => _on($scope["#button/0"], "click", function() {
+	$scope.input_onCount($clickCount($scope, $scope.clickCount + 1));
+}));
+const $input_onCount = /* @__PURE__ */ _const("input_onCount", $input_onCount__script);
 const $input = ($scope, input) => $input_onCount($scope, input.onCount);
 var counter_default = /* @__PURE__ */ _template("__tests__/tags/counter.marko", $template$1, $walks$1, $setup$1, $input);
 

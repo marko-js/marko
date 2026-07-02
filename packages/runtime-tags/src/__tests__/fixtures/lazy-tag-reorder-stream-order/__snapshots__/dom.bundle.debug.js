@@ -1,23 +1,19 @@
 // child.marko
 const $template = "<button><!>:<!></button>";
 const $walks = " D%c%l";
-const $input_label__OR__shared__OR__count__script = _script("__tests__/child.marko_0_input_label_shared_count", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + $scope.shared[$scope.input_label]);
-}));
-const $input_label__OR__shared__OR__count = /* @__PURE__ */ _or(9, $input_label__OR__shared__OR__count__script, 2);
-const $shared = /* @__PURE__ */ _let("shared/7", $input_label__OR__shared__OR__count);
+const $shared = /* @__PURE__ */ _let("shared/7");
 const $input_shared = $shared;
-const $count = /* @__PURE__ */ _let("count/8", ($scope) => {
-	_text($scope["#text/2"], $scope.count);
-	$input_label__OR__shared__OR__count($scope);
-});
+const $count = /* @__PURE__ */ _let("count/8", ($scope) => _text($scope["#text/2"], $scope.count));
 function $setup($scope) {
 	$count($scope, 0);
 }
+const $input_label__script = _script("__tests__/child.marko_0_input_label", ($scope) => _on($scope["#button/0"], "click", function() {
+	$count($scope, $scope.count + $scope.shared[$scope.input_label]);
+}));
 const $input_label = /* @__PURE__ */ _const("input_label", ($scope) => {
 	_attr_class($scope["#button/0"], $scope.input_label);
 	_text($scope["#text/1"], $scope.input_label);
-	$input_label__OR__shared__OR__count($scope);
+	$input_label__script($scope);
 });
 const $input = ($scope, input) => {
 	$input_shared($scope, input.shared);

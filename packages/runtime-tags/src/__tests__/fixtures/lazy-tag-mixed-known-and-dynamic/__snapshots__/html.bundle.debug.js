@@ -18,8 +18,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_set_serialize_reason(1);
 	$Child_withLoadAssets({ value });
 	_dynamic_tag($scope0_id, "#text/4", show ? $Child_withLoadAssets : null, { value });
-	_script($scope0_id, "__tests__/template.marko_0_value");
-	_script($scope0_id, "__tests__/template.marko_0_show");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		show,
 		value,

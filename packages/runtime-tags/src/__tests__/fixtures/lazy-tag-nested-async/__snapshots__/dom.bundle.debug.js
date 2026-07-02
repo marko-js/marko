@@ -11,20 +11,20 @@ const $await_content__setup = ($scope) => {
 const $await_content__value = ($scope, value) => _text($scope["#text/0"], value);
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $count__closure = /* @__PURE__ */ _closure($await_content__count);
-const $count__script = _script("__tests__/child.marko_0_count", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
-}));
 const $count = /* @__PURE__ */ _let("count/6", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$count__closure($scope);
-	$count__script($scope);
 });
 const $input_value = $count;
 const $await_content = /* @__PURE__ */ _await_content("#text/2", "<span id=child-await> </span><!><!><!>", "D l%/&c", $await_content__setup);
 const $await_promise = /* @__PURE__ */ _await_promise("#text/2", $await_content__$params);
+const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$count($scope, $scope.count + 1);
+}));
 function $setup($scope) {
 	$await_content($scope);
 	$await_promise($scope, resolveAfter(10, 1));
+	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_value($scope, input.value);
 var child_default = /* @__PURE__ */ _template("__tests__/child.marko", $template, $walks, $setup, $input);
@@ -34,22 +34,20 @@ const $template = "<button id=grand>grand:<!>:<!></button><!><!>";
 const $walks = " Db%c%l%c";
 const $await_content__v = ($scope, v) => _text($scope["#text/0"], v);
 const $await_content__$params = ($scope, $params2) => $await_content__v($scope, $params2[0]);
-const $n__script = _script("__tests__/grand-child.marko_0_n", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
-}));
-const $n = /* @__PURE__ */ _let("n/7", ($scope) => {
-	_text($scope["#text/1"], $scope.n);
-	$n__script($scope);
-});
+const $n = /* @__PURE__ */ _let("n/7", ($scope) => _text($scope["#text/1"], $scope.n));
 const $input_value = ($scope, input_value) => {
 	_text($scope["#text/2"], input_value);
 	$n($scope, input_value);
 };
 const $await_content = /* @__PURE__ */ _await_content("#text/3", "<span id=grand-await> </span>", "D l");
 const $await_promise = /* @__PURE__ */ _await_promise("#text/3", $await_content__$params);
+const $setup__script = _script("__tests__/grand-child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$n($scope, $scope.n + 1);
+}));
 function $setup($scope) {
 	$await_content($scope);
 	$await_promise($scope, resolveAfter(20, 2));
+	$setup__script($scope);
 }
 const $input = ($scope, input) => $input_value($scope, input.value);
 var grand_child_default = /* @__PURE__ */ _template("__tests__/grand-child.marko", $template, $walks, $setup, $input);

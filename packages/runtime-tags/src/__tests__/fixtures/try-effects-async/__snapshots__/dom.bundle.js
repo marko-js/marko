@@ -14,11 +14,7 @@ const $try_content__clickCount = /* @__PURE__ */ _closure_get(3, ($scope) => {
 	$try_content__await_promise($scope, resolveAfter($scope._.d));
 	$try_content__clickCount__script($scope);
 });
-const $clickCount__closure = /* @__PURE__ */ _closure($try_content__clickCount);
-const $clickCount__script = _script("a4", ($scope) => _on($scope.a, "click", function() {
+const $clickCount = /* @__PURE__ */ _let(3, /* @__PURE__ */ _closure($try_content__clickCount));
+const $setup__script = _script("a4", ($scope) => _on($scope.a, "click", function() {
 	$clickCount($scope, $scope.d + 1);
 }));
-const $clickCount = /* @__PURE__ */ _let(3, ($scope) => {
-	$clickCount__closure($scope);
-	$clickCount__script($scope);
-});

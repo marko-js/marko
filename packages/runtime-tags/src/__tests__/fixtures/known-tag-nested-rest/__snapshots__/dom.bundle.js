@@ -11,14 +11,13 @@ const $group2 = ($scope, $group) => {
 };
 
 // template.marko
-const $n__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$n($scope, $scope.d + 1);
-}));
 const $n = /* @__PURE__ */ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	$group2($scope.c, {
 		keep: "k",
 		val: $scope.d
 	});
-	$n__script($scope);
 });
+const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
+	$n($scope, $scope.d + 1);
+}));

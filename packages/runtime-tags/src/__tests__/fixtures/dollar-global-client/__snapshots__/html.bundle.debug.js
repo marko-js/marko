@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}
 	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
 	_html(`<button>Toggle</button>${_el_resume($scope0_id, "#button/2")}</div>`);
-	_script($scope0_id, "__tests__/template.marko_0_show");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { show }, "__tests__/template.marko", 0, { show: "2:8" });
 	_resume_branch($scope0_id);
 }, 1);

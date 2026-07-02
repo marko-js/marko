@@ -14,25 +14,24 @@ let $load_Child_setup = /* @__PURE__ */ _load_setup("#text/2", "#childScope/3", 
 let $load_Child_tag_input_value = /* @__PURE__ */ _load_signal(() => import("./v:child.marko.input_value.mjs"));
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/4");
 const $show__OR__value = /* @__PURE__ */ _or(7, ($scope) => $dynamicTag($scope, $scope.show ? Child : null, () => ({ value: $scope.value })));
-const $show__script = _script("__tests__/template.marko_0_show", ($scope) => _on($scope["#button/0"], "click", function() {
-	$show($scope, !$scope.show);
-}));
-const $show = /* @__PURE__ */ _let("show/5", ($scope) => {
-	$show__OR__value($scope);
-	$show__script($scope);
-});
-const $value__script = _script("__tests__/template.marko_0_value", ($scope) => _on($scope["#button/1"], "click", function() {
-	$value($scope, $scope.value + 1);
-}));
+const $show = /* @__PURE__ */ _let("show/5", $show__OR__value);
 const $value = /* @__PURE__ */ _let("value/6", ($scope) => {
 	$load_Child_tag_input_value($scope["#childScope/3"], $scope.value);
 	$show__OR__value($scope);
-	$value__script($scope);
+});
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	_on($scope["#button/0"], "click", function() {
+		$show($scope, !$scope.show);
+	});
+	_on($scope["#button/1"], "click", function() {
+		$value($scope, $scope.value + 1);
+	});
 });
 function $setup($scope) {
 	$load_Child_setup($scope);
 	$show($scope, true);
 	$value($scope, 0);
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
 

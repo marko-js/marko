@@ -8,22 +8,22 @@ const $Parent__OR__Child = /* @__PURE__ */ _or(13, _script("a3", ($scope) => {
 	$scope.m;
 	for (const node of $scope.a.querySelectorAll("a")) if (node.getAttribute("ns") !== node.namespaceURI) node.setAttribute("ns", node.namespaceURI);
 }));
-const $Parent__script = _script("a5", ($scope) => _on($scope.g, "click", function() {
-	$Parent($scope, $scope.l === "div" ? "svg" : "div");
-}));
 const $Parent = /* @__PURE__ */ _let(11, ($scope) => {
 	$dynamicTag3($scope, $scope.l);
 	$Parent__OR__Child($scope);
-	$Parent__script($scope);
 });
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(2, $Child_content);
 const $dynamicTag2 = /* @__PURE__ */ _dynamic_tag(4, $Child_content2);
-const $Child__script = _script("a4", ($scope) => _on($scope.h, "click", function() {
-	$Child($scope, $scope.m === "a" ? null : "a");
-}));
 const $Child = /* @__PURE__ */ _let(12, ($scope) => {
 	$dynamicTag($scope, $scope.m, () => ({ href: "#bar" }));
 	$dynamicTag2($scope, $scope.m, () => ({ href: "#bar" }));
 	$Parent__OR__Child($scope);
-	$Child__script($scope);
+});
+const $setup__script = _script("a4", ($scope) => {
+	_on($scope.g, "click", function() {
+		$Parent($scope, $scope.l === "div" ? "svg" : "div");
+	});
+	_on($scope.h, "click", function() {
+		$Child($scope, $scope.m === "a" ? null : "a");
+	});
 });

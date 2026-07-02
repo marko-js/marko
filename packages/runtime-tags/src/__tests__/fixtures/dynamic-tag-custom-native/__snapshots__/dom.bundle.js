@@ -8,10 +8,7 @@ var child_default = /* @__PURE__ */ _template("b", $template, $walks, $setup, $i
 
 // template.marko
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag(1);
-const $tagName__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
+const $tagName = /* @__PURE__ */ _let(2, ($scope) => $dynamicTag($scope, $scope.c, () => ({ id: "dynamic" })));
+const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$tagName($scope, $scope.c === child_default ? "div" : child_default);
 }));
-const $tagName = /* @__PURE__ */ _let(2, ($scope) => {
-	$dynamicTag($scope, $scope.c, () => ({ id: "dynamic" }));
-	$tagName__script($scope);
-});

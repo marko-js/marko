@@ -12,8 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_show_end($scope0_id, "#text/4", inner, 1, 1, 0, 1);
 	_html(" after");
 	_show_end($scope0_id, "#text/5", outer);
-	_script($scope0_id, "__tests__/template.marko_0_inner");
-	_script($scope0_id, "__tests__/template.marko_0_outer");
+	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		outer,
 		inner

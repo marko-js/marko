@@ -13,16 +13,14 @@ const $try_content__setup = ($scope) => {
 	$await_content($scope);
 };
 const $clickCount__closure = /* @__PURE__ */ _closure($try_content__clickCount);
-const $clickCount__script = _script("__tests__/template.marko_0_clickCount", ($scope) => _on($scope["#button/0"], "click", function() {
+const $clickCount = /* @__PURE__ */ _let("clickCount/2", $clickCount__closure);
+const $try = /* @__PURE__ */ _try("#text/1", "<!><!><!>", "b%c", $try_content__setup);
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$clickCount($scope, $scope.clickCount + 1);
 }));
-const $clickCount = /* @__PURE__ */ _let("clickCount/2", ($scope) => {
-	$clickCount__closure($scope);
-	$clickCount__script($scope);
-});
-const $try = /* @__PURE__ */ _try("#text/1", "<!><!><!>", "b%c", $try_content__setup);
 function $setup($scope) {
 	$clickCount($scope, 0);
 	$try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
+	$setup__script($scope);
 }
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

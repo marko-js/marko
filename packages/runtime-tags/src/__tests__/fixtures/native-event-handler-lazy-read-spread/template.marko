@@ -1,0 +1,8 @@
+// Handlers in a native tag spread read `count` lazily from scope.
+<let/count=0/>
+<let/log=""/>
+
+<button.inc onClick() { count++; }>inc</button>
+<button.act ...{ onClick() { log = `${log}[${count}]`; } }>act</button>
+
+<div.log>${log}</div>
