@@ -338,11 +338,12 @@ codebase otherwise avoids everywhere.
 Fresh loop items / flipped branches need their DOM built client-side. Two
 strategies, chosen per section by the compiler:
 
-1. **Clone + merge** (placement-only, shown above): the persisted entry
-   carries the section's `template`/`walks` strings (compiler-split into a
-   tiny shared module so the DOM output and persisted entry don't duplicate
-   them); fresh branches clone, walk-bind, then merge patch values. No
-   expressions ship; per-new-item wire = its hole values.
+1. **Clone + merge** (placement-only, shown above): fresh branches clone the
+   section's `template`/`walks`, walk-bind, then merge patch values. No
+   expressions ship; per-new-item wire = its hole values. Where the strings
+   live is its own axis — compiled into the entry (or a shared module), or
+   **wire-delivered per patch** (see the spike above), which the prototype
+   now uses.
 2. **Reconcile-by-input**: drive the existing `$input_related → _for_of`
    chain with the new collection; the existing keyed reconciler + body render
    code build items. Requires the body's render expressions to be shippable
@@ -477,6 +478,96 @@ the check is byte-neutral-to-negative and the sparse semantics — absence
 means unchanged, matching the G2 decision for conditional outcomes — hold
 uniformly.
 
+### Effects on update
+
+Update responses carry **no effect strings for matched scopes**. The
+reasoning: a matched scope's effects (`_script` bodies, event binding,
+lifecycle) already ran at mount, and the only way a persisted update can
+change what they observe is through merged values — and the compiled graph
+already attaches each effect statement downstream of its referenced
+bindings' value signals, so writing the slot and invoking the signal re-runs
+dependent effects through the normal path (that wiring partitions into the
+persisted entry along with the rest of the param chain). Effects therefore
+run in exactly two situations:
+
+1. **Mount, inside freshly created subtrees** — `createAndSetupBranch`
+   queues setup for wire-cloned branches and fragment insertions, exactly as
+   for client-rendered branches today.
+2. **Dependency-driven re-runs** — a merged value's signal queues dependent
+   effects the same way a `<let>` write does.
+
+The server-side counterpart is G5: the update render suppresses effect
+emission for matched scopes (page B's payload currently includes the
+`_script` effect for scope 1) and emits them only within fresh subtrees.
+The e2e prototype asserts the client half with a double-bind detector: after
+the patch, one click toggles `expanded` exactly once (a replayed `_script`
+would have bound a second handler, making clicks net no-ops) and
+interactivity is intact.
+
+### Spike: wire-delivered branch markup
+
+Instead of baking branch `template`/`walks` strings into persisted entries,
+the server can transmit them **in the patch, only for branches it actually
+rendered**, keyed by content id; the client caches pairs per build:
+
+```js
+// patch `templates` frame
+{ "product#if1": ["<em>Save <!>%</em>", "Db%l"],
+  "product#for1": ["<li><span class=price>$<!></span> <!></li>", "D/Db%l&b%l"] }
+
+// persisted entry references content ids; the signals are the same
+// compiled _if/_for_of, constructed on first use from the store:
+const $if_update = _wire_if("#text/5", ["product#if1"]);
+const $for_update = _wire_for("#ul/6", "product#for1", bodyMerge);
+```
+
+The e2e prototype runs this shape green (`update-runtime.js` store +
+`_wire_if`/`_wire_for`). The store uses `||=`, so retransmission is a
+no-op — server-side pruning is purely an optimization, never a correctness
+requirement. Measured on the example: entry 1106 → 1088 B min (547 → 513
+gzip; the example's markup is only ~60 chars — savings scale with branch
+markup size), wire helpers + store cost ~340 B min one-time in the runtime,
+templates frame 120 B raw on the wire.
+
+Why this is attractive:
+
+- **Pay-for-what-renders.** Entries carry only merge logic (O(reactive
+  structure)); markup bytes are paid only when a server-driven branch
+  actually (re)renders in a patch, not for every branch a template _might_
+  render. For content-heavy or rarely-taken branches this dominates.
+- **Template + values beats fragments for loops.** N fresh items cost one
+  template pair + N value fills, vs N rendered fragments — and cloned
+  branches walk-bind, needing no marker parsing. This subsumes most of the
+  size-heuristic reason for fragment-class; fragments remain for interop and
+  non-serializable structure.
+- **Initial load is untouched** — initial pages never need pairs (the DOM is
+  the markup); this trades incremental-JS bytes for patch bytes.
+
+Costs and open choices:
+
+- **Session vs HTTP cache.** Compiled-in strings ride immutable chunk
+  caching across sessions; wire pairs live per session (or sessionStorage).
+  Repeat visitors re-download pairs once per session.
+- **Server needs the DOM-shape strings.** The HTML output interleaves static
+  markup with dynamic writes — the client template literal does not exist in
+  server bundles today. Options: (i) flag-gated emission of the pairs into
+  the HTML output per section; (ii) a build-emitted server-only manifest
+  module (same bytes, centralized); (iii) the server reads them from the
+  client build's chunks at deploy time (zero duplication, requires client
+  assets visible to the server runtime).
+- **Hints vs statelessness.** v1 sends pairs unconditionally for rendered
+  branches (idempotent client store makes that safe, gzip makes it cheap).
+  A per-id "already have" list is the cache-hostile extreme (tier-2 only).
+  The interesting middle: the tier-2 `X-Marko-From` hint lets the server
+  _compute_ what a client that came from route A already holds (patch
+  content is deterministic per (from, to, build)) — pruning with **no new
+  cache dimension** for single-hop, though multi-hop accumulation would need
+  a visited-routes hint.
+- **Code still comes from chunks.** Wire pairs replace markup strings only;
+  interactive branch bodies still need their setup/handler code from the
+  main module — the compiler knows which branches are placement-only (fully
+  wire-servable) vs interactive (chunk-dependent).
+
 ### Confirmed update-render writer gaps (G1–G5)
 
 Page B's persisted render emits today:
@@ -527,10 +618,11 @@ regardless) and the finding-2 guard split on the initial render.
   placeholders mid-patch, hoists/getters, tag variables, controllable
   attrs — each needs its B2 emission shape spelled out (most look like the
   conditional/loop pattern: reuse the existing signal with a merge params).
-- **`template`/`walks` splitting**: the prototype duplicated the (short) body
-  strings into the entry; decide duplicate-vs-shared-module per template by
-  measured size, since the strings already exist in the DOM output's own
-  `_if`/`_for_of` calls.
+- **Branch markup delivery**: the prototype now wire-delivers
+  `template`/`walks` pairs (see the spike); remaining decisions are the
+  server-side source for the DOM-shape strings (emit into HTML output vs
+  server manifest vs reading client chunks), whether pairs persist beyond
+  the session, and when hint-driven pruning is worth enabling.
 - **Effect ordering**: entry effects are emitted in server completion order;
   child-before-owner arrival is handled by lazy owner resolution — confirm no
   case needs stronger ordering (suspected fine given fills always precede the

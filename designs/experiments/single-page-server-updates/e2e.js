@@ -84,7 +84,8 @@ async function main() {
   const domRuntime = require("@marko/runtime-tags/debug/dom");
   require(path.join(E, "product.marko.dom.cjs")); // registers event handler etc.
   const productUpdate = require(path.join(E, "entries/product.update.js"));
-  const { createPatch, flushPatch } = require(path.join(E, "update-runtime.js"));
+  const updateRuntime = require(path.join(E, "update-runtime.js"));
+  const { createPatch, flushPatch } = updateRuntime;
 
   // Capture the live root scope via a root entry effect (how the real
   // system's update entry would be handed its pairing root). The page's
@@ -127,6 +128,13 @@ async function main() {
 
   // --- 5. Apply the A1 patch through the B2 merges ------------------------
   const mutations = observeMutations(window);
+  // The patch's `templates` frame: markup for server-driven branches this
+  // update rendered, keyed by content id. The client caches pairs, so a
+  // hinted server can omit ones this client already holds.
+  updateRuntime.addTemplates({
+    "product#if1": ["<em>Save <!>%</em>", "Db%l"],
+    "product#for1": ["<li><span class=price>$<!></span> <!></li>", "D/Db%l&b%l"],
+  });
   const getPatchScope = createPatch(patchFill);
   productUpdate.$update(getPatchScope(1), liveRoot);
   flushPatch();
@@ -145,9 +153,21 @@ async function main() {
   assert.equal(button.textContent, "Hide details", "client state survived the navigation");
   assert.equal(liveRoot.expanded, true, "state slot untouched despite hostile expanded:false in payload");
   console.log("PASS patch application");
+  const patchMutations = mutations.take();
+
+  // --- 7. Effects rule: no effect replay for matched scopes ---------------
+  // The patch carried no effect strings for scope 1, so the mount-time
+  // `_script` (event binding) must not have re-run. A double-bound click
+  // handler would toggle `expanded` twice (net no-op); a single toggle
+  // proves exactly-once binding survived the update.
+  button.click();
+  await settle(window);
+  assert.equal(liveRoot.expanded, false, "one click = one toggle (no double-bound handler)");
+  assert.equal(button.textContent, "Show details", "interactivity intact after patch");
+  console.log("PASS effects-not-replayed (no double bind)");
 
   console.log("\nmutations during patch:");
-  for (const m of mutations.take()) console.log("  " + m);
+  for (const m of patchMutations) console.log("  " + m);
 }
 
 // --- harness ---------------------------------------------------------------
