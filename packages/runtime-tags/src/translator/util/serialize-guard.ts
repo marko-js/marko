@@ -88,7 +88,7 @@ export function getSerializeGuard(
     // `serializeBranch & 2`), so instead of collapsing to a static `1` the
     // guard compiles to `1 | <dynamic part>`. Truthiness and the stateful
     // bit are unchanged, so non-update behavior is identical.
-    const mixedGuard = getMixedDynamicGuard(section, reason);
+    const mixedGuard = getMixedDynamicGuard(reason);
     if (mixedGuard) return mixedGuard;
 
     return optional
@@ -102,9 +102,7 @@ export function getSerializeGuard(
   return withPersistedGuard(reason, getParamGuard(reason, true));
 }
 
-const mixedDynamicPartCache = new WeakMap<Sources, DynamicSerializeReason>();
 function getMixedDynamicGuard(
-  section: Section,
   reason: SerializeReason,
 ): t.Expression | undefined {
   if (
@@ -115,26 +113,13 @@ function getMixedDynamicGuard(
   ) {
     return;
   }
-  let part = mixedDynamicPartCache.get(reason);
-  if (!part) {
-    mixedDynamicPartCache.set(
-      reason,
-      (part = {
-        state: undefined,
-        param: reason.param as DynamicSerializeReason["param"],
-        global: reason.global as DynamicSerializeReason["global"],
-      }),
-    );
-  }
-  if (part.param && isCrossSection(section, part)) return;
-  const dynamicGuard = withPersistedGuard(part, getParamGuard(part, true));
-  return (
-    dynamicGuard &&
-    t.binaryExpression(
-      "|",
-      withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state)),
-      dynamicGuard,
-    )
+  // The request-derived part of a mixed reason is render-global under the
+  // persisted option (updates refresh everything that is not client-owned),
+  // so no per-group precision is needed: stateful bit | persisted bits.
+  return t.binaryExpression(
+    "|",
+    withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state)),
+    callRuntime("_persisted_reason" satisfies HTMLRuntimeHelpers),
   );
 }
 
@@ -200,7 +185,7 @@ export function getSerializeGuardForAny(
       // Mixed reasons contribute their request-derived bits in persisted
       // builds (see `getMixedDynamicGuard`); otherwise a stateful reason
       // makes the whole guard static.
-      const mixedGuard = getMixedDynamicGuard(section, reason);
+      const mixedGuard = getMixedDynamicGuard(reason);
       if (!mixedGuard) {
         return optional
           ? undefined
@@ -225,7 +210,18 @@ export function getExprIfSerialized<
   R extends T extends {} ? t.Expression : undefined,
 >(section: Section, reason: T, expr: t.Expression): R {
   if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
-    return (reason && expr) as R;
+    if (!reason) return undefined as R;
+    // State-sourced (or forced) values are client-owned: they serialize for
+    // normal stateful resume but never ride an update patch (the client
+    // keeps -- or recomputes -- its own).
+    if (isPersisted() && !isCrossSection(section, reason as Sources)) {
+      return t.logicalExpression(
+        "&&",
+        callRuntime("_state_reason" satisfies HTMLRuntimeHelpers),
+        expr,
+      ) as R;
+    }
+    return expr as R;
   }
 
   // A purely global-sourced reason never serializes values: a stateful
@@ -238,7 +234,19 @@ export function getExprIfSerialized<
     getParamPart(reason as DynamicParamSerializeReason),
     false,
   );
-  return (guard ? t.logicalExpression("&&", guard, expr) : expr) as R;
+  // Request-derived (state-free) values are the update payload: they
+  // serialize whenever the render is an update, in addition to the normal
+  // stateful-parent gating.
+  const withUpdate = isPersisted()
+    ? guard
+      ? t.logicalExpression(
+          "||",
+          guard,
+          callRuntime("_update_reason" satisfies HTMLRuntimeHelpers),
+        )
+      : callRuntime("_update_reason" satisfies HTMLRuntimeHelpers)
+    : guard;
+  return (withUpdate ? t.logicalExpression("&&", withUpdate, expr) : expr) as R;
 }
 
 // The guard-class sibling of `getExprIfSerialized`: gates on any reason bit

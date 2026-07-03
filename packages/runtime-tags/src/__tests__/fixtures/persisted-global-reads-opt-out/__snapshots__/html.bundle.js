@@ -13,6 +13,6 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "e", _persisted_reason(), 1 | _persisted_reason(), 0, "</section>", 1);
 	_script($scope0_id, "a2");
-	writeScope($scope0_id, { f: count });
+	writeScope($scope0_id, { f: _state_reason() && count });
 	_resume_branch($scope0_id);
 }, 1);

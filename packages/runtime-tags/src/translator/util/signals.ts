@@ -1316,11 +1316,14 @@ export function writeHTMLResumeStatements(
     if (isSameReason(sectionSerializeReason, reason)) return expr;
     return exprSpineSerialized(section, reason, expr);
   };
-  // Binding values require the stateful bit even when their reason matches
-  // the section's (the section gate is spine-class under `persisted`, so the
-  // same-reason hoisting shortcut would leak param-only values initially).
+  // Binding values are gated by source class under `persisted` (see
+  // `getExprIfSerialized`): state-sourced values serialize for stateful
+  // resume but never ride update patches; request-derived values serialize
+  // in update renders (they are the payload) but not in initial persisted
+  // renders. The same-reason hoisting shortcut is skipped -- the section
+  // gate is spine-class and would leak values.
   const ifSerializedValue = (reason: SerializeReason, expr: t.Expression) =>
-    isPersisted() && isReasonDynamic(reason)
+    isPersisted()
       ? getExprIfSerialized(section, reason, expr)
       : ifSerialized(reason, expr);
 

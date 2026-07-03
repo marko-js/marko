@@ -152,7 +152,10 @@ export default {
                   getScopeIdIdentifier(section),
                   getScopeAccessorLiteral(nodeBinding),
                   value,
-                  getSerializeGuard(section, markerSerializeReason, false),
+                  // Captures only fire in update renders, which refresh
+                  // everything that is not client-owned -- the render-global
+                  // flag is the whole guard.
+                  callRuntime("_persisted_reason"),
                 )
               : undefined;
           write`${
