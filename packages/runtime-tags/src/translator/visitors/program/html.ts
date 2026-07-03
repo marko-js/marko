@@ -6,6 +6,7 @@ import {
   usedSharedUid,
 } from "../../util/generate-uid";
 import isStatic from "../../util/is-static";
+import { getMarkoOpts } from "../../util/marko-config";
 import { forEach } from "../../util/optional";
 import {
   BindingType,
@@ -170,7 +171,14 @@ export default {
           "_template",
           t.stringLiteral(program.hub.file.metadata.marko.id),
           contentId ? t.identifier(contentId) : contentFn,
-          program.node.extra!.page ? t.numericLiteral(1) : undefined,
+          // A non-page template renders as an "embed" with a randomized render
+          // id so that multiple can be placed in the same document without their
+          // scope ids colliding. That only matters for real builds that link
+          // client assets; without `linkAssets` (eg. most test/SSR-only setups)
+          // treat every template as a page so its render id stays deterministic.
+          program.node.extra!.page || !getMarkoOpts().linkAssets
+            ? t.numericLiteral(1)
+            : undefined,
         ),
       );
 

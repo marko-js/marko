@@ -190,4 +190,33 @@ describe("runtime-tags/translator-api", () => {
       }
     });
   });
+
+  describe("embed determination", () => {
+    const compileHTML = (src: string, linkAssets: boolean) =>
+      compiler.compileSync(src, path.join(__dirname, "tmp.marko"), {
+        ...baseConfig,
+        cache: new Map(),
+        output: "html",
+        ...(linkAssets
+          ? { linkAssets: { runtime: "asset-runtime", onAsset() {} } }
+          : {}),
+      }).code;
+
+    // A template renders as an "embed" (with a randomized, non-idempotent render
+    // id to avoid scope-id collisions between sibling renders) unless the third
+    // `_template` argument marks it as a page. A non-page template is only an
+    // embed for asset-linked builds; without `linkAssets` it stays deterministic.
+    const isEmbed = (code: string) => !/\}, 1\);\s*$/.test(code.trimEnd());
+
+    it("treats a non-page template as an embed only when linkAssets is set", () => {
+      assert.equal(isEmbed(compileHTML("<div>Hello</div>", true)), true);
+      assert.equal(isEmbed(compileHTML("<div>Hello</div>", false)), false);
+    });
+
+    it("never treats a page (html/body/head) template as an embed", () => {
+      const page = "<html><body><div>Hi</div></body></html>";
+      assert.equal(isEmbed(compileHTML(page, true)), false);
+      assert.equal(isEmbed(compileHTML(page, false)), false);
+    });
+  });
 });
