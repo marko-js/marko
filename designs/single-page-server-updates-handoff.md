@@ -181,7 +181,7 @@ state-sourced values compile to `_state_reason() && v` (serialize for
 normal resume, never in updates — the client owns them), request-derived
 state-free values to `(guard || _update_reason()) && v` (additionally
 serialize in update renders — they are the payload), global/volatile-only
-values stay unserialized (holes carry them). Both class helpers return
+values are never serialized (holes carry them). Both class helpers return
 `undefined` when inactive so gated props drop out of the payload entirely.
 Result: update payloads no longer carry client state defaults
 (`persisted-update-navigate`'s update frame lost `expanded`/derived state
