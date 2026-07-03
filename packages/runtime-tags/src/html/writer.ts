@@ -1106,6 +1106,13 @@ export class State implements SerializeState {
   }
 
   writeReady(id: string, resumes: string) {
+    if (this.update) {
+      // Update responses: ready-channel resumes (persisted pages route
+      // their fills through a blocking channel) emit as bare frames like
+      // everything else -- the applier has no channel gating; fills apply
+      // in arrival order.
+      return "[" + resumes + "]";
+    }
     const readyKey = toObjectKey(id);
     if (this.readyIds?.has(id)) {
       return this.readyAccess(readyKey) + ".push(" + resumes + ")";
