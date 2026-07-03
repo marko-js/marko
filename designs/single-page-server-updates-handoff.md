@@ -169,6 +169,24 @@ through their sources' guards. Purity beyond folding (imported formatter
 calls over constants) currently pays the volatile cost — a pure annotation
 or known-impure-global heuristic is the planned relief valve.
 
+**Implemented** (`feat: render-global persisted guards + value classes…`):
+the architecture simplification that follows from the "anything an MPA nav
+updates, the persisted update updates" invariant. Persisted-ness/update-ness
+are render-global bits, so hole captures and structural guards compile to a
+flat `_persisted_reason()` call — the per-attribute serialize-reason-group
+machinery (Symbol groups per attr, mixed persisted group extension) is
+deleted. `State` now always seeds reason `2` for persisted renders; value
+serialization is gated by compile-time source class instead of the seed:
+state-sourced values compile to `_state_reason() && v` (serialize for
+normal resume, never in updates — the client owns them), request-derived
+state-free values to `(guard || _update_reason()) && v` (additionally
+serialize in update renders — they are the payload), global/volatile-only
+values stay unserialized (holes carry them). Both class helpers return
+`undefined` when inactive so gated props drop out of the payload entirely.
+Result: update payloads no longer carry client state defaults
+(`persisted-update-navigate`'s update frame lost `expanded`/derived state
+values); non-persisted output stays byte-identical.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by

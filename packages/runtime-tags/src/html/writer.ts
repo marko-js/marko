@@ -296,6 +296,20 @@ export function _persisted_reason() {
   return state.update ? 3 : state.$global.persisted ? 2 : 0;
 }
 
+// Value-class guards for persisted builds, split by compile-time source
+// class: request-derived (state-free) values serialize in update renders
+// (they are the payload); state-sourced values never do (the client owns
+// them) but keep serializing for normal stateful resume.
+// Both return `undefined` (not 0) when the class is inactive so
+// `guard && value` collapses to undefined and the serializer skips the prop.
+export function _update_reason() {
+  return $chunk.boundary.state.update ? 1 : undefined;
+}
+
+export function _state_reason() {
+  return $chunk.boundary.state.update ? undefined : 1;
+}
+
 export function _serialize_if(condition: SerializeReasonFlags, key: string) {
   return condition &&
     (typeof condition === "number" ? condition : condition[key] || 0) & 1
@@ -1084,7 +1098,12 @@ export class State implements SerializeState {
       // responses) also set bit 1 so request-derived values serialize -- the
       // values ARE the payload there.
       this.update = $global.persisted === "update";
-      this.serializeReason = this.update ? 3 : 2;
+      // The persisted bit (2) threads through reason vectors for
+      // markers/spine; update-ness is render-global and value emission
+      // checks it directly per source class (`_update_reason` /
+      // `_state_reason`), so update renders no longer masquerade as
+      // stateful (state values stay out of patches entirely).
+      this.serializeReason = 2;
       // Update responses carry no document: no walker bootstrap to emit.
       this.hasMainRuntime = this.update;
     }

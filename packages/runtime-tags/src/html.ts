@@ -78,9 +78,11 @@ export {
   _set_serialize_reason,
   _show_end,
   _show_start,
+  _state_reason,
   _subscribe,
   _trailers,
   _try,
+  _update_reason,
   _var,
   $global,
 } from "./html/writer";

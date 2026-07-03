@@ -321,20 +321,6 @@ export default {
         trackDomVarReferences(tag, nodeBinding);
 
         addSerializeExpr(tagSection, push(exprExtras, tagExtra), nodeBinding);
-
-        // Persisted builds capture each request-derived attr's computed
-        // value under a guard of that attr's own sources
-        // (`buildAttrHoleValue`), so each needs its own analyzed reason
-        // group -- the node's marker reason above merges all of the tag's
-        // expressions and can group differently.
-        if (isPersisted()) {
-          for (const name in seen) {
-            const extra = seen[name].value.extra;
-            if (extra && !isEventHandler(name) && !extra.confident) {
-              addSerializeExpr(tagSection, extra, Symbol(name));
-            }
-          }
-        }
       }
     },
   },
@@ -1386,7 +1372,9 @@ function buildAttrHoleValue(
     getScopeIdIdentifier(tagSection),
     t.stringLiteral(getUpdateAttrPrefix() + name + ":" + accessor.value),
     value,
-    getSerializeGuard(tagSection, sources, false),
+    // Captures only fire in update renders, which refresh everything that
+    // is not client-owned -- the render-global flag is the whole guard.
+    callRuntime("_persisted_reason"),
   );
 }
 

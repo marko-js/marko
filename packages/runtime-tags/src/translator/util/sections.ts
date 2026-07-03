@@ -9,7 +9,6 @@ import {
 import type { AccessorPrefix } from "../../common/accessor.debug";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag, isCoreTagName } from "./is-core-tag";
-import { isPersisted } from "./marko-config";
 import {
   addSorted,
   filter,
@@ -422,17 +421,8 @@ export function finalizeParamSerializeReasonGroups(section: Section) {
 }
 
 function ensureReasonGroups(reason: Section["serializeReason"]) {
-  // Persisted builds also group the param part of *mixed* (stateful +
-  // request-derived) reasons: their guards compile to `1 | <dynamic part>`
-  // (see serialize-guard's `getMixedDynamicGuard`), so the dynamic part
-  // needs an analyzed group like any purely dynamic reason.
-  if (
-    isReasonDynamic(reason) ||
-    (isPersisted() && reason && reason !== true && reason.param)
-  ) {
-    for (const [paramSection, params] of groupParamsBySection(
-      (reason as Sources).param,
-    )) {
+  if (isReasonDynamic(reason)) {
+    for (const [paramSection, params] of groupParamsBySection(reason.param)) {
       ensureParamReasonGroup(paramSection, params);
     }
   }
