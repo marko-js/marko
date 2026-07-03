@@ -31,6 +31,7 @@ import {
 import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
+import { addUpdateMerge } from "../util/update-merges";
 import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -168,6 +169,14 @@ export default {
             writer.markNode(placeholder, nodeBinding, markerSerializeReason);
           }
         } else {
+          // Update entries merge server-computed hole values (G1) for the
+          // same request-derived holes the html output captures.
+          if (nodeBinding && isReasonDynamic(markerSerializeReason)) {
+            addUpdateMerge(section, {
+              kind: method === "_text" ? "text" : "html",
+              accessor: getScopeAccessorLiteral(nodeBinding),
+            });
+          }
           addStatement(
             "render",
             section,

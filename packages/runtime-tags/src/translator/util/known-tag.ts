@@ -112,6 +112,10 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
+export function getKnownTagChildScopeBinding(tag: t.NodePath<t.MarkoTag>) {
+  return tag.node.extra?.[kChildScopeBinding];
+}
+
 export function knownTagAnalyze(
   tag: t.NodePath<t.MarkoTag>,
   contentSection: Section,

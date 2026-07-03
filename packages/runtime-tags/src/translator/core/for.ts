@@ -9,6 +9,7 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { detectForSelector, getForSelectorKey } from "../util/for-selector";
+import { generateUidIdentifier } from "../util/generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
@@ -16,6 +17,7 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { isPersisted } from "../util/marko-config";
 import {
   type Binding,
   BindingType,
@@ -43,6 +45,8 @@ import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  getSerializeSourcesForRef,
+  isReasonDynamic,
   isStateSerializeReason,
   isStaticSerializeReason,
 } from "../util/serialize-reasons";
@@ -55,6 +59,10 @@ import {
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { getMemberExpressionPropString } from "../util/to-property-name";
+import {
+  addUpdateMerge,
+  getUpdateContentRegisterId,
+} from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -341,13 +349,60 @@ export default {
 
         const forType = getForType(node)!;
         const signal = getSignal(tagSection, nodeRef, "for");
+        // Request-derived loops participate in persisted update renders: the
+        // server writes the branch list + keys explicitly (G3/G4) and the
+        // update entry reconciles it with a `_for_of` built from this loop's
+        // branch content, so persisted builds hoist that content into a
+        // registered `[template, walks, setup]` and update entries record a
+        // merge. The strings are shared, not duplicated -- the loop signal
+        // reads them from the same registered array.
+        const updateStructural =
+          isPersisted() &&
+          isReasonDynamic(getSerializeSourcesForRef(referencedBindings));
+        if (updateStructural) {
+          addUpdateMerge(tagSection, {
+            kind: "for",
+            accessor: getScopeAccessorLiteral(nodeRef),
+            encodedAccessor: getScopeAccessorLiteral(nodeRef, true),
+            contentId: getUpdateContentRegisterId(bodySection),
+            bodySection,
+          });
+        }
         signal.build = () => {
+          const rendererArgs = replaceNullishAndEmptyFunctionsWith0(
+            getBranchRendererArgs(bodySection),
+          );
+          if (!updateStructural) {
+            return callRuntime(
+              forTypeToDOMRuntime(forType),
+              getScopeAccessorLiteral(nodeRef, true),
+              ...rendererArgs,
+            );
+          }
+
+          const contentIdentifier = generateUidIdentifier(
+            `${bodySection.name}_content`,
+          );
+          signal.prependStatements = [
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                contentIdentifier,
+                callRuntime(
+                  "_resume",
+                  t.stringLiteral(getUpdateContentRegisterId(bodySection)),
+                  t.arrayExpression(rendererArgs.slice(0, 3)),
+                ),
+              ),
+            ]),
+            ...(signal.prependStatements || []),
+          ];
           return callRuntime(
             forTypeToDOMRuntime(forType),
             getScopeAccessorLiteral(nodeRef, true),
-            ...replaceNullishAndEmptyFunctionsWith0(
-              getBranchRendererArgs(bodySection),
-            ),
+            t.memberExpression(contentIdentifier, t.numericLiteral(0), true),
+            t.memberExpression(contentIdentifier, t.numericLiteral(1), true),
+            t.memberExpression(contentIdentifier, t.numericLiteral(2), true),
+            ...rendererArgs.slice(3),
           );
         };
 

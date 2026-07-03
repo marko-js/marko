@@ -1,4 +1,4 @@
-// size: 25867 (min) 9506 (brotli)
+// size: 25941 (min) 9545 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -332,15 +332,7 @@ function stringifyStyleObject(name, value) {
 }
 function escapeStyleValue(str) {
   let closers = "",
-    result = str.replace(/[\\"'{};<>]|\/(?=\*)/g, (c) =>
-      c === "<"
-        ? "\\3C "
-        : c === ";"
-          ? "\\3B "
-          : c === "{"
-            ? "\\7B "
-            : "\\" + c,
-    );
+    result = str.replace(/[\\"'{};>]|\/(?=\*)/g, "\\$&").replace(/</g, "\\3C ");
   for (let c of result)
     c === "("
       ? (closers = ")" + closers)
@@ -392,11 +384,6 @@ function forUntil(until, from, step, cb) {
 }
 function toArray(opt) {
   return opt ? (Array.isArray(opt) ? opt : [opt]) : [];
-}
-function forEach(opt, cb) {
-  if (opt)
-    if (Array.isArray(opt)) for (let item of opt) cb(item);
-    else cb(opt);
 }
 function push(opt, item) {
   return opt
@@ -952,17 +939,12 @@ function init(runtimeId = "M") {
                         (startVisit = startVisit.previousSibling),
                       );
                     );
-                    ((branch._ ??= visitScope),
-                      (branch.K = branch.S = startVisit),
+                    ((branch.K = branch.S = startVisit),
                       visitType === "'" && (branch.a = startVisit));
                   } else
                     ((curBranchScopes = push(curBranchScopes, branch)),
                       accessor &&
                         ((visitScope[accessor] = curBranchScopes),
-                        forEach(
-                          curBranchScopes,
-                          (scope) => (scope._ ??= visitScope),
-                        ),
                         (curBranchScopes = branchScopesStack.pop())),
                       (startVisit = branchStarts.pop()),
                       parent !== startVisit.parentNode &&
@@ -1467,23 +1449,19 @@ function _attr_style_item(element, name, value) {
 function _style_shell(scope, nodeAccessor) {
   let element = scope[nodeAccessor],
     id = _id(scope);
-  (_attr_nonce(scope, nodeAccessor),
-    (element.className = id),
-    _text_content(element, "." + id + "~*{}"));
+  ((element.className = id), _text_content(element, "." + id + " ~ *{}"));
 }
 function _style_rule_item(element, name, value) {
   let text = element.textContent,
     decl = name + ":" + escapeStyleValue(_to_text(value)) + ";",
     start = text.indexOf("{" + name + ":");
-  (~start || (start = text.indexOf(";" + name + ":")),
-    _text_content(
-      element,
-      ~start
-        ? text.slice(0, ++start) +
-            decl +
-            text.slice(text.indexOf(";", start) + 1)
-        : text.slice(0, -1) + decl + "}",
-    ));
+  if ((start === -1 && (start = text.indexOf(";" + name + ":")), start === -1))
+    element.textContent = text.slice(0, -1) + decl + "}";
+  else {
+    let end = ++start;
+    for (let c; (c = text[end]) && c !== ";"; end++) c === "\\" && end++;
+    element.textContent = text.slice(0, start) + decl + text.slice(end + 1);
+  }
 }
 function _attr_nonce(scope, nodeAccessor) {
   _attr(scope[nodeAccessor], "nonce", scope.$.cspNonce);
@@ -2625,5 +2603,18 @@ function _load_race_trigger(...triggers) {
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();
+}
+function _update_signal(id) {
+  return (scope, value) => getRegisteredWithScope(id, scope)(value);
+}
+function _update_for(nodeAccessor, contentId, merge) {
+  let signal;
+  return (scope, value) => {
+    if (!signal) {
+      let content = getRegisteredWithScope(contentId);
+      signal = _for_of(nodeAccessor, content[0], content[1], content[2], merge);
+    }
+    signal(scope, value);
+  };
 }
 //#endregion

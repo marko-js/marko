@@ -31,6 +31,7 @@ import {
   getMarkoOpts,
   isOutputHTML,
   isPersisted,
+  isUpdateEntryBuild,
 } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
@@ -67,6 +68,7 @@ import {
   toPropertyName,
 } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
+import { addUpdateMerge } from "../../util/update-merges";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
@@ -798,6 +800,13 @@ export default {
                 trackDelimitedAttrValue(value, meta);
 
                 if (meta.dynamicItems) {
+                  recordAttrUpdateMerge(
+                    nodeBinding,
+                    tagSection,
+                    name,
+                    helper,
+                    value,
+                  );
                   stmt = t.expressionStatement(
                     callRuntime(helper, nodeExpr, value),
                   );
@@ -871,6 +880,13 @@ export default {
                   ),
                 );
               } else {
+                recordAttrUpdateMerge(
+                  nodeBinding,
+                  tagSection,
+                  name,
+                  "_attr",
+                  value,
+                );
                 addStatement(
                   "render",
                   tagSection,
@@ -1381,6 +1397,30 @@ function buildAttrHoleValue(
     value,
     getSerializeGuard(tagSection, sources, false),
   );
+}
+
+// The dom-compile counterpart of `buildAttrHoleValue`: update entries merge
+// the server-captured attr value for the same request-derived attrs.
+function recordAttrUpdateMerge(
+  nodeBinding: Binding | undefined,
+  tagSection: Section,
+  name: string,
+  helper: "_attr" | "_attr_class" | "_attr_style",
+  value: t.Expression,
+) {
+  if (!nodeBinding || !isUpdateEntryBuild()) return;
+  const sources = getSerializeSourcesForRef(
+    value.extra?.referencedBindings as ReferencedBindings,
+  );
+  if (!isReasonDynamic(sources)) return;
+  const accessor = getScopeAccessorLiteral(nodeBinding);
+  addUpdateMerge(tagSection, {
+    kind: "attr",
+    key: getUpdateAttrPrefix() + name + ":" + accessor.value,
+    name,
+    helper,
+    accessor,
+  });
 }
 
 function factorAttrConditional(value: t.Expression): t.Expression {
