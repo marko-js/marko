@@ -63,11 +63,14 @@ suppress all static HTML and emit a **newline-delimited stream of serializer
 frames** (bare JS fill arrays, one per flush). Measured on the ecommerce app
 (dev, uncompressed runtime): item page 18.2 KB document → 6.4 KB update
 (3.8 KB → 1.35 KB gzip); cart 2.6 KB → 0.7 KB; the hole-dense search page
-92 KB → 42 KB (pre-filter). The state-only prop filter has since landed
-(source-classified value gates: state-sourced values never serialize in
-update renders), removing matched-scope state defaults from payloads;
-effect strings still ride along inert on some paths (unidentified
-`writeEffect` caller beyond `_script` — measure-first follow-up).
+92 KB (9.0 KB gzip) → 39.6 KB (4.6 KB gzip). The state-only prop filter has
+landed (source-classified value gates: state-sourced values never serialize
+in update renders), removing matched-scope state defaults from payloads
+(re-measured post-filter: item 6.2 KB / 1.3 KB gzip, cart 0.6 KB / 0.3 KB
+gzip). The remaining search-page noise is structural bookkeeping and
+not-yet-class-filtered write sites — `ControlledHandler`/`#TagVariable`/
+`#TagVariableChange` bindings, closure sets, and scope offsets — a
+measure-first follow-up per write site.
 
 **Goal 1 has a real, measured cost to manage: the persisted spine.** The
 opt-in initial render pays for markers + spine + (new in slice 4 debugging)
