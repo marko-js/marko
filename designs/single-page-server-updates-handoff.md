@@ -9,7 +9,11 @@ Everything needed to pick this work up cold. Read in this order:
    — the measured experiments behind the wire-format (A1) and persisted-entry
    (B2) decisions, the end-to-end prototype write-up, and the confirmed
    update-render writer gap list (G1–G5).
-3. [experiments/single-page-server-updates/README.md](./experiments/single-page-server-updates/README.md)
+3. [single-page-server-updates-review.md](./single-page-server-updates-review.md)
+   — shape review after real-app validation: goals as invariants,
+   alternatives, target API boundaries (the feature ships with @marko/run),
+   and the prioritized gap list.
+4. [experiments/single-page-server-updates/README.md](./experiments/single-page-server-updates/README.md)
    — the runnable harness: compile/render scripts and payload/entry size
    measurements. (The end-to-end lifecycle now lives in the
    `persisted-update-navigate` fixture under
@@ -120,6 +124,18 @@ treats the same step as a plain input update (the semantics the patch
 reproduces). The `persisted-update-navigate` fixture snapshots the whole
 lifecycle; the standalone experiments e2e and `update-runtime.js` prototype
 are deleted.
+
+**Implemented** (slice 4 groundwork, `feat: integration fixes…`): three
+fixes found by real-app validation — per-attr serialize-reason groups in
+persisted builds (attr hole guards previously crashed when a tag's merged
+marker reason grouped differently than a single attr's sources); the
+persisted **spine reason** on every custom-tag child-scope link (a
+global-sourced reason, live exactly when the persisted flag is set) so
+attr-less pass-through roots (run's route wrappers) can't elide their scope
+and shift the patch root off scope 1; update entries re-export `applyUpdate`
+and pair the live root themselves (`getUpdateRoot` in `dom/resume.ts`) so
+consumers never import the runtime by path — a second runtime instance has
+its own registry and silently pairs nothing.
 
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
@@ -238,9 +254,21 @@ to param-like sources under the persisted option`). Mechanism: under the
    (loader work), and root pairing by `meta` frame (the harness pairs via a
    registered effect string against scope 1; the applier takes the live root
    explicitly).
-4. **Integration** — build hash + `?update` chunks + manifest in
-   `@marko/vite`; wrapper-over-shell, patch content negotiation, client
-   router in `@marko/run`; `$global` promotion in the translator.
+4. **Integration** — **in progress** (validated against marko-ecommerce in
+   dev mode): `@marko/vite` resolves `x.marko?update` imports to update
+   entries (`.update-entry.marko` kind, own lazy chunk, recursive child
+   `?update` imports; persisted-gated); the ecommerce branch carries the
+   prototype run-router glue (`src/util/persisted-nav.ts` link
+   interception + fill extraction + `applyUpdate`, `+middleware.ts` update
+   content negotiation via `x-marko-update`) and a self-bootstrapping
+   `npm run setup` that git-links the marko/vite branches. Browser-verified:
+   lazy update chunk, no reload, history/state intact. Blocking real-app
+   merges (see the review doc's gap list): dynamic-tag/renderBody descent
+   (layout→page hop emits no structural link in update mode) and
+   branch/hole emission gaps on `<if>/<else>` + only-child + `<try>` page
+   shapes. Remaining: response framing + static-HTML suppression (the bytes
+   goal), build hash, run-owned client router, `?update` chunks in the
+   build manifest.
 
 ## Example-app prototyping workspace
 

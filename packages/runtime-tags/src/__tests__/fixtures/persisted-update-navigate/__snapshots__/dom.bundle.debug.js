@@ -3,7 +3,8 @@ const $update$1 = (patch, live) => {
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_amount" in patch) live["input_amount"] = patch["input_amount"];
-	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
+	if ("UpdateAttr:title:#span/0" in patch) _attr(live["#span/0"], "title", patch["UpdateAttr:title:#span/0"]);
+	if ("#text/1" in patch) _text(live["#text/1"], patch["#text/1"]);
 };
 var price_marko_update_default = _resume("__tests__/tags/price.marko_0_update", $update$1);
 
@@ -45,9 +46,12 @@ var template_marko_update_default = _resume("__tests__/template.marko_0_update",
 
 // tags/price.marko
 const $template$1 = "<span class=price>$<!></span>";
-const $walks$1 = "Db%l";
+const $walks$1 = " Db%l";
 const $setup$1 = () => {};
-const $input_amount = ($scope, input_amount) => _text($scope["#text/0"], input_amount.toFixed(2));
+const $input_amount = ($scope, input_amount) => {
+	_attr($scope["#span/0"], "title", `$${input_amount.toFixed(2)}`);
+	_text($scope["#text/1"], input_amount.toFixed(2));
+};
 const $input$1 = ($scope, input) => $input_amount($scope, input.amount);
 var price_default = /* @__PURE__ */ _template("__tests__/tags/price.marko", $template$1, $walks$1, $setup$1, $input$1);
 

@@ -321,6 +321,20 @@ export default {
         trackDomVarReferences(tag, nodeBinding);
 
         addSerializeExpr(tagSection, push(exprExtras, tagExtra), nodeBinding);
+
+        // Persisted builds capture each request-derived attr's computed
+        // value under a guard of that attr's own sources
+        // (`buildAttrHoleValue`), so each needs its own analyzed reason
+        // group -- the node's marker reason above merges all of the tag's
+        // expressions and can group differently.
+        if (isPersisted()) {
+          for (const name in seen) {
+            const extra = seen[name].value.extra;
+            if (extra && !isEventHandler(name) && !extra.confident) {
+              addSerializeExpr(tagSection, extra, Symbol(name));
+            }
+          }
+        }
       }
     },
   },

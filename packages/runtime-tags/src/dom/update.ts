@@ -20,7 +20,7 @@
 import { AccessorProp, type Scope } from "../common/types";
 import { _for_of } from "./control-flow";
 import { run } from "./queue";
-import { getRegisteredWithScope } from "./resume";
+import { getRegisteredWithScope, getUpdateRoot } from "./resume";
 
 type UpdateSignal = (scope: Scope, value: unknown) => void;
 type UpdateFill = (
@@ -31,7 +31,8 @@ type UpdateFill = (
  * Applies an update-render payload to a live (resumed) render.
  *
  * `merge` is the page template's compiled merge function (the `?update`
- * module's default export) and `liveRoot` the live scope it pairs with. The
+ * module's default export) and `liveRoot` the live scope it pairs with
+ * (defaults to pairing the first render's root by convention). The
  * patch root is scope 1 by convention (the first scope the update render
  * allocates -- the root template's). Patch scopes are plain objects in a
  * patch-local id space; `_(id, registryId)` references inside values resolve
@@ -41,9 +42,14 @@ type UpdateFill = (
 export function applyUpdate(
   merge: (patch: Scope, live: Scope) => void,
   fills: UpdateFill | UpdateFill[],
-  liveRoot: Scope,
+  liveRoot = getUpdateRoot(),
 ) {
-  const liveGlobal = liveRoot[AccessorProp.Global] as unknown as Scope;
+  if (MARKO_DEBUG && !liveRoot) {
+    throw new Error(
+      "applyUpdate could not pair a live root scope (is the page resumed?)",
+    );
+  }
+  const liveGlobal = liveRoot![AccessorProp.Global] as unknown as Scope;
   const patchScopes: Record<number, Scope> = { 0: liveGlobal };
   const getScope = (id: number) => (patchScopes[id] ||= {} as Scope);
   const applyScopes = (partials: (Scope | number)[]) => {
@@ -80,7 +86,7 @@ export function applyUpdate(
     if (Array.isArray(scopes)) applyScopes(scopes);
   }
 
-  merge(getScope(1), liveRoot);
+  merge(getScope(1), liveRoot!);
   // Merges queue renders (intersections, closure fan-out, branch setups);
   // flush synchronously so the update settles as one batch.
   run();

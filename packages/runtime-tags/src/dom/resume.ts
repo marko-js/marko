@@ -458,6 +458,24 @@ function runResumeEffects(render: RenderData) {
   }
 }
 
+// Pairs the live root scope (patch scope 1 by convention) of a resumed
+// render for persisted updates, through the render's own effect machinery.
+// Only imported by `dom/update`, so apps without persisted updates never
+// pay for it.
+export function getUpdateRoot(renderId?: string) {
+  let root: Scope | undefined;
+  for (const id in curRenders) {
+    if (!renderId || id === renderId) {
+      const render = curRenders[id];
+      registeredValues["__update_root"] = (scope: Scope) => (root = scope);
+      (render.r ||= []).push("__update_root 1");
+      runResumeEffects(render);
+      if (root) return root;
+    }
+  }
+  return root;
+}
+
 export function getRegisteredWithScope(id: string, scope?: Scope) {
   const val = registeredValues[id];
   return scope ? (val as RegisteredFn)(scope) : val;
