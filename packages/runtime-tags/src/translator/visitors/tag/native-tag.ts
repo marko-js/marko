@@ -20,11 +20,18 @@ import { WalkCode } from "../../../common/types";
 import { bodyToTextLiteral } from "../../util/body-to-text-literal";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
-import { getAccessorProp } from "../../util/get-accessor-char";
+import {
+  getAccessorProp,
+  getUpdateAttrPrefix,
+} from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  isOutputHTML,
+  isPersisted,
+} from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
 import {
@@ -34,6 +41,7 @@ import {
   dropNodes,
   getScopeAccessorLiteral,
   mergeReferences,
+  type ReferencedBindings,
   trackDomVarReferences,
 } from "../../util/references";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
@@ -42,11 +50,14 @@ import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  type Section,
 } from "../../util/sections";
 import { getSerializeGuard } from "../../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  getSerializeSourcesForRef,
+  isReasonDynamic,
 } from "../../util/serialize-reasons";
 import { addHTMLEffectCall, addStatement } from "../../util/signals";
 import {
@@ -435,8 +446,13 @@ export default {
             case "class":
             case "style": {
               const helper = `_attr_${name}` as const;
+              const holeValue =
+                !confident &&
+                buildAttrHoleValue(nodeBinding, tagSection, name, value);
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
+              } else if (holeValue) {
+                write`${callRuntime(helper, holeValue)}`;
               } else {
                 write`${factorAttrConditional(
                   buildAttrExpression(
@@ -462,20 +478,30 @@ export default {
               } else if (isEventHandler(name)) {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
-                write`${factorAttrConditional(
-                  buildAttrExpression(
-                    value,
-                    (branch) => {
-                      const { confident, computed } = evaluate(branch);
-                      return confident
-                        ? getHTMLRuntime()._attr(name, computed)
-                        : undefined;
-                    },
-                    (branch) =>
-                      buildLogicalAttr(name, branch) ||
-                      callRuntime("_attr", t.stringLiteral(name), branch),
-                  ),
-                )}`;
+                const holeValue = buildAttrHoleValue(
+                  nodeBinding,
+                  tagSection,
+                  name,
+                  value,
+                );
+                if (holeValue) {
+                  write`${callRuntime("_attr", t.stringLiteral(name), holeValue)}`;
+                } else {
+                  write`${factorAttrConditional(
+                    buildAttrExpression(
+                      value,
+                      (branch) => {
+                        const { confident, computed } = evaluate(branch);
+                        return confident
+                          ? getHTMLRuntime()._attr(name, computed)
+                          : undefined;
+                      },
+                      (branch) =>
+                        buildLogicalAttr(name, branch) ||
+                        callRuntime("_attr", t.stringLiteral(name), branch),
+                    ),
+                  )}`;
+                }
               }
 
               break;
@@ -1307,6 +1333,33 @@ function buildAttrExpression(
 // Hoist a shared `name=` prefix out of a conditional with two literal branches
 // so it folds into the static HTML, e.g. `x ? ' class=on' : ' class=off'` ->
 // ` class=${x ? "on" : "off"}`. Each value keeps its own quoting.
+// Persisted builds capture the computed value of request-derived dynamic
+// attrs so update renders can serialize it (keyed
+// `UpdateAttr:<name>:<elementAccessor>` -- per attr, so multi-attr elements
+// don't collide); `_hole_value` is a pass-through otherwise. Pure
+// state-driven attrs are excluded (the client owns those values), as are
+// elements with no node binding (nothing to place onto).
+function buildAttrHoleValue(
+  nodeBinding: Binding | undefined,
+  tagSection: Section,
+  name: string,
+  value: t.Expression,
+) {
+  if (!nodeBinding || !isPersisted()) return;
+  const sources = getSerializeSourcesForRef(
+    value.extra?.referencedBindings as ReferencedBindings,
+  );
+  if (!isReasonDynamic(sources)) return;
+  const accessor = getScopeAccessorLiteral(nodeBinding);
+  return callRuntime(
+    "_hole_value",
+    getScopeIdIdentifier(tagSection),
+    t.stringLiteral(getUpdateAttrPrefix() + name + ":" + accessor.value),
+    value,
+    getSerializeGuard(tagSection, sources, false),
+  );
+}
+
 function factorAttrConditional(value: t.Expression): t.Expression {
   if (value.type !== "ConditionalExpression") {
     return value;

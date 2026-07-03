@@ -114,8 +114,14 @@ export interface $Global {
    * receive single-page server-first updates. Requires templates compiled
    * with the `persisted` option; omit (e.g. for crawlers) to serve the
    * byte-identical non-persisted document.
+   *
+   * `"update"` renders an update (patch) response for an already-persisted
+   * page instead of a document: request-derived values (including computed
+   * hole values), conditional outcomes, and branch lists serialize so the
+   * client can merge them onto its live scope tree, while effects for
+   * matched scopes are suppressed.
    */
-  persisted?: boolean;
+  persisted?: boolean | "update";
   /** @internal */
   __flush__?($global: $Global, html: string): string;
 }

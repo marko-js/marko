@@ -597,7 +597,23 @@ Costs and open choices:
   navigation) would ship only values since its pairs are cached. Not scoped
   in; falls out naturally if the mechanism proves itself.
 
-### Confirmed update-render writer gaps (G1–G5)
+### Confirmed update-render writer gaps (G1–G5) — now implemented
+
+**Status: G1–G5 are implemented** as the update-render writer mode
+(`$global.persisted = "update"`; `State.update` + serialize-reason seed `3`
+so request-derived values serialize — they are the payload). G1 rides a new
+`_hole_value` pass-through helper the translator wraps around
+request-derived (state-free-reasoned) hole expressions in persisted builds
+(text placeholders; dynamic attrs keyed `UpdateAttr:<name>:<elAccessor>`,
+per attr so multi-attr elements don't collide); G2 writes conditional
+outcomes explicitly with `-1` as the no-branch index (out of range for
+every conditional, so the dom `_if` signal renders nothing); G3/G4 write
+branch lists (empty list included — sparse semantics), loop keys (even
+positional), and owner refs as scope props; G5 suppresses `_script` effects
+entirely in update mode. State-driven structure (no persisted bit in the
+branch guard) keeps today's behavior — the server never pairs into
+client-state-driven structure. `e2e.js` now derives its patch from a real
+page-B update render. The historical gap list follows.
 
 Page B's persisted render emits today:
 

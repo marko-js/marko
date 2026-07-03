@@ -305,6 +305,12 @@ companion doc's superseded synthesis).
 
 ### What gets serialized in an update render
 
+_Status: implemented (except the state-only-prop filter, `templates` frames,
+and static-HTML suppression — see the handoff doc's slice-1 notes) as
+`$global.persisted = "update"`: the writer seeds serialize-reason `3`, the
+translator captures request-derived hole values via `_hole_value` in
+persisted builds, and effects are suppressed._
+
 The serialize-reason guards are already request-time-evaluable
 (`_serialize_if`/`_serialize_guard` + writer state,
 `html/writer.ts:263-285`; guard construction in

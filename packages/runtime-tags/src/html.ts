@@ -59,6 +59,7 @@ export {
   _for_to,
   _for_until,
   _hoist,
+  _hole_value,
   _html,
   _id,
   _if,

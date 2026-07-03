@@ -117,6 +117,10 @@ export function writeWaitReady(
 }
 
 export function _script(scopeId: number, registryId: string) {
+  // Update renders suppress effects: a matched live scope's effects already
+  // ran at mount (replaying would double-bind), and fresh branches run setup
+  // client-side when they are cloned in.
+  if ($chunk.boundary.state.update) return;
   if ($chunk.serializeState.readyId || $chunk.context?.[kIsAsync]) {
     _resume_branch(scopeId);
   }
@@ -288,7 +292,8 @@ export function _scope_reason() {
 // it, so the stateful bit never applies and no reason record needs to carry
 // per-key entries for it.
 export function _persisted_reason() {
-  return $chunk.boundary.state.$global.persisted ? 2 : 0;
+  const { state } = $chunk.boundary;
+  return state.update ? 3 : state.$global.persisted ? 2 : 0;
 }
 
 export function _serialize_if(condition: SerializeReasonFlags, key: string) {
@@ -304,6 +309,25 @@ export function _serialize_guard(condition: SerializeReasonFlags, key: string) {
       (typeof condition === "number" ? condition : condition[key])) ||
     0
   );
+}
+
+// Captures a computed hole value for update renders (persisted patch
+// responses): expressions that inline into the HTML string additionally
+// write their value under the hole's accessor so the compiled merge can
+// place it (`_text`/`_attr` against the live scope's bound node). Initial
+// renders pay only the marker -- this is a pass-through outside update mode.
+// The guard is the hole's marker guard; 0 means this render's inputs cannot
+// change the hole (sparse semantics: absent means unchanged).
+export function _hole_value<T>(
+  scopeId: number,
+  accessor: Accessor,
+  value: T,
+  guard?: number,
+): T {
+  if (guard && $chunk.boundary.state.update) {
+    writeScope(scopeId, { [accessor]: value });
+  }
+  return value;
 }
 
 export function _el_resume(
@@ -534,6 +558,38 @@ function forBranches(
   }
 
   const { state } = $chunk.boundary;
+
+  // Update renders (persisted patch responses) have no HTML to carry branch
+  // markers, so the branch list, loop keys (even positional ones), and owner
+  // refs serialize as scope props -- the compiled merge reconciles from
+  // those. State-driven loops (no persisted bit in the guard) are excluded:
+  // the server never pairs into client-state-driven structure.
+  if (state.update && (serializeBranch as number) & 2) {
+    const branchScopes: ScopeInternals[] = [];
+    iterate((itemKey, _sameAsIndex, render) => {
+      const branchId = _peek_scope_id();
+      if (MARKO_DEBUG && by) {
+        assertValidLoopKey(itemKey, seenKeys);
+      }
+      withBranchId(branchId, () => {
+        render();
+        branchScopes.push(
+          writeScope(branchId, {
+            [AccessorProp.LoopKey]: itemKey,
+            [AccessorProp.Owner]: scopeWithId(state, scopeId),
+          }),
+        );
+      });
+    });
+    // Written even when empty: patch semantics are sparse (absence means
+    // unchanged), so "now zero branches" must be an explicit empty list.
+    writeScope(scopeId, {
+      [AccessorPrefix.BranchScopes + accessor]: branchScopes,
+    });
+    writeBranchEnd(scopeId, accessor, serializeStateful, 0, parentEndTag);
+    return;
+  }
+
   const resumeKeys = serializeMarker !== 0;
   const resumeMarker =
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
@@ -604,6 +660,22 @@ export function _if(
 
   const branchIndex = resumeBranch ? withBranchId(branchId, cb) : cb();
   const shouldWriteBranch = resumeBranch && branchIndex !== undefined;
+
+  // Update renders always write the conditional outcome (absence must mean
+  // "unchanged", not "no branch"; -1 is the explicit no-branch index -- out
+  // of range for every conditional) plus the rendered branch scope, since
+  // there is no HTML end-marker to carry it. State-driven conditionals (no
+  // persisted bit) keep today's behavior: the server never pairs into
+  // client-state-driven structure.
+  if (state.update && (serializeBranch as number) & 2) {
+    writeScope(scopeId, {
+      [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex ?? -1,
+      [AccessorPrefix.BranchScopes + accessor]:
+        branchIndex === undefined ? undefined : writeScope(branchId, {}),
+    });
+    writeBranchEnd(scopeId, accessor, serializeStateful, 0, parentEndTag);
+    return;
+  }
 
   if (shouldWriteBranch && (branchIndex || !resumeMarker)) {
     writeScope(scopeId, {
@@ -998,6 +1070,7 @@ export class State implements SerializeState {
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;
   public serializeReason: SerializeReasonFlags;
+  public update = false;
   constructor(
     public $global: $Global & { renderId: string; runtimeId: string },
   ) {
@@ -1007,8 +1080,11 @@ export class State implements SerializeState {
     if ($global.persisted) {
       // Seed the root template's reason: the network is a stateful parent,
       // but one that always supplies fresh values in its updates, so only
-      // markers and the scope spine serialize (bit 2).
-      this.serializeReason = 2;
+      // markers and the scope spine serialize (bit 2). Update renders (patch
+      // responses) also set bit 1 so request-derived values serialize -- the
+      // values ARE the payload there.
+      this.update = $global.persisted === "update";
+      this.serializeReason = this.update ? 3 : 2;
     }
   }
 

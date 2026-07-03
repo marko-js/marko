@@ -40,30 +40,24 @@ const inputB = {
   ],
 };
 
-// The A1 patch for A -> B, in the existing fill format with patch-space ids.
-// Every prop is annotated with whether today's persisted render already emits
-// it (per the render experiments) or which update-mode writer gap (G1-G3 in
-// the proposals doc) supplies it.
-const patchFill = (_) => [
-  1,
-  {
-    "#text/0": "Summit 65L Pack", // G1: computed hole value as scope prop
-    "#a/1": "/products/summit-65/specs", // G1: final attr string
-    input_product_featured: false, // already emitted (closure-read slot)
-    "ConditionalRenderer:#text/5": 1, // G2: conditional outcome (1 = no branch)
-    "BranchScopes:#ul/6": [_(2), _(3), _(4)], // G3: loop branch list in fills
-    // Deliberately hostile: server-default state that mode filtering would
-    // drop. B2 merges only read compiled prop lists, so even an unfiltered
-    // payload cannot clobber client state (asserted below).
-    expanded: false,
-  },
-  { "#LoopKey": 12, "#text/1": "Hip Belt", "#childScope/0": _(5), _: _(1) },
-  { "#LoopKey": 21, "#text/1": "Ice Axe Loop", "#childScope/0": _(6), _: _(1) },
-  { "#LoopKey": 13, "#text/1": "Dry Sack", "#childScope/0": _(7), _: _(1) },
-  { "#text/0": "39.00" }, // G1 (price-tag hole values, computed server-side)
-  { "#text/0": "11.50" },
-  { "#text/0": "14.25" },
-];
+// The A1 patch for A -> B is now derived from a real update render of page B
+// (`$global.persisted = "update"`): the writer's update mode supplies the
+// computed hole values (G1, including the `UpdateAttr:<name>:<accessor>`
+// attr-value keys), explicit conditional outcomes (G2, -1 = no branch),
+// branch lists + loop keys + owner refs (G3/G4), and suppresses effect
+// strings for matched scopes (G5). The server's default state props
+// (`expanded: false`) still ride along unfiltered -- deliberately hostile:
+// B2 merges only read compiled prop lists, so the payload cannot clobber
+// client state (asserted below).
+function extractUpdateFill(html, pageId) {
+  const src = html.match(/\.b=(\{.*\});M\.\w+\.w\(\)/s)?.[1];
+  assert.ok(src, "update render carried a resume fill");
+  const channels = new Function(`return (${src})`)();
+  const fills = channels[pageId];
+  assert.ok(fills && fills.length === 1, "single-flush fill for the page");
+  assert.ok(!/\.e=/.test(html), "no effect strings in the update payload (G5)");
+  return fills[0];
+}
 
 async function main() {
   // --- 1. Server-render page A in persisted mode -------------------------
@@ -123,10 +117,10 @@ async function main() {
   const keptHipBelt = liBefore[1];
   const keptDrySack = liBefore[2];
 
-  // Show what page B's persisted render emits today (for the writer-gap
-  // comparison in the doc) -- the patch below is what update mode WILL emit.
-  const htmlB = await renderToString("product.marko.cjs", inputB);
-  console.log("\npage B payload today:", htmlB.match(/M\.\w+\.b=(\{.*\});M\.\w+\.w\(\)/s)?.[1], "\n");
+  // Render page B as a real update render and derive the patch from it.
+  const htmlB = await renderToString("product.marko.cjs", inputB, "update");
+  const patchFill = extractUpdateFill(htmlB, pageId);
+  console.log("\npage B update payload:", htmlB.match(/M\.\w+\.b=(\{.*\});M\.\w+\.w\(\)/s)?.[1], "\n");
 
   // --- 5. Apply the A1 patch through the B2 merges ------------------------
   const mutations = observeMutations(window);
@@ -174,12 +168,12 @@ async function main() {
 
 // --- harness ---------------------------------------------------------------
 
-async function renderToString(templateFile, input) {
+async function renderToString(templateFile, input, mode = true) {
   const template = require(path.join(E, templateFile)).default;
   let out = "";
   for await (const chunk of template.render({
     ...input,
-    $global: { persisted: true },
+    $global: { persisted: mode },
   }))
     out += chunk;
   return out;

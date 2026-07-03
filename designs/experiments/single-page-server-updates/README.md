@@ -68,8 +68,13 @@ node -r '~ts' $E/e2e.js
 `e2e.js` server-renders page A in persisted mode (real `persisted` compile
 option + `$global.persisted`), resumes it with the real runtime in jsdom
 (inline scripts run in the DOM realm; the page ready channel drains via
-`ready(pageId)`), clicks the button to diverge client state, then applies
-the A1 patch for page B through the working B2 persisted entries:
+`ready(pageId)`), clicks the button to diverge client state, then renders
+page B as a **real update render** (`$global.persisted = "update"`) and
+applies the fill it emits through the working B2 persisted entries — the
+patch is no longer hand-authored; the writer's update mode supplies G1–G5
+(computed hole values incl. `UpdateAttr:` keys, explicit conditional
+outcomes with `-1` = no branch, branch lists + loop keys + owner refs, and
+no effect strings for matched scopes):
 
 - `entries/product.update.js` / `entries/price-tag.update.js` — what the
   `?update` codegen would emit. The conditional merge is an `_if` instance
