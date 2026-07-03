@@ -54,7 +54,9 @@ export interface RenderData {
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
-const registeredValues: Record<string, unknown> = {};
+// Also read by `dom/update`'s patch-aware serialize context (fills access
+// registered values as `_._[id]`).
+export const registeredValues: Record<string, unknown> = {};
 let curRenders: Renders;
 let branchesEnabled: undefined | 1;
 let embedRenders:

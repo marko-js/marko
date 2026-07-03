@@ -20,7 +20,12 @@
 import { AccessorProp, type Scope } from "../common/types";
 import { _for_of } from "./control-flow";
 import { run } from "./queue";
-import { _resume, getRegisteredWithScope, getUpdateRoot } from "./resume";
+import {
+  _resume,
+  getRegisteredWithScope,
+  getUpdateRoot,
+  registeredValues,
+} from "./resume";
 
 type UpdateSignal = (scope: Scope, value: unknown) => void;
 type UpdateFill = (
@@ -71,15 +76,16 @@ export function applyUpdate(
       }
     }
   };
-  const serializeContext = (
-    data: number | (Scope | number)[],
-    registryId?: string,
-  ) =>
-    typeof data === "number"
-      ? registryId
-        ? (getRegisteredWithScope(registryId, getScope(data)) as unknown)
-        : getScope(data)
-      : applyScopes(data);
+  const serializeContext = Object.assign(
+    (data: number | (Scope | number)[], registryId?: string) =>
+      typeof data === "number"
+        ? registryId
+          ? (getRegisteredWithScope(registryId, getScope(data)) as unknown)
+          : getScope(data)
+        : applyScopes(data),
+    // Fills reference registered values directly as `_._[id]`.
+    { _: registeredValues },
+  );
 
   for (const fill of Array.isArray(fills) ? fills : [fills]) {
     const scopes = fill(serializeContext);

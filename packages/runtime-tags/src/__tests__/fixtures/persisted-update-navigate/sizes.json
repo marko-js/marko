@@ -12,8 +12,8 @@
     },
     "update.js": {
       "total": {
-        "min": 1328,
-        "brotli": 605
+        "min": 1356,
+        "brotli": 615
       },
       "files": {
         "tags/price.marko.update.mjs": 400,
