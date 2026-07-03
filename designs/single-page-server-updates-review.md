@@ -58,16 +58,14 @@ no effect replay (exactly-once event binding), fresh branches cloned from
 already-loaded content. This falls out of reusing the signal graph rather
 than reinventing a diff layer.
 
-**Goal 2 is architecturally ready but NOT yet delivered.** The update
-_payload_ (the fill) is small — for the ecommerce item page it is ~1–2 KB of
-values/structure vs a 12 KB document. But the response today is still the
-full document; the fill just rides along. The missing piece is response
-framing: an update response should be `fills (+ effect strings for fresh
-subtrees) + assets frame`, with **all static HTML suppressed**. This is
-writer work (skip content emission in update mode, emit length-prefixed
-frames) plus loader work, and it is the single highest-value remaining
-item. Until it lands, updates are byte-_worse_ than navigation; after it,
-the wire cost is O(changed values), which no HTML-diffing scheme can beat.
+**Goal 2 is delivered end-to-end (dev-validated).** Update responses
+suppress all static HTML and emit a **newline-delimited stream of serializer
+frames** (bare JS fill arrays, one per flush). Measured on the ecommerce app
+(dev, uncompressed runtime): item page 18.2 KB document → 6.4 KB update
+(3.8 KB → 1.35 KB gzip); cart 2.6 KB → 0.7 KB; the hole-dense search page
+92 KB → 42 KB. The remaining update-bytes lever is the state-only prop
+filter — matched-scope state defaults and effect strings still ride along
+inert (most of the search page's 42 KB is card component state noise).
 
 **Goal 1 has a real, measured cost to manage: the persisted spine.** The
 opt-in initial render pays for markers + spine + (new in slice 4 debugging)

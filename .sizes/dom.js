@@ -1,4 +1,4 @@
-// size: 26520 (min) 9725 (brotli)
+// size: 26541 (min) 9727 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2650,12 +2650,15 @@ function applyUpdate(merge, fills, liveRoot = getUpdateRoot()) {
             scopeId++);
       }
     },
-    serializeContext = (data, registryId) =>
-      typeof data == "number"
-        ? registryId
-          ? getRegisteredWithScope(registryId, getScope(data))
-          : getScope(data)
-        : applyScopes(data);
+    serializeContext = Object.assign(
+      (data, registryId) =>
+        typeof data == "number"
+          ? registryId
+            ? getRegisteredWithScope(registryId, getScope(data))
+            : getScope(data)
+          : applyScopes(data),
+      { _: registeredValues },
+    );
   for (let fill of Array.isArray(fills) ? fills : [fills]) {
     let scopes = fill(serializeContext);
     Array.isArray(scopes) && applyScopes(scopes);
