@@ -14,3 +14,12 @@ export function getAccessorPrefix(): typeof DebugAccessorPrefix {
 export function getAccessorProp(): typeof DebugAccessorProp {
   return (isOptimize() ? ProductionAccessorProp : DebugAccessorProp) as any;
 }
+
+// Update-render attr hole values are keyed
+// `UpdateAttr:<attrName>:<elementAccessor>`. The prefix lives here rather
+// than in the shared AccessorPrefix enums because those enum objects ship in
+// every client bundle, while this key only appears in compiled HTML output
+// and the update-only client runtime ("N" is reserved in the enums).
+export function getUpdateAttrPrefix() {
+  return isOptimize() ? "N" : "UpdateAttr:";
+}

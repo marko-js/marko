@@ -40,7 +40,10 @@ const $for_content__update = (patch, live) => {
 
 exports.$update = (patch, live) => {
   if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
-  if ("#a/1" in patch) _attr(live["#a/1"], "href", patch["#a/1"]);
+  // Attr hole values arrive keyed per attribute (`UpdateAttr:<name>:<el>`)
+  // so multi-attr elements don't collide; the live node rides `#a/1`.
+  if ("UpdateAttr:href:#a/1" in patch)
+    _attr(live["#a/1"], "href", patch["UpdateAttr:href:#a/1"]);
   if ("input_product_featured" in patch)
     $input_product_featured(live, patch.input_product_featured);
   if ("input_product_sale_percent" in patch)

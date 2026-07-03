@@ -62,6 +62,24 @@ marks, and the spine with zero param-only values; client bundle sizes
 untouched; the e2e prototype passes against the real flag. Changeset:
 `.changeset/persisted-serialize-guards.md`.
 
+**Implemented** (`feat: add update-render writer mode…`): the G1–G5
+update-render writer mode. `$global.persisted = "update"` renders a patch
+payload: `State.update` seeds serialize-reason `3` (request-derived values
+serialize — they are the payload; `_persisted_reason()` returns `3` so
+cross-template/global propagation carries values too); the translator wraps
+request-derived (state-free-reasoned) hole expressions in persisted builds
+with the pass-through `_hole_value` helper, which in update mode writes the
+computed value under the hole's accessor (dynamic attrs keyed
+`UpdateAttr:<name>:<elAccessor>`, a new `AccessorPrefix` entry — per attr so
+multi-attr elements don't collide) (G1); `_if` always writes the conditional
+outcome, `-1` = no branch (G2); loops write branch lists (empty included),
+loop keys (even positional), and owner refs as scope props (G3/G4); and
+`_script` effects are suppressed in update mode (G5). State-driven structure
+(no persisted bit in the branch guard) is excluded — the server never pairs
+into client-state-driven structure. Verified: e2e derives its patch from a
+real page-B update render (both branch directions); non-persisted compiles
+and initial/non-flag renders byte-identical; full suite passing.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the A1
 update payload applied through B2 merge functions; control-flow merges as
 `_if`/`_for_of` instances; wire-delivered branch `template`/`walks` pairs
@@ -135,14 +153,20 @@ to param-like sources under the persisted option`). Mechanism: under the
 
 ## Next slices (in dependency order, each testable via the harness)
 
-1. **Update-render writer mode** — a writer/`State` mode for patch responses:
-   drop state-only props, write computed hole values under hole accessors
-   (G1), always write conditional outcomes (G2), branch lists + keys in
-   fills (G3, makes G4 derivable), suppress effects for matched scopes (G5),
-   emit `template`/`walks` pairs from hoisted HTML-output consts as
-   `templates` frames (deduped per response, flushed before dependent
-   fills). _Acceptance: the e2e patch is derived from a real render-B
-   payload instead of the hand-authored fill in `e2e.js`._
+1. **Update-render writer mode** — **done** (see "Current state"): G1–G5
+   land as `$global.persisted = "update"`; the e2e patch is derived from a
+   real render-B payload. Deliberately deferred within this slice:
+   state-only props still ride along (bytes only — merges ignore them; a
+   translator-level `_state_value` filter is the fix when profiling says
+   so); `template`/`walks` pair emission as `templates` frames (the e2e
+   still hand-delivers the pairs; belongs with entry codegen, slice 2,
+   which decides the shared content-id scheme); mixed state∩param branch
+   guards compile to a static `1` and so skip structural update emission
+   (needs a compile-time bit split if real apps hit it); `_await`/dynamic
+   tags/`<show>` in update mode unaudited; static-HTML suppression + frame
+   framing (the response is still a full document — the patch consumer only
+   reads the fills; framing belongs to slices 3/4); MARKO_DEBUG pairing
+   asserts (serialize section ids in update renders) not yet emitted.
 2. **Persisted entry codegen** — the `?update` virtual module/entry kind
    (dispatch point `translator/visitors/program/index.ts`), emitting the B2
    merge functions the prototype hand-writes

@@ -5,7 +5,7 @@ import { WalkCode } from "../../common/types";
 import evaluate from "../util/evaluate";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputHTML, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import {
   type Binding,
@@ -19,12 +19,14 @@ import {
   ContentType,
   getNodeContentType,
   getOrCreateSection,
+  getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  isReasonDynamic,
 } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
@@ -136,10 +138,31 @@ export default {
         }
 
         if (isHTML) {
+          // Persisted builds capture the computed value of request-derived
+          // holes so update renders can serialize it under the hole's
+          // accessor (`_hole_value` is a pass-through otherwise). Pure
+          // state-driven holes are excluded -- the client owns those values.
+          const holeValue =
+            nodeBinding &&
+            isPersisted() &&
+            isReasonDynamic(markerSerializeReason)
+              ? callRuntime(
+                  "_hole_value",
+                  getScopeIdIdentifier(section),
+                  getScopeAccessorLiteral(nodeBinding),
+                  value,
+                  getSerializeGuard(section, markerSerializeReason, false),
+                )
+              : undefined;
           write`${
             method === "_escape"
-              ? buildEscapedTextExpression(value)
-              : callRuntime(method as HTMLMethod | DOMMethod, value)
+              ? holeValue
+                ? callRuntime("_escape", holeValue)
+                : buildEscapedTextExpression(value)
+              : callRuntime(
+                  method as HTMLMethod | DOMMethod,
+                  holeValue || value,
+                )
           }`;
           if (nodeBinding) {
             writer.markNode(placeholder, nodeBinding, markerSerializeReason);
