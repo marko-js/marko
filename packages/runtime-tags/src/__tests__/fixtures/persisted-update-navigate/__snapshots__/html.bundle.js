@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "f", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1);
 	_script($scope0_id, "a4");
 	writeScope($scope0_id, {
-		l: _state_reason() && input.product?.featured,
+		l: input.product?.featured,
 		n: (_serialize_if($scope0_reason, 2) || _update_reason()) && input.product?.sale?.percent,
 		p: _state_reason() && expanded
 	});

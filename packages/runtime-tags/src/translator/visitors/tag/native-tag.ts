@@ -67,7 +67,10 @@ import {
   toPropertyName,
 } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
-import { addUpdateMerge } from "../../util/update-merges";
+import {
+  addUpdateMerge,
+  isUpdateCoveredByClientSignals,
+} from "../../util/update-merges";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
@@ -1365,7 +1368,10 @@ function buildAttrHoleValue(
   const sources = getSerializeSourcesForRef(
     value.extra?.referencedBindings as ReferencedBindings,
   );
-  if (!isReasonDynamic(sources)) return;
+  // Browser-code reuse: skip the capture when the client's registered
+  // signal chain already re-renders this attr from patched scope values.
+  if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
+    return;
   const accessor = getScopeAccessorLiteral(nodeBinding);
   return callRuntime(
     "_hole_value",
@@ -1391,7 +1397,8 @@ function recordAttrUpdateMerge(
   const sources = getSerializeSourcesForRef(
     value.extra?.referencedBindings as ReferencedBindings,
   );
-  if (!isReasonDynamic(sources)) return;
+  if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
+    return;
   const accessor = getScopeAccessorLiteral(nodeBinding);
   addUpdateMerge(tagSection, {
     kind: "attr",

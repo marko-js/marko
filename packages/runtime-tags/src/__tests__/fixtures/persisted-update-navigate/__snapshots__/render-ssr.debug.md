@@ -119,9 +119,7 @@ UPDATE: .spotlight[class] null => "spotlight"
 <button>
   Hide
 </button>
-<section
-  class="spotlight"
-/>
+<section />
 <ul>
   <li>
     <span
@@ -156,9 +154,10 @@ UPDATE: .spotlight[class] null => "spotlight"
 ```
 UPDATE: h1::text "Trailhead 40L Pack" => "Summit 65L Pack"
 UPDATE: a[href] "/products/trailhead-40/specs" => "/products/summit-65/specs"
-REMOVE: .spotlight > em
+REMOVE: section > em
 REMOVE: ul > li
 INSERT: ul > li:nth-of-type(1) + li
+UPDATE: section[class] "spotlight" => null
 ```
 
 # Update
@@ -211,7 +210,6 @@ container.querySelector("button").click();
 ## Change
 ```
 UPDATE: button::text "Hide" => "Show"
-UPDATE: section[class] "spotlight" => null
 ```
 
 # Update `{"product":{"name":"Trailhead 40L Pack","slug":"trailhead-40","featured":true,"sale":{"percent":20}},"related":[{"id":11,"name":"Rain Cover","price":24.5},{"id":12,"name":"Hip Belt","price":39},{"id":13,"name":"Dry Sack","price":14.25}],"$global":{"persisted":true}}`
