@@ -2,7 +2,7 @@
 var price_default = _template("__tests__/tags/price.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_amount = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	_html(`<span class=price>$${_sep($sg__input_amount)}${_escape(_hole_value($scope0_id, "#text/0", input.amount.toFixed(2), $sg__input_amount))}${_el_resume($scope0_id, "#text/0", $sg__input_amount)}</span>`);
+	_html(`<span class=price${_attr("title", _hole_value($scope0_id, "UpdateAttr:title:#span/0", `$${input.amount.toFixed(2)}`, $sg__input_amount))}>$${_sep($sg__input_amount)}${_escape(_hole_value($scope0_id, "#text/1", input.amount.toFixed(2), $sg__input_amount))}${_el_resume($scope0_id, "#text/1", $sg__input_amount)}</span>${_el_resume($scope0_id, "#span/0", $sg__input_amount)}`);
 	$sg__input_amount && writeScope($scope0_id, {}, "__tests__/tags/price.marko", 0);
 });
 
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_set_serialize_reason($sg__input_related);
 		price_default({ amount: item.price });
 		_html(` ${_sep($sg__input_related)}${_escape(_hole_value($scope2_id, "#text/1", item.name, $sg__input_related))}${_el_resume($scope2_id, "#text/1", $sg__input_related)}</li>`);
-		$sg__input_related && writeScope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "11:4");
+		($sg__input_related || _persisted_reason()) && writeScope($scope2_id, { "#childScope/0": _existing_scope($childScope) }, "__tests__/template.marko", "11:4");
 	}, function(item) {
 		return item.id;
 	}, $scope0_id, "#ul/5", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1);

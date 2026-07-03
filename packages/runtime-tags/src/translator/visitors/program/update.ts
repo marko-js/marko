@@ -7,7 +7,7 @@ import {
   getAccessorProp,
 } from "../../util/get-accessor-char";
 import { getScopeAccessorLiteral } from "../../util/references";
-import { callRuntime } from "../../util/runtime";
+import { callRuntime, getRuntimePath } from "../../util/runtime";
 import {
   forEachSectionReverse,
   getSectionForBody,
@@ -76,20 +76,35 @@ export default {
       });
 
       const rootIdentifier = mergeIdentifiers.get(rootSection)!;
+      // Built before imports are collected below -- `callRuntime` may add
+      // the `_resume` import to the program body.
+      const defaultExport = t.exportDefaultDeclaration(
+        callRuntime(
+          "_resume",
+          t.stringLiteral(getResumeRegisterId(rootSection, "update")),
+          rootIdentifier,
+        ),
+      );
       const body: t.Statement[] = [];
       for (const statement of program.node.body) {
         if (statement.type === "ImportDeclaration") {
           body.push(statement);
         }
       }
-      body.push(...hoistedDeclarations, ...mergeFunctions);
+      body.push(...hoistedDeclarations, ...mergeFunctions, defaultExport);
+      // Re-export the applier so consumers (the client router) need no
+      // knowledge of the runtime module path this entry was compiled
+      // against (debug vs optimized).
       body.push(
-        t.exportDefaultDeclaration(
-          callRuntime(
-            "_resume",
-            t.stringLiteral(getResumeRegisterId(rootSection, "update")),
-            rootIdentifier,
-          ),
+        t.exportNamedDeclaration(
+          null,
+          [
+            t.exportSpecifier(
+              t.identifier("applyUpdate"),
+              t.identifier("applyUpdate"),
+            ),
+          ],
+          t.stringLiteral(getRuntimePath("dom")),
         ),
       );
 

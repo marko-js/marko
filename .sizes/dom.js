@@ -1,4 +1,4 @@
-// size: 26268 (min) 9619 (brotli)
+// size: 26421 (min) 9692 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1093,6 +1093,21 @@ function runResumeEffects(render) {
   } finally {
     isResuming = 0;
   }
+}
+function getUpdateRoot(renderId) {
+  let root;
+  for (let id in curRenders)
+    if (!renderId || id === renderId) {
+      let render = curRenders[id];
+      if (
+        ((registeredValues.__update_root = (scope) => (root = scope)),
+        (render.r ||= []).push("__update_root 1"),
+        runResumeEffects(render),
+        root)
+      )
+        return root;
+    }
+  return root;
 }
 function getRegisteredWithScope(id, scope) {
   let val = registeredValues[id];
@@ -2608,14 +2623,15 @@ function getSelectorOrResolve(selector, resolve) {
  * Applies an update-render payload to a live (resumed) render.
  *
  * `merge` is the page template's compiled merge function (the `?update`
- * module's default export) and `liveRoot` the live scope it pairs with. The
+ * module's default export) and `liveRoot` the live scope it pairs with
+ * (defaults to pairing the first render's root by convention). The
  * patch root is scope 1 by convention (the first scope the update render
  * allocates -- the root template's). Patch scopes are plain objects in a
  * patch-local id space; `_(id, registryId)` references inside values resolve
  * the same way resume fills do, against patch scopes. Scope 0 partials are
  * the update's `$global` values and merge onto the live `$global`.
  */
-function applyUpdate(merge, fills, liveRoot) {
+function applyUpdate(merge, fills, liveRoot = getUpdateRoot()) {
   let liveGlobal = liveRoot.$,
     patchScopes = { 0: liveGlobal },
     getScope = (id) => (patchScopes[id] ||= {}),

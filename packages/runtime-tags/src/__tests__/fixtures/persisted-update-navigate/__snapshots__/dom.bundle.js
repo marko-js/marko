@@ -1,8 +1,11 @@
 // tags/price.marko
 const $template = "<span class=price>$<!></span>";
-const $walks = "Db%l";
+const $walks = " Db%l";
 const $setup = () => {};
-const $input_amount = ($scope, input_amount) => _text($scope.a, input_amount.toFixed(2));
+const $input_amount = ($scope, input_amount) => {
+	_attr($scope.a, "title", `$${input_amount.toFixed(2)}`);
+	_text($scope.b, input_amount.toFixed(2));
+};
 
 // template.marko
 const $for_content__setup = ($scope) => {
@@ -35,10 +38,11 @@ const $for = /* @__PURE__ */ _for_of(5, $for_content_content[0], $for_content_co
 
 // tags/price.marko.update.mjs
 const $update$1 = (patch, live) => {
-	if ("b" in patch) live["b"] = patch["b"];
 	if ("c" in patch) live["c"] = patch["c"];
 	if ("d" in patch) live["d"] = patch["d"];
-	if ("a" in patch) _text(live["a"], patch["a"]);
+	if ("e" in patch) live["e"] = patch["e"];
+	if ("Ntitle:a" in patch) _attr(live["a"], "title", patch["Ntitle:a"]);
+	if ("b" in patch) _text(live["b"], patch["b"]);
 };
 var price_marko_update_default = _resume("b0", $update$1);
 

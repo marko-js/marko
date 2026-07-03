@@ -2,7 +2,7 @@
 var price_default = _template("b", (input) => {
 	const $sg__input_amount = _serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
-	_html(`<span class=price>$${_sep($sg__input_amount)}${_escape(_hole_value($scope0_id, "a", input.amount.toFixed(2), $sg__input_amount))}${_el_resume($scope0_id, "a", $sg__input_amount)}</span>`);
+	_html(`<span class=price${_attr("title", _hole_value($scope0_id, "Ntitle:a", `$${input.amount.toFixed(2)}`, $sg__input_amount))}>$${_sep($sg__input_amount)}${_escape(_hole_value($scope0_id, "b", input.amount.toFixed(2), $sg__input_amount))}${_el_resume($scope0_id, "b", $sg__input_amount)}</span>${_el_resume($scope0_id, "a", $sg__input_amount)}`);
 	$sg__input_amount && writeScope($scope0_id, {});
 });
 
@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 		_set_serialize_reason($sg__input_related);
 		price_default({ amount: item.price });
 		_html(` ${_sep($sg__input_related)}${_escape(_hole_value($scope2_id, "b", item.name, $sg__input_related))}${_el_resume($scope2_id, "b", $sg__input_related)}</li>`);
-		$sg__input_related && writeScope($scope2_id, { a: _existing_scope($childScope) });
+		($sg__input_related || _persisted_reason()) && writeScope($scope2_id, { a: _existing_scope($childScope) });
 	}, function(item) {
 		return item.id;
 	}, $scope0_id, "f", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1);

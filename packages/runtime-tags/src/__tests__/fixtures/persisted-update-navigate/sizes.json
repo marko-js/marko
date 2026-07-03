@@ -2,27 +2,27 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 495,
-        "brotli": 322
+        "min": 496,
+        "brotli": 313
       },
       "files": {
-        "tags/price.marko": 229,
+        "tags/price.marko": 294,
         "template.marko": 1617
       }
     },
     "update.js": {
       "total": {
-        "min": 1255,
-        "brotli": 577
+        "min": 1328,
+        "brotli": 605
       },
       "files": {
-        "tags/price.marko.update.mjs": 328,
+        "tags/price.marko.update.mjs": 400,
         "template.marko.update.mjs": 1627
       }
     }
   },
   "html": {
-    "min": 855,
-    "brotli": 447
+    "min": 933,
+    "brotli": 473
   }
 }

@@ -20,6 +20,7 @@
   <li>
     <span
       class="price"
+      title="$24.50"
     >
       $24.50
     </span>
@@ -28,6 +29,7 @@
   <li>
     <span
       class="price"
+      title="$39.00"
     >
       $39.00
     </span>
@@ -36,6 +38,7 @@
   <li>
     <span
       class="price"
+      title="$14.25"
     >
       $14.25
     </span>
@@ -71,6 +74,7 @@ container.querySelector("button").click();
   <li>
     <span
       class="price"
+      title="$24.50"
     >
       $24.50
     </span>
@@ -79,6 +83,7 @@ container.querySelector("button").click();
   <li>
     <span
       class="price"
+      title="$39.00"
     >
       $39.00
     </span>
@@ -87,6 +92,7 @@ container.querySelector("button").click();
   <li>
     <span
       class="price"
+      title="$14.25"
     >
       $14.25
     </span>
@@ -118,6 +124,7 @@ UPDATE: .spotlight[class] null => "spotlight"
   <li>
     <span
       class="price"
+      title="$39.00"
     >
       $39.00
     </span>
@@ -126,6 +133,7 @@ UPDATE: .spotlight[class] null => "spotlight"
   <li>
     <span
       class="price"
+      title="$11.50"
     >
       $11.50
     </span>
@@ -134,6 +142,7 @@ UPDATE: .spotlight[class] null => "spotlight"
   <li>
     <span
       class="price"
+      title="$14.25"
     >
       $14.25
     </span>
@@ -172,6 +181,7 @@ container.querySelector("button").click();
   <li>
     <span
       class="price"
+      title="$39.00"
     >
       $39.00
     </span>
@@ -180,6 +190,7 @@ container.querySelector("button").click();
   <li>
     <span
       class="price"
+      title="$11.50"
     >
       $11.50
     </span>
@@ -188,6 +199,7 @@ container.querySelector("button").click();
   <li>
     <span
       class="price"
+      title="$14.25"
     >
       $14.25
     </span>
@@ -222,6 +234,7 @@ UPDATE: button::text "Hide" => "Show"
   <li>
     <span
       class="price"
+      title="$24.50"
     >
       $24.50
     </span>
@@ -230,6 +243,7 @@ UPDATE: button::text "Hide" => "Show"
   <li>
     <span
       class="price"
+      title="$39.00"
     >
       $39.00
     </span>
@@ -238,6 +252,7 @@ UPDATE: button::text "Hide" => "Show"
   <li>
     <span
       class="price"
+      title="$14.25"
     >
       $14.25
     </span>
