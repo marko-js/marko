@@ -178,7 +178,15 @@ export const IfTag = {
                 if (branchSerializeReasons !== true) {
                   if (
                     branchSerializeReason === true ||
-                    branchSerializeReason.state
+                    (branchSerializeReason.state &&
+                      // Persisted builds keep mixed reasons whole so the
+                      // branch guard preserves the request-derived bits
+                      // (see `getMixedDynamicGuard`).
+                      !(
+                        isPersisted() &&
+                        (branchSerializeReason.param ||
+                          branchSerializeReason.global)
+                      ))
                   ) {
                     branchSerializeReasons = true;
                   } else if (branchSerializeReasons) {

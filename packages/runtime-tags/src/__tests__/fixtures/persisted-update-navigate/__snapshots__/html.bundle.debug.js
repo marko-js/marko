@@ -8,7 +8,7 @@ var price_default = _template("__tests__/tags/price.marko", (input) => {
 
 // template.marko
 var template_default = _template("__tests__/template.marko", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_product_name = _serialize_guard($scope0_reason, 0), $sg__input_product_slug = _serialize_guard($scope0_reason, 1), $sg__input_product_sale_percent = _serialize_guard($scope0_reason, 3), $sg__input_product_sale = _serialize_guard($scope0_reason, 2), $sg__input_related = _serialize_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $sg__input_product_name = _serialize_guard($scope0_reason, 1), $sg__input_product_slug = _serialize_guard($scope0_reason, 2), $sg__input_product_sale_percent = _serialize_guard($scope0_reason, 5), $sg__input_product_sale = _serialize_guard($scope0_reason, 4), $sg__input_related = _serialize_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	let expanded = false;
 	_html(`<h1>${_escape(_hole_value($scope0_id, "#text/0", input.product.name, $sg__input_product_name))}${_el_resume($scope0_id, "#text/0", $sg__input_product_name)}</h1><a${_attr("href", _hole_value($scope0_id, "UpdateAttr:href:#a/1", `/products/${input.product.slug}/specs`, $sg__input_product_slug))}>specs</a>${_el_resume($scope0_id, "#a/1", $sg__input_product_slug)}<button>${expanded ? "Hide" : "Show"}${_el_resume($scope0_id, "#text/3")}</button>${_el_resume($scope0_id, "#button/2")}<section${expanded && input.product.featured ? " class=spotlight" : ""}>`);
@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			$sg__input_product_sale && writeScope($scope1_id, { _: $sg__input_product_sale_percent && _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4");
 			return 0;
 		}
-	}, $scope0_id, "#section/4", $sg__input_product_sale, 1, $sg__input_product_sale, "</section>", 1);
+	}, $scope0_id, "#section/4", $sg__input_product_sale, 1 | _serialize_guard($scope0_reason, 0), $sg__input_product_sale, "</section>", 1);
 	_html("<ul>");
 	_for_of(input.related, (item) => {
 		const $scope2_id = _scope_id();
@@ -35,7 +35,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		input_product_featured: input.product?.featured,
-		input_product_sale_percent: _serialize_if($scope0_reason, 2) && input.product?.sale?.percent,
+		input_product_sale_percent: _serialize_if($scope0_reason, 4) && input.product?.sale?.percent,
 		expanded
 	}, "__tests__/template.marko", 0, {
 		input_product_featured: ["input.product.featured"],

@@ -189,6 +189,15 @@ export let _dynamic_tag = (
         [AccessorPrefix.ConditionalRenderer + accessor]:
           (renderer as ServerRenderer | undefined)?.[RendererProp.Id] ||
           renderer,
+        // Update renders link the branch scope explicitly (there are no
+        // markers/DOM to pair through); merges dispatch the content's
+        // registered update merge by the renderer id above (G2 for dynamic
+        // tags).
+        ...(state.update && (serializeReason as unknown as number) & 2
+          ? {
+              [AccessorPrefix.BranchScopes + accessor]: _scope(branchId, {}),
+            }
+          : null),
       });
     }
   } else {

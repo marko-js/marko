@@ -24,7 +24,7 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { isOptimize, isOutputHTML } from "../../util/marko-config";
+import { isOptimize, isOutputHTML, isPersisted } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import {
   type Binding,
@@ -76,6 +76,7 @@ import {
   propsToExpression,
   translateAttrs,
 } from "../../util/translate-attrs";
+import { addUpdateMerge } from "../../util/update-merges";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
@@ -410,11 +411,22 @@ export default {
       if (isOutputHTML()) {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
-        const serializeArg = getSerializeGuard(
+        let serializeArg = getSerializeGuard(
           tagSection,
           serializeReason,
-          true,
+          !isPersisted(),
         );
+        if (isPersisted()) {
+          // Persisted spine: dynamic-tag structure (eg a layout's
+          // `<${input.content}/>`) serializes whenever the persisted render
+          // flag is set -- parent-threaded reasons don't reach body-content
+          // props, and update merges descend through this link.
+          serializeArg = t.binaryExpression(
+            "|",
+            serializeArg!,
+            callRuntime("_persisted_reason"),
+          );
+        }
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -489,6 +501,15 @@ export default {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"));
         const signal = getSignal(section, nodeBinding, "dynamicTag");
+        // Update renders link the rendered branch explicitly (see the html
+        // runtime's `_dynamic_tag`); the merge dispatches the content's
+        // registered update merge by the serialized renderer id.
+        if (isPersisted() && serializeReason) {
+          addUpdateMerge(tagSection, {
+            kind: "dynamic",
+            accessor: getScopeAccessorLiteral(nodeBinding),
+          });
+        }
         let tagVarSignal: Signal | undefined;
         if (tag.node.var) {
           const varBinding = tag.node.var.extra!.binding!;

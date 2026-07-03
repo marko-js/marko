@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { generateUid, getSharedUid } from "./generate-uid";
+import { isPersisted } from "./marko-config";
 import { type OneMany, type Opt, some, Sorted } from "./optional";
 import {
   compareSources,
@@ -79,17 +80,62 @@ export function getSerializeGuard(
   optional: boolean,
 ) {
   if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
-    return reason
-      ? optional
-        ? undefined
-        : withLeadingComment(
-            t.numericLiteral(1),
-            getDebugNames(reason === true ? undefined : reason.state),
-          )
-      : t.numericLiteral(0);
+    if (!reason) return t.numericLiteral(0);
+
+    // Persisted builds keep the request-derived bits of a mixed reason:
+    // structure/content that is both stateful and request-derived still
+    // participates in update renders (the writer checks
+    // `serializeBranch & 2`), so instead of collapsing to a static `1` the
+    // guard compiles to `1 | <dynamic part>`. Truthiness and the stateful
+    // bit are unchanged, so non-update behavior is identical.
+    const mixedGuard = getMixedDynamicGuard(section, reason);
+    if (mixedGuard) return mixedGuard;
+
+    return optional
+      ? undefined
+      : withLeadingComment(
+          t.numericLiteral(1),
+          getDebugNames(reason === true ? undefined : reason.state),
+        );
   }
 
   return withPersistedGuard(reason, getParamGuard(reason, true));
+}
+
+const mixedDynamicPartCache = new WeakMap<Sources, DynamicSerializeReason>();
+function getMixedDynamicGuard(
+  section: Section,
+  reason: SerializeReason,
+): t.Expression | undefined {
+  if (
+    !isPersisted() ||
+    reason === true ||
+    !reason.state ||
+    !(reason.param || reason.global)
+  ) {
+    return;
+  }
+  let part = mixedDynamicPartCache.get(reason);
+  if (!part) {
+    mixedDynamicPartCache.set(
+      reason,
+      (part = {
+        state: undefined,
+        param: reason.param as DynamicSerializeReason["param"],
+        global: reason.global as DynamicSerializeReason["global"],
+      }),
+    );
+  }
+  if (part.param && isCrossSection(section, part)) return;
+  const dynamicGuard = withPersistedGuard(part, getParamGuard(part, true));
+  return (
+    dynamicGuard &&
+    t.binaryExpression(
+      "|",
+      withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state)),
+      dynamicGuard,
+    )
+  );
 }
 
 // Splits a dynamic reason for guard building: the param part rides the
@@ -151,9 +197,20 @@ export function getSerializeGuardForAny(
   let expr!: t.Expression;
   for (const reason of reasons) {
     if (!isReasonDynamic(reason)) {
-      return optional
-        ? undefined
-        : withLeadingComment(t.numericLiteral(1), getDebugNames(reason.state));
+      // Mixed reasons contribute their request-derived bits in persisted
+      // builds (see `getMixedDynamicGuard`); otherwise a stateful reason
+      // makes the whole guard static.
+      const mixedGuard = getMixedDynamicGuard(section, reason);
+      if (!mixedGuard) {
+        return optional
+          ? undefined
+          : withLeadingComment(
+              t.numericLiteral(1),
+              getDebugNames(reason.state),
+            );
+      }
+      expr = expr ? t.logicalExpression("||", expr, mixedGuard) : mixedGuard;
+      continue;
     }
 
     const guard = getSerializeGuard(section, reason, false)!;
