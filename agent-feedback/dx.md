@@ -36,3 +36,15 @@ words to `cspell.json`, inline-disable the regex-heavy lines, or exclude
 generated/vendored type files.
 
 <!-- cspell:enable -->
+
+## `_var_resume` register ids can collide for same-named bindings
+
+`writeSignals` derives the `_var_resume` id from the referenced bindings'
+_names_ (`getResumeRegisterId(section, signal.referencedBindings, "var")`).
+Names are not unique per section for dom bindings (`#text`, `#div`, …), so
+two registered signals over same-named bindings in one section would silently
+overwrite each other in the client registry. Today's registered signals
+(dynamic-tag tag vars) use user-named bindings so it likely never bites, but
+the update-entry work had to add `Signal.registerId` to opt out for
+conditional signals — the default derivation is a latent footgun worth an id
+scheme keyed on accessor rather than name.
