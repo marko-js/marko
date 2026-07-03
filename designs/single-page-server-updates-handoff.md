@@ -157,6 +157,18 @@ array of fills on its own line (the serializer escapes newlines in values).
 The applier/harness/prototype-router parse lines; per-frame streaming apply
 (shared per-navigation patch map) is follow-up router work.
 
+**Implemented** (`feat: MPA-parity for volatile expressions…`): refs-less
+non-foldable expressions (`new Date()`, impure calls, module state) are
+_volatile_ — they share the `$global` source treatment
+(`getVolatileExprSources` in `references.ts`), so persisted navigations
+refresh them exactly as a reload would, propagating through `<const>`
+derivations (`persisted-update-volatile` fixture). `let` initializers stay
+excluded (client state survives by definition). Compile-time-foldable
+expressions stay static; refs-bearing impure expressions already refreshed
+through their sources' guards. Purity beyond folding (imported formatter
+calls over constants) currently pays the volatile cost — a pure annotation
+or known-impure-global heuristic is the planned relief valve.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by
