@@ -19,13 +19,16 @@ Everything needed to pick this work up cold. Read in this order:
    `persisted-update-navigate` fixture under
    `packages/runtime-tags/src/__tests__/fixtures/`.)
 
-Branch: `claude/single-page-server-updates-bimocl` (this repo; sibling
+Branch: `claude/single-page-updates-status-tk3b8h` (this repo; sibling
 branches of the same name exist on `marko-js/vite` — carrying the
-`persisted` plugin-option plumb — and on `marko-js/run`,
-`DylanPiercey/marko-ecommerce`, and `DylanPiercey/marko-idle`; the
-ecommerce branch carries the linked prototype app, see
-"Example-app prototyping workspace" below. Work started on
-`claude/single-page-server-updates-ipucp6`, which this branch continues.)
+`persisted` plugin-option plumb and `?update` entry kind — on
+`marko-js/run` — carrying the run-owned integration: option, update
+negotiation, client router — and on `DylanPiercey/marko-ecommerce`, which
+carries the linked prototype app, see "Example-app prototyping workspace"
+below. Work started on `claude/single-page-server-updates-ipucp6`,
+continued on `claude/single-page-server-updates-bimocl` (marko/vite only;
+same commits as this branch up to the run integration), which this branch
+continues.)
 
 ## What the feature is
 
@@ -219,6 +222,33 @@ own. Measured on the ecommerce app this cut update payloads ~35%: item
 broke `#childScope` spine links -- the gate belongs at the wiring emit
 sites, not the shared emission loop.
 
+**Implemented** (`marko-js/run` branch, `feat: persisted pages…`): the
+run-owned integration — the feature as users see it. `marko({ persisted:
+true })` on run's vite plugin (option lives in `RouterOptions`, forwarded
+wholesale to @marko/vite's `persisted`); the generated router negotiates
+update renders in `invoke` (`accept: text/marko-patch` + an
+`x-marko-route` header carrying the client's route pattern, verified
+against the matched `route.path` — mismatches 409 so route-ranking
+false-positives fall back instead of pairing wrong scopes); update
+responses ship `content-type: text/marko-patch` + `vary: accept`
+(`RuntimeContext.render` swaps the response init off `context.persisted`);
+and every generated route wrapper template registers the client router
+(`src/runtime/persisted.ts`, `register(pattern, () =>
+import("./<wrapper>.marko?update"))` emitted by `renderRouteTemplate`) —
+link interception for URLs matching the route's own pattern
+(`patternToRegExp` mirrors `$`/`$$` segment semantics), parallel
+fetch+entry-load, buffered frame parse, `applyUpdate` via the entry's
+re-export, pushState + scroll-to-top, popstate re-fetch, abort-superseded
+navigations, and a full-navigation fallback ladder. Validated end-to-end
+against the ecommerce app in Chromium (same-route item→item click, no
+reload, cart state + DOM marker survive, back/forward re-applies without
+reload, cross-route stays a full navigation, 409 backstop). The prototype
+glue in the ecommerce app is deleted. Found and fixed on run main while
+integrating: the context class refactor had moved `params`/`search`
+getters and `fetch`/`render`/`redirect`/`back` to the prototype, which
+marko's own-property `$global` spread drops — they're own enumerable
+properties again (rc.10 contract; see marko `agent-feedback/unclear.md`).
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by
@@ -336,36 +366,42 @@ to param-like sources under the persisted option`). Mechanism: under the
    (loader work), and root pairing by `meta` frame (the harness pairs via a
    registered effect string against scope 1; the applier takes the live root
    explicitly).
-4. **Integration** — **in progress** (validated against marko-ecommerce in
+4. **Integration** — **core done** (validated against marko-ecommerce in
    dev mode): `@marko/vite` resolves `x.marko?update` imports to update
    entries (`.update-entry.marko` kind, own lazy chunk, recursive child
-   `?update` imports; persisted-gated); the ecommerce branch carries the
-   prototype run-router glue (`src/util/persisted-nav.ts` link
-   interception + fill extraction + `applyUpdate`, `+middleware.ts` update
-   content negotiation via `x-marko-update`) and a self-bootstrapping
-   `npm run setup` that git-links the marko/vite branches. Browser-verified:
-   lazy update chunk, no reload, history/state intact. Blocking real-app
-   merges (see the review doc's gap list): dynamic-tag/renderBody descent
-   (layout→page hop emits no structural link in update mode) and
-   branch/hole emission gaps on `<if>/<else>` + only-child + `<try>` page
-   shapes. Remaining: response framing + static-HTML suppression (the bytes
-   goal), build hash, run-owned client router, `?update` chunks in the
-   build manifest.
+   `?update` imports; persisted-gated), and **@marko/run owns the feature**
+   (see "Current state"): plugin option, router update negotiation +
+   route-verification backstop, wrapper-emitted client-router registration,
+   `runtime/persisted.ts` (interception, apply, history/scroll, popstate,
+   fallback ladder). The ecommerce app is reduced to `marko({ persisted:
+true })` plus a `PERSISTED=0` measurement middleware; its
+   `npm run setup` git-links the marko/vite/run branches. Remaining in this
+   slice: **build hash** (no build identity exists at runtime; gate updates
+   on it), `?update` chunks in the production build manifest + a production
+   (`vite build`) validation pass (dev-mode only so far), per-frame
+   streaming apply (needs a runtime per-navigation patch context; the
+   router buffers today), cross-route navigation (the shared-shell design),
+   and scroll/focus refinements (hash-fragment scroll after apply,
+   `<a rel=external>` audit). The update wire's `new Function` frame eval
+   also needs a CSP story (initial-render resume runs as inline scripts;
+   updates eval — nonce-carrying script injection is the likely shape).
 
 ## Example-app prototyping workspace
 
-Sibling checkouts on the same branch name carry the integration prototype:
+Sibling checkouts on the same branch name carry the integration:
 
 - **marko-js/vite** — `persisted` plugin option plumbed into the compiler
-  `baseConfig` (the slice-4 plumb, already real).
+  `baseConfig`, plus the `x.marko?update` update-entry module kind.
+- **marko-js/run** — the run-owned feature surface (see "Current state"):
+  `persisted` option, router update negotiation, wrapper-registered client
+  router, `runtime/persisted.ts`.
 - **DylanPiercey/marko-ecommerce** — linked against local `marko`,
-  `@marko/compiler`, and `@marko/vite` tarballs (see its `PROTOTYPE.md` for
-  regeneration steps); `vite.config.ts` enables the compile flag and
-  `+middleware.ts` sets `$global.persisted` per request (the run context
-  _is_ `$global`; `PERSISTED=0` disables). Verified end to end with
-  `$global` promotion: persisted renders emit full markers/spine on every
-  route (measurements in `PROTOTYPE.md`), non-flagged renders stay
-  byte-identical.
+  `@marko/compiler`, `@marko/vite`, and `@marko/run` tarballs (see its
+  `PROTOTYPE.md` for regeneration steps); `vite.config.ts` enables
+  `marko({ persisted: true })` and `+middleware.ts` keeps only the
+  `PERSISTED=0` measurement opt-out (the run context _is_ `$global`, so
+  the router-set flag is the render flag). Verified end to end in
+  Chromium; payload measurements in `PROTOTYPE.md`.
 
 ## How to validate everything
 
