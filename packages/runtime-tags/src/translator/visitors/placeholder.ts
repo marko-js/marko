@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 
-import { isNotVoid, isVoid } from "../../common/helpers";
+import { isVoid } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
 import evaluate from "../util/evaluate";
 import { isCoreTagName } from "../util/is-core-tag";
@@ -28,6 +28,7 @@ import {
 } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
+import { getPrevStaticSibling, isStaticText } from "../util/static-text";
 import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -64,10 +65,11 @@ export default {
     if (confident && isVoid(computed)) return;
 
     if (isStaticText(node)) {
-      if (
-        isStaticText(getPrev(placeholder)) ||
-        isStaticText(getNext(placeholder))
-      ) {
+      // Only the node that starts a merged static-text run emits the walk step
+      // for it. Defer when a previous sibling is static text (it owns the step);
+      // deferring on a *following* static sibling instead would drop the step
+      // entirely for a run made up solely of static placeholders.
+      if (isStaticText(getPrevStaticSibling(placeholder))) {
         (node.extra ??= {})[kSharedText] = true;
       }
     } else {
@@ -305,50 +307,4 @@ function getInlinedBodyTag(parent: t.NodePath) {
       return tag;
     }
   }
-}
-
-function isStaticText(node?: t.Node) {
-  switch (node?.type) {
-    case "MarkoText":
-      return true;
-    case "MarkoPlaceholder": {
-      if (node.escape) {
-        const { confident, computed } = evaluate(node.value);
-        return confident && isNotVoid(computed);
-      } else {
-        return false;
-      }
-    }
-  }
-}
-
-function getPrev(path: t.NodePath) {
-  let prev = path.getPrevSibling();
-  while (
-    prev.node &&
-    (prev.isMarkoComment() ||
-      (prev.isMarkoPlaceholder() && isEmptyPlaceholder(prev.node)))
-  ) {
-    prev = prev.getPrevSibling();
-  }
-
-  return prev.node;
-}
-
-function getNext(path: t.NodePath) {
-  let next = path.getNextSibling();
-  while (
-    next.node &&
-    (next.isMarkoComment() ||
-      (next.isMarkoPlaceholder() && isEmptyPlaceholder(next.node)))
-  ) {
-    next = next.getNextSibling();
-  }
-
-  return next.node;
-}
-
-function isEmptyPlaceholder(placeholder: t.MarkoPlaceholder) {
-  const { confident, computed } = evaluate(placeholder.value);
-  return confident && isVoid(computed);
 }

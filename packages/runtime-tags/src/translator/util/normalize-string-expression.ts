@@ -20,11 +20,11 @@ export default function normalizeStringExpression(
         shiftItems(parts, nextIndex, content.quasis.length + exprLen);
 
         for (let j = 0; j < exprLen; j++) {
-          parts[nextIndex++] = content.quasis[j].value.raw;
+          parts[nextIndex++] = content.quasis[j].value.cooked ?? "";
           parts[nextIndex++] = content.expressions[j] as t.Expression;
         }
 
-        parts[nextIndex] = content.quasis[exprLen].value.raw;
+        parts[nextIndex] = content.quasis[exprLen].value.cooked ?? "";
         continue;
       } else {
         exprs.push(content);

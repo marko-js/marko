@@ -722,7 +722,13 @@ function createBindingsAndTrackReferences(
               scope,
               section,
               patternBinding,
-              property,
+              // A rest element mirrors the shifted tail of its source; the tail
+              // is carried by `excludeProperties` + `restOffset`, so it must be
+              // created without a `property` (matching the object-pattern rest
+              // above). Passing the array pattern's own `property` here would
+              // route the rest through the property-alias branch of
+              // `createBinding` and collide with a sibling element binding.
+              undefined,
               excludeProperties,
               i,
             );

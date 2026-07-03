@@ -1,0 +1,7 @@
+<let/rows=[[1, 2, 3], [4, 5, 6]]/>
+<ul>
+  <for|[first, ...rest], i| of=rows>
+    <li>${i}: first=${first} rest0=${rest[0]} rest1=${rest[1]} len=${rest.length}</li>
+  </for>
+</ul>
+<button onClick() { rows = [[7, 8, 9, 10]] }>update</button>

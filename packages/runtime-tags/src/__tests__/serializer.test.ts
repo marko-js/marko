@@ -744,6 +744,27 @@ describe("serializer", () => {
       assert.equal(result.partial.buffer, result.full.buffer);
     });
 
+    it("partial view at offset 0 serialized before a higher-offset sibling", () => {
+      // The first-seen view starts at offset 0 but doesn't span the whole
+      // buffer; it must still serialize the full buffer so the sibling view at
+      // offset 4 resolves against a correctly-sized buffer instead of a
+      // truncated one (which would throw a RangeError on hydration).
+      const buffer = new ArrayBuffer(8);
+      const head = new Uint8Array(buffer, 0, 4);
+      const tail = new Uint8Array(buffer, 4, 4);
+      head[0] = 1;
+      tail[0] = 2;
+
+      const [result] = assertSerializer().assertStringify(
+        { head, tail },
+        `{head:new Uint8Array(_.a=new Int8Array([1,0,0,0,2,0,0,0]).buffer,0,4),tail:new Uint8Array(_.a,4)}`,
+      ) as [{ head: Uint8Array; tail: Uint8Array }];
+      assert.equal(result.head.buffer.byteLength, 8);
+      assert.deepEqual([...result.head], [1, 0, 0, 0]);
+      assert.deepEqual([...result.tail], [2, 0, 0, 0]);
+      assert.equal(result.head.buffer, result.tail.buffer);
+    });
+
     // it("BigInt64Array", () =>
     //   assertStringify(new BigInt64Array([1n, 2n, 3n]), `new BigInt64Array([1n,2n,3n])`));
     // it("BigUint64Array", () =>

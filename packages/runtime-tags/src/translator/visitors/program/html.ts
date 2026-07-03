@@ -248,15 +248,30 @@ export function replaceRegisteredFunctionNode(node: t.Node) {
   switch (node.type) {
     case "ClassMethod": {
       const replacement = getRegisteredFnExpression(node);
-      return replacement && t.classProperty(node.key, replacement);
+      return (
+        replacement &&
+        t.classProperty(
+          node.key,
+          replacement,
+          undefined,
+          undefined,
+          node.computed,
+          node.static,
+        )
+      );
     }
     case "ClassPrivateMethod": {
       const replacement = getRegisteredFnExpression(node);
-      return replacement && t.classPrivateProperty(node.key, replacement);
+      return (
+        replacement &&
+        t.classPrivateProperty(node.key, replacement, undefined, node.static)
+      );
     }
     case "ObjectMethod": {
       const replacement = getRegisteredFnExpression(node);
-      return replacement && t.objectProperty(node.key, replacement);
+      return (
+        replacement && t.objectProperty(node.key, replacement, node.computed)
+      );
     }
     case "ArrowFunctionExpression":
     case "FunctionExpression": {

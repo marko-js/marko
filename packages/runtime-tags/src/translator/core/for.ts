@@ -106,6 +106,26 @@ export default {
 
     if (isAttrTag) return;
 
+    // Only `<for of>` accepts a string `by` (a property-name key shorthand); the
+    // `in`/`to`/`until` runtimes invoke `by` as a function, so a string would
+    // throw at render. Reject it at compile time with a helpful message.
+    if (forType !== "of") {
+      const byAttr = getKnownAttrValues(tag.node).by;
+      if (byAttr?.type === "StringLiteral") {
+        throw (
+          tag
+            .get("attributes")
+            .find(
+              (attr) => attr.isMarkoAttribute() && attr.node.name === "by",
+            ) || tag
+        ).buildCodeFrameError(
+          `The [\`<for>\` tag](https://markojs.com/docs/reference/core-tag#for) only supports a string \`by\` key with \`of\`; use a \`by=(${
+            forType === "in" ? "key, value" : "index"
+          }) => ...\` function for \`<for ${forType}>\`.`,
+        );
+      }
+    }
+
     const bodySection = startSection(tagBody);
 
     if (!bodySection) {

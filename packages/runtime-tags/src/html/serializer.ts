@@ -1163,7 +1163,15 @@ function writeArrayBuffer(state: State, val: ArrayBuffer) {
 }
 
 function writeTypedArray(state: State, val: TypedArray, ref: Reference) {
-  if (val.byteOffset || state.refs.has(val.buffer)) {
+  // A view that doesn't span its whole buffer must serialize the full buffer
+  // (via the reference path below); the compact `new Ctor([...])` form would
+  // create a buffer sized only to this view, truncating it for any later view
+  // that shares the same buffer at a higher offset.
+  if (
+    val.byteOffset ||
+    val.byteLength < val.buffer.byteLength ||
+    state.refs.has(val.buffer)
+  ) {
     const needsLength = val.byteOffset + val.byteLength < val.buffer.byteLength;
     state.buf.push("new " + val.constructor.name + "(");
     writeProp(state, val.buffer, ref, "buffer");
