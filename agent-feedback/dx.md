@@ -24,3 +24,21 @@ what a hydrate entry generates is unavailable outside a bundler context.
 Either have the inspect script pass a stub `resolveVirtualDependency` (e.g.
 inline the virtual code as a comment), or document the limitation next to
 the `-t ""` workaround in `AGENTS.md`.
+
+## `npm run lint` is red on a clean checkout (cspell)
+
+`cspell.json` | 2026-07-03 | impact:med | effort:low
+
+<!-- cspell:disable -->
+
+`npm run lint` fails on HEAD before any local changes: cspell reports ~27
+unknown words across ~9 untouched files (`commandfor` in
+`packages/runtime-class/tags-html.d.ts`, `jridgewell`, `snapdir`,
+`unrenderable`, `controllables`, `whib`/`cqwhib` regex fragments in
+`style-interpolation.ts`, `vmin`/`vmax`, etc.). Because the lint script is
+`eslint && prettier && cspell`, a red baseline masks new spelling mistakes
+and forces every contributor to diff cspell output by hand. Either add the
+words to `cspell.json`, inline-disable the regex-heavy lines, or exclude
+generated/vendored type files.
+
+<!-- cspell:enable -->
