@@ -240,10 +240,11 @@ link interception for URLs matching the route's own pattern
 fetch+entry-load, buffered frame parse, `applyUpdate` via the entry's
 re-export, pushState + scroll-to-top, popstate re-fetch, abort-superseded
 navigations, and a full-navigation fallback ladder. Validated end-to-end
-against the ecommerce app in Chromium (same-route item→item click, no
-reload, cart state + DOM marker survive, back/forward re-applies without
-reload, cross-route stays a full navigation, 409 backstop). The prototype
-glue in the ecommerce app is deleted. Found and fixed on run main while
+against the ecommerce app in Chromium — dev mode and the production build
+(same-route item→item click, no reload, cart state + DOM marker survive,
+back/forward re-applies without reload, cross-route stays a full
+navigation, 409 backstop). The prototype glue in the ecommerce app is
+deleted. Found and fixed on run main while
 integrating: the context class refactor had moved `params`/`search`
 getters and `fetch`/`render`/`redirect`/`back` to the prototype, which
 marko's own-property `$global` spread drops — they're own enumerable
@@ -367,21 +368,26 @@ to param-like sources under the persisted option`). Mechanism: under the
    registered effect string against scope 1; the applier takes the live root
    explicitly).
 4. **Integration** — **core done** (validated against marko-ecommerce in
-   dev mode): `@marko/vite` resolves `x.marko?update` imports to update
-   entries (`.update-entry.marko` kind, own lazy chunk, recursive child
-   `?update` imports; persisted-gated), and **@marko/run owns the feature**
-   (see "Current state"): plugin option, router update negotiation +
-   route-verification backstop, wrapper-emitted client-router registration,
-   `runtime/persisted.ts` (interception, apply, history/scroll, popstate,
-   fallback ladder). The ecommerce app is reduced to `marko({ persisted:
-true })` plus a `PERSISTED=0` measurement middleware; its
-   `npm run setup` git-links the marko/vite/run branches. Remaining in this
-   slice: **build hash** (no build identity exists at runtime; gate updates
-   on it), `?update` chunks in the production build manifest + a production
-   (`vite build`) validation pass (dev-mode only so far), per-frame
-   streaming apply (needs a runtime per-navigation patch context; the
-   router buffers today), cross-route navigation (the shared-shell design),
-   and scroll/focus refinements (hash-fragment scroll after apply,
+   Chromium, dev mode AND the production build): `@marko/vite` resolves
+   `x.marko?update` imports to update entries (`.update-entry.marko` kind,
+   own lazy chunk, recursive child `?update` imports; persisted-gated), and
+   **@marko/run owns the feature** (see "Current state"): plugin option,
+   router update negotiation + route-verification backstop, wrapper-emitted
+   client-router registration, `runtime/persisted.ts` (interception, apply,
+   history/scroll, popstate, fallback ladder). The ecommerce app is reduced
+   to `marko({ persisted: true })` plus a `PERSISTED=0` measurement
+   middleware; its `npm run setup` git-links the marko/vite/run branches.
+   The production pass (`vite build` + `npm start`) confirmed the
+   id-consistency invariant end to end — optimized register ids match
+   across the html/dom/`?update` compiles, and the wrapper's own dynamic
+   `?update` import gives the entry its chunk with no manifest work
+   (production update payloads: item 2.3 KB vs 12.5 KB document, search
+   15.6 vs 66.5 KB, cart 0.2 vs 1.3 KB). Remaining in this slice: **build
+   hash** (no build identity exists at runtime; gate updates on it),
+   `?update` chunks in the build manifest for **cross-route** loading,
+   per-frame streaming apply (needs a runtime per-navigation patch context;
+   the router buffers today), cross-route navigation (the shared-shell
+   design), and scroll/focus refinements (hash-fragment scroll after apply,
    `<a rel=external>` audit). The update wire's `new Function` frame eval
    also needs a CSP story (initial-render resume runs as inline scripts;
    updates eval — nonce-carrying script injection is the likely shape).
