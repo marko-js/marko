@@ -13,6 +13,11 @@ import {
   getBindingPropTree,
   kDirectContent,
 } from "../../util/binding-prop-tree";
+import {
+  type DynamicNativeTagInfo,
+  getDynamicNativeTagInfo,
+} from "../../util/dynamic-native-tag";
+import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
   getAccessorPrefix,
@@ -26,6 +31,7 @@ import {
 } from "../../util/known-tag";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
+import { type Opt, push } from "../../util/optional";
 import {
   type Binding,
   BindingType,
@@ -40,6 +46,7 @@ import {
 import {
   callRuntime,
   getCompatRuntimeFile,
+  getHTMLRuntime,
   importRuntime,
 } from "../../util/runtime";
 import {
@@ -59,7 +66,7 @@ import {
   addSerializeExpr,
   getSerializeReason,
 } from "../../util/serialize-reasons";
-import { addSetupStatement } from "../../util/setup-statements";
+import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
 import {
   addStatement,
   addValue,
@@ -80,9 +87,11 @@ import {
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
+import { scopeIdentifier } from "../program";
 import { getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
+const kDynamicNative = Symbol("dynamic tag native element info");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
 const importedDynamicTagResume = new WeakSet<t.Program>();
 enum ClassHydration {
@@ -100,6 +109,7 @@ declare module "@marko/compiler" {
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kDOMBinding]?: Binding;
+    [kDynamicNative]?: DynamicNativeTagInfo;
     [kChildOffsetScopeBinding]?: Binding;
     defineBodySection?: Section;
   }
@@ -110,11 +120,11 @@ export default {
     enter(tag) {
       assertAttributesOrArgs(tag);
       const { node } = tag;
-      // Dynamic tags (and locally invoked define bodies) initialize their
-      // renderer with statements that can land in setup.
-      addSetupStatement(getOrCreateSection(tag));
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
+        // Dynamic tags (and locally invoked define bodies) initialize their
+        // renderer with statements that can land in setup.
+        addSetupStatement(getOrCreateSection(tag));
         knownTagAnalyze(
           tag,
           definedBodySection,
@@ -125,6 +135,16 @@ export default {
         return;
       }
 
+      // A dynamic tag whose name is provably a non-nullable enumerable set of
+      // safe native tag names compiles as a real native element with a name
+      // swap, avoiding the general dynamic tag branch/renderer runtime entirely.
+      const dynamicNativeInfo = getDynamicNativeTagInfo(tag);
+      if (dynamicNativeInfo) {
+        analyzeDynamicNativeTag(tag, dynamicNativeInfo);
+        return;
+      }
+
+      addSetupStatement(getOrCreateSection(tag));
       analyzeAttributeTags(tag);
 
       const tagSection = getOrCreateSection(tag);
@@ -174,6 +194,12 @@ export default {
   translate: {
     enter(tag) {
       const tagExtra = tag.node.extra;
+      const dynamicNativeInfo = tagExtra?.[kDynamicNative];
+      if (dynamicNativeInfo) {
+        translateDynamicNativeTagEnter(tag, dynamicNativeInfo);
+        return;
+      }
+
       if (
         tagExtra?.featureType === "class" &&
         !isOutputHTML() &&
@@ -202,6 +228,12 @@ export default {
     },
     exit(tag) {
       const { node } = tag;
+      const dynamicNativeInfo = node.extra?.[kDynamicNative];
+      if (dynamicNativeInfo) {
+        translateDynamicNativeTagExit(tag, dynamicNativeInfo);
+        return;
+      }
+
       const tagSection = getSection(tag);
       const definedBodySection = node.extra?.defineBodySection;
       if (definedBodySection) {
@@ -585,6 +617,156 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.MarkoTag>;
+
+function analyzeDynamicNativeTag(
+  tag: t.NodePath<t.MarkoTag>,
+  info: DynamicNativeTagInfo,
+) {
+  const { node } = tag;
+  const tagSection = getOrCreateSection(tag);
+  // Track the name expression so the swap signal is reactive; attribute values
+  // are tracked individually (like a native tag) for per-attribute signals.
+  const tagExtra = mergeReferences(tagSection, node, [node.name]);
+  tagExtra[kDynamicNative] = info;
+  // The name swap keys on the name expression's references; when they resolve
+  // empty (a constant name) it lands in setup, so register it like a native
+  // tag's dynamic attribute does.
+  addSetupExpr(tagSection, node.name);
+  const nodeBinding = (tagExtra[kDOMBinding] = createBinding(
+    "#" + info.default,
+    BindingType.dom,
+    tagSection,
+  ));
+
+  // The element scope must be serialized whenever the name or any attribute is
+  // dynamic, so its client signals can resume onto the server-rendered element.
+  let exprExtras: Opt<t.NodeExtra> = tagExtra;
+  for (const attr of node.attributes as t.MarkoAttribute[]) {
+    if (!evaluate(attr.value).confident) {
+      exprExtras = push(exprExtras, (attr.value.extra ??= {}));
+    }
+  }
+  addSerializeExpr(tagSection, exprExtras, nodeBinding);
+}
+
+function translateDynamicNativeTagEnter(
+  tag: t.NodePath<t.MarkoTag>,
+  info: DynamicNativeTagInfo,
+) {
+  const { node } = tag;
+  const tagSection = getSection(tag);
+  const nodeBinding = node.extra![kDOMBinding]!;
+  const write = writer.writeTo(tag);
+
+  if (isOutputHTML()) {
+    writer.flushBefore(tag);
+    write`<${t.cloneNode(node.name, true)}`;
+    writeDynamicNativeAttrs(tag, tagSection, nodeBinding, true);
+    write`>`;
+  } else {
+    walks.visit(tag, WalkCode.Get);
+    write`<${info.default}`;
+    writeDynamicNativeAttrs(tag, tagSection, nodeBinding, false);
+    write`>`;
+    walks.enter(tag);
+  }
+}
+
+function translateDynamicNativeTagExit(
+  tag: t.NodePath<t.MarkoTag>,
+  info: DynamicNativeTagInfo,
+) {
+  const { node } = tag;
+  const tagSection = getSection(tag);
+  const nodeBinding = node.extra![kDOMBinding]!;
+  const write = writer.writeTo(tag);
+
+  if (isOutputHTML()) {
+    write`</${t.cloneNode(node.name, true)}>`;
+    writer.markNode(
+      tag,
+      nodeBinding,
+      getSerializeReason(tagSection, nodeBinding),
+    );
+  } else {
+    write`</${info.default}>`;
+    // The name signal swaps the element in place when the tag name changes.
+    addStatement(
+      "render",
+      tagSection,
+      node.extra!.referencedBindings,
+      t.expressionStatement(
+        callRuntime(
+          "_dynamic_native_tag",
+          scopeIdentifier,
+          getScopeAccessorLiteral(nodeBinding),
+          node.name,
+        ),
+      ),
+      undefined,
+      true,
+    );
+    walks.exit(tag);
+  }
+
+  tag.remove();
+}
+
+// Writes each plain attribute of a dynamic native tag as it would for a static
+// native element: static values fold into the template/markup, dynamic values
+// become per-attribute signals (never `_attrs`, so the form-control runtime
+// stays out of the bundle). The gate guarantees no spread/handler/controllable
+// attributes reach here.
+function writeDynamicNativeAttrs(
+  tag: t.NodePath<t.MarkoTag>,
+  tagSection: Section,
+  nodeBinding: Binding,
+  isHTML: boolean,
+) {
+  const write = writer.writeTo(tag);
+  const htmlRuntime = getHTMLRuntime();
+  for (const attr of tag.node.attributes as t.MarkoAttribute[]) {
+    const { name, value } = attr;
+    const { confident, computed } = evaluate(value);
+    const helper =
+      name === "class" || name === "style"
+        ? (`_attr_${name}` as const)
+        : "_attr";
+    const isDelimited = helper !== "_attr";
+
+    if (confident) {
+      write`${
+        isDelimited
+          ? htmlRuntime[helper as "_attr_class" | "_attr_style"](computed)
+          : htmlRuntime._attr(name, computed)
+      }`;
+    } else if (isHTML) {
+      write`${
+        isDelimited
+          ? callRuntime(helper, value)
+          : callRuntime("_attr", t.stringLiteral(name), value)
+      }`;
+    } else {
+      addStatement(
+        "render",
+        tagSection,
+        value.extra?.referencedBindings,
+        t.expressionStatement(
+          isDelimited
+            ? callRuntime(helper, createScopeReadExpression(nodeBinding), value)
+            : callRuntime(
+                "_attr",
+                createScopeReadExpression(nodeBinding),
+                t.stringLiteral(name),
+                value,
+              ),
+        ),
+        undefined,
+        true,
+      );
+    }
+  }
+}
 
 function enableDynamicTagResume(tag: t.NodePath<t.MarkoTag>) {
   const program = getProgram().node;

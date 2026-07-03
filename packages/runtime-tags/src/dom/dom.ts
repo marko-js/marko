@@ -197,6 +197,35 @@ export function _attrs_content(
   _attr_content(scope, nodeAccessor, nextAttrs?.content);
 }
 
+// Swaps a dynamically-named native element in place when its tag name changes.
+// A rename is a move, not a re-render: attributes and children (whose signals
+// hold direct node references) are transferred to a fresh element, so no
+// control-flow machinery or body renderer is needed. Only sound for a
+// non-nullable string tag name.
+export function _dynamic_native_tag(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  name: string,
+) {
+  const el = scope[nodeAccessor] as Element;
+  if (el.tagName.toLowerCase() !== name) {
+    const next = document.createElementNS(
+      name === "svg"
+        ? "http://www.w3.org/2000/svg"
+        : name === "math"
+          ? "http://www.w3.org/1998/Math/MathML"
+          : el.namespaceURI,
+      name,
+    );
+    for (const { name: attrName, value } of el.attributes) {
+      next.setAttribute(attrName, value);
+    }
+    next.append(...el.childNodes);
+    el.replaceWith(next);
+    scope[nodeAccessor] = next;
+  }
+}
+
 function hasAttrAlias(
   element: Element,
   attr: string,

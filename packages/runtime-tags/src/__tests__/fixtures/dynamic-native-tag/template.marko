@@ -1,0 +1,6 @@
+<let/href = input.href/>
+
+<${href ? "a" : "span"} class="chip" title=input.label href=href>
+</>
+
+<button#toggle onClick() { href = href ? undefined : "/home" } />

@@ -31,8 +31,8 @@ const $input$1 = ($scope, input) => {
 var tag_b_default = /* @__PURE__ */ _template("__tests__/tags/tag-b/index.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
-const $template = "<!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!>";
-const $walks = "b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%c";
+const $template = "<!><!><!><!><!><h2 class=\"a b\"></h2><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!>";
+const $walks = "b%b%b%b%b b%b%b%b%b%b%b%b%b%b%b%b%b%b%c";
 const foo = "";
 const $showTagAtagA_content = _content_resume("__tests__/template.marko_1_content", "Body content", "b");
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
@@ -41,7 +41,7 @@ const $input_content__OR__input_other = /* @__PURE__ */ _or(29, ($scope) => $dyn
 	other: $scope.other
 })));
 const $content = /* @__PURE__ */ _const("content", $input_content__OR__input_other);
-const $dynamicTag11 = /* @__PURE__ */ _dynamic_tag("#text/10");
+const $dynamicTag10 = /* @__PURE__ */ _dynamic_tag("#text/10");
 const $dynamicTag2 = /* @__PURE__ */ _dynamic_tag("#text/1");
 const $input_x__OR__input_other = /* @__PURE__ */ _or(30, ($scope) => $dynamicTag2($scope, $scope.x, () => ({
 	class: ["a", "b"],
@@ -59,16 +59,15 @@ const $input_show__OR__input_other = /* @__PURE__ */ _or(31, ($scope) => {
 		other: $scope.other
 	}));
 });
-const $dynamicTag5 = /* @__PURE__ */ _dynamic_tag("#text/4");
-const $input_isLarge__OR__input_other = /* @__PURE__ */ _or(33, ($scope) => $dynamicTag5($scope, $scope.isLarge ? "h1" : "h2", () => ({
-	class: ["a", "b"],
-	other: $scope.other
-})));
-const $dynamicTag6 = /* @__PURE__ */ _dynamic_tag("#text/5");
-const $dynamicTag7 = /* @__PURE__ */ _dynamic_tag("#text/6");
-const $dynamicTag8 = /* @__PURE__ */ _dynamic_tag("#text/7", $showTagAtagA_content);
+const $dynamicTag5 = /* @__PURE__ */ _dynamic_tag("#text/5");
+const $dynamicTag6 = /* @__PURE__ */ _dynamic_tag("#text/6");
+const $dynamicTag7 = /* @__PURE__ */ _dynamic_tag("#text/7", $showTagAtagA_content);
 const $input_showTagA__OR__input_other = /* @__PURE__ */ _or(32, ($scope) => {
-	$dynamicTag6($scope, $scope.showTagA ? tag_a_default : tag_b_default, () => ({
+	$dynamicTag5($scope, $scope.showTagA ? tag_a_default : tag_b_default, () => ({
+		class: ["a", "b"],
+		other: $scope.other
+	}));
+	$dynamicTag6($scope, $scope.showTagA && tag_a_default, () => ({
 		class: ["a", "b"],
 		other: $scope.other
 	}));
@@ -76,52 +75,48 @@ const $input_showTagA__OR__input_other = /* @__PURE__ */ _or(32, ($scope) => {
 		class: ["a", "b"],
 		other: $scope.other
 	}));
-	$dynamicTag8($scope, $scope.showTagA && tag_a_default, () => ({
+});
+const $dynamicTag8 = /* @__PURE__ */ _dynamic_tag("#text/8");
+const $input_tag__OR__input_other = /* @__PURE__ */ _or(33, ($scope) => $dynamicTag8($scope, $scope.tag || tag_a_default, () => ({
+	class: ["a", "b"],
+	other: $scope.other
+})));
+const $dynamicTag9 = /* @__PURE__ */ _dynamic_tag("#text/9");
+const $input_other__OR__largeHeading = /* @__PURE__ */ _or(36, ($scope) => $dynamicTag9($scope, $scope.largeHeading || "h2", () => ({
+	class: ["a", "b"],
+	other: $scope.other
+})));
+const $dynamicTag11 = /* @__PURE__ */ _dynamic_tag("#text/11");
+const $dynamicTag12 = /* @__PURE__ */ _dynamic_tag("#text/12");
+const $input_level__OR__input_other = /* @__PURE__ */ _or(34, ($scope) => {
+	$dynamicTag11($scope, "h" + $scope.level, () => ({
+		class: ["a", "b"],
+		other: $scope.other
+	}));
+	$dynamicTag12($scope, `h${$scope.level}`, () => ({
 		class: ["a", "b"],
 		other: $scope.other
 	}));
 });
-const $dynamicTag9 = /* @__PURE__ */ _dynamic_tag("#text/8");
-const $input_tag__OR__input_other = /* @__PURE__ */ _or(34, ($scope) => $dynamicTag9($scope, $scope.tag || tag_a_default, () => ({
+const $dynamicTag13 = /* @__PURE__ */ _dynamic_tag("#text/13");
+const $input_other__OR__tagConstA = /* @__PURE__ */ _or(38, ($scope) => $dynamicTag13($scope, $scope.tagConstA, () => ({
 	class: ["a", "b"],
 	other: $scope.other
 })));
-const $dynamicTag10 = /* @__PURE__ */ _dynamic_tag("#text/9");
-const $input_other__OR__largeHeading = /* @__PURE__ */ _or(37, ($scope) => $dynamicTag10($scope, $scope.largeHeading || "h2", () => ({
-	class: ["a", "b"],
-	other: $scope.other
-})));
-const $dynamicTag12 = /* @__PURE__ */ _dynamic_tag("#text/11");
-const $dynamicTag13 = /* @__PURE__ */ _dynamic_tag("#text/12");
-const $input_level__OR__input_other = /* @__PURE__ */ _or(35, ($scope) => {
-	$dynamicTag12($scope, "h" + $scope.level, () => ({
-		class: ["a", "b"],
-		other: $scope.other
-	}));
-	$dynamicTag13($scope, `h${$scope.level}`, () => ({
-		class: ["a", "b"],
-		other: $scope.other
-	}));
-});
-const $dynamicTag14 = /* @__PURE__ */ _dynamic_tag("#text/13");
-const $input_other__OR__tagConstA = /* @__PURE__ */ _or(39, ($scope) => $dynamicTag14($scope, $scope.tagConstA, () => ({
-	class: ["a", "b"],
-	other: $scope.other
-})));
-const $dynamicTag15 = /* @__PURE__ */ _dynamic_tag("#text/14");
-const $input_other__OR__tagConstB = /* @__PURE__ */ _or(41, ($scope) => $dynamicTag15($scope, $scope.tagConstB, () => ({
+const $dynamicTag14 = /* @__PURE__ */ _dynamic_tag("#text/14");
+const $input_other__OR__tagConstB = /* @__PURE__ */ _or(40, ($scope) => $dynamicTag14($scope, $scope.tagConstB, () => ({
 	class: ["a", "b"],
 	other: $scope.other
 })));
 const $other = /* @__PURE__ */ _const("other", ($scope) => {
-	$dynamicTag11($scope, globalThis.x = "a" + "b", () => ({
+	_attr($scope["#h2/4"], "other", $scope.other);
+	$dynamicTag10($scope, globalThis.x = "a" + "b", () => ({
 		class: ["a", "b"],
 		other: $scope.other
 	}));
 	$input_content__OR__input_other($scope);
 	$input_x__OR__input_other($scope);
 	$input_show__OR__input_other($scope);
-	$input_isLarge__OR__input_other($scope);
 	$input_showTagA__OR__input_other($scope);
 	$input_tag__OR__input_other($scope);
 	$input_other__OR__largeHeading($scope);
@@ -136,24 +131,24 @@ const $show = /* @__PURE__ */ _const("show", ($scope) => {
 	$input_show__OR__input_other($scope);
 });
 const $largeHeading = /* @__PURE__ */ _const("largeHeading", $input_other__OR__largeHeading);
-const $isLarge = /* @__PURE__ */ _const("isLarge", ($scope) => {
-	$largeHeading($scope, $scope.isLarge && "h1");
-	$input_isLarge__OR__input_other($scope);
-});
+const $isLarge = ($scope, isLarge) => {
+	_dynamic_native_tag($scope, "#h2/4", isLarge ? "h1" : "h2");
+	$largeHeading($scope, isLarge && "h1");
+};
 const $showTagA = /* @__PURE__ */ _const("showTagA", $input_showTagA__OR__input_other);
 const $tag = /* @__PURE__ */ _const("tag", $input_tag__OR__input_other);
 const $level = /* @__PURE__ */ _const("level", $input_level__OR__input_other);
 const $tagConstA = /* @__PURE__ */ _const("tagConstA", $input_other__OR__tagConstA);
-const $dynamicTag16 = /* @__PURE__ */ _dynamic_tag("#text/15");
-const $dynamicTag17 = /* @__PURE__ */ _dynamic_tag("#text/16");
-const $dynamicTag18 = /* @__PURE__ */ _dynamic_tag("#text/17");
-const $dynamicTag19 = /* @__PURE__ */ _dynamic_tag("#text/18");
+const $dynamicTag15 = /* @__PURE__ */ _dynamic_tag("#text/15");
+const $dynamicTag16 = /* @__PURE__ */ _dynamic_tag("#text/16");
+const $dynamicTag17 = /* @__PURE__ */ _dynamic_tag("#text/17");
+const $dynamicTag18 = /* @__PURE__ */ _dynamic_tag("#text/18");
 function $setup($scope) {
 	$tagConstA($scope, "a");
-	$dynamicTag16($scope, `h${1}`);
-	$dynamicTag17($scope, foo || "div");
-	$dynamicTag18($scope, foo + "div");
-	$dynamicTag19($scope, "d" + "iv");
+	$dynamicTag15($scope, `h${1}`);
+	$dynamicTag16($scope, foo || "div");
+	$dynamicTag17($scope, foo + "div");
+	$dynamicTag18($scope, "d" + "iv");
 }
 const $input = ($scope, input) => {
 	$content($scope, input.content);

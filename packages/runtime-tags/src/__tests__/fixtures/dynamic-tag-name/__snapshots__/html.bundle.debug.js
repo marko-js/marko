@@ -42,10 +42,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		class: ["a", "b"],
 		other
 	}, 0, 0, $sg__input_show__OR__input_other);
-	_dynamic_tag($scope0_id, "#text/4", isLarge ? "h1" : "h2", {
-		class: ["a", "b"],
-		other
-	}, 0, 0, $sg__input_isLarge__OR__input_other);
+	_html(`<${isLarge ? "h1" : "h2"} class="a b"${_attr("other", other)}></${isLarge ? "h1" : "h2"}>${_el_resume($scope0_id, "#h2/4", $sg__input_isLarge__OR__input_other)}`);
 	_dynamic_tag($scope0_id, "#text/5", showTagA ? tag_a_default : tag_b_default, {
 		class: ["a", "b"],
 		other
@@ -102,7 +99,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		x: $si__input_other && x,
 		show: $si__input_other && show,
 		showTagA: $si__input_other && showTagA,
-		isLarge: $si__input_other && isLarge,
 		tag: $si__input_other && tag,
 		level: $si__input_other && level,
 		other: _serialize_if($scope0_reason, 7) && other,
@@ -114,7 +110,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		x: "5:19",
 		show: "5:22",
 		showTagA: "5:28",
-		isLarge: "5:38",
 		tag: "5:47",
 		level: "5:52",
 		other: "5:59",

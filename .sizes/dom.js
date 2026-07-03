@@ -1,4 +1,4 @@
-// size: 25867 (min) 9506 (brotli)
+// size: 26175 (min) 9565 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1508,6 +1508,24 @@ function _attrs(scope, nodeAccessor, nextAttrs) {
 function _attrs_content(scope, nodeAccessor, nextAttrs) {
   (_attrs(scope, nodeAccessor, nextAttrs),
     _attr_content(scope, nodeAccessor, nextAttrs?.content));
+}
+function _dynamic_native_tag(scope, nodeAccessor, name) {
+  let el = scope[nodeAccessor];
+  if (el.tagName.toLowerCase() !== name) {
+    let next = document.createElementNS(
+      name === "svg"
+        ? "http://www.w3.org/2000/svg"
+        : name === "math"
+          ? "http://www.w3.org/1998/Math/MathML"
+          : el.namespaceURI,
+      name,
+    );
+    for (let { name: attrName, value } of el.attributes)
+      next.setAttribute(attrName, value);
+    (next.append(...el.childNodes),
+      el.replaceWith(next),
+      (scope[nodeAccessor] = next));
+  }
 }
 function hasAttrAlias(element, attr, nextAttrs) {
   return (

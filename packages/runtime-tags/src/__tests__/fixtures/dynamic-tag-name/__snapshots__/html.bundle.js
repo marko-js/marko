@@ -42,10 +42,7 @@ var template_default = _template("a", (input) => {
 		class: ["a", "b"],
 		other
 	}, 0, 0, $sg__input_show__OR__input_other);
-	_dynamic_tag($scope0_id, "e", isLarge ? "h1" : "h2", {
-		class: ["a", "b"],
-		other
-	}, 0, 0, $sg__input_isLarge__OR__input_other);
+	_html(`<${isLarge ? "h1" : "h2"} class="a b"${_attr("other", other)}></${isLarge ? "h1" : "h2"}>${_el_resume($scope0_id, "e", $sg__input_isLarge__OR__input_other)}`);
 	_dynamic_tag($scope0_id, "f", showTagA ? tag_a_default : tag_b_default, {
 		class: ["a", "b"],
 		other
@@ -102,12 +99,11 @@ var template_default = _template("a", (input) => {
 		w: $si__input_other && x,
 		x: $si__input_other && show,
 		y: $si__input_other && showTagA,
-		z: $si__input_other && isLarge,
 		a0: $si__input_other && tag,
 		a1: $si__input_other && level,
 		a2: _serialize_if($scope0_reason, 7) && other,
-		aa: $si__input_other && largeHeading,
-		ac: $si__input_other && tagConstA,
-		ae: $si__input_other && tagConstB
+		a9: $si__input_other && largeHeading,
+		ab: $si__input_other && tagConstA,
+		ad: $si__input_other && tagConstB
 	});
 }, 1);

@@ -56,6 +56,7 @@ export {
   _attrs_partial,
   _attrs_partial_content,
   _attrs_script,
+  _dynamic_native_tag,
   _html,
   _lifecycle,
   _style_rule_item,
