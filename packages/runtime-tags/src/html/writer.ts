@@ -209,11 +209,20 @@ export function _var(
   registryId: string,
   nodeAccessor?: Accessor,
 ) {
-  writeScopePassive(parentScopeId, { [scopeOffsetAccessor]: _scope_id() });
+  // Tag-variable wiring (scope offset + registered var ref) is resume-only;
+  // update renders keep the structural child-scope link but matched scopes
+  // keep their live variables and fresh branches wire their own.
+  const { update } = $chunk.boundary.state;
+  if (!update) {
+    writeScopePassive(parentScopeId, { [scopeOffsetAccessor]: _scope_id() });
+  }
   // TODO: if the return value is already registered, use that.
-  const childScope = writeScopePassive(childScopeId, {
-    [AccessorProp.TagVariable]: _resume({}, registryId, parentScopeId),
-  });
+  const childScope = writeScopePassive(
+    childScopeId,
+    update
+      ? {}
+      : { [AccessorProp.TagVariable]: _resume({}, registryId, parentScopeId) },
+  );
   if (nodeAccessor !== undefined) {
     writeScope(parentScopeId, {
       [AccessorPrefix.BranchScopes + nodeAccessor]: childScope,
@@ -372,7 +381,13 @@ export function _hoist(scopeId: number, id: string) {
 
 export function _resume_branch(scopeId: number) {
   const branchId = $chunk.context?.[kBranchId];
-  if (branchId !== undefined && branchId !== scopeId) {
+  if (
+    branchId !== undefined &&
+    branchId !== scopeId &&
+    // Branch ownership is recovered structurally by update merges; the
+    // resume-only backref would be dead weight in the patch.
+    !$chunk.boundary.state.update
+  ) {
     writeScope(scopeId, { [AccessorProp.ClosestBranchId]: branchId });
   }
 }
