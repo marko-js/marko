@@ -76,6 +76,13 @@ export interface Signal {
   section: Section;
   build: undefined | (() => t.Expression | undefined);
   register?: boolean;
+  /**
+   * Overrides the `_var_resume` id when `register` is set. Needed when the
+   * default (derived from the referenced bindings' names) is ambiguous, eg
+   * conditional signals whose node binding name (`#text`) repeats within a
+   * section.
+   */
+  registerId?: string;
   values: Array<{
     signal: Signal;
     value: t.Expression;
@@ -1020,7 +1027,8 @@ export function writeSignals(section: Section) {
         value = callRuntime(
           "_var_resume",
           t.stringLiteral(
-            getResumeRegisterId(section, signal.referencedBindings, "var"),
+            signal.registerId ??
+              getResumeRegisterId(section, signal.referencedBindings, "var"),
           ),
           value,
         );

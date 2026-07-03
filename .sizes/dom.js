@@ -1,4 +1,4 @@
-// size: 25812 (min) 9489 (brotli)
+// size: 25941 (min) 9545 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2603,5 +2603,18 @@ function _load_race_trigger(...triggers) {
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();
+}
+function _update_signal(id) {
+  return (scope, value) => getRegisteredWithScope(id, scope)(value);
+}
+function _update_for(nodeAccessor, contentId, merge) {
+  let signal;
+  return (scope, value) => {
+    if (!signal) {
+      let content = getRegisteredWithScope(contentId);
+      signal = _for_of(nodeAccessor, content[0], content[1], content[2], merge);
+    }
+    signal(scope, value);
+  };
 }
 //#endregion

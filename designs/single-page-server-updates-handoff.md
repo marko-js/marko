@@ -70,8 +70,9 @@ cross-template/global propagation carries values too); the translator wraps
 request-derived (state-free-reasoned) hole expressions in persisted builds
 with the pass-through `_hole_value` helper, which in update mode writes the
 computed value under the hole's accessor (dynamic attrs keyed
-`UpdateAttr:<name>:<elAccessor>`, a new `AccessorPrefix` entry — per attr so
-multi-attr elements don't collide) (G1); `_if` always writes the conditional
+`UpdateAttr:<name>:<elAccessor>` — per attr so multi-attr elements don't
+collide; the prefix lives translator-side, see `getUpdateAttrPrefix`, so no
+enum bytes ship to clients) (G1); `_if` always writes the conditional
 outcome, `-1` = no branch (G2); loops write branch lists (empty included),
 loop keys (even positional), and owner refs as scope props (G3/G4); and
 `_script` effects are suppressed in update mode (G5). State-driven structure
@@ -80,11 +81,36 @@ into client-state-driven structure. Verified: e2e derives its patch from a
 real page-B update render (both branch directions); non-persisted compiles
 and initial/non-flag renders byte-identical; full suite passing.
 
-**Prototyped** (validated in `experiments/`, not yet real code): the A1
-update payload applied through B2 merge functions; control-flow merges as
-`_if`/`_for_of` instances; wire-delivered branch `template`/`walks` pairs
-with an idempotent client store; the effects-not-replayed rule (double-bind
-detector); sparse merge semantics.
+**Implemented** (`feat: add persisted update-entry codegen…`): the `?update`
+entry kind. `persisted: "update"` with dom output runs the full dom
+translation (identical sections/accessors/register ids to the main module)
+but the program exit (`translator/visitors/program/update.ts`) emits
+compiled merge functions instead of the template: per-section
+`(patch, live) => { … }` with presence-checked (sparse) statements — plain
+scope stores for request-derived values, value-signal calls where a
+downstream statement mixes client state (`bindingNeedsUpdateSignal` walks
+the signal graph), `_text`/`_attr` hole placements, conditional replay +
+branch-content dispatch, keyed-loop reconcile, and child-template dispatch
+via `<tag>.marko?update` default imports. Sharing is via the resume
+registry, not module exports or a wire `templates` frame: persisted dom
+builds `_var_resume`-register the needed value signals and `_if` signals
+(`Signal.registerId` disambiguates conditionals whose `#text` node-binding
+names repeat) and `_resume`-register each request-derived loop's hoisted
+`[template, walks, setup]` content (strings shared with the loop signal, not
+duplicated); the new `dom/update.ts` runtime (`_update_signal`,
+`_update_for`) resolves them lazily by id. Fresh `_if`/`_for_of` branches
+clone the registry-shared content and fill from patched scope values.
+Verified: e2e imports the generated entries (hand-authored
+`entries/*.update.js` remain as the spec they replaced), including reverse
+navigation (fresh conditional branch creation); no `templates` frame needed.
+
+**Prototyped** (validated in `experiments/`, not yet real code): the patch
+scope constructor + flush (`experiments/.../update-runtime.js` `createPatch`
+/`flushPatch` — becomes the real `dom/update` frame parser in slice 3); the
+effects-not-replayed rule (double-bind detector). The wire-delivered
+`templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by
+registry sharing (see above); a content store may still return in slices 3/4
+for priming templates the client hasn't loaded.
 
 ## Decision log (all settled; rationale in the linked docs)
 
@@ -167,14 +193,22 @@ to param-like sources under the persisted option`). Mechanism: under the
    framing (the response is still a full document — the patch consumer only
    reads the fills; framing belongs to slices 3/4); MARKO_DEBUG pairing
    asserts (serialize section ids in update renders) not yet emitted.
-2. **Persisted entry codegen** — the `?update` virtual module/entry kind
-   (dispatch point `translator/visitors/program/index.ts`), emitting the B2
-   merge functions the prototype hand-writes
-   (`experiments/.../entries/*.update.js` are the codegen spec), signal-graph
-   partition (interactive-reachable stays in main; persisted entry imports
-   shared signals), registrations via
-   `getResumeRegisterId(section, …, "update")`. _Acceptance: e2e imports
-   generated entries._
+2. **Persisted entry codegen** — **done** (see "Current state"): the
+   `?update` entry kind (`persisted: "update"` + dom output), compiled merge
+   functions, registry-shared signals/branch content, child dispatch via
+   `?update` imports; the e2e imports generated entries. Deliberately
+   deferred within this slice: merges cover text/html placeholders, dynamic
+   attrs (whole-value class/style only — item-split class/style values are
+   captured by the server but not merged), `<if>`/`<for>`, child tags, and
+   scope values; `_await`, dynamic tags, `<show>`, and controllable inputs have no
+   merge emission yet. The server-side branch guard (`serializeBranch & 2`)
+   and the entry's structural-merge predicate
+   (`isReasonDynamic(conditionRefs)`) are computed from different reason
+   sets — aligned for pure request/state structure, unaudited for mixed;
+   value-signal calls run synchronously mid-merge, so a mixed binding that
+   also feeds request-derived structure could re-run a conditional against a
+   half-applied patch (queued closures are safe; direct `_if` values are the
+   edge).
 3. **Client update runtime** — real `dom/update` module: frame parser,
    patch-aware serialize context, entry-effect dispatch, ready-channel
    gating, `$global` merge, `_wire_if`/`_wire_for` + content store

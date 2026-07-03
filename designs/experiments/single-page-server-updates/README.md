@@ -61,9 +61,15 @@ fixed walker-runtime bootstrap stripped (it is identical in both modes).
 
 ```sh
 PERSISTED=1 node -r '~ts' $E/compile-cjs.js $E/product.marko $E/tags/price-tag.marko
-OUTPUT=dom node -r '~ts' $E/compile-cjs.js $E/product.marko $E/tags/price-tag.marko
+PERSISTED=1 OUTPUT=dom node -r '~ts' $E/compile-cjs.js $E/product.marko $E/tags/price-tag.marko
+UPDATE=1 node -r '~ts' $E/compile-cjs.js $E/product.marko $E/tags/price-tag.marko
 node -r '~ts' $E/e2e.js
 ```
+
+(The dom build needs `PERSISTED=1` too: it registers the signals and branch
+content the update entries share. `UPDATE=1` compiles the generated update
+entries — the real `?update` entry kind, `persisted: "update"` with dom
+output.)
 
 `e2e.js` server-renders page A in persisted mode (real `persisted` compile
 option + `$global.persisted`), resumes it with the real runtime in jsdom
@@ -76,22 +82,22 @@ patch is no longer hand-authored; the writer's update mode supplies G1–G5
 outcomes with `-1` = no branch, branch lists + loop keys + owner refs, and
 no effect strings for matched scopes):
 
-- `entries/product.update.js` / `entries/price-tag.update.js` — what the
-  `?update` codegen would emit. The conditional merge is an `_if` instance
-  and the keyed-loop merge a `_for_of` instance whose params signal is the
-  body merge function.
+- `product.marko.update.cjs` / `tags/price-tag.marko.update.cjs` — the
+  **generated** update entries the e2e now imports (`persisted: "update"`
+  codegen). The hand-authored `entries/*.update.js` remain as the spec the
+  codegen was written against.
 - `update-runtime.js` — the patch-scope constructor (A1 fill → patch scope
-  tree) plus a `run()` flush.
+  tree) plus a `run()` flush. (Its `_wire_if`/`_wire_for` content store is
+  retired: generated entries share the main dom module's signals and branch
+  content through the resume registry instead.)
 
 It asserts placement, intersection re-execution against preserved state,
 branch destruction, keyed reconcile with element identity preserved, fresh
 item creation by clone + merge, state survival against a hostile state prop
-in the payload, and prints the DOM mutation log. It also exercises two later
-refinements: branch markup arrives via a wire `templates` frame (content-id
-keyed store + `_wire_if`/`_wire_for` in `update-runtime.js` -- entries carry
-no template/walks strings), and a post-patch click proves effects were not
+in the payload, reverse navigation (fresh conditional branch creation from
+registry-shared content), a post-patch click proving effects were not
 replayed for matched scopes (a double-bound handler would make the toggle a
-net no-op).
+net no-op), and prints the DOM mutation log.
 
 Caveats (also noted in the proposals doc): the harness runs the debug
 runtime even for optimized compiles, and its random 6-char `renderId`

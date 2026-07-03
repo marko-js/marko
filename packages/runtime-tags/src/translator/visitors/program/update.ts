@@ -1,0 +1,431 @@
+import { types as t } from "@marko/compiler";
+import { importDefault } from "@marko/compiler/babel-utils";
+
+import { generateUidIdentifier } from "../../util/generate-uid";
+import {
+  getAccessorPrefix,
+  getAccessorProp,
+} from "../../util/get-accessor-char";
+import { getScopeAccessorLiteral } from "../../util/references";
+import { callRuntime } from "../../util/runtime";
+import {
+  forEachSectionReverse,
+  getSectionForBody,
+  type Section,
+} from "../../util/sections";
+import { getResumeRegisterId } from "../../util/signals";
+import {
+  forEachUpdateValueBinding,
+  getUpdateMerges,
+  getUpdateVarRegisterId,
+  type UpdateMerge,
+} from "../../util/update-merges";
+
+/**
+ * Program exit for `?update` entry compiles (`persisted: "update"` with dom
+ * output). The full dom translation has already run -- sections, accessors,
+ * and register ids match the main module exactly -- but instead of emitting
+ * the template we assemble the per-section merge entries the visitors
+ * recorded into compiled merge functions: `(patch, live) => { ... }`
+ * statements that apply a persisted update-render patch to live scopes.
+ * Shared pieces (value/conditional signals, loop branch content) are looked
+ * up from the resume registry where the persisted dom build registered them;
+ * child templates are dispatched through their own `?update` module.
+ *
+ * Sparse merge semantics: every statement is guarded by a presence check --
+ * a key absent from the patch means unchanged.
+ */
+export default {
+  translate: {
+    exit(program: t.NodePath<t.Program>) {
+      const rootSection = getSectionForBody(program)!;
+      const file = program.hub.file;
+      const hoistedDeclarations: t.Statement[] = [];
+      const mergeFunctions: t.Statement[] = [];
+      const mergeIdentifiers = new Map<Section, t.Identifier>();
+
+      forEachSectionReverse((section) => {
+        const patchIdentifier = t.identifier("patch");
+        const liveIdentifier = t.identifier("live");
+        const statements = buildMergeStatements(
+          section,
+          patchIdentifier,
+          liveIdentifier,
+          mergeIdentifiers,
+          hoistedDeclarations,
+          file,
+        );
+
+        if (statements.length || section === rootSection) {
+          const identifier = generateUidIdentifier(
+            section === rootSection ? "update" : `${section.name}__update`,
+          );
+          mergeIdentifiers.set(section, identifier);
+          mergeFunctions.push(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                identifier,
+                t.arrowFunctionExpression(
+                  [patchIdentifier, liveIdentifier],
+                  t.blockStatement(statements),
+                ),
+              ),
+            ]),
+          );
+        }
+      });
+
+      const rootIdentifier = mergeIdentifiers.get(rootSection)!;
+      const body: t.Statement[] = [];
+      for (const statement of program.node.body) {
+        if (statement.type === "ImportDeclaration") {
+          body.push(statement);
+        }
+      }
+      body.push(...hoistedDeclarations, ...mergeFunctions);
+      body.push(
+        t.exportDefaultDeclaration(
+          callRuntime(
+            "_resume",
+            t.stringLiteral(getResumeRegisterId(rootSection, "update")),
+            rootIdentifier,
+          ),
+        ),
+      );
+
+      program.node.body = body;
+      pruneUnusedImports(program.node);
+    },
+  },
+};
+
+function buildMergeStatements(
+  section: Section,
+  patchIdentifier: t.Identifier,
+  liveIdentifier: t.Identifier,
+  mergeIdentifiers: Map<Section, t.Identifier>,
+  hoistedDeclarations: t.Statement[],
+  file: t.BabelFile,
+) {
+  const statements: t.Statement[] = [];
+  const patchGet = (key: string | t.StringLiteral | t.NumericLiteral) =>
+    t.memberExpression(patchIdentifier, toKeyLiteral(key), true);
+  const liveGet = (key: string | t.StringLiteral | t.NumericLiteral) =>
+    t.memberExpression(liveIdentifier, toKeyLiteral(key), true);
+  const ifPresent = (
+    key: string | t.StringLiteral | t.NumericLiteral,
+    whenPresent: t.Statement,
+  ) =>
+    t.ifStatement(
+      t.binaryExpression("in", toKeyLiteral(key), patchIdentifier),
+      whenPresent,
+    );
+
+  forEachUpdateValueBinding(section, (binding, needsSignal) => {
+    if (binding.pruned) return;
+    const accessor = getScopeAccessorLiteral(binding);
+    if (needsSignal) {
+      const signalIdentifier = generateUidIdentifier(`${binding.name}_update`);
+      hoistedDeclarations.push(
+        t.variableDeclaration("const", [
+          t.variableDeclarator(
+            signalIdentifier,
+            callRuntime(
+              "_update_signal",
+              t.stringLiteral(getUpdateVarRegisterId(section, binding)),
+            ),
+          ),
+        ]),
+      );
+      statements.push(
+        ifPresent(
+          accessor,
+          t.expressionStatement(
+            t.callExpression(signalIdentifier, [
+              liveIdentifier,
+              patchGet(accessor),
+            ]),
+          ),
+        ),
+      );
+    } else {
+      statements.push(
+        ifPresent(
+          accessor,
+          t.expressionStatement(
+            t.assignmentExpression("=", liveGet(accessor), patchGet(accessor)),
+          ),
+        ),
+      );
+    }
+  });
+
+  for (const merge of getUpdateMerges(section)) {
+    statements.push(
+      ...buildMerge(
+        merge,
+        liveIdentifier,
+        mergeIdentifiers,
+        hoistedDeclarations,
+        file,
+        { patchGet, liveGet, ifPresent },
+      ),
+    );
+  }
+
+  return statements;
+}
+
+function buildMerge(
+  merge: UpdateMerge,
+  liveIdentifier: t.Identifier,
+  mergeIdentifiers: Map<Section, t.Identifier>,
+  hoistedDeclarations: t.Statement[],
+  file: t.BabelFile,
+  {
+    patchGet,
+    liveGet,
+    ifPresent,
+  }: {
+    patchGet: (
+      key: string | t.StringLiteral | t.NumericLiteral,
+    ) => t.Expression;
+    liveGet: (key: string | t.StringLiteral | t.NumericLiteral) => t.Expression;
+    ifPresent: (
+      key: string | t.StringLiteral | t.NumericLiteral,
+      whenPresent: t.Statement,
+    ) => t.Statement;
+  },
+): t.Statement[] {
+  switch (merge.kind) {
+    case "text":
+      return [
+        ifPresent(
+          merge.accessor,
+          t.expressionStatement(
+            callRuntime(
+              "_text",
+              liveGet(merge.accessor),
+              patchGet(merge.accessor),
+            ),
+          ),
+        ),
+      ];
+    case "html":
+      return [
+        ifPresent(
+          merge.accessor,
+          t.expressionStatement(
+            callRuntime(
+              "_html",
+              liveIdentifier,
+              patchGet(merge.accessor),
+              t.cloneNode(merge.accessor),
+            ),
+          ),
+        ),
+      ];
+    case "attr":
+      return [
+        ifPresent(
+          merge.key,
+          t.expressionStatement(
+            merge.helper === "_attr"
+              ? callRuntime(
+                  "_attr",
+                  liveGet(merge.accessor),
+                  t.stringLiteral(merge.name),
+                  patchGet(merge.key),
+                )
+              : callRuntime(
+                  merge.helper,
+                  liveGet(merge.accessor),
+                  patchGet(merge.key),
+                ),
+          ),
+        ),
+      ];
+    case "if": {
+      const rendererKey =
+        getAccessorPrefix().ConditionalRenderer + merge.accessor.value;
+      const branchScopesKey =
+        getAccessorPrefix().BranchScopes + merge.accessor.value;
+      const signalIdentifier = generateUidIdentifier("if_update");
+      hoistedDeclarations.push(
+        t.variableDeclaration("const", [
+          t.variableDeclarator(
+            signalIdentifier,
+            callRuntime("_update_signal", t.stringLiteral(merge.signalId)),
+          ),
+        ]),
+      );
+
+      const bodyStatements: t.Statement[] = [
+        t.expressionStatement(
+          t.callExpression(signalIdentifier, [
+            liveIdentifier,
+            patchGet(rendererKey),
+          ]),
+        ),
+      ];
+
+      const branchMerges = merge.branchBodySections.map(
+        (branchSection) => branchSection && mergeIdentifiers.get(branchSection),
+      );
+      if (branchMerges.some(Boolean)) {
+        const patchBranch = generateUidIdentifier("patchBranch");
+        const liveBranch = generateUidIdentifier("liveBranch");
+        const branchMerge = generateUidIdentifier("branchMerge");
+        bodyStatements.push(
+          t.variableDeclaration("const", [
+            t.variableDeclarator(patchBranch, patchGet(branchScopesKey)),
+            t.variableDeclarator(liveBranch, liveGet(branchScopesKey)),
+            t.variableDeclarator(
+              branchMerge,
+              branchMerges.length === 1
+                ? t.cloneNode(branchMerges[0]!, true)
+                : t.memberExpression(
+                    t.arrayExpression(
+                      branchMerges.map((identifier) =>
+                        identifier
+                          ? t.cloneNode(identifier, true)
+                          : t.numericLiteral(0),
+                      ),
+                    ),
+                    patchGet(rendererKey),
+                    true,
+                  ),
+            ),
+          ]),
+          t.ifStatement(
+            t.logicalExpression(
+              "&&",
+              t.logicalExpression("&&", patchBranch, liveBranch),
+              branchMerge,
+            ),
+            t.expressionStatement(
+              t.callExpression(t.cloneNode(branchMerge, true), [
+                t.cloneNode(patchBranch, true),
+                t.cloneNode(liveBranch, true),
+              ]),
+            ),
+          ),
+        );
+      }
+
+      return [ifPresent(rendererKey, t.blockStatement(bodyStatements))];
+    }
+    case "for": {
+      const branchScopesKey =
+        getAccessorPrefix().BranchScopes + merge.accessor.value;
+      const bodyMerge = mergeIdentifiers.get(merge.bodySection);
+      const signalIdentifier = generateUidIdentifier("for_update");
+      const branchIdentifier = t.identifier("branch");
+      const argsIdentifier = t.identifier("args");
+      hoistedDeclarations.push(
+        t.variableDeclaration("const", [
+          t.variableDeclarator(
+            signalIdentifier,
+            callRuntime(
+              "_update_for",
+              t.cloneNode(merge.encodedAccessor, true),
+              t.stringLiteral(merge.contentId),
+              bodyMerge
+                ? t.arrowFunctionExpression(
+                    [branchIdentifier, argsIdentifier],
+                    t.callExpression(bodyMerge, [
+                      t.memberExpression(
+                        argsIdentifier,
+                        t.numericLiteral(0),
+                        true,
+                      ),
+                      branchIdentifier,
+                    ]),
+                  )
+                : t.numericLiteral(0),
+            ),
+          ),
+        ]),
+      );
+      return [
+        ifPresent(
+          branchScopesKey,
+          t.expressionStatement(
+            t.callExpression(signalIdentifier, [
+              liveIdentifier,
+              t.arrayExpression([
+                patchGet(branchScopesKey),
+                t.stringLiteral(getAccessorProp().LoopKey),
+              ]),
+            ]),
+          ),
+        ),
+      ];
+    }
+    case "child": {
+      const childIdentifier = importDefault(
+        file,
+        `${merge.relativePath}?update`,
+        `${merge.tagName}_update`,
+      ) as t.Expression;
+      return [
+        ifPresent(
+          merge.accessor,
+          t.expressionStatement(
+            t.callExpression(t.cloneNode(childIdentifier, true), [
+              patchGet(merge.accessor),
+              liveGet(merge.accessor),
+            ]),
+          ),
+        ),
+      ];
+    }
+  }
+}
+
+function toKeyLiteral(key: string | t.StringLiteral | t.NumericLiteral) {
+  return typeof key === "string"
+    ? t.stringLiteral(key)
+    : t.cloneNode(key, true);
+}
+
+// The dom visitors ran in full to keep analysis identical to the main
+// module, adding imports (runtime helpers, child templates) the merge module
+// never references. Drop unused specifiers so entries only pull what they
+// use.
+function pruneUnusedImports(program: t.Program) {
+  const used = new Set<string>();
+  collectIdentifiers(
+    program.body.filter((node) => node.type !== "ImportDeclaration"),
+    used,
+  );
+  program.body = program.body.filter((node) => {
+    if (node.type === "ImportDeclaration") {
+      node.specifiers = node.specifiers.filter((specifier) =>
+        used.has(specifier.local.name),
+      );
+      return node.specifiers.length > 0;
+    }
+    return true;
+  });
+}
+
+function collectIdentifiers(node: unknown, used: Set<string>) {
+  if (Array.isArray(node)) {
+    for (const child of node) collectIdentifiers(child, used);
+  } else if (node && typeof node === "object") {
+    const anyNode = node as Record<string, unknown> & { type?: string };
+    if (anyNode.type === "Identifier") {
+      used.add((anyNode as any as t.Identifier).name);
+    }
+    for (const key in anyNode) {
+      if (key === "loc" || key === "leadingComments" || key === "extra") {
+        continue;
+      }
+      const value = anyNode[key];
+      if (value && typeof value === "object") {
+        collectIdentifiers(value, used);
+      }
+    }
+  }
+}

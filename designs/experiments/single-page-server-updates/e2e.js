@@ -78,8 +78,14 @@ async function main() {
 
   // --- 3. Load the "browser modules" (main DOM module + persisted entry) -
   const domRuntime = require("@marko/runtime-tags/debug/dom");
-  require(path.join(E, "product.marko.dom.cjs")); // registers event handler etc.
-  const productUpdate = require(path.join(E, "entries/product.update.js"));
+  // The persisted dom module registers event handlers AND the pieces update
+  // entries share through the registry: value/conditional signals
+  // (`_var_resume`) and loop branch content (`[template, walks, setup]`).
+  require(path.join(E, "product.marko.dom.cjs"));
+  // The GENERATED update entry (the `?update` virtual module, compiled with
+  // `persisted: "update"`); the hand-authored `entries/*.update.js` remain
+  // as the codegen spec this replaced.
+  const productUpdate = require(path.join(E, "product.marko.update.cjs")).default;
   const updateRuntime = require(path.join(E, "update-runtime.js"));
   const { createPatch, flushPatch } = updateRuntime;
 
@@ -124,15 +130,11 @@ async function main() {
 
   // --- 5. Apply the A1 patch through the B2 merges ------------------------
   const mutations = observeMutations(window);
-  // The patch's `templates` frame: markup for server-driven branches this
-  // update rendered, keyed by content id. The client caches pairs, so a
-  // hinted server can omit ones this client already holds.
-  updateRuntime.addTemplates({
-    "product#if1": ["<em>Save <!>%</em>", "Db%l"],
-    "product#for1": ["<li><span class=price>$<!></span> <!></li>", "D/Db%l&b%l"],
-  });
+  // Branch markup no longer arrives via a hand-delivered `templates` frame:
+  // generated entries share the main dom module's branch content through the
+  // resume registry (registered when `product.marko.dom.cjs` loaded above).
   const getPatchScope = createPatch(patchFill);
-  productUpdate.$update(getPatchScope(1), liveRoot);
+  productUpdate(getPatchScope(1), liveRoot);
   flushPatch();
   await settle(window);
 
@@ -161,6 +163,25 @@ async function main() {
   assert.equal(liveRoot.expanded, false, "one click = one toggle (no double-bound handler)");
   assert.equal(button.textContent, "Show details", "interactivity intact after patch");
   console.log("PASS effects-not-replayed (no double bind)");
+
+  // --- 8. Navigate back (B -> A): fresh conditional branch creation -------
+  // The sale branch was destroyed above; this patch re-creates it, proving
+  // fresh `_if` branches clone the registry-shared content and fill from the
+  // patched scope values.
+  const htmlA2 = await renderToString("product.marko.cjs", inputA, "update");
+  productUpdate(createPatch(extractUpdateFill(htmlA2, pageId))(1), liveRoot);
+  flushPatch();
+  await settle(window);
+  assert.equal(doc.querySelector("h1").textContent, "Trailhead 40L Pack");
+  assert.ok(doc.querySelector("em"), "sale branch re-created");
+  assert.equal(
+    doc.querySelector("em").textContent.replace(/\s+/g, " ").trim(),
+    "Save 20%",
+    "fresh branch filled from patch",
+  );
+  assert.equal(texts(doc, "li"), "$24.50 Rain Cover,$39.00 Hip Belt,$14.25 Dry Sack");
+  assert.equal(liveRoot.expanded, false, "client state still owned by client");
+  console.log("PASS reverse navigation (fresh branch creation)");
 
   console.log("\nmutations during patch:");
   for (const m of patchMutations) console.log("  " + m);

@@ -37,8 +37,13 @@ declare const Config: {
    * renders: request-time serialize guards distinguish marker/spine emission
    * from value emission so a render with `$global.persisted` set serializes
    * resume markers for request-derived content without their values.
+   *
+   * `"update"` (with `output: "dom"`) compiles the template's update entry
+   * (`?update` virtual module) instead: merge functions that apply a
+   * persisted update-render patch to live scopes, sharing signals and branch
+   * content with the main dom module through the resume registry.
    */
-  persisted?: boolean;
+  persisted?: boolean | "update";
   cache?: Map<unknown, unknown>;
   hot?: boolean;
   /** @deprecated */

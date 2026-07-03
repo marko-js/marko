@@ -350,9 +350,10 @@ strategies, chosen per section by the compiler:
 1. **Clone + merge** (placement-only, shown above): fresh branches clone the
    section's `template`/`walks`, walk-bind, then merge patch values. No
    expressions ship; per-new-item wire = its hole values. Where the strings
-   live is its own axis — compiled into the entry (or a shared module), or
-   **wire-delivered per patch** (see the spike above), which the prototype
-   now uses.
+   live is its own axis — compiled into the entry (or a shared module),
+   shared from the main dom module via the resume registry (what the
+   `?update` codegen now does), or **wire-delivered per patch** (see the
+   spike above).
 2. **Reconcile-by-input**: drive the existing `$input_related → _for_of`
    chain with the new collection; the existing keyed reconciler + body render
    code build items. Requires the body's render expressions to be shippable
@@ -514,6 +515,16 @@ would have bound a second handler, making clicks net no-ops) and
 interactivity is intact.
 
 ### Spike: wire-delivered branch markup
+
+_Status: superseded for same-template updates. The real `?update` codegen
+shares branch content through the resume registry instead: persisted dom
+builds `_resume`-register each request-derived loop's hoisted
+`[template, walks, setup]` (and `_var_resume` the `_if` signal itself), so
+generated entries carry only ids and the main module — which is loaded
+anyway on a resumed page — supplies the strings with zero duplication and no
+wire bytes. The wire frame may still return in slices 3/4 for priming
+templates the client hasn't loaded (cross-page branches). The spike below
+remains the measured rationale for that case._
 
 Instead of baking branch `template`/`walks` strings into persisted entries,
 the server can transmit them **in the patch, only for branches it actually

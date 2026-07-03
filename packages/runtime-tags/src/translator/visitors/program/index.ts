@@ -18,6 +18,7 @@ import {
   getReadyId,
   isOutputDOM,
   isOutputHTML,
+  isUpdateEntryBuild,
 } from "../../util/marko-config";
 import {
   BindingType,
@@ -31,6 +32,7 @@ import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
+import programUpdate from "./update";
 
 export let scopeIdentifier: t.Identifier;
 export function isScopeIdentifier(node: t.Node): node is t.Identifier {
@@ -234,6 +236,11 @@ export default {
     exit(program) {
       if (isOutputHTML()) {
         programHTML.translate.exit(program);
+      } else if (isUpdateEntryBuild()) {
+        // `?update` entry: the dom visitors ran in full (identical analysis
+        // and register ids), but the emitted module is the compiled patch
+        // merge instead of the template.
+        programUpdate.translate.exit(program);
       } else {
         programDOM.translate.exit(program);
       }

@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import { importDefault } from "@marko/compiler/babel-utils";
 
 import { bindingHasProperty } from "../../util/binding-has-prop";
+import { isPersisted } from "../../util/marko-config";
 import { forEach } from "../../util/optional";
 import {
   BindingType,
@@ -30,6 +31,7 @@ import {
   writeSignals,
 } from "../../util/signals";
 import { toPropertyName } from "../../util/to-property-name";
+import { registerUpdateValueSignals } from "../../util/update-merges";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
 import { scopeIdentifier } from ".";
@@ -67,6 +69,11 @@ export default {
       });
     },
     exit(program) {
+      // Persisted builds register the value signals update entries invoke
+      // through the registry (must happen before signals are written).
+      if (isPersisted()) {
+        forEachSectionReverse(registerUpdateValueSignals);
+      }
       forEachSectionReverse(writer.getSectionMeta);
 
       const section = getSectionForBody(program)!;
