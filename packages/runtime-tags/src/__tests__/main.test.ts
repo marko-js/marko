@@ -3,6 +3,7 @@ import fs from "fs";
 import { html_beautify } from "js-beautify";
 import path from "path";
 
+import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
 import {
@@ -17,8 +18,10 @@ import {
   type Flush,
   type FlushType,
   isFlush,
+  isNavigate,
   isThrows,
   isWait,
+  type Navigate,
   resetResolveState,
   resolveAfter,
   type Throws,
@@ -31,7 +34,13 @@ import {
 } from "./utils/strip-inline-runtime";
 import createMutationTracker from "./utils/track-mutations";
 
-type Step = Input | Wait | Flush | Throws | ((container: Element) => unknown);
+type Step =
+  | Input
+  | Wait
+  | Flush
+  | Throws
+  | Navigate
+  | ((container: Element) => unknown);
 type Steps = [Input, ...Step[]];
 export type TestConfig = {
   steps?: Steps | (() => Steps | Promise<Steps>);
@@ -248,6 +257,12 @@ function testFixtures(interop?: true) {
                 instance.update(input);
                 tracker.logUpdate(input);
               },
+              // csr navigation is simply new input to the root -- the
+              // semantics the ssr update patch is meant to reproduce.
+              onNavigate(input) {
+                instance.update(input);
+                tracker.logUpdate(input);
+              },
             });
 
             tracker.cleanup();
@@ -306,8 +321,74 @@ function testFixtures(interop?: true) {
             const { run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
 
+            const updateRunner = runner.updateRunner;
             await runSteps(steps, tracker, browser, run, {
               onFlush: hasFlush ? flushAndRun : undefined,
+              onNavigate: updateRunner
+                ? async (navigateInput) => {
+                    // Render the update payload server-side (a stateless
+                    // update render of the same template with the new input)
+                    // and extract its resume fills.
+                    const { template } = await runner.runServer();
+                    let html = "";
+                    for await (const chunk of template.render({
+                      ...navigateInput,
+                      $global: {
+                        ...(navigateInput.$global as object),
+                        persisted: "update",
+                        renderId: "navigate",
+                      },
+                    })) {
+                      html += chunk;
+                    }
+                    // Fills ride the payload as inline `<rid>.r=[…]` /
+                    // `.r.push(…)` assignments (update responses are still
+                    // full documents; framing is a later slice).
+                    const fills: ((ctx: unknown) => unknown)[] = [];
+                    for (const [, arrSource] of html.matchAll(
+                      /\.r=(\[.*?\])(?:;[$\w.]+\.w\(\))?<\/script>/gs,
+                    )) {
+                      fills.push(...new Function(`return (${arrSource})`)());
+                    }
+                    for (const [, argsSource] of html.matchAll(
+                      /\.r\.push\((.*?)\)(?:;[$\w.]+\.w\(\))?<\/script>/gs,
+                    )) {
+                      fills.push(...new Function(`return [${argsSource}]`)());
+                    }
+                    if (!fills.length) {
+                      throw new Error(
+                        "navigate(): update render carried no resume fills",
+                      );
+                    }
+
+                    // Pair with the live root: register a capture handler
+                    // and drive it through the page's own effect machinery.
+                    const updateEntry = await updateRunner(browser.ctx);
+                    const runtimeId = config.runtime_id ?? DEFAULT_RUNTIME_ID;
+                    const renders = (browser.window as any)[runtimeId];
+                    const renderId = Object.keys(renders)[0];
+                    let liveRoot: unknown;
+                    updateEntry.__register(
+                      "__navigate_root",
+                      (scope: unknown) => (liveRoot = scope),
+                    );
+                    renders[renderId].r.push("__navigate_root 1");
+                    updateEntry.__ready("__navigate");
+                    if (!liveRoot) {
+                      throw new Error(
+                        "navigate(): could not pair the live root scope",
+                      );
+                    }
+
+                    updateEntry.__applyUpdate(
+                      updateEntry.default,
+                      fills as any,
+                      liveRoot as any,
+                    );
+                    await browser.runAsyncScripts();
+                    run();
+                  }
+                : undefined,
             });
 
             while (hasFlush) {
@@ -391,10 +472,17 @@ async function runSteps(
   opts: {
     onInput?: (input: Input) => void;
     onFlush?: () => Promise<void>;
+    onNavigate?: (input: Input) => void | Promise<void>;
   },
 ) {
   for (const update of steps) {
-    if (isWait(update)) {
+    if (isNavigate(update)) {
+      if (opts.onNavigate) {
+        tracker.beginUpdate();
+        await opts.onNavigate(update.navigateInput as Input);
+        tracker.logUpdate(update.navigateInput as Input);
+      }
+    } else if (isWait(update)) {
       await update();
       await browser.runAsyncScripts();
       run();

@@ -1,3 +1,20 @@
+// template.marko.update.mjs
+const $global_params_tag_update = _update_signal("__tests__/template.marko_0_$global_params_tag/var");
+const $if_content__update = (patch, live) => {
+	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
+};
+const $update = (patch, live) => {
+	if ("$global" in patch) live["$global"] = patch["$global"];
+	if ("$global_title" in patch) live["$global_title"] = patch["$global_title"];
+	if ("$global_params" in patch) live["$global_params"] = patch["$global_params"];
+	if ("$global_params_id" in patch) live["$global_params_id"] = patch["$global_params_id"];
+	if ("$global_params_tag" in patch) $global_params_tag_update(live, patch["$global_params_tag"]);
+	if ("$global_params_sale" in patch) live["$global_params_sale"] = patch["$global_params_sale"];
+	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
+	if ("UpdateAttr:href:#a/1" in patch) _attr(live["#a/1"], "href", patch["UpdateAttr:href:#a/1"]);
+};
+var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+
 // template.marko
 const $template = "<h1> </h1><a>link</a><button> </button><section></section>";
 const $walks = "D l b D l b";

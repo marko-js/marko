@@ -1,4 +1,4 @@
-// size: 25941 (min) 9545 (brotli)
+// size: 26268 (min) 9619 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2603,6 +2603,48 @@ function _load_race_trigger(...triggers) {
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();
+}
+/**
+ * Applies an update-render payload to a live (resumed) render.
+ *
+ * `merge` is the page template's compiled merge function (the `?update`
+ * module's default export) and `liveRoot` the live scope it pairs with. The
+ * patch root is scope 1 by convention (the first scope the update render
+ * allocates -- the root template's). Patch scopes are plain objects in a
+ * patch-local id space; `_(id, registryId)` references inside values resolve
+ * the same way resume fills do, against patch scopes. Scope 0 partials are
+ * the update's `$global` values and merge onto the live `$global`.
+ */
+function applyUpdate(merge, fills, liveRoot) {
+  let liveGlobal = liveRoot.$,
+    patchScopes = { 0: liveGlobal },
+    getScope = (id) => (patchScopes[id] ||= {}),
+    applyScopes = (partials) => {
+      let scopeId = partials[0];
+      for (let i = 1; i < partials.length; i++) {
+        let partial = partials[i];
+        typeof partial == "number"
+          ? (scopeId += partial)
+          : (scopeId
+              ? (patchScopes[scopeId] = Object.assign(
+                  patchScopes[scopeId] || partial,
+                  partial,
+                ))
+              : Object.assign(liveGlobal, partial),
+            scopeId++);
+      }
+    },
+    serializeContext = (data, registryId) =>
+      typeof data == "number"
+        ? registryId
+          ? getRegisteredWithScope(registryId, getScope(data))
+          : getScope(data)
+        : applyScopes(data);
+  for (let fill of Array.isArray(fills) ? fills : [fills]) {
+    let scopes = fill(serializeContext);
+    Array.isArray(scopes) && applyScopes(scopes);
+  }
+  (merge(getScope(1), liveRoot), run());
 }
 function _update_signal(id) {
   return (scope, value) => getRegisteredWithScope(id, scope)(value);

@@ -10,8 +10,10 @@ Everything needed to pick this work up cold. Read in this order:
    (B2) decisions, the end-to-end prototype write-up, and the confirmed
    update-render writer gap list (G1–G5).
 3. [experiments/single-page-server-updates/README.md](./experiments/single-page-server-updates/README.md)
-   — the runnable harness: compile/render scripts, payload/entry size
-   measurements, and the e2e prototype.
+   — the runnable harness: compile/render scripts and payload/entry size
+   measurements. (The end-to-end lifecycle now lives in the
+   `persisted-update-navigate` fixture under
+   `packages/runtime-tags/src/__tests__/fixtures/`.)
 
 Branch: `claude/single-page-server-updates-bimocl` (this repo; sibling
 branches of the same name exist on `marko-js/vite` — carrying the
@@ -104,9 +106,22 @@ Verified: e2e imports the generated entries (hand-authored
 `entries/*.update.js` remain as the spec they replaced), including reverse
 navigation (fresh conditional branch creation); no `templates` frame needed.
 
-**Prototyped** (validated in `experiments/`, not yet real code): the patch
-scope constructor + flush (`experiments/.../update-runtime.js` `createPatch`
-/`flushPatch` — becomes the real `dom/update` frame parser in slice 3); the
+**Implemented** (slice 3, core): `applyUpdate` in `dom/update.ts` — the
+real merge driver: patch-aware serialize context (patch-local scope ids,
+plain-object patch scopes, `_(id, registryId)` refs resolved through the
+resume registry, scope-0 partials merged onto the live `$global`), root
+pairing at patch scope 1 by convention, compiled-merge dispatch, synchronous
+queue flush. And the fixture-harness `navigate()` step: persisted fixtures
+bundle their generated `?update` entry (snapshotted, sizes tracked as its
+own chunk); an ssr `navigate(input)` step renders a real update payload
+server-side, extracts its fills, pairs the live root through the page's own
+effect machinery, and applies it in the live jsdom document — csr mode
+treats the same step as a plain input update (the semantics the patch
+reproduces). The `persisted-update-navigate` fixture snapshots the whole
+lifecycle; the standalone experiments e2e and `update-runtime.js` prototype
+are deleted.
+
+**Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by
 registry sharing (see above); a content store may still return in slices 3/4
@@ -139,7 +154,7 @@ live only here so far:
   first truthy value and can drop the stateful bit when reason vars with
   different bits mix in one render (conceivable via body-content sections
   rendered under a different reason than their template's program). Not
-  reachable in the current e2e; audit and switch to bitwise OR (`|`) at
+  reachable in current coverage; audit and switch to bitwise OR (`|`) at
   propagation sites when building the update-render slice.
 - **`serializedLookup` conservative classification**: entries registered via
   `setBindingSerializedValue`/`setSectionSerializedValue` are all gated
@@ -209,12 +224,20 @@ to param-like sources under the persisted option`). Mechanism: under the
    also feeds request-derived structure could re-run a conditional against a
    half-applied patch (queued closures are safe; direct `_if` values are the
    edge).
-3. **Client update runtime** — real `dom/update` module: frame parser,
-   patch-aware serialize context, entry-effect dispatch, ready-channel
-   gating, `$global` merge, `_wire_if`/`_wire_for` + content store
-   (prototype: `experiments/.../update-runtime.js`). _Acceptance: e2e uses
-   the real runtime; then a fixture-harness `Navigate` step
-   (`src/__tests__/main.test.ts`) replaces the standalone e2e._
+3. **Client update runtime** — **core done** (see "Current state"):
+   `applyUpdate` (patch-aware serialize context, `$global` merge, merge
+   dispatch, queue flush) plus the fixture-harness `navigate()` step
+   (`src/__tests__/utils/resolve.ts`, ssr handler in `main.test.ts`,
+   `?update` bundling in `utils/bundle.ts`), which replaced the standalone
+   e2e — the `persisted-update-navigate` fixture snapshots the full
+   navigation lifecycle in debug and optimize. Still open for this slice:
+   streamed frame parsing (updates are still full documents; the harness
+   extracts `.r=[…]` fills by regex), entry-effect dispatch (update payloads
+   carry no effect strings yet — fresh-subtree effects arrive with
+   fragment-class content later), ready-channel gating of update chunks
+   (loader work), and root pairing by `meta` frame (the harness pairs via a
+   registered effect string against scope 1; the applier takes the live root
+   explicitly).
 4. **Integration** — build hash + `?update` chunks + manifest in
    `@marko/vite`; wrapper-over-shell, patch content negotiation, client
    router in `@marko/run`; `$global` promotion in the translator.
@@ -239,13 +262,19 @@ Sibling checkouts on the same branch name carry the integration prototype:
 ```sh
 npm ci                       # installs + patches babel (required)
 npm test                     # full suite (~6m)
+npm test -- --grep "persisted"    # persisted fixtures incl. the navigation
+                                  # lifecycle (persisted-update-navigate)
 E=designs/experiments/single-page-server-updates
 PERSISTED=1 node -r '~ts' $E/compile-cjs.js $E/product.marko $E/tags/price-tag.marko
-OUTPUT=dom  node -r '~ts' $E/compile-cjs.js $E/product.marko $E/tags/price-tag.marko
-node -r '~ts' $E/e2e.js      # end-to-end prototype (expect 4 PASS lines)
 PERSISTED=1 TEMPLATE=product.marko.cjs node -r '~ts' $E/render.js  # persisted render
 TEMPLATE=product.marko.cjs node -r '~ts' $E/render.js              # non-flag render
 ```
+
+The standalone e2e prototype (`$E/e2e.js`) is retired: the
+`persisted-update-navigate` fixture covers the same lifecycle (resume,
+client interaction, patch application, keyed reconcile, state survival,
+no-effect-replay, reverse navigation) in both debug and optimize with
+committed snapshots.
 
 ## Gotchas for the next contributor
 
@@ -256,9 +285,13 @@ TEMPLATE=product.marko.cjs node -r '~ts' $E/render.js              # non-flag re
 - The harness runs the **debug runtime even for optimized compiles** (props
   like `#LoopKey` print debug names where prod emits `M`), and its marker
   byte counts are ~5 B/marker larger than production (default renderId `_`).
-- The e2e patch fill is hand-authored against **debug accessor names**; it
-  breaks by design if the example templates change shape — recompile and
-  update the fill (each prop is annotated with its writer gap).
+- Optimized register ids (`getTemplateId(opts, file, child)`) are assigned
+  **sequentially in first-request order**, cached per `optimizeKnownTemplates`
+  array identity — every compile of a persisted template (html, dom, and the
+  `?update` entry) must share that array (or a `getTemplateId` option) or the
+  update entry's registry lookups won't match the dom module's
+  registrations. The fixture harness shares one config object; @marko/vite
+  must do the same in slice 4.
 - Generated harness artifacts (`*.cjs`, `*.min.js`, `out.*`) are gitignored
   and rebuilt by the README commands; `designs/experiments` is excluded from
   eslint/prettier/cspell like fixtures.
