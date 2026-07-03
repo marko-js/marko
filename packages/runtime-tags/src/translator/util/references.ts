@@ -12,7 +12,7 @@ import { getExprRoot, getFnParent, getFnRoot, getMarkoRoot } from "./get-root";
 import { isEventOrChangeHandler } from "./is-event-or-change-handler";
 import isInvokedFunction from "./is-invoked-function";
 import { finalizeKnownTags } from "./known-tag";
-import { isOptimize, isOutputDOM } from "./marko-config";
+import { isOptimize, isOutputDOM, isPersisted } from "./marko-config";
 import {
   addSorted,
   concat,
@@ -1469,6 +1469,28 @@ const globalSources: Sources = {
   global: true,
 };
 
+/**
+ * Persisted builds treat dynamic expressions with no tracked sources as
+ * *volatile*: not compile-time foldable and derived from nothing the lattice
+ * knows about (eg `new Date()`, module state, impure calls), so an MPA
+ * reload could change them. They behave exactly like `$global` reads --
+ * markers under the persisted flag, fresh values in every update render --
+ * which keeps navigation semantics aligned with a full page load.
+ * (Foldable expressions stay static; expressions with tracked refs already
+ * refresh through their sources' guards.)
+ */
+export function getVolatileExprSources(expr: t.NodeExtra) {
+  if (isPersisted() && isVolatileExtra(expr)) return globalSources;
+}
+
+function isVolatileExtra(expr: t.NodeExtra) {
+  return (
+    expr.confident === false &&
+    !expr.isEffect &&
+    !(isReferencedExtra(expr) && expr.referencedBindings)
+  );
+}
+
 function resolveBindingSources(binding: Binding) {
   const resolvedSources = getResolvedSources();
   if (resolvedSources.has(binding)) return;
@@ -1547,6 +1569,16 @@ function resolveDerivedSources(binding: Binding) {
             binding.sources = mergeSources(binding.sources, ref.sources);
           }
         });
+      }
+      // Volatile const/derived values (see `getVolatileExprSources`)
+      // propagate to everything downstream of the binding. `let` bindings
+      // are excluded -- they are client state and survive navigations by
+      // definition, whatever their initializer.
+      if (binding.type !== BindingType.let) {
+        binding.sources = mergeSources(
+          binding.sources,
+          getVolatileExprSources(expr),
+        );
       }
     });
   }
