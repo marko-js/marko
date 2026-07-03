@@ -57,6 +57,24 @@ export function stringifyClassObject(name: string, value: unknown) {
   return value ? name : "";
 }
 
+// Dev-only guard the translator wraps around CSS module class accesses (eg
+// `styles.foo`) in the optimized `class` attribute paths. A typo resolves to
+// `undefined`, which would otherwise fold silently into the class string; here
+// it surfaces as a warning. Compiled away in optimized builds (the translator
+// emits the bare access), so this is never on the production hot path.
+export function _class_module_value(value: unknown, name?: string) {
+  if (MARKO_DEBUG && typeof value !== "string") {
+    console.warn(
+      `Expected the CSS module class ${
+        name ? `\`${name}\`` : "access"
+      } to resolve to a string, but received ${
+        value === undefined ? "undefined" : `a ${typeof value}`
+      }. It may be a typo or missing from the stylesheet.`,
+    );
+  }
+  return value;
+}
+
 export function stringifyStyleObject(name: string, value: unknown) {
   return value || value === 0 ? name + ":" + value : "";
 }

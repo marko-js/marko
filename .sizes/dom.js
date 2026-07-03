@@ -1,4 +1,4 @@
-// size: 25867 (min) 9506 (brotli)
+// size: 25968 (min) 9546 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -326,6 +326,9 @@ function _call(fn, v) {
 }
 function stringifyClassObject(name, value) {
   return value ? name : "";
+}
+function _class_module_value(value, name) {
+  return value;
 }
 function stringifyStyleObject(name, value) {
   return value || value === 0 ? name + ":" + value : "";
@@ -1449,7 +1452,10 @@ function _attr_class_items(element, items) {
   for (let key in items) _attr_class_item(element, key, items[key]);
 }
 function _attr_class_item(element, name, value) {
-  element.classList.toggle(name, !!value);
+  let { classList } = element;
+  if (~name.indexOf(" "))
+    for (let token of name.split(" ")) classList.toggle(token, !!value);
+  else classList.toggle(name, !!value);
 }
 function _attr_style(element, value) {
   setAttribute(
