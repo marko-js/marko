@@ -11,7 +11,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4");
 			return 0;
 		}
-	}, $scope0_id, "#section/4", _persisted_reason(), 1, 0, "</section>", 1);
+	}, $scope0_id, "#section/4", _persisted_reason(), 1 | _persisted_reason(), 0, "</section>", 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);

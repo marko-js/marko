@@ -341,19 +341,17 @@ function testFixtures(interop?: true) {
                     })) {
                       html += chunk;
                     }
-                    // Fills ride the payload as inline `<rid>.r=[…]` /
-                    // `.r.push(…)` assignments (update responses are still
-                    // full documents; framing is a later slice).
+                    // Update responses are a newline-delimited stream of
+                    // serializer frames: each line is a bare JS array of
+                    // fills (and effect strings, which the applier ignores
+                    // for matched scopes).
                     const fills: ((ctx: unknown) => unknown)[] = [];
-                    for (const [, arrSource] of html.matchAll(
-                      /\.r=(\[.*?\])(?:;[$\w.]+\.w\(\))?<\/script>/gs,
-                    )) {
-                      fills.push(...new Function(`return (${arrSource})`)());
-                    }
-                    for (const [, argsSource] of html.matchAll(
-                      /\.r\.push\((.*?)\)(?:;[$\w.]+\.w\(\))?<\/script>/gs,
-                    )) {
-                      fills.push(...new Function(`return [${argsSource}]`)());
+                    for (const line of html.split("\n")) {
+                      if (line) {
+                        for (const item of new Function(`return (${line})`)()) {
+                          if (typeof item === "function") fills.push(item);
+                        }
+                      }
                     }
                     if (!fills.length) {
                       throw new Error(

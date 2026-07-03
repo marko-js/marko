@@ -1081,6 +1081,8 @@ export class State implements SerializeState {
       // values ARE the payload there.
       this.update = $global.persisted === "update";
       this.serializeReason = this.update ? 3 : 2;
+      // Update responses carry no document: no walker bootstrap to emit.
+      this.hasMainRuntime = this.update;
     }
   }
 
@@ -1229,7 +1231,13 @@ export class Chunk {
     public next: Chunk | null,
     public context: Record<string | symbol, unknown> | null,
     public serializeState: SerializeState,
-  ) {}
+  ) {
+    // Update responses are patch payloads: static HTML (content, markers,
+    // reorder templates) is suppressed at the write; only the resume
+    // scripts flush. Expressions still evaluate normally, so scope ids,
+    // hole captures, and structural writes are unaffected.
+    if (boundary.state.update) this.writeHTML = noopWriteHTML;
+  }
 
   fork(boundary: Boundary, next: Chunk | null) {
     return new Chunk(boundary, next, this.context, this.serializeState);
@@ -1286,7 +1294,7 @@ export class Chunk {
     if (placeholder) {
       const body = placeholder.body.consume();
 
-      if (body.async) {
+      if (body.async && !this.boundary.state.update) {
         const { state } = this.boundary;
         const reorderId = (body.reorderId = placeholder.branchId
           ? placeholder.branchId + ""
@@ -1473,7 +1481,14 @@ export class Chunk {
     }
 
     if (state.resumes) {
-      if (state.hasWrittenResume) {
+      if (state.update) {
+        // Update responses are a newline-delimited stream of serializer
+        // frames: each flush emits its resumes as a bare JS array (the same
+        // fills a document render assigns to `<runtimeId>.<renderId>.r`),
+        // one per line (the serializer escapes newlines in values). No
+        // runtime prefix -- the client applier evaluates frames directly.
+        scripts = concatScripts(scripts, "[" + state.resumes + "]");
+      } else if (state.hasWrittenResume) {
         scripts = concatScripts(
           scripts,
           runtimePrefix + RuntimeKey.Resume + ".push(" + state.resumes + ")",
@@ -1583,7 +1598,7 @@ export class Chunk {
       state.writeReorders = null;
     }
 
-    if (needsWalk) {
+    if (needsWalk && !state.update) {
       scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");
     }
 
@@ -1604,6 +1619,14 @@ export class Chunk {
 
     this.flushScript();
     const { scripts } = this;
+
+    if (state.update) {
+      // Update responses: raw frames, one per line -- no script wrapper,
+      // no asset flush, no trailer.
+      this.html = this.scripts = "";
+      return scripts ? scripts + "\n" : "";
+    }
+
     const { $global, nonceAttr } = state;
     const { __flush__ } = $global;
     let { html } = this;
@@ -1625,6 +1648,8 @@ export class Chunk {
     return html;
   }
 }
+
+function noopWriteHTML() {}
 
 function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
   const { state } = boundary;
@@ -1711,7 +1736,8 @@ function depsMarker(deps: Set<string> | null) {
 }
 
 export function _trailers(html: string) {
-  $chunk.boundary.state.trailerHTML += html;
+  const { state } = $chunk.boundary;
+  if (!state.update) state.trailerHTML += html;
 }
 
 function concatEffects(a: string, b: string) {

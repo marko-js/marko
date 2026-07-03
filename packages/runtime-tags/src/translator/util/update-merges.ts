@@ -45,6 +45,10 @@ export type UpdateMerge =
       accessor: t.StringLiteral | t.NumericLiteral;
       relativePath: string;
       tagName: string;
+    }
+  | {
+      kind: "dynamic";
+      accessor: t.StringLiteral | t.NumericLiteral;
     };
 
 const [getUpdateMergesRaw] = createSectionState<UpdateMerge[]>(

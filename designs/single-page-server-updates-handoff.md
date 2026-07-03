@@ -137,6 +137,26 @@ and pair the live root themselves (`getUpdateRoot` in `dom/resume.ts`) so
 consumers never import the runtime by path — a second runtime instance has
 its own registry and silently pairs nothing.
 
+**Implemented** (`feat: update wire format…`): the bytes goal. Mixed
+(stateful ∩ request-derived) reasons keep their request bits — guards
+compile to `1 | <dynamic part>` (`getMixedDynamicGuard`), branch reason
+aggregation stops collapsing them, and their param groups are analyzed — so
+real page shapes (`<if>/<else>` containing interactive components) emit
+branch outcomes/links/holes in update mode (`persisted-update-mixed-branch`
+fixture). Dynamic tags serialize under the persisted spine
+(`… | _persisted_reason()` guard) and link their branch scope explicitly in
+update mode; content-section merges register by content id
+(`_update_content`) and dynamic-tag merges dispatch them from the patch's
+serialized renderer id (`_update_dynamic`) — the layout
+`<${input.content}/>` hop works (`persisted-update-layout` fixture). Update
+responses suppress ALL static HTML (chunk `writeHTML` no-ops in update
+mode; no walker bootstrap, no walk calls, no reorder templates — async
+placeholder bodies stream in order; no trailers) and emit a
+**newline-delimited stream of serializer frames**: each flush is a bare JS
+array of fills on its own line (the serializer escapes newlines in values).
+The applier/harness/prototype-router parse lines; per-frame streaming apply
+(shared per-navigation patch map) is follow-up router work.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by

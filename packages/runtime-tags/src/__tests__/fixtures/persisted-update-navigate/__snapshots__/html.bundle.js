@@ -8,7 +8,7 @@ var price_default = _template("b", (input) => {
 
 // template.marko
 var template_default = _template("a", (input) => {
-	const $scope0_reason = _scope_reason(), $sg__input_product_name = _serialize_guard($scope0_reason, 0), $sg__input_product_slug = _serialize_guard($scope0_reason, 1), $sg__input_product_sale_percent = _serialize_guard($scope0_reason, 3), $sg__input_product_sale = _serialize_guard($scope0_reason, 2), $sg__input_related = _serialize_guard($scope0_reason, 4);
+	const $scope0_reason = _scope_reason(), $sg__input_product_name = _serialize_guard($scope0_reason, 1), $sg__input_product_slug = _serialize_guard($scope0_reason, 2), $sg__input_product_sale_percent = _serialize_guard($scope0_reason, 5), $sg__input_product_sale = _serialize_guard($scope0_reason, 4), $sg__input_related = _serialize_guard($scope0_reason, 6);
 	const $scope0_id = _scope_id();
 	let expanded = false;
 	_html(`<h1>${_escape(_hole_value($scope0_id, "a", input.product.name, $sg__input_product_name))}${_el_resume($scope0_id, "a", $sg__input_product_name)}</h1><a${_attr("href", _hole_value($scope0_id, "Nhref:b", `/products/${input.product.slug}/specs`, $sg__input_product_slug))}>specs</a>${_el_resume($scope0_id, "b", $sg__input_product_slug)}<button>Show${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}<section>`);
@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 			$sg__input_product_sale && writeScope($scope1_id, { _: $sg__input_product_sale_percent && _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "e", $sg__input_product_sale, 1, $sg__input_product_sale, "</section>", 1);
+	}, $scope0_id, "e", $sg__input_product_sale, 1 | _serialize_guard($scope0_reason, 0), $sg__input_product_sale, "</section>", 1);
 	_html("<ul>");
 	_for_of(input.related, (item) => {
 		const $scope2_id = _scope_id();
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	writeScope($scope0_id, {
 		l: input.product?.featured,
-		n: _serialize_if($scope0_reason, 2) && input.product?.sale?.percent,
+		n: _serialize_if($scope0_reason, 4) && input.product?.sale?.percent,
 		p: expanded
 	});
 	_resume_branch($scope0_id);

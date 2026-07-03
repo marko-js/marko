@@ -108,4 +108,10 @@ export {
   _var_change,
 } from "./dom/signals";
 export { _template } from "./dom/template";
-export { _update_for, _update_signal, applyUpdate } from "./dom/update";
+export {
+  _update_content,
+  _update_dynamic,
+  _update_for,
+  _update_signal,
+  applyUpdate,
+} from "./dom/update";

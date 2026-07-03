@@ -20,7 +20,7 @@
 import { AccessorProp, type Scope } from "../common/types";
 import { _for_of } from "./control-flow";
 import { run } from "./queue";
-import { getRegisteredWithScope, getUpdateRoot } from "./resume";
+import { _resume, getRegisteredWithScope, getUpdateRoot } from "./resume";
 
 type UpdateSignal = (scope: Scope, value: unknown) => void;
 type UpdateFill = (
@@ -90,6 +90,32 @@ export function applyUpdate(
   // Merges queue renders (intersections, closure fan-out, branch setups);
   // flush synchronously so the update settles as one batch.
   run();
+}
+
+// Content-section merges register under the section's content id plus this
+// suffix (a character that cannot appear in generated register ids), so
+// dynamic tags can dispatch a merge from the renderer id the server
+// serialized (`ConditionalRenderer:<accessor>` in the patch).
+const UPDATE_MERGE_SUFFIX = "!";
+type UpdateMerge = (patch: Scope, live: Scope) => void;
+
+export function _update_content(contentId: string, merge: UpdateMerge) {
+  _resume(contentId + UPDATE_MERGE_SUFFIX, merge);
+}
+
+export function _update_dynamic(
+  rendererId: unknown,
+  patchBranch: Scope | undefined,
+  liveBranch: Scope | undefined,
+) {
+  const merge =
+    typeof rendererId === "string" &&
+    (getRegisteredWithScope(rendererId + UPDATE_MERGE_SUFFIX) as
+      | UpdateMerge
+      | undefined);
+  if (merge && patchBranch && liveBranch) {
+    merge(patchBranch, liveBranch);
+  }
 }
 
 export function _update_signal(id: string): UpdateSignal {

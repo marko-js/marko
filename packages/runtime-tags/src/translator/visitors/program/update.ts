@@ -11,6 +11,7 @@ import { callRuntime, getRuntimePath } from "../../util/runtime";
 import {
   forEachSectionReverse,
   getSectionForBody,
+  getSectionParentIsOwner,
   type Section,
 } from "../../util/sections";
 import { getResumeRegisterId } from "../../util/signals";
@@ -91,7 +92,30 @@ export default {
           body.push(statement);
         }
       }
-      body.push(...hoistedDeclarations, ...mergeFunctions, defaultExport);
+      body.push(...hoistedDeclarations, ...mergeFunctions);
+      // Content sections rendered through dynamic tags (eg a layout's
+      // `<${input.content}/>`) are dispatched by renderer id at merge time,
+      // so their merges register under the same content id the dom output
+      // registers the renderer with (`_content_resume`).
+      forEachSectionReverse((section) => {
+        const identifier = mergeIdentifiers.get(section);
+        if (
+          identifier &&
+          section !== rootSection &&
+          !getSectionParentIsOwner(section)
+        ) {
+          body.push(
+            t.expressionStatement(
+              callRuntime(
+                "_update_content",
+                t.stringLiteral(getResumeRegisterId(section, "content")),
+                t.cloneNode(identifier, true),
+              ),
+            ),
+          );
+        }
+      });
+      body.push(defaultExport);
       // Re-export the applier so consumers (the client router) need no
       // knowledge of the runtime module path this entry was compiled
       // against (debug vs optimized).
@@ -373,6 +397,25 @@ function buildMerge(
                 t.stringLiteral(getAccessorProp().LoopKey),
               ]),
             ]),
+          ),
+        ),
+      ];
+    }
+    case "dynamic": {
+      const rendererKey =
+        getAccessorPrefix().ConditionalRenderer + merge.accessor.value;
+      const branchScopesKey =
+        getAccessorPrefix().BranchScopes + merge.accessor.value;
+      return [
+        ifPresent(
+          rendererKey,
+          t.expressionStatement(
+            callRuntime(
+              "_update_dynamic",
+              patchGet(rendererKey),
+              patchGet(branchScopesKey),
+              liveGet(branchScopesKey),
+            ),
           ),
         ),
       ];
