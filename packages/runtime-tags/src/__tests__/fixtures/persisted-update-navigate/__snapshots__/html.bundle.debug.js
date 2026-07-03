@@ -34,7 +34,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#ul/5", $sg__input_related, $sg__input_related, $sg__input_related, "</ul>", 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		input_product_featured: _state_reason() && input.product?.featured,
+		input_product_featured: input.product?.featured,
 		input_product_sale_percent: (_serialize_if($scope0_reason, 2) || _update_reason()) && input.product?.sale?.percent,
 		expanded: _state_reason() && expanded
 	}, "__tests__/template.marko", 0, {

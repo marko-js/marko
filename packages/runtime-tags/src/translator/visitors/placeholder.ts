@@ -32,6 +32,10 @@ import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
 import { addUpdateMerge } from "../util/update-merges";
+import {
+  addUpdateMerge,
+  isUpdateCoveredByClientSignals,
+} from "../util/update-merges";
 import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -146,7 +150,11 @@ export default {
           const holeValue =
             nodeBinding &&
             isPersisted() &&
-            isReasonDynamic(markerSerializeReason)
+            isReasonDynamic(markerSerializeReason) &&
+            // Browser-code reuse: skip the capture when the client's
+            // registered signal chain already re-renders this hole from
+            // patched scope values -- no double-shipping the computed value.
+            !isUpdateCoveredByClientSignals(valueExtra)
               ? callRuntime(
                   "_hole_value",
                   getScopeIdIdentifier(section),
@@ -174,7 +182,11 @@ export default {
         } else {
           // Update entries merge server-computed hole values (G1) for the
           // same request-derived holes the html output captures.
-          if (nodeBinding && isReasonDynamic(markerSerializeReason)) {
+          if (
+            nodeBinding &&
+            isReasonDynamic(markerSerializeReason) &&
+            !isUpdateCoveredByClientSignals(valueExtra)
+          ) {
             addUpdateMerge(section, {
               kind: method === "_text" ? "text" : "html",
               accessor: getScopeAccessorLiteral(nodeBinding),

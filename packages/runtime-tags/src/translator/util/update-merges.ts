@@ -6,12 +6,15 @@
 // signals, loop branch content) so both compiles agree on register ids.
 import type { types as t } from "@marko/compiler";
 
-import { isUpdateEntryBuild } from "./marko-config";
+import { isPersisted, isUpdateEntryBuild } from "./marko-config";
 import { forEach } from "./optional";
-import { type Binding, BindingType } from "./references";
+import { type Binding, BindingType, isReferencedExtra } from "./references";
 import type { Section } from "./sections";
-import { getSerializeSourcesForRef } from "./serialize-reasons";
-import { getResumeRegisterId, getSignals, type Signal } from "./signals";
+import {
+  getSerializeReason,
+  getSerializeSourcesForRef,
+} from "./serialize-reasons";
+import { getResumeRegisterId, getSignals } from "./signals";
 import { createSectionState } from "./state";
 
 export type UpdateMerge =
@@ -127,28 +130,64 @@ export function registerUpdateValueSignals(section: Section) {
   });
 }
 
+// Analyze-data equivalent of walking the dom signal graph (which the html
+// compile never builds, and both compiles must agree): a binding's merge
+// must go through its value signal when some non-effect expression reading
+// it also mixes client state -- the client has to re-execute that
+// statement with the patched value. No transitive walk is needed: a
+// state-free derived reader is itself an update value binding, patched (and
+// signal-invoked if needed) with its own server-computed value.
 export function bindingNeedsUpdateSignal(binding: Binding) {
-  const seen = new Set<Signal>();
-  let needs = false;
-
-  const visit = (signal: Signal | undefined) => {
-    if (!signal || seen.has(signal) || needs) return;
-    seen.add(signal);
-    if (signal !== getSignals(binding.section).get(binding)) {
-      const sources = getSerializeSourcesForRef(signal.referencedBindings);
-      if (sources?.state) {
-        needs = true;
-        return;
-      }
+  for (const read of binding.reads) {
+    if (
+      !read.isEffect &&
+      getSerializeSourcesForRef(read.referencedBindings)?.state
+    ) {
+      return true;
     }
-    forEach(signal.intersection, visit);
-    for (const value of signal.values) visit(value.signal);
-  };
+  }
+  return false;
+}
 
-  visit(getSignals(binding.section).get(binding));
-  forEach(binding.closureSections, (closureSection) => {
-    visit(getSignals(closureSection).get(binding));
+/**
+ * True when an update render need not capture (and the update entry need not
+ * place) this hole: every referenced binding is either live client state or
+ * a patched update value, and at least one patched value's merge invokes its
+ * registered signal -- re-running this statement client-side with patched
+ * scope values, exactly as a CSR update would.
+ */
+export function isUpdateCoveredByClientSignals(extra: t.NodeExtra | undefined) {
+  if (!isPersisted() || !isReferencedExtra(extra) || extra.isEffect) {
+    return false;
+  }
+  let invoked = false;
+  let covered = !!extra.referencedBindings;
+  forEach(extra.referencedBindings, (binding) => {
+    if (!covered) return;
+    const { sources } = binding;
+    if (!sources) {
+      covered = false;
+    } else if (sources.state && !sources.param && !sources.global) {
+      // Live client-owned value; correct by definition.
+    } else if (
+      isUpdateValueBindingType(binding) &&
+      sources.param &&
+      !sources.state &&
+      !sources.global &&
+      getSerializeReason(binding.section, binding)
+    ) {
+      invoked ||= bindingNeedsUpdateSignal(binding);
+    } else {
+      covered = false;
+    }
   });
+  return covered && invoked;
+}
 
-  return needs;
+function isUpdateValueBindingType(binding: Binding) {
+  return (
+    binding.type === BindingType.input ||
+    binding.type === BindingType.param ||
+    binding.type === BindingType.derived
+  );
 }

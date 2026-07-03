@@ -1322,9 +1322,13 @@ export function writeHTMLResumeStatements(
   // in update renders (they are the payload) but not in initial persisted
   // renders. The same-reason hoisting shortcut is skipped -- the section
   // gate is spine-class and would leak values.
-  const ifSerializedValue = (reason: SerializeReason, expr: t.Expression) =>
+  const ifSerializedValue = (
+    binding: Binding,
+    reason: SerializeReason,
+    expr: t.Expression,
+  ) =>
     isPersisted()
-      ? getExprIfSerialized(section, reason, expr)
+      ? getExprIfSerialized(section, reason, expr, binding.sources)
       : ifSerialized(reason, expr);
 
   let debugVars: t.ObjectProperty[] | undefined;
@@ -1350,7 +1354,7 @@ export function writeHTMLResumeStatements(
     }
     // Undefined means the value provably never serializes (purely
     // global-sourced reason under the persisted option).
-    const serializedValue = ifSerializedValue(reason, expr);
+    const serializedValue = ifSerializedValue(binding, reason, expr);
     if (serializedValue) {
       serializedProperties.push(toObjectProperty(accessor, serializedValue));
     }

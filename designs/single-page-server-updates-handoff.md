@@ -187,6 +187,25 @@ Result: update payloads no longer carry client state defaults
 (`persisted-update-navigate`'s update frame lost `expanded`/derived state
 values); non-persisted output stays byte-identical.
 
+**Implemented** (`feat: browser-code reuse…`, step 2b): holes whose
+referenced bindings are all live client state or patched update values with
+a registered, merge-invoked signal skip both the server `_hole_value`
+capture and the update entry's placement
+(`isUpdateCoveredByClientSignals` in `update-merges.ts`) -- the client's
+already-loaded signal chain re-renders them from patched scope values,
+exactly as a CSR update would. `bindingNeedsUpdateSignal` was rewritten on
+analyze data (`binding.reads`, non-effect state-mixing readers) so the html
+and dom compiles agree by construction; no transitive walk is needed since
+state-free derived readers are themselves patched. Value gates now classify
+by the binding's own source class rather than the reader-derived reason (a
+state-free binding forced by a state-mixing reader serializes unguarded and
+rides updates) -- this also fixed a real staleness bug where a mixed attr
+kept its pre-navigation value until the next client state change
+(`persisted-update-navigate`'s spotlight class). Fixture:
+`persisted-update-signal-reuse`. The broader fully-interactive fast path
+(root input signal ≡ CSR update, whole-template coverage) remains future
+work.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by

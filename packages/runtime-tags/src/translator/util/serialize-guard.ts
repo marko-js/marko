@@ -208,13 +208,20 @@ export function getSerializeGuardForAny(
 export function getExprIfSerialized<
   T extends undefined | SerializeReason,
   R extends T extends {} ? t.Expression : undefined,
->(section: Section, reason: T, expr: t.Expression): R {
+>(section: Section, reason: T, expr: t.Expression, valueSources?: Sources): R {
   if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
     if (!reason) return undefined as R;
-    // State-sourced (or forced) values are client-owned: they serialize for
-    // normal stateful resume but never ride an update patch (the client
-    // keeps -- or recomputes -- its own).
     if (isPersisted() && !isCrossSection(section, reason as Sources)) {
+      // Ownership is the value's own source class, not the reader-derived
+      // reason: a state-free binding forced by a state-mixing reader is
+      // still server-owned and must ride update patches (the client's
+      // registered signals re-render from it).
+      if (valueSources && !valueSources.state) {
+        return expr as R;
+      }
+      // State-sourced (or forced) values are client-owned: they serialize
+      // for normal stateful resume but never ride an update patch (the
+      // client keeps -- or recomputes -- its own).
       return t.logicalExpression(
         "&&",
         callRuntime("_state_reason" satisfies HTMLRuntimeHelpers),
