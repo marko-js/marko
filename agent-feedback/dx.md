@@ -52,5 +52,5 @@ two registered signals over same-named bindings in one section would silently
 overwrite each other in the client registry. Today's registered signals
 (dynamic-tag tag vars) use user-named bindings so it likely never bites, but
 the update-entry work had to add `Signal.registerId` to opt out for
-conditional signals — the default derivation is a latent footgun worth an id
+conditional signals — the default derivation is a latent trap worth an id
 scheme keyed on accessor rather than name.
