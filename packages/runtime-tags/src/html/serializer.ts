@@ -1622,6 +1622,15 @@ function throwUnserializable(
       message += ` (reading ${access})`;
     }
 
+    if (state.boundary.state.update) {
+      // Update renders serialize request-derived values wholesale; ones
+      // that cannot cross the wire (eg functions in `input`) degrade to
+      // sparse "unchanged" -- the prop is skipped (as in production) and
+      // the client keeps its live value -- instead of aborting the patch.
+      console.warn(message + " (skipped in update render)");
+      return;
+    }
+
     const err = new TypeError(message, { cause });
     err.stack = undefined;
     state.boundary.abort(err);
