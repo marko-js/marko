@@ -71,6 +71,24 @@ export function throws(fn: (...args: any[]) => void) {
   return Object.assign(fn, { throws: true });
 }
 
+/**
+ * A persisted-pages navigation step: the root template receives new input.
+ * In ssr mode the harness renders an update payload (`$global.persisted =
+ * "update"`) server-side and applies it to the live document through the
+ * fixture's generated `?update` entry; in csr mode it is a plain input
+ * update -- the same semantics the patch is meant to reproduce.
+ */
+export type Navigate = { navigateInput: Record<string, unknown> };
+export function navigate(input: Record<string, unknown>): Navigate {
+  return { navigateInput: input };
+}
+
+export function isNavigate(value: any): value is Navigate {
+  return (
+    typeof value === "object" && value !== null && "navigateInput" in value
+  );
+}
+
 export function isWait(value: any): value is Wait {
   return typeof value === "function" && value.wait;
 }

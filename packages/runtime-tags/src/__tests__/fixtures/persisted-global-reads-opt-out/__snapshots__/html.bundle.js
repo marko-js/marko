@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "e", _persisted_reason(), 1, 0, "</section>", 1);
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a2");
 	writeScope($scope0_id, { f: count });
 	_resume_branch($scope0_id);
 }, 1);
