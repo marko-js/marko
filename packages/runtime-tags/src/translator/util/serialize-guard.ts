@@ -205,6 +205,19 @@ export function getSerializeGuardForAny(
   return expr;
 }
 
+// Wraps client-resume-only wiring (eg tag-variable change handlers) so
+// persisted builds drop it from update payloads: matched scopes keep their
+// live wiring and fresh branches wire their own client-side.
+export function getResumeOnlyExpr(expr: t.Expression): t.Expression {
+  return isPersisted()
+    ? t.logicalExpression(
+        "&&",
+        callRuntime("_state_reason" satisfies HTMLRuntimeHelpers),
+        expr,
+      )
+    : expr;
+}
+
 export function getExprIfSerialized<
   T extends undefined | SerializeReason,
   R extends T extends {} ? t.Expression : undefined,

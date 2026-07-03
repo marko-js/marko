@@ -206,6 +206,19 @@ kept its pre-navigation value until the next client state change
 (root input signal ≡ CSR update, whole-template coverage) remains future
 work.
 
+**Implemented** (`feat: drop client-resume-only wiring…`): update renders
+suppress serialization that only the resume walk consumes -- controlled
+input wiring (`_controllable*` scope writes), tag-variable refs and scope
+offsets (`_var`), closest-branch back-references (`_resume_branch`), and
+tag-variable change handlers (`getResumeOnlyExpr` wraps the let/return
+emits in persisted builds). Matched scopes keep their live wiring; fresh
+branches are client-constructed from registered content and wire their
+own. Measured on the ecommerce app this cut update payloads ~35%: item
+6.5 → 4.4 KB, search 41.2 → 26.8 KB (4.8 → 3.6 KB gzip), cart 0.65 →
+0.31 KB. A first attempt gated the whole serialized-accessors channel and
+broke `#childScope` spine links -- the gate belongs at the wiring emit
+sites, not the shared emission loop.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by
