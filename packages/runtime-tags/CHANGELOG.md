@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.2.2
+
+### Patch Changes
+
+- [#3327](https://github.com/marko-js/marko/pull/3327) [`d298ff1`](https://github.com/marko-js/marko/commit/d298ff1df7e4c138c7ee33254a8d5d004e0896f5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Only treat a non-page template as an `embed` (with a randomized, non-idempotent render id) when the `linkAssets` compiler option is configured. Without it — as in most test and SSR-only setups — every template keeps a deterministic render id, so server integration tests that render templates directly stay idempotent.
+
 ## 6.2.1
 
 ### Patch Changes
