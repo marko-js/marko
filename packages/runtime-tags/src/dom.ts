@@ -9,6 +9,7 @@ export {
   _await_promise,
   _dynamic_tag,
   _dynamic_tag_content,
+  _enable_catch,
   _for_in,
   _for_of,
   _for_to,
@@ -46,16 +47,10 @@ export {
   _attr_class,
   _attr_class_item,
   _attr_class_items,
-  _attr_content,
   _attr_nonce,
   _attr_style,
   _attr_style_item,
   _attr_style_items,
-  _attrs,
-  _attrs_content,
-  _attrs_partial,
-  _attrs_partial_content,
-  _attrs_script,
   _html,
   _lifecycle,
   _style_rule_item,
@@ -75,7 +70,7 @@ export {
   _load_template,
   _load_visible_trigger,
 } from "./dom/load";
-export { _enable_catch, run } from "./dom/queue";
+export { _script_update, _updating, run } from "./dom/queue";
 export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,
@@ -107,9 +102,16 @@ export {
   _var,
   _var_change,
 } from "./dom/signals";
+export {
+  _attr_content,
+  _attrs,
+  _attrs_content,
+  _attrs_partial,
+  _attrs_partial_content,
+  _attrs_script,
+} from "./dom/spread";
 export { _template } from "./dom/template";
 export {
-  _script_update,
   _update_branch,
   _update_content,
   _update_dynamic,
@@ -118,7 +120,6 @@ export {
   _update_pair,
   _update_seed,
   _update_signal,
-  _updating,
   applyUpdate,
   createUpdate,
 } from "./dom/update";

@@ -89,13 +89,23 @@ The real lever is a **slim hydration entry**: the eager path needs only
 what non-persisted hydration needs (resume + the page's interactive
 signals); the full registration graph (renderers, value signals, merges)
 is consumed only on the first persisted navigation, which already lazily
-loads the `?update` entry — registration could ride that load (e.g. the
-`?update` entry importing a registration-bearing variant of the template
-module, or a separate registration compile). That inverts the cost: pages
-pay persisted bytes when they first navigate, not on first paint. Needs a
-design pass — it splits the template module's top-level side effects
-across two loading stages, and same-route structural updates must still
-find loop/if content registered before the first merge dispatches.
+loads the `?update` entry — registration could ride that load as a
+`persisted: "register"` compile the `?update` entry imports. **A full
+attempt was built and parked** (see the handoff's "Attempted and parked"
+section): all suites and the app passed, but (1) the eager win is gated
+on finishing the runtime's phase partition — a module mixing
+hydration-used and lazily-used exports is hosted in one (eager) chunk
+with all its imports; the enablers landed (`sideEffects: false`,
+preserved dist modules behind the `dom.mjs` facade, spread/catch/
+`_script_update` file splits), with controllable and control-flow still
+mixed-phase — and (2) the register module duplicates template module
+scope, and duplicated `client` module STATE breaks copy-consistency
+(resume wires subscribers into the main copy; post-navigation registry
+resolutions hit the register copy — caught by
+`persisted-update-fresh-page`). The next attempt needs main-module
+exports of module-scope declarations (register imports them) plus
+suppressed re-registration of main-registered ids, so all stateful
+resolution converges on the main copies.
 
 ## Persisted compute guards make previously-unused imports bundle client-side
 

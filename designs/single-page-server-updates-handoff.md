@@ -562,6 +562,76 @@ navigation's lazy `?update` load — replaced the outdated
 "register-all-content retains the document shell" theory in
 `agent-feedback/perf.md`.
 
+**Attempted and parked** (the slim-hydration `?register` split) + **landed
+enablers**: the full design from `agent-feedback/perf.md` was built and
+validated a long way — a `persisted: "register"` compile (the persisted
+dom module WITH registrations, statically imported by the generated
+`?update` entry), the main compile reverted to non-persisted retention so
+hydration bundles tree-shake the server-driven graph, `_enable_branches`
+emitted at module init (the walker defers branch visits until branches
+enable; the old main modules enabled them via `_if`/`_for` construction,
+which the slim main tree-shakes — element refs riding retained visits must
+bind at hydration), and @marko/vite `?register` resolution. Every suite
+and all 38 app browser checks passed, dev and production. Two findings
+killed it as-landed:
+
+1. **Chunk-graph hosting beats module retention.** Retention worked (the
+   benchmark's `dom.mjs` contribution fell 2351→667 B after splitting the
+   spread machinery out) but the eager total stayed ~31.5 kB: a module is
+   hosted in ONE chunk, so any module mixing hydration-used and
+   lazily-used exports (queue with `_enable_catch`, dom-writes with the
+   spread/`_attr_content` machinery, controllable with its `_script`
+   variants) gets eager-hosted together with the imports its lazy exports
+   need — and the runtime shipping as one flat `dom.mjs` made the whole
+   thing one module. Landed enablers that survive: the runtime now ships
+   as **preserved modules behind the `dom.mjs` re-export facade**,
+   declares **`sideEffects: false`** (this alone shrank a plain
+   non-persisted fixture page bundle 16.1→2.7 kB min — module bodies were
+   retained as potential side effects), and three **file splits by
+   phase** (spread/`_attr_content` machinery out of `dom/dom.ts` into
+   `dom/spread.ts`; `_enable_catch` out of the queue into control-flow
+   behind `enableCatchPending` wrap hooks; `_script_update`/`_updating`
+   out of the applier file into the queue). The remaining follow-up is
+   finishing the phase partition (controllable `_script` vs `_default`
+   variants, control-flow's construction API) — mechanical now that the
+   packaging supports it.
+2. **Module-state duality is the real design constraint.** The register
+   module duplicates the template's module scope, and duplicated _code_
+   is benign but duplicated _state_ is not: `persisted-update-fresh-page`
+   caught resume-wired subscribers living in the MAIN module's
+   `client const subsByKey` while post-navigation registry resolutions
+   (the register copy overwrites shared ids) invoked the REGISTER copy's
+   `valueChange` — notifying the register copy's empty set. The app's
+   suites happened to stay copy-consistent (fresh subtrees wire and
+   notify through the same copy), so only the fixture's
+   resume-then-navigate-then-interact ordering exposed it. The next
+   attempt must make module-scope client state single-instance: the main
+   module exports its module-scope declarations and the register build
+   imports them (plus suppresses re-registration of main-registered ids —
+   effect fns, change handlers — so registry resolutions always hit the
+   main copies whose state resume wired). Until then, `?update` entries
+   do not import a register module and the main persisted compile keeps
+   its registrations.
+
+**Implemented** (`fix: per-translate abort-signal ids` + shared compiler
+caches): the `?update` entry compiles now share the whole build's compiler
+`cache` (in @marko/vite and the fixture harness) instead of creating fresh
+ones per entry kind. The cache stores the parse/migrate/analyze result and
+every compile translates a clone, so one cache is designed to serve all
+output/entry kinds of a file — analysis is identical across the persisted
+modes (all truthy; the mode distinctions are translate-phase). The fresh
+caches were papering over a real state leak the sharing exposed:
+`$signal` abort-ids were allocated during translate into a module-level
+WeakMap keyed by SECTION (a cached-analysis object that outlives
+compiles), so a second dom-mode translate of the same cached file drifted
+the ids (`$signal($scope, 0)` → `1`) — fixed by moving the allocation to
+`createSectionState` (keyed off the current program, per-translate by
+construction). Rule of thumb honored: analyze-phase state belongs on
+cached objects (module WeakMaps keyed by section/binding), translate-phase
+state belongs in `createSectionState`/`createProgramState`; an audit of
+the other section/binding-keyed module maps found only analyze-phase
+writes and idempotent pure memos.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by

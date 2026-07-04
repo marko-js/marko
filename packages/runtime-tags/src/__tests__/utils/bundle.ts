@@ -134,11 +134,12 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
             }
 
             if (kind === "update") {
-              // A fresh cache: the same file also compiles as the regular
-              // persisted dom module in this build.
+              // Shares the fixture's compiler cache: the cache holds the
+              // parse/migrate/analyze result (each compile translates a
+              // clone), and analysis is identical across persisted modes --
+              // "update" only changes the translate phase.
               const { code } = compiler.compileFileSync(file, {
                 ...compileOpts,
-                cache: new Map(),
                 output: "dom",
                 persisted: "update",
                 sourceMaps: false,

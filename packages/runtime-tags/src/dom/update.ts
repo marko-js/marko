@@ -26,14 +26,7 @@ import {
 } from "../common/types";
 import { _for_of, attachAwaitBranch } from "./control-flow";
 import { _html } from "./dom";
-import {
-  queueEffect,
-  run,
-  runEffects,
-  runId,
-  setUpdating,
-  updating,
-} from "./queue";
+import { run, runEffects, runId, setUpdating } from "./queue";
 import {
   _resume,
   getRegisteredWithScope,
@@ -189,32 +182,7 @@ export function _update_pair(patch: Scope, live: Scope) {
   activePairs?.set(patch, live);
 }
 
-/**
- * Persisted builds' `_script`: identical to `_script`, except setup skips
- * queueing while an update patch applies — fresh-branch wiring comes from
- * the payload's effect entries instead (running both would double-bind).
- */
-export function _script_update(id: string, fn: (scope: Scope) => void) {
-  _resume(id, fn);
-  return (scope: Scope) => {
-    if (!updating) queueEffect(scope, fn);
-  };
-}
-
 let applyGen = 0;
-
-/**
- * True while an update-render patch is being applied. Persisted builds
- * guard state-free request-derived compute invocations with it: their
- * values are the patch's payload (computing them client-side is at best
- * redundant and at worst impossible -- the computation may live behind a
- * `server import`), so during an apply the signal graph skips the compute
- * and the merge delivers the server-computed value instead. Client-state
- * (and state-mixing) computations are unaffected.
- */
-export function _updating() {
-  return !!updating;
-}
 
 // Content-section merges register under the section's content id plus this
 // suffix (a character that cannot appear in generated register ids), so

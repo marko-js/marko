@@ -1,12 +1,6 @@
-import {
-  AccessorProp,
-  type BranchScope,
-  PendingRenderProp,
-  type Scope,
-} from "../common/types";
-import { renderCatch } from "./control-flow";
-import { enableBranches } from "./resume";
-import type { Signal, SignalFn } from "./signals";
+import { AccessorProp, PendingRenderProp, type Scope } from "../common/types";
+import { _resume, enableBranches } from "./resume";
+import type { Signal } from "./signals";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 export type PendingRender = {
@@ -25,6 +19,33 @@ export let rendering: undefined | 0 | 1;
 export let updating: undefined | 0 | 1;
 export function setUpdating(value: 0 | 1) {
   updating = value;
+}
+
+/**
+ * True while an update-render patch is being applied. Persisted builds
+ * guard state-free request-derived compute invocations with it: their
+ * values are the patch's payload (computing them client-side is at best
+ * redundant and at worst impossible -- the computation may live behind a
+ * `server import`), so during an apply the signal graph skips the compute
+ * and the merge delivers the server-computed value instead. Client-state
+ * (and state-mixing) computations are unaffected. Lives here (not with the
+ * applier in `dom/update`) because main persisted modules import it --
+ * hydration bundles must not drag the applier graph eagerly.
+ */
+export function _updating() {
+  return !!updating;
+}
+
+/**
+ * Persisted builds' `_script`: identical to `_script`, except setup skips
+ * queueing while an update patch applies — fresh-branch wiring comes from
+ * the payload's effect entries instead (running both would double-bind).
+ */
+export function _script_update(id: string, fn: (scope: Scope) => void) {
+  _resume(id, fn);
+  return (scope: Scope) => {
+    if (!updating) queueEffect(scope, fn);
+  };
 }
 export let runId = 2; // resumed scopes get `1`
 export const caughtError = new WeakSet<unknown[]>();
@@ -189,67 +210,23 @@ export function skipDestroyedRenders() {
   })(runRender);
 }
 
+export type RunRender = (render: PendingRender) => void;
+export type RunEffects = typeof runEffects;
+
 let catchEnabled: undefined | 1;
-export function _enable_catch() {
+/**
+ * Installed by `_enable_catch` (in `./control-flow` -- the wrappers need
+ * `renderCatch`, and the queue must never import branch machinery: a module
+ * is hosted in one chunk and the queue is eager in every bundle).
+ */
+export function enableCatchPending(
+  wrapRunEffects: (original: RunEffects) => RunEffects,
+  wrapRunRender: (original: RunRender) => RunRender,
+) {
   if (!catchEnabled) {
     catchEnabled = 1;
     enableBranches();
-    const handlePendingTry = (
-      fn: ExecFn,
-      scope: Scope,
-      branch: BranchScope | undefined,
-    ) => {
-      // walk up the branches to see if any have an AwaitCounter with count (i) > 0
-      // if not, return false
-      // if so, return true and push the fn to the pending async queue on the try branch
-      while (branch) {
-        if (branch[AccessorProp.AwaitCounter]?.i) {
-          return (branch[AccessorProp.PendingEffects] ||= []).push(fn, scope);
-        }
-        branch = branch[AccessorProp.ParentBranch];
-      }
-    };
-    runEffects = (
-      (runEffects) =>
-      (effects: unknown[], checkPending = placeholderShown.has(effects)) => {
-        if (checkPending || caughtError.has(effects)) {
-          let i = 0;
-          let fn: SignalFn;
-          let scope: Scope;
-          let branch: BranchScope | undefined;
-          for (; i < effects.length; ) {
-            fn = effects[i++] as SignalFn;
-            scope = effects[i++] as Scope;
-            if (
-              (branch = scope[AccessorProp.ClosestBranch])?.[
-                AccessorProp.Gen
-              ] !== 0 &&
-              !(checkPending && handlePendingTry(fn, scope, branch))
-            ) {
-              fn(scope);
-            }
-          }
-        } else {
-          runEffects(effects);
-        }
-      }
-    )(runEffects);
-    runRender = ((runRender) => (render: PendingRender) => {
-      try {
-        let branch =
-          render[PendingRenderProp.Scope][AccessorProp.ClosestBranch];
-        while (branch) {
-          if (branch[AccessorProp.PendingRenders]) {
-            render[PendingRenderProp.Pending] = 1;
-            return branch[AccessorProp.PendingRenders].push(render);
-          }
-          branch = branch![AccessorProp.ParentBranch];
-        }
-        render[PendingRenderProp.Pending] = 0;
-        runRender(render);
-      } catch (error) {
-        renderCatch(render[PendingRenderProp.Scope], error);
-      }
-    })(runRender);
+    runEffects = wrapRunEffects(runEffects);
+    runRender = wrapRunRender(runRender);
   }
 }

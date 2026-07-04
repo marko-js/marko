@@ -5,15 +5,20 @@ import { getExprRoot } from "../util/get-root";
 import { isOutputHTML, isPersisted } from "../util/marko-config";
 import { setReferencesScope, trackGlobalReference } from "../util/references";
 import { importRuntime } from "../util/runtime";
-import { getOrCreateSection, getSection, type Section } from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
+import { createSectionState } from "../util/state";
 import type { TemplateVisitor } from "../util/visitors";
 import { scopeIdentifier } from "./program";
 
-const abortIdsByExpressionForSection = new WeakMap<
-  Section,
+// Per-translate state (`createSectionState` keys off the current program):
+// the compiler cache shares one analyzed file (and its sections) across
+// every output/entry compile, and each translate pass works on a fresh AST
+// clone -- a module-level section-keyed map would leak allocations across
+// compiles and drift the ids.
+const [getAbortIdsByExpression] = createSectionState<
   Map<t.NodePath<t.Node>, number>
->();
+>("abortIdsByExpression", () => new Map());
 
 export default {
   migrate(identifier) {
@@ -90,16 +95,8 @@ export default {
         } else {
           const section = getSection(identifier);
           const exprRoot = getExprRoot(identifier);
-          let abortIdsByExpression =
-            abortIdsByExpressionForSection.get(section);
-          let exprId: number | undefined;
-
-          if (abortIdsByExpression) {
-            exprId = abortIdsByExpression.get(exprRoot);
-          } else {
-            abortIdsByExpression = new Map();
-            abortIdsByExpressionForSection.set(section, abortIdsByExpression);
-          }
+          const abortIdsByExpression = getAbortIdsByExpression(section);
+          let exprId = abortIdsByExpression.get(exprRoot);
 
           if (exprId === undefined) {
             exprId = abortIdsByExpression.size;

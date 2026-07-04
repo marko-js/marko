@@ -16,6 +16,7 @@
     "directory": "packages/runtime-tags"
   },
   "license": "MIT",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./index.d.ts"
