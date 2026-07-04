@@ -2,22 +2,22 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 662,
-        "brotli": 367
+        "min": 661,
+        "brotli": 376
       },
       "files": {
-        "tags/layout.marko": 334,
-        "template.marko": 1548
+        "tags/layout.marko": 341,
+        "template.marko": 1555
       }
     },
     "update.js": {
       "total": {
-        "min": 1541,
-        "brotli": 663
+        "min": 838,
+        "brotli": 347
       },
       "files": {
-        "tags/layout.marko.update.mjs": 406,
-        "template.marko.update.mjs": 1394
+        "tags/layout.marko.update.mjs": 434,
+        "template.marko.update.mjs": 1422
       }
     }
   },

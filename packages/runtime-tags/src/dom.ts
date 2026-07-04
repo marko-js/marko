@@ -109,11 +109,14 @@ export {
 } from "./dom/signals";
 export { _template } from "./dom/template";
 export {
+  _script_update,
   _update_content,
   _update_dynamic,
   _update_for,
   _update_html,
+  _update_pair,
   _update_signal,
+  _updating,
   applyUpdate,
   createUpdate,
 } from "./dom/update";

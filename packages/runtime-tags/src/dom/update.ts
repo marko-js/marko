@@ -20,7 +20,7 @@
 import { type Accessor, AccessorProp, type Scope } from "../common/types";
 import { _for_of } from "./control-flow";
 import { _html } from "./dom";
-import { run } from "./queue";
+import { queueEffect, run, runEffects, runId } from "./queue";
 import {
   _resume,
   getRegisteredWithScope,
@@ -29,9 +29,14 @@ import {
 } from "./resume";
 
 type UpdateSignal = (scope: Scope, value: unknown) => void;
-type UpdateFill = (
-  ctx: (data: number | (Scope | number)[], registryId?: string) => unknown,
-) => unknown;
+type UpdateFill =
+  | ((
+      ctx: (data: number | (Scope | number)[], registryId?: string) => unknown,
+    ) => unknown)
+  // Effect entries ("registryId scopeId …", patch-local scope ids): executed
+  // only against scopes freshly created during the apply — a matched live
+  // scope's effects already ran at mount.
+  | string;
 
 /**
  * Applies an update-render payload to a live (resumed) render.
@@ -105,17 +110,92 @@ export function createUpdate(
     { _: registeredValues },
   );
 
+  const pairs = new Map<Scope, Scope>();
+
   return (fills: UpdateFill | UpdateFill[]) => {
+    const effectEntries: string[] = [];
     for (const fill of Array.isArray(fills) ? fills : [fills]) {
-      const scopes = fill(serializeContext);
-      if (Array.isArray(scopes)) applyScopes(scopes);
+      if (typeof fill === "string") {
+        effectEntries.push(fill);
+      } else {
+        const scopes = fill(serializeContext);
+        if (Array.isArray(scopes)) applyScopes(scopes);
+      }
     }
 
-    merge(getScope(1), liveRoot!);
-    // Merges queue renders (intersections, closure fan-out, branch setups);
-    // flush synchronously so each frame settles as one batch.
-    run();
+    updating = true;
+    activePairs = pairs;
+    try {
+      merge(getScope(1), liveRoot!);
+
+      // Fresh-subtree effects: merges paired patch scopes to live scopes
+      // (`_update_pair`); an entry runs iff its scope's live pair was
+      // created during this apply (`Gen === runId` — resumed/pre-existing
+      // scopes are older). Matched scopes never replay.
+      if (effectEntries.length) {
+        const effects: unknown[] = [];
+        for (const entry of effectEntries) {
+          let fn: unknown;
+          for (const token of entry.split(" ")) {
+            if (/\D/.test(token)) {
+              fn = registeredValues[token];
+            } else {
+              const live = pairs.get(patchScopes[+token]);
+              if (fn && live && live[AccessorProp.Gen] === runId) {
+                effects.push(fn, live);
+              }
+            }
+          }
+        }
+        runEffects(effects);
+      }
+
+      // Merges queue renders (intersections, closure fan-out, branch
+      // setups); flush synchronously so each frame settles as one batch.
+      run();
+    } finally {
+      updating = false;
+      activePairs = undefined;
+    }
   };
+}
+
+let activePairs: Map<Scope, Scope> | undefined;
+
+/**
+ * Emitted at the top of compiled merge functions for sections with effects:
+ * records the patch → live scope pairing so payload effect entries (which
+ * carry patch-local scope ids) can resolve their live scope.
+ */
+export function _update_pair(patch: Scope, live: Scope) {
+  activePairs?.set(patch, live);
+}
+
+/**
+ * Persisted builds' `_script`: identical to `_script`, except setup skips
+ * queueing while an update patch applies — fresh-branch wiring comes from
+ * the payload's effect entries instead (running both would double-bind).
+ */
+export function _script_update(id: string, fn: (scope: Scope) => void) {
+  _resume(id, fn);
+  return (scope: Scope) => {
+    if (!updating) queueEffect(scope, fn);
+  };
+}
+
+let updating = false;
+
+/**
+ * True while an update-render patch is being applied. Persisted builds
+ * guard state-free request-derived compute invocations with it: their
+ * values are the patch's payload (computing them client-side is at best
+ * redundant and at worst impossible -- the computation may live behind a
+ * `server import`), so during an apply the signal graph skips the compute
+ * and the merge delivers the server-computed value instead. Client-state
+ * (and state-mixing) computations are unaffected.
+ */
+export function _updating() {
+  return updating;
 }
 
 // Content-section merges register under the section's content id plus this

@@ -25,6 +25,7 @@ const $try_content__update = (patch, live) => {
 	}
 };
 const $update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_title" in patch) live["input_title"] = patch["input_title"];
@@ -74,7 +75,7 @@ const $try_content__setup = ($scope) => {
 };
 const $count = /* @__PURE__ */ _let("count/10", ($scope) => _text($scope["#text/2"], $scope.count));
 const $try = /* @__PURE__ */ _try("#text/3", "<!><!><!>", "b%c", $try_content__setup);
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
+const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
 function $setup($scope) {

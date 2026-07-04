@@ -343,16 +343,24 @@ function testFixtures(interop?: true) {
                     }
                     // Update responses are a newline-delimited stream of
                     // serializer frames: each line is a bare JS array of
-                    // fills (and effect strings, which the applier ignores
-                    // for matched scopes). Frames apply one at a time (the
-                    // streaming model -- async boundary bodies arrive in
-                    // later frames, in resolution order).
-                    const frames: ((ctx: unknown) => unknown)[][] = [];
+                    // fills plus effect entries (strings; the applier runs
+                    // them only for scopes it freshly created). Frames
+                    // apply one at a time (the streaming model -- async
+                    // boundary bodies arrive in later frames, in
+                    // resolution order).
+                    const frames: (((ctx: unknown) => unknown) | string)[][] =
+                      [];
                     for (const line of html.split("\n")) {
                       if (line) {
-                        const fills: ((ctx: unknown) => unknown)[] = [];
+                        const fills: (((ctx: unknown) => unknown) | string)[] =
+                          [];
                         for (const item of new Function(`return (${line})`)()) {
-                          if (typeof item === "function") fills.push(item);
+                          if (
+                            typeof item === "function" ||
+                            typeof item === "string"
+                          ) {
+                            fills.push(item);
+                          }
                         }
                         if (fills.length) frames.push(fills);
                       }

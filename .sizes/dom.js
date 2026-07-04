@@ -1,4 +1,4 @@
-// size: 26732 (min) 9805 (brotli)
+// size: 27087 (min) 9912 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -302,7 +302,9 @@ let empty = [],
       (renderer._ = renderer),
       _resume(id, renderer)
     );
-  };
+  },
+  activePairs,
+  updating = !1;
 function attrTag(attrs) {
   return (
     (attrs[Symbol.iterator] = attrTagIterator),
@@ -2671,14 +2673,69 @@ function createUpdate(merge, liveRoot = getUpdateRoot()) {
             : getScope(data)
           : applyScopes(data),
       { _: registeredValues },
-    );
+    ),
+    pairs = /* @__PURE__ */ new Map();
   return (fills) => {
-    for (let fill of Array.isArray(fills) ? fills : [fills]) {
-      let scopes = fill(serializeContext);
-      Array.isArray(scopes) && applyScopes(scopes);
+    let effectEntries = [];
+    for (let fill of Array.isArray(fills) ? fills : [fills])
+      if (typeof fill == "string") effectEntries.push(fill);
+      else {
+        let scopes = fill(serializeContext);
+        Array.isArray(scopes) && applyScopes(scopes);
+      }
+    ((updating = !0), (activePairs = pairs));
+    try {
+      if ((merge(getScope(1), liveRoot), effectEntries.length)) {
+        let effects = [];
+        for (let entry of effectEntries) {
+          let fn;
+          for (let token of entry.split(" "))
+            if (/\D/.test(token)) fn = registeredValues[token];
+            else {
+              let live = pairs.get(patchScopes[+token]);
+              fn && live && live.H === runId && effects.push(fn, live);
+            }
+        }
+        runEffects(effects);
+      }
+      run();
+    } finally {
+      ((updating = !1), (activePairs = void 0));
     }
-    (merge(getScope(1), liveRoot), run());
   };
+}
+/**
+ * Emitted at the top of compiled merge functions for sections with effects:
+ * records the patch → live scope pairing so payload effect entries (which
+ * carry patch-local scope ids) can resolve their live scope.
+ */
+function _update_pair(patch, live) {
+  activePairs?.set(patch, live);
+}
+/**
+ * Persisted builds' `_script`: identical to `_script`, except setup skips
+ * queueing while an update patch applies — fresh-branch wiring comes from
+ * the payload's effect entries instead (running both would double-bind).
+ */
+function _script_update(id, fn) {
+  return (
+    _resume(id, fn),
+    (scope) => {
+      updating || queueEffect(scope, fn);
+    }
+  );
+}
+/**
+ * True while an update-render patch is being applied. Persisted builds
+ * guard state-free request-derived compute invocations with it: their
+ * values are the patch's payload (computing them client-side is at best
+ * redundant and at worst impossible -- the computation may live behind a
+ * `server import`), so during an apply the signal graph skips the compute
+ * and the merge delivers the server-computed value instead. Client-state
+ * (and state-mixing) computations are unaffected.
+ */
+function _updating() {
+  return updating;
 }
 function _update_content(contentId, merge) {
   _resume(contentId + "!", merge);

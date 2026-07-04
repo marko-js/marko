@@ -1,6 +1,7 @@
 // tags/layout/layout.marko.update.mjs
 const $dynamic_update = _update_signal("__tests__/tags/layout/layout.marko_0/update_dynamic_#text/2");
 const $update$1 = (patch, live) => {
+	_update_pair(patch, live);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_content" in patch) live["input_content"] = patch["input_content"];
@@ -10,6 +11,7 @@ var layout_marko_update_default = _resume("__tests__/tags/layout/layout.marko_0_
 
 // template.marko.update.mjs
 const $layout_content__update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
 };
 const $update = (patch, live) => {
@@ -26,7 +28,7 @@ const $template$1 = "<header><button> </button></header><main><!></main>";
 const $walks$1 = "D D mD%l";
 const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/2");
 const $open = /* @__PURE__ */ _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "Close" : "Menu"));
-const $setup__script = _script("__tests__/tags/layout/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+const $setup__script = _script_update("__tests__/tags/layout/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
@@ -42,7 +44,7 @@ var layout_default = /* @__PURE__ */ _template("__tests__/tags/layout/layout.mar
 const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)($walks$1);
 const $layout_content__input_title = /* @__PURE__ */ _closure_get("input_title", ($scope) => _text($scope["#text/0"], $scope._.input_title));
-const $layout_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
+const $layout_content__setup__script = _script_update("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope._, $scope._.count + 1);
 }));
 const $layout_content__setup = ($scope) => {

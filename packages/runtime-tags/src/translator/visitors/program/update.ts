@@ -14,7 +14,7 @@ import {
   getSectionParentIsOwner,
   type Section,
 } from "../../util/sections";
-import { getResumeRegisterId } from "../../util/signals";
+import { getResumeRegisterId, getSignals } from "../../util/signals";
 import {
   forEachUpdateValueBinding,
   getUpdateMerges,
@@ -152,6 +152,25 @@ function buildMergeStatements(
   file: t.BabelFile,
 ) {
   const statements: t.Statement[] = [];
+
+  // Sections with effects pair their patch scope to the live scope so
+  // payload effect entries (patch-local scope ids) can resolve their live
+  // scope -- executed only for scopes freshly created during the apply.
+  let hasEffects = false;
+  for (const signal of getSignals(section).values()) {
+    if (signal.effect.length) {
+      hasEffects = true;
+      break;
+    }
+  }
+  if (hasEffects) {
+    statements.push(
+      t.expressionStatement(
+        callRuntime("_update_pair", patchIdentifier, liveIdentifier),
+      ),
+    );
+  }
+
   const patchGet = (key: string | t.StringLiteral | t.NumericLiteral) =>
     t.memberExpression(patchIdentifier, toKeyLiteral(key), true);
   const liveGet = (key: string | t.StringLiteral | t.NumericLiteral) =>

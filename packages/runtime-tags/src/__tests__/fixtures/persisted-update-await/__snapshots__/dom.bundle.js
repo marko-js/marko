@@ -14,7 +14,7 @@ const $for_content_content = _resume("a0", [
 const $await_content__for = /* @__PURE__ */ _for_of(0, $for_content_content[0], $for_content_content[1], $for_content_content[2], $for_content__$params);
 const $placeholder_content = _content_resume("a2", "loading related…", "b");
 const $count = /* @__PURE__ */ _let(10, ($scope) => _text($scope.c, $scope.k));
-const $setup__script = _script("a4", ($scope) => _on($scope.b, "click", function() {
+const $setup__script = _script_update("a4", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, $scope.k + 1);
 }));
 
@@ -45,6 +45,7 @@ const $try_content__update = (patch, live) => {
 	}
 };
 const $update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("f" in patch) live["f"] = patch["f"];
 	if ("g" in patch) live["g"] = patch["g"];
 	if ("h" in patch) live["h"] = patch["h"];

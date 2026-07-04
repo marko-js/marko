@@ -24,7 +24,7 @@ const $expanded = /* @__PURE__ */ _let(15, ($scope) => {
 	_text($scope.d, $scope.p ? "Hide" : "Show");
 	$input_product_featured__OR__expanded($scope);
 });
-const $setup__script = _script("a4", ($scope) => _on($scope.c, "click", function() {
+const $setup__script = _script_update("a4", ($scope) => _on($scope.c, "click", function() {
 	$expanded($scope, !$scope.p);
 }));
 const $input_product_featured = _var_resume("a2", /* @__PURE__ */ _const(11, $input_product_featured__OR__expanded));
@@ -62,6 +62,7 @@ const $if_content__update = (patch, live) => {
 	if ("a" in patch) _text(live["a"], patch["a"]);
 };
 const $update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("g" in patch) live["g"] = patch["g"];
 	if ("h" in patch) live["h"] = patch["h"];
 	if ("i" in patch) live["i"] = patch["i"];

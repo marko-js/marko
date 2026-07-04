@@ -1,13 +1,13 @@
 // tags/layout/layout.marko
 const $open = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "Close" : "Menu"));
-const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
 const $dynamicTag = _var_resume("b1", /* @__PURE__ */ _dynamic_tag(2));
 
 // template.marko
 const $layout_content__input_title = /* @__PURE__ */ _closure_get(3, ($scope) => _text($scope.a, $scope._.d));
-const $layout_content__setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
+const $layout_content__setup__script = _script_update("a2", ($scope) => _on($scope.b, "click", function() {
 	$count($scope._, $scope._.e + 1);
 }));
 const $layout_content__setup = ($scope) => {
@@ -22,6 +22,7 @@ const $count = /* @__PURE__ */ _let(4, /* @__PURE__ */ _closure($layout_content_
 // tags/layout/layout.marko.update.mjs
 const $dynamic_update = _update_signal("b1");
 const $update$1 = (patch, live) => {
+	_update_pair(patch, live);
 	if ("d" in patch) live["d"] = patch["d"];
 	if ("e" in patch) live["e"] = patch["e"];
 	if ("f" in patch) live["f"] = patch["f"];
@@ -31,6 +32,7 @@ var layout_marko_update_default = _resume("b2", $update$1);
 
 // template.marko.update.mjs
 const $layout_content__update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("a" in patch) _text(live["a"], patch["a"]);
 };
 const $update = (patch, live) => {

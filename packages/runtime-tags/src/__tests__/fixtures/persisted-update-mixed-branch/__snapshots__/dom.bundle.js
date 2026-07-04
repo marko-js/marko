@@ -1,6 +1,6 @@
 // template.marko
 const $else_content__input_title = /* @__PURE__ */ _if_closure(0, 1, ($scope) => _text($scope.a, $scope._.e));
-const $else_content__setup__script = _script("a2", ($scope) => _on($scope.b, "click", function() {
+const $else_content__setup__script = _script_update("a2", ($scope) => _on($scope.b, "click", function() {
 	$count($scope._, $scope._.f + 1);
 }));
 const $else_content__setup = ($scope) => {
@@ -15,6 +15,7 @@ const $if = _var_resume("a0", /* @__PURE__ */ _if(0, "<h2>Something went wrong</
 // template.marko.update.mjs
 const $if_update = _update_signal("a0");
 const $else_content__update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("a" in patch) _text(live["a"], patch["a"]);
 };
 const $update = (patch, live) => {

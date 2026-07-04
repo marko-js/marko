@@ -1,7 +1,7 @@
 // template.marko
 const $input_label__OR__highlight = /* @__PURE__ */ _or(9, ($scope) => _attr_class($scope.b, $scope.i && $scope.g));
 const $highlight = /* @__PURE__ */ _let(8, $input_label__OR__highlight);
-const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script_update("a2", ($scope) => _on($scope.a, "click", function() {
 	$highlight($scope, !$scope.i);
 }));
 const $input_label = _var_resume("a0", /* @__PURE__ */ _const(6, ($scope) => {
@@ -12,6 +12,7 @@ const $input_label = _var_resume("a0", /* @__PURE__ */ _const(6, ($scope) => {
 // template.marko.update.mjs
 const $input_label_update = _update_signal("a0");
 const $update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("e" in patch) live["e"] = patch["e"];
 	if ("f" in patch) live["f"] = patch["f"];
 	if ("g" in patch) $input_label_update(live, patch["g"]);

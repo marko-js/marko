@@ -1,11 +1,12 @@
 // template.marko
 const $count = /* @__PURE__ */ _let(8, ($scope) => _text($scope.e, $scope.i));
-const $setup__script = _script("a1", ($scope) => _on($scope.d, "click", function() {
+const $setup__script = _script_update("a1", ($scope) => _on($scope.d, "click", function() {
 	$count($scope, $scope.i + 1);
 }));
 
 // template.marko.update.mjs
 const $update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("f" in patch) live["f"] = patch["f"];
 	if ("g" in patch) live["g"] = patch["g"];
 	if ("h" in patch) live["h"] = patch["h"];

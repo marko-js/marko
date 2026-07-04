@@ -1,6 +1,7 @@
 // template.marko.update.mjs
 const $input_label_update = _update_signal("__tests__/template.marko_0_input_label/var");
 const $update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_label" in patch) $input_label_update(live, patch["input_label"]);
@@ -14,7 +15,7 @@ const $template = "<button>toggle</button><div> </div><span><!> items</span>";
 const $walks = " b D lD%l";
 const $input_label__OR__highlight = /* @__PURE__ */ _or(9, ($scope) => _attr_class($scope["#div/1"], $scope.highlight && $scope.input_label));
 const $highlight = /* @__PURE__ */ _let("highlight/8", $input_label__OR__highlight);
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$highlight($scope, !$scope.highlight);
 }));
 function $setup($scope) {

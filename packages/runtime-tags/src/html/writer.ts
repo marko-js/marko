@@ -117,10 +117,15 @@ export function writeWaitReady(
 }
 
 export function _script(scopeId: number, registryId: string) {
-  // Update renders suppress effects: a matched live scope's effects already
-  // ran at mount (replaying would double-bind), and fresh branches run setup
-  // client-side when they are cloned in.
-  if ($chunk.boundary.state.update) return;
+  // Update renders ship effects as data: the applier executes them only for
+  // scopes it freshly created during the apply (a matched live scope's
+  // effects already ran at mount -- replaying would double-bind -- but a
+  // fresh branch's wiring cannot come from setup, which persisted builds
+  // skip request-derived computes in).
+  if ($chunk.boundary.state.update) {
+    $chunk.writeEffect(scopeId, registryId);
+    return;
+  }
   if ($chunk.serializeState.readyId || $chunk.context?.[kIsAsync]) {
     _resume_branch(scopeId);
   }

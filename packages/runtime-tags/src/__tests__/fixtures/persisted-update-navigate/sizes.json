@@ -2,22 +2,22 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 496,
-        "brotli": 313
+        "min": 490,
+        "brotli": 307
       },
       "files": {
         "tags/price.marko": 294,
-        "template.marko": 1617
+        "template.marko": 1624
       }
     },
     "update.js": {
       "total": {
-        "min": 1436,
-        "brotli": 643
+        "min": 920,
+        "brotli": 392
       },
       "files": {
         "tags/price.marko.update.mjs": 400,
-        "template.marko.update.mjs": 1627
+        "template.marko.update.mjs": 1655
       }
     }
   },

@@ -1,6 +1,7 @@
 // tags/layout.marko.update.mjs
 const $dynamic_update = _update_signal("__tests__/tags/layout.marko_0/update_dynamic_#text/2");
 const $update$1 = (patch, live) => {
+	_update_pair(patch, live);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_content" in patch) live["input_content"] = patch["input_content"];
@@ -26,6 +27,7 @@ const $Overview_content__update = (patch, live) => {
 	if ("#text/1" in patch) _text(live["#text/1"], patch["#text/1"]);
 };
 const $update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_title" in patch) live["input_title"] = patch["input_title"];
@@ -46,7 +48,7 @@ const $template$1 = "<aside><button class=toggle> </button></aside><section><!><
 const $walks$1 = "D D mD%l";
 const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/2");
 const $open = /* @__PURE__ */ _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "collapse" : "expand"));
-const $setup__script$1 = _script("__tests__/tags/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+const $setup__script$1 = _script_update("__tests__/tags/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
 function $setup$1($scope) {
@@ -89,14 +91,14 @@ const $count = /* @__PURE__ */ _let("count/10", ($scope) => _text($scope["#text/
 const $input_view__OR__Overview__OR__Specs = /* @__PURE__ */ _or(13, ($scope) => $input_content($scope["#childScope/3"], $scope.input_view === "specs" ? $scope.Specs : $scope.Overview), 2);
 const $Overview = /* @__PURE__ */ _const("Overview", $input_view__OR__Overview__OR__Specs);
 const $Specs = /* @__PURE__ */ _const("Specs", $input_view__OR__Overview__OR__Specs);
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
+const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
 function $setup($scope) {
 	$setup$1($scope["#childScope/3"]);
 	$count($scope, 0);
-	$Overview($scope, { content: $Overview_content($scope) });
-	$Specs($scope, { content: $Specs_content($scope) });
+	if (!_updating()) $Overview($scope, { content: $Overview_content($scope) });
+	if (!_updating()) $Specs($scope, { content: $Specs_content($scope) });
 	$setup__script($scope);
 }
 const $input_title__closure = /* @__PURE__ */ _closure($Overview_content__input_title);

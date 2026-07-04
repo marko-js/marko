@@ -4,6 +4,7 @@ const $if_content__update = (patch, live) => {
 	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
 };
 const $update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("$global" in patch) live["$global"] = patch["$global"];
 	if ("$global_title" in patch) live["$global_title"] = patch["$global_title"];
 	if ("$global_params" in patch) live["$global_params"] = patch["$global_params"];
@@ -26,7 +27,7 @@ const $count = /* @__PURE__ */ _let("count/5", ($scope) => {
 	$count__OR__$global_params_tag($scope);
 });
 const $if = /* @__PURE__ */ _if("#section/4", "<em>Sale <!>% off</em>", "Db%l", $if_content__setup);
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
+const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
 function $setup($scope) {

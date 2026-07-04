@@ -1,6 +1,6 @@
 // tags/layout.marko
 const $open = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
-const $setup__script$1 = _script("b0", ($scope) => _on($scope.a, "click", function() {
+const $setup__script$1 = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
 const $dynamicTag = _var_resume("b1", /* @__PURE__ */ _dynamic_tag(2));
@@ -30,13 +30,14 @@ const $Overview_content__setup = ($scope) => {
 const $Overview_content__input_summary = /* @__PURE__ */ _closure_get(7, ($scope) => _text($scope.b, $scope._.h));
 const $Overview_content = _content_resume("a3", "<p>Overview of <!>: <!></p>", "Db%c%l", $Overview_content__setup);
 const $count = /* @__PURE__ */ _let(10, ($scope) => _text($scope.c, $scope.k));
-const $setup__script = _script("a4", ($scope) => _on($scope.b, "click", function() {
+const $setup__script = _script_update("a4", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, $scope.k + 1);
 }));
 
 // tags/layout.marko.update.mjs
 const $dynamic_update = _update_signal("b1");
 const $update$1 = (patch, live) => {
+	_update_pair(patch, live);
 	if ("d" in patch) live["d"] = patch["d"];
 	if ("e" in patch) live["e"] = patch["e"];
 	if ("f" in patch) live["f"] = patch["f"];
@@ -62,6 +63,7 @@ const $Overview_content__update = (patch, live) => {
 	if ("b" in patch) _text(live["b"], patch["b"]);
 };
 const $update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("e" in patch) live["e"] = patch["e"];
 	if ("f" in patch) live["f"] = patch["f"];
 	if ("g" in patch) live["g"] = patch["g"];

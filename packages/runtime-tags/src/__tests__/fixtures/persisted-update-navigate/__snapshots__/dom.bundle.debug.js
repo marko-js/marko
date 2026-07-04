@@ -24,6 +24,7 @@ const $if_content__update = (patch, live) => {
 	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
 };
 const $update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_product" in patch) live["input_product"] = patch["input_product"];
@@ -74,7 +75,7 @@ const $expanded = /* @__PURE__ */ _let("expanded/15", ($scope) => {
 	_text($scope["#text/3"], $scope.expanded ? "Hide" : "Show");
 	$input_product_featured__OR__expanded($scope);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
+const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$expanded($scope, !$scope.expanded);
 }));
 function $setup($scope) {

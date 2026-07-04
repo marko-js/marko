@@ -1,6 +1,7 @@
 // template.marko.update.mjs
 const $if_update = _update_signal("__tests__/template.marko_0/update_if_#text/0");
 const $else_content__update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
 };
 const $update = (patch, live) => {
@@ -20,7 +21,7 @@ var template_marko_update_default = _resume("__tests__/template.marko_0_update",
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $else_content__input_title = /* @__PURE__ */ _if_closure("#text/0", 1, ($scope) => _text($scope["#text/0"], $scope._.input_title));
-const $else_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
+const $else_content__setup__script = _script_update("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope._, $scope._.count + 1);
 }));
 const $else_content__setup = ($scope) => {

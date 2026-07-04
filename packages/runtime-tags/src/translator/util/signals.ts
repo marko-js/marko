@@ -418,6 +418,24 @@ export function initValue(binding: Binding, isLet = false) {
   return signal;
 }
 
+/**
+ * True when this value signal's binding is patched by persisted updates
+ * (state-free input/param/derived -- the values the server serializes as
+ * the update payload), so its compute invocation is skippable while a
+ * patch applies.
+ */
+function isUpdatePatchedValueSignal(signal: Signal) {
+  const binding = signal.referencedBindings;
+  return (
+    binding &&
+    !Array.isArray(binding) &&
+    (binding.type === BindingType.input ||
+      binding.type === BindingType.param ||
+      binding.type === BindingType.derived) &&
+    !binding.sources?.state
+  );
+}
+
 export function signalHasStatements(signal: Signal): boolean {
   if (
     signal.extraArgs ||
@@ -610,14 +628,27 @@ export function getSignalFn(signal: Signal): t.Expression {
       continue;
     }
     if (signalHasStatements(value.signal)) {
+      const invocation = t.expressionStatement(
+        t.callExpression(value.signal.identifier, [
+          scopeIdentifier,
+          value.value,
+          ...getTranslatedExtraArgs(value.signal),
+        ]),
+      );
       signal.render.push(
-        t.expressionStatement(
-          t.callExpression(value.signal.identifier, [
-            scopeIdentifier,
-            value.value,
-            ...getTranslatedExtraArgs(value.signal),
-          ]),
-        ),
+        // Persisted builds skip state-free request-derived compute
+        // invocations while an update patch applies: their values are the
+        // patch's payload (delivered by the merge; same predicate as
+        // `forEachUpdateValueBinding` in update-merges), and the compute
+        // may live behind a `server import` -- fresh branches created
+        // during an apply must not evaluate it. Client-state and
+        // state-mixing computations (excluded here) keep firing.
+        isPersisted() && isUpdatePatchedValueSignal(value.signal)
+          ? t.ifStatement(
+              t.unaryExpression("!", callRuntime("_updating")),
+              invocation,
+            )
+          : invocation,
       );
     } else {
       signal.render.push(
@@ -1003,7 +1034,10 @@ export function writeSignals(section: Section) {
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
         callRuntime(
-          "_script",
+          // Persisted builds skip setup-time effect queueing during update
+          // applies -- fresh-branch wiring comes from payload effect
+          // entries instead (running both would double-bind).
+          isPersisted() ? "_script_update" : "_script",
           t.stringLiteral(
             getResumeRegisterId(section, signal.referencedBindings),
           ),
