@@ -311,6 +311,33 @@ Template-valued dynamic tags (`<${cond ? A : B}/>` with whole templates)
 swap only if the template is registered — content-section values (define,
 pass-through content) are covered; dom `_template` registration is not.
 
+**Implemented** (`feat: fresh-branch payload effects + request-derived
+compute skipping`): the first half of the wire-delivery direction agreed
+after the cross-route slice. Persisted builds guard state-free
+request-derived compute invocations with the runtime `_updating()` flag
+(values are the patch's payload; the guard set mirrors
+`forEachUpdateValueBinding`, so state-mixing computations keep firing),
+and fresh-subtree wiring ships as data: update renders emit effect
+entries (G5 lifted — the same `"registryId scopeId"` strings resume
+uses), compiled merges pair patch scopes to live scopes (`_update_pair`,
+emitted only for sections with effects), and the applier executes entries
+only for scopes created during the apply (`Gen === runId`) — matched
+scopes never replay, the no-double-bind rule enforced client-side.
+Persisted builds compile script effects through `_script_update` (skips
+setup-time queueing during applies) so payload entries are the single
+wiring source for fresh subtrees. Await/try promise computes hang off dom
+bindings and are deliberately outside the guard set: a fresh branch
+containing an await over a server-only expression throws into the
+full-navigation fallback instead of settling into a permanently-pending
+placeholder. Effect entries cost ~4.5% update-payload gzip on the
+hole-dense search page (697 B raw), item +144 B. Fixture:
+`persisted-update-server-derived`. Remaining for the wire-delivery
+direction, in order: fresh-await/try construction from registered branch
+content (unblocks server-first pages with awaits as swap targets),
+fragment `templates` frames + client content store + `x-marko-from`
+route-pair inclusion (unblocks all server-only pages without loading
+their modules), CSS/asset frames, `x-marko-have` T2 pruning.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by
