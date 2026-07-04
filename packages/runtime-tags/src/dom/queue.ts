@@ -19,6 +19,13 @@ export type PendingRender = {
 };
 
 export let rendering: undefined | 0 | 1;
+// True while a persisted update patch applies (set by `dom/update`; read
+// there and by `_let`, whose fresh-scope initializer defers to seeded
+// values).
+export let updating: undefined | 0 | 1;
+export function setUpdating(value: 0 | 1) {
+  updating = value;
+}
 export let runId = 2; // resumed scopes get `1`
 export const caughtError = new WeakSet<unknown[]>();
 export const placeholderShown = new WeakSet<unknown[]>();

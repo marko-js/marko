@@ -16,6 +16,7 @@ import {
 } from "../../util/sections";
 import { getResumeRegisterId, getSignals } from "../../util/signals";
 import {
+  forEachUpdateSeedBinding,
   forEachUpdateValueBinding,
   getUpdateMerges,
   getUpdateVarRegisterId,
@@ -184,6 +185,44 @@ function buildMergeStatements(
       whenPresent,
     );
 
+  // State seeds (cross-route/seed-mode payloads) run FIRST: a fresh
+  // subtree's `<let>` initializers may live behind server-only
+  // expressions, so the seed must land before setup flushes (`_let`
+  // defers to it while updating). Applied through the binding's
+  // registered signal so downstream derivations recompute, and gated by
+  // `_update_seed` to scopes created during this apply -- matched scopes'
+  // live state never changes. Sparse like everything else: the key is
+  // absent from non-seed payloads entirely.
+  forEachUpdateSeedBinding(section, (binding) => {
+    if (binding.pruned) return;
+    const accessor = getScopeAccessorLiteral(binding);
+    const signalIdentifier = generateUidIdentifier(`${binding.name}_seed`);
+    hoistedDeclarations.push(
+      t.variableDeclaration("const", [
+        t.variableDeclarator(
+          signalIdentifier,
+          callRuntime(
+            "_update_signal",
+            t.stringLiteral(getUpdateVarRegisterId(section, binding)),
+          ),
+        ),
+      ]),
+    );
+    statements.push(
+      ifPresent(
+        accessor,
+        t.expressionStatement(
+          callRuntime(
+            "_update_seed",
+            liveIdentifier,
+            signalIdentifier,
+            patchGet(accessor),
+          ),
+        ),
+      ),
+    );
+  });
+
   forEachUpdateValueBinding(section, (binding, needsSignal) => {
     if (binding.pruned) return;
     const accessor = getScopeAccessorLiteral(binding);
@@ -344,13 +383,7 @@ function buildMerge(
         bodyStatements.push(
           t.variableDeclaration("const", [
             t.variableDeclarator(patchBranch, patchGet(branchScopesKey)),
-            // Fresh branches (this replay just created one) flush their
-            // queued setup before the body merge fills -- see
-            // `_update_flush_fresh`.
-            t.variableDeclarator(
-              liveBranch,
-              callRuntime("_update_flush_fresh", liveGet(branchScopesKey)),
-            ),
+            t.variableDeclarator(liveBranch, liveGet(branchScopesKey)),
             t.variableDeclarator(
               branchMerge,
               branchMerges.length === 1

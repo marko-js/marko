@@ -20,14 +20,14 @@ var template_default = _template("a", (input) => {
 	const $input_specs__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	_html(`<h1>${_escape(_hole_value($scope0_id, "a", input.title, _persisted_reason()))}${_el_resume($scope0_id, "a", $sg__input_title)}</h1><button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "b")}`);
-	const Overview = { content: _content_resume("a3", () => {
+	const Overview = { content: _content_resume("a4", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<p>Overview of ${_sep($sg__input_title)}${_escape(_hole_value($scope1_id, "a", input.title, _persisted_reason()))}${_el_resume($scope1_id, "a", $sg__input_title)}: ${_sep($sg__input_summary)}${_escape(_hole_value($scope1_id, "b", input.summary, _persisted_reason()))}${_el_resume($scope1_id, "b", $sg__input_summary)}</p>`);
 		_serialize_guard($scope0_reason, 1) && _subscribe($sg__input_summary && $input_summary__closures, _subscribe($sg__input_title && $input_title__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) })));
 		_resume_branch($scope1_id);
 	}, $scope0_id) };
-	const Specs = { content: _content_resume("a2", () => {
+	const Specs = { content: _content_resume("a3", () => {
 		const $scope2_id = _scope_id();
 		_scope_reason();
 		_html("<ul>");
@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason($sg__input_view);
 	layout_default({ content: input.view === "specs" ? Specs : Overview });
-	_script($scope0_id, "a4");
+	_script($scope0_id, "a5");
 	writeScope($scope0_id, {
 		g: ($si__input_view || _update_reason()) && input.title,
 		h: ($si__input_view || _update_reason()) && input.summary,

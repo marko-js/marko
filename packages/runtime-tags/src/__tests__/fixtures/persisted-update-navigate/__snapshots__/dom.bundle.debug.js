@@ -9,6 +9,7 @@ const $update$1 = (patch, live) => {
 var price_marko_update_default = _resume("__tests__/tags/price.marko_0_update", $update$1);
 
 // template.marko.update.mjs
+const $expanded_seed = _update_signal("__tests__/template.marko_0_expanded/var");
 const $input_product_featured_update = _update_signal("__tests__/template.marko_0_input_product_featured/var");
 const $if_update = _update_signal("__tests__/template.marko_0/update_if_#section/4");
 const $for_update = _update_for("#ul/5", "__tests__/template.marko_2_content/update", (branch, args) => $for_content__update(args[0], branch));
@@ -25,6 +26,7 @@ const $if_content__update = (patch, live) => {
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
+	if ("expanded" in patch) _update_seed(live, $expanded_seed, patch["expanded"]);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_product" in patch) live["input_product"] = patch["input_product"];
@@ -38,7 +40,7 @@ const $update = (patch, live) => {
 	if ("UpdateAttr:href:#a/1" in patch) _attr(live["#a/1"], "href", patch["UpdateAttr:href:#a/1"]);
 	if ("ConditionalRenderer:#section/4" in patch) {
 		$if_update(live, patch["ConditionalRenderer:#section/4"]);
-		const $patchBranch = patch["BranchScopes:#section/4"], $liveBranch = _update_flush_fresh(live["BranchScopes:#section/4"]), $branchMerge = $if_content__update;
+		const $patchBranch = patch["BranchScopes:#section/4"], $liveBranch = live["BranchScopes:#section/4"], $branchMerge = $if_content__update;
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 	if ("BranchScopes:#ul/5" in patch) $for_update(live, [patch["BranchScopes:#ul/5"], "#LoopKey"]);
@@ -73,10 +75,10 @@ const $if_content__setup = ($scope) => {
 	if (!_updating()) $if_content__input_product_sale_percent._($scope);
 };
 const $input_product_featured__OR__expanded = /* @__PURE__ */ _or(16, ($scope) => _attr_class($scope["#section/4"], $scope.expanded && $scope.input_product_featured && "spotlight"));
-const $expanded = /* @__PURE__ */ _let("expanded/15", ($scope) => {
+const $expanded = _var_resume("__tests__/template.marko_0_expanded/var", /* @__PURE__ */ _let("expanded/15", ($scope) => {
 	_text($scope["#text/3"], $scope.expanded ? "Hide" : "Show");
 	$input_product_featured__OR__expanded($scope);
-});
+}));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$expanded($scope, !$scope.expanded);
 }));

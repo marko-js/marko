@@ -1,10 +1,12 @@
 // template.marko.update.mjs
+const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $global_params_tag_update = _update_signal("__tests__/template.marko_0_$global_params_tag/var");
 const $if_content__update = (patch, live) => {
 	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
+	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	if ("$global" in patch) live["$global"] = patch["$global"];
 	if ("$global_title" in patch) live["$global_title"] = patch["$global_title"];
 	if ("$global_params" in patch) live["$global_params"] = patch["$global_params"];
@@ -24,10 +26,10 @@ const $if_content__setup = ($scope) => {
 	if (!_updating()) $if_content__$global_params_sale._($scope);
 };
 const $count__OR__$global_params_tag = /* @__PURE__ */ _or(11, ($scope) => _attr_class($scope["#section/4"], $scope.count && $scope.$global.params.tag && "hot"), 0);
-const $count = /* @__PURE__ */ _let("count/5", ($scope) => {
+const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _let("count/5", ($scope) => {
 	_text($scope["#text/3"], $scope.count);
 	$count__OR__$global_params_tag($scope);
-});
+}));
 const $if = /* @__PURE__ */ _if("#section/4", "<em>Sale <!>% off</em>", "Db%l", $if_content__setup);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, $scope.count + 1);

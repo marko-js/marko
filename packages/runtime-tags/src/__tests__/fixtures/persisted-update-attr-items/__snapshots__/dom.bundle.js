@@ -17,8 +17,8 @@ const $for_content_content = _resume("b0", [
 const $for = /* @__PURE__ */ _for_of(0, $for_content_content[0], $for_content_content[1], $for_content_content[2], $for_content__$params);
 
 // template.marko
-const $count = /* @__PURE__ */ _let(3, ($scope) => _text($scope.b, $scope.d));
-const $setup__script = _script_update("a1", ($scope) => _on($scope.a, "click", function() {
+const $count = _var_resume("a0", /* @__PURE__ */ _let(3, ($scope) => _text($scope.b, $scope.d)));
+const $setup__script = _script_update("a2", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
 
@@ -42,8 +42,10 @@ const $update$1 = (patch, live) => {
 var chip_list_marko_update_default = _resume("b1", $update$1);
 
 // template.marko.update.mjs
+const $count_seed = _update_signal("a0");
 const $update = (patch, live) => {
 	_update_pair(patch, live);
+	if ("d" in patch) _update_seed(live, $count_seed, patch["d"]);
 	if ("c" in patch) chip_list_marko_update_default(patch["c"], live["c"]);
 };
-var template_marko_update_default = _resume("a0", $update);
+var template_marko_update_default = _resume("a1", $update);

@@ -30,7 +30,7 @@ const $await_content__reviews = ($scope, reviews) => $await_content__for($scope,
 	return review.id;
 }]);
 const $await_content__$params = ($scope, $params2) => $await_content__reviews($scope, $params2[0]);
-const $placeholder_content = _content_resume("a3", "loading reviews…", "b");
+const $placeholder_content = _content_resume("a4", "loading reviews…", "b");
 const $await_content = /* @__PURE__ */ _await_content(0, "<ul></ul>", " b");
 const $try_content__await_promise = /* @__PURE__ */ _await_promise(0, $await_content__$params);
 const $try_content__input_productId = /* @__PURE__ */ _closure_get(5, ($scope) => {
@@ -46,14 +46,15 @@ const $if_content__setup = ($scope) => {
 	if (!_updating()) $if_content__input_productId._($scope);
 	$if_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 };
-const $count = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g));
-const $setup__script = _script_update("a5", ($scope) => _on($scope.a, "click", function() {
+const $count = _var_resume("a2", /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g)));
+const $setup__script = _script_update("a6", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.g + 1);
 }));
 const $if = _var_resume("a1", /* @__PURE__ */ _if(2, "<h2>Product <!></h2><!><!>", "Db%l%c", $if_content__setup, "<p>pick a product</p>", "b"));
 
 // template.marko.update.mjs
 const $for_update = _update_for(0, "a0", (branch, args) => $for_content__update(args[0], branch));
+const $count_seed = _update_signal("a2");
 const $if_update = _update_signal("a1");
 const $for_content__update = (patch, live) => {
 	if ("c" in patch) live["c"] = patch["c"];
@@ -77,13 +78,14 @@ const $if_content__update = (patch, live) => {
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
+	if ("g" in patch) _update_seed(live, $count_seed, patch["g"]);
 	if ("d" in patch) live["d"] = patch["d"];
 	if ("e" in patch) live["e"] = patch["e"];
 	if ("f" in patch) live["f"] = patch["f"];
 	if ("Dc" in patch) {
 		$if_update(live, patch["Dc"]);
-		const $patchBranch = patch["Ac"], $liveBranch = _update_flush_fresh(live["Ac"]), $branchMerge = [$if_content__update, 0][patch["Dc"]];
+		const $patchBranch = patch["Ac"], $liveBranch = live["Ac"], $branchMerge = [$if_content__update, 0][patch["Dc"]];
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 };
-var template_marko_update_default = _resume("a2", $update);
+var template_marko_update_default = _resume("a3", $update);

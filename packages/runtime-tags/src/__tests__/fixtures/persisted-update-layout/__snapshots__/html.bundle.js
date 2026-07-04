@@ -19,11 +19,11 @@ var template_default = _template("a", (input) => {
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	const $childScope = _peek_scope_id();
-	layout_default({ content: _content("a1", () => {
+	layout_default({ content: _content("a2", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<h1>${_escape(_hole_value($scope1_id, "a", input.title, _persisted_reason()))}${_el_resume($scope1_id, "a", $sg__input_title)}</h1><button class=inc>${_escape(count)}${_el_resume($scope1_id, "c")}</button>${_el_resume($scope1_id, "b")}`);
-		_script($scope1_id, "a2");
+		_script($scope1_id, "a3");
 		_subscribe($count__closures, _subscribe($sg__input_title && $input_title__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) })));
 		_resume_branch($scope1_id);
 	}) });

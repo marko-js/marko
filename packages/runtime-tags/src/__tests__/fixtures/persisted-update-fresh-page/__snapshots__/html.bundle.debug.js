@@ -22,6 +22,11 @@ function getRecommendations(id) {
 		title: `Product ${id + 2}`
 	}], 1);
 }
+const getProducts = typeof window === "undefined" ? (ids) => ids.map((id) => ({
+	id,
+	title: `Product ${id}`,
+	price: id * 100 + .5
+})) : undefined;
 
 // tags/shared-list.marko
 const subsByKey = {};
@@ -89,77 +94,114 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const Cart = { content: _content_resume("__tests__/template.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_html("<p class=cart>cart is empty</p>");
+		const $childScope = _peek_scope_id();
+		let list = shared_list_default({ name: "cart" });
+		_var($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_list/var");
+		let products = getProducts?.(list) || [];
+		const entries = list.map((id) => ({
+			product: products.find((p) => p.id === id),
+			id
+		}));
+		_if(() => {
+			if (!entries.length) {
+				const $scope3_id = _scope_id();
+				_html("<p class=cart>cart is empty</p>");
+				writeScope($scope3_id, {}, "__tests__/template.marko", "10:4");
+				return 0;
+			} else {
+				const $scope2_id = _scope_id();
+				_html("<ul class=cart>");
+				_for_of(entries, (entry) => {
+					const $scope4_id = _scope_id();
+					_html(`<li>${_escape(entry.product.title)}${_el_resume($scope4_id, "#text/0")} $<!>${_escape(entry.product.price)}${_el_resume($scope4_id, "#text/1")}</li>`);
+					writeScope($scope4_id, {}, "__tests__/template.marko", "15:8");
+				}, function(entry) {
+					return entry.id;
+				}, $scope2_id, "#ul/0", 1, 1, 1, "</ul>", 1);
+				_html(`<p class=total>total $<!>${_escape(entries.reduce((sum, e) => sum + e.product.price, 0))}${_el_resume($scope2_id, "#text/1")}</p>`);
+				writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "13:4");
+				return 1;
+			}
+		}, $scope1_id, "#text/2");
+		writeScope($scope1_id, {
+			products: _state_reason() && products,
+			entries: _state_reason() && entries,
+			"#childScope/0": _existing_scope($childScope)
+		}, "__tests__/template.marko", "6:2", {
+			products: "8:8",
+			entries: "9:10"
+		});
+		_resume_branch($scope1_id);
 	}, $scope0_id) };
-	const Item = { content: _content_resume("__tests__/template.marko_2_content", () => {
-		const $scope2_id = _scope_id();
+	const Item = { content: _content_resume("__tests__/template.marko_5_content", () => {
+		const $scope5_id = _scope_id();
 		const $Item_content__product_id__closures = new Set();
-		const $scope2_reason = _scope_reason();
+		const $scope5_reason = _scope_reason();
 		const product = $global().productId && getProduct($global().productId);
 		_if(() => {
 			if (!product) {
-				const $scope5_id = _scope_id();
+				const $scope8_id = _scope_id();
 				_html("<h2>not found</h2>");
-				_persisted_reason() && writeScope($scope5_id, {}, "__tests__/template.marko", "11:4");
+				_persisted_reason() && writeScope($scope8_id, {}, "__tests__/template.marko", "24:4");
 				return 0;
 			} else {
-				const $scope3_id = _scope_id();
-				_html(`<img${_attr("src", _hole_value($scope3_id, "UpdateAttr:src:#img/0", product.image, _persisted_reason()))}${_attr("alt", _hole_value($scope3_id, "UpdateAttr:alt:#img/0", product.title, _persisted_reason()))} class=thumb>${_el_resume($scope3_id, "#img/0", _persisted_reason())}<h2 class=title>${_escape(_hole_value($scope3_id, "#text/1", product.title, _persisted_reason()))}${_el_resume($scope3_id, "#text/1", _persisted_reason())}</h2><div class=price>$${_sep(_persisted_reason())}${_escape(_hole_value($scope3_id, "#text/2", product.price.toFixed(2), _persisted_reason()))}${_el_resume($scope3_id, "#text/2", _persisted_reason())}</div>`);
-				const $childScope = _peek_scope_id();
+				const $scope6_id = _scope_id();
+				_html(`<img${_attr("src", _hole_value($scope6_id, "UpdateAttr:src:#img/0", product.image, _persisted_reason()))}${_attr("alt", _hole_value($scope6_id, "UpdateAttr:alt:#img/0", product.title, _persisted_reason()))} class=thumb>${_el_resume($scope6_id, "#img/0", _persisted_reason())}<h2 class=title>${_escape(_hole_value($scope6_id, "#text/1", product.title, _persisted_reason()))}${_el_resume($scope6_id, "#text/1", _persisted_reason())}</h2><div class=price>$${_sep(_persisted_reason())}${_escape(_hole_value($scope6_id, "#text/2", product.price.toFixed(2), _persisted_reason()))}${_el_resume($scope6_id, "#text/2", _persisted_reason())}</div>`);
+				const $childScope2 = _peek_scope_id();
 				_set_serialize_reason(_persisted_reason());
 				actions_default({ id: product.id });
-				_try($scope3_id, "#text/4", _content_resume("__tests__/template.marko_4_content", () => {
-					const $scope4_id = _scope_id();
-					const $scope4_reason = _scope_reason();
-					_await($scope4_id, "#text/0", getRecommendations(product.id), (recs) => {
-						const $scope7_id = _scope_id();
+				_try($scope6_id, "#text/4", _content_resume("__tests__/template.marko_7_content", () => {
+					const $scope7_id = _scope_id();
+					const $scope7_reason = _scope_reason();
+					_await($scope7_id, "#text/0", getRecommendations(product.id), (recs) => {
+						const $scope10_id = _scope_id();
 						_html("<ul class=recs>");
 						_for_of(recs, (rec) => {
-							const $scope8_id = _scope_id();
-							_html(`<li>${_escape(_hole_value($scope8_id, "#text/0", rec.title, _persisted_reason()))}${_el_resume($scope8_id, "#text/0", _persisted_reason())}</li>`);
-							_persisted_reason() && writeScope($scope8_id, {}, "__tests__/template.marko", "23:12");
+							const $scope11_id = _scope_id();
+							_html(`<li>${_escape(_hole_value($scope11_id, "#text/0", rec.title, _persisted_reason()))}${_el_resume($scope11_id, "#text/0", _persisted_reason())}</li>`);
+							_persisted_reason() && writeScope($scope11_id, {}, "__tests__/template.marko", "36:12");
 						}, function(rec) {
 							return rec.id;
-						}, $scope7_id, "#ul/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
-						_persisted_reason() && writeScope($scope7_id, {}, "__tests__/template.marko", "21:8");
+						}, $scope10_id, "#ul/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</ul>", 1);
+						_persisted_reason() && writeScope($scope10_id, {}, "__tests__/template.marko", "34:8");
 					}, _persisted_reason());
-					_persisted_reason() && _subscribe($Item_content__product_id__closures, writeScope($scope4_id, { _: _scope_with_id($scope3_id) }, "__tests__/template.marko", "19:6"));
-					_resume_branch($scope4_id);
-				}, $scope3_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_6_content", () => {
+					_persisted_reason() && _subscribe($Item_content__product_id__closures, writeScope($scope7_id, { _: _scope_with_id($scope6_id) }, "__tests__/template.marko", "32:6"));
+					_resume_branch($scope7_id);
+				}, $scope6_id), { placeholder: attrTag({ content: _content_resume("__tests__/template.marko_9_content", () => {
 					_scope_reason();
-					const $scope6_id = _scope_id();
+					const $scope9_id = _scope_id();
 					_html("loading recommendations…");
-				}, $scope3_id) }) });
-				_persisted_reason() && writeScope($scope3_id, {
-					_: _scope_with_id($scope2_id),
-					"#childScope/3": _existing_scope($childScope)
-				}, "__tests__/template.marko", "14:4");
+				}, $scope6_id) }) });
+				_persisted_reason() && writeScope($scope6_id, {
+					_: _scope_with_id($scope5_id),
+					"#childScope/3": _existing_scope($childScope2)
+				}, "__tests__/template.marko", "27:4");
 				return 1;
 			}
-		}, $scope2_id, "#text/0", _persisted_reason(), _persisted_reason(), _persisted_reason());
-		_persisted_reason() && _subscribe($global_productId__closures, writeScope($scope2_id, {
+		}, $scope5_id, "#text/0", _persisted_reason(), _persisted_reason(), _persisted_reason());
+		_persisted_reason() && _subscribe($global_productId__closures, writeScope($scope5_id, {
 			_: _scope_with_id($scope0_id),
 			"ClosureScopes:product_id": $Item_content__product_id__closures
-		}, "__tests__/template.marko", "9:2", {
-			product_image: ["product.image", "10:10"],
-			product_title: ["product.title", "10:10"],
-			product_price: ["product.price", "10:10"],
-			product_id: ["product.id", "10:10"]
+		}, "__tests__/template.marko", "22:2", {
+			product_image: ["product.image", "23:10"],
+			product_title: ["product.title", "23:10"],
+			product_price: ["product.price", "23:10"],
+			product_id: ["product.id", "23:10"]
 		}));
-		_resume_branch($scope2_id);
+		_resume_branch($scope5_id);
 	}, $scope0_id) };
-	const $childScope2 = _peek_scope_id();
+	const $childScope3 = _peek_scope_id();
 	_set_serialize_reason(_persisted_reason());
 	layout_default({ content: $global().view === "item" ? Item : Cart });
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count: _state_reason() && count,
 		"ClosureScopes:$global_productId": _persisted_reason() && $global_productId__closures,
-		"#childScope/2": _persisted_reason() && _existing_scope($childScope2)
+		"#childScope/2": _persisted_reason() && _existing_scope($childScope3)
 	}, "__tests__/template.marko", 0, {
 		count: "3:6",
 		Cart: "6:9",
-		Item: "9:9"
+		Item: "22:9"
 	});
 	_resume_branch($scope0_id);
 }, 1);

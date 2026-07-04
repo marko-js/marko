@@ -25,3 +25,15 @@ export function getRecommendations(id) {
     1,
   );
 }
+
+// Mirrors run's `server import` client transform: the identifier exists in
+// both environments but the implementation is server-only.
+export const getProducts =
+  typeof window === "undefined"
+    ? (ids) =>
+        ids.map((id) => ({
+          id,
+          title: `Product ${id}`,
+          price: id * 100 + 0.5,
+        }))
+    : undefined;

@@ -1,6 +1,8 @@
 // template.marko.update.mjs
+const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $update = (patch, live) => {
 	_update_pair(patch, live);
+	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_title" in patch) live["input_title"] = patch["input_title"];
@@ -18,7 +20,7 @@ const nextStamp = () => ++n;
 // template.marko
 const $template = "<h1> </h1><div id=stamp>stamp:<!></div><span id=label> </span><button> </button>";
 const $walks = "D lDb%lD l D l";
-const $count = /* @__PURE__ */ _let("count/8", ($scope) => _text($scope["#text/4"], $scope.count));
+const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _let("count/8", ($scope) => _text($scope["#text/4"], $scope.count)));
 const $label = ($scope, label) => _text($scope["#text/2"], label);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
 	$count($scope, $scope.count + 1);

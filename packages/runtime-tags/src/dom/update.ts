@@ -26,7 +26,14 @@ import {
 } from "../common/types";
 import { _for_of, attachAwaitBranch } from "./control-flow";
 import { _html } from "./dom";
-import { queueEffect, run, runEffects, runId } from "./queue";
+import {
+  queueEffect,
+  run,
+  runEffects,
+  runId,
+  setUpdating,
+  updating,
+} from "./queue";
 import {
   _resume,
   getRegisteredWithScope,
@@ -129,7 +136,7 @@ export function createUpdate(
       }
     }
 
-    updating = true;
+    setUpdating(1);
     activePairs = pairs;
     // Boundary merges may flush mid-apply (`_update_branch`'s retry for
     // same-frame fresh creations), advancing `runId` -- "created during
@@ -165,7 +172,7 @@ export function createUpdate(
       // setups); flush synchronously so each frame settles as one batch.
       run();
     } finally {
-      updating = false;
+      setUpdating(0);
       activePairs = undefined;
     }
   };
@@ -194,7 +201,6 @@ export function _script_update(id: string, fn: (scope: Scope) => void) {
   };
 }
 
-let updating = false;
 let applyGen = 0;
 
 /**
@@ -207,23 +213,7 @@ let applyGen = 0;
  * (and state-mixing) computations are unaffected.
  */
 export function _updating() {
-  return updating;
-}
-
-/**
- * Called by branch dispatches before running a body merge into a branch
- * created during this apply: flushes the queue so the fresh subtree's
- * setup runs *before* the merge fills. Merged values suppress equal-value
- * signal invocations (`_const` and friends memoize), so a fill applied
- * first would silently skip setup-time renders -- and with them client
- * wiring the patch cannot deliver (`<let>` seeding, tag-var returns).
- * Matched (pre-existing) branches keep fills-first semantics untouched.
- */
-export function _update_flush_fresh<T extends Scope | undefined>(
-  liveBranch: T,
-): T {
-  if (liveBranch && liveBranch[AccessorProp.Gen] >= applyGen) run();
-  return liveBranch;
+  return !!updating;
 }
 
 // Content-section merges register under the section's content id plus this
@@ -261,7 +251,7 @@ export function _update_branch(
   if (liveBranch[AccessorProp.DetachedAwait]) {
     attachAwaitBranch(live, accessor as string, liveBranch);
   }
-  if (bodyMerge) bodyMerge(patchBranch, _update_flush_fresh(liveBranch));
+  if (bodyMerge) bodyMerge(patchBranch, liveBranch);
 }
 
 export function _update_content(contentId: string, merge: UpdateMerge) {
@@ -305,7 +295,7 @@ export function _update_dynamic(
   const merge = getRegisteredWithScope(rendererId + UPDATE_MERGE_SUFFIX) as
     | UpdateMerge
     | undefined;
-  const liveBranch = _update_flush_fresh(live[branchKey] as Scope | undefined);
+  const liveBranch = live[branchKey] as Scope | undefined;
   if (merge && patchBranch && liveBranch) {
     merge(patchBranch, liveBranch);
   }
@@ -321,6 +311,21 @@ export function _update_html(
 ) {
   _html(live, patch[accessor], accessor as Accessor);
   delete patch[accessor];
+}
+
+/**
+ * Applies a seed-mode state value: only into scopes created during this
+ * apply (fresh subtrees cannot compute state whose initializers live
+ * behind server-only expressions -- the seed IS the initial value), through
+ * the binding's registered signal so downstream derivations recompute.
+ * Matched (pre-existing) scopes keep their live state untouched.
+ */
+export function _update_seed(
+  live: Scope,
+  signal: UpdateSignal,
+  value: unknown,
+) {
+  if (live[AccessorProp.Gen] >= applyGen) signal(live, value);
 }
 
 export function _update_signal(id: string): UpdateSignal {

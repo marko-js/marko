@@ -1,4 +1,4 @@
-// size: 27313 (min) 9986 (brotli)
+// size: 27348 (min) 10005 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -194,6 +194,7 @@ let empty = [],
       forUntil(until, from, step, (v) => cb(by(v), [v])),
   ),
   rendering,
+  updating,
   runId = 2,
   caughtError = /* @__PURE__ */ new WeakSet(),
   placeholderShown = /* @__PURE__ */ new WeakSet(),
@@ -304,7 +305,6 @@ let empty = [],
     );
   },
   activePairs,
-  updating = !1,
   applyGen = 0;
 function attrTag(attrs) {
   return (
@@ -501,7 +501,9 @@ function _let(id, fn) {
   let valueAccessor = decodeAccessor(id);
   return (scope, value) => (
     rendering
-      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
+      ? scope.H === runId &&
+        ((updating && valueAccessor in scope) || (scope[valueAccessor] = value),
+        fn?.(scope))
       : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
         ((scope[valueAccessor] = value), fn) &&
         (schedule(), queueRender(scope, fn, id)),
@@ -528,7 +530,9 @@ function _const(valueAccessor, fn) {
   return (
     (valueAccessor = decodeAccessor(valueAccessor)),
     (scope, value) => {
-      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+      (scope[valueAccessor] !== value ||
+        !(valueAccessor in scope) ||
+        (updating && rendering && scope.H === runId)) &&
         ((scope[valueAccessor] = value), fn?.(scope));
     }
   );
@@ -2275,6 +2279,9 @@ function bySecondArg(_item, index) {
 function byFirstArg(name) {
   return name;
 }
+function setUpdating(value) {
+  updating = value;
+}
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
@@ -2696,7 +2703,7 @@ function createUpdate(merge, liveRoot = getUpdateRoot()) {
         let scopes = fill(serializeContext);
         Array.isArray(scopes) && applyScopes(scopes);
       }
-    ((updating = !0), (activePairs = pairs), (applyGen = runId));
+    (setUpdating(1), (activePairs = pairs), (applyGen = runId));
     try {
       if ((merge(getScope(1), liveRoot), effectEntries.length)) {
         let effects = [];
@@ -2713,7 +2720,7 @@ function createUpdate(merge, liveRoot = getUpdateRoot()) {
       }
       run();
     } finally {
-      ((updating = !1), (activePairs = void 0));
+      (setUpdating(0), (activePairs = void 0));
     }
   };
 }
@@ -2748,19 +2755,7 @@ function _script_update(id, fn) {
  * (and state-mixing) computations are unaffected.
  */
 function _updating() {
-  return updating;
-}
-/**
- * Called by branch dispatches before running a body merge into a branch
- * created during this apply: flushes the queue so the fresh subtree's
- * setup runs *before* the merge fills. Merged values suppress equal-value
- * signal invocations (`_const` and friends memoize), so a fill applied
- * first would silently skip setup-time renders -- and with them client
- * wiring the patch cannot deliver (`<let>` seeding, tag-var returns).
- * Matched (pre-existing) branches keep fills-first semantics untouched.
- */
-function _update_flush_fresh(liveBranch) {
-  return (liveBranch && liveBranch.H >= applyGen && run(), liveBranch);
+  return !!updating;
 }
 /**
  * Single-branch boundary (`<await>`/`<try>` body) dispatch. When the live
@@ -2776,7 +2771,7 @@ function _update_branch(patch, live, accessor, bodyMerge) {
   let liveBranch = live[branchKey];
   (!liveBranch && (run(), (liveBranch = live[branchKey]), !liveBranch)) ||
     (liveBranch.V && attachAwaitBranch(live, accessor, liveBranch),
-    bodyMerge && bodyMerge(patchBranch, _update_flush_fresh(liveBranch)));
+    bodyMerge && bodyMerge(patchBranch, liveBranch));
 }
 function _update_content(contentId, merge) {
   _resume(contentId + "!", merge);
@@ -2794,11 +2789,21 @@ function _update_dynamic(patch, live, rendererKey, branchKey, replay) {
     replay(live, renderer);
   }
   let merge = getRegisteredWithScope(rendererId + "!"),
-    liveBranch = _update_flush_fresh(live[branchKey]);
+    liveBranch = live[branchKey];
   merge && patchBranch && liveBranch && merge(patchBranch, liveBranch);
 }
 function _update_html(live, patch, accessor) {
   (_html(live, patch[accessor], accessor), delete patch[accessor]);
+}
+/**
+ * Applies a seed-mode state value: only into scopes created during this
+ * apply (fresh subtrees cannot compute state whose initializers live
+ * behind server-only expressions -- the seed IS the initial value), through
+ * the binding's registered signal so downstream derivations recompute.
+ * Matched (pre-existing) scopes keep their live state untouched.
+ */
+function _update_seed(live, signal, value) {
+  live.H >= applyGen && signal(live, value);
 }
 function _update_signal(id) {
   return (scope, value) => getRegisteredWithScope(id, scope)(value);

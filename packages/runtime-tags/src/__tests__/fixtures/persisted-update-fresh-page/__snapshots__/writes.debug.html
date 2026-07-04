@@ -2,8 +2,8 @@
     0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->
 <aside><button
     class=toggle>expand<!--M_*2 #text/1--></button><!--M_*2 #button/0--></aside>
-<section><!--M_[-->
-  <p class=cart>cart is empty</p><!--M_]2 #text/2 3-->
+<section><!--M_[--><!--M_[-->
+  <p class=cart>cart is empty</p><!--M_]3 #text/2 6--><!--M_]2 #text/2 3-->
 </section>
 <script>
   WALKER_RUNTIME("M")("_");
@@ -18,8 +18,22 @@
     }, {
       "ConditionalRenderer:#text/2": "packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/template.marko_1_content",
       open: !1
+    }, {
+      "#scopeOffset/1": 5,
+      products: [],
+      entries: [],
+      "#childScope/0": _(4)
+    }, {
+      "#TagVariable": _(3,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/template.marko_1_list/var"
+        ),
+      input_name: "cart",
+      "#TagVariableChange": _(4,
+        "packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/tags/shared-list.marko_0/valueChange"
+        ),
+      "#ClosestBranchId": 3
     }],
-    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/tags/layout.marko_0 2 packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/template.marko_0 1"
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/tags/shared-list.marko_0_input_name_$global_data 4 packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/tags/layout.marko_0 2 packages/runtime-tags/src/__tests__/fixtures/persisted-update-fresh-page/template.marko_0 1"
   ];
   M._.w()
 </script>

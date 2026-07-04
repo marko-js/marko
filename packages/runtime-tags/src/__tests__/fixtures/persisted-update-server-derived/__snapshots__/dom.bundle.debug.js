@@ -1,4 +1,5 @@
 // template.marko.update.mjs
+const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $if_update = _update_signal("__tests__/template.marko_0/update_if_#text/2");
 const $if_content__update = (patch, live) => {
 	_update_pair(patch, live);
@@ -10,12 +11,13 @@ const $if_content__update = (patch, live) => {
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
+	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_detailId" in patch) live["input_detailId"] = patch["input_detailId"];
 	if ("ConditionalRenderer:#text/2" in patch) {
 		$if_update(live, patch["ConditionalRenderer:#text/2"]);
-		const $patchBranch = patch["BranchScopes:#text/2"], $liveBranch = _update_flush_fresh(live["BranchScopes:#text/2"]), $branchMerge = [$if_content__update, 0][patch["ConditionalRenderer:#text/2"]];
+		const $patchBranch = patch["BranchScopes:#text/2"], $liveBranch = live["BranchScopes:#text/2"], $branchMerge = [$if_content__update, 0][patch["ConditionalRenderer:#text/2"]];
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 };
@@ -53,7 +55,7 @@ const $if_content__details_price = /* @__PURE__ */ _const("details_price", ($sco
 	_text($scope["#text/1"], $scope.details_price);
 	$if_content__details_price__script($scope);
 });
-const $count = /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count)));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

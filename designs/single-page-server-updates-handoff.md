@@ -451,6 +451,38 @@ walk). Fixed in `dom/resume.ts`: branch visits are now always retained
 rewalks all current renders exactly as `ready()` does, so late-loading
 branch modules reprocess them. The fixture runs all legs green.
 
+**Implemented** (`feat: state seeding for fresh subtrees` + the run
+branch's `x-marko-from`): **both cross-route directions are true updates
+now** — the last fallback shape (pages deriving content from client-state
+computes over server-only data, the ecommerce cart) is gone. Update
+fetches send `x-marko-from` (the client's current route pattern); the
+generated router stamps cross-route renders with `$global.persistedSeed`,
+which makes `_state_reason()` live in that update render — state values
+serialize with no translator change (v1 serializes state everywhere in
+seed renders; matched-scope waste is bounded, measured +44 B on the cart
+payload, +211 B on item). Persisted dom builds register `let` signals
+(`_var_resume`), update entries emit `_update_seed` calls through them
+(downstream derivations recompute), and the runtime gates seeds to scopes
+created during the apply (`Gen >= applyGen`) — the hostile-patch
+protection moved from serialization omission to the client-side gate, so
+matched scopes' live state never changes. Two ordering rules replaced the
+mid-merge flush (`_update_flush_fresh`, now deleted): it ran the whole
+queue, so a wrapper-level flush executed a page's setup before the page's
+own (child-dispatched) seeds — depth-fragile. Instead ordering is
+insensitive: `_let` initializers defer to a landed seed while updating,
+and `_const` re-renders equal values on fresh-during-apply scopes (the
+equality-suppression problem the flush originally fixed), so fills and
+seeds land at any depth before the final flush runs setup once. Fixture:
+`persisted-update-fresh-page`'s Cart now mirrors the app (let from a
+server-only optional call, derived entries, if/else, keyed rows, total
+reduce) and swaps in correctly with seeded state. Validated on the
+ecommerce production build: item→cart applies as an update with correct
+rows/total (cross-route probe 8/8, browser 11/11, forms 9/9); same-route
+payloads stay byte-identical. Remaining wire-delivery sequence: fragment
+`templates` frames + client content store (pages whose modules aren't
+loaded), CSS/asset frames, `x-marko-have` T2 pruning; then POST/PRG
+forms ride the seeding.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by

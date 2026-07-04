@@ -318,7 +318,13 @@ export function _update_reason() {
 }
 
 export function _state_reason() {
-  return $chunk.boundary.state.update ? undefined : 1;
+  const { state } = $chunk.boundary;
+  // Seed-mode update renders (cross-route navigations: the client will
+  // create the target subtree fresh and cannot compute state seeded from
+  // server-only expressions) serialize state values too; the client only
+  // seeds them into scopes created during the apply, so matched scopes'
+  // live state stays hostile-patch-proof.
+  return state.update && !state.seed ? undefined : 1;
 }
 
 export function _serialize_if(condition: SerializeReasonValue, key: number) {
@@ -1132,6 +1138,7 @@ export class State implements SerializeState {
   public readyIds: Set<string> | null = null;
   public serializeReason: SerializeReasonValue;
   public update = false;
+  public seed = false;
   constructor(
     public $global: $Global & { renderId: string; runtimeId: string },
   ) {
@@ -1145,6 +1152,7 @@ export class State implements SerializeState {
       // responses) also set bit 1 so request-derived values serialize -- the
       // values ARE the payload there.
       this.update = $global.persisted === "update";
+      this.seed = this.update && !!$global.persistedSeed;
       // The persisted bit (2) threads through reason vectors for
       // markers/spine; update-ness is render-global and value emission
       // checks it directly per source class (`_update_reason` /

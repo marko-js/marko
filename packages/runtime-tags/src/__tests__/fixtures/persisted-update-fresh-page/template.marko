@@ -1,10 +1,23 @@
-import { getProduct, getRecommendations } from "./data";
+import { getProduct, getProducts, getRecommendations } from "./data";
 
 <let/count=0/>
 <button.count onClick() { count++ }>clicked ${count}</button>
 
 <define/Cart>
-  <p class="cart">cart is empty</p>
+  <shared-list/list name="cart"/>
+  <let/products=getProducts?.(list) || []>
+  <const/entries=list.map((id) => ({ product: products.find((p) => p.id === id), id }))>
+  <if=!entries.length>
+    <p class="cart">cart is empty</p>
+  </if>
+  <else>
+    <ul class="cart">
+      <for|entry| of=entries by(entry) { return entry.id }>
+        <li>${entry.product.title} $${entry.product.price}</li>
+      </for>
+    </ul>
+    <p class="total">total $${entries.reduce((sum, e) => sum + e.product.price, 0)}</p>
+  </else>
 </define>
 <define/Item>
   <const/product=$global.productId && getProduct($global.productId)>

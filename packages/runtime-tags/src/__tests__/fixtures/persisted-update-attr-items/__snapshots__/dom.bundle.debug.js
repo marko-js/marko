@@ -18,8 +18,10 @@ const $update$1 = (patch, live) => {
 var chip_list_marko_update_default = _resume("__tests__/tags/chip-list.marko_0_update", $update$1);
 
 // template.marko.update.mjs
+const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $update = (patch, live) => {
 	_update_pair(patch, live);
+	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	if ("#childScope/2" in patch) chip_list_marko_update_default(patch["#childScope/2"], live["#childScope/2"]);
 };
 var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
@@ -69,7 +71,7 @@ var chip_list_default = /* @__PURE__ */ _template("__tests__/tags/chip-list.mark
 // template.marko
 const $template = /* @__PURE__ */ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);
 const $walks = /* @__PURE__ */ ((_w0) => ` Db%l/${_w0}&`)(" b");
-const $count = /* @__PURE__ */ _let("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _let("count/3", ($scope) => _text($scope["#text/1"], $scope.count)));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

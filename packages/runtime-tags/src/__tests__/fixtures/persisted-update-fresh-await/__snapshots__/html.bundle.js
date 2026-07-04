@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 		if (input.productId) {
 			const $scope1_id = _scope_id();
 			_html(`<h2>Product ${_sep($sg__input_productId)}${_escape(_hole_value($scope1_id, "a", input.productId, _persisted_reason()))}${_el_resume($scope1_id, "a", $sg__input_productId)}</h2>`);
-			_try($scope1_id, "b", _content_resume("a4", () => {
+			_try($scope1_id, "b", _content_resume("a5", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
 				_await($scope2_id, "a", getReviews(input.productId), (reviews) => {
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 				}, $sg__input_productId);
 				$sg__input_productId && _subscribe($input_productId__closures, writeScope($scope2_id, { _: _scope_with_id($scope1_id) }));
 				_resume_branch($scope2_id);
-			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("a3", () => {
+			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("a4", () => {
 				_scope_reason();
 				_scope_id();
 				_html("loading reviews…");
@@ -54,7 +54,7 @@ var template_default = _template("a", (input) => {
 			return 1;
 		}
 	}, $scope0_id, "c", $sg__input_productId, $sg__input_productId, $sg__input_productId);
-	_script($scope0_id, "a5");
+	_script($scope0_id, "a6");
 	writeScope($scope0_id, {
 		f: (_serialize_if($scope0_reason, 0) || _update_reason()) && input.productId,
 		g: _state_reason() && count,

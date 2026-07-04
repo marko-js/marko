@@ -2,32 +2,32 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 3296,
-        "brotli": 1502
+        "min": 4021,
+        "brotli": 1757
       },
       "files": {
-        "data.js": 491,
-        "tags/shared-list.marko": 985,
-        "tags/actions.marko": 1021,
-        "tags/layout.marko": 341,
-        "template.marko": 4114
+        "data.js": 637,
+        "tags/shared-list.marko": 1004,
+        "tags/actions.marko": 1040,
+        "tags/layout.marko": 360,
+        "template.marko": 6192
       }
     },
     "update.js": {
       "total": {
-        "min": 1394,
-        "brotli": 517
+        "min": 1598,
+        "brotli": 564
       },
       "files": {
-        "tags/shared-list.marko.update.mjs": 405,
-        "tags/actions.marko.update.mjs": 479,
-        "tags/layout.marko.update.mjs": 434,
-        "template.marko.update.mjs": 2189
+        "tags/shared-list.marko.update.mjs": 511,
+        "tags/actions.marko.update.mjs": 585,
+        "tags/layout.marko.update.mjs": 538,
+        "template.marko.update.mjs": 2564
       }
     }
   },
   "html": {
-    "min": 582,
-    "brotli": 355
+    "min": 675,
+    "brotli": 406
   }
 }

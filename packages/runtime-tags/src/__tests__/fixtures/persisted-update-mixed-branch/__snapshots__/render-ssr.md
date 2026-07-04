@@ -82,6 +82,6 @@ REMOVE: h2 + button
 ```
 INSERT: h1, button
 REMOVE: button + h2
-UPDATE: button::text " " => "2"
 UPDATE: h1::text " " => "Back"
+UPDATE: button::text " " => "2"
 ```

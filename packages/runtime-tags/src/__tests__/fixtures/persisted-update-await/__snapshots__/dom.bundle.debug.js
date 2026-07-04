@@ -1,5 +1,6 @@
 // template.marko.update.mjs
 const $for_update = _update_for("#ul/0", "__tests__/template.marko_4_content/update", (branch, args) => $for_content__update(args[0], branch));
+const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $await_content2__update = (patch, live) => {
 	if ("$params4" in patch) live["$params4"] = patch["$params4"];
 	if ("note" in patch) live["note"] = patch["note"];
@@ -23,6 +24,7 @@ const $try_content__update = (patch, live) => {
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
+	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_title" in patch) live["input_title"] = patch["input_title"];
@@ -66,7 +68,7 @@ const $try_content__setup = ($scope) => {
 	if (!_updating()) $try_content__input_related($scope);
 	$await_content($scope);
 };
-const $count = /* @__PURE__ */ _let("count/10", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _let("count/10", ($scope) => _text($scope["#text/2"], $scope.count)));
 const $try = /* @__PURE__ */ _try("#text/3", "<!><!><!>", "b%c", $try_content__setup);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, $scope.count + 1);

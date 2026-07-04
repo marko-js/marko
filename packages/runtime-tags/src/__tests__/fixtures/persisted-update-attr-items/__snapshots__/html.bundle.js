@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	const $childScope = _peek_scope_id();
 	chip_list_default({});
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
 		d: _state_reason() && count,
 		c: _persisted_reason() && _existing_scope($childScope)

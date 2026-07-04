@@ -12,14 +12,15 @@ const $for_content_content = _resume("a0", [
 	0
 ]);
 const $await_content__for = /* @__PURE__ */ _for_of(0, $for_content_content[0], $for_content_content[1], $for_content_content[2], $for_content__$params);
-const $placeholder_content = _content_resume("a2", "loading related…", "b");
-const $count = /* @__PURE__ */ _let(10, ($scope) => _text($scope.c, $scope.k));
-const $setup__script = _script_update("a4", ($scope) => _on($scope.b, "click", function() {
+const $placeholder_content = _content_resume("a3", "loading related…", "b");
+const $count = _var_resume("a1", /* @__PURE__ */ _let(10, ($scope) => _text($scope.c, $scope.k)));
+const $setup__script = _script_update("a5", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, $scope.k + 1);
 }));
 
 // template.marko.update.mjs
 const $for_update = _update_for(0, "a0", (branch, args) => $for_content__update(args[0], branch));
+const $count_seed = _update_signal("a1");
 const $await_content2__update = (patch, live) => {
 	if ("b" in patch) live["b"] = patch["b"];
 	if ("c" in patch) live["c"] = patch["c"];
@@ -43,6 +44,7 @@ const $try_content__update = (patch, live) => {
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
+	if ("k" in patch) _update_seed(live, $count_seed, patch["k"]);
 	if ("f" in patch) live["f"] = patch["f"];
 	if ("g" in patch) live["g"] = patch["g"];
 	if ("h" in patch) live["h"] = patch["h"];
@@ -52,4 +54,4 @@ const $update = (patch, live) => {
 	if ("Ad" in patch) _update_branch(patch, live, "d", $try_content__update);
 	if ("Ae" in patch) _update_branch(patch, live, "e", $await_content2__update);
 };
-var template_marko_update_default = _resume("a1", $update);
+var template_marko_update_default = _resume("a2", $update);

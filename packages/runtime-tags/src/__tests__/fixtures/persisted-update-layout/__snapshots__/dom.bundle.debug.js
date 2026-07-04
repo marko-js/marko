@@ -1,7 +1,9 @@
 // tags/layout/layout.marko.update.mjs
+const $open_seed = _update_signal("__tests__/tags/layout/layout.marko_0_open/var");
 const $dynamic_update = _update_signal("__tests__/tags/layout/layout.marko_0/update_dynamic_#text/2");
 const $update$1 = (patch, live) => {
 	_update_pair(patch, live);
+	if ("open" in patch) _update_seed(live, $open_seed, patch["open"]);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_content" in patch) live["input_content"] = patch["input_content"];
@@ -10,11 +12,13 @@ const $update$1 = (patch, live) => {
 var layout_marko_update_default = _resume("__tests__/tags/layout/layout.marko_0_update", $update$1);
 
 // template.marko.update.mjs
+const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $layout_content__update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
 };
 const $update = (patch, live) => {
+	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_title" in patch) live["input_title"] = patch["input_title"];
@@ -27,7 +31,7 @@ var template_marko_update_default = _resume("__tests__/template.marko_0_update",
 const $template$1 = "<header><button> </button></header><main><!></main>";
 const $walks$1 = "D D mD%l";
 const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/2");
-const $open = /* @__PURE__ */ _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "Close" : "Menu"));
+const $open = _var_resume("__tests__/tags/layout/layout.marko_0_open/var", /* @__PURE__ */ _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "Close" : "Menu")));
 const $setup__script = _script_update("__tests__/tags/layout/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
@@ -55,7 +59,7 @@ const $layout_content__setup = ($scope) => {
 const $layout_content__count = /* @__PURE__ */ _closure_get("count", ($scope) => _text($scope["#text/2"], $scope._.count));
 const $layout_content = _content_resume("__tests__/template.marko_1_content", "<h1> </h1><button class=inc> </button>", "D l D l", $layout_content__setup);
 const $count__closure = /* @__PURE__ */ _closure($layout_content__count);
-const $count = /* @__PURE__ */ _let("count/4", $count__closure);
+const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _let("count/4", $count__closure));
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input_content_direct($scope["#childScope/0"], $layout_content($scope));

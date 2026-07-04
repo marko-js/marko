@@ -129,17 +129,38 @@ export function forEachUpdateValueBinding(
 }
 
 /**
+ * State (`let`) bindings the server serializes in seed-mode (cross-route)
+ * update renders: the client will create the target subtree fresh and its
+ * `let` initializers may depend on server-only expressions, so the seed IS
+ * the initial value. Applied through the binding's registered signal so
+ * downstream derivations recompute, and gated client-side to scopes
+ * created during the apply -- matched scopes' live state never changes.
+ */
+export function forEachUpdateSeedBinding(
+  section: Section,
+  cb: (binding: Binding) => void,
+) {
+  forEach(section.bindings, (binding) => {
+    if (binding.type === BindingType.let) {
+      cb(binding);
+    }
+  });
+}
+
+/**
  * In persisted dom builds, flag signals the update entry invokes through the
  * registry (`_var_resume`) so `_update_signal` can find them by id.
  */
 export function registerUpdateValueSignals(section: Section) {
   forEach(section.bindings, (binding) => {
     if (
-      (binding.type === BindingType.input ||
-        binding.type === BindingType.param ||
-        binding.type === BindingType.derived) &&
-      !binding.sources?.state &&
-      bindingNeedsUpdateSignal(binding)
+      binding.type === BindingType.let
+        ? true
+        : (binding.type === BindingType.input ||
+            binding.type === BindingType.param ||
+            binding.type === BindingType.derived) &&
+          !binding.sources?.state &&
+          bindingNeedsUpdateSignal(binding)
     ) {
       const signal = getSignals(section).get(binding);
       if (signal) signal.register = true;

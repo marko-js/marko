@@ -38,11 +38,18 @@ export const config: TestConfig = {
       },
     }),
     clickAdd,
+    // Back to the cart cross-route: the cart content derives its rows from
+    // a client-state compute over server-only data
+    // (`<let/products=getProducts?.(…)>`), so this swap needs the
+    // seed-mode payload -- the fresh subtree's `<let>`s seed from the
+    // patch (the server's view of the cart matches: the add wrote through
+    // to `$global.data`).
     navigate({
       $global: {
         persisted: true,
+        persistedSeed: true,
         view: "cart",
-        data: { cart: [] },
+        data: { cart: [2] },
         serializedGlobals: { data: true },
       },
     }),

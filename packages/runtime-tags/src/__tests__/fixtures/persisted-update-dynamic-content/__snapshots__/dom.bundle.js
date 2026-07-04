@@ -1,5 +1,5 @@
 // tags/layout.marko
-const $open = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
+const $open = _var_resume("b2", /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand")));
 const $setup__script$1 = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
@@ -24,32 +24,35 @@ const $Specs_content__input_specs = /* @__PURE__ */ _closure_get(8, ($scope) => 
 const $Specs_content__setup = ($scope) => {
 	if (!_updating()) $Specs_content__input_specs($scope);
 };
-const $Specs_content = _content_resume("a2", "<ul></ul>", " b", $Specs_content__setup);
+const $Specs_content = _content_resume("a3", "<ul></ul>", " b", $Specs_content__setup);
 const $Overview_content__input_title = /* @__PURE__ */ _closure_get(6, ($scope) => _text($scope.a, $scope._.g));
 const $Overview_content__setup = ($scope) => {
 	if (!_updating()) $Overview_content__input_title($scope);
 	if (!_updating()) $Overview_content__input_summary($scope);
 };
 const $Overview_content__input_summary = /* @__PURE__ */ _closure_get(7, ($scope) => _text($scope.b, $scope._.h));
-const $Overview_content = _content_resume("a3", "<p>Overview of <!>: <!></p>", "Db%c%l", $Overview_content__setup);
-const $count = /* @__PURE__ */ _let(10, ($scope) => _text($scope.c, $scope.k));
-const $setup__script = _script_update("a4", ($scope) => _on($scope.b, "click", function() {
+const $Overview_content = _content_resume("a4", "<p>Overview of <!>: <!></p>", "Db%c%l", $Overview_content__setup);
+const $count = _var_resume("a1", /* @__PURE__ */ _let(10, ($scope) => _text($scope.c, $scope.k)));
+const $setup__script = _script_update("a5", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, $scope.k + 1);
 }));
 
 // tags/layout.marko.update.mjs
+const $open_seed = _update_signal("b2");
 const $dynamic_update = _update_signal("b1");
 const $update$1 = (patch, live) => {
 	_update_pair(patch, live);
+	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);
 	if ("d" in patch) live["d"] = patch["d"];
 	if ("e" in patch) live["e"] = patch["e"];
 	if ("f" in patch) live["f"] = patch["f"];
 	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac", $dynamic_update);
 };
-var layout_marko_update_default = _resume("b2", $update$1);
+var layout_marko_update_default = _resume("b3", $update$1);
 
 // template.marko.update.mjs
 const $for_update = _update_for(0, "a0", (branch, args) => $for_content__update(args[0], branch));
+const $count_seed = _update_signal("a1");
 const $for_content__update = (patch, live) => {
 	if ("c" in patch) live["c"] = patch["c"];
 	if ("d" in patch) live["d"] = patch["d"];
@@ -67,6 +70,7 @@ const $Overview_content__update = (patch, live) => {
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
+	if ("k" in patch) _update_seed(live, $count_seed, patch["k"]);
 	if ("e" in patch) live["e"] = patch["e"];
 	if ("f" in patch) live["f"] = patch["f"];
 	if ("g" in patch) live["g"] = patch["g"];
@@ -78,6 +82,6 @@ const $update = (patch, live) => {
 	if ("a" in patch) _text(live["a"], patch["a"]);
 	if ("d" in patch) layout_marko_update_default(patch["d"], live["d"]);
 };
-_update_content("a2", $Specs_content__update);
-_update_content("a3", $Overview_content__update);
-var template_marko_update_default = _resume("a1", $update);
+_update_content("a3", $Specs_content__update);
+_update_content("a4", $Overview_content__update);
+var template_marko_update_default = _resume("a2", $update);

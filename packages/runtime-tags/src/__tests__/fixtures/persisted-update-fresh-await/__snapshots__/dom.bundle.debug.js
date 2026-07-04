@@ -1,5 +1,6 @@
 // template.marko.update.mjs
 const $for_update = _update_for("#ul/0", "__tests__/template.marko_6_content/update", (branch, args) => $for_content__update(args[0], branch));
+const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $if_update = _update_signal("__tests__/template.marko_0/update_if_#text/2");
 const $for_content__update = (patch, live) => {
 	if ("$params3" in patch) live["$params3"] = patch["$params3"];
@@ -23,12 +24,13 @@ const $if_content__update = (patch, live) => {
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
+	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_productId" in patch) live["input_productId"] = patch["input_productId"];
 	if ("ConditionalRenderer:#text/2" in patch) {
 		$if_update(live, patch["ConditionalRenderer:#text/2"]);
-		const $patchBranch = patch["BranchScopes:#text/2"], $liveBranch = _update_flush_fresh(live["BranchScopes:#text/2"]), $branchMerge = [$if_content__update, 0][patch["ConditionalRenderer:#text/2"]];
+		const $patchBranch = patch["BranchScopes:#text/2"], $liveBranch = live["BranchScopes:#text/2"], $branchMerge = [$if_content__update, 0][patch["ConditionalRenderer:#text/2"]];
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 };
@@ -86,7 +88,7 @@ const $if_content__setup = ($scope) => {
 	if (!_updating()) $if_content__input_productId._($scope);
 	$if_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 };
-const $count = /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count)));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

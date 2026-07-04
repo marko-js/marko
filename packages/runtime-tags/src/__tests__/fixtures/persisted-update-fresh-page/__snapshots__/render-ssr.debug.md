@@ -92,13 +92,13 @@ UPDATE: .count::text@8 "0" => "1"
 ```
 REMOVE: .add + p
 INSERT: section > :is(.thumb, .title, .price, .add)
-UPDATE: .add::text@14 "" => "0"
-UPDATE: .add::text@6 "" => "0"
 UPDATE: .thumb[src] null => "/images/2.svg"
 UPDATE: .thumb[alt] null => "Product 2"
 UPDATE: .title::text " " => "Product 2"
 UPDATE: .price::text@1 "" => "200.50"
 UPDATE: .add::text@11 "" => "2"
+UPDATE: .add::text@14 "" => "0"
+UPDATE: .add::text@6 "" => "0"
 ```
 
 # Update `{"$global":{"persisted":true,"view":"item","productId":2,"data":{"cart":[]},"serializedGlobals":{"data":true}}}`
@@ -211,7 +211,7 @@ UPDATE: .add::text@6 "0" => "1"
 UPDATE: .add::text@14 "0" => "1"
 ```
 
-# Update `{"$global":{"persisted":true,"view":"cart","data":{"cart":[]},"serializedGlobals":{"data":true}}}`
+# Update `{"$global":{"persisted":true,"persistedSeed":true,"view":"cart","data":{"cart":[2]},"serializedGlobals":{"data":true}}}`
 ```html
 <button
   class="count"
@@ -226,21 +226,30 @@ UPDATE: .add::text@14 "0" => "1"
   </button>
 </aside>
 <section>
-  <p
+  <ul
     class="cart"
   >
-    cart is empty
+    <li>
+      Product 2 $200.5
+    </li>
+  </ul>
+  <p
+    class="total"
+  >
+    total $200.5
   </p>
 </section>
 ```
 ## Change
 ```
-INSERT: section > .cart
-REMOVE: .cart + img
-REMOVE: .cart + h2
-REMOVE: .cart + div
-REMOVE: .cart + button
-REMOVE: .cart + ul
+REMOVE: .total + img
+REMOVE: .total + h2
+REMOVE: .total + div
+REMOVE: .total + button
+REMOVE: .total + ul
+INSERT: section > :is(.cart, .total)
+UPDATE: .total::text@7 "" => "200.5"
+INSERT: .cart > li
 ```
 
 # Update
@@ -261,10 +270,17 @@ container.querySelector("button.count").click();
   </button>
 </aside>
 <section>
-  <p
+  <ul
     class="cart"
   >
-    cart is empty
+    <li>
+      Product 2 $200.5
+    </li>
+  </ul>
+  <p
+    class="total"
+  >
+    total $200.5
   </p>
 </section>
 ```

@@ -1,7 +1,9 @@
 // tags/layout.marko.update.mjs
+const $open_seed = _update_signal("__tests__/tags/layout.marko_0_open/var");
 const $dynamic_update = _update_signal("__tests__/tags/layout.marko_0/update_dynamic_#text/2");
 const $update$1 = (patch, live) => {
 	_update_pair(patch, live);
+	if ("open" in patch) _update_seed(live, $open_seed, patch["open"]);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_content" in patch) live["input_content"] = patch["input_content"];
@@ -11,6 +13,7 @@ var layout_marko_update_default = _resume("__tests__/tags/layout.marko_0_update"
 
 // template.marko.update.mjs
 const $for_update = _update_for("#ul/0", "__tests__/template.marko_3_content/update", (branch, args) => $for_content__update(args[0], branch));
+const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $for_content__update = (patch, live) => {
 	if ("$params2" in patch) live["$params2"] = patch["$params2"];
 	if ("spec" in patch) live["spec"] = patch["spec"];
@@ -28,6 +31,7 @@ const $Overview_content__update = (patch, live) => {
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
+	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_title" in patch) live["input_title"] = patch["input_title"];
@@ -47,7 +51,7 @@ var template_marko_update_default = _resume("__tests__/template.marko_0_update",
 const $template$1 = "<aside><button class=toggle> </button></aside><section><!></section>";
 const $walks$1 = "D D mD%l";
 const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/2");
-const $open = /* @__PURE__ */ _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "collapse" : "expand"));
+const $open = _var_resume("__tests__/tags/layout.marko_0_open/var", /* @__PURE__ */ _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "collapse" : "expand")));
 const $setup__script$1 = _script_update("__tests__/tags/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
@@ -89,7 +93,7 @@ const $Overview_content__setup = ($scope) => {
 };
 const $Overview_content__input_summary = /* @__PURE__ */ _closure_get("input_summary", ($scope) => _text($scope["#text/1"], $scope._.input_summary));
 const $Overview_content = _content_resume("__tests__/template.marko_1_content", "<p>Overview of <!>: <!></p>", "Db%c%l", $Overview_content__setup);
-const $count = /* @__PURE__ */ _let("count/10", ($scope) => _text($scope["#text/2"], $scope.count));
+const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _let("count/10", ($scope) => _text($scope["#text/2"], $scope.count)));
 const $input_view__OR__Overview__OR__Specs = /* @__PURE__ */ _or(13, ($scope) => $input_content($scope["#childScope/3"], $scope.input_view === "specs" ? $scope.Specs : $scope.Overview), 2);
 const $Overview = /* @__PURE__ */ _const("Overview", $input_view__OR__Overview__OR__Specs);
 const $Specs = /* @__PURE__ */ _const("Specs", $input_view__OR__Overview__OR__Specs);

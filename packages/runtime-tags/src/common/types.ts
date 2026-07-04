@@ -122,6 +122,15 @@ export interface $Global {
    * matched scopes are suppressed.
    */
   persisted?: boolean | "update";
+  /**
+   * With `persisted: "update"`: this navigation's target subtree will be
+   * created fresh on the client (a cross-route update), so state values
+   * serialize too -- the client seeds them only into scopes created during
+   * the apply (fresh subtrees cannot compute state whose initializers live
+   * behind server-only expressions; matched scopes' live state is never
+   * overwritten).
+   */
+  persistedSeed?: boolean;
   /** @internal */
   __flush__?($global: $Global, html: string): string;
 }
