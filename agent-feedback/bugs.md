@@ -76,25 +76,23 @@ only never-firing bindings probably belong in setup placement instead.
 
 ## Optimize-mode persisted updates crash reconciling resumed request-derived loops
 
-`packages/runtime-tags/src/dom/control-flow.ts:807` | 2026-07-04 | impact:high | effort:med
+`packages/runtime-tags/src/dom/resume.ts:140` | 2026-07-04 | impact:high | effort:med
 
-In optimize builds only, dispatching a `"for"` update merge against a
-_resumed_ scope crashes: `scope[nodeAccessor]` is undefined in the `loop()`
-reconcile (`referenceNode.nodeType` TypeError), so the loop's anchor node
-was never hydrated. Debug builds work, and the main/update compiles agree
-on the encoded accessor (`_update_for(2, …)` vs `_for_of(2, …)`), and the real
-cause is an html↔dom **binding-id divergence**: optimize accessors are
-`binding.id`, and ids are assigned in analyze-traversal order — but when a
-file is first loaded as a _child_ (`loadFileForTag` during a parent's
-compile, shared cache), extra/reordered binding creation shifts the
-sequence relative to a standalone compile, and the shift differs by output
-target. Reproduced in one process: shared cache + parent-first gives the
-loop nodeRef id 0 ("a") in dom but "b" in html; the test harness's bundles
-land on "a" (html) vs 2/"c" (dom/update) and resume hydrates a key the dom
-never reads. Real apps currently agree only because both vite builds
-happen to compile modules in the same order — a latent scope-pairing
-corruption hazard for persisted optimize builds generally. Fix direction:
-make binding-id assignment per-file deterministic (analyze must be
-order/target-independent, or ids must be normalized per file before
-translate). Repro: fixture `persisted-update-attr-items` with `skip_ssr`
-removed (debug passes; optimize ssr throws on the navigate step).
+Fixture `persisted-update-attr-items` with `skip_ssr` removed: debug
+passes, optimize ssr throws reading 'nodeType' at `control-flow.ts:807`
+via `_update_for` on the navigate step. The real cause is a
+**scope-identity split for empty-elided scope writes**, not an accessor
+mismatch (binding ids were verified consistent across the harness's
+html/dom/update compiles; an earlier stale-snapshot diagnosis of id
+divergence was wrong). The chip-list template's own scope write is empty
+in optimize (`_scope($scope0_id, {})`) and empty entries are elided from
+the wire; instrumenting the crash shows the merge's "live" child scope
+contains only runtime-internal keys (Id/Gen/Global) — a lazily created
+stand-in reached through the parent's `{c:_(2)}` child ref — while the
+loop-anchor marker visit (`<!--Md}2 a 5 4 3-->`) hydrated a different
+object for serialized scope id 2. Debug mode never hits it (its scope
+write is non-empty, so the ref and the marker share one object). Fix
+direction: the resume fill's scope lookup and the walker's visit-scope
+lookup must share one object per serialized id even when the scope's
+value write was elided — or persisted builds must force a scope write
+(`_existing_scope`-style) for scopes that carry marker visits.
