@@ -82,13 +82,19 @@ In optimize builds only, dispatching a `"for"` update merge against a
 _resumed_ scope crashes: `scope[nodeAccessor]` is undefined in the `loop()`
 reconcile (`referenceNode.nodeType` TypeError), so the loop's anchor node
 was never hydrated. Debug builds work, and the main/update compiles agree
-on the encoded accessor (`_update_for(2, …)` vs `_for_of(2, …)`), so the
-suspect is optimize-mode resume-marker emission dropping the loop anchor
-for a fully request-derived loop (nothing retained client-side reads it —
-except the separately-compiled `?update` entry). Repro: fixture
-`persisted-update-attr-items` with `skip_ssr` removed (debug passes,
-optimize ssr throws on the navigate step). Notably the ecommerce
-production build's `/search` grid — for over request-derived products in a
-content section — reconciles fine, so the gap is shape-specific; find the
-divergence (walks marker emission vs `writeHTMLResumeStatements` gating
-under the persisted bit) and re-enable the fixture's ssr leg.
+on the encoded accessor (`_update_for(2, …)` vs `_for_of(2, …)`), and the real
+cause is an html↔dom **binding-id divergence**: optimize accessors are
+`binding.id`, and ids are assigned in analyze-traversal order — but when a
+file is first loaded as a _child_ (`loadFileForTag` during a parent's
+compile, shared cache), extra/reordered binding creation shifts the
+sequence relative to a standalone compile, and the shift differs by output
+target. Reproduced in one process: shared cache + parent-first gives the
+loop nodeRef id 0 ("a") in dom but "b" in html; the test harness's bundles
+land on "a" (html) vs 2/"c" (dom/update) and resume hydrates a key the dom
+never reads. Real apps currently agree only because both vite builds
+happen to compile modules in the same order — a latent scope-pairing
+corruption hazard for persisted optimize builds generally. Fix direction:
+make binding-id assignment per-file deterministic (analyze must be
+order/target-independent, or ids must be normalized per file before
+translate). Repro: fixture `persisted-update-attr-items` with `skip_ssr`
+removed (debug passes; optimize ssr throws on the navigate step).
