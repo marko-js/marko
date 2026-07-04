@@ -24,7 +24,12 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { isOptimize, isOutputHTML, isPersisted } from "../../util/marko-config";
+import {
+  isOptimize,
+  isOutputHTML,
+  isPersisted,
+  isRegisterEntryBuild,
+} from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import {
   type Binding,
@@ -521,8 +526,10 @@ export default {
             tagSection,
             accessor.value,
           );
-          signal.register = true;
-          signal.registerId = signalId;
+          if (isRegisterEntryBuild()) {
+            signal.register = true;
+            signal.registerId = signalId;
+          }
           addUpdateMerge(tagSection, {
             kind: "dynamic",
             accessor,

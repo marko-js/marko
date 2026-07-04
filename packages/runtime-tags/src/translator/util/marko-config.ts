@@ -28,6 +28,18 @@ export function isUpdateEntryBuild() {
   return getMarkoOpts().persisted === "update" && isOutputDOM();
 }
 
+// The `?register` entry compile: `persisted: "register"` with dom output is
+// the full persisted dom module — the template graph WITH the registry
+// registrations updates resolve signals, branch content, and renderers
+// from. The main persisted dom compile emits the same graph WITHOUT them,
+// so bundlers tree-shake whatever hydration doesn't reference; generated
+// `?update` entries import the register module, deferring the registration
+// graph to the first persisted navigation. Register ids are hashed from
+// (file, section, key), so the two compiles agree by construction.
+export function isRegisterEntryBuild() {
+  return getMarkoOpts().persisted === "register" && isOutputDOM();
+}
+
 export function getReadyId(file: t.BabelFile = getFile()) {
   const { markoOpts } = file;
   if (!markoOpts.linkAssets) return undefined;

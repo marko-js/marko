@@ -17,7 +17,7 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
-import { isPersisted } from "../util/marko-config";
+import { isPersisted, isRegisterEntryBuild } from "../util/marko-config";
 import { addSorted } from "../util/optional";
 import {
   compareSources,
@@ -350,7 +350,9 @@ export const IfTag = {
           // Request-derived conditionals participate in persisted update
           // renders: the server writes the branch outcome explicitly (G2)
           // and the update entry replays it through this same signal, so
-          // persisted builds register it and update entries record a merge.
+          // register builds register it and update entries record a merge
+          // (the main module's copy stays unregistered -- resume never
+          // invokes it, so hydration bundles may tree-shake it).
           if (
             isPersisted() &&
             isReasonDynamic(
@@ -362,8 +364,10 @@ export const IfTag = {
               ifTagSection,
               accessor.value,
             );
-            signal.register = true;
-            signal.registerId = signalId;
+            if (isRegisterEntryBuild()) {
+              signal.register = true;
+              signal.registerId = signalId;
+            }
             addUpdateMerge(ifTagSection, {
               kind: "if",
               accessor,

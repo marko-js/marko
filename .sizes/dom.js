@@ -1,4 +1,4 @@
-// size: 27524 (min) 10156 (brotli)
+// size: 27552 (min) 10151 (brotli)
 //#region packages/runtime-tags/dist/common/attr-tag.mjs
 let empty = [],
   rest = Symbol();
@@ -807,12 +807,18 @@ function _updating() {
  * the payload's effect entries instead (running both would double-bind).
  */
 function _script_update(id, fn) {
-  return (
-    _resume(id, fn),
-    (scope) => {
-      updating || queueEffect(scope, fn);
-    }
-  );
+  return (_resume(id, fn), _script_shared(fn));
+}
+/**
+ * The register build's `_script_update`: the same skip-queueing-while-
+ * updating wrapper WITHOUT the registration — the main module already
+ * registered the id, and payload effect entries must keep resolving the
+ * main copies resume wired.
+ */
+function _script_shared(fn) {
+  return (scope) => {
+    updating || queueEffect(scope, fn);
+  };
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;

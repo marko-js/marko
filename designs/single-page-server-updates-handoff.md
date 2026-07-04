@@ -617,6 +617,45 @@ finishing the phase partition (controllable`\_script`vs`\_default`
    do not import a register module and the main persisted compile keeps
    its registrations.
 
+**Implemented** (attempt 2, `feat: slim hydration via ?register entries`):
+the parked split above is **landed**, with both attempt-1 findings solved:
+
+- **Single-instance module state.** Module-scope client statements
+  (`MarkoScriptlet`, `static`/`client`) stay one-instance across the
+  main/register pair: the main persisted dom compile exports each
+  scriptlet's outer bindings, and the register compile replaces the
+  scriptlet with an import of those bindings from the main module —
+  side-effect-only statements are skipped entirely (the main module ran
+  them at hydration). Register builds also never re-register
+  main-registered ids: `writeRegisteredFns` keeps the function
+  declarations (setups reference them) but skips the `_resume` calls, and
+  effects compile through `_script_shared` (the `_script_update`
+  skip-queueing-while-applying wrapper without the registration), so
+  payload effect entries and change-handler resolutions keep hitting the
+  copies resume wired. `persisted-update-fresh-page` (the fixture that
+  caught the duality) passes with the split active, and a dedicated app
+  probe validates the killer ordering — resume, navigate (register
+  modules load), then a matched-page interaction whose
+  `valueChange`→`subsByKey` notification must reach the resume-wired
+  subscriber — in both production and dev.
+- **The split is now byte-free in total.** Attempt 1's register
+  duplication cost +7.5 kB total app JS; with the state seam and
+  suppressed re-registrations the bundler dedupes it to ~+0.1 kB
+  (44.2 vs 44.1 kB all-routes raw). Mechanics unchanged from attempt 1:
+  `persisted: "register"` compiles the full persisted dom module (with
+  registrations), the generated `?update` entry statically imports it, the
+  main compile keeps only non-persisted registration reasons, slim mains
+  emit `_enable_branches()` at module init (retained branch visits must
+  process at hydration), and @marko/vite resolves `?register` mirroring
+  `?update`. Suite 8371 passing with rendered output byte-identical; all
+  38 app browser checks green.
+- **The eager win is still gated on the runtime phase partition** (the
+  attempt-1 finding #1): `/search` eager stays ~31.5 kB raw until the
+  mixed-phase runtime modules (controllable's `_script` vs `_default`
+  variants, control-flow's hydration-reachable surface) split by phase so
+  chunk hosting stops dragging render machinery eagerly. That partition is
+  the remaining step of this slice.
+
 **Implemented** (`fix: per-translate abort-signal ids` + shared compiler
 caches): the `?update` entry compiles now share the whole build's compiler
 `cache` (in @marko/vite and the fixture harness) instead of creating fresh

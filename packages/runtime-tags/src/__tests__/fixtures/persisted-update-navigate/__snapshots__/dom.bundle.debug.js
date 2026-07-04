@@ -48,15 +48,16 @@ const $update = (patch, live) => {
 var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
 
 // tags/price.marko
-const $template$1 = "<span class=price>$<!></span>";
-const $walks$1 = " Db%l";
-const $setup$1 = () => {};
+const $template = "<span class=price>$<!></span>";
+const $walks = " Db%l";
+const $setup = () => {};
 const $input_amount = ($scope, input_amount) => {
 	_attr($scope["#span/0"], "title", `$${input_amount.toFixed(2)}`);
 	_text($scope["#text/1"], input_amount.toFixed(2));
 };
-const $input$1 = ($scope, input) => $input_amount($scope, input.amount);
-var price_default = /* @__PURE__ */ _template("__tests__/tags/price.marko", $template$1, $walks$1, $setup$1, $input$1);
+const $input = ($scope, input) => $input_amount($scope, input.amount);
+enableBranches();
+var price_default = /* @__PURE__ */ _template("__tests__/tags/price.marko", $template, $walks, $setup, $input);
 
 // template.marko
 const $template = "<h1> </h1><a>specs</a><button> </button><section></section><ul></ul>";
@@ -75,10 +76,10 @@ const $if_content__setup = ($scope) => {
 	if (!_updating()) $if_content__input_product_sale_percent._($scope);
 };
 const $input_product_featured__OR__expanded = /* @__PURE__ */ _or(16, ($scope) => _attr_class($scope["#section/4"], $scope.expanded && $scope.input_product_featured && "spotlight"));
-const $expanded = _var_resume("__tests__/template.marko_0_expanded/var", /* @__PURE__ */ _let("expanded/15", ($scope) => {
+const $expanded = /* @__PURE__ */ _let("expanded/15", ($scope) => {
 	_text($scope["#text/3"], $scope.expanded ? "Hide" : "Show");
 	$input_product_featured__OR__expanded($scope);
-}));
+});
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$expanded($scope, !$scope.expanded);
 }));
@@ -88,18 +89,13 @@ function $setup($scope) {
 }
 const $input_product_name = ($scope, input_product_name) => _text($scope["#text/0"], input_product_name);
 const $input_product_slug = ($scope, input_product_slug) => _attr($scope["#a/1"], "href", `/products/${input_product_slug}/specs`);
-const $input_product_featured = _var_resume("__tests__/template.marko_0_input_product_featured/var", /* @__PURE__ */ _const("input_product_featured", $input_product_featured__OR__expanded));
-const $if = _var_resume("__tests__/template.marko_0/update_if_#section/4", /* @__PURE__ */ _if("#section/4", "<em>Save <!>%</em>", "Db%l", $if_content__setup));
+const $input_product_featured = /* @__PURE__ */ _const("input_product_featured", $input_product_featured__OR__expanded);
+const $if = /* @__PURE__ */ _if("#section/4", "<em>Save <!>%</em>", "Db%l", $if_content__setup);
 const $input_product_sale = ($scope, input_product_sale) => {
 	$input_product_sale_percent($scope, input_product_sale?.percent);
 	$if($scope, input_product_sale ? 0 : 1);
 };
-const $for_content_content = _resume("__tests__/template.marko_2_content/update", [
-	/* @__PURE__ */ ((_w0) => `<li>${_w0} <!></li>`)($template$1),
-	/* @__PURE__ */ ((_w0) => `D/${_w0}&b%l`)($walks$1),
-	$for_content__setup
-]);
-const $for = /* @__PURE__ */ _for_of("#ul/5", $for_content_content[0], $for_content_content[1], $for_content_content[2], $for_content__$params);
+const $for = /* @__PURE__ */ _for_of("#ul/5", /* @__PURE__ */ ((_w0) => `<li>${_w0} <!></li>`)($template$1), /* @__PURE__ */ ((_w0) => `D/${_w0}&b%l`)($walks$1), $for_content__setup, $for_content__$params);
 const $input_related = ($scope, input_related) => $for($scope, [input_related, function(item) {
 	return item.id;
 }]);
@@ -114,4 +110,5 @@ const $input_product = ($scope, input_product) => {
 	$input_product_sale($scope, input_product?.sale);
 };
 const $input_product_sale_percent = /* @__PURE__ */ _const("input_product_sale_percent", $if_content__input_product_sale_percent);
+enableBranches();
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup, $input);

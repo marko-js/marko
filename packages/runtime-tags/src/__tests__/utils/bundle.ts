@@ -24,11 +24,14 @@ const pageExt = ".page.mjs";
 const loadExt = ".load.mjs";
 const csrExt = ".csr.mjs";
 const updateExt = ".update.mjs";
-const entryRe = /\.marko\.(load|page|csr|update)?\.mjs$/;
+const entryRe = /\.marko\.(load|page|csr|update|register)?\.mjs$/;
 // Generated `?update` entries are snapshotted (they are translator output
-// worth reviewing); the other entry kinds are boilerplate and excluded.
-const snapshotExcludeEntryRe = /\.marko\.(load|page|csr)?\.mjs$/;
+// worth reviewing); the other entry kinds are boilerplate and excluded --
+// including `?register` modules, which are the persisted dom compile the
+// dom bundle already shows (minus the registration gates).
+const snapshotExcludeEntryRe = /\.marko\.(load|page|csr|register)?\.mjs$/;
 const updateImportRe = /\.marko\?update$/;
+const registerImportRe = /\.marko\?register$/;
 const assetRuntimeId = "\0asset-runtime";
 const assetRuntimeIdRe = /\0asset-runtime$/;
 const virtualFilePrefix = "v:";
@@ -109,6 +112,18 @@ export async function createServerRunner<T extends Record<string, string>>(
         },
       },
       {
+        name: "register-imports",
+        resolveId: {
+          filter: { id: registerImportRe },
+          handler(id, importer) {
+            return this.resolve(
+              id.replace(registerImportRe, markoExt + ".register.mjs"),
+              importer,
+            );
+          },
+        },
+      },
+      {
         name: "dom-entry",
         resolveId: {
           filter: { id: entryRe },
@@ -133,11 +148,22 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
               }`;
             }
 
+            if (kind === "register") {
+              // The persisted dom module WITH registrations (the generated
+              // `?update` entry imports it). Shares the fixture's compiler
+              // cache: the cache holds the analyze result (translate runs
+              // on a clone), and analysis is identical across persisted
+              // modes.
+              const { code } = compiler.compileFileSync(file, {
+                ...compileOpts,
+                output: "dom",
+                persisted: "register",
+                sourceMaps: false,
+              });
+              return code;
+            }
+
             if (kind === "update") {
-              // Shares the fixture's compiler cache: the cache holds the
-              // parse/migrate/analyze result (each compile translates a
-              // clone), and analysis is identical across persisted modes --
-              // "update" only changes the translate phase.
               const { code } = compiler.compileFileSync(file, {
                 ...compileOpts,
                 output: "dom",

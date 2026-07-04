@@ -1,22 +1,11 @@
 // template.marko
 _enable_catch();
-const $for_content__item_name = ($scope, item_name) => _text($scope.a, item_name);
-const $for_content__item_price = ($scope, item_price) => _text($scope.b, item_price);
-const $for_content__$params = ($scope, $params3) => {
-	$for_content__item_name($scope, $params3[0]?.name);
-	$for_content__item_price($scope, $params3[0]?.price);
-};
-const $for_content_content = _resume("a0", [
-	"<li><!> costs <!></li>",
-	"D%c%l",
-	0
-]);
-const $await_content__for = /* @__PURE__ */ _for_of(0, $for_content_content[0], $for_content_content[1], $for_content_content[2], $for_content__$params);
 const $placeholder_content = _content_resume("a3", "loading related…", "b");
-const $count = _var_resume("a1", /* @__PURE__ */ _let(10, ($scope) => _text($scope.c, $scope.k)));
+const $count = /* @__PURE__ */ _let(10, ($scope) => _text($scope.c, $scope.k));
 const $setup__script = _script_update("a5", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, $scope.k + 1);
 }));
+enableBranches();
 
 // template.marko.update.mjs
 const $for_update = _update_for(0, "a0", (branch, args) => $for_content__update(args[0], branch));

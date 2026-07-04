@@ -13,7 +13,12 @@ import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
-import { isOptimize, isOutputHTML, isPersisted } from "./marko-config";
+import {
+  isOptimize,
+  isOutputHTML,
+  isPersisted,
+  isRegisterEntryBuild,
+} from "./marko-config";
 import { find, forEach, type Opt, push, some } from "./optional";
 import {
   type AssignedBindingExtra,
@@ -1059,21 +1064,27 @@ export function writeSignals(section: Section) {
       const effectIdentifier = t.identifier(
         `${signal.identifier.name}__script`,
       );
+      const effectFn = t.arrowFunctionExpression(
+        [scopeIdentifier],
+        toFirstExpressionOrBlock(signal.effect),
+      );
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
-        callRuntime(
-          // Persisted builds skip setup-time effect queueing during update
-          // applies -- fresh-branch wiring comes from payload effect
-          // entries instead (running both would double-bind).
-          isPersisted() ? "_script_update" : "_script",
-          t.stringLiteral(
-            getResumeRegisterId(section, signal.referencedBindings),
-          ),
-          t.arrowFunctionExpression(
-            [scopeIdentifier],
-            toFirstExpressionOrBlock(signal.effect),
-          ),
-        ),
+        // Persisted builds skip setup-time effect queueing during update
+        // applies -- fresh-branch wiring comes from payload effect
+        // entries instead (running both would double-bind). Register
+        // builds keep that behavior but must NOT re-register the id: the
+        // main module registered it, and payload entries must keep
+        // resolving the copies resume wired.
+        isRegisterEntryBuild()
+          ? callRuntime("_script_shared", effectFn)
+          : callRuntime(
+              isPersisted() ? "_script_update" : "_script",
+              t.stringLiteral(
+                getResumeRegisterId(section, signal.referencedBindings),
+              ),
+              effectFn,
+            ),
       );
     }
 
@@ -1223,16 +1234,22 @@ export function writeRegisteredFns() {
       statements.push(fn);
     }
 
-    for (const registeredFn of registeredFns) {
-      statements.push(
-        t.expressionStatement(
-          callRuntime(
-            "_resume",
-            t.stringLiteral(registeredFn.registerId),
-            t.identifier(registeredFn.id),
+    // Register builds keep the declarations (setups reference them) but
+    // never re-register: registry resolutions (payload effect entries,
+    // change handlers) must keep hitting the main module's copies, whose
+    // module-scope state resume wired.
+    if (!isRegisterEntryBuild()) {
+      for (const registeredFn of registeredFns) {
+        statements.push(
+          t.expressionStatement(
+            callRuntime(
+              "_resume",
+              t.stringLiteral(registeredFn.registerId),
+              t.identifier(registeredFn.id),
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
 
     getProgram().node.body.push(...statements);

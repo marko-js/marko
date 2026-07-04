@@ -55,7 +55,7 @@ const $if_content__details_price = /* @__PURE__ */ _const("details_price", ($sco
 	_text($scope["#text/1"], $scope.details_price);
 	$if_content__details_price__script($scope);
 });
-const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count)));
+const $count = /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -63,10 +63,11 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $if = _var_resume("__tests__/template.marko_0/update_if_#text/2", /* @__PURE__ */ _if("#text/2", "<section><h2> </h2><p>costs <!></p><button class=copy>use price</button></section>", "E lDb%l l", $if_content__setup, "<p>no selection</p>", "b"));
+const $if = /* @__PURE__ */ _if("#text/2", "<section><h2> </h2><p>costs <!></p><button class=copy>use price</button></section>", "E lDb%l l", $if_content__setup, "<p>no selection</p>", "b");
 const $input_detailId = /* @__PURE__ */ _const("input_detailId", ($scope) => {
 	$if($scope, $scope.input_detailId ? 0 : 1);
 	$if_content__input_detailId($scope);
 });
 const $input = ($scope, input) => $input_detailId($scope, input.detailId);
+enableBranches();
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -17,7 +17,7 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
-import { isPersisted } from "../util/marko-config";
+import { isPersisted, isRegisterEntryBuild } from "../util/marko-config";
 import {
   type Binding,
   BindingType,
@@ -352,10 +352,12 @@ export default {
         // Request-derived loops participate in persisted update renders: the
         // server writes the branch list + keys explicitly (G3/G4) and the
         // update entry reconciles it with a `_for_of` built from this loop's
-        // branch content, so persisted builds hoist that content into a
+        // branch content, so register builds hoist that content into a
         // registered `[template, walks, setup]` and update entries record a
         // merge. The strings are shared, not duplicated -- the loop signal
-        // reads them from the same registered array.
+        // reads them from the same registered array. The main module's copy
+        // keeps the plain (unregistered) shape so hydration bundles may
+        // tree-shake it.
         const updateStructural =
           isPersisted() &&
           isReasonDynamic(getSerializeSourcesForRef(referencedBindings));
@@ -372,7 +374,7 @@ export default {
           const rendererArgs = replaceNullishAndEmptyFunctionsWith0(
             getBranchRendererArgs(bodySection),
           );
-          if (!updateStructural) {
+          if (!(updateStructural && isRegisterEntryBuild())) {
             return callRuntime(
               forTypeToDOMRuntime(forType),
               getScopeAccessorLiteral(nodeRef, true),

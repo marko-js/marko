@@ -48,12 +48,7 @@ const $for_content__$params = ($scope, $params3) => {
 	$for_content__item_name($scope, $params3[0]?.name);
 	$for_content__item_price($scope, $params3[0]?.price);
 };
-const $for_content_content = _resume("__tests__/template.marko_4_content/update", [
-	"<li><!> costs <!></li>",
-	"D%c%l",
-	0
-]);
-const $await_content__for = /* @__PURE__ */ _for_of("#ul/0", $for_content_content[0], $for_content_content[1], $for_content_content[2], $for_content__$params);
+const $await_content__for = /* @__PURE__ */ _for_of("#ul/0", "<li><!> costs <!></li>", "D%c%l", 0, $for_content__$params);
 const $await_content__related = ($scope, related) => $await_content__for($scope, [related, function(item) {
 	return item.id;
 }]);
@@ -68,7 +63,7 @@ const $try_content__setup = ($scope) => {
 	if (!_updating()) $try_content__input_related($scope);
 	$await_content($scope);
 };
-const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _let("count/10", ($scope) => _text($scope["#text/2"], $scope.count)));
+const $count = /* @__PURE__ */ _let("count/10", ($scope) => _text($scope["#text/2"], $scope.count));
 const $try = /* @__PURE__ */ _try("#text/3", "<!><!><!>", "b%c", $try_content__setup);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$count($scope, $scope.count + 1);
@@ -92,4 +87,5 @@ const $input = ($scope, input) => {
 };
 const $input_related__closure = /* @__PURE__ */ _closure($try_content__input_related);
 const $input_related = /* @__PURE__ */ _const("input_related", $input_related__closure);
+enableBranches();
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup, $input);

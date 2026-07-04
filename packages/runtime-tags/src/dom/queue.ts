@@ -43,6 +43,16 @@ export function _updating() {
  */
 export function _script_update(id: string, fn: (scope: Scope) => void) {
   _resume(id, fn);
+  return _script_shared(fn);
+}
+
+/**
+ * The register build's `_script_update`: the same skip-queueing-while-
+ * updating wrapper WITHOUT the registration — the main module already
+ * registered the id, and payload effect entries must keep resolving the
+ * main copies resume wired.
+ */
+export function _script_shared(fn: (scope: Scope) => void) {
   return (scope: Scope) => {
     if (!updating) queueEffect(scope, fn);
   };

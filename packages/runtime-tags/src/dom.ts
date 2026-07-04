@@ -70,10 +70,11 @@ export {
   _load_template,
   _load_visible_trigger,
 } from "./dom/load";
-export { _script_update, _updating, run } from "./dom/queue";
+export { _script_shared, _script_update, _updating, run } from "./dom/queue";
 export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,
+  enableBranches as _enable_branches,
   _resume,
   _var_resume,
   init,

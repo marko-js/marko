@@ -1,23 +1,10 @@
-// tags/layout/layout.marko
-const $open = _var_resume("b2", /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "Close" : "Menu")));
-const $setup__script = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
-	$open($scope, !$scope.g);
-}));
-const $dynamicTag = _var_resume("b1", /* @__PURE__ */ _dynamic_tag(2));
-
 // template.marko
-const $layout_content__input_title = /* @__PURE__ */ _closure_get(3, ($scope) => _text($scope.a, $scope._.d));
 const $layout_content__setup__script = _script_update("a3", ($scope) => _on($scope.b, "click", function() {
 	$count($scope._, $scope._.e + 1);
 }));
-const $layout_content__setup = ($scope) => {
-	if (!_updating()) $layout_content__input_title($scope);
-	$layout_content__count($scope);
-	$layout_content__setup__script($scope);
-};
 const $layout_content__count = /* @__PURE__ */ _closure_get(4, ($scope) => _text($scope.c, $scope._.e));
-const $layout_content = _content_resume("a2", "<h1> </h1><button class=inc> </button>", "D l D l", $layout_content__setup);
-const $count = _var_resume("a0", /* @__PURE__ */ _let(4, /* @__PURE__ */ _closure($layout_content__count)));
+const $count = /* @__PURE__ */ _let(4, /* @__PURE__ */ _closure($layout_content__count));
+enableBranches();
 
 // tags/layout/layout.marko.update.mjs
 const $open_seed = _update_signal("b2");
@@ -47,3 +34,10 @@ const $update = (patch, live) => {
 };
 _update_content("a2", $layout_content__update);
 var template_marko_update_default = _resume("a1", $update);
+
+// tags/layout/layout.marko
+const $open = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "Close" : "Menu"));
+const $setup__script = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
+	$open($scope, !$scope.g);
+}));
+enableBranches();

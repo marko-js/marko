@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { importDefault } from "@marko/compiler/babel-utils";
+import { basename } from "path";
 
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
@@ -87,7 +88,22 @@ export default {
           rootIdentifier,
         ),
       );
-      const body: t.Statement[] = [];
+      const body: t.Statement[] = [
+        // The register module (`?register`, this template compiled with
+        // `persisted: "register"`) is the persisted dom module WITH the
+        // registry registrations this entry's merges resolve signals,
+        // branch content, and renderers from -- the main dom module omits
+        // them so hydration bundles stay lean, and this import defers the
+        // registration graph to the first persisted navigation (this entry
+        // is always lazily loaded). A static import so registrations land
+        // before any merge dispatches.
+        t.importDeclaration(
+          [],
+          t.stringLiteral(
+            `./${basename(file.opts.filename as string)}?register`,
+          ),
+        ),
+      ];
       for (const statement of program.node.body) {
         if (statement.type === "ImportDeclaration") {
           body.push(statement);
@@ -578,6 +594,8 @@ function pruneUnusedImports(program: t.Program) {
   );
   program.body = program.body.filter((node) => {
     if (node.type === "ImportDeclaration") {
+      // Side-effect-only imports (the `?register` module) always stay.
+      if (!node.specifiers.length) return true;
       node.specifiers = node.specifiers.filter((specifier) =>
         used.has(specifier.local.name),
       );

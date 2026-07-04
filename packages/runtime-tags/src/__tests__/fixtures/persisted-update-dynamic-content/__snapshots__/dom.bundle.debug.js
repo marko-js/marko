@@ -48,21 +48,22 @@ _update_content("__tests__/template.marko_1_content", $Overview_content__update)
 var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
 
 // tags/layout.marko
-const $template$1 = "<aside><button class=toggle> </button></aside><section><!></section>";
-const $walks$1 = "D D mD%l";
+const $template = "<aside><button class=toggle> </button></aside><section><!></section>";
+const $walks = "D D mD%l";
 const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/2");
-const $open = _var_resume("__tests__/tags/layout.marko_0_open/var", /* @__PURE__ */ _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "collapse" : "expand")));
-const $setup__script$1 = _script_update("__tests__/tags/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+const $open = /* @__PURE__ */ _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "collapse" : "expand"));
+const $setup__script = _script_update("__tests__/tags/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
-function $setup$1($scope) {
+function $setup($scope) {
 	$open($scope, false);
-	$setup__script$1($scope);
+	$setup__script($scope);
 }
-const $dynamicTag = _var_resume("__tests__/tags/layout.marko_0/update_dynamic_#text/2", /* @__PURE__ */ _dynamic_tag("#text/2"));
+const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/2");
 const $input_content = $dynamicTag;
-const $input$1 = ($scope, input) => $input_content($scope, input.content);
-var layout_default = /* @__PURE__ */ _template("__tests__/tags/layout.marko", $template$1, $walks$1, $setup$1, $input$1);
+const $input = ($scope, input) => $input_content($scope, input.content);
+enableBranches();
+var layout_default = /* @__PURE__ */ _template("__tests__/tags/layout.marko", $template, $walks, $setup, $input);
 
 // template.marko
 const $template = /* @__PURE__ */ ((_w0) => `<h1> </h1><button class=count>clicked <!></button>${_w0}`)($template$1);
@@ -73,12 +74,7 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__spec_name($scope, $params2[0]?.name);
 	$for_content__spec_value($scope, $params2[0]?.value);
 };
-const $for_content_content = _resume("__tests__/template.marko_3_content/update", [
-	"<li><!> is <!></li>",
-	"D%c%l",
-	0
-]);
-const $Specs_content__for = /* @__PURE__ */ _for_of("#ul/0", $for_content_content[0], $for_content_content[1], $for_content_content[2], $for_content__$params);
+const $Specs_content__for = /* @__PURE__ */ _for_of("#ul/0", "<li><!> is <!></li>", "D%c%l", 0, $for_content__$params);
 const $Specs_content__input_specs = /* @__PURE__ */ _closure_get("input_specs", ($scope) => $Specs_content__for($scope, [$scope._.input_specs, function(spec) {
 	return spec.name;
 }]));
@@ -93,7 +89,7 @@ const $Overview_content__setup = ($scope) => {
 };
 const $Overview_content__input_summary = /* @__PURE__ */ _closure_get("input_summary", ($scope) => _text($scope["#text/1"], $scope._.input_summary));
 const $Overview_content = _content_resume("__tests__/template.marko_1_content", "<p>Overview of <!>: <!></p>", "Db%c%l", $Overview_content__setup);
-const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _let("count/10", ($scope) => _text($scope["#text/2"], $scope.count)));
+const $count = /* @__PURE__ */ _let("count/10", ($scope) => _text($scope["#text/2"], $scope.count));
 const $input_view__OR__Overview__OR__Specs = /* @__PURE__ */ _or(13, ($scope) => $input_content($scope["#childScope/3"], $scope.input_view === "specs" ? $scope.Specs : $scope.Overview), 2);
 const $Overview = /* @__PURE__ */ _const("Overview", $input_view__OR__Overview__OR__Specs);
 const $Specs = /* @__PURE__ */ _const("Specs", $input_view__OR__Overview__OR__Specs);
@@ -123,4 +119,5 @@ const $input_summary__closure = /* @__PURE__ */ _closure($Overview_content__inpu
 const $input_summary = /* @__PURE__ */ _const("input_summary", $input_summary__closure);
 const $input_specs__closure = /* @__PURE__ */ _closure($Specs_content__input_specs);
 const $input_specs = /* @__PURE__ */ _const("input_specs", $input_specs__closure);
+enableBranches();
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup, $input);

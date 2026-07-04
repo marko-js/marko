@@ -90,22 +90,21 @@ what non-persisted hydration needs (resume + the page's interactive
 signals); the full registration graph (renderers, value signals, merges)
 is consumed only on the first persisted navigation, which already lazily
 loads the `?update` entry — registration could ride that load as a
-`persisted: "register"` compile the `?update` entry imports. **A full
-attempt was built and parked** (see the handoff's "Attempted and parked"
-section): all suites and the app passed, but (1) the eager win is gated
+`persisted: "register"` compile the `?update` entry imports. **Landed**
+(attempt 2 — see the handoff): the module-state duality is solved with
+single-instance module scope (main exports scriptlet bindings, register
+imports them; register builds never re-register main-registered ids) and
+the split's total-JS cost deduped to ~free. The eager win remains gated
 on finishing the runtime's phase partition — a module mixing
 hydration-used and lazily-used exports is hosted in one (eager) chunk
-with all its imports; the enablers landed (`"sideEffects": ["**/*.marko"]`,
+with all its imports. Enablers in place (`"sideEffects": ["**/*.marko"]`,
 preserved dist modules behind the `dom.mjs` facade, spread/catch/
-`_script_update` file splits), with controllable and control-flow still
-mixed-phase — and (2) the register module duplicates template module
-scope, and duplicated `client` module STATE breaks copy-consistency
-(resume wires subscribers into the main copy; post-navigation registry
-resolutions hit the register copy — caught by
-`persisted-update-fresh-page`). The next attempt needs main-module
-exports of module-scope declarations (register imports them) plus
-suppressed re-registration of main-registered ids, so all stateful
-resolution converges on the main copies.
+`_script_update` file splits); still mixed-phase: `controllable.ts`
+(hydration `_script` variants vs render `_default`/value helpers) and
+control-flow's hydration-reachable surface (the `renderCatch` chain
+retains the branch-construction graph wherever `_enable_catch` is eager —
+lazy tags, try users). Splitting those two by phase is the remaining
+step for the measured eager drop.
 
 ## Persisted compute guards make previously-unused imports bundle client-side
 
@@ -122,3 +121,20 @@ invocation during applies), but the size footgun is silent. A diagnostic —
 warn when a persisted client compile retains an import referenced only
 from update-guarded compute invocations — would surface it; run's
 `server import` remains the correct authoring tool.
+
+## Audit sideEffects declarations across the other packages
+
+`packages/runtime-class/package.json`, `packages/compiler/package.json` (and the `@marko/run`/`@marko/vite` repos) | 2026-07-04 | impact:med | effort:low
+
+`@marko/runtime-tags` now declares `"sideEffects": ["**/*.marko"]`; the
+sibling packages declare nothing, which is safe-by-default but leaves
+tree-shaking wins on the table and the invariants implicit. Worth an
+explicit pass per package: runtime-class ships the Marko 5 interop compat
+files the runtime-tags translator bare-imports (`dist/runtime/helpers/
+tags-compat/*`) plus vendored `src/node_modules/@internal/*` — any future
+declaration there MUST mark those side-effectful or interop silently
+breaks in optimized builds; the run/vite packages ship runtime clients
+(`runtime/persisted.js` etc.) that look declaration-safe. Also worth
+deciding whether published component libraries should get documented
+guidance (a library shipping `.marko` tags must exclude them from any
+`sideEffects` declaration for registration side effects to survive).

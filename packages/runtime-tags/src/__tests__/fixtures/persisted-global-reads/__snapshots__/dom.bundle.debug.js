@@ -26,10 +26,10 @@ const $if_content__setup = ($scope) => {
 	if (!_updating()) $if_content__$global_params_sale._($scope);
 };
 const $count__OR__$global_params_tag = /* @__PURE__ */ _or(11, ($scope) => _attr_class($scope["#section/4"], $scope.count && $scope.$global.params.tag && "hot"), 0);
-const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _let("count/5", ($scope) => {
+const $count = /* @__PURE__ */ _let("count/5", ($scope) => {
 	_text($scope["#text/3"], $scope.count);
 	$count__OR__$global_params_tag($scope);
-}));
+});
 const $if = /* @__PURE__ */ _if("#section/4", "<em>Sale <!>% off</em>", "Db%l", $if_content__setup);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, $scope.count + 1);
@@ -41,4 +41,5 @@ function $setup($scope) {
 	$if($scope, $scope.$global.params.sale ? 0 : 1);
 	$setup__script($scope);
 }
+enableBranches();
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

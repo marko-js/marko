@@ -62,12 +62,7 @@ const $for_content__$params = ($scope, $params3) => {
 	$for_content__review_text($scope, $params3[0]?.text);
 	$for_content__review_stars($scope, $params3[0]?.stars);
 };
-const $for_content_content = _resume("__tests__/template.marko_6_content/update", [
-	"<li><!> rated <!></li>",
-	"D%c%l",
-	0
-]);
-const $await_content__for = /* @__PURE__ */ _for_of("#ul/0", $for_content_content[0], $for_content_content[1], $for_content_content[2], $for_content__$params);
+const $await_content__for = /* @__PURE__ */ _for_of("#ul/0", "<li><!> rated <!></li>", "D%c%l", 0, $for_content__$params);
 const $await_content__reviews = ($scope, reviews) => $await_content__for($scope, [reviews, function(review) {
 	return review.id;
 }]);
@@ -88,7 +83,7 @@ const $if_content__setup = ($scope) => {
 	if (!_updating()) $if_content__input_productId._($scope);
 	$if_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 };
-const $count = _var_resume("__tests__/template.marko_0_count/var", /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count)));
+const $count = /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -96,7 +91,7 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $if = _var_resume("__tests__/template.marko_0/update_if_#text/2", /* @__PURE__ */ _if("#text/2", "<h2>Product <!></h2><!><!>", "Db%l%c", $if_content__setup, "<p>pick a product</p>", "b"));
+const $if = /* @__PURE__ */ _if("#text/2", "<h2>Product <!></h2><!><!>", "Db%l%c", $if_content__setup, "<p>pick a product</p>", "b");
 const $input_productId__closure = /* @__PURE__ */ _closure($try_content__input_productId);
 const $input_productId = /* @__PURE__ */ _const("input_productId", ($scope) => {
 	$if($scope, $scope.input_productId ? 0 : 1);
@@ -104,4 +99,5 @@ const $input_productId = /* @__PURE__ */ _const("input_productId", ($scope) => {
 	$input_productId__closure($scope);
 });
 const $input = ($scope, input) => $input_productId($scope, input.productId);
+enableBranches();
 var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup, $input);

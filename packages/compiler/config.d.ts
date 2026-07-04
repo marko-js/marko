@@ -42,8 +42,14 @@ declare const Config: {
    * (`?update` virtual module) instead: merge functions that apply a
    * persisted update-render patch to live scopes, sharing signals and branch
    * content with the main dom module through the resume registry.
+   *
+   * `"register"` (with `output: "dom"`) compiles the template's register
+   * entry (`?register` virtual module, imported by the generated `?update`
+   * entry): the persisted dom module including the registry registrations
+   * update entries resolve pieces from. The main (`true`) dom compile omits
+   * them so hydration bundles only retain what resume references.
    */
-  persisted?: boolean | "update";
+  persisted?: boolean | "update" | "register";
   cache?: Map<unknown, unknown>;
   hot?: boolean;
   /** @deprecated */

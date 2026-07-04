@@ -1,16 +1,10 @@
 // template.marko
-const $else_content__input_title = /* @__PURE__ */ _if_closure(0, 1, ($scope) => _text($scope.a, $scope._.e));
 const $else_content__setup__script = _script_update("a3", ($scope) => _on($scope.b, "click", function() {
 	$count($scope._, $scope._.f + 1);
 }));
-const $else_content__setup = ($scope) => {
-	if (!_updating()) $else_content__input_title._($scope);
-	$else_content__count._($scope);
-	$else_content__setup__script($scope);
-};
 const $else_content__count = /* @__PURE__ */ _if_closure(0, 1, ($scope) => _text($scope.c, $scope._.f));
-const $count = _var_resume("a1", /* @__PURE__ */ _let(5, $else_content__count));
-const $if = _var_resume("a0", /* @__PURE__ */ _if(0, "<h2>Something went wrong</h2>", "b", 0, "<h1> </h1><button> </button>", "D l D l", $else_content__setup));
+const $count = /* @__PURE__ */ _let(5, $else_content__count);
+enableBranches();
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("a1");

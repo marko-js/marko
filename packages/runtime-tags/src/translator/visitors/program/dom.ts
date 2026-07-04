@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import { importDefault } from "@marko/compiler/babel-utils";
 
 import { bindingHasProperty } from "../../util/binding-has-prop";
-import { isPersisted } from "../../util/marko-config";
+import { isPersisted, isRegisterEntryBuild } from "../../util/marko-config";
 import { forEach } from "../../util/optional";
 import {
   BindingType,
@@ -83,9 +83,12 @@ export default {
       });
     },
     exit(program) {
-      // Persisted builds register the value signals update entries invoke
-      // through the registry (must happen before signals are written).
-      if (isPersisted()) {
+      // Register builds (`?register`, loaded by the generated `?update`
+      // entry) register the value signals update entries invoke through the
+      // registry (must happen before signals are written). The main
+      // persisted dom module emits the same signals unregistered, so
+      // hydration bundles tree-shake what resume doesn't reference.
+      if (isRegisterEntryBuild()) {
         forEachSectionReverse(registerUpdateValueSignals);
       }
       forEachSectionReverse(writer.getSectionMeta);
@@ -137,11 +140,12 @@ export default {
               ]);
             } else {
               let renderer = callRuntime(
-                // Persisted builds always register content: a persisted
+                // Register builds always register content: a persisted
                 // update may swap a dynamic tag to a renderer the live page
                 // has never rendered (a cross-route navigation's divergence
                 // point), resolved from the registry by the serialized id.
-                getSectionRegisterReasons(childSection) || isPersisted()
+                getSectionRegisterReasons(childSection) ||
+                  isRegisterEntryBuild()
                   ? "_content_resume"
                   : "_content",
                 t.stringLiteral(getResumeRegisterId(childSection, "content")),
@@ -209,6 +213,18 @@ export default {
         // here means that proof was wrong and must fail loudly.
         throw program.buildCodeFrameError(
           "Marko internal error: analysis marked this template's setup export as empty but translation produced statements for it. Please open an issue with a reproduction.",
+        );
+      }
+
+      // Slim persisted main modules may tree-shake every branch-machinery
+      // import (`_if`/`_for_of`/... construction is what normally calls
+      // `enableBranches` at module init), but the resume walker defers
+      // branch visits until branches are enabled -- element refs riding
+      // those visits must bind at hydration, not at the first navigation's
+      // `?register` load, or pre-navigation interactivity reads undefined.
+      if (isPersisted() && !isRegisterEntryBuild()) {
+        program.node.body.push(
+          t.expressionStatement(callRuntime("_enable_branches")),
         );
       }
 
