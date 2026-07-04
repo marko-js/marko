@@ -585,14 +585,18 @@ killed it as-landed:
    need — and the runtime shipping as one flat `dom.mjs` made the whole
    thing one module. Landed enablers that survive: the runtime now ships
    as **preserved modules behind the `dom.mjs` re-export facade**,
-   declares **`sideEffects: false`** (this alone shrank a plain
-   non-persisted fixture page bundle 16.1→2.7 kB min — module bodies were
-   retained as potential side effects), and three **file splits by
-   phase** (spread/`_attr_content` machinery out of `dom/dom.ts` into
-   `dom/spread.ts`; `_enable_catch` out of the queue into control-flow
-   behind `enableCatchPending` wrap hooks; `_script_update`/`_updating`
-   out of the applier file into the queue). The remaining follow-up is
-   finishing the phase partition (controllable `_script` vs `_default`
+   declares **`"sideEffects": ["**/\*.marko"]`** -- compiled templates
+rely on top-level registration side effects, so `.marko` files are
+explicitly excluded; the runtime itself is import-side-effect-free
+(verified: no runnable templates ship in the package, the Marko 5
+compat file the translator bare-imports lives in the runtime-class
+package, and all runtime-internal imports carry bindings). This alone
+shrank a plain
+non-persisted fixture page bundle 16.1→2.7 kB min — module bodies were
+retained as potential side effects), and three **file splits by
+phase** (spread/`\_attr_content`machinery out of`dom/dom.ts`into`dom/spread.ts`; `\_enable_catch`out of the queue into control-flow
+behind`enableCatchPending`wrap hooks;`\_script_update`/`\_updating`out of the applier file into the queue). The remaining follow-up is
+finishing the phase partition (controllable`\_script`vs`\_default`
    variants, control-flow's construction API) — mechanical now that the
    packaging supports it.
 2. **Module-state duality is the real design constraint.** The register

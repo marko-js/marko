@@ -16,7 +16,9 @@
     "directory": "packages/runtime-tags"
   },
   "license": "MIT",
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.marko"
+  ],
   "exports": {
     ".": {
       "types": "./index.d.ts"

@@ -95,7 +95,7 @@ attempt was built and parked** (see the handoff's "Attempted and parked"
 section): all suites and the app passed, but (1) the eager win is gated
 on finishing the runtime's phase partition — a module mixing
 hydration-used and lazily-used exports is hosted in one (eager) chunk
-with all its imports; the enablers landed (`sideEffects: false`,
+with all its imports; the enablers landed (`"sideEffects": ["**/*.marko"]`,
 preserved dist modules behind the `dom.mjs` facade, spread/catch/
 `_script_update` file splits), with controllable and control-flow still
 mixed-phase — and (2) the register module duplicates template module
