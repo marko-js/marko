@@ -73,3 +73,22 @@ are harmless when the joined statement's output is a server-captured hole
 (the merge places it), but a non-captured side effect (eg `_return_change`
 mixing two such bindings) would silently not run. Statements referencing
 only never-firing bindings probably belong in setup placement instead.
+
+## Optimize-mode persisted updates crash reconciling resumed request-derived loops
+
+`packages/runtime-tags/src/dom/control-flow.ts:807` | 2026-07-04 | impact:high | effort:med
+
+In optimize builds only, dispatching a `"for"` update merge against a
+_resumed_ scope crashes: `scope[nodeAccessor]` is undefined in the `loop()`
+reconcile (`referenceNode.nodeType` TypeError), so the loop's anchor node
+was never hydrated. Debug builds work, and the main/update compiles agree
+on the encoded accessor (`_update_for(2, …)` vs `_for_of(2, …)`), so the
+suspect is optimize-mode resume-marker emission dropping the loop anchor
+for a fully request-derived loop (nothing retained client-side reads it —
+except the separately-compiled `?update` entry). Repro: fixture
+`persisted-update-attr-items` with `skip_ssr` removed (debug passes,
+optimize ssr throws on the navigate step). Notably the ecommerce
+production build's `/search` grid — for over request-derived products in a
+content section — reconciles fine, so the gap is shape-specific; find the
+divergence (walks marker emission vs `writeHTMLResumeStatements` gating
+under the persisted bit) and re-enable the fixture's ssr leg.

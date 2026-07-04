@@ -819,6 +819,18 @@ export default {
                   }
 
                   if (meta.dynamicValues) {
+                    // Item-split values still merge the server-captured
+                    // whole value (the html compile captures it either
+                    // way); the shared gates exclude state-mixing values,
+                    // so the whole-value write never stomps client-owned
+                    // items.
+                    recordAttrUpdateMerge(
+                      nodeBinding,
+                      tagSection,
+                      name,
+                      helper,
+                      value,
+                    );
                     const keys = Object.keys(meta.dynamicValues);
 
                     if (keys.length === 1) {
