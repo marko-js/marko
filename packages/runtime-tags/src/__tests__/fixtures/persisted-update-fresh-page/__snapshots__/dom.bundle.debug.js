@@ -126,9 +126,9 @@ const getProducts = typeof window === "undefined" ? (ids) => ids.map((id) => ({
 })) : undefined;
 
 // tags/shared-list.marko
-const $template$2 = "";
-const $walks$2 = "";
-const $setup$2 = () => {};
+const $template = "";
+const $walks = "";
+const $setup = () => {};
 const subsByKey = {};
 const $value = /* @__PURE__ */ _let("value/3", ($scope) => _return($scope, $scope.value));
 const $input_name__OR__$global_data__script = _script_update("__tests__/tags/shared-list.marko_0_input_name_$global_data", ($scope) => {
@@ -148,7 +148,7 @@ const $input_name = /* @__PURE__ */ _const("input_name", ($scope) => {
 	$value($scope, $scope.$global.data[$scope.input_name]);
 	$input_name__OR__$global_data($scope);
 });
-const $input$2 = ($scope, input) => $input_name($scope, input.name);
+const $input = ($scope, input) => $input_name($scope, input.name);
 function $valueChange($scope) {
 	return function(next) {
 		$scope.$global.data[$scope.input_name] = next;
@@ -157,11 +157,11 @@ function $valueChange($scope) {
 }
 _resume("__tests__/tags/shared-list.marko_0/valueChange", $valueChange);
 enableBranches();
-var shared_list_default = /* @__PURE__ */ _template("__tests__/tags/shared-list.marko", "", "", $setup$2, $input$2);
+var shared_list_default = /* @__PURE__ */ _template("__tests__/tags/shared-list.marko", "", "", $setup, $input);
 
 // tags/actions.marko
-const $template$1 = /* @__PURE__ */ ((_w0) => `${_w0}<button class=add>added <!> of <!> (<!> in cart)</button>`)("");
-const $walks$1 = /* @__PURE__ */ ((_w0) => `0${_w0}& Db%c%c%l`)("");
+const $template$2 = /* @__PURE__ */ ((_w0) => `${_w0}<button class=add>added <!> of <!> (<!> in cart)</button>`)("");
+const $walks$2 = /* @__PURE__ */ ((_w0) => `0${_w0}& Db%c%c%l`)("");
 const $productId = /* @__PURE__ */ _const("productId", ($scope) => _text($scope["#text/4"], $scope.productId));
 const $input_id = ($scope, input_id) => {
 	if (!_updating()) $productId($scope, input_id);
@@ -169,38 +169,38 @@ const $input_id = ($scope, input_id) => {
 const $list = _var_resume("__tests__/tags/actions.marko_0_list/var", /* @__PURE__ */ _const("list", ($scope) => $list_length($scope, $scope.list?.length)));
 const $list_length = ($scope, list_length) => _text($scope["#text/5"], list_length);
 const $added = /* @__PURE__ */ _let("added/12", ($scope) => _text($scope["#text/3"], $scope.added));
-const $setup__script$1 = _script_update("__tests__/tags/actions.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
+const $setup__script$2 = _script_update("__tests__/tags/actions.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$added($scope, $scope.added + 1);
 	_var_change($scope["#childScope/0"], [...$scope.list, $scope.productId], "list");
 }));
-function $setup$1($scope) {
+function $setup$2($scope) {
 	_var($scope, "#childScope/0", $list);
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
+	/* @__PURE__ */ $setup$3($scope["#childScope/0"]);
 	$input_name($scope["#childScope/0"], "cart");
 	$added($scope, 0);
-	$setup__script$1($scope);
+	$setup__script$2($scope);
 }
 const $input$1 = ($scope, input) => $input_id($scope, input.id);
 enableBranches();
-var actions_default = /* @__PURE__ */ _template("__tests__/tags/actions.marko", $template$1, $walks$1, $setup$1, $input$1);
+var actions_default = /* @__PURE__ */ _template("__tests__/tags/actions.marko", $template$2, $walks$2, $setup$2, $input$1);
 
 // tags/layout.marko
-const $template = "<aside><button class=toggle> </button></aside><section><!></section>";
-const $walks = "D D mD%l";
+const $template$1 = "<aside><button class=toggle> </button></aside><section><!></section>";
+const $walks$1 = "D D mD%l";
 const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/2");
 const $open = /* @__PURE__ */ _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "collapse" : "expand"));
-const $setup__script = _script_update("__tests__/tags/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+const $setup__script$1 = _script_update("__tests__/tags/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
-function $setup($scope) {
+function $setup$1($scope) {
 	$open($scope, false);
-	$setup__script($scope);
+	$setup__script$1($scope);
 }
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/2");
 const $input_content = $dynamicTag;
 const $input = ($scope, input) => $input_content($scope, input.content);
 enableBranches();
-var layout_default = /* @__PURE__ */ _template("__tests__/tags/layout.marko", $template, $walks, $setup, $input);
+var layout_default = /* @__PURE__ */ _template("__tests__/tags/layout.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
 const $template = /* @__PURE__ */ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);
@@ -230,7 +230,7 @@ const $else_content2__setup = ($scope) => {
 	if (!_updating()) $else_content2__product_title._($scope);
 	if (!_updating()) $else_content2__product_price._($scope);
 	if (!_updating()) $else_content2__product_id._($scope);
-	$setup$1($scope["#childScope/3"]);
+	$setup$2($scope["#childScope/3"]);
 	$else_content2__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 };
 const $else_content2__product_title = /* @__PURE__ */ _if_closure("#text/0", 1, ($scope) => {
@@ -291,7 +291,7 @@ const $Cart_content__list = _var_resume("__tests__/template.marko_1_list/var", /
 }));
 const $Cart_content__setup = ($scope) => {
 	_var($scope, "#childScope/0", $Cart_content__list);
-	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
+	/* @__PURE__ */ $setup$3($scope["#childScope/0"]);
 	$input_name($scope["#childScope/0"], "cart");
 };
 const $Cart_content__if = /* @__PURE__ */ _if("#text/2", "<p class=cart>cart is empty</p>", "b", 0, "<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l", $else_content__setup);
@@ -305,7 +305,7 @@ const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => 
 	$count($scope, $scope.count + 1);
 }));
 function $setup($scope) {
-	$setup$3($scope["#childScope/2"]);
+	$setup$1($scope["#childScope/2"]);
 	$count($scope, 0);
 	if (!_updating()) $Cart($scope, { content: $Cart_content($scope) });
 	if (!_updating()) $Item($scope, { content: $Item_content($scope) });

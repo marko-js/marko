@@ -89,7 +89,7 @@ import {
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
-import { getTagRelativePath } from "./custom-tag";
+import { getChildImportPath, getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
@@ -388,7 +388,7 @@ export default {
       } else if (t.isStringLiteral(tagExpression)) {
         tagExpression = importDefault(
           tag.hub.file,
-          getTagRelativePath(tag),
+          getChildImportPath(tag.hub.file, getTagRelativePath(tag)),
           tagExpression.value,
         );
       }

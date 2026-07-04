@@ -24,7 +24,11 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  isOutputHTML,
+  isRegisterEntryBuild,
+} from "../../util/marko-config";
 import type { Binding } from "../../util/references";
 import {
   BindingType,
@@ -302,13 +306,14 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     walks.injectWalks(tag, tagName, t.identifier(childExports.walks));
   } else {
     recordChildUpdateMerge(tag, relativePath, tagName);
+    const importPath = getChildImportPath(file, relativePath);
     knownTagTranslateDOM(
       tag,
       childExports.params,
       (binding, preferredName, directContent) =>
         importOrSelfReferenceName(
           tag.hub.file,
-          relativePath,
+          importPath,
           (directContent && binding.directContentExport) || binding.export!,
           preferredName,
         ),
@@ -323,7 +328,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
                 t.callExpression(
                   importOrSelfReferenceName(
                     file,
-                    relativePath,
+                    importPath,
                     childExports.setup,
                     tagName,
                   ),
@@ -334,15 +339,30 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           },
     );
 
-    write`${importNamed(file, relativePath, childExports.template, `${tagName}_template`)}`;
+    write`${importNamed(file, importPath, childExports.template, `${tagName}_template`)}`;
     walks.injectWalks(
       tag,
       tagName,
-      importNamed(file, relativePath, childExports.walks, `${tagName}_walks`),
+      importNamed(file, importPath, childExports.walks, `${tagName}_walks`),
     );
   }
 
   tag.remove();
+}
+
+// Register entry builds reference child template render graphs (template,
+// walks, setup, value setters) from the child's own `?register` module: the
+// graphs exist for persisted updates, which only run once the `?update`/
+// `?register` chunk loads, and importing them from the child's main module
+// would pin every child's otherwise tree-shakeable render graph into the
+// eager hydration chunks. Circular (self) references keep the plain path so
+// they stay local identifiers.
+export function getChildImportPath(file: t.BabelFile, relativePath: string) {
+  return isRegisterEntryBuild() &&
+    relativePath.endsWith(".marko") &&
+    !isCircularRequest(file, relativePath)
+    ? `${relativePath}?register`
+    : relativePath;
 }
 
 export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {

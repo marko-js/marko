@@ -48,16 +48,16 @@ const $update = (patch, live) => {
 var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
 
 // tags/price.marko
-const $template = "<span class=price>$<!></span>";
-const $walks = " Db%l";
-const $setup = () => {};
+const $template$1 = "<span class=price>$<!></span>";
+const $walks$1 = " Db%l";
+const $setup$1 = () => {};
 const $input_amount = ($scope, input_amount) => {
 	_attr($scope["#span/0"], "title", `$${input_amount.toFixed(2)}`);
 	_text($scope["#text/1"], input_amount.toFixed(2));
 };
-const $input = ($scope, input) => $input_amount($scope, input.amount);
+const $input$1 = ($scope, input) => $input_amount($scope, input.amount);
 enableBranches();
-var price_default = /* @__PURE__ */ _template("__tests__/tags/price.marko", $template, $walks, $setup, $input);
+var price_default = /* @__PURE__ */ _template("__tests__/tags/price.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = "<h1> </h1><a>specs</a><button> </button><section></section><ul></ul>";

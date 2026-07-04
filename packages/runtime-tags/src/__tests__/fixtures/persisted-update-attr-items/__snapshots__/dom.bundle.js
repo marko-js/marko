@@ -1,3 +1,6 @@
+// tags/chip-list.marko
+enableBranches();
+
 // template.marko
 const $count = /* @__PURE__ */ _let(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a2", ($scope) => _on($scope.a, "click", function() {
@@ -32,6 +35,3 @@ const $update = (patch, live) => {
 	if ("c" in patch) chip_list_marko_update_default(patch["c"], live["c"]);
 };
 var template_marko_update_default = _resume("a1", $update);
-
-// tags/chip-list.marko
-enableBranches();

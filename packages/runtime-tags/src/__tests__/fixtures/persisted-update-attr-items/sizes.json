@@ -1,22 +1,24 @@
 {
   "dom": {
     "template.marko.page.mjs": {
-      "min": 179,
-      "brotli": 135
+      "total": {
+        "min": 179,
+        "brotli": 133
+      },
+      "files": {
+        "tags/chip-list.marko": 62,
+        "template.marko": 263
+      }
     },
     "update.js": {
       "total": {
-        "min": 3118,
-        "brotli": 1530
+        "min": 3114,
+        "brotli": 1528
       },
       "files": {
         "tags/chip-list.marko.update.mjs": 829,
         "template.marko.update.mjs": 355
       }
-    },
-    "chip-list.mjs": {
-      "min": 7418,
-      "brotli": 3251
     }
   },
   "html": {

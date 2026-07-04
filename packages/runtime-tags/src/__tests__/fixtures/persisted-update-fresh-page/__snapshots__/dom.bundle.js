@@ -1,3 +1,33 @@
+// tags/actions.marko
+const $template = /* @__PURE__ */ ((_w0) => `${_w0}<button class=add>added <!> of <!> (<!> in cart)</button>`)("");
+const $walks = /* @__PURE__ */ ((_w0) => `0${_w0}& Db%c%c%l`)("");
+const $productId = /* @__PURE__ */ _const(9, ($scope) => _text($scope.e, $scope.j));
+const $input_id = ($scope, input_id) => {
+	if (!_updating()) $productId($scope, input_id);
+};
+const $list = _var_resume("b0", /* @__PURE__ */ _const(10, ($scope) => $list_length($scope, $scope.k?.length)));
+const $list_length = ($scope, list_length) => _text($scope.f, list_length);
+const $added = /* @__PURE__ */ _let(12, ($scope) => _text($scope.d, $scope.m));
+const $setup__script$2 = _script_update("b1", ($scope) => _on($scope.c, "click", function() {
+	$added($scope, $scope.m + 1);
+	_var_change($scope.a, [...$scope.k, $scope.j]);
+}));
+function $setup($scope) {
+	_var($scope, 0, $list);
+	/* @__PURE__ */ $setup$1($scope.a);
+	$input_name($scope.a, "cart");
+	$added($scope, 0);
+	$setup__script$2($scope);
+}
+enableBranches();
+
+// tags/layout.marko
+const $open = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
+const $setup__script$1 = _script_update("c0", ($scope) => _on($scope.a, "click", function() {
+	$open($scope, !$scope.g);
+}));
+enableBranches();
+
 // template.marko
 _enable_catch();
 const $for_content2__rec_title = ($scope, rec_title) => _text($scope.a, rec_title);
@@ -221,7 +251,7 @@ const getProducts = typeof window === "undefined" ? (ids) => ids.map((id) => ({
 })) : void 0;
 
 // tags/shared-list.marko
-const $setup$1 = () => {};
+const $setup = () => {};
 const subsByKey = {};
 const $value = /* @__PURE__ */ _let(3, ($scope) => _return($scope, $scope.d));
 const $input_name__OR__$global_data__script = _script_update("d1", ($scope) => {
@@ -248,34 +278,4 @@ function $valueChange($scope) {
 	};
 }
 _resume("d0", $valueChange);
-enableBranches();
-
-// tags/actions.marko
-const $template = /* @__PURE__ */ ((_w0) => `${_w0}<button class=add>added <!> of <!> (<!> in cart)</button>`)("");
-const $walks = /* @__PURE__ */ ((_w0) => `0${_w0}& Db%c%c%l`)("");
-const $productId = /* @__PURE__ */ _const(9, ($scope) => _text($scope.e, $scope.j));
-const $input_id = ($scope, input_id) => {
-	if (!_updating()) $productId($scope, input_id);
-};
-const $list = _var_resume("b0", /* @__PURE__ */ _const(10, ($scope) => $list_length($scope, $scope.k?.length)));
-const $list_length = ($scope, list_length) => _text($scope.f, list_length);
-const $added = /* @__PURE__ */ _let(12, ($scope) => _text($scope.d, $scope.m));
-const $setup__script$1 = _script_update("b1", ($scope) => _on($scope.c, "click", function() {
-	$added($scope, $scope.m + 1);
-	_var_change($scope.a, [...$scope.k, $scope.j]);
-}));
-function $setup($scope) {
-	_var($scope, 0, $list);
-	/* @__PURE__ */ $setup$1($scope.a);
-	$input_name($scope.a, "cart");
-	$added($scope, 0);
-	$setup__script$1($scope);
-}
-enableBranches();
-
-// tags/layout.marko
-const $open = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
-const $setup__script = _script_update("c0", ($scope) => _on($scope.a, "click", function() {
-	$open($scope, !$scope.g);
-}));
 enableBranches();

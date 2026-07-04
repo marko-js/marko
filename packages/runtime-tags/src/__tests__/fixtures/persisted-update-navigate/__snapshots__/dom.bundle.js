@@ -1,3 +1,6 @@
+// tags/price.marko
+enableBranches();
+
 // template.marko
 const $input_product_featured__OR__expanded = /* @__PURE__ */ _or(16, ($scope) => _attr_class($scope.e, $scope.p && $scope.l && "spotlight"));
 const $expanded = /* @__PURE__ */ _let(15, ($scope) => {
@@ -57,13 +60,3 @@ const $update = (patch, live) => {
 	if ("Af" in patch) $for_update(live, [patch["Af"], "M"]);
 };
 var template_marko_update_default = _resume("a4", $update);
-
-// tags/price.marko
-const $template = "<span class=price>$<!></span>";
-const $walks = " Db%l";
-const $setup = () => {};
-const $input_amount = ($scope, input_amount) => {
-	_attr($scope.a, "title", `$${input_amount.toFixed(2)}`);
-	_text($scope.b, input_amount.toFixed(2));
-};
-enableBranches();

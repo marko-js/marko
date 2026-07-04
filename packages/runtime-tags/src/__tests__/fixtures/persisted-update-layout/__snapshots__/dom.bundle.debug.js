@@ -28,22 +28,22 @@ _update_content("__tests__/template.marko_1_content", $layout_content__update);
 var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
 
 // tags/layout/layout.marko
-const $template = "<header><button> </button></header><main><!></main>";
-const $walks = "D D mD%l";
+const $template$1 = "<header><button> </button></header><main><!></main>";
+const $walks$1 = "D D mD%l";
 const $input_content_direct = /* @__PURE__ */ _dynamic_tag_content("#text/2");
 const $open = /* @__PURE__ */ _let("open/6", ($scope) => _text($scope["#text/1"], $scope.open ? "Close" : "Menu"));
 const $setup__script = _script_update("__tests__/tags/layout/layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$open($scope, !$scope.open);
 }));
-function $setup($scope) {
+function $setup$1($scope) {
 	$open($scope, false);
 	$setup__script($scope);
 }
 const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/2");
 const $input_content = $dynamicTag;
-const $input = ($scope, input) => $input_content($scope, input.content);
+const $input$1 = ($scope, input) => $input_content($scope, input.content);
 enableBranches();
-var layout_default = /* @__PURE__ */ _template("__tests__/tags/layout/layout.marko", $template, $walks, $setup, $input);
+var layout_default = /* @__PURE__ */ _template("__tests__/tags/layout/layout.marko", $template$1, $walks$1, $setup$1, $input$1);
 
 // template.marko
 const $template = $template$1;

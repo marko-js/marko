@@ -1,3 +1,10 @@
+// tags/layout.marko
+const $open = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
+const $setup__script$1 = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
+	$open($scope, !$scope.g);
+}));
+enableBranches();
+
 // template.marko
 const $for_content__spec_name = ($scope, spec_name) => _text($scope.a, spec_name);
 const $for_content__spec_value = ($scope, spec_value) => _text($scope.b, spec_value);
@@ -74,10 +81,3 @@ const $update = (patch, live) => {
 _update_content("a3", $Specs_content__update);
 _update_content("a4", $Overview_content__update);
 var template_marko_update_default = _resume("a2", $update);
-
-// tags/layout.marko
-const $open = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
-const $setup__script = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
-	$open($scope, !$scope.g);
-}));
-enableBranches();

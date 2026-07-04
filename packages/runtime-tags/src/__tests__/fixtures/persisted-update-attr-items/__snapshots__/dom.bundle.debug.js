@@ -39,8 +39,8 @@ function getCategories() {
 }
 
 // tags/chip-list.marko
-const $template = "<div class=chips></div>";
-const $walks = " b";
+const $template$1 = "<div class=chips></div>";
+const $walks$1 = " b";
 const $for_content__search_category__OR__cat = /* @__PURE__ */ _or(4, ($scope) => _attr_class_item($scope["#span/0"], "chip--active", $scope._.search_category === $scope.cat), 0);
 const $for_content__search_category = /* @__PURE__ */ _for_selector("#div/0", "search_category", "cat", $for_content__search_category__OR__cat);
 const $for_content__setup = ($scope) => {
@@ -57,12 +57,12 @@ const $for = /* @__PURE__ */ _for_of("#div/0", "<span class=chip> </span>", " D 
 const $categories = ($scope, categories) => $for($scope, [categories, function(cat) {
 	return cat;
 }]);
-function $setup($scope) {
+function $setup$1($scope) {
 	if (!_updating()) $pattern2($scope, $scope.$global.search);
 	if (!_updating()) $categories($scope, getCategories());
 }
 enableBranches();
-var chip_list_default = /* @__PURE__ */ _template("__tests__/tags/chip-list.marko", $template, " b", $setup);
+var chip_list_default = /* @__PURE__ */ _template("__tests__/tags/chip-list.marko", $template$1, " b", $setup$1);
 
 // template.marko
 const $template = /* @__PURE__ */ ((_w0) => `<button class=count>clicked <!></button>${_w0}`)($template$1);

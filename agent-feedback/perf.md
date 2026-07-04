@@ -102,31 +102,34 @@ preserved dist modules behind the `dom.mjs` facade, spread/catch/
 `_script_update` file splits). Post-split attribution of the /search
 eager closure pinpoints the remaining drivers, largest first:
 
-1. **The slim main still carries the render graph, retainer unknown.**
-   (An earlier revision blamed registrations left in main — that
-   extraction ran against a stale tarball without the gates; the real
-   build's main has zero registrations yet still holds the
-   `_for_of`/`_if` constructions, setups, and update-guarded closure
-   invocations, ~1.8 kB for the search page plus the runtime machinery
-   they reference.) The fixture equivalent
-   (`persisted-update-attr-items`) tree-shakes its whole graph out of
-   main, so the difference lies in shapes the app has and the fixture
-   lacks: `_closure` href closures reading through the owner chain and
-   page-level `_if_closure`/`_for_closure` over promoted `$global`.
-   Next step: extend a fixture to those shapes and do unminified
-   retention analysis on its main module to name the eager root
-   (candidate: the dynamic-closure serialized-subscriber machinery
-   needing client-resolvable closure signals at owner-change, which
-   would make the deferral question "does resume resolve closure
-   subscribers lazily").
+1. **RESOLVED — the render-graph retainer was cross-chunk child imports.**
+   Unminified-build tracing (an unretained fixture ruled out every
+   in-module suspect; the app's eager chunk literally ended in
+   `export { $walks, $setup, $template }`) named it: register entry
+   builds imported child template render graphs (template, walks, setup,
+   value setters) from the child's **main** module, so the lazy
+   register/update chunks' use of those exports pinned every child's
+   otherwise tree-shakeable graph into the eager hydration chunks —
+   run's route wrapper made every page a "child". Fixed by pointing
+   child `.marko` imports at the child's `?register` module in register
+   builds (`getChildImportPath` in `visitors/tag/custom-tag.ts`).
+   /search eager fell 31.5→21.2 kB raw, 13.5→9.7 kB gz (non-persisted
+   baseline 8.6/4.5); the `persisted-update-layout` fixture's eager
+   client JS fell 96%.
 2. `controllable.ts` is mixed-phase: hydration `_script` variants (and
    the controlled helpers interactive inputs genuinely need eagerly, eg
    the app's qty input) host together with the `_default`/value writers
    and all five control kinds' machinery — a file split by kind and phase
-   lets per-app usage decide.
-3. `spread.ts`/control-flow hosting follows from (1): once no eager
-   module references branch construction, both should fall out of the
-   eager closure (verify after (1)).
+   lets per-app usage decide. Post-fix this is the whole eager gap on
+   /search: product mains import `_on` + `_attr_input_value*` and get
+   the 11 kB (raw) event+controllable chunk.
+3. `_enable_catch` hosting: a page using `<try>`/`<await>` (the app's
+   /item) calls `_enable_catch()` from its slim main, and it lives in
+   `dom/control-flow.ts`, which statically imports branch construction
+   plus `common/for.ts` and `dom/spread.ts` — one import drags a 20.6 kB
+   (raw) chunk eager. Splitting the catch machinery into its own module
+   (or trimming what the catch wrappers reference) would confine the
+   cost to what catch actually needs.
 
 ## Persisted compute guards make previously-unused imports bundle client-side
 

@@ -40,8 +40,8 @@ function getItem(id) {
 }
 
 // tags/item-form.marko
-const $template = "<form><input type=number class=qty><input type=hidden name=itemId><button class=add>add</button></form>";
-const $walks = "D b b l";
+const $template$1 = "<form><input type=number class=qty><input type=hidden name=itemId><button class=add>add</button></form>";
+const $walks$1 = "D b b l";
 const $itemId = /* @__PURE__ */ _const("itemId", ($scope) => _attr_input_value_default($scope, "#input/1", $scope.itemId));
 const $input_id = ($scope, input_id) => {
 	if (!_updating()) $itemId($scope, input_id);
@@ -53,7 +53,7 @@ const $setup__script = _script_update("__tests__/tags/item-form.marko_0", ($scop
 		$qty($scope, $scope.qty + 1);
 	});
 });
-function $setup($scope) {
+function $setup$1($scope) {
 	$qty($scope, 1);
 	$setup__script($scope);
 }
@@ -65,7 +65,7 @@ function $valueChange($scope) {
 }
 _resume("__tests__/tags/item-form.marko_0/valueChange", $valueChange);
 enableBranches();
-var item_form_default = /* @__PURE__ */ _template("__tests__/tags/item-form.marko", $template, $walks, $setup, $input);
+var item_form_default = /* @__PURE__ */ _template("__tests__/tags/item-form.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
 const $template = /* @__PURE__ */ ((_w0) => `<input class=title><select class=category><option value=odd>odd</option><option value=even>even</option></select>${_w0}`)($template$1);

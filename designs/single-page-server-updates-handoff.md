@@ -657,18 +657,36 @@ the parked split above is **landed**, with both attempt-1 findings solved:
   process at hydration), and @marko/vite resolves `?register` mirroring
   `?update`. Suite 8371 passing with rendered output byte-identical; all
   38 app browser checks green.
-- **The eager win is still pending.** The gates verifiably work — the
-  real build's page main constructs plain `_if`/`_for_of` with zero
-  registrations — but `/search` eager stays ~31.5 kB raw: the main
-  module still _carries_ the full render graph (constructions, setups,
-  update-guarded closure invocations), retained by a reference chain the
-  minified output doesn't conclusively name (the fixture equivalent,
-  `persisted-update-attr-items`, drops its whole graph from main — the
-  app page differs in its `_closure`-over-owner-chain href closures and
-  page-level `_if_closure` shapes). Next step: a minimal fixture
-  reproducing those shapes, then unminified retention analysis of its
-  main module; the mixed-phase runtime hosting (controllable,
-  control-flow) remains the second lever after it.
+- **The eager win landed** (`fix: register builds import child templates
+via ?register`). The retainer was named by elimination: a fixture
+  reproducing the app's suspect shapes (owner-chain href closures,
+  page-level `_if_closure` over promoted `$global`) tree-shook its whole
+  graph from main, so the retention had to be a real cross-module
+  reference — and an unminified app build (`build.minify: false`) showed
+  it plainly: the eager page chunk ended in
+  `export { $walks, $setup, $template }`, imported by the **lazy**
+  register/update chunk. Register entry builds imported child template
+  render graphs (template, walks, setup, value setters) from the child's
+  _main_ module; since a module is hosted in one chunk, the lazy chunk's
+  use of those exports pinned every child's otherwise tree-shakeable
+  graph into the eager chunks — and run's route wrapper makes every page
+  a child tag, so it bit every route. Fix: `getChildImportPath`
+  (`visitors/tag/custom-tag.ts`, also used by dynamic tags) points child
+  `.marko` imports at `?register` in register builds, keeping circular
+  self-references local; @marko/vite and the fixture harness already
+  resolve arbitrary `?register` importees. Result: page mains are now
+  fully slim in the real build (/search main region = one
+  `enableBranches()` call, 7.7 kB → 698 B unminified), eager /search
+  **21.2 kB raw / 9.7 kB gz** (was 31.5/13.5; non-persisted baseline
+  8.6/4.5), /cart 15.9/7.3, /item 28.4/13.1. The
+  `persisted-update-layout` fixture's eager client JS fell 96%. All 38
+  browser checks + duality probe re-validated (production and dev);
+  suite 8377 passing with non-persisted output untouched. Remaining
+  eager gap is runtime hosting, not graphs: the controllable kind/phase
+  split (qty input pulls the whole 11 kB event+controllable chunk) and
+  `_enable_catch` living in `dom/control-flow.ts` (an `<await>`/`<try>`
+  page eagerly drags the 20.6 kB control-flow+for+spread chunk for that
+  one call) — both recorded in `agent-feedback/perf.md`.
 
 **Implemented** (`fix: per-translate abort-signal ids` + shared compiler
 caches): the `?update` entry compiles now share the whole build's compiler
