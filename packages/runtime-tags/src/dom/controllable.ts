@@ -178,7 +178,14 @@ export function _attr_input_value_default(
   const normalizedValue = normalizeAttrValue(value) || "";
   if (el.defaultValue !== normalizedValue) {
     const restoreValue =
-      scope[AccessorProp.Gen] < runId ? el.value : normalizedValue;
+      // Types whose `value` IDL attribute reflects the content attribute
+      // (hidden inputs, button labels, checkbox/radio values) have no
+      // user-owned live value to preserve -- restoring would write the
+      // stale attribute back.
+      scope[AccessorProp.Gen] < runId &&
+      !/^(?:hidden|submit|image|reset|button|checkbox|radio)$/.test(el.type)
+        ? el.value
+        : normalizedValue;
     el.defaultValue = normalizedValue;
     setInputValue(el, restoreValue);
   }

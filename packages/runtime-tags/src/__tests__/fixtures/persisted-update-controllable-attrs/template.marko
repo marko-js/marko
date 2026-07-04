@@ -1,0 +1,10 @@
+import { getItem } from "./data";
+
+<const/[id]=$global.item>
+<const/item=getItem(id)>
+<input.title value=item.title>
+<select.category value=item.category>
+  <option value="odd">odd</option>
+  <option value="even">even</option>
+</select>
+<item-form id=item.id/>

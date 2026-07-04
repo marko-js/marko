@@ -31,6 +31,25 @@ export type UpdateMerge =
       accessor: t.StringLiteral | t.NumericLiteral;
     }
   | {
+      /**
+       * A controllable attr (`value` on input/select/textarea, `checked`,
+       * `open`): replays through the helper's `_default` variant against
+       * the live scope + node accessor (it owns default-vs-live value
+       * semantics), not a plain attr write.
+       */
+      kind: "controllable";
+      /** Full patch key (`UpdateAttr:<name>:<accessor>`). */
+      key: string;
+      helper:
+        | "_attr_input_value_default"
+        | "_attr_input_checked_default"
+        | "_attr_select_value_default"
+        | "_attr_textarea_value_default"
+        | "_attr_details_open_default"
+        | "_attr_dialog_open_default";
+      accessor: t.StringLiteral | t.NumericLiteral;
+    }
+  | {
       kind: "if";
       accessor: t.StringLiteral | t.NumericLiteral;
       signalId: string;

@@ -1,4 +1,4 @@
-// size: 27348 (min) 10005 (brotli)
+// size: 27419 (min) 10041 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1242,7 +1242,11 @@ function _attr_input_value_default(scope, nodeAccessor, value) {
   let el = scope[nodeAccessor],
     normalizedValue = normalizeAttrValue(value) || "";
   if (el.defaultValue !== normalizedValue) {
-    let restoreValue = scope.H < runId ? el.value : normalizedValue;
+    let restoreValue =
+      scope.H < runId &&
+      !/^(?:hidden|submit|image|reset|button|checkbox|radio)$/.test(el.type)
+        ? el.value
+        : normalizedValue;
     ((el.defaultValue = normalizedValue), setInputValue(el, restoreValue));
   }
 }

@@ -380,6 +380,27 @@ export default {
 
         if (staticControllable) {
           const hasChangeHandler = !!staticControllable.attrs[1];
+          // Controllable values (`value`/`checked`/`open`) render through
+          // their helper rather than a plain attr write, so the update
+          // capture wraps the helper's value argument in place -- every
+          // downstream path (the generic write here, the select/textarea
+          // specials below) then evaluates the capture. Compiled merges
+          // replay it through the helper's `_default` variant.
+          // (`checkedValue` pairs two interdependent values and is not
+          // captured.)
+          const controllableValueAttr =
+            staticControllable.helper === "_attr_input_checkedValue"
+              ? undefined
+              : staticControllable.attrs[0];
+          if (controllableValueAttr) {
+            controllableValueAttr.value =
+              buildAttrHoleValue(
+                nodeBinding,
+                tagSection,
+                controllableAttrName(staticControllable.helper),
+                controllableValueAttr.value,
+              ) || controllableValueAttr.value;
+          }
           if (tagName !== "select" && tagName !== "textarea") {
             write`${callRuntime(
               staticControllable.helper,
@@ -743,6 +764,17 @@ export default {
           const hasChangeHandler = !!staticControllable.attrs[1];
           const firstAttr = staticControllable.attrs.find(Boolean)!;
           const referencedBindings = firstAttr.value.extra?.referencedBindings;
+          if (
+            staticControllable.helper !== "_attr_input_checkedValue" &&
+            staticControllable.attrs[0]
+          ) {
+            recordControllableUpdateMerge(
+              nodeBinding,
+              tagSection,
+              staticControllable.helper,
+              staticControllable.attrs[0].value,
+            );
+          }
           const values = (
             hasChangeHandler
               ? staticControllable.attrs
@@ -1442,6 +1474,47 @@ function recordAttrUpdateMerge(
     helper,
     accessor,
   });
+}
+
+// The controllable counterpart of `recordAttrUpdateMerge`: these attrs
+// re-render through their helper's `_default` variant (scope + node
+// accessor -- it owns default-vs-live value semantics: an interactive
+// input's typed value survives, hidden/button-likes track the attribute),
+// not a plain attr write. Same gates and patch key as the html capture,
+// which wraps the helper's value argument.
+function recordControllableUpdateMerge(
+  nodeBinding: Binding | undefined,
+  tagSection: Section,
+  helper: Exclude<
+    NonNullable<RelatedControllable>["helper"],
+    "_attr_input_checkedValue"
+  >,
+  value: t.Expression,
+) {
+  if (!nodeBinding || !isUpdateEntryBuild()) return;
+  const sources = getSerializeSourcesForRef(
+    value.extra?.referencedBindings as ReferencedBindings,
+  );
+  if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
+    return;
+  const accessor = getScopeAccessorLiteral(nodeBinding);
+  addUpdateMerge(tagSection, {
+    kind: "controllable",
+    key:
+      getUpdateAttrPrefix() +
+      controllableAttrName(helper) +
+      ":" +
+      accessor.value,
+    helper: `${helper}_default`,
+    accessor,
+  });
+}
+
+// `_attr_input_value` -> `value`: controllable captures key off the
+// canonical attr name (on these tags those names always route through the
+// controllable carve-out, so they cannot collide with a plain attr hole).
+function controllableAttrName(helper: string) {
+  return helper.slice(helper.lastIndexOf("_") + 1);
 }
 
 function factorAttrConditional(value: t.Expression): t.Expression {

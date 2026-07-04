@@ -483,6 +483,66 @@ payloads stay byte-identical. Remaining wire-delivery sequence: fragment
 loaded), CSS/asset frames, `x-marko-have` T2 pruning; then POST/PRG
 forms ride the seeding.
 
+**Implemented** (`marko-js/run` branch, `feat: persisted router intercepts
+POST forms as PRG updates`): **any in-app interaction can be persisted-page
+driven now** — links, GET forms, and POST forms all route through the
+update pipeline with full-navigation fallback. POSTs submit via fetch with
+update content negotiation (enctype honored: url-encoded default,
+`multipart/form-data` as FormData, `text/plain` stays native; submitter
+`formaction`/`formmethod`/`formenctype`/`formtarget` overrides; server
+negotiation is method-agnostic now); the handler mutates and PRGs
+(`ctx.back()`), fetch follows the redirect, and the final GET's patch
+applies in place — a same-URL refresh adds no history entry, so
+remove/clear cycles leave back pointing at the previous page. Two rules
+keep mutations safe: they are **never aborted** (only their application is
+superseded, via the per-frame signal check) and **never replayed** by the
+fallback ladder (with a response in hand the final URL is followed with a
+plain GET; without one the submission is handed back to the browser via
+`requestSubmit` under a re-entry flag — native resubmission semantics).
+Content-type (not status) decides patch acceptance, so a non-2xx
+validation re-render still applies in place, keeping focus and scroll. A
+`marko-run:navigate` event fires after every applied navigation; the
+ecommerce `let-global` mirrors re-read `$global.data` on it, so
+server-driven mutations reach client state (header cart count) with zero
+app-specific router code. The cart page is now plain `method="POST"`
+forms with zero client JS — validated on the production build (POST probe
+10/10: in-place row removal, patched total, synced header count, no
+history growth, clear-cart branch swap, clean back). `defaultPrevented`
+submissions (the app's own optimistic add-to-cart) stay untouched.
+
+**Implemented** (`feat: controllable attr update capture/merge`): the
+slice-2 deferral "controllable inputs have no merge emission yet" closed —
+found because the POST slice's PRG forms depend on hidden inputs, which
+went silently stale on matched scopes (item→item navigation left
+`value=input.id` at the previous product — add-to-cart then mutated the
+wrong product) and rendered with **no value at all** in fresh subtrees
+(the persisted-arrived cart's remove forms posted an empty `productId`,
+failing validation into a visible no-op). Controllable attrs (`value` on
+input/select/textarea, `checked`, `open`) render through controllable
+helpers rather than plain attr writes, so the plain-attr capture/merge
+never saw them: the html compile now wraps the helper's value argument in
+the same `_hole_value` capture (mutated in place so the select/textarea
+special paths inherit it), and the update entry records a `"controllable"`
+merge replaying `patch[key]` through the helper's `_default` variant
+against the live scope — the variant that owns default-vs-live value
+semantics (typed text survives on matched scopes, hidden/button-likes
+track the attribute, selects re-default their options, `open` keeps its
+create-only semantics). `_attr_input_value_default` itself no longer
+restores the stale attribute on value-IDL-reflecting types (hidden,
+buttons, checkbox/radio — there is no user-owned live value to preserve);
++43 B brotli runtime cost. Bound (`:=`) controllables are state-sourced
+and skip the shared gates as before. Fixture
+`persisted-update-controllable-attrs` pins all four semantics (hidden
+follows the patch, text preserves the typed value while re-defaulting,
+select re-defaults, bound qty untouched with the child still interactive).
+Not covered (recorded in `agent-feedback/bugs.md`): `checkedValue` (two
+interdependent values — sparse per-key captures can't replay the pair),
+controllables reached through spreads (`_attrs` resolves them at runtime;
+capture needs to move into the html runtime), and `<option value=dynamic>`
+(`_attr_option_value` has no capture). Payload cost of the new captures:
+search +0.2 KB gzip (its sort select and query input now ride updates),
+item unchanged.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by
@@ -523,8 +583,10 @@ live only here so far:
   spine-class under the flag. Most are structural (closure sets, indexes,
   child scope refs); audit for value-like entries that would serialize
   initially without need.
-- Merge shapes beyond the prototype: dynamic tags, attr tags, `<await>`
-  mid-patch, hoists/getters, tag variables, controllable attrs.
+- Merge shapes beyond the prototype: attr tags, hoists/getters, tag
+  variables (dynamic tags, `<await>`, and controllable attrs are done —
+  see "Current state"; the controllable gaps `checkedValue`/spreads/
+  `<option value>` are in `agent-feedback/bugs.md`).
 - `$global` promotion — **implemented** (commit `feat: promote $global reads
 to param-like sources under the persisted option`). Mechanism: under the
   `persisted` option, `$global` member reads get bindings (program-section

@@ -349,6 +349,24 @@ function buildMerge(
           ),
         ),
       ];
+    case "controllable":
+      // Replays through the controllable helper's `_default` variant
+      // against the live scope -- it owns default-vs-live value semantics
+      // (an interactive input's typed value survives; hidden/button-likes
+      // track the attribute; selects re-select options).
+      return [
+        ifPresent(
+          merge.key,
+          t.expressionStatement(
+            callRuntime(
+              merge.helper,
+              liveIdentifier,
+              t.cloneNode(merge.accessor, true),
+              patchGet(merge.key),
+            ),
+          ),
+        ),
+      ];
     case "if": {
       const rendererKey =
         getAccessorPrefix().ConditionalRenderer + merge.accessor.value;

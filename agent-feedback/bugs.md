@@ -73,3 +73,25 @@ are harmless when the joined statement's output is a server-captured hole
 (the merge places it), but a non-captured side effect (eg `_return_change`
 mixing two such bindings) would silently not run. Statements referencing
 only never-firing bindings probably belong in setup placement instead.
+
+## Controllable update coverage: `checkedValue`, spread controllables, `<option value>`
+
+`packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` (controllable capture/merge) | 2026-07-04 | impact:low | effort:med
+
+The controllable attr update slice covers single-value controllables
+(`value` on input/select/textarea, `checked`, `open`) via the helper's
+`_default` variant. Three adjacent shapes still don't ride persisted
+updates:
+
+1. `checkedValue` pairs two interdependent values (`checkedValue` +
+   `value`); sparse per-key captures can't replay the pair when only one
+   key changed, so it is excluded (uncontrolled request-derived
+   `checkedValue` is rare -- it is virtually always bound).
+2. Controllables reached through a spread (`_attrs`/`_attrs_partial`
+   resolve them at runtime) have no static value expression to wrap, so
+   nothing captures; a fix needs capture support inside the html `_attrs`
+   runtime itself.
+3. `<option value=dynamic>` renders via `_attr_option_value` with no
+   capture/merge (the select's own `value` merge re-selects by option
+   value, so a changed option value under an unchanged select value can
+   leave selection stale).
