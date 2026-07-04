@@ -52,26 +52,50 @@ Existing TODO: `<${input.component}/>` style dynamic tags always compile against
 
 ## Persisted register-all-content retains unreachable DOM renderers (document shell in client bundles)
 
-`packages/runtime-tags/src/translator/visitors/program/dom.ts:130` | 2026-07-04 | impact:high | effort:high
+## Persisted eager client cost: registered renderer graphs keep hydration bundles ~2.3x
 
-Persisted builds register every content section (`_content_resume`) so a
-cross-route swap can resolve any renderer by serialized id, but that
-retains the full DOM renderer graph client-side — including templates the
-client can never be asked to create: the app layout's compiled `_template`
-carries the entire `<html>…</html>` document shell string into the shared
-eager chunk. Measured on marko-ecommerce `/search` (after fixing an
-app-level plain-import leak): persisted client JS is 32.7/14.4 kB raw/gz
-vs 11.8/5.8 kB with `persisted: false`, and ~27 kB raw of that is one
-shared chunk holding the update runtime + run's persisted router + the
-layout/wrapper renderers. Only content that can flow into a dynamic-tag
-hop (`<${input.content}/>`) needs registration; content reachable solely
-as a static child of the root chain (the document shell) never swaps.
-A reachability analysis over content-section flow (or an explicit
-"swappable" marker at the hop) would cut most of this; splitting the
-update runtime helpers main modules import (`_updating`, `_script_update`)
-away from the applier (`createUpdate` and friends, only needed by lazy
-`?update` entries) is the other lever if tree-shaking isn't already
-dropping them (the applier appears in the eager chunk today).
+`packages/runtime-tags/src/translator/visitors/program/dom.ts:130` | 2026-07-04 (re-measured; earlier shell theory corrected) | impact:high | effort:high
+
+Sourcemap-attributed decomposition on marko-ecommerce `/search`
+(production): persisted eager client JS is ~31 kB raw / ~13.5 kB gz vs
+8.6/~4.5 kB with `persisted: false`. The earlier "document shell in the
+eager chunk" framing was wrong in scale — program templates are never
+registered; the shell string (323 B here) rode ordinary export retention
+(a wrapper's `$template` getter interpolates the layout's template
+export), which run's route table forced by dynamically importing wrapper
+modules. That is fixed on the run branch (`import(...).then(() => 0)`
+lets the bundler tree-shake the namespace; −1.9 kB raw app-wide, and it
+scales with real-world shell/layout size). The remaining eager cost is
+structural:
+
+- `marko/dist/dom.mjs` retention grows 8.3 → 21 kB raw: registered
+  renderer graphs (every page/layout client compile registers all its
+  content for swaps and same-route structural merges) reference the full
+  control-flow machinery the templates use anywhere — loops, ifs,
+  await/try/catch, dynamic tags, controllable scripts, spread attrs.
+- The update applier family (`createUpdate`, `_update_*`, ~2 kB) sits in
+  the eager shared chunk because `dom.mjs` is one module and eager code
+  imports `_updating`/`_script_update`/registration helpers from it.
+  Splitting the applier into its own dist entry would defer it to the
+  first `?update` chunk load, but the entry must import dom internals
+  (registry, queue) _externally_ — a self-contained second bundle would
+  duplicate the resume registry and silently pair nothing (the exact bug
+  the entry re-export design exists to avoid); the current
+  `scripts/bundle.mts` has no inter-entry externals.
+- Per-route page client compiles are 1.5–3.2 kB each (vs ~0.1 kB
+  non-persisted) — the renderer graph itself.
+
+The real lever is a **slim hydration entry**: the eager path needs only
+what non-persisted hydration needs (resume + the page's interactive
+signals); the full registration graph (renderers, value signals, merges)
+is consumed only on the first persisted navigation, which already lazily
+loads the `?update` entry — registration could ride that load (e.g. the
+`?update` entry importing a registration-bearing variant of the template
+module, or a separate registration compile). That inverts the cost: pages
+pay persisted bytes when they first navigate, not on first paint. Needs a
+design pass — it splits the template module's top-level side effects
+across two loading stages, and same-route structural updates must still
+find loop/if content registered before the first merge dispatches.
 
 ## Persisted compute guards make previously-unused imports bundle client-side
 

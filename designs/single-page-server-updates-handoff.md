@@ -543,6 +543,25 @@ capture needs to move into the html runtime), and `<option value=dynamic>`
 search +0.2 KB gzip (its sort select and query input now ride updates),
 item unchanged.
 
+**Implemented** (`marko-js/run` branch, `fix: tree-shakeable route-table
+template imports`) + **bundle-size analysis correction**: the client route
+table's `loadTemplate` loaders import template modules for side effects
+only (registration), but a plain dynamic import retained every wrapper's
+exports — and a wrapper's `$template` getter interpolates its layout's
+template export, so the whole document-shell string rode into the shared
+eager chunk. The loaders now use `import(...).then(() => 0)` (namespace
+provably unused), which rolldown/rollup tree-shake: the shell and all
+wrapper/layout template+walks strings drop from client bundles entirely
+(−1.9 kB raw on the benchmark app; scales with real shell size). All four
+browser suites stay green (registration side effects still run). The
+fuller sourcemap-attributed decomposition of the persisted eager cost
+(~31 kB vs 8.6 kB non-persisted on `/search`; registered renderer graphs
+dominate, the applier is only ~2 kB of it) and the **slim hydration
+entry** design sketch — defer the registration graph to the first
+navigation's lazy `?update` load — replaced the outdated
+"register-all-content retains the document shell" theory in
+`agent-feedback/perf.md`.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by
