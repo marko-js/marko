@@ -428,6 +428,27 @@ captured by update renders but the update entry emits no attr merge for
 them (active-chip state goes stale) — the capture/merge predicates at
 `native-tag.ts` disagree for that shape; tracked as the next marko fix.
 
+**Implemented** (`fix: merge item-split class/style attrs in persisted
+updates`): the slice-2 deferral ("item-split class/style values are
+captured by the server but not merged") closed. The dom compile's
+class/style item-split path (static items + keyed dynamic values, the
+filter-chips shape `class=["chip", { "chip--active": expr }]`) now records
+the whole-value attr merge the html compile was already capturing; the
+shared gates exclude state-mixing values, so the whole-value write cannot
+stomp client-owned items. Fixture `persisted-update-attr-items` pins the
+shape (promoted `$global` read ∩ loop param over a server-only list);
+validated on the ecommerce production build (form probe 9/9 — the active
+chip moves on filter updates). The fixture's ssr leg is temporarily
+`skip_ssr`: it exposed a pre-existing **html↔dom binding-id divergence**
+in optimize builds (optimize accessors are `binding.id`; ids shift when a
+file is first analyzed as a child through a parent's shared-cache compile,
+and the shift differs by output target — the harness's html bundle
+hydrates the loop anchor at "a" while dom/update read "c"). Real apps
+currently agree only by consistent module-graph ordering across the two
+vite builds — a latent scope-pairing hazard for the whole feature;
+root-caused with repro in `agent-feedback/bugs.md`, fix direction:
+deterministic per-file binding ids.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by
