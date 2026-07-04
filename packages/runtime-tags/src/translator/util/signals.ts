@@ -327,12 +327,29 @@ export function getSignal(
       } else {
         signal.build = () => {
           const { id, scopeOffset } = intersectionMeta.get(referencedBindings)!;
+          // Promoted `$global` reads (persisted builds) have no client-side
+          // value signal, so nothing invokes the join for them during a
+          // fresh render window -- they don't count toward the pending
+          // gate. (Matched scopes re-render through the queue path, which
+          // ignores it.)
+          let pending = -1;
+          forEach(referencedBindings, (member) => {
+            const sources = member.sources;
+            if (
+              !isPersisted() ||
+              !sources?.global ||
+              sources.state ||
+              sources.param
+            ) {
+              pending++;
+            }
+          });
           return callRuntime(
             "_or",
             t.numericLiteral(id),
             getSignalFn(signal),
-            scopeOffset || referencedBindings.length > 2
-              ? t.numericLiteral(referencedBindings.length - 1)
+            scopeOffset || pending !== 1
+              ? t.numericLiteral(Math.max(pending, 0))
               : undefined,
             scopeOffset && getScopeAccessorLiteral(scopeOffset, true),
           );

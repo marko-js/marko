@@ -344,7 +344,13 @@ function buildMerge(
         bodyStatements.push(
           t.variableDeclaration("const", [
             t.variableDeclarator(patchBranch, patchGet(branchScopesKey)),
-            t.variableDeclarator(liveBranch, liveGet(branchScopesKey)),
+            // Fresh branches (this replay just created one) flush their
+            // queued setup before the body merge fills -- see
+            // `_update_flush_fresh`.
+            t.variableDeclarator(
+              liveBranch,
+              callRuntime("_update_flush_fresh", liveGet(branchScopesKey)),
+            ),
             t.variableDeclarator(
               branchMerge,
               branchMerges.length === 1

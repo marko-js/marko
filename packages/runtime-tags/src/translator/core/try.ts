@@ -30,8 +30,6 @@ import {
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
-import { getSerializeGuard } from "../util/serialize-guard";
-import { isReasonDynamic } from "../util/serialize-reasons";
 import {
   addStatement,
   addValue,
@@ -128,7 +126,6 @@ export default {
         writeHTMLResumeStatements(tagBody);
         tag.insertBefore(translatedAttrs.statements);
 
-        const bodySection = getSectionForBody(tagBody);
         tag
           .replaceWith(
             t.expressionStatement(
@@ -138,19 +135,6 @@ export default {
                 getScopeAccessorLiteral(nodeRef),
                 contentProp?.value,
                 propsToExpression(translatedAttrs.properties),
-                // Update renders serialize the parent -> body branch link
-                // when the body carries a persisted reason. Only persisted
-                // builds pass the guard -- the runtime reads it only in
-                // update mode, and non-persisted output stays byte-identical.
-                ...(isPersisted()
-                  ? [
-                      getSerializeGuard(
-                        section,
-                        bodySection?.serializeReason,
-                        true,
-                      ),
-                    ]
-                  : []),
               ),
             ),
           )[0]
@@ -192,10 +176,12 @@ export default {
         const bodySection = getSectionForBody(tag.get("body"))!;
         const signal = getSignal(section, nodeRef, "try");
 
-        // Request-derived try bodies participate in persisted update
-        // renders: the server serializes the parent -> body branch link and
-        // the update entry dispatches the body's merge from it.
-        if (isPersisted() && isReasonDynamic(bodySection.serializeReason)) {
+        // Try bodies participate in persisted update renders: the server
+        // serializes the parent -> body branch link and the update entry
+        // dispatches the body's merge from it. Boundaries always dispatch --
+        // even a statically-rendered body may hold awaits that need
+        // attaching when the branch was freshly created during an apply.
+        if (isPersisted()) {
           addUpdateMerge(section, {
             kind: "branch",
             accessor: getScopeAccessorLiteral(nodeRef),

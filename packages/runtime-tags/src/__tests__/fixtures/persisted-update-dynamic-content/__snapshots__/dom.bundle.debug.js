@@ -78,12 +78,14 @@ const $Specs_content__for = /* @__PURE__ */ _for_of("#ul/0", $for_content_conten
 const $Specs_content__input_specs = /* @__PURE__ */ _closure_get("input_specs", ($scope) => $Specs_content__for($scope, [$scope._.input_specs, function(spec) {
 	return spec.name;
 }]));
-const $Specs_content__setup = $Specs_content__input_specs;
+const $Specs_content__setup = ($scope) => {
+	if (!_updating()) $Specs_content__input_specs($scope);
+};
 const $Specs_content = _content_resume("__tests__/template.marko_2_content", "<ul></ul>", " b", $Specs_content__setup);
 const $Overview_content__input_title = /* @__PURE__ */ _closure_get("input_title", ($scope) => _text($scope["#text/0"], $scope._.input_title));
 const $Overview_content__setup = ($scope) => {
-	$Overview_content__input_title($scope);
-	$Overview_content__input_summary($scope);
+	if (!_updating()) $Overview_content__input_title($scope);
+	if (!_updating()) $Overview_content__input_summary($scope);
 };
 const $Overview_content__input_summary = /* @__PURE__ */ _closure_get("input_summary", ($scope) => _text($scope["#text/1"], $scope._.input_summary));
 const $Overview_content = _content_resume("__tests__/template.marko_1_content", "<p>Overview of <!>: <!></p>", "Db%c%l", $Overview_content__setup);

@@ -1,4 +1,4 @@
-// size: 27228 (min) 9981 (brotli)
+// size: 27293 (min) 9989 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -304,7 +304,8 @@ let empty = [],
     );
   },
   activePairs,
-  updating = !1;
+  updating = !1,
+  applyGen = 0;
 function attrTag(attrs) {
   return (
     (attrs[Symbol.iterator] = attrTagIterator),
@@ -540,7 +541,7 @@ function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
       scope.H === runId
         ? id in scope
           ? --scope[id] || fn(scope)
-          : (scope[id] = defaultPending)
+          : (scope[id] = defaultPending) || fn(scope)
         : queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
     }
   );
@@ -2692,7 +2693,7 @@ function createUpdate(merge, liveRoot = getUpdateRoot()) {
         let scopes = fill(serializeContext);
         Array.isArray(scopes) && applyScopes(scopes);
       }
-    ((updating = !0), (activePairs = pairs));
+    ((updating = !0), (activePairs = pairs), (applyGen = runId));
     try {
       if ((merge(getScope(1), liveRoot), effectEntries.length)) {
         let effects = [];
@@ -2702,7 +2703,7 @@ function createUpdate(merge, liveRoot = getUpdateRoot()) {
             if (/\D/.test(token)) fn = registeredValues[token];
             else {
               let live = pairs.get(patchScopes[+token]);
-              fn && live && live.H === runId && effects.push(fn, live);
+              fn && live && live.H >= applyGen && effects.push(fn, live);
             }
         }
         runEffects(effects);
@@ -2747,6 +2748,18 @@ function _updating() {
   return updating;
 }
 /**
+ * Called by branch dispatches before running a body merge into a branch
+ * created during this apply: flushes the queue so the fresh subtree's
+ * setup runs *before* the merge fills. Merged values suppress equal-value
+ * signal invocations (`_const` and friends memoize), so a fill applied
+ * first would silently skip setup-time renders -- and with them client
+ * wiring the patch cannot deliver (`<let>` seeding, tag-var returns).
+ * Matched (pre-existing) branches keep fills-first semantics untouched.
+ */
+function _update_flush_fresh(liveBranch) {
+  return (liveBranch && liveBranch.H >= applyGen && run(), liveBranch);
+}
+/**
  * Single-branch boundary (`<await>`/`<try>` body) dispatch. When the live
  * branch is a detached await — a fresh subtree's await whose promise
  * compute was skipped while updating — the body's frame is the resolution:
@@ -2760,7 +2773,7 @@ function _update_branch(patch, live, accessor, bodyMerge) {
   let liveBranch = live[branchKey];
   (!liveBranch && (run(), (liveBranch = live[branchKey]), !liveBranch)) ||
     (liveBranch.V && attachAwaitBranch(live, accessor, liveBranch),
-    bodyMerge && bodyMerge(patchBranch, liveBranch));
+    bodyMerge && bodyMerge(patchBranch, _update_flush_fresh(liveBranch)));
 }
 function _update_content(contentId, merge) {
   _resume(contentId + "!", merge);
@@ -2778,7 +2791,7 @@ function _update_dynamic(patch, live, rendererKey, branchKey, replay) {
     replay(live, renderer);
   }
   let merge = getRegisteredWithScope(rendererId + "!"),
-    liveBranch = live[branchKey];
+    liveBranch = _update_flush_fresh(live[branchKey]);
   merge && patchBranch && liveBranch && merge(patchBranch, liveBranch);
 }
 function _update_html(live, patch, accessor) {

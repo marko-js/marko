@@ -37,13 +37,13 @@ const $try_content__input_productId = /* @__PURE__ */ _closure_get(5, ($scope) =
 	if (!_updating()) $try_content__await_promise($scope, getReviews($scope._._.f));
 }, ($scope) => $scope._._);
 const $try_content__setup = ($scope) => {
-	$try_content__input_productId($scope);
+	if (!_updating()) $try_content__input_productId($scope);
 	$await_content($scope);
 };
 const $if_content__input_productId = /* @__PURE__ */ _if_closure(2, 0, ($scope) => _text($scope.a, $scope._.f));
 const $if_content__try = /* @__PURE__ */ _try(1, "<!><!><!>", "b%c", $try_content__setup);
 const $if_content__setup = ($scope) => {
-	$if_content__input_productId._($scope);
+	if (!_updating()) $if_content__input_productId._($scope);
 	$if_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 };
 const $count = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g));
@@ -82,7 +82,7 @@ const $update = (patch, live) => {
 	if ("f" in patch) live["f"] = patch["f"];
 	if ("Dc" in patch) {
 		$if_update(live, patch["Dc"]);
-		const $patchBranch = patch["Ac"], $liveBranch = live["Ac"], $branchMerge = [$if_content__update, 0][patch["Dc"]];
+		const $patchBranch = patch["Ac"], $liveBranch = _update_flush_fresh(live["Ac"]), $branchMerge = [$if_content__update, 0][patch["Dc"]];
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 };

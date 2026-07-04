@@ -44,7 +44,7 @@ var template_default = _template("a", (input) => {
 				_scope_reason();
 				_scope_id();
 				_html("loading reviews…");
-			}, $scope1_id) }) }, $sg__input_productId);
+			}, $scope1_id) }) });
 			$sg__input_productId && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		} else {

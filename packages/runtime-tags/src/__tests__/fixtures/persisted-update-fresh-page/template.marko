@@ -1,0 +1,32 @@
+import { getProduct, getRecommendations } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Cart>
+  <p class="cart">cart is empty</p>
+</define>
+<define/Item>
+  <const/product=$global.productId && getProduct($global.productId)>
+  <if=!product>
+    <h2>not found</h2>
+  </if>
+  <else>
+    <img.thumb src=product.image alt=product.title>
+    <h2.title>${product.title}</h2>
+    <div.price>$${product.price.toFixed(2)}</div>
+    <actions id=product.id/>
+    <try>
+      <@placeholder>loading recommendations…</@placeholder>
+      <await|recs|=getRecommendations(product.id)>
+        <ul.recs>
+          <for|rec| of=recs by(rec) { return rec.id }>
+            <li>${rec.title}</li>
+          </for>
+        </ul>
+      </await>
+    </try>
+  </else>
+</define>
+
+<layout content=$global.view === "item" ? Item : Cart/>

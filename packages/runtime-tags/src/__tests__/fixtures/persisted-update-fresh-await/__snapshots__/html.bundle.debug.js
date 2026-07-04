@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_scope_reason();
 				const $scope4_id = _scope_id();
 				_html("loading reviews…");
-			}, $scope1_id) }) }, $sg__input_productId);
+			}, $scope1_id) }) });
 			$sg__input_productId && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "5:2");
 			return 0;
 		} else {

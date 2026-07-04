@@ -11,7 +11,7 @@ const $layout_content__setup__script = _script_update("a2", ($scope) => _on($sco
 	$count($scope._, $scope._.e + 1);
 }));
 const $layout_content__setup = ($scope) => {
-	$layout_content__input_title($scope);
+	if (!_updating()) $layout_content__input_title($scope);
 	$layout_content__count($scope);
 	$layout_content__setup__script($scope);
 };

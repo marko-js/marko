@@ -38,7 +38,7 @@ const $update = (patch, live) => {
 	if ("UpdateAttr:href:#a/1" in patch) _attr(live["#a/1"], "href", patch["UpdateAttr:href:#a/1"]);
 	if ("ConditionalRenderer:#section/4" in patch) {
 		$if_update(live, patch["ConditionalRenderer:#section/4"]);
-		const $patchBranch = patch["BranchScopes:#section/4"], $liveBranch = live["BranchScopes:#section/4"], $branchMerge = $if_content__update;
+		const $patchBranch = patch["BranchScopes:#section/4"], $liveBranch = _update_flush_fresh(live["BranchScopes:#section/4"]), $branchMerge = $if_content__update;
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 	if ("BranchScopes:#ul/5" in patch) $for_update(live, [patch["BranchScopes:#ul/5"], "#LoopKey"]);
@@ -69,7 +69,9 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__item_name($scope, $params2[0]?.name);
 };
 const $if_content__input_product_sale_percent = /* @__PURE__ */ _if_closure("#section/4", 0, ($scope) => _text($scope["#text/0"], $scope._.input_product_sale_percent));
-const $if_content__setup = $if_content__input_product_sale_percent;
+const $if_content__setup = ($scope) => {
+	if (!_updating()) $if_content__input_product_sale_percent._($scope);
+};
 const $input_product_featured__OR__expanded = /* @__PURE__ */ _or(16, ($scope) => _attr_class($scope["#section/4"], $scope.expanded && $scope.input_product_featured && "spotlight"));
 const $expanded = /* @__PURE__ */ _let("expanded/15", ($scope) => {
 	_text($scope["#text/3"], $scope.expanded ? "Hide" : "Show");

@@ -31,7 +31,10 @@ import {
   writeSignals,
 } from "../../util/signals";
 import { toPropertyName } from "../../util/to-property-name";
-import { registerUpdateValueSignals } from "../../util/update-merges";
+import {
+  isUpdateDeliveredClosure,
+  registerUpdateValueSignals,
+} from "../../util/update-merges";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
 import { scopeIdentifier } from ".";
@@ -46,21 +49,32 @@ export default {
             if (closure.type !== BindingType.constant) {
               const closureSignal = getSignal(childSection, closure);
               if (signalHasStatements(closureSignal)) {
+                const invocation = t.expressionStatement(
+                  t.callExpression(
+                    isDynamicClosure(childSection, closure)
+                      ? closureSignal.identifier
+                      : t.memberExpression(
+                          closureSignal.identifier,
+                          t.identifier("_"),
+                        ),
+                    [scopeIdentifier],
+                  ),
+                );
                 addStatement(
                   "render",
                   childSection,
                   undefined,
-                  t.expressionStatement(
-                    t.callExpression(
-                      isDynamicClosure(childSection, closure)
-                        ? closureSignal.identifier
-                        : t.memberExpression(
-                            closureSignal.identifier,
-                            t.identifier("_"),
-                          ),
-                      [scopeIdentifier],
-                    ),
-                  ),
+                  // Persisted builds skip request-derived closure renders in
+                  // branches created while an update patch applies: normal
+                  // resume never serializes those raw owner values (nothing
+                  // re-runs such closures client-side), so the branch merge
+                  // places the server-rendered holes instead.
+                  isPersisted() && isUpdateDeliveredClosure(closure)
+                    ? t.ifStatement(
+                        t.unaryExpression("!", callRuntime("_updating")),
+                        invocation,
+                      )
+                    : invocation,
                 );
               }
             }

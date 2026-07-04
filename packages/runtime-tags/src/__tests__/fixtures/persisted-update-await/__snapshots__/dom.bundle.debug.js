@@ -63,7 +63,7 @@ const $try_content__input_related = /* @__PURE__ */ _closure_get("input_related"
 	if (!_updating()) $try_content__await_promise($scope, resolveAfter($scope._.input_related, 1));
 });
 const $try_content__setup = ($scope) => {
-	$try_content__input_related($scope);
+	if (!_updating()) $try_content__input_related($scope);
 	$await_content($scope);
 };
 const $count = /* @__PURE__ */ _let("count/10", ($scope) => _text($scope["#text/2"], $scope.count));

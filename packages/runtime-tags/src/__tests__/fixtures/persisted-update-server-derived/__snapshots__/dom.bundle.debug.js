@@ -15,7 +15,7 @@ const $update = (patch, live) => {
 	if ("input_detailId" in patch) live["input_detailId"] = patch["input_detailId"];
 	if ("ConditionalRenderer:#text/2" in patch) {
 		$if_update(live, patch["ConditionalRenderer:#text/2"]);
-		const $patchBranch = patch["BranchScopes:#text/2"], $liveBranch = live["BranchScopes:#text/2"], $branchMerge = [$if_content__update, 0][patch["ConditionalRenderer:#text/2"]];
+		const $patchBranch = patch["BranchScopes:#text/2"], $liveBranch = _update_flush_fresh(live["BranchScopes:#text/2"]), $branchMerge = [$if_content__update, 0][patch["ConditionalRenderer:#text/2"]];
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 };
@@ -42,7 +42,9 @@ const $if_content__details = ($scope, details) => {
 const $if_content__input_detailId = /* @__PURE__ */ _if_closure("#text/2", 0, ($scope) => {
 	if (!_updating()) $if_content__details($scope, getDetails($scope._.input_detailId));
 });
-const $if_content__setup = $if_content__input_detailId;
+const $if_content__setup = ($scope) => {
+	if (!_updating()) $if_content__input_detailId._($scope);
+};
 const $if_content__details_name = ($scope, details_name) => _text($scope["#text/0"], details_name);
 const $if_content__details_price__script = _script_update("__tests__/template.marko_1_details_price", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope._, $scope.details_price);

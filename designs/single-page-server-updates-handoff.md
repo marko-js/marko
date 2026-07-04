@@ -338,6 +338,77 @@ fragment `templates` frames + client content store + `x-marko-from`
 route-pair inclusion (unblocks all server-only pages without loading
 their modules), CSS/asset frames, `x-marko-have` T2 pruning.
 
+**Implemented** (`feat: fresh server-first subtree construction`): the
+second half — server-first pages (request-derived data, awaited sections)
+are now viable cross-route swap targets, constructed entirely from the
+patch. Five composable fixes, each found by walking the ecommerce cart→item
+navigation one crash at a time (fixture `persisted-update-fresh-page`
+mirrors the full shape: layout hop, `$global`-derived server-only product,
+`<if>/<else>`, property closures, a stateful child, a let-global-style
+`$global`-backed shared value with `<return>`+valueChange+pub-sub effect,
+and three `<try>/<await>` sections including static bodies):
+
+1. **Request-derived closure skip** (`visitors/program/dom.ts`,
+   `isUpdateDeliveredClosure` in `update-merges.ts`): fresh branches
+   created during an apply skip setup-time closure renders over state-free
+   request-derived owner values — normal resume never serializes those raw
+   values (nothing re-runs such closures client-side), so they'd
+   dereference `undefined` (`product.price.toFixed(2)` was the production
+   crash); the branch merge places the server-captured holes instead. The
+   exception mirrors `isUpdateCoveredByClientSignals`: signal-invoked,
+   serialized bindings keep firing (their raw value is guaranteed present).
+2. **Boundaries always participate** (`core/await.ts`, `core/try.ts`,
+   `html/writer.ts`): the `isReasonDynamic` gate is gone — await promise
+   computes are always `_updating()`-guarded (`delay(DELAYS.shippingDeals)`
+   references no bindings yet lives behind a `server import`), update
+   renders always write the branch link (a fresh detached await with a
+   _static_ body still needs the link to attach), and `_try` lost its
+   guard argument (the runtime keys off `state.update` alone).
+3. **Flush-fresh ordering** (`_update_flush_fresh` in `dom/update.ts`,
+   emitted by the `if` merge and called by `_update_branch` /
+   `_update_dynamic`): branch dispatches flush the queue before running a
+   body merge into a branch created during this apply, so the fresh
+   subtree's setup runs _before_ the fills. Merged values suppress
+   equal-value signal invocations (`_const` memoizes) — fills-first
+   silently skipped setup renders and with them client wiring the patch
+   cannot deliver (`<let>` seeding from `$global`, `_return`/
+   `_return_change` tag-var wiring; the let-global `cart` was undefined at
+   click time). Matched branches keep fills-first semantics untouched.
+4. **`_or` pending excludes promoted globals** (`util/signals.ts`,
+   `dom/signals.ts`): promoted `$global` reads have no client-side value
+   signal, so they never invoke fresh-render joins — a
+   `valueChange(next) { $global.data[key] = next }` handler's
+   `input ∩ $global` join stalled one short and never wired. The runtime
+   `_or` now runs on the first invocation when emitted pending is 0;
+   matched scopes (queue path) are unaffected.
+5. **Apply-window effects** (`dom/update.ts`): payload effect entries
+   execute for every scope with `Gen >= applyGen` — boundary flushes
+   advance `runId` mid-apply, so the old `Gen === runId` check dropped
+   wiring for scopes created before a same-frame flush (dead add-to-cart
+   button).
+
+Also fixed: the test bundler resolved nested child `?update` imports
+against the fixture root instead of the importer (`utils/bundle.ts`).
+Validated on the ecommerce production build: cart→item (a link click into
+a route whose page is fully server-derived) applies as a true update —
+layout DOM identity survives, recommendations/deals/reviews stream in as
+frames (500/900/1200 ms), add-to-cart works on the swapped page including
+the let-global header count, same-route and popstate navigations keep
+updating in place. **Known limitation (drives the next slice)**: the
+_reverse_ shape — pages deriving content from _client-state_ computes over
+server-only data (cart's `<let/products=getProducts?.(…)>` +
+`<const/entries=…>`) — cannot fresh-construct: update payloads carry no
+state, so the apply now falls back cleanly to a full navigation with
+correct content (before this slice it silently rendered an _empty_ cart
+body; the weak old validation masked it). The fix is the planned
+state-seeding work: the client tells the server what it has
+(`x-marko-from`/`x-marko-have`), the server serializes state for subtrees
+the client will create fresh, and the merge seeds only apply-created
+scopes (matched state stays hostile-patch-proof). Remaining wire-delivery
+sequence: state seeding for fresh subtrees, fragment `templates` frames +
+client content store + `x-marko-from` route-pair inclusion, CSS/asset
+frames, `x-marko-have` T2 pruning.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by
@@ -485,8 +556,13 @@ to param-like sources under the persisted option`). Mechanism: under the
    navigation — done for shared-layout routes** (see "Current state": the
    content-hop swap; the generated client route table subsumed the
    manifest work — its loaders are plain dynamic imports the bundler
-   chunks). Remaining in this slice: wire-delivered resumable html
-   fragments (so pages with server-only setup can be swap targets), and
+   chunks). **Fresh server-first subtree construction — done** (see
+   "Current state": request-derived pages with awaited sections are swap
+   targets, validated cart→item on the production build). Remaining in
+   this slice: state seeding for fresh subtrees (pages deriving content
+   from client-state computes over server-only data — the cart shape —
+   currently fall back; needs `x-marko-from`/`x-marko-have` so the server
+   serializes state only for subtrees the client will create fresh), and
    scroll/focus refinements (hash-fragment scroll after apply,
    `<a rel=external>` audit). The update wire's `new Function` frame eval
    also needs a CSP story (initial-render resume runs as inline scripts;

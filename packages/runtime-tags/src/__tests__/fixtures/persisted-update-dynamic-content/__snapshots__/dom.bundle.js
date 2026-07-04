@@ -21,11 +21,14 @@ const $Specs_content__for = /* @__PURE__ */ _for_of(0, $for_content_content[0], 
 const $Specs_content__input_specs = /* @__PURE__ */ _closure_get(8, ($scope) => $Specs_content__for($scope, [$scope._.i, function(spec) {
 	return spec.name;
 }]));
-const $Specs_content = _content_resume("a2", "<ul></ul>", " b", $Specs_content__input_specs);
+const $Specs_content__setup = ($scope) => {
+	if (!_updating()) $Specs_content__input_specs($scope);
+};
+const $Specs_content = _content_resume("a2", "<ul></ul>", " b", $Specs_content__setup);
 const $Overview_content__input_title = /* @__PURE__ */ _closure_get(6, ($scope) => _text($scope.a, $scope._.g));
 const $Overview_content__setup = ($scope) => {
-	$Overview_content__input_title($scope);
-	$Overview_content__input_summary($scope);
+	if (!_updating()) $Overview_content__input_title($scope);
+	if (!_updating()) $Overview_content__input_summary($scope);
 };
 const $Overview_content__input_summary = /* @__PURE__ */ _closure_get(7, ($scope) => _text($scope.b, $scope._.h));
 const $Overview_content = _content_resume("a3", "<p>Overview of <!>: <!></p>", "Db%c%l", $Overview_content__setup);

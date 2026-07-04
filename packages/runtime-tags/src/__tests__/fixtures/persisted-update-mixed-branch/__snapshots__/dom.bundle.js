@@ -4,7 +4,7 @@ const $else_content__setup__script = _script_update("a2", ($scope) => _on($scope
 	$count($scope._, $scope._.f + 1);
 }));
 const $else_content__setup = ($scope) => {
-	$else_content__input_title._($scope);
+	if (!_updating()) $else_content__input_title._($scope);
 	$else_content__count._($scope);
 	$else_content__setup__script($scope);
 };
@@ -25,7 +25,7 @@ const $update = (patch, live) => {
 	if ("e" in patch) live["e"] = patch["e"];
 	if ("Da" in patch) {
 		$if_update(live, patch["Da"]);
-		const $patchBranch = patch["Aa"], $liveBranch = live["Aa"], $branchMerge = [0, $else_content__update][patch["Da"]];
+		const $patchBranch = patch["Aa"], $liveBranch = _update_flush_fresh(live["Aa"]), $branchMerge = [0, $else_content__update][patch["Da"]];
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 };

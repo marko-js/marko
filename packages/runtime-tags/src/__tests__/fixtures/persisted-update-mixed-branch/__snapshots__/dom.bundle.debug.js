@@ -11,7 +11,7 @@ const $update = (patch, live) => {
 	if ("input_title" in patch) live["input_title"] = patch["input_title"];
 	if ("ConditionalRenderer:#text/0" in patch) {
 		$if_update(live, patch["ConditionalRenderer:#text/0"]);
-		const $patchBranch = patch["BranchScopes:#text/0"], $liveBranch = live["BranchScopes:#text/0"], $branchMerge = [0, $else_content__update][patch["ConditionalRenderer:#text/0"]];
+		const $patchBranch = patch["BranchScopes:#text/0"], $liveBranch = _update_flush_fresh(live["BranchScopes:#text/0"]), $branchMerge = [0, $else_content__update][patch["ConditionalRenderer:#text/0"]];
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 };
@@ -25,7 +25,7 @@ const $else_content__setup__script = _script_update("__tests__/template.marko_1"
 	$count($scope._, $scope._.count + 1);
 }));
 const $else_content__setup = ($scope) => {
-	$else_content__input_title._($scope);
+	if (!_updating()) $else_content__input_title._($scope);
 	$else_content__count._($scope);
 	$else_content__setup__script($scope);
 };

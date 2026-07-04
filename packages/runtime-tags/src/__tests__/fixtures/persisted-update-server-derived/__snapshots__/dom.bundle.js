@@ -15,7 +15,9 @@ const $if_content__details = ($scope, details) => {
 const $if_content__input_detailId = /* @__PURE__ */ _if_closure(2, 0, ($scope) => {
 	if (!_updating()) $if_content__details($scope, getDetails($scope._.f));
 });
-const $if_content__setup = $if_content__input_detailId;
+const $if_content__setup = ($scope) => {
+	if (!_updating()) $if_content__input_detailId._($scope);
+};
 const $if_content__details_name = ($scope, details_name) => _text($scope.a, details_name);
 const $if_content__details_price__script = _script_update("a2", ($scope) => _on($scope.c, "click", function() {
 	$count($scope._, $scope.f);
@@ -47,7 +49,7 @@ const $update = (patch, live) => {
 	if ("f" in patch) live["f"] = patch["f"];
 	if ("Dc" in patch) {
 		$if_update(live, patch["Dc"]);
-		const $patchBranch = patch["Ac"], $liveBranch = live["Ac"], $branchMerge = [$if_content__update, 0][patch["Dc"]];
+		const $patchBranch = patch["Ac"], $liveBranch = _update_flush_fresh(live["Ac"]), $branchMerge = [$if_content__update, 0][patch["Dc"]];
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 };

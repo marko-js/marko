@@ -147,6 +147,29 @@ export function registerUpdateValueSignals(section: Section) {
   });
 }
 
+/**
+ * True when fresh branches created during an update apply must skip this
+ * closure's setup-time render. Closures over request-derived (state-free)
+ * bindings read raw values normal resume never serializes -- nothing can
+ * re-run them client-side, so the server serializes their *rendered* holes
+ * instead and the branch merge places those. The exception mirrors
+ * `isUpdateCoveredByClientSignals`: when the binding's merge invokes its
+ * registered signal and the raw value is serialized (it has a resume
+ * reason), the server may skip capturing holes and rely on client
+ * re-execution -- for a fresh branch that re-execution IS the setup-time
+ * render, so it must keep firing (its inputs are guaranteed present).
+ */
+export function isUpdateDeliveredClosure(binding: Binding) {
+  return (
+    isUpdateValueBindingType(binding) &&
+    !binding.sources?.state &&
+    !(
+      bindingNeedsUpdateSignal(binding) &&
+      getSerializeReason(binding.section, binding)
+    )
+  );
+}
+
 // Analyze-data equivalent of walking the dom signal graph (which the html
 // compile never builds, and both compiles must agree): a binding's merge
 // must go through its value signal when some non-effect expression reading

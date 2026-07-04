@@ -28,7 +28,7 @@ const $update = (patch, live) => {
 	if ("input_productId" in patch) live["input_productId"] = patch["input_productId"];
 	if ("ConditionalRenderer:#text/2" in patch) {
 		$if_update(live, patch["ConditionalRenderer:#text/2"]);
-		const $patchBranch = patch["BranchScopes:#text/2"], $liveBranch = live["BranchScopes:#text/2"], $branchMerge = [$if_content__update, 0][patch["ConditionalRenderer:#text/2"]];
+		const $patchBranch = patch["BranchScopes:#text/2"], $liveBranch = _update_flush_fresh(live["BranchScopes:#text/2"]), $branchMerge = [$if_content__update, 0][patch["ConditionalRenderer:#text/2"]];
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 };
@@ -77,13 +77,13 @@ const $try_content__input_productId = /* @__PURE__ */ _closure_get("input_produc
 	if (!_updating()) $try_content__await_promise($scope, getReviews($scope._._.input_productId));
 }, ($scope) => $scope._._);
 const $try_content__setup = ($scope) => {
-	$try_content__input_productId($scope);
+	if (!_updating()) $try_content__input_productId($scope);
 	$await_content($scope);
 };
 const $if_content__input_productId = /* @__PURE__ */ _if_closure("#text/2", 0, ($scope) => _text($scope["#text/0"], $scope._.input_productId));
 const $if_content__try = /* @__PURE__ */ _try("#text/1", "<!><!><!>", "b%c", $try_content__setup);
 const $if_content__setup = ($scope) => {
-	$if_content__input_productId._($scope);
+	if (!_updating()) $if_content__input_productId._($scope);
 	$if_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 };
 const $count = /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));

@@ -112,7 +112,11 @@ export async function createServerRunner<T extends Record<string, string>>(
         name: "dom-entry",
         resolveId: {
           filter: { id: entryRe },
-          handler: (id) => path.resolve(cwd, id),
+          // Child `?update` imports are relative to the importing update
+          // entry (which may itself be nested, eg `tags/actions.marko`
+          // importing `./shared-list.marko?update`).
+          handler: (id, importer) =>
+            path.resolve(importer ? path.dirname(importer) : cwd, id),
         },
         load: {
           filter: { id: entryRe },

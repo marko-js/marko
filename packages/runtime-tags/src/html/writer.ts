@@ -889,14 +889,11 @@ export function _await<T>(
   // branch link, so it serializes as a scope prop (the same
   // `BranchScopes:<accessor>` key the live page stores its resolved branch
   // under) -- the compiled merge dispatches the body merge from it when the
-  // body's frame arrives. State-driven awaits (no persisted bit) are
-  // excluded, as everywhere: the server never pairs into client-state-driven
-  // structure.
+  // body's frame arrives. Every await writes it: a fresh subtree's await is
+  // created detached (its compute is skipped while a patch applies) and this
+  // link is what attaches it, even when the body itself has nothing to fill.
   const updateBranch = (render: () => void) => {
-    if (
-      $chunk.boundary.state.update &&
-      (serializeMarker as number) & 2 // SerializeReasonFlags.Persisted
-    ) {
+    if ($chunk.boundary.state.update) {
       const branchId = _peek_scope_id();
       withBranchId(branchId, render);
       writeScope(scopeId, {
@@ -980,7 +977,6 @@ export function _try(
     placeholder?: { content?(): void };
     catch?: { content?(err: unknown): void };
   },
-  serializeBranch?: number,
 ) {
   const branchId = _peek_scope_id();
   $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
@@ -1013,10 +1009,7 @@ export function _try(
 
   // Update renders carry the parent -> body branch link as a scope prop
   // (there is no HTML end-marker); see `_await`.
-  if (
-    $chunk.boundary.state.update &&
-    (serializeBranch as number) & 2 // SerializeReasonFlags.Persisted
-  ) {
+  if ($chunk.boundary.state.update) {
     writeScope(scopeId, {
       [AccessorPrefix.BranchScopes + accessor]: writeScope(branchId, {}),
     });

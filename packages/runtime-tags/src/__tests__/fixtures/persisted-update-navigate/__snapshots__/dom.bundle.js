@@ -18,7 +18,9 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__item_name($scope, $params2[0]?.name);
 };
 const $if_content__input_product_sale_percent = /* @__PURE__ */ _if_closure(4, 0, ($scope) => _text($scope.a, $scope._.n));
-const $if_content__setup = $if_content__input_product_sale_percent;
+const $if_content__setup = ($scope) => {
+	if (!_updating()) $if_content__input_product_sale_percent._($scope);
+};
 const $input_product_featured__OR__expanded = /* @__PURE__ */ _or(16, ($scope) => _attr_class($scope.e, $scope.p && $scope.l && "spotlight"));
 const $expanded = /* @__PURE__ */ _let(15, ($scope) => {
 	_text($scope.d, $scope.p ? "Hide" : "Show");
@@ -76,7 +78,7 @@ const $update = (patch, live) => {
 	if ("Nhref:b" in patch) _attr(live["b"], "href", patch["Nhref:b"]);
 	if ("De" in patch) {
 		$if_update(live, patch["De"]);
-		const $patchBranch = patch["Ae"], $liveBranch = live["Ae"], $branchMerge = $if_content__update;
+		const $patchBranch = patch["Ae"], $liveBranch = _update_flush_fresh(live["Ae"]), $branchMerge = $if_content__update;
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 	if ("Af" in patch) $for_update(live, [patch["Af"], "M"]);

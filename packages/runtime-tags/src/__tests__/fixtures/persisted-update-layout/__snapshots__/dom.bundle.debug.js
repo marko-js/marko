@@ -48,7 +48,7 @@ const $layout_content__setup__script = _script_update("__tests__/template.marko_
 	$count($scope._, $scope._.count + 1);
 }));
 const $layout_content__setup = ($scope) => {
-	$layout_content__input_title($scope);
+	if (!_updating()) $layout_content__input_title($scope);
 	$layout_content__count($scope);
 	$layout_content__setup__script($scope);
 };

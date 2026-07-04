@@ -26,7 +26,7 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_scope_id();
 		_html("loading related…");
-	}, $scope0_id) }) }, $sg__input_related);
+	}, $scope0_id) }) });
 	_html("</section><footer>");
 	_await($scope0_id, "e", resolveAfter(input.note, 2), (note) => {
 		const $scope5_id = _scope_id();

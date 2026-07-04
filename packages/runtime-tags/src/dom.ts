@@ -113,6 +113,7 @@ export {
   _update_branch,
   _update_content,
   _update_dynamic,
+  _update_flush_fresh,
   _update_for,
   _update_html,
   _update_pair,

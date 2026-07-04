@@ -131,13 +131,18 @@ export function createUpdate(
 
     updating = true;
     activePairs = pairs;
+    // Boundary merges may flush mid-apply (`_update_branch`'s retry for
+    // same-frame fresh creations), advancing `runId` -- "created during
+    // this apply" means any run window from here on.
+    applyGen = runId;
     try {
       merge(getScope(1), liveRoot!);
 
       // Fresh-subtree effects: merges paired patch scopes to live scopes
       // (`_update_pair`); an entry runs iff its scope's live pair was
-      // created during this apply (`Gen === runId` — resumed/pre-existing
-      // scopes are older). Matched scopes never replay.
+      // created during this apply (resumed/pre-existing scopes carry older
+      // generation stamps, destroyed scopes `0`). Matched scopes never
+      // replay.
       if (effectEntries.length) {
         const effects: unknown[] = [];
         for (const entry of effectEntries) {
@@ -147,7 +152,7 @@ export function createUpdate(
               fn = registeredValues[token];
             } else {
               const live = pairs.get(patchScopes[+token]);
-              if (fn && live && live[AccessorProp.Gen] === runId) {
+              if (fn && live && live[AccessorProp.Gen] >= applyGen) {
                 effects.push(fn, live);
               }
             }
@@ -190,6 +195,7 @@ export function _script_update(id: string, fn: (scope: Scope) => void) {
 }
 
 let updating = false;
+let applyGen = 0;
 
 /**
  * True while an update-render patch is being applied. Persisted builds
@@ -202,6 +208,22 @@ let updating = false;
  */
 export function _updating() {
   return updating;
+}
+
+/**
+ * Called by branch dispatches before running a body merge into a branch
+ * created during this apply: flushes the queue so the fresh subtree's
+ * setup runs *before* the merge fills. Merged values suppress equal-value
+ * signal invocations (`_const` and friends memoize), so a fill applied
+ * first would silently skip setup-time renders -- and with them client
+ * wiring the patch cannot deliver (`<let>` seeding, tag-var returns).
+ * Matched (pre-existing) branches keep fills-first semantics untouched.
+ */
+export function _update_flush_fresh<T extends Scope | undefined>(
+  liveBranch: T,
+): T {
+  if (liveBranch && liveBranch[AccessorProp.Gen] >= applyGen) run();
+  return liveBranch;
 }
 
 // Content-section merges register under the section's content id plus this
@@ -239,7 +261,7 @@ export function _update_branch(
   if (liveBranch[AccessorProp.DetachedAwait]) {
     attachAwaitBranch(live, accessor as string, liveBranch);
   }
-  if (bodyMerge) bodyMerge(patchBranch, liveBranch);
+  if (bodyMerge) bodyMerge(patchBranch, _update_flush_fresh(liveBranch));
 }
 
 export function _update_content(contentId: string, merge: UpdateMerge) {
@@ -283,7 +305,7 @@ export function _update_dynamic(
   const merge = getRegisteredWithScope(rendererId + UPDATE_MERGE_SUFFIX) as
     | UpdateMerge
     | undefined;
-  const liveBranch = live[branchKey] as Scope | undefined;
+  const liveBranch = _update_flush_fresh(live[branchKey] as Scope | undefined);
   if (merge && patchBranch && liveBranch) {
     merge(patchBranch, liveBranch);
   }

@@ -20,8 +20,10 @@ var template_marko_update_default = _resume("__tests__/template.marko_0_update",
 const $template = "<h1> </h1><a>link</a><button> </button><section></section>";
 const $walks = "D l b D l b";
 const $if_content__$global_params_sale = /* @__PURE__ */ _if_closure("#section/4", 0, ($scope) => _text($scope["#text/0"], $scope.$global.params.sale));
-const $if_content__setup = $if_content__$global_params_sale;
-const $count__OR__$global_params_tag = /* @__PURE__ */ _or(11, ($scope) => _attr_class($scope["#section/4"], $scope.count && $scope.$global.params.tag && "hot"));
+const $if_content__setup = ($scope) => {
+	if (!_updating()) $if_content__$global_params_sale._($scope);
+};
+const $count__OR__$global_params_tag = /* @__PURE__ */ _or(11, ($scope) => _attr_class($scope["#section/4"], $scope.count && $scope.$global.params.tag && "hot"), 0);
 const $count = /* @__PURE__ */ _let("count/5", ($scope) => {
 	_text($scope["#text/3"], $scope.count);
 	$count__OR__$global_params_tag($scope);
