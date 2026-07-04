@@ -99,12 +99,33 @@ on finishing the runtime's phase partition — a module mixing
 hydration-used and lazily-used exports is hosted in one (eager) chunk
 with all its imports. Enablers in place (`"sideEffects": ["**/*.marko"]`,
 preserved dist modules behind the `dom.mjs` facade, spread/catch/
-`_script_update` file splits); still mixed-phase: `controllable.ts`
-(hydration `_script` variants vs render `_default`/value helpers) and
-control-flow's hydration-reachable surface (the `renderCatch` chain
-retains the branch-construction graph wherever `_enable_catch` is eager —
-lazy tags, try users). Splitting those two by phase is the remaining
-step for the measured eager drop.
+`_script_update` file splits). Post-split attribution of the /search
+eager closure pinpoints the remaining drivers, largest first:
+
+1. **Promoted-`$global` dynamic closures keep the branch graph in slim
+   mains.** The page main still constructs `_for_of`/`_if`/`_for_selector`
+   plus registered loop/branch content because dynamic closures over
+   promoted `$global` reads (the chips' active-class `$global.search` ∩
+   loop param, pagination links) register their signals and content for
+   resume-time closure invocation — but a global-sourced closure can
+   never fire client-side outside an update merge (nothing reactively
+   writes `$global`; `valueChange` handlers assign the plain object). In
+   persisted MAIN builds those registrations (and the render graphs they
+   retain, control-flow included) belong register-side. Fix needs an
+   audit that resume resolves serialized closure-subscriber sets lazily
+   (invocation-time, owner-change only) so deferring the registration to
+   the `?register` load is observation-equivalent; the emission sites are
+   the dynamic-closure registration in `util/signals.ts` (the
+   `ClosureSignalIndex`/`ClosureScopes` serialization block) and the
+   loop/if content registration reasons those closures create.
+2. `controllable.ts` is mixed-phase: hydration `_script` variants (and
+   the controlled helpers interactive inputs genuinely need eagerly, eg
+   the app's qty input) host together with the `_default`/value writers
+   and all five control kinds' machinery — a file split by kind and phase
+   lets per-app usage decide.
+3. `spread.ts`/control-flow hosting follows from (1): once no eager
+   module references branch construction, both should fall out of the
+   eager closure (verify after (1)).
 
 ## Persisted compute guards make previously-unused imports bundle client-side
 
