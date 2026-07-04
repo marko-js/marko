@@ -409,6 +409,25 @@ sequence: state seeding for fresh subtrees, fragment `templates` frames +
 client content store + `x-marko-from` route-pair inclusion, CSS/asset
 frames, `x-marko-have` T2 pruning.
 
+**Implemented** (`marko-js/run` branch, `feat: persisted router intercepts
+GET form submissions`): same-origin GET forms are links with parameters —
+the router serializes them (submitter name/value included,
+`formaction`/`formmethod`/`formtarget` overrides honored, files dropped
+exactly as native GET does) and routes them through the existing update
+pipeline; `defaultPrevented` submissions stay with the app, POST stays
+native until the PRG slice (a mutation's fallback must never replay the
+request — see the review discussion: follow redirects, verify
+`x-marko-route` against the final URL, fall back to `location.assign(res.url)`
+after a response and native `form.submit()` before one). Validated on the
+ecommerce search page: filter chips and the search box apply as updates
+(no reload, negotiated patch, URL/history correct, back-over-form
+popstates as an update); an app-level valibot strictness (`sort=` from the
+default option) was fixed alongside. Found by this slice: chip
+`class=` attrs referencing a promoted `$global` binding ∩ a loop param are
+captured by update renders but the update entry emits no attr merge for
+them (active-chip state goes stale) — the capture/merge predicates at
+`native-tag.ts` disagree for that shape; tracked as the next marko fix.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by
