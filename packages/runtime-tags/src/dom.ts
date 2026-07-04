@@ -110,6 +110,7 @@ export {
 export { _template } from "./dom/template";
 export {
   _script_update,
+  _update_branch,
   _update_content,
   _update_dynamic,
   _update_for,

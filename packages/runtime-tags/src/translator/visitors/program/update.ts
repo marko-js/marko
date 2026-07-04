@@ -461,35 +461,24 @@ function buildMerge(
       // `<await>`/`<try>` body dispatch: a single always-body branch, linked
       // by the same `BranchScopes:<accessor>` key the live page stores its
       // branch under. An await body's link arrives with the body's own frame
-      // (resolution order) -- until then the presence check skips it.
+      // (resolution order) -- until then the presence check skips it. The
+      // runtime helper also attaches detached awaits (a fresh subtree's
+      // await whose promise compute was skipped while updating).
       const bodyMerge = mergeIdentifiers.get(merge.bodySection);
-      if (!bodyMerge) return [];
       const branchScopesKey =
         getAccessorPrefix().BranchScopes + merge.accessor.value;
-      const patchBranch = generateUidIdentifier("patchBranch");
-      const liveBranch = generateUidIdentifier("liveBranch");
       return [
         ifPresent(
           branchScopesKey,
-          t.blockStatement([
-            t.variableDeclaration("const", [
-              t.variableDeclarator(patchBranch, patchGet(branchScopesKey)),
-              t.variableDeclarator(liveBranch, liveGet(branchScopesKey)),
-            ]),
-            t.ifStatement(
-              t.logicalExpression(
-                "&&",
-                t.cloneNode(patchBranch, true),
-                t.cloneNode(liveBranch, true),
-              ),
-              t.expressionStatement(
-                t.callExpression(t.cloneNode(bodyMerge, true), [
-                  t.cloneNode(patchBranch, true),
-                  t.cloneNode(liveBranch, true),
-                ]),
-              ),
+          t.expressionStatement(
+            callRuntime(
+              "_update_branch",
+              t.identifier("patch"),
+              liveIdentifier,
+              t.cloneNode(merge.accessor, true),
+              bodyMerge ? t.cloneNode(bodyMerge, true) : t.numericLiteral(0),
             ),
-          ]),
+          ),
         ),
       ];
     }

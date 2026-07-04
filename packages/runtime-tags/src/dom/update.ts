@@ -17,8 +17,14 @@
 //   `_resume` so `_update_for` can build a `_for_of` instance whose params
 //   signal is the update entry's own body merge function (the main loop
 //   signal's params render from real items, which a patch scope is not).
-import { type Accessor, AccessorProp, type Scope } from "../common/types";
-import { _for_of } from "./control-flow";
+import {
+  type Accessor,
+  AccessorPrefix,
+  AccessorProp,
+  type BranchScope,
+  type Scope,
+} from "../common/types";
+import { _for_of, attachAwaitBranch } from "./control-flow";
 import { _html } from "./dom";
 import { queueEffect, run, runEffects, runId } from "./queue";
 import {
@@ -204,6 +210,37 @@ export function _updating() {
 // serialized (`ConditionalRenderer:<accessor>` in the patch).
 const UPDATE_MERGE_SUFFIX = "!";
 type UpdateMerge = (patch: Scope, live: Scope) => void;
+
+/**
+ * Single-branch boundary (`<await>`/`<try>` body) dispatch. When the live
+ * branch is a detached await — a fresh subtree's await whose promise
+ * compute was skipped while updating — the body's frame is the resolution:
+ * attach it at its anchor, then fill it. Attached (or non-await) branches
+ * just fill; an absent live branch sparse-skips.
+ */
+export function _update_branch(
+  patch: Scope,
+  live: Scope,
+  accessor: Accessor,
+  bodyMerge: UpdateMerge | 0,
+) {
+  const branchKey = AccessorPrefix.BranchScopes + accessor;
+  const patchBranch = patch[branchKey] as Scope | undefined;
+  if (!patchBranch) return;
+  let liveBranch = live[branchKey] as BranchScope | undefined;
+  if (!liveBranch) {
+    // The boundary may sit in a subtree created earlier in this same
+    // apply whose structural renders are still queued (a same-frame fresh
+    // creation) -- flush and retry once.
+    run();
+    liveBranch = live[branchKey] as BranchScope | undefined;
+    if (!liveBranch) return;
+  }
+  if (liveBranch[AccessorProp.DetachedAwait]) {
+    attachAwaitBranch(live, accessor as string, liveBranch);
+  }
+  if (bodyMerge) bodyMerge(patchBranch, liveBranch);
+}
 
 export function _update_content(contentId: string, merge: UpdateMerge) {
   _resume(contentId + UPDATE_MERGE_SUFFIX, merge);

@@ -1,4 +1,4 @@
-// size: 27087 (min) 9912 (brotli)
+// size: 27228 (min) 9981 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1837,18 +1837,27 @@ function resolveAwait(
   let awaitBranch = scope[branchAccessor];
   return (
     awaitBranch.V &&
-      ((awaitBranch.Y = awaitBranch.Y?.forEach(syncGen)),
-      setupBranch(awaitBranch.V, awaitBranch),
-      (awaitBranch.V = 0),
-      insertBranchBefore(
-        awaitBranch,
-        scope[nodeAccessor].parentNode,
-        scope[nodeAccessor],
-      ),
+      (attachAwaitBranch(scope, nodeAccessor, awaitBranch),
       referenceNode.remove()),
     params?.(awaitBranch, [value]),
     awaitBranch
   );
+}
+/**
+ * Sets up and inserts a detached (unresolved) await branch at its anchor.
+ * Shared by promise resolution above and by persisted update applies, where
+ * a fresh subtree's await never ran its promise (the compute is skipped
+ * while updating) and the body's own frame is the resolution.
+ */
+function attachAwaitBranch(scope, nodeAccessor, awaitBranch) {
+  ((awaitBranch.Y = awaitBranch.Y?.forEach(syncGen)),
+    setupBranch(awaitBranch.V, awaitBranch),
+    (awaitBranch.V = 0),
+    insertBranchBefore(
+      awaitBranch,
+      scope[nodeAccessor].parentNode,
+      scope[nodeAccessor],
+    ));
 }
 function _await_content(nodeAccessor, template, walks, setup) {
   nodeAccessor = decodeAccessor(nodeAccessor);
@@ -2736,6 +2745,22 @@ function _script_update(id, fn) {
  */
 function _updating() {
   return updating;
+}
+/**
+ * Single-branch boundary (`<await>`/`<try>` body) dispatch. When the live
+ * branch is a detached await — a fresh subtree's await whose promise
+ * compute was skipped while updating — the body's frame is the resolution:
+ * attach it at its anchor, then fill it. Attached (or non-await) branches
+ * just fill; an absent live branch sparse-skips.
+ */
+function _update_branch(patch, live, accessor, bodyMerge) {
+  let branchKey = "A" + accessor,
+    patchBranch = patch[branchKey];
+  if (!patchBranch) return;
+  let liveBranch = live[branchKey];
+  (!liveBranch && (run(), (liveBranch = live[branchKey]), !liveBranch)) ||
+    (liveBranch.V && attachAwaitBranch(live, accessor, liveBranch),
+    bodyMerge && bodyMerge(patchBranch, liveBranch));
 }
 function _update_content(contentId, merge) {
   _resume(contentId + "!", merge);

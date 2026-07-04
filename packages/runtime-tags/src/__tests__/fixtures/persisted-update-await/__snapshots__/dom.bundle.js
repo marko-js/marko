@@ -39,10 +39,7 @@ const $await_content__update = (patch, live) => {
 	if ("Aa" in patch) $for_update(live, [patch["Aa"], "M"]);
 };
 const $try_content__update = (patch, live) => {
-	if ("Aa" in patch) {
-		const $patchBranch = patch["Aa"], $liveBranch = live["Aa"];
-		if ($patchBranch && $liveBranch) $await_content__update($patchBranch, $liveBranch);
-	}
+	if ("Aa" in patch) _update_branch(patch, live, "a", $await_content__update);
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
@@ -52,13 +49,7 @@ const $update = (patch, live) => {
 	if ("i" in patch) live["i"] = patch["i"];
 	if ("j" in patch) live["j"] = patch["j"];
 	if ("a" in patch) _text(live["a"], patch["a"]);
-	if ("Ad" in patch) {
-		const $patchBranch2 = patch["Ad"], $liveBranch2 = live["Ad"];
-		if ($patchBranch2 && $liveBranch2) $try_content__update($patchBranch2, $liveBranch2);
-	}
-	if ("Ae" in patch) {
-		const $patchBranch3 = patch["Ae"], $liveBranch3 = live["Ae"];
-		if ($patchBranch3 && $liveBranch3) $await_content2__update($patchBranch3, $liveBranch3);
-	}
+	if ("Ad" in patch) _update_branch(patch, live, "d", $try_content__update);
+	if ("Ae" in patch) _update_branch(patch, live, "e", $await_content2__update);
 };
 var template_marko_update_default = _resume("a1", $update);

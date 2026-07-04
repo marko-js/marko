@@ -19,10 +19,7 @@ const $await_content__update = (patch, live) => {
 	if ("BranchScopes:#ul/0" in patch) $for_update(live, [patch["BranchScopes:#ul/0"], "#LoopKey"]);
 };
 const $try_content__update = (patch, live) => {
-	if ("BranchScopes:#text/0" in patch) {
-		const $patchBranch = patch["BranchScopes:#text/0"], $liveBranch = live["BranchScopes:#text/0"];
-		if ($patchBranch && $liveBranch) $await_content__update($patchBranch, $liveBranch);
-	}
+	if ("BranchScopes:#text/0" in patch) _update_branch(patch, live, "#text/0", $await_content__update);
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
@@ -32,14 +29,8 @@ const $update = (patch, live) => {
 	if ("input_related" in patch) live["input_related"] = patch["input_related"];
 	if ("input_note" in patch) live["input_note"] = patch["input_note"];
 	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
-	if ("BranchScopes:#text/3" in patch) {
-		const $patchBranch2 = patch["BranchScopes:#text/3"], $liveBranch2 = live["BranchScopes:#text/3"];
-		if ($patchBranch2 && $liveBranch2) $try_content__update($patchBranch2, $liveBranch2);
-	}
-	if ("BranchScopes:#text/4" in patch) {
-		const $patchBranch3 = patch["BranchScopes:#text/4"], $liveBranch3 = live["BranchScopes:#text/4"];
-		if ($patchBranch3 && $liveBranch3) $await_content2__update($patchBranch3, $liveBranch3);
-	}
+	if ("BranchScopes:#text/3" in patch) _update_branch(patch, live, "#text/3", $try_content__update);
+	if ("BranchScopes:#text/4" in patch) _update_branch(patch, live, "#text/4", $await_content2__update);
 };
 var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
 
@@ -68,7 +59,9 @@ const $await_content__$params = ($scope, $params2) => $await_content__related($s
 const $placeholder_content = _content_resume("__tests__/template.marko_2_content", "loading related…", "b");
 const $await_content = /* @__PURE__ */ _await_content("#text/0", "<ul></ul>", " b");
 const $try_content__await_promise = /* @__PURE__ */ _await_promise("#text/0", $await_content__$params);
-const $try_content__input_related = /* @__PURE__ */ _closure_get("input_related", ($scope) => $try_content__await_promise($scope, resolveAfter($scope._.input_related, 1)));
+const $try_content__input_related = /* @__PURE__ */ _closure_get("input_related", ($scope) => {
+	if (!_updating()) $try_content__await_promise($scope, resolveAfter($scope._.input_related, 1));
+});
 const $try_content__setup = ($scope) => {
 	$try_content__input_related($scope);
 	$await_content($scope);
@@ -87,7 +80,9 @@ function $setup($scope) {
 const $input_title = ($scope, input_title) => _text($scope["#text/0"], input_title);
 const $await_content2 = /* @__PURE__ */ _await_content("#text/4", "<em> </em>", "D l");
 const $await_promise = /* @__PURE__ */ _await_promise("#text/4", $await_content2__$params);
-const $input_note = ($scope, input_note) => $await_promise($scope, resolveAfter(input_note, 2));
+const $input_note = ($scope, input_note) => {
+	if (!_updating()) $await_promise($scope, resolveAfter(input_note, 2));
+};
 const $input = ($scope, input) => {
 	$input_title($scope, input.title);
 	$input_related($scope, input.related);

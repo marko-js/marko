@@ -191,8 +191,13 @@ export default {
         // Request-derived await bodies participate in persisted update
         // renders: the server serializes the parent -> body branch link when
         // the body resolves (its own frame, in resolution order) and the
-        // update entry dispatches the body's merge from it.
+        // update entry dispatches the body's merge from it. The promise
+        // compute is skipped while a patch applies (`updateGuard`) -- it may
+        // live behind a `server import`, and a fresh subtree's await is
+        // resolved by the body's frame instead (attached from its detached
+        // branch by `_update_branch`).
         if (isPersisted() && isReasonDynamic(bodySection.serializeReason)) {
+          signal.updateGuard = true;
           addUpdateMerge(section, {
             kind: "branch",
             accessor: getScopeAccessorLiteral(nodeRef),

@@ -83,6 +83,14 @@ export interface Signal {
    * section.
    */
   registerId?: string;
+  /**
+   * Persisted builds: skip this signal's compute invocation while an update
+   * patch applies (the payload delivers the result). Set for await promise
+   * signals whose body is request-derived -- the promise expression may
+   * live behind a `server import`, and the body's own frame is the
+   * resolution.
+   */
+  updateGuard?: boolean;
   values: Array<{
     signal: Signal;
     value: t.Expression;
@@ -642,8 +650,11 @@ export function getSignalFn(signal: Signal): t.Expression {
         // `forEachUpdateValueBinding` in update-merges), and the compute
         // may live behind a `server import` -- fresh branches created
         // during an apply must not evaluate it. Client-state and
-        // state-mixing computations (excluded here) keep firing.
-        isPersisted() && isUpdatePatchedValueSignal(value.signal)
+        // state-mixing computations (excluded here) keep firing. Signals
+        // flagged `updateGuard` (await promises over request-derived
+        // bodies) opt in explicitly.
+        isPersisted() &&
+          (value.signal.updateGuard || isUpdatePatchedValueSignal(value.signal))
           ? t.ifStatement(
               t.unaryExpression("!", callRuntime("_updating")),
               invocation,
