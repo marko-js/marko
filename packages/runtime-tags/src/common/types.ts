@@ -108,6 +108,29 @@ export interface $Global {
   cspNonce?: string;
   renderId?: string;
   runtimeId?: string;
+  /**
+   * Enables persisted-mode serialization for this render: resume markers and
+   * the scope spine for request-derived content are emitted so the page can
+   * receive single-page server-first updates. Requires templates compiled
+   * with the `persisted` option; omit (e.g. for crawlers) to serve the
+   * byte-identical non-persisted document.
+   *
+   * `"update"` renders an update (patch) response for an already-persisted
+   * page instead of a document: request-derived values (including computed
+   * hole values), conditional outcomes, and branch lists serialize so the
+   * client can merge them onto its live scope tree, while effects for
+   * matched scopes are suppressed.
+   */
+  persisted?: boolean | "update";
+  /**
+   * With `persisted: "update"`: this navigation's target subtree will be
+   * created fresh on the client (a cross-route update), so state values
+   * serialize too -- the client seeds them only into scopes created during
+   * the apply (fresh subtrees cannot compute state whose initializers live
+   * behind server-only expressions; matched scopes' live state is never
+   * overwritten).
+   */
+  persistedSeed?: boolean;
   /** @internal */
   __flush__?($global: $Global, html: string): string;
 }

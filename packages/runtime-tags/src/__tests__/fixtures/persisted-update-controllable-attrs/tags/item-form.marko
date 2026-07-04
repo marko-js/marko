@@ -1,0 +1,7 @@
+<const/itemId=input.id>
+<let/qty=1>
+<form>
+  <input.qty type="number" value:Number:=qty>
+  <input type="hidden" name="itemId" value=itemId>
+  <button.add onClick() { qty++ }>add</button>
+</form>

@@ -7,8 +7,8 @@
     {
       "name": "*",
       "total": {
-        "min": 25867,
-        "brotli": 9506
+        "min": 27607,
+        "brotli": 10181
       }
     },
     {
@@ -18,42 +18,42 @@
         "brotli": 119
       },
       "runtime": {
-        "min": 3938,
-        "brotli": 1744
+        "min": 3974,
+        "brotli": 1764
       },
       "total": {
-        "min": 4099,
-        "brotli": 1863
+        "min": 4135,
+        "brotli": 1883
       }
     },
     {
       "name": "counter 💧",
       "user": {
         "min": 80,
-        "brotli": 80
+        "brotli": 76
       },
       "runtime": {
-        "min": 2471,
-        "brotli": 1246
+        "min": 2480,
+        "brotli": 1251
       },
       "total": {
-        "min": 2551,
-        "brotli": 1326
+        "min": 2560,
+        "brotli": 1327
       }
     },
     {
       "name": "comments",
       "user": {
         "min": 646,
-        "brotli": 365
+        "brotli": 364
       },
       "runtime": {
-        "min": 6480,
-        "brotli": 2845
+        "min": 6600,
+        "brotli": 2901
       },
       "total": {
-        "min": 7126,
-        "brotli": 3210
+        "min": 7246,
+        "brotli": 3265
       }
     },
     {
@@ -63,12 +63,12 @@
         "brotli": 101
       },
       "runtime": {
-        "min": 2676,
-        "brotli": 1317
+        "min": 2685,
+        "brotli": 1325
       },
       "total": {
-        "min": 2791,
-        "brotli": 1418
+        "min": 2800,
+        "brotli": 1426
       }
     }
   ]

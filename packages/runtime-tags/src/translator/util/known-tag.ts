@@ -10,7 +10,7 @@ import {
 } from "./binding-prop-tree";
 import { generateUidIdentifier } from "./generate-uid";
 import { getTagName } from "./get-tag-name";
-import { isOptimize } from "./marko-config";
+import { isOptimize, isPersisted } from "./marko-config";
 import {
   analyzeAttributeTags,
   type AttrTagLookup,
@@ -112,6 +112,10 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
+export function getKnownTagChildScopeBinding(tag: t.NodePath<t.MarkoTag>) {
+  return tag.node.extra?.[kChildScopeBinding];
+}
+
 export function knownTagAnalyze(
   tag: t.NodePath<t.MarkoTag>,
   contentSection: Section,
@@ -171,6 +175,19 @@ export function knownTagAnalyze(
   }
 
   addSerializeExpr(section, fromIter(attrExprs), childScopeBinding);
+  // Persisted spine: parent -> child scope links must serialize whenever the
+  // persisted render flag is set (a global-sourced reason is exactly that
+  // bit), even when nothing else on the parent references the child -- the
+  // update merge descends the patch tree through these links, and a root
+  // that passes no attrs (eg a route wrapper template) would otherwise elide
+  // its scope entirely, shifting the patch root off scope 1.
+  if (isPersisted()) {
+    addSerializeReason(
+      section,
+      { state: undefined, param: undefined, global: true },
+      childScopeBinding,
+    );
+  }
 }
 
 export function knownTagTranslateHTML(

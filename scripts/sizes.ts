@@ -38,6 +38,10 @@ interface Saved {
 
 const rootDir = path.join(__dirname, "..");
 const runtimePath = path.join(rootDir, "packages/runtime-tags/dist/dom.mjs");
+// The dist dom entry is a re-export facade over preserved per-file modules
+// (dist/dom/*.mjs, dist/common/*.mjs), so runtime classification for the
+// user/runtime split must match the whole dist directory, not the facade id.
+const runtimeDir = path.join(rootDir, "packages/runtime-tags/dist") + path.sep;
 const translatorPath = path.join(
   rootDir,
   "packages/runtime-tags/dist/translator/index.js",
@@ -323,7 +327,7 @@ function isRuntimeChunk(
 }
 
 function manualChunks(id: string) {
-  if (id === runtimePath) {
+  if (id === runtimePath || id.startsWith(runtimeDir)) {
     return "runtime";
   }
 }

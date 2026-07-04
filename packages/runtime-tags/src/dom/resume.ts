@@ -54,7 +54,9 @@ export interface RenderData {
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
-const registeredValues: Record<string, unknown> = {};
+// Also read by `dom/update`'s patch-aware serialize context (fills access
+// registered values as `_._[id]`).
+export const registeredValues: Record<string, unknown> = {};
 let curRenders: Renders;
 let branchesEnabled: undefined | 1;
 let embedRenders:
@@ -68,6 +70,13 @@ export function enableBranches() {
   if (!branchesEnabled) {
     branchesEnabled = 1;
     skipDestroyedRenders();
+    // Branch modules may execute after a flush's walk already ran (module
+    // ordering, lazy chunks, persisted update entries): reprocess the
+    // branch visits those walks retained. No-op before the runtime
+    // initializes (`for..in` over undefined iterates nothing).
+    for (const renderId in curRenders) {
+      runResumeEffects(curRenders[renderId]);
+    }
   }
 }
 
@@ -410,10 +419,11 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   : visit.parentNode!.insertBefore(new Text(), visit);
             } else if (branchesEnabled) {
               (visitBranches ||= createVisitBranches())();
-            } else if (render.b) {
-              // Pending ready data means a lazily loaded module may still
-              // enable branches; its visits ride the same flush as the
-              // ready data, so they are compacted in place to reprocess.
+            } else {
+              // A module that enables branches may not have executed yet
+              // (module ordering, lazy chunks, persisted update entries) --
+              // compact the visit in place; `enableBranches`/`ready`
+              // rewalk to reprocess.
               visits[retained++] = visit;
             }
           }
@@ -465,6 +475,24 @@ function runResumeEffects(render: RenderData) {
   } finally {
     isResuming = 0;
   }
+}
+
+// Pairs the live root scope (patch scope 1 by convention) of a resumed
+// render for persisted updates, through the render's own effect machinery.
+// Only imported by `dom/update`, so apps without persisted updates never
+// pay for it.
+export function getUpdateRoot(renderId?: string) {
+  let root: Scope | undefined;
+  for (const id in curRenders) {
+    if (!renderId || id === renderId) {
+      const render = curRenders[id];
+      registeredValues["__update_root"] = (scope: Scope) => (root = scope);
+      (render.r ||= []).push("__update_root 1");
+      runResumeEffects(render);
+      if (root) return root;
+    }
+  }
+  return root;
 }
 
 export function getRegisteredWithScope(id: string, scope?: Scope) {

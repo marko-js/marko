@@ -17,6 +17,7 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { isPersisted, isPersistedEntryBuild } from "../util/marko-config";
 import { addSorted } from "../util/optional";
 import {
   compareSources,
@@ -43,6 +44,8 @@ import {
 import {
   addSerializeExpr,
   getSerializeReason,
+  getSerializeSourcesForRef,
+  isReasonDynamic,
   isStateSerializeReason,
   isStaticSerializeReason,
   type SerializeReasons,
@@ -57,6 +60,7 @@ import {
 } from "../util/signals";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
+import { addUpdateMerge, getUpdateIfRegisterId } from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -134,6 +138,13 @@ export const IfTag = {
           const [[ifTag]] = getBranches(tag);
           const ifTagSection = getSection(ifTag);
           if (
+            // Persisted builds keep serializing branch owners: update
+            // payloads carry no resume markers, so patch-borne branch
+            // scopes (fresh or matched through mixed state+request-derived
+            // conditions) cannot link owners from visits. A finer-grained
+            // skip for purely state-driven branches (excluded from updates)
+            // is possible -- see agent-feedback/perf.md.
+            !isPersisted() &&
             isStateSerializeReason(
               getSerializeReason(ifTagSection, kStatefulReason),
             ) &&
@@ -201,7 +212,15 @@ export const IfTag = {
                 if (branchSerializeReasons !== true) {
                   if (
                     branchSerializeReason === true ||
-                    branchSerializeReason.state
+                    (branchSerializeReason.state &&
+                      // Persisted builds keep mixed reasons whole so the
+                      // branch guard preserves the request-derived bits
+                      // (see `getMixedDynamicGuard`).
+                      !(
+                        isPersisted() &&
+                        (branchSerializeReason.param ||
+                          branchSerializeReason.global)
+                      ))
                   ) {
                     branchSerializeReasons = true;
                   } else if (branchSerializeReasons) {
@@ -335,6 +354,36 @@ export const IfTag = {
           }
 
           const signal = getSignal(ifTagSection, nodeRef, "if");
+          // Request-derived conditionals participate in persisted update
+          // renders: the server writes the branch outcome explicitly (G2)
+          // and the update entry replays it through this same signal, so
+          // persisted entry builds register it and update entries record a merge
+          // (the main module's copy stays unregistered -- resume never
+          // invokes it, so hydration bundles may tree-shake it).
+          if (
+            isPersisted() &&
+            isReasonDynamic(
+              getSerializeSourcesForRef(ifTagExtra.referencedBindings),
+            )
+          ) {
+            const accessor = getScopeAccessorLiteral(nodeRef);
+            const signalId = getUpdateIfRegisterId(
+              ifTagSection,
+              accessor.value,
+            );
+            if (isPersistedEntryBuild()) {
+              signal.register = true;
+              signal.registerId = signalId;
+            }
+            addUpdateMerge(ifTagSection, {
+              kind: "if",
+              accessor,
+              signalId,
+              branchBodySections: branches.map(
+                ([, branchBodySection]) => branchBodySection,
+              ),
+            });
+          }
           signal.build = () => {
             const rendererArgs: (t.Expression | undefined)[] = [];
             for (const [_, branchBodySection] of branches) {

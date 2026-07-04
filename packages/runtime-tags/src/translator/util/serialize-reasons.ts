@@ -11,6 +11,7 @@ import {
   type Binding,
   compareSources,
   getCanonicalBinding,
+  getVolatileExprSources,
   type InputBinding,
   isReferencedExtra,
   mergeSources,
@@ -149,7 +150,11 @@ export function addOwnerSerializeReason(
 
 export function isReasonDynamic(
   reason: undefined | SerializeReason,
-): reason is { state: undefined; param: OneMany<InputBinding | ParamBinding> } {
+): reason is {
+  state: undefined;
+  param: Opt<InputBinding | ParamBinding>;
+  global: true | undefined;
+} {
   return !!reason && reason !== true && !reason.state;
 }
 
@@ -184,8 +189,12 @@ export function getSerializeReason(
 
 export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
   if (isReferencedExtra(expr)) {
-    return getSerializeSourcesForRef(expr.referencedBindings);
+    const sources = getSerializeSourcesForRef(expr.referencedBindings);
+    if (sources) return sources;
   }
+  // Refs-less dynamic expressions are volatile in persisted builds (an MPA
+  // reload could change them, so navigations must too).
+  return getVolatileExprSources(expr);
 }
 
 export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {

@@ -13,6 +13,10 @@ export enum AccessorPrefix {
   Lifecycle = "K",
   Promise = "L",
   TagVariableChange = "M",
+  // "N" is reserved for UpdateAttr (update-render attr hole values). It is
+  // deliberately not an enum member: only compiled HTML output and the
+  // update-only client runtime use it, and enum objects ship in every client
+  // bundle. See `getUpdateAttrPrefix` in the translator.
 }
 
 export enum AccessorProp {

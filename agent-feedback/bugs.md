@@ -41,3 +41,57 @@ therefore relied upon for correctness. A real fix needs `isSupersetSources` to
 use a strict/proper-superset test (equal sources must not prune each other)
 _and_ the corrected arithmetic, then a full snapshot audit — out of scope for a
 one-line change.
+
+## Register update if-merges for conditionals over direct `$global` reads
+
+`packages/runtime-tags/src/translator/core/if.ts:327` | 2026-07-04 | impact:med | effort:med
+
+Persisted builds only record an `<if>` update merge (and register its
+signal) when `isReasonDynamic(getSerializeSourcesForRef(...))` on the
+condition, and a condition that reads `$global` directly (eg
+`<if=$global.params.sale>` in the `persisted-global-reads` fixture) gets no
+sources from that call — so its `?update` entry defines a body merge that
+nothing dispatches, and an update render that flips the condition never
+replays the branch client-side. Conditions on a _derived_ of a `$global`
+read (eg `<const/product=$global.productId && get(...)>` then `<if=!product>`)
+work fine, which is why app code hasn't hit it. The fixture never navigates,
+so nothing covers this today; a fix likely means treating promoted-global
+condition refs as dynamic in that check (plus a fixture step that toggles
+the branch across an update).
+
+## Fresh-render `_or` joins can stall when no member fires during an apply
+
+`packages/runtime-tags/src/translator/util/signals.ts:318` | 2026-07-04 | impact:low | effort:med
+
+The `_or` pending count now excludes promoted `$global` members (they have
+no client-side value signal), but two pathological shapes remain for fresh
+branches created during a persisted apply: (1) an intersection whose members
+are _all_ promoted globals emits pending 0 yet has no invoker at all, and
+(2) an intersection whose non-global members are all `_updating()`-guarded
+request-derived invocations never completes its join during the apply. Both
+are harmless when the joined statement's output is a server-captured hole
+(the merge places it), but a non-captured side effect (eg `_return_change`
+mixing two such bindings) would silently not run. Statements referencing
+only never-firing bindings probably belong in setup placement instead.
+
+## Controllable update coverage: `checkedValue`, spread controllables, `<option value>`
+
+`packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` (controllable capture/merge) | 2026-07-04 | impact:low | effort:med
+
+The controllable attr update slice covers single-value controllables
+(`value` on input/select/textarea, `checked`, `open`) via the helper's
+`_default` variant. Three adjacent shapes still don't ride persisted
+updates:
+
+1. `checkedValue` pairs two interdependent values (`checkedValue` +
+   `value`); sparse per-key captures can't replay the pair when only one
+   key changed, so it is excluded (uncontrolled request-derived
+   `checkedValue` is rare -- it is virtually always bound).
+2. Controllables reached through a spread (`_attrs`/`_attrs_partial`
+   resolve them at runtime) have no static value expression to wrap, so
+   nothing captures; a fix needs capture support inside the html `_attrs`
+   runtime itself.
+3. `<option value=dynamic>` renders via `_attr_option_value` with no
+   capture/merge (the select's own `value` merge re-selects by option
+   value, so a changed option value under an unchanged select value can
+   leave selection stale).

@@ -48,12 +48,29 @@ await Promise.all([
 
       try {
         await Promise.all([
-          bundle.write({
-            file: `${file}.mjs`,
-            format: "esm",
-            minify,
-            sourcemap: false,
-          }),
+          name === "dom"
+            ? // The browser runtime ships as preserved modules behind the
+              // `dom.mjs` re-export facade so application bundlers chunk it
+              // at file granularity: a persisted app's lazily-loaded
+              // `?register`/`?update` graphs pull control-flow/renderer/
+              // update machinery into lazy chunks instead of forcing every
+              // retained export into the eager chunk hosting one big module.
+              bundle.write({
+                dir: out,
+                format: "esm",
+                entryFileNames: "[name].mjs",
+                chunkFileNames: "[name].mjs",
+                preserveModules: true,
+                preserveModulesRoot: path.join(cwd, "src"),
+                minify,
+                sourcemap: false,
+              })
+            : bundle.write({
+                file: `${file}.mjs`,
+                format: "esm",
+                minify,
+                sourcemap: false,
+              }),
           bundle.write({
             file: `${file}.js`,
             format: "cjs",

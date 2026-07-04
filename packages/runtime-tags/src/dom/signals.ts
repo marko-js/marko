@@ -12,7 +12,7 @@ import {
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
-import { queueEffect, queueRender, rendering, runId } from "./queue";
+import { queueEffect, queueRender, rendering, runId, updating } from "./queue";
 import { _resume } from "./resume";
 import { schedule } from "./schedule";
 
@@ -37,7 +37,13 @@ export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
   return (scope: Scope, value: T) => {
     if (rendering) {
       if (scope[AccessorProp.Gen] === runId) {
-        scope[valueAccessor] = value;
+        // A fresh scope created while a persisted update applies may have
+        // been seeded from the patch before its setup flushed -- the
+        // initializer (which may depend on server-only expressions) defers
+        // to the seed.
+        if (!(updating && valueAccessor in scope)) {
+          scope[valueAccessor] = value;
+        }
         fn?.(scope);
       }
     } else if (
@@ -86,7 +92,15 @@ export function _const<T>(
 ): Signal<T> {
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
   return ((scope: Scope, value: T | undefined) => {
-    if (scope[valueAccessor] !== value || !(valueAccessor in scope)) {
+    if (
+      scope[valueAccessor] !== value ||
+      !(valueAccessor in scope) ||
+      // While a persisted update applies, merge fills may land on a fresh
+      // scope before its setup flushes; an equal-value setup invocation
+      // must still render (its statements carry client wiring the patch
+      // cannot deliver -- child `<let>` seeding, tag-var returns).
+      (updating && rendering && scope[AccessorProp.Gen] === runId)
+    ) {
       scope[valueAccessor] = value;
       fn?.(scope);
     }
@@ -109,8 +123,11 @@ export function _or(
         if (!--scope[id]) {
           fn(scope);
         }
-      } else {
-        scope[id] = defaultPending;
+      } else if (!(scope[id] = defaultPending)) {
+        // Zero pending: every other member is one that never fires during
+        // a fresh render window (persisted builds' promoted `$global`
+        // reads), so the first invocation is also the last.
+        fn(scope);
       }
     } else {
       queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);

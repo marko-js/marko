@@ -1,7 +1,13 @@
 import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
+import { basename } from "path";
 
-import { isOutputHTML } from "../util/marko-config";
+import {
+  isOutputHTML,
+  isPersisted,
+  isPersistedEntryBuild,
+  isUpdateEntryBuild,
+} from "../util/marko-config";
 import { mergeReferences } from "../util/references";
 import { getOrCreateSection } from "../util/sections";
 import { replaceRegisteredFunctionNode } from "../util/signals";
@@ -55,9 +61,51 @@ export default {
 
       if (isHTML) {
         // handled in program exit for html currently.
+      } else if (isPersistedEntryBuild()) {
+        // Module-scope client statements must stay single-instance: the
+        // persisted entry (`?persisted`, loaded with the first persisted
+        // navigation) would otherwise duplicate module STATE -- resume
+        // wires subscribers/handlers against the main module's copies, so
+        // a register-copy closure over a duplicated `client const` set
+        // notifies nobody. Import the bindings from the main module (which
+        // exports them, below) and skip re-running side-effect statements
+        // (the main module already ran them at hydration).
+        const ids = Object.keys(scriptlet.getOuterBindingIdentifiers());
+        if (ids.length) {
+          scriptlet.replaceWith(
+            t.importDeclaration(
+              ids.map((id) =>
+                t.importSpecifier(t.identifier(id), t.identifier(id)),
+              ),
+              t.stringLiteral(
+                `./${basename(scriptlet.hub.file.opts.filename as string)}`,
+              ),
+            ),
+          );
+        } else {
+          scriptlet.remove();
+        }
       } else {
         traverseReplace(node, "body", replaceRegisteredFunctionNode);
-        scriptlet.replaceWithMultiple(node.body);
+        const statements = scriptlet.replaceWithMultiple(node.body);
+        // Persisted main modules export their module-scope bindings so the
+        // persisted entry shares them (single-instance state, above).
+        if (isPersisted() && !isUpdateEntryBuild()) {
+          const ids: string[] = [];
+          for (const statement of statements) {
+            ids.push(...Object.keys(statement.getOuterBindingIdentifiers()));
+          }
+          if (ids.length) {
+            statements[statements.length - 1].insertAfter(
+              t.exportNamedDeclaration(
+                null,
+                ids.map((id) =>
+                  t.exportSpecifier(t.identifier(id), t.identifier(id)),
+                ),
+              ),
+            );
+          }
+        }
       }
     },
   },

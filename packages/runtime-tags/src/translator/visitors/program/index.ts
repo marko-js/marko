@@ -18,6 +18,7 @@ import {
   getReadyId,
   isOutputDOM,
   isOutputHTML,
+  isUpdateEntryBuild,
 } from "../../util/marko-config";
 import {
   BindingType,
@@ -32,6 +33,7 @@ import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
+import programUpdate from "./update";
 
 export let scopeIdentifier: t.Identifier;
 export function isScopeIdentifier(node: t.Node): node is t.Identifier {
@@ -120,7 +122,10 @@ export default {
           (output === "dom" && entry === "page") || output === "hydrate";
         const isServerEntry = output === "html" && entry === "page";
 
-        if (entry && !markoOpts.linkAssets) {
+        // The update/persisted entry kinds are bundler-resolved persisted
+        // artifacts with no assets to link; only the facade kinds bake
+        // linked-asset wiring in.
+        if ((entry === "page" || entry === "load") && !markoOpts.linkAssets) {
           throw program.buildCodeFrameError(
             'The "entry" option requires the `linkAssets` compiler option to be configured.',
           );
@@ -243,6 +248,11 @@ export default {
     exit(program) {
       if (isOutputHTML()) {
         programHTML.translate.exit(program);
+      } else if (isUpdateEntryBuild()) {
+        // `?update` entry: the dom visitors ran in full (identical analysis
+        // and register ids), but the emitted module is the compiled patch
+        // merge instead of the template.
+        programUpdate.translate.exit(program);
       } else {
         programDOM.translate.exit(program);
       }

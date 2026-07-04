@@ -18,6 +18,7 @@ import {
 import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
+import { getResumeOnlyExpr } from "../util/serialize-guard";
 import { addSerializeReason } from "../util/serialize-reasons";
 import {
   addValue,
@@ -159,10 +160,12 @@ export default {
           setBindingSerializedValue(
             section,
             binding,
-            t.logicalExpression(
-              "||",
-              valueChangeAttr.value,
-              t.unaryExpression("void", t.numericLiteral(0)),
+            getResumeOnlyExpr(
+              t.logicalExpression(
+                "||",
+                valueChangeAttr.value,
+                t.unaryExpression("void", t.numericLiteral(0)),
+              ),
             ),
             getAccessorPrefix().TagVariableChange,
           );

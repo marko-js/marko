@@ -1,0 +1,15 @@
+import { getDetails } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<if=input.detailId>
+  <const/details=getDetails(input.detailId)>
+  <section>
+    <h2>${details.name}</h2>
+    <p>costs ${details.price}</p>
+    <button.copy onClick() { count = details.price }>use price</button>
+  </section>
+</if>
+<else>
+  <p>no selection</p>
+</else>

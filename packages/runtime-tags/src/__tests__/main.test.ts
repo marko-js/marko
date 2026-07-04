@@ -3,6 +3,7 @@ import fs from "fs";
 import { html_beautify } from "js-beautify";
 import path from "path";
 
+import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import type { Input } from "../common/types";
 import * as tagsTranslator from "../translator";
 import {
@@ -17,8 +18,10 @@ import {
   type Flush,
   type FlushType,
   isFlush,
+  isNavigate,
   isThrows,
   isWait,
+  type Navigate,
   resetResolveState,
   resolveAfter,
   type Throws,
@@ -31,7 +34,13 @@ import {
 } from "./utils/strip-inline-runtime";
 import createMutationTracker from "./utils/track-mutations";
 
-type Step = Input | Wait | Flush | Throws | ((container: Element) => unknown);
+type Step =
+  | Input
+  | Wait
+  | Flush
+  | Throws
+  | Navigate
+  | ((container: Element) => unknown);
 type Steps = [Input, ...Step[]];
 export type TestConfig = {
   steps?: Steps | (() => Steps | Promise<Steps>);
@@ -52,6 +61,12 @@ export type TestConfig = {
   error_compiler?: true | string[];
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
+  /**
+   * Compiles the fixture with the `persisted` compiler option (single-page
+   * server-first updates). Pair with `$global.persisted` in the fixture
+   * input to exercise persisted-mode serialization.
+   */
+  persisted?: boolean;
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -146,6 +161,7 @@ function testFixtures(interop?: true) {
             (): compiler.Config => ({
               translator,
               runtimeId: config.runtime_id,
+              persisted: config.persisted,
               writeVersionComment: false,
               babelConfig: {
                 babelrc: false,
@@ -241,6 +257,12 @@ function testFixtures(interop?: true) {
                 instance.update(input);
                 tracker.logUpdate(input);
               },
+              // csr navigation is simply new input to the root -- the
+              // semantics the ssr update patch is meant to reproduce.
+              onNavigate(input) {
+                instance.update(input);
+                tracker.logUpdate(input);
+              },
             });
 
             tracker.cleanup();
@@ -299,8 +321,95 @@ function testFixtures(interop?: true) {
             const { run } =
               browser.ctx as typeof import("@marko/runtime-tags/dom");
 
+            const updateRunner = runner.updateRunner;
             await runSteps(steps, tracker, browser, run, {
               onFlush: hasFlush ? flushAndRun : undefined,
+              onNavigate: updateRunner
+                ? async (navigateInput) => {
+                    // Render the update payload server-side (a stateless
+                    // update render of the same template with the new input)
+                    // and extract its resume fills.
+                    const { template } = await runner.runServer();
+                    let html = "";
+                    for await (const chunk of template.render({
+                      ...navigateInput,
+                      $global: {
+                        ...(navigateInput.$global as object),
+                        persisted: "update",
+                        renderId: "navigate",
+                      },
+                    })) {
+                      html += chunk;
+                    }
+                    // Update responses are a newline-delimited stream of
+                    // serializer frames: each line is a bare JS array of
+                    // fills plus effect entries (strings; the applier runs
+                    // them only for scopes it freshly created). Frames
+                    // apply one at a time (the streaming model -- async
+                    // boundary bodies arrive in later frames, in
+                    // resolution order).
+                    const frames: (((ctx: unknown) => unknown) | string)[][] =
+                      [];
+                    for (const line of html.split("\n")) {
+                      if (line) {
+                        const fills: (((ctx: unknown) => unknown) | string)[] =
+                          [];
+                        for (const item of new Function(`return (${line})`)()) {
+                          if (
+                            typeof item === "function" ||
+                            typeof item === "string"
+                          ) {
+                            fills.push(item);
+                          }
+                        }
+                        if (fills.length) frames.push(fills);
+                      }
+                    }
+                    if (!frames.length) {
+                      throw new Error(
+                        "navigate(): update render carried no resume fills",
+                      );
+                    }
+
+                    // Pair with the live root: register a capture handler
+                    // and drive it through the page's own effect machinery.
+                    const updateEntry = await updateRunner(browser.ctx);
+                    const runtimeId = config.runtime_id ?? DEFAULT_RUNTIME_ID;
+                    const renders = (browser.window as any)[runtimeId];
+                    const renderId = Object.keys(renders)[0];
+                    let liveRoot: unknown;
+                    updateEntry.__register(
+                      "__navigate_root",
+                      (scope: unknown) => (liveRoot = scope),
+                    );
+                    renders[renderId].r.push("__navigate_root 1");
+                    updateEntry.__ready("__navigate");
+                    if (!liveRoot) {
+                      throw new Error(
+                        "navigate(): could not pair the live root scope",
+                      );
+                    }
+
+                    // Intermediate frames log their own mutation batches
+                    // (the last frame's log is the step's, via runSteps) so
+                    // snapshots show the page settling frame by frame.
+                    const applyFrame = updateEntry.__createUpdate(
+                      updateEntry.default,
+                      liveRoot as any,
+                    );
+                    for (let i = 0; i < frames.length; i++) {
+                      applyFrame(frames[i] as any);
+                      await browser.runAsyncScripts();
+                      run();
+                      if (i < frames.length - 1) {
+                        tracker.logUpdate(
+                          `update frame ${i + 1} of ${frames.length}`,
+                        );
+                        tracker.beginUpdate();
+                      }
+                    }
+                  }
+                : undefined,
             });
 
             while (hasFlush) {
@@ -384,10 +493,17 @@ async function runSteps(
   opts: {
     onInput?: (input: Input) => void;
     onFlush?: () => Promise<void>;
+    onNavigate?: (input: Input) => void | Promise<void>;
   },
 ) {
   for (const update of steps) {
-    if (isWait(update)) {
+    if (isNavigate(update)) {
+      if (opts.onNavigate) {
+        tracker.beginUpdate();
+        await opts.onNavigate(update.navigateInput as Input);
+        tracker.logUpdate(update.navigateInput as Input);
+      }
+    } else if (isWait(update)) {
       await update();
       await browser.runAsyncScripts();
       run();
