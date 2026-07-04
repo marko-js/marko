@@ -102,22 +102,23 @@ preserved dist modules behind the `dom.mjs` facade, spread/catch/
 `_script_update` file splits). Post-split attribution of the /search
 eager closure pinpoints the remaining drivers, largest first:
 
-1. **Promoted-`$global` dynamic closures keep the branch graph in slim
-   mains.** The page main still constructs `_for_of`/`_if`/`_for_selector`
-   plus registered loop/branch content because dynamic closures over
-   promoted `$global` reads (the chips' active-class `$global.search` ∩
-   loop param, pagination links) register their signals and content for
-   resume-time closure invocation — but a global-sourced closure can
-   never fire client-side outside an update merge (nothing reactively
-   writes `$global`; `valueChange` handlers assign the plain object). In
-   persisted MAIN builds those registrations (and the render graphs they
-   retain, control-flow included) belong register-side. Fix needs an
-   audit that resume resolves serialized closure-subscriber sets lazily
-   (invocation-time, owner-change only) so deferring the registration to
-   the `?register` load is observation-equivalent; the emission sites are
-   the dynamic-closure registration in `util/signals.ts` (the
-   `ClosureSignalIndex`/`ClosureScopes` serialization block) and the
-   loop/if content registration reasons those closures create.
+1. **The slim main still carries the render graph, retainer unknown.**
+   (An earlier revision blamed registrations left in main — that
+   extraction ran against a stale tarball without the gates; the real
+   build's main has zero registrations yet still holds the
+   `_for_of`/`_if` constructions, setups, and update-guarded closure
+   invocations, ~1.8 kB for the search page plus the runtime machinery
+   they reference.) The fixture equivalent
+   (`persisted-update-attr-items`) tree-shakes its whole graph out of
+   main, so the difference lies in shapes the app has and the fixture
+   lacks: `_closure` href closures reading through the owner chain and
+   page-level `_if_closure`/`_for_closure` over promoted `$global`.
+   Next step: extend a fixture to those shapes and do unminified
+   retention analysis on its main module to name the eager root
+   (candidate: the dynamic-closure serialized-subscriber machinery
+   needing client-resolvable closure signals at owner-change, which
+   would make the deferral question "does resume resolve closure
+   subscribers lazily").
 2. `controllable.ts` is mixed-phase: hydration `_script` variants (and
    the controlled helpers interactive inputs genuinely need eagerly, eg
    the app's qty input) host together with the `_default`/value writers

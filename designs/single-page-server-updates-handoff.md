@@ -638,10 +638,18 @@ the parked split above is **landed**, with both attempt-1 findings solved:
   modules load), then a matched-page interaction whose
   `valueChange`→`subsByKey` notification must reach the resume-wired
   subscriber — in both production and dev.
-- **The split is now byte-free in total.** Attempt 1's register
-  duplication cost +7.5 kB total app JS; with the state seam and
-  suppressed re-registrations the bundler dedupes it to ~+0.1 kB
-  (44.2 vs 44.1 kB all-routes raw). Mechanics unchanged from attempt 1:
+- **Correction (stale-tarball artifact):** an earlier revision here
+  claimed the split's total-JS cost deduped to ~free — that measurement
+  ran against a stale installed tarball whose translator lacked the
+  gates (the relink's npm cache kept an old same-version tarball; the
+  packed dist must be verified after every relink, eg
+  `grep -c isRegisterEntryBuild node_modules/marko/dist/translator/index.js`).
+  With the split genuinely active the register modules cost **+7.3 kB
+  raw total app JS** (51.4 vs 44.1 all-routes) — the render-graph
+  duplication is real and intentional; the state seam fixes
+  _correctness_, not bytes. All 38 browser checks plus the duality
+  probes were re-validated against the real split build (production and
+  dev). Mechanics unchanged from attempt 1:
   `persisted: "register"` compiles the full persisted dom module (with
   registrations), the generated `?update` entry statically imports it, the
   main compile keeps only non-persisted registration reasons, slim mains
@@ -649,12 +657,18 @@ the parked split above is **landed**, with both attempt-1 findings solved:
   process at hydration), and @marko/vite resolves `?register` mirroring
   `?update`. Suite 8371 passing with rendered output byte-identical; all
   38 app browser checks green.
-- **The eager win is still gated on the runtime phase partition** (the
-  attempt-1 finding #1): `/search` eager stays ~31.5 kB raw until the
-  mixed-phase runtime modules (controllable's `_script` vs `_default`
-  variants, control-flow's hydration-reachable surface) split by phase so
-  chunk hosting stops dragging render machinery eagerly. That partition is
-  the remaining step of this slice.
+- **The eager win is still pending.** The gates verifiably work — the
+  real build's page main constructs plain `_if`/`_for_of` with zero
+  registrations — but `/search` eager stays ~31.5 kB raw: the main
+  module still _carries_ the full render graph (constructions, setups,
+  update-guarded closure invocations), retained by a reference chain the
+  minified output doesn't conclusively name (the fixture equivalent,
+  `persisted-update-attr-items`, drops its whole graph from main — the
+  app page differs in its `_closure`-over-owner-chain href closures and
+  page-level `_if_closure` shapes). Next step: a minimal fixture
+  reproducing those shapes, then unminified retention analysis of its
+  main module; the mixed-phase runtime hosting (controllable,
+  control-flow) remains the second lever after it.
 
 **Implemented** (`fix: per-translate abort-signal ids` + shared compiler
 caches): the `?update` entry compiles now share the whole build's compiler
