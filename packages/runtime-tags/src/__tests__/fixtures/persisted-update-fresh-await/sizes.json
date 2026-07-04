@@ -9,8 +9,8 @@
       "brotli": 1217
     },
     "control-flow.mjs": {
-      "min": 12371,
-      "brotli": 5153
+      "min": 12468,
+      "brotli": 5167
     }
   },
   "html": {

@@ -138,6 +138,13 @@ export const IfTag = {
           const [[ifTag]] = getBranches(tag);
           const ifTagSection = getSection(ifTag);
           if (
+            // Persisted builds keep serializing branch owners: update
+            // payloads carry no resume markers, so patch-borne branch
+            // scopes (fresh or matched through mixed state+request-derived
+            // conditions) cannot link owners from visits. A finer-grained
+            // skip for purely state-driven branches (excluded from updates)
+            // is possible -- see agent-feedback/perf.md.
+            !isPersisted() &&
             isStateSerializeReason(
               getSerializeReason(ifTagSection, kStatefulReason),
             ) &&

@@ -9,8 +9,8 @@
       "brotli": 1066
     },
     "event.mjs": {
-      "min": 6550,
-      "brotli": 2909
+      "min": 6647,
+      "brotli": 2965
     }
   },
   "html": {

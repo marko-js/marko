@@ -225,6 +225,10 @@ export default {
           kStatefulReason,
         );
         if (
+          // Persisted builds keep serializing branch owners (update payloads
+          // carry no resume markers to link them from) -- see the matching
+          // gate in core/if.ts.
+          !isPersisted() &&
           isStateSerializeReason(statefulSerializeReason) &&
           isStaticSerializeReason(branchSerializeReason) &&
           isStaticSerializeReason(markerSerializeReason)

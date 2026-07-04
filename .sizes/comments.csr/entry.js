@@ -1,4 +1,4 @@
-// size: 7317 (min) 3250 (brotli)
+// size: 7298 (min) 3254 (brotli)
 //#region packages/runtime-tags/dist/common/helpers.mjs
 let decodeAccessor = (num) =>
   (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
@@ -710,7 +710,6 @@ const $if_content__comment_comments = /* @__PURE__ */ _if_closure(
 const $if_content__setup = ($scope) => {
   $if_content__comment_comments._($scope);
   $if_content__id._($scope);
-  $scope.a;
 };
 const $if_content__id = /* @__PURE__ */ _if_closure(4, 0, ($scope) =>
   $input_path$1($scope.a, $scope._.l),
@@ -766,9 +765,7 @@ const $input_path$1 = /* @__PURE__ */ _const(4, $for_content__input_path);
 //#region packages/runtime-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/template.marko
 const $template = $template$1;
 const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)(" b");
-function $setup($scope) {
-  $scope.a;
-}
+const $setup = () => {};
 const $input_comments = ($scope, input_comments) =>
   $input_comments$1($scope.a, input_comments);
 const $input_path = ($scope, input_path) => $input_path$1($scope.a, input_path);

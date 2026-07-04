@@ -707,6 +707,45 @@ state belongs in `createSectionState`/`createProgramState`; an audit of
 the other section/binding-keyed module maps found only analyze-phase
 writes and idempotent pure memos.
 
+**Rebased onto `main`** (2026-07-04): the branch replayed cleanly over
+upstream's serialize-reason bitmask re-encoding plus the bug-bash/perf
+push, with one explicit reconciliation commit on top of the replay
+(design collisions are resolved there, not smeared through rewritten
+history):
+
+- Threaded serialize reasons now use upstream's encoding untouched
+  (`1` = everything, packed number = pure-stateful group bitmask, record
+  for dynamic groups). Persisted-ness is **render-wide state, not a
+  threaded value**: the root no longer seeds `serializeReason`;
+  `_serialize_guard` returns the group's raw bits OR
+  `_persisted_reason()` (so every reason-carrying spine site serializes
+  in persisted renders, and branch guards keep the `& 2` update bit),
+  while `_serialize_if` masks bit 1 so record entries carrying persisted
+  bits never masquerade as stateful. Non-persisted renders hit the
+  upstream code paths exactly.
+- Upstream's owner-from-resume-marker optimization is gated off under
+  `isPersisted()` (update payloads carry no markers to link owners
+  from); a finer-grained skip for purely state-driven branches is
+  recorded in `agent-feedback/perf.md`.
+- Upstream's held-effects-while-async-blocked fix skips update renders:
+  frames apply atomically and the applier only runs effects for scopes
+  created by the same frame (`Gen >= applyGen`), so effects must ride
+  the frame that creates their scopes (caught by the fresh-page
+  fixture's dead add-to-cart click).
+- **Non-persisted size verification** (fixture corpus dom bundles,
+  HEAD vs upstream `main`; every value byte-identical to the
+  pre-rebase branch, i.e. the rebase itself added nothing): 163
+  fixtures shrank (−30.9 kB min total; identifier dedup + tree-shaking
+  from the preserved-modules/`sideEffects` packaging), 272 grew
+  slightly (+6.3 kB total, max +110 bytes single), and 35 `lazy-tag-*`
+  fixtures show +48.1 kB that is chunk-accounting redistribution (a
+  previously separate, uncounted shared chunk now counts inline —
+  noted in the packaging changeset). Benchmark apps: counter +40 min /
+  −9 brotli, comments +191 min / +40 brotli, hydrate variants +9 min /
+  −30 brotli; the full runtime surface (`*`) +1,685 min / +645 brotli
+  is the persisted machinery in the published bundle, which
+  tree-shakes out of non-persisted apps (as the app numbers show).
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by

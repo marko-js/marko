@@ -328,17 +328,34 @@ export function _state_reason() {
 }
 
 export function _serialize_if(condition: SerializeReasonValue, key: number) {
+  // Record entries carry the persisted bit lattice under the persisted
+  // option (bit 1 stateful, bit 2 persisted/request-derived), so the value
+  // gate masks the stateful bit; packed numbers are pure stateful group
+  // masks and unaffected.
   return condition &&
     (condition === 1 ||
       (typeof condition === "number"
         ? (condition >>> (key + 1)) & 1
-        : condition[key]))
+        : condition[key]! & 1))
     ? 1
     : undefined;
 }
 
 export function _serialize_guard(condition: SerializeReasonValue, key: number) {
-  return _serialize_if(condition, key) || 0;
+  // The spine gate keeps the group's raw bits (records can carry the
+  // persisted bit, which branch guards check via `& 2`) and ORs in the
+  // render-wide persisted bits: persisted renders serialize every
+  // reason-carrying marker/spine site regardless of what a stateful parent
+  // threaded. Non-persisted renders get `_serialize_if || 0`, unchanged.
+  return (
+    (condition &&
+      (condition === 1
+        ? 1
+        : typeof condition === "number"
+          ? (condition >>> (key + 1)) & 1
+          : condition[key])) ||
+    _persisted_reason()
+  );
 }
 
 // Captures a computed hole value for update renders (persisted patch
@@ -1146,19 +1163,15 @@ export class State implements SerializeState {
       this.nonceAttr = " nonce" + attrAssignment($global.cspNonce);
     }
     if ($global.persisted) {
-      // Seed the root template's reason: the network is a stateful parent,
-      // but one that always supplies fresh values in its updates, so only
-      // markers and the scope spine serialize (bit 2). Update renders (patch
-      // responses) also set bit 1 so request-derived values serialize -- the
-      // values ARE the payload there.
+      // Persisted renders are render-wide state, not a threaded reason: the
+      // spine gates (`_serialize_guard` / `_persisted_reason`) read these
+      // flags directly, so the network-as-parent needs no root reason seed
+      // (threaded reasons stay pure stateful group masks). Update renders
+      // (patch responses) serialize request-derived values -- the values ARE
+      // the payload -- via the source-classified `_update_reason` /
+      // `_state_reason` gates.
       this.update = $global.persisted === "update";
       this.seed = this.update && !!$global.persistedSeed;
-      // The persisted bit (2) threads through reason vectors for
-      // markers/spine; update-ness is render-global and value emission
-      // checks it directly per source class (`_update_reason` /
-      // `_state_reason`), so update renders no longer masquerade as
-      // stateful (state values stay out of patches entirely).
-      this.serializeReason = 2;
       // Update responses carry no document: no walker bootstrap to emit.
       this.hasMainRuntime = this.update;
     }
@@ -1539,8 +1552,12 @@ export class Chunk {
     // markers for everything already rendered after that content have not
     // been written -- running effects now could cascade state updates into
     // scopes whose nodes aren't in the document yet. Hold effects on the
-    // blocked chunk so they flush once its async content completes.
-    const effects = this.async ? "" : this.effects;
+    // blocked chunk so they flush once its async content completes. Update
+    // responses skip the hold: frames apply atomically client-side and the
+    // applier only runs an effect for scopes created by the same frame, so
+    // effects must ride the frame that creates their scopes.
+    const holdEffects = this.async && !state.update;
+    const effects = holdEffects ? "" : this.effects;
     let { html, scripts } = this;
 
     if (state.needsMainRuntime && !state.hasMainRuntime) {
@@ -1689,7 +1706,7 @@ export class Chunk {
 
     this.html = html;
     this.scripts = scripts;
-    if (!this.async) this.effects = this.lastEffect = "";
+    if (!holdEffects) this.effects = this.lastEffect = "";
     state.resumes = "";
     return this;
   }

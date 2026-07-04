@@ -37,9 +37,8 @@ import {
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
-import { getOrCreateSection } from "../../util/sections";
-import { addSetupStatement } from "../../util/setup-statements";
 import { getOrCreateSection, getSection } from "../../util/sections";
+import { addSetupStatement } from "../../util/setup-statements";
 import { addStatement, getSignal } from "../../util/signals";
 import { createProgramState } from "../../util/state";
 import { addUpdateMerge } from "../../util/update-merges";

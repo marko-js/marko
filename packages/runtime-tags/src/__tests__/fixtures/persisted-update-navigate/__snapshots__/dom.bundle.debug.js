@@ -62,9 +62,6 @@ var price_default = /* @__PURE__ */ _template("__tests__/tags/price.marko", $tem
 // template.marko
 const $template = "<h1> </h1><a>specs</a><button> </button><section></section><ul></ul>";
 const $walks = "D l b D l b b";
-const $for_content__setup = ($scope) => {
-	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
-};
 const $for_content__item_price = ($scope, item_price) => $input_amount($scope["#childScope/0"], item_price);
 const $for_content__item_name = ($scope, item_name) => _text($scope["#text/1"], item_name);
 const $for_content__$params = ($scope, $params2) => {
@@ -95,7 +92,7 @@ const $input_product_sale = ($scope, input_product_sale) => {
 	$input_product_sale_percent($scope, input_product_sale?.percent);
 	$if($scope, input_product_sale ? 0 : 1);
 };
-const $for = /* @__PURE__ */ _for_of("#ul/5", /* @__PURE__ */ ((_w0) => `<li>${_w0} <!></li>`)($template$1), /* @__PURE__ */ ((_w0) => `D/${_w0}&b%l`)($walks$1), $for_content__setup, $for_content__$params);
+const $for = /* @__PURE__ */ _for_of("#ul/5", /* @__PURE__ */ ((_w0) => `<li>${_w0} <!></li>`)($template$1), /* @__PURE__ */ ((_w0) => `D/${_w0}&b%l`)($walks$1), 0, $for_content__$params);
 const $input_related = ($scope, input_related) => $for($scope, [input_related, function(item) {
 	return item.id;
 }]);

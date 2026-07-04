@@ -31,7 +31,6 @@ import {
 import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
-import { addUpdateMerge } from "../util/update-merges";
 import {
   addUpdateMerge,
   isUpdateCoveredByClientSignals,

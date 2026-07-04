@@ -31,7 +31,6 @@ import {
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
 import { addSetupStatement } from "../util/setup-statements";
-import { isReasonDynamic } from "../util/serialize-reasons";
 import {
   addStatement,
   addValue,
