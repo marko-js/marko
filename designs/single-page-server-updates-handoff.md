@@ -277,6 +277,40 @@ ecommerce app's awaited sections (recommendations/reviews) were silently
 stale after persisted navigations, and buffered apply cost 1.26s on the
 item page — both fixed by this slice.
 
+**Implemented** (`feat: persisted dynamic-tag renderer swaps` + the run
+branch's cross-route router): **cross-route navigation without the shared
+shell**. The design's recursive dynamic shell would deopt static
+composition at every chain level; instead the swap rides the
+already-dynamic `<${input.content}/>` hop — two routes sharing a layout
+chain compile to identical wrapper shapes (only the page import differs),
+so the target route's update entry pairs with the live root and the
+divergence is a content-renderer-id mismatch at the hop. Persisted dom
+builds always register content sections and dynamic-tag signals; on
+mismatch `_update_dynamic` resolves the registered renderer (bound to the
+patch branch's owner scope — its values are the update's data; owner
+reactivity into a swapped branch is inert, fine for stateless wrappers)
+and replays the tag's own signal: fresh branch from static parts, filled
+by the renderer's registered update merge (matched ids never replay, so
+matched levels don't re-run their input phase). run generates a client
+route table (patterns + lazy loaders per route for the template module and
+`?update` entry); the router matches any route's links and loads the
+target's code in parallel with the fetch. This also fixed a pre-existing
+optimized-build bug where the layout-hop dispatch no-op'd persisted
+updates entirely. Validated on the ecommerce app (dev + production):
+item→cart applies as an update with layout DOM identity surviving; back
+to the item page falls back cleanly. Limitations (each on the watch
+list): (1) pages whose setup calls server-only imports cannot
+client-construct as swap targets — the fallback ladder full-navigates;
+the designed fix is wire-delivered resumable html fragments for the
+divergent subtree. (2) Nested-layout client state below the hop does not
+survive cross-route (content identity is per-wrapper-file); the shell —
+or a compiler-level "swappable static tag" — is the deopt-free fix if
+partial-chain matching proves needed. (3) The client table's linear match
+can disagree with server ranking (409 → fallback covers it). (4)
+Template-valued dynamic tags (`<${cond ? A : B}/>` with whole templates)
+swap only if the template is registered — content-section values (define,
+pass-through content) are covered; dom `_template` registration is not.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by
@@ -420,9 +454,12 @@ to param-like sources under the persisted option`). Mechanism: under the
    full-navigation fallback — validated by swapping the server bundle's
    hash under a live Chromium page (stale tab's next click full-navigates
    cleanly onto the new build). **Per-frame streaming apply — done** (see
-   "Current state": `createUpdate` + the streaming router). Remaining in
-   this slice: `?update` chunks in the build manifest for **cross-route**
-   loading, cross-route navigation (the shared-shell design), and
+   "Current state": `createUpdate` + the streaming router). **Cross-route
+   navigation — done for shared-layout routes** (see "Current state": the
+   content-hop swap; the generated client route table subsumed the
+   manifest work — its loaders are plain dynamic imports the bundler
+   chunks). Remaining in this slice: wire-delivered resumable html
+   fragments (so pages with server-only setup can be swap targets), and
    scroll/focus refinements (hash-fragment scroll after apply,
    `<a rel=external>` audit). The update wire's `new Function` frame eval
    also needs a CSP story (initial-render resume runs as inline scripts;
