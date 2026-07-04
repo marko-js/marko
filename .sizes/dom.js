@@ -1,4 +1,4 @@
-// size: 26630 (min) 9738 (brotli)
+// size: 26732 (min) 9805 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2683,9 +2683,20 @@ function createUpdate(merge, liveRoot = getUpdateRoot()) {
 function _update_content(contentId, merge) {
   _resume(contentId + "!", merge);
 }
-function _update_dynamic(rendererId, patchBranch, liveBranch) {
-  let merge =
-    typeof rendererId == "string" && getRegisteredWithScope(rendererId + "!");
+function _update_dynamic(patch, live, rendererKey, branchKey, replay) {
+  let rendererId = patch[rendererKey];
+  if (typeof rendererId != "string") return;
+  let patchBranch = patch[branchKey];
+  if (replay && live[rendererKey] !== rendererId) {
+    let renderer = getRegisteredWithScope(
+      rendererId,
+      patchBranch?._ || live._ || live,
+    );
+    if (!renderer) return;
+    replay(live, renderer);
+  }
+  let merge = getRegisteredWithScope(rendererId + "!"),
+    liveBranch = live[branchKey];
   merge && patchBranch && liveBranch && merge(patchBranch, liveBranch);
 }
 function _update_html(live, patch, accessor) {

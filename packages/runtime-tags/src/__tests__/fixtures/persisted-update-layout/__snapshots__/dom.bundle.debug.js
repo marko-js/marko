@@ -1,9 +1,10 @@
 // tags/layout/layout.marko.update.mjs
+const $dynamic_update = _update_signal("__tests__/tags/layout/layout.marko_0/update_dynamic_#text/2");
 const $update$1 = (patch, live) => {
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_content" in patch) live["input_content"] = patch["input_content"];
-	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch["ConditionalRenderer:#text/2"], patch["BranchScopes:#text/2"], live["BranchScopes:#text/2"]);
+	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2", $dynamic_update);
 };
 var layout_marko_update_default = _resume("__tests__/tags/layout/layout.marko_0_update", $update$1);
 
@@ -32,7 +33,7 @@ function $setup$1($scope) {
 	$open($scope, false);
 	$setup__script($scope);
 }
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/2");
+const $dynamicTag = _var_resume("__tests__/tags/layout/layout.marko_0/update_dynamic_#text/2", /* @__PURE__ */ _dynamic_tag("#text/2"));
 const $input_content = $dynamicTag;
 const $input$1 = ($scope, input) => $input_content($scope, input.content);
 var layout_default = /* @__PURE__ */ _template("__tests__/tags/layout/layout.marko", $template$1, $walks$1, $setup$1, $input$1);
@@ -50,7 +51,7 @@ const $layout_content__setup = ($scope) => {
 	$layout_content__setup__script($scope);
 };
 const $layout_content__count = /* @__PURE__ */ _closure_get("count", ($scope) => _text($scope["#text/2"], $scope._.count));
-const $layout_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "<h1> </h1><button class=inc> </button>", "D l D l", $layout_content__setup);
+const $layout_content = _content_resume("__tests__/template.marko_1_content", "<h1> </h1><button class=inc> </button>", "D l D l", $layout_content__setup);
 const $count__closure = /* @__PURE__ */ _closure($layout_content__count);
 const $count = /* @__PURE__ */ _let("count/4", $count__closure);
 function $setup($scope) {

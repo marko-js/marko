@@ -52,6 +52,7 @@ export type UpdateMerge =
   | {
       kind: "dynamic";
       accessor: t.StringLiteral | t.NumericLiteral;
+      signalId: string;
     }
   | {
       /** Single-branch boundary (`<await>`/`<try>` body) dispatch. */
@@ -90,6 +91,16 @@ export function getUpdateIfRegisterId(
   accessor: string | number,
 ) {
   return getResumeRegisterId(section, undefined, `update_if_${accessor}`);
+}
+
+// Same for dynamic-tag signals: update merges replay them to swap the
+// branch when the patch's renderer id differs from the live one (a
+// cross-route navigation's divergence point).
+export function getUpdateDynamicRegisterId(
+  section: Section,
+  accessor: string | number,
+) {
+  return getResumeRegisterId(section, undefined, `update_dynamic_${accessor}`);
 }
 
 /**

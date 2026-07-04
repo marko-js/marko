@@ -77,7 +77,10 @@ import {
   propsToExpression,
   translateAttrs,
 } from "../../util/translate-attrs";
-import { addUpdateMerge } from "../../util/update-merges";
+import {
+  addUpdateMerge,
+  getUpdateDynamicRegisterId,
+} from "../../util/update-merges";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
@@ -507,11 +510,23 @@ export default {
         const signal = getSignal(section, nodeBinding, "dynamicTag");
         // Update renders link the rendered branch explicitly (see the html
         // runtime's `_dynamic_tag`); the merge dispatches the content's
-        // registered update merge by the serialized renderer id.
+        // registered update merge by the serialized renderer id. The signal
+        // registers so the merge can replay it when the patch's renderer id
+        // differs from the live one (a cross-route navigation's divergence
+        // point) — the runtime's own branch swap, fed the registered
+        // renderer.
         if (isPersisted() && serializeReason) {
+          const accessor = getScopeAccessorLiteral(nodeBinding);
+          const signalId = getUpdateDynamicRegisterId(
+            tagSection,
+            accessor.value,
+          );
+          signal.register = true;
+          signal.registerId = signalId;
           addUpdateMerge(tagSection, {
             kind: "dynamic",
-            accessor: getScopeAccessorLiteral(nodeBinding),
+            accessor,
+            signalId,
           });
         }
         let tagVarSignal: Signal | undefined;

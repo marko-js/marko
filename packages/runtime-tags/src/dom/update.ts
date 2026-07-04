@@ -130,15 +130,43 @@ export function _update_content(contentId: string, merge: UpdateMerge) {
 }
 
 export function _update_dynamic(
-  rendererId: unknown,
-  patchBranch: Scope | undefined,
-  liveBranch: Scope | undefined,
+  patch: Scope,
+  live: Scope,
+  rendererKey: string,
+  branchKey: string,
+  replay?: UpdateSignal,
 ) {
-  const merge =
-    typeof rendererId === "string" &&
-    (getRegisteredWithScope(rendererId + UPDATE_MERGE_SUFFIX) as
-      | UpdateMerge
-      | undefined);
+  const rendererId = patch[rendererKey];
+  if (typeof rendererId !== "string") return;
+  const patchBranch = patch[branchKey] as Scope | undefined;
+
+  if (replay && live[rendererKey] !== rendererId) {
+    // The patch rendered a different renderer than the live page holds --
+    // a cross-route navigation's divergence point. Resolve the registered
+    // renderer (persisted builds register all content; the target route's
+    // modules are loaded before applying) bound to the patch branch's own
+    // owner scope -- its values are the update's data, so the fresh
+    // branch's closures read correct values (client-state reactivity from
+    // the owner into a swapped branch is inert; acceptable for stateless
+    // pass-through owners like route wrappers) -- and replay the dynamic
+    // tag's own signal: the runtime swaps in a fresh branch built from the
+    // renderer's static parts, and the merge below fills it from the
+    // patch. An unresolved id (target code not loaded) leaves the live
+    // branch untouched -- the sparse skip.
+    const renderer = getRegisteredWithScope(
+      rendererId,
+      (patchBranch?.[AccessorProp.Owner] as Scope) ||
+        (live[AccessorProp.Owner] as Scope) ||
+        live,
+    );
+    if (!renderer) return;
+    replay(live, renderer);
+  }
+
+  const merge = getRegisteredWithScope(rendererId + UPDATE_MERGE_SUFFIX) as
+    | UpdateMerge
+    | undefined;
+  const liveBranch = live[branchKey] as Scope | undefined;
   if (merge && patchBranch && liveBranch) {
     merge(patchBranch, liveBranch);
   }

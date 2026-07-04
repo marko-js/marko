@@ -123,7 +123,11 @@ export default {
               ]);
             } else {
               let renderer = callRuntime(
-                getSectionRegisterReasons(childSection)
+                // Persisted builds always register content: a persisted
+                // update may swap a dynamic tag to a renderer the live page
+                // has never rendered (a cross-route navigation's divergence
+                // point), resolved from the registry by the serialized id.
+                getSectionRegisterReasons(childSection) || isPersisted()
                   ? "_content_resume"
                   : "_content",
                 t.stringLiteral(getResumeRegisterId(childSection, "content")),

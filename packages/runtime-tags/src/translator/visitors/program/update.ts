@@ -413,15 +413,26 @@ function buildMerge(
         getAccessorPrefix().ConditionalRenderer + merge.accessor.value;
       const branchScopesKey =
         getAccessorPrefix().BranchScopes + merge.accessor.value;
+      const signalIdentifier = generateUidIdentifier("dynamic_update");
+      hoistedDeclarations.push(
+        t.variableDeclaration("const", [
+          t.variableDeclarator(
+            signalIdentifier,
+            callRuntime("_update_signal", t.stringLiteral(merge.signalId)),
+          ),
+        ]),
+      );
       return [
         ifPresent(
           rendererKey,
           t.expressionStatement(
             callRuntime(
               "_update_dynamic",
-              patchGet(rendererKey),
-              patchGet(branchScopesKey),
-              liveGet(branchScopesKey),
+              t.identifier("patch"),
+              liveIdentifier,
+              t.stringLiteral(rendererKey),
+              t.stringLiteral(branchScopesKey),
+              t.cloneNode(signalIdentifier, true),
             ),
           ),
         ),

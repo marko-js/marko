@@ -44,6 +44,27 @@ UPDATE: .inc::text "0" => "1"
 ```
 
 # Update `{"title":"About","$global":{"persisted":true}}`
+```html
+<header>
+  <button>
+    Menu
+  </button>
+</header>
+<main>
+  <h1>
+    About
+  </h1>
+  <button
+    class="inc"
+  >
+    1
+  </button>
+</main>
+```
+## Change
+```
+UPDATE: main > h1::text "Home" => "About"
+```
 
 # Update
 ```js
@@ -57,7 +78,7 @@ container.querySelector("button.inc").click();
 </header>
 <main>
   <h1>
-    Home
+    About
   </h1>
   <button
     class="inc"
