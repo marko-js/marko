@@ -116,9 +116,10 @@ export default {
         }
       });
       body.push(defaultExport);
-      // Re-export the applier so consumers (the client router) need no
+      // Re-export the appliers so consumers (the client router) need no
       // knowledge of the runtime module path this entry was compiled
-      // against (debug vs optimized).
+      // against (debug vs optimized). `createUpdate` is the per-navigation
+      // streaming form (one call per response frame).
       body.push(
         t.exportNamedDeclaration(
           null,
@@ -126,6 +127,10 @@ export default {
             t.exportSpecifier(
               t.identifier("applyUpdate"),
               t.identifier("applyUpdate"),
+            ),
+            t.exportSpecifier(
+              t.identifier("createUpdate"),
+              t.identifier("createUpdate"),
             ),
           ],
           t.stringLiteral(getRuntimePath("dom")),
@@ -251,14 +256,16 @@ function buildMerge(
         ),
       ];
     case "html":
+      // `_update_html` consumes its patch key: html holes replace their DOM
+      // range unconditionally, so streamed re-dispatches must not re-run it.
       return [
         ifPresent(
           merge.accessor,
           t.expressionStatement(
             callRuntime(
-              "_html",
+              "_update_html",
               liveIdentifier,
-              patchGet(merge.accessor),
+              t.identifier("patch"),
               t.cloneNode(merge.accessor),
             ),
           ),
@@ -417,6 +424,42 @@ function buildMerge(
               liveGet(branchScopesKey),
             ),
           ),
+        ),
+      ];
+    }
+    case "branch": {
+      // `<await>`/`<try>` body dispatch: a single always-body branch, linked
+      // by the same `BranchScopes:<accessor>` key the live page stores its
+      // branch under. An await body's link arrives with the body's own frame
+      // (resolution order) -- until then the presence check skips it.
+      const bodyMerge = mergeIdentifiers.get(merge.bodySection);
+      if (!bodyMerge) return [];
+      const branchScopesKey =
+        getAccessorPrefix().BranchScopes + merge.accessor.value;
+      const patchBranch = generateUidIdentifier("patchBranch");
+      const liveBranch = generateUidIdentifier("liveBranch");
+      return [
+        ifPresent(
+          branchScopesKey,
+          t.blockStatement([
+            t.variableDeclaration("const", [
+              t.variableDeclarator(patchBranch, patchGet(branchScopesKey)),
+              t.variableDeclarator(liveBranch, liveGet(branchScopesKey)),
+            ]),
+            t.ifStatement(
+              t.logicalExpression(
+                "&&",
+                t.cloneNode(patchBranch, true),
+                t.cloneNode(liveBranch, true),
+              ),
+              t.expressionStatement(
+                t.callExpression(t.cloneNode(bodyMerge, true), [
+                  t.cloneNode(patchBranch, true),
+                  t.cloneNode(liveBranch, true),
+                ]),
+              ),
+            ),
+          ]),
         ),
       ];
     }

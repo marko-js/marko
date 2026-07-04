@@ -13,6 +13,7 @@ type DOMRuntime = typeof import("@marko/runtime-tags/dom");
 export interface UpdateEntryModule {
   default: (patch: unknown, live: unknown) => void;
   __applyUpdate: DOMRuntime["applyUpdate"];
+  __createUpdate: DOMRuntime["createUpdate"];
   __ready: DOMRuntime["ready"];
   __register: DOMRuntime["_resume"];
 }
@@ -142,7 +143,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
               // (runtime instance included) stays inside the browser context.
               return (
                 code +
-                `\nexport { applyUpdate as __applyUpdate, ready as __ready, _resume as __register } from "@marko/runtime-tags/dom";`
+                `\nexport { applyUpdate as __applyUpdate, createUpdate as __createUpdate, ready as __ready, _resume as __register } from "@marko/runtime-tags/dom";`
               );
             }
 

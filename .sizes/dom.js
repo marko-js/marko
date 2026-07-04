@@ -1,4 +1,4 @@
-// size: 26541 (min) 9727 (brotli)
+// size: 26630 (min) 9738 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -2632,6 +2632,19 @@ function getSelectorOrResolve(selector, resolve) {
  * the update's `$global` values and merge onto the live `$global`.
  */
 function applyUpdate(merge, fills, liveRoot = getUpdateRoot()) {
+  createUpdate(merge, liveRoot)(fills);
+}
+/**
+ * The per-navigation form of `applyUpdate`: update responses are a stream of
+ * serializer frames, and the returned function applies one frame's fills at
+ * a time against a shared patch-scope space -- early frames settle in the
+ * page before slow async boundaries resolve, exactly like a streamed MPA
+ * render. Each call re-dispatches the root merge: sparse presence checks
+ * pick up the keys the new frame added (later frames extend earlier scopes,
+ * e.g. an `<await>` body's branch link), while already-applied keys re-apply
+ * through value/DOM primitives that all no-op on unchanged input.
+ */
+function createUpdate(merge, liveRoot = getUpdateRoot()) {
   let liveGlobal = liveRoot.$,
     patchScopes = { 0: liveGlobal },
     getScope = (id) => (patchScopes[id] ||= {}),
@@ -2659,11 +2672,13 @@ function applyUpdate(merge, fills, liveRoot = getUpdateRoot()) {
           : applyScopes(data),
       { _: registeredValues },
     );
-  for (let fill of Array.isArray(fills) ? fills : [fills]) {
-    let scopes = fill(serializeContext);
-    Array.isArray(scopes) && applyScopes(scopes);
-  }
-  (merge(getScope(1), liveRoot), run());
+  return (fills) => {
+    for (let fill of Array.isArray(fills) ? fills : [fills]) {
+      let scopes = fill(serializeContext);
+      Array.isArray(scopes) && applyScopes(scopes);
+    }
+    (merge(getScope(1), liveRoot), run());
+  };
 }
 function _update_content(contentId, merge) {
   _resume(contentId + "!", merge);
@@ -2672,6 +2687,9 @@ function _update_dynamic(rendererId, patchBranch, liveBranch) {
   let merge =
     typeof rendererId == "string" && getRegisteredWithScope(rendererId + "!");
   merge && patchBranch && liveBranch && merge(patchBranch, liveBranch);
+}
+function _update_html(live, patch, accessor) {
+  (_html(live, patch[accessor], accessor), delete patch[accessor]);
 }
 function _update_signal(id) {
   return (scope, value) => getRegisteredWithScope(id, scope)(value);

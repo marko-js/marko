@@ -17,8 +17,9 @@
 //   `_resume` so `_update_for` can build a `_for_of` instance whose params
 //   signal is the update entry's own body merge function (the main loop
 //   signal's params render from real items, which a patch scope is not).
-import { AccessorProp, type Scope } from "../common/types";
+import { type Accessor, AccessorProp, type Scope } from "../common/types";
 import { _for_of } from "./control-flow";
+import { _html } from "./dom";
 import { run } from "./queue";
 import {
   _resume,
@@ -47,6 +48,23 @@ type UpdateFill = (
 export function applyUpdate(
   merge: (patch: Scope, live: Scope) => void,
   fills: UpdateFill | UpdateFill[],
+  liveRoot = getUpdateRoot(),
+) {
+  createUpdate(merge, liveRoot)(fills);
+}
+
+/**
+ * The per-navigation form of `applyUpdate`: update responses are a stream of
+ * serializer frames, and the returned function applies one frame's fills at
+ * a time against a shared patch-scope space -- early frames settle in the
+ * page before slow async boundaries resolve, exactly like a streamed MPA
+ * render. Each call re-dispatches the root merge: sparse presence checks
+ * pick up the keys the new frame added (later frames extend earlier scopes,
+ * e.g. an `<await>` body's branch link), while already-applied keys re-apply
+ * through value/DOM primitives that all no-op on unchanged input.
+ */
+export function createUpdate(
+  merge: (patch: Scope, live: Scope) => void,
   liveRoot = getUpdateRoot(),
 ) {
   if (MARKO_DEBUG && !liveRoot) {
@@ -87,15 +105,17 @@ export function applyUpdate(
     { _: registeredValues },
   );
 
-  for (const fill of Array.isArray(fills) ? fills : [fills]) {
-    const scopes = fill(serializeContext);
-    if (Array.isArray(scopes)) applyScopes(scopes);
-  }
+  return (fills: UpdateFill | UpdateFill[]) => {
+    for (const fill of Array.isArray(fills) ? fills : [fills]) {
+      const scopes = fill(serializeContext);
+      if (Array.isArray(scopes)) applyScopes(scopes);
+    }
 
-  merge(getScope(1), liveRoot!);
-  // Merges queue renders (intersections, closure fan-out, branch setups);
-  // flush synchronously so the update settles as one batch.
-  run();
+    merge(getScope(1), liveRoot!);
+    // Merges queue renders (intersections, closure fan-out, branch setups);
+    // flush synchronously so each frame settles as one batch.
+    run();
+  };
 }
 
 // Content-section merges register under the section's content id plus this
@@ -122,6 +142,18 @@ export function _update_dynamic(
   if (merge && patchBranch && liveBranch) {
     merge(patchBranch, liveBranch);
   }
+}
+
+// Unsafe-html holes replace their DOM range unconditionally, so a streamed
+// re-dispatch (each frame re-runs the root merge) must consume the patch key
+// after applying -- a leaf value nothing else descends through.
+export function _update_html(
+  live: Scope,
+  patch: Scope,
+  accessor: string | number,
+) {
+  _html(live, patch[accessor], accessor as Accessor);
+  delete patch[accessor];
 }
 
 export function _update_signal(id: string): UpdateSignal {

@@ -112,6 +112,8 @@ export {
   _update_content,
   _update_dynamic,
   _update_for,
+  _update_html,
   _update_signal,
   applyUpdate,
+  createUpdate,
 } from "./dom/update";

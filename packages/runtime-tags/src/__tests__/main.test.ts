@@ -344,16 +344,20 @@ function testFixtures(interop?: true) {
                     // Update responses are a newline-delimited stream of
                     // serializer frames: each line is a bare JS array of
                     // fills (and effect strings, which the applier ignores
-                    // for matched scopes).
-                    const fills: ((ctx: unknown) => unknown)[] = [];
+                    // for matched scopes). Frames apply one at a time (the
+                    // streaming model -- async boundary bodies arrive in
+                    // later frames, in resolution order).
+                    const frames: ((ctx: unknown) => unknown)[][] = [];
                     for (const line of html.split("\n")) {
                       if (line) {
+                        const fills: ((ctx: unknown) => unknown)[] = [];
                         for (const item of new Function(`return (${line})`)()) {
                           if (typeof item === "function") fills.push(item);
                         }
+                        if (fills.length) frames.push(fills);
                       }
                     }
-                    if (!fills.length) {
+                    if (!frames.length) {
                       throw new Error(
                         "navigate(): update render carried no resume fills",
                       );
@@ -378,13 +382,24 @@ function testFixtures(interop?: true) {
                       );
                     }
 
-                    updateEntry.__applyUpdate(
+                    // Intermediate frames log their own mutation batches
+                    // (the last frame's log is the step's, via runSteps) so
+                    // snapshots show the page settling frame by frame.
+                    const applyFrame = updateEntry.__createUpdate(
                       updateEntry.default,
-                      fills as any,
                       liveRoot as any,
                     );
-                    await browser.runAsyncScripts();
-                    run();
+                    for (let i = 0; i < frames.length; i++) {
+                      applyFrame(frames[i] as any);
+                      await browser.runAsyncScripts();
+                      run();
+                      if (i < frames.length - 1) {
+                        tracker.logUpdate(
+                          `update frame ${i + 1} of ${frames.length}`,
+                        );
+                        tracker.beginUpdate();
+                      }
+                    }
                   }
                 : undefined,
             });

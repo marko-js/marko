@@ -250,6 +250,33 @@ getters and `fetch`/`render`/`redirect`/`back` to the prototype, which
 marko's own-property `$global` spread drops — they're own enumerable
 properties again (rc.10 contract; see marko `agent-feedback/unclear.md`).
 
+**Implemented** (`feat: await/try update semantics + per-frame streaming
+apply`): persisted updates cross async boundaries. `<await>`/`<try>` bodies
+serialize the parent → body branch link as a scope prop in update renders
+(`BranchScopes:<accessor>`, the same key the live page stores its resolved
+branch under — the HTML end-marker that normally carries it is suppressed;
+`_try` gains a persisted-build-only serialize-guard arg so non-persisted
+output stays byte-identical), the translators register a `"branch"` update
+merge (single always-body dispatch, gated `isReasonDynamic` on the body
+reason like `if`), and the update entry dispatches the body merge when the
+link's frame arrives. `createUpdate` in `dom/update.ts` (re-exported by
+generated entries) is the per-navigation streaming applier: one call per
+response frame against a shared patch context, re-dispatching the root
+merge each time — sparse presence checks pick up newly arrived keys
+(an await body's link rides its own frame, in resolution order) while
+already-applied keys re-apply through primitives that all no-op on
+unchanged input (`_let`/`_const` value-compare, `_text` data-compare, `_if`
+branch-compare, keyed reconcile; unsafe-html holes go through
+`_update_html`, which consumes its patch key). run's client router streams
+response lines and applies per frame, committing history/scroll on the
+first applied frame — MPA-parity paint for pages with slow awaits. The
+fixture harness applies per frame and snapshots each intermediate state
+(`persisted-update-await` covers `<try>`+`<await>` keyed-reconcile, a bare
+`<await>`, reverse navigation, state survival). Found while validating: the
+ecommerce app's awaited sections (recommendations/reviews) were silently
+stale after persisted navigations, and buffered apply cost 1.26s on the
+item page — both fixed by this slice.
+
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered
 `templates` frame + `_wire_if`/`_wire_for` store prototype was superseded by
@@ -392,14 +419,20 @@ to param-like sources under the persisted option`). Mechanism: under the
    present it back as `x-marko-build`, and mismatches 409 into the
    full-navigation fallback — validated by swapping the server bundle's
    hash under a live Chromium page (stale tab's next click full-navigates
-   cleanly onto the new build). Remaining in this slice: `?update` chunks
-   in the build manifest for **cross-route** loading, per-frame streaming
-   apply (needs a runtime per-navigation patch context; the router buffers
-   today), cross-route navigation (the shared-shell design), and
+   cleanly onto the new build). **Per-frame streaming apply — done** (see
+   "Current state": `createUpdate` + the streaming router). Remaining in
+   this slice: `?update` chunks in the build manifest for **cross-route**
+   loading, cross-route navigation (the shared-shell design), and
    scroll/focus refinements (hash-fragment scroll after apply,
    `<a rel=external>` audit). The update wire's `new Function` frame eval
    also needs a CSP story (initial-render resume runs as inline scripts;
    updates eval — nonce-carrying script injection is the likely shape).
+   New watch-list item from the await slice: navigating before the live
+   page's own awaits resolve — the patch's body frame finds no live branch
+   to pair with (sparse-skips), and the live page's still-pending promise
+   later resolves with pre-navigation data; the fallback is probably
+   "fresh-create the branch from registered content" (the `_if` fresh-branch
+   machinery) or a forced reload when an unresolved boundary is patched.
 
 ## Example-app prototyping workspace
 

@@ -880,8 +880,31 @@ export function _await<T>(
 ) {
   const resumeMarker = serializeMarker !== 0;
 
+  // Update renders have no HTML end-marker to carry the parent -> body
+  // branch link, so it serializes as a scope prop (the same
+  // `BranchScopes:<accessor>` key the live page stores its resolved branch
+  // under) -- the compiled merge dispatches the body merge from it when the
+  // body's frame arrives. State-driven awaits (no persisted bit) are
+  // excluded, as everywhere: the server never pairs into client-state-driven
+  // structure.
+  const updateBranch = (render: () => void) => {
+    if (
+      $chunk.boundary.state.update &&
+      (serializeMarker as number) & 2 // SerializeReasonFlags.Persisted
+    ) {
+      const branchId = _peek_scope_id();
+      withBranchId(branchId, render);
+      writeScope(scopeId, {
+        [AccessorPrefix.BranchScopes + accessor]: writeScope(branchId, {}),
+      });
+      return true;
+    }
+  };
+
   if (!isPromise(promise)) {
-    if (resumeMarker) {
+    if (updateBranch(() => content(promise))) {
+      // handled
+    } else if (resumeMarker) {
       const branchId = _peek_scope_id();
       $chunk.writeHTML(
         $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
@@ -914,7 +937,10 @@ export function _await<T>(
 
         if (!boundary.signal.aborted) {
           chunk.render(() => {
-            if (resumeMarker) {
+            if (updateBranch(() => withIsAsync(content, value))) {
+              // handled -- the body flushes as its own frame in resolution
+              // order; the serialized branch link lets the client attach it.
+            } else if (resumeMarker) {
               const branchId = _peek_scope_id();
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
@@ -949,6 +975,7 @@ export function _try(
     placeholder?: { content?(): void };
     catch?: { content?(err: unknown): void };
   },
+  serializeBranch?: number,
 ) {
   const branchId = _peek_scope_id();
   $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
@@ -978,6 +1005,17 @@ export function _try(
     [AccessorProp.CatchContent]: catchContent,
     [AccessorProp.PlaceholderContent]: placeholderContent,
   });
+
+  // Update renders carry the parent -> body branch link as a scope prop
+  // (there is no HTML end-marker); see `_await`.
+  if (
+    $chunk.boundary.state.update &&
+    (serializeBranch as number) & 2 // SerializeReasonFlags.Persisted
+  ) {
+    writeScope(scopeId, {
+      [AccessorPrefix.BranchScopes + accessor]: writeScope(branchId, {}),
+    });
+  }
 
   $chunk.writeHTML(
     $chunk.boundary.state.mark(

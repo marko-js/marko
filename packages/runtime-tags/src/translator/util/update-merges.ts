@@ -52,6 +52,12 @@ export type UpdateMerge =
   | {
       kind: "dynamic";
       accessor: t.StringLiteral | t.NumericLiteral;
+    }
+  | {
+      /** Single-branch boundary (`<await>`/`<try>` body) dispatch. */
+      kind: "branch";
+      accessor: t.StringLiteral | t.NumericLiteral;
+      bodySection: Section;
     };
 
 const [getUpdateMergesRaw] = createSectionState<UpdateMerge[]>(
