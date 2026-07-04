@@ -382,12 +382,21 @@ to param-like sources under the persisted option`). Mechanism: under the
    across the html/dom/`?update` compiles, and the wrapper's own dynamic
    `?update` import gives the entry its chunk with no manifest work
    (production update payloads: item 2.3 KB vs 12.5 KB document, search
-   15.6 vs 66.5 KB, cart 0.2 vs 1.3 KB). Remaining in this slice: **build
-   hash** (no build identity exists at runtime; gate updates on it),
-   `?update` chunks in the build manifest for **cross-route** loading,
-   per-frame streaming apply (needs a runtime per-navigation patch context;
-   the router buffers today), cross-route navigation (the shared-shell
-   design), and scroll/focus refinements (hash-fragment scroll after apply,
+   15.6 vs 66.5 KB, cart 0.2 vs 1.3 KB). **Build hash — done**: @marko/vite
+   digests the shipped client files into the manifest (reserved `#build`
+   key) and the linkAssets runtime exposes a call-time `buildId()`
+   (importable via `virtual:marko-vite/link-assets`; undefined in dev,
+   where run substitutes a per-process token). run's generated router
+   stamps every persisted render with it (serialized as
+   `$global.buildHash`), wrappers pass it to `register()`, update fetches
+   present it back as `x-marko-build`, and mismatches 409 into the
+   full-navigation fallback — validated by swapping the server bundle's
+   hash under a live Chromium page (stale tab's next click full-navigates
+   cleanly onto the new build). Remaining in this slice: `?update` chunks
+   in the build manifest for **cross-route** loading, per-frame streaming
+   apply (needs a runtime per-navigation patch context; the router buffers
+   today), cross-route navigation (the shared-shell design), and
+   scroll/focus refinements (hash-fragment scroll after apply,
    `<a rel=external>` audit). The update wire's `new Function` frame eval
    also needs a CSP story (initial-render resume runs as inline scripts;
    updates eval — nonce-carrying script injection is the likely shape).
