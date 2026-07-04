@@ -73,26 +73,3 @@ are harmless when the joined statement's output is a server-captured hole
 (the merge places it), but a non-captured side effect (eg `_return_change`
 mixing two such bindings) would silently not run. Statements referencing
 only never-firing bindings probably belong in setup placement instead.
-
-## Optimize-mode persisted updates crash reconciling resumed request-derived loops
-
-`packages/runtime-tags/src/dom/resume.ts:140` | 2026-07-04 | impact:high | effort:med
-
-Fixture `persisted-update-attr-items` with `skip_ssr` removed: debug
-passes, optimize ssr throws reading 'nodeType' at `control-flow.ts:807`
-via `_update_for` on the navigate step. The real cause is a
-**scope-identity split for empty-elided scope writes**, not an accessor
-mismatch (binding ids were verified consistent across the harness's
-html/dom/update compiles; an earlier stale-snapshot diagnosis of id
-divergence was wrong). The chip-list template's own scope write is empty
-in optimize (`_scope($scope0_id, {})`) and empty entries are elided from
-the wire; instrumenting the crash shows the merge's "live" child scope
-contains only runtime-internal keys (Id/Gen/Global) — a lazily created
-stand-in reached through the parent's `{c:_(2)}` child ref — while the
-loop-anchor marker visit (`<!--Md}2 a 5 4 3-->`) hydrated a different
-object for serialized scope id 2. Debug mode never hits it (its scope
-write is non-empty, so the ref and the marker share one object). Fix
-direction: the resume fill's scope lookup and the walker's visit-scope
-lookup must share one object per serialized id even when the scope's
-value write was elided — or persisted builds must force a scope write
-(`_existing_scope`-style) for scopes that carry marker visits.

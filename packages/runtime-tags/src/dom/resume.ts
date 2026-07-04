@@ -70,6 +70,13 @@ export function enableBranches() {
   if (!branchesEnabled) {
     branchesEnabled = 1;
     skipDestroyedRenders();
+    // Branch modules may execute after a flush's walk already ran (module
+    // ordering, lazy chunks, persisted update entries): reprocess the
+    // branch visits those walks retained. No-op before the runtime
+    // initializes (`for..in` over undefined iterates nothing).
+    for (const renderId in curRenders) {
+      runResumeEffects(curRenders[renderId]);
+    }
   }
 }
 
@@ -412,10 +419,11 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   : visit.parentNode!.insertBefore(new Text(), visit);
             } else if (branchesEnabled) {
               (visitBranches ||= createVisitBranches())();
-            } else if (render.b) {
-              // Pending ready data means a lazily loaded module may still
-              // enable branches; its visits ride the same flush as the
-              // ready data, so they are compacted in place to reprocess.
+            } else {
+              // A module that enables branches may not have executed yet
+              // (module ordering, lazy chunks, persisted update entries) --
+              // compact the visit in place; `enableBranches`/`ready`
+              // rewalk to reprocess.
               visits[retained++] = visit;
             }
           }

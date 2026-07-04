@@ -438,16 +438,18 @@ shared gates exclude state-mixing values, so the whole-value write cannot
 stomp client-owned items. Fixture `persisted-update-attr-items` pins the
 shape (promoted `$global` read ∩ loop param over a server-only list);
 validated on the ecommerce production build (form probe 9/9 — the active
-chip moves on filter updates). The fixture's ssr leg is temporarily
-`skip_ssr`: it exposed a pre-existing **html↔dom binding-id divergence**
-in optimize builds (optimize accessors are `binding.id`; ids shift when a
-file is first analyzed as a child through a parent's shared-cache compile,
-and the shift differs by output target — the harness's html bundle
-hydrates the loop anchor at "a" while dom/update read "c"). Real apps
-currently agree only by consistent module-graph ordering across the two
-vite builds — a latent scope-pairing hazard for the whole feature;
-root-caused with repro in `agent-feedback/bugs.md`, fix direction:
-deterministic per-file binding ids.
+chip moves on filter updates). The fixture's optimize ssr leg
+initially crashed and exposed a pre-existing resume gap (two wrong
+theories — binding-id divergence, elided-empty-scope identity — were
+disproven by instrumentation along the way): the walker **dropped branch
+visits** when no branch-enabling module had executed yet and no ready
+data was pending, but branch modules can legitimately execute after the
+walk (module ordering, lazy chunks, persisted `?update` entries — the
+optimize bundle's module order put the loop construction after the
+walk). Fixed in `dom/resume.ts`: branch visits are now always retained
+(compacted in place) when branches are disabled, and `enableBranches()`
+rewalks all current renders exactly as `ready()` does, so late-loading
+branch modules reprocess them. The fixture runs all legs green.
 
 **Prototyped** (validated in `experiments/`, not yet real code): the
 effects-not-replayed rule (double-bind detector). The wire-delivered

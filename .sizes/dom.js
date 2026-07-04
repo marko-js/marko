@@ -1,4 +1,4 @@
-// size: 27293 (min) 9989 (brotli)
+// size: 27313 (min) 9986 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -829,7 +829,10 @@ function createCloneableHTML(html, ns) {
   );
 }
 function enableBranches() {
-  branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
+  if (!branchesEnabled) {
+    ((branchesEnabled = 1), skipDestroyedRenders());
+    for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
+  }
 }
 function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
@@ -1057,7 +1060,7 @@ function init(runtimeId = "M") {
                 } else
                   branchesEnabled
                     ? (visitBranches ||= createVisitBranches())()
-                    : render.b && (visits[retained++] = visit);
+                    : (visits[retained++] = visit);
               return (
                 embedRenders &&
                   !embedAnchor &&

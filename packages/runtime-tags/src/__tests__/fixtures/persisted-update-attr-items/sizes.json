@@ -20,5 +20,9 @@
         "template.marko.update.mjs": 249
       }
     }
+  },
+  "html": {
+    "min": 661,
+    "brotli": 365
   }
 }
