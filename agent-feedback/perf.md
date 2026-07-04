@@ -49,3 +49,42 @@ Existing TODO: `<${input.component}/>` style dynamic tags always compile against
 `scripts/test-parallel.js:40` | 2026-07-02 | impact:low | effort:med
 
 `npm run test:parallel` runs one mocha process per core, but each fixture bundle already drives rolldown's own multi-threaded build (`packages/runtime-tags/src/__tests__/utils/bundle.ts`), so even a serial run uses ~1.4 cores. On a 4-core box the whole suite lands at ~87s vs ~238s serial (2.7×), short of the ~4× the core count implies, because the workers contend for the same native threads. `RAYON_NUM_THREADS=1` in the worker env made no measurable difference, so rolldown isn't honoring it. If rolldown (or its native binding) exposes a per-build thread cap, pinning workers to 1 bundler thread each — so N workers ≈ N threads total — could recover much of the lost efficiency and let the runner scale closer to linearly on higher core counts.
+
+## Persisted register-all-content retains unreachable DOM renderers (document shell in client bundles)
+
+`packages/runtime-tags/src/translator/visitors/program/dom.ts:130` | 2026-07-04 | impact:high | effort:high
+
+Persisted builds register every content section (`_content_resume`) so a
+cross-route swap can resolve any renderer by serialized id, but that
+retains the full DOM renderer graph client-side — including templates the
+client can never be asked to create: the app layout's compiled `_template`
+carries the entire `<html>…</html>` document shell string into the shared
+eager chunk. Measured on marko-ecommerce `/search` (after fixing an
+app-level plain-import leak): persisted client JS is 32.7/14.4 kB raw/gz
+vs 11.8/5.8 kB with `persisted: false`, and ~27 kB raw of that is one
+shared chunk holding the update runtime + run's persisted router + the
+layout/wrapper renderers. Only content that can flow into a dynamic-tag
+hop (`<${input.content}/>`) needs registration; content reachable solely
+as a static child of the root chain (the document shell) never swaps.
+A reachability analysis over content-section flow (or an explicit
+"swappable" marker at the hop) would cut most of this; splitting the
+update runtime helpers main modules import (`_updating`, `_script_update`)
+away from the applier (`createUpdate` and friends, only needed by lazy
+`?update` entries) is the other lever if tree-shaking isn't already
+dropping them (the applier appears in the eager chunk today).
+
+## Persisted compute guards make previously-unused imports bundle client-side
+
+`packages/runtime-tags/src/translator/util/signals.ts:646` | 2026-07-04 | impact:med | effort:med
+
+The `if (!_updating()) $x($scope, serverFn(...))` guard keeps
+request-derived compute invocations in the client dom output, so a module
+imported with a plain `import` that was previously tree-shaken as unused
+becomes "used" and bundles. marko-ecommerce's search page shipped its
+entire 500-product catalog + search implementation (+74 kB raw / +10 kB
+gz) because it used `import` where its siblings used `server import`.
+The runtime behavior is correct either way (the guard prevents
+invocation during applies), but the size footgun is silent. A diagnostic —
+warn when a persisted client compile retains an import referenced only
+from update-guarded compute invocations — would surface it; run's
+`server import` remains the correct authoring tool.
