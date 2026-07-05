@@ -1,4 +1,11 @@
-import { AccessorProp, type BranchScope, type Scope } from "../common/types";
+import {
+  type Accessor,
+  AccessorPrefix,
+  AccessorProp,
+  type BranchScope,
+  NodeType,
+  type Scope,
+} from "../common/types";
 import { $signalReset } from "./abort-signal";
 import { insertChildNodes, removeChildNodes } from "./dom";
 import { runId } from "./queue";
@@ -134,4 +141,61 @@ export function tempDetachBranch(branch: BranchScope) {
     branch[AccessorProp.StartNode],
     branch[AccessorProp.EndNode],
   );
+}
+
+// Swaps the branch rendered at a node accessor: destroys/detaches the
+// previous branch and creates + inserts the new renderer's branch (the
+// caller supplies branch construction, keeping renderer machinery out of
+// this module's imports). Shared by branch signals, dynamic content
+// attrs, and the catch runtime.
+export function setConditionalRenderer<T>(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  newRenderer: T,
+  createBranch: (
+    $global: Scope[AccessorProp.Global],
+    renderer: NonNullable<T>,
+    parentScope: Scope,
+    parentNode: ParentNode,
+  ) => BranchScope,
+) {
+  const referenceNode = scope[nodeAccessor] as Comment | Element;
+  const prevBranch = scope[AccessorPrefix.BranchScopes + nodeAccessor] as
+    | BranchScope
+    | undefined;
+  const parentNode =
+    referenceNode.nodeType > NodeType.Element
+      ? (prevBranch?.[AccessorProp.StartNode] || referenceNode).parentNode!
+      : (referenceNode as ParentNode);
+  const newBranch = (scope[AccessorPrefix.BranchScopes + nodeAccessor] =
+    newRenderer &&
+    createBranch(scope[AccessorProp.Global], newRenderer, scope, parentNode));
+  if (referenceNode === parentNode) {
+    if (prevBranch) {
+      destroyBranch(prevBranch);
+      referenceNode.textContent = "";
+    }
+
+    if (newBranch) {
+      insertBranchBefore(newBranch, parentNode, null);
+    }
+  } else if (prevBranch) {
+    if (newBranch) {
+      insertBranchBefore(
+        newBranch,
+        parentNode,
+        prevBranch[AccessorProp.StartNode],
+      );
+    } else {
+      parentNode.insertBefore(
+        referenceNode,
+        prevBranch[AccessorProp.StartNode],
+      );
+    }
+
+    removeAndDestroyBranch(prevBranch);
+  } else if (newBranch) {
+    insertBranchBefore(newBranch, parentNode, referenceNode);
+    referenceNode.remove();
+  }
 }

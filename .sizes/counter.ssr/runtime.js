@@ -1,67 +1,21 @@
-// size: 2471 (min) 1246 (brotli)
-//#region packages/runtime-tags/dist/dom.mjs
+// size: 2487 (min) 1256 (brotli)
+//#region packages/runtime-tags/dist/common/helpers.mjs
 let decodeAccessor = (num) =>
-    (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
-  delegate = (type, handler) =>
-    (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
-  isScheduled,
-  channel,
-  registeredValues = {},
+  (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
+//#endregion
+//#region packages/runtime-tags/dist/dom/dom.mjs
+function _to_text(value) {
+  return value || value === 0 ? value + "" : "";
+}
+function _text(node, value) {
+  let normalizedValue = _to_text(value);
+  node.data !== normalizedValue && (node.data = normalizedValue);
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom/resume.mjs
+let registeredValues = {},
   curRenders,
-  readyIds,
-  rendering,
-  runId = 2,
-  pendingEffects = [],
-  pendingRenders = [],
-  scopeKeyOffset = 1e3,
-  runEffects = (effects) => {
-    for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
-  },
-  runRender = (render) => render.c(render.b, render.d),
-  catchEnabled;
-function _on(element, type, handler) {
-  (element["$" + type] === void 0 && delegate(type, handleDelegated),
-    (element["$" + type] = handler || null));
-}
-function handleDelegated(ev) {
-  let target = !rendering && ev.target;
-  for (; target;)
-    (target["$" + ev.type]?.(ev, target),
-      (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
-}
-function schedule() {
-  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
-}
-function flushAndWaitFrame() {
-  (requestAnimationFrame(triggerMacroTask), run());
-}
-function triggerMacroTask() {
-  (channel ||
-    ((channel = new MessageChannel()),
-    (channel.port1.onmessage = () => {
-      ((isScheduled = 0), run());
-    })),
-    channel.port2.postMessage(0));
-}
-function _let(id, fn) {
-  let valueAccessor = decodeAccessor(id);
-  return (scope, value) => (
-    rendering
-      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
-      : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
-        ((scope[valueAccessor] = value), fn) &&
-        (schedule(), queueRender(scope, fn, id)),
-    value
-  );
-}
-function _script(id, fn) {
-  return (
-    _resume(id, fn),
-    (scope) => {
-      queueEffect(scope, fn);
-    }
-  );
-}
+  readyIds;
 function init(runtimeId = "M") {
   if (curRenders) return;
   let renders = self[runtimeId],
@@ -122,7 +76,10 @@ function init(runtimeId = "M") {
               for (; i < resumes.length; i++) {
                 let serialized = resumes[i];
                 if (typeof serialized == "string")
-                  for (lastTokenIndex = 0, visitText = serialized; nextToken();)
+                  for (
+                    lastTokenIndex = 0, visitText = serialized;
+                    nextToken();
+                  )
                     /\D/.test(lastToken)
                       ? (lastEffect = registeredValues[lastToken])
                       : effects.push(lastEffect, getScope(lastToken));
@@ -189,13 +146,18 @@ function runResumeEffects(render) {
 function _resume(id, obj) {
   return (registeredValues[id] = obj);
 }
-function _to_text(value) {
-  return value || value === 0 ? value + "" : "";
-}
-function _text(node, value) {
-  let normalizedValue = _to_text(value);
-  node.data !== normalizedValue && (node.data = normalizedValue);
-}
+//#endregion
+//#region packages/runtime-tags/dist/dom/queue.mjs
+let rendering,
+  runId = 2,
+  pendingEffects = [],
+  pendingRenders = [],
+  scopeKeyOffset = 1e3,
+  runEffects = (effects) => {
+    for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
+  },
+  runRender = (render) => render.c(render.b, render.d),
+  catchEnabled;
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
@@ -214,7 +176,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
 }
 function queuePendingRender(render) {
   let i = pendingRenders.push(render) - 1;
-  for (; i;) {
+  for (; i; ) {
     let parentIndex = (i - 1) >> 1,
       parent = pendingRenders[parentIndex];
     if (render.a - parent.a >= 0) break;
@@ -235,14 +197,14 @@ function run() {
   runEffects(effects);
 }
 function runRenders() {
-  for (; pendingRenders.length;) {
+  for (; pendingRenders.length; ) {
     let render = pendingRenders[0],
       item = pendingRenders.pop();
     if (render !== item) {
       let i = 0,
         mid = pendingRenders.length >> 1,
         key = (pendingRenders[0] = item).a;
-      for (; i < mid;) {
+      for (; i < mid; ) {
         let bestChild = (i << 1) + 1,
           right = bestChild + 1;
         if (
@@ -258,5 +220,57 @@ function runRenders() {
     }
     runRender(render);
   }
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom/schedule.mjs
+let isScheduled, channel;
+function schedule() {
+  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
+}
+function flushAndWaitFrame() {
+  (requestAnimationFrame(triggerMacroTask), run());
+}
+function triggerMacroTask() {
+  (channel ||
+    ((channel = new MessageChannel()),
+    (channel.port1.onmessage = () => {
+      ((isScheduled = 0), run());
+    })),
+    channel.port2.postMessage(0));
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom/signals.mjs
+function _let(id, fn) {
+  let valueAccessor = decodeAccessor(id);
+  return (scope, value) => (
+    rendering
+      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
+      : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+        ((scope[valueAccessor] = value), fn) &&
+        (schedule(), queueRender(scope, fn, id)),
+    value
+  );
+}
+function _script(id, fn) {
+  return (
+    _resume(id, fn),
+    (scope) => {
+      queueEffect(scope, fn);
+    }
+  );
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom/event.mjs
+let delegate = (type, handler) =>
+  (handler[type] ||= (document.addEventListener(type, handler, !0), 1));
+function _on(element, type, handler) {
+  (element["$" + type] === void 0 && delegate(type, handleDelegated),
+    (element["$" + type] = handler || null));
+}
+function handleDelegated(ev) {
+  let target = !rendering && ev.target;
+  for (; target; )
+    (target["$" + ev.type]?.(ev, target),
+      (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
 //#endregion
