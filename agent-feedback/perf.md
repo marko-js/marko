@@ -145,6 +145,20 @@ warn when a persisted client compile retains an import referenced only
 from update-guarded compute invocations — would surface it; run's
 `server import` remains the correct authoring tool.
 
+Implementation caveat (scoped 2026-07-05): the naive predicate ("every
+reference sits under an `if (!_updating())` guard in the main compile")
+is not sufficient to advise `server import`. The `?persisted` render
+graph can legitimately invoke the same expressions client-side when a
+state-driven branch containing a request-derived hole or compute
+constructs after load — `_updating()` is false then, the guard passes,
+and the import is needed. The subset safe to warn on is imports whose
+references are reachable ONLY from update-borne construction (no
+enclosing state-driven branch path), which needs section-graph
+reachability analysis, not a per-reference guard check. Without that,
+the diagnostic should hedge its wording (“verify nothing renders this
+client-side”) or only fire when every reference's enclosing sections are
+request-derived all the way to the program root.
+
 ## Audit sideEffects declarations across the other packages
 
 `packages/runtime-class/package.json`, `packages/compiler/package.json` (and the `@marko/run`/`@marko/vite` repos) | 2026-07-04 | impact:med | effort:low
