@@ -167,17 +167,41 @@ array of fills on its own line (the serializer escapes newlines in values).
 The applier/harness/prototype-router parse lines; per-frame streaming apply
 (shared per-navigation patch map) is follow-up router work.
 
-**Implemented** (`feat: MPA-parity for volatile expressions…`): refs-less
+**Implemented — render-once contract** (superseding the earlier MPA-parity
+treatment): `$global` and input/params (plus their derivations) are
+deliberately the ONLY navigation-refreshable channels. Refs-less
 non-foldable expressions (`new Date()`, impure calls, module state) are
-_volatile_ — they share the `$global` source treatment
-(`getVolatileExprSources` in `references.ts`), so persisted navigations
-refresh them exactly as a reload would, propagating through `<const>`
-derivations (`persisted-update-volatile` fixture). `let` initializers stay
-excluded (client state survives by definition). Compile-time-foldable
-expressions stay static; refs-bearing impure expressions already refreshed
-through their sources' guards. Purity beyond folding (imported formatter
-calls over constants) currently pays the volatile cost — a pure annotation
-or known-impure-global heuristic is the planned relief valve.
+computed at page load and persisted navigations never refresh them — no
+markers, no captures, no merges — matching the client reactive model,
+where nothing drives a refs-less expression and a CSR state update
+wouldn't refresh it either (`persisted-update-volatile` fixture asserts
+the contract; `getGlobalExprSources` in `references.ts` is the taint,
+`$global` reads its only feeder). The earlier reload-parity behavior made
+navigations MORE dynamic than client updates, paid spine markers and
+payload captures for every refs-less hole, and split behavior from the
+mixed case (`count && helper()` never refreshed) — dropping it removes
+the seam: volatility inside a refs-bearing expression is undecidable, so
+the contract is "if the server should refresh it, read it from `$global`
+or input". Full-document fallbacks still re-render everything (uniform
+divergence, previously split). The drop surfaced a real app break the
+validation suite caught (search filter chips went stale): stable branch
+sets — a `<for>`/`<if>` over a render-once value with request-derived
+BODY content — previously participated in updates only via the volatile
+taint on their upstream expression. Participation now keys off the
+branch content too: `isRequestDerivedSerializeReason` widens the
+`updateStructural` gates in `core/for.ts`/`core/if.ts` (state-driven
+sets stay excluded), `trackGlobalReference` flags `hasGlobalReads` on
+the section so direct `$global` reads feed `kBranchSerializeReason`
+(the demotion equivalent of promoted-global closures), and the
+request-derived part of the immediate branch reason threads to the
+parent's marker so the reconcile reference node resumes
+(`persisted-update-static-loop` fixture asserts the chip shape,
+including a mixed statement re-invoking through the branch dispatch).
+A dev-mode diagnostic for refs-less dynamic expressions in persisted
+builds ("computed at page load; read
+from `$global` if it should refresh") is the discoverability follow-up —
+needs a severity/opt-out design so legit render-once values (footer
+years) don't drown builds in warnings.
 
 **Implemented** (`feat: render-global persisted guards + value classes…`):
 the architecture simplification that follows from the "anything an MPA nav
@@ -190,7 +214,7 @@ serialization is gated by compile-time source class instead of the seed:
 state-sourced values compile to `_state_reason() && v` (serialize for
 normal resume, never in updates — the client owns them), request-derived
 state-free values to `(guard || _update_reason()) && v` (additionally
-serialize in update renders — they are the payload), global/volatile-only
+serialize in update renders — they are the payload), global-only
 values are never serialized (holes carry them). Both class helpers return
 `undefined` when inactive so gated props drop out of the payload entirely.
 Result: update payloads no longer carry client state defaults
@@ -884,11 +908,12 @@ live only here so far:
   `<option value>` are in `agent-feedback/bugs.md`).
 - `$global` demotion — **implemented** (2026-07-05; replaced the earlier
   binding promotion). `$global` is not qualitatively special except that
-  its fresh values exist client-side after a navigation, so reads are
-  treated like any other server-volatile expression:
+  its fresh values exist client-side after a navigation; with the
+  render-once contract above it is the one expression-level
+  navigation-refreshable channel:
   - No bindings. `trackGlobalReference` sets a canonical-extra
     `readsGlobal` flag on the owning expression (syntactic, at analyze);
-    `getVolatileExprSources` turns it into the request-derived `global`
+    `getGlobalExprSources` turns it into the request-derived `global`
     taint, merged WITH tracked ref sources (`getSerializeSourcesForExpr`)
     so mixed state∩global expressions keep both dimensions. Markers,
     reason threading, and update-merge gates key off sources as before.
@@ -922,7 +947,9 @@ live only here so far:
     `agent-feedback/bugs.md` with the other controllable/spread gaps).
     Mixed structural conditionals stay on the reason-set alignment
     watch-list below. Markers themselves remain — they are the patch
-    addresses; the marker-cost numbers (+16%/+50% gzip) still stand.
+    addresses; re-measured marker cost on the app: +16.4%/+53.4% gzip
+    (item/search — the app has no refs-less holes, so the render-once
+    drop is marker-neutral here; its payload captures did shrink).
     Per-key suppression stays REJECTED (`$global` carries user-defined
     arbitrary keys; stale-hole failures are silent).
 
@@ -990,9 +1017,10 @@ live only here so far:
    id-consistency invariant end to end — optimized register ids match
    across the html/dom/`?update` compiles, and the wrapper's own dynamic
    `?update` import gives the entry its chunk with no manifest work
-   (production update payloads, re-measured post-`$global`-demotion via
-   `payload-probe`: item 2.6 KB vs 12.5 KB document, search 16.6 vs
-   66.5 KB, cart 0.4 vs 1.3 KB). **Build hash — done**: @marko/vite
+   (production update payloads, re-measured post-render-once-contract via
+   `payload-probe`: item 2.4 KB vs 12.5 KB document, search 16.1 vs
+   66.5 KB, cart 0.3 vs 1.3 KB — the render-once drop removed refs-less
+   hole captures from payloads). **Build hash — done**: @marko/vite
    digests the shipped client files into the manifest (reserved `#build`
    key) and the linkAssets runtime exposes a call-time `buildId()`
    (importable via `virtual:marko-vite/link-assets`; undefined in dev,

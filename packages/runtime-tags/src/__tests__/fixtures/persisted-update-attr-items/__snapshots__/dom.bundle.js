@@ -14,7 +14,6 @@ const $for_content__update = (patch, live) => {
 	if ("c" in patch) live["c"] = patch["c"];
 	if ("d" in patch) live["d"] = patch["d"];
 	if ("Nclass:a" in patch) _attr_class(live["a"], patch["Nclass:a"]);
-	if ("b" in patch) _text(live["b"], patch["b"]);
 };
 const $update$1 = (patch, live) => {
 	if ("b" in patch) live["b"] = patch["b"];

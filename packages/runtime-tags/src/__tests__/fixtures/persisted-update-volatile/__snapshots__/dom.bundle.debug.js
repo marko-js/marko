@@ -8,8 +8,6 @@ const $update = (patch, live) => {
 	if ("input_title" in patch) live["input_title"] = patch["input_title"];
 	if ("label" in patch) live["label"] = patch["label"];
 	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
-	if ("#text/1" in patch) _text(live["#text/1"], patch["#text/1"]);
-	if ("#text/2" in patch) _text(live["#text/2"], patch["#text/2"]);
 };
 var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
 

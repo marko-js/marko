@@ -47,6 +47,7 @@ import {
   getSerializeReason,
   getSerializeSourcesForExpr,
   isReasonDynamic,
+  isRequestDerivedSerializeReason,
   isStateOnlySerializeReason,
   isStateSerializeReason,
   isStaticSerializeReason,
@@ -364,10 +365,20 @@ export default {
         // merge. The strings are shared, not duplicated -- the loop signal
         // reads them from the same registered array. The main module's copy
         // keeps the plain (unregistered) shape so hydration bundles may
-        // tree-shake it.
+        // tree-shake it. Stable branch sets (a constant `of`, eg a module
+        // value -- render-once by contract) also participate when the BODY
+        // carries request-derived content: the branches never change but
+        // their merges (placement holes, mixed-statement re-invocations)
+        // must still dispatch. Client-state-driven sets stay excluded -- the
+        // server never pairs into them.
+        const tagSources = getSerializeSourcesForExpr(tagExtra);
         const updateStructural =
           isPersisted() &&
-          isReasonDynamic(getSerializeSourcesForExpr(tagExtra));
+          !isStateSerializeReason(tagSources) &&
+          (isReasonDynamic(tagSources) ||
+            isRequestDerivedSerializeReason(
+              getSerializeReason(bodySection, kBranchSerializeReason),
+            ));
         if (updateStructural) {
           addUpdateMerge(tagSection, {
             kind: "for",

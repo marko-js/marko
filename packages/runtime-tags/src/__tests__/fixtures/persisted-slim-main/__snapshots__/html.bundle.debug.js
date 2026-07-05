@@ -47,12 +47,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				_if(() => {
 					if (page === search.page) {
 						const $scope6_id = _scope_id();
-						_html(`<span class=current>${_escape(_hole_value($scope6_id, "#text/0", page, _persisted_reason()))}${_el_resume($scope6_id, "#text/0", _persisted_reason())}</span>`);
+						_html(`<span class=current>${_escape(page)}</span>`);
 						_persisted_reason() && writeScope($scope6_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "15:8");
 						return 0;
 					} else {
 						const $scope3_id = _scope_id();
-						_html(`<a${_attr("href", _hole_value($scope3_id, "UpdateAttr:href:#a/0", `/search?page=${page}&q=${search.q}`, _persisted_reason()))}>${_escape(_hole_value($scope3_id, "#text/1", page, _persisted_reason()))}${_el_resume($scope3_id, "#text/1", _persisted_reason())}</a>${_el_resume($scope3_id, "#a/0", _persisted_reason())}`);
+						_html(`<a${_attr("href", _hole_value($scope3_id, "UpdateAttr:href:#a/0", `/search?page=${page}&q=${search.q}`, _persisted_reason()))}>${_escape(page)}</a>${_el_resume($scope3_id, "#a/0", _persisted_reason())}`);
 						_persisted_reason() && _subscribe($search_q__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }, "__tests__/template.marko", "18:8"));
 						return 1;
 					}

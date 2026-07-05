@@ -53,12 +53,12 @@ UPDATE: button::text "0" => "1"
 <div
   id="stamp"
 >
-  stamp:4
+  stamp:2
 </div>
 <span
   id="label"
 >
-  label:3
+  label:1
 </span>
 <button>
   1
@@ -67,8 +67,6 @@ UPDATE: button::text "0" => "1"
 ## Change
 ```
 UPDATE: h1::text "First" => "Second"
-UPDATE: #stamp::text@6 "2" => "4"
-UPDATE: #label::text "label:1" => "label:3"
 ```
 
 # Update
@@ -82,12 +80,12 @@ container.querySelector("button").click();
 <div
   id="stamp"
 >
-  stamp:4
+  stamp:2
 </div>
 <span
   id="label"
 >
-  label:3
+  label:1
 </span>
 <button>
   2

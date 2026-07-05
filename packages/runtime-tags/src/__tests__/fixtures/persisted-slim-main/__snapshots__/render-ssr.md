@@ -140,9 +140,9 @@ UPDATE: .pagination > a:nth-of-type(1)[href] "/search?page=1&q=a" => "/search?pa
 INSERT: .pagination > a:nth-of-type(1) + a
 REMOVE: .pagination > a:nth-of-type(2) + .current
 UPDATE: .pagination > a:nth-of-type(2)[href] null => "/search?page=2&q=e"
-UPDATE: .pagination > a:nth-of-type(2)::text " " => "2"
 INSERT: .pagination > a:nth-of-type(2) + .current
 REMOVE: .current + a
+UPDATE: .pagination > a:nth-of-type(2)::text " " => "2"
 UPDATE: .current::text " " => "3"
 ```
 

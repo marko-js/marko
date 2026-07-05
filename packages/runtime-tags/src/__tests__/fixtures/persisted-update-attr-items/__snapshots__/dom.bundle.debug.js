@@ -4,7 +4,6 @@ const $for_content__update = (patch, live) => {
 	if ("$params2" in patch) live["$params2"] = patch["$params2"];
 	if ("cat" in patch) live["cat"] = patch["cat"];
 	if ("UpdateAttr:class:#span/0" in patch) _attr_class(live["#span/0"], patch["UpdateAttr:class:#span/0"]);
-	if ("#text/1" in patch) _text(live["#text/1"], patch["#text/1"]);
 };
 const $update$1 = (patch, live) => {
 	if ("$pattern" in patch) live["$pattern"] = patch["$pattern"];

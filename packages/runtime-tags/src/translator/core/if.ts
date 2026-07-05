@@ -46,6 +46,7 @@ import {
   getSerializeReason,
   getSerializeSourcesForExpr,
   isReasonDynamic,
+  isRequestDerivedSerializeReason,
   isStateOnlySerializeReason,
   isStateSerializeReason,
   isStaticSerializeReason,
@@ -363,10 +364,26 @@ export const IfTag = {
           // and the update entry replays it through this same signal, so
           // persisted entry builds register it and update entries record a merge
           // (the main module's copy stays unregistered -- resume never
-          // invokes it, so hydration bundles may tree-shake it).
+          // invokes it, so hydration bundles may tree-shake it). Stable
+          // branch outcomes (a constant test -- render-once by contract)
+          // also participate when a BRANCH carries request-derived content,
+          // so body merges still dispatch; client-state-driven conditionals
+          // stay excluded (the server never pairs into them).
+          const ifTagSources = getSerializeSourcesForExpr(ifTagExtra);
           if (
             isPersisted() &&
-            isReasonDynamic(getSerializeSourcesForExpr(ifTagExtra))
+            !isStateSerializeReason(ifTagSources) &&
+            (isReasonDynamic(ifTagSources) ||
+              branches.some(
+                ([, branchBodySection]) =>
+                  branchBodySection &&
+                  isRequestDerivedSerializeReason(
+                    getSerializeReason(
+                      branchBodySection,
+                      kBranchSerializeReason,
+                    ),
+                  ),
+              ))
           ) {
             const accessor = getScopeAccessorLiteral(nodeRef);
             const signalId = getUpdateIfRegisterId(

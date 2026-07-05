@@ -55,6 +55,7 @@ import {
   getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
   isForceSerialized,
+  isRequestDerivedSerializeReason,
   mergeSerializeReasons,
   type SerializeReason,
 } from "./serialize-reasons";
@@ -631,6 +632,7 @@ export function trackGlobalReference(identifier: t.NodePath<t.Identifier>) {
     (exprRoot.node.extra ??= { section }) as ReferencedExtra,
   );
   exprExtra.readsGlobal = true;
+  section.hasGlobalReads = true;
 }
 
 function createBindingsAndTrackReferences(
@@ -1133,6 +1135,31 @@ export function finalizeReferences() {
           getSerializeSourcesForRef(getDirectClosures(section)),
         kBranchSerializeReason,
       );
+      // Direct `$global` reads have no closure binding to surface through
+      // `getDirectClosures`, but they make the branch's scopes
+      // navigation-refreshable all the same (persisted builds only).
+      if (isPersisted()) {
+        if (section.hasGlobalReads) {
+          addSerializeReason(section, globalSources, kBranchSerializeReason);
+        }
+        // Stable branch sets (constant upstream expressions) with
+        // request-derived content participate in update renders, so their
+        // reconcile reference node must resume: thread the request-derived
+        // part of the immediate branch reason (closures + the flag above --
+        // upstream-expression contributions already reach the marker via
+        // the `addSerializeExpr` below) to the parent's marker reason.
+        const branchReason = getSerializeReason(
+          section,
+          kBranchSerializeReason,
+        );
+        if (isRequestDerivedSerializeReason(branchReason)) {
+          addSerializeReason(
+            section.parent,
+            createSources(undefined, branchReason.param, branchReason.global),
+            section.sectionAccessor.binding,
+          );
+        }
+      }
       addSerializeExpr(
         section,
         section.upstreamExpression,
@@ -1459,26 +1486,19 @@ const globalSources: Sources = {
 };
 
 /**
- * Persisted builds treat dynamic expressions with no tracked sources as
- * *volatile*: not compile-time foldable and derived from nothing the lattice
- * knows about (eg `new Date()`, module state, impure calls), so an MPA
- * reload could change them. They behave exactly like `$global` reads --
- * markers under the persisted flag, fresh values in every update render --
- * which keeps navigation semantics aligned with a full page load.
- * (Foldable expressions stay static; expressions with tracked refs already
- * refresh through their sources' guards.)
+ * The server-refreshable taint for persisted builds: `$global`-reading
+ * expressions serialize markers under the persisted flag and refresh on
+ * every navigation. `$global` (with input/params, which track through
+ * bindings) is deliberately the ONLY channel -- other server-varying
+ * expressions (`new Date()`, module state, impure calls) are computed once
+ * at page load and navigations never refresh them, matching the client
+ * reactive model where nothing drives a refs-less expression. Volatility
+ * inside an expression is undecidable in general (`count && helper()`),
+ * so the contract is: if the server should refresh it, read it from
+ * `$global` or input.
  */
-export function getVolatileExprSources(expr: t.NodeExtra) {
-  if (isPersisted() && (expr.readsGlobal || isVolatileExtra(expr)))
-    return globalSources;
-}
-
-function isVolatileExtra(expr: t.NodeExtra) {
-  return (
-    expr.confident === false &&
-    !expr.isEffect &&
-    !(isReferencedExtra(expr) && expr.referencedBindings)
-  );
+export function getGlobalExprSources(expr: t.NodeExtra) {
+  if (isPersisted() && expr.readsGlobal) return globalSources;
 }
 
 function resolveBindingSources(binding: Binding) {
@@ -1555,14 +1575,14 @@ function resolveDerivedSources(binding: Binding) {
           }
         });
       }
-      // Volatile const/derived values (see `getVolatileExprSources`)
+      // Volatile const/derived values (see `getGlobalExprSources`)
       // propagate to everything downstream of the binding. `let` bindings
       // are excluded -- they are client state and survive navigations by
       // definition, whatever their initializer.
       if (binding.type !== BindingType.let) {
         binding.sources = mergeSources(
           binding.sources,
-          getVolatileExprSources(expr),
+          getGlobalExprSources(expr),
         );
       }
     });

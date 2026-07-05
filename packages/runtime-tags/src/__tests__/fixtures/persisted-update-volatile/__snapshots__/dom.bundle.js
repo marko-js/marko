@@ -15,7 +15,5 @@ const $update = (patch, live) => {
 	if ("h" in patch) live["h"] = patch["h"];
 	if ("j" in patch) live["j"] = patch["j"];
 	if ("a" in patch) _text(live["a"], patch["a"]);
-	if ("b" in patch) _text(live["b"], patch["b"]);
-	if ("c" in patch) _text(live["c"], patch["c"]);
 };
 var template_marko_update_default = _resume("a1", $update);

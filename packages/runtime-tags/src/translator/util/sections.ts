@@ -76,6 +76,7 @@ export interface Section {
     | false
     | undefined;
   hasAbortSignal: boolean;
+  hasGlobalReads: boolean;
   readsOwner: boolean;
   isBranch: boolean;
   content: null | {
@@ -150,6 +151,7 @@ export function startSection(
       upstreamExpression: undefined,
       downstreamBinding: undefined,
       hasAbortSignal: false,
+      hasGlobalReads: false,
       readsOwner: false,
       isBranch: false,
     };

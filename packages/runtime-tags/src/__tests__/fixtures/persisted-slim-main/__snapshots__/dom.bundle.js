@@ -11,9 +11,6 @@ const $for_update = _update_for(0, "a0", (branch, args) => $for_content2__update
 const $for_update2 = _update_for(1, "a2", (branch, args) => $for_content__update(args[0], branch));
 const $count_seed = _update_signal("a4");
 const $if_update2 = _update_signal("a3");
-const $if_content2__update = (patch, live) => {
-	if ("a" in patch) _text(live["a"], patch["a"]);
-};
 const $for_content2__update = (patch, live) => {
 	if ("b" in patch) live["b"] = patch["b"];
 	if ("c" in patch) live["c"] = patch["c"];
@@ -22,12 +19,11 @@ const $for_content2__update = (patch, live) => {
 };
 const $else_content__update = (patch, live) => {
 	if ("Nhref:a" in patch) _attr(live["a"], "href", patch["Nhref:a"]);
-	if ("b" in patch) _text(live["b"], patch["b"]);
 };
 const $for_content__update = (patch, live) => {
 	if ("Da" in patch) {
 		$if_update(live, patch["Da"]);
-		const $patchBranch = patch["Aa"], $liveBranch = live["Aa"], $branchMerge = [$if_content2__update, $else_content__update][patch["Da"]];
+		const $patchBranch = patch["Aa"], $liveBranch = live["Aa"], $branchMerge = [0, $else_content__update][patch["Da"]];
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 };

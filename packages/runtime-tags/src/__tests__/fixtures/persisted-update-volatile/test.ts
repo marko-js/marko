@@ -4,11 +4,14 @@ import { navigate } from "../../utils/resolve";
 const clickButton = (container: Element) =>
   container.querySelector("button")!.click();
 
-// MPA-navigation parity for volatile expressions: values that derive from
-// nothing the source lattice tracks (impure calls like `new Date()` --
-// simulated here with a deterministic counter) refresh on every persisted
-// navigation, both inline and through a `<const>`, exactly as a full page
-// load would refresh them. Client state (`count`) still survives.
+// Render-once contract for expressions outside the sanctioned server
+// channels: values derived from nothing the source lattice tracks (impure
+// calls like `new Date()` -- simulated here with a deterministic counter)
+// are computed at page load and persisted navigations never refresh them,
+// both inline and through a `<const>` -- matching the client reactive
+// model, where nothing drives a refs-less expression. Data the server
+// should refresh must be read from `$global` or input (`title` refreshes
+// below; the stamps must not). Client state (`count`) survives.
 export const config: TestConfig = {
   persisted: true,
   equivalent: false,

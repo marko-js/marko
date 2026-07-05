@@ -19,12 +19,12 @@ var chip_list_default = _template("__tests__/tags/chip-list.marko", (input) => {
 	_html("<div class=chips>");
 	_for_of(categories, (cat) => {
 		const $scope1_id = _scope_id();
-		_html(`<span${_attr_class(_hole_value($scope1_id, "UpdateAttr:class:#span/0", ["chip", { "chip--active": search.category === cat }], _persisted_reason()))}>${_escape(_hole_value($scope1_id, "#text/1", cat, _persisted_reason()))}${_el_resume($scope1_id, "#text/1", _persisted_reason())}</span>${_el_resume($scope1_id, "#span/0", _persisted_reason())}`);
-		_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/chip-list.marko", "6:4");
+		_html(`<span${_attr_class(_hole_value($scope1_id, "UpdateAttr:class:#span/0", ["chip", { "chip--active": search.category === cat }], _persisted_reason()))}>${_escape(cat)}</span>${_el_resume($scope1_id, "#span/0", _persisted_reason())}`);
+		_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/tags/chip-list.marko", "6:4", { cat: "6:8" });
 	}, function(cat) {
 		return cat;
-	}, $scope0_id, "#div/0", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</div>", 1);
-	_persisted_reason() && writeScope($scope0_id, {}, "__tests__/tags/chip-list.marko", 0, { search_category: ["search.category", "3:9"] });
+	}, $scope0_id, "#div/0", _persisted_reason(), _persisted_reason(), 0, "</div>", 1);
+	_persisted_reason() && writeScope($scope0_id, {}, "__tests__/tags/chip-list.marko", 0);
 });
 
 // template.marko

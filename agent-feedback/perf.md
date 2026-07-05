@@ -175,3 +175,18 @@ breaks in optimized builds; the run/vite packages ship runtime clients
 deciding whether published component libraries should get documented
 guidance (a library shipping `.marko` tags must exclude them from any
 `sideEffects` declaration for registration side effects to survive).
+
+## Update entries carry dead value-merge lines for reason-less bindings
+
+`packages/runtime-tags/src/translator/visitors/program/update.ts` (`forEachUpdateValueBinding`) | 2026-07-05 | impact:low | effort:low
+
+`forEachUpdateValueBinding` emits an `if ("<key>" in patch)` merge for every
+input/param/derived binding without state sources, but the server only
+serializes such a value when the binding has a serialize reason -- a
+reason-less binding (eg a `<const>` of a module call under the render-once
+contract) produces a merge line whose key can never appear in a patch.
+Pruning with a `getSerializeReason(section, binding)` check at entry build
+time would shave bytes from every `?update` entry with constants; needs a
+quick audit that seed-mode (cross-route) payloads really never write those
+keys either (they shouldn't -- seed values ride `forEachUpdateSeedBinding`,
+which is `let`-only).

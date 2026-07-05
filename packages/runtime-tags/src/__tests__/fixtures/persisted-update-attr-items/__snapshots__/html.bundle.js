@@ -17,11 +17,11 @@ var chip_list_default = _template("b", (input) => {
 	_html("<div class=chips>");
 	_for_of(categories, (cat) => {
 		const $scope1_id = _scope_id();
-		_html(`<span${_attr_class(_hole_value($scope1_id, "Nclass:a", ["chip", { "chip--active": search.category === cat }], _persisted_reason()))}>${_escape(_hole_value($scope1_id, "b", cat, _persisted_reason()))}${_el_resume($scope1_id, "b", _persisted_reason())}</span>${_el_resume($scope1_id, "a", _persisted_reason())}`);
+		_html(`<span${_attr_class(_hole_value($scope1_id, "Nclass:a", ["chip", { "chip--active": search.category === cat }], _persisted_reason()))}>${_escape(cat)}</span>${_el_resume($scope1_id, "a", _persisted_reason())}`);
 		_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 	}, function(cat) {
 		return cat;
-	}, $scope0_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</div>", 1);
+	}, $scope0_id, "a", _persisted_reason(), _persisted_reason(), 0, "</div>", 1);
 	_persisted_reason() && writeScope($scope0_id, {});
 });
 

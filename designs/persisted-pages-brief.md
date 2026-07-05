@@ -23,8 +23,8 @@ app-owned router code.
   excludes client-owned values from patches; nothing is manually lifted or
   restored.
 - **Patches, not pages or fragments.** Measured on the benchmark shop
-  (production build): item page **2.6 KB** patch vs 12.5 KB document; search
-  **16.6 vs 66.5 KB**; a cart mutation **0.4 vs 1.3 KB**.
+  (production build): item page **2.4 KB** patch vs 12.5 KB document; search
+  **16.1 vs 66.5 KB**; a cart mutation **0.3 vs 1.3 KB**.
 - **Server code never ships.** Patches are placement-only — derived values
   arrive computed. A search page can import its whole catalog and ranking
   code; none of it reaches the client.
@@ -88,7 +88,7 @@ page is stored server-side, so any instance can answer any navigation.
 - **Marko-only**, and the compiler is doing the heavy lifting — this is not
   a bolt-on library.
 - **Initial documents carry more resume markers** (the spine that makes
-  precise patching possible): +16% gzip on a typical page, +50% on a
+  precise patching possible): +16% gzip on a typical page, +53% on a
   deliberately hole-dense worst case. Planned marker-suppression levers
   target exactly this.
 - **Eager JS sits above the non-persisted baseline** (benchmark search page:

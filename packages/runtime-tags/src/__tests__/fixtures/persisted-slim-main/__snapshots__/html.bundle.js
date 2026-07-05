@@ -44,12 +44,12 @@ var template_default = _template("a", (input) => {
 				_if(() => {
 					if (page === search.page) {
 						const $scope6_id = _scope_id();
-						_html(`<span class=current>${_escape(_hole_value($scope6_id, "a", page, _persisted_reason()))}${_el_resume($scope6_id, "a", _persisted_reason())}</span>`);
+						_html(`<span class=current>${_escape(page)}</span>`);
 						_persisted_reason() && writeScope($scope6_id, { _: _scope_with_id($scope2_id) });
 						return 0;
 					} else {
 						const $scope3_id = _scope_id();
-						_html(`<a${_attr("href", _hole_value($scope3_id, "Nhref:a", `/search?page=${page}&q=${search.q}`, _persisted_reason()))}>${_escape(_hole_value($scope3_id, "b", page, _persisted_reason()))}${_el_resume($scope3_id, "b", _persisted_reason())}</a>${_el_resume($scope3_id, "a", _persisted_reason())}`);
+						_html(`<a${_attr("href", _hole_value($scope3_id, "Nhref:a", `/search?page=${page}&q=${search.q}`, _persisted_reason()))}>${_escape(page)}</a>${_el_resume($scope3_id, "a", _persisted_reason())}`);
 						_persisted_reason() && _subscribe($search_q__closures, writeScope($scope3_id, { _: _scope_with_id($scope2_id) }));
 						return 1;
 					}
