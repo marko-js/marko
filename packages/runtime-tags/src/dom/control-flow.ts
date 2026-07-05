@@ -18,10 +18,8 @@ import {
   RendererProp,
   type Scope,
 } from "../common/types";
-import { _attrs, _attrs_content, _attrs_script } from "./dom";
+import { _enable_catch, renderCatch } from "./catch";
 import {
-  _enable_catch,
-  caughtError,
   pendingEffects,
   type PendingRender,
   placeholderShown,
@@ -47,10 +45,12 @@ import {
   findBranchWithKey,
   insertBranchBefore,
   removeAndDestroyBranch,
+  setConditionalRenderer,
   syncGen,
   tempDetachBranch,
 } from "./scope";
 import { type Signal, subscribeToScopeSet } from "./signals";
+import { _attrs, _attrs_content, _attrs_script } from "./spread";
 
 export function _await_promise(
   nodeAccessor: EncodedAccessor,
@@ -176,7 +176,8 @@ export function _await_promise(
             );
 
             const pendingRenders = awaitBranch[AccessorProp.PendingRenders] as
-              PendingRender[] | undefined;
+              | PendingRender[]
+              | undefined;
             awaitBranch[AccessorProp.PendingRenders] = 0;
             pendingRenders?.forEach(queuePendingRender);
 
@@ -186,7 +187,7 @@ export function _await_promise(
             if (awaitCounter!.m) {
               const fnScopes = new Map<unknown, Set<Scope>>();
               const effects = awaitCounter!.m([]);
-              for (let i = 0; i < pendingEffects.length;) {
+              for (let i = 0; i < pendingEffects.length; ) {
                 const fn = pendingEffects[i++] as any;
                 let scopes = fnScopes.get(fn);
                 if (!scopes) {
@@ -194,7 +195,7 @@ export function _await_promise(
                 }
                 scopes.add(pendingEffects[i++] as Scope);
               }
-              for (let i = 0; i < effects.length;) {
+              for (let i = 0; i < effects.length; ) {
                 const fn = effects[i++] as any;
                 const scope = effects[i++] as Scope;
                 if (!fnScopes.get(fn)?.has(scope)) {
@@ -371,39 +372,6 @@ export function _try(
       );
     }
   };
-}
-
-export function renderCatch(scope: Scope, error: unknown) {
-  const tryWithCatch = findBranchWithKey(scope, AccessorProp.CatchContent);
-  if (!tryWithCatch) {
-    throw error;
-  } else {
-    const owner = tryWithCatch[AccessorProp.Owner]!;
-    const placeholderBranch = tryWithCatch[
-      AccessorProp.PlaceholderBranch
-    ] as BranchScope;
-    if (placeholderBranch) {
-      if (tryWithCatch[AccessorProp.AwaitCounter])
-        (tryWithCatch[AccessorProp.AwaitCounter] as AwaitCounter).i = 0;
-      owner[
-        AccessorPrefix.BranchScopes + tryWithCatch[AccessorProp.BranchAccessor]
-      ] = placeholderBranch;
-      destroyBranch(tryWithCatch);
-    }
-    caughtError.add(pendingEffects);
-    setConditionalRenderer(
-      owner,
-      tryWithCatch[AccessorProp.BranchAccessor],
-      tryWithCatch[AccessorProp.CatchContent],
-      createAndSetupBranch,
-    );
-    tryWithCatch[AccessorProp.CatchContent]?.[RendererProp.Params]?.(
-      owner[
-        AccessorPrefix.BranchScopes + tryWithCatch[AccessorProp.BranchAccessor]
-      ],
-      [error],
-    );
-  }
 }
 
 export function _if(
@@ -684,57 +652,6 @@ function dynamicTagScript(branch: Scope) {
   );
 }
 
-export function setConditionalRenderer<T>(
-  scope: Scope,
-  nodeAccessor: Accessor,
-  newRenderer: T,
-  createBranch: (
-    $global: Scope[AccessorProp.Global],
-    renderer: NonNullable<T>,
-    parentScope: Scope,
-    parentNode: ParentNode,
-  ) => BranchScope,
-) {
-  const referenceNode = scope[nodeAccessor] as Comment | Element;
-  const prevBranch = scope[AccessorPrefix.BranchScopes + nodeAccessor] as
-    BranchScope | undefined;
-  const parentNode =
-    referenceNode.nodeType > NodeType.Element
-      ? (prevBranch?.[AccessorProp.StartNode] || referenceNode).parentNode!
-      : (referenceNode as ParentNode);
-  const newBranch = (scope[AccessorPrefix.BranchScopes + nodeAccessor] =
-    newRenderer &&
-    createBranch(scope[AccessorProp.Global], newRenderer, scope, parentNode));
-  if (referenceNode === parentNode) {
-    if (prevBranch) {
-      destroyBranch(prevBranch);
-      referenceNode.textContent = "";
-    }
-
-    if (newBranch) {
-      insertBranchBefore(newBranch, parentNode, null);
-    }
-  } else if (prevBranch) {
-    if (newBranch) {
-      insertBranchBefore(
-        newBranch,
-        parentNode,
-        prevBranch[AccessorProp.StartNode],
-      );
-    } else {
-      parentNode.insertBefore(
-        referenceNode,
-        prevBranch[AccessorProp.StartNode],
-      );
-    }
-
-    removeAndDestroyBranch(prevBranch);
-  } else if (newBranch) {
-    insertBranchBefore(newBranch, parentNode, referenceNode);
-    referenceNode.remove();
-  }
-}
-
 export const _for_of = loop<
   [all: unknown[], by?: (item: unknown, index: number) => unknown]
 >(([all, by = bySecondArg], cb) => {
@@ -921,7 +838,7 @@ function loop<T extends unknown[] = unknown[]>(
         oldPos.set(oldScopes[i], i);
       }
 
-      for (let i = diffLen; i--;) {
+      for (let i = diffLen; i--; ) {
         sources[i] = oldPos.get(newScopes[start + i]) ?? -1;
       }
 
@@ -954,7 +871,7 @@ function loop<T extends unknown[] = unknown[]>(
         hi = pred[hi];
       }
 
-      for (let i = diffLen; i--;) {
+      for (let i = diffLen; i--; ) {
         if (~tail && i === tails[tail]) {
           tail--;
         } else {

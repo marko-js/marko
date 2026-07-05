@@ -3,6 +3,7 @@ export { _assert_hoist } from "./common/errors";
 export { forIn, forOf, forTo, forUntil } from "./common/for";
 export { _call } from "./common/helpers";
 export { $signal, $signalReset } from "./dom/abort-signal";
+export { _enable_catch } from "./dom/catch";
 export { compat } from "./dom/compat";
 export {
   _await_content,
@@ -19,43 +20,43 @@ export {
   _try,
 } from "./dom/control-flow";
 export {
-  _attr_details_or_dialog_open as _attr_details_open,
-  _attr_details_or_dialog_open_default as _attr_details_open_default,
-  _attr_details_or_dialog_open_script as _attr_details_open_script,
-  _attr_details_or_dialog_open as _attr_dialog_open,
-  _attr_details_or_dialog_open_default as _attr_dialog_open_default,
-  _attr_details_or_dialog_open_script as _attr_dialog_open_script,
   _attr_input_checked,
   _attr_input_checked_default,
   _attr_input_checked_script,
   _attr_input_checkedValue,
   _attr_input_checkedValue_default,
   _attr_input_checkedValue_script,
+} from "./dom/controllable-input-checked";
+export {
   _attr_input_value,
   _attr_input_value_default,
   _attr_input_value_script,
-  _attr_select_value,
-  _attr_select_value_default,
-  _attr_select_value_script,
   _attr_input_value as _attr_textarea_value,
   _attr_input_value_default as _attr_textarea_value_default,
   _attr_input_value_script as _attr_textarea_value_script,
-} from "./dom/controllable";
+} from "./dom/controllable-input-value";
+export {
+  _attr_details_or_dialog_open as _attr_details_open,
+  _attr_details_or_dialog_open_default as _attr_details_open_default,
+  _attr_details_or_dialog_open_script as _attr_details_open_script,
+  _attr_details_or_dialog_open as _attr_dialog_open,
+  _attr_details_or_dialog_open_default as _attr_dialog_open_default,
+  _attr_details_or_dialog_open_script as _attr_dialog_open_script,
+} from "./dom/controllable-open";
+export {
+  _attr_select_value,
+  _attr_select_value_default,
+  _attr_select_value_script,
+} from "./dom/controllable-select";
 export {
   _attr,
   _attr_class,
   _attr_class_item,
   _attr_class_items,
-  _attr_content,
   _attr_nonce,
   _attr_style,
   _attr_style_item,
   _attr_style_items,
-  _attrs,
-  _attrs_content,
-  _attrs_partial,
-  _attrs_partial_content,
-  _attrs_script,
   _html,
   _lifecycle,
   _style_rule_item,
@@ -75,7 +76,7 @@ export {
   _load_template,
   _load_visible_trigger,
 } from "./dom/load";
-export { _enable_catch, run } from "./dom/queue";
+export { run } from "./dom/queue";
 export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,
@@ -107,4 +108,12 @@ export {
   _var,
   _var_change,
 } from "./dom/signals";
+export {
+  _attr_content,
+  _attrs,
+  _attrs_content,
+  _attrs_partial,
+  _attrs_partial_content,
+  _attrs_script,
+} from "./dom/spread";
 export { _template } from "./dom/template";
