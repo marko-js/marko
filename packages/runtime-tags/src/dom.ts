@@ -20,28 +20,34 @@ export {
   _try,
 } from "./dom/control-flow";
 export {
-  _attr_details_or_dialog_open as _attr_details_open,
-  _attr_details_or_dialog_open_default as _attr_details_open_default,
-  _attr_details_or_dialog_open_script as _attr_details_open_script,
-  _attr_details_or_dialog_open as _attr_dialog_open,
-  _attr_details_or_dialog_open_default as _attr_dialog_open_default,
-  _attr_details_or_dialog_open_script as _attr_dialog_open_script,
   _attr_input_checked,
   _attr_input_checked_default,
   _attr_input_checked_script,
   _attr_input_checkedValue,
   _attr_input_checkedValue_default,
   _attr_input_checkedValue_script,
+} from "./dom/controllable-input-checked";
+export {
   _attr_input_value,
   _attr_input_value_default,
   _attr_input_value_script,
-  _attr_select_value,
-  _attr_select_value_default,
-  _attr_select_value_script,
   _attr_input_value as _attr_textarea_value,
   _attr_input_value_default as _attr_textarea_value_default,
   _attr_input_value_script as _attr_textarea_value_script,
-} from "./dom/controllable";
+} from "./dom/controllable-input-value";
+export {
+  _attr_details_or_dialog_open as _attr_details_open,
+  _attr_details_or_dialog_open_default as _attr_details_open_default,
+  _attr_details_or_dialog_open_script as _attr_details_open_script,
+  _attr_details_or_dialog_open as _attr_dialog_open,
+  _attr_details_or_dialog_open_default as _attr_dialog_open_default,
+  _attr_details_or_dialog_open_script as _attr_dialog_open_script,
+} from "./dom/controllable-open";
+export {
+  _attr_select_value,
+  _attr_select_value_default,
+  _attr_select_value_script,
+} from "./dom/controllable-select";
 export {
   _attr,
   _attr_class,

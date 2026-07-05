@@ -50,8 +50,6 @@ Existing TODO: `<${input.component}/>` style dynamic tags always compile against
 
 `npm run test:parallel` runs one mocha process per core, but each fixture bundle already drives rolldown's own multi-threaded build (`packages/runtime-tags/src/__tests__/utils/bundle.ts`), so even a serial run uses ~1.4 cores. On a 4-core box the whole suite lands at ~87s vs ~238s serial (2.7×), short of the ~4× the core count implies, because the workers contend for the same native threads. `RAYON_NUM_THREADS=1` in the worker env made no measurable difference, so rolldown isn't honoring it. If rolldown (or its native binding) exposes a per-build thread cap, pinning workers to 1 bundler thread each — so N workers ≈ N threads total — could recover much of the lost efficiency and let the runner scale closer to linearly on higher core counts.
 
-## Persisted register-all-content retains unreachable DOM renderers (document shell in client bundles)
-
 ## Persisted eager client cost: registered renderer graphs keep hydration bundles ~2.3x
 
 `packages/runtime-tags/src/translator/visitors/program/dom.ts:130` | 2026-07-04 (re-measured; earlier shell theory corrected) | impact:high | effort:high
@@ -116,13 +114,13 @@ eager closure pinpoints the remaining drivers, largest first:
    /search eager fell 31.5→21.2 kB raw, 13.5→9.7 kB gz (non-persisted
    baseline 8.6/4.5); the `persisted-update-layout` fixture's eager
    client JS fell 96%.
-2. `controllable.ts` is mixed-phase: hydration `_script` variants (and
-   the controlled helpers interactive inputs genuinely need eagerly, eg
-   the app's qty input) host together with the `_default`/value writers
-   and all five control kinds' machinery — a file split by kind and phase
-   lets per-app usage decide. Post-fix this is the whole eager gap on
-   /search: product mains import `_on` + `_attr_input_value*` and get
-   the 11 kB (raw) event+controllable chunk.
+2. **RESOLVED — controllable kind split.** `dom/controllable.ts` split
+   into per-kind modules (`controllable-input-value`, `-input-checked`
+   (with checkedValue, which depends on it), `-select`, `-open`, plus
+   `controllable-shared` for the change/reset delegation and detection
+   helpers), so a page hosting one controllable kind no longer pulls the
+   other four. App /search eager: 21.6→19.1 kB raw, 9.9→9.1 kB gz;
+   /item 22.3→19.8 raw, 10.4→9.5 gz.
 3. **RESOLVED — `_enable_catch` hosting.** The catch machinery
    (`_enable_catch`, `renderCatch`, `handlePendingTry`) moved to its own
    `dom/catch.ts` (with `setConditionalRenderer` relocated to `scope.ts`,

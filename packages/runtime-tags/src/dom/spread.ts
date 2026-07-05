@@ -17,17 +17,23 @@ import {
   type Scope,
 } from "../common/types";
 import {
-  _attr_details_or_dialog_open,
-  _attr_details_or_dialog_open_script,
   _attr_input_checked,
   _attr_input_checked_script,
   _attr_input_checkedValue,
   _attr_input_checkedValue_script,
+} from "./controllable-input-checked";
+import {
   _attr_input_value,
   _attr_input_value_script,
+} from "./controllable-input-value";
+import {
+  _attr_details_or_dialog_open,
+  _attr_details_or_dialog_open_script,
+} from "./controllable-open";
+import {
   _attr_select_value,
   _attr_select_value_script,
-} from "./controllable";
+} from "./controllable-select";
 import { _attr, _attr_class, _attr_style } from "./dom";
 import { _on } from "./event";
 import { createAndSetupBranch, type Renderer } from "./renderer";

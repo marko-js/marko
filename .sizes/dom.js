@@ -1,4 +1,4 @@
-// size: 27607 (min) 10192 (brotli)
+// size: 27607 (min) 10197 (brotli)
 //#region packages/runtime-tags/dist/common/attr-tag.mjs
 let empty = [],
   rest = Symbol();
@@ -1314,33 +1314,52 @@ function handleDelegated(ev) {
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
 //#endregion
-//#region packages/runtime-tags/dist/dom/resolve-cursor-position.mjs
-let R = /[^\p{L}\p{N}]/gu;
-function resolveCursorPosition(
-  inputType,
-  initialPosition,
-  initialValue,
-  updatedValue,
-) {
-  if (
-    (initialPosition || initialPosition === 0) &&
-    (initialPosition !== initialValue.length || /kw/.test(inputType))
-  ) {
-    let before = initialValue.slice(0, initialPosition),
-      after = initialValue.slice(initialPosition);
-    if (updatedValue.startsWith(before)) return initialPosition;
-    if (updatedValue.endsWith(after)) return updatedValue.length - after.length;
-    let count = before.replace(R, "").length,
-      pos = 0;
-    for (; count && updatedValue[pos]; )
-      updatedValue[pos++].replace(R, "") && count--;
-    return pos;
-  }
-  return -1;
+//#region packages/runtime-tags/dist/dom/controllable-shared.mjs
+function syncControllableFormInput(el, hasChanged, onChange) {
+  ((el._ = onChange),
+    delegate("input", handleChange),
+    el.form && delegate("reset", handleFormReset),
+    isResuming && hasChanged(el) && queueMicrotask(onChange));
+}
+function handleChange(ev) {
+  ev.target._?.(ev);
+}
+function handleFormReset(ev) {
+  let handlers = [];
+  for (let el of ev.target.elements)
+    el._ && hasFormElementChanged(el) && handlers.push(el._);
+  requestAnimationFrame(() => {
+    if (!ev.defaultPrevented) for (let change of handlers) change();
+  });
+}
+function hasValueChanged(el) {
+  return el.value !== el.defaultValue;
+}
+function hasCheckboxChanged(el) {
+  return el.checked !== el.defaultChecked;
+}
+function hasSelectChanged(el) {
+  for (let opt of el.options)
+    if (opt.selected !== opt.defaultSelected) return !0;
+}
+function hasFormElementChanged(el) {
+  return el.options
+    ? hasSelectChanged(el)
+    : hasValueChanged(el) || hasCheckboxChanged(el);
+}
+function normalizeStrProp(value) {
+  return normalizeAttrValue(value) || "";
+}
+function updateList(arr, val, push) {
+  let index = arr.indexOf(val);
+  return (
+    (push
+      ? !~index && [...arr, val]
+      : ~index && arr.slice(0, index).concat(arr.slice(index + 1))) || arr
+  );
 }
 //#endregion
-//#region packages/runtime-tags/dist/dom/controllable.mjs
-let inputType = "";
+//#region packages/runtime-tags/dist/dom/controllable-input-checked.mjs
 function _attr_input_checked_default(scope, nodeAccessor, checked) {
   let el = scope[nodeAccessor],
     normalizedChecked = isNotVoid(checked);
@@ -1444,6 +1463,34 @@ function _attr_input_checkedValue_script(scope, nodeAccessor) {
       }
     }));
 }
+//#endregion
+//#region packages/runtime-tags/dist/dom/resolve-cursor-position.mjs
+let R = /[^\p{L}\p{N}]/gu;
+function resolveCursorPosition(
+  inputType,
+  initialPosition,
+  initialValue,
+  updatedValue,
+) {
+  if (
+    (initialPosition || initialPosition === 0) &&
+    (initialPosition !== initialValue.length || /kw/.test(inputType))
+  ) {
+    let before = initialValue.slice(0, initialPosition),
+      after = initialValue.slice(initialPosition);
+    if (updatedValue.startsWith(before)) return initialPosition;
+    if (updatedValue.endsWith(after)) return updatedValue.length - after.length;
+    let count = before.replace(R, "").length,
+      pos = 0;
+    for (; count && updatedValue[pos]; )
+      updatedValue[pos++].replace(R, "") && count--;
+    return pos;
+  }
+  return -1;
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom/controllable-input-value.mjs
+let inputType = "";
 function _attr_input_value_default(scope, nodeAccessor, value) {
   let el = scope[nodeAccessor],
     normalizedValue = normalizeAttrValue(value) || "";
@@ -1490,6 +1537,38 @@ function setInputValue(el, value) {
     ~updatedPosition && el.setSelectionRange(updatedPosition, updatedPosition);
   }
 }
+//#endregion
+//#region packages/runtime-tags/dist/dom/controllable-open.mjs
+function _attr_details_or_dialog_open_default(scope, nodeAccessor, open) {
+  scope.H === runId && (scope[nodeAccessor].open = isNotVoid(open));
+}
+function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
+  let normalizedOpen = (scope["G" + nodeAccessor] = isNotVoid(open));
+  ((scope["E" + nodeAccessor] = openChange),
+    (scope["F" + nodeAccessor] = openChange ? 4 : 5),
+    openChange && scope.H < runId
+      ? (scope[nodeAccessor].open = normalizedOpen)
+      : _attr_details_or_dialog_open_default(
+          scope,
+          nodeAccessor,
+          normalizedOpen,
+        ));
+}
+function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
+  let el = scope[nodeAccessor];
+  new MutationObserver(() => {
+    let openChange = scope["E" + nodeAccessor];
+    if (openChange && el.open === !scope["G" + nodeAccessor]) {
+      let newValue = el.open;
+      ((el.open = !newValue), openChange(newValue), run());
+    }
+  }).observe(el, {
+    attributes: !0,
+    attributeFilter: ["open"],
+  });
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom/controllable-select.mjs
 function _attr_select_value_default(scope, nodeAccessor, value) {
   let restoreValue,
     el = scope[nodeAccessor],
@@ -1571,77 +1650,6 @@ function getSelectValue(el, multiple) {
   return multiple
     ? Array.from(el.selectedOptions, (opt) => opt.value)
     : el.value;
-}
-function _attr_details_or_dialog_open_default(scope, nodeAccessor, open) {
-  scope.H === runId && (scope[nodeAccessor].open = isNotVoid(open));
-}
-function _attr_details_or_dialog_open(scope, nodeAccessor, open, openChange) {
-  let normalizedOpen = (scope["G" + nodeAccessor] = isNotVoid(open));
-  ((scope["E" + nodeAccessor] = openChange),
-    (scope["F" + nodeAccessor] = openChange ? 4 : 5),
-    openChange && scope.H < runId
-      ? (scope[nodeAccessor].open = normalizedOpen)
-      : _attr_details_or_dialog_open_default(
-          scope,
-          nodeAccessor,
-          normalizedOpen,
-        ));
-}
-function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
-  let el = scope[nodeAccessor];
-  new MutationObserver(() => {
-    let openChange = scope["E" + nodeAccessor];
-    if (openChange && el.open === !scope["G" + nodeAccessor]) {
-      let newValue = el.open;
-      ((el.open = !newValue), openChange(newValue), run());
-    }
-  }).observe(el, {
-    attributes: !0,
-    attributeFilter: ["open"],
-  });
-}
-function syncControllableFormInput(el, hasChanged, onChange) {
-  ((el._ = onChange),
-    delegate("input", handleChange),
-    el.form && delegate("reset", handleFormReset),
-    isResuming && hasChanged(el) && queueMicrotask(onChange));
-}
-function handleChange(ev) {
-  ev.target._?.(ev);
-}
-function handleFormReset(ev) {
-  let handlers = [];
-  for (let el of ev.target.elements)
-    el._ && hasFormElementChanged(el) && handlers.push(el._);
-  requestAnimationFrame(() => {
-    if (!ev.defaultPrevented) for (let change of handlers) change();
-  });
-}
-function hasValueChanged(el) {
-  return el.value !== el.defaultValue;
-}
-function hasCheckboxChanged(el) {
-  return el.checked !== el.defaultChecked;
-}
-function hasSelectChanged(el) {
-  for (let opt of el.options)
-    if (opt.selected !== opt.defaultSelected) return !0;
-}
-function hasFormElementChanged(el) {
-  return el.options
-    ? hasSelectChanged(el)
-    : hasValueChanged(el) || hasCheckboxChanged(el);
-}
-function normalizeStrProp(value) {
-  return normalizeAttrValue(value) || "";
-}
-function updateList(arr, val, push) {
-  let index = arr.indexOf(val);
-  return (
-    (push
-      ? !~index && [...arr, val]
-      : ~index && arr.slice(0, index).concat(arr.slice(index + 1))) || arr
-  );
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom/spread.mjs
