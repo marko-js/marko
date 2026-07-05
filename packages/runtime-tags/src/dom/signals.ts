@@ -123,11 +123,8 @@ export function _or(
         if (!--scope[id]) {
           fn(scope);
         }
-      } else if (!(scope[id] = defaultPending)) {
-        // Zero pending: every other member is one that never fires during
-        // a fresh render window (persisted builds' promoted `$global`
-        // reads), so the first invocation is also the last.
-        fn(scope);
+      } else {
+        scope[id] = defaultPending;
       }
     } else {
       queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);

@@ -1,4 +1,4 @@
-// size: 27607 (min) 10197 (brotli)
+// size: 27599 (min) 10196 (brotli)
 //#region packages/runtime-tags/dist/common/attr-tag.mjs
 let empty = [],
   rest = Symbol();
@@ -1038,7 +1038,7 @@ function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
       scope.H === runId
         ? id in scope
           ? --scope[id] || fn(scope)
-          : (scope[id] = defaultPending) || fn(scope)
+          : (scope[id] = defaultPending)
         : queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
     }
   );

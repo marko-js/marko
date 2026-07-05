@@ -25,8 +25,8 @@
     },
     "shared-list.mjs": {
       "total": {
-        "min": 20652,
-        "brotli": 7846
+        "min": 20644,
+        "brotli": 7843
       },
       "files": {
         "data.js": 637,
