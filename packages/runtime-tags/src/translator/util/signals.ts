@@ -975,11 +975,13 @@ function stripOwnGlobalRefs(
 ): ReferencedBindings {
   if (refs) {
     if (Array.isArray(refs)) {
-      if (
-        !refs.some(
-          (binding) => binding.section !== section || !isGlobalBinding(binding),
-        )
-      ) {
+      // A pure-global intersection never fires client-side (no member has a
+      // value signal), so its `_or` join would stall -- fresh branches
+      // created during a persisted apply would skip the statement entirely
+      // (eg a `<let>` seed with no server-captured hole to fall back on).
+      // Fold into setup regardless of section: promoted global reads are
+      // live `$global` member accesses, so placement needs no owner chain.
+      if (!refs.some((binding) => !isGlobalBinding(binding))) {
         return undefined;
       }
     } else if (refs.section === section && isGlobalBinding(refs)) {

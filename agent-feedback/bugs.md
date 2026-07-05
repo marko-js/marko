@@ -42,20 +42,21 @@ use a strict/proper-superset test (equal sources must not prune each other)
 _and_ the corrected arithmetic, then a full snapshot audit — out of scope for a
 one-line change.
 
-## Fresh-render `_or` joins can stall when no member fires during an apply
+## Fresh-render `_or` joins can stall for guarded request-derived members
 
-`packages/runtime-tags/src/translator/util/signals.ts:318` | 2026-07-04 | impact:low | effort:med
+`packages/runtime-tags/src/translator/util/signals.ts:330` | 2026-07-05 | impact:low | effort:med
 
-The `_or` pending count now excludes promoted `$global` members (they have
-no client-side value signal), but two pathological shapes remain for fresh
-branches created during a persisted apply: (1) an intersection whose members
-are _all_ promoted globals emits pending 0 yet has no invoker at all, and
-(2) an intersection whose non-global members are all `_updating()`-guarded
-request-derived invocations never completes its join during the apply. Both
-are harmless when the joined statement's output is a server-captured hole
-(the merge places it), but a non-captured side effect (eg `_return_change`
-mixing two such bindings) would silently not run. Statements referencing
-only never-firing bindings probably belong in setup placement instead.
+Pure-global intersections now fold into setup placement (fixed -- see the
+`persisted-update-or-stall` fixture), but the second pathological shape
+remains: an intersection whose non-global members are all `_updating()`-
+guarded request-derived invocations never completes its join during a
+persisted apply (the guarded computes skip, and globals have no value
+signal). Harmless when the joined statement's output is a server-captured
+hole (the merge places it); a non-captured side effect over such an
+intersection would silently not run for fresh branches. Also worth
+auditing: the `_or` pending count excludes members by source shape
+(`sources.global` without state/param), which under-counts derived
+request-derived members that CAN fire through registered update merges.
 
 ## Controllable update coverage: `checkedValue`, spread controllables, `<option value>`
 
