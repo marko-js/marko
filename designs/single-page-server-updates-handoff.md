@@ -779,6 +779,71 @@ effects-not-replayed rule (double-bind detector). The wire-delivered
 registry sharing (see above); a content store may still return in slices 3/4
 for priming templates the client hasn't loaded.
 
+## Backport map (mainline-first extraction)
+
+The plan is to land every improvement that is not persisted-specific on
+`main` FIRST, so the eventual persisted-pages review is only the feature.
+The branch is squashed, so extraction is by change, not cherry-pick — this
+list is the guide (pre-squash commits live on the `-history` branch).
+
+**A. Pure mainline improvements (backport first, in this order):**
+
+1. **Runtime packaging** — `scripts/bundle.mts` preserved dist modules
+   behind the `dom.mjs` facade, `package.json`
+   `"sideEffects": ["**/*.marko"]`, and the `scripts/sizes.ts` runtime
+   classifier that understands the preserved layout. This is where the
+   measured non-persisted wins live (163 fixtures shrank, −30.9 kB min
+   corpus-wide; hydrate benchmarks −30 brotli) and it is the prerequisite
+   for hosting granularity to exist at the package boundary at all.
+   Honest costs: tiny min regressions on some pages (max +110 B observed),
+   and the lazy-tag fixtures' sizes.json show a +48 kB _accounting_
+   redistribution (a previously separate uncounted chunk now counts
+   inline).
+2. **Runtime module splits** (each benefits any code-split or lazy-tag
+   app; validated behavior-neutral — non-persisted fixtures byte-identical):
+   - `dom/spread.ts` extracted from `dom/dom.ts`;
+   - the catch split: `dom/catch.ts` (`_enable_catch`, `renderCatch`,
+     `handlePendingTry`), `setConditionalRenderer` moved to `dom/scope.ts`,
+     and the `enableCatchPending` wrap hooks in `dom/queue.ts` — mainline's
+     `<load>` entries import `_enable_catch` and currently pin the whole
+     branch-construction module eagerly, the identical pathology we fixed
+     for persisted mains;
+   - the controllable per-kind split (`controllable-input-value` /
+     `-input-checked` / `-select` / `-open` / `-shared`) — pays wherever
+     chunks straddle kinds (eager text input + lazy select); ~neutral for
+     single-chunk apps where plain tree-shaking already drops unused kinds.
+     Extraction caveat: `dom/queue.ts` on this branch mixes the neutral
+     `enableCatchPending` hooks with persisted machinery
+     (`_script_update`/`_script_shared`/`_updating`) — take only the hooks.
+3. **Compiler/translator hardening** (behavior-neutral on main by
+   construction — zero non-persisted snapshot drift here):
+   - `$signal` abort-ids allocated via `createSectionState` instead of a
+     Section-keyed module WeakMap (translate-phase state must not live on
+     cached-analysis objects);
+   - `addReadToExpression` resolving the canonical (merge-target) extra so
+     reads recorded after a `mergeReferences` cannot split an expression's
+     references (today only promoted `$global` reads trigger it, but the
+     merge contract is general);
+   - the empty-child-setup proof check interplay fixes if any surface
+     during extraction.
+4. **Misc**: mainline-relevant `agent-feedback/` entries (dx/perf/bugs
+   items not persisted-specific), cspell additions riding the above.
+
+**B. Persisted-specific (the feature review proper):** the serialize
+spine/value gates and `_persisted_reason` family, `$global` promotion,
+the update-render writer mode (G1–G5), `entry: "update"`/`"persisted"`
+kinds and their codegen, `dom/update.ts` applier, controllable
+capture/merge and option-value capture, the register/slim-hydration
+gates (`isPersistedEntryBuild` paths, scriptlet export seam,
+`_enable_branches` emission, `getChildImportPath`), the persisted
+owner-skip gate in `core/if.ts`/`core/for.ts`, the pure-global `_or`
+setup-fold (global promotion only exists under persisted), the
+`persisted-*` fixtures and harness entry kinds, and the config surface.
+
+**Gray zone, resolved toward B:** anything gated on `isPersisted()` even
+when the mechanism looks general — it cannot change main's output, so
+backporting it early buys nothing and splits review context.
+
 ## Decision log (all settled; rationale in the linked docs)
 
 | Decision                                                                                                                                          | Where documented                                     |
