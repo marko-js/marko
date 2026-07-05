@@ -1,7 +1,9 @@
 // template.marko.update.mjs
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $global_params_tag_update = _update_signal("__tests__/template.marko_0_$global_params_tag/var");
+const $if_update = _update_signal("__tests__/template.marko_0/update_if_#section/4");
 const $if_content__update = (patch, live) => {
+	_update_pair(patch, live);
 	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
 };
 const $update = (patch, live) => {
@@ -15,6 +17,11 @@ const $update = (patch, live) => {
 	if ("$global_params_sale" in patch) live["$global_params_sale"] = patch["$global_params_sale"];
 	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
 	if ("UpdateAttr:href:#a/1" in patch) _attr(live["#a/1"], "href", patch["UpdateAttr:href:#a/1"]);
+	if ("ConditionalRenderer:#section/4" in patch) {
+		$if_update(live, patch["ConditionalRenderer:#section/4"]);
+		const $patchBranch = patch["BranchScopes:#section/4"], $liveBranch = live["BranchScopes:#section/4"], $branchMerge = $if_content__update;
+		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
+	}
 };
 var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
 
@@ -22,15 +29,19 @@ var template_marko_update_default = _resume("__tests__/template.marko_0_update",
 const $template = "<h1> </h1><a>link</a><button> </button><section></section>";
 const $walks = "D l b D l b";
 const $if_content__$global_params_sale = /* @__PURE__ */ _if_closure("#section/4", 0, ($scope) => _text($scope["#text/0"], $scope.$global.params.sale));
+const $if_content__setup__script = _script_update("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
+	$count($scope._, $scope._.count + 10);
+}));
 const $if_content__setup = ($scope) => {
 	if (!_updating()) $if_content__$global_params_sale._($scope);
+	$if_content__setup__script($scope);
 };
 const $count__OR__$global_params_tag = /* @__PURE__ */ _or(11, ($scope) => _attr_class($scope["#section/4"], $scope.count && $scope.$global.params.tag && "hot"), 0);
 const $count = /* @__PURE__ */ _let("count/5", ($scope) => {
 	_text($scope["#text/3"], $scope.count);
 	$count__OR__$global_params_tag($scope);
 });
-const $if = /* @__PURE__ */ _if("#section/4", "<em>Sale <!>% off</em>", "Db%l", $if_content__setup);
+const $if = /* @__PURE__ */ _if("#section/4", "<em>Sale <!>% off</em><button class=buy>buy</button>", "Db%l b", $if_content__setup);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

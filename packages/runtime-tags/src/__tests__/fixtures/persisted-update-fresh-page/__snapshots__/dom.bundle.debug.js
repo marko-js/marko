@@ -142,12 +142,10 @@ const $input_name__OR__$global_data__script = _script_update("__tests__/tags/sha
 const $input_name__OR__$global_data = /* @__PURE__ */ _or(6, ($scope) => {
 	$signalReset($scope, 0);
 	_return_change($scope, $valueChange($scope));
+	$value($scope, $scope.$global.data[$scope.input_name]);
 	$input_name__OR__$global_data__script($scope);
 }, 0);
-const $input_name = /* @__PURE__ */ _const("input_name", ($scope) => {
-	$value($scope, $scope.$global.data[$scope.input_name]);
-	$input_name__OR__$global_data($scope);
-});
+const $input_name = /* @__PURE__ */ _const("input_name", $input_name__OR__$global_data);
 const $input = ($scope, input) => $input_name($scope, input.name);
 function $valueChange($scope) {
 	return function(next) {

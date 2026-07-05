@@ -42,23 +42,6 @@ use a strict/proper-superset test (equal sources must not prune each other)
 _and_ the corrected arithmetic, then a full snapshot audit — out of scope for a
 one-line change.
 
-## Register update if-merges for conditionals over direct `$global` reads
-
-`packages/runtime-tags/src/translator/core/if.ts:327` | 2026-07-04 | impact:med | effort:med
-
-Persisted builds only record an `<if>` update merge (and register its
-signal) when `isReasonDynamic(getSerializeSourcesForRef(...))` on the
-condition, and a condition that reads `$global` directly (eg
-`<if=$global.params.sale>` in the `persisted-global-reads` fixture) gets no
-sources from that call — so its `?update` entry defines a body merge that
-nothing dispatches, and an update render that flips the condition never
-replays the branch client-side. Conditions on a _derived_ of a `$global`
-read (eg `<const/product=$global.productId && get(...)>` then `<if=!product>`)
-work fine, which is why app code hasn't hit it. The fixture never navigates,
-so nothing covers this today; a fix likely means treating promoted-global
-condition refs as dynamic in that check (plus a fixture step that toggles
-the branch across an update).
-
 ## Fresh-render `_or` joins can stall when no member fires during an apply
 
 `packages/runtime-tags/src/translator/util/signals.ts:318` | 2026-07-04 | impact:low | effort:med

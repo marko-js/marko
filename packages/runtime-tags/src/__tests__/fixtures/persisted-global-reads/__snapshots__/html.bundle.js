@@ -7,12 +7,13 @@ var template_default = _template("a", (input) => {
 	_if(() => {
 		if ($global().params.sale) {
 			const $scope1_id = _scope_id();
-			_html(`<em>Sale ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "a", $global().params.sale, _persisted_reason()))}${_el_resume($scope1_id, "a", _persisted_reason())}% off</em>`);
-			_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_html(`<em>Sale ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "a", $global().params.sale, _persisted_reason()))}${_el_resume($scope1_id, "a", _persisted_reason())}% off</em><button class=buy>buy</button>${_el_resume($scope1_id, "b")}`);
+			_script($scope1_id, "a4");
+			writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
 			return 0;
 		}
-	}, $scope0_id, "e", _persisted_reason(), 1 | _persisted_reason(), 0, "</section>", 1);
-	_script($scope0_id, "a3");
+	}, $scope0_id, "e", _persisted_reason(), 1 | _persisted_reason(), _persisted_reason(), "</section>");
+	_script($scope0_id, "a5");
 	writeScope($scope0_id, { f: _state_reason() && count });
 	_resume_branch($scope0_id);
 }, 1);

@@ -7,11 +7,12 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_if(() => {
 		if ($global().params.sale) {
 			const $scope1_id = _scope_id();
-			_html(`<em>Sale ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "#text/0", $global().params.sale, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", _persisted_reason())}% off</em>`);
-			_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4");
+			_html(`<em>Sale ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "#text/0", $global().params.sale, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", _persisted_reason())}% off</em><button class=buy>buy</button>${_el_resume($scope1_id, "#button/1")}`);
+			_script($scope1_id, "__tests__/template.marko_1");
+			writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4");
 			return 0;
 		}
-	}, $scope0_id, "#section/4", _persisted_reason(), 1 | _persisted_reason(), 0, "</section>", 1);
+	}, $scope0_id, "#section/4", _persisted_reason(), 1 | _persisted_reason(), _persisted_reason(), "</section>");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, { count: _state_reason() && count }, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);

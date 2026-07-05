@@ -1,7 +1,17 @@
 import type { TestConfig } from "../../main.test";
+import { navigate } from "../../utils/resolve";
 
 const clickButton = (container: Element) =>
-  container.querySelector("button")!.click();
+  container
+    .querySelector<HTMLButtonElement>(
+      "section + button, h1 ~ button:not(.buy)",
+    )!
+    .click();
+
+// Inside the $global-driven branch: its wiring must survive both initial
+// hydration and fresh creation through an update.
+const clickBuy = (container: Element) =>
+  container.querySelector<HTMLButtonElement>("button.buy")!.click();
 
 // $global reads promoted under the persisted option: text/attr holes,
 // a $global-driven conditional, and a state ∩ $global intersection all get
@@ -22,6 +32,28 @@ export const config: TestConfig = {
       },
     },
     clickButton,
+    clickBuy,
     clickButton,
+    // Update renders must replay a conditional whose test reads $global
+    // directly: sale toggles off (branch removed) and back on with a new
+    // value (branch fresh-created), with the client-owned count preserved.
+    navigate({
+      $global: {
+        persisted: true,
+        title: "Persisted Page",
+        params: { id: 42, tag: "featured", sale: 0 },
+        serializedGlobals: { title: true, params: true },
+      },
+    }),
+    navigate({
+      $global: {
+        persisted: true,
+        title: "Persisted Page",
+        params: { id: 7, tag: "featured", sale: 35 },
+        serializedGlobals: { title: true, params: true },
+      },
+    }),
+    clickButton,
+    clickBuy,
   ],
 };

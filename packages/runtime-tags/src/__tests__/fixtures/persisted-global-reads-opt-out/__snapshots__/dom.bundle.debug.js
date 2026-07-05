@@ -1,6 +1,7 @@
 // template.marko.update.mjs
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $global_params_tag_update = _update_signal("__tests__/template.marko_0_$global_params_tag/var");
+const $if_update = _update_signal("__tests__/template.marko_0/update_if_#section/4");
 const $if_content__update = (patch, live) => {
 	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
 };
@@ -15,6 +16,11 @@ const $update = (patch, live) => {
 	if ("$global_params_sale" in patch) live["$global_params_sale"] = patch["$global_params_sale"];
 	if ("#text/0" in patch) _text(live["#text/0"], patch["#text/0"]);
 	if ("UpdateAttr:href:#a/1" in patch) _attr(live["#a/1"], "href", patch["UpdateAttr:href:#a/1"]);
+	if ("ConditionalRenderer:#section/4" in patch) {
+		$if_update(live, patch["ConditionalRenderer:#section/4"]);
+		const $patchBranch = patch["BranchScopes:#section/4"], $liveBranch = live["BranchScopes:#section/4"], $branchMerge = $if_content__update;
+		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
+	}
 };
 var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
 

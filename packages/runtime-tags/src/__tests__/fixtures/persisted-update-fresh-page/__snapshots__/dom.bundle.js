@@ -265,12 +265,10 @@ const $input_name__OR__$global_data__script = _script_update("d1", ($scope) => {
 const $input_name__OR__$global_data = /* @__PURE__ */ _or(6, ($scope) => {
 	$signalReset($scope, 0);
 	_return_change($scope, $valueChange($scope));
+	$value($scope, $scope.$.data[$scope.c]);
 	$input_name__OR__$global_data__script($scope);
 }, 0);
-const $input_name = /* @__PURE__ */ _const(2, ($scope) => {
-	$value($scope, $scope.$.data[$scope.c]);
-	$input_name__OR__$global_data($scope);
-});
+const $input_name = /* @__PURE__ */ _const(2, $input_name__OR__$global_data);
 function $valueChange($scope) {
 	return function(next) {
 		$scope.$.data[$scope.c] = next;
