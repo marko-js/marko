@@ -1,0 +1,8 @@
+<let/count=0/>
+<if=input.err>
+  <h2>Something went wrong</h2>
+</if>
+<else>
+  <h1>${input.title}</h1>
+  <button onClick() { count++ }>${count}</button>
+</else>

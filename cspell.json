@@ -410,7 +410,12 @@
     "Unpoly",
     "unpromoted",
     "unretained",
-    "updatable"
+    "updatable",
+    "backportable",
+    "backref",
+    "backrefs",
+    "hrefs",
+    "idempotently"
   ],
   "ignoreRegExpList": [],
   "files": [

@@ -13,7 +13,12 @@ import { isForSelectorValue } from "./for-selector";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
 import { getDeclaredBindingExpression } from "./get-declared-binding-expression";
-import { isOptimize, isOutputHTML } from "./marko-config";
+import {
+  isOptimize,
+  isOutputHTML,
+  isPersisted,
+  isPersistedEntryBuild,
+} from "./marko-config";
 import { find, forEach, type Opt, push, some } from "./optional";
 import {
   type AssignedBindingExtra,
@@ -37,7 +42,7 @@ import {
   isRegisteredFnExtra,
   type ReferencedBindings,
 } from "./references";
-import { callRuntime } from "./runtime";
+import { callRuntime, importRuntime } from "./runtime";
 import { createScopeReadExpression, getScopeExpression } from "./scope-read";
 import {
   getDynamicClosureIndex,
@@ -48,7 +53,7 @@ import {
   type Section,
   sectionUtil,
 } from "./sections";
-import { getExprIfSerialized } from "./serialize-guard";
+import { getExprGuardSerialized, getExprIfSerialized } from "./serialize-guard";
 import {
   getSerializeReason,
   isReasonDynamic,
@@ -67,6 +72,9 @@ import {
   toPropertyName,
 } from "./to-property-name";
 import { traverseReplace } from "./traverse";
+// Cycle with ./update-merges (it reads signal state); safe -- only used
+// inside deferred `signal.build` thunks.
+import { isUpdateDeliveredClosure } from "./update-merges";
 import { withLeadingComment } from "./with-comment";
 
 export interface Signal {
@@ -75,6 +83,21 @@ export interface Signal {
   section: Section;
   build: undefined | (() => t.Expression | undefined);
   register?: boolean;
+  /**
+   * Overrides the `_var_resume` id when `register` is set. Needed when the
+   * default (derived from the referenced bindings' names) is ambiguous, eg
+   * conditional signals whose node binding name (`#text`) repeats within a
+   * section.
+   */
+  registerId?: string;
+  /**
+   * Persisted builds: skip this signal's compute invocation while an update
+   * patch applies (the payload delivers the result). Set for await promise
+   * signals whose body is request-derived -- the promise expression may
+   * live behind a `server import`, and the body's own frame is the
+   * resolution.
+   */
+  updateGuard?: boolean;
   values: Array<{
     signal: Signal;
     value: t.Expression;
@@ -311,12 +334,13 @@ export function getSignal(
       } else {
         signal.build = () => {
           const { id, scopeOffset } = intersectionMeta.get(referencedBindings)!;
+          const pending = referencedBindings.length - 1;
           return callRuntime(
             "_or",
             t.numericLiteral(id),
             getSignalFn(signal),
-            scopeOffset || referencedBindings.length > 2
-              ? t.numericLiteral(referencedBindings.length - 1)
+            scopeOffset || pending !== 1
+              ? t.numericLiteral(pending)
               : undefined,
             scopeOffset && getScopeAccessorLiteral(scopeOffset, true),
           );
@@ -328,7 +352,42 @@ export function getSignal(
     ) {
       signal.build = () => {
         const closure = referencedBindings;
-        const render = getSignalFn(signal);
+        let render = getSignalFn(signal);
+        // Update-delivered closures never re-execute while a patch
+        // applies: their rendered holes are the patch's payload (hole
+        // captures, or values baked into fragment markup) and the owner
+        // value may be server-only (never serialized) -- both the
+        // pending-resume re-render for late boundary bodies and fan-out
+        // during an apply must no-op. The subscription itself still
+        // registers (`_closure_get` subscribes outside the render), so
+        // later navigations fan out normally. Same predicate family as
+        // the compute-invocation guard in `getSignalFn`.
+        if (isPersisted() && isUpdateDeliveredClosure(closure)) {
+          if (render.type === "ArrowFunctionExpression") {
+            render.body = t.blockStatement([
+              t.ifStatement(
+                t.unaryExpression("!", importRuntime("_updating")),
+                render.body.type === "BlockStatement"
+                  ? render.body
+                  : t.expressionStatement(render.body),
+              ),
+            ]);
+          } else {
+            render = t.arrowFunctionExpression(
+              [scopeIdentifier],
+              t.blockStatement([
+                t.ifStatement(
+                  t.unaryExpression("!", importRuntime("_updating")),
+                  t.expressionStatement(
+                    t.callExpression(t.cloneNode(render, true), [
+                      scopeIdentifier,
+                    ]),
+                  ),
+                ),
+              ]),
+            );
+          }
+        }
         const closureSignalBuilder = getClosureSignalBuilder(section);
 
         if (closureSignalBuilder && !isDynamicClosure(section, closure)) {
@@ -408,6 +467,24 @@ export function initValue(binding: Binding, isLet = false) {
   }
 
   return signal;
+}
+
+/**
+ * True when this value signal's binding is patched by persisted updates
+ * (state-free input/param/derived -- the values the server serializes as
+ * the update payload), so its compute invocation is skippable while a
+ * patch applies.
+ */
+function isUpdatePatchedValueSignal(signal: Signal) {
+  const binding = signal.referencedBindings;
+  return (
+    binding &&
+    !Array.isArray(binding) &&
+    (binding.type === BindingType.input ||
+      binding.type === BindingType.param ||
+      binding.type === BindingType.derived) &&
+    !binding.sources?.state
+  );
 }
 
 export function signalHasStatements(signal: Signal): boolean {
@@ -602,14 +679,30 @@ export function getSignalFn(signal: Signal): t.Expression {
       continue;
     }
     if (signalHasStatements(value.signal)) {
+      const invocation = t.expressionStatement(
+        t.callExpression(value.signal.identifier, [
+          scopeIdentifier,
+          value.value,
+          ...getTranslatedExtraArgs(value.signal),
+        ]),
+      );
       signal.render.push(
-        t.expressionStatement(
-          t.callExpression(value.signal.identifier, [
-            scopeIdentifier,
-            value.value,
-            ...getTranslatedExtraArgs(value.signal),
-          ]),
-        ),
+        // Persisted builds skip state-free request-derived compute
+        // invocations while an update patch applies: their values are the
+        // patch's payload (delivered by the merge; same predicate as
+        // `forEachUpdateValueBinding` in update-merges), and the compute
+        // may live behind a `server import` -- fresh branches created
+        // during an apply must not evaluate it. Client-state and
+        // state-mixing computations (excluded here) keep firing. Signals
+        // flagged `updateGuard` (await promises over request-derived
+        // bodies) opt in explicitly.
+        isPersisted() &&
+          (value.signal.updateGuard || isUpdatePatchedValueSignal(value.signal))
+          ? t.ifStatement(
+              t.unaryExpression("!", importRuntime("_updating")),
+              invocation,
+            )
+          : invocation,
       );
     } else {
       signal.render.push(
@@ -965,18 +1058,27 @@ export function writeSignals(section: Section) {
       const effectIdentifier = t.identifier(
         `${signal.identifier.name}__script`,
       );
+      const effectFn = t.arrowFunctionExpression(
+        [scopeIdentifier],
+        toFirstExpressionOrBlock(signal.effect),
+      );
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
-        callRuntime(
-          "_script",
-          t.stringLiteral(
-            getResumeRegisterId(section, signal.referencedBindings),
-          ),
-          t.arrowFunctionExpression(
-            [scopeIdentifier],
-            toFirstExpressionOrBlock(signal.effect),
-          ),
-        ),
+        // Persisted builds skip setup-time effect queueing during update
+        // applies -- fresh-branch wiring comes from payload effect
+        // entries instead (running both would double-bind). Register
+        // builds keep that behavior but must NOT re-register the id: the
+        // main module registered it, and payload entries must keep
+        // resolving the copies resume wired.
+        isPersistedEntryBuild()
+          ? callRuntime("_script_shared", effectFn)
+          : callRuntime(
+              isPersisted() ? "_script_update" : "_script",
+              t.stringLiteral(
+                getResumeRegisterId(section, signal.referencedBindings),
+              ),
+              effectFn,
+            ),
       );
     }
 
@@ -1002,7 +1104,8 @@ export function writeSignals(section: Section) {
         value = callRuntime(
           "_var_resume",
           t.stringLiteral(
-            getResumeRegisterId(section, signal.referencedBindings, "var"),
+            signal.registerId ??
+              getResumeRegisterId(section, signal.referencedBindings, "var"),
           ),
           value,
         );
@@ -1043,6 +1146,17 @@ export function writeSignals(section: Section) {
   }
 
   return written;
+}
+
+/**
+ * Applies the same read/assignment replacements `writeSignals` runs on a
+ * signal's render statements, but with no owning signal -- every binding
+ * read resolves to a scope read, so the statements only need a `$scope`
+ * parameter. Used for statement copies emitted outside the signal graph
+ * (the persisted entry's registered update-globals functions).
+ */
+export function finalizeRenderStatements(statements: t.Statement[]) {
+  traverseReplace({ statements }, "statements", replaceRenderNode);
 }
 
 function writeGetters(section: Section) {
@@ -1125,16 +1239,22 @@ export function writeRegisteredFns() {
       statements.push(fn);
     }
 
-    for (const registeredFn of registeredFns) {
-      statements.push(
-        t.expressionStatement(
-          callRuntime(
-            "_resume",
-            t.stringLiteral(registeredFn.registerId),
-            t.identifier(registeredFn.id),
+    // Persisted entry builds keep the declarations (setups reference them) but
+    // never re-register: registry resolutions (payload effect entries,
+    // change handlers) must keep hitting the main module's copies, whose
+    // module-scope state resume wired.
+    if (!isPersistedEntryBuild()) {
+      for (const registeredFn of registeredFns) {
+        statements.push(
+          t.expressionStatement(
+            callRuntime(
+              "_resume",
+              t.stringLiteral(registeredFn.registerId),
+              t.identifier(registeredFn.id),
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
 
     getProgram().node.body.push(...statements);
@@ -1168,6 +1288,13 @@ export function writeHTMLResumeStatements(
   const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
     ? true
     : section.serializeReason;
+  // Under the `persisted` option, spine emission (scope writes, owner links,
+  // structural bookkeeping) gates on any reason bit so persisted-only renders
+  // keep an addressable scope tree, while binding values stay gated on the
+  // stateful bit and are elided (updates always supply fresh values).
+  const exprSpineSerialized = isPersisted()
+    ? getExprGuardSerialized
+    : getExprIfSerialized;
   forEach(section.referencedClosures, (closure) => {
     if (closure.sources) {
       if (isDynamicClosure(section, closure)) {
@@ -1213,7 +1340,7 @@ export function writeHTMLResumeStatements(
           if (reason) {
             getHTMLSectionStatements(section).push(
               t.expressionStatement(
-                getExprIfSerialized(
+                exprSpineSerialized(
                   section,
                   reason,
                   callRuntime(
@@ -1236,7 +1363,7 @@ export function writeHTMLResumeStatements(
           const subscribeArg =
             isReasonDynamic(closureScopesReason) &&
             !isSameReason(closureScopesReason, sectionSerializeReason)
-              ? getExprIfSerialized(
+              ? exprSpineSerialized(
                   closure.section,
                   closureScopesReason,
                   identifier,
@@ -1271,8 +1398,22 @@ export function writeHTMLResumeStatements(
   const serializedProperties: t.ObjectProperty[] = [];
   const ifSerialized = (reason: SerializeReason, expr: t.Expression) => {
     if (isSameReason(sectionSerializeReason, reason)) return expr;
-    return getExprIfSerialized(section, reason, expr);
+    return exprSpineSerialized(section, reason, expr);
   };
+  // Binding values are gated by source class under `persisted` (see
+  // `getExprIfSerialized`): state-sourced values serialize for stateful
+  // resume but never ride update patches; request-derived values serialize
+  // in update renders (they are the payload) but not in initial persisted
+  // renders. The same-reason hoisting shortcut is skipped -- the section
+  // gate is spine-class and would leak values.
+  const ifSerializedValue = (
+    binding: Binding,
+    reason: SerializeReason,
+    expr: t.Expression,
+  ) =>
+    isPersisted()
+      ? getExprIfSerialized(section, reason, expr, binding.sources)
+      : ifSerialized(reason, expr);
 
   let debugVars: t.ObjectProperty[] | undefined;
   const writeSerializedBinding = (binding: Binding) => {
@@ -1292,9 +1433,12 @@ export function writeHTMLResumeStatements(
       });
       expr = t.objectExpression(props);
     }
-    serializedProperties.push(
-      toObjectProperty(accessor, ifSerialized(reason, expr)),
-    );
+    // Undefined means the value provably never serializes (purely
+    // global-sourced reason under the persisted option).
+    const serializedValue = ifSerializedValue(binding, reason, expr);
+    if (serializedValue) {
+      serializedProperties.push(toObjectProperty(accessor, serializedValue));
+    }
 
     if (debug) {
       const { root, access } = getDebugScopeAccess(binding);
@@ -1388,7 +1532,7 @@ export function writeHTMLResumeStatements(
 
     body.push(
       t.expressionStatement(
-        getExprIfSerialized(
+        exprSpineSerialized(
           section,
           sectionSerializeReason,
           writeScopeBuilder

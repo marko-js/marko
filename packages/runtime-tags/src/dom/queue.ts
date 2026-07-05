@@ -1,5 +1,5 @@
 import { AccessorProp, PendingRenderProp, type Scope } from "../common/types";
-import { enableBranches } from "./resume";
+import { _resume, enableBranches } from "./resume";
 import type { Signal } from "./signals";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
@@ -13,6 +13,45 @@ export type PendingRender = {
 };
 
 export let rendering: undefined | 0 | 1;
+/**
+ * Truthy while an update-render patch is being applied (set by
+ * `dom/update`). Persisted builds guard state-free request-derived compute
+ * invocations by reading the live binding directly (`if (!_updating)`):
+ * their values are the patch's payload (computing them client-side is at
+ * best redundant and at worst impossible -- the computation may live
+ * behind a `server import`), so during an apply the signal graph skips the
+ * compute and the merge delivers the server-computed value instead.
+ * Client-state (and state-mixing) computations are unaffected. Lives here
+ * (not with the applier in `dom/update`) because main persisted modules
+ * import it -- hydration bundles must not drag the applier graph eagerly.
+ */
+export let updating: undefined | 0 | 1;
+export { updating as _updating };
+export function setUpdating(value: 0 | 1) {
+  updating = value;
+}
+
+/**
+ * Persisted builds' `_script`: identical to `_script`, except setup skips
+ * queueing while an update patch applies — fresh-branch wiring comes from
+ * the payload's effect entries instead (running both would double-bind).
+ */
+export function _script_update(id: string, fn: (scope: Scope) => void) {
+  _resume(id, fn);
+  return _script_shared(fn);
+}
+
+/**
+ * The register build's `_script_update`: the same skip-queueing-while-
+ * updating wrapper WITHOUT the registration — the main module already
+ * registered the id, and payload effect entries must keep resolving the
+ * main copies resume wired.
+ */
+export function _script_shared(fn: (scope: Scope) => void) {
+  return (scope: Scope) => {
+    if (!updating) queueEffect(scope, fn);
+  };
+}
 export let runId = 2; // resumed scopes get `1`
 export const caughtError = new WeakSet<unknown[]>();
 export const placeholderShown = new WeakSet<unknown[]>();

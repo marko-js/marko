@@ -18,6 +18,7 @@ export default tseslint.config(
       "**/snapshots",
       "**/test/**/input.js",
       "coverage",
+      "designs/experiments",
       "node_modules",
     ],
   },

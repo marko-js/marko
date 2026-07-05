@@ -13,6 +13,7 @@ import {
   AccessorPrefix,
   AccessorProp,
   type Falsy,
+  type PersistedRenderMode,
   ResumeSymbol,
 } from "../common/types";
 import { RendererProp } from "../common/types";
@@ -117,6 +118,15 @@ export function writeWaitReady(
 }
 
 export function _script(scopeId: number, registryId: string) {
+  // Update renders ship effects as data: the applier executes them only for
+  // scopes it freshly created during the apply (a matched live scope's
+  // effects already ran at mount -- replaying would double-bind -- but a
+  // fresh branch's wiring cannot come from setup, which persisted builds
+  // skip request-derived computes in).
+  if ($chunk.boundary.state.update) {
+    $chunk.writeEffect(scopeId, registryId);
+    return;
+  }
   if ($chunk.serializeState.readyId || $chunk.context?.[kIsAsync]) {
     _resume_branch(scopeId);
   }
@@ -128,7 +138,7 @@ export function _attr_content(
   nodeAccessor: Accessor,
   scopeId: number,
   content: unknown,
-  serializeReason?: 1 | 0,
+  serializeReason?: number,
 ) {
   const shouldResume = serializeReason !== 0;
   const render = normalizeServerRender(content);
@@ -205,11 +215,23 @@ export function _var(
   registryId: string,
   nodeAccessor?: Accessor,
 ) {
-  writeScopePassive(parentScopeId, { [scopeOffsetAccessor]: _scope_id() });
+  // Tag-variable wiring (scope offset + registered var ref) is resume-only;
+  // update renders keep the structural child-scope link but matched scopes
+  // keep their live variables and fresh branches wire their own. Fragment
+  // subtrees are resumes, not fresh constructions -- no setup runs for
+  // them, so the wiring rides the serialized data exactly as in a
+  // document.
+  const resumeWiring = !$chunk.boundary.state.update || $chunk.fragment;
+  if (resumeWiring) {
+    writeScopePassive(parentScopeId, { [scopeOffsetAccessor]: _scope_id() });
+  }
   // TODO: if the return value is already registered, use that.
-  const childScope = writeScopePassive(childScopeId, {
-    [AccessorProp.TagVariable]: _resume({}, registryId, parentScopeId),
-  });
+  const childScope = writeScopePassive(
+    childScopeId,
+    resumeWiring
+      ? { [AccessorProp.TagVariable]: _resume({}, registryId, parentScopeId) }
+      : {},
+  );
   if (nodeAccessor !== undefined) {
     writeScope(parentScopeId, {
       [AccessorPrefix.BranchScopes + nodeAccessor]: childScope,
@@ -221,6 +243,12 @@ function writeScopePassive(scopeId: number, partialScope: PartialScope) {
   const target = $chunk.serializeState;
   const scope = _scope_with_id(scopeId);
   const passive = (target.passiveScopes ||= {});
+  // See the matching hook in `writeScope`: fragment-subtree scopes are
+  // stamped from the entry's id list.
+  if ($chunk.fragment) {
+    const { state } = $chunk.boundary;
+    (state.fragmentScopeIds ??= new Set()).add(scopeId);
+  }
   Object.assign(scope, partialScope);
   passive[scopeId] = Object.assign(passive[scopeId] || {}, partialScope);
   return scope;
@@ -277,33 +305,201 @@ export function _scope_reason() {
   return reason;
 }
 
+// The guard for $global-sourced serialization (persisted compile option):
+// reads the render's persisted flag directly rather than the parent-threaded
+// reason, since `$global` is render-wide -- a stateful parent cannot change
+// it, so the stateful bit never applies and no reason record needs to carry
+// per-key entries for it.
+export function _persisted_reason() {
+  const { state } = $chunk.boundary;
+  return state.update ? 3 : state.persistedMode ? 2 : 0;
+}
+
+// Value-class guards for persisted builds, split by compile-time source
+// class: request-derived (state-free) values serialize in update renders
+// (they are the payload); state-sourced values never do (the client owns
+// them) but keep serializing for normal stateful resume.
+// Both return `undefined` (not 0) when the class is inactive so
+// `guard && value` collapses to undefined and the serializer skips the prop.
+export function _update_reason() {
+  return $chunk.boundary.state.update ? 1 : undefined;
+}
+
+export function _state_reason() {
+  const { state } = $chunk.boundary;
+  // Seed-mode update renders (cross-route navigations: the client will
+  // create the target subtree fresh and cannot compute state seeded from
+  // server-only expressions) serialize state values too; the client only
+  // seeds them into scopes created during the apply, so matched scopes'
+  // live state stays hostile-patch-proof.
+  if (state.update) {
+    if (!state.seed) return undefined;
+    // Fragment mode knows the fresh subtree server-side: seed values and
+    // resume-only wiring narrow to the fragment's chunks and to
+    // fills-path structural branch renders (fresh-by-patch loop items,
+    // conditional branches, await bodies). Everything else is matched --
+    // its seeds are dead bytes the client would discard.
+    if (state.fragments && !$chunk.fragment && !state.freshBranchDepth) {
+      return undefined;
+    }
+  }
+  return 1;
+}
+
 export function _serialize_if(condition: SerializeReasonValue, key: number) {
+  // Record entries carry the persisted bit lattice under the persisted
+  // option (bit 1 stateful, bit 2 persisted/request-derived), so the value
+  // gate masks the stateful bit; packed numbers are pure stateful group
+  // masks and unaffected.
   return condition &&
     (condition === 1 ||
       (typeof condition === "number"
         ? (condition >>> (key + 1)) & 1
-        : condition[key]))
+        : condition[key]! & 1))
     ? 1
     : undefined;
 }
 
 export function _serialize_guard(condition: SerializeReasonValue, key: number) {
-  return _serialize_if(condition, key) || 0;
+  // The spine gate keeps the group's raw bits (records can carry the
+  // persisted bit, which branch guards check via `& 2`) and ORs in the
+  // render-wide persisted bits: persisted renders serialize every
+  // reason-carrying marker/spine site regardless of what a stateful parent
+  // threaded. Non-persisted renders get `_serialize_if || 0`, unchanged.
+  return (
+    (condition &&
+      (condition === 1
+        ? 1
+        : typeof condition === "number"
+          ? (condition >>> (key + 1)) & 1
+          : condition[key])) ||
+    _persisted_reason()
+  );
+}
+
+// Captures a computed hole value for update renders (persisted patch
+// responses): expressions that inline into the HTML string additionally
+// write their value under the hole's patch key (`UpdateHole:<accessor>` /
+// `UpdateAttr:<name>:<accessor>` -- prefixed off the node-accessor
+// namespace so fragment subtrees, where patch and live scopes are one
+// object, never collide values with bound node refs) so the compiled merge
+// can place it (`_text`/`_attr` against the live scope's bound node).
+// Initial renders pay only the marker -- this is a pass-through outside
+// update mode. The guard is the hole's marker guard; 0 means this render's
+// inputs cannot change the hole (sparse semantics: absent means unchanged).
+export function _hole_value<T>(
+  scopeId: number,
+  key: Accessor,
+  value: T,
+  guard?: number,
+): T {
+  // Fragment subtrees skip captures: their values are baked into the
+  // fragment's markup and the applier resumes them, so shipping the
+  // computed value again would be pure redundancy.
+  const { state } = $chunk.boundary;
+  if (guard && state.update && !$chunk.fragment) {
+    writeScope(scopeId, { [key]: value });
+  }
+  return value;
+}
+
+/**
+ * Serializes a parent -> child scope link under its typed update key
+ * (`UpdateChild:<accessor>`) when the child template is update-generic:
+ * the generic applier descends through the typed key with no compiled
+ * dispatch line in the parent, which is what lets server-only
+ * compositions drop their `?update` modules transitively. Update renders
+ * only (document resume keeps the plain accessor link both builds also
+ * serialize); fragment subtrees skip it like hole captures -- their merge
+ * self-applies through shared scope objects, so there is nothing for the
+ * descent to place.
+ */
+export function _update_child(
+  scopeId: number,
+  key: Accessor,
+  childScopeId: number,
+) {
+  const { state } = $chunk.boundary;
+  if (state.update && !$chunk.fragment) {
+    writeScope(scopeId, { [key]: scopeWithId(state, childScopeId) });
+  }
+}
+
+/**
+ * Renders a content-hop branch as a fragment frame (see
+ * designs/persisted-pages-at-scale.md): the branch's HTML — markers,
+ * branch brackets, values baked in — is captured instead of being
+ * suppressed, and rides the update frame as a
+ * `[anchorScopeId, accessor, markerPrefix, html]` entry the applier
+ * inserts at the hop's anchor and resumes. Scope data still rides the
+ * ordinary fills (same id space); only construction material moves to
+ * HTML.
+ *
+ * Capture is a chunk property, not a splice: in an update render nothing
+ * else writes HTML, so chunks flagged `fragment` accumulate exactly the
+ * fragment's markup and the ordinary flush machinery assembles it across
+ * forks (`consume` merges the chain; `flushScript` emits accumulated html
+ * as the pending entry keyed by `state.fragmentAnchor`). Forks made while
+ * a fragment chunk renders inherit the flag, so async continuations (an
+ * awaited boundary body resolving later) keep capturing — the body flushes
+ * as its own boundary-body entry (see `flushPlaceholder`/`consume`). Async
+ * content inside a fragment must sit behind a `<try>` placeholder
+ * boundary; a bare await would hold the whole fragment (see `_await`).
+ */
+export function _fragment<T>(
+  scopeId: number,
+  accessor: Accessor,
+  render: () => T,
+): T {
+  const start = $chunk;
+  const { state } = start.boundary;
+  state.fragmentAnchor = scopeId + "," + JSON.stringify(accessor);
+  start.fragment = true;
+  start.writeHTML = Chunk.prototype.writeHTML;
+  try {
+    return render();
+  } finally {
+    // End the capture: content after the hop renders into a fresh
+    // non-fragment chunk (the fork inherits the flag; undo it), leaving
+    // everything captured on the `start..end` run of the chain.
+    const end = $chunk;
+    end.next = $chunk = end.fork(end.boundary, end.next);
+    $chunk.fragment = false;
+    $chunk.writeHTML = noopWriteHTML;
+  }
 }
 
 export function _el_resume(
   scopeId: number,
   accessor: Accessor,
-  shouldResume?: 0 | 1,
+  shouldResume?: number,
 ) {
   if (shouldResume === 0) return "";
 
   const { state } = $chunk.boundary;
   state.needsMainRuntime = true;
+  // Persisted documents carry many more node markers (they are the patch
+  // addresses), and consecutive markers usually share a scope (a section's
+  // holes mark back to back), so runs use a continuation form that omits
+  // the repeated scope id (`M_* <accessor>` vs `M_*<id> <accessor>`; the
+  // walker keeps the mirror register). The leading space is load-bearing:
+  // the inline walker registers every marker by its post-symbol payload in
+  // the same lookup the reorder runtime resolves anchors from, and a bare
+  // (numeric, in optimized output) accessor would collide with a reorder
+  // id -- a space-leading key cannot. The run register is per chunk:
+  // reordered async content always opens with a full-form marker, so a
+  // walker register carried across a boundary is overwritten before any
+  // continuation is read. Non-persisted documents are byte-identical.
+  if (state.persistedMode) {
+    if ($chunk.lastNodeMarkScope === scopeId) {
+      return state.mark(ResumeSymbol.Node, " " + accessor);
+    }
+    $chunk.lastNodeMarkScope = scopeId;
+  }
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
-export function _sep(shouldResume: 0 | 1) {
+export function _sep(shouldResume: number) {
   return shouldResume === 0 ? "" : "<!>";
 }
 
@@ -319,7 +515,13 @@ export function _hoist(scopeId: number, id: string) {
 
 export function _resume_branch(scopeId: number) {
   const branchId = $chunk.context?.[kBranchId];
-  if (branchId !== undefined && branchId !== scopeId) {
+  if (
+    branchId !== undefined &&
+    branchId !== scopeId &&
+    // Branch ownership is recovered structurally by update merges; the
+    // resume-only backref would be dead weight in the patch.
+    !$chunk.boundary.state.update
+  ) {
     writeScope(scopeId, { [AccessorProp.ClosestBranchId]: branchId });
   }
 }
@@ -345,9 +547,9 @@ export function _for_of(
   by: Falsy | ((item: unknown, index: number) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -376,9 +578,9 @@ export function _for_in(
   by: Falsy | ((key: string, v: unknown) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -410,9 +612,9 @@ export function _for_to(
   by: Falsy | ((v: number) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -445,9 +647,9 @@ export function _for_until(
   by: Falsy | ((v: number) => unknown),
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ): void {
@@ -486,9 +688,9 @@ function forBranches(
   ) => void,
   scopeId: number,
   accessor: Accessor,
-  serializeBranch: undefined | 0 | 1,
-  serializeMarker: undefined | 0 | 1,
-  serializeStateful: undefined | 0 | 1,
+  serializeBranch: undefined | number,
+  serializeMarker: undefined | number,
+  serializeStateful: undefined | number,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
 ) {
@@ -519,6 +721,44 @@ function forBranches(
   }
 
   const { state } = $chunk.boundary;
+
+  // Update renders (persisted patch responses) have no HTML to carry branch
+  // markers, so the branch list, loop keys (even positional ones), and owner
+  // refs serialize as scope props -- the compiled merge reconciles from
+  // those. State-driven loops (no persisted bit in the guard) are excluded:
+  // the server never pairs into client-state-driven structure. Fragment
+  // subtrees fall through to the initial-persisted path below: their HTML
+  // carries real branch brackets the fragment walker consumes.
+  if (state.update && !$chunk.fragment && (serializeBranch as number) & 2) {
+    const branchScopes: ScopeInternals[] = [];
+    // Patch-list branches may be created fresh client-side; their seed
+    // data serializes even when fragment mode narrows the page-wide seed.
+    state.freshBranchDepth++;
+    iterate((itemKey, _sameAsIndex, render) => {
+      const branchId = _peek_scope_id();
+      if (MARKO_DEBUG && by) {
+        assertValidLoopKey(itemKey, seenKeys);
+      }
+      withBranchId(branchId, () => {
+        render();
+        branchScopes.push(
+          writeScope(branchId, {
+            [AccessorProp.LoopKey]: itemKey,
+            [AccessorProp.Owner]: scopeWithId(state, scopeId),
+          }),
+        );
+      });
+    });
+    state.freshBranchDepth--;
+    // Written even when empty: patch semantics are sparse (absence means
+    // unchanged), so "now zero branches" must be an explicit empty list.
+    writeScope(scopeId, {
+      [AccessorPrefix.BranchScopes + accessor]: branchScopes,
+    });
+    writeBranchEnd(scopeId, accessor, serializeStateful, 0, parentEndTag);
+    return;
+  }
+
   const resumeKeys = serializeMarker !== 0;
   const resumeMarker =
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
@@ -534,6 +774,11 @@ function forBranches(
       if (singleNode) {
         flushBranchIds = " " + branchId + flushBranchIds;
       } else {
+        // Branch markers bracket every async/structural boundary (where other
+        // chunks' content interleaves in final document order), so they reset
+        // the node-marker run register; the walker mirrors the reset on every
+        // non-node visit (see `_el_resume`).
+        $chunk.lastNodeMarkScope = -1;
         $chunk.writeHTML(state.mark(ResumeSymbol.BranchStart, flushBranchIds));
         flushBranchIds = branchId + "";
       }
@@ -572,9 +817,9 @@ export function _if(
   cb: () => void | number,
   scopeId: number,
   accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeBranch?: number,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1,
 ) {
@@ -584,11 +829,34 @@ export function _if(
     serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
   const branchId = _peek_scope_id();
   if (resumeMarker && resumeBranch && !singleNode) {
+    $chunk.lastNodeMarkScope = -1;
     $chunk.writeHTML(state.mark(ResumeSymbol.BranchStart, ""));
   }
 
+  // A patch-list branch may be created fresh client-side; its seed data
+  // serializes even when fragment mode narrows the page-wide seed.
+  const updateStructural =
+    state.update && !$chunk.fragment && (serializeBranch as number) & 2;
+  if (updateStructural) state.freshBranchDepth++;
   const branchIndex = resumeBranch ? withBranchId(branchId, cb) : cb();
+  if (updateStructural) state.freshBranchDepth--;
   const shouldWriteBranch = resumeBranch && branchIndex !== undefined;
+
+  // Update renders always write the conditional outcome (absence must mean
+  // "unchanged", not "no branch"; -1 is the explicit no-branch index -- out
+  // of range for every conditional) plus the rendered branch scope, since
+  // there is no HTML end-marker to carry it. State-driven conditionals (no
+  // persisted bit) keep today's behavior: the server never pairs into
+  // client-state-driven structure.
+  if (updateStructural) {
+    writeScope(scopeId, {
+      [AccessorPrefix.ConditionalRenderer + accessor]: branchIndex ?? -1,
+      [AccessorPrefix.BranchScopes + accessor]:
+        branchIndex === undefined ? undefined : writeScope(branchId, {}),
+    });
+    writeBranchEnd(scopeId, accessor, serializeStateful, 0, parentEndTag);
+    return;
+  }
 
   if (shouldWriteBranch && (branchIndex || !resumeMarker)) {
     writeScope(scopeId, {
@@ -616,8 +884,8 @@ export function _if(
 function writeBranchEnd(
   scopeId: number,
   accessor: Accessor,
-  serializeStateful: undefined | 0 | 1,
-  serializeMarker: undefined | 0 | 1,
+  serializeStateful: undefined | number,
+  serializeMarker: undefined | number,
   parentEndTag: string | undefined | 0,
   singleNode?: 1,
   branchIds?: string,
@@ -639,6 +907,9 @@ function writeBranchEnd(
               : ResumeSymbol.BranchEnd,
             scopeId + " " + accessor + (branchIds || ""),
           );
+      // See the branch-start reset above: branch-end markers also bracket
+      // interleave points.
+      $chunk.lastNodeMarkScope = -1;
       $chunk.writeHTML(mark + endTag);
     } else {
       $chunk.writeHTML(endTag + _el_resume(scopeId, accessor));
@@ -672,8 +943,8 @@ export function _show_end(
   scopeId: number,
   accessor: Accessor,
   display: unknown,
-  serializeMarker?: 0 | 1,
-  serializeStateful?: 0 | 1,
+  serializeMarker?: number,
+  serializeStateful?: number,
   parentEndTag?: string | 0,
   singleNode?: 1 | 0,
 ) {
@@ -700,6 +971,14 @@ let writeScope = (scopeId: number, partialScope: PartialScope) => {
   const scope = scopeWithId(state, scopeId);
   const pending = target.writeScopes[scopeId];
   state.needsMainRuntime = true;
+  // Scopes serialized while a fragment renders belong to its subtree; the
+  // entry carries their ids so the applier can stamp them all into the
+  // live tree -- markers only reach scopes with DOM refs, and a dom-less
+  // scope (state + tag-variable wiring only) still needs live identity
+  // ($global, effect pairing).
+  if ($chunk.fragment) {
+    (state.fragmentScopeIds ??= new Set()).add(scopeId);
+  }
   Object.assign(scope, partialScope);
 
   // Each serialize state only flushes the props it wrote itself; the
@@ -764,12 +1043,40 @@ export function _await<T>(
   accessor: Accessor,
   promise: Promise<T> | T,
   content: (value: T) => void,
-  serializeMarker?: 0 | 1,
+  serializeMarker?: number,
 ) {
   const resumeMarker = serializeMarker !== 0;
 
+  // Update renders have no HTML end-marker to carry the parent -> body
+  // branch link, so it serializes as a scope prop (the same
+  // `BranchScopes:<accessor>` key the live page stores its resolved branch
+  // under) -- the compiled merge dispatches the body merge from it when the
+  // body's frame arrives. Every await writes it: a fresh subtree's await is
+  // created detached (its compute is skipped while a patch applies) and this
+  // link is what attaches it, even when the body itself has nothing to fill.
+  // Fragment chunks fall through to the marker paths below: their branch
+  // brackets ride the captured markup and the fragment walker builds them.
+  const updateBranch = (render: () => void) => {
+    const { state } = $chunk.boundary;
+    if (state.update && !$chunk.fragment) {
+      const branchId = _peek_scope_id();
+      // The body may attach to a freshly created (detached) await branch
+      // client-side; its seed data serializes even when fragment mode
+      // narrows the page-wide seed.
+      state.freshBranchDepth++;
+      withBranchId(branchId, render);
+      state.freshBranchDepth--;
+      writeScope(scopeId, {
+        [AccessorPrefix.BranchScopes + accessor]: writeScope(branchId, {}),
+      });
+      return true;
+    }
+  };
+
   if (!isPromise(promise)) {
-    if (resumeMarker) {
+    if (updateBranch(() => content(promise))) {
+      // handled
+    } else if (resumeMarker) {
       const branchId = _peek_scope_id();
       $chunk.writeHTML(
         $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
@@ -789,6 +1096,17 @@ export function _await<T>(
 
   const chunk = $chunk;
   const { boundary } = chunk;
+  // A pending await on a fragment's main chain would hold the whole
+  // fragment frame (its markup cannot be assembled until the await
+  // resolves) -- fragments require async content behind a `<try>`
+  // placeholder boundary, where the placeholder ships in the fragment and
+  // the body follows as its own boundary-body entry. A real error in both
+  // modes: the router's fallback ladder turns it into a full navigation.
+  if (chunk.fragment && !chunk.fragmentAsync) {
+    throw new Error(
+      "async content inside a fragment frame requires a placeholder boundary",
+    );
+  }
   chunk.next = $chunk = chunk.fork(boundary, chunk.next);
   chunk.async = true;
   if (chunk.context?.[kPendingContexts]) {
@@ -802,7 +1120,10 @@ export function _await<T>(
 
         if (!boundary.signal.aborted) {
           chunk.render(() => {
-            if (resumeMarker) {
+            if (updateBranch(() => withIsAsync(content, value))) {
+              // handled -- the body flushes as its own frame in resolution
+              // order; the serialized branch link lets the client attach it.
+            } else if (resumeMarker) {
               const branchId = _peek_scope_id();
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
@@ -866,6 +1187,16 @@ export function _try(
     [AccessorProp.PlaceholderContent]: placeholderContent,
   });
 
+  // Update renders carry the parent -> body branch link as a scope prop
+  // (there is no HTML end-marker); see `_await`. Fragment chunks skip it:
+  // the end mark below is captured and the fragment walker binds the
+  // branch from it.
+  if ($chunk.boundary.state.update && !$chunk.fragment) {
+    writeScope(scopeId, {
+      [AccessorPrefix.BranchScopes + accessor]: writeScope(branchId, {}),
+    });
+  }
+
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
       ResumeSymbol.BranchEnd,
@@ -882,6 +1213,10 @@ function tryPlaceholder(
   const chunk = $chunk;
   const { boundary } = chunk;
   const body = chunk.fork(boundary, null);
+  // Awaits under a placeholder boundary are fine inside a fragment: the
+  // placeholder ships in the fragment frame and the body follows as its
+  // own boundary-body entry (see `flushPlaceholder`).
+  body.fragmentAsync = true;
 
   if (body === body.render(content)) {
     chunk.append(body);
@@ -910,6 +1245,14 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
     // Sync success
     chunk.append(body);
     return;
+  }
+
+  // The async catch machinery below is reorder-based (placeholder marks,
+  // out-of-order swap scripts) -- no update/fragment story yet.
+  if (chunk.fragment) {
+    throw new Error(
+      "async content inside a fragment frame's <try> requires a placeholder (catch-only boundaries are not supported yet)",
+    );
   }
 
   const reorderId = state.nextReorderId();
@@ -982,11 +1325,55 @@ export class State implements SerializeState {
   public writeScopes: Record<number, PartialScope> = {};
   public readyIds: Set<string> | null = null;
   public serializeReason: SerializeReasonValue;
+  public update = false;
+  public seed = false;
+  // Fragment frames (see designs/persisted-pages-at-scale.md): update
+  // renders whose mode has `fragment` set render the first content-hop
+  // branch as resumable HTML instead of a client-constructed subtree.
+  // `fragments` enables the mode, `fragmentTaken` marks the hop consumed,
+  // and `fragmentAnchor` holds the pending entry's anchor
+  // (`<scopeId>,"<accessor>"`) from capture start until `flushScript`
+  // emits the assembled markup. Capture itself is a chunk property
+  // (`Chunk.fragment`): while a fragment chunk renders, markers and branch
+  // brackets emit as markup and hole captures are skipped -- the values
+  // are baked in.
+  public fragments = false;
+  public fragmentTaken = false;
+  public fragmentAnchor = "";
+  /** Ids of scopes serialized during fragment capture since the last
+   * entry emission (see `writeScope`); ride the entry so the applier can
+   * stamp dom-less scopes the markup never references. */
+  public fragmentScopeIds: Set<number> | null = null;
+  /** Depth of fills-path structural branch renders (update-mode loop
+   * items, conditional branches, await bodies): content the client will
+   * construct fresh from the patch, so seed-mode state and resume-only
+   * wiring serialize for it even when fragment mode narrows the
+   * page-wide seed (see `_state_reason`). */
+  public freshBranchDepth = 0;
   constructor(
     public $global: $Global & { renderId: string; runtimeId: string },
+    // The persisted render mode, passed to `render()` (not smuggled through
+    // `$global`); kept as the source of truth so a Boundary reset can rethread
+    // it, with the hot-read flags below derived from it. Absent = non-persisted.
+    public persistedMode?: PersistedRenderMode,
   ) {
     if ($global.cspNonce) {
       this.nonceAttr = " nonce" + attrAssignment($global.cspNonce);
+    }
+    if (persistedMode) {
+      // Persisted renders are render-wide state, not a threaded reason: the
+      // spine gates (`_serialize_guard` / `_persisted_reason`) read these
+      // cached flags directly, so the network-as-parent needs no root reason
+      // seed (threaded reasons stay pure stateful group masks). Update renders
+      // (patch responses) serialize request-derived values -- the values ARE
+      // the payload -- via the source-classified `_update_reason` /
+      // `_state_reason` gates. The producer (@marko/run's router / the test
+      // harness) already folded seed/fragment behind update, so trust them.
+      this.update = persistedMode.update;
+      this.seed = persistedMode.seed;
+      this.fragments = persistedMode.fragment;
+      // Update responses carry no document: no walker bootstrap to emit.
+      this.hasMainRuntime = persistedMode.update;
     }
   }
 
@@ -1010,6 +1397,13 @@ export class State implements SerializeState {
   }
 
   writeReady(id: string, resumes: string) {
+    if (this.update) {
+      // Update responses: ready-channel resumes (persisted pages route
+      // their fills through a blocking channel) emit as bare frames like
+      // everything else -- the applier has no channel gating; fills apply
+      // in arrival order.
+      return "[" + resumes + "]";
+    }
     const readyKey = toObjectKey(id);
     if (this.readyIds?.has(id)) {
       return this.readyAccess(readyKey) + ".push(" + resumes + ")";
@@ -1069,7 +1463,8 @@ export class Boundary extends AbortController {
     super();
     this.signal.addEventListener("abort", () => {
       this.count = 0;
-      this.state = new State(this.state.$global);
+      // Reset render progress for the retry but preserve the render mode.
+      this.state = new State(this.state.$global, this.state.persistedMode);
       this.onNext();
     });
 
@@ -1120,9 +1515,18 @@ export class Chunk {
   public scripts = "";
   public effects = "";
   public lastEffect = "";
+  /** Node-marker run register (see `_el_resume`); -1 = no marker yet. */
+  public lastNodeMarkScope = -1;
   public async = false;
   public consumed = false;
   public needsWalk = false;
+  /** Fragment capture (see `_fragment`): this chunk's html is fragment
+   * markup. Inherited by forks so async continuations keep capturing. */
+  public fragment = false;
+  /** Awaits are allowed on this (fragment) chunk: it renders under a
+   * `<try>` placeholder boundary, so its markup flushes as a
+   * boundary-body entry instead of holding the fragment frame. */
+  public fragmentAsync = false;
   public reorderId: string | null = null;
   public deferredReady: Opt<Chunk> = null;
   public placeholder: {
@@ -1135,10 +1539,23 @@ export class Chunk {
     public next: Chunk | null,
     public context: Record<string | symbol, unknown> | null,
     public serializeState: SerializeState,
-  ) {}
+  ) {
+    // Update responses are patch payloads: static HTML (content, markers,
+    // reorder templates) is suppressed at the write; only the resume
+    // scripts flush. Expressions still evaluate normally, so scope ids,
+    // hole captures, and structural writes are unaffected. (Fragment
+    // capture selectively restores the write -- see `fork`/`_fragment`.)
+    if (boundary.state.update) this.writeHTML = noopWriteHTML;
+  }
 
   fork(boundary: Boundary, next: Chunk | null) {
-    return new Chunk(boundary, next, this.context, this.serializeState);
+    const chunk = new Chunk(boundary, next, this.context, this.serializeState);
+    if (this.fragment) {
+      chunk.fragment = true;
+      chunk.fragmentAsync = this.fragmentAsync;
+      chunk.writeHTML = Chunk.prototype.writeHTML;
+    }
+    return chunk;
   }
 
   writeHTML(html: string) {
@@ -1192,7 +1609,7 @@ export class Chunk {
     if (placeholder) {
       const body = placeholder.body.consume();
 
-      if (body.async) {
+      if (body.async && !this.boundary.state.update) {
         const { state } = this.boundary;
         const reorderId = (body.reorderId = placeholder.branchId
           ? placeholder.branchId + ""
@@ -1208,6 +1625,43 @@ export class Chunk {
         }
         after.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
         state.reorder(body);
+      } else if (body.async && this.fragment) {
+        // Fragment frame + pending boundary body: the placeholder ships in
+        // the fragment's markup, bracketed as the try branch's placeholder
+        // branch (the "!" accessor token -- the fragment walker binds it
+        // to `PlaceholderBranch` so the applier can swap it out), and the
+        // body stays detached. When it completes, `endAsync` registers it
+        // through the reorder channel (its reorder id IS the try branch
+        // id) and the update branch of the reorder flush in `flushScript`
+        // emits it as a boundary-body entry.
+        const { state } = this.boundary;
+        // v1: one pending await per boundary body -- a second pending
+        // segment would need reorder-marker anchors in the entry's markup
+        // for the applier to place it.
+        for (let cur = body.next; cur; cur = cur.next) {
+          if (cur.async) {
+            this.boundary.abort(
+              new Error(
+                "multiple pending awaits inside one fragment placeholder boundary are not supported yet",
+              ),
+            );
+          }
+        }
+        const placeholderBranchId = state.scopeId++;
+        this.writeHTML(state.mark(ResumeSymbol.BranchStart, ""));
+        const after = this.render(placeholder.render);
+        if (after !== this) {
+          this.boundary.abort(
+            new Error("An @placeholder cannot contain async content."),
+          );
+        }
+        this.writeHTML(
+          state.mark(
+            ResumeSymbol.BranchEnd,
+            placeholder.branchId + " ! " + placeholderBranchId,
+          ),
+        );
+        body.reorderId = placeholder.branchId + "";
       } else {
         body.next = this.next;
         this.next = body;
@@ -1352,9 +1806,38 @@ export class Chunk {
     // markers for everything already rendered after that content have not
     // been written -- running effects now could cascade state updates into
     // scopes whose nodes aren't in the document yet. Hold effects on the
-    // blocked chunk so they flush once its async content completes.
-    const effects = this.async ? "" : this.effects;
+    // blocked chunk so they flush once its async content completes. Update
+    // responses skip the hold: frames apply atomically client-side and the
+    // applier only runs an effect for scopes created by the same frame, so
+    // effects must ride the frame that creates their scopes.
+    const holdEffects = this.async && !state.update;
+    const effects = holdEffects ? "" : this.effects;
     let { html, scripts } = this;
+
+    if (state.update && html) {
+      // The only html an update render accumulates is fragment capture
+      // (every other write is suppressed at construction); `consume`
+      // assembled it across the capture's forks. Divert it onto the frame
+      // as the pending fragment entry.
+      if (MARKO_DEBUG && !state.fragmentAnchor) {
+        throw new Error(
+          "an update render accumulated html outside a fragment capture",
+        );
+      }
+      state.resumes = concatSequence(
+        state.resumes,
+        "[" +
+          state.fragmentAnchor +
+          "," +
+          JSON.stringify(state.commentPrefix) +
+          "," +
+          JSON.stringify(html) +
+          takeFragmentScopeIds(state) +
+          "]",
+      );
+      state.fragmentAnchor = "";
+      html = "";
+    }
 
     if (state.needsMainRuntime && !state.hasMainRuntime) {
       state.hasMainRuntime = true;
@@ -1378,8 +1861,60 @@ export class Chunk {
         : '"' + effects + '"';
     }
 
+    // Boundary bodies inside a fragment frame ride the reorder channel
+    // (see `flushPlaceholder`): a completed body chain's markup becomes a
+    // boundary-body entry `[tryBranchId, 0, prefix, html]` on this frame,
+    // with its effects appended so they run against the scopes the entry
+    // creates.
+    if (state.update && state.writeReorders) {
+      for (const bodyChunk of state.writeReorders) {
+        const branchId = bodyChunk.reorderId!;
+        let bodyHTML = "";
+        let bodyEffects = "";
+        let cur: Chunk | null = bodyChunk;
+        bodyChunk.reorderId = null;
+        while (cur) {
+          cur.flushPlaceholder();
+          if (MARKO_DEBUG && cur.async) {
+            // Guarded up front in `flushPlaceholder`; a pending segment
+            // here means that guard has a hole.
+            throw new Error(
+              "a fragment boundary body flushed with a pending async segment",
+            );
+          }
+          cur.consumed = true;
+          bodyHTML += cur.html;
+          bodyEffects = concatEffects(bodyEffects, cur.effects);
+          cur.html = cur.effects = cur.lastEffect = "";
+          cur = cur.next;
+        }
+        state.resumes = concatSequence(
+          state.resumes,
+          "[" +
+            branchId +
+            ",0," +
+            JSON.stringify(state.commentPrefix) +
+            "," +
+            JSON.stringify(bodyHTML) +
+            takeFragmentScopeIds(state) +
+            "]",
+        );
+        if (bodyEffects) {
+          state.resumes = state.resumes + ',"' + bodyEffects + '"';
+        }
+      }
+      state.writeReorders = null;
+    }
+
     if (state.resumes) {
-      if (state.hasWrittenResume) {
+      if (state.update) {
+        // Update responses are a newline-delimited stream of serializer
+        // frames: each flush emits its resumes as a bare JS array (the same
+        // fills a document render assigns to `<runtimeId>.<renderId>.r`),
+        // one per line (the serializer escapes newlines in values). No
+        // runtime prefix -- the client applier evaluates frames directly.
+        scripts = concatScripts(scripts, "[" + state.resumes + "]");
+      } else if (state.hasWrittenResume) {
         scripts = concatScripts(
           scripts,
           runtimePrefix + RuntimeKey.Resume + ".push(" + state.resumes + ")",
@@ -1489,13 +2024,13 @@ export class Chunk {
       state.writeReorders = null;
     }
 
-    if (needsWalk) {
+    if (needsWalk && !state.update) {
       scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");
     }
 
     this.html = html;
     this.scripts = scripts;
-    if (!this.async) this.effects = this.lastEffect = "";
+    if (!holdEffects) this.effects = this.lastEffect = "";
     state.resumes = "";
     return this;
   }
@@ -1510,6 +2045,14 @@ export class Chunk {
 
     this.flushScript();
     const { scripts } = this;
+
+    if (state.update) {
+      // Update responses: raw frames, one per line -- no script wrapper,
+      // no asset flush, no trailer.
+      this.html = this.scripts = "";
+      return scripts ? scripts + "\n" : "";
+    }
+
     const { $global, nonceAttr } = state;
     const { __flush__ } = $global;
     let { html } = this;
@@ -1530,6 +2073,18 @@ export class Chunk {
 
     return html;
   }
+}
+
+function noopWriteHTML() {}
+
+// The scope ids serialized since the last fragment/boundary-body entry
+// emission, encoded as the entry's trailing element (empty when only
+// marker-reachable scopes serialized -- the walker stamps those anyway).
+function takeFragmentScopeIds(state: State) {
+  const ids = state.fragmentScopeIds;
+  if (!ids) return "";
+  state.fragmentScopeIds = null;
+  return ",[" + [...ids].join(",") + "]";
 }
 
 function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
@@ -1617,7 +2172,8 @@ function depsMarker(deps: Set<string> | null) {
 }
 
 export function _trailers(html: string) {
-  $chunk.boundary.state.trailerHTML += html;
+  const { state } = $chunk.boundary;
+  if (!state.update) state.trailerHTML += html;
 }
 
 function concatEffects(a: string, b: string) {

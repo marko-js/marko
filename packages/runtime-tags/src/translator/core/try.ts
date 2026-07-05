@@ -9,6 +9,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
+import { isPersisted } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
   type Binding,
@@ -42,6 +43,7 @@ import {
   propsToExpression,
   translateAttrs,
 } from "../util/translate-attrs";
+import { addUpdateMerge } from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -173,6 +175,19 @@ export default {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"))!;
         const signal = getSignal(section, nodeRef, "try");
+
+        // Try bodies participate in persisted update renders: the server
+        // serializes the parent -> body branch link and the update entry
+        // dispatches the body's merge from it. Boundaries always dispatch --
+        // even a statically-rendered body may hold awaits that need
+        // attaching when the branch was freshly created during an apply.
+        if (isPersisted()) {
+          addUpdateMerge(section, {
+            kind: "branch",
+            accessor: getScopeAccessorLiteral(nodeRef),
+            bodySection,
+          });
+        }
 
         signal.build = () => {
           return callRuntime(

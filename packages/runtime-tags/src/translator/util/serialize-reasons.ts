@@ -11,6 +11,7 @@ import {
   type Binding,
   compareSources,
   getCanonicalBinding,
+  getGlobalExprSources,
   type InputBinding,
   isReferencedExtra,
   mergeSources,
@@ -149,7 +150,11 @@ export function addOwnerSerializeReason(
 
 export function isReasonDynamic(
   reason: undefined | SerializeReason,
-): reason is { state: undefined; param: OneMany<InputBinding | ParamBinding> } {
+): reason is {
+  state: undefined;
+  param: Opt<InputBinding | ParamBinding>;
+  global: true | undefined;
+} {
   return !!reason && reason !== true && !reason.state;
 }
 
@@ -170,6 +175,32 @@ export function isStateSerializeReason(
   return !!reason && reason !== true && !!reason.state;
 }
 
+/**
+ * A reason carrying ANY request-derived dimension (param/global), state-mixed
+ * or not: content the server refreshes in update renders. Distinct from
+ * `isReasonDynamic` (request-derived AND state-free): structural update
+ * participation for stable branch sets keys off this -- a loop over a module
+ * constant whose body reads `$global` has a state-mixed or state-free branch
+ * reason, and its body merges (placement holes, mixed-statement
+ * re-invocations) must still dispatch.
+ */
+export function isRequestDerivedSerializeReason(
+  reason: undefined | SerializeReason,
+): reason is Sources {
+  return !!reason && reason !== true && !!(reason.param || reason.global);
+}
+
+// A reason backed by state sources ONLY (no request-derived part): under the
+// persisted option such content never participates in update renders (the
+// server never pairs into client-state-driven structure), so resume-only
+// optimizations that update payloads cannot support -- eg marker-linked
+// branch owners -- stay sound for it.
+export function isStateOnlySerializeReason(
+  reason: undefined | SerializeReason,
+): reason is Sources {
+  return isStateSerializeReason(reason) && !reason.param && !reason.global;
+}
+
 export function getSerializeReason(
   section: Section,
   prop?: Binding | AccessorProp | symbol,
@@ -183,9 +214,16 @@ export function getSerializeReason(
 }
 
 export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
-  if (isReferencedExtra(expr)) {
-    return getSerializeSourcesForRef(expr.referencedBindings);
-  }
+  // `$global`-reading expressions taint request-derived in persisted
+  // builds -- fresh values arrive with every navigation's payload. The
+  // taint merges WITH any tracked ref sources so mixed state/global
+  // expressions keep both dimensions.
+  return mergeSources(
+    isReferencedExtra(expr)
+      ? getSerializeSourcesForRef(expr.referencedBindings)
+      : undefined,
+    getGlobalExprSources(expr),
+  );
 }
 
 export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {

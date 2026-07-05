@@ -18,12 +18,13 @@ Better tree-shaking for the browser runtime:
   re-export facade, so application bundlers chunk it at file granularity
   instead of hosting one big module in the first chunk that needs any of
   it.
-- Two phase splits so hydration-time imports stop dragging render-time
+- Three phase splits so hydration-time imports stop dragging render-time
   machinery: the spread/`content`-attr machinery moved out of the plain
-  write helpers (`dom/spread.ts`), and `<try>` catch/pending installation
-  moved out of the render queue (the queue exposes `enableCatchPending`
-  wrap hooks instead of importing branch machinery). Public exports are
-  unchanged.
+  write helpers (`dom/spread.ts`), `<try>` catch/pending installation
+  moved out of the render queue into control-flow (the queue exposes
+  `enableCatchPending` wrap hooks instead of importing branch machinery),
+  and `_script_update`/`_updating` moved out of the persisted-update
+  applier file into the queue. Public exports are unchanged.
 
 Library packages need no `sideEffects` declaration of their own in Marko
 apps: `@marko/vite` treats imports from templates as pure unless

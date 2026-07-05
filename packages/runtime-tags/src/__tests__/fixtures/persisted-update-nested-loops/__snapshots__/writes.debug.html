@@ -1,0 +1,58 @@
+<button class=bump>0<!--M_*1 #text/1--></button><!--M_* #button/0-->
+<nav>
+  <div>
+    <h4>Start<!--M_*2 #text/0--></h4><a
+      class="link active">Intro<!--M_*3 #text/1--></a><!--M_* #a/0--><a
+      class=link>Setup<!--M_*4 #text/1--></a><!--M_* #a/0--><!--M_|2 #text/1 4 3-->
+  </div>
+  <div>
+    <h4>Guides<!--M_*5 #text/0--></h4><a
+      class=link>Routing<!--M_*6 #text/1--></a><!--M_* #a/0--><a
+      class=link>Data<!--M_*7 #text/1--></a><!--M_* #a/0--><!--M_|5 #text/1 7 6-->
+  </div>
+</nav><!--M_*1 #nav/2-->
+<p><b
+    class=on>na<!--M_*9 #text/1--></b><!--M_* #b/0--><b>eu<!--M_*10 #text/1--></b><!--M_* #b/0--><b>apac<!--M_*11 #text/1--></b><!--M_* #b/0-->
+</p><!--M_*8 #p/0--><!--M_|1 #text/3 8-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [0, {
+      params: {
+        path: "intro",
+        region: "na"
+      }
+    }, {
+      "BranchScopes:#nav/2": [_(2), _(5)],
+      count: 0,
+      "ClosureScopes:path": new Set([_(3), _(4), _(6), _(7)]),
+      "ClosureScopes:region": new Set([_(9), _(10), _(11)])
+    }, {
+      _: _(1)
+    }, {
+      _: _(2),
+      "#LoopKey": "intro"
+    }, {
+      _: _(2),
+      "#LoopKey": "setup"
+    }, {
+      _: _(1)
+    }, {
+      _: _(5),
+      "#LoopKey": "routing"
+    }, {
+      _: _(5),
+      "#LoopKey": "data"
+    }, {
+      "BranchScopes:#p/0": [_(9), _(10), _(11)],
+      _: _(1)
+    }, {
+      _: _(8)
+    }, {
+      _: _(8)
+    }, {
+      _: _(8)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-nested-loops/template.marko_0 1"
+  ];
+  M._.w()
+</script>

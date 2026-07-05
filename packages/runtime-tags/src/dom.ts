@@ -76,10 +76,11 @@ export {
   _load_template,
   _load_visible_trigger,
 } from "./dom/load";
-export { run } from "./dom/queue";
+export { _script_shared, _script_update, _updating, run } from "./dom/queue";
 export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,
+  enableBranches as _enable_branches,
   _resume,
   _var_resume,
   init,
@@ -117,3 +118,16 @@ export {
   _attrs_script,
 } from "./dom/spread";
 export { _template } from "./dom/template";
+export {
+  _update_branch,
+  _update_content,
+  _update_dynamic,
+  _update_for,
+  _update_html,
+  _update_pair,
+  _update_scope,
+  _update_seed,
+  _update_signal,
+  applyUpdate,
+  createUpdate,
+} from "./dom/update";

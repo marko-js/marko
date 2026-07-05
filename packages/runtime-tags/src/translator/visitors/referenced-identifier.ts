@@ -2,8 +2,8 @@ import { types as t } from "@marko/compiler";
 
 import { getAccessorProp } from "../util/get-accessor-char";
 import { getExprRoot } from "../util/get-root";
-import { isOutputHTML } from "../util/marko-config";
-import { setReferencesScope } from "../util/references";
+import { isOutputHTML, isPersisted } from "../util/marko-config";
+import { setReferencesScope, trackGlobalReference } from "../util/references";
 import { importRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
@@ -45,6 +45,12 @@ export default {
     if (identifier.scope.hasBinding(name)) return;
     if (name === "$global") {
       setReferencesScope(identifier);
+      // Under the persisted option, $global reads join the reactive graph as
+      // param-like sources so $global-derived holes get resume markers and
+      // spine serialization (values still read the live global object).
+      if (isPersisted()) {
+        trackGlobalReference(identifier);
+      }
     } else if (name === "$signal") {
       const section = getOrCreateSection(identifier);
       section.hasAbortSignal = true;

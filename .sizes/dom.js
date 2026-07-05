@@ -1,4 +1,4 @@
-// size: 26037 (min) 9640 (brotli)
+// size: 30477 (min) 11153 (brotli)
 //#region packages/runtime-tags/dist/common/attr-tag.mjs
 let empty = [],
   rest = Symbol();
@@ -511,7 +511,10 @@ let registeredValues = {},
   readyIds,
   isResuming;
 function enableBranches() {
-  branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
+  if (!branchesEnabled) {
+    ((branchesEnabled = 1), skipDestroyedRenders());
+    for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
+  }
 }
 function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
@@ -727,24 +730,33 @@ function init(runtimeId = "M") {
                       (progress = 1);
                   }
                 }
-              let retained = 0;
+              let retained = 0,
+                lastNodeVisitScopeId = "";
               for (visit of (visits = render.v))
                 if (
                   ((lastTokenIndex = render.i.length),
                   (visitText = visit.data),
                   (visitType = visitText[lastTokenIndex++]),
-                  (visitScope = getScope(nextToken())),
                   visitType === "*")
                 ) {
-                  let prev = visit.previousSibling;
-                  visitScope[nextToken()] =
+                  let scopeId = nextToken();
+                  visitScope = getScope(
+                    scopeId
+                      ? (lastNodeVisitScopeId = scopeId)
+                      : lastNodeVisitScopeId,
+                  );
+                  let accessor = nextToken(),
+                    prev = visit.previousSibling;
+                  visitScope[accessor] =
                     prev && (prev.nodeType < 8 || prev.data)
                       ? prev
                       : visit.parentNode.insertBefore(new Text(), visit);
                 } else
-                  branchesEnabled
-                    ? (visitBranches ||= createVisitBranches())()
-                    : render.b && (visits[retained++] = visit);
+                  ((lastNodeVisitScopeId = ""),
+                    (visitScope = getScope(nextToken())),
+                    branchesEnabled
+                      ? (visitBranches ||= createVisitBranches())()
+                      : (visits[retained++] = visit));
               return (
                 embedRenders &&
                   !embedAnchor &&
@@ -784,6 +796,21 @@ function runResumeEffects(render) {
     isResuming = 0;
   }
 }
+function getUpdateRoot(renderId) {
+  let root;
+  for (let id in curRenders)
+    if (!renderId || id === renderId) {
+      let render = curRenders[id];
+      if (
+        ((registeredValues.__update_root = (scope) => (root = scope)),
+        (render.r ||= []).push("__update_root 1"),
+        runResumeEffects(render),
+        root)
+      )
+        return root;
+    }
+  return root;
+}
 function getRegisteredWithScope(id, scope) {
   let val = registeredValues[id];
   return scope ? val(scope) : val;
@@ -803,6 +830,7 @@ function _el(id, accessor) {
 //#endregion
 //#region packages/runtime-tags/dist/dom/queue.mjs
 let rendering,
+  updating,
   runId = 2,
   caughtError = /* @__PURE__ */ new WeakSet(),
   placeholderShown = /* @__PURE__ */ new WeakSet(),
@@ -814,6 +842,40 @@ let rendering,
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled;
+/**
+ * Truthy while an update-render patch is being applied (set by
+ * `dom/update`). Persisted builds guard state-free request-derived compute
+ * invocations by reading the live binding directly (`if (!_updating)`):
+ * their values are the patch's payload (computing them client-side is at
+ * best redundant and at worst impossible -- the computation may live
+ * behind a `server import`), so during an apply the signal graph skips the
+ * compute and the merge delivers the server-computed value instead.
+ * Client-state (and state-mixing) computations are unaffected. Lives here
+ * (not with the applier in `dom/update`) because main persisted modules
+ * import it -- hydration bundles must not drag the applier graph eagerly.
+ */
+function setUpdating(value) {
+  updating = value;
+}
+/**
+ * Persisted builds' `_script`: identical to `_script`, except setup skips
+ * queueing while an update patch applies — fresh-branch wiring comes from
+ * the payload's effect entries instead (running both would double-bind).
+ */
+function _script_update(id, fn) {
+  return (_resume(id, fn), _script_shared(fn));
+}
+/**
+ * The register build's `_script_update`: the same skip-queueing-while-
+ * updating wrapper WITHOUT the registration — the main module already
+ * registered the id, and payload effect entries must keep resolving the
+ * main copies resume wired.
+ */
+function _script_shared(fn) {
+  return (scope) => {
+    updating || queueEffect(scope, fn);
+  };
+}
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
@@ -939,7 +1001,9 @@ function _let(id, fn) {
   let valueAccessor = decodeAccessor(id);
   return (scope, value) => (
     rendering
-      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
+      ? scope.H === runId &&
+        ((updating && valueAccessor in scope) || (scope[valueAccessor] = value),
+        fn?.(scope))
       : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
         ((scope[valueAccessor] = value), fn) &&
         (schedule(), queueRender(scope, fn, id)),
@@ -966,7 +1030,9 @@ function _const(valueAccessor, fn) {
   return (
     (valueAccessor = decodeAccessor(valueAccessor)),
     (scope, value) => {
-      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+      (scope[valueAccessor] !== value ||
+        !(valueAccessor in scope) ||
+        (updating && rendering && scope.H === runId)) &&
         ((scope[valueAccessor] = value), fn?.(scope));
     }
   );
@@ -1999,18 +2065,27 @@ function resolveAwait(
   let awaitBranch = scope[branchAccessor];
   return (
     awaitBranch.V &&
-      ((awaitBranch.Y = awaitBranch.Y?.forEach(syncGen)),
-      setupBranch(awaitBranch.V, awaitBranch),
-      (awaitBranch.V = 0),
-      insertBranchBefore(
-        awaitBranch,
-        scope[nodeAccessor].parentNode,
-        scope[nodeAccessor],
-      ),
+      (attachAwaitBranch(scope, nodeAccessor, awaitBranch),
       referenceNode.remove()),
     params?.(awaitBranch, [value]),
     awaitBranch
   );
+}
+/**
+ * Sets up and inserts a detached (unresolved) await branch at its anchor.
+ * Shared by promise resolution above and by persisted update applies, where
+ * a fresh subtree's await never ran its promise (the compute is skipped
+ * while updating) and the body's own frame is the resolution.
+ */
+function attachAwaitBranch(scope, nodeAccessor, awaitBranch) {
+  ((awaitBranch.Y = awaitBranch.Y?.forEach(syncGen)),
+    setupBranch(awaitBranch.V, awaitBranch),
+    (awaitBranch.V = 0),
+    insertBranchBefore(
+      awaitBranch,
+      scope[nodeAccessor].parentNode,
+      scope[nodeAccessor],
+    ));
 }
 function _await_content(nodeAccessor, template, walks, setup) {
   nodeAccessor = decodeAccessor(nodeAccessor);
@@ -2704,5 +2779,407 @@ function _load_race_trigger(...triggers) {
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom/update.mjs
+let activePairs,
+  activeUpdate,
+  applyGen = 0;
+/**
+ * Applies an update-render payload to a live (resumed) render.
+ *
+ * `merge` is the page template's compiled merge function (the `?update`
+ * module's default export) and `liveRoot` the live scope it pairs with
+ * (defaults to pairing the first render's root by convention). The
+ * patch root is scope 1 by convention (the first scope the update render
+ * allocates -- the root template's). Patch scopes are plain objects in a
+ * patch-local id space; `_(id, registryId)` references inside values resolve
+ * the same way resume fills do, against patch scopes. Scope 0 partials are
+ * the update's `$global` values and merge onto the live `$global`.
+ */
+function applyUpdate(merge, fills, liveRoot = getUpdateRoot()) {
+  createUpdate(merge, liveRoot)(fills);
+}
+/**
+ * The per-navigation form of `applyUpdate`: update responses are a stream of
+ * serializer frames, and the returned function applies one frame's fills at
+ * a time against a shared patch-scope space -- early frames settle in the
+ * page before slow async boundaries resolve, exactly like a streamed MPA
+ * render. Each call re-dispatches the root merge: sparse presence checks
+ * pick up the keys the new frame added (later frames extend earlier scopes,
+ * e.g. an `<await>` body's branch link), while already-applied keys re-apply
+ * through value/DOM primitives that all no-op on unchanged input.
+ */
+function createUpdate(merge, liveRoot = getUpdateRoot()) {
+  let liveGlobal = liveRoot.$,
+    patchScopes = { 0: liveGlobal },
+    getScope = (id) => (patchScopes[id] ||= {}),
+    applyScopes = (partials) => {
+      let scopeId = partials[0];
+      for (let i = 1; i < partials.length; i++) {
+        let partial = partials[i];
+        typeof partial == "number"
+          ? (scopeId += partial)
+          : (scopeId
+              ? (patchScopes[scopeId] = Object.assign(
+                  patchScopes[scopeId] || partial,
+                  partial,
+                ))
+              : Object.assign(liveGlobal, partial),
+            scopeId++);
+      }
+    },
+    serializeContext = Object.assign(
+      (data, registryId) =>
+        typeof data == "number"
+          ? registryId
+            ? registryId in registeredValues
+              ? getRegisteredWithScope(registryId, getScope(data))
+              : void 0
+            : getScope(data)
+          : applyScopes(data),
+      { _: registeredValues },
+    ),
+    pairs = /* @__PURE__ */ new Map(),
+    stamp = (scope, id) =>
+      scope.H
+        ? !1
+        : ((scope.L = id),
+          (scope.H = runId),
+          (scope.$ = liveGlobal),
+          pairs.set(scope, scope),
+          !0);
+  return (fills) => {
+    let effectEntries = [],
+      bodyEntries = [];
+    for (let fill of Array.isArray(fills) ? fills : [fills])
+      if (typeof fill == "string") effectEntries.push(fill);
+      else if (Array.isArray(fill))
+        fill[1] === 0
+          ? bodyEntries.push(fill)
+          : (getScope(fill[0])["P" + fill[1]] = fill);
+      else {
+        let scopes = fill(serializeContext);
+        Array.isArray(scopes) && applyScopes(scopes);
+      }
+    (setUpdating(1),
+      (activePairs = pairs),
+      (activeUpdate = {
+        getScope,
+        stamp,
+      }),
+      (applyGen = runId));
+    try {
+      for (let body of bodyEntries)
+        applyBoundaryBody(getScope(body[0]), body[2], body[3]);
+      if ((merge(getScope(1), liveRoot), effectEntries.length)) {
+        let effects = [];
+        for (let entry of effectEntries) {
+          let fn;
+          for (let token of entry.split(" "))
+            if (/\D/.test(token)) fn = registeredValues[token];
+            else {
+              let live = pairs.get(patchScopes[+token]);
+              fn && live && live.H >= applyGen && effects.push(fn, live);
+            }
+        }
+        runEffects(effects);
+      }
+      run();
+    } finally {
+      (setUpdating(0), (activePairs = void 0), (activeUpdate = void 0));
+    }
+  };
+}
+/**
+ * Emitted at the top of compiled merge functions for sections with effects:
+ * records the patch → live scope pairing so payload effect entries (which
+ * carry patch-local scope ids) can resolve their live scope.
+ */
+function _update_pair(patch, live) {
+  activePairs?.set(patch, live);
+}
+/**
+ * Single-branch boundary (`<await>`/`<try>` body) dispatch. When the live
+ * branch is a detached await — a fresh subtree's await whose promise
+ * compute was skipped while updating — the body's frame is the resolution:
+ * attach it at its anchor, then fill it. Attached (or non-await) branches
+ * just fill; an absent live branch sparse-skips.
+ */
+function _update_branch(patch, live, accessor, bodyMerge) {
+  let branchKey = "A" + accessor,
+    patchBranch = patch[branchKey];
+  if (!patchBranch) return;
+  let liveBranch = live[branchKey];
+  (!liveBranch && (run(), (liveBranch = live[branchKey]), !liveBranch)) ||
+    (liveBranch.V && attachAwaitBranch(live, accessor, liveBranch),
+    bodyMerge && bodyMerge(patchBranch, liveBranch));
+}
+function _update_content(contentId, merge) {
+  _resume(contentId + "!", merge);
+}
+function _update_dynamic(patch, live, rendererKey, branchKey, replay) {
+  let rendererId = patch[rendererKey];
+  if (typeof rendererId != "string") return;
+  let patchBranch = patch[branchKey],
+    accessor = branchKey.slice(1),
+    fragment = patch["P" + accessor];
+  if (fragment && patchBranch && live[rendererKey] !== rendererId)
+    (delete patch["P" + accessor],
+      stampFragmentScopes(fragment[4]),
+      applyFragment(live, accessor, patchBranch, fragment[2], fragment[3]),
+      (live[rendererKey] = rendererId));
+  else if (replay && live[rendererKey] !== rendererId) {
+    let renderer = getRegisteredWithScope(
+      rendererId,
+      patchBranch?._ || live._ || live,
+    );
+    if (!renderer) return;
+    replay(live, renderer);
+  } else if (live[rendererKey] !== rendererId) {
+    if (live[branchKey]) throw Error("update diverged");
+    return;
+  }
+  let merge = getRegisteredWithScope(rendererId + "!"),
+    liveBranch = live[branchKey];
+  merge && patchBranch && liveBranch && merge(patchBranch, liveBranch);
+}
+function stampFragmentScopes(ids) {
+  if (ids) {
+    let { getScope, stamp } = activeUpdate;
+    for (let id of ids) stamp(getScope(id), id);
+  }
+}
+function applyFragment(live, accessor, branch, markerPrefix, html) {
+  let { stamp } = activeUpdate,
+    marker = live[accessor],
+    old = live["A" + accessor],
+    tpl = document.createElement("template");
+  tpl.innerHTML = html;
+  let { touched, orphans } = walkFragment(tpl.content, markerPrefix),
+    first = tpl.content.insertBefore(new Text(), tpl.content.firstChild),
+    last = tpl.content.appendChild(new Text());
+  (marker.parentNode.insertBefore(tpl.content, marker),
+    old && removeAndDestroyBranch(old),
+    stamp(branch, 0),
+    (branch.S = first),
+    (branch.K = last),
+    (branch._ ||= live),
+    setParentBranch(branch, live.F),
+    (live["A" + accessor] = branch));
+  for (let orphan of orphans) orphan.N || setParentBranch(orphan, branch);
+  for (let scope of touched) scope.F ||= branch;
+}
+/**
+ * Applies a boundary-body entry: a `<try>` placeholder boundary's resolved
+ * body, arriving after the fragment frame that shipped the placeholder.
+ * The body's markup walks like a fragment (its scope data already landed
+ * through the frame's fills; the await's own end bracket binds the body
+ * branch onto the try branch) and swaps in where the placeholder branch
+ * sits. No-ops if the try branch is gone (a later navigation already
+ * swapped the subtree away) or its placeholder was already dismissed.
+ */
+function applyBoundaryBody(tryBranch, markerPrefix, html) {
+  let placeholderBranch = tryBranch.P;
+  if (!placeholderBranch || !tryBranch.H) return;
+  tryBranch.P = 0;
+  let tpl = document.createElement("template");
+  tpl.innerHTML = html;
+  let { touched, orphans } = walkFragment(tpl.content, markerPrefix);
+  (placeholderBranch.S.parentNode.insertBefore(
+    tpl.content,
+    placeholderBranch.S,
+  ),
+    removeAndDestroyBranch(placeholderBranch));
+  for (let orphan of orphans) orphan.N || setParentBranch(orphan, tryBranch);
+  for (let scope of touched) scope.F ||= tryBranch;
+}
+function walkFragment(root, prefix) {
+  let { getScope, stamp } = activeUpdate,
+    visits = [],
+    treeWalker = document.createTreeWalker(root, 128);
+  for (let node; (node = treeWalker.nextNode()); )
+    node.data.startsWith(prefix) && visits.push(node);
+  let touched = [],
+    scopeOf = (id) => {
+      let scope = getScope(+id);
+      return (stamp(scope, +id) && touched.push(scope), scope);
+    },
+    branchStarts = [],
+    branchScopesStack = [],
+    orphanBranches = [],
+    curBranchScopes,
+    lastNodeScopeId = "",
+    visitText = "",
+    tokenIndex = 0,
+    lastToken = "",
+    nextToken = () =>
+      (lastToken = visitText.slice(
+        tokenIndex,
+        (tokenIndex =
+          visitText.indexOf(" ", tokenIndex) + 1 || visitText.length + 1) - 1,
+      ));
+  for (let visit of visits) {
+    ((visitText = visit.data), (tokenIndex = prefix.length));
+    let visitType = visitText[tokenIndex++];
+    if (visitType === "*") {
+      let scopeId = nextToken(),
+        scope = scopeOf(
+          scopeId ? (lastNodeScopeId = scopeId) : lastNodeScopeId,
+        ),
+        accessor = nextToken(),
+        prev = visit.previousSibling;
+      scope[accessor] =
+        prev && (prev.nodeType < 8 || prev.data)
+          ? prev
+          : visit.parentNode.insertBefore(new Text(), visit);
+      continue;
+    }
+    lastNodeScopeId = "";
+    let visitScope,
+      accessor,
+      singleNode = !1,
+      endedBranches,
+      startVisit = visit,
+      parent = visit.parentNode;
+    visitType === "["
+      ? nextToken()
+      : ((visitScope = scopeOf(nextToken())),
+        nextToken() === "!"
+          ? (accessor = "P")
+          : ((visitScope[lastToken] =
+              visitType === ")" || visitType === "}" ? parent : visit),
+            (accessor = "A" + lastToken)),
+        (singleNode = visitType !== "]" && visitType !== ")"),
+        nextToken());
+    let i = orphanBranches.length,
+      branchId;
+    for (; (branchId = +lastToken); ) {
+      let branch = scopeOf(lastToken);
+      if (((endedBranches ||= []).push(branch), singleNode)) {
+        for (
+          ;
+          startVisit.previousSibling &&
+          ~visits.indexOf((startVisit = startVisit.previousSibling));
+        );
+        ((branch._ ??= visitScope),
+          (branch.K = branch.S = startVisit),
+          visitType === "'" && (branch.a = startVisit));
+      } else {
+        if (
+          ((curBranchScopes = curBranchScopes
+            ? (curBranchScopes.push(branch), curBranchScopes)
+            : [branch]),
+          accessor)
+        ) {
+          visitScope[accessor] =
+            curBranchScopes.length > 1 ? curBranchScopes : curBranchScopes[0];
+          for (let scope of curBranchScopes) scope._ ??= visitScope;
+          curBranchScopes = branchScopesStack.pop();
+        }
+        ((startVisit = branchStarts.pop()),
+          parent !== startVisit.parentNode && parent.prepend(startVisit),
+          (branch.S = startVisit),
+          (branch.K =
+            visit.previousSibling === startVisit
+              ? startVisit
+              : parent.insertBefore(new Text(), visit)));
+      }
+      for (; i && orphanBranches[--i].L > branchId; )
+        setParentBranch(orphanBranches.pop(), branch);
+      nextToken();
+    }
+    if (endedBranches) {
+      for (let ended of endedBranches) orphanBranches.push(ended);
+      singleNode &&
+        (visitScope[accessor] =
+          endedBranches.length > 1
+            ? endedBranches.reverse()
+            : endedBranches[0]);
+    }
+    visitType === "[" &&
+      (endedBranches ||
+        (branchScopesStack.push(curBranchScopes), (curBranchScopes = void 0)),
+      branchStarts.push(visit));
+  }
+  return {
+    touched,
+    orphans: orphanBranches,
+  };
+}
+/**
+ * The generic hole applier: places every typed hole capture a patch scope
+ * carries against its paired live scope -- text holes (`UpdateHole:`),
+ * unsafe-html holes (`UpdateHtml:`), and attr holes/controllables
+ * (`UpdateAttr:<name>:<accessor>`) -- replacing the per-template merge
+ * lines those keys used to compile to, and descends into update-generic
+ * child scopes through their typed links (`UpdateChild:<accessor>`,
+ * serialized by `_update_child` in update renders only) so server-only
+ * compositions need no compiled dispatch at any level. Controllable
+ * semantics are recovered from the live element: on their tags the
+ * controllable names always route through the controllable carve-out, so
+ * `value` on an input is never a plain attr hole. Fragment subtrees are
+ * naturally inert here: their captures and child links are suppressed
+ * server-side (values are baked into the markup), so the shared
+ * patch/live object carries no prefixed keys.
+ */
+function _update_scope(patch, live) {
+  for (let key in patch)
+    if (key.length > 1) {
+      if (key.startsWith("Q")) _text(live[key.slice(1)], patch[key]);
+      else if (key.startsWith("R"))
+        _update_html(live, patch, key, key.slice(1));
+      else if (key.startsWith("S"))
+        _update_scope(patch[key], live[key.slice(1)]);
+      else if (key.startsWith("N")) {
+        let sep = key.indexOf(":", 1),
+          name = key.slice(1, sep),
+          accessor = key.slice(sep + 1),
+          value = patch[key];
+        if (name === "class") _attr_class(live[accessor], value);
+        else if (name === "style") _attr_style(live[accessor], value);
+        else if (name === "textContent") _text_content(live[accessor], value);
+        else {
+          let tag = live[accessor].tagName;
+          name === "value" && (tag === "INPUT" || tag === "TEXTAREA")
+            ? _attr_input_value_default(live, accessor, value)
+            : name === "value" && tag === "SELECT"
+              ? _attr_select_value_default(live, accessor, value)
+              : name === "checked" && tag === "INPUT"
+                ? _attr_input_checked_default(live, accessor, value)
+                : name === "open" && (tag === "DETAILS" || tag === "DIALOG")
+                  ? _attr_details_or_dialog_open_default(live, accessor, value)
+                  : _attr(live[accessor], name, value);
+        }
+      }
+    }
+}
+function _update_html(live, patch, key, accessor) {
+  (_html(live, patch[key], accessor), delete patch[key]);
+}
+/**
+ * Applies a seed-mode state value: only into scopes created during this
+ * apply (fresh subtrees cannot compute state whose initializers live
+ * behind server-only expressions -- the seed IS the initial value), through
+ * the binding's registered signal so downstream derivations recompute.
+ * Matched (pre-existing) scopes keep their live state untouched.
+ */
+function _update_seed(live, signal, value) {
+  live.H >= applyGen && signal(live, value);
+}
+function _update_signal(id) {
+  return (scope, value) => getRegisteredWithScope(id, scope)(value);
+}
+function _update_for(nodeAccessor, contentId, merge) {
+  let signal;
+  return (scope, value) => {
+    if (!signal) {
+      let content = getRegisteredWithScope(contentId);
+      signal = _for_of(nodeAccessor, content[0], content[1], content[2], merge);
+    }
+    let branches = value[0];
+    (branches && !Array.isArray(branches) && (branches = value[0] = [branches]),
+      !branches?.[0]?.S && signal(scope, value));
+  };
 }
 //#endregion

@@ -1,0 +1,24 @@
+// template.marko.update.mjs
+const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
+const $update = (patch, live) => {
+	_update_pair(patch, live);
+	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
+	_update_scope(patch, live);
+};
+var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+
+// template.marko
+const $template = "<button> </button><title></title><p> </p><output></output>";
+const $walks = " D l bD lb";
+const $count = /* @__PURE__ */ _let("count/4", ($scope) => _text($scope["#text/1"], $scope.count));
+const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
+	$count($scope, $scope.count + 1);
+}));
+function $setup($scope) {
+	_text_content($scope["#title/2"], `App — ${_to_text($scope.$global.docTitle)}`);
+	_text($scope["#text/3"], $scope.$global.docTitle);
+	$count($scope, 0);
+	$setup__script($scope);
+}
+enableBranches();
+var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);

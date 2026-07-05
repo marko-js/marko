@@ -20,11 +20,19 @@ import { WalkCode } from "../../../common/types";
 import { bodyToTextLiteral } from "../../util/body-to-text-literal";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
-import { getAccessorProp } from "../../util/get-accessor-char";
+import {
+  getAccessorProp,
+  getUpdateAttrPrefix,
+} from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  isOutputHTML,
+  isPersisted,
+  isUpdateEntryBuild,
+} from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
 import {
@@ -42,11 +50,14 @@ import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  type Section,
 } from "../../util/sections";
 import { getSerializeGuard } from "../../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  getSerializeSourcesForExpr,
+  isReasonDynamic,
 } from "../../util/serialize-reasons";
 import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
 import { addHTMLEffectCall, addStatement } from "../../util/signals";
@@ -56,6 +67,11 @@ import {
   toPropertyName,
 } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
+import {
+  addUpdateGlobalsStatement,
+  addUpdateMerge,
+  isUpdateCoveredByClientSignals,
+} from "../../util/update-merges";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
@@ -140,6 +156,14 @@ export default {
 
           if (isEventOrChangeHandler(attr.name)) {
             assertNativeHandlerAttr(tag, attr);
+            if (!isEventHandler(attr.name)) {
+              // Change handlers replay controllables through a signal
+              // effect even when the handler expression registers nothing
+              // itself (eg a plain `input.setX` reference), and that effect
+              // is invisible to analyze data otherwise -- record the
+              // footprint update classification disqualifies on.
+              getProgram().node.extra.hasChangeHandlers = true;
+            }
           }
 
           if (isEventHandler(attr.name)) {
@@ -364,6 +388,27 @@ export default {
 
         if (staticControllable) {
           const hasChangeHandler = !!staticControllable.attrs[1];
+          // Controllable values (`value`/`checked`/`open`) render through
+          // their helper rather than a plain attr write, so the update
+          // capture wraps the helper's value argument in place -- every
+          // downstream path (the generic write here, the select/textarea
+          // specials below) then evaluates the capture. Compiled merges
+          // replay it through the helper's `_default` variant.
+          // (`checkedValue` pairs two interdependent values and is not
+          // captured.)
+          const controllableValueAttr =
+            staticControllable.helper === "_attr_input_checkedValue"
+              ? undefined
+              : staticControllable.attrs[0];
+          if (controllableValueAttr) {
+            controllableValueAttr.value =
+              buildAttrHoleValue(
+                nodeBinding,
+                tagSection,
+                controllableAttrName(staticControllable.helper),
+                controllableValueAttr.value,
+              ) || controllableValueAttr.value;
+          }
           if (tagName !== "select" && tagName !== "textarea") {
             write`${callRuntime(
               staticControllable.helper,
@@ -450,7 +495,16 @@ export default {
           const valueReferences = value.extra?.referencedBindings;
 
           if (tagName === "option" && name === "value") {
-            write`${callRuntime("_attr_option_value", value)}`;
+            // Request-derived option values ride persisted updates like any
+            // attr hole: the dom compile records a plain `_attr` merge for
+            // them, so the capture here is what lets matched options update
+            // and keyed-reconcile-fresh options fill their value. Selection
+            // re-sync under an unchanged select value is a recorded
+            // follow-up (agent-feedback/bugs.md).
+            const holeValue =
+              !confident &&
+              buildAttrHoleValue(nodeBinding, tagSection, name, value);
+            write`${callRuntime("_attr_option_value", holeValue || value)}`;
             continue;
           }
 
@@ -458,8 +512,13 @@ export default {
             case "class":
             case "style": {
               const helper = `_attr_${name}` as const;
+              const holeValue =
+                !confident &&
+                buildAttrHoleValue(nodeBinding, tagSection, name, value);
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
+              } else if (holeValue) {
+                write`${callRuntime(helper, holeValue)}`;
               } else {
                 write`${factorAttrConditional(
                   buildAttrExpression(
@@ -485,20 +544,30 @@ export default {
               } else if (isEventHandler(name)) {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
-                write`${factorAttrConditional(
-                  buildAttrExpression(
-                    value,
-                    (branch) => {
-                      const { confident, computed } = evaluate(branch);
-                      return confident
-                        ? getHTMLRuntime()._attr(name, computed)
-                        : undefined;
-                    },
-                    (branch) =>
-                      buildLogicalAttr(name, branch) ||
-                      callRuntime("_attr", t.stringLiteral(name), branch),
-                  ),
-                )}`;
+                const holeValue = buildAttrHoleValue(
+                  nodeBinding,
+                  tagSection,
+                  name,
+                  value,
+                );
+                if (holeValue) {
+                  write`${callRuntime("_attr", t.stringLiteral(name), holeValue)}`;
+                } else {
+                  write`${factorAttrConditional(
+                    buildAttrExpression(
+                      value,
+                      (branch) => {
+                        const { confident, computed } = evaluate(branch);
+                        return confident
+                          ? getHTMLRuntime()._attr(name, computed)
+                          : undefined;
+                      },
+                      (branch) =>
+                        buildLogicalAttr(name, branch) ||
+                        callRuntime("_attr", t.stringLiteral(name), branch),
+                    ),
+                  )}`;
+                }
               }
 
               break;
@@ -637,11 +706,25 @@ export default {
             ),
           );
         } else if (isTextOnly) {
-          for (const child of tag.node.body.body) {
-            if (t.isMarkoText(child)) {
-              write`${child.value}`;
-            } else if (t.isMarkoPlaceholder(child)) {
-              write`${callRuntime(getTextOnlyEscapeHelper(tagName), child.value)}`;
+          // Persisted builds capture the whole computed text of
+          // request-derived text-only content (eg `<title>`) so update
+          // renders serialize it: `_text_content` replaces wholesale, so
+          // the capture is the concatenated literal rather than
+          // per-placeholder holes (whole-value escaping decodes the same).
+          const textHole = buildTextContentHoleValue(
+            nodeBinding,
+            tagSection,
+            tag.node.body,
+          );
+          if (textHole) {
+            write`${callRuntime(getTextOnlyEscapeHelper(tagName), textHole)}`;
+          } else {
+            for (const child of tag.node.body.body) {
+              if (t.isMarkoText(child)) {
+                write`${child.value}`;
+              } else if (t.isMarkoPlaceholder(child)) {
+                write`${callRuntime(getTextOnlyEscapeHelper(tagName), child.value)}`;
+              }
             }
           }
         } else {
@@ -712,6 +795,17 @@ export default {
           const hasChangeHandler = !!staticControllable.attrs[1];
           const firstAttr = staticControllable.attrs.find(Boolean)!;
           const referencedBindings = firstAttr.value.extra?.referencedBindings;
+          if (
+            staticControllable.helper !== "_attr_input_checkedValue" &&
+            staticControllable.attrs[0]
+          ) {
+            recordControllableUpdateMerge(
+              nodeBinding,
+              tagSection,
+              staticControllable.helper,
+              staticControllable.attrs[0].value,
+            );
+          }
           const values = (
             hasChangeHandler
               ? staticControllable.attrs
@@ -772,6 +866,13 @@ export default {
                 trackDelimitedAttrValue(value, meta);
 
                 if (meta.dynamicItems) {
+                  recordAttrUpdateMerge(
+                    nodeBinding,
+                    tagSection,
+                    name,
+                    helper,
+                    value,
+                  );
                   stmt = t.expressionStatement(
                     callRuntime(helper, nodeExpr, value),
                   );
@@ -781,6 +882,18 @@ export default {
                   }
 
                   if (meta.dynamicValues) {
+                    // Item-split values still merge the server-captured
+                    // whole value (the html compile captures it either
+                    // way); the shared gates exclude state-mixing values,
+                    // so the whole-value write never stomps client-owned
+                    // items.
+                    recordAttrUpdateMerge(
+                      nodeBinding,
+                      tagSection,
+                      name,
+                      helper,
+                      value,
+                    );
                     const keys = Object.keys(meta.dynamicValues);
 
                     if (keys.length === 1) {
@@ -815,6 +928,7 @@ export default {
                 }
 
                 if (stmt) {
+                  addUpdateGlobalsStatement(tagSection, value.extra, stmt);
                   addStatement(
                     "render",
                     tagSection,
@@ -845,18 +959,27 @@ export default {
                   ),
                 );
               } else {
+                recordAttrUpdateMerge(
+                  nodeBinding,
+                  tagSection,
+                  name,
+                  "_attr",
+                  value,
+                );
+                const stmt = t.expressionStatement(
+                  callRuntime(
+                    "_attr",
+                    createScopeReadExpression(nodeBinding!),
+                    t.stringLiteral(name),
+                    value,
+                  ),
+                );
+                addUpdateGlobalsStatement(tagSection, value.extra, stmt);
                 addStatement(
                   "render",
                   tagSection,
                   valueReferences,
-                  t.expressionStatement(
-                    callRuntime(
-                      "_attr",
-                      createScopeReadExpression(nodeBinding!),
-                      t.stringLiteral(name),
-                      value,
-                    ),
-                  ),
+                  stmt,
                   undefined,
                   true,
                 );
@@ -918,18 +1041,24 @@ export default {
         }
 
         if (staticContentAttr) {
+          const stmt = t.expressionStatement(
+            callRuntime(
+              "_attr_content",
+              scopeIdentifier,
+              visitAccessor,
+              staticContentAttr.value,
+            ),
+          );
+          addUpdateGlobalsStatement(
+            tagSection,
+            staticContentAttr.value.extra,
+            stmt,
+          );
           addStatement(
             "render",
             tagSection,
             staticContentAttr.value.extra?.referencedBindings,
-            t.expressionStatement(
-              callRuntime(
-                "_attr_content",
-                scopeIdentifier,
-                visitAccessor,
-                staticContentAttr.value,
-              ),
-            ),
+            stmt,
             undefined,
             true,
           );
@@ -952,17 +1081,28 @@ export default {
             if (t.isStringLiteral(textLiteral)) {
               write`${textLiteral}`;
             } else {
+              recordTextContentUpdateMerge(
+                nodeBinding,
+                getSection(tag),
+                textLiteral,
+              );
+              const stmt = t.expressionStatement(
+                callRuntime(
+                  "_text_content",
+                  createScopeReadExpression(nodeBinding!),
+                  textLiteral,
+                ),
+              );
+              addUpdateGlobalsStatement(
+                getSection(tag),
+                textLiteral.extra,
+                stmt,
+              );
               addStatement(
                 "render",
                 getSection(tag),
                 textLiteral.extra?.referencedBindings,
-                t.expressionStatement(
-                  callRuntime(
-                    "_text_content",
-                    createScopeReadExpression(nodeBinding!),
-                    textLiteral,
-                  ),
-                ),
+                stmt,
                 undefined,
                 true,
               );
@@ -1331,6 +1471,145 @@ function buildAttrExpression(
 // Hoist a shared `name=` prefix out of a conditional with two literal branches
 // so it folds into the static HTML, e.g. `x ? ' class=on' : ' class=off'` ->
 // ` class=${x ? "on" : "off"}`. Each value keeps its own quoting.
+// Persisted builds capture the computed value of request-derived dynamic
+// attrs so update renders can serialize it (keyed
+// `UpdateAttr:<name>:<elementAccessor>` -- per attr, so multi-attr elements
+// don't collide); `_hole_value` is a pass-through otherwise. Pure
+// state-driven attrs are excluded (the client owns those values), as are
+// elements with no node binding (nothing to place onto).
+function buildAttrHoleValue(
+  nodeBinding: Binding | undefined,
+  tagSection: Section,
+  name: string,
+  value: t.Expression,
+) {
+  if (!nodeBinding || !isPersisted()) return;
+  const sources = value.extra && getSerializeSourcesForExpr(value.extra);
+  // Browser-code reuse: skip the capture when the client's registered
+  // signal chain already re-renders this attr from patched scope values.
+  if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
+    return;
+  const accessor = getScopeAccessorLiteral(nodeBinding);
+  return callRuntime(
+    "_hole_value",
+    getScopeIdIdentifier(tagSection),
+    t.stringLiteral(getUpdateAttrPrefix() + name + ":" + accessor.value),
+    value,
+    // Captures only fire in update renders, which refresh everything that
+    // is not client-owned -- the render-global flag is the whole guard.
+    callRuntime("_persisted_reason"),
+  );
+}
+
+// The dom-compile counterpart of `buildAttrHoleValue`: update entries merge
+// the server-captured attr value for the same request-derived attrs.
+function recordAttrUpdateMerge(
+  nodeBinding: Binding | undefined,
+  tagSection: Section,
+  name: string,
+  helper: "_attr" | "_attr_class" | "_attr_style",
+  value: t.Expression,
+) {
+  if (!nodeBinding || !isUpdateEntryBuild()) return;
+  const sources = value.extra && getSerializeSourcesForExpr(value.extra);
+  if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
+    return;
+  const accessor = getScopeAccessorLiteral(nodeBinding);
+  addUpdateMerge(tagSection, {
+    kind: "attr",
+    key: getUpdateAttrPrefix() + name + ":" + accessor.value,
+    name,
+    helper,
+    accessor,
+  });
+}
+
+// The text-only tag counterpart of the `buildAttrHoleValue`/
+// `recordAttrUpdateMerge` pair: `<title>`/`<script>`/`<style>` content
+// replaces wholesale through `_text_content`, so the whole computed text
+// is captured (html) and merged (update entries) under a reserved
+// `textContent` pseudo-attr key -- text-only tags have no real attr of
+// that name to collide with. `<textarea>` never reaches these (its
+// content routes through the value controllable).
+function buildTextContentHoleValue(
+  nodeBinding: Binding | undefined,
+  tagSection: Section,
+  body: t.MarkoTagBody,
+) {
+  if (!nodeBinding || !isPersisted()) return;
+  const value = bodyToTextLiteral(body);
+  if (t.isStringLiteral(value)) return;
+  const sources = value.extra && getSerializeSourcesForExpr(value.extra);
+  if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
+    return;
+  const accessor = getScopeAccessorLiteral(nodeBinding);
+  return callRuntime(
+    "_hole_value",
+    getScopeIdIdentifier(tagSection),
+    t.stringLiteral(getUpdateAttrPrefix() + "textContent:" + accessor.value),
+    value,
+    callRuntime("_persisted_reason"),
+  );
+}
+
+function recordTextContentUpdateMerge(
+  nodeBinding: Binding | undefined,
+  tagSection: Section,
+  value: t.Expression,
+) {
+  if (!nodeBinding || !isUpdateEntryBuild()) return;
+  const sources = value.extra && getSerializeSourcesForExpr(value.extra);
+  if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
+    return;
+  const accessor = getScopeAccessorLiteral(nodeBinding);
+  addUpdateMerge(tagSection, {
+    kind: "attr",
+    key: getUpdateAttrPrefix() + "textContent:" + accessor.value,
+    name: "textContent",
+    helper: "_text_content",
+    accessor,
+  });
+}
+
+// The controllable counterpart of `recordAttrUpdateMerge`: these attrs
+// re-render through their helper's `_default` variant (scope + node
+// accessor -- it owns default-vs-live value semantics: an interactive
+// input's typed value survives, hidden/button-likes track the attribute),
+// not a plain attr write. Same gates and patch key as the html capture,
+// which wraps the helper's value argument.
+function recordControllableUpdateMerge(
+  nodeBinding: Binding | undefined,
+  tagSection: Section,
+  helper: Exclude<
+    NonNullable<RelatedControllable>["helper"],
+    "_attr_input_checkedValue"
+  >,
+  value: t.Expression,
+) {
+  if (!nodeBinding || !isUpdateEntryBuild()) return;
+  const sources = value.extra && getSerializeSourcesForExpr(value.extra);
+  if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
+    return;
+  const accessor = getScopeAccessorLiteral(nodeBinding);
+  addUpdateMerge(tagSection, {
+    kind: "controllable",
+    key:
+      getUpdateAttrPrefix() +
+      controllableAttrName(helper) +
+      ":" +
+      accessor.value,
+    helper: `${helper}_default`,
+    accessor,
+  });
+}
+
+// `_attr_input_value` -> `value`: controllable captures key off the
+// canonical attr name (on these tags those names always route through the
+// controllable carve-out, so they cannot collide with a plain attr hole).
+function controllableAttrName(helper: string) {
+  return helper.slice(helper.lastIndexOf("_") + 1);
+}
+
 function factorAttrConditional(value: t.Expression): t.Expression {
   if (value.type !== "ConditionalExpression") {
     return value;

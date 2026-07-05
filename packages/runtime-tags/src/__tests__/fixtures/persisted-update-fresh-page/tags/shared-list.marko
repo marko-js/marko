@@ -1,0 +1,17 @@
+// A `$global`-backed shared value (the ecommerce `let-global` shape): a
+// `<let>` seeded from `$global` data, synced across instances through a
+// module-level registry wired up by an effect, returned with a change
+// handler that writes back to the global object and notifies the others.
+static const subsByKey = {};
+
+<let/value=$global.data[input.name]>
+<script>
+  const subs = subsByKey[input.name] ??= new Set();
+  const sub = () => value = $global.data[input.name];
+  $signal.onabort = () => subs.delete(sub);
+  subs.add(sub);
+</script>
+<return=value valueChange(next) {
+  $global.data[input.name] = next;
+  subsByKey[input.name]?.forEach(cb => cb());
+}>

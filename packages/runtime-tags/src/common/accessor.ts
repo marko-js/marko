@@ -13,6 +13,22 @@ export enum AccessorPrefix {
   Lifecycle = "K",
   Promise = "L",
   TagVariableChange = "M",
+  // "N" is reserved for UpdateAttr (update-render attr hole values). It is
+  // deliberately not an enum member: only compiled HTML output and the
+  // update-only client runtime use it, and enum objects ship in every client
+  // bundle. See `getUpdateAttrPrefix` in the translator.
+  // "P" is reserved for FragmentHtml (fragment frame entries stashed on
+  // their anchor's patch scope) under the same rule -- only the update
+  // applier uses it. See `FRAGMENT_PREFIX` in dom/update.
+  // "Q" is reserved for UpdateHole (update-render text hole values),
+  // "R" for UpdateHtml (unsafe-html holes), and "S" for UpdateChild
+  // (update-render child scope links for update-generic children) under
+  // the same rule. See `getUpdateHolePrefix`/`getUpdateHtmlPrefix`/
+  // `getUpdateChildPrefix` in the translator. Bare single-char scope
+  // PROPS (`Q` PlaceholderContent, `R` Renderer, `S` StartNode, `N`
+  // ParentBranch in `AccessorProp`) stay unambiguous: prefixed keys are
+  // always longer than one character, and the generic applier
+  // (`_update_scope` in dom/update) checks length before prefix.
 }
 
 export enum AccessorProp {

@@ -11,6 +11,7 @@ import {
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
 import type { ServerRenderer } from "./template";
 import {
+  _fragment,
   _html,
   _peek_scope_id,
   _resume,
@@ -170,7 +171,26 @@ export let _dynamic_tag = (
         return content();
       }
     };
-    result = shouldResume ? withBranchId(branchId, render) : render();
+    // The first content hop of a fragment-mode update render (see
+    // `_fragment`) delivers its branch as resumable HTML instead of a
+    // client-constructed subtree; everything above the hop stays a normal
+    // matched-scope patch.
+    if (!shouldResume) {
+      result = render();
+    } else if (state.fragments && !state.fragmentTaken) {
+      state.fragmentTaken = true;
+      result = _fragment(scopeId, accessor, () =>
+        withBranchId(branchId, render),
+      );
+    } else {
+      // A replay-constructed hop branch (renderer mismatch client-side)
+      // seeds like other patch-list branches (see `_state_reason`).
+      const updateStructural =
+        state.update && (serializeReason as unknown as number) & 2;
+      if (updateStructural) state.freshBranchDepth++;
+      result = withBranchId(branchId, render);
+      if (updateStructural) state.freshBranchDepth--;
+    }
     rendered = _peek_scope_id() !== branchId;
 
     if (shouldResume) {
@@ -189,6 +209,15 @@ export let _dynamic_tag = (
         [AccessorPrefix.ConditionalRenderer + accessor]:
           (renderer as ServerRenderer | undefined)?.[RendererProp.Id] ||
           renderer,
+        // Update renders link the branch scope explicitly (there are no
+        // markers/DOM to pair through); merges dispatch the content's
+        // registered update merge by the renderer id above (G2 for dynamic
+        // tags).
+        ...(state.update && (serializeReason as unknown as number) & 2
+          ? {
+              [AccessorPrefix.BranchScopes + accessor]: _scope(branchId, {}),
+            }
+          : null),
       });
     }
   } else {

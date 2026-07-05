@@ -1,4 +1,4 @@
-// size: 6519 (min) 2870 (brotli)
+// size: 6600 (min) 2896 (brotli)
 //#region packages/runtime-tags/dist/common/helpers.mjs
 let decodeAccessor = (num) =>
   (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
@@ -254,9 +254,19 @@ function createCloneableHTML(html, ns) {
 //#endregion
 //#region packages/runtime-tags/dist/dom/resume.mjs
 let registeredValues = {},
+  curRenders,
   branchesEnabled;
 function enableBranches() {
-  branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
+  if (!branchesEnabled) {
+    ((branchesEnabled = 1), skipDestroyedRenders());
+    for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
+  }
+}
+function runResumeEffects(render) {
+  try {
+    runEffects(render.m([]), 1);
+  } finally {
+  }
 }
 function _resume(id, obj) {
   return (registeredValues[id] = obj);

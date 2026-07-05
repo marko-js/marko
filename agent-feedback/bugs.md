@@ -41,3 +41,74 @@ therefore relied upon for correctness. A real fix needs `isSupersetSources` to
 use a strict/proper-superset test (equal sources must not prune each other)
 _and_ the corrected arithmetic, then a full snapshot audit — out of scope for a
 one-line change.
+
+## Fresh-render `_or` joins can stall for guarded request-derived members
+
+`packages/runtime-tags/src/translator/util/signals.ts:330` | 2026-07-05 | impact:low | effort:med
+
+Pure-global intersections now fold into setup placement (fixed -- see the
+`persisted-update-or-stall` fixture), but the second pathological shape
+remains: an intersection whose non-global members are all `_updating()`-
+guarded request-derived invocations never completes its join during a
+persisted apply (the guarded computes skip, and globals have no value
+signal). Harmless when the joined statement's output is a server-captured
+hole (the merge places it); a non-captured side effect over such an
+intersection would silently not run for fresh branches. Also worth
+auditing: the `_or` pending count excludes members by source shape
+(`sources.global` without state/param), which under-counts derived
+request-derived members that CAN fire through registered update merges.
+
+## Controllable update coverage: `checkedValue`, spread controllables, selection re-sync
+
+`packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` (controllable capture/merge) | 2026-07-05 | impact:low | effort:med
+
+The controllable attr update slice covers single-value controllables
+(`value` on input/select/textarea, `checked`, `open`) via the helper's
+`_default` variant, and `<option value=dynamic>` holes now capture/merge
+as plain attrs (see the `persisted-update-option-values` fixture). Still
+outstanding:
+
+1. `checkedValue` pairs two interdependent values (`checkedValue` +
+   `value`); sparse per-key captures can't replay the pair when only one
+   key changed, so it is excluded (uncontrolled request-derived
+   `checkedValue` is rare -- it is virtually always bound).
+2. Controllables reached through a spread (`_attrs`/`_attrs_partial`
+   resolve them at runtime) have no static value expression to wrap, so
+   nothing captures; a fix needs capture support inside the html `_attrs`
+   runtime itself.
+3. Selection re-sync: after option values merge, live selectedness is not
+   re-derived -- a changed option value under an unchanged select value
+   can leave the user-visible selection on the wrong option. Needs a
+   design decision on uncontrolled-select semantics (re-match the select's
+   default value vs preserve element-identity selection) plus cross-element
+   coordination from the option's section to its owning select.
+4. Mixed state/global values in spreads and controllables: the `$global`
+   demotion re-invokes mixed statements client-side after the update's
+   globals assign (`addUpdateGlobalsStatement` at the attr, class/style,
+   placeholder, and content/text-content emission sites), but spread
+   statements and controllable helpers are not collected -- a
+   controllable value or spread attr mixing client state with `$global`
+   stays stale across navigations. Spreads need the same runtime-capture
+   design as (2); controllables need the `_default` replay wired through
+   the globals re-invocation (or their own merge path) so
+   default-vs-live semantics survive the re-run.
+
+## Inline walker lookup: branch-start keys can collide with reorder anchor ids (pre-existing)
+
+The inline `WALKER_RUNTIME` registers _every_ prefixed comment in the
+per-render lookup keyed by its post-symbol payload (`a[l.slice(s+1)]=e`),
+and `REORDER_RUNTIME` resolves its anchors from that same lookup by bare
+reorder id (`e.l[a]` / `e.l["^"+a]`, ids from `state.nextReorderId()`,
+counting from 1). Branch-start markers flushed with accumulated ids emit
+`<!--M_[2-->` (`forBranches`' `flushBranchIds` starts as `branchId + ""`),
+whose lookup key is the bare string `"2"` -- branch ids are scope ids,
+which share the small-integer space with reorder ids. A branch-start
+registered after anchor `<!--M_!2-->` in walk order overwrites the
+anchor's entry, so when the reordered tail arrives, the removal walk /
+`replaceWith` targets the branch-start comment instead of the anchor.
+Reachable in principle on any page combining out-of-order flushing with
+multi-branch loop flushes; unconfirmed by a failing test. Discovered
+while adding the persisted node-marker continuation form, which hit the
+same collision class (bare numeric accessor keys vs reorder ids) and
+sidesteps it with a space-leading payload -- the same disambiguation (or
+a reserved prefix for reorder keys) would fix this one.

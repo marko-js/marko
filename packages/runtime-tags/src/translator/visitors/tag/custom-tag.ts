@@ -19,11 +19,17 @@ import { getBindingPropTree } from "../../util/binding-prop-tree";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getTagName } from "../../util/get-tag-name";
 import {
+  getKnownTagChildScopeBinding,
+  isKnownTagChildUpdateGeneric,
   knownTagAnalyze,
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  isOutputHTML,
+  isPersistedEntryBuild,
+} from "../../util/marko-config";
 import type { Binding } from "../../util/references";
 import {
   BindingType,
@@ -32,10 +38,11 @@ import {
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
-import { getOrCreateSection } from "../../util/sections";
+import { getOrCreateSection, getSection } from "../../util/sections";
 import { addSetupStatement } from "../../util/setup-statements";
 import { addStatement, getSignal } from "../../util/signals";
 import { createProgramState } from "../../util/state";
+import { addUpdateMerge } from "../../util/update-merges";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
@@ -107,6 +114,10 @@ export default {
         programSection === childSection
           ? programSection.params && getBindingPropTree(programSection.params)
           : childExtra.domExports?.params,
+        // Final for a fully-analyzed child (the flag is set once at its
+        // program exit); a mid-analysis circular child has no flag yet and
+        // reads as non-generic on every pass, so all consumers agree.
+        childExtra.domExports?.updateGeneric,
       );
     },
   },
@@ -273,6 +284,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     walks.injectWalks(tag, tagName);
     walks.enterShallow(tag);
   } else if (programSection === childSection) {
+    recordChildUpdateMerge(tag, relativePath, tagName);
     knownTagTranslateDOM(
       tag,
       childExports.params,
@@ -297,13 +309,15 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     write`${t.identifier(childExports.template)}`;
     walks.injectWalks(tag, tagName, t.identifier(childExports.walks));
   } else {
+    recordChildUpdateMerge(tag, relativePath, tagName);
+    const importPath = getChildImportPath(file, relativePath);
     knownTagTranslateDOM(
       tag,
       childExports.params,
       (binding, preferredName, directContent) =>
         importOrSelfReferenceName(
           tag.hub.file,
-          relativePath,
+          importPath,
           (directContent && binding.directContentExport) || binding.export!,
           preferredName,
         ),
@@ -318,7 +332,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
                 t.callExpression(
                   importOrSelfReferenceName(
                     file,
-                    relativePath,
+                    importPath,
                     childExports.setup,
                     tagName,
                   ),
@@ -329,15 +343,30 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           },
     );
 
-    write`${importNamed(file, relativePath, childExports.template, `${tagName}_template`)}`;
+    write`${importNamed(file, importPath, childExports.template, `${tagName}_template`)}`;
     walks.injectWalks(
       tag,
       tagName,
-      importNamed(file, relativePath, childExports.walks, `${tagName}_walks`),
+      importNamed(file, importPath, childExports.walks, `${tagName}_walks`),
     );
   }
 
   tag.remove();
+}
+
+// Persisted entry builds reference child template render graphs (template,
+// walks, setup, value setters) from the child's own `?persisted` entry: the
+// graphs exist for persisted updates, which only run once the `?update`/
+// `?persisted` chunk loads, and importing them from the child's main module
+// would pin every child's otherwise tree-shakeable render graph into the
+// eager hydration chunks. Circular (self) references keep the plain path so
+// they stay local identifiers.
+export function getChildImportPath(file: t.BabelFile, relativePath: string) {
+  return isPersistedEntryBuild() &&
+    relativePath.endsWith(".marko") &&
+    !isCircularRequest(file, relativePath)
+    ? `${relativePath}?persisted`
+    : relativePath;
 }
 
 export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
@@ -439,6 +468,28 @@ function loadTriggersToExpression(loadConfig: LoadImportConfig | undefined) {
   return triggers.length === 1
     ? triggers[0]
     : callRuntime("_load_race_trigger", ...triggers);
+}
+
+// Update entries dispatch the child template's own merge function
+// (`<tag>.marko?update` default export) for serialized child scopes --
+// unless the child proved that module would be the bare generic
+// interpreter (`updateGeneric`), in which case the dispatch inlines
+// `_update_scope` and the module is never imported or built.
+function recordChildUpdateMerge(
+  tag: t.NodePath<t.MarkoTag>,
+  relativePath: string,
+  tagName: string,
+) {
+  const childScopeBinding = getKnownTagChildScopeBinding(tag);
+  if (childScopeBinding) {
+    addUpdateMerge(getSection(tag), {
+      kind: "child",
+      accessor: getScopeAccessorLiteral(childScopeBinding),
+      relativePath,
+      tagName,
+      generic: isKnownTagChildUpdateGeneric(tag),
+    });
+  }
 }
 
 function toDOMTriggerExpression(trigger: LoadTrigger) {
