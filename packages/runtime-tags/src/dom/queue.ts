@@ -225,7 +225,7 @@ export type RunEffects = typeof runEffects;
 
 let catchEnabled: undefined | 1;
 /**
- * Installed by `_enable_catch` (in `./control-flow` -- the wrappers need
+ * Installed by `_enable_catch` (in `./catch` -- the wrappers need
  * `renderCatch`, and the queue must never import branch machinery: a module
  * is hosted in one chunk and the queue is eager in every bundle).
  */

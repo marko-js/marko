@@ -3,7 +3,7 @@
     "template.marko.page.mjs": {
       "total": {
         "min": 2393,
-        "brotli": 1117
+        "brotli": 1113
       },
       "files": {
         "tags/actions.marko": 1039,
@@ -14,7 +14,7 @@
     "update.js": {
       "total": {
         "min": 5495,
-        "brotli": 2256
+        "brotli": 2254
       },
       "files": {
         "tags/shared-list.marko.update.mjs": 511,
@@ -26,7 +26,7 @@
     "shared-list.mjs": {
       "total": {
         "min": 20870,
-        "brotli": 7924
+        "brotli": 7933
       },
       "files": {
         "data.js": 637,

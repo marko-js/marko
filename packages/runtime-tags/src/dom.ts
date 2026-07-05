@@ -3,13 +3,13 @@ export { _assert_hoist } from "./common/errors";
 export { forIn, forOf, forTo, forUntil } from "./common/for";
 export { _call } from "./common/helpers";
 export { $signal, $signalReset } from "./dom/abort-signal";
+export { _enable_catch } from "./dom/catch";
 export { compat } from "./dom/compat";
 export {
   _await_content,
   _await_promise,
   _dynamic_tag,
   _dynamic_tag_content,
-  _enable_catch,
   _for_in,
   _for_of,
   _for_to,

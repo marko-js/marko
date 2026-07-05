@@ -123,13 +123,13 @@ eager closure pinpoints the remaining drivers, largest first:
    lets per-app usage decide. Post-fix this is the whole eager gap on
    /search: product mains import `_on` + `_attr_input_value*` and get
    the 11 kB (raw) event+controllable chunk.
-3. `_enable_catch` hosting: a page using `<try>`/`<await>` (the app's
-   /item) calls `_enable_catch()` from its slim main, and it lives in
-   `dom/control-flow.ts`, which statically imports branch construction
-   plus `common/for.ts` and `dom/spread.ts` — one import drags a 20.6 kB
-   (raw) chunk eager. Splitting the catch machinery into its own module
-   (or trimming what the catch wrappers reference) would confine the
-   cost to what catch actually needs.
+3. **RESOLVED — `_enable_catch` hosting.** The catch machinery
+   (`_enable_catch`, `renderCatch`, `handlePendingTry`) moved to its own
+   `dom/catch.ts` (with `setConditionalRenderer` relocated to `scope.ts`,
+   where its actual dependencies live), so an await/try page's slim main
+   pulls only the catch module — for/spread/control-flow/update now host
+   in a fully lazy chunk. App /item eager: 28.5→22.3 kB raw,
+   13.1→10.4 kB gz; fixture corpus net −2.8 kB min.
 
 ## Persisted compute guards make previously-unused imports bundle client-side
 

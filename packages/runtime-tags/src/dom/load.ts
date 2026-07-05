@@ -8,8 +8,8 @@ import {
   type Scope,
   type Template,
 } from "../common/types";
-import { addAwaitCounter, renderCatch } from "./control-flow";
-import { _enable_catch } from "./control-flow";
+import { _enable_catch, renderCatch } from "./catch";
+import { addAwaitCounter } from "./control-flow";
 import { queueAsyncRender, runId } from "./queue";
 import { _content, type Renderer, setupBranch, type SetupFn } from "./renderer";
 import { insertBranchBefore, syncGen } from "./scope";

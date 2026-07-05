@@ -16,7 +16,6 @@ import {
   RendererProp,
   type Scope,
 } from "../common/types";
-import { setConditionalRenderer } from "./control-flow";
 import {
   _attr_details_or_dialog_open,
   _attr_details_or_dialog_open_script,
@@ -32,6 +31,7 @@ import {
 import { _attr, _attr_class, _attr_style } from "./dom";
 import { _on } from "./event";
 import { createAndSetupBranch, type Renderer } from "./renderer";
+import { setConditionalRenderer } from "./scope";
 import { subscribeToScopeSet } from "./signals";
 
 export function _attrs(

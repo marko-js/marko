@@ -1,4 +1,4 @@
-// size: 27607 (min) 10181 (brotli)
+// size: 27607 (min) 10192 (brotli)
 //#region packages/runtime-tags/dist/common/attr-tag.mjs
 let empty = [],
   rest = Symbol();
@@ -330,6 +330,33 @@ function tempDetachBranch(branch) {
   let fragment = new DocumentFragment();
   ((fragment.namespaceURI = branch.S.parentNode.namespaceURI),
     insertChildNodes(fragment, null, branch.S, branch.K));
+}
+function setConditionalRenderer(
+  scope,
+  nodeAccessor,
+  newRenderer,
+  createBranch,
+) {
+  let referenceNode = scope[nodeAccessor],
+    prevBranch = scope["A" + nodeAccessor],
+    parentNode =
+      referenceNode.nodeType > 1
+        ? (prevBranch?.S || referenceNode).parentNode
+        : referenceNode,
+    newBranch = (scope["A" + nodeAccessor] =
+      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
+  referenceNode === parentNode
+    ? (prevBranch &&
+        (destroyBranch(prevBranch), (referenceNode.textContent = "")),
+      newBranch && insertBranchBefore(newBranch, parentNode, null))
+    : prevBranch
+      ? (newBranch
+          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
+          : parentNode.insertBefore(referenceNode, prevBranch.S),
+        removeAndDestroyBranch(prevBranch))
+      : newBranch &&
+        (insertBranchBefore(newBranch, parentNode, referenceNode),
+        referenceNode.remove());
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom/walker.mjs
@@ -930,7 +957,7 @@ function skipDestroyedRenders() {
   })(runRender);
 }
 /**
- * Installed by `_enable_catch` (in `./control-flow` -- the wrappers need
+ * Installed by `_enable_catch` (in `./catch` -- the wrappers need
  * `renderCatch`, and the queue must never import branch machinery: a module
  * is hosted in one chunk and the queue is eager in every bundle).
  */
@@ -1204,6 +1231,73 @@ function _hoist(...path) {
 }
 function _hoist_resume(id, ...path) {
   return _resume(id, _hoist(...path));
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom/catch.mjs
+/**
+ * Enables `<try>` catch/pending semantics: effects and renders check their
+ * closest branch for pending awaits and caught errors. Lives in its own
+ * module (not the queue, which only exposes the wrap hooks, and not
+ * control-flow, which hosts branch construction plus its for/spread
+ * imports) so an await/try page's slim hydration bundle pays only for the
+ * catch machinery itself -- a module is hosted in one chunk and the queue
+ * is eager in every bundle.
+ */
+function _enable_catch() {
+  enableCatchPending(
+    (runEffects) =>
+      (effects, checkPending = placeholderShown.has(effects)) => {
+        if (checkPending || caughtError.has(effects)) {
+          let i = 0,
+            fn,
+            scope,
+            branch;
+          for (; i < effects.length; )
+            ((fn = effects[i++]),
+              (scope = effects[i++]),
+              (branch = scope.F)?.H !== 0 &&
+                !(checkPending && handlePendingTry(fn, scope, branch)) &&
+                fn(scope));
+        } else runEffects(effects);
+      },
+    (runRender) => (render) => {
+      try {
+        let branch = render.b.F;
+        for (; branch; ) {
+          if (branch.W) return ((render.f = 1), branch.W.push(render));
+          branch = branch.N;
+        }
+        ((render.f = 0), runRender(render));
+      } catch (error) {
+        renderCatch(render.b, error);
+      }
+    },
+  );
+}
+function handlePendingTry(fn, scope, branch) {
+  for (; branch; ) {
+    if (branch.O?.i) return (branch.J ||= []).push(fn, scope);
+    branch = branch.N;
+  }
+}
+function renderCatch(scope, error) {
+  let tryWithCatch = findBranchWithKey(scope, "E");
+  if (tryWithCatch) {
+    let owner = tryWithCatch._,
+      placeholderBranch = tryWithCatch.P;
+    (placeholderBranch &&
+      (tryWithCatch.O && (tryWithCatch.O.i = 0),
+      (owner["A" + tryWithCatch.C] = placeholderBranch),
+      destroyBranch(tryWithCatch)),
+      caughtError.add(pendingEffects),
+      setConditionalRenderer(
+        owner,
+        tryWithCatch.C,
+        tryWithCatch.E,
+        createAndSetupBranch,
+      ),
+      tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
+  } else throw error;
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom/event.mjs
@@ -1548,6 +1642,173 @@ function updateList(arr, val, push) {
       ? !~index && [...arr, val]
       : ~index && arr.slice(0, index).concat(arr.slice(index + 1))) || arr
   );
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom/spread.mjs
+function _attrs(scope, nodeAccessor, nextAttrs) {
+  let el = scope[nodeAccessor];
+  for (let i = el.attributes.length; i--; ) {
+    let { name } = el.attributes.item(i);
+    (nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))) ||
+      el.removeAttribute(name);
+  }
+  attrsInternal(scope, nodeAccessor, nextAttrs);
+}
+function _attrs_content(scope, nodeAccessor, nextAttrs) {
+  (_attrs(scope, nodeAccessor, nextAttrs),
+    _attr_content(scope, nodeAccessor, nextAttrs?.content));
+}
+function hasAttrAlias(element, attr, nextAttrs) {
+  return (
+    attr === "checked" &&
+    element.tagName === "INPUT" &&
+    "checkedValue" in nextAttrs
+  );
+}
+function _attrs_partial(scope, nodeAccessor, nextAttrs, skip) {
+  let el = scope[nodeAccessor],
+    partial = {};
+  for (let i = el.attributes.length; i--; ) {
+    let { name } = el.attributes.item(i);
+    !skip[name] &&
+      !(nextAttrs && name in nextAttrs) &&
+      el.removeAttribute(name);
+  }
+  for (let name in nextAttrs) {
+    let key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
+    skip[key] || (partial[key] = nextAttrs[name]);
+  }
+  attrsInternal(scope, nodeAccessor, partial);
+}
+function _attrs_partial_content(scope, nodeAccessor, nextAttrs, skip) {
+  (_attrs_partial(scope, nodeAccessor, nextAttrs, skip),
+    _attr_content(scope, nodeAccessor, nextAttrs?.content));
+}
+function attrsInternal(scope, nodeAccessor, nextAttrs) {
+  let el = scope[nodeAccessor],
+    events = scope["I" + nodeAccessor],
+    skip;
+  for (let name in events) events[name] = 0;
+  switch (
+    ((scope["F" + nodeAccessor] = 5),
+    (scope["E" + nodeAccessor] = 0),
+    el.tagName)
+  ) {
+    case "INPUT":
+      if ("checked" in nextAttrs || "checkedChange" in nextAttrs)
+        (_attr_input_checked(
+          scope,
+          nodeAccessor,
+          nextAttrs.checked,
+          nextAttrs.checkedChange,
+        ),
+          (skip = /^checked(?:Value)?(?:Change)?$/));
+      else if ("checkedValue" in nextAttrs || "checkedValueChange" in nextAttrs)
+        (_attr_input_checkedValue(
+          scope,
+          nodeAccessor,
+          nextAttrs.checkedValue,
+          nextAttrs.checkedValueChange,
+          nextAttrs.value,
+        ),
+          (skip = /^(?:value|checked(?:Value)?)(?:Change)?$/));
+      else if ("value" in nextAttrs || "valueChange" in nextAttrs)
+        (_attr_input_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        ),
+          (skip = /^value(?:Change)?$/));
+      else break;
+      break;
+    case "SELECT":
+      ("value" in nextAttrs || "valueChange" in nextAttrs) &&
+        (_attr_select_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        ),
+        (skip = /^value(?:Change)?$/));
+      break;
+    case "TEXTAREA":
+      ("value" in nextAttrs || "valueChange" in nextAttrs) &&
+        (_attr_input_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        ),
+        (skip = /^value(?:Change)?$/));
+      break;
+    case "DETAILS":
+    case "DIALOG":
+      ("open" in nextAttrs || "openChange" in nextAttrs) &&
+        (_attr_details_or_dialog_open(
+          scope,
+          nodeAccessor,
+          nextAttrs.open,
+          nextAttrs.openChange,
+        ),
+        (skip = /^open(?:Change)?$/));
+      break;
+  }
+  for (let name in nextAttrs) {
+    let value = nextAttrs[name];
+    switch (name) {
+      case "class":
+        _attr_class(el, value);
+        break;
+      case "style":
+        _attr_style(el, value);
+        break;
+      default:
+        isEventHandler(name)
+          ? ((events ||= scope["I" + nodeAccessor] = {})[
+              getEventHandlerName(name)
+            ] = value)
+          : skip?.test(name) ||
+            (name === "content" && el.tagName !== "META") ||
+            _attr(el, name, value);
+        break;
+    }
+  }
+}
+function _attr_content(scope, nodeAccessor, value) {
+  let content = normalizeClientRender(value);
+  scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = content?.a) &&
+    (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
+    content?.f &&
+      subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor]));
+  for (let accessor in content?.g)
+    content.g[accessor](scope["A" + nodeAccessor], content.h[accessor]);
+}
+function _attrs_script(scope, nodeAccessor) {
+  let el = scope[nodeAccessor],
+    events = scope["I" + nodeAccessor];
+  switch (scope["F" + nodeAccessor]) {
+    case 0:
+      _attr_input_checked_script(scope, nodeAccessor);
+      break;
+    case 1:
+      _attr_input_checkedValue_script(scope, nodeAccessor);
+      break;
+    case 2:
+      _attr_input_value_script(scope, nodeAccessor);
+      break;
+    case 3:
+      _attr_select_value_script(scope, nodeAccessor);
+      break;
+    case 4:
+      _attr_details_or_dialog_open_script(scope, nodeAccessor);
+      break;
+  }
+  for (let name in events) _on(el, name, events[name]);
+}
+function normalizeClientRender(value) {
+  let renderer = normalizeDynamicRenderer(value);
+  if (renderer && renderer.a) return renderer;
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom/control-flow.mjs
@@ -1909,69 +2170,6 @@ function _try(nodeAccessor, template, walks, setup) {
       (branch.Q = normalizeDynamicRenderer(input.placeholder)));
   };
 }
-/**
- * Enables `<try>` catch/pending semantics: effects and renders check their
- * closest branch for pending awaits and caught errors. Lives here (not in
- * the queue, which only exposes the wrap hooks) so hydration bundles that
- * never use branches don't pay for the machinery -- a module is hosted in
- * one chunk and the queue is eager in every bundle.
- */
-function _enable_catch() {
-  enableCatchPending(
-    (runEffects) =>
-      (effects, checkPending = placeholderShown.has(effects)) => {
-        if (checkPending || caughtError.has(effects)) {
-          let i = 0,
-            fn,
-            scope,
-            branch;
-          for (; i < effects.length; )
-            ((fn = effects[i++]),
-              (scope = effects[i++]),
-              (branch = scope.F)?.H !== 0 &&
-                !(checkPending && handlePendingTry(fn, scope, branch)) &&
-                fn(scope));
-        } else runEffects(effects);
-      },
-    (runRender) => (render) => {
-      try {
-        let branch = render.b.F;
-        for (; branch; ) {
-          if (branch.W) return ((render.f = 1), branch.W.push(render));
-          branch = branch.N;
-        }
-        ((render.f = 0), runRender(render));
-      } catch (error) {
-        renderCatch(render.b, error);
-      }
-    },
-  );
-}
-function handlePendingTry(fn, scope, branch) {
-  for (; branch; ) {
-    if (branch.O?.i) return (branch.J ||= []).push(fn, scope);
-    branch = branch.N;
-  }
-}
-function renderCatch(scope, error) {
-  let tryWithCatch = findBranchWithKey(scope, "E");
-  if (tryWithCatch) {
-    let owner = tryWithCatch._,
-      placeholderBranch = tryWithCatch.P;
-    (placeholderBranch &&
-      (tryWithCatch.O && (tryWithCatch.O.i = 0),
-      (owner["A" + tryWithCatch.C] = placeholderBranch),
-      destroyBranch(tryWithCatch)),
-      caughtError.add(pendingEffects),
-      setConditionalRenderer(
-        owner,
-        tryWithCatch.C,
-        tryWithCatch.E,
-        createAndSetupBranch,
-      ),
-      tryWithCatch.E?.d?.(owner["A" + tryWithCatch.C], [error]));
-  } else throw error;
-}
 function _if(nodeAccessor, ...branchesArgs) {
   nodeAccessor = decodeAccessor(nodeAccessor);
   let branchAccessor = "D" + nodeAccessor,
@@ -2073,33 +2271,6 @@ function _resume_dynamic_tag() {
 }
 function dynamicTagScript(branch) {
   _attrs_script(branch, "a");
-}
-function setConditionalRenderer(
-  scope,
-  nodeAccessor,
-  newRenderer,
-  createBranch,
-) {
-  let referenceNode = scope[nodeAccessor],
-    prevBranch = scope["A" + nodeAccessor],
-    parentNode =
-      referenceNode.nodeType > 1
-        ? (prevBranch?.S || referenceNode).parentNode
-        : referenceNode,
-    newBranch = (scope["A" + nodeAccessor] =
-      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
-  referenceNode === parentNode
-    ? (prevBranch &&
-        (destroyBranch(prevBranch), (referenceNode.textContent = "")),
-      newBranch && insertBranchBefore(newBranch, parentNode, null))
-    : prevBranch
-      ? (newBranch
-          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
-          : parentNode.insertBefore(referenceNode, prevBranch.S),
-        removeAndDestroyBranch(prevBranch))
-      : newBranch &&
-        (insertBranchBefore(newBranch, parentNode, referenceNode),
-        referenceNode.remove());
 }
 /* @__NO_SIDE_EFFECTS__ */
 function loop(forEach) {
@@ -2266,173 +2437,6 @@ function bySecondArg(_item, index) {
 }
 function byFirstArg(name) {
   return name;
-}
-//#endregion
-//#region packages/runtime-tags/dist/dom/spread.mjs
-function _attrs(scope, nodeAccessor, nextAttrs) {
-  let el = scope[nodeAccessor];
-  for (let i = el.attributes.length; i--; ) {
-    let { name } = el.attributes.item(i);
-    (nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))) ||
-      el.removeAttribute(name);
-  }
-  attrsInternal(scope, nodeAccessor, nextAttrs);
-}
-function _attrs_content(scope, nodeAccessor, nextAttrs) {
-  (_attrs(scope, nodeAccessor, nextAttrs),
-    _attr_content(scope, nodeAccessor, nextAttrs?.content));
-}
-function hasAttrAlias(element, attr, nextAttrs) {
-  return (
-    attr === "checked" &&
-    element.tagName === "INPUT" &&
-    "checkedValue" in nextAttrs
-  );
-}
-function _attrs_partial(scope, nodeAccessor, nextAttrs, skip) {
-  let el = scope[nodeAccessor],
-    partial = {};
-  for (let i = el.attributes.length; i--; ) {
-    let { name } = el.attributes.item(i);
-    !skip[name] &&
-      !(nextAttrs && name in nextAttrs) &&
-      el.removeAttribute(name);
-  }
-  for (let name in nextAttrs) {
-    let key = isEventHandler(name) ? `on-${getEventHandlerName(name)}` : name;
-    skip[key] || (partial[key] = nextAttrs[name]);
-  }
-  attrsInternal(scope, nodeAccessor, partial);
-}
-function _attrs_partial_content(scope, nodeAccessor, nextAttrs, skip) {
-  (_attrs_partial(scope, nodeAccessor, nextAttrs, skip),
-    _attr_content(scope, nodeAccessor, nextAttrs?.content));
-}
-function attrsInternal(scope, nodeAccessor, nextAttrs) {
-  let el = scope[nodeAccessor],
-    events = scope["I" + nodeAccessor],
-    skip;
-  for (let name in events) events[name] = 0;
-  switch (
-    ((scope["F" + nodeAccessor] = 5),
-    (scope["E" + nodeAccessor] = 0),
-    el.tagName)
-  ) {
-    case "INPUT":
-      if ("checked" in nextAttrs || "checkedChange" in nextAttrs)
-        (_attr_input_checked(
-          scope,
-          nodeAccessor,
-          nextAttrs.checked,
-          nextAttrs.checkedChange,
-        ),
-          (skip = /^checked(?:Value)?(?:Change)?$/));
-      else if ("checkedValue" in nextAttrs || "checkedValueChange" in nextAttrs)
-        (_attr_input_checkedValue(
-          scope,
-          nodeAccessor,
-          nextAttrs.checkedValue,
-          nextAttrs.checkedValueChange,
-          nextAttrs.value,
-        ),
-          (skip = /^(?:value|checked(?:Value)?)(?:Change)?$/));
-      else if ("value" in nextAttrs || "valueChange" in nextAttrs)
-        (_attr_input_value(
-          scope,
-          nodeAccessor,
-          nextAttrs.value,
-          nextAttrs.valueChange,
-        ),
-          (skip = /^value(?:Change)?$/));
-      else break;
-      break;
-    case "SELECT":
-      ("value" in nextAttrs || "valueChange" in nextAttrs) &&
-        (_attr_select_value(
-          scope,
-          nodeAccessor,
-          nextAttrs.value,
-          nextAttrs.valueChange,
-        ),
-        (skip = /^value(?:Change)?$/));
-      break;
-    case "TEXTAREA":
-      ("value" in nextAttrs || "valueChange" in nextAttrs) &&
-        (_attr_input_value(
-          scope,
-          nodeAccessor,
-          nextAttrs.value,
-          nextAttrs.valueChange,
-        ),
-        (skip = /^value(?:Change)?$/));
-      break;
-    case "DETAILS":
-    case "DIALOG":
-      ("open" in nextAttrs || "openChange" in nextAttrs) &&
-        (_attr_details_or_dialog_open(
-          scope,
-          nodeAccessor,
-          nextAttrs.open,
-          nextAttrs.openChange,
-        ),
-        (skip = /^open(?:Change)?$/));
-      break;
-  }
-  for (let name in nextAttrs) {
-    let value = nextAttrs[name];
-    switch (name) {
-      case "class":
-        _attr_class(el, value);
-        break;
-      case "style":
-        _attr_style(el, value);
-        break;
-      default:
-        isEventHandler(name)
-          ? ((events ||= scope["I" + nodeAccessor] = {})[
-              getEventHandlerName(name)
-            ] = value)
-          : skip?.test(name) ||
-            (name === "content" && el.tagName !== "META") ||
-            _attr(el, name, value);
-        break;
-    }
-  }
-}
-function _attr_content(scope, nodeAccessor, value) {
-  let content = normalizeClientRender(value);
-  scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = content?.a) &&
-    (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
-    content?.f &&
-      subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor]));
-  for (let accessor in content?.g)
-    content.g[accessor](scope["A" + nodeAccessor], content.h[accessor]);
-}
-function _attrs_script(scope, nodeAccessor) {
-  let el = scope[nodeAccessor],
-    events = scope["I" + nodeAccessor];
-  switch (scope["F" + nodeAccessor]) {
-    case 0:
-      _attr_input_checked_script(scope, nodeAccessor);
-      break;
-    case 1:
-      _attr_input_checkedValue_script(scope, nodeAccessor);
-      break;
-    case 2:
-      _attr_input_value_script(scope, nodeAccessor);
-      break;
-    case 3:
-      _attr_select_value_script(scope, nodeAccessor);
-      break;
-    case 4:
-      _attr_details_or_dialog_open_script(scope, nodeAccessor);
-      break;
-  }
-  for (let name in events) _on(el, name, events[name]);
-}
-function normalizeClientRender(value) {
-  let renderer = normalizeDynamicRenderer(value);
-  if (renderer && renderer.a) return renderer;
 }
 //#endregion
 //#region packages/runtime-tags/dist/common/compat-meta.mjs

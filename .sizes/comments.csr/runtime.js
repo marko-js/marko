@@ -1,4 +1,4 @@
-// size: 6600 (min) 2901 (brotli)
+// size: 6600 (min) 2896 (brotli)
 //#region packages/runtime-tags/dist/common/helpers.mjs
 let decodeAccessor = (num) =>
   (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
@@ -105,6 +105,33 @@ function removeAndDestroyBranch(branch) {
 }
 function insertBranchBefore(branch, parentNode, nextSibling) {
   insertChildNodes(parentNode, nextSibling, branch.S, branch.K);
+}
+function setConditionalRenderer(
+  scope,
+  nodeAccessor,
+  newRenderer,
+  createBranch,
+) {
+  let referenceNode = scope[nodeAccessor],
+    prevBranch = scope["A" + nodeAccessor],
+    parentNode =
+      referenceNode.nodeType > 1
+        ? (prevBranch?.S || referenceNode).parentNode
+        : referenceNode,
+    newBranch = (scope["A" + nodeAccessor] =
+      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
+  referenceNode === parentNode
+    ? (prevBranch &&
+        (destroyBranch(prevBranch), (referenceNode.textContent = "")),
+      newBranch && insertBranchBefore(newBranch, parentNode, null))
+    : prevBranch
+      ? (newBranch
+          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
+          : parentNode.insertBefore(referenceNode, prevBranch.S),
+        removeAndDestroyBranch(prevBranch))
+      : newBranch &&
+        (insertBranchBefore(newBranch, parentNode, referenceNode),
+        referenceNode.remove());
 }
 //#endregion
 //#region packages/runtime-tags/dist/dom/walker.mjs
@@ -463,33 +490,6 @@ function _if(nodeAccessor, ...branchesArgs) {
         );
     }
   );
-}
-function setConditionalRenderer(
-  scope,
-  nodeAccessor,
-  newRenderer,
-  createBranch,
-) {
-  let referenceNode = scope[nodeAccessor],
-    prevBranch = scope["A" + nodeAccessor],
-    parentNode =
-      referenceNode.nodeType > 1
-        ? (prevBranch?.S || referenceNode).parentNode
-        : referenceNode,
-    newBranch = (scope["A" + nodeAccessor] =
-      newRenderer && createBranch(scope.$, newRenderer, scope, parentNode));
-  referenceNode === parentNode
-    ? (prevBranch &&
-        (destroyBranch(prevBranch), (referenceNode.textContent = "")),
-      newBranch && insertBranchBefore(newBranch, parentNode, null))
-    : prevBranch
-      ? (newBranch
-          ? insertBranchBefore(newBranch, parentNode, prevBranch.S)
-          : parentNode.insertBefore(referenceNode, prevBranch.S),
-        removeAndDestroyBranch(prevBranch))
-      : newBranch &&
-        (insertBranchBefore(newBranch, parentNode, referenceNode),
-        referenceNode.remove());
 }
 /* @__NO_SIDE_EFFECTS__ */
 function loop(forEach) {
