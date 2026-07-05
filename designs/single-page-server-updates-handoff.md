@@ -882,31 +882,52 @@ live only here so far:
   variables (dynamic tags, `<await>`, and controllable attrs are done —
   see "Current state"; the controllable gaps `checkedValue`/spreads/
   `<option value>` are in `agent-feedback/bugs.md`).
-- `$global` promotion — **implemented** (commit `feat: promote $global reads
-to param-like sources under the persisted option`). Mechanism: under the
-  `persisted` option, `$global` member reads get bindings (program-section
-  root + property aliases) whose `Sources` carry a new `global` flag; guard
-  codegen splits it out — the param part rides the existing per-group
-  `_scope_reason()` guards unchanged while a global part ORs in
-  `_persisted_reason()`, a runtime read of `$global.persisted` itself, so
-  cross-template reads gate with no parent threading (and parents passing
-  $global-derived props thread the persisted bit to children through the
-  existing reason records). Values are untouched: reads bail out of scope-slot
-  rewriting (live member access on the global object), global-sourced props
-  never serialize values (`getExprIfSerialized` returns undefined;
-  `writeSerializedBinding` skips global bindings), and DOM statements
-  referencing only same-section global bindings fold into setup. Verified:
-  non-persisted builds and non-flagged renders byte-identical; fixtures
-  `persisted-global-reads`(+`-opt-out`); full suite 8293 passing; ecommerce
-  app emits full markers/spine (measured: `/item` 44→125 markers, +16% gzip;
-  `/search` 201→802, +50% gzip on that hole-dense worst case — the number
-  the marker-suppression levers must bring down).
-  Remaining from the original design note: per-key granularity for
-  serialized vs non-serialized globals (currently every static `$global.key`
-  read promotes; non-serialized keys cost markers they can't use), and the
-  DOM-side value-signal chains for global keys exist only where reads are
-  cross-section (closures/intersections) — pure setup-folded holes rely on
-  placement for updates, per the placement-only model.
+- `$global` promotion — **implemented, demotion decided** (2026-07-05).
+  Current mechanism: under the `persisted` option, `$global` member reads
+  get bindings (program-section root + property aliases) whose `Sources`
+  carry a `global` flag; guards OR in `_persisted_reason()`; reads stay
+  live member accesses; global values never serialize; same-section
+  global-only statements fold into setup. Measured cost of the marker
+  spine: `/item` 44→125 markers (+16% gzip); `/search` 201→802 (+50% on
+  the hole-dense worst case). Per-key suppression was considered and
+  REJECTED (`$global` carries user-defined arbitrary keys; compile-time
+  key knowledge is impossible and stale-hole failures are silent).
+
+  **Decided replacement (not yet implemented) — no promotion at all:**
+  `$global` is not qualitatively special except that its fresh values
+  exist client-side after a navigation, so treat reads like any other
+  server-volatile expression and lean on that one property:
+  1. Kill `trackGlobalReference` bindings/aliases/closures/global
+     value-signal chains and per-key `Sources.global` precision. A
+     syntactic, expression-level "reads `$global`" flag (set during
+     analyze, no bindings) taints the expression's serialize sources
+     request-derived — markers, reason threading to children, and
+     update-merge recording (`isReasonDynamic`) all key off sources as
+     today.
+  2. Update payloads always carry the `serializedGlobals` partial and the
+     applier `Object.assign`s it onto the live `$global` BEFORE section
+     merges dispatch (already the applier's order: scope-0 partials apply
+     in `applyScopes`).
+  3. Mixed `state ∩ $global` expressions are ordinary server∩client
+     intersections: the compiled `?update` entry invokes the section's
+     global-reading statements after the assign (a small per-section
+     `$globals(scope)` fn in the `?persisted` entry, registered by hashed
+     id like everything else) and they re-run against live state + the
+     freshly assigned global. No broadcast machinery, no bindings.
+  4. Pure `$global` holes need no per-hole `_hole_value` capture: the
+     globals partial IS the payload (sent once, deduped across N holes);
+     matched scopes re-render those statements via (3), fresh renders
+     read the live global during construction. Captures remain for
+     compute/param-derived holes (placement-only stays for values the
+     client cannot recompute).
+  5. Expected fallout: `stripOwnGlobalRefs`, the `_or` global pending
+     exclusions, `isGlobalBinding` paths, and the global closure shapes
+     all delete; `persisted-global-reads`/`-opt-out`, `-slim-main`,
+     `-or-stall`, `-state-branch` compiled shapes simplify; the chip
+     active-state checks in the app validation suite are the behavioral
+     guard for (3). Markers themselves remain — they are the patch
+     addresses; what shrinks is machinery, captures, and bundle bytes.
+
 - Root pairing convention; concurrent navigations (abort between frames);
   `by`-less loop diagnostics; effect ordering confirmation; pair-store
   session persistence; when to enable hint pruning.
