@@ -487,7 +487,16 @@ export default {
           const valueReferences = value.extra?.referencedBindings;
 
           if (tagName === "option" && name === "value") {
-            write`${callRuntime("_attr_option_value", value)}`;
+            // Request-derived option values ride persisted updates like any
+            // attr hole: the dom compile records a plain `_attr` merge for
+            // them, so the capture here is what lets matched options update
+            // and keyed-reconcile-fresh options fill their value. Selection
+            // re-sync under an unchanged select value is a recorded
+            // follow-up (agent-feedback/bugs.md).
+            const holeValue =
+              !confident &&
+              buildAttrHoleValue(nodeBinding, tagSection, name, value);
+            write`${callRuntime("_attr_option_value", holeValue || value)}`;
             continue;
           }
 

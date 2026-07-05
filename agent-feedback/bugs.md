@@ -58,14 +58,15 @@ auditing: the `_or` pending count excludes members by source shape
 (`sources.global` without state/param), which under-counts derived
 request-derived members that CAN fire through registered update merges.
 
-## Controllable update coverage: `checkedValue`, spread controllables, `<option value>`
+## Controllable update coverage: `checkedValue`, spread controllables, selection re-sync
 
-`packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` (controllable capture/merge) | 2026-07-04 | impact:low | effort:med
+`packages/runtime-tags/src/translator/visitors/tag/native-tag.ts` (controllable capture/merge) | 2026-07-05 | impact:low | effort:med
 
 The controllable attr update slice covers single-value controllables
 (`value` on input/select/textarea, `checked`, `open`) via the helper's
-`_default` variant. Three adjacent shapes still don't ride persisted
-updates:
+`_default` variant, and `<option value=dynamic>` holes now capture/merge
+as plain attrs (see the `persisted-update-option-values` fixture). Still
+outstanding:
 
 1. `checkedValue` pairs two interdependent values (`checkedValue` +
    `value`); sparse per-key captures can't replay the pair when only one
@@ -75,7 +76,9 @@ updates:
    resolve them at runtime) have no static value expression to wrap, so
    nothing captures; a fix needs capture support inside the html `_attrs`
    runtime itself.
-3. `<option value=dynamic>` renders via `_attr_option_value` with no
-   capture/merge (the select's own `value` merge re-selects by option
-   value, so a changed option value under an unchanged select value can
-   leave selection stale).
+3. Selection re-sync: after option values merge, live selectedness is not
+   re-derived -- a changed option value under an unchanged select value
+   can leave the user-visible selection on the wrong option. Needs a
+   design decision on uncontrolled-select semantics (re-match the select's
+   default value vs preserve element-identity selection) plus cross-element
+   coordination from the option's section to its owning select.
