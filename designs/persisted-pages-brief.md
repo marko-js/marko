@@ -92,7 +92,7 @@ page is stored server-side, so any instance can answer any navigation.
   deliberately hole-dense worst case. Planned marker-suppression levers
   target exactly this.
 - **Eager JS sits above the non-persisted baseline** (benchmark search page:
-  9.7 kB gz vs 4.5) — the client router plus what interactivity needs; the
+  9.1 kB gz vs 4.5) — the client router plus what interactivity needs; the
   merge programs and render graphs load with the first navigation, not up
   front.
 

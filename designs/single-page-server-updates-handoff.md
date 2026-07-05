@@ -693,7 +693,10 @@ via ?register`, naming since updated). The retainer was named by elimination: a 
   fully slim in the real build (/search main region = one
   `enableBranches()` call, 7.7 kB → 698 B unminified), eager /search
   **21.2 kB raw / 9.7 kB gz** (was 31.5/13.5; non-persisted baseline
-  8.6/4.5), /cart 15.9/7.3, /item 28.4/13.1. The
+  8.6/4.5), /cart 15.9/7.3, /item 28.4/13.1 — and the two runtime-hosting
+  follow-ups landed after the checkpoint brought /search to **19.1 raw /
+  9.1 gz** and /item to **19.8 / 9.5** (catch machinery split into
+  `dom/catch.ts`; controllable helpers split per kind). The
   `persisted-update-layout` fixture's eager client JS fell 96%. All 38
   browser checks + duality probe re-validated (production and dev);
   suite 8377 passing with non-persisted output untouched. Remaining
