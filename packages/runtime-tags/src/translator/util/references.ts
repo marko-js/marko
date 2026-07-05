@@ -1759,8 +1759,8 @@ function addReadToExpression(
   const exprRoot = getExprRoot(fnRoot || root);
   const section = getOrCreateSection(exprRoot);
   // Reads recorded after the owning expression was merged into another
-  // node's extra (eg promoted `$global` reads, tracked at identifier-visit
-  // time -- after an `<if>`'s analyze merged its test into the tag extra)
+  // node's extra (anything tracked at identifier-visit time -- eg `$global`
+  // reads -- after an `<if>`'s analyze merged its test into the tag extra)
   // must land on the merge target, or the expression's references split
   // and the merged extra resolves with the read missing.
   const exprExtra = getCanonicalExtra(
