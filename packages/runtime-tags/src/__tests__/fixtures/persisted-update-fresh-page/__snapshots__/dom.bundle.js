@@ -1,10 +1,4 @@
 // tags/actions.marko
-const $template = /* @__PURE__ */ ((_w0) => `${_w0}<button class=add>added <!> of <!> (<!> in cart)</button>`)("");
-const $walks = /* @__PURE__ */ ((_w0) => `0${_w0}& Db%c%c%l`)("");
-const $productId = /* @__PURE__ */ _const(9, ($scope) => _text($scope.e, $scope.j));
-const $input_id = ($scope, input_id) => {
-	if (!_updating()) $productId($scope, input_id);
-};
 const $list = _var_resume("b0", /* @__PURE__ */ _const(10, ($scope) => $list_length($scope, $scope.k?.length)));
 const $list_length = ($scope, list_length) => _text($scope.f, list_length);
 const $added = /* @__PURE__ */ _let(12, ($scope) => _text($scope.d, $scope.m));
@@ -12,13 +6,6 @@ const $setup__script$2 = _script_update("b1", ($scope) => _on($scope.c, "click",
 	$added($scope, $scope.m + 1);
 	_var_change($scope.a, [...$scope.k, $scope.j]);
 }));
-function $setup($scope) {
-	_var($scope, 0, $list);
-	/* @__PURE__ */ $setup$1($scope.a);
-	$input_name($scope.a, "cart");
-	$added($scope, 0);
-	$setup__script$2($scope);
-}
 enableBranches();
 
 // tags/layout.marko
@@ -30,62 +17,7 @@ enableBranches();
 
 // template.marko
 _enable_catch();
-const $for_content2__rec_title = ($scope, rec_title) => _text($scope.a, rec_title);
-const $for_content2__$params = ($scope, $params4) => $for_content2__rec_title($scope, $params4[0]?.title);
-const $await_content__for = /* @__PURE__ */ _for_of(0, "<li> </li>", "D l", 0, $for_content2__$params);
-const $await_content__recs = ($scope, recs) => $await_content__for($scope, [recs, function(rec) {
-	return rec.id;
-}]);
-const $await_content__$params = ($scope, $params3) => $await_content__recs($scope, $params3[0]);
 const $placeholder_content = _content_resume("a8", "loading recommendations…", "b");
-const $await_content = /* @__PURE__ */ _await_content(0, "<ul class=recs></ul>", " b");
-const $try_content__await_promise = /* @__PURE__ */ _await_promise(0, $await_content__$params);
-const $try_content__product_id = /* @__PURE__ */ _closure_get(5, ($scope) => {
-	if (!_updating()) $try_content__await_promise($scope, getRecommendations($scope._._.f));
-}, ($scope) => $scope._._);
-const $try_content__setup = ($scope) => {
-	if (!_updating()) $try_content__product_id($scope);
-	$await_content($scope);
-};
-const $else_content2__product_image = /* @__PURE__ */ _if_closure(0, 1, ($scope) => _attr($scope.a, "src", $scope._.c));
-const $else_content2__try = /* @__PURE__ */ _try(4, "<!><!><!>", "b%c", $try_content__setup);
-const $else_content2__setup = ($scope) => {
-	if (!_updating()) $else_content2__product_image._($scope);
-	if (!_updating()) $else_content2__product_title._($scope);
-	if (!_updating()) $else_content2__product_price._($scope);
-	if (!_updating()) $else_content2__product_id._($scope);
-	$setup($scope.d);
-	$else_content2__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
-};
-const $else_content2__product_title = /* @__PURE__ */ _if_closure(0, 1, ($scope) => {
-	_attr($scope.a, "alt", $scope._.d);
-	_text($scope.b, $scope._.d);
-});
-const $else_content2__product_price = /* @__PURE__ */ _if_closure(0, 1, ($scope) => _text($scope.c, $scope._.e.toFixed(2)));
-const $else_content2__product_id = /* @__PURE__ */ _if_closure(0, 1, ($scope) => $input_id($scope.d, $scope._.f));
-const $Item_content__if = /* @__PURE__ */ _if(0, "<h2>not found</h2>", "b", 0, /* @__PURE__ */ ((_w0) => `<img class=thumb><h2 class=title> </h2><div class=price>$<!></div>${_w0}<!><!>`)($template), /* @__PURE__ */ ((_w0) => ` bD lDb%l/${_w0}&%c`)($walks), $else_content2__setup);
-const $Item_content__product = ($scope, product) => {
-	$Item_content__product_image($scope, product?.image);
-	$Item_content__product_title($scope, product?.title);
-	$Item_content__product_price($scope, product?.price);
-	$Item_content__product_id($scope, product?.id);
-	$Item_content__if($scope, !product ? 0 : 1);
-};
-const $Item_content__$global_productId = /* @__PURE__ */ _closure_get(7, ($scope) => {
-	if (!_updating()) $Item_content__product($scope, $scope.$.productId && getProduct($scope.$.productId));
-});
-const $Item_content__setup = ($scope) => {
-	if (!_updating()) $Item_content__$global_productId($scope);
-};
-const $Item_content__product_image = /* @__PURE__ */ _const(2, $else_content2__product_image);
-const $Item_content__product_title = /* @__PURE__ */ _const(3, $else_content2__product_title);
-const $Item_content__product_price = /* @__PURE__ */ _const(4, $else_content2__product_price);
-const $Item_content__product_id__closure = /* @__PURE__ */ _closure($try_content__product_id);
-const $Item_content__product_id = /* @__PURE__ */ _const(5, ($scope) => {
-	$else_content2__product_id($scope);
-	$Item_content__product_id__closure($scope);
-});
-const $Item_content = _content_resume("a5", "<!><!><!>", "b%c", $Item_content__setup);
 const $for_content__entry_product_title = ($scope, entry_product_title) => _text($scope.a, entry_product_title);
 const $for_content__entry_product_price = ($scope, entry_product_price) => _text($scope.b, entry_product_price);
 const $for_content__$params = ($scope, $params2) => {
@@ -113,14 +45,8 @@ const $Cart_content__list = _var_resume("a7", /* @__PURE__ */ _const(3, ($scope)
 	$Cart_content__products($scope, getProducts?.($scope.d) || []);
 	$Cart_content__list__OR__products($scope);
 }));
-const $Cart_content__setup = ($scope) => {
-	_var($scope, 0, $Cart_content__list);
-	/* @__PURE__ */ $setup$1($scope.a);
-	$input_name($scope.a, "cart");
-};
 const $Cart_content__if = /* @__PURE__ */ _if(2, "<p class=cart>cart is empty</p>", "b", 0, "<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l", $else_content__setup);
 const $Cart_content__entries_length = ($scope, entries_length) => $Cart_content__if($scope, !entries_length ? 0 : 1);
-const $Cart_content = _content_resume("a6", /* @__PURE__ */ ((_w0) => `<!>${_w0}<!><!>`)(""), /* @__PURE__ */ ((_w0) => `b0${_w0}&%c`)(""), $Cart_content__setup);
 const $count = /* @__PURE__ */ _let(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a10", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
@@ -135,8 +61,6 @@ const $update$3 = (patch, live) => {
 	if ("a" in patch) live["a"] = patch["a"];
 	if ("b" in patch) live["b"] = patch["b"];
 	if ("c" in patch) live["c"] = patch["c"];
-	if ("e" in patch) live["e"] = patch["e"];
-	if ("f" in patch) live["f"] = patch["f"];
 };
 var shared_list_marko_update_default = _resume("d3", $update$3);
 
@@ -215,9 +139,6 @@ const $update = (patch, live) => {
 	if ("d" in patch) _update_seed(live, $count_seed, patch["d"]);
 	if ("e" in patch) live["e"] = patch["e"];
 	if ("f" in patch) live["f"] = patch["f"];
-	if ("g" in patch) live["g"] = patch["g"];
-	if ("h" in patch) live["h"] = patch["h"];
-	if ("i" in patch) live["i"] = patch["i"];
 	if ("c" in patch) layout_marko_update_default(patch["c"], live["c"]);
 };
 _update_content("a5", $Item_content__update);
@@ -251,10 +172,9 @@ const getProducts = typeof window === "undefined" ? (ids) => ids.map((id) => ({
 })) : void 0;
 
 // tags/shared-list.marko
-const $setup = () => {};
 const subsByKey = {};
 const $value = /* @__PURE__ */ _let(3, ($scope) => _return($scope, $scope.d));
-const $input_name__OR__$global_data__script = _script_update("d1", ($scope) => {
+const $input_name__script = _script_update("d1", ($scope) => {
 	{
 		const subs = subsByKey[$scope.c] ??= /* @__PURE__ */ new Set();
 		const sub = () => $value($scope, $scope.$.data[$scope.c]);
@@ -262,13 +182,6 @@ const $input_name__OR__$global_data__script = _script_update("d1", ($scope) => {
 		subs.add(sub);
 	}
 });
-const $input_name__OR__$global_data = /* @__PURE__ */ _or(6, ($scope) => {
-	$signalReset($scope, 0);
-	_return_change($scope, $valueChange($scope));
-	$value($scope, $scope.$.data[$scope.c]);
-	$input_name__OR__$global_data__script($scope);
-}, 0);
-const $input_name = /* @__PURE__ */ _const(2, $input_name__OR__$global_data);
 function $valueChange($scope) {
 	return function(next) {
 		$scope.$.data[$scope.c] = next;

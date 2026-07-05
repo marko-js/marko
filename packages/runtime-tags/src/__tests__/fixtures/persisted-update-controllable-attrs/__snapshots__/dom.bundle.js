@@ -38,8 +38,6 @@ const $update = (patch, live) => {
 	if ("g" in patch) live["g"] = patch["g"];
 	if ("h" in patch) live["h"] = patch["h"];
 	if ("i" in patch) live["i"] = patch["i"];
-	if ("j" in patch) live["j"] = patch["j"];
-	if ("k" in patch) live["k"] = patch["k"];
 	if ("Nvalue:a" in patch) _attr_input_value_default(live, "a", patch["Nvalue:a"]);
 	if ("Nvalue:b" in patch) _attr_select_value_default(live, "b", patch["Nvalue:b"]);
 	if ("c" in patch) item_form_marko_update_default(patch["c"], live["c"]);

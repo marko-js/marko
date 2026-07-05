@@ -4,14 +4,19 @@
 // exit assembles them into compiled merge functions. Persisted dom builds
 // use the same predicates to register the shared pieces (value/conditional
 // signals, loop branch content) so both compiles agree on register ids.
-import type { types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
 
-import { isPersisted, isUpdateEntryBuild } from "./marko-config";
+import {
+  isPersisted,
+  isPersistedEntryBuild,
+  isUpdateEntryBuild,
+} from "./marko-config";
 import { forEach } from "./optional";
 import { type Binding, BindingType, isReferencedExtra } from "./references";
 import type { Section } from "./sections";
 import {
   getSerializeReason,
+  getSerializeSourcesForExpr,
   getSerializeSourcesForRef,
 } from "./serialize-reasons";
 import { getResumeRegisterId, getSignals } from "./signals";
@@ -95,8 +100,60 @@ export function addUpdateMerge(section: Section, merge: UpdateMerge) {
   }
 }
 
+const [getUpdateGlobalsStatementsRaw] = createSectionState<t.Statement[]>(
+  "updateGlobalsStatements",
+  () => [],
+);
+
+export function getUpdateGlobalsStatements(section: Section) {
+  return getUpdateGlobalsStatementsRaw(section);
+}
+
+/**
+ * Statements mixing client state with `$global` can't be patched by value
+ * (the server renders update responses with fresh state, so it doesn't know
+ * the live operand) and won't re-run through a value signal (nothing
+ * state-side changed) -- instead the update entry re-invokes a registered
+ * copy against the live scope after the patch's `$global` assign lands.
+ * Collected during both the persisted-entry and update-entry compiles (the
+ * same full dom translate) so the register/invoke decisions agree. Records
+ * the live node -- identifier replacements (`$global` -> scope member) land
+ * during traversal, after some collection sites run -- so the persisted
+ * entry snapshots copies via `cloneUpdateGlobalsStatements` at program exit.
+ */
+export function addUpdateGlobalsStatement(
+  section: Section,
+  extra: t.NodeExtra | undefined,
+  statement: t.Statement,
+) {
+  if (extra && (isPersistedEntryBuild() || isUpdateEntryBuild())) {
+    const sources = getSerializeSourcesForExpr(extra);
+    if (sources && sources.state && sources.global) {
+      getUpdateGlobalsStatementsRaw(section).push(statement);
+    }
+  }
+}
+
+/**
+ * Detaches the recorded statements from the dom program's AST as deep
+ * clones. Must run after the translate traversal (so identifier
+ * replacements have landed) and before `writeSignals` (which rewrites the
+ * originals in place against their owning signal, eg substituting value
+ * params the registered copies wouldn't have in scope).
+ */
+export function cloneUpdateGlobalsStatements(section: Section) {
+  const statements = getUpdateGlobalsStatementsRaw(section);
+  for (let i = statements.length; i--; ) {
+    statements[i] = t.cloneNode(statements[i], true);
+  }
+}
+
 export function getUpdateContentRegisterId(bodySection: Section) {
   return getResumeRegisterId(bodySection, "content", "update");
+}
+
+export function getUpdateGlobalsRegisterId(section: Section) {
+  return getResumeRegisterId(section, undefined, "update_globals");
 }
 
 export function getUpdateVarRegisterId(section: Section, binding: Binding) {

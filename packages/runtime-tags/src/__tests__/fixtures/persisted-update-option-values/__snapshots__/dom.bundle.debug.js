@@ -15,8 +15,6 @@ const $update = (patch, live) => {
 	if ("$pattern" in patch) live["$pattern"] = patch["$pattern"];
 	if ("cfg" in patch) live["cfg"] = patch["cfg"];
 	if ("cfg_options" in patch) live["cfg_options"] = patch["cfg_options"];
-	if ("$global" in patch) live["$global"] = patch["$global"];
-	if ("$global_cfg" in patch) live["$global_cfg"] = patch["$global_cfg"];
 	if ("BranchScopes:#select/2" in patch) $for_update(live, [patch["BranchScopes:#select/2"], "#LoopKey"]);
 };
 var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
@@ -35,7 +33,7 @@ const $for = /* @__PURE__ */ _for_of("#select/2", "<option> </option>", " D l", 
 const $cfg_options = ($scope, cfg_options) => $for($scope, [cfg_options, function(opt) {
 	return opt.key;
 }]);
-const $count = /* @__PURE__ */ _let("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

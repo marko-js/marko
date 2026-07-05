@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "c", _persisted_reason(), _persisted_reason(), _persisted_reason());
 	_script($scope0_id, "a6");
 	writeScope($scope0_id, {
-		n: _state_reason() && count,
+		l: _state_reason() && count,
 		Bg: _persisted_reason() && $search_q__closures,
 		Bf: _persisted_reason() && $search_page__closures
 	});

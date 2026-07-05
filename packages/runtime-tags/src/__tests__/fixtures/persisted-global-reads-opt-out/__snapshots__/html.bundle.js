@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		if ($global().params.sale) {
 			const $scope1_id = _scope_id();
 			_html(`<em>Sale ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "a", $global().params.sale, _persisted_reason()))}${_el_resume($scope1_id, "a", _persisted_reason())}% off</em>`);
-			_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) });
+			_persisted_reason() && writeScope($scope1_id, {});
 			return 0;
 		}
 	}, $scope0_id, "e", _persisted_reason(), 1 | _persisted_reason(), _persisted_reason(), "</section>", 1);

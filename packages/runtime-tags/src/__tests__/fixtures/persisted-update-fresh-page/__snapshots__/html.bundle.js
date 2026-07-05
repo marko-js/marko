@@ -79,10 +79,9 @@ var layout_default = _template("c", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const $global_productId__closures = /* @__PURE__ */ new Set();
 	let count = 0;
 	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
-	const Cart = { content: _content_resume("a6", () => {
+	const Cart = { content: _content("a6", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		const $childScope = _peek_scope_id();
@@ -120,8 +119,8 @@ var template_default = _template("a", (input) => {
 			a: _existing_scope($childScope)
 		});
 		_resume_branch($scope1_id);
-	}, $scope0_id) };
-	const Item = { content: _content_resume("a5", () => {
+	}) };
+	const Item = { content: _content("a5", () => {
 		const $scope5_id = _scope_id();
 		const $Item_content__product_id__closures = /* @__PURE__ */ new Set();
 		_scope_reason();
@@ -167,19 +166,14 @@ var template_default = _template("a", (input) => {
 				return 1;
 			}
 		}, $scope5_id, "a", _persisted_reason(), _persisted_reason(), _persisted_reason());
-		_persisted_reason() && _subscribe($global_productId__closures, writeScope($scope5_id, {
-			_: _scope_with_id($scope0_id),
-			Bf: $Item_content__product_id__closures
-		}));
-		_resume_branch($scope5_id);
-	}, $scope0_id) };
+		_persisted_reason() && writeScope($scope5_id, { Bf: $Item_content__product_id__closures });
+	}) };
 	const $childScope3 = _peek_scope_id();
 	_set_serialize_reason(_persisted_reason());
 	layout_default({ content: $global().view === "item" ? Item : Cart });
 	_script($scope0_id, "a10");
 	writeScope($scope0_id, {
 		d: _state_reason() && count,
-		Bh: _persisted_reason() && $global_productId__closures,
 		c: _persisted_reason() && _existing_scope($childScope3)
 	});
 	_resume_branch($scope0_id);

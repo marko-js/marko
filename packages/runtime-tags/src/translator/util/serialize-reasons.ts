@@ -199,13 +199,16 @@ export function getSerializeReason(
 }
 
 export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
-  if (isReferencedExtra(expr)) {
-    const sources = getSerializeSourcesForRef(expr.referencedBindings);
-    if (sources) return sources;
-  }
-  // Refs-less dynamic expressions are volatile in persisted builds (an MPA
-  // reload could change them, so navigations must too).
-  return getVolatileExprSources(expr);
+  // `$global`-reading and refs-less dynamic (volatile) expressions taint
+  // request-derived in persisted builds -- an MPA reload could change
+  // them, so navigations must too. The taint merges WITH any tracked ref
+  // sources so mixed state/global expressions keep both dimensions.
+  return mergeSources(
+    isReferencedExtra(expr)
+      ? getSerializeSourcesForRef(expr.referencedBindings)
+      : undefined,
+    getVolatileExprSources(expr),
+  );
 }
 
 export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra> | boolean) {

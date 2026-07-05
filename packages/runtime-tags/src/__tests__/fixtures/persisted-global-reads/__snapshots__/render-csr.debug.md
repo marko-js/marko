@@ -201,3 +201,7 @@ container.querySelector("button.buy").click();
 ```
 UPDATE: button::text "13" => "23"
 ```
+
+# Update `{"$global":{"persisted":true,"title":"Persisted Page","params":{"id":7,"tag":"","sale":35},"serializedGlobals":{"title":true,"params":true}}}`
+
+# Update `{"$global":{"persisted":true,"title":"Persisted Page","params":{"id":7,"tag":"","sale":35},"serializedGlobals":{"title":true,"params":true}}}`

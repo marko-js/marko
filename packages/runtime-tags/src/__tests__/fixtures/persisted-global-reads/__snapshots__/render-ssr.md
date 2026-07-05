@@ -248,3 +248,32 @@ container.querySelector("button.buy").click();
 ```
 UPDATE: button::text "13" => "23"
 ```
+
+# Update `{"$global":{"persisted":true,"title":"Persisted Page","params":{"id":7,"tag":"","sale":35},"serializedGlobals":{"title":true,"params":true}}}`
+```html
+<h1>
+  Persisted Page
+</h1>
+<a
+  href="/items/7"
+>
+  link
+</a>
+<button>
+  23
+</button>
+<section>
+  <em>
+    Sale 35% off
+  </em>
+  <button
+    class="buy"
+  >
+    buy
+  </button>
+</section>
+```
+## Change
+```
+UPDATE: section[class] "hot" => null
+```

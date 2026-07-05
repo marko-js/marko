@@ -14,12 +14,6 @@ const $update = (patch, live) => {
 	if ("$pattern" in patch) live["$pattern"] = patch["$pattern"];
 	if ("settings" in patch) live["settings"] = patch["settings"];
 	if ("settings_prefix" in patch) live["settings_prefix"] = patch["settings_prefix"];
-	if ("$global" in patch) live["$global"] = patch["$global"];
-	if ("$global_settings" in patch) live["$global_settings"] = patch["$global_settings"];
-	if ("$global_show" in patch) live["$global_show"] = patch["$global_show"];
-	if ("$global_info" in patch) live["$global_info"] = patch["$global_info"];
-	if ("$global_info_a" in patch) live["$global_info_a"] = patch["$global_info_a"];
-	if ("$global_info_b" in patch) live["$global_info_b"] = patch["$global_info_b"];
 	if ("ConditionalRenderer:#text/2" in patch) {
 		$if_update(live, patch["ConditionalRenderer:#text/2"]);
 		const $patchBranch = patch["BranchScopes:#text/2"], $liveBranch = live["BranchScopes:#text/2"], $branchMerge = [$if_content__update, 0][patch["ConditionalRenderer:#text/2"]];
@@ -38,16 +32,13 @@ const $if_content__setup__script = _script_update("__tests__/template.marko_1", 
 }));
 const $if_content__setup = ($scope) => {
 	if (!_updating()) $if_content__settings_prefix._($scope);
-	if (!_updating()) $if_content__$global_info_a._($scope);
-	if (!_updating()) $if_content__$global_info_b._($scope);
+	_text($scope["#text/3"], $scope.$global.info.a);
 	$if_content__pair($scope, `${$scope.$global.info.a}-${$scope.$global.info.b}`);
 	$if_content__setup__script($scope);
 };
-const $if_content__$global_info_a = /* @__PURE__ */ _if_closure("#text/2", 0, ($scope) => _text($scope["#text/3"], $scope.$global.info.a));
-const $if_content__$global_info_b = /* @__PURE__ */ _if_closure("#text/2", 0);
 const $pattern2 = ($scope, $pattern) => $settings_prefix($scope, $pattern[0]?.prefix);
 const $settings_prefix = /* @__PURE__ */ _const("settings_prefix", $if_content__settings_prefix);
-const $count = /* @__PURE__ */ _let("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 const $if = /* @__PURE__ */ _if("#text/2", "<p class=pair> </p><button class=bump>bump</button><p class=combo><!>:<!></p>", "D l bD%c%l", $if_content__setup, "<p class=empty>hidden</p>", "b");
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);

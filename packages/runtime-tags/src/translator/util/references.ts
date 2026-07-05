@@ -177,6 +177,7 @@ declare module "@marko/compiler/dist/types" {
     read?: ExtraRead;
     pruned?: true;
     isEffect?: true;
+    readsGlobal?: true;
     invokeOnly?: true;
     lazyBindings?: ReferencedBindings;
     spreadFrom?: Binding;
@@ -610,39 +611,26 @@ export function setReferencesScope(path: t.NodePath<any>) {
   }
 }
 
-const [getGlobalBinding, setGlobalBinding] = createProgramState<
-  Binding | undefined
->(() => undefined);
-
 /**
- * Under the `persisted` compile option `$global` member reads are promoted to
- * bindings (rooted at the program section, narrowed per key through the
- * regular property-alias machinery) so the serialize-reason system treats
- * $global-derived holes as dynamic: they get resume markers and join the
- * serialized spine when the render's persisted flag is set. Reads are left
- * as plain member accesses on the live global object (see the bail in
- * `getReadReplacement`) and global sources never contribute to value
- * serialization, so non-persisted renders stay byte-identical.
+ * Under the `persisted` compile option `$global` member reads taint their
+ * owning expression (a canonical-extra `readsGlobal` flag -- no bindings,
+ * no signals) so the serialize-reason system treats $global-derived holes
+ * as request-derived: they get resume markers and join the serialized
+ * spine when the render's persisted flag is set. Reads stay plain member
+ * accesses on the live global object; updates `Object.assign` the fresh
+ * `serializedGlobals` partial onto it before section merges dispatch, and
+ * the compiled `?update` entries re-invoke global-reading statements so
+ * mixed state/global expressions re-run like any other server/client
+ * intersection.
  */
 export function trackGlobalReference(identifier: t.NodePath<t.Identifier>) {
-  let binding = getGlobalBinding();
-  if (!binding) {
-    let section = getOrCreateSection(identifier);
-    while (section.parent) section = section.parent;
-    binding = createBinding("$global", BindingType.param, section);
-    binding.global = true;
-    setGlobalBinding(binding);
-  }
-  trackReference(identifier, binding);
-}
-
-export function isGlobalBinding(binding: Binding) {
-  let cur: Binding | undefined = binding;
-  while (cur) {
-    if (cur.global) return true;
-    cur = cur.upstreamAlias;
-  }
-  return false;
+  const fnRoot = getFnRoot(identifier);
+  const exprRoot = getExprRoot(fnRoot || identifier);
+  const section = getOrCreateSection(exprRoot);
+  const exprExtra = getCanonicalExtra(
+    (exprRoot.node.extra ??= { section }) as ReferencedExtra,
+  );
+  exprExtra.readsGlobal = true;
 }
 
 function createBindingsAndTrackReferences(
@@ -864,6 +852,7 @@ export function mergeReferences<T extends t.Node>(
       const additionalReads = readsByExpression.get(extra);
       const additionalExprFnReads = fnReadsByExpression.get(extra);
       isEffect ||= extra.isEffect;
+      if (extra.readsGlobal) targetExtra.readsGlobal = true;
       if (additionalReads) {
         forEach(additionalReads, (read) => {
           read.binding.reads.delete(extra);
@@ -1480,7 +1469,8 @@ const globalSources: Sources = {
  * refresh through their sources' guards.)
  */
 export function getVolatileExprSources(expr: t.NodeExtra) {
-  if (isPersisted() && isVolatileExtra(expr)) return globalSources;
+  if (isPersisted() && (expr.readsGlobal || isVolatileExtra(expr)))
+    return globalSources;
 }
 
 function isVolatileExtra(expr: t.NodeExtra) {
@@ -1495,11 +1485,6 @@ function resolveBindingSources(binding: Binding) {
   const resolvedSources = getResolvedSources();
   if (resolvedSources.has(binding)) return;
   resolvedSources.add(binding);
-
-  if (isGlobalBinding(binding)) {
-    binding.sources = globalSources;
-    return;
-  }
 
   switch (binding.type) {
     case BindingType.let: {
@@ -1996,12 +1981,6 @@ export function getReadReplacement(
   if (read) {
     const readBinding = read.binding;
     let replacement: t.Expression | undefined;
-
-    // Promoted `$global` reads (persisted option) exist for serialize-reason
-    // classification only: the value lives on the live global object, never
-    // in a scope slot, so the original member access must stay as written
-    // (the `$global` identifier itself is replaced by its visitor).
-    if (isGlobalBinding(readBinding)) return;
 
     if (read.props === undefined) {
       if (read.getter?.invoked) {

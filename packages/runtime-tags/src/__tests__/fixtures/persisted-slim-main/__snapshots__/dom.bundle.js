@@ -1,7 +1,7 @@
 // template.marko
-const $count = /* @__PURE__ */ _let(13, ($scope) => _text($scope.b, $scope.n));
+const $count = /* @__PURE__ */ _let(11, ($scope) => _text($scope.b, $scope.l));
 const $setup__script = _script_update("a6", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.n + 1);
+	$count($scope, $scope.l + 1);
 }));
 enableBranches();
 
@@ -37,7 +37,7 @@ const $if_content__update = (patch, live) => {
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
-	if ("n" in patch) _update_seed(live, $count_seed, patch["n"]);
+	if ("l" in patch) _update_seed(live, $count_seed, patch["l"]);
 	if ("d" in patch) live["d"] = patch["d"];
 	if ("e" in patch) live["e"] = patch["e"];
 	if ("f" in patch) live["f"] = patch["f"];
@@ -46,8 +46,6 @@ const $update = (patch, live) => {
 	if ("i" in patch) live["i"] = patch["i"];
 	if ("j" in patch) live["j"] = patch["j"];
 	if ("k" in patch) live["k"] = patch["k"];
-	if ("l" in patch) live["l"] = patch["l"];
-	if ("m" in patch) live["m"] = patch["m"];
 	if ("Dc" in patch) {
 		$if_update2(live, patch["Dc"]);
 		const $patchBranch2 = patch["Ac"], $liveBranch2 = live["Ac"], $branchMerge2 = [$if_content__update, 0][patch["Dc"]];

@@ -44,7 +44,7 @@ import {
 import {
   addSerializeExpr,
   getSerializeReason,
-  getSerializeSourcesForRef,
+  getSerializeSourcesForExpr,
   isReasonDynamic,
   isStateOnlySerializeReason,
   isStateSerializeReason,
@@ -366,9 +366,7 @@ export const IfTag = {
           // invokes it, so hydration bundles may tree-shake it).
           if (
             isPersisted() &&
-            isReasonDynamic(
-              getSerializeSourcesForRef(ifTagExtra.referencedBindings),
-            )
+            isReasonDynamic(getSerializeSourcesForExpr(ifTagExtra))
           ) {
             const accessor = getScopeAccessorLiteral(nodeRef);
             const signalId = getUpdateIfRegisterId(

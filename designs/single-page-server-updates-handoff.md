@@ -882,51 +882,49 @@ live only here so far:
   variables (dynamic tags, `<await>`, and controllable attrs are done —
   see "Current state"; the controllable gaps `checkedValue`/spreads/
   `<option value>` are in `agent-feedback/bugs.md`).
-- `$global` promotion — **implemented, demotion decided** (2026-07-05).
-  Current mechanism: under the `persisted` option, `$global` member reads
-  get bindings (program-section root + property aliases) whose `Sources`
-  carry a `global` flag; guards OR in `_persisted_reason()`; reads stay
-  live member accesses; global values never serialize; same-section
-  global-only statements fold into setup. Measured cost of the marker
-  spine: `/item` 44→125 markers (+16% gzip); `/search` 201→802 (+50% on
-  the hole-dense worst case). Per-key suppression was considered and
-  REJECTED (`$global` carries user-defined arbitrary keys; compile-time
-  key knowledge is impossible and stale-hole failures are silent).
-
-  **Decided replacement (not yet implemented) — no promotion at all:**
-  `$global` is not qualitatively special except that its fresh values
-  exist client-side after a navigation, so treat reads like any other
-  server-volatile expression and lean on that one property:
-  1. Kill `trackGlobalReference` bindings/aliases/closures/global
-     value-signal chains and per-key `Sources.global` precision. A
-     syntactic, expression-level "reads `$global`" flag (set during
-     analyze, no bindings) taints the expression's serialize sources
-     request-derived — markers, reason threading to children, and
-     update-merge recording (`isReasonDynamic`) all key off sources as
-     today.
-  2. Update payloads always carry the `serializedGlobals` partial and the
-     applier `Object.assign`s it onto the live `$global` BEFORE section
-     merges dispatch (already the applier's order: scope-0 partials apply
-     in `applyScopes`).
-  3. Mixed `state ∩ $global` expressions are ordinary server∩client
-     intersections: the compiled `?update` entry invokes the section's
-     global-reading statements after the assign (a small per-section
-     `$globals(scope)` fn in the `?persisted` entry, registered by hashed
-     id like everything else) and they re-run against live state + the
-     freshly assigned global. No broadcast machinery, no bindings.
-  4. Pure `$global` holes need no per-hole `_hole_value` capture: the
-     globals partial IS the payload (sent once, deduped across N holes);
-     matched scopes re-render those statements via (3), fresh renders
-     read the live global during construction. Captures remain for
-     compute/param-derived holes (placement-only stays for values the
-     client cannot recompute).
-  5. Expected fallout: `stripOwnGlobalRefs`, the `_or` global pending
-     exclusions, `isGlobalBinding` paths, and the global closure shapes
-     all delete; `persisted-global-reads`/`-opt-out`, `-slim-main`,
-     `-or-stall`, `-state-branch` compiled shapes simplify; the chip
-     active-state checks in the app validation suite are the behavioral
-     guard for (3). Markers themselves remain — they are the patch
-     addresses; what shrinks is machinery, captures, and bundle bytes.
+- `$global` demotion — **implemented** (2026-07-05; replaced the earlier
+  binding promotion). `$global` is not qualitatively special except that
+  its fresh values exist client-side after a navigation, so reads are
+  treated like any other server-volatile expression:
+  - No bindings. `trackGlobalReference` sets a canonical-extra
+    `readsGlobal` flag on the owning expression (syntactic, at analyze);
+    `getVolatileExprSources` turns it into the request-derived `global`
+    taint, merged WITH tracked ref sources (`getSerializeSourcesForExpr`)
+    so mixed state∩global expressions keep both dimensions. Markers,
+    reason threading, and update-merge gates key off sources as before.
+  - Update payloads always carry the `serializedGlobals` partial;
+    `applyScopes` `Object.assign`s it onto the live `$global` before
+    section merges dispatch (pre-existing applier order — no new
+    runtime).
+  - Mixed `state ∩ $global` statements re-run client-side: the emission
+    sites (attrs, class/style, placeholders, content/text-content attrs)
+    record them (`addUpdateGlobalsStatement`, live nodes cloned at
+    program exit before `writeSignals` rewrites them); the `?persisted`
+    entry registers a per-section `($scope) => () => {…}` under
+    `…/update_globals`, reads finalized to scope reads
+    (`finalizeRenderStatements`); the `?update` entry invokes it via
+    `_update_signal` unconditionally at the end of the section's merge
+    (globals are always sent — absent-means-unchanged doesn't apply).
+    `persisted-global-reads`' final navigation (tag cleared while
+    `count` holds client state) is the fixture guard; the chip
+    active-state checks in the app validation suite are the behavioral
+    guard.
+  - Fallout that deleted: `stripOwnGlobalRefs`, the `_or` global pending
+    exclusions, `isGlobalBinding`/global-binding paths, global closure
+    shapes, per-key `$global_*` value merges in `?update` entries.
+    Compiled persisted fixtures shrank (eg `-global-reads` page.mjs
+    190→171 B brotli, update.js 965→892).
+  - Deliberate deviations/residuals: pure-`$global` holes KEEP their
+    `_hole_value` captures for now (the globals partial could replace
+    them — a byte optimization, not correctness; remove later if
+    profiling says so). Mixed statements inside spread attrs and
+    controllable values are NOT collected for re-invocation (recorded in
+    `agent-feedback/bugs.md` with the other controllable/spread gaps).
+    Mixed structural conditionals stay on the reason-set alignment
+    watch-list below. Markers themselves remain — they are the patch
+    addresses; the marker-cost numbers (+16%/+50% gzip) still stand.
+    Per-key suppression stays REJECTED (`$global` carries user-defined
+    arbitrary keys; stale-hole failures are silent).
 
 - Root pairing convention; concurrent navigations (abort between frames);
   `by`-less loop diagnostics; effect ordering confirmation; pair-store
@@ -992,8 +990,9 @@ live only here so far:
    id-consistency invariant end to end — optimized register ids match
    across the html/dom/`?update` compiles, and the wrapper's own dynamic
    `?update` import gives the entry its chunk with no manifest work
-   (production update payloads: item 2.3 KB vs 12.5 KB document, search
-   15.6 vs 66.5 KB, cart 0.2 vs 1.3 KB). **Build hash — done**: @marko/vite
+   (production update payloads, re-measured post-`$global`-demotion via
+   `payload-probe`: item 2.6 KB vs 12.5 KB document, search 16.6 vs
+   66.5 KB, cart 0.4 vs 1.3 KB). **Build hash — done**: @marko/vite
    digests the shipped client files into the manifest (reserved `#build`
    key) and the linkAssets runtime exposes a call-time `buildId()`
    (importable via `virtual:marko-vite/link-assets`; undefined in dev,

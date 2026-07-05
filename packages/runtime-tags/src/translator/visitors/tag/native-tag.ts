@@ -42,7 +42,6 @@ import {
   dropNodes,
   getScopeAccessorLiteral,
   mergeReferences,
-  type ReferencedBindings,
   trackDomVarReferences,
 } from "../../util/references";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
@@ -57,7 +56,7 @@ import { getSerializeGuard } from "../../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
-  getSerializeSourcesForRef,
+  getSerializeSourcesForExpr,
   isReasonDynamic,
 } from "../../util/serialize-reasons";
 import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
@@ -69,6 +68,7 @@ import {
 } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
 import {
+  addUpdateGlobalsStatement,
   addUpdateMerge,
   isUpdateCoveredByClientSignals,
 } from "../../util/update-merges";
@@ -906,6 +906,7 @@ export default {
                 }
 
                 if (stmt) {
+                  addUpdateGlobalsStatement(tagSection, value.extra, stmt);
                   addStatement(
                     "render",
                     tagSection,
@@ -943,18 +944,20 @@ export default {
                   "_attr",
                   value,
                 );
+                const stmt = t.expressionStatement(
+                  callRuntime(
+                    "_attr",
+                    createScopeReadExpression(nodeBinding!),
+                    t.stringLiteral(name),
+                    value,
+                  ),
+                );
+                addUpdateGlobalsStatement(tagSection, value.extra, stmt);
                 addStatement(
                   "render",
                   tagSection,
                   valueReferences,
-                  t.expressionStatement(
-                    callRuntime(
-                      "_attr",
-                      createScopeReadExpression(nodeBinding!),
-                      t.stringLiteral(name),
-                      value,
-                    ),
-                  ),
+                  stmt,
                   undefined,
                   true,
                 );
@@ -1016,18 +1019,24 @@ export default {
         }
 
         if (staticContentAttr) {
+          const stmt = t.expressionStatement(
+            callRuntime(
+              "_attr_content",
+              scopeIdentifier,
+              visitAccessor,
+              staticContentAttr.value,
+            ),
+          );
+          addUpdateGlobalsStatement(
+            tagSection,
+            staticContentAttr.value.extra,
+            stmt,
+          );
           addStatement(
             "render",
             tagSection,
             staticContentAttr.value.extra?.referencedBindings,
-            t.expressionStatement(
-              callRuntime(
-                "_attr_content",
-                scopeIdentifier,
-                visitAccessor,
-                staticContentAttr.value,
-              ),
-            ),
+            stmt,
             undefined,
             true,
           );
@@ -1050,17 +1059,23 @@ export default {
             if (t.isStringLiteral(textLiteral)) {
               write`${textLiteral}`;
             } else {
+              const stmt = t.expressionStatement(
+                callRuntime(
+                  "_text_content",
+                  createScopeReadExpression(nodeBinding!),
+                  textLiteral,
+                ),
+              );
+              addUpdateGlobalsStatement(
+                getSection(tag),
+                textLiteral.extra,
+                stmt,
+              );
               addStatement(
                 "render",
                 getSection(tag),
                 textLiteral.extra?.referencedBindings,
-                t.expressionStatement(
-                  callRuntime(
-                    "_text_content",
-                    createScopeReadExpression(nodeBinding!),
-                    textLiteral,
-                  ),
-                ),
+                stmt,
                 undefined,
                 true,
               );
@@ -1441,9 +1456,7 @@ function buildAttrHoleValue(
   value: t.Expression,
 ) {
   if (!nodeBinding || !isPersisted()) return;
-  const sources = getSerializeSourcesForRef(
-    value.extra?.referencedBindings as ReferencedBindings,
-  );
+  const sources = value.extra && getSerializeSourcesForExpr(value.extra);
   // Browser-code reuse: skip the capture when the client's registered
   // signal chain already re-renders this attr from patched scope values.
   if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
@@ -1470,9 +1483,7 @@ function recordAttrUpdateMerge(
   value: t.Expression,
 ) {
   if (!nodeBinding || !isUpdateEntryBuild()) return;
-  const sources = getSerializeSourcesForRef(
-    value.extra?.referencedBindings as ReferencedBindings,
-  );
+  const sources = value.extra && getSerializeSourcesForExpr(value.extra);
   if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
     return;
   const accessor = getScopeAccessorLiteral(nodeBinding);
@@ -1501,9 +1512,7 @@ function recordControllableUpdateMerge(
   value: t.Expression,
 ) {
   if (!nodeBinding || !isUpdateEntryBuild()) return;
-  const sources = getSerializeSourcesForRef(
-    value.extra?.referencedBindings as ReferencedBindings,
-  );
+  const sources = value.extra && getSerializeSourcesForExpr(value.extra);
   if (!isReasonDynamic(sources) || isUpdateCoveredByClientSignals(value.extra))
     return;
   const accessor = getScopeAccessorLiteral(nodeBinding);

@@ -13,6 +13,6 @@ var template_default = _template("a", (input) => {
 		return opt.key;
 	}, $scope0_id, "c", _persisted_reason(), _persisted_reason(), _persisted_reason(), "</select>", 1);
 	_script($scope0_id, "a3");
-	writeScope($scope0_id, { i: _state_reason() && count });
+	writeScope($scope0_id, { g: _state_reason() && count });
 	_resume_branch($scope0_id);
 }, 1);

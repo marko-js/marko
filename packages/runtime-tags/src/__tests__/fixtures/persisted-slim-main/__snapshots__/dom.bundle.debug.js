@@ -35,8 +35,6 @@ const $update = (patch, live) => {
 	if ("search" in patch) live["search"] = patch["search"];
 	if ("search_page" in patch) live["search_page"] = patch["search_page"];
 	if ("search_q" in patch) live["search_q"] = patch["search_q"];
-	if ("$global" in patch) live["$global"] = patch["$global"];
-	if ("$global_search" in patch) live["$global_search"] = patch["$global_search"];
 	if ("results" in patch) live["results"] = patch["results"];
 	if ("results_total" in patch) live["results_total"] = patch["results_total"];
 	if ("results_items" in patch) live["results_items"] = patch["results_items"];
@@ -116,7 +114,7 @@ const $search_page__closure = /* @__PURE__ */ _closure($for_content__search_page
 const $search_page = /* @__PURE__ */ _const("search_page", $search_page__closure);
 const $search_q__closure = /* @__PURE__ */ _closure($else_content__search_q);
 const $search_q = /* @__PURE__ */ _const("search_q", $search_q__closure);
-const $count = /* @__PURE__ */ _let("count/13", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /* @__PURE__ */ _let("count/11", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

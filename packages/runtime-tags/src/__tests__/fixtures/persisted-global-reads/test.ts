@@ -55,5 +55,16 @@ export const config: TestConfig = {
     }),
     clickButton,
     clickBuy,
+    // A navigation that changes a global read by a state-mixing expression
+    // (count && $global.params.tag): the update entry must re-invoke the
+    // statement after the globals assign so it re-runs against live state.
+    navigate({
+      $global: {
+        persisted: true,
+        title: "Persisted Page",
+        params: { id: 7, tag: "", sale: 35 },
+        serializedGlobals: { title: true, params: true },
+      },
+    }),
   ],
 };

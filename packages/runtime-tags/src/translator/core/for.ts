@@ -45,7 +45,7 @@ import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
-  getSerializeSourcesForRef,
+  getSerializeSourcesForExpr,
   isReasonDynamic,
   isStateOnlySerializeReason,
   isStateSerializeReason,
@@ -367,7 +367,7 @@ export default {
         // tree-shake it.
         const updateStructural =
           isPersisted() &&
-          isReasonDynamic(getSerializeSourcesForRef(referencedBindings));
+          isReasonDynamic(getSerializeSourcesForExpr(tagExtra));
         if (updateStructural) {
           addUpdateMerge(tagSection, {
             kind: "for",

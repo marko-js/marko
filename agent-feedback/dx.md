@@ -54,3 +54,16 @@ overwrite each other in the client registry. Today's registered signals
 the update-entry work had to add `Signal.registerId` to opt out for
 conditional signals — the default derivation is a latent trap worth an id
 scheme keyed on accessor rather than name.
+
+## App validation suites silently run against stale servers
+
+The marko-ecommerce validation runner (`npm run validate`) targets whatever
+answers on `:41800` and has no way to tell whether that server predates the
+build under test. A long-lived server from an earlier work session produced
+a confusing failure signature after a rebuild — chunk-hash 404s, navigations
+falling back to full reloads (`marker=undefined`), and history-count
+mismatches — that looked exactly like a regression in the change being
+validated. Worth a freshness guard in `all.mjs`: compare the server's
+`x-marko-build` (already exposed for update negotiation) or the dist mtime
+against the running process start, and refuse to run — or at least warn —
+on mismatch.

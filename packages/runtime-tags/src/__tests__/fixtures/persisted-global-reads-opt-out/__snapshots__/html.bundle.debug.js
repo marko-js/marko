@@ -8,7 +8,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		if ($global().params.sale) {
 			const $scope1_id = _scope_id();
 			_html(`<em>Sale ${_sep(_persisted_reason())}${_escape(_hole_value($scope1_id, "#text/0", $global().params.sale, _persisted_reason()))}${_el_resume($scope1_id, "#text/0", _persisted_reason())}% off</em>`);
-			_persisted_reason() && writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4");
+			_persisted_reason() && writeScope($scope1_id, {}, "__tests__/template.marko", "6:4");
 			return 0;
 		}
 	}, $scope0_id, "#section/4", _persisted_reason(), 1 | _persisted_reason(), _persisted_reason(), "</section>", 1);

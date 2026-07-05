@@ -35,7 +35,7 @@ var shared_list_default = _template("__tests__/tags/shared-list.marko", (input) 
 	const $scope0_id = _scope_id();
 	let value = $global().data[input.name];
 	const $return = value;
-	_script($scope0_id, "__tests__/tags/shared-list.marko_0_input_name_$global_data");
+	_script($scope0_id, "__tests__/tags/shared-list.marko_0_input_name");
 	writeScope($scope0_id, {
 		input_name: input.name,
 		"#TagVariableChange": _state_reason() && (_resume(function(next) {
@@ -88,10 +88,9 @@ var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 var template_default = _template("__tests__/template.marko", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
-	const $global_productId__closures = new Set();
 	let count = 0;
 	_html(`<button class=count>clicked <!>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
-	const Cart = { content: _content_resume("__tests__/template.marko_1_content", () => {
+	const Cart = { content: _content("__tests__/template.marko_1_content", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		const $childScope = _peek_scope_id();
@@ -132,8 +131,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 			entries: "9:10"
 		});
 		_resume_branch($scope1_id);
-	}, $scope0_id) };
-	const Item = { content: _content_resume("__tests__/template.marko_5_content", () => {
+	}) };
+	const Item = { content: _content("__tests__/template.marko_5_content", () => {
 		const $scope5_id = _scope_id();
 		const $Item_content__product_id__closures = new Set();
 		const $scope5_reason = _scope_reason();
@@ -179,29 +178,20 @@ var template_default = _template("__tests__/template.marko", (input) => {
 				return 1;
 			}
 		}, $scope5_id, "#text/0", _persisted_reason(), _persisted_reason(), _persisted_reason());
-		_persisted_reason() && _subscribe($global_productId__closures, writeScope($scope5_id, {
-			_: _scope_with_id($scope0_id),
-			"ClosureScopes:product_id": $Item_content__product_id__closures
-		}, "__tests__/template.marko", "22:2", {
+		_persisted_reason() && writeScope($scope5_id, { "ClosureScopes:product_id": $Item_content__product_id__closures }, "__tests__/template.marko", "22:2", {
 			product_image: ["product.image", "23:10"],
 			product_title: ["product.title", "23:10"],
 			product_price: ["product.price", "23:10"],
 			product_id: ["product.id", "23:10"]
-		}));
-		_resume_branch($scope5_id);
-	}, $scope0_id) };
+		});
+	}) };
 	const $childScope3 = _peek_scope_id();
 	_set_serialize_reason(_persisted_reason());
 	layout_default({ content: $global().view === "item" ? Item : Cart });
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		count: _state_reason() && count,
-		"ClosureScopes:$global_productId": _persisted_reason() && $global_productId__closures,
 		"#childScope/2": _persisted_reason() && _existing_scope($childScope3)
-	}, "__tests__/template.marko", 0, {
-		count: "3:6",
-		Cart: "6:9",
-		Item: "22:9"
-	});
+	}, "__tests__/template.marko", 0, { count: "3:6" });
 	_resume_branch($scope0_id);
 }, 1);

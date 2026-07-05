@@ -82,3 +82,13 @@ outstanding:
    design decision on uncontrolled-select semantics (re-match the select's
    default value vs preserve element-identity selection) plus cross-element
    coordination from the option's section to its owning select.
+4. Mixed state/global values in spreads and controllables: the `$global`
+   demotion re-invokes mixed statements client-side after the update's
+   globals assign (`addUpdateGlobalsStatement` at the attr, class/style,
+   placeholder, and content/text-content emission sites), but spread
+   statements and controllable helpers are not collected -- a
+   controllable value or spread attr mixing client state with `$global`
+   stays stale across navigations. Spreads need the same runtime-capture
+   design as (2); controllables need the `_default` replay wired through
+   the globals re-invocation (or their own merge path) so
+   default-vs-live semantics survive the re-run.

@@ -32,6 +32,7 @@ import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
 import {
+  addUpdateGlobalsStatement,
   addUpdateMerge,
   isUpdateCoveredByClientSignals,
 } from "../util/update-merges";
@@ -191,24 +192,26 @@ export default {
               accessor: getScopeAccessorLiteral(nodeBinding),
             });
           }
+          const stmt = t.expressionStatement(
+            method === "_text"
+              ? callRuntime(
+                  "_text",
+                  createScopeReadExpression(nodeBinding!),
+                  value,
+                )
+              : callRuntime(
+                  "_html",
+                  scopeIdentifier,
+                  value,
+                  getScopeAccessorLiteral(nodeBinding!),
+                ),
+          );
+          addUpdateGlobalsStatement(section, valueExtra, stmt);
           addStatement(
             "render",
             section,
             valueExtra.referencedBindings,
-            t.expressionStatement(
-              method === "_text"
-                ? callRuntime(
-                    "_text",
-                    createScopeReadExpression(nodeBinding!),
-                    value,
-                  )
-                : callRuntime(
-                    "_html",
-                    scopeIdentifier,
-                    value,
-                    getScopeAccessorLiteral(nodeBinding!),
-                  ),
-            ),
+            stmt,
             undefined,
             true,
           );

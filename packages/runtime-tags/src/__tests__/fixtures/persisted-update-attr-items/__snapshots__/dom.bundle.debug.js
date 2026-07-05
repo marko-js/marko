@@ -10,8 +10,6 @@ const $update$1 = (patch, live) => {
 	if ("$pattern" in patch) live["$pattern"] = patch["$pattern"];
 	if ("search" in patch) live["search"] = patch["search"];
 	if ("search_category" in patch) live["search_category"] = patch["search_category"];
-	if ("$global" in patch) live["$global"] = patch["$global"];
-	if ("$global_search" in patch) live["$global_search"] = patch["$global_search"];
 	if ("categories" in patch) live["categories"] = patch["categories"];
 	if ("BranchScopes:#div/0" in patch) $for_update(live, [patch["BranchScopes:#div/0"], "#LoopKey"]);
 };
@@ -41,7 +39,7 @@ function getCategories() {
 // tags/chip-list.marko
 const $template$1 = "<div class=chips></div>";
 const $walks$1 = " b";
-const $for_content__search_category__OR__cat = /* @__PURE__ */ _or(4, ($scope) => _attr_class_item($scope["#span/0"], "chip--active", $scope._.search_category === $scope.cat), 0);
+const $for_content__search_category__OR__cat = /* @__PURE__ */ _or(4, ($scope) => _attr_class_item($scope["#span/0"], "chip--active", $scope._.search_category === $scope.cat));
 const $for_content__search_category = /* @__PURE__ */ _for_selector("#div/0", "search_category", "cat", $for_content__search_category__OR__cat);
 const $for_content__setup = ($scope) => {
 	if (!_updating()) $for_content__search_category._($scope);

@@ -23,8 +23,8 @@ app-owned router code.
   excludes client-owned values from patches; nothing is manually lifted or
   restored.
 - **Patches, not pages or fragments.** Measured on the benchmark shop
-  (production build): item page **2.3 KB** patch vs 12.5 KB document; search
-  **15.6 vs 66.5 KB**; a cart mutation **0.2 vs 1.3 KB**.
+  (production build): item page **2.6 KB** patch vs 12.5 KB document; search
+  **16.6 vs 66.5 KB**; a cart mutation **0.4 vs 1.3 KB**.
 - **Server code never ships.** Patches are placement-only — derived values
   arrive computed. A search page can import its whole catalog and ranking
   code; none of it reaches the client.

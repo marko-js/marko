@@ -39,7 +39,6 @@ import {
   hasNonConstantPropertyAlias,
   intersectionMeta,
   isAssignedBindingExtra,
-  isGlobalBinding,
   isRegisteredFnExtra,
   type ReferencedBindings,
 } from "./references";
@@ -332,29 +331,13 @@ export function getSignal(
       } else {
         signal.build = () => {
           const { id, scopeOffset } = intersectionMeta.get(referencedBindings)!;
-          // Promoted `$global` reads (persisted builds) have no client-side
-          // value signal, so nothing invokes the join for them during a
-          // fresh render window -- they don't count toward the pending
-          // gate. (Matched scopes re-render through the queue path, which
-          // ignores it.)
-          let pending = -1;
-          forEach(referencedBindings, (member) => {
-            const sources = member.sources;
-            if (
-              !isPersisted() ||
-              !sources?.global ||
-              sources.state ||
-              sources.param
-            ) {
-              pending++;
-            }
-          });
+          const pending = referencedBindings.length - 1;
           return callRuntime(
             "_or",
             t.numericLiteral(id),
             getSignalFn(signal),
             scopeOffset || pending !== 1
-              ? t.numericLiteral(Math.max(pending, 0))
+              ? t.numericLiteral(pending)
               : undefined,
             scopeOffset && getScopeAccessorLiteral(scopeOffset, true),
           );
@@ -918,7 +901,6 @@ export function addStatement(
   usedReferences?: ReferencedBindings[] | false,
   isPure?: boolean,
 ): void {
-  referencedBindings = stripOwnGlobalRefs(targetSection, referencedBindings);
   const signal = getSignal(targetSection, referencedBindings);
   const statements = (signal[type] ??= []);
   const add = type === "effect" ? addEffectReferences : addRenderReferences;
@@ -964,40 +946,12 @@ function addRenderReferences(
   );
 }
 
-// Promoted `$global` bindings (persisted option) have no client-side value
-// application chain: reads stay live member accesses on the global object,
-// so statements/values referencing only them run once at setup, exactly like
-// unpromoted `$global` reads today. Cross-section reads keep the closure
-// path and mixed intersections keep their `_or` signal.
-function stripOwnGlobalRefs(
-  section: Section,
-  refs: ReferencedBindings,
-): ReferencedBindings {
-  if (refs) {
-    if (Array.isArray(refs)) {
-      // A pure-global intersection never fires client-side (no member has a
-      // value signal), so its `_or` join would stall -- fresh branches
-      // created during a persisted apply would skip the statement entirely
-      // (eg a `<let>` seed with no server-captured hole to fall back on).
-      // Fold into setup regardless of section: promoted global reads are
-      // live `$global` member accesses, so placement needs no owner chain.
-      if (!refs.some((binding) => !isGlobalBinding(binding))) {
-        return undefined;
-      }
-    } else if (refs.section === section && isGlobalBinding(refs)) {
-      return undefined;
-    }
-  }
-  return refs;
-}
-
 export function addValue(
   targetSection: Section,
   referencedBindings: ReferencedBindings,
   signal: Signal,
   value: t.Expression,
 ) {
-  referencedBindings = stripOwnGlobalRefs(targetSection, referencedBindings);
   const parentSignal = getSignal(targetSection, referencedBindings);
   addRenderReferences(parentSignal, referencedBindings);
   parentSignal.values.push({
@@ -1154,6 +1108,17 @@ export function writeSignals(section: Section) {
   }
 
   return written;
+}
+
+/**
+ * Applies the same read/assignment replacements `writeSignals` runs on a
+ * signal's render statements, but with no owning signal -- every binding
+ * read resolves to a scope read, so the statements only need a `$scope`
+ * parameter. Used for statement copies emitted outside the signal graph
+ * (the persisted entry's registered update-globals functions).
+ */
+export function finalizeRenderStatements(statements: t.Statement[]) {
+  traverseReplace({ statements }, "statements", replaceRenderNode);
 }
 
 function writeGetters(section: Section) {
@@ -1416,10 +1381,7 @@ export function writeHTMLResumeStatements(
   const writeSerializedBinding = (binding: Binding) => {
     const reason = getSerializeReason(section, binding);
     if (!reason) return;
-    // Promoted `$global` bindings (persisted option) never serialize values:
-    // client reads stay member accesses on the live global object, which
-    // serializes through the existing serialized-globals channel.
-    if (binding.noSerialize || isGlobalBinding(binding)) {
+    if (binding.noSerialize) {
       serializedLookup.delete(getScopeAccessor(binding));
       return;
     }

@@ -19,6 +19,8 @@ import { getResumeRegisterId, getSignals } from "../../util/signals";
 import {
   forEachUpdateSeedBinding,
   forEachUpdateValueBinding,
+  getUpdateGlobalsRegisterId,
+  getUpdateGlobalsStatements,
   getUpdateMerges,
   getUpdateVarRegisterId,
   type UpdateMerge,
@@ -287,6 +289,31 @@ function buildMergeStatements(
         hoistedDeclarations,
         file,
         { patchGet, liveGet, ifPresent },
+      ),
+    );
+  }
+
+  // Statements mixing client state with `$global` re-run against the live
+  // scope, last -- after patched values land, and after `applyScopes` has
+  // already assigned the payload's `serializedGlobals` (every update carries
+  // them, so this is unconditional: absent-means-unchanged doesn't apply to
+  // `$global`). The persisted entry registered the statements per section.
+  if (getUpdateGlobalsStatements(section).length) {
+    const signalIdentifier = generateUidIdentifier("globals_update");
+    hoistedDeclarations.push(
+      t.variableDeclaration("const", [
+        t.variableDeclarator(
+          signalIdentifier,
+          callRuntime(
+            "_update_signal",
+            t.stringLiteral(getUpdateGlobalsRegisterId(section)),
+          ),
+        ),
+      ]),
+    );
+    statements.push(
+      t.expressionStatement(
+        t.callExpression(signalIdentifier, [liveIdentifier]),
       ),
     );
   }

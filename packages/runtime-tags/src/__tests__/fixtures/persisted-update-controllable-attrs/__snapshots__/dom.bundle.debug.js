@@ -15,8 +15,6 @@ var item_form_marko_update_default = _resume("__tests__/tags/item-form.marko_0_u
 const $update = (patch, live) => {
 	if ("$pattern" in patch) live["$pattern"] = patch["$pattern"];
 	if ("id" in patch) live["id"] = patch["id"];
-	if ("$global" in patch) live["$global"] = patch["$global"];
-	if ("$global_item" in patch) live["$global_item"] = patch["$global_item"];
 	if ("item" in patch) live["item"] = patch["item"];
 	if ("item_title" in patch) live["item_title"] = patch["item_title"];
 	if ("item_category" in patch) live["item_category"] = patch["item_category"];

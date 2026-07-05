@@ -6,8 +6,6 @@ const $update$3 = (patch, live) => {
 	if ("$params" in patch) live["$params"] = patch["$params"];
 	if ("input" in patch) live["input"] = patch["input"];
 	if ("input_name" in patch) live["input_name"] = patch["input_name"];
-	if ("$global" in patch) live["$global"] = patch["$global"];
-	if ("$global_data" in patch) live["$global_data"] = patch["$global_data"];
 };
 var shared_list_marko_update_default = _resume("__tests__/tags/shared-list.marko_0_update", $update$3);
 
@@ -86,9 +84,6 @@ const $update = (patch, live) => {
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	if ("Cart" in patch) live["Cart"] = patch["Cart"];
 	if ("Item" in patch) live["Item"] = patch["Item"];
-	if ("$global" in patch) live["$global"] = patch["$global"];
-	if ("$global_productId" in patch) live["$global_productId"] = patch["$global_productId"];
-	if ("$global_view" in patch) live["$global_view"] = patch["$global_view"];
 	if ("#childScope/2" in patch) layout_marko_update_default(patch["#childScope/2"], live["#childScope/2"]);
 };
 _update_content("__tests__/template.marko_5_content", $Item_content__update);
@@ -131,7 +126,7 @@ const $walks = "";
 const $setup = () => {};
 const subsByKey = {};
 const $value = /* @__PURE__ */ _let("value/3", ($scope) => _return($scope, $scope.value));
-const $input_name__OR__$global_data__script = _script_update("__tests__/tags/shared-list.marko_0_input_name_$global_data", ($scope) => {
+const $input_name__script = _script_update("__tests__/tags/shared-list.marko_0_input_name", ($scope) => {
 	{
 		const subs = subsByKey[$scope.input_name] ??= new Set();
 		const sub = () => $value($scope, $scope.$global.data[$scope.input_name]);
@@ -139,13 +134,12 @@ const $input_name__OR__$global_data__script = _script_update("__tests__/tags/sha
 		subs.add(sub);
 	}
 });
-const $input_name__OR__$global_data = /* @__PURE__ */ _or(6, ($scope) => {
+const $input_name = /* @__PURE__ */ _const("input_name", ($scope) => {
 	$signalReset($scope, 0);
 	_return_change($scope, $valueChange($scope));
 	$value($scope, $scope.$global.data[$scope.input_name]);
-	$input_name__OR__$global_data__script($scope);
-}, 0);
-const $input_name = /* @__PURE__ */ _const("input_name", $input_name__OR__$global_data);
+	$input_name__script($scope);
+});
 const $input = ($scope, input) => $input_name($scope, input.name);
 function $valueChange($scope) {
 	return function(next) {
@@ -245,12 +239,6 @@ const $Item_content__product = ($scope, product) => {
 	$Item_content__product_id($scope, product?.id);
 	$Item_content__if($scope, !product ? 0 : 1);
 };
-const $Item_content__$global_productId = /* @__PURE__ */ _closure_get("$global_productId", ($scope) => {
-	if (!_updating()) $Item_content__product($scope, $scope.$global.productId && getProduct($scope.$global.productId));
-});
-const $Item_content__setup = ($scope) => {
-	if (!_updating()) $Item_content__$global_productId($scope);
-};
 const $Item_content__product_image = /* @__PURE__ */ _const("product_image", $else_content2__product_image);
 const $Item_content__product_title = /* @__PURE__ */ _const("product_title", $else_content2__product_title);
 const $Item_content__product_price = /* @__PURE__ */ _const("product_price", $else_content2__product_price);
@@ -259,7 +247,10 @@ const $Item_content__product_id = /* @__PURE__ */ _const("product_id", ($scope) 
 	$else_content2__product_id($scope);
 	$Item_content__product_id__closure($scope);
 });
-const $Item_content = _content_resume("__tests__/template.marko_5_content", "<!><!><!>", "b%c", $Item_content__setup);
+const $Item_content__setup = ($scope) => {
+	if (!_updating()) $Item_content__product($scope, $scope.$global.productId && getProduct($scope.$global.productId));
+};
+const $Item_content = /* @__PURE__ */ _content("__tests__/template.marko_5_content", "<!><!><!>", "b%c", $Item_content__setup);
 const $for_content__entry_product_title = ($scope, entry_product_title) => _text($scope["#text/0"], entry_product_title);
 const $for_content__entry_product_price = ($scope, entry_product_price) => _text($scope["#text/1"], entry_product_price);
 const $for_content__$params = ($scope, $params2) => {
@@ -294,11 +285,11 @@ const $Cart_content__setup = ($scope) => {
 };
 const $Cart_content__if = /* @__PURE__ */ _if("#text/2", "<p class=cart>cart is empty</p>", "b", 0, "<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l", $else_content__setup);
 const $Cart_content__entries_length = ($scope, entries_length) => $Cart_content__if($scope, !entries_length ? 0 : 1);
-const $Cart_content = _content_resume("__tests__/template.marko_1_content", /* @__PURE__ */ ((_w0) => `<!>${_w0}<!><!>`)(""), /* @__PURE__ */ ((_w0) => `b0${_w0}&%c`)(""), $Cart_content__setup);
+const $Cart_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", /* @__PURE__ */ ((_w0) => `<!>${_w0}<!><!>`)(""), /* @__PURE__ */ ((_w0) => `b0${_w0}&%c`)(""), $Cart_content__setup);
 const $count = /* @__PURE__ */ _let("count/3", ($scope) => _text($scope["#text/1"], $scope.count));
-const $Cart__OR__Item__OR__$global_view = /* @__PURE__ */ _or(9, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "item" ? $scope.Item : $scope.Cart));
-const $Cart = /* @__PURE__ */ _const("Cart", $Cart__OR__Item__OR__$global_view);
-const $Item = /* @__PURE__ */ _const("Item", $Cart__OR__Item__OR__$global_view);
+const $Cart__OR__Item = /* @__PURE__ */ _or(6, ($scope) => $input_content($scope["#childScope/2"], $scope.$global.view === "item" ? $scope.Item : $scope.Cart));
+const $Cart = /* @__PURE__ */ _const("Cart", $Cart__OR__Item);
+const $Item = /* @__PURE__ */ _const("Item", $Cart__OR__Item);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));

@@ -20,6 +20,7 @@ import {
 } from "../../util/sections";
 import {
   addStatement,
+  finalizeRenderStatements,
   getResumeRegisterId,
   getSetup,
   getSignal,
@@ -32,6 +33,9 @@ import {
 } from "../../util/signals";
 import { toPropertyName } from "../../util/to-property-name";
 import {
+  cloneUpdateGlobalsStatements,
+  getUpdateGlobalsRegisterId,
+  getUpdateGlobalsStatements,
   isUpdateDeliveredClosure,
   registerUpdateValueSignals,
 } from "../../util/update-merges";
@@ -90,6 +94,8 @@ export default {
       // hydration bundles tree-shake what resume doesn't reference.
       if (isPersistedEntryBuild()) {
         forEachSectionReverse(registerUpdateValueSignals);
+        // Snapshot before any writeSignals call rewrites the originals.
+        forEachSectionReverse(cloneUpdateGlobalsStatements);
       }
       forEachSectionReverse(writer.getSectionMeta);
 
@@ -205,6 +211,32 @@ export default {
 
       const written = writeSignals(section);
       writeRegisteredFns();
+
+      // Statements mixing client state with `$global` re-run client-side
+      // after an update patch's `$global` assign (the server can't compute
+      // them -- it doesn't know the live state operand). The persisted entry
+      // registers a per-section copy, curried to the shape `_update_signal`
+      // invokes; reads resolve to scope reads so `$scope` is the only input.
+      if (isPersistedEntryBuild()) {
+        forEachSectionReverse((globalsSection) => {
+          const statements = getUpdateGlobalsStatements(globalsSection);
+          if (statements.length) {
+            finalizeRenderStatements(statements);
+            program.node.body.push(
+              t.expressionStatement(
+                callRuntime(
+                  "_resume",
+                  t.stringLiteral(getUpdateGlobalsRegisterId(globalsSection)),
+                  t.arrowFunctionExpression(
+                    [scopeIdentifier],
+                    t.arrowFunctionExpression([], t.blockStatement(statements)),
+                  ),
+                ),
+              ),
+            );
+          }
+        });
+      }
 
       const setup = getSetup(section);
       if (domExports.setupEmpty && setup && written.has(setup)) {
