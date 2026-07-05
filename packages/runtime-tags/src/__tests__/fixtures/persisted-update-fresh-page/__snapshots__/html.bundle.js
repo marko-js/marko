@@ -110,7 +110,7 @@ var template_default = _template("a", (input) => {
 					return entry.id;
 				}, $scope2_id, "a", 1, 1, 1, "</ul>", 1);
 				_html(`<p class=total>total $<!>${_escape(entries.reduce((sum, e) => sum + e.product.price, 0))}${_el_resume($scope2_id, "b")}</p>`);
-				writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
+				writeScope($scope2_id, {});
 				return 1;
 			}
 		}, $scope1_id, "c");

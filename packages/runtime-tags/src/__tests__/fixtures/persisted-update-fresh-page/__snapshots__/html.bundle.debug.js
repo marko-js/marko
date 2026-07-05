@@ -119,7 +119,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 					return entry.id;
 				}, $scope2_id, "#ul/0", 1, 1, 1, "</ul>", 1);
 				_html(`<p class=total>total $<!>${_escape(entries.reduce((sum, e) => sum + e.product.price, 0))}${_el_resume($scope2_id, "#text/1")}</p>`);
-				writeScope($scope2_id, { _: _scope_with_id($scope1_id) }, "__tests__/template.marko", "13:4");
+				writeScope($scope2_id, {}, "__tests__/template.marko", "13:4");
 				return 1;
 			}
 		}, $scope1_id, "#text/2");

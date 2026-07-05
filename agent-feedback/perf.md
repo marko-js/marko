@@ -161,18 +161,3 @@ breaks in optimized builds; the run/vite packages ship runtime clients
 deciding whether published component libraries should get documented
 guidance (a library shipping `.marko` tags must exclude them from any
 `sideEffects` declaration for registration side effects to survive).
-
-## Persisted builds disable the owner-from-marker optimization wholesale
-
-`packages/runtime-tags/src/translator/core/if.ts` / `core/for.ts` (owner-skip gates) | 2026-07-04 | impact:low | effort:med
-
-The rebase reconciliation gates upstream's owner-from-resume-marker
-optimization off under `isPersisted()`: update payloads carry no resume
-markers, so patch-borne branch scopes need serialized owners. But purely
-state-driven branches (reason has `state` and no `param`/`global`) never
-participate in updates — the server never pairs into client-state-driven
-structure — so their owners could still be marker-linked in persisted
-builds, recovering the optimization for the common interactive-branch
-case. Needs a reason-shape check (`!reason.param && !reason.global`)
-plus fixture coverage proving a state-driven branch inside a persisted
-page still resumes with the right owner.

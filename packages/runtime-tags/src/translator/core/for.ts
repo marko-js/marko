@@ -47,6 +47,7 @@ import {
   getSerializeReason,
   getSerializeSourcesForRef,
   isReasonDynamic,
+  isStateOnlySerializeReason,
   isStateSerializeReason,
   isStaticSerializeReason,
 } from "../util/serialize-reasons";
@@ -225,11 +226,13 @@ export default {
           kStatefulReason,
         );
         if (
-          // Persisted builds keep serializing branch owners (update payloads
-          // carry no resume markers to link them from) -- see the matching
-          // gate in core/if.ts.
-          !isPersisted() &&
-          isStateSerializeReason(statefulSerializeReason) &&
+          // Purely state-driven loops keep marker-linked owners under the
+          // persisted option; anything patch-borne keeps serializing them
+          // (update payloads carry no markers) -- see the matching gate in
+          // core/if.ts.
+          (isPersisted()
+            ? isStateOnlySerializeReason(statefulSerializeReason)
+            : isStateSerializeReason(statefulSerializeReason)) &&
           isStaticSerializeReason(branchSerializeReason) &&
           isStaticSerializeReason(markerSerializeReason)
         ) {

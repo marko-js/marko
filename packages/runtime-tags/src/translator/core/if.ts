@@ -46,6 +46,7 @@ import {
   getSerializeReason,
   getSerializeSourcesForRef,
   isReasonDynamic,
+  isStateOnlySerializeReason,
   isStateSerializeReason,
   isStaticSerializeReason,
   type SerializeReasons,
@@ -138,16 +139,19 @@ export const IfTag = {
           const [[ifTag]] = getBranches(tag);
           const ifTagSection = getSection(ifTag);
           if (
-            // Persisted builds keep serializing branch owners: update
-            // payloads carry no resume markers, so patch-borne branch
-            // scopes (fresh or matched through mixed state+request-derived
-            // conditions) cannot link owners from visits. A finer-grained
-            // skip for purely state-driven branches (excluded from updates)
-            // is possible -- see agent-feedback/perf.md.
-            !isPersisted() &&
-            isStateSerializeReason(
-              getSerializeReason(ifTagSection, kStatefulReason),
-            ) &&
+            // Update payloads carry no resume markers, so a branch that can
+            // be patch-borne (any request-derived part in its condition)
+            // keeps its serialized owner under the persisted option; purely
+            // state-driven branches never participate in updates (the
+            // server never pairs into client-state-driven structure), so
+            // their owners stay marker-linked.
+            (isPersisted()
+              ? isStateOnlySerializeReason(
+                  getSerializeReason(ifTagSection, kStatefulReason),
+                )
+              : isStateSerializeReason(
+                  getSerializeReason(ifTagSection, kStatefulReason),
+                )) &&
             isStaticSerializeReason(
               getSerializeReason(bodySection, kBranchSerializeReason),
             ) &&

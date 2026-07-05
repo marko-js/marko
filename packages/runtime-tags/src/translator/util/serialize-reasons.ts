@@ -175,6 +175,17 @@ export function isStateSerializeReason(
   return !!reason && reason !== true && !!reason.state;
 }
 
+// A reason backed by state sources ONLY (no request-derived part): under the
+// persisted option such content never participates in update renders (the
+// server never pairs into client-state-driven structure), so resume-only
+// optimizations that update payloads cannot support -- eg marker-linked
+// branch owners -- stay sound for it.
+export function isStateOnlySerializeReason(
+  reason: undefined | SerializeReason,
+): reason is Sources {
+  return isStateSerializeReason(reason) && !reason.param && !reason.global;
+}
+
 export function getSerializeReason(
   section: Section,
   prop?: Binding | AccessorProp | symbol,
