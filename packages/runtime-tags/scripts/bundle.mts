@@ -51,9 +51,9 @@ await Promise.all([
           name === "dom"
             ? // The browser runtime ships as preserved modules behind the
               // `dom.mjs` re-export facade so application bundlers chunk it
-              // at file granularity: a persisted app's lazily-loaded
-              // `?register`/`?update` graphs pull control-flow/renderer/
-              // update machinery into lazy chunks instead of forcing every
+              // at file granularity: a lazily-loaded importer (eg a
+              // persisted app's `?persisted`/`?update` graphs) pulls the
+              // machinery it uses into lazy chunks instead of forcing every
               // retained export into the eager chunk hosting one big module.
               bundle.write({
                 dir: out,
