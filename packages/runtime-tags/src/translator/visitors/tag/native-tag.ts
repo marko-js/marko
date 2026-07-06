@@ -18,13 +18,21 @@ import {
 } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import { bodyToTextLiteral } from "../../util/body-to-text-literal";
+import {
+  cssModuleClassName,
+  isCSSModuleClass,
+} from "../../util/css-module-class";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorProp } from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  isOptimize,
+  isOutputHTML,
+} from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import { includes, type Opt, push } from "../../util/optional";
 import {
@@ -319,6 +327,17 @@ export default {
             !evaluate(attr.value).confident
           ) {
             addSetupExpr(tagSection, attr.value);
+
+            // Constant CSS module classes are applied once in setup (see the DOM
+            // `class` codegen). Their extras merge into the reactive value, so
+            // force setup here to match, or analysis mis-predicts an empty setup.
+            if (name === "class") {
+              const meta = emptyDelimitedAttrMeta(tag.scope);
+              trackDelimitedAttrValue(attr.value, meta);
+              if (!meta.dynamicItems && meta.stringItems) {
+                addSetupStatement(tagSection);
+              }
+            }
           }
         }
 
@@ -472,7 +491,8 @@ export default {
                     },
                     (branch) =>
                       buildStringAttrAnd(helper, branch) ||
-                      (name === "class" && buildClassAttrExpression(branch)) ||
+                      (name === "class" &&
+                        buildClassAttrExpression(branch, tag.scope)) ||
                       callRuntime(helper, branch),
                   ),
                 )}`;
@@ -763,55 +783,89 @@ export default {
                 write`${getHTMLRuntime()[helper](computed)}`;
               } else {
                 const nodeExpr = createScopeReadExpression(nodeBinding!);
-                const meta: DelimitedAttrMeta = {
-                  staticItems: undefined,
-                  dynamicItems: undefined,
-                  dynamicValues: undefined,
-                };
-                let stmt: undefined | t.Statement;
+                const meta = emptyDelimitedAttrMeta(
+                  name === "class" ? tag.scope : undefined,
+                );
                 trackDelimitedAttrValue(value, meta);
 
                 if (meta.dynamicItems) {
-                  stmt = t.expressionStatement(
-                    callRuntime(helper, nodeExpr, value),
+                  addStatement(
+                    "render",
+                    tagSection,
+                    valueReferences,
+                    t.expressionStatement(callRuntime(helper, nodeExpr, value)),
+                    undefined,
+                    true,
                   );
-                } else {
-                  if (meta.staticItems) {
-                    write`${getHTMLRuntime()[helper](meta.staticItems)}`;
-                  }
+                  break;
+                }
 
-                  if (meta.dynamicValues) {
-                    const keys = Object.keys(meta.dynamicValues);
+                // Static literals fold into the SSR'd attribute.
+                if (meta.staticItems) {
+                  write`${getHTMLRuntime()[helper](meta.staticItems)}`;
+                }
 
-                    if (keys.length === 1) {
-                      const [key] = keys;
-                      const value = meta.dynamicValues[key];
-                      stmt = t.expressionStatement(
+                // Always-applied CSS module classes are constant, so `classList`
+                // them on once at mount rather than inside a reactive signal.
+                if (meta.stringItems) {
+                  for (const item of meta.stringItems) {
+                    addStatement(
+                      "render",
+                      tagSection,
+                      undefined,
+                      t.expressionStatement(
                         callRuntime(
                           `_attr_${name}_item`,
                           nodeExpr,
-                          t.stringLiteral(key),
-                          value,
+                          classModuleValue(item),
+                          t.numericLiteral(1),
                         ),
-                      );
-                    } else {
-                      const props: t.ObjectExpression["properties"] = [];
-                      for (const key of keys) {
-                        const value = meta.dynamicValues[key];
-                        props.push(
-                          t.objectProperty(toPropertyName(key), value),
-                        );
-                      }
-
-                      stmt = t.expressionStatement(
-                        callRuntime(
-                          `_attr_${name}_items`,
-                          nodeExpr,
-                          t.objectExpression(props),
-                        ),
-                      );
-                    }
+                      ),
+                      undefined,
+                      false,
+                    );
                   }
+                }
+
+                // Toggles (static keys and CSS module keys) update reactively.
+                const toggles: [t.Expression, t.Expression][] = [];
+                if (meta.dynamicValues) {
+                  for (const key in meta.dynamicValues) {
+                    toggles.push([
+                      t.stringLiteral(key),
+                      meta.dynamicValues[key],
+                    ]);
+                  }
+                }
+                if (meta.stringToggles) {
+                  for (const [key, condition] of meta.stringToggles) {
+                    toggles.push([classModuleValue(key), condition]);
+                  }
+                }
+
+                let stmt: undefined | t.Statement;
+                if (toggles.length === 1) {
+                  const [key, condition] = toggles[0];
+                  stmt = t.expressionStatement(
+                    callRuntime(`_attr_${name}_item`, nodeExpr, key, condition),
+                  );
+                } else if (toggles.length > 1) {
+                  stmt = t.expressionStatement(
+                    callRuntime(
+                      `_attr_${name}_items`,
+                      nodeExpr,
+                      t.objectExpression(
+                        toggles.map(([key, condition]) =>
+                          key.type === "StringLiteral"
+                            ? t.objectProperty(
+                                toPropertyName(key.value),
+                                condition,
+                              )
+                            : t.objectProperty(key, condition, true),
+                        ),
+                      ),
+                    ),
+                  );
                 }
 
                 if (stmt) {
@@ -821,7 +875,7 @@ export default {
                     valueReferences,
                     stmt,
                     undefined,
-                    !!meta.dynamicItems,
+                    false,
                   );
                 }
               }
@@ -1421,18 +1475,25 @@ function buildStringAttrAnd(
 // toggle once: 1 toggle picks a precomputed literal; a few index a hoisted table
 // packed from the toggles; more concatenate the string for `_attr_class`.
 const MAX_PRECOMPUTED_CLASS_TOGGLES = 4;
-function buildClassAttrExpression(value: t.Expression) {
+function buildClassAttrExpression(
+  value: t.Expression,
+  cssScope: CSSModuleScope,
+) {
   if (value.type !== "ObjectExpression" && value.type !== "ArrayExpression") {
     return;
   }
 
-  const meta: DelimitedAttrMeta = {
-    staticItems: undefined,
-    dynamicItems: undefined,
-    dynamicValues: undefined,
-  };
+  const meta = emptyDelimitedAttrMeta(cssScope);
   trackDelimitedAttrValue(value, meta);
-  if (meta.dynamicItems || !meta.staticItems || !meta.dynamicValues) {
+  if (meta.dynamicItems) {
+    return;
+  }
+
+  if (meta.stringItems || meta.stringToggles) {
+    return buildCSSModuleClassExpression(meta);
+  }
+
+  if (!meta.staticItems || !meta.dynamicValues) {
     return;
   }
 
@@ -1519,11 +1580,126 @@ function buildClassAttrExpression(value: t.Expression) {
   return callRuntime("_attr_class", classes);
 }
 
+// HTML codegen for a `class` value whose parts are known class strings (static
+// literals + CSS module accesses). Concatenates them directly - `_attr_class`
+// still trims/escapes - instead of allocating the array/object and walking it.
+function buildCSSModuleClassExpression(meta: DelimitedAttrMeta) {
+  // Always-applied parts, in source order: the folded static base then each
+  // CSS module class. All are non-empty strings, so they need no guard.
+  const always: (string | t.Expression)[] = [];
+  const base = meta.staticItems
+    ? toDelimitedString(meta.staticItems, " ", stringifyClassObject)
+    : "";
+  if (base) always.push(base);
+  if (meta.stringItems) {
+    for (const item of meta.stringItems) always.push(classModuleValue(item));
+  }
+
+  // Toggles, as `[classExpression, condition]`. Static keys are literals; CSS
+  // module keys carry the dev assertion wrapper.
+  const toggles: [t.Expression, t.Expression][] = [];
+  if (meta.dynamicValues) {
+    for (const key in meta.dynamicValues) {
+      toggles.push([t.stringLiteral(key), meta.dynamicValues[key]]);
+    }
+  }
+  if (meta.stringToggles) {
+    for (const [key, condition] of meta.stringToggles) {
+      toggles.push([classModuleValue(key), condition]);
+    }
+  }
+
+  if (always.length) {
+    // A non-empty always-part seeds the string, so each toggle can safely
+    // prepend its own separator space when present.
+    const parts: (string | t.Expression)[] = [];
+    always.forEach((part, i) => {
+      if (i) parts.push(" ");
+      parts.push(part);
+    });
+    for (const [key, condition] of toggles) {
+      parts.push(
+        t.conditionalExpression(
+          condition,
+          prefixSpace(key),
+          t.stringLiteral(""),
+        ),
+      );
+    }
+    return callRuntime("_attr_class", normalizeStringExpression(parts)!);
+  }
+
+  if (toggles.length === 1) {
+    const [key, condition] = toggles[0];
+    return callRuntime(
+      "_attr_class",
+      t.conditionalExpression(condition, key, t.stringLiteral("")),
+    );
+  }
+
+  // Multiple toggles with no always-part: a leading separator would depend on
+  // which toggles are on, so hand the walker an array of `condition && class`
+  // and let it drop the falsy entries.
+  return callRuntime(
+    "_attr_class",
+    t.arrayExpression(
+      toggles.map(([key, condition]) =>
+        t.logicalExpression("&&", condition, key),
+      ),
+    ),
+  );
+}
+
+// Prepend a separating space to a class expression, folding it into the literal
+// when the class itself is a literal.
+function prefixSpace(value: t.Expression): t.Expression {
+  return value.type === "StringLiteral"
+    ? t.stringLiteral(" " + value.value)
+    : t.binaryExpression("+", t.stringLiteral(" "), value);
+}
+
+// Wrap a CSS module class access so a non-string (typo/missing class) warns in
+// development. Optimized builds emit the bare access - no runtime cost.
+function classModuleValue(access: t.MemberExpression): t.Expression {
+  if (isOptimize()) {
+    return access;
+  }
+  const name = cssModuleClassName(access);
+  return callRuntime(
+    "_class_module_value",
+    access,
+    name && t.stringLiteral(name),
+  );
+}
+
 interface DelimitedAttrMeta {
   staticItems: undefined | unknown[];
   dynamicItems: undefined | (t.Expression | t.SpreadElement)[];
   dynamicValues: undefined | Record<string, t.Expression>;
+  // Set only for `class` attributes: `cssScope` enables CSS module detection.
+  // `stringItems` are always-applied CSS module classes (eg `styles.foo`);
+  // `stringToggles` are `[classAccess, condition]` pairs from `{ [styles.x]: c }`
+  // or `c && styles.x`. Both hold expressions known to be class strings, so the
+  // optimizer can concatenate them instead of deferring to the runtime walker.
+  cssScope: undefined | CSSModuleScope;
+  stringItems: undefined | t.MemberExpression[];
+  stringToggles: undefined | [t.MemberExpression, t.Expression][];
 }
+type CSSModuleScope = Parameters<typeof isCSSModuleClass>[1];
+
+function emptyDelimitedAttrMeta(
+  cssScope: CSSModuleScope | undefined,
+): DelimitedAttrMeta {
+  return {
+    staticItems: undefined,
+    dynamicItems: undefined,
+    dynamicValues: undefined,
+    cssScope,
+    stringItems: undefined,
+    stringToggles: undefined,
+  };
+}
+
 function trackDelimitedAttrValue(expr: t.Expression, meta: DelimitedAttrMeta) {
   switch (expr.type) {
     case "ObjectExpression":
@@ -1533,6 +1709,8 @@ function trackDelimitedAttrValue(expr: t.Expression, meta: DelimitedAttrMeta) {
       trackDelimitedAttrArrayItems(expr, meta);
       break;
     default:
+      // A lone value (eg `class=styles.foo`) is already applied in one call, so
+      // there is nothing to split out - only array/object shapes benefit.
       (meta.dynamicItems ||= []).push(expr);
       break;
   }
@@ -1564,6 +1742,16 @@ function trackDelimitedAttrArrayItems(
           const evalItem = evaluate(item);
           if (evalItem.confident) {
             (meta.staticItems ||= []).push(evalItem.computed);
+          } else if (meta.cssScope && isCSSModuleClass(item, meta.cssScope)) {
+            (meta.stringItems ||= []).push(item);
+          } else if (
+            // The array-boolean idiom `condition && styles.foo`.
+            item.type === "LogicalExpression" &&
+            item.operator === "&&" &&
+            meta.cssScope &&
+            isCSSModuleClass(item.right, meta.cssScope)
+          ) {
+            (meta.stringToggles ||= []).push([item.right, item.left]);
           } else {
             (meta.dynamicItems ||= []).push(item);
           }
@@ -1581,8 +1769,21 @@ function trackDelimitedAttrObjectProperties(
   let staticProps: Record<string, unknown> | undefined;
   let dynamicProps: t.ObjectExpression["properties"] | undefined;
   for (const prop of obj.properties) {
-    if (prop.type !== "ObjectProperty" || prop.computed) {
+    if (prop.type !== "ObjectProperty") {
       (dynamicProps ||= []).push(prop);
+      continue;
+    }
+
+    if (prop.computed) {
+      // `{ [styles.foo]: condition }` - a toggle keyed by a CSS module class.
+      if (meta.cssScope && isCSSModuleClass(prop.key, meta.cssScope)) {
+        (meta.stringToggles ||= []).push([
+          prop.key,
+          prop.value as t.Expression,
+        ]);
+      } else {
+        (dynamicProps ||= []).push(prop);
+      }
       continue;
     }
 

@@ -92,7 +92,14 @@ export function _attr_class_item(
   name: string,
   value: unknown,
 ) {
-  element.classList.toggle(name, !!value);
+  const { classList } = element;
+  // Only pay for a split when a CSS module class resolves to multiple tokens
+  // (eg `composes:`), which `classList.toggle` would reject as a single token.
+  if (~name.indexOf(" ")) {
+    for (const token of name.split(" ")) classList.toggle(token, !!value);
+  } else {
+    classList.toggle(name, !!value);
+  }
 }
 
 export function _attr_style(element: Element, value: unknown) {

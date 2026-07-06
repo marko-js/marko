@@ -1,0 +1,10 @@
+<style/styles>
+  .card { color: green }
+  .on { color: blue }
+</style>
+
+<const/{ active }=input/>
+
+// A `<style/var>` object resolves classes the same way a module import does.
+<div class=[styles.card, { [styles.on]: active }]/>
+<div class=[styles.card, active && styles.on]/>

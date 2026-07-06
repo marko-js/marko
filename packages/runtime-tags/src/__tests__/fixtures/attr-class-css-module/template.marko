@@ -1,0 +1,14 @@
+import styles from "./styles.module.css";
+
+<const/{ active, x, y }=input/>
+
+// always-applied member + toggle
+<div class=[styles.card, { [styles.on]: active }]/>
+// single toggle
+<div class={ [styles.on]: active }/>
+// pure multi-toggle
+<div class={ [styles.a]: x, [styles.b]: y }/>
+// array-boolean idiom
+<div class=[styles.card, active && styles.on]/>
+// static literal mixed with a css module class
+<div class=["base", styles.card, { [styles.on]: active }]/>

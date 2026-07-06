@@ -4,6 +4,7 @@ export {
   _el_read_error,
   _hoist_read_error,
 } from "./common/errors";
+export { _class_module_value } from "./common/helpers";
 export { _flush_head, withLoadAssets, withPageAssets } from "./html/assets";
 export {
   _attr,

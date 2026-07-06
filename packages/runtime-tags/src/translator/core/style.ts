@@ -16,6 +16,7 @@ import path from "path";
 
 import { WalkCode } from "../../common/types";
 import { addAssetImport } from "../util/asset-imports";
+import { registerStyleModuleVar } from "../util/css-module-class";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isOutputDOM } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
@@ -89,6 +90,14 @@ export default {
     (node.extra ??= {}).styleImportPath = importPath;
     if (importPath) {
       addAssetImport(file, importPath);
+    }
+
+    // Record the `var` name (eg `<style/styles>`) so the `class` attribute
+    // optimizer recognizes `styles.foo` as a CSS module class. Done in analyze
+    // because translate removes this tag and emits the backing import late,
+    // after which the name is no longer resolvable as a binding.
+    if (t.isIdentifier(node.var)) {
+      registerStyleModuleVar(node.var.name);
     }
 
     if (names) {
