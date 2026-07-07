@@ -932,6 +932,76 @@ regions, which the matched-scope fills path supersedes. Its use of the
 Navigation API for interception (vs click/submit listeners) is a small
 router upgrade worth taking when support allows.
 
+## Async placeholder / pending states on persisted navigation (design; deferred 2026-07-07)
+
+**Observed:** on the ecommerce item page (`/item/$id`, three
+`<try><await><@placeholder>` sections — recommendations 500 ms, shipping
+900 ms, reviews 1200 ms), navigating item→item leaves the previous
+product's resolved sections on screen until the new bodies stream in; the
+`Loading…` placeholder never recedes. Placeholders re-appear on
+_cross-route_ navigation but not on _same-route_ re-await.
+
+**Grounded behavior** (placeholder-text counts across the persisted await
+fixtures confirm it):
+
+| scenario                               | placeholder on nav?   | mechanism                                                                                                                                                                                                                   |
+| -------------------------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| initial load                           | yes                   | standard SSR streaming                                                                                                                                                                                                      |
+| cross-route nav (fragment swap)        | yes                   | two-frame model — `flushPlaceholder`'s `body.async && this.fragment` branch ships it (`persisted-update-fragment-await`)                                                                                                    |
+| same-route **matched** await re-await  | no — patched in place | `_update_branch` fills the resolved body; `flushPlaceholder`'s `else` **drops** the placeholder (`persisted-update-await`: its only placeholder hits are the initial render + its removal, none during the two navigations) |
+| fresh await via non-fragment `<if>`-on | no — empty gap        | detached await attaches its body when the frame lands, nothing shown meanwhile (`persisted-update-fresh-await`: zero)                                                                                                       |
+
+`/item/$id → /item/$id` is one route, so the three sections are matched
+scopes; the update reconciles each body in place (keyed `<for>` inside the
+`<await>`) when its frame resolves, holding stale content until then.
+
+**Root cause is narrow.** The placeholder only ships through the fragment
+path. In `flushPlaceholder` (html/writer.ts) the update branches are:
+
+- `body.async && this.fragment` → placeholder in the frame + body as a
+  boundary-body entry (cross-route). ✅
+- `else` → `body.next = this.next` — links the body for in-place fill, the
+  placeholder render is **discarded** (matched, and fresh-non-fragment). ❌
+
+**Fix path reuses existing machinery.** The `<@placeholder>`→body handoff
+_is_ the boundary-body two-frame model: `applyBoundaryBody`
+(dom/update.ts) already swaps a placeholder branch out when the body frame
+lands. Making a matched await recede is "on update, treat this matched
+boundary like a fresh/detached one": ship the placeholder as a frame keyed
+to the matched try branch (reset live body → placeholder), then let the
+body frame swap it back. A client-side op resets the matched body to its
+placeholder branch (destroy body DOM, insert placeholder markup, set
+`PlaceholderBranch`). The same change fixes the fresh-non-fragment
+empty-gap for free. No new trust surface, no new frame type.
+
+**The real decision is _when_ to recede.** The server re-runs every
+`<await>` on every update render (fresh promises each time), so a blanket
+"recede all matched awaits" flashes _every_ placeholder on _every_
+navigation — including async sections that didn't change and sections on
+untouched parts of the page. Correct-looking for the item page (all three
+sections genuinely reload per product); a regression on partial-update
+pages (a slow sidebar await flashing when you navigate the main area).
+Gating models:
+
+- **Auto — slow re-awaits only.** Recede whenever the matched await is
+  still pending at first-frame flush (reuses the existing `body.async`
+  signal; no new syntax). Fast/cached awaits patch in place silently.
+  Simplest; correct for the item page; still flashes an _unrelated_ slow
+  await. Recommended first step.
+- **Opt-in per boundary.** A `<try>`/`<await>` attribute marks which
+  boundaries recede. Precise, zero false flashes; needs compiler support +
+  manual annotation.
+- **Auto + input-echo gate.** Mirror the possession echo (`x-marko-have`):
+  the client echoes each await's input identity, the server recedes only
+  the ones whose input changed. Fully automatic _and_ precise; most work
+  (an input-identity/serialization story across marko + run). The natural
+  end state — the auto-slow model can ship first and this layered on.
+
+**Status:** deferred by decision (2026-07-07) — documented, not built.
+Current patch-in-place behavior stands. Revisit gating before
+implementing; the fix itself is a contained extension of the boundary-body
+path plus one client reset op.
+
 ## Open questions / forks (decision needed)
 
 1. **Fragment cacheability split** — **RESOLVED (2026-07-06): no
@@ -986,3 +1056,13 @@ router upgrade worth taking when support allows.
    rule; the alternative (fragment-replace matched subtrees) would
    silently drop client DOM state (focus, media playback) and is
    rejected here, but stating it as an invariant needs sign-off.
+5. **Async placeholder recede gating**: whether a matched `<await>`
+   recedes to its placeholder on same-route navigation, and how it's
+   gated (auto-slow / opt-in / input-echo). Deferred 2026-07-07 —
+   see "Async placeholder / pending states on persisted navigation"
+   above for the behavior, root cause, fix path, and tradeoffs.
+   Note the tension with fork 4: a recede resets a _matched_ boundary
+   to its placeholder, so the "fragments never touch matched scopes"
+   invariant needs a carve-out for developer-/policy-driven pending
+   states (the reset destroys server-derived async body DOM only, not
+   interactive client state above the boundary).
