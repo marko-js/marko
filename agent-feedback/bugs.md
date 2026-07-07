@@ -2,6 +2,39 @@
 
 Out-of-scope defects noticed while working on something else. Format and rules: [README.md](README.md).
 
+## Possession echo keys by runtime scope id, which is not stable across the document and update renders
+
+`src/dom/update.ts:_have` + `src/html/dynamic-tag.ts` (siteKey) | 2026-07-07 | impact:high | effort:high
+
+The possession echo (`x-marko-have`) keys each dynamic-tag hop by
+`"<scopeId> <accessor>"`, where the client (`_have`) reads `scopeId` off its
+**live** resumed tree and the server (`_dynamic_tag`) computes it from the
+**update** render's scope counter. Those two id spaces do not agree: scope ids
+are runtime-allocated, and the update render elides matched/unchanged scopes
+(and omits the document shell), so the counter drifts relative to the full
+document render. Patch application tolerates this because matched scopes pair by
+DOM marker, not by raw id equality (patch ids are patch-local) — but the echo
+compares raw ids, so it silently misses.
+
+Reproduced end-to-end in marko-ecommerce (`/swap` demo, `scripts/validate/swap-validate.mjs`):
+the layout content hop matches (`"2 g"` both sides) but the page's swap hop is
+`"6 f"` on the client and `"5 f"` on the server — off by one, because a matched
+header scope is elided in the update render. Result: `possessionMiss` is false,
+no fragment is shipped, the client throws `update diverged`, and the router
+falls back to a full navigation (state lost). The `persisted-update-possession-swap`
+fixture passes only because its trivial structure (no document shell, no
+elidable scopes before the hop) makes the two numberings coincide — it does not
+exercise the divergence.
+
+Fix needs a **cross-render-stable site identity**, not the runtime scope id:
+either a compiler-assigned per-site id disambiguated by loop key (this is the
+"compiler register" that the byte analysis had dismissed — it turns out to be
+required for correctness, not economy), or keying the echo off the same
+marker-pairing the value patch already uses. Until then the feature is inert on
+any real app whose layout allocates scopes before the swap hop. Server + client
+plumbing (slices 1/2/2b) is otherwise correct and degrades safely (no crash,
+just a full-nav fallback).
+
 ## `bigint` zero renders as empty string in text/escape helpers
 
 `src/html/content.ts:26` | 2026-07-03 | impact:low | effort:low
