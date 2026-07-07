@@ -217,7 +217,12 @@ export function createUpdate(
       // objects -- the body's scopes ARE its patch scopes), and the merge
       // dispatch below may fill into scopes the body's markup creates.
       for (const body of bodyEntries) {
-        applyBoundaryBody(getScope(body[0]) as BranchScope, body[2], body[3]);
+        applyBoundaryBody(
+          getScope(body[0]) as BranchScope,
+          body[2],
+          body[3],
+          body[4],
+        );
       }
 
       merge(getScope(1), liveRoot!);
@@ -485,10 +490,17 @@ function applyBoundaryBody(
   tryBranch: BranchScope,
   markerPrefix: string,
   html: string,
+  scopeIds?: number[],
 ) {
   const placeholderBranch = tryBranch[AccessorProp.PlaceholderBranch];
   if (!placeholderBranch || !tryBranch[AccessorProp.Gen]) return;
   tryBranch[AccessorProp.PlaceholderBranch] = 0;
+  // Give the body's dom-less scopes (state/tag-variable wiring only -- the
+  // markup walk below can't reach them) live identity, exactly as the
+  // fragment path stamps `fragment[4]` (see `_update_dynamic`). Without this
+  // their payload effects are generation-gated out and `$global` reads on
+  // them see undefined.
+  stampFragmentScopes(scopeIds);
   const tpl = document.createElement("template");
   tpl.innerHTML = html;
   const { touched, orphans } = walkFragment(tpl.content, markerPrefix);

@@ -1,4 +1,4 @@
-// size: 30477 (min) 11153 (brotli)
+// size: 30490 (min) 11133 (brotli)
 //#region packages/runtime-tags/dist/common/attr-tag.mjs
 let empty = [],
   rest = Symbol();
@@ -2871,7 +2871,7 @@ function createUpdate(merge, liveRoot = getUpdateRoot()) {
       (applyGen = runId));
     try {
       for (let body of bodyEntries)
-        applyBoundaryBody(getScope(body[0]), body[2], body[3]);
+        applyBoundaryBody(getScope(body[0]), body[2], body[3], body[4]);
       if ((merge(getScope(1), liveRoot), effectEntries.length)) {
         let effects = [];
         for (let entry of effectEntries) {
@@ -2979,10 +2979,10 @@ function applyFragment(live, accessor, branch, markerPrefix, html) {
  * sits. No-ops if the try branch is gone (a later navigation already
  * swapped the subtree away) or its placeholder was already dismissed.
  */
-function applyBoundaryBody(tryBranch, markerPrefix, html) {
+function applyBoundaryBody(tryBranch, markerPrefix, html, scopeIds) {
   let placeholderBranch = tryBranch.P;
   if (!placeholderBranch || !tryBranch.H) return;
-  tryBranch.P = 0;
+  ((tryBranch.P = 0), stampFragmentScopes(scopeIds));
   let tpl = document.createElement("template");
   tpl.innerHTML = html;
   let { touched, orphans } = walkFragment(tpl.content, markerPrefix);
