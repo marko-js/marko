@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.40.1
+
+### Patch Changes
+
+- [#3333](https://github.com/marko-js/marko/pull/3333) [`4fedb7e`](https://github.com/marko-js/marko/commit/4fedb7ebde2ae60e06319ba3277865d9589a8017) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update dependencies to their latest compatible versions.
+
 ## 5.40.0
 
 ### Minor Changes

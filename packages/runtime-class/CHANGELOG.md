@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.39.14
+
+### Patch Changes
+
+- [#3335](https://github.com/marko-js/marko/pull/3335) [`5052f45`](https://github.com/marko-js/marko/commit/5052f456675d89b86bf3be66fe7d914eeb867e60) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Inject the compiler-supplied `runtimeId` when rendering a page entry (`withPageAssets`), matching the Marko 6 runtime.
+
+- [#3333](https://github.com/marko-js/marko/pull/3333) [`4fedb7e`](https://github.com/marko-js/marko/commit/4fedb7ebde2ae60e06319ba3277865d9589a8017) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update dependencies to their latest compatible versions.
+
+- Updated dependencies [[`4fedb7e`](https://github.com/marko-js/marko/commit/4fedb7ebde2ae60e06319ba3277865d9589a8017)]:
+  - @marko/compiler@5.40.1
+
 ## 5.39.13
 
 ### Patch Changes
