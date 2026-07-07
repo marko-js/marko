@@ -499,6 +499,15 @@ export function _el_resume(
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
+// Branch/non-node resume markers reset the per-chunk node-marker run register
+// so the following node marker re-emits its full scope id instead of a
+// continuation; the client walker mirrors this on every non-node visit (see
+// `_el_resume`). Exposed for `dynamic-tag.ts`, whose branch markers write to
+// this same active chunk through `_html`.
+export function _reset_node_mark_run() {
+  $chunk.lastNodeMarkScope = -1;
+}
+
 export function _sep(shouldResume: number) {
   return shouldResume === 0 ? "" : "<!>";
 }
@@ -930,6 +939,10 @@ export function _show_start(display: unknown, mark?: unknown) {
     // written (and its stack entry only popped) when the body renders in
     // place.
     if (mark) {
+      // Branch markers bracket interleave points and reset the node-marker
+      // run register; the walker mirrors the reset on every non-node visit
+      // (see the branch-start reset in `_if`/`forBranches`).
+      $chunk.lastNodeMarkScope = -1;
       $chunk.writeHTML(
         $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
       );
@@ -1078,10 +1091,15 @@ export function _await<T>(
       // handled
     } else if (resumeMarker) {
       const branchId = _peek_scope_id();
+      // Branch markers reset the node-marker run register (the walker mirrors
+      // it on every non-node visit); both brackets must reset so a same-scope
+      // node marker on either side re-emits its full scope id.
+      $chunk.lastNodeMarkScope = -1;
       $chunk.writeHTML(
         $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
       );
       content(promise);
+      $chunk.lastNodeMarkScope = -1;
       $chunk.writeHTML(
         $chunk.boundary.state.mark(
           ResumeSymbol.BranchEnd,
@@ -1125,10 +1143,14 @@ export function _await<T>(
               // order; the serialized branch link lets the client attach it.
             } else if (resumeMarker) {
               const branchId = _peek_scope_id();
+              // Branch markers reset the node-marker run register (see the
+              // sync path above).
+              $chunk.lastNodeMarkScope = -1;
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""),
               );
               withIsAsync(content, value);
+              $chunk.lastNodeMarkScope = -1;
               $chunk.writeHTML(
                 $chunk.boundary.state.mark(
                   ResumeSymbol.BranchEnd,
@@ -1160,6 +1182,9 @@ export function _try(
   },
 ) {
   const branchId = _peek_scope_id();
+  // Branch markers reset the node-marker run register; the walker mirrors it
+  // on every non-node visit, so both brackets reset (see `_await`).
+  $chunk.lastNodeMarkScope = -1;
   $chunk.writeHTML($chunk.boundary.state.mark(ResumeSymbol.BranchStart, ""));
 
   const catchContent = input.catch
@@ -1197,6 +1222,7 @@ export function _try(
     });
   }
 
+  $chunk.lastNodeMarkScope = -1;
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
       ResumeSymbol.BranchEnd,
@@ -1648,6 +1674,10 @@ export class Chunk {
           }
         }
         const placeholderBranchId = state.scopeId++;
+        // Branch markers reset the node-marker run register; the walker
+        // mirrors it on every non-node visit (this is a chunk method, so the
+        // register lives on `this`, the chunk being consumed).
+        this.lastNodeMarkScope = -1;
         this.writeHTML(state.mark(ResumeSymbol.BranchStart, ""));
         const after = this.render(placeholder.render);
         if (after !== this) {
@@ -1655,6 +1685,7 @@ export class Chunk {
             new Error("An @placeholder cannot contain async content."),
           );
         }
+        this.lastNodeMarkScope = -1;
         this.writeHTML(
           state.mark(
             ResumeSymbol.BranchEnd,

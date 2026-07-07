@@ -14,6 +14,7 @@ import {
   _fragment,
   _html,
   _peek_scope_id,
+  _reset_node_mark_run,
   _resume,
   _scope,
   _scope_id,
@@ -137,6 +138,7 @@ export let _dynamic_tag = (
     }
 
     if (shouldResume || needsScript) {
+      _reset_node_mark_run();
       _html(
         state.mark(
           ResumeSymbol.BranchEndNativeTag,
@@ -148,6 +150,7 @@ export let _dynamic_tag = (
     // TODO: this needs to set result the element getter
   } else {
     if (shouldResume) {
+      _reset_node_mark_run();
       _html(state.mark(ResumeSymbol.BranchStart, ""));
     }
 
@@ -194,6 +197,7 @@ export let _dynamic_tag = (
     rendered = _peek_scope_id() !== branchId;
 
     if (shouldResume) {
+      _reset_node_mark_run();
       _html(
         state.mark(
           ResumeSymbol.BranchEnd,
