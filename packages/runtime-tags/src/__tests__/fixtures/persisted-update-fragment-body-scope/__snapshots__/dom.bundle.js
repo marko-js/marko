@@ -9,9 +9,9 @@ enableBranches();
 
 // template.marko
 _enable_catch();
-const $await_content__ready = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "ready" : "waiting"));
+const $await_content__ready = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "ready" : "waiting"));
 const $placeholder_content = _content_resume("a6", "<p class=loading>loading…</p>", "b");
-const $count = /* @__PURE__ */ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a8", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));

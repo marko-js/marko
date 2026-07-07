@@ -220,7 +220,7 @@ export function getResumeOnlyExpr(expr: t.Expression): t.Expression {
 
 export function getExprIfSerialized<
   T extends undefined | SerializeReason,
-  R extends T extends {} ? t.Expression : undefined,
+  R extends (T extends {} ? t.Expression : undefined),
 >(section: Section, reason: T, expr: t.Expression, valueSources?: Sources): R {
   if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
     if (!reason) return undefined as R;
@@ -275,7 +275,7 @@ export function getExprIfSerialized<
 // structural bookkeeping) that updates rely on even when values are elided.
 export function getExprGuardSerialized<
   T extends undefined | SerializeReason,
-  R extends T extends {} ? t.Expression : undefined,
+  R extends (T extends {} ? t.Expression : undefined),
 >(section: Section, reason: T, expr: t.Expression): R {
   if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
     return (reason && expr) as R;

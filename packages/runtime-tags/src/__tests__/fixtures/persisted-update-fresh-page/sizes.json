@@ -6,9 +6,9 @@
         "brotli": 560
       },
       "files": {
-        "tags/actions.marko": 508,
-        "tags/layout.marko": 287,
-        "template.marko": 2155
+        "tags/actions.marko": 504,
+        "tags/layout.marko": 285,
+        "template.marko": 2139
       }
     },
     "update.js": {
@@ -25,12 +25,12 @@
     },
     "shared-list.mjs": {
       "total": {
-        "min": 21362,
-        "brotli": 8118
+        "min": 21361,
+        "brotli": 8134
       },
       "files": {
         "data.js": 729,
-        "tags/shared-list.marko": 609
+        "tags/shared-list.marko": 607
       }
     }
   },

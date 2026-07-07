@@ -22,12 +22,12 @@ var template_marko_update_default = _resume("__tests__/template.marko_0_update",
 // template.marko
 const $template = "<button>clicked <!></button><!><!>";
 const $walks = " Db%l%c";
-const $if_content__settings_prefix = /* @__PURE__ */ _if_closure("#text/2", 0, ($scope) => {
+const $if_content__settings_prefix = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => {
 	if (!updating) {
 		_text($scope["#text/2"], $scope._.settings_prefix);
 	}
 });
-const $if_content__pair = /* @__PURE__ */ _let("pair/4", ($scope) => _text($scope["#text/0"], $scope.pair));
+const $if_content__pair = /*@__PURE__*/ _let("pair/4", ($scope) => _text($scope["#text/0"], $scope.pair));
 const $if_content__setup__script = _script_update("__tests__/template.marko_1", ($scope) => _on($scope["#button/1"], "click", function() {
 	$if_content__pair($scope, $scope.pair + "!");
 }));
@@ -38,9 +38,9 @@ const $if_content__setup = ($scope) => {
 	$if_content__setup__script($scope);
 };
 const $pattern2 = ($scope, $pattern) => $settings_prefix($scope, $pattern[0]?.prefix);
-const $settings_prefix = /* @__PURE__ */ _const("settings_prefix", $if_content__settings_prefix);
-const $count = /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
-const $if = /* @__PURE__ */ _if("#text/2", "<p class=pair> </p><button class=bump>bump</button><p class=combo><!>:<!></p>", "D l bD%c%l", $if_content__setup, "<p class=empty>hidden</p>", "b");
+const $settings_prefix = /*@__PURE__*/ _const("settings_prefix", $if_content__settings_prefix);
+const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
+const $if = /*@__PURE__*/ _if("#text/2", "<p class=pair> </p><button class=bump>bump</button><p class=combo><!>:<!></p>", "D l bD%c%l", $if_content__setup, "<p class=empty>hidden</p>", "b");
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -51,4 +51,4 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 enableBranches();
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

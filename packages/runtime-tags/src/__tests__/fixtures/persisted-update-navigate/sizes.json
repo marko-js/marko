@@ -7,12 +7,12 @@
       },
       "files": {
         "tags/price.marko": 58,
-        "template.marko": 482
+        "template.marko": 478
       }
     },
     "update.js": {
-      "min": 6965,
-      "brotli": 3149
+      "min": 6964,
+      "brotli": 3147
     }
   },
   "html": {

@@ -1,4 +1,4 @@
-// size: 30490 (min) 11133 (brotli)
+// size: 30489 (min) 11150 (brotli)
 //#region packages/runtime-tags/dist/common/attr-tag.mjs
 let empty = [],
   rest = Symbol();
@@ -252,7 +252,7 @@ function _lifecycle(scope, thisObj, index = 0) {
 }
 function removeChildNodes(startNode, endNode) {
   let stop = endNode.nextSibling;
-  for (; startNode !== stop; ) {
+  for (; startNode !== stop;) {
     let next = startNode.nextSibling;
     (startNode.remove(), (startNode = next));
   }
@@ -264,7 +264,7 @@ function toInsertNode(startNode, endNode) {
   if (startNode === endNode) return startNode;
   let parent = new DocumentFragment(),
     stop = endNode.nextSibling;
-  for (; startNode !== stop; ) {
+  for (; startNode !== stop;) {
     let next = startNode.nextSibling;
     (parent.appendChild(startNode), (startNode = next));
   }
@@ -308,7 +308,7 @@ function skipScope() {
 }
 function findBranchWithKey(scope, key) {
   let branch = scope.F;
-  for (; branch && branch[key] == null; ) branch = branch.N;
+  for (; branch && branch[key] == null;) branch = branch.N;
   return branch;
 }
 function destroyBranch(branch) {
@@ -366,7 +366,7 @@ let walker = /* @__PURE__ */ document.createTreeWalker(document),
       currentMultiplier,
       storedMultiplier = 0,
       currentScopeIndex = 0;
-    for (; currentWalkIndex < walkCodes.length; )
+    for (; currentWalkIndex < walkCodes.length;)
       if (
         ((value = walkCodes.charCodeAt(currentWalkIndex++)),
         (currentMultiplier = storedMultiplier),
@@ -395,13 +395,13 @@ let walker = /* @__PURE__ */ document.createTreeWalker(document),
           value === 48 &&
             (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
       else if (value < 92)
-        for (value = 20 * currentMultiplier + value - 67; value--; )
+        for (value = 20 * currentMultiplier + value - 67; value--;)
           walker.nextNode();
       else if (value < 107)
-        for (value = 10 * currentMultiplier + value - 97; value--; )
+        for (value = 10 * currentMultiplier + value - 97; value--;)
           walker.nextSibling();
       else if (value < 117) {
-        for (value = 10 * currentMultiplier + value - 107; value--; )
+        for (value = 10 * currentMultiplier + value - 107; value--;)
           walker.parentNode();
         walker.nextSibling();
       } else storedMultiplier = currentMultiplier * 10 + value - 117;
@@ -647,9 +647,9 @@ function init(runtimeId = "M") {
                         visit.previousSibling === startVisit
                           ? startVisit
                           : parent.insertBefore(new Text(), visit)));
-                  for (; i && orphanBranches[--i].L > branchId; )
+                  for (; i && orphanBranches[--i].L > branchId;)
                     setParentBranch(orphanBranches.pop(), branch);
-                  for (; j && deferredOwners[--j].L > branchId; ) {
+                  for (; j && deferredOwners[--j].L > branchId;) {
                     let owner = deferredOwners.pop();
                     owner.F !== owner && (owner.F = branch);
                   }
@@ -682,22 +682,17 @@ function init(runtimeId = "M") {
               for (; i < resumes.length; i++) {
                 let serialized = resumes[i];
                 if (typeof serialized == "string")
-                  for (
-                    lastTokenIndex = 0, visitText = serialized;
-                    nextToken();
-                  )
+                  for (lastTokenIndex = 0, visitText = serialized; nextToken();)
                     /\D/.test(lastToken)
                       ? (lastEffect = registeredValues[lastToken])
                       : effects.push(lastEffect, getScope(lastToken));
                 else if (Array.isArray(serialized)) {
-                  if (
-                    !(
-                      readyIds &&
-                      serialized.every(
-                        (dep) => readyIds.has(dep) && !render.b[dep].length,
-                      )
+                  if (!(
+                    readyIds &&
+                    serialized.every(
+                      (dep) => readyIds.has(dep) && !render.b[dep].length,
                     )
-                  )
+                  ))
                     break;
                 } else if (readyIds && typeof serialized == "number") break;
                 else {
@@ -721,7 +716,7 @@ function init(runtimeId = "M") {
             (serializeContext._ = registeredValues),
             (render.m = (effects) => {
               if ((processResumes(render.r, effects), readyIds && render.b))
-                for (let progress = 1; progress; ) {
+                for (let progress = 1; progress;) {
                   progress = 0;
                   for (let readyId of readyIds) {
                     let resumes = render.b[readyId];
@@ -838,7 +833,7 @@ let rendering,
   pendingRenders = [],
   scopeKeyOffset = 1e3,
   runEffects = (effects) => {
-    for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
+    for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled;
@@ -895,7 +890,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
 }
 function queuePendingRender(render) {
   let i = pendingRenders.push(render) - 1;
-  for (; i; ) {
+  for (; i;) {
     let parentIndex = (i - 1) >> 1,
       parent = pendingRenders[parentIndex];
     if (render.a - parent.a >= 0) break;
@@ -934,14 +929,14 @@ function prepareEffects(fn) {
   return preparedEffects;
 }
 function runRenders() {
-  for (; pendingRenders.length; ) {
+  for (; pendingRenders.length;) {
     let render = pendingRenders[0],
       item = pendingRenders.pop();
     if (render !== item) {
       let i = 0,
         mid = pendingRenders.length >> 1,
         key = (pendingRenders[0] = item).a;
-      for (; i < mid; ) {
+      for (; i < mid;) {
         let bestChild = (i << 1) + 1,
           right = bestChild + 1;
         if (
@@ -1152,7 +1147,7 @@ function _closure(...closureSignals) {
   let [firstSignal] = closureSignals,
     scopeInstances = firstSignal.a,
     signalIndex = firstSignal.b;
-  for (let i = closureSignals.length; i--; ) closureSignals[i].c = i;
+  for (let i = closureSignals.length; i--;) closureSignals[i].c = i;
   return (scope) => {
     if (scope[scopeInstances])
       for (let childScope of scope[scopeInstances])
@@ -1259,7 +1254,7 @@ function _enable_catch() {
             fn,
             scope,
             branch;
-          for (; i < effects.length; )
+          for (; i < effects.length;)
             ((fn = effects[i++]),
               (scope = effects[i++]),
               (branch = scope.F)?.H !== 0 &&
@@ -1270,7 +1265,7 @@ function _enable_catch() {
     (runRender) => (render) => {
       try {
         let branch = render.b.F;
-        for (; branch; ) {
+        for (; branch;) {
           if (branch.W) return ((render.f = 1), branch.W.push(render));
           branch = branch.N;
         }
@@ -1282,7 +1277,7 @@ function _enable_catch() {
   );
 }
 function handlePendingTry(fn, scope, branch) {
-  for (; branch; ) {
+  for (; branch;) {
     if (branch.O?.i) return (branch.J ||= []).push(fn, scope);
     branch = branch.N;
   }
@@ -1316,7 +1311,7 @@ function _on(element, type, handler) {
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
-  for (; target; )
+  for (; target;)
     (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
@@ -1489,7 +1484,7 @@ function resolveCursorPosition(
     if (updatedValue.endsWith(after)) return updatedValue.length - after.length;
     let count = before.replace(R, "").length,
       pos = 0;
-    for (; count && updatedValue[pos]; )
+    for (; count && updatedValue[pos];)
       updatedValue[pos++].replace(R, "") && count--;
     return pos;
   }
@@ -1662,7 +1657,7 @@ function getSelectValue(el, multiple) {
 //#region packages/runtime-tags/dist/dom/spread.mjs
 function _attrs(scope, nodeAccessor, nextAttrs) {
   let el = scope[nodeAccessor];
-  for (let i = el.attributes.length; i--; ) {
+  for (let i = el.attributes.length; i--;) {
     let { name } = el.attributes.item(i);
     (nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))) ||
       el.removeAttribute(name);
@@ -1683,7 +1678,7 @@ function hasAttrAlias(element, attr, nextAttrs) {
 function _attrs_partial(scope, nodeAccessor, nextAttrs, skip) {
   let el = scope[nodeAccessor],
     partial = {};
-  for (let i = el.attributes.length; i--; ) {
+  for (let i = el.attributes.length; i--;) {
     let { name } = el.attributes.item(i);
     !skip[name] &&
       !(nextAttrs && name in nextAttrs) &&
@@ -2029,14 +2024,14 @@ function _await_promise(nodeAccessor, params) {
                 ) {
                   let fnScopes = /* @__PURE__ */ new Map(),
                     effects = awaitCounter.m([]);
-                  for (let i = 0; i < pendingEffects.length; ) {
+                  for (let i = 0; i < pendingEffects.length;) {
                     let fn = pendingEffects[i++],
                       scopes = fnScopes.get(fn);
                     (scopes ||
                       fnScopes.set(fn, (scopes = /* @__PURE__ */ new Set())),
                       scopes.add(pendingEffects[i++]));
                   }
-                  for (let i = 0; i < effects.length; ) {
+                  for (let i = 0; i < effects.length;) {
                     let fn = effects[i++],
                       scope = effects[i++];
                     fnScopes.get(fn)?.has(scope) || queueEffect(scope, fn);
@@ -2190,7 +2185,7 @@ function _if(nodeAccessor, ...branchesArgs) {
   let branchAccessor = "D" + nodeAccessor,
     branches = [],
     i = 0;
-  for (; i < branchesArgs.length; )
+  for (; i < branchesArgs.length;)
     branches.push(
       _content("", branchesArgs[i++], branchesArgs[i++], branchesArgs[i++])(),
     );
@@ -2388,14 +2383,14 @@ function loop(forEach) {
           hi,
           mid;
         for (let i = start; i <= oldEnd; i++) oldPos.set(oldScopes[i], i);
-        for (let i = diffLen; i--; )
+        for (let i = diffLen; i--;)
           sources[i] = oldPos.get(newScopes[start + i]) ?? -1;
         for (let i = 0; i < diffLen; i++)
           if (~sources[i])
             if (tail < 0 || sources[tails[tail]] < sources[i])
               (~tail && (pred[i] = tails[tail]), (tails[++tail] = i));
             else {
-              for (lo = 0, hi = tail; lo < hi; )
+              for (lo = 0, hi = tail; lo < hi;)
                 ((mid = ((lo + hi) / 2) | 0),
                   sources[tails[mid]] < sources[i]
                     ? (lo = mid + 1)
@@ -2403,9 +2398,9 @@ function loop(forEach) {
               sources[i] < sources[tails[lo]] &&
                 (lo > 0 && (pred[i] = tails[lo - 1]), (tails[lo] = i));
             }
-        for (hi = tails[tail], lo = tail + 1; lo-- > 0; )
+        for (hi = tails[tail], lo = tail + 1; lo-- > 0;)
           ((tails[lo] = hi), (hi = pred[hi]));
-        for (let i = diffLen; i--; )
+        for (let i = diffLen; i--;)
           (~tail && i === tails[tail]
             ? tail--
             : insertBranchBefore(
@@ -2998,7 +2993,7 @@ function walkFragment(root, prefix) {
   let { getScope, stamp } = activeUpdate,
     visits = [],
     treeWalker = document.createTreeWalker(root, 128);
-  for (let node; (node = treeWalker.nextNode()); )
+  for (let node; (node = treeWalker.nextNode());)
     node.data.startsWith(prefix) && visits.push(node);
   let touched = [],
     scopeOf = (id) => {
@@ -3054,7 +3049,7 @@ function walkFragment(root, prefix) {
         nextToken());
     let i = orphanBranches.length,
       branchId;
-    for (; (branchId = +lastToken); ) {
+    for (; (branchId = +lastToken);) {
       let branch = scopeOf(lastToken);
       if (((endedBranches ||= []).push(branch), singleNode)) {
         for (
@@ -3085,7 +3080,7 @@ function walkFragment(root, prefix) {
               ? startVisit
               : parent.insertBefore(new Text(), visit)));
       }
-      for (; i && orphanBranches[--i].L > branchId; )
+      for (; i && orphanBranches[--i].L > branchId;)
         setParentBranch(orphanBranches.pop(), branch);
       nextToken();
     }

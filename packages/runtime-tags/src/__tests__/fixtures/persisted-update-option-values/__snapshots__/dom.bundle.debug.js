@@ -18,13 +18,13 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__opt_label($scope, $params2[0]?.label);
 };
 const $pattern2 = ($scope, $pattern) => $cfg_options($scope, $pattern[0]?.options);
-const $for = /* @__PURE__ */ _for_of("#select/2", "<option> </option>", " D l", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#select/2", "<option> </option>", " D l", 0, $for_content__$params);
 const $cfg_options = ($scope, cfg_options) => {
 	if (!updating) $for($scope, [cfg_options, function(opt) {
 		return opt.key;
 	}]);
 };
-const $count = /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -34,4 +34,4 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 enableBranches();
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

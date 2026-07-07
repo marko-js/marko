@@ -2,7 +2,7 @@
 enableBranches();
 
 // template.marko
-const $count = /* @__PURE__ */ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a2", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));

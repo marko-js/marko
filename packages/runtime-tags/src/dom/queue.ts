@@ -152,7 +152,7 @@ export function prepareEffects(fn: () => void): unknown[] {
 }
 
 export let runEffects = ((effects) => {
-  for (let i = 0; i < effects.length; ) {
+  for (let i = 0; i < effects.length;) {
     (effects[i++] as (scope: Scope) => void)(effects[i++] as Scope);
   }
 }) as (effects: unknown[], checkPending?: boolean | 1) => void;

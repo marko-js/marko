@@ -1,6 +1,6 @@
 // template.marko
-const $input_label__OR__highlight = /* @__PURE__ */ _or(9, ($scope) => _attr_class($scope.b, $scope.i && $scope.g));
-const $highlight = /* @__PURE__ */ _let(8, $input_label__OR__highlight);
+const $input_label__OR__highlight = /*@__PURE__*/ _or(9, ($scope) => _attr_class($scope.b, $scope.i && $scope.g));
+const $highlight = /*@__PURE__*/ _let(8, $input_label__OR__highlight);
 const $setup__script = _script_update("a3", ($scope) => _on($scope.a, "click", function() {
 	$highlight($scope, !$scope.i);
 }));

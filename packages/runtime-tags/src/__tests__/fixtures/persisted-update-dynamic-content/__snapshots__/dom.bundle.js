@@ -1,5 +1,5 @@
 // tags/layout.marko
-const $open = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
+const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
 const $setup__script$1 = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
@@ -12,8 +12,8 @@ const $for_content__$params = ($scope, $params2) => {
 	$for_content__spec_name($scope, $params2[0]?.name);
 	$for_content__spec_value($scope, $params2[0]?.value);
 };
-const $Specs_content__for = /* @__PURE__ */ _for_of(0, "<li><!> is <!></li>", "D%c%l", 0, $for_content__$params);
-const $Specs_content__input_specs = /* @__PURE__ */ _closure_get(8, ($scope) => {
+const $Specs_content__for = /*@__PURE__*/ _for_of(0, "<li><!> is <!></li>", "D%c%l", 0, $for_content__$params);
+const $Specs_content__input_specs = /*@__PURE__*/ _closure_get(8, ($scope) => {
 	if (!updating) {
 		if (!updating) $Specs_content__for($scope, [$scope._.i, function(spec) {
 			return spec.name;
@@ -24,18 +24,18 @@ const $Specs_content__setup = ($scope) => {
 	if (!updating) $Specs_content__input_specs($scope);
 };
 const $Specs_content = _content_resume("a3", "<ul></ul>", " b", $Specs_content__setup);
-const $Overview_content__input_title = /* @__PURE__ */ _closure_get(6, ($scope) => {
+const $Overview_content__input_title = /*@__PURE__*/ _closure_get(6, ($scope) => {
 	if (!updating) _text($scope.a, $scope._.g);
 });
 const $Overview_content__setup = ($scope) => {
 	if (!updating) $Overview_content__input_title($scope);
 	if (!updating) $Overview_content__input_summary($scope);
 };
-const $Overview_content__input_summary = /* @__PURE__ */ _closure_get(7, ($scope) => {
+const $Overview_content__input_summary = /*@__PURE__*/ _closure_get(7, ($scope) => {
 	if (!updating) _text($scope.b, $scope._.h);
 });
 const $Overview_content = _content_resume("a4", "<p>Overview of <!>: <!></p>", "Db%c%l", $Overview_content__setup);
-const $count = /* @__PURE__ */ _let(10, ($scope) => _text($scope.c, $scope.k));
+const $count = /*@__PURE__*/ _let(10, ($scope) => _text($scope.c, $scope.k));
 const $setup__script = _script_update("a5", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, $scope.k + 1);
 }));

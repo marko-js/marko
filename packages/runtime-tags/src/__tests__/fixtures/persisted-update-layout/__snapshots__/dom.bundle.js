@@ -1,5 +1,5 @@
 // tags/layout/layout.marko
-const $open = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "Close" : "Menu"));
+const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "Close" : "Menu"));
 const $setup__script = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
@@ -9,8 +9,8 @@ enableBranches();
 const $layout_content__setup__script = _script_update("a3", ($scope) => _on($scope.b, "click", function() {
 	$count($scope._, $scope._.e + 1);
 }));
-const $layout_content__count = /* @__PURE__ */ _closure_get(4, ($scope) => _text($scope.c, $scope._.e));
-const $count = /* @__PURE__ */ _let(4, /* @__PURE__ */ _closure($layout_content__count));
+const $layout_content__count = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.c, $scope._.e));
+const $count = /*@__PURE__*/ _let(4, /* @__PURE__ */ _closure($layout_content__count));
 enableBranches();
 
 // tags/layout/layout.marko.update.mjs

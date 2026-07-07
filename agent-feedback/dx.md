@@ -25,6 +25,7 @@ The dependency upgrade took everything to latest except two majors that are true
 `package.json:9` | 2026-07-07 | impact:low | effort:low
 
 Bare `npm audit` shows 3 advisories (`serialize-javascript` high, `js-yaml`/mocha moderate, `diff` low), all transitively under `mocha` and `@changesets/cli` — dev tooling that never ships. They can't be resolved by version bumps: the fixes live in higher majors than mocha's ranges allow (`serialize-javascript ^6`→fix in 7.x, `diff ^7`→8.x, `js-yaml ^4`→5.x), mocha 11.7.6 is the newest stable, and the latest `@changesets/parse` still pins `js-yaml ^4.1.1`. Rather than pin them via `overrides`, the repo audits production deps only: **`npm run audit`** (`npm audit --omit=dev`) is the gate and returns 0 — that's what consumers of the published packages actually receive. Revisit and drop the distinction once mocha/changesets update their transitive deps upstream.
+
 ## `npm run compile -o hydrate` cannot be used standalone
 
 `scripts/inspect-compiled-output.ts:31` | 2026-07-02 | impact:low | effort:low

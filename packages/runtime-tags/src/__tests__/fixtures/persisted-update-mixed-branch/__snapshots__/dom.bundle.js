@@ -2,8 +2,8 @@
 const $else_content__setup__script = _script_update("a3", ($scope) => _on($scope.b, "click", function() {
 	$count($scope._, $scope._.f + 1);
 }));
-const $else_content__count = /* @__PURE__ */ _if_closure(0, 1, ($scope) => _text($scope.c, $scope._.f));
-const $count = /* @__PURE__ */ _let(5, $else_content__count);
+const $else_content__count = /*@__PURE__*/ _if_closure(0, 1, ($scope) => _text($scope.c, $scope._.f));
+const $count = /*@__PURE__*/ _let(5, $else_content__count);
 enableBranches();
 
 // template.marko.update.mjs

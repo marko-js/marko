@@ -36,7 +36,7 @@ const $if_content__details = ($scope, details) => {
 	$if_content__details_name($scope, details?.name);
 	$if_content__details_price($scope, details?.price);
 };
-const $if_content__input_detailId = /* @__PURE__ */ _if_closure("#text/2", 0, ($scope) => {
+const $if_content__input_detailId = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => {
 	if (!updating) {
 		if (!updating) $if_content__details($scope, getDetails($scope._.input_detailId));
 	}
@@ -48,11 +48,11 @@ const $if_content__details_name = ($scope, details_name) => _text($scope["#text/
 const $if_content__details_price__script = _script_update("__tests__/template.marko_1_details_price", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope._, $scope.details_price);
 }));
-const $if_content__details_price = /* @__PURE__ */ _const("details_price", ($scope) => {
+const $if_content__details_price = /*@__PURE__*/ _const("details_price", ($scope) => {
 	_text($scope["#text/1"], $scope.details_price);
 	$if_content__details_price__script($scope);
 });
-const $count = /* @__PURE__ */ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
+const $count = /*@__PURE__*/ _let("count/6", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -60,11 +60,11 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-const $if = /* @__PURE__ */ _if("#text/2", "<section><h2> </h2><p>costs <!></p><button class=copy>use price</button></section>", "E lDb%l l", $if_content__setup, "<p>no selection</p>", "b");
-const $input_detailId = /* @__PURE__ */ _const("input_detailId", ($scope) => {
+const $if = /*@__PURE__*/ _if("#text/2", "<section><h2> </h2><p>costs <!></p><button class=copy>use price</button></section>", "E lDb%l l", $if_content__setup, "<p>no selection</p>", "b");
+const $input_detailId = /*@__PURE__*/ _const("input_detailId", ($scope) => {
 	if (!updating) $if($scope, $scope.input_detailId ? 0 : 1);
 	$if_content__input_detailId($scope);
 });
 const $input = ($scope, input) => $input_detailId($scope, input.detailId);
 enableBranches();
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

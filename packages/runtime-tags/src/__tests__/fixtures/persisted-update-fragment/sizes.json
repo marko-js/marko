@@ -6,16 +6,16 @@
         "brotli": 276
       },
       "files": {
-        "tags/store.marko": 359,
-        "tags/widget.marko": 270,
-        "tags/layout.marko": 287,
-        "template.marko": 537
+        "tags/store.marko": 357,
+        "tags/widget.marko": 268,
+        "tags/layout.marko": 285,
+        "template.marko": 533
       }
     },
     "update.js": {
       "total": {
-        "min": 8088,
-        "brotli": 3453
+        "min": 8087,
+        "brotli": 3452
       },
       "files": {
         "tags/store.marko.update.mjs": 284,

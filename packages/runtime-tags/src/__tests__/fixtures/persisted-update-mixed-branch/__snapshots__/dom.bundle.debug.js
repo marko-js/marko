@@ -19,7 +19,7 @@ var template_marko_update_default = _resume("__tests__/template.marko_0_update",
 // template.marko
 const $template = "<!><!><!>";
 const $walks = "b%c";
-const $else_content__input_title = /* @__PURE__ */ _if_closure("#text/0", 1, ($scope) => {
+const $else_content__input_title = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => {
 	if (!updating) {
 		_text($scope["#text/0"], $scope._.input_title);
 	}
@@ -32,12 +32,12 @@ const $else_content__setup = ($scope) => {
 	$else_content__count._($scope);
 	$else_content__setup__script($scope);
 };
-const $else_content__count = /* @__PURE__ */ _if_closure("#text/0", 1, ($scope) => _text($scope["#text/2"], $scope._.count));
-const $count = /* @__PURE__ */ _let("count/5", $else_content__count);
+const $else_content__count = /*@__PURE__*/ _if_closure("#text/0", 1, ($scope) => _text($scope["#text/2"], $scope._.count));
+const $count = /*@__PURE__*/ _let("count/5", $else_content__count);
 function $setup($scope) {
 	$count($scope, 0);
 }
-const $if = /* @__PURE__ */ _if("#text/0", "<h2>Something went wrong</h2>", "b", 0, "<h1> </h1><button> </button>", "D l D l", $else_content__setup);
+const $if = /*@__PURE__*/ _if("#text/0", "<h2>Something went wrong</h2>", "b", 0, "<h1> </h1><button> </button>", "D l D l", $else_content__setup);
 const $input_err = ($scope, input_err) => {
 	if (!updating) $if($scope, input_err ? 0 : 1);
 };
@@ -45,6 +45,6 @@ const $input = ($scope, input) => {
 	$input_err($scope, input.err);
 	$input_title($scope, input.title);
 };
-const $input_title = /* @__PURE__ */ _const("input_title", $else_content__input_title);
+const $input_title = /*@__PURE__*/ _const("input_title", $else_content__input_title);
 enableBranches();
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, "b%c", $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup, $input);

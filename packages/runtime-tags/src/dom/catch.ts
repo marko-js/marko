@@ -39,7 +39,7 @@ export function _enable_catch() {
           let fn: (scope: Scope) => void;
           let scope: Scope;
           let branch: BranchScope | undefined;
-          for (; i < effects.length; ) {
+          for (; i < effects.length;) {
             fn = effects[i++] as (scope: Scope) => void;
             scope = effects[i++] as Scope;
             if (

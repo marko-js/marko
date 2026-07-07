@@ -5,14 +5,14 @@ enableBranches();
 enableBranches();
 
 // tags/toggle.marko
-const $on = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "on" : "off"));
+const $on = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "on" : "off"));
 const $setup__script$1 = _script_update("d0", ($scope) => _on($scope.a, "click", function() {
 	$on($scope, !$scope.g);
 }));
 enableBranches();
 
 // template.marko
-const $count = /* @__PURE__ */ _let(14, ($scope) => _text($scope.b, $scope.o));
+const $count = /*@__PURE__*/ _let(14, ($scope) => _text($scope.b, $scope.o));
 const $setup__script = _script_update("a2", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.o + 1);
 }));

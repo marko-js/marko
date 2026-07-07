@@ -1,12 +1,12 @@
 // tags/widget.marko
-const $clicks = /* @__PURE__ */ _let(6, ($scope) => _text($scope.c, $scope.g));
+const $clicks = /*@__PURE__*/ _let(6, ($scope) => _text($scope.c, $scope.g));
 const $setup__script$2 = _script_update("c0", ($scope) => _on($scope.a, "click", function() {
 	$clicks($scope, $scope.g + 1);
 }));
 enableBranches();
 
 // tags/layout.marko
-const $open = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
+const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
 const $setup__script$1 = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
@@ -15,7 +15,7 @@ enableBranches();
 // template.marko
 _enable_catch();
 const $placeholder_content = _content_resume("a6", "<p class=loading>crunching numbers…</p>", "b");
-const $count = /* @__PURE__ */ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a8", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));

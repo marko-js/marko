@@ -36,12 +36,7 @@ import {
 import createMutationTracker from "./utils/track-mutations";
 
 type Step =
-  | Input
-  | Wait
-  | Flush
-  | Throws
-  | Navigate
-  | ((container: Element) => unknown);
+  Input | Wait | Flush | Throws | Navigate | ((container: Element) => unknown);
 type Steps = [Input, ...Step[]];
 export type TestConfig = {
   steps?: Steps | (() => Steps | Promise<Steps>);
@@ -161,29 +156,27 @@ function testFixtures(interop?: true) {
             csr.reset();
             ssr.reset();
           });
-          const getModeOpts = once(
-            (): compiler.Config => ({
-              translator,
-              runtimeId: config.runtime_id,
-              persisted: config.persisted,
-              writeVersionComment: false,
-              babelConfig: {
-                babelrc: false,
-                configFile: false,
-                browserslistConfigFile: false,
-              },
-              optimize,
-              optimizeKnownTemplates: optimize
-                ? (
-                    fs.readdirSync(fixtureDir, {
-                      recursive: true,
-                    }) as string[]
-                  )
-                    .filter((f) => f.endsWith(".marko"))
-                    .map((f) => path.join(fixtureDir, f))
-                : undefined,
-            }),
-          );
+          const getModeOpts = once((): compiler.Config => ({
+            translator,
+            runtimeId: config.runtime_id,
+            persisted: config.persisted,
+            writeVersionComment: false,
+            babelConfig: {
+              babelrc: false,
+              configFile: false,
+              browserslistConfigFile: false,
+            },
+            optimize,
+            optimizeKnownTemplates: optimize
+              ? (
+                  fs.readdirSync(fixtureDir, {
+                    recursive: true,
+                  }) as string[]
+                )
+                  .filter((f) => f.endsWith(".marko"))
+                  .map((f) => path.join(fixtureDir, f))
+              : undefined,
+          }));
 
           const ssrRunner = once(() =>
             createServerRunner(
@@ -366,16 +359,12 @@ function testFixtures(interop?: true) {
                     // streaming model -- async boundary bodies arrive in
                     // later frames, in resolution order).
                     const frames: (
-                      | ((ctx: unknown) => unknown)
-                      | string
-                      | unknown[]
+                      ((ctx: unknown) => unknown) | string | unknown[]
                     )[][] = [];
                     for (const line of html.split("\n")) {
                       if (line) {
                         const fills: (
-                          | ((ctx: unknown) => unknown)
-                          | string
-                          | unknown[]
+                          ((ctx: unknown) => unknown) | string | unknown[]
                         )[] = [];
                         for (const item of new Function(`return (${line})`)()) {
                           if (

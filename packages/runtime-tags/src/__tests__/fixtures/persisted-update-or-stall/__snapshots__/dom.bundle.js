@@ -1,9 +1,9 @@
 // template.marko
-const $if_content__pair = /* @__PURE__ */ _let(4, ($scope) => _text($scope.a, $scope.e));
+const $if_content__pair = /*@__PURE__*/ _let(4, ($scope) => _text($scope.a, $scope.e));
 const $if_content__setup__script = _script_update("a4", ($scope) => _on($scope.b, "click", function() {
 	$if_content__pair($scope, $scope.e + "!");
 }));
-const $count = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g));
+const $count = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g));
 const $setup__script = _script_update("a5", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.g + 1);
 }));

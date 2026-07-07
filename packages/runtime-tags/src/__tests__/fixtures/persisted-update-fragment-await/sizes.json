@@ -6,15 +6,15 @@
         "brotli": 218
       },
       "files": {
-        "tags/widget.marko": 270,
-        "tags/layout.marko": 287,
-        "template.marko": 380
+        "tags/widget.marko": 268,
+        "tags/layout.marko": 285,
+        "template.marko": 378
       }
     },
     "update.js": {
       "total": {
-        "min": 7882,
-        "brotli": 3378
+        "min": 7881,
+        "brotli": 3376
       },
       "files": {
         "tags/widget.marko.update.mjs": 317,

@@ -19,11 +19,11 @@ var template_marko_update_default = _resume("__tests__/template.marko_0_update",
 const $template = "<h1> </h1><a>link</a><button> </button><section></section>";
 const $walks = "D l b D l b";
 const $if_content__setup = ($scope) => _text($scope["#text/0"], $scope.$global.params.sale);
-const $count = /* @__PURE__ */ _let("count/5", ($scope) => {
+const $count = /*@__PURE__*/ _let("count/5", ($scope) => {
 	_text($scope["#text/3"], $scope.count);
 	_attr_class($scope["#section/4"], $scope.count && $scope.$global.params.tag && "hot");
 });
-const $if = /* @__PURE__ */ _if("#section/4", "<em>Sale <!>% off</em>", "Db%l", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#section/4", "<em>Sale <!>% off</em>", "Db%l", $if_content__setup);
 const $setup__script = _script_update("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -35,4 +35,4 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 enableBranches();
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

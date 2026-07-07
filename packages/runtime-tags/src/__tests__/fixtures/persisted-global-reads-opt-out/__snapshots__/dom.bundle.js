@@ -1,5 +1,5 @@
 // template.marko
-const $count = /* @__PURE__ */ _let(5, ($scope) => {
+const $count = /*@__PURE__*/ _let(5, ($scope) => {
 	_text($scope.d, $scope.f);
 	_attr_class($scope.e, $scope.f && $scope.$.params.tag && "hot");
 });

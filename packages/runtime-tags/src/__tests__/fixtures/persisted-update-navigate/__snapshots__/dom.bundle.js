@@ -2,8 +2,8 @@
 enableBranches();
 
 // template.marko
-const $input_product_featured__OR__expanded = /* @__PURE__ */ _or(16, ($scope) => _attr_class($scope.e, $scope.p && $scope.l && "spotlight"));
-const $expanded = /* @__PURE__ */ _let(15, ($scope) => {
+const $input_product_featured__OR__expanded = /*@__PURE__*/ _or(16, ($scope) => _attr_class($scope.e, $scope.p && $scope.l && "spotlight"));
+const $expanded = /*@__PURE__*/ _let(15, ($scope) => {
 	_text($scope.d, $scope.p ? "Hide" : "Show");
 	$input_product_featured__OR__expanded($scope);
 });

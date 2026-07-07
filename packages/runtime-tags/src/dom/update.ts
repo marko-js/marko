@@ -181,8 +181,7 @@ export function createUpdate(
   // fragment entries always arrive inside a frame array off the wire.
   return (
     fills:
-      | UpdateFill[]
-      | Exclude<UpdateFill, FragmentEntry | BoundaryBodyEntry>,
+      UpdateFill[] | Exclude<UpdateFill, FragmentEntry | BoundaryBodyEntry>,
   ) => {
     const effectEntries: string[] = [];
     const bodyEntries: BoundaryBodyEntry[] = [];
@@ -334,8 +333,7 @@ export function _update_dynamic(
   const patchBranch = patch[branchKey] as Scope | undefined;
   const accessor = branchKey.slice(AccessorPrefix.BranchScopes.length);
   const fragment = patch[FRAGMENT_PREFIX + accessor] as
-    | FragmentEntry
-    | undefined;
+    FragmentEntry | undefined;
 
   if (fragment && patchBranch && live[rendererKey] !== rendererId) {
     // The divergence point arrived as a fragment frame: swap the branch by
@@ -397,8 +395,7 @@ export function _update_dynamic(
   }
 
   const merge = getRegisteredWithScope(rendererId + UPDATE_MERGE_SUFFIX) as
-    | UpdateMerge
-    | undefined;
+    UpdateMerge | undefined;
   const liveBranch = live[branchKey] as Scope | undefined;
   if (merge && patchBranch && liveBranch) {
     merge(patchBranch, liveBranch);
@@ -439,8 +436,7 @@ function applyFragment(
   const { stamp } = activeUpdate!;
   const marker = live[accessor] as ChildNode;
   const old = live[AccessorPrefix.BranchScopes + accessor] as
-    | BranchScope
-    | undefined;
+    BranchScope | undefined;
   const tpl = document.createElement("template");
   tpl.innerHTML = html;
   const { touched, orphans } = walkFragment(tpl.content, markerPrefix);
@@ -531,7 +527,7 @@ function walkFragment(root: ParentNode, prefix: string) {
   const { getScope, stamp } = activeUpdate!;
   const visits: Comment[] = [];
   const treeWalker = document.createTreeWalker(root, 128 /* comments */);
-  for (let node; (node = treeWalker.nextNode()); ) {
+  for (let node; (node = treeWalker.nextNode());) {
     if ((node as Comment).data.startsWith(prefix)) {
       visits.push(node as Comment);
     }

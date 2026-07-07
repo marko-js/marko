@@ -1,5 +1,5 @@
 // tags/item-form.marko
-const $qty = /* @__PURE__ */ _let(7, ($scope) => _attr_input_value($scope, "a", $scope.h, $valueChange($scope)));
+const $qty = /*@__PURE__*/ _let(7, ($scope) => _attr_input_value($scope, "a", $scope.h, $valueChange($scope)));
 const $setup__script = _script_update("b1", ($scope) => {
 	_attr_input_value_script($scope, "a");
 	_on($scope.c, "click", function() {

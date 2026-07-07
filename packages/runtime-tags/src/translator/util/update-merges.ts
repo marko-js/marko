@@ -240,7 +240,7 @@ export function addUpdateGlobalsStatement(
  */
 export function cloneUpdateGlobalsStatements(section: Section) {
   const statements = getUpdateGlobalsStatementsRaw(section);
-  for (let i = statements.length; i--; ) {
+  for (let i = statements.length; i--;) {
     statements[i] = t.cloneNode(statements[i], true);
   }
 }

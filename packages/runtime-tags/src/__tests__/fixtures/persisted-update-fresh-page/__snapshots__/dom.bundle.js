@@ -1,7 +1,7 @@
 // tags/actions.marko
-const $list = _var_resume("b0", /* @__PURE__ */ _const(10, ($scope) => $list_length($scope, $scope.k?.length)));
+const $list = _var_resume("b0", /*@__PURE__*/ _const(10, ($scope) => $list_length($scope, $scope.k?.length)));
 const $list_length = ($scope, list_length) => _text($scope.f, list_length);
-const $added = /* @__PURE__ */ _let(12, ($scope) => _text($scope.d, $scope.m));
+const $added = /*@__PURE__*/ _let(12, ($scope) => _text($scope.d, $scope.m));
 const $setup__script$2 = _script_update("b1", ($scope) => _on($scope.c, "click", function() {
 	$added($scope, $scope.m + 1);
 	_var_change($scope.a, [...$scope.k, $scope.j]);
@@ -9,7 +9,7 @@ const $setup__script$2 = _script_update("b1", ($scope) => _on($scope.c, "click",
 enableBranches();
 
 // tags/layout.marko
-const $open = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
+const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
 const $setup__script$1 = _script_update("c0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
@@ -24,30 +24,30 @@ const $for_content2__$params = ($scope, $params3) => {
 	$for_content2__entry_product_title($scope, $params3[0]?.product?.title);
 	$for_content2__entry_product_price($scope, $params3[0]?.product?.price);
 };
-const $else_content__for = /* @__PURE__ */ _for_of(0, "<li><!> $<!></li>", "D%c%l", 0, $for_content2__$params);
-const $else_content__entries = /* @__PURE__ */ _if_closure(3, 1, ($scope) => {
+const $else_content__for = /*@__PURE__*/ _for_of(0, "<li><!> $<!></li>", "D%c%l", 0, $for_content2__$params);
+const $else_content__entries = /*@__PURE__*/ _if_closure(3, 1, ($scope) => {
 	_text($scope.b, $scope._.h.reduce((sum, e) => sum + e.product.price, 0));
 	$else_content__for($scope, [$scope._.h, function(entry) {
 		return entry.id;
 	}]);
 });
 const $else_content__setup = $else_content__entries;
-const $Cart_content__entries = /* @__PURE__ */ _const(7, ($scope) => {
+const $Cart_content__entries = /*@__PURE__*/ _const(7, ($scope) => {
 	$Cart_content__entries_length($scope, $scope.h?.length);
 	$else_content__entries($scope);
 });
-const $Cart_content__list__OR__products = /* @__PURE__ */ _or(6, ($scope) => $Cart_content__entries($scope, $scope.e.map((id) => ({
+const $Cart_content__list__OR__products = /*@__PURE__*/ _or(6, ($scope) => $Cart_content__entries($scope, $scope.e.map((id) => ({
 	product: $scope.f.find((p) => p.id === id),
 	id
 }))), 1, 1);
-const $Cart_content__products = /* @__PURE__ */ _let(5, $Cart_content__list__OR__products);
-const $Cart_content__list = _var_resume("a8", /* @__PURE__ */ _const(4, ($scope) => {
+const $Cart_content__products = /*@__PURE__*/ _let(5, $Cart_content__list__OR__products);
+const $Cart_content__list = _var_resume("a8", /*@__PURE__*/ _const(4, ($scope) => {
 	$Cart_content__products($scope, getProducts?.($scope.e) || []);
 	$Cart_content__list__OR__products($scope);
 }));
-const $Cart_content__if = /* @__PURE__ */ _if(3, "<p class=cart>cart is empty</p>", "b", 0, "<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l", $else_content__setup);
+const $Cart_content__if = /*@__PURE__*/ _if(3, "<p class=cart>cart is empty</p>", "b", 0, "<ul class=cart></ul><p class=total>total $<!></p>", " bDb%l", $else_content__setup);
 const $Cart_content__entries_length = ($scope, entries_length) => $Cart_content__if($scope, !entries_length ? 0 : 1);
-const $count = /* @__PURE__ */ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a11", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));
@@ -158,7 +158,7 @@ const getTags = typeof window === "undefined" ? () => [
 
 // tags/shared-list.marko
 const subsByKey = {};
-const $value = /* @__PURE__ */ _let(3, ($scope) => _return($scope, $scope.d));
+const $value = /*@__PURE__*/ _let(3, ($scope) => _return($scope, $scope.d));
 const $input_name__script = _script_update("d1", ($scope) => {
 	{
 		const subs = subsByKey[$scope.c] ??= /* @__PURE__ */ new Set();

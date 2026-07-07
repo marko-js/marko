@@ -1,7 +1,7 @@
 // template.marko
 _enable_catch();
 const $placeholder_content = _content_resume("a3", "loading related…", "b");
-const $count = /* @__PURE__ */ _let(10, ($scope) => _text($scope.c, $scope.k));
+const $count = /*@__PURE__*/ _let(10, ($scope) => _text($scope.c, $scope.k));
 const $setup__script = _script_update("a5", ($scope) => _on($scope.b, "click", function() {
 	$count($scope, $scope.k + 1);
 }));

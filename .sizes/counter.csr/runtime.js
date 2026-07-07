@@ -1,4 +1,4 @@
-// size: 3974 (min) 1764 (brotli)
+// size: 3948 (min) 1755 (brotli)
 //#region packages/runtime-tags/dist/common/helpers.mjs
 let decodeAccessor = (num) =>
   (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36);
@@ -29,7 +29,7 @@ function _text(node, value) {
 }
 function removeChildNodes(startNode, endNode) {
   let stop = endNode.nextSibling;
-  for (; startNode !== stop; ) {
+  for (; startNode !== stop;) {
     let next = startNode.nextSibling;
     (startNode.remove(), (startNode = next));
   }
@@ -41,7 +41,7 @@ function toInsertNode(startNode, endNode) {
   if (startNode === endNode) return startNode;
   let parent = new DocumentFragment(),
     stop = endNode.nextSibling;
-  for (; startNode !== stop; ) {
+  for (; startNode !== stop;) {
     let next = startNode.nextSibling;
     (parent.appendChild(startNode), (startNode = next));
   }
@@ -50,20 +50,18 @@ function toInsertNode(startNode, endNode) {
 //#endregion
 //#region packages/runtime-tags/dist/dom/scope.mjs
 let nextScopeId = 1e6,
-  collectingScopes,
   destroyNestedScopes = function destroyNestedScopes(scope) {
     ((scope.H = 0),
       scope.D?.forEach(destroyNestedScopes),
       scope.B?.forEach(resetControllers));
   };
 function createScope($global, closestBranch) {
-  let scope = {
+  return {
     L: nextScopeId++,
     H: runId,
     F: closestBranch,
     $: $global,
   };
-  return (collectingScopes?.push(scope), scope);
 }
 function skipScope() {
   return nextScopeId++;
@@ -85,7 +83,7 @@ let walker = /* @__PURE__ */ document.createTreeWalker(document),
       currentMultiplier,
       storedMultiplier = 0,
       currentScopeIndex = 0;
-    for (; currentWalkIndex < walkCodes.length; )
+    for (; currentWalkIndex < walkCodes.length;)
       if (
         ((value = walkCodes.charCodeAt(currentWalkIndex++)),
         (currentMultiplier = storedMultiplier),
@@ -114,13 +112,13 @@ let walker = /* @__PURE__ */ document.createTreeWalker(document),
           value === 48 &&
             (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
       else if (value < 92)
-        for (value = 20 * currentMultiplier + value - 67; value--; )
+        for (value = 20 * currentMultiplier + value - 67; value--;)
           walker.nextNode();
       else if (value < 107)
-        for (value = 10 * currentMultiplier + value - 97; value--; )
+        for (value = 10 * currentMultiplier + value - 97; value--;)
           walker.nextSibling();
       else if (value < 117) {
-        for (value = 10 * currentMultiplier + value - 107; value--; )
+        for (value = 10 * currentMultiplier + value - 107; value--;)
           walker.parentNode();
         walker.nextSibling();
       } else storedMultiplier = currentMultiplier * 10 + value - 117;
@@ -200,7 +198,7 @@ let rendering,
   pendingRenders = [],
   scopeKeyOffset = 1e3,
   runEffects = (effects) => {
-    for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
+    for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled;
@@ -222,7 +220,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
 }
 function queuePendingRender(render) {
   let i = pendingRenders.push(render) - 1;
-  for (; i; ) {
+  for (; i;) {
     let parentIndex = (i - 1) >> 1,
       parent = pendingRenders[parentIndex];
     if (render.a - parent.a >= 0) break;
@@ -258,14 +256,14 @@ function prepareEffects(fn) {
   return preparedEffects;
 }
 function runRenders() {
-  for (; pendingRenders.length; ) {
+  for (; pendingRenders.length;) {
     let render = pendingRenders[0],
       item = pendingRenders.pop();
     if (render !== item) {
       let i = 0,
         mid = pendingRenders.length >> 1,
         key = (pendingRenders[0] = item).a;
-      for (; i < mid; ) {
+      for (; i < mid;) {
         let bestChild = (i << 1) + 1,
           right = bestChild + 1;
         if (
@@ -331,7 +329,7 @@ function _on(element, type, handler) {
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
-  for (; target; )
+  for (; target;)
     (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }

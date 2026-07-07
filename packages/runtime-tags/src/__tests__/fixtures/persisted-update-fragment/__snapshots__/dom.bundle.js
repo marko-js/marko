@@ -1,5 +1,5 @@
 // tags/store.marko
-const $value = /* @__PURE__ */ _let(0, ($scope) => _return($scope, $scope.a));
+const $value = /*@__PURE__*/ _let(0, ($scope) => _return($scope, $scope.a));
 const $setup__script$3 = _script_update("c1", ($scope) => $value($scope, $scope.$.seed));
 function $valueChange($scope) {
 	return function(next) {
@@ -10,14 +10,14 @@ _resume("c0", $valueChange);
 enableBranches();
 
 // tags/widget.marko
-const $clicks = /* @__PURE__ */ _let(6, ($scope) => _text($scope.c, $scope.g));
+const $clicks = /*@__PURE__*/ _let(6, ($scope) => _text($scope.c, $scope.g));
 const $setup__script$2 = _script_update("d0", ($scope) => _on($scope.a, "click", function() {
 	$clicks($scope, $scope.g + 1);
 }));
 enableBranches();
 
 // tags/layout.marko
-const $open = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
+const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
 const $setup__script$1 = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
@@ -27,8 +27,8 @@ enableBranches();
 const $Dashboard_content__setup__script = _script_update("a7", ($scope) => _on($scope.d, "click", function() {
 	_var_change($scope.b, $scope.l + 1);
 }));
-const $Dashboard_content__tally = _var_resume("a6", /* @__PURE__ */ _const(11, ($scope) => _text($scope.e, $scope.l)));
-const $count = /* @__PURE__ */ _let(3, ($scope) => _text($scope.b, $scope.d));
+const $Dashboard_content__tally = _var_resume("a6", /*@__PURE__*/ _const(11, ($scope) => _text($scope.e, $scope.l)));
+const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script_update("a8", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.d + 1);
 }));

@@ -36,21 +36,21 @@ const $for_content__cat = ($scope, cat) => {
 	_text($scope["#text/1"], cat);
 };
 const $for_content__$params = ($scope, $params2) => $for_content__cat($scope, $params2[0]);
-const $if_content__count = /* @__PURE__ */ _if_closure("#text/3", 0, ($scope) => _attr_class($scope["#em/0"], $scope._.count && $scope.$global.params.tag && "hot"));
+const $if_content__count = /*@__PURE__*/ _if_closure("#text/3", 0, ($scope) => _attr_class($scope["#em/0"], $scope._.count && $scope.$global.params.tag && "hot"));
 const $if_content__setup = ($scope) => {
 	$if_content__count._($scope);
 	_text($scope["#text/1"], $scope.$global.params.pick);
 };
-const $for = /* @__PURE__ */ _for_of("#text/2", "<span> </span>", " D l", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#text/2", "<span> </span>", " D l", 0, $for_content__$params);
 const $categories = ($scope, categories) => {
 	$categories_length($scope, categories?.length);
 	if (!updating) $for($scope, [categories]);
 };
-const $if = /* @__PURE__ */ _if("#text/3", "<em>pick:<!></em>", " Db%l", $if_content__setup);
+const $if = /*@__PURE__*/ _if("#text/3", "<em>pick:<!></em>", " Db%l", $if_content__setup);
 const $categories_length = ($scope, categories_length) => {
 	if (!updating) $if($scope, categories_length ? 0 : 1);
 };
-const $count = /* @__PURE__ */ _let("count/6", ($scope) => {
+const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$if_content__count($scope);
 });
@@ -63,4 +63,4 @@ function $setup($scope) {
 	$setup__script($scope);
 }
 enableBranches();
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
