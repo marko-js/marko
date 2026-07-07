@@ -531,8 +531,9 @@ costs, and navigation content rides the wire like the MPA it replaces.
    full-navigation fallback) rather than silently keeping the stale
    branch — which is also what the same-route dynamic-swap pattern
    (`<layout content=$global.tab === "a" ? A : B/>` without a route
-   change) degrades to under this mode; watch-listed, phase 4's
-   possession echo is the eventual fix. Plain `persisted: true` builds
+   change) degrades to under this mode; phase 4's possession echo (now
+   landed — see item 4) lifts it into a fine-grained fragment swap.
+   Plain `persisted: true` builds
    keep today's always-registered behavior (the fixture suite pins
    both modes; the fills-path fixtures stay on the compat mode).
 
@@ -561,18 +562,51 @@ interactive`. Feed retains its keyed post-row content (fork 2);
    (`event.mjs`, 9–11 kB) disappeared.
 
 4. **Same-route fresh branches via fragments** — requires knowing what
-   the client lacks. The server-template POC (prior art below) shows
-   the cheap sufficient primitive: a **possession echo** — the client
-   enumerates which structural sites it holds (branch index per
-   conditional site, key set per keyed-loop site; all identities the
-   scopes already carry), no digests needed. The server then sends
-   fills for possessed sites, a fragment for missing ones, and an
-   explicit empty for now-absent ones. Content digests (`x-marko-have`
-   T2) become a pure dedup optimization layered on top — skipping
-   value re-sends for possessed-and-unchanged branches — so this phase
-   no longer waits on the digest canonicalization fork, only on the
-   shared cache-policy decision (any client echo fragments cache
-   keys).
+   the client lacks. The cheap sufficient primitive is a **possession
+   echo** — the client enumerates which structural sites it holds and
+   the server ships a fragment for any whose renderer diverges, instead
+   of failing the apply. **Landed** (three slices):
+
+   - _Server (marko):_ `PersistedRenderMode.possessed` carries, per
+     participating dynamic-tag hop (`"<scopeId> <accessor>"`), the
+     renderer id the client echoed; `_dynamic_tag` fragments a hop whose
+     target renderer differs — the same-route dynamic swap that
+     previously degraded to a full navigation (the watch-listed bail in
+     phase 1) now applies fine-grained, client state preserved.
+   - _Client (marko):_ `_have()` walks the resumed scope tree for the
+     string-valued `ConditionalRenderer:` keys (`<${…}/>` hops store a
+     renderer-id string there; `<if>`/loop branches store a numeric
+     index, so control flow is excluded for free) and returns the map.
+   - _Wire (run):_ the router sends it as `x-marko-have`; the server
+     decodes it back into `possessed` (only for update renders, and
+     defensively — a malformed echo degrades to a full navigation, never
+     a corrupt apply).
+
+   **Encoding decision — no compiler register (measured 2026-07-07).**
+   The initial instinct was a compiler-assigned site/renderer register
+   for a compact positional wire. Measurement retired that: the optimize
+   registry-minification pass _already_ shrinks both the accessor and the
+   renderer id it reads off live scopes to ~1–2 B each (`Da → a2`), so a
+   hop encodes in ~5–8 B with no register. A 20-hop synthetic page
+   measured 156 B derived-keyed vs 59 B positional in optimize (1936 vs
+   1719 B in debug — where the un-minified ids dominate); and a
+   runtime-only accessor-factored + delta-scope encoding lands at ~61 B,
+   within ~2 B of the register's positional scheme, because density only
+   arises in loops where every instance shares one accessor and scope ids
+   delta-encode to ~1 B. Crucially the corpus is sparse: the 80-component
+   `scale` app has a **single** dynamic-tag hop (component composition is
+   static `<cN/>`, not `<${}/>`), so its real echo is one ~7 B entry. So
+   the shipped encoding is JSON of the public `possessed` shape (robust
+   against the spaces and `%` real optimize accessors contain, and
+   symmetric client/server); the accessor-factored + positional codec is
+   a documented future swap behind the same `_have`/decode seam, to
+   revisit only behind a real hop-dense (CMS block-list) workload.
+
+   Content digests (`x-marko-have` T2) remain a pure dedup optimization
+   layered on top — skipping value re-sends for possessed-and-unchanged
+   branches — gated only on the shared cache-policy decision (any client
+   echo fragments cache keys).
+
 5. **C2 dedup** for what remains (interactive components).
 
 ## Interactions
