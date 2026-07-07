@@ -6,7 +6,7 @@ var layout_default = _template("b", (input) => {
 	const $sg__input_content = _serialize_guard(_scope_reason(), 0);
 	const $scope0_id = _scope_id();
 	_html("<section class=shell>");
-	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $sg__input_content | _persisted_reason());
+	_dynamic_tag($scope0_id, "a", input.content, {}, 0, 0, $sg__input_content | _persisted_reason(), "b0");
 	_html("</section>");
 	$sg__input_content && writeScope($scope0_id, {});
 });

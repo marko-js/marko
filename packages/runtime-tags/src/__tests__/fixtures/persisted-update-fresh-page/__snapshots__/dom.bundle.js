@@ -10,7 +10,7 @@ enableBranches();
 
 // tags/layout.marko
 const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
-const $setup__script$1 = _script_update("c0", ($scope) => _on($scope.a, "click", function() {
+const $setup__script$1 = _script_update("c1", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
 enableBranches();
@@ -75,7 +75,7 @@ var actions_marko_update_default = _resume("b3", $update$2);
 
 // tags/layout.marko.update.mjs
 const $open_seed = _update_signal("c2");
-const $dynamic_update = _update_signal("c1");
+const $dynamic_update = _update_signal("c0");
 const $update$1 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);

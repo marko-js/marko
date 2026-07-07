@@ -445,6 +445,21 @@ export default {
             callRuntime("_persisted_reason"),
           );
         }
+        // A build-stable id for this dynamic-tag site (globally unique --
+        // filename + section + accessor), the possession echo's key: runtime
+        // scope ids drift between the document and update renders (matched
+        // scopes elide), but this compile constant is identical in both, so
+        // the client can echo what it holds at a site and the server match it.
+        // Persisted only; the html runtime stashes it on the hop scope so the
+        // client reads it back (see `_dynamic_tag`/`_have`).
+        const siteId = isPersisted()
+          ? t.stringLiteral(
+              getUpdateDynamicRegisterId(
+                tagSection,
+                getScopeAccessor(nodeBinding),
+              ),
+            )
+          : undefined;
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -455,6 +470,7 @@ export default {
               t.numericLiteral(0),
               t.numericLiteral(1),
               serializeArg,
+              siteId,
             )
           : callRuntime(
               "_dynamic_tag",
@@ -465,6 +481,7 @@ export default {
               args[1] || (serializeArg ? t.numericLiteral(0) : undefined),
               serializeArg ? t.numericLiteral(0) : undefined,
               serializeArg,
+              siteId,
             );
 
         if (node.var) {

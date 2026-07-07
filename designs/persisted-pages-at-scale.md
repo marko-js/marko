@@ -568,39 +568,45 @@ interactive`. Feed retains its keyed post-row content (fork 2);
    of failing the apply. **Landed** (three slices):
 
    - _Server (marko):_ `PersistedRenderMode.possessed` carries, per
-     participating dynamic-tag hop (`"<scopeId> <accessor>"`), the
-     renderer id the client echoed; `_dynamic_tag` fragments a hop whose
-     target renderer differs — the same-route dynamic swap that
-     previously degraded to a full navigation (the watch-listed bail in
-     phase 1) now applies fine-grained, client state preserved.
+     dynamic-tag hop keyed by a **build-stable site id**, the renderer id
+     the client echoed; `_dynamic_tag` fragments a hop whose target
+     renderer differs — the same-route dynamic swap that previously
+     degraded to a full navigation (the watch-listed bail in phase 1) now
+     applies fine-grained, client state preserved.
    - _Client (marko):_ `_have()` walks the resumed scope tree for the
      string-valued `ConditionalRenderer:` keys (`<${…}/>` hops store a
      renderer-id string there; `<if>`/loop branches store a numeric
-     index, so control flow is excluded for free) and returns the map.
+     index, so control flow is excluded for free), reads the site id the
+     html runtime stashed alongside each, and returns the map keyed by it.
    - _Wire (run):_ the router sends it as `x-marko-have`; the server
      decodes it back into `possessed` (only for update renders, and
      defensively — a malformed echo degrades to a full navigation, never
      a corrupt apply).
 
-   **Encoding decision — no compiler register (measured 2026-07-07).**
-   The initial instinct was a compiler-assigned site/renderer register
-   for a compact positional wire. Measurement retired that: the optimize
-   registry-minification pass _already_ shrinks both the accessor and the
-   renderer id it reads off live scopes to ~1–2 B each (`Da → a2`), so a
-   hop encodes in ~5–8 B with no register. A 20-hop synthetic page
-   measured 156 B derived-keyed vs 59 B positional in optimize (1936 vs
-   1719 B in debug — where the un-minified ids dominate); and a
-   runtime-only accessor-factored + delta-scope encoding lands at ~61 B,
-   within ~2 B of the register's positional scheme, because density only
-   arises in loops where every instance shares one accessor and scope ids
-   delta-encode to ~1 B. Crucially the corpus is sparse: the 80-component
-   `scale` app has a **single** dynamic-tag hop (component composition is
-   static `<cN/>`, not `<${}/>`), so its real echo is one ~7 B entry. So
-   the shipped encoding is JSON of the public `possessed` shape (robust
-   against the spaces and `%` real optimize accessors contain, and
-   symmetric client/server); the accessor-factored + positional codec is
-   a documented future swap behind the same `_have`/decode seam, to
-   revisit only behind a real hop-dense (CMS block-list) workload.
+   **Keying decision — the compiler register, for correctness (2026-07-07).**
+   The site key must be a **build-stable site id**, not the runtime scope
+   id. The byte analysis below had argued against a register (optimize
+   already minifies the ids, so a raw `scopeId + accessor` key encodes in
+   ~5–8 B; a 20-hop synthetic page is 156 B, and a runtime-only
+   accessor-factored + delta-scope encoding lands ~61 B, within ~2 B of a
+   positional register — and the corpus is sparse: the 80-component
+   `scale` app has a **single** hop). All of that holds for _size_. But
+   wiring the marko-ecommerce `/swap` demo showed a scope-id key is simply
+   **wrong**: runtime scope ids are not stable across the document and the
+   update renders (the update elides matched scopes and omits the shell),
+   so the client's live id (`6`) and the server's update-render id (`5`)
+   for the same hop diverge and the echo silently misses — patch
+   application tolerates this because matched scopes pair by DOM marker,
+   not raw id. So the shipped key is the compiler's per-site register id
+   (`getUpdateDynamicRegisterId`, filename + section + accessor; a compile
+   constant identical in both renders), stashed on the hop scope under a
+   reserved prefix so the client reads it back off its live tree. The wire
+   is JSON of `{ siteId: rendererId }` — those ids are already the
+   optimize-minified register strings, so it stays compact without a
+   separate positional codec; the codec remains a future size-only swap
+   behind the same `_have`/decode seam. (Instances of one site — loops of
+   dynamic tags — currently share the id and collide, degrading to a full
+   nav; disambiguating by loop key is a follow-up.)
 
    Content digests (`x-marko-have` T2) remain a pure dedup optimization
    layered on top — skipping value re-sends for possessed-and-unchanged

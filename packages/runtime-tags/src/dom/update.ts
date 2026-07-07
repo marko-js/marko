@@ -111,7 +111,6 @@ export function _have(root: Scope | undefined = getUpdateRoot()): string {
     const scope = stack.pop()!;
     if (seen.has(scope)) continue;
     seen.add(scope);
-    const scopeId = scope[AccessorProp.Id];
     for (const key in scope) {
       const value = scope[key];
       if (
@@ -119,8 +118,16 @@ export function _have(root: Scope | undefined = getUpdateRoot()): string {
         key.length > prefix.length &&
         key.slice(0, prefix.length) === prefix
       ) {
-        found = 1;
-        possessed[scopeId + " " + key.slice(prefix.length)] = value;
+        // Key by the site's build-stable id (stashed by the html runtime),
+        // not the runtime scope id -- the document and update renders number
+        // scopes differently, but this id is a compile constant common to
+        // both. A hop with no stashed id (should not happen in a persisted
+        // build) is skipped -- at worst its swap falls back to a full nav.
+        const siteId = scope[HOP_SITE_PREFIX + key.slice(prefix.length)];
+        if (typeof siteId === "string") {
+          found = 1;
+          possessed[siteId] = value;
+        }
       } else if (value && typeof value === "object") {
         // Follow scope links (child/owner/branch scopes carry a numeric id)
         // and scope collections (`#BranchScopes` set, closure-scope arrays);
@@ -470,6 +477,13 @@ export function _update_dynamic(
 // branch bookkeeping. Reserved accessor prefix "P" carries the entry on the
 // anchor's patch scope (see common/accessor.ts).
 const FRAGMENT_PREFIX = "P";
+
+// The build-stable per-site id the possession echo (`_have`) reads is stashed
+// on each hop scope by the html runtime under this reserved prefix ("Z", not
+// an AccessorPrefix enum member so it stays out of client bundles). Matches
+// `HOP_SITE_PREFIX` in html/dynamic-tag; same MARKO_DEBUG gate so the document
+// (server) and live (client) builds agree within a build.
+const HOP_SITE_PREFIX = MARKO_DEBUG ? "HopSite:" : "Z";
 
 // Every scope a fragment (or boundary body) serialized joins the live tree
 // -- including dom-less scopes (state and tag-variable wiring only) the

@@ -14,8 +14,8 @@
     },
     "update.js": {
       "total": {
-        "min": 5355,
-        "brotli": 2317
+        "min": 5377,
+        "brotli": 2320
       },
       "files": {
         "tags/toggle.marko.update.mjs": 309,

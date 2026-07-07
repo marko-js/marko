@@ -143,15 +143,16 @@ export interface PersistedRenderMode {
   seed: boolean;
   fragment: boolean;
   /**
-   * @internal The possession echo (`x-marko-have`): for each participating
-   * dynamic-hop site the client holds, `"<scopeId> <accessor>"` → the renderer
-   * id it currently shows (empty string = participating but absent). The server
-   * ships a fragment for a site whose target renderer differs from what the
-   * client echoed — same-route dynamic swaps included — rather than failing the
-   * apply. Absent map = no echo (cross-route possesses nothing; the whole
-   * diverging subtree fragments at the first hop via `fragment`).
+   * @internal The possession echo (`x-marko-have`): for each dynamic-hop site
+   * the client holds, the site's build-stable id → the renderer id it
+   * currently shows. The id is the compiler's per-site register id (stashed on
+   * the hop scope so the client reads it back), not the runtime scope id --
+   * scope ids drift between the document and update renders, this constant does
+   * not. The server ships a fragment for a site whose target renderer differs
+   * from what the client echoed (same-route dynamic swaps included) rather than
+   * failing the apply. Absent map = no echo.
    */
-  possessed?: { [siteKey: string]: string };
+  possessed?: { [siteId: string]: string };
 }
 export interface Input {
   [x: PropertyKey]: unknown;

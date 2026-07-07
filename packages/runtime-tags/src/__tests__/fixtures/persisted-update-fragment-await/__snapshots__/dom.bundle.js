@@ -7,7 +7,7 @@ enableBranches();
 
 // tags/layout.marko
 const $open = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g ? "collapse" : "expand"));
-const $setup__script$1 = _script_update("b0", ($scope) => _on($scope.a, "click", function() {
+const $setup__script$1 = _script_update("b1", ($scope) => _on($scope.a, "click", function() {
 	$open($scope, !$scope.g);
 }));
 enableBranches();

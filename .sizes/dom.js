@@ -1,4 +1,4 @@
-// size: 30917 (min) 11294 (brotli)
+// size: 30933 (min) 11278 (brotli)
 //#region packages/runtime-tags/dist/common/attr-tag.mjs
 let empty = [],
   rest = Symbol();
@@ -2806,18 +2806,24 @@ function _have(root = getUpdateRoot()) {
     found;
   for (; stack.length;) {
     let scope = stack.pop();
-    if (seen.has(scope)) continue;
-    seen.add(scope);
-    let scopeId = scope.L;
-    for (let key in scope) {
-      let value = scope[key];
-      if (typeof value == "string" && key.length > 1 && key.slice(0, 1) === "D")
-        ((found = 1), (possessed[scopeId + " " + key.slice(1)] = value));
-      else if (value && typeof value == "object") {
-        if (typeof value.L == "number") stack.push(value);
-        else if (value instanceof Set || Array.isArray(value))
-          for (let child of value)
-            child && typeof child == "object" && stack.push(child);
+    if (!seen.has(scope)) {
+      seen.add(scope);
+      for (let key in scope) {
+        let value = scope[key];
+        if (
+          typeof value == "string" &&
+          key.length > 1 &&
+          key.slice(0, 1) === "D"
+        ) {
+          let siteId = scope["Z" + key.slice(1)];
+          typeof siteId == "string" &&
+            ((found = 1), (possessed[siteId] = value));
+        } else if (value && typeof value == "object") {
+          if (typeof value.L == "number") stack.push(value);
+          else if (value instanceof Set || Array.isArray(value))
+            for (let child of value)
+              child && typeof child == "object" && stack.push(child);
+        }
       }
     }
   }

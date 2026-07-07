@@ -73,9 +73,9 @@ var layout_default = _template("c", (input) => {
 	const $scope0_id = _scope_id();
 	let open = false;
 	_html(`<aside><button class=toggle>expand${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}</aside><section>`);
-	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason());
+	_dynamic_tag($scope0_id, "c", input.content, {}, 0, 0, _serialize_guard($scope0_reason, 0) | _persisted_reason(), "c0");
 	_html("</section>");
-	_script($scope0_id, "c0");
+	_script($scope0_id, "c1");
 	writeScope($scope0_id, { g: _state_reason() && open });
 	_resume_branch($scope0_id);
 });

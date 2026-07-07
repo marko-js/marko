@@ -6,7 +6,7 @@ var layout_default = _template("__tests__/tags/layout.marko", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_content = _serialize_guard($scope0_reason, 0);
 	const $scope0_id = _scope_id();
 	_html("<section class=shell>");
-	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $sg__input_content | _persisted_reason());
+	_dynamic_tag($scope0_id, "#text/0", input.content, {}, 0, 0, $sg__input_content | _persisted_reason(), "__tests__/tags/layout.marko_0/update_dynamic_#text/0");
 	_html("</section>");
 	$sg__input_content && writeScope($scope0_id, {}, "__tests__/tags/layout.marko", 0);
 });

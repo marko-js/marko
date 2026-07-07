@@ -25,6 +25,12 @@ import {
   withBranchId,
 } from "./writer";
 
+// The build-stable per-site id the possession echo keys by is stashed on the
+// hop's scope under this reserved prefix (`"Z"`, not an AccessorPrefix enum
+// member so it stays out of every client bundle) so the client can read it
+// back off its live tree -- see `_have`. Persisted resume only.
+const HOP_SITE_PREFIX = MARKO_DEBUG ? "HopSite:" : "Z";
+
 const voidElementsReg =
   /* cspell:disable-next-line */
   /^(?:area|b(?:ase|r)|col|embed|hr|i(?:mg|nput)|link|meta|param|source|track|wbr)$/;
@@ -43,6 +49,7 @@ export let _dynamic_tag = (
   content?: (() => void) | 0,
   inputIsArgs?: 1,
   serializeReason?: 1 | 0,
+  siteId?: string,
 ) => {
   const shouldResume = serializeReason !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
@@ -181,18 +188,19 @@ export let _dynamic_tag = (
     //  - `state.fragments`: a cross-route swap, whose whole diverging subtree
     //    is captured once at the first hop (the client possesses none of it).
     //  - a possession miss: the client echoed (`x-marko-have`) which renderer
-    //    it holds at this site, and this update renders a different one -- a
-    //    same-route dynamic swap. Fragment-first dropped the construction
+    //    it holds at this site (keyed by the build-stable `siteId`, not the
+    //    drifting runtime scope id), and this update renders a different one --
+    //    a same-route dynamic swap. Fragment-first dropped the construction
     //    graph, so shipping the fragment here is what lets the swap apply
     //    instead of failing into a full navigation.
     const targetRendererId =
       (renderer as ServerRenderer | undefined)?.[RendererProp.Id] || renderer;
     const possessed = state.possessed;
-    const siteKey = scopeId + " " + accessor;
     const possessionMiss =
       possessed !== undefined &&
-      siteKey in possessed &&
-      possessed[siteKey] !== targetRendererId;
+      siteId !== undefined &&
+      siteId in possessed &&
+      possessed[siteId] !== targetRendererId;
     if (!shouldResume) {
       result = render();
     } else if (!state.fragmentTaken && (state.fragments || possessionMiss)) {
@@ -228,6 +236,12 @@ export let _dynamic_tag = (
         [AccessorPrefix.ConditionalRenderer + accessor]:
           (renderer as ServerRenderer | undefined)?.[RendererProp.Id] ||
           renderer,
+        // Stash the site id so the client can echo what it holds here keyed by
+        // a value that survives the document->update scope-id drift (persisted
+        // only, so non-persisted resume stays byte-identical).
+        ...(siteId !== undefined
+          ? { [HOP_SITE_PREFIX + accessor]: siteId }
+          : null),
         // Update renders link the branch scope explicitly (there are no
         // markers/DOM to pair through); merges dispatch the content's
         // registered update merge by the renderer id above (G2 for dynamic
