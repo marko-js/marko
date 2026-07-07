@@ -3,20 +3,46 @@
 var flushHereAndAfter = require("../../core-tags/core/__flush_here_and_after__");
 var escapeScript = require("../html/helpers/escape-script-placeholder");
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
+var DEFAULT_RUNTIME_ID = "M";
 var kAssets = Symbol();
 var kBlockIndex = Symbol();
 var kDeferIndex = Symbol();
 var assetFlush;
 
-exports.withPageAssets = function withPageAssets(typeId, template, runtime) {
+exports.withPageAssets = function withPageAssets(
+  typeId,
+  template,
+  runtime,
+  runtimeId,
+) {
   assetFlush = runtime;
   var flushBeforeInput = { renderBody: flush };
   return createFacade(template, function (input, out) {
-    var hasAssets = !!out.global[kAssets];
+    var g = out.global;
+    if (runtimeId) {
+      // eslint-disable-next-line no-constant-condition
+      if ("MARKO_DEBUG") {
+        if (g.runtimeId !== DEFAULT_RUNTIME_ID && g.runtimeId !== runtimeId) {
+          throw new Error(
+            '$global.runtimeId ("' +
+              g.runtimeId +
+              '") conflicts with the runtimeId this entry was compiled with ("' +
+              runtimeId +
+              '").',
+          );
+        }
+      }
+
+      // The client half of the runtimeId contract is baked into the
+      // compiled browser entry, so the compiled value must win for the
+      // halves to agree.
+      g.runtimeId = runtimeId;
+    }
+    var hasAssets = !!g[kAssets];
     var key = out.___assignedKey;
     var def = out.___assignedComponentDef;
     var component = def && def.___component;
-    addAsset(out.global, typeId);
+    addAsset(g, typeId);
 
     if (hasAssets) {
       if (willRerender(def)) {

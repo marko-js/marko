@@ -281,9 +281,17 @@ export const translate = {
       }
 
       if (file.markoOpts.output === "html" && file.markoOpts.entry === "page") {
-        const { linkAssets } = file.markoOpts;
+        const { linkAssets, runtimeId } = file.markoOpts;
         const templateId = file.metadata.marko.id;
         const relPath = resolveRelativePath(file, file.opts.filename);
+        const pageAssetArgs = [
+          t.stringLiteral(templateId),
+          t.identifier("template"),
+          t.identifier("flush"),
+        ];
+        if (runtimeId) {
+          pageAssetArgs.push(t.stringLiteral(runtimeId));
+        }
         linkAssets.onAsset("page", file.opts.filename, templateId);
         path.node.body = [
           t.importDeclaration(
@@ -305,11 +313,7 @@ export const translate = {
           ),
           t.exportAllDeclaration(t.stringLiteral(relPath)),
           t.exportDefaultDeclaration(
-            t.callExpression(t.identifier("withPageAssets"), [
-              t.stringLiteral(templateId),
-              t.identifier("template"),
-              t.identifier("flush"),
-            ]),
+            t.callExpression(t.identifier("withPageAssets"), pageAssetArgs),
           ),
         ];
         path.skip();
