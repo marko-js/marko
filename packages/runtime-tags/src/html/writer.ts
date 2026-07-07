@@ -453,6 +453,34 @@ export function _fragment<T>(
 ): T {
   const start = $chunk;
   const { state } = start.boundary;
+
+  if (state.fragmentTaken) {
+    // A second (or later) same-route swap diverging in the same nav: the
+    // main chain's single html blob + `fragmentAnchor` already belong to the
+    // first capture, so render this one onto a DETACHED chunk with its own
+    // anchor and collect it for a per-entry flush (see `flushScript`). The
+    // main walk continues on `start` (writing nothing in update mode), so
+    // this capture never enters `consume`.
+    const capture = start.fork(start.boundary, null);
+    capture.fragment = true;
+    capture.fragmentAnchor = scopeId + "," + JSON.stringify(accessor);
+    capture.writeHTML = Chunk.prototype.writeHTML;
+    const result = capture.render(render as () => void) as unknown as T;
+    if (MARKO_DEBUG && (capture.async || capture.next)) {
+      // v1: additional fragments are sync-only. An async body would need the
+      // detached capture wired through the reorder/endAsync channel (as the
+      // first capture's async body already is) before its markup can assemble.
+      start.boundary.abort(
+        new Error(
+          "multiple simultaneous fragments with async content are not supported yet",
+        ),
+      );
+    }
+    (state.writeFragments ||= []).push(capture);
+    return result;
+  }
+
+  state.fragmentTaken = true;
   state.fragmentAnchor = scopeId + "," + JSON.stringify(accessor);
   start.fragment = true;
   start.writeHTML = Chunk.prototype.writeHTML;
@@ -1367,16 +1395,27 @@ export class State implements SerializeState {
   // Fragment frames (see designs/persisted-pages-at-scale.md): update
   // renders whose mode has `fragment` set render the first content-hop
   // branch as resumable HTML instead of a client-constructed subtree.
-  // `fragments` enables the mode, `fragmentTaken` marks the hop consumed,
-  // and `fragmentAnchor` holds the pending entry's anchor
+  // `fragments` enables the mode, `fragmentTaken` marks the FIRST hop
+  // consumed, and `fragmentAnchor` holds that first entry's anchor
   // (`<scopeId>,"<accessor>"`) from capture start until `flushScript`
   // emits the assembled markup. Capture itself is a chunk property
   // (`Chunk.fragment`): while a fragment chunk renders, markers and branch
   // brackets emit as markup and hole captures are skipped -- the values
   // are baked in.
+  //
+  // The first capture rides the main chunk chain (its markup collapses into
+  // the flushed chunk's `html` via `consume`, emitted against
+  // `fragmentAnchor`). Additional simultaneous same-route swaps (a keyed
+  // `<for>` with two rows diverging in one nav) can't share that single
+  // blob/anchor, so each renders onto its OWN detached chunk carrying its
+  // own `Chunk.fragmentAnchor`, collected here and emitted one wire entry
+  // apiece at flush -- mirroring the boundary-body / reorder channel
+  // (`writeReorders`). The applier already keys fragments by anchor, so N
+  // entries apply independently.
   public fragments = false;
   public fragmentTaken = false;
   public fragmentAnchor = "";
+  public writeFragments: Chunk[] | null = null;
   // The possession echo (`x-marko-have`): what renderer the client currently
   // holds at each participating dynamic-hop site, so a same-route renderer
   // swap ships a fragment for exactly that hop instead of failing the apply.
@@ -1570,6 +1609,10 @@ export class Chunk {
   /** Fragment capture (see `_fragment`): this chunk's html is fragment
    * markup. Inherited by forks so async continuations keep capturing. */
   public fragment = false;
+  /** Anchor (`<scopeId>,"<accessor>"`) for a detached additional-fragment
+   * capture that rides its own wire entry (see `State.writeFragments`);
+   * empty on main-chain chunks, whose capture uses `State.fragmentAnchor`. */
+  public fragmentAnchor = "";
   /** Awaits are allowed on this (fragment) chunk: it renders under a
    * `<try>` placeholder boundary, so its markup flushes as a
    * boundary-body entry instead of holding the fragment frame. */
@@ -1956,6 +1999,49 @@ export class Chunk {
         }
       }
       state.writeReorders = null;
+    }
+
+    // Additional simultaneous same-route swaps captured on detached chunks
+    // (see `_fragment`): each rides its OWN wire entry keyed by its anchor,
+    // just like a first-capture entry (line ~1869) -- the applier stashes
+    // every fragment by anchor and applies them independently. Scope-id
+    // attribution is idempotent (`stamp`), so the first-flushed entry above
+    // may carry the union via `takeFragmentScopeIds`; here it is empty.
+    if (state.update && state.writeFragments) {
+      for (const capture of state.writeFragments) {
+        let fragHTML = "";
+        let fragEffects = "";
+        let cur: Chunk | null = capture;
+        while (cur) {
+          if (MARKO_DEBUG && cur.async) {
+            // Guarded at capture (see `_fragment`); async detached fragments
+            // are not supported yet.
+            throw new Error(
+              "an additional fragment flushed with pending async content",
+            );
+          }
+          cur.consumed = true;
+          fragHTML += cur.html;
+          fragEffects = concatEffects(fragEffects, cur.effects);
+          cur.html = cur.effects = cur.lastEffect = "";
+          cur = cur.next;
+        }
+        state.resumes = concatSequence(
+          state.resumes,
+          "[" +
+            capture.fragmentAnchor +
+            "," +
+            JSON.stringify(state.commentPrefix) +
+            "," +
+            JSON.stringify(fragHTML) +
+            takeFragmentScopeIds(state) +
+            "]",
+        );
+        if (fragEffects) {
+          state.resumes = state.resumes + ',"' + fragEffects + '"';
+        }
+      }
+      state.writeFragments = null;
     }
 
     if (state.resumes) {

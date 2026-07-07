@@ -209,10 +209,16 @@ export let _dynamic_tag = (
       siteKey !== undefined &&
       siteKey in possessed &&
       possessed[siteKey] !== targetRendererId;
+    // Cross-route capture is one top-level fragment (`state.fragments`, first
+    // hop only -- nested hops render inline into it). A possession miss is a
+    // same-route swap and every diverging site takes its own fragment, so
+    // multiple rows swapping in one nav each ship an entry (`_fragment` routes
+    // the first onto the main chain and the rest onto detached chunks).
+    const takeFragment =
+      possessionMiss || (state.fragments && !state.fragmentTaken);
     if (!shouldResume) {
       result = render();
-    } else if (!state.fragmentTaken && (state.fragments || possessionMiss)) {
-      state.fragmentTaken = true;
+    } else if (takeFragment) {
       result = _fragment(scopeId, accessor, () =>
         withBranchId(branchId, render),
       );
