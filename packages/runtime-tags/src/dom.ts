@@ -119,6 +119,7 @@ export {
 } from "./dom/spread";
 export { _template } from "./dom/template";
 export {
+  _have,
   _update_branch,
   _update_content,
   _update_dynamic,

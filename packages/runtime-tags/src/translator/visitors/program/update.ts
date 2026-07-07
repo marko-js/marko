@@ -167,7 +167,9 @@ export default {
       // Re-export the appliers so consumers (the client router) need no
       // knowledge of the runtime module path this entry was compiled
       // against (debug vs optimized). `createUpdate` is the per-navigation
-      // streaming form (one call per response frame).
+      // streaming form (one call per response frame); `have` (exported from
+      // the runtime as `_have`) builds the possession echo the router sends
+      // as `x-marko-have`.
       body.push(
         t.exportNamedDeclaration(
           null,
@@ -180,6 +182,7 @@ export default {
               t.identifier("createUpdate"),
               t.identifier("createUpdate"),
             ),
+            t.exportSpecifier(t.identifier("_have"), t.identifier("have")),
           ],
           t.stringLiteral(getRuntimePath("dom")),
         ),

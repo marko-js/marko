@@ -83,6 +83,64 @@ type UpdateFill =
   | BoundaryBodyEntry;
 
 /**
+ * The possession echo (`x-marko-have`): what renderer the live page currently
+ * holds at each dynamic-tag hop, so a same-route navigation whose update
+ * renders a different renderer there ships a fragment for exactly that hop
+ * (see the html writer's `possessed` / `_dynamic_tag`) instead of failing the
+ * apply into a full navigation. Walks the resumed scope tree collecting, per
+ * hop, `"<scopeId> <accessor>"` -> renderer id from the string-valued
+ * `ConditionalRenderer:` keys -- dynamic tags serialize a renderer id string
+ * there, while `<if>`/loop branches store a numeric branch index, so control
+ * flow is excluded for free. Returns the map JSON-encoded for the request
+ * header, or "" when the page holds no hops (the common case: the header is
+ * then omitted). Optimize already minifies the accessor/renderer codes it
+ * emits, so this stays compact without a compiler-side register (see
+ * designs/persisted-pages-at-scale.md).
+ *
+ * `root` defaults to the resumed render's root; callers that already hold it
+ * (the router pairs the root once for the apply) pass it to avoid re-pairing.
+ */
+export function _have(root: Scope | undefined = getUpdateRoot()): string {
+  if (!root) return "";
+  const prefix = AccessorPrefix.ConditionalRenderer;
+  const possessed: Record<string, string> = {};
+  const seen = new Set<Scope>();
+  const stack: Scope[] = [root];
+  let found: undefined | 1;
+  while (stack.length) {
+    const scope = stack.pop()!;
+    if (seen.has(scope)) continue;
+    seen.add(scope);
+    const scopeId = scope[AccessorProp.Id];
+    for (const key in scope) {
+      const value = scope[key];
+      if (
+        typeof value === "string" &&
+        key.length > prefix.length &&
+        key.slice(0, prefix.length) === prefix
+      ) {
+        found = 1;
+        possessed[scopeId + " " + key.slice(prefix.length)] = value;
+      } else if (value && typeof value === "object") {
+        // Follow scope links (child/owner/branch scopes carry a numeric id)
+        // and scope collections (`#BranchScopes` set, closure-scope arrays);
+        // dom nodes and plain data terminate. `seen` guards the owner cycle.
+        if (typeof (value as Scope)[AccessorProp.Id] === "number") {
+          stack.push(value as Scope);
+        } else if (value instanceof Set || Array.isArray(value)) {
+          for (const child of value as Iterable<unknown>) {
+            if (child && typeof child === "object") {
+              stack.push(child as Scope);
+            }
+          }
+        }
+      }
+    }
+  }
+  return found ? JSON.stringify(possessed) : "";
+}
+
+/**
  * Applies an update-render payload to a live (resumed) render.
  *
  * `merge` is the page template's compiled merge function (the `?update`

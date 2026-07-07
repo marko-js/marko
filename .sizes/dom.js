@@ -1,4 +1,4 @@
-// size: 30489 (min) 11150 (brotli)
+// size: 30917 (min) 11294 (brotli)
 //#region packages/runtime-tags/dist/common/attr-tag.mjs
 let empty = [],
   rest = Symbol();
@@ -2780,6 +2780,49 @@ function getSelectorOrResolve(selector, resolve) {
 let activePairs,
   activeUpdate,
   applyGen = 0;
+/**
+ * The possession echo (`x-marko-have`): what renderer the live page currently
+ * holds at each dynamic-tag hop, so a same-route navigation whose update
+ * renders a different renderer there ships a fragment for exactly that hop
+ * (see the html writer's `possessed` / `_dynamic_tag`) instead of failing the
+ * apply into a full navigation. Walks the resumed scope tree collecting, per
+ * hop, `"<scopeId> <accessor>"` -> renderer id from the string-valued
+ * `ConditionalRenderer:` keys -- dynamic tags serialize a renderer id string
+ * there, while `<if>`/loop branches store a numeric branch index, so control
+ * flow is excluded for free. Returns the map JSON-encoded for the request
+ * header, or "" when the page holds no hops (the common case: the header is
+ * then omitted). Optimize already minifies the accessor/renderer codes it
+ * emits, so this stays compact without a compiler-side register (see
+ * designs/persisted-pages-at-scale.md).
+ *
+ * `root` defaults to the resumed render's root; callers that already hold it
+ * (the router pairs the root once for the apply) pass it to avoid re-pairing.
+ */
+function _have(root = getUpdateRoot()) {
+  if (!root) return "";
+  let possessed = {},
+    seen = /* @__PURE__ */ new Set(),
+    stack = [root],
+    found;
+  for (; stack.length;) {
+    let scope = stack.pop();
+    if (seen.has(scope)) continue;
+    seen.add(scope);
+    let scopeId = scope.L;
+    for (let key in scope) {
+      let value = scope[key];
+      if (typeof value == "string" && key.length > 1 && key.slice(0, 1) === "D")
+        ((found = 1), (possessed[scopeId + " " + key.slice(1)] = value));
+      else if (value && typeof value == "object") {
+        if (typeof value.L == "number") stack.push(value);
+        else if (value instanceof Set || Array.isArray(value))
+          for (let child of value)
+            child && typeof child == "object" && stack.push(child);
+      }
+    }
+  }
+  return found ? JSON.stringify(possessed) : "";
+}
 /**
  * Applies an update-render payload to a live (resumed) render.
  *

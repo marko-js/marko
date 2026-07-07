@@ -14,6 +14,7 @@ export interface UpdateEntryModule {
   default: (patch: unknown, live: unknown) => void;
   __applyUpdate: DOMRuntime["applyUpdate"];
   __createUpdate: DOMRuntime["createUpdate"];
+  __have: DOMRuntime["_have"];
   __ready: DOMRuntime["ready"];
   __register: DOMRuntime["_resume"];
 }
@@ -174,7 +175,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
               // (runtime instance included) stays inside the browser context.
               return (
                 code +
-                `\nexport { applyUpdate as __applyUpdate, createUpdate as __createUpdate, ready as __ready, _resume as __register } from "@marko/runtime-tags/dom";`
+                `\nexport { applyUpdate as __applyUpdate, createUpdate as __createUpdate, _have as __have, ready as __ready, _resume as __register } from "@marko/runtime-tags/dom";`
               );
             }
 
