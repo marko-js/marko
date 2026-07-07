@@ -142,6 +142,16 @@ export interface PersistedRenderMode {
   update: boolean;
   seed: boolean;
   fragment: boolean;
+  /**
+   * @internal The possession echo (`x-marko-have`): for each participating
+   * dynamic-hop site the client holds, `"<scopeId> <accessor>"` → the renderer
+   * id it currently shows (empty string = participating but absent). The server
+   * ships a fragment for a site whose target renderer differs from what the
+   * client echoed — same-route dynamic swaps included — rather than failing the
+   * apply. Absent map = no echo (cross-route possesses nothing; the whole
+   * diverging subtree fragments at the first hop via `fragment`).
+   */
+  possessed?: { [siteKey: string]: string };
 }
 export interface Input {
   [x: PropertyKey]: unknown;

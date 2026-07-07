@@ -3,8 +3,16 @@ import fs from "fs";
 import { html_beautify } from "js-beautify";
 import path from "path";
 
+import {
+  AccessorPrefix as ProdAccessorPrefix,
+  AccessorProp as ProdAccessorProp,
+} from "../common/accessor";
+import {
+  AccessorPrefix as DebugAccessorPrefix,
+  AccessorProp as DebugAccessorProp,
+} from "../common/accessor.debug";
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
-import type { Input } from "../common/types";
+import type { Input, PersistedRenderMode } from "../common/types";
 import * as tagsTranslator from "../translator";
 import {
   type ChunkSizes,
@@ -334,6 +342,30 @@ function testFixtures(interop?: true) {
               onFlush: hasFlush ? flushAndRun : undefined,
               onNavigate: updateRunner
                 ? async (navigateInput) => {
+                    // Pair with the live root BEFORE rendering the update:
+                    // register a capture handler and drive it through the
+                    // page's own effect machinery. Reading it first lets the
+                    // update render carry the possession echo (`x-marko-have`)
+                    // -- what renderer the live page holds at each dynamic-tag
+                    // hop -- the same order the real client sends it (from its
+                    // live tree, before the server responds).
+                    const updateEntry = await updateRunner(browser.ctx);
+                    const runtimeId = config.runtime_id ?? DEFAULT_RUNTIME_ID;
+                    const renders = (browser.window as any)[runtimeId];
+                    const renderId = Object.keys(renders)[0];
+                    let liveRoot: unknown;
+                    updateEntry.__register(
+                      "__navigate_root",
+                      (scope: unknown) => (liveRoot = scope),
+                    );
+                    renders[renderId].r.push("__navigate_root 1");
+                    updateEntry.__ready("__navigate");
+                    if (!liveRoot) {
+                      throw new Error(
+                        "navigate(): could not pair the live root scope",
+                      );
+                    }
+
                     // Render the update payload server-side (a stateless
                     // update render of the same template with the new input)
                     // and extract its resume fills.
@@ -344,9 +376,23 @@ function testFixtures(interop?: true) {
                       persisted: "update",
                       renderId: "navigate",
                     };
+                    const persistedMode = persistedModeFrom(navigateGlobal);
+                    // Fragment-first is the only mode that drops the fills-path
+                    // construction graph, so it is the only mode that needs the
+                    // echo: with it, a same-route dynamic-tag renderer swap
+                    // ships a fragment for that hop (see `collectPossessed`)
+                    // instead of failing the apply. Non-fragment builds keep
+                    // the replay path (smaller wire when the graph is present),
+                    // so no echo is sent -- matching the run router's contract.
+                    if (persistedMode && config.persisted === "fragments") {
+                      persistedMode.possessed = collectPossessed(
+                        liveRoot,
+                        optimize,
+                      );
+                    }
                     for await (const chunk of template.render(
                       { ...navigateInput, $global: navigateGlobal },
-                      { persisted: persistedModeFrom(navigateGlobal) },
+                      { persisted: persistedMode },
                     )) {
                       html += chunk;
                     }
@@ -381,25 +427,6 @@ function testFixtures(interop?: true) {
                     if (!frames.length) {
                       throw new Error(
                         "navigate(): update render carried no resume fills",
-                      );
-                    }
-
-                    // Pair with the live root: register a capture handler
-                    // and drive it through the page's own effect machinery.
-                    const updateEntry = await updateRunner(browser.ctx);
-                    const runtimeId = config.runtime_id ?? DEFAULT_RUNTIME_ID;
-                    const renders = (browser.window as any)[runtimeId];
-                    const renderId = Object.keys(renders)[0];
-                    let liveRoot: unknown;
-                    updateEntry.__register(
-                      "__navigate_root",
-                      (scope: unknown) => (liveRoot = scope),
-                    );
-                    renders[renderId].r.push("__navigate_root 1");
-                    updateEntry.__ready("__navigate");
-                    if (!liveRoot) {
-                      throw new Error(
-                        "navigate(): could not pair the live root scope",
                       );
                     }
 
@@ -577,4 +604,61 @@ function once<T>(fn: () => T) {
       cached = undefined;
     },
   });
+}
+
+/**
+ * The possession echo (`x-marko-have`) a fragment-first client sends: walk the
+ * live scope tree and collect, for every dynamic-tag hop the page holds
+ * (`ConditionalRenderer:<accessor>` on the owner scope), a `"<scopeId>
+ * <accessor>"` -> renderer-id map. The update render consults it at each
+ * `_dynamic_tag` site, so a swap the client can't construct (its renderer
+ * differs from what it holds) is shipped as a fragment for exactly that hop.
+ *
+ * The walk follows scope links (any own property whose value is a scope, plus
+ * scope sets/arrays like `#BranchScopes`) so nested hops are reached; non-scope
+ * values (dom nodes, primitives) terminate. Extra keys that happen to match the
+ * prefix are harmless -- the server only looks up genuine hop site keys.
+ */
+function collectPossessed(
+  root: unknown,
+  optimize: boolean,
+): NonNullable<PersistedRenderMode["possessed"]> {
+  const idProp = (optimize ? ProdAccessorProp : DebugAccessorProp).Id;
+  const rendererPrefix = (optimize ? ProdAccessorPrefix : DebugAccessorPrefix)
+    .ConditionalRenderer;
+  const possessed: NonNullable<PersistedRenderMode["possessed"]> = {};
+  const seen = new Set<object>();
+  const stack: unknown[] = [root];
+  const isScope = (value: unknown): value is Record<string, unknown> =>
+    typeof value === "object" &&
+    value !== null &&
+    typeof (value as Record<string, unknown>)[idProp] === "number";
+  while (stack.length) {
+    const scope = stack.pop();
+    if (!isScope(scope) || seen.has(scope)) continue;
+    seen.add(scope);
+    const scopeId = scope[idProp] as number;
+    for (const key of Object.keys(scope)) {
+      const value = scope[key];
+      if (
+        key.length > rendererPrefix.length &&
+        key.startsWith(rendererPrefix) &&
+        typeof value === "string"
+      ) {
+        possessed[scopeId + " " + key.slice(rendererPrefix.length)] = value;
+      } else if (isScope(value)) {
+        stack.push(value);
+      } else if (
+        typeof value === "object" &&
+        value !== null &&
+        typeof (value as { [Symbol.iterator]?: unknown })[Symbol.iterator] ===
+          "function"
+      ) {
+        for (const item of value as Iterable<unknown>) {
+          if (isScope(item)) stack.push(item);
+        }
+      }
+    }
+  }
+  return possessed;
 }

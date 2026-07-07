@@ -174,13 +174,28 @@ export let _dynamic_tag = (
         return content();
       }
     };
-    // The first content hop of a fragment-mode update render (see
-    // `_fragment`) delivers its branch as resumable HTML instead of a
-    // client-constructed subtree; everything above the hop stays a normal
-    // matched-scope patch.
+    // A content hop delivers its branch as resumable HTML (a fragment the
+    // client inserts and resumes) instead of a client-constructed subtree
+    // when the branch is fresh to the client -- everything above the hop
+    // stays a normal matched-scope patch. Two triggers:
+    //  - `state.fragments`: a cross-route swap, whose whole diverging subtree
+    //    is captured once at the first hop (the client possesses none of it).
+    //  - a possession miss: the client echoed (`x-marko-have`) which renderer
+    //    it holds at this site, and this update renders a different one -- a
+    //    same-route dynamic swap. Fragment-first dropped the construction
+    //    graph, so shipping the fragment here is what lets the swap apply
+    //    instead of failing into a full navigation.
+    const targetRendererId =
+      (renderer as ServerRenderer | undefined)?.[RendererProp.Id] || renderer;
+    const possessed = state.possessed;
+    const siteKey = scopeId + " " + accessor;
+    const possessionMiss =
+      possessed !== undefined &&
+      siteKey in possessed &&
+      possessed[siteKey] !== targetRendererId;
     if (!shouldResume) {
       result = render();
-    } else if (state.fragments && !state.fragmentTaken) {
+    } else if (!state.fragmentTaken && (state.fragments || possessionMiss)) {
       state.fragmentTaken = true;
       result = _fragment(scopeId, accessor, () =>
         withBranchId(branchId, render),

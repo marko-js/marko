@@ -1366,6 +1366,10 @@ export class State implements SerializeState {
   public fragments = false;
   public fragmentTaken = false;
   public fragmentAnchor = "";
+  // The possession echo (`x-marko-have`): what renderer the client currently
+  // holds at each participating dynamic-hop site, so a same-route renderer
+  // swap ships a fragment for exactly that hop instead of failing the apply.
+  public possessed?: PersistedRenderMode["possessed"];
   /** Ids of scopes serialized during fragment capture since the last
    * entry emission (see `writeScope`); ride the entry so the applier can
    * stamp dom-less scopes the markup never references. */
@@ -1398,6 +1402,7 @@ export class State implements SerializeState {
       this.update = persistedMode.update;
       this.seed = persistedMode.seed;
       this.fragments = persistedMode.fragment;
+      this.possessed = persistedMode.possessed;
       // Update responses carry no document: no walker bootstrap to emit.
       this.hasMainRuntime = persistedMode.update;
     }
