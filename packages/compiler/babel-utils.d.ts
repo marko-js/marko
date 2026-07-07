@@ -172,9 +172,7 @@ export interface ModuleFunctionPlugin<T = any> {
 export type ParsePlugin<T = any> = ModuleFunctionPlugin<T> | FunctionPlugin<T>;
 
 export type Plugin<T = any> =
-  | ModulePlugin<T>
-  | EnterExitPlugin<T>
-  | FunctionPlugin<T>;
+  ModulePlugin<T> | EnterExitPlugin<T> | FunctionPlugin<T>;
 
 export function assertAllowedAttributes(
   path: t.NodePath<t.MarkoTag>,

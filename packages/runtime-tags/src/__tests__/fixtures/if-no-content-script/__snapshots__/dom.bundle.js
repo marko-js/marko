@@ -1,6 +1,6 @@
 // template.marko
-const $if = /* @__PURE__ */ _if(3, 0, 0, _script("a0", ($scope) => $scope._.a.textContent = "Hit"));
-const $count = /* @__PURE__ */ _let(4, ($scope) => {
+const $if = /*@__PURE__*/ _if(3, 0, 0, _script("a0", ($scope) => $scope._.a.textContent = "Hit"));
+const $count = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.c, $scope.e);
 	$if($scope, !$scope.e ? 0 : 1);
 });

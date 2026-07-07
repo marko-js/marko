@@ -1,7 +1,7 @@
 // tags/list.marko
 const $template = "<!><!><!>";
 const $for_content__setup = ($scope) => _text($scope.a, $scope.M);
-const $for = /* @__PURE__ */ _for_to(0, "<li>item <!></li>", "Db%l", $for_content__setup);
+const $for = /*@__PURE__*/ _for_to(0, "<li>item <!></li>", "Db%l", $for_content__setup);
 const $count$1 = ($scope, count) => $for($scope, [
 	count,
 	0,
@@ -9,10 +9,10 @@ const $count$1 = ($scope, count) => $for($scope, [
 ]);
 
 // template.marko
-const $if_content__count = /* @__PURE__ */ _if_closure(2, 0, ($scope) => $count$1($scope.a, $scope._.e));
-const $if = /* @__PURE__ */ _if(2, /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($template), /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__count);
-const $outer = /* @__PURE__ */ _let(3, ($scope) => $if($scope, $scope.d ? 0 : 1));
-const $count = /* @__PURE__ */ _let(4, $if_content__count);
+const $if_content__count = /*@__PURE__*/ _if_closure(2, 0, ($scope) => $count$1($scope.a, $scope._.e));
+const $if = /*@__PURE__*/ _if(2, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__count);
+const $outer = /*@__PURE__*/ _let(3, ($scope) => $if($scope, $scope.d ? 0 : 1));
+const $count = /*@__PURE__*/ _let(4, $if_content__count);
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.a, "click", function() {
 		$outer($scope, !$scope.d);

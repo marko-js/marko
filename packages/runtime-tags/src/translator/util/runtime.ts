@@ -95,7 +95,7 @@ export function getRuntimePath(output: string) {
 
 function filterArguments<A>(args: (A | Falsy)[]) {
   const filteredArgs = [];
-  for (let i = args.length; i--; ) {
+  for (let i = args.length; i--;) {
     const arg = args[i];
     if (arg || filteredArgs.length) {
       filteredArgs[i] = arg || t.unaryExpression("void", t.numericLiteral(0));

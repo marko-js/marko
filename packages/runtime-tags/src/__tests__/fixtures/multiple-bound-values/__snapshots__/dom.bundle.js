@@ -1,10 +1,10 @@
 // tags/2counters.marko
-const $count$1 = /* @__PURE__ */ _let_change(12, ($scope) => _text($scope.b, $scope.m));
-const $input_count1__OR__input_count1Change = /* @__PURE__ */ _or(8, ($scope) => $count$1($scope, $scope.g, $scope.h));
-const $input_count = /* @__PURE__ */ _const(6, $input_count1__OR__input_count1Change);
-const $count2$1 = /* @__PURE__ */ _let_change(13, ($scope) => _text($scope.d, $scope.n));
-const $input_count2__OR__input_count2Change = /* @__PURE__ */ _or(11, ($scope) => $count2$1($scope, $scope.j, $scope.k));
-const $input_count2 = /* @__PURE__ */ _const(9, $input_count2__OR__input_count2Change);
+const $count$1 = /*@__PURE__*/ _let_change(12, ($scope) => _text($scope.b, $scope.m));
+const $input_count1__OR__input_count1Change = /*@__PURE__*/ _or(8, ($scope) => $count$1($scope, $scope.g, $scope.h));
+const $input_count = /*@__PURE__*/ _const(6, $input_count1__OR__input_count1Change);
+const $count2$1 = /*@__PURE__*/ _let_change(13, ($scope) => _text($scope.d, $scope.n));
+const $input_count2__OR__input_count2Change = /*@__PURE__*/ _or(11, ($scope) => $count2$1($scope, $scope.j, $scope.k));
+const $input_count2 = /*@__PURE__*/ _const(9, $input_count2__OR__input_count2Change);
 const $setup__script = _script("b0", ($scope) => {
 	_on($scope.a, "click", function() {
 		$count$1($scope, $scope.m + 1);
@@ -15,11 +15,11 @@ const $setup__script = _script("b0", ($scope) => {
 });
 
 // template.marko
-const $count = /* @__PURE__ */ _let(3, ($scope) => {
+const $count = /*@__PURE__*/ _let(3, ($scope) => {
 	$input_count($scope.a, $scope.d);
 	_text($scope.b, $scope.d);
 });
-const $count2 = /* @__PURE__ */ _let(4, ($scope) => {
+const $count2 = /*@__PURE__*/ _let(4, ($scope) => {
 	$input_count2($scope.a, $scope.e);
 	_text($scope.c, $scope.e);
 });

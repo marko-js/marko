@@ -178,18 +178,16 @@ export const IfTag = {
           let singleChild = true;
 
           for (const [, branchBody] of branches) {
-            if (
-              !(
-                branchBody?.content?.singleChild &&
-                branchBody.content.startType !== ContentType.Text
-              )
-            ) {
+            if (!(
+              branchBody?.content?.singleChild &&
+              branchBody.content.startType !== ContentType.Text
+            )) {
               singleChild = false;
               break;
             }
           }
 
-          for (let i = branches.length; i--; ) {
+          for (let i = branches.length; i--;) {
             const [branchTag, branchBody] = branches[i];
             const bodyStatements = branchTag.node.body.body;
             if (branchBody) {
@@ -313,7 +311,7 @@ export const IfTag = {
 
           let expr: t.Expression = t.numericLiteral(branches.length);
 
-          for (let i = branches.length; i--; ) {
+          for (let i = branches.length; i--;) {
             const [branchTag, branchBodySection] = branches[i];
             const [testAttr] = branchTag.node.attributes;
             const consequent = t.numericLiteral(branchBodySection ? i : -1);
@@ -469,7 +467,7 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
   }
 
   let expr: t.Expression = t.stringLiteral("");
-  for (let i = branches.length; i--; ) {
+  for (let i = branches.length; i--;) {
     const branchTag = branches[i];
     const text = bodyToTextLiteral(branchTag.node.body);
     expr = isCoreTagName(branchTag, "else")
@@ -477,7 +475,7 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
       : t.conditionalExpression(branchTag.node.attributes[0].value, text, expr);
   }
 
-  for (let i = branches.length; i-- > 1; ) {
+  for (let i = branches.length; i-- > 1;) {
     branches[i].remove();
   }
   rootTag.replaceWith(t.markoPlaceholder(expr, true));

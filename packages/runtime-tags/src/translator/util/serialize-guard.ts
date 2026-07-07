@@ -117,7 +117,7 @@ export function getSerializeGuardForAny(
 
 export function getExprIfSerialized<
   T extends undefined | SerializeReason,
-  R extends T extends {} ? t.Expression : undefined,
+  R extends (T extends {} ? t.Expression : undefined),
 >(section: Section, reason: T, expr: t.Expression): R {
   if (!isReasonDynamic(reason) || isCrossSection(section, reason)) {
     return (reason && expr) as R;

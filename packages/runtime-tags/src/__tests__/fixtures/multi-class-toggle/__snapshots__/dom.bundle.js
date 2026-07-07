@@ -1,5 +1,5 @@
 // template.marko
-const $count = /* @__PURE__ */ _let(2, ($scope) => {
+const $count = /*@__PURE__*/ _let(2, ($scope) => {
 	_attr_class($scope.a, {
 		"a b c": true,
 		"d e f": $scope.c % 2

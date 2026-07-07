@@ -1,11 +1,11 @@
 // template.marko
-const $for = /* @__PURE__ */ _for_of(1, "Child", "b");
+const $for = /*@__PURE__*/ _for_of(1, "Child", "b");
 const $children__script = _script("a0", ($scope) => {
 	if ($scope.c?.length === 1) $children($scope, [...$scope.c, 2]);
 });
-const $children = /* @__PURE__ */ _let(2, ($scope) => {
+const $children = /*@__PURE__*/ _let(2, ($scope) => {
 	$children_length($scope, $scope.c?.length);
 	$for($scope, [$scope.c]);
 	$children__script($scope);
 });
-const $children_length = /* @__PURE__ */ _const(3, ($scope) => _attr($scope.a, "data-children", $scope.d));
+const $children_length = /*@__PURE__*/ _const(3, ($scope) => _attr($scope.a, "data-children", $scope.d));

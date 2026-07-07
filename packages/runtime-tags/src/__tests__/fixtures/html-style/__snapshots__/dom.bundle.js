@@ -1,5 +1,5 @@
 // template.marko
-const $count = /* @__PURE__ */ _let(1, ($scope) => _text_content($scope.a, `
+const $count = /*@__PURE__*/ _let(1, ($scope) => _text_content($scope.a, `
   .test {
     content: ${_to_text($scope.b)}
   }

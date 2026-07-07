@@ -4,7 +4,7 @@ const $input_b = ($scope, input_b) => _text($scope.b, input_b);
 const $input_c = ($scope, input_c) => _text($scope.c, input_c);
 
 // template.marko
-const $extras__OR__n = /* @__PURE__ */ _or(10, ($scope) => {
+const $extras__OR__n = /*@__PURE__*/ _or(10, ($scope) => {
 	const $childa_input_spread = {
 		a: $scope.j,
 		...$scope.i
@@ -13,7 +13,7 @@ const $extras__OR__n = /* @__PURE__ */ _or(10, ($scope) => {
 	$input_b($scope.c, $childa_input_spread.b);
 	$input_c($scope.c, $childa_input_spread.c);
 });
-const $n = /* @__PURE__ */ _let(9, ($scope) => {
+const $n = /*@__PURE__*/ _let(9, ($scope) => {
 	_text($scope.b, $scope.j);
 	$input_a($scope.d, $scope.j);
 	$extras__OR__n($scope);

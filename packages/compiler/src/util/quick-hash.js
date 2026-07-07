@@ -8,7 +8,7 @@ export class Hash {
   update(s) {
     let a = this.a;
     let b = this.b;
-    for (let i = s.length; i--; ) {
+    for (let i = s.length; i--;) {
       a = Math.imul(a ^ s.charCodeAt(i), 0x85ebca6b);
       a = (a << 13) | (a >>> 19);
       b = Math.imul(b ^ a, 0xc2b2ae35);

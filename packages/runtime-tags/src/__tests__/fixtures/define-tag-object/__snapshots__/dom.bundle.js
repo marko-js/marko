@@ -1,6 +1,6 @@
 // template.marko
 const $myObj = ($scope, myObj) => _text($scope.a, JSON.stringify(myObj));
-const $x = /* @__PURE__ */ _let(3, ($scope) => {
+const $x = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.c, $scope.d);
 	$myObj($scope, {
 		foo: 1,

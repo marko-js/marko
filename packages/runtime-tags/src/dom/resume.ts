@@ -324,19 +324,17 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 }
               }
             } else if (Array.isArray(serialized)) {
-              if (
-                !(
-                  readyIds &&
-                  serialized.every(
-                    // A dep's data is always flushed before a marker that
-                    // names it (bindings only reference already written
-                    // values), so its resumes are guaranteed present once
-                    // its module has loaded.
-                    (dep) =>
-                      readyIds!.has(dep as string) && !render.b![dep].length,
-                  )
+              if (!(
+                readyIds &&
+                serialized.every(
+                  // A dep's data is always flushed before a marker that
+                  // names it (bindings only reference already written
+                  // values), so its resumes are guaranteed present once
+                  // its module has loaded.
+                  (dep) =>
+                    readyIds!.has(dep as string) && !render.b![dep].length,
                 )
-              ) {
+              )) {
                 break;
               }
             } else if (readyIds && typeof serialized === "number") {
@@ -382,7 +380,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           if (readyIds && render.b) {
             // Process ready channels to a fixed point — draining one may
             // unblock another's deps marker.
-            for (let progress: unknown = 1; progress; ) {
+            for (let progress: unknown = 1; progress;) {
               progress = 0;
               for (const readyId of readyIds) {
                 const resumes = render.b[readyId];

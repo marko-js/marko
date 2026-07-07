@@ -119,7 +119,7 @@ export default {
       let spreadReferenceNodes: t.Node[] | undefined;
       let exprExtras: Opt<t.NodeExtra>;
 
-      for (let i = attributes.length; i--; ) {
+      for (let i = attributes.length; i--;) {
         const attr = attributes[i];
         const valueExtra = (attr.value.extra ??= {});
 
@@ -1069,7 +1069,7 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
   let staticControllable: RelatedControllable;
   let staticContentAttr: undefined | t.MarkoAttribute;
   let injectNonce = isInjectNonceTag(tagName);
-  for (let i = attributes.length; i--; ) {
+  for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     const { value } = attr;
     if (t.isMarkoSpreadAttribute(attr)) {
@@ -1088,9 +1088,10 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
         }
       }
       spreadProps.push(t.spreadElement(value));
-    } else if (
-      !(seen[attr.name] || (attr.name === "content" && tag.body.body.length))
-    ) {
+    } else if (!(
+      seen[attr.name] ||
+      (attr.name === "content" && tag.body.body.length)
+    )) {
       seen[attr.name] = attr;
 
       if (injectNonce && attr.name === "nonce") {

@@ -138,8 +138,8 @@ ul.example-list
   <th><img alt="Discord" src="https://user-images.githubusercontent.com/4985201/89313514-6edbea80-d62d-11ea-8447-ca2fd8983661.png" width="162">
   <th><img alt="Twitter" src="https://user-images.githubusercontent.com/1958812/56055707-07e74380-5d0f-11e9-8a59-d529fbb5a81e.png" width="53">
 <tbody><tr><td>
-  
-  Ask and answer [StackOverflow questions with the `#marko` tag](https://stackoverflow.com/questions/tagged/marko)<td>
+
+Ask and answer [StackOverflow questions with the `#marko` tag](https://stackoverflow.com/questions/tagged/marko)<td>
 
 Come [hang out in our Discord chat](https://discord.gg/RFGxYGs), ask questions, and discuss project direction<td>
 

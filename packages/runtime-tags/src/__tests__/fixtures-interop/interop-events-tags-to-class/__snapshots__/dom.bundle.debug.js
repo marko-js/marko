@@ -34,8 +34,8 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<!><!><div id=tags-api> </div>";
 const $walks = "b%bD l";
-const $count = /* @__PURE__ */ _let("count/2", ($scope) => _text($scope["#text/1"], $scope.count));
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
+const $count = /*@__PURE__*/ _let("count/2", ($scope) => _text($scope["#text/1"], $scope.count));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 function $setup($scope) {
 	$count($scope, 0);
 	$dynamicTag($scope, _marko_template, () => ({ onCount: $onCount($scope) }));
@@ -46,4 +46,4 @@ function $onCount($scope) {
 	};
 }
 _resume("__tests__/template.marko_0/onCount", $onCount);
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

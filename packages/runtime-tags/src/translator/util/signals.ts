@@ -803,7 +803,7 @@ export function replaceNullishAndEmptyFunctionsWith0(
   const len = args.length;
   let finalLen: undefined | number = undefined;
 
-  for (let i = len; i--; ) {
+  for (let i = len; i--;) {
     const arg = args[i];
     if (!arg) {
       args[i] = t.numericLiteral(0);
@@ -1250,7 +1250,7 @@ export function writeHTMLResumeStatements(
     }
   });
 
-  for (let i = allSignals.length; i--; ) {
+  for (let i = allSignals.length; i--;) {
     if (allSignals[i].effect.length) {
       const signalRefs = allSignals[i].referencedBindings;
       body.push(
@@ -1631,7 +1631,7 @@ function getBuildAssignment(extra: AssignedBindingExtra) {
           cur = cur.upstreamAlias;
         }
         scopeRead = createScopeReadExpression(cur, section);
-        for (let i = props.length; i--; ) {
+        for (let i = props.length; i--;) {
           scopeRead = toMemberExpression(scopeRead, props[i], false);
         }
       } else {

@@ -1,5 +1,5 @@
 // template.marko
-const $checked = /* @__PURE__ */ _let(3, ($scope) => {
+const $checked = /*@__PURE__*/ _let(3, ($scope) => {
 	_attr_input_checked_default($scope, "a", $scope.d);
 	_attr_input_checked($scope, "b", $scope.d, void 0);
 });

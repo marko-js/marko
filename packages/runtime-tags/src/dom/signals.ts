@@ -276,7 +276,7 @@ export function _closure(...closureSignals: ReturnType<typeof _closure_get>[]) {
   const [firstSignal] = closureSignals;
   const scopeInstances = firstSignal[ClosureSignalProp.ScopeInstancesAccessor];
   const signalIndex = firstSignal[ClosureSignalProp.SignalIndexAccessor];
-  for (let i = closureSignals.length; i--; ) {
+  for (let i = closureSignals.length; i--;) {
     closureSignals[i][ClosureSignalProp.Index] = i;
   }
 

@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<textarea></textarea><textarea></textarea><textarea></textarea><textarea></textarea><textarea></textarea><textarea></textarea><button>Update</button>";
 const $walks = " b b b b b b b";
-const $value = /* @__PURE__ */ _let("value/7", ($scope) => {
+const $value = /*@__PURE__*/ _let("value/7", ($scope) => {
 	_attr_input_value_default($scope, "#textarea/2", $scope.value);
 	_attr_input_value_default($scope, "#textarea/3", $scope.value);
 	_attr_input_value($scope, "#textarea/4", $scope.value, undefined);
@@ -20,4 +20,4 @@ function $setup($scope) {
 	$value($scope, "a");
 	$setup__script($scope);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

@@ -1,6 +1,6 @@
 // tags/let-global.marko
 const subsByKey = {};
-const $value = /* @__PURE__ */ _let(3, ($scope) => _return($scope, $scope.d));
+const $value = /*@__PURE__*/ _let(3, ($scope) => _return($scope, $scope.d));
 const $input_value__script = _script("c1", ($scope) => {
 	{
 		const subs = subsByKey[$scope.c] ??= /* @__PURE__ */ new Set();
@@ -18,12 +18,12 @@ function $valueChange($scope) {
 _resume("c0", $valueChange);
 
 // template.marko
-const $a__OR__b = /* @__PURE__ */ _or(8, ($scope) => _text($scope.f, `${$scope.g},${$scope.h}`), 1, 1);
-const $b = /* @__PURE__ */ _let(7, ($scope) => {
+const $a__OR__b = /*@__PURE__*/ _or(8, ($scope) => _text($scope.f, `${$scope.g},${$scope.h}`), 1, 1);
+const $b = /*@__PURE__*/ _let(7, ($scope) => {
 	_text($scope.d, $scope.h);
 	$a__OR__b($scope);
 });
-const $a = _var_resume("a0", /* @__PURE__ */ _const(6, ($scope) => {
+const $a = _var_resume("a0", /*@__PURE__*/ _const(6, ($scope) => {
 	_text($scope.c, $scope.g);
 	$b($scope, $scope.g + 1);
 	$a__OR__b($scope);

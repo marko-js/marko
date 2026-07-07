@@ -1,5 +1,5 @@
 // tags/counter.marko
-const $x = /* @__PURE__ */ _let(2, ($scope) => {
+const $x = /*@__PURE__*/ _let(2, ($scope) => {
 	_text($scope.b, $scope.c);
 	_return($scope, $scope.c);
 });

@@ -1,5 +1,5 @@
 // template.marko
-const $foo = /* @__PURE__ */ _let(3, ($scope) => {
+const $foo = /*@__PURE__*/ _let(3, ($scope) => {
 	_attr_class($scope.a, ($scope.d, $scope.d.class));
 	_attr_class($scope.b, ($scope.d, $scope.d.class));
 });

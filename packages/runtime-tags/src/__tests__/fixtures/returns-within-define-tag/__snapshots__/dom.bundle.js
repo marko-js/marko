@@ -1,20 +1,20 @@
 // template.marko
-const $Twice_content__value__OR__call = /* @__PURE__ */ _or(4, ($scope) => _return($scope, $_return2($scope)));
-const $Twice_content__call = /* @__PURE__ */ _let(3, $Twice_content__value__OR__call);
-const $Twice_content__value = /* @__PURE__ */ _const(2, $Twice_content__value__OR__call);
-const $Once_content__value__OR__call = /* @__PURE__ */ _or(4, ($scope) => _return($scope, $_return($scope)));
-const $Once_content__call = /* @__PURE__ */ _let(3, $Once_content__value__OR__call);
-const $Once_content__value = /* @__PURE__ */ _const(2, $Once_content__value__OR__call);
-const $clickOnceCount = /* @__PURE__ */ _let(8, ($scope) => {
+const $Twice_content__value__OR__call = /*@__PURE__*/ _or(4, ($scope) => _return($scope, $_return2($scope)));
+const $Twice_content__call = /*@__PURE__*/ _let(3, $Twice_content__value__OR__call);
+const $Twice_content__value = /*@__PURE__*/ _const(2, $Twice_content__value__OR__call);
+const $Once_content__value__OR__call = /*@__PURE__*/ _or(4, ($scope) => _return($scope, $_return($scope)));
+const $Once_content__call = /*@__PURE__*/ _let(3, $Once_content__value__OR__call);
+const $Once_content__value = /*@__PURE__*/ _const(2, $Once_content__value__OR__call);
+const $clickOnceCount = /*@__PURE__*/ _let(8, ($scope) => {
 	$Once_content__value($scope.a, $onClickOnce($scope));
 	_text($scope.d, $scope.i);
 });
-const $clickTwiceCount = /* @__PURE__ */ _let(10, ($scope) => {
+const $clickTwiceCount = /*@__PURE__*/ _let(10, ($scope) => {
 	$Twice_content__value($scope.e, $onClickTwice($scope));
 	_text($scope.h, $scope.k);
 });
-const $onClickOnce2 = _var_resume("a5", /* @__PURE__ */ _const(9, _script("a9", ($scope) => _on($scope.c, "click", $scope.j))));
-const $onClickTwice2 = _var_resume("a7", /* @__PURE__ */ _const(11, _script("a8", ($scope) => _on($scope.g, "click", $scope.l))));
+const $onClickOnce2 = _var_resume("a5", /*@__PURE__*/ _const(9, _script("a9", ($scope) => _on($scope.c, "click", $scope.j))));
+const $onClickTwice2 = _var_resume("a7", /*@__PURE__*/ _const(11, _script("a8", ($scope) => _on($scope.g, "click", $scope.l))));
 function $_return2($scope) {
 	return function() {
 		if ($scope.d) {

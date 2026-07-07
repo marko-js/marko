@@ -5,7 +5,7 @@ const $setup__script$1 = _script("__tests__/tags/leaf.marko_0", ($scope) => _lif
 	document.getElementById("ref").textContent = "leaf destroyed";
 } }));
 const $setup$2 = $setup__script$1;
-var leaf_default = /* @__PURE__ */ _template("__tests__/tags/leaf.marko", $template$2, "b", $setup$2);
+var leaf_default = /*@__PURE__*/ _template("__tests__/tags/leaf.marko", $template$2, "b", $setup$2);
 
 // tags/wrapper.marko
 const $template$1 = "<!><!><!>";
@@ -14,19 +14,19 @@ const $setup$1 = () => {};
 const $if_content__setup$1 = ($scope) => {
 	$setup$2($scope["#childScope/0"]);
 };
-const $if$1 = /* @__PURE__ */ _if("#text/0", $template$2, /* @__PURE__ */ ((_w0) => `/${_w0}&`)("b"), $if_content__setup$1);
+const $if$1 = /*@__PURE__*/ _if("#text/0", $template$2, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b"), $if_content__setup$1);
 const $show$1 = ($scope, show) => $if$1($scope, show ? 0 : 1);
 const $input = ($scope, input) => $show$1($scope, input.show);
-var wrapper_default = /* @__PURE__ */ _template("__tests__/tags/wrapper.marko", $template$1, "b%c", $setup$1, $input);
+var wrapper_default = /*@__PURE__*/ _template("__tests__/tags/wrapper.marko", $template$1, "b%c", $setup$1, $input);
 
 // template.marko
 const $template = "<div id=ref>init</div><button id=o>O</button><button id=s>S</button><!><!>";
 const $walks = "b b b%c";
-const $if_content__show = /* @__PURE__ */ _if_closure("#text/2", 0, ($scope) => $show$1($scope["#childScope/0"], $scope._.show));
+const $if_content__show = /*@__PURE__*/ _if_closure("#text/2", 0, ($scope) => $show$1($scope["#childScope/0"], $scope._.show));
 const $if_content__setup = $if_content__show;
-const $if = /* @__PURE__ */ _if("#text/2", /* @__PURE__ */ ((_w0) => `<!>${_w0}<!>`)($template$1), /* @__PURE__ */ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
-const $outer = /* @__PURE__ */ _let("outer/3", ($scope) => $if($scope, $scope.outer ? 0 : 1));
-const $show = /* @__PURE__ */ _let("show/4", $if_content__show);
+const $if = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
+const $outer = /*@__PURE__*/ _let("outer/3", ($scope) => $if($scope, $scope.outer ? 0 : 1));
+const $show = /*@__PURE__*/ _let("show/4", $if_content__show);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$outer($scope, !$scope.outer);
@@ -40,4 +40,4 @@ function $setup($scope) {
 	$show($scope, false);
 	$setup__script($scope);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

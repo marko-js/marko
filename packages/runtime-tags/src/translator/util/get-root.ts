@@ -80,8 +80,7 @@ export function getFnParent(path: t.NodePath<t.Node>) {
 export function getDeclarationRoot(path: t.NodePath<t.Node>) {
   let curPath = path;
   let declPath:
-    | undefined
-    | t.NodePath<t.FunctionDeclaration | t.VariableDeclaration>;
+    undefined | t.NodePath<t.FunctionDeclaration | t.VariableDeclaration>;
   while (!isMarko(curPath)) {
     if (isFunctionOrVariableDeclaration(curPath)) {
       declPath = curPath;

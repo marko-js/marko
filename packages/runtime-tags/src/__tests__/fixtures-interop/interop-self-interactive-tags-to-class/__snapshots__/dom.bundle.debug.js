@@ -1,11 +1,11 @@
 // template.marko
 const $template = "<div id=tags-api>tags</div><!><!>";
 const $walks = "b%c";
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/0");
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 function $setup($scope) {
 	$dynamicTag($scope, _marko_template);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, "b%c", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "b%c", $setup);
 
 // v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => {};

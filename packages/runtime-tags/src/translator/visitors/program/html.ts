@@ -313,8 +313,7 @@ function getRegisteredFnExpression(
     return callRuntime(
       "_resume",
       simplifyFunction(node) as
-        | t.FunctionExpression
-        | t.ArrowFunctionExpression,
+        t.FunctionExpression | t.ArrowFunctionExpression,
       t.stringLiteral(extra.registerId),
       (extra.referencedBindingsInFunction || extra.referencesScope) &&
         getScopeIdIdentifier(extra.section),

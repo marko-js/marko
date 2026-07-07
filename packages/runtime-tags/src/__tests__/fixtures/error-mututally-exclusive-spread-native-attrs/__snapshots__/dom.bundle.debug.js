@@ -14,4 +14,4 @@ function $setup($scope) {
 }
 function $checkedChange() {}
 _resume("__tests__/template.marko_0/checkedChange", $checkedChange);
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, " b", $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, " b", $setup);

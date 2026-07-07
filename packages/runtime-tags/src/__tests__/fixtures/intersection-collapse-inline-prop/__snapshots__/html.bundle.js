@@ -5,7 +5,7 @@ var template_default = _template("a", (input) => {
 	let count = 1;
 	const pos = {
 		x: count,
-		y: count + 1
+		y: 2
 	};
 	const scale = count * 10;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}<div>${_escape(pos.x + scale)}${_el_resume($scope0_id, "b")}</div>`);

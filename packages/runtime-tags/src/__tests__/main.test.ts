@@ -142,28 +142,26 @@ function testFixtures(interop?: true) {
             csr.reset();
             ssr.reset();
           });
-          const getModeOpts = once(
-            (): compiler.Config => ({
-              translator,
-              runtimeId: config.runtime_id,
-              writeVersionComment: false,
-              babelConfig: {
-                babelrc: false,
-                configFile: false,
-                browserslistConfigFile: false,
-              },
-              optimize,
-              optimizeKnownTemplates: optimize
-                ? (
-                    fs.readdirSync(fixtureDir, {
-                      recursive: true,
-                    }) as string[]
-                  )
-                    .filter((f) => f.endsWith(".marko"))
-                    .map((f) => path.join(fixtureDir, f))
-                : undefined,
-            }),
-          );
+          const getModeOpts = once((): compiler.Config => ({
+            translator,
+            runtimeId: config.runtime_id,
+            writeVersionComment: false,
+            babelConfig: {
+              babelrc: false,
+              configFile: false,
+              browserslistConfigFile: false,
+            },
+            optimize,
+            optimizeKnownTemplates: optimize
+              ? (
+                  fs.readdirSync(fixtureDir, {
+                    recursive: true,
+                  }) as string[]
+                )
+                  .filter((f) => f.endsWith(".marko"))
+                  .map((f) => path.join(fixtureDir, f))
+              : undefined,
+          }));
 
           const ssrRunner = once(() =>
             createServerRunner(

@@ -146,7 +146,7 @@ function checkInputChanged(existingComponent, oldInput, newInput) {
       return true;
     }
 
-    for (var i = len; i--; ) {
+    for (var i = len; i--;) {
       var key = oldKeys[i];
       if (!(key in newInput && oldInput[key] === newInput[key])) {
         return true;

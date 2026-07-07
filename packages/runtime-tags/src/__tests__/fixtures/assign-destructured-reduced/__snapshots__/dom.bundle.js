@@ -7,10 +7,10 @@ const $input__script = _script("b0", ($scope) => {
 		console.log(updated, $scope.b.value);
 	}
 });
-const $input = /* @__PURE__ */ _const(1, $input__script);
+const $input = /*@__PURE__*/ _const(1, $input__script);
 
 // template.marko
-const $count = /* @__PURE__ */ _let(1, ($scope) => $input($scope.a, {
+const $count = /*@__PURE__*/ _let(1, ($scope) => $input($scope.a, {
 	value: $scope.b,
 	valueChange: $valueChange($scope)
 }));

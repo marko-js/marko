@@ -172,11 +172,12 @@ export function _attrs(
   nextAttrs: Record<string, unknown>,
 ) {
   const el = scope[nodeAccessor] as Element;
-  for (let i = el.attributes.length; i--; ) {
+  for (let i = el.attributes.length; i--;) {
     const { name } = el.attributes.item(i)!;
-    if (
-      !(nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs)))
-    ) {
+    if (!(
+      nextAttrs &&
+      (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))
+    )) {
       el.removeAttribute(name);
     }
   }
@@ -218,7 +219,7 @@ export function _attrs_partial(
   const el = scope[nodeAccessor] as Element;
   const partial: Partial<typeof nextAttrs> = {};
 
-  for (let i = el.attributes.length; i--; ) {
+  for (let i = el.attributes.length; i--;) {
     const { name } = el.attributes.item(i)!;
     if (!skip[name] && !(nextAttrs && name in nextAttrs)) {
       el.removeAttribute(name);
@@ -254,8 +255,7 @@ function attrsInternal(
 ) {
   const el = scope[nodeAccessor] as Element;
   let events = scope[AccessorPrefix.EventAttributes + nodeAccessor] as
-    | undefined
-    | Record<string, unknown>;
+    undefined | Record<string, unknown>;
   let skip: RegExp | undefined;
   for (const name in events) events[name] = 0;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = ControlledType.None;
@@ -348,9 +348,10 @@ function attrsInternal(
         if (isEventHandler(name)) {
           (events ||= scope[AccessorPrefix.EventAttributes + nodeAccessor] =
             {})[getEventHandlerName(name)] = value;
-        } else if (
-          !(skip?.test(name) || (name === "content" && el.tagName !== "META"))
-        ) {
+        } else if (!(
+          skip?.test(name) ||
+          (name === "content" && el.tagName !== "META")
+        )) {
           _attr(el, name, value);
         }
         break;

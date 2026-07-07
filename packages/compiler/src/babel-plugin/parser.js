@@ -658,7 +658,7 @@ export function parseMarko(file) {
   parser.parse(code);
   onNext();
 
-  for (let i = 0; i < parseVisits.length; ) {
+  for (let i = 0; i < parseVisits.length;) {
     parseVisits[i++](parseVisits[i++]);
   }
 

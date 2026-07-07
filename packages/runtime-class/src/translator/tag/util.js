@@ -226,7 +226,7 @@ function camelCase(string) {
 }
 
 function findLastIndex(arr, check) {
-  for (let i = arr.length; i--; ) {
+  for (let i = arr.length; i--;) {
     if (check(arr[i])) {
       return i;
     }

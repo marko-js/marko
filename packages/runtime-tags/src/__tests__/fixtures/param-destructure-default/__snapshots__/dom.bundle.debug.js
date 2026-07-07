@@ -1,7 +1,7 @@
 // template.marko
 const $ChildA_content__walks = "D%c%l", $ChildA_content__template = "<div class=a><!> <!></div>", $ChildB_content__walks = "D%c%l", $ChildB_content__template = "<div class=b><!> <!></div>";
-const $template = /* @__PURE__ */ ((_w0, _w1, _w2, _w3, _w4, _w5) => `<!>${_w0}${_w1}${_w2}${_w3}${_w4}${_w5}<!>`)($ChildA_content__template, $ChildA_content__template, $ChildA_content__template, $ChildB_content__template, $ChildB_content__template, $ChildB_content__template);
-const $walks = /* @__PURE__ */ ((_w0, _w1, _w2, _w3, _w4, _w5) => `b/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}&b`)($ChildA_content__walks, $ChildA_content__walks, $ChildA_content__walks, $ChildB_content__walks, $ChildB_content__walks, $ChildB_content__walks);
+const $template = /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5) => `<!>${_w0}${_w1}${_w2}${_w3}${_w4}${_w5}<!>`)($ChildA_content__template, $ChildA_content__template, $ChildA_content__template, $ChildB_content__template, $ChildB_content__template, $ChildB_content__template);
+const $walks = /*@__PURE__*/ ((_w0, _w1, _w2, _w3, _w4, _w5) => `b/${_w0}&/${_w1}&/${_w2}&/${_w3}&/${_w4}&/${_w5}&b`)($ChildA_content__walks, $ChildA_content__walks, $ChildA_content__walks, $ChildB_content__walks, $ChildB_content__walks, $ChildB_content__walks);
 const $ChildB_content__$pattern = ($scope, $pattern2) => $ChildB_content__$bar($scope, $pattern2.bar);
 const $ChildB_content__bar = ($scope, bar) => _text($scope["#text/0"], bar);
 const $ChildB_content__$bar = ($scope, $bar2) => $ChildB_content__bar($scope, void 0 !== $bar2 ? $bar2 : 1);
@@ -30,4 +30,4 @@ function $setup($scope) {
 	$ChildB_content__foo($scope["#childScope/4"], {});
 	$ChildB_content__foo($scope["#childScope/5"]);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

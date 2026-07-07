@@ -41,7 +41,7 @@ const walkInternal = function walkInternal(
   let storedMultiplier = 0;
   let currentScopeIndex = 0;
 
-  for (; currentWalkIndex < walkCodes.length; ) {
+  for (; currentWalkIndex < walkCodes.length;) {
     value = walkCodes.charCodeAt(currentWalkIndex++);
     currentMultiplier = storedMultiplier;
     storedMultiplier = 0;

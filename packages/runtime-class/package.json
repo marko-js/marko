@@ -80,7 +80,7 @@
     "events-light": "^1.0.5",
     "listener-tracker": "^2.0.0",
     "magic-string": "^0.30.21",
-    "minimatch": "^9.0.5",
+    "minimatch": "^10.2.5",
     "raptor-util": "^3.2.0",
     "resolve-from": "^5.0.0",
     "self-closing-tags": "^1.0.1",

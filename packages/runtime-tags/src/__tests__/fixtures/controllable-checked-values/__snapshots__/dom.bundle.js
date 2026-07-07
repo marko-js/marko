@@ -1,10 +1,10 @@
 // template.marko
-const $checkedValue__OR__$checkedValueChange = /* @__PURE__ */ _or(6, ($scope) => {
+const $checkedValue__OR__$checkedValueChange = /*@__PURE__*/ _or(6, ($scope) => {
 	_attr_input_checkedValue($scope, "a", $scope.e, $scope.f, "a");
 	_attr_input_checkedValue($scope, "b", $scope.e, $scope.f, "b");
 	_attr_input_checkedValue($scope, "c", $scope.e, $scope.f, "c");
 });
-const $checkedValue = /* @__PURE__ */ _let(4, ($scope) => {
+const $checkedValue = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.d, $scope.e);
 	$checkedValue__OR__$checkedValueChange($scope);
 });

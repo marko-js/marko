@@ -1,5 +1,5 @@
 // tags/counter.marko
-const $x = /* @__PURE__ */ _let(2, ($scope) => {
+const $x = /*@__PURE__*/ _let(2, ($scope) => {
 	_text($scope.b, $scope.c);
 	_return($scope, $scope.c);
 });
@@ -14,7 +14,7 @@ function $valueChange($scope) {
 _resume("b0", $valueChange);
 
 // template.marko
-const $count = _var_resume("a0", /* @__PURE__ */ _const(5, ($scope) => _text($scope.d, $scope.f)));
+const $count = _var_resume("a0", /*@__PURE__*/ _const(5, ($scope) => _text($scope.d, $scope.f)));
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.c, "click", function() {
 		_var_change($scope.a, $scope.f + 1);

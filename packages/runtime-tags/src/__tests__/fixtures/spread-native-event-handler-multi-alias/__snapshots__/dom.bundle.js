@@ -1,5 +1,5 @@
 // template.marko
-const $MyButton_content__input_onClick = /* @__PURE__ */ _const(3, _script("a4", ($scope) => _on($scope.a, "click", function() {
+const $MyButton_content__input_onClick = /*@__PURE__*/ _const(3, _script("a4", ($scope) => _on($scope.a, "click", function() {
 	document.getElementById("el").textContent += "[onClick(child)]";
 	$scope.d();
 })));

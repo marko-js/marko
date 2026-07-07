@@ -1,7 +1,7 @@
 // template.marko
 const $template = "<script type=importmap><\/script><div> </div>";
 const $walks = " bD l";
-const $count = /* @__PURE__ */ _let("count/2", ($scope) => {
+const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
 	_text_content($scope["#script/0"], `
   {
     "imports": {
@@ -19,4 +19,4 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

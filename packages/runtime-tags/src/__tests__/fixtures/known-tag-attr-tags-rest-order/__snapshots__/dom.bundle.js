@@ -2,7 +2,7 @@
 const $first = ($scope, first) => _text($scope.a, first);
 
 // template.marko
-const $n = /* @__PURE__ */ _let(3, ($scope) => {
+const $n = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	$first($scope.c, $scope.d);
 });

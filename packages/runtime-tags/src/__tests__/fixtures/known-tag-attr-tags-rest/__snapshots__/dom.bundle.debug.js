@@ -4,7 +4,7 @@ const $walks$2 = "b%bDb%lDb%l";
 const $setup$2 = () => {};
 const $for_content__row_x = ($scope, row_x) => _text($scope["#text/0"], row_x);
 const $for_content__$params = ($scope, $params2) => $for_content__row_x($scope, $params2[0]?.x);
-const $for = /* @__PURE__ */ _for_of("#text/0", "<div>row <!></div>", "Db%l", 0, $for_content__$params);
+const $for = /*@__PURE__*/ _for_of("#text/0", "<div>row <!></div>", "Db%l", 0, $for_content__$params);
 const $input_stuff_row = ($scope, input_stuff_row) => $for($scope, [input_stuff_row]);
 const $input_stuff_other_y = ($scope, input_stuff_other_y) => _text($scope["#text/1"], input_stuff_other_y);
 const $input_stuff_cond_a = ($scope, input_stuff_cond_a) => _text($scope["#text/2"], input_stuff_cond_a);
@@ -16,11 +16,11 @@ const $input_stuff = ($scope, input_stuff) => {
 };
 const $input_stuff_other = ($scope, input_stuff_other) => $input_stuff_other_y($scope, input_stuff_other?.y);
 const $input_stuff_cond = ($scope, input_stuff_cond) => $input_stuff_cond_a($scope, input_stuff_cond?.a);
-var inner_default = /* @__PURE__ */ _template("__tests__/tags/inner/index.marko", $template$2, $walks$2, $setup$2, $input$1);
+var inner_default = /*@__PURE__*/ _template("__tests__/tags/inner/index.marko", $template$2, $walks$2, $setup$2, $input$1);
 
 // tags/child/index.marko
-const $template$1 = /* @__PURE__ */ ((_w0) => `<h1> </h1>${_w0}`)($template$2);
-const $walks$1 = /* @__PURE__ */ ((_w0) => `D l/${_w0}&`)($walks$2);
+const $template$1 = /*@__PURE__*/ ((_w0) => `<h1> </h1>${_w0}`)($template$2);
+const $walks$1 = /*@__PURE__*/ ((_w0) => `D l/${_w0}&`)($walks$2);
 const $setup$1 = () => {};
 const $title = ($scope, title) => _text($scope["#text/0"], title);
 const $rest = ($scope, rest) => $input_stuff($scope["#childScope/1"], rest);
@@ -28,12 +28,12 @@ const $input = ($scope, input) => {
 	(({ title, ...rest }) => $rest($scope, rest))(input);
 	$title($scope, input.title);
 };
-var child_default = /* @__PURE__ */ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
-const $template = /* @__PURE__ */ ((_w0) => `<button>toggle</button>${_w0}`)($template$1);
-const $walks = /* @__PURE__ */ ((_w0) => ` b/${_w0}&`)($walks$1);
-const $cond = /* @__PURE__ */ _let("cond/2", ($scope) => {
+const $template = /*@__PURE__*/ ((_w0) => `<button>toggle</button>${_w0}`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)($walks$1);
+const $cond = /*@__PURE__*/ _let("cond/2", ($scope) => {
 	let $cond;
 	if ($scope.cond) {
 		$cond = attrTag({ a: 1 });
@@ -54,4 +54,4 @@ function $setup($scope) {
 	$cond($scope, true);
 	$setup__script($scope);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

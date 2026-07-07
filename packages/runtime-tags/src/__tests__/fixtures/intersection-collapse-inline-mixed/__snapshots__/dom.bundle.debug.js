@@ -1,11 +1,11 @@
 // template.marko
 const $template = "<button>inc</button><div><!> | <!></div>";
 const $walks = " bD%c%l";
-const $shared = /* @__PURE__ */ _const("shared", ($scope) => _text($scope["#text/1"], $scope.shared));
+const $shared = /*@__PURE__*/ _const("shared", ($scope) => _text($scope["#text/1"], $scope.shared));
 const $shared__OR__once = ($scope) => {
 	_text($scope["#text/2"], $scope.shared + $scope.count * 3);
 };
-const $count = /* @__PURE__ */ _let("count/3", ($scope) => {
+const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
 	$shared($scope, $scope.count * 2);
 	$shared__OR__once($scope);
 });
@@ -16,4 +16,4 @@ function $setup($scope) {
 	$count($scope, 1);
 	$setup__script($scope);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

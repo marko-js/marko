@@ -3,7 +3,7 @@ const $onClick__script = _script("b0", ($scope) => _on($scope.a, "click", $scope
 const $text = ($scope, text) => _text($scope.b, text);
 
 // template.marko
-const $clickCount = /* @__PURE__ */ _let(1, ($scope) => $text($scope.a, $scope.b));
+const $clickCount = /*@__PURE__*/ _let(1, ($scope) => $text($scope.a, $scope.b));
 function $onClick($scope) {
 	return function() {
 		$clickCount($scope, $scope.b + 1);

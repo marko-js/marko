@@ -11,7 +11,7 @@ const $group2 = ($scope, $group) => {
 };
 
 // template.marko
-const $n = /* @__PURE__ */ _let(3, ($scope) => {
+const $n = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	$group2($scope.c, {
 		keep: "k",

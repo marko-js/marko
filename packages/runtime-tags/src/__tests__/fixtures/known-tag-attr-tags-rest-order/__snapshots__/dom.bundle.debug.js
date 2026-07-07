@@ -8,12 +8,12 @@ const $input = ($scope, input) => {
 	(({ first, ...rest }) => $rest($scope, rest))(input);
 	$first($scope, input.first);
 };
-var child_default = /* @__PURE__ */ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, $setup$1, $input);
+var child_default = /*@__PURE__*/ _template("__tests__/tags/child/index.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
-const $template = /* @__PURE__ */ ((_w0) => `<button>inc <!></button>${_w0}`)($template$1);
-const $walks = /* @__PURE__ */ ((_w0) => ` Db%l/${_w0}&`)($walks$1);
-const $n = /* @__PURE__ */ _let("n/3", ($scope) => {
+const $template = /*@__PURE__*/ ((_w0) => `<button>inc <!></button>${_w0}`)($template$1);
+const $walks = /*@__PURE__*/ ((_w0) => ` Db%l/${_w0}&`)($walks$1);
+const $n = /*@__PURE__*/ _let("n/3", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$first($scope["#childScope/2"], $scope.n);
 });
@@ -28,4 +28,4 @@ function $setup($scope) {
 	$n($scope, 1);
 	$setup__script($scope);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

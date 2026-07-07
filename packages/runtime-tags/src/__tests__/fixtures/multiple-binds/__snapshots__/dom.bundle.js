@@ -1,9 +1,9 @@
 // template.marko
-const $count__OR__$valueChange = /* @__PURE__ */ _or(5, ($scope) => {
+const $count__OR__$valueChange = /*@__PURE__*/ _or(5, ($scope) => {
 	_attr_input_value($scope, "b", $scope.d, $scope.e);
 	_attr_input_value($scope, "c", $scope.d, $scope.e);
 });
-const $count = /* @__PURE__ */ _let(3, $count__OR__$valueChange);
+const $count = /*@__PURE__*/ _let(3, $count__OR__$valueChange);
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.a, "click", function() {
 		$count($scope, $scope.d + 1);

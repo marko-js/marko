@@ -63,7 +63,7 @@ export function buildLookup(dirname, requestedTranslator, onError) {
   if (!lookup) {
     lookup = lookupCache[cacheKey] = new Lookup();
     lookup.exclusiveTagDiscoveryDirs = exclusiveTagDiscoveryDirs;
-    for (let i = taglibsForDir.length; i--; ) {
+    for (let i = taglibsForDir.length; i--;) {
       const taglib = taglibsForDir[i];
       lookup.addTaglib(taglib);
       if (taglib.imports) {

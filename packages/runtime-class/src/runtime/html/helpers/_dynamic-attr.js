@@ -25,7 +25,7 @@ module.exports = function dynamicAttr(name, value) {
 // In practice however the only character that does not become an attribute name
 // is when there is a >.
 function isInvalidAttrName(name) {
-  for (let i = name.length; i--; ) {
+  for (let i = name.length; i--;) {
     if (name[i] === ">") {
       return true;
     }

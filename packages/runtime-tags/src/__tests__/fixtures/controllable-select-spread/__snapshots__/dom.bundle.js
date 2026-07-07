@@ -1,13 +1,13 @@
 // tags/my-select.marko
 const $input__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
-const $input = /* @__PURE__ */ _const(2, ($scope) => {
+const $input = /*@__PURE__*/ _const(2, ($scope) => {
 	_attrs_content($scope, "a", $scope.c);
 	$input__script($scope);
 });
 
 // template.marko
-const $myselect_content = /* @__PURE__ */ _content("a1", "<option value=a>A</option><option value=b>B</option><option value=c>C</option>", "d");
-const $value = /* @__PURE__ */ _let(2, ($scope) => {
+const $myselect_content = /*@__PURE__*/ _content("a1", "<option value=a>A</option><option value=b>B</option><option value=c>C</option>", "d");
+const $value = /*@__PURE__*/ _let(2, ($scope) => {
 	$input($scope.a, {
 		value: $scope.c,
 		valueChange: $valueChange($scope),

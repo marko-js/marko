@@ -1,4 +1,4 @@
-// size: 6480 (min) 2845 (brotli)
+// size: 6453 (min) 2833 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -6,7 +6,6 @@ let decodeAccessor = (num) =>
     (handler[type] ||= (document.addEventListener(type, handler, !0), 1)),
   parsers = {},
   nextScopeId = 1e6,
-  collectingScopes,
   destroyNestedScopes = function destroyNestedScopes(scope) {
     ((scope.H = 0),
       scope.D?.forEach(destroyNestedScopes),
@@ -21,7 +20,7 @@ let decodeAccessor = (num) =>
       currentMultiplier,
       storedMultiplier = 0,
       currentScopeIndex = 0;
-    for (; currentWalkIndex < walkCodes.length; )
+    for (; currentWalkIndex < walkCodes.length;)
       if (
         ((value = walkCodes.charCodeAt(currentWalkIndex++)),
         (currentMultiplier = storedMultiplier),
@@ -50,13 +49,13 @@ let decodeAccessor = (num) =>
           value === 48 &&
             (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
       else if (value < 92)
-        for (value = 20 * currentMultiplier + value - 67; value--; )
+        for (value = 20 * currentMultiplier + value - 67; value--;)
           walker.nextNode();
       else if (value < 107)
-        for (value = 10 * currentMultiplier + value - 97; value--; )
+        for (value = 10 * currentMultiplier + value - 97; value--;)
           walker.nextSibling();
       else if (value < 117) {
-        for (value = 10 * currentMultiplier + value - 107; value--; )
+        for (value = 10 * currentMultiplier + value - 107; value--;)
           walker.parentNode();
         walker.nextSibling();
       } else storedMultiplier = currentMultiplier * 10 + value - 117;
@@ -75,7 +74,7 @@ let decodeAccessor = (num) =>
   pendingRenders = [],
   scopeKeyOffset = 1e3,
   runEffects = (effects) => {
-    for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
+    for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled,
@@ -105,7 +104,7 @@ function _on(element, type, handler) {
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
-  for (; target; )
+  for (; target;)
     (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
@@ -114,13 +113,12 @@ function parseHTML(html, ns) {
   return ((parser.innerHTML = html), parser.content || parser);
 }
 function createScope($global, closestBranch) {
-  let scope = {
+  return {
     L: nextScopeId++,
     H: runId,
     F: closestBranch,
     $: $global,
   };
-  return (collectingScopes?.push(scope), scope);
 }
 function skipScope() {
   return nextScopeId++;
@@ -306,7 +304,7 @@ function normalizeAttrValue(value) {
 }
 function removeChildNodes(startNode, endNode) {
   let stop = endNode.nextSibling;
-  for (; startNode !== stop; ) {
+  for (; startNode !== stop;) {
     let next = startNode.nextSibling;
     (startNode.remove(), (startNode = next));
   }
@@ -318,7 +316,7 @@ function toInsertNode(startNode, endNode) {
   if (startNode === endNode) return startNode;
   let parent = new DocumentFragment(),
     stop = endNode.nextSibling;
-  for (; startNode !== stop; ) {
+  for (; startNode !== stop;) {
     let next = startNode.nextSibling;
     (parent.appendChild(startNode), (startNode = next));
   }
@@ -329,7 +327,7 @@ function _if(nodeAccessor, ...branchesArgs) {
   let branchAccessor = "D" + nodeAccessor,
     branches = [],
     i = 0;
-  for (; i < branchesArgs.length; )
+  for (; i < branchesArgs.length;)
     branches.push(
       _content("", branchesArgs[i++], branchesArgs[i++], branchesArgs[i++])(),
     );
@@ -475,14 +473,14 @@ function loop(forEach) {
           hi,
           mid;
         for (let i = start; i <= oldEnd; i++) oldPos.set(oldScopes[i], i);
-        for (let i = diffLen; i--; )
+        for (let i = diffLen; i--;)
           sources[i] = oldPos.get(newScopes[start + i]) ?? -1;
         for (let i = 0; i < diffLen; i++)
           if (~sources[i])
             if (tail < 0 || sources[tails[tail]] < sources[i])
               (~tail && (pred[i] = tails[tail]), (tails[++tail] = i));
             else {
-              for (lo = 0, hi = tail; lo < hi; )
+              for (lo = 0, hi = tail; lo < hi;)
                 ((mid = ((lo + hi) / 2) | 0),
                   sources[tails[mid]] < sources[i]
                     ? (lo = mid + 1)
@@ -490,9 +488,9 @@ function loop(forEach) {
               sources[i] < sources[tails[lo]] &&
                 (lo > 0 && (pred[i] = tails[lo - 1]), (tails[lo] = i));
             }
-        for (hi = tails[tail], lo = tail + 1; lo-- > 0; )
+        for (hi = tails[tail], lo = tail + 1; lo-- > 0;)
           ((tails[lo] = hi), (hi = pred[hi]));
-        for (let i = diffLen; i--; )
+        for (let i = diffLen; i--;)
           (~tail && i === tails[tail]
             ? tail--
             : insertBranchBefore(
@@ -526,7 +524,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
 }
 function queuePendingRender(render) {
   let i = pendingRenders.push(render) - 1;
-  for (; i; ) {
+  for (; i;) {
     let parentIndex = (i - 1) >> 1,
       parent = pendingRenders[parentIndex];
     if (render.a - parent.a >= 0) break;
@@ -562,14 +560,14 @@ function prepareEffects(fn) {
   return preparedEffects;
 }
 function runRenders() {
-  for (; pendingRenders.length; ) {
+  for (; pendingRenders.length;) {
     let render = pendingRenders[0],
       item = pendingRenders.pop();
     if (render !== item) {
       let i = 0,
         mid = pendingRenders.length >> 1,
         key = (pendingRenders[0] = item).a;
-      for (; i < mid; ) {
+      for (; i < mid;) {
         let bestChild = (i << 1) + 1,
           right = bestChild + 1;
         if (

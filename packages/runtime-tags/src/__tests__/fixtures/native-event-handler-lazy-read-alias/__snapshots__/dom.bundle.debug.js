@@ -8,7 +8,7 @@ const $state_n__OR__state_tag__script = _script("__tests__/template.marko_0_stat
 	});
 }));
 const $state_n__OR__state_tag = $state_n__OR__state_tag__script;
-const $state = /* @__PURE__ */ _let("state/4", ($scope) => {
+const $state = /*@__PURE__*/ _let("state/4", ($scope) => {
 	$state_n($scope, $scope.state.n);
 	$state_tag($scope, $scope.state.tag);
 	$state_n__OR__state_tag($scope);
@@ -16,16 +16,16 @@ const $state = /* @__PURE__ */ _let("state/4", ($scope) => {
 const $state_tag__OR__n__script = _script("__tests__/template.marko_0_state_tag_n", ($scope) => _on($scope["#button/1"], "click", function() {
 	$log($scope, `${$scope.log}[${$scope.state_n}:${$scope.state_tag}]`);
 }));
-const $state_tag__OR__n = /* @__PURE__ */ _or(8, $state_tag__OR__n__script);
-const $state_n = /* @__PURE__ */ _const("state_n", ($scope) => {
+const $state_tag__OR__n = /*@__PURE__*/ _or(8, $state_tag__OR__n__script);
+const $state_n = /*@__PURE__*/ _const("state_n", ($scope) => {
 	$n($scope, $scope.state_n);
 	$state_tag__OR__n($scope);
 });
 const $n = ($scope) => {
 	_text($scope["#text/2"], $scope.state_n);
 };
-const $state_tag = /* @__PURE__ */ _const("state_tag", $state_tag__OR__n);
-const $log = /* @__PURE__ */ _let("log/7", ($scope) => _text($scope["#text/3"], $scope.log));
+const $state_tag = /*@__PURE__*/ _const("state_tag", $state_tag__OR__n);
+const $log = /*@__PURE__*/ _let("log/7", ($scope) => _text($scope["#text/3"], $scope.log));
 function $setup($scope) {
 	$state($scope, {
 		n: 0,
@@ -33,4 +33,4 @@ function $setup($scope) {
 	});
 	$log($scope, "");
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

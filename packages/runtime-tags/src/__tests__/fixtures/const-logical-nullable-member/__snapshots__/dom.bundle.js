@@ -2,7 +2,7 @@
 const $viaAnd = ($scope, viaAnd) => $viaAnd_label($scope, viaAnd?.label);
 const $viaTernary = ($scope, viaTernary) => $viaTernary_label($scope, viaTernary?.label);
 const $box = ($scope, box) => $box_inner($scope, box.inner);
-const $on = /* @__PURE__ */ _let(4, ($scope) => {
+const $on = /*@__PURE__*/ _let(4, ($scope) => {
 	$viaAnd($scope, $scope.e && { label: "and" });
 	$viaTernary($scope, $scope.e ? { label: "ternary" } : null);
 	$box($scope, { inner: $scope.e ? { label: "assign" } : null });

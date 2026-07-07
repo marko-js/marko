@@ -11,4 +11,4 @@ const $input = ($scope, input) => {
 	$input_name($scope, input.name);
 	$input_missing($scope, input.missing);
 };
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

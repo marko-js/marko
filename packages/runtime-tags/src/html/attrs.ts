@@ -48,8 +48,7 @@ export function _attr_option_value(value: unknown) {
   ) {
     if (MARKO_DEBUG) {
       const matched = getContext(kSelectedValueMatched) as
-        | { value: boolean }
-        | undefined;
+        { value: boolean } | undefined;
       if (matched) {
         matched.value = true;
       }

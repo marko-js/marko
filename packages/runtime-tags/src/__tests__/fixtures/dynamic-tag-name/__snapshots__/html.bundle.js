@@ -21,7 +21,6 @@ var tag_b_default = _template("c", (input) => {
 });
 
 // template.marko
-const foo = "";
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show__OR__input_other = _serialize_guard($scope0_reason, 2), $sg__input_showTagA__OR__input_other = _serialize_guard($scope0_reason, 3), $sg__input_isLarge__OR__input_other = _serialize_guard($scope0_reason, 4), $sg__input_level__OR__input_other = _serialize_guard($scope0_reason, 6), $sg__input_other = _serialize_guard($scope0_reason, 9), $si__input_other = _serialize_if($scope0_reason, 9);
 	const $scope0_id = _scope_id();
@@ -95,7 +94,7 @@ var template_default = _template("a", (input) => {
 	}, 0, 0, $sg__input_show__OR__input_other);
 	_dynamic_tag($scope0_id, "p", `h1`, {}, 0, 0, 0);
 	_dynamic_tag($scope0_id, "q", "div", {}, 0, 0, 0);
-	_dynamic_tag($scope0_id, "r", foo + "div", {}, 0, 0, 0);
+	_dynamic_tag($scope0_id, "r", "div", {}, 0, 0, 0);
 	_dynamic_tag($scope0_id, "s", "div", {}, 0, 0, 0);
 	_serialize_if($scope0_reason, 8) && writeScope($scope0_id, {
 		v: $si__input_other && content,

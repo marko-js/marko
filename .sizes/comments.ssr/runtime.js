@@ -15,7 +15,7 @@ let decodeAccessor = (num) =>
   pendingRenders = [],
   scopeKeyOffset = 1e3,
   runEffects = (effects) => {
-    for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
+    for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled;
@@ -28,7 +28,7 @@ function _on(element, type, handler) {
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
-  for (; target; )
+  for (; target;)
     (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
@@ -125,10 +125,7 @@ function init(runtimeId = "M") {
               for (; i < resumes.length; i++) {
                 let serialized = resumes[i];
                 if (typeof serialized == "string")
-                  for (
-                    lastTokenIndex = 0, visitText = serialized;
-                    nextToken();
-                  )
+                  for (lastTokenIndex = 0, visitText = serialized; nextToken();)
                     /\D/.test(lastToken)
                       ? (lastEffect = registeredValues[lastToken])
                       : effects.push(lastEffect, getScope(lastToken));
@@ -232,7 +229,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
 }
 function queuePendingRender(render) {
   let i = pendingRenders.push(render) - 1;
-  for (; i; ) {
+  for (; i;) {
     let parentIndex = (i - 1) >> 1,
       parent = pendingRenders[parentIndex];
     if (render.a - parent.a >= 0) break;
@@ -253,14 +250,14 @@ function run() {
   runEffects(effects);
 }
 function runRenders() {
-  for (; pendingRenders.length; ) {
+  for (; pendingRenders.length;) {
     let render = pendingRenders[0],
       item = pendingRenders.pop();
     if (render !== item) {
       let i = 0,
         mid = pendingRenders.length >> 1,
         key = (pendingRenders[0] = item).a;
-      for (; i < mid; ) {
+      for (; i < mid;) {
         let bestChild = (i << 1) + 1,
           right = bestChild + 1;
         if (

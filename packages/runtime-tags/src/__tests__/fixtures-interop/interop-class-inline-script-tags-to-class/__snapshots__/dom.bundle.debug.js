@@ -21,13 +21,13 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 const $template = "<div id=tags-api> </div><!><!>";
 const $walks = "D l%c";
-const $n = /* @__PURE__ */ _let("n/2", ($scope) => _text($scope["#text/0"], $scope.n));
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
+const $n = /*@__PURE__*/ _let("n/2", ($scope) => _text($scope["#text/0"], $scope.n));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
 function $setup($scope) {
 	$n($scope, 0);
 	$dynamicTag($scope, _marko_template);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);
 
 // v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => {};

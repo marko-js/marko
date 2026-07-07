@@ -9,4 +9,4 @@ _resume("c0", $_return);
 
 // template.marko
 const $x_getter = _hoist_resume("a0", 3);
-const $x = _var_resume("a1", /* @__PURE__ */ _const(3));
+const $x = _var_resume("a1", /*@__PURE__*/ _const(3));

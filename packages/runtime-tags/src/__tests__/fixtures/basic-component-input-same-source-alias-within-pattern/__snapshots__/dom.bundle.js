@@ -8,7 +8,7 @@ const $input_value_text = ($scope, text) => _text($scope.c, text);
 const $value2 = ($scope, $value) => $text($scope, $value.text);
 
 // template.marko
-const $clickCount = /* @__PURE__ */ _let(2, ($scope) => {
+const $clickCount = /*@__PURE__*/ _let(2, ($scope) => {
 	$value2($scope.a, { text: $scope.c });
 	$text($scope.b, $scope.c);
 });

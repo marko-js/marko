@@ -22,8 +22,7 @@ export interface Scope {
   [AccessorProp.Id]: number;
   [AccessorProp.Gen]: number;
   [AccessorProp.AbortControllers]:
-    | Record<string | number, AbortController | void>
-    | undefined;
+    Record<string | number, AbortController | void> | undefined;
   [AccessorProp.ClosestBranch]: BranchScope | undefined;
   [AccessorProp.ClosestBranchId]: number | undefined;
   [x: `___${string}`]: never;

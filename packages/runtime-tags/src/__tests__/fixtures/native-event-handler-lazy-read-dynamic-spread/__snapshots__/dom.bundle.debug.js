@@ -5,14 +5,14 @@ const $enabled__script = _script("__tests__/template.marko_0_enabled", ($scope) 
 	_attrs_script($scope, "#button/2");
 	_attrs_script($scope, "#button/3");
 });
-const $enabled = /* @__PURE__ */ _let("enabled/7", ($scope) => {
+const $enabled = /*@__PURE__*/ _let("enabled/7", ($scope) => {
 	_attrs_partial($scope, "#button/2", { onClick: $scope.enabled && $anonymous($scope) }, { class: 1 });
 	_attrs_partial($scope, "#button/3", $scope.enabled && { onClick: $onClick($scope) }, { class: 1 });
 	_text($scope["#text/4"], $scope.enabled);
 	$enabled__script($scope);
 });
-const $count = /* @__PURE__ */ _let("count/8", ($scope) => _text($scope["#text/5"], $scope.count));
-const $log = /* @__PURE__ */ _let("log/9", ($scope) => _text($scope["#text/6"], $scope.log));
+const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/5"], $scope.count));
+const $log = /*@__PURE__*/ _let("log/9", ($scope) => _text($scope["#text/6"], $scope.log));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$enabled($scope, !$scope.enabled);
@@ -39,4 +39,4 @@ function $anonymous($scope) {
 }
 _resume("__tests__/template.marko_0/onClick", $onClick);
 _resume("__tests__/template.marko_0/anonymous", $anonymous);
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

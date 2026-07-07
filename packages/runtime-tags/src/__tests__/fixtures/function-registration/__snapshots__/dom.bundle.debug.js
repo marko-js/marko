@@ -14,4 +14,4 @@ function $setup($scope) {
 	_text($scope["#text/1"], add1(3));
 	$setup__script($scope);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

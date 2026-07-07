@@ -786,8 +786,7 @@ function trackReference(
     }
 
     root = root.parentPath as
-      | t.NodePath<t.MemberExpression>
-      | t.NodePath<t.OptionalMemberExpression>;
+      t.NodePath<t.MemberExpression> | t.NodePath<t.OptionalMemberExpression>;
 
     reference = getOrCreatePropertyAlias(reference, prop);
   }
@@ -1283,7 +1282,7 @@ export function finalizeReferences() {
     if (intersections.length) {
       const anchors = new Map<Intersection, Binding | undefined>();
       for (const intersection of intersections) {
-        for (let i = intersection.length; i--; ) {
+        for (let i = intersection.length; i--;) {
           if (isOwnedBinding(intersection[i])) {
             anchors.set(intersection, intersection[i]);
             break;
@@ -1962,9 +1961,7 @@ export function getReadReplacement(
       let curNode = node;
       let curBinding: Binding | undefined = readBinding;
       let replaceMember:
-        | t.MemberExpression
-        | t.OptionalMemberExpression
-        | undefined;
+        t.MemberExpression | t.OptionalMemberExpression | undefined;
       if (isOutputDOM()) {
         if (
           signal?.referencedBindings === readBinding &&
@@ -1988,9 +1985,7 @@ export function getReadReplacement(
         if (memberProp !== prop) break;
         replaceMember = curNode;
         curNode = curNode.object as
-          | t.Identifier
-          | t.MemberExpression
-          | t.OptionalMemberExpression;
+          t.Identifier | t.MemberExpression | t.OptionalMemberExpression;
       }
 
       for (const prop of props) {
@@ -2642,7 +2637,7 @@ function isPropertyMemberAccessed(binding: Binding, property: string): boolean {
 
 function addNumericPropertiesUntil(props: Opt<string>, len: number) {
   let result = props;
-  for (let i = len; i--; ) {
+  for (let i = len; i--;) {
     result = propsUtil.add(result, i + "");
   }
   return result;

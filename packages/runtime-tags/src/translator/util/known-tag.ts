@@ -651,7 +651,7 @@ function analyzeAttrs(
   let knownSpread: ReturnType<typeof getSingleKnownSpread>;
   let spreadReferenceNodes: t.Node[] | undefined;
   const { attributes } = tag.node;
-  for (let i = attributes.length; i--; ) {
+  for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     if (t.isMarkoAttribute(attr)) {
       const templateExportAttr = getKnownFromPropTree(propTree, attr.name);
@@ -768,7 +768,7 @@ function getSingleKnownSpread(
 ) {
   let binding: Binding | undefined;
   let extra: t.NodeExtra | undefined;
-  for (let i = attributes.length; i--; ) {
+  for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     if (
       attr.type === "MarkoSpreadAttribute"
@@ -1258,7 +1258,7 @@ function writeAttrsToSignals(
 
   const staticAttrs: t.MarkoAttribute[] = [];
   const { attributes } = tag.node;
-  for (let i = attributes.length; i--; ) {
+  for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     if (t.isMarkoAttribute(attr)) {
       const templateExportAttr = getKnownFromPropTree(propTree, attr.name);
@@ -1287,7 +1287,7 @@ function writeAttrsToSignals(
     }
   }
 
-  for (let i = staticAttrs.length; i--; ) {
+  for (let i = staticAttrs.length; i--;) {
     const attr = staticAttrs[i];
     const childAttrExports = getKnownFromPropTree(
       propTree,
@@ -1501,7 +1501,7 @@ function mapParamBindingToExpr(
   }
 
   let curExpr = exprs;
-  for (let i = props.length; i--; ) {
+  for (let i = props.length; i--;) {
     const nestedExpr = curExpr.known?.[props[i]];
     if (!nestedExpr) {
       return curExpr.value;

@@ -922,13 +922,7 @@ declare global {
          * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-method
          */
         method?:
-          | AttrMissing
-          | "POST"
-          | "post"
-          | "GET"
-          | "get"
-          | "dialog"
-          | "DIALOG";
+          AttrMissing | "POST" | "post" | "GET" | "get" | "dialog" | "DIALOG";
         /**
          * The name attribute represents the form's name within the forms collection.
          * @see https://html.spec.whatwg.org/multipage/forms.html#attr-form-name
@@ -2645,12 +2639,7 @@ declare global {
          * @see https://svgwg.org/specs/animations/#AnimateTransformElementTypeAttribute
          */
         type?:
-          | AttrMissing
-          | "translate"
-          | "scale"
-          | "rotate"
-          | "skewX"
-          | "skewY";
+          AttrMissing | "translate" | "scale" | "rotate" | "skewX" | "skewY";
       }
 
       /**
@@ -3577,11 +3566,7 @@ declare global {
          * @see https://www.w3.org/TR/SVG2/painting.html#OrientAttribute
          */
         orient?:
-          | AttrMissing
-          | "auto"
-          | "auto-start-reverse"
-          | number
-          | (string & {});
+          AttrMissing | "auto" | "auto-start-reverse" | number | (string & {});
       }
 
       /**
@@ -3701,9 +3686,7 @@ declare global {
          * @see https://www.w3.org/TR/SVG2/pservers.html#PatternElementPatternContentUnitsAttribute
          */
         patternContentUnits?:
-          | AttrMissing
-          | "userSpaceOnUse"
-          | "objectBoundingBox";
+          AttrMissing | "userSpaceOnUse" | "objectBoundingBox";
 
         /**
          * @see https://www.w3.org/TR/SVG2/pservers.html#PatternElementPatternTransformAttribute
@@ -3951,23 +3934,13 @@ declare global {
          * @see https://www.w3.org/TR/SVG2/struct.html#SymbolElementRefXAttribute
          */
         refX?:
-          | AttrMissing
-          | "left"
-          | "center"
-          | "right"
-          | number
-          | (string & {});
+          AttrMissing | "left" | "center" | "right" | number | (string & {});
 
         /**
          * @see https://www.w3.org/TR/SVG2/struct.html#SymbolElementRefYAttribute
          */
         refY?:
-          | AttrMissing
-          | "top"
-          | "center"
-          | "bottom"
-          | number
-          | (string & {});
+          AttrMissing | "top" | "center" | "bottom" | number | (string & {});
 
         /**
          * @see https://www.w3.org/TR/SVG2/geometry.html#XProperty
@@ -4197,11 +4170,7 @@ declare global {
        * @see https://html.spec.whatwg.org/multipage/interaction.html#attr-autocapitalize
        */
       autocapitalize?:
-        | AttrOnOff
-        | "characters"
-        | "none"
-        | "sentences"
-        | "words";
+        AttrOnOff | "characters" | "none" | "sentences" | "words";
 
       /**
        * Indicates whether the element should automatically get focus when the page loads.
@@ -4470,16 +4439,13 @@ declare global {
       color?: AttrMissing | csstype.Property.Color;
       "color-interpolation"?: AttrMissing | csstype.Property.ColorInterpolation;
       "color-interpolation-filters"?:
-        | AttrMissing
-        | csstype.Property.ColorInterpolation;
+        AttrMissing | csstype.Property.ColorInterpolation;
       "color-rendering"?: AttrMissing | csstype.Property.ColorRendering;
       cursor?: AttrMissing | csstype.Property.Cursor;
       direction?: AttrMissing | csstype.Property.Direction;
       display?: AttrMissing | csstype.Property.Display;
       "dominant-baseline"?:
-        | AttrMissing
-        | csstype.Property.DominantBaseline
-        | number;
+        AttrMissing | csstype.Property.DominantBaseline | number;
       /**
        * @see https://www.w3.org/TR/SVG11/filters.html#EnableBackgroundProperty
        */
@@ -4494,19 +4460,15 @@ declare global {
       "font-family"?: AttrMissing | csstype.Property.FontFamily;
       "font-size"?: AttrMissing | csstype.Property.FontSize | number;
       "font-size-adjust"?:
-        | AttrMissing
-        | csstype.Property.FontSizeAdjust
-        | number;
+        AttrMissing | csstype.Property.FontSizeAdjust | number;
       "font-stretch"?: AttrMissing | csstype.Property.FontStretch;
       "font-style"?: AttrMissing | csstype.Property.FontStyle;
       "font-variant"?: AttrMissing | csstype.Property.FontVariant;
       "font-weight"?: AttrMissing | csstype.Property.FontWeight | number;
       "glyph-orientation-horizontal"?:
-        | AttrMissing
-        | csstype.Property.GlyphOrientationVertical;
+        AttrMissing | csstype.Property.GlyphOrientationVertical;
       "glyph-orientation-vertical"?:
-        | AttrMissing
-        | csstype.Property.GlyphOrientationVertical;
+        AttrMissing | csstype.Property.GlyphOrientationVertical;
       "image-rendering"?: AttrMissing | csstype.Property.ImageRendering;
       isolation?: AttrMissing | csstype.Property.Isolation;
       kerning?: AttrMissing | csstype.Property.FontKerning | number;
@@ -4526,19 +4488,13 @@ declare global {
       "stop-opacity"?: AttrMissing | csstype.Property.StopOpacity | number;
       stroke?: AttrMissing | csstype.Property.Stroke;
       "stroke-dasharray"?:
-        | AttrMissing
-        | csstype.Property.StrokeDasharray
-        | number;
+        AttrMissing | csstype.Property.StrokeDasharray | number;
       "stroke-dashoffset"?:
-        | AttrMissing
-        | csstype.Property.StrokeDashoffset
-        | number;
+        AttrMissing | csstype.Property.StrokeDashoffset | number;
       "stroke-linecap"?: AttrMissing | csstype.Property.StrokeLinecap;
       "stroke-linejoin"?: AttrMissing | csstype.Property.StrokeLinejoin;
       "stroke-miterlimit"?:
-        | AttrMissing
-        | csstype.Property.StrokeMiterlimit
-        | number;
+        AttrMissing | csstype.Property.StrokeMiterlimit | number;
       "stroke-opacity"?: AttrMissing | csstype.Property.StrokeOpacity | number;
       "stroke-width"?: AttrMissing | csstype.Property.StrokeWidth | number;
       "text-anchor"?: AttrMissing | csstype.Property.TextAnchor;
@@ -5596,13 +5552,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://www.w3.org/TR/wai-aria-1.1/#aria-current
    */
   "aria-current"?:
-    | AttrBooleanString
-    | "date"
-    | "location"
-    | "page"
-    | "step"
-    | "time"
-    | "true";
+    AttrBooleanString | "date" | "location" | "page" | "step" | "time" | "true";
   /**
    * Identifies the element (or elements) that describes the object.
    * @see https://www.w3.org/TR/wai-aria-1.1/#aria-describedby
@@ -5631,13 +5581,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://www.w3.org/TR/wai-aria-1.1/#aria-dropeffect
    * */
   "aria-dropeffect"?:
-    | AttrMissing
-    | "copy"
-    | "execute"
-    | "link"
-    | "move"
-    | "none"
-    | "popup";
+    AttrMissing | "copy" | "execute" | "link" | "move" | "none" | "popup";
   /**
    * Identifies the element that provides an error message for the object.
    * @see https://www.w3.org/TR/wai-aria-1.1/#aria-errormessage
@@ -5667,12 +5611,7 @@ interface CommonAttributes<T extends Element> {
    * @see https://www.w3.org/TR/wai-aria-1.1/#aria-haspopup
    */
   "aria-haspopup"?:
-    | AttrBooleanString
-    | "dialog"
-    | "grid"
-    | "listbox"
-    | "menu"
-    | "tree";
+    AttrBooleanString | "dialog" | "grid" | "listbox" | "menu" | "tree";
   /**
    * Indicates whether the element is exposed to an accessibility API.
    * @see https://www.w3.org/TR/wai-aria-1.1/#aria-hidden
@@ -5928,22 +5867,13 @@ interface CommonAttributes<T extends Element> {
 }
 type AttrMissing = undefined | null | false;
 type AttrClass =
-  | AttrMissing
-  | string
-  | AttrClass[]
-  | Record<string, AttrMissing | boolean>;
+  AttrMissing | string | AttrClass[] | Record<string, AttrMissing | boolean>;
 type AttrStyle = AttrMissing | string | Marko.CSS.Properties | AttrStyle[];
 type AttrCrossOrigin = AttrBoolean | "anonymous" | "use-credentials";
 type AttrEventHandler<Event, Target> =
-  | AttrMissing
-  | ((event: Event, target: Target) => unknown);
+  AttrMissing | ((event: Event, target: Target) => unknown);
 type AttrTarget =
-  | AttrMissing
-  | "_blank"
-  | "_parent"
-  | "_self"
-  | "_top"
-  | (string & {});
+  AttrMissing | "_blank" | "_parent" | "_self" | "_top" | (string & {});
 type AttrReferrerPolicy =
   | AttrMissing
   | "no-referrer-when-downgrade"
@@ -5973,13 +5903,7 @@ type AttrHref =
  * so any URL is accepted while suggesting common prefixes in autocomplete.
  */
 type AttrSrc =
-  | AttrMissing
-  | "/"
-  | "./"
-  | "https://"
-  | "data:"
-  | "blob:"
-  | (string & {});
+  AttrMissing | "/" | "./" | "https://" | "data:" | "blob:" | (string & {});
 /**
  * MIME type for type, codetype, and enctype attributes. Use (string & {}) so
  * any MIME type is accepted while suggesting common values in autocomplete.

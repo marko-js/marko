@@ -26,8 +26,8 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 
 // template.marko
 _resume("b", _marko_template);
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag(0);
-const $count = /* @__PURE__ */ _let(2, ($scope) => {
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
+const $count = /*@__PURE__*/ _let(2, ($scope) => {
 	_text($scope.b, $scope.c);
 	$dynamicTag($scope, _marko_template, () => ({
 		value: $scope.c,

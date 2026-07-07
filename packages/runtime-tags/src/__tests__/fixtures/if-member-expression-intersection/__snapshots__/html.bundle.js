@@ -11,7 +11,7 @@ var child_default = _template("b", (input) => {
 	writeScope($scope0_id, {
 		b: hide,
 		c: text,
-		d: text?.length,
+		d: 0,
 		f: id
 	});
 	_resume_branch($scope0_id);

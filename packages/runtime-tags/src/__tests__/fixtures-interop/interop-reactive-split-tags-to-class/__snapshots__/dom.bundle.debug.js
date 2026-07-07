@@ -36,8 +36,8 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 const $template = "<button id=tags>inc</button><!><!>";
 const $walks = " b%c";
 _resume("__tests__/components/split-display/index.marko", _marko_template);
-const $dynamicTag = /* @__PURE__ */ _dynamic_tag("#text/1");
-const $count = /* @__PURE__ */ _let("count/2", ($scope) => $dynamicTag($scope, _marko_template, () => ({ value: $scope.count })));
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
+const $count = /*@__PURE__*/ _let("count/2", ($scope) => $dynamicTag($scope, _marko_template, () => ({ value: $scope.count })));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$count($scope, $scope.count + 1);
 }));
@@ -45,4 +45,4 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

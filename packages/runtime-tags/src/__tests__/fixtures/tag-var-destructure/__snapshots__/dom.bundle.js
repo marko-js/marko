@@ -1,9 +1,9 @@
 // template.marko
-const $a = /* @__PURE__ */ _let(6, ($scope) => _text($scope.b, $scope.g));
-const $b = /* @__PURE__ */ _let(7, ($scope) => _text($scope.c, $scope.h));
-const $c = /* @__PURE__ */ _let(8, ($scope) => _text($scope.d, JSON.stringify($scope.i)));
-const $d = /* @__PURE__ */ _let(9, ($scope) => _text($scope.e, $scope.j));
-const $e = /* @__PURE__ */ _let(10, ($scope) => _text($scope.f, JSON.stringify($scope.k)));
+const $a = /*@__PURE__*/ _let(6, ($scope) => _text($scope.b, $scope.g));
+const $b = /*@__PURE__*/ _let(7, ($scope) => _text($scope.c, $scope.h));
+const $c = /*@__PURE__*/ _let(8, ($scope) => _text($scope.d, JSON.stringify($scope.i)));
+const $d = /*@__PURE__*/ _let(9, ($scope) => _text($scope.e, $scope.j));
+const $e = /*@__PURE__*/ _let(10, ($scope) => _text($scope.f, JSON.stringify($scope.k)));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	let local;
 	(($result2, $a2, $b2, unused, $c2) => ({a: $a2, _b: {_b: $b2}, local, unused, ...$c2} = $result2, $a($scope, $a2), $b($scope, $b2), $c($scope, $c2), $result2))({

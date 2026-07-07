@@ -159,10 +159,7 @@ function isMarkoComment(node: Node): node is Comment {
 function isIgnoredTag(
   node: Node,
 ): node is
-  | HTMLLinkElement
-  | HTMLTitleElement
-  | HTMLStyleElement
-  | HTMLScriptElement {
+  HTMLLinkElement | HTMLTitleElement | HTMLStyleElement | HTMLScriptElement {
   if (!isElement(node)) return false;
   switch (node.tagName) {
     case "T":

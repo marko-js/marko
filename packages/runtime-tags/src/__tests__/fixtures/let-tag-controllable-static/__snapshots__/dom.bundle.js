@@ -1,6 +1,6 @@
 // template.marko
-const $y = /* @__PURE__ */ _let_change(4, ($scope) => _text($scope.c, $scope.e));
-const $x = /* @__PURE__ */ _let(3, ($scope) => {
+const $y = /*@__PURE__*/ _let_change(4, ($scope) => _text($scope.c, $scope.e));
+const $x = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	$y($scope, $scope.d, $valueChange($scope));
 });

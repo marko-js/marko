@@ -1,13 +1,13 @@
 // template.marko
 const $template = "<button id=inc><!>|<!></button><button id=toggle>toggle</button>";
 const $walks = " D%c%l b";
-const $y = /* @__PURE__ */ _let_change("y/7", ($scope) => _text($scope["#text/2"], $scope.y));
-const $x__OR__yChange = /* @__PURE__ */ _or(6, ($scope) => $y($scope, $scope.x, $scope.yChange));
-const $x = /* @__PURE__ */ _let("x/4", ($scope) => {
+const $y = /*@__PURE__*/ _let_change("y/7", ($scope) => _text($scope["#text/2"], $scope.y));
+const $x__OR__yChange = /*@__PURE__*/ _or(6, ($scope) => $y($scope, $scope.x, $scope.yChange));
+const $x = /*@__PURE__*/ _let("x/4", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
 	$x__OR__yChange($scope);
 });
-const $yChange2 = /* @__PURE__ */ _let("yChange/5", $x__OR__yChange);
+const $yChange2 = /*@__PURE__*/ _let("yChange/5", $x__OR__yChange);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
 		$y($scope, $scope.y + 1);
@@ -27,4 +27,4 @@ function $yChange($scope) {
 	};
 }
 _resume("__tests__/template.marko_0/yChange", $yChange);
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

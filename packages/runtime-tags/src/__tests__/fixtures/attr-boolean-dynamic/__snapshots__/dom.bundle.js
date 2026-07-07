@@ -1,5 +1,5 @@
 // template.marko
-const $disabled = /* @__PURE__ */ _let(3, ($scope) => {
+const $disabled = /*@__PURE__*/ _let(3, ($scope) => {
 	_attr($scope.a, "disabled", $scope.d);
 	_text($scope.c, $scope.d ? "enable" : "disable");
 });

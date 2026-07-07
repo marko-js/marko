@@ -1,5 +1,5 @@
 // template.marko
-const $MyTag_content__y = /* @__PURE__ */ _let(7, ($scope) => {
+const $MyTag_content__y = /*@__PURE__*/ _let(7, ($scope) => {
 	_text($scope.b, $scope.h);
 	_text($scope.d, $scope.h);
 });

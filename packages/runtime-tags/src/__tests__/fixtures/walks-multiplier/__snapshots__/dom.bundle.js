@@ -1,5 +1,5 @@
 // template.marko
-const $n = /* @__PURE__ */ _let(4, ($scope) => {
+const $n = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.b, $scope.e);
 	_text($scope.c, $scope.e);
 	_text($scope.d, $scope.e + 1);

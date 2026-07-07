@@ -1,6 +1,6 @@
 // template.marko
 const $MyTag_content__count = ($scope, count) => _text($scope.b, count);
-const $count = /* @__PURE__ */ _let(3, ($scope) => {
+const $count = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	$MyTag_content__count($scope.c, $scope.d);
 });

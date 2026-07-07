@@ -18,14 +18,14 @@ export function traverseReplace<T, K extends VisitKeys<T>, S>(
   const node = container[key] as VisitValue;
   if (node) {
     if (Array.isArray(node)) {
-      for (let i = node.length; i--; ) {
+      for (let i = node.length; i--;) {
         traverseReplace(node, i, enter, state);
       }
     } else {
       const keys = (t as any).VISITOR_KEYS[node.type] as VisitKeys<
         typeof node
       >[];
-      for (let i = keys.length; i--; ) {
+      for (let i = keys.length; i--;) {
         traverseReplace(node, keys[i], enter, state);
       }
 

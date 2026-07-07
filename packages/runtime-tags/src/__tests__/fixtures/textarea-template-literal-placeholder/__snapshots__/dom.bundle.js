@@ -1,5 +1,5 @@
 // template.marko
-const $n = /* @__PURE__ */ _let(3, ($scope) => {
+const $n = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	_attr_input_value_default($scope, "c", `premid-${$scope.d}-postend`);
 });

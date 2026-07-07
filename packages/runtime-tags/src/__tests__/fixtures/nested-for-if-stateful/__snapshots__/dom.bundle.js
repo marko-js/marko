@@ -1,5 +1,5 @@
 // template.marko
-const $else_content__count = /* @__PURE__ */ _if_closure(0, 1, ($scope) => _text($scope.b, $scope._.c));
+const $else_content__count = /*@__PURE__*/ _if_closure(0, 1, ($scope) => _text($scope.b, $scope._.c));
 const $else_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$for_content__editing($scope._, true);
 }));
@@ -15,17 +15,17 @@ const $if_content__count__script = _script("a0", ($scope) => _on($scope.a, "clic
 	]);
 	$for_content__editing($scope._, false);
 }));
-const $if_content__count = /* @__PURE__ */ _if_closure(0, 0, ($scope) => {
+const $if_content__count = /*@__PURE__*/ _if_closure(0, 0, ($scope) => {
 	_text($scope.b, $scope._.c + 1);
 	$if_content__count__script($scope);
 });
-const $for_content__if = /* @__PURE__ */ _if(0, "<button>Confirm <!></button>", " Db%l", $if_content__count, "<button>Increment <!></button>", " Db%l", $else_content__setup);
-const $for_content__editing = /* @__PURE__ */ _let(4, ($scope) => $for_content__if($scope, $scope.e ? 0 : 1));
+const $for_content__if = /*@__PURE__*/ _if(0, "<button>Confirm <!></button>", " Db%l", $if_content__count, "<button>Increment <!></button>", " Db%l", $else_content__setup);
+const $for_content__editing = /*@__PURE__*/ _let(4, ($scope) => $for_content__if($scope, $scope.e ? 0 : 1));
 const $for_content__setup = ($scope) => $for_content__editing($scope, false);
 const $for_content__$params = ($scope, $params2) => $for_content__count($scope, $params2[0]);
-const $for_content__count = /* @__PURE__ */ _const(2, ($scope) => {
+const $for_content__count = /*@__PURE__*/ _const(2, ($scope) => {
 	$if_content__count($scope);
 	$else_content__count($scope);
 });
-const $for = /* @__PURE__ */ _for_of(0, "<!><!><!>", "b%c", $for_content__setup, $for_content__$params);
-const $counts = /* @__PURE__ */ _let(1, ($scope) => $for($scope, [$scope.b]));
+const $for = /*@__PURE__*/ _for_of(0, "<!><!><!>", "b%c", $for_content__setup, $for_content__$params);
+const $counts = /*@__PURE__*/ _let(1, ($scope) => $for($scope, [$scope.b]));

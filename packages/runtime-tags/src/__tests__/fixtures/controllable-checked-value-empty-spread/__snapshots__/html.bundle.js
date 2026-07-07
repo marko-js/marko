@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 		checkedValue: v,
 		value: "",
 		...rest
-	}, "b", $scope0_id, "input")}>${_el_resume($scope0_id, "b")}<output>${v === void 0 ? "undefined" : _escape("value=" + v)}${_el_resume($scope0_id, "c")}</output>`);
+	}, "b", $scope0_id, "input")}>${_el_resume($scope0_id, "b")}<output>${_escape("value=")}${_el_resume($scope0_id, "c")}</output>`);
 	_script($scope0_id, "a0");
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {

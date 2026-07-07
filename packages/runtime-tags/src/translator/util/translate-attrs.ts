@@ -157,7 +157,7 @@ export function translateAttrs(
 
   const { attributes } = tag.node;
   const attrProperties: t.ObjectExpression["properties"] = [];
-  for (let i = attributes.length; i--; ) {
+  for (let i = attributes.length; i--;) {
     const attr = attributes[i];
     const { value } = attr;
     if (t.isMarkoSpreadAttribute(attr)) {

@@ -5,7 +5,7 @@ const $MyTag_content__tag_params = ($scope, $params2) => {
 	$MyTag_content__a($scope, $params2[0]);
 	$MyTag_content__b($scope, $params2[1]);
 };
-const $args = /* @__PURE__ */ _const(8, ($scope) => $MyTag_content__tag_params($scope.a, [...$scope.i]));
+const $args = /*@__PURE__*/ _const(8, ($scope) => $MyTag_content__tag_params($scope.a, [...$scope.i]));
 const $x__OR__args = ($scope) => {
 	let $cgrp;
 	if ($scope.h) $cgrp = attrTag({ y: 1 });
@@ -15,7 +15,7 @@ const $x__OR__args = ($scope) => {
 		row: attrTag({ r: $scope.h })
 	}]);
 };
-const $x = /* @__PURE__ */ _let(7, ($scope) => {
+const $x = /*@__PURE__*/ _let(7, ($scope) => {
 	_text($scope.e, $scope.h);
 	$args($scope, [$scope.h, 2]);
 	$x__OR__args($scope);

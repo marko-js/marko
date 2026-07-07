@@ -4,7 +4,7 @@ import jsesc from "jsesc";
 export function normalizeTemplateString(quasis, ...expressions) {
   quasis = quasis.map((q) => (t.isTemplateElement(q) ? q.value.cooked : q));
 
-  for (let i = expressions.length; i--; ) {
+  for (let i = expressions.length; i--;) {
     let v = expressions[i];
     if (t.isTemplateLiteral(v)) {
       quasis[i] += v.quasis[0].value.cooked;

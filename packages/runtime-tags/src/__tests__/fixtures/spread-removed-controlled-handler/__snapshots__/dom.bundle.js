@@ -1,10 +1,10 @@
 // template.marko
 const $attrs2__script = _script("a2", ($scope) => _attrs_script($scope, "a"));
-const $attrs2 = /* @__PURE__ */ _let(4, ($scope) => {
+const $attrs2 = /*@__PURE__*/ _let(4, ($scope) => {
 	_attrs($scope, "a", $scope.e);
 	$attrs2__script($scope);
 });
-const $value = /* @__PURE__ */ _let(3, ($scope) => {
+const $value = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	$attrs2($scope, {
 		value: $scope.d,

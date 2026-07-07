@@ -1,5 +1,5 @@
 // tags/parent-el.marko
-const $tagName = /* @__PURE__ */ _let(1, ($scope) => _return($scope, $scope.b));
+const $tagName = /*@__PURE__*/ _let(1, ($scope) => _return($scope, $scope.b));
 const $setup__script = _script("b0", ($scope) => $tagName($scope, $scope.a.parentElement.tagName));
 
 // template.marko

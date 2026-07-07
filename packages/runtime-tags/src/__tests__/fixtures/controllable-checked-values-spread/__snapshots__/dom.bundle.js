@@ -1,6 +1,6 @@
 // tags/checkbox.marko
 const $input__script = _script("b0", ($scope) => _attrs_script($scope, "a"));
-const $input = /* @__PURE__ */ _const(2, ($scope) => {
+const $input = /*@__PURE__*/ _const(2, ($scope) => {
 	_attrs($scope, "a", {
 		type: "checkbox",
 		...$scope.c
@@ -9,7 +9,7 @@ const $input = /* @__PURE__ */ _const(2, ($scope) => {
 });
 
 // template.marko
-const $checkedValue__OR__$checkedValueChange = /* @__PURE__ */ _or(6, ($scope) => {
+const $checkedValue__OR__$checkedValueChange = /*@__PURE__*/ _or(6, ($scope) => {
 	$input($scope.a, {
 		checkedValue: $scope.e,
 		checkedValueChange: $scope.f,
@@ -26,7 +26,7 @@ const $checkedValue__OR__$checkedValueChange = /* @__PURE__ */ _or(6, ($scope) =
 		value: "c"
 	});
 });
-const $checkedValue = /* @__PURE__ */ _let(4, ($scope) => {
+const $checkedValue = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.d, $scope.e);
 	$checkedValue__OR__$checkedValueChange($scope);
 });

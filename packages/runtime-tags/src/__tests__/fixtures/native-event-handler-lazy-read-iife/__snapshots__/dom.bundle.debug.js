@@ -7,12 +7,12 @@ const $n__OR__log__script = _script("__tests__/template.marko_0_n_log", ($scope)
 		$log($scope, `${$scope.log}[${captured}:${$scope.n}]`);
 	};
 })()));
-const $n__OR__log = /* @__PURE__ */ _or(6, $n__OR__log__script);
-const $n = /* @__PURE__ */ _let("n/4", ($scope) => {
+const $n__OR__log = /*@__PURE__*/ _or(6, $n__OR__log__script);
+const $n = /*@__PURE__*/ _let("n/4", ($scope) => {
 	_text($scope["#text/2"], $scope.n);
 	$n__OR__log($scope);
 });
-const $log = /* @__PURE__ */ _let("log/5", ($scope) => {
+const $log = /*@__PURE__*/ _let("log/5", ($scope) => {
 	_text($scope["#text/3"], $scope.log);
 	$n__OR__log($scope);
 });
@@ -24,4 +24,4 @@ function $setup($scope) {
 	$log($scope, "");
 	$setup__script($scope);
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

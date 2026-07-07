@@ -68,7 +68,7 @@ export default function (path, attrs) {
   let curString = "";
 
   // Remove duplicate attrs so last one wins.
-  for (let i = len; i--; ) {
+  for (let i = len; i--;) {
     const attr = attrs[i];
     const { name, value } = attr.node;
     if (attrValues.has(name)) continue;

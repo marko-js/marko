@@ -131,7 +131,7 @@ function find(dirname, registeredTaglibs, tagDiscoveryDirs) {
     });
   }
 
-  for (let i = registeredTaglibs.length; i--; ) {
+  for (let i = registeredTaglibs.length; i--;) {
     addTaglib(registeredTaglibs[i]);
   }
 

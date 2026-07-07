@@ -72,9 +72,7 @@ export interface Section {
   isHoistThrough: true | undefined;
   upstreamExpression: t.NodeExtra | undefined;
   downstreamBinding:
-    | { binding: Binding; properties: Opt<string> }
-    | false
-    | undefined;
+    { binding: Binding; properties: Opt<string> } | false | undefined;
   hasAbortSignal: boolean;
   readsOwner: boolean;
   isBranch: boolean;
@@ -217,7 +215,7 @@ export function forEachSection(fn: (section: Section) => void) {
 
 export function forEachSectionReverse(fn: (section: Section) => void) {
   const { sections } = getProgram().node.extra;
-  for (let i = sections!.length; i--; ) {
+  for (let i = sections!.length; i--;) {
     fn(sections![i]);
   }
 }
@@ -229,7 +227,7 @@ function getContentInfo(path: t.NodePath<t.Program | t.MarkoTagBody>) {
     endType: null!,
     singleChild: true,
   };
-  for (let endIndex = body.length; endIndex--; ) {
+  for (let endIndex = body.length; endIndex--;) {
     const endType = getNodeContentType(body[endIndex], "endType", contentInfo);
     if (endType !== null) {
       contentInfo.endType = endType;

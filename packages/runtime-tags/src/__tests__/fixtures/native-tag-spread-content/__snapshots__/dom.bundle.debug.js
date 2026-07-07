@@ -3,7 +3,7 @@ const $template$1 = "<div></div><button></button><span>Overridden</span><output>
 const $walks$1 = " b b b b b b b";
 const $CustomContent_content = _content_resume("__tests__/tags/my-div.marko_1_content", "Custom content", "b");
 const $input__OR__CustomContent_content__script = _script("__tests__/tags/my-div.marko_0_input_CustomContent_content", ($scope) => _attrs_script($scope, "#p/5"));
-const $input__OR__CustomContent_content = /* @__PURE__ */ _or(11, ($scope) => {
+const $input__OR__CustomContent_content = /*@__PURE__*/ _or(11, ($scope) => {
 	_attrs_content($scope, "#p/5", {
 		content: $scope.CustomContent_content,
 		...$scope.input
@@ -17,7 +17,7 @@ const $input__script = _script("__tests__/tags/my-div.marko_0_input", ($scope) =
 	_attrs_script($scope, "#output/3");
 	_attrs_script($scope, "#strong/4");
 });
-const $input = /* @__PURE__ */ _const("input", ($scope) => {
+const $input = /*@__PURE__*/ _const("input", ($scope) => {
 	_attrs_content($scope, "#div/0", $scope.input);
 	_attrs_content($scope, "#button/1", {
 		foo: 1,
@@ -37,18 +37,18 @@ function $setup$1($scope) {
 	_attr_content($scope, "#output/3", undefined);
 	$CustomContent($scope, { content: $CustomContent_content($scope) });
 }
-const $CustomContent_content2 = /* @__PURE__ */ _const("CustomContent_content", ($scope) => {
+const $CustomContent_content2 = /*@__PURE__*/ _const("CustomContent_content", ($scope) => {
 	_attr_content($scope, "#strong/4", $scope.CustomContent_content);
 	$input__OR__CustomContent_content($scope);
 });
-var my_div_default = /* @__PURE__ */ _template("__tests__/tags/my-div.marko", $template$1, $walks$1, $setup$1, $input);
+var my_div_default = /*@__PURE__*/ _template("__tests__/tags/my-div.marko", $template$1, $walks$1, $setup$1, $input);
 
 // template.marko
 const $template = $template$1;
-const $walks = /* @__PURE__ */ ((_w0) => `/${_w0}&`)($walks$1);
-const $mydiv_content = /* @__PURE__ */ _content("__tests__/template.marko_1_content", "Hello", "b");
+const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1);
+const $mydiv_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "Hello", "b");
 function $setup($scope) {
 	$setup$1($scope["#childScope/0"]);
 	$input($scope["#childScope/0"], { content: $mydiv_content($scope) });
 }
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

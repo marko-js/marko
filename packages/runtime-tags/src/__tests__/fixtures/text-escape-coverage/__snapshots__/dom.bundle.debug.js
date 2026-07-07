@@ -10,4 +10,4 @@ const $input = ($scope, input) => {
 	$input_b($scope, input.b);
 	$input_c($scope, input.c);
 };
-var template_default = /* @__PURE__ */ _template("__tests__/template.marko", $template, $walks, $setup, $input);
+var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup, $input);

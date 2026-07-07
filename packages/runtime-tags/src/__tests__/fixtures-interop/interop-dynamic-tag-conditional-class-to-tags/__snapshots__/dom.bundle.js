@@ -2,7 +2,7 @@
 var import_vdom = require_vdom();
 const $template = "<button id=tags> </button>";
 const $walks = " D l";
-const $count = /* @__PURE__ */ _let(2, ($scope) => _text($scope.b, $scope.c));
+const $count = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
 	$count($scope, $scope.c + 1);
 }));
@@ -10,7 +10,7 @@ function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);
 }
-var tags_child_default = /* @__PURE__ */ _template("b", $template, $walks, $setup);
+var tags_child_default = /*@__PURE__*/ _template("b", $template, $walks, $setup);
 
 // template.marko
 var import_dynamic_tag = /* @__PURE__ */ __toESM(require_dynamic_tag());

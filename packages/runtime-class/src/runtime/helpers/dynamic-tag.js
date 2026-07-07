@@ -167,7 +167,7 @@ function addEvents(componentDef, customEvents, props) {
   var result = props || {};
   var event;
 
-  for (var i = len; i--; ) {
+  for (var i = len; i--;) {
     event = customEvents[i];
     result["on" + event[0]] = componentDef.d(
       event[0],
