@@ -126,7 +126,12 @@ export function _have(root: Scope | undefined = getUpdateRoot()): string {
         const siteId = scope[HOP_SITE_PREFIX + key.slice(prefix.length)];
         if (typeof siteId === "string") {
           found = 1;
-          possessed[siteId] = value;
+          // Repeated hops (in a keyed `<for>`) share the site id, so append
+          // the iteration's loop key to distinguish them -- the server does
+          // the same from its live loop key (see `_dynamic_tag`).
+          const loopKey = scope[AccessorProp.LoopKey];
+          possessed[loopKey === undefined ? siteId : siteId + " " + loopKey] =
+            value;
         }
       } else if (value && typeof value === "object") {
         // Follow scope links (child/owner/branch scopes carry a numeric id)

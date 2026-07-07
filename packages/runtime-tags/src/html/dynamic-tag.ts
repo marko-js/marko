@@ -196,11 +196,19 @@ export let _dynamic_tag = (
     const targetRendererId =
       (renderer as ServerRenderer | undefined)?.[RendererProp.Id] || renderer;
     const possessed = state.possessed;
+    // Repeated hops (a `<${...}/>` in a keyed `<for>`) share one site id, so
+    // disambiguate by the enclosing loop key -- the same value the client
+    // reads off the iteration's `LoopKey` (see `_have`). Positional loops
+    // expose no key and collide, degrading safely to a full nav.
+    const siteKey =
+      siteId !== undefined && state.loopKey !== undefined
+        ? siteId + " " + state.loopKey
+        : siteId;
     const possessionMiss =
       possessed !== undefined &&
-      siteId !== undefined &&
-      siteId in possessed &&
-      possessed[siteId] !== targetRendererId;
+      siteKey !== undefined &&
+      siteKey in possessed &&
+      possessed[siteKey] !== targetRendererId;
     if (!shouldResume) {
       result = render();
     } else if (!state.fragmentTaken && (state.fragments || possessionMiss)) {

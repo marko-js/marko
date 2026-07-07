@@ -1,4 +1,4 @@
-// size: 30933 (min) 11278 (brotli)
+// size: 30964 (min) 11311 (brotli)
 //#region packages/runtime-tags/dist/common/attr-tag.mjs
 let empty = [],
   rest = Symbol();
@@ -2816,8 +2816,12 @@ function _have(root = getUpdateRoot()) {
           key.slice(0, 1) === "D"
         ) {
           let siteId = scope["Z" + key.slice(1)];
-          typeof siteId == "string" &&
-            ((found = 1), (possessed[siteId] = value));
+          if (typeof siteId == "string") {
+            found = 1;
+            let loopKey = scope.M;
+            possessed[loopKey === void 0 ? siteId : siteId + " " + loopKey] =
+              value;
+          }
         } else if (value && typeof value == "object") {
           if (typeof value.L == "number") stack.push(value);
           else if (value instanceof Set || Array.isArray(value))

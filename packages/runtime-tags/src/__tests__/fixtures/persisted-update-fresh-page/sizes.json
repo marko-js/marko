@@ -13,8 +13,8 @@
     },
     "update.js": {
       "total": {
-        "min": 8809,
-        "brotli": 3733
+        "min": 8840,
+        "brotli": 3753
       },
       "files": {
         "tags/shared-list.marko.update.mjs": 339,

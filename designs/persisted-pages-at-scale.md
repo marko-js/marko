@@ -601,12 +601,19 @@ interactive`. Feed retains its keyed post-row content (fork 2);
    (`getUpdateDynamicRegisterId`, filename + section + accessor; a compile
    constant identical in both renders), stashed on the hop scope under a
    reserved prefix so the client reads it back off its live tree. The wire
-   is JSON of `{ siteId: rendererId }` — those ids are already the
+   is JSON of `{ siteKey: rendererId }` — the ids are already the
    optimize-minified register strings, so it stays compact without a
    separate positional codec; the codec remains a future size-only swap
-   behind the same `_have`/decode seam. (Instances of one site — loops of
-   dynamic tags — currently share the id and collide, degrading to a full
-   nav; disambiguating by loop key is a follow-up.)
+   behind the same `_have`/decode seam. Instances of one site (a
+   `<${...}/>` in a keyed `<for>`) share the site id, so the key appends
+   the iteration's loop key (`siteId + " " + loopKey`) — the server threads
+   the current key through the writer while the body renders; the client
+   reads the matching `LoopKey` off the live iteration scope. Positional
+   loops expose no key and still collide (degrading to a full nav). One
+   remaining gap: two rows swapping in the _same_ navigation need multiple
+   fragment captures per update render (the writer captures one today), so
+   that case falls back to a full nav until fragment capture is extended —
+   a single swap per nav applies fine-grained.
 
    Content digests (`x-marko-have` T2) remain a pure dedup optimization
    layered on top — skipping value re-sends for possessed-and-unchanged

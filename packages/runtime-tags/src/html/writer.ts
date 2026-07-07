@@ -743,13 +743,19 @@ function forBranches(
     // Patch-list branches may be created fresh client-side; their seed
     // data serializes even when fragment mode narrows the page-wide seed.
     state.freshBranchDepth++;
-    iterate((itemKey, _sameAsIndex, render) => {
+    iterate((itemKey, sameAsIndex, render) => {
       const branchId = _peek_scope_id();
       if (MARKO_DEBUG && by) {
         assertValidLoopKey(itemKey, seenKeys);
       }
       withBranchId(branchId, () => {
+        const prevLoopKey = state.loopKey;
+        // Only expose the key when the client's live scope carries a matching
+        // `LoopKey` (keyed loop) -- positional iterations share the site id and
+        // degrade to a full nav, matching the client echo (see `_dynamic_tag`).
+        state.loopKey = sameAsIndex ? undefined : itemKey;
         render();
+        state.loopKey = prevLoopKey;
         branchScopes.push(
           writeScope(branchId, {
             [AccessorProp.LoopKey]: itemKey,
@@ -794,7 +800,12 @@ function forBranches(
     }
 
     withBranchId(branchId, () => {
+      const prevLoopKey = state.loopKey;
+      // Matches `resumeKeys && !sameAsIndex` below: the possession key carries
+      // the loop key exactly when the client's live scope serialized one.
+      state.loopKey = resumeKeys && !sameAsIndex ? itemKey : undefined;
       render();
+      state.loopKey = prevLoopKey;
       const branchScope = writeScope(
         branchId,
         resumeKeys && !sameAsIndex ? { [AccessorProp.LoopKey]: itemKey } : {},
@@ -1370,6 +1381,11 @@ export class State implements SerializeState {
   // holds at each participating dynamic-hop site, so a same-route renderer
   // swap ships a fragment for exactly that hop instead of failing the apply.
   public possessed?: PersistedRenderMode["possessed"];
+  // The nearest enclosing keyed-loop iteration's key while its body renders
+  // (undefined outside a keyed loop) -- disambiguates the site ids of a
+  // dynamic-tag hop repeated across loop iterations for the possession echo
+  // (matches the client's per-iteration `LoopKey`). See `_dynamic_tag`.
+  public loopKey: unknown;
   /** Ids of scopes serialized during fragment capture since the last
    * entry emission (see `writeScope`); ride the entry so the applier can
    * stamp dom-less scopes the markup never references. */
