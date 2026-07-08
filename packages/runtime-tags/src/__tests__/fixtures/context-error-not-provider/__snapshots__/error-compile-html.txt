@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/context-error-not-provider/template.marko:1:14
+    > 1 | <context/val from="./not-a-provider.marko"/>
+        |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The template "./not-a-provider.marko" does not provide a <context> value (it has no provide-mode `<context>` tag).
+      2 |

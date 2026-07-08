@@ -59,6 +59,7 @@ import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
+import { buildContextReserve } from "./context";
 
 type ForType = "in" | "of" | "to" | "until";
 const kStatefulReason = Symbol("<for> stateful reason");
@@ -280,6 +281,17 @@ export default {
 
             forTagArgs.push(t.numericLiteral(1));
           }
+        }
+
+        // A client-changing loop input can create fresh iteration branches;
+        // server-only contexts consumed beneath must serialize their box.
+        const reserveStatement = buildContextReserve(
+          tagSection,
+          statefulSerializeReason,
+          [bodySection],
+        );
+        if (reserveStatement) {
+          statements.push(reserveStatement);
         }
 
         statements.push(

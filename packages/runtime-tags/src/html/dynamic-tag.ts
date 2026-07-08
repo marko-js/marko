@@ -9,6 +9,7 @@ import {
   ResumeSymbol,
 } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
+import { _context_reserve } from "./context";
 import type { ServerRenderer } from "./template";
 import {
   _html,
@@ -48,6 +49,12 @@ export let _dynamic_tag = (
   const branchId = _peek_scope_id();
   let rendered: boolean;
   let result: unknown;
+
+  if (shouldResume) {
+    // Statically unknowable content that can render client-side may
+    // consume any open server-only context.
+    _context_reserve();
+  }
 
   if (typeof renderer === "string") {
     if (MARKO_DEBUG) {

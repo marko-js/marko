@@ -15,6 +15,7 @@ import path from "path";
 
 import { WalkCode } from "../../../common/types";
 import type { LoadTrigger } from "../../../html/assets";
+import { addConsumedContext, kRecursiveRefs } from "../../core/context";
 import { getBindingPropTree } from "../../util/binding-prop-tree";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getTagName } from "../../util/get-tag-name";
@@ -29,10 +30,12 @@ import {
   BindingType,
   createBinding,
   getScopeAccessorLiteral,
+  kBranchSerializeReason,
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import { getOrCreateSection } from "../../util/sections";
+import { addSerializeReason } from "../../util/serialize-reasons";
 import { addSetupStatement } from "../../util/setup-statements";
 import { addStatement, getSignal } from "../../util/signals";
 import { createProgramState } from "../../util/state";
@@ -91,6 +94,29 @@ export default {
           BindingType.dom,
           getOrCreateSection(tag),
         );
+      }
+
+      if (childExtra.providesContext && childExtra.contextMutable !== false) {
+        // A mutable provider stamps its containing branch's scope at
+        // runtime, which the reason analysis cannot otherwise see.
+        addSerializeReason(
+          getOrCreateSection(tag),
+          true,
+          kBranchSerializeReason,
+        );
+      }
+
+      // Server-only contexts consumed under this tag, for branch reach
+      // analysis. A mid-analysis child means recursion: a self reference
+      // resolves to this template's own set at the program exit hook (a
+      // mutual cycle is unknowable, like other dynamic content).
+      if (childExtra.consumedContexts !== undefined) {
+        addConsumedContext(
+          getOrCreateSection(tag),
+          childExtra.consumedContexts,
+        );
+      } else if (childProgram === getProgram().node) {
+        (programExtra[kRecursiveRefs] ??= []).push(getOrCreateSection(tag));
       }
 
       if (tagExtra.tagNameLoad || !childExtra.domExports?.setupEmpty) {

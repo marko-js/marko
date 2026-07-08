@@ -1,0 +1,11 @@
+import Provider from "./provider.marko"
+
+<Provider>
+  // Static-only consumer: never serializes or ships client behavior.
+  <context/theme from="./provider.marko"/>
+  <div>${theme}</div>
+
+  // Handler-read consumer: the value must serialize for hydration.
+  <context/loggedTheme from="./provider.marko"/>
+  <button onClick() { console.log(loggedTheme) }>log theme</button>
+</Provider>

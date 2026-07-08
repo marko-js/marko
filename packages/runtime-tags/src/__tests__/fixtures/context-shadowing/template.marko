@@ -1,0 +1,19 @@
+import Provider from "./provider.marko"
+import Consumer from "./consumer.marko"
+
+// The inner provider shadows the outer; after its block closes the outer
+// instance is visible again.
+<Provider>
+  <Consumer/>
+  <Provider>
+    <Consumer/>
+  </Provider>
+  <Consumer/>
+</Provider>
+
+// A provider inside a keyed `<for>` is one instance per iteration.
+<for|item| of=["x", "y", "z"] by=(x) => x>
+  <Provider>
+    <Consumer/>
+  </Provider>
+</for>

@@ -49,3 +49,15 @@ Existing TODO: `<${input.component}/>` style dynamic tags always compile against
 `scripts/test-parallel.js:40` | 2026-07-02 | impact:low | effort:med
 
 `npm run test:parallel` runs one mocha process per core, but each fixture bundle already drives rolldown's own multi-threaded build (`packages/runtime-tags/src/__tests__/utils/bundle.ts`), so even a serial run uses ~1.4 cores. On a 4-core box the whole suite lands at ~87s vs ~238s serial (2.7×), short of the ~4× the core count implies, because the workers contend for the same native threads. `RAYON_NUM_THREADS=1` in the worker env made no measurable difference, so rolldown isn't honoring it. If rolldown (or its native binding) exposes a per-build thread cap, pinning workers to 1 bundler thread each — so N workers ≈ N threads total — could recover much of the lost efficiency and let the runner scale closer to linearly on higher core counts.
+
+## `<context>` write-only consumers ship more wiring than the link they need
+
+`packages/runtime-tags/src/translator/core/context.ts` (`consumerNeedsWiring`) | 2026-07-09 | impact:low | effort:low
+
+A writable consumer that only assigns (no reads anywhere, so the binding prunes) still serializes full wiring: link, registered fan-out signal (an empty composed arrow), and fan-out `Set` membership. `_context_write` only needs the `ContextLink` entry on the consumer scope; the signal and `Set` membership are dead. Splitting `consumerNeedsWiring` into link-only vs full wiring would save the registered-signal bytes and a registry id for this (rare) shape.
+
+## Mutable `<context>` provider double-serializes primitive values
+
+`packages/runtime-tags/src/html/context.ts` (`_context_provide`) | 2026-07-09 | impact:low | effort:med
+
+A mutable provider serializes its value into the provider scope's `ContextValue` slot for fan-out comparison, alongside the backing state binding's own slot (eg `I: "light"` and the `<let>`'s `g: "light"` in `context-mutable-inert`'s `writes.html`). Objects dedupe by serializer identity; primitives ship twice. When the provide value is a bare state-binding reference the `ContextValue` slot could alias the binding's accessor instead of re-serializing, at the cost of the dom runtime knowing which accessor to compare against.

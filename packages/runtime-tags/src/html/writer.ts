@@ -17,6 +17,7 @@ import {
 } from "../common/types";
 import { RendererProp } from "../common/types";
 import { attrAssignment } from "./attrs";
+import { _context_reserve } from "./context";
 import { forInBy, forOfBy, forStepBy } from "./for";
 import {
   REORDER_RUNTIME_CODE,
@@ -135,6 +136,9 @@ export function _attr_content(
   const branchId = _peek_scope_id();
   if (render) {
     if (shouldResume) {
+      // Statically unknowable content that can render client-side may
+      // consume any open server-only context.
+      _context_reserve();
       withBranchId(branchId, render);
     } else {
       render();
@@ -329,6 +333,10 @@ const kIsAsync = Symbol("Is Async");
 
 export function isInResumedBranch() {
   return $chunk?.context?.[kBranchId] !== undefined;
+}
+
+export function getBranchId() {
+  return $chunk.context?.[kBranchId] as number | undefined;
 }
 
 export function withBranchId<T>(branchId: number, cb: () => T): T {

@@ -1,0 +1,8 @@
+// Mutable provider: `<let>`-derived, so consumers subscribe.
+<let/theme=`light-${input.id}`/>
+<context=theme>
+  <${input.content}/>
+</context>
+<button class=`change-${input.id}` onClick() { theme = `dark-${input.id}` }>
+  change
+</button>

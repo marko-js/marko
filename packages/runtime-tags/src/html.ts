@@ -37,6 +37,12 @@ export {
   _to_text,
   _unescaped,
 } from "./html/content";
+export {
+  _context_get,
+  _context_link,
+  _context_provide,
+  _context_reserve,
+} from "./html/context";
 export { _content, _content_resume, _dynamic_tag } from "./html/dynamic-tag";
 export {
   forIn,

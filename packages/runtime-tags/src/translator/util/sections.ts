@@ -290,6 +290,9 @@ export function getNodeContentType(
           case "await":
           case "try":
           case "show":
+          case "context":
+            // The body renders inline exactly once; Dynamic is always safe
+            // (a boundary marker only at section edges).
             return ContentType.Dynamic;
           default:
             return null;
@@ -494,6 +497,7 @@ function isNativeNode(tag: t.NodePath<t.MarkoTag>) {
       case "html-script":
       case "html-style":
       case "show":
+      case "context":
         return true;
       case "style":
         return tag.node.body.body.some((child) => t.isMarkoPlaceholder(child));

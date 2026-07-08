@@ -1,0 +1,12 @@
+import { resolveAfter } from "../../utils/resolve"
+
+// A mutable consumer inside a deferred `<await>` body subscribes from a
+// later flush; a provider change after resume must still reach it.
+<theme-provider>
+  <try>
+    <@placeholder>loading</@placeholder>
+    <await|_ignored|=resolveAfter(0, 1)>
+      <theme-display/>
+    </await>
+  </try>
+</theme-provider>

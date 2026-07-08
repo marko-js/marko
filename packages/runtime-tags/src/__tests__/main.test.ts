@@ -52,6 +52,9 @@ export type TestConfig = {
   error_compiler?: true | string[];
   /** Compiles the fixture with a custom `runtimeId` compiler option. */
   runtime_id?: string;
+  /** Strings that must not appear in the given output's optimize bundle
+   * snapshot (debug bundles skip tree-shaking). */
+  bundle_excludes?: { dom?: string[]; html?: string[] };
 };
 
 // `scripts/test-parallel` fans the fixtures across CPU cores by giving each
@@ -218,7 +221,19 @@ function testFixtures(interop?: true) {
               const runner = await ssrRunner();
               const { snapshot, sizes } = await runner[`${output}Bundle`]();
               if (optimize && sizes) stats.dom = sizes;
-              return stripFixtureDir(snapshot);
+              const result = await stripFixtureDir(snapshot);
+              if (optimize) {
+                // Debug bundles skip tree-shaking, so exclusion is only a
+                // meaningful guarantee for the optimized artifact.
+                for (const exclude of config.bundle_excludes?.[output] || []) {
+                  if (result.includes(exclude)) {
+                    throw new Error(
+                      `Expected the ${output} bundle to not contain ${JSON.stringify(exclude)} (bundle_excludes).`,
+                    );
+                  }
+                }
+              }
+              return result;
             }, `${output}.bundle.js`);
           };
 

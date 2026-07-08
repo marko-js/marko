@@ -3,6 +3,7 @@ import AttrsTag from "./attrs";
 import AwaitTag from "./await";
 import ClientTag from "./client";
 import ConstTag from "./const";
+import ContextTag from "./context";
 import DebugTag from "./debug";
 import DefineTag from "./define";
 import EffectTag from "./effect";
@@ -31,6 +32,7 @@ export default {
   "<await>": AwaitTag,
   "<client>": ClientTag,
   "<const>": ConstTag,
+  "<context>": ContextTag,
   "<debug>": DebugTag,
   "<define>": DefineTag,
   "<effect>": EffectTag,

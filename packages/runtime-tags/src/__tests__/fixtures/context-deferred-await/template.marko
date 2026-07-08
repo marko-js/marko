@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve"
+import Provider from "./provider.marko"
+import Consumer from "./consumer.marko"
+
+// The consumer inside the deferred `<await>` body must read the value
+// captured at defer time, not the sibling provider's later push.
+<Provider>
+  <await|_ignored|=resolveAfter(1)>
+    <Consumer/>
+  </await>
+</Provider>
+<Provider>
+  <div>sibling</div>
+</Provider>

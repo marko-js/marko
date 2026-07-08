@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/context-error-unknown-from/template.marko:1:14
+    > 1 | <context/val from="<does-not-exist>"/>
+        |              ^^^^^^^^^^^^^^^^^^^^^^^ Unable to resolve the `from=` template "<does-not-exist>": 
+        at packages/runtime-tags/src/__tests__/fixtures/context-error-unknown-from/template.marko:1:1
+        > 1 | <context/val from="<does-not-exist>"/>
+            | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Unable to find entry point for custom tag <does-not-exist>.
+          2 |
+      2 |

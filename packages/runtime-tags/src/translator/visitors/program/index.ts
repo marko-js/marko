@@ -5,6 +5,13 @@ import {
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 
+import {
+  addConsumedContext,
+  getConsumedContexts,
+  kProvideInfo,
+  kRecursiveRefs,
+  kSelfConsumes,
+} from "../../core/context";
 import { addAssetImport } from "../../util/asset-imports";
 import {
   type BindingPropTree,
@@ -22,12 +29,20 @@ import {
 import {
   BindingType,
   finalizeReferences,
+  kBranchSerializeReason,
   trackParamsReferences,
 } from "../../util/references";
 import { resolveRelativeToEntry } from "../../util/resolve-relative-to-entry";
 import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
 import { startSection } from "../../util/sections";
-import { sectionHasSetupStatements } from "../../util/setup-statements";
+import {
+  addSerializeReason,
+  getSerializeSourcesForExpr,
+} from "../../util/serialize-reasons";
+import {
+  addSetupStatement,
+  sectionHasSetupStatements,
+} from "../../util/setup-statements";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
@@ -99,7 +114,45 @@ export default {
         programExtra.domExports!.params = getBindingPropTree(paramsBinding);
       }
 
+      // Publish `<context>` cross-template flags once, after
+      // `finalizeReferences()` (mutability reads finalized `sources`).
+      // Self-consumes are typed conservatively at analyze and pick their
+      // tier from this flag at translate.
+      const contextProvide = programExtra[kProvideInfo];
+      if (contextProvide) {
+        programExtra.providesContext = true;
+        programExtra.contextMutable =
+          contextProvide.writable ||
+          !!getSerializeSourcesForExpr(contextProvide.valueExtra);
+        if (contextProvide.writable) {
+          programExtra.contextWritable = true;
+        }
+        // Both tiers emit dom setup statements (a client-created provider
+        // stamps its branch and value).
+        addSetupStatement(contextProvide.section);
+        if (programExtra.contextMutable) {
+          // The mutable provider's runtime branch stamp needs the
+          // containing branch serialized.
+          addSerializeReason(
+            contextProvide.section,
+            true,
+            kBranchSerializeReason,
+          );
+        } else {
+          // Immutable self-consumes join the consumed-context reach sets
+          // now that the tier is final.
+          for (const selfSection of programExtra[kSelfConsumes] || []) {
+            addConsumedContext(selfSection, program.hub.file.metadata.marko.id);
+          }
+        }
+      }
+
       const section = programExtra.section!;
+      // Self-recursive render sites see the template's own final set.
+      for (const recursiveSection of programExtra[kRecursiveRefs] || []) {
+        addConsumedContext(recursiveSection, getConsumedContexts(section));
+      }
+      programExtra.consumedContexts = getConsumedContexts(section) || new Set();
       if (!section.hoistedTo && !sectionHasSetupStatements(section)) {
         // The setup export will be a noop, letting parent templates skip
         // importing and calling it (checked when this template translates).
