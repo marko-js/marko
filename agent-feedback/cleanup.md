@@ -24,3 +24,22 @@ call (it must take the chunk explicitly -- some emitters write to
 `this`/a boundary's chunk rather than the module-level `$chunk`) would make
 every non-node marker site reset by construction instead of by remembering
 to.
+
+## AccessorPrefix letter namespace is nearly exhausted, with informal claims
+
+`packages/runtime-tags/src/common/accessor.ts:1-62` | 2026-07-09 | impact:med | effort:low
+
+The optimized `AccessorPrefix` single-letter namespace has A–M and O as
+enum members, N/P/Q/R/S/T/U/Z reserved via comments for persisted-only
+keys, and V/W informally claimed by the `<context>` branch after its
+original N/P choice collided with persisted-update's reservations
+(designs/context.md, "Evaluation against the `<context>` branch", item
+1). That leaves X and Y — and `<let by=>` (designs/let-by.md, open
+question 2) needs one of them for its key slot. Two asks: (a) claims
+should land in the catalog comment at proposal time, not implementation
+time, so parallel branches stop re-discovering collisions at merge; (b)
+before a third consumer letters itself out of alphabet, decide the
+overflow scheme (two-letter prefixes for persisted-only keys are free —
+they never ship in client bundles and the generic applier already
+disambiguates prefixed keys by length, dom/update.ts's
+`key.length > 1` checks).
