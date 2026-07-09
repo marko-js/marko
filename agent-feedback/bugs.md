@@ -41,3 +41,21 @@ therefore relied upon for correctness. A real fix needs `isSupersetSources` to
 use a strict/proper-superset test (equal sources must not prune each other)
 _and_ the corrected arithmetic, then a full snapshot audit — out of scope for a
 one-line change.
+
+## Two same-flavor `<style>` tags in one template silently drop the first block's CSS
+
+`src/translator/core/style.ts:423` | 2026-07-09 | impact:med | effort:med
+
+`getStyleImportPath` names every `<style>` block's virtual file
+`./<basename><ext>` — identical for two blocks of the same flavor in one
+template — so the second `resolveVirtualDependency` registration replaces the
+first and the first block's static CSS vanishes with no diagnostic. The
+`style-tag-dynamic-two-tags` fixture pins the breakage: its virtual
+`template.marko.css` contains only `.b`'s rule; `.a`'s rule is gone (the
+interpolated custom properties still render, so the loss is only the static
+text). Encountered building a page that wanted a second `<style>` inside a
+`<for>` for per-iteration dynamic values alongside the main `<style/styles>`
+module block (that pairing works — `.css` vs `.module.css`). Suggested
+direction: suffix the virtual path with the block index (`template.marko.2.css`)
+or concatenate blocks of the same flavor into one virtual file; failing that,
+a compile error naming the colliding tags.
