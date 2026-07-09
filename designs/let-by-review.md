@@ -335,7 +335,7 @@ let-by.md's own first principle — "a language feature that means
 something different over the wire would be incoherent" — applies squarely
 to `<@placeholder by=>`, which currently means something only over the
 wire. And the user-facing consequence is real: a search-as-you-type
-`<await(search(query))>` skeleton-flashes on every keystroke client-side,
+`<await|results|=search(query)>` skeleton-flashes on every keystroke client-side,
 while the identical interaction expressed as a persisted GET-form
 navigation keeps the previous results visible. Same template, opposite
 UX, depending on which driver re-ran it.

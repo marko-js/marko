@@ -57,3 +57,18 @@ packages/runtime-tags/src/common/types.ts:120-156, unwrapped by
 html/template.ts into `State.persistedMode`). A reader wiring up a
 persisted render from this comment would set a `$global` key that the
 runtime no longer reads. Reword to reference `RenderOptions.persisted`.
+
+## Recede design's flagship example uses invalid syntax (`await(...)` in an attribute expression)
+
+`designs/persisted-pages-recede.md` (layer 2 example) | 2026-07-09 | impact:low | effort:low
+
+The layer-2 example reads
+`<reviews-list reviews=await(getReviews(input.productId))/>` — but
+`await` is not valid inside a Marko template expression; the shipped
+surface is the `<await>` tag with the resolved value as a body
+parameter (`<await|reviews|=getReviews(input.productId)>`, see e.g. the
+`persisted-update-abort-between-frames` fixture). Either the example
+predates a syntax decision or it sketches an unshipped await-expression
+form without saying so; both readings misteach the boundary the
+`<@placeholder by=>` feature it documents actually attaches to. Fix the
+example (and check the other designs/ docs for the same form).

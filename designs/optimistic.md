@@ -15,9 +15,8 @@ this) and [persisted-pages-optimistic-transitions.md](./persisted-pages-optimist
 ```
 
 actually requires, for **both** drivers: persisted pages (mutation →
-PRG → update frames) and client-side async transitions (a re-run
-`await` expression under the existing `<try>`/`<@placeholder>`
-machinery).
+PRG → update frames) and client-side async transitions (a re-running
+`<await>` tag under the existing `<try>`/`<@placeholder>` machinery).
 
 ## The one-sentence architecture
 
@@ -64,6 +63,49 @@ outstanding?":
 | persisted mutation        | router mutation queue non-empty (the F2 state)       | router calls the runtime once when the final pending response's stream completes |
 | client re-await           | the feeding boundary's re-await pending (`AwaitCounter`) | boundary settle fans out to held cells registered on the branch            |
 | neither (unassociated)    | always clear                                          | next emission lifts the hold (`let-global`'s semantics as the fallback)     |
+
+### Association, precisely: cells bind to confirmation channels, not writes to interactions
+
+The direct answer to "how does the system know which optimistic updates
+belong to which interaction": **it deliberately never does.** A write is
+never tagged with an interaction. Instead, each *cell* is bound —
+statically, from its source expression's dataflow — to the **channel its
+truth arrives through**: the feeding `<await>` boundary when the source
+is a body param, or the persisted delivery pipeline when the source is
+`input`/`$global`-derived. Settle is then a property of the channel, not
+of any interaction: a held cell lifts at the first truth arrival at
+which its channel has nothing further outstanding (boundary not
+re-pending; router mutation queue empty).
+
+Why interaction identity is dispensable:
+
+- **Truth is attributed by channel, not by cause.** Whichever
+  interaction triggered the mutation or re-await, the authoritative
+  value for this cell arrives through the same channel the cell already
+  reads — so "my confirmation arrived" and "my channel emitted while
+  quiet" are the same event.
+- **Ordered mutations make "quiet" sufficient.** Under F2, mutation
+  responses apply in order, so when the queue empties, the latest
+  delivered truth reflects *every* settled interaction — settling all
+  held cells against it is correct regardless of which interaction
+  wrote what.
+- **The coarseness is delay-only, never wrongness.** The one imprecision
+  is persisted-side: the queue predicate is global, so a held cart cell
+  won't settle while an unrelated wishlist mutation is still pending —
+  its reconciliation waits a beat longer, then lands on truth that
+  reflects both. That coarseness is arguably *honest* for
+  server-derived data: while any mutation is outstanding, any server
+  value may be about to change, and no client-side bookkeeping can know
+  otherwise (which mutations affect which data is server knowledge).
+  Client-side the predicate is already per-channel (each boundary
+  counts its own awaits), so unrelated boundaries never couple.
+
+Per-interaction precision would require exactly the machinery this
+model exists to avoid — tagging writes with transitions (task-scoped
+capture across the click→submit dispatch chain, `for=` ref plumbing) —
+and would buy only earlier settling in the concurrent-unrelated-mutation
+case, at the cost of claiming knowledge (mutation→data dependencies)
+the client doesn't have.
 
 ### Why predicate-at-emission, not write-association
 
@@ -132,15 +174,21 @@ in a full navigation — everything rebuilds from truth.
 
 ## Walk-through: client async transition
 
-Truth arrives as the boundary's **param**, so derive the cell from it:
+Truth arrives as the boundary's **body parameter** (the `<await>` tag's
+resolved value — `await` is not valid inside a template expression), so
+derive the cell from it. The await branch scope persists across
+re-awaits (`resolveAwait` reuses `scope[branchAccessor]`; params
+re-fire into the same branch), so the cell — and a held guess — survive
+the transition:
 
 ```marko
 <let/refreshGen=0/>
 <try>
   <@placeholder by=id><post-skeleton/></@placeholder>
-  <const/post=await(fetchPost(id, refreshGen))/>
-  <optimistic/likes=post.likes/>
-  <button onClick() { likes++; refreshGen++ }>❤️ ${likes}</button>
+  <await|post|=fetchPost(id, refreshGen)>
+    <optimistic/likes=post.likes/>
+    <button onClick() { likes++; refreshGen++ }>❤️ ${likes}</button>
+  </await>
 </try>
 ```
 
