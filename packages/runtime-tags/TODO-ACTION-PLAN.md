@@ -83,7 +83,7 @@ The serializer only writes string entries of a `FormData` value; `File`/`Blob` e
 
 ## Track C — Likely stale: verify with fixtures, then delete (6 TODOs)
 
-### C1. Destructured tag variables work — `src/translator/util/known-tag.ts:232`, `known-tag.ts:354`, `src/translator/visitors/tag/dynamic-tag.ts:475`, `dynamic-tag.ts:500`
+### C1. Destructured tag variables work — resolved 2026-07-09
 
 Four TODOs claim `node.var` handling needs destructuring support / "is not always an identifier". Compile probes show destructured tag variables on custom **and** dynamic tags already work end to end:
 
@@ -94,7 +94,7 @@ Four TODOs claim `node.var` handling needs destructuring support / "is not alway
 
 The `(node.var as t.Identifier).extra?.binding` casts at `known-tag.ts:232` / `dynamic-tag.ts:475` work because pattern nodes also receive `extra.binding` (the synthetic pattern binding from `createBindingsAndTrackReferences`). The `mutatesTagVar` identifier-only check at `known-tag.ts:150` is correct as-is: patterns cannot be directly assigned, and alias assignments use the change protocol.
 
-**Action:** add `custom-tag-var-destructured` and `dynamic-tag-var-destructured` fixtures (render + interact + resume) to lock the behavior in, replace the `as t.Identifier` casts with honest `LVal`-typed access, and delete all four TODOs. Carve out anything a fixture disproves into Track A. _Effort: low-med, high confidence._
+**Resolution:** the `custom-tag-var-destructured` and `dynamic-tag-var-destructured` fixtures now lock the behavior in across SSR, resume, and CSR (reactive destructured reads, `inc()` method calls into child state, assignment through an alias via `countChange`, and a destructure default). The `as t.Identifier` casts were replaced with direct `extra?.binding` access and all four TODOs (`known-tag.ts:232`/`354`, `dynamic-tag.ts:475`/`500`) were deleted.
 
 ### C2. Nested state writes appear to compile correctly — `src/__tests__/fixtures/basic-push-pop-list/template.marko:8`
 
@@ -146,7 +146,7 @@ These can land as one batch with no user-visible behavior change (except the two
 
 ## Suggested sequencing
 
-1. **Now (small, high value):** ~~A1 diagnostic fix~~ (done 2026-07-09), C1 fixtures + cast cleanup, C2 fixture. Deletes 6 TODOs and closes a silent wrong-output hole.
+1. **Now (small, high value):** ~~A1 diagnostic fix~~ (done 2026-07-09), ~~C1 fixtures + cast cleanup~~ (done 2026-07-09), C2 fixture. Deletes 6 TODOs and closes a silent wrong-output hole.
 2. **Next:** repro fixtures for A2, A3, A4, A5 — each is a half-day spike that converts a suspicion into either a scoped bug issue or a deleted TODO. File issues for whatever is confirmed.
 3. **Then:** A6 (re-enable interop SSR) and A7+D4 (dynamic-tag SSR var + dedupe) as independent PRs; A8, A9 policy decisions alongside.
 4. **Ongoing:** D1-D2 as one sizes PR; C3 experiment; E batch PR; re-check oxc#17364 / jsdom#3261 monthly (Track B).

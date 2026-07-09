@@ -1,0 +1,26 @@
+<span>child:<!>1<!--M_*2 #text/0--></span><button
+  class=inc>inc</button><!--M_*1 #button/2--><button
+  class=assign>assign</button><!--M_*1 #button/3-->
+<div>1<!--M_*1 #text/4-->:<!>fallback<!--M_*1 #text/5--></div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "#scopeOffset/1": 3,
+      count: 1,
+      $countChange: _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/custom-tag-var-destructured/tags/child.marko_0/_return2"
+        ),
+      inc: _(2,
+        "packages/runtime-tags/src/__tests__/fixtures/custom-tag-var-destructured/tags/child.marko_0/_return"
+        ),
+      "#childScope/0": _(2)
+    }, {
+      "#TagVariable": _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/custom-tag-var-destructured/template.marko_0_$pattern/var"
+        ),
+      count: 1
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/custom-tag-var-destructured/template.marko_0_count_$countChange 1 packages/runtime-tags/src/__tests__/fixtures/custom-tag-var-destructured/template.marko_0_inc 1"
+  ];
+  M._.w()
+</script>
