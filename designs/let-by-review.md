@@ -738,14 +738,19 @@ response objects). Reversed (designer decision, 2026-07-09 — this
 paragraph originally held the "attributes suffice" line): pending-ness
 itself becomes first-class reactive state, because users must be able
 to optimistically drive *any* update, not only respond to attribute
-changes via CSS. The surface is two tag variables designed in
-[optimistic.md](./optimistic.md) ("Programmatic pending state"):
-`<try/t>.pending` for inbound content (backed by `AwaitCounter` /
-persisted boundary state — the boundary-scoped signal Svelte's
-`$effect.pending` and React's `isPending` prefigure, designed once for
-both drivers) and `<transition/t>.pending` for outbound interactions
-(association by DOM containment of the initiating element — no refs, so
-loops and cross-template shells work). Both are zero-cost when
+changes via CSS. The surface is three grains designed in
+[optimistic.md](./optimistic.md) ("Programmatic pending state"), chosen
+so the non-local ones are tree-shape-free (lexical wrappers force tree
+shapes — a reader above the interaction site cannot see a tag variable
+below it): **resource** — `pending(cell)`, a cell's held window,
+readable at any height wherever the cell is in scope through the same
+context hoist as its value; **page** — router-stamped `$global.nav`
+via the early-input synthetic-frame channel, readable everywhere by
+definition; **site** — `<try/t>.pending` (inbound, backed by
+`AwaitCounter`/persisted boundary state — the boundary-scoped signal
+Svelte's `$effect.pending` and React's `isPending` prefigure, one
+design for both drivers) and `<transition/t>.pending` (outbound,
+DOM-containment association) for genuinely local UI. All zero-cost when
 unreferenced; the CSS attributes and `aria-busy` remain as zero-code
 conveniences and assistive-tech semantics on top.
 

@@ -292,17 +292,27 @@ client-side through ordinary fan-out).
 **The primary surface is reactive, not CSS** (decision 2026-07-09,
 reversing the optimistic-transitions doc's non-goal in part — transport
 detail stays hidden; pending-ness becomes first-class state; see
-optimistic.md, "Programmatic pending state"). Two tag variables cover
-the two directions of async, both zero-cost when unreferenced:
+optimistic.md, "Programmatic pending state"). Pending has **three
+grains**, each with the visibility its scope implies — the non-local
+ones deliberately avoid lexical wrappers, which force tree shapes
+(a reader above the interaction site could never see a tag variable
+declared below it):
 
-- `<try/section>` → `section.pending` — *inbound*: this boundary's
-  content is being re-fetched (client `AwaitCounter` / persisted
-  pending-boundary state). [EXPLORATION]
-- `<transition/adding>` → `adding.pending` — *outbound*: a navigation
-  initiated by a control inside the body is unsettled. Association is
-  DOM containment of the initiating element (no refs — works in loops
-  and across templates); page-global pending is just a transition
-  around the layout body. [EXPLORATION]
+- **Resource** — `pending(cell)` [EXPLORATION]: a cell's held window,
+  readable at *any height* wherever the cell is in scope (the header
+  already consumes `cart` via context for the badge; syncing state
+  rides the same hoist). Deliberately not "some mutation might affect
+  this" — that's server knowledge.
+- **Page** — `$global.nav.pending` [EXPLORATION]: router-stamped
+  through the synthetic-frame channel early-input uses; readable
+  everywhere by definition. Progress bars, dim-the-page.
+- **Site** — `<try/section>` → `section.pending` (inbound: this
+  boundary re-fetching; client `AwaitCounter` / persisted
+  pending-boundary state) and `<transition/adding>` → `adding.pending`
+  (outbound: a navigation initiated by a contained control —
+  DOM-containment association, no refs, loop-safe) [EXPLORATION].
+  Lexical visibility is the *point* of this grain (the button's own
+  label/`disabled`); grains above cover everything non-local.
 
 With those plus `<optimistic>` cells — whose guesses are arbitrary
 values and may carry their own presentation metadata
@@ -314,7 +324,7 @@ and platform affordances on top of that surface, not the API:
 
 | layer                                   | what the author does            | status                                                       |
 | --------------------------------------- | ------------------------------- | ------------------------------------------------------------ |
-| pending reactive vars (`<try/t>`, `<transition/t>`) | any template logic  | [EXPLORATION] — optimistic.md                                 |
+| pending reactive state, three grains (`pending(cell)`, `$global.nav`, `<try/t>`/`<transition/t>`) | any template logic | [EXPLORATION] — optimistic.md |
 | pending attrs (`data-marko-pending`, doc-level) + double-submit guard | CSS only, zero code | [DESIGNED] — review F6 says ship **first** (the guard is correctness) |
 | regional `aria-busy` on pending boundaries | nothing (a11y semantics)     | [DESIGNED], deferred by decision; same boundary-settle hook as the cells |
 | structural recede `<@placeholder by=>`  | one attribute                   | **[BUILT]** persisted-side; F3 extends to client re-awaits; anti-flash hold unbuilt |

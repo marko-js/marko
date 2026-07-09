@@ -243,8 +243,62 @@ beats snapping to stale truth mid-error. Needs a fixture either way.
 > components, reorder content — not only respond to attribute changes
 > via CSS.
 
+Pending has **three natural grains**, and each gets the surface whose
+visibility matches its scope. The first design pass here exposed only
+lexical wrappers (tag variables), which forces tree shapes — a reader
+*above* the interaction site could not see its pending. That constraint
+is inherent to lexical scoping, so the non-local grains hang pending on
+things that are already tree-shape-free: the shared cell and `$global`.
+
+### Grain 1 — resource: pending hangs on the cell (readable at any height)
+
+"Something higher in the DOM wants to know the add-to-cart is pending"
+almost always means "**the cart** is syncing" — a fact about the
+resource, not the form. The cell is already hoisted above both reader
+and writer (that is what made the header badge work), so held-ness is
+exposed wherever the cell is readable, through the same context
+machinery as the value:
+
+```marko
+/* +layout.marko header — already consumes cart for the badge */
+<context/cart from="<cart-provider>"/>
+<header class=(pending(cart) && "header--syncing")>
+  🛒 (${cart.reduce((s, i) => s + i.quantity, 0)})
+</header>
+```
+
+Semantics: `pending(cell)` is the cell's **held window** — true from
+the first unsettled optimistic write until settle. It is deliberately
+*not* "a mutation that might affect this resource is in flight"
+(unknowable client-side — mutation→data dependencies are server
+knowledge); a mutation fired with no optimistic write does not hold the
+cell, and the page grain covers that case unconditionally. Surface is
+an open question below: a compiled expression intrinsic
+(`pending(cart)` — resolves the binding at compile time, including
+through a context consumption, and subscribes to the provider-scope
+held slot; `$global`/`$signal` are the special-identifier precedent) or
+a companion tag (`<pending/cartBusy of=cart>`). The intrinsic is leaner:
+usable inline in any expression at any position, zero tree nodes.
+
+### Grain 2 — page: router-stamped `$global` (ignores tree shape by definition)
+
+Navigation-level pending — progress bar, dim-the-page — belongs to no
+subtree. Every template reads `$global`, and the early-input mechanism
+(let-by-review.md, "Link-driven optimism") already gives the router a
+reactive client-side write channel into it: synthetic globals-only
+frames through the navigation's own apply context. Stamp
+`$global.nav.pending` (strawman name) at navigation start and settle;
+readers anywhere re-run through the same promotion machinery persisted
+deliveries use. No provider, no wrapper, no containment walk.
+
+### Grain 3 — site: lexical tag variables, for genuinely local UI
+
 Two reactive values, exposed the way Marko exposes platform-owned
-lexical state — **tag variables** — one per direction of async:
+lexical state — **tag variables** — one per direction of async. Their
+visibility is lexical (the tag's body and the remainder of the
+enclosing body) — right for the button's own label and `disabled`, the
+section's own stale styling — and that constraint is the *meaning* of
+the grain, with grains 1–2 covering everything non-local.
 
 **Inbound (content pending): a tag variable on the boundary.**
 
@@ -314,8 +368,9 @@ since settle replaces it wholesale with server truth:
 The provisional flag never survives settle — the delivered cart has no
 such property — so "mark the row as sending until the server confirms"
 is just data in the guess. Between that, per-cell truth
-(`<optimistic>`), inbound pending (`<try/t>`), and outbound pending
-(`<transition/t>`), arbitrary optimistic UI is ordinary template logic
+(`<optimistic>`), resource pending (`pending(cell)`, any height), page
+pending (`$global.nav`), and site pending (`<try/t>`,
+`<transition/t>`), arbitrary optimistic UI is ordinary template logic
 over reactive values — components, text, `disabled`, reordering — with
 CSS selectors as one consumer among many rather than the only one.
 
@@ -433,7 +488,19 @@ guess).
 8. **The outbound boundary's name**: `<transition>` collides with CSS
    transitions / View Transitions vocabulary; alternatives:
    `<pending>`, `<busy>`, `<action>`. Whatever wins, `<try/t>` and it
-   should read as the two directions of one concept.
+   should read as the two directions of one concept. Also decide
+   whether the site grain earns two tags at all once grains 1–2 exist —
+   the local-only cases may be few enough for one.
+10. **Grain-1 surface**: compiled expression intrinsic
+    (`pending(cell)`) vs companion tag (`<pending/x of=cell>`). The
+    intrinsic is leaner and position-free; the tag is consistent with
+    `let`/`const`/`optimistic`. Decide with the parser/language owners;
+    either must resolve through context consumption to the provider
+    scope's held slot.
+11. **Grain-2 shape**: the `$global.nav` field name, and whether the
+    router stamps it always or only when some template reads it
+    (compile-time discoverable — the promotion machinery already tracks
+    `$global` reads per expression).
 9. **Initial-stream pending**: should `<try/t>.pending` be true while
    the document stream is still filling the boundary at resume
    (unifying first-load and transition UX)? Leaning yes; needs the
