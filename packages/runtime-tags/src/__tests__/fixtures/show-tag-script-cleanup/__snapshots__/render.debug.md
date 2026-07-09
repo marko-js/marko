@@ -77,7 +77,7 @@ c.querySelector(`#${id}`).click();
 <div
   id="ref"
 >
-  close 1
+  open 1
 </div>
 <button
   id="next"
@@ -93,4 +93,6 @@ c.querySelector(`#${id}`).click();
 ## Change
 ```
 INSERT: #ref + #next
+REMOVE: #ref::text("close 1")
+INSERT: #ref::text("open 1")
 ```

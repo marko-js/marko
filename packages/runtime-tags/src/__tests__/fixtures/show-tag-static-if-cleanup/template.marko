@@ -1,0 +1,14 @@
+<let/show=true/>
+<div#ref/>
+<show=show>
+  <if=true>
+    <lifecycle
+      onMount() { document.getElementById("ref").textContent = "mount"; }
+      onDestroy() { document.getElementById("ref").textContent = "destroy"; }
+    />
+  </if>
+  <script>
+    /* keeps the body in branch mode alongside the static branch */
+  </script>
+</show>
+<button#toggle onClick() { show = !show }>Toggle</button>

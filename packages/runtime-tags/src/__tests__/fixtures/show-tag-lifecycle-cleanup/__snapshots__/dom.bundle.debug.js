@@ -11,7 +11,7 @@ const $show_content__mounts__OR__count__script = _script("__tests__/template.mar
 	}
 }));
 const $show_content__mounts__OR__count = /*@__PURE__*/ _or(3, $show_content__mounts__OR__count__script);
-const $show_content__mounts = /*@__PURE__*/ _if_closure("#text/0", 0, $show_content__mounts__OR__count);
+const $show_content__mounts = /*@__PURE__*/ _show_closure("#text/0", $show_content__mounts__OR__count);
 const $show_content__count = /*@__PURE__*/ _let("count/2", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$show_content__mounts__OR__count($scope);

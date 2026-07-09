@@ -105,6 +105,7 @@ export {
   _return,
   _return_change,
   _script,
+  _show_closure,
   _var,
   _var_change,
 } from "./dom/signals";

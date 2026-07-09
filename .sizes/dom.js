@@ -1,4 +1,4 @@
-// size: 26192 (min) 9654 (brotli)
+// size: 26517 (min) 9690 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -485,6 +485,10 @@ function resetControllers(scope) {
 function resetBranchEffects(branch) {
   (branch.B?.forEach(resetControllers), branch.D?.forEach(resetBranchEffects));
 }
+function setBranchGen(branch, gen) {
+  branch.H &&
+    ((branch.H = gen), branch.D?.forEach((child) => setBranchGen(child, gen)));
+}
 function removeAndDestroyBranch(branch) {
   (destroyBranch(branch), removeChildNodes(branch.S, branch.K));
 }
@@ -514,7 +518,9 @@ function _let(id, fn) {
   let valueAccessor = decodeAccessor(id);
   return (scope, value) => (
     rendering
-      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
+      ? scope.H === runId
+        ? ((scope[valueAccessor] = value), fn?.(scope))
+        : scope.H < 0 && fn?.(scope)
       : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
         ((scope[valueAccessor] = value), fn) &&
         (schedule(), queueRender(scope, fn, id)),
@@ -541,7 +547,9 @@ function _const(valueAccessor, fn) {
   return (
     (valueAccessor = decodeAccessor(valueAccessor)),
     (scope, value) => {
-      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+      (scope[valueAccessor] !== value ||
+        !(valueAccessor in scope) ||
+        scope.H < 0) &&
         ((scope[valueAccessor] = value), fn?.(scope));
     }
   );
@@ -646,6 +654,19 @@ function _if_closure(ownerConditionalNodeAccessor, branch, fn) {
         ifScope.H < runId &&
         (scope[branchAccessor] || 0) === branch &&
         queueRender(ifScope, fn, -1);
+    };
+  return ((ownerSignal._ = fn), ownerSignal);
+}
+function _show_closure(ownerNodeAccessor, fn) {
+  ownerNodeAccessor = decodeAccessor(ownerNodeAccessor);
+  let scopeAccessor = "A" + ownerNodeAccessor,
+    ownerSignal = (scope) => {
+      let branch = scope[scopeAccessor];
+      branch &&
+        branch.H > 0 &&
+        branch.H < runId &&
+        branch.S.parentNode.nodeType === 1 &&
+        queueRender(branch, fn, -1);
     };
   return ((ownerSignal._ = fn), ownerSignal);
 }
@@ -774,6 +795,14 @@ function createAndSetupBranch($global, renderer, parentScope, parentNode) {
 }
 function setupBranch(renderer, branch) {
   return (renderer.c && queueRender(branch, renderer.c, -1), branch);
+}
+function remountBranch(renderer, branch) {
+  (setBranchGen(branch, -1),
+    renderer.c?.(branch),
+    queueEffect(branch, restoreBranchGen));
+}
+function restoreBranchGen(branch) {
+  setBranchGen(branch, 1);
 }
 function _content(id, template, walks, setup, params, dynamicScopesAccessor) {
   ((walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
@@ -1984,14 +2013,20 @@ function _if(nodeAccessor, ...branchesArgs) {
   return (
     enableBranches(),
     (scope, newBranch) => {
-      newBranch !==
-        (scope[branchAccessor] ?? (scope["A" + nodeAccessor] && 0)) &&
+      if (
+        newBranch !==
+        (scope[branchAccessor] ?? (scope["A" + nodeAccessor] && 0))
+      )
         setConditionalRenderer(
           scope,
           nodeAccessor,
           branches[(scope[branchAccessor] = newBranch)],
           createAndSetupBranch,
         );
+      else if (scope.H < 0) {
+        let branch = scope["A" + nodeAccessor];
+        branch && branches[newBranch]?.c?.(branch);
+      }
     }
   );
 }
@@ -2004,8 +2039,8 @@ function _show(nodeAccessor, startNodeAccessor) {
     enableBranches(),
     (scope, display) => {
       let referenceNode = scope[nodeAccessor],
-        onlyChild = referenceNode.nodeType === 1,
-        parentNode = onlyChild ? referenceNode : referenceNode.parentNode,
+        parentNode = getShowParent(referenceNode),
+        onlyChild = parentNode === referenceNode,
         range = scope[rangeAccessor];
       range ||
         ((range = scope[rangeAccessor] = {}),
@@ -2044,26 +2079,27 @@ function _show_branch(nodeAccessor, template, walks, setup) {
     enableBranches(),
     (scope, display) => {
       let referenceNode = scope[nodeAccessor],
-        onlyChild = referenceNode.nodeType === 1,
-        parentNode = onlyChild ? referenceNode : referenceNode.parentNode,
-        nextSibling = onlyChild ? null : referenceNode,
-        branch = scope[branchAccessor];
-      if (!branch) {
-        ((branch = scope[branchAccessor] =
-          createBranch(scope.$, renderer, scope, parentNode)),
-          display &&
-            (insertBranchBefore(branch, parentNode, nextSibling),
-            setupBranch(renderer, branch)));
-        return;
-      }
-      let inDom = branch.S.parentNode === parentNode;
+        parentNode = getShowParent(referenceNode),
+        nextSibling = parentNode === referenceNode ? null : referenceNode,
+        branch = scope[branchAccessor],
+        inDom = branch && branch.S.parentNode === parentNode;
       display
-        ? inDom ||
-          (insertBranchBefore(branch, parentNode, nextSibling),
-          setupBranch(renderer, branch))
+        ? branch
+          ? inDom ||
+            (insertBranchBefore(branch, parentNode, nextSibling),
+            remountBranch(renderer, branch))
+          : ((branch = scope[branchAccessor] =
+              createBranch(scope.$, renderer, scope, parentNode)),
+            insertBranchBefore(branch, parentNode, nextSibling),
+            setupBranch(renderer, branch))
         : inDom && (resetBranchEffects(branch), tempDetachBranch(branch));
     }
   );
+}
+function getShowParent(referenceNode) {
+  return referenceNode.nodeType === 1
+    ? referenceNode
+    : referenceNode.parentNode;
 }
 function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);
@@ -2159,7 +2195,8 @@ function loop(forEach) {
               /* @__PURE__ */ new Map(),
             )).get(key);
           (branch
-            ? (hasPotentialMoves = oldScopesByKey.delete(key))
+            ? ((hasPotentialMoves = oldScopesByKey.delete(key)),
+              scope.H < 0 && renderer.c?.(branch))
             : (branch = createAndSetupBranch(
                 scope.$,
                 renderer,

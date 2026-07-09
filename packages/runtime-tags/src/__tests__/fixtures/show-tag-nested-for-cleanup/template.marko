@@ -1,0 +1,15 @@
+<let/show=true/>
+<let/items=["a"]/>
+<div#refa/>
+<show=show>
+  <script>
+    /* keeps the body in branch mode */
+  </script>
+  <for|item| of=items>
+    <lifecycle
+      onMount() { document.getElementById(`ref${item}`).textContent = `${item} mount`; }
+      onDestroy() { document.getElementById(`ref${item}`).textContent = `${item} destroy`; }
+    />
+  </for>
+</show>
+<button#toggle onClick() { show = !show }>Toggle</button>

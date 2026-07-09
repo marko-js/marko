@@ -100,6 +100,7 @@ export default {
         const bodySection = startSection(tag.get("body"))!;
         const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
         bodySection.isBranch = true;
+        bodySection.isRemountableBranch = true;
         bodySection.upstreamExpression = tagExtra;
         bodySection.sectionAccessor = {
           binding: nodeBinding,
@@ -286,8 +287,7 @@ export default {
     dom: {
       enter(tag) {
         if (showBodyNeedsBranch(tag)) {
-          const bodySection = getSectionForBody(tag.get("body"));
-          if (bodySection) setSectionParentIsOwner(bodySection, true);
+          setSectionParentIsOwner(getSectionForBody(tag.get("body"))!, true);
           if (!getOnlyChildParentTagName(tag)) {
             walks.visit(tag, WalkCode.Replace);
             walks.enterShallow(tag);
@@ -355,9 +355,9 @@ export default {
 } as Tag;
 
 // Wires the DOM signal for a branch-mode `<show>`: closures over parent state
-// re-run the always-present body branch (`_if_closure` with a constant branch
-// index), and the display value drives `_show_branch`, which keeps the branch
-// mounted, toggling only its attachment and effects.
+// re-run the body branch only while it is attached (`_show_closure`), and the
+// display value drives `_show_branch`, which keeps the branch alive, toggling
+// its attachment and effects.
 function translateShowBranchDom(tag: t.NodePath<t.MarkoTag>) {
   const tagExtra = tag.node.extra!;
   const tagSection = getSection(tag);
@@ -367,9 +367,8 @@ function translateShowBranchDom(tag: t.NodePath<t.MarkoTag>) {
 
   setClosureSignalBuilder(tag, (_closure, render) => {
     return callRuntime(
-      "_if_closure",
+      "_show_closure",
       getScopeAccessorLiteral(nodeBinding, true),
-      t.numericLiteral(0),
       render,
     );
   });
@@ -395,10 +394,8 @@ function translateShowBranchHtmlEnter(tag: t.NodePath<t.MarkoTag>) {
     walks.enterShallow(tag);
   }
   writer.flushBefore(tag);
-  const bodySection = getSectionForBody(tag.get("body"));
-  if (bodySection) {
-    setSectionParentIsOwner(bodySection, true);
-  }
+  // Branch mode always starts a body section in analyze.
+  setSectionParentIsOwner(getSectionForBody(tag.get("body"))!, true);
 }
 
 function translateShowBranchHtmlExit(tag: t.NodePath<t.MarkoTag>) {
@@ -429,7 +426,7 @@ function translateShowBranchHtmlExit(tag: t.NodePath<t.MarkoTag>) {
   const statefulSerializeArg = getSerializeGuard(
     tagSection,
     statefulReason,
-    !skipParentEnd,
+    !(skipParentEnd || singleNode),
   );
   const markerSerializeArg = getSerializeGuard(
     tagSection,

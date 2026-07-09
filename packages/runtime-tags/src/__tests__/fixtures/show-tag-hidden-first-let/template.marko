@@ -1,0 +1,11 @@
+<let/show=false/>
+<div#ref>initial</div>
+<show=show>
+  <let/count=0/>
+  <script>
+    document.getElementById("ref").textContent = `count ${count}`;
+    $signal.onabort = () => { document.getElementById("ref").textContent = "closed"; };
+  </script>
+  <button#inc onClick() { count++ }>count ${count}</button>
+</show>
+<button#toggle onClick() { show = !show }>Toggle</button>

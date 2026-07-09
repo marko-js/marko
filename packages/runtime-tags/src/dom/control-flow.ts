@@ -36,6 +36,7 @@ import {
   _content,
   createAndSetupBranch,
   createBranch,
+  remountBranch,
   type Renderer,
   setupBranch,
   type SetupFn,
@@ -440,6 +441,13 @@ export function _if(
         branches[(scope[branchAccessor] = newBranch)],
         createAndSetupBranch,
       );
+    } else if (scope[AccessorProp.Gen] < 0) {
+      // Remounting (`remountBranch`): the branch is unchanged, so re-run its
+      // setup in place to re-mount its effects.
+      const branch = scope[
+        AccessorPrefix.BranchScopes + nodeAccessor
+      ] as BranchScope;
+      if (branch) branches[newBranch]?.[RendererProp.Setup]?.(branch);
     }
   };
 }
@@ -462,13 +470,9 @@ export function _show(
   const rangeAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
   enableBranches();
   return (scope: Scope, display: unknown) => {
-    // The reference node is the parent element when the `<show>` is its only
-    // child, otherwise a marker node just after the body.
     const referenceNode = scope[nodeAccessor] as ChildNode;
-    const onlyChild = referenceNode.nodeType === NodeType.Element;
-    const parentNode = onlyChild
-      ? (referenceNode as unknown as ParentNode & Element)
-      : referenceNode.parentNode!;
+    const parentNode = getShowParent(referenceNode);
+    const onlyChild = parentNode === (referenceNode as unknown as ParentNode);
     let range = scope[rangeAccessor] as BranchScope | undefined;
 
     if (!range) {
@@ -512,12 +516,13 @@ export function _show(
   };
 }
 
-// A `<show>` whose body mounts effects (`<script>`/`<lifecycle>`) or nested
-// scopes renders the body as its own keep-alive branch instead of inline. The
-// branch is created once and never destroyed, so its state persists across
-// toggles; hiding runs its effect cleanups and detaches it, showing re-runs its
-// effects (re-mount) and re-attaches it. Like `_show`, a `<t hidden>` server
-// wrapper is dissolved the first time the value changes.
+// A `<show>` whose body mounts effects (`<script>`/`<lifecycle>`) renders the
+// body as its own keep-alive branch instead of inline. The branch is created
+// on the first truthy display and never destroyed while the `<show>` lives, so
+// its state persists across toggles; hiding runs its effect cleanups and
+// detaches it, showing re-attaches it and re-mounts its effects (a hidden body
+// is never server rendered, so a resumed hidden `<show>` also creates the
+// branch on first reveal).
 export function _show_branch(
   nodeAccessor: EncodedAccessor,
   template?: string | 0,
@@ -529,43 +534,43 @@ export function _show_branch(
   const renderer = _content("", template, walks, setup)();
   enableBranches();
   return (scope: Scope, display: unknown) => {
-    // The reference node is the parent element when the `<show>` is its only
-    // child, otherwise a marker node just after the body.
     const referenceNode = scope[nodeAccessor] as ChildNode;
-    const onlyChild = referenceNode.nodeType === NodeType.Element;
-    const parentNode = onlyChild
-      ? (referenceNode as unknown as ParentNode & Element)
-      : referenceNode.parentNode!;
-    const nextSibling = onlyChild ? null : referenceNode;
+    const parentNode = getShowParent(referenceNode);
+    const nextSibling =
+      parentNode === (referenceNode as unknown as ParentNode)
+        ? null
+        : referenceNode;
     let branch = scope[branchAccessor] as BranchScope | undefined;
+    const inDom =
+      branch && branch[AccessorProp.StartNode].parentNode === parentNode;
 
-    if (!branch) {
-      // Client render: create the branch once. Only mount (run effects) when
-      // shown; a hidden body stays parked in its detached clone until shown.
-      branch = scope[branchAccessor] = createBranch(
-        scope[AccessorProp.Global],
-        renderer,
-        scope,
-        parentNode,
-      );
-      if (display) {
-        insertBranchBefore(branch, parentNode, nextSibling);
-        setupBranch(renderer, branch);
-      }
-      return;
-    }
-
-    const inDom = branch[AccessorProp.StartNode].parentNode === parentNode;
     if (display) {
-      if (!inDom) {
+      if (!branch) {
+        branch = scope[branchAccessor] = createBranch(
+          scope[AccessorProp.Global],
+          renderer,
+          scope,
+          parentNode,
+        );
         insertBranchBefore(branch, parentNode, nextSibling);
         setupBranch(renderer, branch);
+      } else if (!inDom) {
+        insertBranchBefore(branch, parentNode, nextSibling);
+        remountBranch(renderer, branch);
       }
     } else if (inDom) {
-      resetBranchEffects(branch);
-      tempDetachBranch(branch);
+      resetBranchEffects(branch!);
+      tempDetachBranch(branch!);
     }
   };
+}
+
+// The reference node is the parent element when the `<show>` is its only
+// child, otherwise a marker node just after the body.
+function getShowParent(referenceNode: ChildNode) {
+  return referenceNode.nodeType === NodeType.Element
+    ? (referenceNode as unknown as ParentNode & Element)
+    : referenceNode.parentNode!;
 }
 
 export function patchDynamicTag(
@@ -871,6 +876,11 @@ function loop<T extends unknown[] = unknown[]>(
           )).get(key);
         if (branch) {
           hasPotentialMoves = oldScopesByKey!.delete(key);
+          if (scope[AccessorProp.Gen] < 0) {
+            // Remounting (`remountBranch`): re-run the kept branch's setup in
+            // place to re-mount its effects.
+            renderer[RendererProp.Setup]?.(branch);
+          }
         } else {
           branch = createAndSetupBranch(
             scope[AccessorProp.Global],

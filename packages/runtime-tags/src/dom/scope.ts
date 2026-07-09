@@ -106,6 +106,18 @@ export function resetBranchEffects(branch: BranchScope) {
   branch[AccessorProp.BranchScopes]?.forEach(resetBranchEffects);
 }
 
+// Stamps a generation across a branch subtree (skipping destroyed branches).
+// `remountBranch` uses a negative sentinel so state-holding signals (`_let`)
+// re-propagate without re-initializing while a kept-alive branch re-mounts.
+export function setBranchGen(branch: BranchScope, gen: number) {
+  if (branch[AccessorProp.Gen]) {
+    branch[AccessorProp.Gen] = gen;
+    branch[AccessorProp.BranchScopes]?.forEach((child) =>
+      setBranchGen(child, gen),
+    );
+  }
+}
+
 export function removeAndDestroyBranch(branch: BranchScope) {
   destroyBranch(branch);
   removeChildNodes(

@@ -1,0 +1,13 @@
+<let/show=true/>
+<let/inner=true/>
+<div#ref/>
+<show=show>
+  <if=inner>
+    <lifecycle
+      onMount() { document.getElementById("ref").textContent = "mount"; }
+      onDestroy() { document.getElementById("ref").textContent = "destroy"; }
+    />
+  </if>
+</show>
+<button#inner onClick() { inner = !inner }>Inner</button>
+<button#toggle onClick() { show = !show }>Toggle</button>

@@ -1,0 +1,12 @@
+<let/show=true/>
+<let/label=0/>
+<div#ref/>
+<show=show>
+  <lifecycle
+    onMount() { document.getElementById("ref").textContent = `Mount ${label}`; }
+    onUpdate() { document.getElementById("ref").textContent = `Update ${label}`; }
+    onDestroy() { document.getElementById("ref").textContent = `Destroy ${label}`; }
+  />
+</show>
+<button#bump onClick() { label++ }>bump</button>
+<button#toggle onClick() { show = !show }>Toggle</button>

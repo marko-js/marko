@@ -1,4 +1,4 @@
-// size: 6453 (min) 2833 (brotli)
+// size: 6540 (min) 2869 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -153,7 +153,9 @@ function _let(id, fn) {
   let valueAccessor = decodeAccessor(id);
   return (scope, value) => (
     rendering
-      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
+      ? scope.H === runId
+        ? ((scope[valueAccessor] = value), fn?.(scope))
+        : scope.H < 0 && fn?.(scope)
       : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
         ((scope[valueAccessor] = value), fn) &&
         (schedule(), queueRender(scope, fn, id)),
@@ -164,7 +166,9 @@ function _const(valueAccessor, fn) {
   return (
     (valueAccessor = decodeAccessor(valueAccessor)),
     (scope, value) => {
-      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+      (scope[valueAccessor] !== value ||
+        !(valueAccessor in scope) ||
+        scope.H < 0) &&
         ((scope[valueAccessor] = value), fn?.(scope));
     }
   );
@@ -334,14 +338,20 @@ function _if(nodeAccessor, ...branchesArgs) {
   return (
     enableBranches(),
     (scope, newBranch) => {
-      newBranch !==
-        (scope[branchAccessor] ?? (scope["A" + nodeAccessor] && 0)) &&
+      if (
+        newBranch !==
+        (scope[branchAccessor] ?? (scope["A" + nodeAccessor] && 0))
+      )
         setConditionalRenderer(
           scope,
           nodeAccessor,
           branches[(scope[branchAccessor] = newBranch)],
           createAndSetupBranch,
         );
+      else if (scope.H < 0) {
+        let branch = scope["A" + nodeAccessor];
+        branch && branches[newBranch]?.c?.(branch);
+      }
     }
   );
 }
@@ -401,7 +411,8 @@ function loop(forEach) {
               /* @__PURE__ */ new Map(),
             )).get(key);
           (branch
-            ? (hasPotentialMoves = oldScopesByKey.delete(key))
+            ? ((hasPotentialMoves = oldScopesByKey.delete(key)),
+              scope.H < 0 && renderer.c?.(branch))
             : (branch = createAndSetupBranch(
                 scope.$,
                 renderer,

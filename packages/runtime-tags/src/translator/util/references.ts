@@ -41,6 +41,7 @@ import {
   getSectionForBody,
   getSectionRegisterReasons,
   isDynamicClosure,
+  isInRemountableBranch,
   isSameOrChildSection,
   type Section,
   sectionUtil,
@@ -1092,6 +1093,17 @@ export function finalizeReferences() {
       section.sectionAccessor &&
       section.upstreamExpression
     ) {
+      if (isInRemountableBranch(section.parent)) {
+        // Re-attaching the kept-alive ancestor re-runs the setup that drives
+        // this branch, which must find its marker and scopes even when the
+        // branch is otherwise statically elided (e.g. a constant condition).
+        addSerializeReason(section, true, kBranchSerializeReason);
+        addSerializeReason(
+          section.parent,
+          true,
+          section.sectionAccessor.binding,
+        );
+      }
       addSerializeReason(
         section,
         !!(section.isHoistThrough || section.hoisted) ||

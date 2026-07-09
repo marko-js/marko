@@ -1,0 +1,18 @@
+<let/show=true/>
+<let/inner=true/>
+<div#ref/>
+<div#nestedRef/>
+<show=show>
+  <lifecycle
+    onMount() { document.getElementById("ref").textContent = "outer mount"; }
+    onDestroy() { document.getElementById("ref").textContent = "outer destroy"; }
+  />
+  <if=inner>
+    <lifecycle
+      onMount() { document.getElementById("nestedRef").textContent = "inner mount"; }
+      onDestroy() { document.getElementById("nestedRef").textContent = "inner destroy"; }
+    />
+  </if>
+</show>
+<button#inner onClick() { inner = !inner }>Inner</button>
+<button#toggle onClick() { show = !show }>Toggle</button>

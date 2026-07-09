@@ -76,6 +76,7 @@ export interface Section {
   hasAbortSignal: boolean;
   readsOwner: boolean;
   isBranch: boolean;
+  isRemountableBranch: boolean;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -150,6 +151,7 @@ export function startSection(
       hasAbortSignal: false,
       readsOwner: false,
       isBranch: false,
+      isRemountableBranch: false,
     };
     sections.push(section);
   }
@@ -508,6 +510,17 @@ function isNativeNode(tag: t.NodePath<t.MarkoTag>) {
   return analyzeTagNameType(tag) === TagNameType.NativeTag;
 }
 
+// True when re-attaching a kept-alive ancestor branch re-runs this section's
+// setup (a branch-mode `<show>` body, see `showBodyNeedsBranch`). Everything
+// that setup touches must then serialize, since the re-run can happen against
+// resumed scopes.
+export function isInRemountableBranch(section: Section) {
+  for (let cur: Section | undefined = section; cur; cur = cur.parent) {
+    if (cur.isRemountableBranch) return true;
+  }
+  return false;
+}
+
 const showBranchCache = new WeakMap<t.MarkoTag, boolean>();
 
 // Whether a `<show>` body must compile as its own branch (rather than inline)
@@ -532,14 +545,21 @@ function bodyNeedsBranch(body: t.NodePath<t.MarkoTagBody>): boolean {
     if (!child.isMarkoTag()) continue;
 
     if (isCoreTag(child)) {
-      if (
-        child.node.name.value === "lifecycle" ||
-        child.node.name.value === "script"
-      ) {
-        return true;
+      switch (child.node.name.value) {
+        case "lifecycle":
+        case "script":
+          return true;
+        case "if":
+        case "else":
+        case "for":
+          // Control flow renders nested branches, which the keep-alive
+          // machinery can reset and re-mount, so effects inside still count.
+          if (bodyNeedsBranch(child.get("body"))) return true;
+          break;
+        // Other core tags are either leaves (`<let>`, `<const>`, ...) or open
+        // a child scope the keep-alive branch cannot re-mount (`<await>`,
+        // custom/dynamic tags, ...); those are not recursed.
       }
-      // Other core tags are either leaves (`<let>`, `<const>`, ...) or open a
-      // child scope (`<if>`, `<for>`, `<await>`, ...); neither is recursed.
     } else if (analyzeTagNameType(child) === TagNameType.NativeTag) {
       // Native elements are part of this scope, so an effect within one still
       // belongs to the `<show>`.
@@ -556,13 +576,15 @@ function bodyNeedsBranch(body: t.NodePath<t.MarkoTagBody>): boolean {
 }
 
 // Detects a `$signal` reference (used for effect cleanup) in a tag's attribute
-// values, which the `<lifecycle>`/`<script>` cases above do not already cover
-// (e.g. an inline event handler that opens an abortable subscription).
+// values (including spreads), which the `<lifecycle>`/`<script>` cases above
+// do not already cover (e.g. an inline event handler that opens an abortable
+// subscription). Matches the predicate the `referenced-identifier` visitor
+// uses when it records `section.hasAbortSignal`.
 function tagReferencesAbortSignal(tag: t.NodePath<t.MarkoTag>) {
   let found = false;
   for (const attr of tag.get("attributes")) {
-    const value = attr.isMarkoAttribute() && attr.get("value");
-    if (value && value.node) {
+    const value = attr.get("value") as t.NodePath<t.Expression>;
+    if (value.node) {
       value.traverse({
         ReferencedIdentifier(path) {
           if (

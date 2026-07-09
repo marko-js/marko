@@ -8,9 +8,9 @@ import {
 } from "../common/types";
 import { insertChildNodes } from "./dom";
 import { parseHTML } from "./parse-html";
-import { queueRender } from "./queue";
+import { queueEffect, queueRender } from "./queue";
 import { _resume } from "./resume";
-import { createScope } from "./scope";
+import { createScope, setBranchGen } from "./scope";
 import { _const, type Signal, type SignalFn } from "./signals";
 import { walk } from "./walker";
 
@@ -78,6 +78,22 @@ export function setupBranch(renderer: Renderer, branch: BranchScope) {
     queueRender(branch, renderer[RendererProp.Setup], -1);
   }
   return branch;
+}
+
+// Re-runs a kept-alive branch's setup so its effects re-mount after a
+// `<show>` reveal. The remount sentinel generation makes state-holding
+// signals propagate downstream (re-queueing effects) without resetting their
+// preserved values; it stays active for every render this setup queues in the
+// current batch and is restored (to a resumed-style stale generation) by an
+// effect that runs after them.
+export function remountBranch(renderer: Renderer, branch: BranchScope) {
+  setBranchGen(branch, -1);
+  renderer[RendererProp.Setup]?.(branch);
+  queueEffect(branch, restoreBranchGen);
+}
+
+function restoreBranchGen(branch: BranchScope) {
+  setBranchGen(branch, 1);
 }
 
 export function _content(

@@ -26,6 +26,7 @@ const pureDOMFunctions = new Set<string>([
   "_if_closure",
   "_show",
   "_show_branch",
+  "_show_closure",
   "_try",
   "_dynamic_tag",
   "_dynamic_tag_content",

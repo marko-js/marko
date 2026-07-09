@@ -9,6 +9,7 @@ import {
   ClosureSignalProp,
   type EncodedAccessor,
   KeyedScopesProp,
+  NodeType,
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
@@ -38,6 +39,10 @@ export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
     if (rendering) {
       if (scope[AccessorProp.Gen] === runId) {
         scope[valueAccessor] = value;
+        fn?.(scope);
+      } else if (scope[AccessorProp.Gen] < 0) {
+        // Remounting (`remountBranch`): keep the preserved value but still
+        // propagate so downstream effects re-queue.
         fn?.(scope);
       }
     } else if (
@@ -86,7 +91,11 @@ export function _const<T>(
 ): Signal<T> {
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
   return ((scope: Scope, value: T | undefined) => {
-    if (scope[valueAccessor] !== value || !(valueAccessor in scope)) {
+    if (
+      scope[valueAccessor] !== value ||
+      !(valueAccessor in scope) ||
+      scope[AccessorProp.Gen] < 0
+    ) {
       scope[valueAccessor] = value;
       fn?.(scope);
     }
@@ -252,6 +261,32 @@ export function _if_closure(
       (scope[branchAccessor] || 0) === branch
     ) {
       queueRender(ifScope, fn, -1);
+    }
+  };
+  ownerSignal._ = fn;
+  return ownerSignal;
+}
+
+// Like `_if_closure`, but for a branch-mode `<show>`'s always-present body
+// branch: closures over parent state only re-render it while it is attached.
+// A hidden (detached) body skips updates entirely; revealing it re-mounts via
+// `remountBranch`, whose setup re-reads owner state, so nothing is missed.
+export function _show_closure(
+  ownerNodeAccessor: EncodedAccessor,
+  fn: SignalFn,
+): SignalFn {
+  if (!MARKO_DEBUG)
+    ownerNodeAccessor = decodeAccessor(ownerNodeAccessor as number);
+  const scopeAccessor = AccessorPrefix.BranchScopes + ownerNodeAccessor;
+  const ownerSignal = (scope: Scope) => {
+    const branch = scope[scopeAccessor] as BranchScope | undefined;
+    if (
+      branch &&
+      branch[AccessorProp.Gen] > 0 &&
+      branch[AccessorProp.Gen] < runId &&
+      branch[AccessorProp.StartNode].parentNode!.nodeType === NodeType.Element
+    ) {
+      queueRender(branch, fn, -1);
     }
   };
   ownerSignal._ = fn;

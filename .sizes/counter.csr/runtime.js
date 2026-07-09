@@ -1,4 +1,4 @@
-// size: 3912 (min) 1727 (brotli)
+// size: 3925 (min) 1741 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -132,7 +132,9 @@ function _let(id, fn) {
   let valueAccessor = decodeAccessor(id);
   return (scope, value) => (
     rendering
-      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
+      ? scope.H === runId
+        ? ((scope[valueAccessor] = value), fn?.(scope))
+        : scope.H < 0 && fn?.(scope)
       : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
         ((scope[valueAccessor] = value), fn) &&
         (schedule(), queueRender(scope, fn, id)),
