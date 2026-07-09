@@ -21,11 +21,9 @@ Tracks:
 
 **Resolution:** computed keys (and other unsupported key kinds) are now rejected with a code-frame error ("Only identifier and string literal keys are supported when destructuring."); statically-known string literal keys keep working. Locked in by the `error-destructure-computed-key` and `error-destructure-computed-key-expression` fixtures. Full computed-key support remains a separate feature decision (the property name is not statically known to the per-property alias machinery). Accepting statically-known numeric literal keys is recorded as a follow-up in `agent-feedback/cleanup.md`.
 
-### A2. Content signal may be missing the reference group of its param defaults — `src/translator/util/known-tag.ts:865`, `known-tag.ts:1232`
+### A2. Content signal may be missing the reference group of its param defaults — resolved 2026-07-09 (real bug, but a different one; fixed via desugaring)
 
-Two copies of the same suspicion ("pretty sure content needs to have the reference group of it's param defaults") at the two `addStatement("render", ...)` call sites that apply a known child's content/param export. If a body param default references reactive state, the statement's `referencedBindings` would not include it, so updates may not re-run the application. **Unverified.**
-
-**Action:** build a repro fixture: a known (statically resolvable) child tag whose body params use a default that reads parent state, mutate that state, and check both DOM update and SSR resume. If confirmed, thread `arg.extra?.referencedBindings` (site 1 already has the expression; site 2 passes `undefined`) together with the param-default references. _Effort: med._
+The repro spike surfaced the actual defect behind the suspicion: top-level assignment-pattern params (`<child|a, b = x|>`) never got a binding at all — `createBindingsAndTrackReferences` has no `AssignmentPattern` case — so DOM output referenced an unbound identifier (CSR crash) and never re-applied the default (stale after resume). HTML output was fine. Fix: desugar top-level param defaults in `pre-analyze` into body `const` tags (the same rewrite already used for defaults nested in destructures), which places the default's references in the body section where closure signals handle them. A follow-up in `writeParamsToSignals` makes the inlined known/define path match the runtime params applier: the attrs object is only written into the param slot after the args when the generic branch would append one, and remaining declared params are applied as `undefined` so joined signals settle during initial render. Both TODO comments removed; `undefined` at the content site is correct and now documented. Covered by the `param-top-level-default` fixture (known child + inlined define, defaults reading parent state, explicit falsy arg beating the default).
 
 ### A3. Shared property aliases ignore destructure defaults — `src/translator/util/references.ts:250`
 
@@ -146,8 +144,8 @@ These can land as one batch with no user-visible behavior change (except the two
 
 ## Suggested sequencing
 
-1. **Now (small, high value):** ~~A1 diagnostic fix~~ (done 2026-07-09), ~~C1 fixtures + cast cleanup~~ (done 2026-07-09), C2 fixture. Deletes 6 TODOs and closes a silent wrong-output hole.
-2. **Next:** repro fixtures for A2, A3, A4, A5 — each is a half-day spike that converts a suspicion into either a scoped bug issue or a deleted TODO. File issues for whatever is confirmed.
+1. **Now (small, high value):** ~~A1 diagnostic fix~~ (done 2026-07-09), ~~C1 fixtures + cast cleanup~~ (done 2026-07-09), ~~C2 fixture~~ (done 2026-07-09). Deletes 6 TODOs and closes a silent wrong-output hole.
+2. **Next:** repro fixtures for ~~A2~~ (done 2026-07-09 — real bug found and fixed), A3, A4, A5 — each is a half-day spike that converts a suspicion into either a scoped bug issue or a deleted TODO. File issues for whatever is confirmed.
 3. **Then:** A6 (re-enable interop SSR) and A7+D4 (dynamic-tag SSR var + dedupe) as independent PRs; A8, A9 policy decisions alongside.
 4. **Ongoing:** D1-D2 as one sizes PR; C3 experiment; E batch PR; re-check oxc#17364 / jsdom#3261 monthly (Track B).
 5. **Explicitly lowered in priority:** writer.ts:595 (recommend closing as won't-fix per the perf.md analysis), return.ts:77 and function.ts:108 (need protocol/design work; keep as TODOs until scheduled).

@@ -855,7 +855,7 @@ function writeParamsToSignals(
         addStatement(
           "render",
           info.tagSection,
-          arg.extra?.referencedBindings, // TODO: pretty sure content needs to have the reference group of it's param defaults.
+          arg.extra?.referencedBindings,
           t.expressionStatement(
             t.callExpression(argExportIdentifier, [
               createScopeReadExpression(
@@ -875,8 +875,45 @@ function writeParamsToSignals(
   }
 
   const attrPropsTree = propTree.props[i];
-  if (attrPropsTree) {
+  if (
+    attrPropsTree &&
+    (!tag.node.arguments?.length ||
+      tag.node.attributes.length ||
+      tag.node.attributeTags.length ||
+      tag.node.body.body.length)
+  ) {
     writeAttrsToSignals(tag, attrPropsTree, `${importAlias}_input`, info);
+    i++;
+  }
+
+  // Declared params after the provided args are still applied (as undefined)
+  // to match the runtime params applier; otherwise joined signals (eg from
+  // rewritten param defaults) never settle during the initial render.
+  for (const key in propTree.props) {
+    if (+key >= i) {
+      addStatement(
+        "render",
+        info.tagSection,
+        undefined,
+        t.expressionStatement(
+          t.callExpression(
+            info.getBindingIdentifier(
+              propTree.props[key].binding,
+              `${importAlias}_param_${key}`,
+            ),
+            [
+              createScopeReadExpression(
+                info.childScopeBinding,
+                info.tagSection,
+              ),
+              t.unaryExpression("void", t.numericLiteral(0)),
+            ],
+          ),
+        ),
+        undefined,
+        true,
+      );
+    }
   }
 }
 
@@ -1222,7 +1259,10 @@ function writeAttrsToSignals(
         addStatement(
           "render",
           info.tagSection,
-          undefined, // TODO: pretty sure content needs to have the reference group of it's param defaults.
+          // Content renders once per scope; param defaults are rewritten into
+          // body `const` tags during pre-analyze, so their references belong
+          // to the body section rather than this statement.
+          undefined,
           t.expressionStatement(
             t.callExpression(
               info.getBindingIdentifier(

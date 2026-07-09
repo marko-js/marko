@@ -1,0 +1,24 @@
+<div id=known>one:<!>10<!--M_*3 #text/1--></div>
+<div id=known>two:<!>0<!--M_*4 #text/1--></div>
+<div id=local>L:<!>101<!--M_*5 #text/1--></div><button
+  id=x>x</button><!--M_*1 #button/2--><button
+  id=y>y</button><!--M_*1 #button/3-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      x: 1,
+      y: 1,
+      "ClosureScopes:x": new Set([_(3), _(4)]),
+      "ClosureScopes:y": new Set([_(5)])
+    }, 1, {
+      _: _(1)
+    }, {
+      $b: 0,
+      _: _(1)
+    }, {
+      _: _(1)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/param-top-level-default/template.marko_0 1"
+  ];
+  M._.w()
+</script>

@@ -1,0 +1,100 @@
+# Render
+```html
+<div
+  id="known"
+>
+  one:10
+</div>
+<div
+  id="known"
+>
+  two:0
+</div>
+<div
+  id="local"
+>
+  L:101
+</div>
+<button
+  id="x"
+>
+  x
+</button>
+<button
+  id="y"
+>
+  y
+</button>
+```
+
+# Update
+```js
+container.querySelector("#x").click();
+```
+```html
+<div
+  id="known"
+>
+  one:20
+</div>
+<div
+  id="known"
+>
+  two:0
+</div>
+<div
+  id="local"
+>
+  L:101
+</div>
+<button
+  id="x"
+>
+  x
+</button>
+<button
+  id="y"
+>
+  y
+</button>
+```
+## Change
+```
+UPDATE: #known::text@4 "10" => "20"
+```
+
+# Update
+```js
+container.querySelector("#y").click();
+```
+```html
+<div
+  id="known"
+>
+  one:20
+</div>
+<div
+  id="known"
+>
+  two:0
+</div>
+<div
+  id="local"
+>
+  L:102
+</div>
+<button
+  id="x"
+>
+  x
+</button>
+<button
+  id="y"
+>
+  y
+</button>
+```
+## Change
+```
+UPDATE: #local::text@2 "101" => "102"
+```

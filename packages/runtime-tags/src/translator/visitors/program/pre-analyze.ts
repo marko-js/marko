@@ -111,8 +111,20 @@ function normalizeTag(tag: t.NodePath<t.MarkoTag>) {
 
   if (node.body.params.length) {
     let insertions: t.MarkoTag[] | undefined;
-    for (const param of node.body.params) {
-      insertions = getAssignmentInsertions(param, insertions);
+    const { params } = node.body;
+    for (let i = 0; i < params.length; i++) {
+      const param = params[i];
+      if (param.type === "AssignmentPattern") {
+        const { left, right } = param;
+        const sourceName = generateUid(getLiteralName(left) || "pattern");
+        params[i] = t.identifier(sourceName);
+        (insertions ||= []).push(
+          toConstTag(left as any, toFallbackExpr(sourceName, right)),
+        );
+        getAssignmentInsertions(left, insertions);
+      } else {
+        insertions = getAssignmentInsertions(param, insertions);
+      }
     }
 
     if (insertions) {
