@@ -472,7 +472,7 @@ export default {
                 t.stringLiteral(
                   getResumeRegisterId(
                     tagSection,
-                    (node.var as t.Identifier).extra?.binding, // TODO: node.var is not always an identifier.
+                    node.var.extra?.binding,
                     "var",
                   ),
                 ),
@@ -496,10 +496,7 @@ export default {
         let tagVarSignal: Signal | undefined;
         if (tag.node.var) {
           const varBinding = tag.node.var.extra!.binding!;
-          tagVarSignal = initValue(
-            // TODO: support destructuring
-            varBinding,
-          );
+          tagVarSignal = initValue(varBinding);
           tagVarSignal.register = true;
           tagVarSignal.buildAssignment = (valueSection, value) => {
             const changeArgs = [

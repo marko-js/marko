@@ -1,0 +1,11 @@
+<let/count = 1/>
+<return={
+  count,
+  inc() {
+    count++;
+  },
+  countChange(value) {
+    count = value;
+  },
+}/>
+<span>child:${count}</span>

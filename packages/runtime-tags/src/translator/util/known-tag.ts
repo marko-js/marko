@@ -227,11 +227,7 @@ export function knownTagTranslateHTML(
             getScopeAccessorLiteral(tag.node.extra![kChildOffsetScopeBinding]!),
             peekScopeId,
             t.stringLiteral(
-              getResumeRegisterId(
-                section,
-                (node.var as t.Identifier).extra?.binding, // TODO: node.var is not always an identifier.
-                "var",
-              ),
+              getResumeRegisterId(section, tagVar.extra?.binding, "var"),
             ),
           ),
         ),
@@ -350,10 +346,7 @@ export function knownTagTranslateDOM(
 
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
-    const source = initValue(
-      // TODO: support destructuring
-      varBinding,
-    );
+    const source = initValue(varBinding);
     source.register = true;
     source.buildAssignment = (valueSection, value) => {
       const changeArgs = [

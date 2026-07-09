@@ -1,0 +1,18 @@
+<span>child:<!>1<!--M_*2 a--></span><button
+  class=inc>inc</button><!--M_*1 c--><button
+  class=assign>assign</button><!--M_*1 d-->
+<div>1<!--M_*1 e-->:<!>fallback<!--M_*1 f--></div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    b: 3,
+    h: 1,
+    i: _(2, "b1"),
+    k: _(2, "b0"),
+    a: _(2)
+  }, {
+    T: _(1, "a0"),
+    b: 1
+  }], "a1 1 a2 1"];
+  M._.w()
+</script>
