@@ -742,17 +742,18 @@ changes via CSS. The surface is three grains designed in
 [optimistic.md](./optimistic.md) ("Programmatic pending state"), chosen
 so the non-local ones are tree-shape-free (lexical wrappers force tree
 shapes — a reader above the interaction site cannot see a tag variable
-below it): **resource** — `<pending/x=cell>`, a cell's held window,
-readable at any height wherever the cell is in scope through the same
-context hoist as its value; **page** — router-stamped `$global.nav`
-via the early-input synthetic-frame channel, readable everywhere by
-definition; **site** — `<try/t>.pending` (inbound, backed by
+below it): **resource** — the cell drives ordinary author state via the
+bind shorthand (`<optimistic/cart=… pending:=syncing/>`; `syncing` is a
+plain `<let>` riding the same context hoist as the value); **page** —
+router-stamped `$global.nav` via the early-input synthetic-frame
+channel, readable everywhere by definition; **site** — the same drive
+on the boundaries (`<try pending:=refreshing>`, backed by
 `AwaitCounter`/persisted boundary state — the boundary-scoped signal
 Svelte's `$effect.pending` and React's `isPending` prefigure, one
-design for both drivers) and `<transition/t>.pending` (outbound,
+design for both drivers; `<transition pending:=adding>` outbound,
 DOM-containment association) for genuinely local UI. All zero-cost when
-unreferenced; the CSS attributes and `aria-busy` remain as zero-code
-conveniences and assistive-tech semantics on top.
+the attribute is absent; the CSS attributes and `aria-busy` remain as
+zero-code conveniences and assistive-tech semantics on top.
 
 The remaining genuinely-hard open edge is teardown symmetry: a persisted
 recede shares the matched-path body swap's recorded gap (DOM removed,

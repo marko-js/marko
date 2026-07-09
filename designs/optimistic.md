@@ -259,41 +259,46 @@ and writer (that is what made the header badge work), so held-ness is
 exposed wherever the cell is readable, through the same context
 machinery as the value:
 
-```marko
-/* +layout.marko header — already consumes cart for the badge */
-<context/cart from="<cart-provider>"/>
-<pending/syncing=cart/>
+The surface **inverts the read into a drive**: the cell does not offer
+pending for extraction; it *drives ordinary author state* through the
+established bind-shorthand/change-handler pattern (`value:=x` on
+controllable inputs is the precedent):
 
-<header class=(syncing && "header--syncing")>
-  🛒 (${cart.reduce((s, i) => s + i.quantity, 0)})
-</header>
+```marko
+/* cart-provider.marko */
+<let/syncing=false/>
+<optimistic/cart=$global.data.cart pending:=syncing/>
+<context:=cart/>
 ```
 
-Semantics: the cell's **held window** — true from the first unsettled
-optimistic write until settle. It is deliberately *not* "a mutation
-that might affect this resource is in flight" (unknowable client-side —
-mutation→data dependencies are server knowledge); a mutation fired with
-no optimistic write does not hold the cell, and the page grain covers
-that case unconditionally.
+The cell invokes the handler as its held window opens and settles.
+`syncing` is a plain `<let>` — hoistable, derivable, providable — so
+readers at any height reach it the way they reach any state; for the
+header, it rides the same provider that already shares `cart` (the
+one-provide-per-template interaction is noted in the open questions).
+The long form is free generality: `pendingChange(p) { ... }` runs
+arbitrary logic on the transition, which is also the aggregation escape
+for multiple cells driving one indicator
+(`pendingChange(p) { busy += p ? 1 : -1 }` — two cells writing one
+*boolean* via `:=` would stomp each other, a documented hazard).
 
-Surface: a **core tag with a tag variable** whose default attribute is
-a compile-resolved *reference* to a pending-capable binding — a compile
-error otherwise. Reference-typed attributes are established language
-shape (`:=` requires an assignable binding reference; `<for by="id">`
-compiles a string against the item shape); an expression intrinsic
-(`pending(cart)`) was considered and **rejected** as out of line with
-the language — Marko expressions are plain JavaScript, and specialness
-lives in tags and identifiers, never in magic callables (the same rule
-that makes `await(...)` invalid in expressions). For a context-consumed
-cell, `from=` is a compile-time constant, so the compiler verifies the
-provider's value is an optimistic cell (a cross-template program-extra
-flag, same drift-safe pattern as `providesContext`/`updateGeneric`) and
-the runtime subscribes to the held slot on the provider scope through
-the same closure machinery as the value. `<pending>` can be the
-family's *uniform* pending read: a cell reference → held window; a
-`<try>` boundary var → its re-await state; a transition var → its
-in-flight state — one tag, "pending of this", rather than object-valued
-vars with `.pending` members on three surfaces.
+Semantics of the driven value: the cell's **held window** — true from
+the first unsettled optimistic write until settle. It is deliberately
+*not* "a mutation that might affect this resource is in flight"
+(unknowable client-side — mutation→data dependencies are server
+knowledge); a mutation fired with no optimistic write does not hold the
+cell, and the page grain covers that case unconditionally.
+
+Two surfaces were considered and **rejected** on language-consistency
+grounds: an expression intrinsic (`pending(cart)`) — Marko expressions
+are plain JavaScript; specialness lives in tags and identifiers, never
+magic callables (the rule that makes `await(...)` invalid) — and a
+reader tag (`<pending/x=cart>`) whose default attribute would have been
+a compile-resolved *reference* restricted to cell bindings: a
+normal-looking attribute position with a secret bare-reference rule,
+and dataflow archaeology besides (pending is a property of the cell;
+values in expressions are just values). `:=` avoids both problems
+because its reference restriction is carried by syntax.
 
 ### Grain 2 — page: router-stamped `$global` (ignores tree shape by definition)
 
@@ -308,40 +313,36 @@ deliveries use. No provider, no wrapper, no containment walk.
 
 ### Grain 3 — site: lexical tag variables, for genuinely local UI
 
-The boundaries expose **handles** as tag variables — lexical
-visibility (the tag's body and the remainder of the enclosing body) is
-the *meaning* of this grain, right for the button's own label and
-`disabled` or the section's own stale styling, with grains 1–2 covering
-everything non-local. The handle's state is read through the same
-uniform `<pending>` tag as a cell (whether handles *also* support
-direct member reads like `t.pending` is an open question; the uniform
-tag keeps one read surface).
+The same drive pattern as grain 1 — the boundary tags accept
+`pending:=` (or `pendingChange=`) and drive author-declared state at
+their pending transitions. No handles, no read tag, no member magic;
+the author places the state at whatever height they need it, and for
+this grain that is naturally next to the boundary, because local is the
+point (grains 1–2 cover everything non-local).
 
-**Inbound (content pending): the boundary's handle.**
+**Inbound (content pending): `pending:=` on the boundary.**
 
 ```marko
-<try/section>
+<let/refreshing=false/>
+<try pending:=refreshing>
   <@placeholder by=id><skeleton/></@placeholder>
   <await|post|=fetchPost(id, refreshGen)>
-    <pending/refreshing=section/>
     <h2 class=(refreshing && "stale")>${post.title}</h2>
   </await>
 </try>
-<pending/sectionBusy=section/>
-<refresh-button disabled=sectionBusy/>
+<refresh-button disabled=refreshing/>
 ```
 
-Backed by state both drivers already maintain: the branch's
+Driven from state both drivers already maintain: the branch's
 `AwaitCounter` (client re-awaits) and the persisted pending-boundary
-state (the `"!"` echo / body-frame commit in `_update_branch`).
-Unreferenced, the compiler wires nothing: zero bytes, the ordinary
-tag-var contract.
+state (the `"!"` echo / body-frame commit in `_update_branch`). Without
+the attribute, `<try>` compiles exactly as today: zero bytes.
 
-**Outbound (interaction pending): a transition boundary's handle.**
+**Outbound (interaction pending): `pending:=` on a transition boundary.**
 
 ```marko
-<transition/t>   // name is a strawman — see open questions
-  <pending/adding=t/>
+<let/adding=false/>
+<transition pending:=adding>   // name is a strawman — see open questions
   <form method="POST" onSubmit() { cart = addItem(cart, input.id) }>
     <button disabled=adding>
       ${adding ? "Adding…" : "Add to cart"}
@@ -350,8 +351,8 @@ tag-var contract.
 </transition>
 ```
 
-`adding` is true while a navigation **initiated from within the tag's
-body** is unsettled. Association is by **DOM containment, not refs**:
+`adding` is driven true while a navigation **initiated from within the
+tag's body** is unsettled. Association is by **DOM containment, not refs**:
 the router already holds the initiating element (the link it
 intercepted, the form that submitted); at navigation start it walks
 that element's ancestry against registered transition ranges (a
@@ -386,9 +387,10 @@ since settle replaces it wholesale with server truth:
 The provisional flag never survives settle — the delivered cart has no
 such property — so "mark the row as sending until the server confirms"
 is just data in the guess. Between that, per-cell truth
-(`<optimistic>`), resource pending (`<pending/x=cell>`, any height), page
-pending (`$global.nav`), and site pending (`<try/t>`,
-`<transition/t>`), arbitrary optimistic UI is ordinary template logic
+(`<optimistic>`), resource pending (`pending:=` on the cell, hoisted to
+any height), page pending (`$global.nav`), and site pending
+(`pending:=` on `<try>`/`<transition>`), arbitrary optimistic UI is
+ordinary template logic
 over reactive values — components, text, `disabled`, reordering — with
 CSS selectors as one consumer among many rather than the only one.
 
@@ -504,17 +506,17 @@ guess).
    (fork-at-rest vs derived-at-rest); the docs teach the split
    (let-by-review.md F1). Confirm no template needs both on one value.
 8. **The outbound boundary's name**: `<transition>` collides with CSS
-   transitions / View Transitions vocabulary; alternatives:
-   `<pending>`, `<busy>`, `<action>`. Whatever wins, `<try/t>` and it
-   should read as the two directions of one concept. Also decide
-   whether the site grain earns two tags at all once grains 1–2 exist —
-   the local-only cases may be few enough for one.
-10. **`<pending>` details** (the surface itself is decided — a core
-    tag with a tag variable; the expression intrinsic was rejected as
-    out of line with the language): whether boundary/transition handles
-    also allow direct member reads (`t.pending`) or the tag stays the
-    single read surface; and whether the reference rides the default
-    attribute (`<pending/x=cart>`) or a named one (`of=`).
+   transitions / View Transitions vocabulary; alternatives: `<busy>`,
+   `<action>`. Whatever wins, it and `<try pending:=>` should read as
+   the two directions of one concept. Also decide whether the site
+   grain earns a dedicated tag at all once grains 1–2 exist — the
+   local-only cases may be few enough to fold into `<try>` and forms.
+10. **Sharing a cell's driven pending state cross-template** pokes at
+    context.md's one-provide-per-template rule (the provider already
+    provides `cart`; `syncing` wants to ride along). Expressible today
+    by layering a second tiny provider template; the cart+syncing pair
+    is the motivating case for a multi-value provide — record it as a
+    context.md follow-up rather than solving it here.
 11. **Grain-2 shape**: the `$global.nav` field name, and whether the
     router stamps it always or only when some template reads it
     (compile-time discoverable — the promotion machinery already tracks
