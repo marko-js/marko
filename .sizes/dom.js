@@ -1,4 +1,4 @@
-// size: 25866 (min) 9518 (brotli)
+// size: 26192 (min) 9654 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -481,6 +481,9 @@ function destroyScope(scope) {
 }
 function resetControllers(scope) {
   for (let id in scope.A) $signalReset(scope, id);
+}
+function resetBranchEffects(branch) {
+  (branch.B?.forEach(resetControllers), branch.D?.forEach(resetBranchEffects));
 }
 function removeAndDestroyBranch(branch) {
   (destroyBranch(branch), removeChildNodes(branch.S, branch.K));
@@ -1680,7 +1683,9 @@ function _lifecycle(scope, thisObj, index = 0) {
     ? (Object.assign(instance, thisObj), instance.onUpdate?.())
     : ((scope[accessor] = thisObj),
       thisObj.onMount?.(),
-      ($signal(scope, accessor).onabort = () => thisObj.onDestroy?.()));
+      ($signal(scope, accessor).onabort = () => {
+        ((scope[accessor] = void 0), thisObj.onDestroy?.());
+      }));
 }
 function removeChildNodes(startNode, endNode) {
   let stop = endNode.nextSibling;
@@ -2028,6 +2033,35 @@ function _show(nodeAccessor, startNodeAccessor) {
             onlyChild ? null : referenceNode,
           )
         : inDom && tempDetachBranch(range);
+    }
+  );
+}
+function _show_branch(nodeAccessor, template, walks, setup) {
+  nodeAccessor = decodeAccessor(nodeAccessor);
+  let branchAccessor = "A" + nodeAccessor,
+    renderer = _content("", template, walks, setup)();
+  return (
+    enableBranches(),
+    (scope, display) => {
+      let referenceNode = scope[nodeAccessor],
+        onlyChild = referenceNode.nodeType === 1,
+        parentNode = onlyChild ? referenceNode : referenceNode.parentNode,
+        nextSibling = onlyChild ? null : referenceNode,
+        branch = scope[branchAccessor];
+      if (!branch) {
+        ((branch = scope[branchAccessor] =
+          createBranch(scope.$, renderer, scope, parentNode)),
+          display &&
+            (insertBranchBefore(branch, parentNode, nextSibling),
+            setupBranch(renderer, branch)));
+        return;
+      }
+      let inDom = branch.S.parentNode === parentNode;
+      display
+        ? inDom ||
+          (insertBranchBefore(branch, parentNode, nextSibling),
+          setupBranch(renderer, branch))
+        : inDom && (resetBranchEffects(branch), tempDetachBranch(branch));
     }
   );
 }

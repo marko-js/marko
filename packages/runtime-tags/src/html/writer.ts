@@ -694,6 +694,51 @@ export function _show_end(
   );
 }
 
+// A branch-mode `<show>` (whose body mounts effects) renders the body into its
+// own keep-alive scope so it resumes with its own effects, mirroring `_if` but
+// always rendering a shown body. A hidden body is not rendered at all: its
+// effects must not run while hidden, so the client mounts it fresh on the first
+// reveal (matching a purely client-rendered `<show>`).
+export function _show_branch(
+  cb: () => void,
+  scopeId: number,
+  accessor: Accessor,
+  display: unknown,
+  serializeMarker?: 0 | 1,
+  serializeStateful?: 0 | 1,
+  parentEndTag?: string | 0,
+  singleNode?: 1,
+) {
+  const { state } = $chunk.boundary;
+  const resumeMarker =
+    serializeMarker !== 0 && (!parentEndTag || serializeStateful !== 0);
+  const branchId = _peek_scope_id();
+  let rendered = false;
+
+  if (display) {
+    if (resumeMarker && !singleNode) {
+      $chunk.writeHTML(state.mark(ResumeSymbol.BranchStart, ""));
+    }
+    withBranchId(branchId, cb);
+    rendered = _peek_scope_id() !== branchId;
+    if (rendered && !resumeMarker) {
+      writeScope(scopeId, {
+        [AccessorPrefix.BranchScopes + accessor]: writeScope(branchId, {}),
+      });
+    }
+  }
+
+  writeBranchEnd(
+    scopeId,
+    accessor,
+    serializeStateful,
+    serializeMarker,
+    parentEndTag,
+    singleNode,
+    rendered ? " " + branchId : "",
+  );
+}
+
 let writeScope = (scopeId: number, partialScope: PartialScope) => {
   const { state } = $chunk.boundary;
   const target = $chunk.serializeState;

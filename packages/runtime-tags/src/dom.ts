@@ -16,6 +16,7 @@ export {
   _if,
   _resume_dynamic_tag,
   _show,
+  _show_branch,
   _try,
 } from "./dom/control-flow";
 export {

@@ -1,0 +1,12 @@
+<let/show=true/>
+<div#ref>initial</div>
+<show=show>
+  <section>
+    <p>content</p>
+    <lifecycle
+      onMount() { document.getElementById("ref").textContent = "Mounted"; }
+      onDestroy() { document.getElementById("ref").textContent = "Destroyed"; }
+    />
+  </section>
+</show>
+<button#toggle onClick() { show = !show }>Toggle</button>

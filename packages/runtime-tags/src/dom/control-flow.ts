@@ -47,6 +47,7 @@ import {
   findBranchWithKey,
   insertBranchBefore,
   removeAndDestroyBranch,
+  resetBranchEffects,
   syncGen,
   tempDetachBranch,
 } from "./scope";
@@ -507,6 +508,62 @@ export function _show(
       }
     } else if (inDom) {
       tempDetachBranch(range);
+    }
+  };
+}
+
+// A `<show>` whose body mounts effects (`<script>`/`<lifecycle>`) or nested
+// scopes renders the body as its own keep-alive branch instead of inline. The
+// branch is created once and never destroyed, so its state persists across
+// toggles; hiding runs its effect cleanups and detaches it, showing re-runs its
+// effects (re-mount) and re-attaches it. Like `_show`, a `<t hidden>` server
+// wrapper is dissolved the first time the value changes.
+export function _show_branch(
+  nodeAccessor: EncodedAccessor,
+  template?: string | 0,
+  walks?: string | 0,
+  setup?: SetupFn | 0,
+) {
+  if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
+  const branchAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
+  const renderer = _content("", template, walks, setup)();
+  enableBranches();
+  return (scope: Scope, display: unknown) => {
+    // The reference node is the parent element when the `<show>` is its only
+    // child, otherwise a marker node just after the body.
+    const referenceNode = scope[nodeAccessor] as ChildNode;
+    const onlyChild = referenceNode.nodeType === NodeType.Element;
+    const parentNode = onlyChild
+      ? (referenceNode as unknown as ParentNode & Element)
+      : referenceNode.parentNode!;
+    const nextSibling = onlyChild ? null : referenceNode;
+    let branch = scope[branchAccessor] as BranchScope | undefined;
+
+    if (!branch) {
+      // Client render: create the branch once. Only mount (run effects) when
+      // shown; a hidden body stays parked in its detached clone until shown.
+      branch = scope[branchAccessor] = createBranch(
+        scope[AccessorProp.Global],
+        renderer,
+        scope,
+        parentNode,
+      );
+      if (display) {
+        insertBranchBefore(branch, parentNode, nextSibling);
+        setupBranch(renderer, branch);
+      }
+      return;
+    }
+
+    const inDom = branch[AccessorProp.StartNode].parentNode === parentNode;
+    if (display) {
+      if (!inDom) {
+        insertBranchBefore(branch, parentNode, nextSibling);
+        setupBranch(renderer, branch);
+      }
+    } else if (inDom) {
+      resetBranchEffects(branch);
+      tempDetachBranch(branch);
     }
   };
 }

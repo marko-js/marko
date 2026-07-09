@@ -493,8 +493,12 @@ function isNativeNode(tag: t.NodePath<t.MarkoTag>) {
       case "html-comment":
       case "html-script":
       case "html-style":
-      case "show":
         return true;
+      case "show":
+        // A body with effects (`<script>`/`<lifecycle>`) or nested scopes to
+        // tear down instead compiles as its own (keep-alive) branch so those
+        // effects can be cleaned up while hidden and re-run when shown again.
+        return !showBodyNeedsBranch(tag);
       case "style":
         return tag.node.body.body.some((child) => t.isMarkoPlaceholder(child));
       default:
@@ -502,4 +506,76 @@ function isNativeNode(tag: t.NodePath<t.MarkoTag>) {
     }
   }
   return analyzeTagNameType(tag) === TagNameType.NativeTag;
+}
+
+const showBranchCache = new WeakMap<t.MarkoTag, boolean>();
+
+// Whether a `<show>` body must compile as its own branch (rather than inline)
+// so its effects can be torn down while hidden and re-run when shown. True when
+// the body directly mounts an effect: a `<script>`, a `<lifecycle>`, or a
+// `$signal`, reachable through native elements.
+//
+// Effects nested inside a child scope (a component, or a control-flow tag like
+// `<if>`) are intentionally not detected: the keep-alive branch re-runs its
+// setup to re-mount, which a *resumed* child scope cannot service (its instance
+// accessor is not serialized), so those are left inline as before.
+export function showBodyNeedsBranch(tag: t.NodePath<t.MarkoTag>) {
+  let result = showBranchCache.get(tag.node);
+  if (result === undefined) {
+    showBranchCache.set(tag.node, (result = bodyNeedsBranch(tag.get("body"))));
+  }
+  return result;
+}
+
+function bodyNeedsBranch(body: t.NodePath<t.MarkoTagBody>): boolean {
+  for (const child of body.get("body")) {
+    if (!child.isMarkoTag()) continue;
+
+    if (isCoreTag(child)) {
+      if (
+        child.node.name.value === "lifecycle" ||
+        child.node.name.value === "script"
+      ) {
+        return true;
+      }
+      // Other core tags are either leaves (`<let>`, `<const>`, ...) or open a
+      // child scope (`<if>`, `<for>`, `<await>`, ...); neither is recursed.
+    } else if (analyzeTagNameType(child) === TagNameType.NativeTag) {
+      // Native elements are part of this scope, so an effect within one still
+      // belongs to the `<show>`.
+      if (
+        tagReferencesAbortSignal(child) ||
+        bodyNeedsBranch(child.get("body"))
+      ) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+// Detects a `$signal` reference (used for effect cleanup) in a tag's attribute
+// values, which the `<lifecycle>`/`<script>` cases above do not already cover
+// (e.g. an inline event handler that opens an abortable subscription).
+function tagReferencesAbortSignal(tag: t.NodePath<t.MarkoTag>) {
+  let found = false;
+  for (const attr of tag.get("attributes")) {
+    const value = attr.isMarkoAttribute() && attr.get("value");
+    if (value && value.node) {
+      value.traverse({
+        ReferencedIdentifier(path) {
+          if (
+            path.node.name === "$signal" &&
+            !path.scope.hasBinding("$signal")
+          ) {
+            found = true;
+            path.stop();
+          }
+        },
+      });
+      if (found) break;
+    }
+  }
+  return found;
 }

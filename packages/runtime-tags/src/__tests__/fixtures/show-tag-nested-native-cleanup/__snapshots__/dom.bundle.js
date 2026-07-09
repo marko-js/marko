@@ -1,0 +1,13 @@
+// template.marko
+const $show2 = /*@__PURE__*/ _show_branch(0, "<section><p>content</p></section>", "b", _script("a0", ($scope) => _lifecycle($scope, {
+	onMount: function() {
+		document.getElementById("ref").textContent = "Mounted";
+	},
+	onDestroy: function() {
+		document.getElementById("ref").textContent = "Destroyed";
+	}
+})));
+const $show = /*@__PURE__*/ _let(2, ($scope) => $show2($scope, $scope.c));
+const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
+	$show($scope, !$scope.c);
+}));

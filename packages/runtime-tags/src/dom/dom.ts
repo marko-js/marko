@@ -476,7 +476,12 @@ export function _lifecycle(
   } else {
     scope[accessor] = thisObj;
     thisObj.onMount?.();
-    $signal(scope, accessor).onabort = () => thisObj.onDestroy?.();
+    // Clearing the instance on abort lets a re-shown `<show>` treat the next
+    // run as a fresh mount (`onMount`) rather than an update.
+    $signal(scope, accessor).onabort = () => {
+      scope[accessor] = undefined;
+      thisObj.onDestroy?.();
+    };
   }
 }
 

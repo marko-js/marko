@@ -74,6 +74,7 @@ export {
   _serialize_guard,
   _serialize_if,
   _set_serialize_reason,
+  _show_branch,
   _show_end,
   _show_start,
   _subscribe,

@@ -1,0 +1,12 @@
+<let/show=true/>
+<div#ref/>
+<show=show>
+  <let/id=0/>
+  <script>
+    const el = document.getElementById("ref");
+    el.textContent = `open ${id}`;
+    $signal.onabort = () => { el.textContent = `close ${id}`; };
+  </script>
+  <button#next onClick() { id++ }>next</button>
+</show>
+<button#toggle onClick() { show = !show }>Toggle</button>

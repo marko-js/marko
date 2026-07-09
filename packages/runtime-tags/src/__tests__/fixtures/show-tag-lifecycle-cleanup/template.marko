@@ -1,0 +1,12 @@
+<let/show=true/>
+<let/mounts=0/>
+<div#ref/>
+<show=show>
+  <let/count=0/>
+  <lifecycle
+    onMount() { mounts++; document.getElementById("ref").textContent = `Mount ${mounts} (count ${count})`; }
+    onDestroy() { document.getElementById("ref").textContent = `Destroy (count ${count})`; }
+  />
+  <button#inc onClick() { count++ }>count ${count}</button>
+</show>
+<button#toggle onClick() { show = !show }>Toggle</button>

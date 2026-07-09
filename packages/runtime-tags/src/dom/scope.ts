@@ -98,6 +98,14 @@ function resetControllers(scope: Scope) {
   }
 }
 
+// Runs a branch's effect cleanups (aborting its controllers throughout the
+// subtree) without destroying its scopes, so `<show>` can tear down effects
+// while hidden yet keep state and re-run them when shown again.
+export function resetBranchEffects(branch: BranchScope) {
+  branch[AccessorProp.AbortScopes]?.forEach(resetControllers);
+  branch[AccessorProp.BranchScopes]?.forEach(resetBranchEffects);
+}
+
 export function removeAndDestroyBranch(branch: BranchScope) {
   destroyBranch(branch);
   removeChildNodes(

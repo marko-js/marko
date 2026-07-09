@@ -10,6 +10,7 @@ import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { generateUidIdentifier } from "../util/generate-uid";
+import { getAccessorPrefix } from "../util/get-accessor-char";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import {
@@ -25,9 +26,15 @@ import {
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import {
+  ContentType,
+  getBranchRendererArgs,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  getSectionForBody,
+  setSectionParentIsOwner,
+  showBodyNeedsBranch,
+  startSection,
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
 import {
@@ -35,7 +42,13 @@ import {
   getSerializeReason,
 } from "../util/serialize-reasons";
 import { addSetupStatement } from "../util/setup-statements";
-import { addValue, getSignal } from "../util/signals";
+import {
+  addValue,
+  getSignal,
+  replaceNullishAndEmptyFunctionsWith0,
+  setClosureSignalBuilder,
+  writeHTMLResumeStatements,
+} from "../util/signals";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
@@ -66,6 +79,11 @@ declare module "@marko/compiler/dist/types" {
 // still renders (so it resumes) inside a `<t hidden>` wrapper that dissolves
 // lazily the first time the value changes. A resumed page never needs the
 // body's template, so only the small range-toggling signal is ever bundled.
+//
+// The exception is a body that mounts effects (`showBodyNeedsBranch`): to tear
+// those effects down while hidden and re-run them when shown, that body instead
+// compiles as its own keep-alive branch (like `<if>`, but created once and
+// never destroyed, so its state persists). See `_show_branch`.
 export default {
   analyze: {
     enter(tag) {
@@ -73,6 +91,25 @@ export default {
 
       const tagExtra = (tag.node.extra ??= {});
       const display = tag.node.attributes[0].value;
+
+      // A body that mounts effects or nested scopes renders as its own
+      // keep-alive branch (see `showBodyNeedsBranch`) so they can be torn down
+      // while hidden and re-run when shown; everything else stays inline.
+      if (showBodyNeedsBranch(tag)) {
+        const tagSection = getOrCreateSection(tag);
+        const bodySection = startSection(tag.get("body"))!;
+        const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
+        bodySection.isBranch = true;
+        bodySection.upstreamExpression = tagExtra;
+        bodySection.sectionAccessor = {
+          binding: nodeBinding,
+          prefix: getAccessorPrefix().BranchScopes,
+        };
+        mergeReferences(tagSection, tag.node, [display]);
+        addSerializeExpr(tagSection, tagExtra, kStatefulReason);
+        return;
+      }
+
       const displayEval = evaluate(display);
 
       tagExtra[kSingleNodeBody] = isSingleNodeBody(tag);
@@ -109,7 +146,7 @@ export default {
     },
     exit(tag) {
       const tagExtra = tag.node.extra!;
-      if (tagExtra[kStaticDisplay] === true) return;
+      if (showBodyNeedsBranch(tag) || tagExtra[kStaticDisplay] === true) return;
 
       const tagSection = getSection(tag);
       const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
@@ -122,6 +159,11 @@ export default {
   translate: translateByTarget({
     html: {
       enter(tag) {
+        if (showBodyNeedsBranch(tag)) {
+          translateShowBranchHtmlEnter(tag);
+          return;
+        }
+
         const tagExtra = tag.node.extra!;
         writer.flushBefore(tag);
 
@@ -146,6 +188,11 @@ export default {
         }
       },
       exit(tag) {
+        if (showBodyNeedsBranch(tag)) {
+          translateShowBranchHtmlExit(tag);
+          return;
+        }
+
         const tagExtra = tag.node.extra!;
         const staticDisplay = tagExtra[kStaticDisplay];
 
@@ -238,6 +285,16 @@ export default {
     },
     dom: {
       enter(tag) {
+        if (showBodyNeedsBranch(tag)) {
+          const bodySection = getSectionForBody(tag.get("body"));
+          if (bodySection) setSectionParentIsOwner(bodySection, true);
+          if (!getOnlyChildParentTagName(tag)) {
+            walks.visit(tag, WalkCode.Replace);
+            walks.enterShallow(tag);
+          }
+          return;
+        }
+
         const tagExtra = tag.node.extra!;
         if (tagExtra[kStartBinding]) {
           walks.visit(tag, WalkCode.Replace);
@@ -245,6 +302,11 @@ export default {
         }
       },
       exit(tag) {
+        if (showBodyNeedsBranch(tag)) {
+          translateShowBranchDom(tag);
+          return;
+        }
+
         const tagExtra = tag.node.extra!;
 
         if (tagExtra[kStaticDisplay] === true) {
@@ -291,6 +353,118 @@ export default {
     },
   ],
 } as Tag;
+
+// Wires the DOM signal for a branch-mode `<show>`: closures over parent state
+// re-run the always-present body branch (`_if_closure` with a constant branch
+// index), and the display value drives `_show_branch`, which keeps the branch
+// mounted, toggling only its attachment and effects.
+function translateShowBranchDom(tag: t.NodePath<t.MarkoTag>) {
+  const tagExtra = tag.node.extra!;
+  const tagSection = getSection(tag);
+  const bodySection = getSectionForBody(tag.get("body"))!;
+  const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
+  const display = tag.node.attributes[0].value;
+
+  setClosureSignalBuilder(tag, (_closure, render) => {
+    return callRuntime(
+      "_if_closure",
+      getScopeAccessorLiteral(nodeBinding, true),
+      t.numericLiteral(0),
+      render,
+    );
+  });
+
+  const signal = getSignal(tagSection, nodeBinding, "show");
+  signal.build = () => {
+    return callRuntime(
+      "_show_branch",
+      getScopeAccessorLiteral(nodeBinding, true),
+      ...replaceNullishAndEmptyFunctionsWith0(
+        getBranchRendererArgs(bodySection).slice(0, 3),
+      ),
+    );
+  };
+  addValue(tagSection, tagExtra.referencedBindings, signal, display);
+
+  tag.remove();
+}
+
+function translateShowBranchHtmlEnter(tag: t.NodePath<t.MarkoTag>) {
+  if (!getOnlyChildParentTagName(tag)) {
+    walks.visit(tag, WalkCode.Replace);
+    walks.enterShallow(tag);
+  }
+  writer.flushBefore(tag);
+  const bodySection = getSectionForBody(tag.get("body"));
+  if (bodySection) {
+    setSectionParentIsOwner(bodySection, true);
+  }
+}
+
+function translateShowBranchHtmlExit(tag: t.NodePath<t.MarkoTag>) {
+  const tagBody = tag.get("body");
+  const tagSection = getSection(tag);
+  const bodySection = getSectionForBody(tagBody)!;
+  const display = tag.node.attributes[0].value;
+  const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
+  const onlyChildParentTagName = getOnlyChildParentTagName(tag);
+  const statefulReason = getSerializeReason(tagSection, kStatefulReason);
+  const markerSerializeReason = getSerializeReason(tagSection, nodeBinding);
+  const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
+  const singleNode = !!(
+    bodySection.content?.singleChild &&
+    bodySection.content.startType !== ContentType.Text
+  );
+
+  if (skipParentEnd) {
+    getParentTag(tag)!.node.extra![kSkipEndTag] = true;
+  }
+
+  writer.flushInto(tag);
+  // Prepends the body scope id and appends its `_scope`/`_script` resume calls
+  // to the body statements, which then render inside the `_show_branch`
+  // callback (aligning the branch id with the body scope via `_peek_scope_id`).
+  writeHTMLResumeStatements(tagBody);
+
+  const statefulSerializeArg = getSerializeGuard(
+    tagSection,
+    statefulReason,
+    !skipParentEnd,
+  );
+  const markerSerializeArg = getSerializeGuard(
+    tagSection,
+    markerSerializeReason,
+    !statefulSerializeArg,
+  );
+
+  const bodyStatements = tag.node.body.body as unknown as t.Statement[];
+  const cbNode = t.arrowFunctionExpression(
+    [],
+    t.blockStatement(bodyStatements),
+  );
+
+  for (const replacement of tag.replaceWithMultiple([
+    t.expressionStatement(
+      callRuntime(
+        "_show_branch",
+        cbNode,
+        getScopeIdIdentifier(tagSection),
+        getScopeAccessorLiteral(nodeBinding),
+        t.cloneNode(display, true),
+        markerSerializeArg,
+        statefulSerializeArg,
+        skipParentEnd
+          ? t.stringLiteral(`</${onlyChildParentTagName}>`)
+          : singleNode
+            ? t.numericLiteral(0)
+            : undefined,
+        singleNode ? t.numericLiteral(1) : undefined,
+      ),
+    ),
+  ])) {
+    replacement.skip();
+  }
+}
 
 // True when the body renders exactly one static node, so the single-node
 // resume mark applies.
