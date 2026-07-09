@@ -96,7 +96,7 @@ The `(node.var as t.Identifier).extra?.binding` casts at `known-tag.ts:232` / `d
 
 **Resolution:** the `custom-tag-var-destructured` and `dynamic-tag-var-destructured` fixtures now lock the behavior in across SSR, resume, and CSR (reactive destructured reads, `inc()` method calls into child state, assignment through an alias via `countChange`, and a destructure default). The `as t.Identifier` casts were replaced with direct `extra?.binding` access and all four TODOs (`known-tag.ts:232`/`354`, `dynamic-tag.ts:475`/`500`) were deleted.
 
-### C2. Nested state writes appear to compile correctly — `src/__tests__/fixtures/basic-push-pop-list/template.marko:8`
+### C2. Nested state writes appear to compile correctly — resolved 2026-07-09 (fixture now uses `[...items, ++id]`; behavior snapshots unchanged)
 
 The fixture comment says `items = [...items, id++]` "doesn't work" and hand-expands it. A probe now compiles that expression to `$items($scope, [...$scope.items, $id($scope, $scope.id + 1) - 1])`, which is shape-correct (assumes the signal setter returns the set value — verify at runtime).
 
