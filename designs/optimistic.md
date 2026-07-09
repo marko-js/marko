@@ -229,6 +229,114 @@ still fires; a held cell keeps its guess (shadow unchanged), and the
 next successful emission reconciles — the guess over an error banner
 beats snapping to stale truth mid-error. Needs a fixture either way.
 
+## Programmatic pending state — the reactive surface
+
+> Decision recorded (2026-07-09, design discussion): the
+> optimistic-transitions doc's non-goal — "no promise/props exposure of
+> navigation state into templates" — is **reversed in part**. Transport
+> *detail* stays hidden (no fetch promises, no response objects, no
+> client data layer), but *pending-ness* becomes first-class reactive
+> state. CSS attributes (`data-marko-pending`, `aria-busy`) demote to
+> zero-code conveniences and assistive-tech semantics layered on top —
+> they are not the API. A user must be able to optimistically drive
+> **any** update — swap text, disable semantically, render different
+> components, reorder content — not only respond to attribute changes
+> via CSS.
+
+Two reactive values, exposed the way Marko exposes platform-owned
+lexical state — **tag variables** — one per direction of async:
+
+**Inbound (content pending): a tag variable on the boundary.**
+
+```marko
+<try/section>
+  <@placeholder by=id><skeleton/></@placeholder>
+  <await|post|=fetchPost(id, refreshGen)>
+    <h2 class=(section.pending && "stale")>${post.title}</h2>
+  </await>
+</try>
+<refresh-button disabled=section.pending/>
+```
+
+`section.pending` is backed by state both drivers already maintain: the
+branch's `AwaitCounter` (client re-awaits) and the persisted
+pending-boundary state (the `"!"` echo / body-frame commit in
+`_update_branch`). Tag-variable scoping gives the right visibility for
+free — readable inside the body and in the remainder of the enclosing
+body (the spinner-next-to-the-section case). Unreferenced, the compiler
+wires nothing: zero bytes, the ordinary tag-var contract.
+
+**Outbound (interaction pending): a transition boundary.**
+
+```marko
+<transition/adding>   // name is a strawman — see open questions
+  <form method="POST" onSubmit() { cart = addItem(cart, input.id) }>
+    <button disabled=adding.pending>
+      ${adding.pending ? "Adding…" : "Add to cart"}
+    </button>
+  </form>
+</transition>
+```
+
+`adding.pending` is true while a navigation **initiated from within the
+tag's body** is unsettled. Association is by **DOM containment, not
+refs**: the router already holds the initiating element (the link it
+intercepted, the form that submitted); at navigation start it walks
+that element's ancestry against registered transition ranges (a
+boundary's body is a branch with start/end nodes — the containment
+check is the same shape the runtime uses everywhere else). No tag-var
+plumbing, so it works in loops (each iteration's instance contains its
+own form — per-row pending for a feed of like buttons) and across
+templates (the transition wraps a `<content>` slot; controls rendered
+into it still associate). Settle mirrors the cell predicate: the
+navigation's stream completing, the fallback ladder firing, or a
+supersede. Page-global pending is the degenerate case — wrap the layout
+body in one `<transition/nav>` — so no separate document-level API is
+needed; the doc-level attribute becomes a convenience the router can
+keep stamping for zero-code apps.
+
+**"Any sort of update" then needs no further machinery.** The guess a
+cell holds is an arbitrary value — including presentation metadata,
+since settle replaces it wholesale with server truth:
+
+```marko
+<form method="POST" onSubmit() {
+  cart = [...cart, { ...item, provisional: true }];  // guess carries its own flag
+}>
+```
+
+```marko
+<for|entry| of=cart>
+  <li class=(entry.provisional && "cart__row--sending")>…</li>
+</for>
+```
+
+The provisional flag never survives settle — the delivered cart has no
+such property — so "mark the row as sending until the server confirms"
+is just data in the guess. Between that, per-cell truth
+(`<optimistic>`), inbound pending (`<try/t>`), and outbound pending
+(`<transition/t>`), arbitrary optimistic UI is ordinary template logic
+over reactive values — components, text, `disabled`, reordering — with
+CSS selectors as one consumer among many rather than the only one.
+
+Costs and edges:
+
+- Unused vars compile to nothing (tag-variable wiring is demand-driven).
+  Used, each is a small counter-backed signal; the router pays one
+  ancestry walk per navigation start/settle.
+- SSR: `pending` renders `false`; one honest question is the initial
+  document stream — a boundary still streaming its body at resume
+  arguably *is* pending, and `section.pending` reflecting that would
+  unify first-load and transition UX (needs a decision + fixture).
+- Anti-flash: a raw boolean flips immediately; fast navigations would
+  flash spinners built on it. Follow the TanStack lesson at the
+  primitive level *later* if needed (`<transition/t delay=300>`), not
+  by making the raw value lie. The server-side fast-path (resolved by
+  first flush → no recede) already covers the structural half.
+- Error exposure (`t.error`?) is deliberately out of scope: failed
+  navigations end in the fallback ladder (full navigation), and
+  boundary errors already have `<@catch>`.
+
 ## What each layer requires
 
 - **Compiler** (`translator/core/optimistic.ts`, shaped like `let.ts`):
@@ -322,3 +430,12 @@ guess).
 7. **Interaction with `<let by>`**: none by design — different shapes
    (fork-at-rest vs derived-at-rest); the docs teach the split
    (let-by-review.md F1). Confirm no template needs both on one value.
+8. **The outbound boundary's name**: `<transition>` collides with CSS
+   transitions / View Transitions vocabulary; alternatives:
+   `<pending>`, `<busy>`, `<action>`. Whatever wins, `<try/t>` and it
+   should read as the two directions of one concept.
+9. **Initial-stream pending**: should `<try/t>.pending` be true while
+   the document stream is still filling the boundary at resume
+   (unifying first-load and transition UX)? Leaning yes; needs the
+   reorder-runtime's pending state surfaced to the resumed branch and a
+   fixture.

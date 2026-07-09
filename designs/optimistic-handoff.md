@@ -287,12 +287,36 @@ dedicated delivery channel is still needed at all once the guess shape
 moves to `<optimistic>` (request-derived keys/values already re-run
 client-side through ordinary fan-out).
 
-## 7. The perception layers around every flow
+## 7. Pending state and the perception layers
+
+**The primary surface is reactive, not CSS** (decision 2026-07-09,
+reversing the optimistic-transitions doc's non-goal in part — transport
+detail stays hidden; pending-ness becomes first-class state; see
+optimistic.md, "Programmatic pending state"). Two tag variables cover
+the two directions of async, both zero-cost when unreferenced:
+
+- `<try/section>` → `section.pending` — *inbound*: this boundary's
+  content is being re-fetched (client `AwaitCounter` / persisted
+  pending-boundary state). [EXPLORATION]
+- `<transition/adding>` → `adding.pending` — *outbound*: a navigation
+  initiated by a control inside the body is unsettled. Association is
+  DOM containment of the initiating element (no refs — works in loops
+  and across templates); page-global pending is just a transition
+  around the layout body. [EXPLORATION]
+
+With those plus `<optimistic>` cells — whose guesses are arbitrary
+values and may carry their own presentation metadata
+(`{ ...item, provisional: true }`, wiped by settle since server truth
+replaces the value wholesale) — **any** optimistic update is ordinary
+template logic: swap labels, `disabled=adding.pending`, render spinner
+components, style provisional rows. The layers below are conveniences
+and platform affordances on top of that surface, not the API:
 
 | layer                                   | what the author does            | status                                                       |
 | --------------------------------------- | ------------------------------- | ------------------------------------------------------------ |
-| pending attrs (`data-marko-pending`, doc-level) + double-submit guard | CSS only     | [DESIGNED] — review F6 says ship **first**                    |
-| regional `aria-busy` on pending boundaries | CSS only                     | [DESIGNED], deferred by decision; F3/held-cells hook revives it |
+| pending reactive vars (`<try/t>`, `<transition/t>`) | any template logic  | [EXPLORATION] — optimistic.md                                 |
+| pending attrs (`data-marko-pending`, doc-level) + double-submit guard | CSS only, zero code | [DESIGNED] — review F6 says ship **first** (the guard is correctness) |
+| regional `aria-busy` on pending boundaries | nothing (a11y semantics)     | [DESIGNED], deferred by decision; same boundary-settle hook as the cells |
 | structural recede `<@placeholder by=>`  | one attribute                   | **[BUILT]** persisted-side; F3 extends to client re-awaits; anti-flash hold unbuilt |
 | early-input stamp                        | nothing                         | [REVIEW]                                                      |
 | View Transitions                         | CSS (`view-transition-name`)    | [DESIGNED], behind a run option; both swap paths are single choke points |
@@ -308,9 +332,11 @@ client-side through ordinary fan-out).
 5. `<let by>` persisted delivery (scope per §6's audit).
 6. `<context>` per its plan (reason-threading spike first — shared with
    `<optimistic>`'s cross-template boundary feeding).
-7. `<optimistic>` (optimistic.md): the gate cell, the held-cells
-   boundary hook, the router settle call. Delete `let-global` from the
-   benchmark as acceptance.
+7. `<optimistic>` + the pending tag variables (optimistic.md): the gate
+   cell, the held-cells boundary hook, the router settle call, and
+   `<try/t>`/`<transition/t>` riding the same boundary-settle and
+   queue-state plumbing. Delete `let-global` from the benchmark as
+   acceptance.
 8. `<@placeholder by=>` on client re-awaits (F3) + shared anti-flash.
 9. View Transitions behind the run option.
 

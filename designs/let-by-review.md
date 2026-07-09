@@ -464,7 +464,7 @@ what fell out of forcing the comparison follows.
 | React surface | what it encodes | persisted-pages answer |
 | --- | --- | --- |
 | `startTransition` (off-screen concurrent render; old UI stays visible and interactive; boundary-atomic commit) | protect the visible UI while the next one is prepared | there is no second tree to render — keep-stale falls out of the wire model (live DOM holds until values land); the per-frame synchronous `run()` flush is the atomicity unit; the `persisted-update-csr-race` fixture pins the interruption equivalent (urgent client renders win mid-stream, late frames re-compute against live state rather than clobbering) |
-| `useTransition().isPending` | a programmatic pending read — necessary in React because a client state change has no DOM element to mark | a persisted transition always has an initiator element and affected boundary ranges, so attribute-first (`data-marko-pending`, `aria-busy`) reaches the same styling with zero app JS; the programmatic residue (swap a label, true `disabled` semantics) is mostly covered by CSS plus the F6 double-submit guard — hold the "no transport state in templates" line until real demand, then design one boundary-scoped read for both drivers |
+| `useTransition().isPending` | a programmatic pending read — arbitrary UI must be derivable from pending-ness, not just styling | initially answered attribute-first here; **superseded (2026-07-09)** — pending is now first-class reactive state via tag variables (`<try/t>.pending` inbound, `<transition/t>.pending` outbound, designed in optimistic.md), one design for both drivers; attributes and `aria-busy` remain as the zero-code/a11y layer |
 | `<Suspense>` reveal rules (fallback on first mount; revealed content never re-hides in a transition; `key=` forces reset; routers "should key automatically") | when stale content may be destroyed | matched boundaries keep stale; `<@placeholder by=>` is the key idiom — aligned on the persisted driver, **contradicted by the client driver today** (F3) |
 | coordinated reveal (multiple suspending children per boundary; `SuspenseList`) | staged/grouped appearance | the client runtime already does all-or-nothing per boundary (`AwaitCounter` counts every pending await under one placeholder, dom/control-flow.ts:100-127); the persisted driver's v1 rule aborts >1 pending await per placeholder body into a full navigation — that limit now looks like the *standard idiom* rather than an edge, prioritize lifting it |
 | `useOptimistic` (overlay over canonical state; auto-revert when the action settles; **rebases** queued deltas onto refreshed canonical state) | optimistic writes must never become truth, and must survive canonical refreshes that don't answer them | F1's target primitive is this exact shape made declarative: derived-at-rest cell, write opens an interaction-scoped overlay, settle (navigation stream / boundary re-await, per driver) re-derives; overlay-holds-while-pending is the rebase answer, per cell; the interim `<let by>` + version-key recipe approximates it for single mutations |
@@ -732,17 +732,22 @@ the server work. Every surface then behaves identically on both drivers:
 | guesses inside       | optimistic cell: overlay opens on write, settles when the boundary's re-await commits (param source re-fires) | same cell: overlay settles when the navigation/mutation stream commits its frames — persisted deliveries inform the same lifecycle |
 | input latency        | none — the input is already local            | early-input stamp at click (proposed): URL-derived state and `by=` comparisons react at interaction time; content keeps stale behind the pending signal until frames land |
 
-Two deliberate omissions to keep: no template-visible transport state
-(`isPending` props for navigations), and no client data layer. The
-cross-check section makes the case for the first precisely: React needs
-`isPending`/`useFormStatus` as *hooks* because a client state change has
-no DOM element to mark, while a persisted transition always has an
-initiator element and boundary ranges an attribute can style — the
-programmatic residue is small and shrinks further once the double-submit
-guard exists. If demand for a programmatic pending read materializes
-(Svelte's `$effect.pending` and React's `isPending` are the precedents),
-design it once for both drivers as a boundary-scoped compiled signal —
-but let the attribute prove insufficient first.
+One deliberate omission to keep, one reversed. Kept: no client data
+layer, and no transport *detail* in templates (no fetch promises, no
+response objects). Reversed (designer decision, 2026-07-09 — this
+paragraph originally held the "attributes suffice" line): pending-ness
+itself becomes first-class reactive state, because users must be able
+to optimistically drive *any* update, not only respond to attribute
+changes via CSS. The surface is two tag variables designed in
+[optimistic.md](./optimistic.md) ("Programmatic pending state"):
+`<try/t>.pending` for inbound content (backed by `AwaitCounter` /
+persisted boundary state — the boundary-scoped signal Svelte's
+`$effect.pending` and React's `isPending` prefigure, designed once for
+both drivers) and `<transition/t>.pending` for outbound interactions
+(association by DOM containment of the initiating element — no refs, so
+loops and cross-template shells work). Both are zero-cost when
+unreferenced; the CSS attributes and `aria-busy` remain as zero-code
+conveniences and assistive-tech semantics on top.
 
 The remaining genuinely-hard open edge is teardown symmetry: a persisted
 recede shares the matched-path body swap's recorded gap (DOM removed,
