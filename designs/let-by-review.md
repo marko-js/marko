@@ -177,7 +177,9 @@ load-bearing property, which is the tell that the key is smuggling in a
 fact that isn't identity at all: "my mutation settled."
 
 **Target: an interaction-scoped optimistic cell (design direction,
-2026-07-09 discussion).** A dedicated primitive whose semantics are the
+2026-07-09 discussion — now worked out in
+[optimistic.md](./optimistic.md), which supersedes the sketch below
+where they differ).** A dedicated primitive whose semantics are the
 derived-at-rest overlay directly — seeded by a control-tied sketch from
 that discussion (`<a/nextTab href=…>` +
 `<optimistic/tab=input.tab for=nextTab onClick() { tab = … }>`), and
