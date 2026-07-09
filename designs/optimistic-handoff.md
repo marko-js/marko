@@ -16,18 +16,18 @@ traced end to end. Everything here is stated with its build status:
 
 ## 1. The mental model
 
-Persisted pages make the server authoritative: a navigation is *the
-current page receiving new input*, the compiler's ownership analysis
+Persisted pages make the server authoritative: a navigation is _the
+current page receiving new input_, the compiler's ownership analysis
 decides what the wire may touch, and client state survives by
 construction. "Optimistic UX" is everything that happens **between the
 user's intent and the server's answer** — and it decomposes into three
 different problems, because the client knows different things in each:
 
-| the user…                          | the client knows…                       | primitive                                        | status        |
-| ---------------------------------- | --------------------------------------- | ------------------------------------------------ | ------------- |
-| clicks a link / submits a GET form | the next **input**, exactly (the href)  | early-input stamp — zero authoring               | [REVIEW]      |
-| submits a mutation / triggers a refresh | only a **guess** at the outcome    | `<optimistic>` cell — derived-at-rest overlay    | [EXPLORATION] |
-| edits something in place           | local truth, until the **subject** changes | `<let by=>` — identity-keyed durable state   | [DESIGNED]    |
+| the user…                               | the client knows…                          | primitive                                                 | status        |
+| --------------------------------------- | ------------------------------------------ | --------------------------------------------------------- | ------------- |
+| clicks a link / submits a GET form      | the next **input**, exactly (the href)     | nav-context stamp — early reaction is an authored consume | [EXPLORATION] |
+| submits a mutation / triggers a refresh | only a **guess** at the outcome            | `<optimistic>` cell — derived-at-rest overlay             | [EXPLORATION] |
+| edits something in place                | local truth, until the **subject** changes | `<let by=>` — identity-keyed durable state                | [DESIGNED]    |
 
 Shared vocabulary (defined by the `<optimistic>` gate model, used
 throughout):
@@ -39,13 +39,14 @@ throughout):
   `$global`-statement re-run each apply performs, or await params
   firing with a fresh resolved object.
 - **held / shadow / exposed** — an optimistic cell's state: a guess is
-  showing (*exposed*) while the latest truth accumulates (*shadow*)
-  until confirmation is no longer outstanding (*held* clears).
+  showing (_exposed_) while the latest truth accumulates (_shadow_)
+  until confirmation is no longer outstanding (_held_ clears).
 - **settle predicate** — "is confirmation still outstanding on this
   cell's channel?": router mutation queue non-empty (persisted) or the
   feeding boundary's `AwaitCounter` pending (client).
-- **settle** — the channel going quiet: the final pending mutation's
-  synchronous frames applied with the queue empty, or the boundary's
+- **settle** — the channel going quiet: a delivered frame applying
+  while the mutation queue is empty (persisted — checked per frame,
+  since the wire has no sync/async phase marker), or the boundary's
   awaits reaching zero / a body committing / catch.
 
 Association, in one sentence: **writes are never tied to interactions;
@@ -86,16 +87,22 @@ persisted driver (keep stale when `<@placeholder by=>` identity is
 unchanged).
 
 **The one new shared hook [EXPLORATION]**: a global held-cell
-registry (cells register at write time, carry their own predicate, and
-deregister at settle or scope abort), fanned out at counter-zero,
+registry (cells register at write time and carry their own predicate;
+fan-out iterates a snapshot with a pass-generation guard; one abort
+listener per cell instance), fanned out at counter-zero,
 `_update_branch` body commit, and catch — including the counters the
-document's **inline reorder runtime** owns, which the module wraps at
-resume (it cannot be patched to call lazy modules itself). Same
+document's **inline reorder runtime** owns (it cannot call lazy
+modules itself). Round 2 respecified how those inline counters are
+reached: not a load-time wrap of `render.p` (the inline script keeps a
+local alias and creates counters continuously as chunks arrive), but
+the runtime's own seams — `render.j[id]` completion callbacks for
+counters not yet created, in-place chaining of `c` on the live counter
+object at cell registration, and fire-if-already-settled. Same
 boundary-settled moment the pending-signal layer (`aria-busy`) wants.
-Adversarial round 1 (see optimistic-adversarial-review.md) reshaped
-this from per-branch sets: per-branch-only sets strand
-await-param-sourced cells settled by the router, and emission-time
-registration is swallowed by dirty-checks.
+Adversarial round 1 reshaped this from per-branch sets (which strand
+await-param-sourced cells settled by the router, while emission-time
+registration is swallowed by dirty-checks); see
+optimistic-adversarial-review.md for both rounds.
 
 ## 3. Example A — Add to Cart (shared state, mutation-confirmed)
 
@@ -132,25 +139,29 @@ is an unhandled rejection with the optimistic write left standing.
 
 **Happy path**, step by step:
 
-1. *(browser)* Click. The form's `onSubmit` runs: the write travels
+1. _(browser)_ Click. The form's `onSubmit` runs: the write travels
    through the writable context to the provider's cell —
    exposed = guessed cart, **held**; every consumer (badge, cart page)
    re-renders in the click's own frame.
-2. *(router)* The submit bubbles to the persisted router's listener; it
-   POSTs with `accept: text/marko-patch` and marks the mutation queue
-   non-empty (F2 state). `data-marko-pending` goes on the form
-   [DESIGNED, layer 1].
-3. *(server)* The handler mutates the session cart; PRG redirect; the
+2. _(router)_ The submit bubbles to the persisted router's listener,
+   which inserts the mutation into its queue **synchronously, on the
+   listener stack, before `navigate()`'s first `await`** (F2 state;
+   round-2 placement rule — the entry import is a task boundary an
+   unrelated GET's frames could otherwise slip through), then POSTs
+   with `accept: text/marko-patch`. `data-marko-pending` goes on the
+   form [DESIGNED, layer 1].
+3. _(server)_ The handler mutates the session cart; PRG redirect; the
    followed GET renders the page in update mode and streams frames.
-4. *(applier)* Frame 1 merges the `serializedGlobals` partial — a fresh
+4. _(applier)_ Frame 1 merges the `serializedGlobals` partial — a fresh
    `data` object — and the dispatched sections' registered
    `$global`-mixing statements re-run: the cell's **emission**. Shadow
    ← the authoritative cart. Predicate: queue non-empty → still held
    (the badge keeps showing the guess; usually identical to truth
    anyway).
-5. *(router)* Synchronous frames applied + queue empty → the settle
-   fan-out runs (effect time) over the held-cell registry.
-6. *(cell)* Predicate clear → exposed = shadow. Guess was right →
+5. _(router)_ A frame applies with the queue now empty → the settle
+   fan-out runs (checked per applied frame; effect time) over the
+   held-cell registry.
+6. _(cell)_ Predicate clear → exposed = shadow. Guess was right →
    dirty-check: **zero DOM work**. Done — no reconcile write, no
    version, no event listener.
 
@@ -159,8 +170,8 @@ flash — non-2xx patches deliberately apply in place so focus survives,
 persisted.ts:286): identical steps, except the delivered cart is
 unchanged. Two sub-cases both converge: if the response carries the
 cart value, the emission refreshes shadow; if sparse pruning omits the
-unchanged value entirely, no emission fires and shadow *already holds
-the last truth*. Either way settle exposes the real cart — the badge
+unchanged value entirely, no emission fires and shadow _already holds
+the last truth_. Either way settle exposes the real cart — the badge
 visibly rolls back, next to the server-rendered error. This is the case
 that broke every key-based idiom (review F1: a self-value key strands
 the guess forever; a version key works but is fragile hand-maintained
@@ -240,38 +251,47 @@ so no optimistic cell is involved:
 </for>
 ```
 
-1. *(router)* Click intercepted. `data-marko-pending` on the chip
+1. _(router)_ Click intercepted. `data-marko-pending` on the chip
    [DESIGNED] — the CSS-only rung, Unpoly's `.up-active`.
-2. *(router)* **Early-input stamp [REVIEW, mechanism revised by
+2. _(router)_ **Early-input stamp [EXPLORATION, mechanism revised by
    adversarial round 1]**: the router stamps the target URL into the
-   run **nav context** at click (`nav.url`), and consumers re-run
-   through context fan-out — in any template, at any depth. (The
-   original synthetic-frame-zero mechanism died in review: a
-   globals-only frame dispatches only the root section's `$global`
+   run **nav context** at click (`nav.url`), and _nav-context
+   consumers_ re-run through context fan-out — in any template, at any
+   depth. (The original synthetic-frame-zero mechanism died in review:
+   a globals-only frame dispatches only the root section's `$global`
    statement, so child-template chips never re-ran — R-F5 — and
    routing the stamp through `createUpdate` would advance
    `bumpNavEpoch` at click, discarding pre-navigation reorder chunks
-   for the whole round trip — R-F7.) Server-derived content keeps
-   stale values until real frames land, the keep-stale policy
-   everywhere else.
-3. Results content keeps stale behind `aria-busy` while frames stream;
-   an identity-keyed boundary (`<@placeholder by=$global.search.tag>`)
-   can recede **at interaction time** instead of first flush — the
-   upgrade the recede design's own prior-art survey asks for.
+   for the whole round trip — R-F7.) Note what this means for the chip
+   sample above: its `chip--active` class reads `$global.search.tag`,
+   which is _not_ the nav context — it flips when truth lands, which is
+   correct for active state. A click-time `chip--loading` is the
+   nav-context read (`nav.pending && nav.url` comparison, §7).
+3. Results content keeps stale behind `aria-busy` while frames stream.
+   **Honest pricing after the revision (round-2 F4)**: nothing writes
+   `$global` before delivery anymore, so an identity-keyed boundary
+   (`<@placeholder by=$global.search.tag>`) recedes at **first frame**,
+   not at interaction time — click-time recede was the dead
+   synthetic-frame mechanism's promise, and it died with it. A region
+   that must react at click is authored as a nav-context consumer
+   (e.g. keying off `nav.url`), which is code, not zero-authoring.
 4. Frames land; the delivered globals merge over the stamp
    (dirty-checks to no-ops); history commits at first applied frame,
    unchanged.
 5. Superseding click: re-stamps, aborts the first fetch. Fallback:
    `location.assign` — full document, stamp moot.
 
-URL-keyed state resets compose here with zero extra machinery:
-`<let/expanded=false by=$global.params.id/>` collapses at click, one
-round trip earlier than today.
+URL-keyed state resets still compose with zero extra machinery —
+`<let/expanded=false by=$global.params.id/>` collapses when the new
+`$global` merges at first frame. Not at click: that claim belonged to
+the dead synthetic-frame mechanism (round-2 F4). A reset that must
+happen at interaction time means keying off a nav-context value the
+author consumes explicitly.
 
 ## 6. Example D — Drafts and in-place editing (`<let by=>`)
 
 The other optimistic shape: local writes are the **user's property**
-until the *subject* changes — not a guess awaiting confirmation. A
+until the _subject_ changes — not a guess awaiting confirmation. A
 review-edit box on the item page:
 
 ```marko
@@ -287,9 +307,9 @@ review-edit box on the item page:
   is: the old draft is **discarded**, not banked — `<let by>` cannot
   express "keep one instance per key ever seen" (per-key draft banking
   is a hand-rolled `<let/drafts={}>` map), and an unsaved-changes
-  guard must fire *before* the navigation, which is router-surface
+  guard must fire _before_ the navigation, which is router-surface
   territory (guards are a recorded run-roadmap item), not `by=`'s job.
-- Bonus outside optimism entirely: inside a *positional* loop, `by=`
+- Bonus outside optimism entirely: inside a _positional_ loop, `by=`
   fixes today's stale-state hazard when rows shift (review,
   "free correctness win").
 - **Anti-pattern** (review F1): do not use `<let by>` with a self-value
@@ -325,13 +345,13 @@ three grains:
 
 - **Resource** — `<optimistic/cart=… onPending(p) { syncing = p }/>`
   [EXPLORATION]: handler-shaped notification (the `<lifecycle
-  onMount…>` convention), effect-time, try/catch-wrapped. The state it
+onMount…>` convention), effect-time, try/catch-wrapped. The state it
   drives is a plain `<let>` the author owns; aggregation is ordinary
   code. Semantics: resource-sync (the held window) — explicitly NOT a
   per-interaction spinner (a shared cell's hold can outlast one row's
   request).
 - **Navigation** — a run-provided **context** (`{ pending, url,
-  method }`), not `$global` [EXPLORATION]: reactive in any template via
+method }`), not `$global` [EXPLORATION]: reactive in any template via
   explicit consume, collision-free, and needing no synthetic-frame
   fan-out (which only reaches the root section — the reason
   `$global.nav` died). Early-input stamps `nav.url` through the same
@@ -353,33 +373,38 @@ template logic: swap labels, `disabled=adding.pending`, render spinner
 components, style provisional rows. The layers below are conveniences
 and platform affordances on top of that surface, not the API:
 
-| layer                                   | what the author does            | status                                                       |
-| --------------------------------------- | ------------------------------- | ------------------------------------------------------------ |
-| pending reactive state, three grains (`onPending` on cells, the run nav context, `<form-status>`/`<try|{pending}|>`) | any template logic | [EXPLORATION] — optimistic.md + adversarial review |
-| pending attrs (`data-marko-pending`, doc-level) + double-submit guard | CSS only, zero code | [DESIGNED] — review F6 says ship **first** (the guard is correctness) |
-| regional `aria-busy` on pending boundaries | nothing (a11y semantics)     | [DESIGNED], deferred by decision; same boundary-settle hook as the cells |
-| structural recede `<@placeholder by=>`  | one attribute                   | **[BUILT]** persisted-side; F3 extends to client re-awaits; anti-flash hold unbuilt |
-| early-input stamp                        | nothing                         | [REVIEW]                                                      |
-| View Transitions                         | CSS (`view-transition-name`)    | [DESIGNED], behind a run option; both swap paths are single choke points |
+| layer                                                                                                                  | what the author does                                                                          | status                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| pending reactive state, three grains (`onPending` on cells, the run nav context, `<form-status>`/`<try\|{pending}\|>`) | any template logic                                                                            | [EXPLORATION] — optimistic.md + adversarial review                                  |
+| pending attrs (`data-marko-pending`, doc-level) + double-submit guard                                                  | CSS only, zero code                                                                           | [DESIGNED] — review F6 says ship **first** (the guard is correctness)               |
+| regional `aria-busy` on pending boundaries                                                                             | nothing (a11y semantics)                                                                      | [DESIGNED], deferred by decision; same boundary-settle hook as the cells            |
+| structural recede `<@placeholder by=>`                                                                                 | one attribute                                                                                 | **[BUILT]** persisted-side; F3 extends to client re-awaits; anti-flash hold unbuilt |
+| early-input via the nav context                                                                                        | consume `nav` where click-time reaction is wanted; `$global`-keyed sites react at first frame | [EXPLORATION] — mechanism revised in round 1, priced in round 2                     |
+| View Transitions                                                                                                       | CSS (`view-transition-name`)                                                                  | [DESIGNED], behind a run option; both swap paths are single choke points            |
 
 ## 8. Build order (from the review, updated through the discussion)
 
 1. Pending attrs + `aria-busy` + double-submit guard (router; F6).
 2. Router mutation ordering (F2) — prerequisite for all settle
-   semantics; its queue state is the persisted predicate.
-3. Early-input stamping for GET navigations.
-4. `<let by>` client half on main (+ F5 error for `by=`+`valueChange`,
+   semantics; its queue state is the persisted predicate. Placement is
+   part of the spec (round 2): queue-insert synchronous in the submit
+   listener, before `navigate()`'s first `await`.
+3. `<let by>` client half on main (+ F5 error for `by=`+`valueChange`,
    F4 non-primitive-key lint, fixtures incl. positional-loop).
-5. `<let by>` persisted delivery (scope per §6's audit).
-6. `<context>` per its plan (reason-threading spike first — shared with
+4. `<let by>` persisted delivery (scope per §6's audit).
+5. `<context>` per its plan (reason-threading spike first — shared with
    `<optimistic>`'s cross-template boundary feeding).
-7. `<optimistic>` + the pending surfaces (optimistic.md, post-review):
-   the gate cell, the global held-cell registry with the
-   wrap-on-resume boundary hook, the router settle fan-out,
-   `onPending`, `<form-status>`, `<try|{ pending }|>`, and the run nav
-   context. Delete `let-global` from the benchmark as acceptance.
-8. `<@placeholder by=>` on client re-awaits (F3) + shared anti-flash.
-9. View Transitions behind the run option.
+6. `<optimistic>` + the pending surfaces (optimistic.md, post-review):
+   the gate cell, the global held-cell registry with the boundary
+   settle hook (`render.j` callbacks + in-place counter chaining), the
+   per-frame router settle fan-out, `onPending`, `<form-status>`,
+   `<try|{ pending }|>`, and the run nav context — which is also
+   early-input's delivery for GET navigations (moved here from its old
+   step-3 slot: the revised mechanism _requires_ the context tag and
+   the nav provider, so it cannot precede them — round-2 F4). Delete
+   `let-global` from the benchmark as acceptance.
+7. `<@placeholder by=>` on client re-awaits (F3) + shared anti-flash.
+8. View Transitions behind the run option.
 
 ## 9. Invariants and gotchas for whoever builds this
 
@@ -398,10 +423,12 @@ and platform affordances on top of that surface, not the API:
   expressions over delivery-fresh bindings (params objects, `$global`
   re-runs); an intermediate memoized `<const>` swallows same-value
   emissions (lint candidate).
-- **Ordering facts**: params fire before `AwaitCounter` settles
-  (hence the held-cells hook); persisted settle-at-stream-completion is
-  conservative — a slow unrelated boundary delays it (open question;
-  refine to response-scoped if it bites).
+- **Ordering facts**: params fire before `AwaitCounter` settles (hence
+  the held-cells hook); the persisted settle check runs per applied
+  frame, gated on the mutation queue being empty — decided, not open
+  (R-F11 closed in round 1, wording fixed in round 2): stream-scoped
+  settle was rejected because a slow unrelated boundary would delay
+  every rollback on the page.
 - **Object keys over the wire** (`<let by>`/`<@placeholder by>`):
   deserialized clones never SameValueZero-match and string-coerced
   identities collapse to `"[object Object]"` — one family-wide
