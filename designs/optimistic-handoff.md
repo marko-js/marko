@@ -45,7 +45,8 @@ throughout):
   cell's channel?": router mutation queue non-empty (persisted) or the
   feeding boundary's `AwaitCounter` pending (client).
 - **settle** — the channel going quiet: the final pending mutation's
-  stream completing, or the boundary's awaits reaching zero.
+  synchronous frames applied with the queue empty, or the boundary's
+  awaits reaching zero / a body committing / catch.
 
 Association, in one sentence: **writes are never tied to interactions;
 cells are bound (statically, from their source expression) to their
@@ -84,10 +85,17 @@ placeholder after a one-frame grace; **F3 [REVIEW]** aligns it with the
 persisted driver (keep stale when `<@placeholder by=>` identity is
 unchanged).
 
-**The one new shared hook [EXPLORATION]**: a held-cells set on the
-try branch, notified at counter-zero, at `_update_branch` body commit,
-and on catch — the same boundary-settled moment the pending-signal
-layer (`aria-busy`) wants. Build once, two consumers.
+**The one new shared hook [EXPLORATION]**: a global held-cell
+registry (cells register at write time, carry their own predicate, and
+deregister at settle or scope abort), fanned out at counter-zero,
+`_update_branch` body commit, and catch — including the counters the
+document's **inline reorder runtime** owns, which the module wraps at
+resume (it cannot be patched to call lazy modules itself). Same
+boundary-settled moment the pending-signal layer (`aria-busy`) wants.
+Adversarial round 1 (see optimistic-adversarial-review.md) reshaped
+this from per-branch sets: per-branch-only sets strand
+await-param-sourced cells settled by the router, and emission-time
+registration is swallowed by dirty-checks.
 
 ## 3. Example A — Add to Cart (shared state, mutation-confirmed)
 
@@ -135,12 +143,13 @@ is an unhandled rejection with the optimistic write left standing.
 3. *(server)* The handler mutates the session cart; PRG redirect; the
    followed GET renders the page in update mode and streams frames.
 4. *(applier)* Frame 1 merges the `serializedGlobals` partial — a fresh
-   `data` object — and re-runs the registered `$global`-mixing
-   statements unconditionally: the cell's **emission**. Shadow ← the
-   authoritative cart. Predicate: queue non-empty → still held (the
-   badge keeps showing the guess; usually identical to truth anyway).
-5. *(router)* Stream completes → queue empties → one settle call fans
-   out to held cells.
+   `data` object — and the dispatched sections' registered
+   `$global`-mixing statements re-run: the cell's **emission**. Shadow
+   ← the authoritative cart. Predicate: queue non-empty → still held
+   (the badge keeps showing the guess; usually identical to truth
+   anyway).
+5. *(router)* Synchronous frames applied + queue empty → the settle
+   fan-out runs (effect time) over the held-cell registry.
 6. *(cell)* Predicate clear → exposed = shadow. Guess was right →
    dirty-check: **zero DOM work**. Done — no reconcile write, no
    version, no event listener.
@@ -207,8 +216,11 @@ param** rather than through a navigation:
 4. Counter reaches zero → the held-cells fan-out notifies the cell →
    predicate clear → exposed = shadow. Server ignored the like? Rolls
    back to 5. Confirmed? Silent no-op.
-5. Double-click: resolve #1's emission finds the boundary pending
-   *again* (re-await #2 in flight) → keep holding → settle once on #2.
+5. Double-click: the second re-await **replaces** the boundary's
+   promise, so resolve #1 fires neither params nor the counter (the
+   identity guard) — the boundary simply stays pending until resolve
+   #2 fires the one emission and the one settle (mechanics corrected
+   by adversarial round 1, R-F10).
 6. Rejection-by-error (`fetchPost` throws): catch settles the boundary
    with no emission — proposed rule: keep the guess over the error
    content; the next successful emission reconciles (optimistic.md open
@@ -230,14 +242,17 @@ so no optimistic cell is involved:
 
 1. *(router)* Click intercepted. `data-marko-pending` on the chip
    [DESIGNED] — the CSS-only rung, Unpoly's `.up-active`.
-2. *(router)* **Early-input stamp [REVIEW]**: before the fetch, apply a
-   synthetic frame zero — `[_ => [0, {url}]]` — through the
-   navigation's own `createUpdate` context (the `?update` entry is
-   already loaded pre-fetch for the possession echo). URL-derived
-   expressions re-run: the old chip un-highlights, the new one
-   highlights, **at click time**. Server-only-mixed expressions are
-   skipped by the existing `!_updating` compute guards — they keep
-   stale values until real frames land, which is the keep-stale policy
+2. *(router)* **Early-input stamp [REVIEW, mechanism revised by
+   adversarial round 1]**: the router stamps the target URL into the
+   run **nav context** at click (`nav.url`), and consumers re-run
+   through context fan-out — in any template, at any depth. (The
+   original synthetic-frame-zero mechanism died in review: a
+   globals-only frame dispatches only the root section's `$global`
+   statement, so child-template chips never re-ran — R-F5 — and
+   routing the stamp through `createUpdate` would advance
+   `bumpNavEpoch` at click, discarding pre-navigation reorder chunks
+   for the whole round trip — R-F7.) Server-derived content keeps
+   stale values until real frames land, the keep-stale policy
    everywhere else.
 3. Results content keeps stale behind `aria-busy` while frames stream;
    an identity-keyed boundary (`<@placeholder by=$global.search.tag>`)
@@ -268,7 +283,12 @@ review-edit box on the item page:
   user's in-progress draft **survives** — same key, same instance.
 - Different `item.id` (navigated to another item): the draft re-seeds
   from the new item's text — new key, new instance. Comparison is
-  SameValueZero, mirroring keyed `<for>`.
+  SameValueZero, mirroring keyed `<for>`. Be precise about what this
+  is: the old draft is **discarded**, not banked — `<let by>` cannot
+  express "keep one instance per key ever seen" (per-key draft banking
+  is a hand-rolled `<let/drafts={}>` map), and an unsaved-changes
+  guard must fire *before* the navigation, which is router-surface
+  territory (guards are a recorded run-roadmap item), not `by=`'s job.
 - Bonus outside optimism entirely: inside a *positional* loop, `by=`
   fixes today's stale-state hazard when rows shift (review,
   "free correctness win").
@@ -292,30 +312,38 @@ client-side through ordinary fan-out).
 **The primary surface is reactive, not CSS** (decision 2026-07-09,
 reversing the optimistic-transitions doc's non-goal in part — transport
 detail stays hidden; pending-ness becomes first-class state; see
-optimistic.md, "Programmatic pending state"). Pending has **three
-grains**, each with the visibility its scope implies — the non-local
-ones deliberately avoid lexical wrappers, which force tree shapes
-(a reader above the interaction site could never see a tag variable
-declared below it):
+optimistic.md, "Programmatic pending state"). Adversarial round 1
+(optimistic-adversarial-review.md) killed two earlier surfaces —
+`pending:=` (the language's only output-only bind, with driven writes
+silently dropped on the client settle path) and `<transition>`
+(false-positive containment, `form=` splits, View Transitions name
+collision, library-composability failure) — and corrected a recorded
+rationale: tag-variable reads DO hoist template-wide; the real
+tree-shape prison is that hoisted reads are getter-shaped (not
+signal-subscribed) and pluralize under control flow. The surviving
+three grains:
 
-- **Resource** — `<optimistic/cart=… pending:=syncing/>`
-  [EXPLORATION]: the cell *drives* ordinary author state through the
-  bind-shorthand/change-handler pattern (`value:=x` on controllables is
-  the precedent). `syncing` is a plain `<let>` — hoistable and
-  providable at any height (it rides the same provider that already
-  shares `cart`). Deliberately the held window only, not "some mutation
-  might affect this" — that's server knowledge.
-- **Page** — `$global.nav.pending` [EXPLORATION]: router-stamped
-  through the synthetic-frame channel early-input uses; readable
-  everywhere by definition. Progress bars, dim-the-page.
-- **Site** — the same drive pattern on the boundaries:
-  `<try pending:=refreshing>` (inbound: this boundary re-fetching;
-  client `AwaitCounter` / persisted pending-boundary state) and
-  `<transition pending:=adding>` (outbound: a navigation initiated by a
-  contained control — DOM-containment association, no refs, loop-safe)
-  [EXPLORATION]. Local state next to the boundary is the *point* of
-  this grain (the button's own label/`disabled`); grains above cover
-  everything non-local.
+- **Resource** — `<optimistic/cart=… onPending(p) { syncing = p }/>`
+  [EXPLORATION]: handler-shaped notification (the `<lifecycle
+  onMount…>` convention), effect-time, try/catch-wrapped. The state it
+  drives is a plain `<let>` the author owns; aggregation is ordinary
+  code. Semantics: resource-sync (the held window) — explicitly NOT a
+  per-interaction spinner (a shared cell's hold can outlast one row's
+  request).
+- **Navigation** — a run-provided **context** (`{ pending, url,
+  method }`), not `$global` [EXPLORATION]: reactive in any template via
+  explicit consume, collision-free, and needing no synthetic-frame
+  fan-out (which only reaches the root section — the reason
+  `$global.nav` died). Early-input stamps `nav.url` through the same
+  provider. Per-link pending derives by URL comparison.
+- **Interaction** — run-owned, DOM-grounded [EXPLORATION]:
+  `<form-status/status/>` (working name) resolves its enclosing form
+  the way the platform does and subscribes to the router's per-element
+  state — per-instance in loops, `useFormStatus`-parity for library
+  components (a `<quantity-stepper>` ships its own), `<button form=…>`
+  resolved natively. Inbound content pending is the boundary's **body
+  params**: `<try|{ pending }|>` — render-native, body-scoped, which is
+  this grain's definition of local.
 
 With those plus `<optimistic>` cells — whose guesses are arbitrary
 values and may carry their own presentation metadata
@@ -327,7 +355,7 @@ and platform affordances on top of that surface, not the API:
 
 | layer                                   | what the author does            | status                                                       |
 | --------------------------------------- | ------------------------------- | ------------------------------------------------------------ |
-| pending reactive state, three grains (`pending:=` on cells and boundaries, `$global.nav`) | any template logic | [EXPLORATION] — optimistic.md |
+| pending reactive state, three grains (`onPending` on cells, the run nav context, `<form-status>`/`<try|{pending}|>`) | any template logic | [EXPLORATION] — optimistic.md + adversarial review |
 | pending attrs (`data-marko-pending`, doc-level) + double-submit guard | CSS only, zero code | [DESIGNED] — review F6 says ship **first** (the guard is correctness) |
 | regional `aria-busy` on pending boundaries | nothing (a11y semantics)     | [DESIGNED], deferred by decision; same boundary-settle hook as the cells |
 | structural recede `<@placeholder by=>`  | one attribute                   | **[BUILT]** persisted-side; F3 extends to client re-awaits; anti-flash hold unbuilt |
@@ -345,11 +373,11 @@ and platform affordances on top of that surface, not the API:
 5. `<let by>` persisted delivery (scope per §6's audit).
 6. `<context>` per its plan (reason-threading spike first — shared with
    `<optimistic>`'s cross-template boundary feeding).
-7. `<optimistic>` + the pending tag variables (optimistic.md): the gate
-   cell, the held-cells boundary hook, the router settle call, and
-   `<try/t>`/`<transition/t>` riding the same boundary-settle and
-   queue-state plumbing. Delete `let-global` from the benchmark as
-   acceptance.
+7. `<optimistic>` + the pending surfaces (optimistic.md, post-review):
+   the gate cell, the global held-cell registry with the
+   wrap-on-resume boundary hook, the router settle fan-out,
+   `onPending`, `<form-status>`, `<try|{ pending }|>`, and the run nav
+   context. Delete `let-global` from the benchmark as acceptance.
 8. `<@placeholder by=>` on client re-awaits (F3) + shared anti-flash.
 9. View Transitions behind the run option.
 

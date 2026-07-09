@@ -464,7 +464,7 @@ what fell out of forcing the comparison follows.
 | React surface | what it encodes | persisted-pages answer |
 | --- | --- | --- |
 | `startTransition` (off-screen concurrent render; old UI stays visible and interactive; boundary-atomic commit) | protect the visible UI while the next one is prepared | there is no second tree to render — keep-stale falls out of the wire model (live DOM holds until values land); the per-frame synchronous `run()` flush is the atomicity unit; the `persisted-update-csr-race` fixture pins the interruption equivalent (urgent client renders win mid-stream, late frames re-compute against live state rather than clobbering) |
-| `useTransition().isPending` | a programmatic pending read — arbitrary UI must be derivable from pending-ness, not just styling | initially answered attribute-first here; **superseded (2026-07-09)** — pending is now first-class reactive state via tag variables (`<try/t>.pending` inbound, `<transition/t>.pending` outbound, designed in optimistic.md), one design for both drivers; attributes and `aria-busy` remain as the zero-code/a11y layer |
+| `useTransition().isPending` | a programmatic pending read — arbitrary UI must be derivable from pending-ness, not just styling | initially answered attribute-first, then via tag variables, then via `pending:=` — all three superseded through adversarial round 1 (optimistic-adversarial-review.md): pending is first-class reactive state via `onPending` on the cell, the run nav context, and `<form-status>`/`<try|{pending}|>`; attributes and `aria-busy` remain the zero-code/a11y layer |
 | `<Suspense>` reveal rules (fallback on first mount; revealed content never re-hides in a transition; `key=` forces reset; routers "should key automatically") | when stale content may be destroyed | matched boundaries keep stale; `<@placeholder by=>` is the key idiom — aligned on the persisted driver, **contradicted by the client driver today** (F3) |
 | coordinated reveal (multiple suspending children per boundary; `SuspenseList`) | staged/grouped appearance | the client runtime already does all-or-nothing per boundary (`AwaitCounter` counts every pending await under one placeholder, dom/control-flow.ts:100-127); the persisted driver's v1 rule aborts >1 pending await per placeholder body into a full navigation — that limit now looks like the *standard idiom* rather than an edge, prioritize lifting it |
 | `useOptimistic` (overlay over canonical state; auto-revert when the action settles; **rebases** queued deltas onto refreshed canonical state) | optimistic writes must never become truth, and must survive canonical refreshes that don't answer them | F1's target primitive is this exact shape made declarative: derived-at-rest cell, write opens an interaction-scoped overlay, settle (navigation stream / boundary re-await, per driver) re-derives; overlay-holds-while-pending is the rebase answer, per cell; the interim `<let by>` + version-key recipe approximates it for single mutations |
@@ -659,6 +659,18 @@ applied input, not transport state" non-goal — the URL is the
 navigation's *input*, not its transport state, and the whole persisted
 model is built on "new input to the root".
 
+> **Mechanism revised by adversarial round 1** (see
+> optimistic-adversarial-review.md): the synthetic-frame-zero apply
+> below reaches only the root section's `$global` statement (section
+> dispatch is presence-gated — R-F5), and riding `createUpdate` at
+> click advances `bumpNavEpoch` a full round trip early (R-F7). The
+> surviving delivery for early input is the run **nav context**
+> (`nav.url` stamped at click; consumers re-run through context
+> fan-out at any depth). The paragraph below is kept as the original
+> analysis; its safety arguments (sparse semantics, `!_updating`
+> guards) still describe why stamping input early is sound in
+> principle.
+
 The mechanism is nearly free, because it can be a **synthetic frame
 zero**: the router already loads the `?update` entry *before* the fetch
 (for the possession echo, persisted.ts:243-250), so at click time it can
@@ -738,22 +750,25 @@ response objects). Reversed (designer decision, 2026-07-09 — this
 paragraph originally held the "attributes suffice" line): pending-ness
 itself becomes first-class reactive state, because users must be able
 to optimistically drive *any* update, not only respond to attribute
-changes via CSS. The surface is three grains designed in
-[optimistic.md](./optimistic.md) ("Programmatic pending state"), chosen
-so the non-local ones are tree-shape-free (lexical wrappers force tree
-shapes — a reader above the interaction site cannot see a tag variable
-below it): **resource** — the cell drives ordinary author state via the
-bind shorthand (`<optimistic/cart=… pending:=syncing/>`; `syncing` is a
-plain `<let>` riding the same context hoist as the value); **page** —
-router-stamped `$global.nav` via the early-input synthetic-frame
-channel, readable everywhere by definition; **site** — the same drive
-on the boundaries (`<try pending:=refreshing>`, backed by
-`AwaitCounter`/persisted boundary state — the boundary-scoped signal
-Svelte's `$effect.pending` and React's `isPending` prefigure, one
-design for both drivers; `<transition pending:=adding>` outbound,
-DOM-containment association) for genuinely local UI. All zero-cost when
-the attribute is absent; the CSS attributes and `aria-busy` remain as
-zero-code conveniences and assistive-tech semantics on top.
+changes via CSS. The surface went through several shapes in review
+discussion and then adversarial round 1
+([optimistic-adversarial-review.md](./optimistic-adversarial-review.md));
+the survivors, designed in [optimistic.md](./optimistic.md): **resource**
+— `onPending(p) { syncing = p }` on the cell (handler-shaped, the
+`<lifecycle>` convention; the earlier `pending:=` died as the
+language's only output-only bind, with driven writes silently dropped
+on the client settle path); **navigation** — a run-provided context
+(`{ pending, url, method }`), reactive at any depth through context
+fan-out (the earlier `$global.nav` synthetic-frame mechanism died:
+globals-only frames dispatch only the root section); **interaction** —
+run's `<form-status>` tag resolving the enclosing form the way the
+platform does (`useFormStatus` parity, library-composable) and
+`<try|{ pending }|>` body params inbound. A recorded-rationale repair
+from the same round: tag-variable reads DO hoist template-wide — the
+real tree-shape objection to handle vars is that hoisted reads are
+getter-shaped, not signal-subscribed, and pluralize under control
+flow. The CSS attributes and `aria-busy` remain zero-code conveniences
+and assistive-tech semantics on top.
 
 The remaining genuinely-hard open edge is teardown symmetry: a persisted
 recede shares the matched-path body swap's recorded gap (DOM removed,

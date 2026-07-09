@@ -1,12 +1,17 @@
 # `<optimistic>` — interaction-scoped optimistic cells: exploration
 
-Status: **design exploration — not built, not signed off.** Companion to
-[let-by-review.md](./let-by-review.md) (finding F1, which motivates
-this) and [persisted-pages-optimistic-transitions.md](./persisted-pages-optimistic-transitions.md)
-(whose layer 3 this would replace for the pending-confirmation shape;
+Status: **design exploration — not built, not signed off.**
+Adversarial-review round 1 applied (2026-07-09): four independent
+attack reviews (language consistency, runtime mechanics, real-app DX,
+alternatives); this document reflects the surviving composite. The
+verdict ledger, kill list, and repair rationale live in
+[optimistic-adversarial-review.md](./optimistic-adversarial-review.md).
+Companion to [let-by-review.md](./let-by-review.md) (finding F1, which
+motivates this) and
+[persisted-pages-optimistic-transitions.md](./persisted-pages-optimistic-transitions.md)
+(whose layer 3 this replaces for the pending-confirmation shape;
 `<let by=>` remains the in-progress-input shape per
-[let-by.md](./let-by.md)). Seeded by a control-tied sketch from the
-2026-07-09 review discussion; this document works out what the DX
+[let-by.md](./let-by.md)). This document works out what the DX
 
 ```marko
 <optimistic/likes=post.likes/>
@@ -41,28 +46,68 @@ Per-instance state, on the scope:
 Three paths:
 
 1. **Emission** (the source's compiled subscription fires — parent
-   re-render, `$global` re-run per apply, await params firing):
+   re-render, `$global` re-run during an apply, await params firing):
    recompute the source expression into **shadow**. If not held →
    expose it (dirty-checked). If held → consult the **settle
-   predicate** (below); if confirmation is no longer outstanding,
-   expose shadow and clear held; otherwise keep holding.
+   predicate** (below); if confirmation is no longer outstanding *and*
+   the hold is not younger than the currently-running task (the
+   task-drain bracket, below), expose shadow and clear held; otherwise
+   keep holding.
 2. **Write** (`likes++` compiles through the cell's
    `buildAssignment`): exposed = value, held = true, queue downstream
-   renders. No association bookkeeping happens here — see below.
-3. **Settle notification** (boundary/router fan-out): if held and the
-   predicate is now clear → exposed = shadow, held = false,
-   dirty-checked downstream. A correct guess settles as a **no-op** (6
-   === 6); a rejected mutation re-derives to the unchanged truth — the
-   visible rollback, with no rollback API.
+   renders — and **register the held cell** in the settle registry,
+   carrying its statically-compiled boundary accessor (if any).
+   Registration happens at write time, never at emission time: a
+   dirty-check-swallowed emission must not be able to swallow
+   registration (adversarial R-F6).
+3. **Settle notification** (registry fan-out): if held and the cell's
+   own predicate is now clear → exposed = shadow, held = false,
+   dirty-checked downstream, deregister. A correct guess settles as a
+   **no-op** (6 === 6); a rejected mutation re-derives to the unchanged
+   truth — the visible rollback, with no rollback API. Notifications
+   run at **effect time** (`queueEffect`) and are wrapped in their own
+   try/catch: a throwing app callback can neither corrupt an apply nor
+   trip the router's fallback ladder (adversarial R-F1).
 
-The settle predicate, per driver, is "is confirmation still
+The settle predicate, per channel, is "is confirmation still
 outstanding?":
 
-| driver                    | predicate                                            | settle notification                                                        |
-| ------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------- |
-| persisted mutation        | router mutation queue non-empty (the F2 state)       | router calls the runtime once when the final pending response's stream completes |
-| client re-await           | the feeding boundary's re-await pending (`AwaitCounter`) | boundary settle fans out to held cells registered on the branch            |
-| neither (unassociated)    | always clear                                          | next emission lifts the hold (`let-global`'s semantics as the fallback)     |
+| channel                   | predicate                                            | settle events that trigger a registry fan-out                                |
+| ------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------- |
+| persisted mutation        | router mutation queue non-empty (the F2 state)       | the response's **synchronous frames applied + queue empty** (not stream completion — see settle timing below) |
+| client re-await           | the feeding boundary's re-await pending (`AwaitCounter`) | the boundary's counter reaching zero, a boundary body committing (`_update_branch`), catch |
+| neither (unassociated)    | always clear                                          | next emission lifts the hold (`let-global`'s semantics as the fallback)       |
+
+**One registry, per-cell predicates** (adversarial R-F3): held cells
+register in a single module-level registry; *every* settle event fans
+out over it and each cell re-checks its **own** predicate. This is what
+makes the advertised composition work — an await-param-sourced cell in
+a persisted app is boundary-bound, but a POST mutation settles through
+the router: with per-branch-only sets nobody would ever notify it.
+Lifetime: deregistered at settle and via the owning scope's abort
+signal (`subscribeToScopeSet`'s cleanup pattern), so a subtree
+destroyed mid-navigation cannot leak detached DOM through the registry
+(R-F8).
+
+**Task-drain bracket** (R-F4): the write path marks the hold
+association-pending until the current task drains (one microtask). An
+emission never settles a hold younger than the running task, and the
+router inserts a mutation into its queue **before** any apply/stamp it
+performs. Without this, a frame from an in-flight unrelated GET can
+apply in the microtask checkpoint between the click handler (which
+wrote the guess) and the submit listener (which creates the mutation) —
+predicate reads "queue empty," and the user's guess visibly reverts
+inside their own click. This is deliberately *not* write-association
+(no per-cell mutation tagging): it only protects the window in which
+the navigation is still being born.
+
+**Settle timing** (R-F11): the persisted settle point is "the
+response's synchronous frames applied and the mutation queue empty."
+Stream-completion was rejected: a PRG response re-runs every `<await>`
+on the page, so stream-scoped settle makes rollback latency equal the
+slowest boundary on any async page — unbounded and server-controlled.
+Sources nested inside async boundaries settle through their own
+boundary events (body commit), which arrive as those frames land.
 
 ### Association, precisely: cells bind to confirmation channels, not writes to interactions
 
@@ -73,63 +118,36 @@ statically, from its source expression's dataflow — to the **channel its
 truth arrives through**: the feeding `<await>` boundary when the source
 is a body param, or the persisted delivery pipeline when the source is
 `input`/`$global`-derived. Settle is then a property of the channel, not
-of any interaction: a held cell lifts at the first truth arrival at
-which its channel has nothing further outstanding (boundary not
-re-pending; router mutation queue empty).
+of any interaction: a held cell lifts at the first settle event at
+which its channel has nothing further outstanding.
 
 Why interaction identity is dispensable:
 
 - **Truth is attributed by channel, not by cause.** Whichever
   interaction triggered the mutation or re-await, the authoritative
   value for this cell arrives through the same channel the cell already
-  reads — so "my confirmation arrived" and "my channel emitted while
-  quiet" are the same event.
+  reads.
 - **Ordered mutations make "quiet" sufficient.** Under F2, mutation
   responses apply in order, so when the queue empties, the latest
   delivered truth reflects *every* settled interaction — settling all
   held cells against it is correct regardless of which interaction
   wrote what.
-- **The coarseness is delay-only, never wrongness.** The one imprecision
-  is persisted-side: the queue predicate is global, so a held cart cell
-  won't settle while an unrelated wishlist mutation is still pending —
-  its reconciliation waits a beat longer, then lands on truth that
-  reflects both. That coarseness is arguably *honest* for
-  server-derived data: while any mutation is outstanding, any server
-  value may be about to change, and no client-side bookkeeping can know
-  otherwise (which mutations affect which data is server knowledge).
-  Client-side the predicate is already per-channel (each boundary
-  counts its own awaits), so unrelated boundaries never couple.
+- **The coarseness is delay-only, never wrongness — but the delay is
+  honest now**: under sustained mutation traffic (autosave, chat) the
+  queue may rarely be empty, so a held guess (including a rejected one)
+  can display for an unbounded window, flagged by pending UI but not
+  reconciled. The recorded future refinement is per-resource settle
+  precision via **server-stamped versions** (the useful organ harvested
+  from the rejected version-key design): the server exporting
+  mutation→data knowledge the client cannot infer. Record, don't build.
 
-Per-interaction precision would require exactly the machinery this
-model exists to avoid — tagging writes with transitions (task-scoped
-capture across the click→submit dispatch chain, `for=` ref plumbing) —
-and would buy only earlier settling in the concurrent-unrelated-mutation
-case, at the cost of claiming knowledge (mutation→data dependencies)
-the client doesn't have.
-
-### Why predicate-at-emission, not write-association
-
-The review's first pass at this (and the seeding sketch's `for=`)
-associated **writes** with transitions — which needs task-scoped write
-capture (a click handler's write precedes the submit event that creates
-the navigation), ref plumbing that breaks in loops (N tab links, one
-cell) and across templates (the cart cell lives in the layout provider;
-the forms don't), and an escape hatch for programmatic submits. The
-gate model deletes all of it: the write only marks the cell held; the
-question "which transition settles this?" is answered **at emission
-time** by asking the platform whether confirmation is still
-outstanding. The router's mutation queue is one module read; the
-feeding boundary is one scope read. No batches, no brackets, no `for=`
-in v1. (`for=`/explicit association returns only if a real app needs a
-predicate the platform can't infer — custom `fetch` flows that neither
-navigate nor re-run an await.)
-
-The predicate is also what a version key or settle token was
-hand-encoding, and it is the only shape that survives the
-rejected-mutation case: "no news" and "news: the same value" are
-indistinguishable in the data channel (dirty-checks swallow the
-latter), so *some* out-of-band pending signal must exist. Putting it in
-the platform — which already tracks it — is the entire trick.
+Per-interaction precision would otherwise require exactly the machinery
+this model exists to avoid — tagging writes with transitions across the
+click→submit dispatch chain, `for=` ref plumbing — and would buy only
+earlier settling in the concurrent-unrelated-mutation case, at the cost
+of claiming knowledge (mutation→data dependencies) the client doesn't
+have. The task-drain bracket above is the one deliberate, bounded bite
+of write-timing the model concedes.
 
 ## Walk-through: persisted driver
 
@@ -138,29 +156,31 @@ source), like button in a `POST` form the persisted router intercepts.
 Assumes F2 (mutation ordering + queue) from the review.
 
 1. Resume: exposed = shadow = 5.
-2. Click: handler runs `likes++` → exposed 6, held; the form submit
-   rides the router (queue: 1). Downstream re-renders now — the button
-   shows 6 in the click's own frame.
+2. Click: handler runs `likes++` → exposed 6, held,
+   **registered** (association-pending for this task); the form submit
+   rides the router, which queues the mutation before anything else.
+   Downstream re-renders now — the button shows 6 in the click's own
+   frame.
 3. The PRG response streams. Frame 1 merges the `serializedGlobals`
-   partial — a fresh `data` object — and the registered
-   `$global`-mixing statements **re-run unconditionally per apply**
-   (the `addUpdateGlobalsStatement` machinery), so the cell's source
-   emission fires even when the value is unchanged. Shadow ← delivered
-   truth (6 accepted / 5 rejected). Predicate: queue non-empty → keep
-   holding.
-4. Stream completes → router marks the mutation settled; queue empty →
-   one runtime call fans out to held cells → predicate clear → exposed
-   = shadow. Accepted: 6 === 6, silent. Rejected: 6 → 5 re-renders —
-   rollback, alongside whatever error content the response rendered
-   (non-2xx patches deliberately apply in place, `persisted.ts:286-298`).
+   partial — a fresh `data` object — and the *dispatched sections'*
+   registered `$global`-mixing statements re-run (unconditional within
+   each compiled merge; sections still ride the patch's presence-gated
+   dispatch — see the sparse note). The cell's **emission** fires.
+   Shadow ← delivered truth (6 accepted / 5 rejected). Predicate: queue
+   non-empty → keep holding.
+4. Synchronous frames applied + queue empty → registry fan-out (effect
+   time) → predicate clear → exposed = shadow. Accepted: 6 === 6,
+   silent. Rejected: 6 → 5 re-renders — rollback, alongside whatever
+   error content the response rendered (non-2xx patches deliberately
+   apply in place, `persisted.ts:286-298`).
 
 **Sparse-delivery compatibility** (why the shadow slot matters): an
-update render prunes unchanged values — a rejected mutation's response
-may carry *no fill at all* for an input-chain source. Then no emission
-fires, shadow still holds the pre-write truth (5), and the settle
-fan-out exposes it — correct by exactly the "absent means unchanged"
-contract the wire already has. `$global`-sourced cells emit per apply
-regardless; input-sourced cells fall back to the shadow. Both converge.
+update render prunes unchanged values, and section dispatch itself is
+presence-gated — a rejected mutation's response may carry *no fill at
+all* for the cell's section. Then no emission fires, shadow still holds
+the pre-write truth (5), and the settle fan-out exposes it — correct by
+exactly the "absent means unchanged" contract the wire already has.
+Both delivery shapes converge.
 
 **Overlapping mutations** (the React `useOptimistic` rebase case):
 click-click → exposed 7, held; mutation #1's frames emit (shadow 6) but
@@ -192,27 +212,42 @@ the transition:
 </try>
 ```
 
-1. Click: exposed 6, held; `refreshGen++` re-runs the awaited
-   expression → the boundary goes pending (`_await_promise` →
-   `addAwaitCounter`). With `<@placeholder by=>` extended to the client
-   driver (review F3), `id` unchanged → **keep stale + pending signal**,
-   no skeleton flash; today's keyless behavior would recede after the
-   rAF grace — either way the cell is orthogonal to the placeholder
-   policy.
-2. Resolve: `resolveAwait` fires the params with a **fresh `post`
-   object** (`control-flow.ts:169-176`) — object identity differs every
-   resolve, so the emission reaches the cell even when `likes` is
-   numerically unchanged. Shadow ← truth.
+1. Click: `likes++` → exposed 6, held, registered (the compiler bound
+   the cell to this boundary at build time — its source is the
+   boundary's param, the lexical case); `refreshGen++` re-runs the
+   awaited expression → boundary pending. With review F3,
+   `post.id` unchanged → **keep stale** + pending signal (no skeleton
+   flash); today's keyless behavior would recede after the rAF grace —
+   either way the cell is orthogonal to the placeholder policy.
+2. Resolve: `resolveAwait` fires the params with the resolved object —
+   for a plain `fetch().json()` flow that object is fresh per resolve,
+   so the emission reaches the cell even when `likes` is numerically
+   unchanged. **Two known swallowing hazards** (R-F6): an
+   identity-stable resolved value (memoized fetcher, SWR-style cache)
+   dirty-checks away at the param binding; and an intermediate memoized
+   `<const>` (`<const/likes=post.likes/>` then `<optimistic/l=likes/>`)
+   swallows the same-value case upstream of the cell. Registration at
+   write time makes both *recoverable* — the settle fan-out still
+   reaches the cell and exposes the shadow — but a swallowed emission
+   means a stale shadow, so the lint (open questions) matters.
 3. Ordering fact that shapes the design: params fire **before**
    `awaitCounter.c()` settles the boundary (`control-flow.ts:169-185`),
-   so at emission time the predicate still reads pending. The cell
-   therefore registers itself on the feeding branch (a `HeldCells` set —
-   `subscribeToScopeSet` in `dom/signals.ts:275` is the existing
-   pattern), and the counter-zero path notifies it. Predicate clear →
-   exposed = shadow.
-4. Double-click before resolve #1: resolve #1's emission finds the
-   boundary pending *again* (re-await #2 in flight) → keep holding;
-   resolve #2 settles. Same rebase behavior as the persisted driver.
+   so at emission time the predicate still reads pending. The
+   registry fan-out at counter-zero (effect time) settles the cell.
+4. Double-click before resolve #1 — mechanics per the code, not the
+   earlier draft (R-F10): the second `_await_promise` invocation
+   **replaces** `scope[promiseAccessor]`, so promise #1's resolution
+   fires *neither* params nor `c()` (the `thisPromise` identity guard),
+   and the counter never exceeds one for re-awaits. There is no
+   "resolve #1 emission" to hold through; the boundary simply stays
+   pending until resolve #2 fires the one emission and the one settle.
+   Same end state as the rebase case, simpler mechanism.
+5. Rejection-by-error (`fetchPost` throws): the catch path settles the
+   boundary with no params emission. Proposed rule: the settle
+   notification still fires (the registry is populated — registration
+   happened at write); a held cell whose shadow never refreshed keeps
+   its guess over the error content, and the next successful emission
+   reconciles. Needs a fixture either way.
 
 **Finding the feeding boundary** is compile-time work in the common
 case: the source expression's references include an await-param binding
@@ -220,157 +255,157 @@ of a lexically enclosing boundary section, so the translator passes
 that boundary's accessor to the cell. Cross-template feeding (a
 context-provided cell whose source is another template's param) needs
 the cross-template reason-threading spike `context.md` already names —
-v1 is lexical, and an unresolvable feed degrades to the unassociated
-rule.
+v1 is lexical, an unresolvable feed degrades to the unassociated rule,
+and the degradation gets a dev-warning (silent-degradation cliffs are
+what the rest of this design set criticizes).
 
-**Catch:** a failed re-await settles the boundary through the catch
-path with no params emission. Proposed rule: the settle notification
-still fires; a held cell keeps its guess (shadow unchanged), and the
-next successful emission reconciles — the guess over an error banner
-beats snapping to stale truth mid-error. Needs a fixture either way.
+## Programmatic pending state
 
-## Programmatic pending state — the reactive surface
+> Decision recorded (2026-07-09, design discussion): transport *detail*
+> stays hidden (no fetch promises, no response objects, no client data
+> layer), but *pending-ness* is first-class reactive state — a user
+> must be able to optimistically drive **any** update, not only respond
+> to attribute changes via CSS. The CSS attributes (`data-marko-pending`,
+> `aria-busy`) remain as zero-code conveniences and assistive-tech
+> semantics layered on top.
+>
+> Post-adversarial-review surface: **all platform pending notification
+> is handler-shaped** (`on*` — the platform-notification convention
+> `<lifecycle onMount onUpdate onDestroy>` already establishes on a
+> core tag), invoked at effect time, wrapped in try/catch. `:=` is
+> ruled out everywhere here: it would be the language's only
+> output-only bind — every existing bind site makes the author's value
+> the authority and the change call a request (controllables snap the
+> DOM back; `context.md` states the rule) — and the desugar erases
+> `bound`, so the shape could not even be policed (adversarial L-1/L-2).
+> Driven-`<let>` writes from settle contexts are additionally a silent
+> no-op hazard (`_let`'s rendering branch, R-F1) that handler-shaped
+> notification at effect time avoids by specification.
 
-> Decision recorded (2026-07-09, design discussion): the
-> optimistic-transitions doc's non-goal — "no promise/props exposure of
-> navigation state into templates" — is **reversed in part**. Transport
-> *detail* stays hidden (no fetch promises, no response objects, no
-> client data layer), but *pending-ness* becomes first-class reactive
-> state. CSS attributes (`data-marko-pending`, `aria-busy`) demote to
-> zero-code conveniences and assistive-tech semantics layered on top —
-> they are not the API. A user must be able to optimistically drive
-> **any** update — swap text, disable semantically, render different
-> components, reorder content — not only respond to attribute changes
-> via CSS.
+Pending has **three grains**; each gets the surface whose visibility
+and ownership match its scope:
 
-Pending has **three natural grains**, and each gets the surface whose
-visibility matches its scope. The first design pass here exposed only
-lexical wrappers (tag variables), which forces tree shapes — a reader
-*above* the interaction site could not see its pending. That constraint
-is inherent to lexical scoping, so the non-local grains hang pending on
-things that are already tree-shape-free: the shared cell and `$global`.
-
-### Grain 1 — resource: pending hangs on the cell (readable at any height)
-
-"Something higher in the DOM wants to know the add-to-cart is pending"
-almost always means "**the cart** is syncing" — a fact about the
-resource, not the form. The cell is already hoisted above both reader
-and writer (that is what made the header badge work), so held-ness is
-exposed wherever the cell is readable, through the same context
-machinery as the value:
-
-The surface **inverts the read into a drive**: the cell does not offer
-pending for extraction; it *drives ordinary author state* through the
-established bind-shorthand/change-handler pattern (`value:=x` on
-controllable inputs is the precedent):
+### Grain 1 — resource: `onPending` on the cell
 
 ```marko
 /* cart-provider.marko */
 <let/syncing=false/>
-<optimistic/cart=$global.data.cart pending:=syncing/>
+<optimistic/cart=$global.data.cart onPending(p) { syncing = p }/>
 <context:=cart/>
 ```
 
-The cell invokes the handler as its held window opens and settles.
-`syncing` is a plain `<let>` — hoistable, derivable, providable — so
-readers at any height reach it the way they reach any state; for the
-header, it rides the same provider that already shares `cart` (the
-one-provide-per-template interaction is noted in the open questions).
-The long form is free generality: `pendingChange(p) { ... }` runs
-arbitrary logic on the transition, which is also the aggregation escape
-for multiple cells driving one indicator
-(`pendingChange(p) { busy += p ? 1 : -1 }` — two cells writing one
-*boolean* via `:=` would stomp each other, a documented hazard).
+The cell invokes the handler as its held window opens and settles
+(effect time). The state it drives is a plain `<let>` the author owns —
+hoistable, derivable, providable — and aggregation across cells is
+ordinary code (a counter, not a stomped boolean). Documented semantics:
+**resource-sync** — the held window, deliberately *not* "a mutation
+that might affect this resource is in flight" (unknowable client-side)
+and deliberately not a per-interaction spinner: the DX review showed
+cell-pending mistaken for per-row pending ships wrong UI (a row's
+spinner running because a *different* row's mutation holds the queue).
+Per-interaction pending is grain 3's job. Sharing `cart` + `syncing`
+from one provider is the named motivating case for context.md's
+multi-value-provide open question; until that resolves, a second tiny
+provider template is the workaround.
 
-Semantics of the driven value: the cell's **held window** — true from
-the first unsettled optimistic write until settle. It is deliberately
-*not* "a mutation that might affect this resource is in flight"
-(unknowable client-side — mutation→data dependencies are server
-knowledge); a mutation fired with no optimistic write does not hold the
-cell, and the page grain covers that case unconditionally.
+### Grain 2 — navigation: a run-provided context, not `$global`
 
-Two surfaces were considered and **rejected** on language-consistency
-grounds: an expression intrinsic (`pending(cart)`) — Marko expressions
-are plain JavaScript; specialness lives in tags and identifiers, never
-magic callables (the rule that makes `await(...)` invalid) — and a
-reader tag (`<pending/x=cart>`) whose default attribute would have been
-a compile-resolved *reference* restricted to cell bindings: a
-normal-looking attribute position with a secret bare-reference rule,
-and dataflow archaeology besides (pending is a property of the cell;
-values in expressions are just values). `:=` avoids both problems
-because its reference restriction is carried by syntax.
+The router *provides* navigation state through the `<context>`
+mechanism from run's generated route wrapper — reactive in any template
+via an explicit consume, collision-free (no squatting on the app-owned
+`$global` bag), absent rather than silently frozen in non-persisted
+builds, and needing **no synthetic-frame fan-out**: context's
+provider-scope subscription set is the delivery. (The earlier
+`$global.nav` mechanism is dead: synthetic globals-only frames dispatch
+only the root section's `$global` statement — every child template's
+reader was unreachable, R-F5 — and routing the click-time stamp through
+`createUpdate` would advance `bumpNavEpoch` at click, discarding
+pre-navigation reorder chunks for the whole round trip with a silent
+stuck-placeholder corner past the possession echo's 4 KB cutoff, R-F7.)
 
-### Grain 2 — page: router-stamped `$global` (ignores tree shape by definition)
-
-Navigation-level pending — progress bar, dim-the-page — belongs to no
-subtree. Every template reads `$global`, and the early-input mechanism
-(let-by-review.md, "Link-driven optimism") already gives the router a
-reactive client-side write channel into it: synthetic globals-only
-frames through the navigation's own apply context. Stamp
-`$global.nav.pending` (strawman name) at navigation start and settle;
-readers anywhere re-run through the same promotion machinery persisted
-deliveries use. No provider, no wrapper, no containment walk.
-
-### Grain 3 — site: lexical tag variables, for genuinely local UI
-
-The same drive pattern as grain 1 — the boundary tags accept
-`pending:=` (or `pendingChange=`) and drive author-declared state at
-their pending transitions. No handles, no read tag, no member magic;
-the author places the state at whatever height they need it, and for
-this grain that is naturally next to the boundary, because local is the
-point (grains 1–2 cover everything non-local).
-
-**Inbound (content pending): `pending:=` on the boundary.**
+Shape (strawman): `{ pending, url, method }` — carrying the
+navigation's *input* makes per-link pending derivable with zero
+per-anchor state:
 
 ```marko
-<let/refreshing=false/>
-<try pending:=refreshing>
+<context/nav from="<marko-run-nav>"/>   // provider name TBD with run
+<a
+  href=`/?tab=${t}`
+  class=[
+    t === tab && "tab--active",
+    nav.pending && nav.url.searchParams.get("tab") === t && "tab--loading",
+  ]
+>${t}</a>
+```
+
+Early-input stamping composes here instead of through globals: the
+router stamps `nav.url` at click through the provider (context fan-out
+reaches every consumer, any template), and `bumpNavEpoch` stays at
+first-response time.
+
+### Grain 3 — interaction: run-owned, DOM-grounded (`useFormStatus`-shaped)
+
+The initiating element is the honest anchor for per-interaction
+pending, and the platform already defines how elements relate to forms
+(`input.form`, `<button form=…>`, fieldset disabling) — so the surface
+is a **run taglib tag** that resolves its enclosing form the way the
+platform does and subscribes to that element's navigation state in the
+router's per-element registry:
+
+```marko
+/* product-actions.marko */
+<context/cart from="<cart-provider>"/>
+<form method="POST" action="/cart" onSubmit() {
+  cart = addItem(cart, input.id, quantity);
+}>
+  <form-status/status/>   // working name; run taglib
+  <button disabled=status.pending>
+    ${status.pending ? "Adding…" : "Add to cart"}
+  </button>
+</form>
+```
+
+- **Per-instance by construction**: loops need no wrapper; each row's
+  tag resolves each row's form.
+- **Library-composable** (the DX review's fatal case resolved): a
+  `<quantity-stepper>` ships its own `<form-status/busy/>` and works in
+  any consumer's form with zero threaded props — the `useFormStatus`
+  parity Marko lacked.
+- **Layering-clean**: run owns the router *and* this tag; runtime-tags
+  is untouched. This also answers the language review's kill of native
+  `pending:=` attrs (controllables are a closed set keyed to real
+  element IDL; `pending` would render as junk HTML or become a secret
+  native attr).
+- **`<button form="checkout">`** targets the form it names, exactly as
+  the platform resolves it; nearest-form is DOM semantics, not
+  framework magic-nearest (the context tag's explicit-`from=` rule is
+  about template identity, which has no platform resolution — forms
+  do).
+- The dead `<transition>` tag's remaining exclusive case — pending for
+  a region whose initiators you don't own — stays unserved by decision,
+  on the same evidence standard as `for=`.
+
+Inbound content pending stays on the boundary, through the established
+platform→body output channel — **body parameters**, which are
+render-native (`_const` has no `Gen` gate, so param-driven state flows
+in every context the settle points run in):
+
+```marko
+<try|{ pending }|>
   <@placeholder by=id><skeleton/></@placeholder>
   <await|post|=fetchPost(id, refreshGen)>
-    <h2 class=(refreshing && "stale")>${post.title}</h2>
+    <h2 class=(pending && "stale")>${post.title}</h2>
   </await>
 </try>
-<refresh-button disabled=refreshing/>
 ```
 
-Driven from state both drivers already maintain: the branch's
-`AwaitCounter` (client re-awaits) and the persisted pending-boundary
-state (the `"!"` echo / body-frame commit in `_update_branch`). Without
-the attribute, `<try>` compiles exactly as today: zero bytes.
+Body params are body-scoped — which is this grain's own definition of
+local. Readers outside the boundary belong to grains 1–2.
 
-**Outbound (interaction pending): `pending:=` on a transition boundary.**
+### "Any sort of update" needs no further machinery
 
-```marko
-<let/adding=false/>
-<transition pending:=adding>   // name is a strawman — see open questions
-  <form method="POST" onSubmit() { cart = addItem(cart, input.id) }>
-    <button disabled=adding>
-      ${adding ? "Adding…" : "Add to cart"}
-    </button>
-  </form>
-</transition>
-```
-
-`adding` is driven true while a navigation **initiated from within the
-tag's body** is unsettled. Association is by **DOM containment, not refs**:
-the router already holds the initiating element (the link it
-intercepted, the form that submitted); at navigation start it walks
-that element's ancestry against registered transition ranges (a
-boundary's body is a branch with start/end nodes — the containment
-check is the same shape the runtime uses everywhere else). No tag-var
-plumbing, so it works in loops (each iteration's instance contains its
-own form — per-row pending for a feed of like buttons) and across
-templates (the transition wraps a `<content>` slot; controls rendered
-into it still associate). Settle mirrors the cell predicate: the
-navigation's stream completing, the fallback ladder firing, or a
-supersede. Page-global pending is the degenerate case — wrap the layout
-body in one transition — though the `$global.nav` grain covers it with
-no wrapper at all; the doc-level attribute becomes a convenience the
-router can keep stamping for zero-code apps.
-
-**"Any sort of update" then needs no further machinery.** The guess a
-cell holds is an arbitrary value — including presentation metadata,
-since settle replaces it wholesale with server truth:
+The guess a cell holds is an arbitrary value — including presentation
+metadata, since settle replaces it wholesale with server truth:
 
 ```marko
 <form method="POST" onSubmit() {
@@ -385,80 +420,71 @@ since settle replaces it wholesale with server truth:
 ```
 
 The provisional flag never survives settle — the delivered cart has no
-such property — so "mark the row as sending until the server confirms"
-is just data in the guess. Between that, per-cell truth
-(`<optimistic>`), resource pending (`pending:=` on the cell, hoisted to
-any height), page pending (`$global.nav`), and site pending
-(`pending:=` on `<try>`/`<transition>`), arbitrary optimistic UI is
-ordinary template logic
-over reactive values — components, text, `disabled`, reordering — with
-CSS selectors as one consumer among many rather than the only one.
-
-Costs and edges:
-
-- Unused vars compile to nothing (tag-variable wiring is demand-driven).
-  Used, each is a small counter-backed signal; the router pays one
-  ancestry walk per navigation start/settle.
-- SSR: `pending` renders `false`; one honest question is the initial
-  document stream — a boundary still streaming its body at resume
-  arguably *is* pending, and `section.pending` reflecting that would
-  unify first-load and transition UX (needs a decision + fixture).
-- Anti-flash: a raw boolean flips immediately; fast navigations would
-  flash spinners built on it. Follow the TanStack lesson at the
-  primitive level *later* if needed (`<transition/t delay=300>`), not
-  by making the raw value lie. The server-side fast-path (resolved by
-  first flush → no recede) already covers the structural half.
-- Error exposure (`t.error`?) is deliberately out of scope: failed
-  navigations end in the fallback ladder (full navigation), and
-  boundary errors already have `<@catch>`.
+such property. Between that, per-cell truth (`<optimistic>`), resource
+sync (`onPending`), navigation state (the nav context), and
+per-interaction pending (`<form-status>`, `<try|{pending}|>`),
+arbitrary optimistic UI is ordinary template logic over reactive
+values — components, text, `disabled`, reordering — with CSS selectors
+as one consumer among many rather than the only one.
 
 ## What each layer requires
 
 - **Compiler** (`translator/core/optimistic.ts`, shaped like `let.ts`):
-  tag variable required; `value=` (default attr) required; no body; no
-  `by=`. Analyze: a writable-derived binding — assignments allowed
-  (reuse the `let` assignment plumbing / `buildAssignment` →
-  `_optimistic_write`), but the source expression compiles **into the
-  cell's own signal function** subscribed to the source's references —
-  not through an intermediate memoized `<const>`, whose dirty-check
-  would swallow same-value emissions (worth a lint when the source is
-  just an alias of one). A cell with **no assignments anywhere**
-  compiles as a plain `<const>` — the tag costs nothing until it's
-  actually written. Downstream readers classify as state-mixing —
-  which the persisted compiler already handles correctly: holes
-  downstream of client state re-invoke against **live** state during
-  applies rather than writing captured values (pinned by
-  `persisted-update-csr-race`), so a held overlay is never clobbered
+  tag variable required; `value=` (default attr) required; `onPending=`
+  optional (function-typed, like `valueChange`'s assertion); no body;
+  no `by=`. **Compile errors**: `valueChange=` (a cell's writes are
+  guesses, never upstream delegations — and its `Change`-direction
+  would be opposite `onPending`'s on one tag), and a **bound default
+  attribute** (`<optimistic/cart:=src/>` currently desugars into a
+  silent unreactive mutation of the source — the desugar runs before
+  tag analyze, so the tag must reject the desugared pair explicitly).
+  Analyze: a writable-derived binding — assignments allowed (reuse the
+  `let` assignment plumbing / `buildAssignment` → `_optimistic_write`),
+  but the source expression compiles **into the cell's own signal
+  function** subscribed to the source's references — not through an
+  intermediate memoized `<const>` (lint the bare-alias case). A cell
+  with **no assignments anywhere** compiles as a plain `<const>` — and
+  the load-bearing invariant behind that downgrade is now recorded:
+  *every cross-template write channel must desugar to a lexically
+  visible assignment in the declaring template* (writable context does;
+  any future channel that doesn't must revisit this optimization or it
+  becomes a wrong-behavior cliff). Downstream readers classify as
+  state-mixing — which the persisted compiler already handles correctly
+  (`persisted-update-csr-race`): a held overlay is never clobbered
   mid-apply by construction.
 - **DOM runtime** (`dom/optimistic.ts`, its own module for
   tree-shaking): `_optimistic(accessor, boundaryAccessor?, fn)` — the
-  gate signal (emission/write/settle paths above), `_optimistic_write`,
-  and the held-cell registration. Budget: in the low hundreds of bytes
-  min, riding only bundles that use the tag.
-- **Boundary machinery** (the one genuinely new hook): a `HeldCells`
-  set on the try/await branch scope, notified at `awaitCounter.c()`
-  reaching zero, at `_update_branch` body commit (the persisted driver
-  of the same boundary), and on catch-settle. Small (a Set, one fan-out
-  loop), and it is the same "boundary settled" moment the review's F3
-  pending-signal layer wants to expose as `aria-busy` clearing — build
-  it once, two consumers.
-- **Run router**: F2's mutation queue (already a prerequisite) plus one
-  integration point: call the runtime's settle entry when the final
-  pending mutation's response stream completes. Note the timing choice:
-  stream-completion is conservative — a slow unrelated `<await>` on the
-  page holds the stream open and delays settle; if that bites in
-  practice, refine to "the response's synchronous frames applied +
-  queue empty", with boundary-nested sources already covered by their
-  own body-commit emissions.
+  gate signal (emission/write/settle paths above), `_optimistic_write`
+  (write + register + task-drain bracket), the **global held-cell
+  registry** with per-cell predicate re-check and abort-signal cleanup,
+  and effect-time, try/catch-wrapped notification for settles and
+  `onPending`. Budget: low hundreds of bytes min, riding only bundles
+  that use the tag.
+- **Boundary machinery** (the genuinely new pieces): settle events fan
+  out to the registry from `awaitCounter.c()` reaching zero,
+  `_update_branch` body commit, and catch — **including the counters
+  the document's inline reorder runtime owns**: the optimistic/pending
+  module, when it loads, wraps the `render.p` counters resume attached
+  (R-F2 — one of the three `c()` implementations ships as an inline
+  document script and cannot call lazily-loaded modules itself;
+  wrap-on-resume is the only viable seam). MARKO_DEBUG asserts if an
+  unwrapped counter settles while the registry is non-empty.
+- **Run router**: F2's mutation queue (already a prerequisite) plus:
+  queue-insert ordered before any apply/stamp the router performs
+  (R-F4); settle fan-out at "synchronous frames applied + queue empty";
+  the per-element form-state registry backing `<form-status>`; the nav
+  context provider (grain 2), which also becomes early-input's
+  delivery; and — recorded as run-roadmap items surfaced by the DX
+  review, not this doc's to design — programmatic
+  `navigate(href, { replace })` (today `form.requestSubmit()` is the
+  entire programmatic API and every debounced-search tick is a history
+  entry), navigation guards with defined listener-phase ordering, and
+  documenting `marko-run:navigate` as the sanctioned low-level event
+  hatch.
 - **The wire: nothing.** No new serialization class, no dedicated
-  delivery, no echo. The source rides the channels it already rides
-  (value merges, globals partial, boundary body frames); the cell's
-  exposed slot serializes for resume exactly as a written `<let>`
-  would (standard serialize-reason analysis — a server render never
-  holds an overlay, so there is nothing else to ship). This is the
-  practical payoff of derived-at-rest: `<let by>`'s persisted plan
-  needed a new unconditional serialize reason and a merge dispatch
-  (let-by.md compiler item 5); the optimistic cell needs neither.
+  delivery, no echo. The source rides the channels it already rides;
+  the cell's exposed slot serializes for resume exactly as a written
+  `<let>` would. This remains the practical payoff of derived-at-rest.
 
 ## SSR / resume
 
@@ -466,63 +492,89 @@ The server renders the source value like a `<const>` — no special
 behavior, no key slot. The exposed slot serializes when client code
 reads/writes it (ordinary reasons). Resume registers the cell signal
 like any let; `held` always starts false (a server cannot render a
-guess).
+guess). `<try|{ pending }|>` under SSR: content already flushed before
+a slow body cannot be revised, so the param is `false` for the
+document render and **resume-time drive only** — decided explicitly
+(R-F12) rather than left as the earlier open question.
+
+## Escape hatch (pre-decided, deferred)
+
+If custom-`fetch` flows — confirmations the platform cannot see because
+they neither navigate nor re-run an await — ever demonstrate the need,
+the slot is `guess(value, untilPromise)`: an ordinary import producing
+a branded value the cell's write path recognizes (hold until the
+promise settles, then re-derive). Plain-JS-legal (an import, not a
+magic callable), with a dev-mode brand check on non-cell writes.
+Deferred on the same evidence standard as `for=` was.
 
 ## Fixtures
 
-1. Client driver: write → held; param emission with pending boundary →
-   still held; counter-zero settle → re-derive; equal-value settle is a
-   no-op (no downstream renders — assert via render counts).
-2. Client driver, double re-await: no intermediate value renders.
-3. Catch-settle: guess retained; next successful emission reconciles.
+1. Client driver: write → held+registered; param emission with pending
+   boundary → still held; counter-zero settle (effect time) →
+   re-derive; equal-value settle is a no-op (assert via render counts).
+2. Client driver, double re-await: superseded promise fires neither
+   params nor `c()` (identity guard); single settle on resolve #2; no
+   intermediate value renders.
+3. Catch-settle: registry fan-out fires; guess retained (shadow never
+   refreshed); next successful emission reconciles.
 4. Persisted driver (feature branch): accepted mutation (silent
    settle), rejected mutation with sparse response (no fill → shadow
    fallback → rollback renders), overlapping mutations (no intermediate
    value), unrelated GET mid-flight (emission holds; later settle
    reconciles).
-5. Unassociated write: lifts on next emission (any navigation).
-6. No-assignment cell compiles byte-identical to `<const>`.
-7. Composition: provider `<optimistic>` + writable `<context>` +
-   consumer writes from a form — the cart shape end-to-end, deleting
-   `let-global` in the benchmark app.
+5. Task-drain bracket: click handler writes then programmatically
+   submits; an unrelated GET frame applying in the click→submit gap
+   does not lift the hold (R-F4's exact sequence).
+6. Channel misclassification guard: await-param-sourced cell + POST
+   mutation + sparse response → router settle fan-out reaches the
+   boundary-bound cell via the global registry (R-F3's exact sequence).
+7. Resumed still-streaming boundary: interact before the document
+   stream finishes; the wrapped inline counter's settle notifies the
+   registry (R-F2's exact sequence).
+8. Registry lifetime: cell's subtree destroyed mid-navigation while
+   held → deregistered via abort; no detached-DOM retention.
+9. Unassociated write: lifts on next emission (any navigation).
+10. No-assignment cell compiles byte-identical to `<const>`; bound
+    default attr and `valueChange=` are compile errors.
+11. Composition: provider `<optimistic>` + writable `<context>` +
+    consumer writes from a form — the cart shape end-to-end, deleting
+    `let-global` in the benchmark app.
+12. `<form-status>`: per-row forms in a loop; `<button form=…>` outside
+    the form's subtree; a library tag consuming its host form's status.
+13. `<try|{ pending }|>`: pending true across a client re-await and a
+    persisted matched-boundary re-render; resume-time drive on a
+    still-streaming document boundary; SSR renders `false`.
 
 ## Open questions
 
 1. **Name.** `<optimistic>` is self-documenting and matches industry
-   vocabulary; `<guess>` is shorter; the tag-variable read
-   (`<optimistic/likes=…>`) should drive the choice.
+   vocabulary — and is the language's first adjective core tag, and its
+   longest at 10 chars; it reads best in the var position
+   (`<optimistic/likes=…>`). Decide with naming of `<form-status>` and
+   the nav provider so the family reads as one.
 2. **Memoization swallowing**: lint (or see through) sources that are
-   bare aliases of a memoized `<const>`, where equal-value emissions
-   die before reaching the gate.
-3. **Persisted settle timing**: stream-completion vs response-scoped
-   (the slow-unrelated-boundary hazard above).
-4. **Catch semantics**: hold-the-guess (proposed) vs re-derive-stale.
-5. **Cross-template boundary feeding**: rides the shared
-   reason-threading spike (`context.md`); v1 lexical.
-6. **Does `for=`/explicit association ever return?** Only if real apps
-   produce confirmations the platform can't see (custom fetch that
-   neither navigates nor re-awaits); leave out until demonstrated.
-7. **Interaction with `<let by>`**: none by design — different shapes
-   (fork-at-rest vs derived-at-rest); the docs teach the split
-   (let-by-review.md F1). Confirm no template needs both on one value.
-8. **The outbound boundary's name**: `<transition>` collides with CSS
-   transitions / View Transitions vocabulary; alternatives: `<busy>`,
-   `<action>`. Whatever wins, it and `<try pending:=>` should read as
-   the two directions of one concept. Also decide whether the site
-   grain earns a dedicated tag at all once grains 1–2 exist — the
-   local-only cases may be few enough to fold into `<try>` and forms.
-10. **Sharing a cell's driven pending state cross-template** pokes at
-    context.md's one-provide-per-template rule (the provider already
-    provides `cart`; `syncing` wants to ride along). Expressible today
-    by layering a second tiny provider template; the cart+syncing pair
-    is the motivating case for a multi-value provide — record it as a
-    context.md follow-up rather than solving it here.
-11. **Grain-2 shape**: the `$global.nav` field name, and whether the
-    router stamps it always or only when some template reads it
-    (compile-time discoverable — the promotion machinery already tracks
-    `$global` reads per expression).
-9. **Initial-stream pending**: should `<try/t>.pending` be true while
-   the document stream is still filling the boundary at resume
-   (unifying first-load and transition UX)? Leaning yes; needs the
-   reorder-runtime's pending state surfaced to the resumed branch and a
-   fixture.
+   bare aliases of a memoized `<const>`, and document the
+   identity-stable-resolved-value hazard (memoized fetchers) — with
+   write-time registration these degrade to stale-shadow-until-settle
+   rather than permanent holds, but the lint still matters.
+3. **`onPending` siblings**: whether an `onSettle` (each
+   reconciliation) is worth a second moment — defer until a real
+   consumer appears.
+4. **Cross-template boundary feeding**: rides the shared
+   reason-threading spike (`context.md`); v1 lexical; degradation
+   dev-warns.
+5. **Interaction with `<let by>`**: none by design — different shapes
+   (fork-at-rest vs derived-at-rest); confirm no template needs both on
+   one value.
+6. **`<form-status>` details**: name; target resolution rule
+   (closest-form default, named-target override?); whether links need a
+   per-anchor variant in v2 or the nav-context URL comparison suffices.
+7. **Nav context provider identity**: run's generated wrapper needs a
+   stable `from=` name — coordinates with context.md's `from=` syntax
+   question and the multi-value-provide follow-up (cart + syncing is
+   the other named case).
+8. **Task-drain bracket definition**: microtask vs `requestSubmit`
+   re-entry — fixture 5 decides.
+9. **Per-resource settle precision** (future): server-stamped versions
+   as the refinement for the global queue's unbounded coarseness under
+   sustained mutations. Record only.
