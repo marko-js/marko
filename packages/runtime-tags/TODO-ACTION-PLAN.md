@@ -12,14 +12,14 @@ Tracks:
 
 ## Track A — Correctness (10 TODOs, highest priority)
 
-### A1. Computed keys in destructuring patterns produce wrong output or throw poorly — `src/translator/util/references.ts:665`
+### A1. Computed keys in destructuring patterns produce wrong output or throw poorly — resolved 2026-07-09
 
-**Verified bug.** `createBindingsAndTrackReferences` classifies object-pattern keys with `prop.key.type === "Identifier"` without checking `prop.computed`:
+**Verified bug, now fixed.** `createBindingsAndTrackReferences` classified object-pattern keys with `prop.key.type === "Identifier"` without checking `prop.computed`:
 
-- `<child/{ [KEY]: count }/>` is silently treated as the literal property `KEY`. HTML output destructures `[KEY]` correctly, but DOM/resume output reads `$pattern.KEY`, so server and client disagree on the value with no diagnostic. This is a silent SSR/CSR divergence.
-- `<child/{ ["cou" + "nt"]: count }/>` hits the `throw new Error("computed keys not supported in object pattern")` path: a raw error with no code frame or template location.
+- `<child/{ [KEY]: count }/>` was silently treated as the literal property `KEY`. HTML output destructured `[KEY]` correctly, but DOM/resume output read `$pattern.KEY`, so server and client disagreed on the value with no diagnostic.
+- `<child/{ ["cou" + "nt"]: count }/>` hit a raw `throw new Error(...)` with no code frame or template location.
 
-**Action:** short term, treat every `prop.computed` key as unsupported and report it with a proper code-frame error (the function currently only receives the AST node and Babel scope, so plumbing a path or location through is part of the fix). Full support for computed keys means the property name is not statically known, which breaks per-property alias bindings; that is a separate feature decision. Recorded in `agent-feedback/bugs.md`. _Impact: med (silent wrong values), effort: low (diagnostic) / high (full support)._
+**Resolution:** computed keys (and other unsupported key kinds) are now rejected with a code-frame error ("Only identifier and string literal keys are supported when destructuring."); statically-known string literal keys keep working. Locked in by the `error-destructure-computed-key` and `error-destructure-computed-key-expression` fixtures. Full computed-key support remains a separate feature decision (the property name is not statically known to the per-property alias machinery). Accepting statically-known numeric literal keys is recorded as a follow-up in `agent-feedback/cleanup.md`.
 
 ### A2. Content signal may be missing the reference group of its param defaults — `src/translator/util/known-tag.ts:865`, `known-tag.ts:1232`
 
@@ -146,7 +146,7 @@ These can land as one batch with no user-visible behavior change (except the two
 
 ## Suggested sequencing
 
-1. **Now (small, high value):** A1 diagnostic fix (+ `agent-feedback/bugs.md` entry already recorded), C1 fixtures + cast cleanup, C2 fixture. Deletes 6 TODOs and closes a silent wrong-output hole.
+1. **Now (small, high value):** ~~A1 diagnostic fix~~ (done 2026-07-09), C1 fixtures + cast cleanup, C2 fixture. Deletes 6 TODOs and closes a silent wrong-output hole.
 2. **Next:** repro fixtures for A2, A3, A4, A5 — each is a half-day spike that converts a suspicion into either a scoped bug issue or a deleted TODO. File issues for whatever is confirmed.
 3. **Then:** A6 (re-enable interop SSR) and A7+D4 (dynamic-tag SSR var + dedupe) as independent PRs; A8, A9 policy decisions alongside.
 4. **Ongoing:** D1-D2 as one sizes PR; C3 experiment; E batch PR; re-check oxc#17364 / jsdom#3261 monthly (Track B).

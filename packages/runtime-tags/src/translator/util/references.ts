@@ -657,13 +657,15 @@ function createBindingsAndTrackReferences(
         } else {
           let key: string;
 
-          if (prop.key.type === "Identifier") {
+          if (!prop.computed && prop.key.type === "Identifier") {
             key = prop.key.name;
           } else if (prop.key.type === "StringLiteral") {
             key = prop.key.value;
           } else {
-            // TODO: it should be a computed value
-            throw new Error("computed keys not supported in object pattern");
+            throw scope.path.hub.buildError(
+              prop.key,
+              "Only identifier and string literal keys are supported when destructuring.",
+            );
           }
 
           if (hasRest) {

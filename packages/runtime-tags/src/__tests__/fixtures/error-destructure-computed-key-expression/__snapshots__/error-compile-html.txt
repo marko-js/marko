@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-destructure-computed-key-expression/template.marko:1:11
+    > 1 | <const/{ ["cou" + "nt"]: count } = input/>
+        |           ^^^^^^^^^^^^ Only identifier and string literal keys are supported when destructuring.
+      2 | <div>${count}</div>
+      3 |
