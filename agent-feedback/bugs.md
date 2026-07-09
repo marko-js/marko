@@ -41,3 +41,22 @@ therefore relied upon for correctness. A real fix needs `isSupersetSources` to
 use a strict/proper-superset test (equal sources must not prune each other)
 _and_ the corrected arithmetic, then a full snapshot audit — out of scope for a
 one-line change.
+
+## Computed keys in destructure patterns silently bind the identifier name
+
+`src/translator/util/references.ts:660` | 2026-07-09 | impact:med | effort:med
+
+`createBindingsAndTrackReferences` classifies object-pattern keys with
+`prop.key.type === "Identifier"` without checking `prop.computed`, so
+`<child/{ [KEY]: count }/>` is treated as the literal property `KEY`: HTML
+output correctly destructures `let { [KEY]: count } = ...` while DOM/resume
+output reads `$pattern.KEY`, producing a silent SSR/CSR value divergence with
+no diagnostic. Non-identifier computed keys (`{ ["cou" + "nt"]: v }`) reach the
+`throw new Error("computed keys not supported in object pattern")` at
+`references.ts:666`, an uncaught raw error with no code frame (the function
+only receives the AST node and Babel scope, so a located error needs a path or
+loc threaded through). Short-term fix: reject every `prop.computed` key with a
+code-frame error; actual computed-key support is a separate feature since the
+property name is not statically known to the per-property alias machinery.
+Applies to tag variables, tag params, and any other pattern routed through
+this helper.
