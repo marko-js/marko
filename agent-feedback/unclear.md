@@ -72,3 +72,21 @@ predates a syntax decision or it sketches an unshipped await-expression
 form without saying so; both readings misteach the boundary the
 `<@placeholder by=>` feature it documents actually attaches to. Fix the
 example (and check the other designs/ docs for the same form).
+
+## The inline reorder runtime's `render.j` hook is load-bearing but unexplained
+
+`packages/runtime-tags/src/html/inlined-runtimes.debug.ts` (persisted
+feature branch): the reorder runtime exposes `runtime.j = {}` and, when
+processing a reorder chunk, chains any `runtime.j[id]` callback onto
+that boundary counter's final decrement (`placeholderCb = placeholder.c;
+placeholder.c = () => placeholderCb() || op(runtime.r)`). This is the
+_only_ module-side seam for observing an inline-owned boundary settle —
+design work on the optimistic/pending settle hook initially specced an
+unimplementable `render.p` wrap because nothing signals that `j`
+exists: the sole comment is `// repurpose "op" for callbacks
+...carefully`, the property is a bare single letter, and no module-side
+consumer is cross-referenced. A two-line comment stating the contract
+("module code may register a per-boundary completion callback here;
+registered-before-chunk-arrival only") — and a pointer from wherever
+module code consumes it — would have saved a full design-review round
+trip.

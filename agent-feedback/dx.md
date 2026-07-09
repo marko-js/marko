@@ -125,3 +125,16 @@ persisted-pages review (the failure looked exactly like a branch
 regression); also worth noting the harness leaves fixture preview servers
 (`node .../dist/index.mjs`) running when the mocha process is killed
 mid-suite, which compounds diagnosis with port noise on subsequent runs.
+
+## cspell is in `npm run lint` but not in lint-staged
+
+`.lintstagedrc.json` runs eslint + prettier on staged files, but not
+cspell — while `npm run lint` (and CI's lint job) runs
+`cspell "**/*.{md,ts,js,marko}"` over everything. So a markdown-heavy
+commit passes the pre-commit hook and then fails CI on unknown words,
+with the fix landing in a later unrelated diff (this branch accumulated
+a dozen such words across several docs commits before a cleanup pass
+added them to `cspell.json`). Adding `cspell --no-must-find-files` to
+the lint-staged `*.md` entry (or all entries) would surface the failure
+at commit time, where the word list is still fresh in the author's
+head.
