@@ -262,23 +262,38 @@ machinery as the value:
 ```marko
 /* +layout.marko header — already consumes cart for the badge */
 <context/cart from="<cart-provider>"/>
-<header class=(pending(cart) && "header--syncing")>
+<pending/syncing=cart/>
+
+<header class=(syncing && "header--syncing")>
   🛒 (${cart.reduce((s, i) => s + i.quantity, 0)})
 </header>
 ```
 
-Semantics: `pending(cell)` is the cell's **held window** — true from
-the first unsettled optimistic write until settle. It is deliberately
-*not* "a mutation that might affect this resource is in flight"
-(unknowable client-side — mutation→data dependencies are server
-knowledge); a mutation fired with no optimistic write does not hold the
-cell, and the page grain covers that case unconditionally. Surface is
-an open question below: a compiled expression intrinsic
-(`pending(cart)` — resolves the binding at compile time, including
-through a context consumption, and subscribes to the provider-scope
-held slot; `$global`/`$signal` are the special-identifier precedent) or
-a companion tag (`<pending/cartBusy of=cart>`). The intrinsic is leaner:
-usable inline in any expression at any position, zero tree nodes.
+Semantics: the cell's **held window** — true from the first unsettled
+optimistic write until settle. It is deliberately *not* "a mutation
+that might affect this resource is in flight" (unknowable client-side —
+mutation→data dependencies are server knowledge); a mutation fired with
+no optimistic write does not hold the cell, and the page grain covers
+that case unconditionally.
+
+Surface: a **core tag with a tag variable** whose default attribute is
+a compile-resolved *reference* to a pending-capable binding — a compile
+error otherwise. Reference-typed attributes are established language
+shape (`:=` requires an assignable binding reference; `<for by="id">`
+compiles a string against the item shape); an expression intrinsic
+(`pending(cart)`) was considered and **rejected** as out of line with
+the language — Marko expressions are plain JavaScript, and specialness
+lives in tags and identifiers, never in magic callables (the same rule
+that makes `await(...)` invalid in expressions). For a context-consumed
+cell, `from=` is a compile-time constant, so the compiler verifies the
+provider's value is an optimistic cell (a cross-template program-extra
+flag, same drift-safe pattern as `providesContext`/`updateGeneric`) and
+the runtime subscribes to the held slot on the provider scope through
+the same closure machinery as the value. `<pending>` can be the
+family's *uniform* pending read: a cell reference → held window; a
+`<try>` boundary var → its re-await state; a transition var → its
+in-flight state — one tag, "pending of this", rather than object-valued
+vars with `.pending` members on three surfaces.
 
 ### Grain 2 — page: router-stamped `$global` (ignores tree shape by definition)
 
@@ -293,48 +308,51 @@ deliveries use. No provider, no wrapper, no containment walk.
 
 ### Grain 3 — site: lexical tag variables, for genuinely local UI
 
-Two reactive values, exposed the way Marko exposes platform-owned
-lexical state — **tag variables** — one per direction of async. Their
-visibility is lexical (the tag's body and the remainder of the
-enclosing body) — right for the button's own label and `disabled`, the
-section's own stale styling — and that constraint is the *meaning* of
-the grain, with grains 1–2 covering everything non-local.
+The boundaries expose **handles** as tag variables — lexical
+visibility (the tag's body and the remainder of the enclosing body) is
+the *meaning* of this grain, right for the button's own label and
+`disabled` or the section's own stale styling, with grains 1–2 covering
+everything non-local. The handle's state is read through the same
+uniform `<pending>` tag as a cell (whether handles *also* support
+direct member reads like `t.pending` is an open question; the uniform
+tag keeps one read surface).
 
-**Inbound (content pending): a tag variable on the boundary.**
+**Inbound (content pending): the boundary's handle.**
 
 ```marko
 <try/section>
   <@placeholder by=id><skeleton/></@placeholder>
   <await|post|=fetchPost(id, refreshGen)>
-    <h2 class=(section.pending && "stale")>${post.title}</h2>
+    <pending/refreshing=section/>
+    <h2 class=(refreshing && "stale")>${post.title}</h2>
   </await>
 </try>
-<refresh-button disabled=section.pending/>
+<pending/sectionBusy=section/>
+<refresh-button disabled=sectionBusy/>
 ```
 
-`section.pending` is backed by state both drivers already maintain: the
-branch's `AwaitCounter` (client re-awaits) and the persisted
-pending-boundary state (the `"!"` echo / body-frame commit in
-`_update_branch`). Tag-variable scoping gives the right visibility for
-free — readable inside the body and in the remainder of the enclosing
-body (the spinner-next-to-the-section case). Unreferenced, the compiler
-wires nothing: zero bytes, the ordinary tag-var contract.
+Backed by state both drivers already maintain: the branch's
+`AwaitCounter` (client re-awaits) and the persisted pending-boundary
+state (the `"!"` echo / body-frame commit in `_update_branch`).
+Unreferenced, the compiler wires nothing: zero bytes, the ordinary
+tag-var contract.
 
-**Outbound (interaction pending): a transition boundary.**
+**Outbound (interaction pending): a transition boundary's handle.**
 
 ```marko
-<transition/adding>   // name is a strawman — see open questions
+<transition/t>   // name is a strawman — see open questions
+  <pending/adding=t/>
   <form method="POST" onSubmit() { cart = addItem(cart, input.id) }>
-    <button disabled=adding.pending>
-      ${adding.pending ? "Adding…" : "Add to cart"}
+    <button disabled=adding>
+      ${adding ? "Adding…" : "Add to cart"}
     </button>
   </form>
 </transition>
 ```
 
-`adding.pending` is true while a navigation **initiated from within the
-tag's body** is unsettled. Association is by **DOM containment, not
-refs**: the router already holds the initiating element (the link it
+`adding` is true while a navigation **initiated from within the tag's
+body** is unsettled. Association is by **DOM containment, not refs**:
+the router already holds the initiating element (the link it
 intercepted, the form that submitted); at navigation start it walks
 that element's ancestry against registered transition ranges (a
 boundary's body is a branch with start/end nodes — the containment
@@ -345,9 +363,9 @@ templates (the transition wraps a `<content>` slot; controls rendered
 into it still associate). Settle mirrors the cell predicate: the
 navigation's stream completing, the fallback ladder firing, or a
 supersede. Page-global pending is the degenerate case — wrap the layout
-body in one `<transition/nav>` — so no separate document-level API is
-needed; the doc-level attribute becomes a convenience the router can
-keep stamping for zero-code apps.
+body in one transition — though the `$global.nav` grain covers it with
+no wrapper at all; the doc-level attribute becomes a convenience the
+router can keep stamping for zero-code apps.
 
 **"Any sort of update" then needs no further machinery.** The guess a
 cell holds is an arbitrary value — including presentation metadata,
@@ -368,7 +386,7 @@ since settle replaces it wholesale with server truth:
 The provisional flag never survives settle — the delivered cart has no
 such property — so "mark the row as sending until the server confirms"
 is just data in the guess. Between that, per-cell truth
-(`<optimistic>`), resource pending (`pending(cell)`, any height), page
+(`<optimistic>`), resource pending (`<pending/x=cell>`, any height), page
 pending (`$global.nav`), and site pending (`<try/t>`,
 `<transition/t>`), arbitrary optimistic UI is ordinary template logic
 over reactive values — components, text, `disabled`, reordering — with
@@ -491,12 +509,12 @@ guess).
    should read as the two directions of one concept. Also decide
    whether the site grain earns two tags at all once grains 1–2 exist —
    the local-only cases may be few enough for one.
-10. **Grain-1 surface**: compiled expression intrinsic
-    (`pending(cell)`) vs companion tag (`<pending/x of=cell>`). The
-    intrinsic is leaner and position-free; the tag is consistent with
-    `let`/`const`/`optimistic`. Decide with the parser/language owners;
-    either must resolve through context consumption to the provider
-    scope's held slot.
+10. **`<pending>` details** (the surface itself is decided — a core
+    tag with a tag variable; the expression intrinsic was rejected as
+    out of line with the language): whether boundary/transition handles
+    also allow direct member reads (`t.pending`) or the tag stays the
+    single read surface; and whether the reference rides the default
+    attribute (`<pending/x=cart>`) or a named one (`of=`).
 11. **Grain-2 shape**: the `$global.nav` field name, and whether the
     router stamps it always or only when some template reads it
     (compile-time discoverable — the promotion machinery already tracks

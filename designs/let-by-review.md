@@ -742,7 +742,7 @@ changes via CSS. The surface is three grains designed in
 [optimistic.md](./optimistic.md) ("Programmatic pending state"), chosen
 so the non-local ones are tree-shape-free (lexical wrappers force tree
 shapes — a reader above the interaction site cannot see a tag variable
-below it): **resource** — `pending(cell)`, a cell's held window,
+below it): **resource** — `<pending/x=cell>`, a cell's held window,
 readable at any height wherever the cell is in scope through the same
 context hoist as its value; **page** — router-stamped `$global.nav`
 via the early-input synthetic-frame channel, readable everywhere by

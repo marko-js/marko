@@ -298,7 +298,7 @@ ones deliberately avoid lexical wrappers, which force tree shapes
 (a reader above the interaction site could never see a tag variable
 declared below it):
 
-- **Resource** — `pending(cell)` [EXPLORATION]: a cell's held window,
+- **Resource** — `<pending/syncing=cart>` [EXPLORATION]: a cell's held window,
   readable at *any height* wherever the cell is in scope (the header
   already consumes `cart` via context for the badge; syncing state
   rides the same hoist). Deliberately not "some mutation might affect
@@ -324,7 +324,7 @@ and platform affordances on top of that surface, not the API:
 
 | layer                                   | what the author does            | status                                                       |
 | --------------------------------------- | ------------------------------- | ------------------------------------------------------------ |
-| pending reactive state, three grains (`pending(cell)`, `$global.nav`, `<try/t>`/`<transition/t>`) | any template logic | [EXPLORATION] — optimistic.md |
+| pending reactive state, three grains (`<pending/x=cell>`, `$global.nav`, boundary/transition handles) | any template logic | [EXPLORATION] — optimistic.md |
 | pending attrs (`data-marko-pending`, doc-level) + double-submit guard | CSS only, zero code | [DESIGNED] — review F6 says ship **first** (the guard is correctness) |
 | regional `aria-busy` on pending boundaries | nothing (a11y semantics)     | [DESIGNED], deferred by decision; same boundary-settle hook as the cells |
 | structural recede `<@placeholder by=>`  | one attribute                   | **[BUILT]** persisted-side; F3 extends to client re-awaits; anti-flash hold unbuilt |
