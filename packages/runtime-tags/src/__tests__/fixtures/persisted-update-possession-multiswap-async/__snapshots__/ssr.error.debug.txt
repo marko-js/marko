@@ -1,0 +1,1 @@
+multiple simultaneous fragments with async content are not supported yet

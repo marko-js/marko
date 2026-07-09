@@ -16,9 +16,9 @@ var template_default = _template("a", (input) => {
 		value: 1,
 		valueChange: 1
 	}, "d", $scope0_id, "input")}>${_el_resume($scope0_id, "d")}`);
-	_script($scope0_id, "a1");
-	_script($scope0_id, "a2");
 	_script($scope0_id, "a3");
+	_script($scope0_id, "a2");
+	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		e: v,
 		f: rest

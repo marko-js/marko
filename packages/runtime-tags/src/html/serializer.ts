@@ -426,10 +426,14 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
     // skip count (the browser creates scopes on demand).
     const openIndex = buf.push("") - 1;
     if (writeObjectProps(state, flush[2], ref)) {
+      // The delta may be negative: two partials can flush for the same slot
+      // under different identities (globals object and scope 0's record both
+      // land on slot 0 when a root mutable `<context>` stamps its branch
+      // link), and `applyScopes` sums deltas signed.
       buf[openIndex] =
         nextSlotId === -1
           ? "[" + scopeId + ",{"
-          : (scopeId > nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
+          : (scopeId !== nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
       if (fillIndex === -1) fillIndex = openIndex;
       nextSlotId = scopeId + 1;
       buf.push("}");
@@ -1661,6 +1665,15 @@ function throwUnserializable(
 
     if (access) {
       message += ` (reading ${access})`;
+    }
+
+    if (state.boundary.state.update) {
+      // Update renders serialize request-derived values wholesale; ones that
+      // can't cross the wire (eg functions in `input`) degrade to sparse
+      // "unchanged" -- prop skipped, client keeps its live value -- rather
+      // than aborting the patch.
+      console.warn(message + " (skipped in update render)");
+      return;
     }
 
     const err = new TypeError(message, { cause });

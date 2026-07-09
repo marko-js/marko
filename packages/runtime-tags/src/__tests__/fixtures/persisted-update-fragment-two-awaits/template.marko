@@ -1,0 +1,28 @@
+import { getReport, getSummary } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Reports>
+  // v1 limit (designs/persisted-pages-architecture.md, "Fragment frames"):
+  // one pending await per placeholder boundary body -- a second pending
+  // segment would need reorder-marker anchors in the boundary-body entry's
+  // markup for the applier to place it, so the fragment capture must abort
+  // into the router's full-navigation fallback instead.
+  <try>
+    <@placeholder>
+      <p.loading>loading…</p>
+    </@placeholder>
+    <await|report|=getReport($global.topic)>
+      <p.report>${report}</p>
+    </await>
+    <await|summary|=getSummary($global.topic)>
+      <p.summary>${summary}</p>
+    </await>
+  </try>
+</define>
+
+<${$global.view === "reports" ? Reports : Home}/>

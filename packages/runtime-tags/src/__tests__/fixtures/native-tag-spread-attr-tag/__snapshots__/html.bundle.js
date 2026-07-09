@@ -7,8 +7,8 @@ var my_box_default = _template("b", (input) => {
 	_html(`</section>${_el_resume($scope0_id, "a")}<footer`);
 	_attrs_content(input.foot, "b", $scope0_id, "footer");
 	_html(`</footer>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "b0");
 	_script($scope0_id, "b1");
+	_script($scope0_id, "b0");
 	writeScope($scope0_id, {});
 });
 

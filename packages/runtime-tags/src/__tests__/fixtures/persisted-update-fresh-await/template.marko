@@ -1,0 +1,20 @@
+import { getReviews } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<if=input.productId>
+  <h2>Product ${input.productId}</h2>
+  <try>
+    <@placeholder>loading reviews…</@placeholder>
+    <await|reviews|=getReviews(input.productId)>
+      <ul>
+        <for|review| of=reviews by(review) { return review.id }>
+          <li>${review.text} rated ${review.stars}</li>
+        </for>
+      </ul>
+    </await>
+  </try>
+</if>
+<else>
+  <p>pick a product</p>
+</else>

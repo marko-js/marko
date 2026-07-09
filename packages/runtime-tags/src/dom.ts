@@ -70,15 +70,24 @@ export {
   _load_idle_trigger,
   _load_media_trigger,
   _load_race_trigger,
+  _load_ready,
   _load_setup,
   _load_signal,
   _load_template,
   _load_visible_trigger,
 } from "./dom/load";
-export { _enable_catch, run } from "./dom/queue";
+export {
+  _enable_catch,
+  _script_refresh,
+  _script_shared,
+  _script_update,
+  _updating,
+  run,
+} from "./dom/queue";
 export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,
+  enableBranches as _enable_branches,
   _resume,
   _var_resume,
   init,
@@ -108,3 +117,18 @@ export {
   _var_change,
 } from "./dom/signals";
 export { _template } from "./dom/template";
+export {
+  _have,
+  _update_branch,
+  _update_content,
+  _update_dynamic,
+  _update_for,
+  _update_html,
+  _update_load,
+  _update_pair,
+  _update_scope,
+  _update_seed,
+  _update_signal,
+  applyUpdate,
+  createUpdate,
+} from "./dom/update";

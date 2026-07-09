@@ -5,7 +5,7 @@ import {
   type Scope,
 } from "../common/types";
 import { renderCatch } from "./control-flow";
-import { enableBranches } from "./resume";
+import { _resume, enableBranches } from "./resume";
 import type { Signal, SignalFn } from "./signals";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
@@ -19,6 +19,65 @@ export type PendingRender = {
 };
 
 export let rendering: undefined | 0 | 1;
+/**
+ * Truthy while an update-render patch applies (set by `dom/update`).
+ * Persisted builds guard state-free request-derived compute invocations
+ * with `if (!_updating)`: their value comes from the patch payload
+ * (client-side compute is redundant, or impossible when it lives behind a
+ * `server import`), so the signal graph skips the compute and the merge
+ * delivers the server value. Client-state and state-mixing computations are
+ * unaffected. Lives here, not with the applier in `dom/update`, so main
+ * persisted modules import it without dragging the applier graph into
+ * hydration bundles.
+ */
+export let updating: undefined | 0 | 1;
+export { updating as _updating };
+/** The apply's generation floor: scopes created during the apply carry
+ * `Gen >= updatingGen` (see `applyGen` in dom/update). */
+export let updatingGen = 0;
+export function setUpdating(value: 0 | 1, gen?: number) {
+  updating = value;
+  if (gen !== undefined) updatingGen = gen;
+}
+
+/**
+ * Persisted builds' `_script`: setup skips queueing for scopes created
+ * while an update patch applies — a fresh branch's wiring comes from the
+ * payload's effect entries, and running both would double-bind. A matched
+ * scope reaching this during an apply is a value-change invocation, so it
+ * queues exactly as a client-side write would.
+ */
+export function _script_update(id: string, fn: (scope: Scope) => void) {
+  _resume(id, fn);
+  return _script_shared(fn);
+}
+
+/**
+ * `_script_update` for `$global`-referencing effects: marks the registered
+ * copy so the applier re-queues it against matched scopes on every apply,
+ * since the effect reads a request-derived source every navigation
+ * refreshes.
+ */
+export function _script_refresh(id: string, fn: (scope: Scope) => void) {
+  refreshEffects.add(fn);
+  return _script_update(id, fn);
+}
+
+/** Registered effect fns the applier re-queues for matched scopes too. */
+export const refreshEffects = new WeakSet<(scope: Scope) => void>();
+
+/**
+ * The register build's `_script_update`: the same wrapper without the
+ * registration, since the main module already registered the id and payload
+ * effect entries must keep resolving the main copies resume wired.
+ */
+export function _script_shared(fn: (scope: Scope) => void) {
+  return (scope: Scope) => {
+    if (!updating || (scope[AccessorProp.Gen] as number) < updatingGen) {
+      queueEffect(scope, fn);
+    }
+  };
+}
 export let runId = 2; // resumed scopes get `1`
 export const caughtError = new WeakSet<unknown[]>();
 export const placeholderShown = new WeakSet<unknown[]>();

@@ -2,6 +2,7 @@ import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import {
   type RenderedTemplate,
   RendererProp,
+  type RenderOptions,
   type Template,
   type TemplateInput,
 } from "../common/types";
@@ -41,7 +42,11 @@ export const _template = (
   return _content_resume(templateId, renderer) as unknown as Template;
 };
 
-function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
+function render(
+  this: Template & ServerRenderer,
+  input: TemplateInput = {},
+  options?: RenderOptions,
+) {
   let { $global } = input;
   if ($global) {
     ({ $global, ...input } = input);
@@ -71,7 +76,7 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
     };
   }
 
-  const state = new State($global as State["$global"]);
+  const state = new State($global as State["$global"], options?.persisted);
   const head = new Chunk(
     new Boundary(state, $global.signal),
     null,
@@ -281,9 +286,14 @@ class ServerRendered implements RenderedTemplate {
             boundary.onNext = NOOP;
             reject(boundary.signal.reason);
             break;
-          case FlushStatus.complete:
-            resolve(head.consume().flushHTML());
+          case FlushStatus.complete: {
+            // `consume` can abort (placeholder flush failure or unsupported-
+            // shape guard); the abort listener re-enters this handler and
+            // rejects, so only flush html when still live.
+            const consumed = head.consume();
+            if (!boundary.signal.aborted) resolve(consumed.flushHTML());
             break;
+          }
         }
       })();
     }));
@@ -311,7 +321,13 @@ class ServerRendered implements RenderedTemplate {
         boundary.onNext = NOOP;
         onAbort(boundary.signal.reason);
       } else if (write || status === FlushStatus.complete) {
-        const html = (head = head.consume()).flushHTML();
+        head = head.consume();
+        // `consume` can abort (placeholder flush failure or unsupported-shape
+        // guard); the abort listener re-enters this handler (via `onAbort`,
+        // NOOPing `boundary.onNext`), so bail instead of flushing html into
+        // the errored stream.
+        if (boundary.signal.aborted) return;
+        const html = head.flushHTML();
         if (html) onWrite(html);
         if (status === FlushStatus.complete) {
           if (!tick) offTick(onNext);

@@ -77,6 +77,7 @@ export interface Section {
   /** Count of distinct `$signal` expression roots; analyze allocates each
    * root's `abortId` from this so translates read, never re-derive. */
   abortSignalExprs: number;
+  hasGlobalReads: boolean;
   readsOwner: boolean;
   isBranch: boolean;
   content: null | {
@@ -152,6 +153,7 @@ export function startSection(
       downstreamBinding: undefined,
       hasAbortSignal: false,
       abortSignalExprs: 0,
+      hasGlobalReads: false,
       readsOwner: false,
       isBranch: false,
     };
@@ -415,19 +417,17 @@ export function getCommonSection(section: Section, other: Section) {
 }
 
 export function finalizeParamSerializeReasonGroups(section: Section) {
-  if (isReasonDynamic(section.serializeReason)) {
-    for (const [paramSection, params] of groupParamsBySection(
-      section.serializeReason.param,
-    )) {
-      ensureParamReasonGroup(paramSection, params);
-    }
-  }
+  ensureReasonGroups(section.serializeReason);
 
   for (const reason of section.serializeReasons.values()) {
-    if (isReasonDynamic(reason)) {
-      for (const [paramSection, params] of groupParamsBySection(reason.param)) {
-        ensureParamReasonGroup(paramSection, params);
-      }
+    ensureReasonGroups(reason);
+  }
+}
+
+function ensureReasonGroups(reason: Section["serializeReason"]) {
+  if (isReasonDynamic(reason)) {
+    for (const [paramSection, params] of groupParamsBySection(reason.param)) {
+      ensureParamReasonGroup(paramSection, params);
     }
   }
 }

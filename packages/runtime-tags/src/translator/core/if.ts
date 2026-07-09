@@ -17,7 +17,9 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { isPersisted, isPersistedEntryBuild } from "../util/marko-config";
 import { addSorted } from "../util/optional";
+import { recordRegisterIdFootprint } from "../util/preallocate-register-ids";
 import {
   compareSources,
   getScopeAccessorLiteral,
@@ -43,6 +45,10 @@ import {
 import {
   addSerializeExpr,
   getSerializeReason,
+  getSerializeSourcesForExpr,
+  isReasonDynamic,
+  isRequestDerivedSerializeReason,
+  isStateOnlySerializeReason,
   isStateSerializeReason,
   isStaticSerializeReason,
   type SerializeReasons,
@@ -57,6 +63,7 @@ import {
 } from "../util/signals";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
+import { addUpdateMerge, getUpdateIfRegisterId } from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -88,6 +95,14 @@ export const IfTag = {
         binding: nodeBinding,
         prefix: getAccessorPrefix().BranchScopes,
       };
+      recordRegisterIdFootprint(ifTagSection, {
+        kind: "if",
+        binding: nodeBinding,
+        extra: ifTagExtra,
+        branchBodySections: branches.map(
+          ([, branchBodySection]) => branchBodySection,
+        ),
+      });
       // TODO: remove all branches if none have body content.
 
       for (const [branchTag, branchBodySection] of branches) {
@@ -135,9 +150,19 @@ export const IfTag = {
           const [[ifTag]] = getBranches(tag);
           const ifTagSection = getSection(ifTag);
           if (
-            isStateSerializeReason(
-              getSerializeReason(ifTagSection, kStatefulReason),
-            ) &&
+            // Update payloads carry no resume markers, so a branch that can
+            // be patch-borne (any request-derived part in its condition)
+            // keeps its serialized owner under the persisted option; purely
+            // state-driven branches never participate in updates (the
+            // server never pairs into client-state-driven structure), so
+            // their owners stay marker-linked.
+            (isPersisted()
+              ? isStateOnlySerializeReason(
+                  getSerializeReason(ifTagSection, kStatefulReason),
+                )
+              : isStateSerializeReason(
+                  getSerializeReason(ifTagSection, kStatefulReason),
+                )) &&
             isStaticSerializeReason(
               getSerializeReason(bodySection, kBranchSerializeReason),
             ) &&
@@ -200,7 +225,15 @@ export const IfTag = {
                 if (branchSerializeReasons !== true) {
                   if (
                     branchSerializeReason === true ||
-                    branchSerializeReason.state
+                    (branchSerializeReason.state &&
+                      // Persisted builds keep mixed reasons whole so the
+                      // branch guard preserves the request-derived bits
+                      // (see `getMixedDynamicGuard`).
+                      !(
+                        isPersisted() &&
+                        (branchSerializeReason.param ||
+                          branchSerializeReason.global)
+                      ))
                   ) {
                     branchSerializeReasons = true;
                   } else if (branchSerializeReasons) {
@@ -334,6 +367,55 @@ export const IfTag = {
           }
 
           const signal = getSignal(ifTagSection, nodeRef, "if");
+          // Request-derived conditionals participate in persisted update
+          // renders: the server writes the branch outcome explicitly (G2) and
+          // the update entry replays it through this same signal, so persisted
+          // entry builds register it and update entries record a merge (the
+          // main module's copy stays unregistered -- resume never invokes it,
+          // so hydration bundles may tree-shake it). Stable branch outcomes (a
+          // constant test, render-once by contract) also participate when a
+          // BRANCH carries request-derived content, so body merges still
+          // dispatch; client-state-driven conditionals stay excluded.
+          const ifTagSources = getSerializeSourcesForExpr(ifTagExtra);
+          if (
+            isPersisted() &&
+            !isStateSerializeReason(ifTagSources) &&
+            (isReasonDynamic(ifTagSources) ||
+              branches.some(
+                ([, branchBodySection]) =>
+                  branchBodySection &&
+                  isRequestDerivedSerializeReason(
+                    getSerializeReason(
+                      branchBodySection,
+                      kBranchSerializeReason,
+                    ),
+                  ),
+              ))
+          ) {
+            const accessor = getScopeAccessorLiteral(nodeRef);
+            const signalId = getUpdateIfRegisterId(
+              ifTagSection,
+              accessor.value,
+            );
+            if (isPersistedEntryBuild()) {
+              signal.register = true;
+              signal.registerId = signalId;
+            }
+            addUpdateMerge(ifTagSection, {
+              kind: "if",
+              accessor,
+              signalId,
+              branchBodySections: branches.map(
+                ([, branchBodySection]) => branchBodySection,
+              ),
+            });
+            // The patch's branch outcome is authoritative for participating
+            // conditionals; refs-less (render-once) tests invoke at
+            // fresh-branch setup with no upstream guard and would replay
+            // the conditional against a value that may not exist in the
+            // browser (see the matching guard in core/for.ts).
+            signal.updateGuard = true;
+          }
           signal.build = () => {
             const rendererArgs: (t.Expression | undefined)[] = [];
             for (const [_, branchBodySection] of branches) {

@@ -24,8 +24,8 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
 	child_default({ value: count });
-	_var($scope0_id, "d", $childScope, "a0");
-	_script($scope0_id, "a1");
+	_var($scope0_id, "d", $childScope, "a1");
+	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		e: count,
 		c: _existing_scope($childScope)

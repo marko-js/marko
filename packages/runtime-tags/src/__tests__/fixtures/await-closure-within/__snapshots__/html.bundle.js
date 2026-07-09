@@ -2,7 +2,7 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_try($scope0_id, "a", _content_resume("a2", () => {
+	_try($scope0_id, "a", _content_resume("a0", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_await($scope1_id, "a", resolveAfter(0, 1), () => {
@@ -17,7 +17,7 @@ var template_default = _template("a", (input) => {
 					return 0;
 				}
 			}, $scope3_id, "c", 1, 1, 1, 0, 1);
-			_script($scope3_id, "a0");
+			_script($scope3_id, "a2");
 			writeScope($scope3_id, { d: value });
 			_resume_branch($scope3_id);
 		});

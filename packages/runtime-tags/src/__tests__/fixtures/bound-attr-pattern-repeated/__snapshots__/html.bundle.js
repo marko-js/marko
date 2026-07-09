@@ -2,7 +2,7 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	const Wrap = { content: _content("a0", ({ "aChange": $aChange, a }) => {
+	const Wrap = { content: _content("a2", ({ "aChange": $aChange, a }) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason();
 		const $valueChange = $aChange;
@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
 	Wrap.content({ a: "z1" });
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		d: n,
 		c: _existing_scope($childScope)

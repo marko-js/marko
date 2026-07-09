@@ -15,23 +15,23 @@ var template_default = _template("a", (input) => {
 			})()) : _escape(value)}${_el_resume($scope4_id, "a")}`);
 			writeScope($scope4_id, {});
 		});
-		_script($scope1_id, "a3");
+		_script($scope1_id, "a1");
 		_subscribe($clickCount__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}, $scope0_id), {
-		placeholder: attrTag({ content: _content_resume("a0", () => {
+		placeholder: attrTag({ content: _content_resume("a3", () => {
 			_scope_reason();
 			_scope_id();
 			_html("LOADING...");
 		}, $scope0_id) }),
-		catch: attrTag({ content: _content_resume("a1", (err) => {
+		catch: attrTag({ content: _content_resume("a4", (err) => {
 			const $scope3_reason = _scope_reason();
 			const $scope3_id = _scope_id();
 			_html(`${_escape(err)}${_el_resume($scope3_id, "a", _serialize_guard($scope3_reason, 0))}`);
 			_serialize_if($scope3_reason, 0) && writeScope($scope3_id, {});
 		}, $scope0_id) })
 	});
-	_script($scope0_id, "a4");
+	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		d: clickCount,
 		e: $clickCount__closures

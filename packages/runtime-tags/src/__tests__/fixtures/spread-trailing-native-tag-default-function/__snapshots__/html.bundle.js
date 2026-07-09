@@ -11,6 +11,6 @@ var template_default = _template("a", (input) => {
 		...rest
 	}, "a", $scope0_id, "button");
 	_html(`</button>${_el_resume($scope0_id, "a")}`);
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a2");
 	writeScope($scope0_id, {});
 }, 1);

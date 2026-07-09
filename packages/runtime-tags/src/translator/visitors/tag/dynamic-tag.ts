@@ -24,8 +24,15 @@ import {
   knownTagTranslateDOM,
   knownTagTranslateHTML,
 } from "../../util/known-tag";
-import { isOptimize, isOutputHTML } from "../../util/marko-config";
+import {
+  isOptimize,
+  isOutputHTML,
+  isPersisted,
+  isPersistedEntryBuild,
+  isPersistedFragments,
+} from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
+import { recordRegisterIdFootprint } from "../../util/preallocate-register-ids";
 import {
   type Binding,
   BindingType,
@@ -77,10 +84,14 @@ import {
   propsToExpression,
   translateAttrs,
 } from "../../util/translate-attrs";
+import {
+  addUpdateMerge,
+  getUpdateDynamicRegisterId,
+} from "../../util/update-merges";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
-import { getTagRelativePath } from "./custom-tag";
+import { getChildImportPath, getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
@@ -127,6 +138,11 @@ export default {
 
       analyzeAttributeTags(tag);
 
+      // A bodiless dynamic tag leaves no section or binding footprint that
+      // distinguishes it in analyze data, but its update merge dispatches
+      // by renderer id -- record the flag update classification checks.
+      getProgram().node.extra.hasDynamicTags = true;
+
       const tagSection = getOrCreateSection(tag);
       const tagExtra = mergeReferences(tagSection, node, [
         node.name,
@@ -155,7 +171,15 @@ export default {
         tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
           kChildOffsetScopeBinding
         ] = createBinding("#scopeOffset", BindingType.dom, tagSection);
+        recordRegisterIdFootprint(tagSection, {
+          kind: "tagVar",
+          binding: tag.node.var!.extra!.binding!,
+        });
       }
+      recordRegisterIdFootprint(tagSection, {
+        kind: "dynamic",
+        binding: nodeBinding,
+      });
 
       startSection(tagBody);
       trackParamsReferences(tagBody, BindingType.param);
@@ -379,7 +403,7 @@ export default {
       } else if (t.isStringLiteral(tagExpression)) {
         tagExpression = importDefault(
           tag.hub.file,
-          getTagRelativePath(tag),
+          getChildImportPath(tag.hub.file, getTagRelativePath(tag)),
           tagExpression.value,
         );
       }
@@ -414,11 +438,42 @@ export default {
       if (isOutputHTML()) {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
-        const serializeArg = getSerializeGuard(
+        let serializeArg = getSerializeGuard(
           tagSection,
           serializeReason,
-          true,
+          !isPersisted(),
         );
+        if (isPersisted()) {
+          // Persisted spine: dynamic-tag structure (eg a layout's
+          // `<${input.content}/>`) serializes whenever the persisted render
+          // flag is set -- parent-threaded reasons don't reach body-content
+          // props, and update merges descend through this link.
+          serializeArg = t.binaryExpression(
+            "|",
+            serializeArg!,
+            callRuntime("_persisted_reason"),
+          );
+        }
+        // A build-stable id for this dynamic-tag site (globally unique --
+        // filename + section + accessor), the possession echo's key: runtime
+        // scope ids drift between the document and update renders (matched
+        // scopes elide), but this compile constant is identical in both, so the
+        // client can echo what it holds at a site and the server match it.
+        // Fragment-first builds only: a plain `persisted: true` build keeps its
+        // registered renderers and replays same-route swaps fine-grained
+        // through `_update_dynamic`, so compiling no site id there keeps a miss
+        // from forcing a fragment down a path whose replay machinery was never
+        // removed (see agent-feedback/bugs.md on the fragment/replay
+        // shared-tag-variable disagreement). The html runtime stashes it on the
+        // hop scope so the client reads it back (`_dynamic_tag`/`_have`).
+        const siteId = isPersistedFragments()
+          ? t.stringLiteral(
+              getUpdateDynamicRegisterId(
+                tagSection,
+                getScopeAccessor(nodeBinding),
+              ),
+            )
+          : undefined;
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "_dynamic_tag",
@@ -429,6 +484,7 @@ export default {
               t.numericLiteral(0),
               t.numericLiteral(1),
               serializeArg,
+              siteId,
             )
           : callRuntime(
               "_dynamic_tag",
@@ -439,6 +495,7 @@ export default {
               args[1] || (serializeArg ? t.numericLiteral(0) : undefined),
               serializeArg ? t.numericLiteral(0) : undefined,
               serializeArg,
+              siteId,
             );
 
         if (node.var) {
@@ -493,6 +550,34 @@ export default {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"));
         const signal = getSignal(section, nodeBinding, "dynamicTag");
+        // Update renders link the rendered branch explicitly (see the html
+        // runtime's `_dynamic_tag`); the merge dispatches the content's
+        // registered update merge by the serialized renderer id. The signal
+        // registers so the merge can replay it when the patch's renderer id
+        // differs from the live one (a cross-route navigation's divergence
+        // point) -- the runtime's own branch swap, fed the registered renderer.
+        if (isPersisted() && serializeReason) {
+          const accessor = getScopeAccessorLiteral(nodeBinding);
+          const signalId = getUpdateDynamicRegisterId(
+            tagSection,
+            accessor.value,
+          );
+          // Fragment-first builds never replay: divergence arrives as a
+          // fragment frame, so the signal registration (and the registered
+          // renderer construction it would resolve) is dead weight -- the
+          // update merge compiles without a replay argument and a
+          // fragment-less mismatch fails the apply into the router's
+          // full-navigation fallback.
+          if (isPersistedEntryBuild() && !isPersistedFragments()) {
+            signal.register = true;
+            signal.registerId = signalId;
+          }
+          addUpdateMerge(tagSection, {
+            kind: "dynamic",
+            accessor,
+            signalId,
+          });
+        }
         let tagVarSignal: Signal | undefined;
         if (tag.node.var) {
           const varBinding = tag.node.var.extra!.binding!;

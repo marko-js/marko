@@ -1,0 +1,22 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count=0/>
+<h1>${input.title}</h1>
+<button onClick() { count++ }>clicked ${count}</button>
+<section>
+  <try>
+    <@placeholder>loading related…</@placeholder>
+    <await|related|=resolveAfter(input.related, 1)>
+      <ul>
+        <for|item| of=related by(item) { return item.id }>
+          <li>${item.name} costs ${item.price}</li>
+        </for>
+      </ul>
+    </await>
+  </try>
+</section>
+<footer>
+  <await|note|=resolveAfter(input.note, 2)>
+    <em>${note}</em>
+  </await>
+</footer>

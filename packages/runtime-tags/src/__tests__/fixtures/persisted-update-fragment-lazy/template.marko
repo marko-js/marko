@@ -1,0 +1,14 @@
+import Gadget from "./tags/gadget.marko" with { load: "idle" };
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Detail>
+  <h2.title>${$global.title}</h2>
+  <Gadget label=$global.label/>
+</define>
+
+<layout content=$global.view === "detail" ? Detail : Home/>

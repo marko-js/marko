@@ -12,7 +12,7 @@ import {
   type Scope,
 } from "../common/types";
 import { $signal } from "./abort-signal";
-import { queueEffect, queueRender, rendering, runId } from "./queue";
+import { queueEffect, queueRender, rendering, runId, updating } from "./queue";
 import { _resume } from "./resume";
 import { schedule } from "./schedule";
 
@@ -37,7 +37,12 @@ export function _let<T>(id: EncodedAccessor, fn?: SignalFn) {
   return (scope: Scope, value: T) => {
     if (rendering) {
       if (scope[AccessorProp.Gen] === runId) {
-        scope[valueAccessor] = value;
+        // While a persisted update applies, a fresh scope may already be
+        // seeded from the patch; its initializer (which may depend on
+        // server-only expressions) defers to that seed.
+        if (!(updating && valueAccessor in scope)) {
+          scope[valueAccessor] = value;
+        }
         fn?.(scope);
       }
     } else if (
@@ -89,7 +94,15 @@ export function _const<T>(
 ): Signal<T> {
   if (!MARKO_DEBUG) valueAccessor = decodeAccessor(valueAccessor as number);
   return ((scope: Scope, value: T | undefined) => {
-    if (scope[valueAccessor] !== value || !(valueAccessor in scope)) {
+    if (
+      scope[valueAccessor] !== value ||
+      !(valueAccessor in scope) ||
+      // While a persisted update applies, a merge fill may land on a fresh
+      // scope before setup flushes; an equal-value setup invocation must
+      // still render, since its statements carry client wiring the patch
+      // cannot deliver (child `<let>` seeding, tag-var returns).
+      (updating && rendering && scope[AccessorProp.Gen] === runId)
+    ) {
       scope[valueAccessor] = value;
       fn?.(scope);
     }

@@ -9,12 +9,15 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
+import { isPersisted } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
+import { recordRegisterIdFootprint } from "../util/preallocate-register-ids";
 import {
   type Binding,
   BindingType,
   createBinding,
   getAllTagReferenceNodes,
+  getScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
 } from "../util/references";
@@ -42,6 +45,10 @@ import {
   propsToExpression,
   translateAttrs,
 } from "../util/translate-attrs";
+import {
+  addUpdateMerge,
+  getUpdateBoundaryRegisterId,
+} from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -82,6 +89,18 @@ export default {
 
     if (bodySection) {
       bodySection.upstreamExpression = tagExtra;
+    }
+
+    // The try body (and its @placeholder/@catch attribute-tag bodies)
+    // compiles through `translateAttrs`/`buildContent`, so it registers a
+    // content id like any tag body -- no `ownedBody` footprint (contrast
+    // `<await>`, whose body renders through branch renderer args).
+    if (tag.node.extra?.attributeTags?.["@placeholder"]) {
+      recordRegisterIdFootprint(section, {
+        kind: "tryPlaceholder",
+        binding: tagExtra[kDOMBinding]!,
+        bodySection,
+      });
     }
   },
   translate: translateByTarget({
@@ -124,6 +143,24 @@ export default {
         writeHTMLResumeStatements(tagBody);
         tag.insertBefore(translatedAttrs.statements);
 
+        // A build-stable id for this try's placeholder boundary (globally
+        // unique -- filename + section + accessor), the pending-boundary half
+        // of the possession echo: runtime scope ids drift between the document
+        // and update renders (matched scopes elide), but this compile constant
+        // is identical in both, so a later navigation's echo can tell the
+        // server "the client still shows this boundary's placeholder" (see
+        // `_have`/`_try` in dom/update.ts and html/writer.ts). Persisted only,
+        // and only for a `<try>` that can show a placeholder; the html runtime
+        // stashes it on the parent scope only once a document render's
+        // placeholder ships (`flushPlaceholder`), so non-persisted output and
+        // persisted output with no pending boundaries stay byte-identical.
+        const siteId =
+          isPersisted() && tag.node.extra?.attributeTags?.["@placeholder"]
+            ? t.stringLiteral(
+                getUpdateBoundaryRegisterId(section, getScopeAccessor(nodeRef)),
+              )
+            : undefined;
+
         tag
           .replaceWith(
             t.expressionStatement(
@@ -133,6 +170,7 @@ export default {
                 getScopeAccessorLiteral(nodeRef),
                 contentProp?.value,
                 propsToExpression(translatedAttrs.properties),
+                siteId,
               ),
             ),
           )[0]
@@ -173,6 +211,19 @@ export default {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"))!;
         const signal = getSignal(section, nodeRef, "try");
+
+        // Try bodies participate in persisted update renders: the server
+        // serializes the parent -> body branch link and the update entry
+        // dispatches the body's merge from it. Boundaries always dispatch --
+        // even a statically-rendered body may hold awaits that need
+        // attaching when the branch was freshly created during an apply.
+        if (isPersisted()) {
+          addUpdateMerge(section, {
+            kind: "branch",
+            accessor: getScopeAccessorLiteral(nodeRef),
+            bodySection,
+          });
+        }
 
         signal.build = () => {
           return callRuntime(

@@ -1,3 +1,5 @@
+import type { PersistedRenderMode } from "../../common/types";
+
 declare global {
   var __RESOLVE_STATE__: {
     generation: number;
@@ -73,6 +75,66 @@ export const flushMedia = Object.assign(() => {}, {
 export type Throws = ReturnType<typeof throws>;
 export function throws(fn: (...args: any[]) => void) {
   return Object.assign(fn, { throws: true });
+}
+
+/**
+ * A persisted-pages navigation step: the root template receives new input.
+ * In ssr mode the harness renders an update payload (`$global.persisted =
+ * "update"`) server-side and applies it to the live document through the
+ * fixture's generated `?update` entry; in csr mode it is a plain input
+ * update -- the same semantics the patch is meant to reproduce.
+ */
+export type Navigate = {
+  navigateInput: Record<string, unknown>;
+  /**
+   * ssr-mode only: runs after each streamed update frame applies except the
+   * last, so a fixture can drive a client mutation (a click, a state write)
+   * while a later async frame is still pending -- pins CSR/SSR interleaving
+   * mid-navigation. There is no frame concept in csr mode (a navigation is
+   * one atomic input update), so this never runs there.
+   */
+  betweenFrames?: (container: Element, frameIndex: number) => unknown;
+  /**
+   * ssr-mode only: apply only the first N streamed frames and drop the
+   * rest -- models the run router aborting a superseded navigation between
+   * frames (its per-frame `signal.aborted` check stops applying, and the
+   * dropped frames never touch the page). Later steps run against the
+   * truncated state.
+   */
+  abortAfterFrame?: number;
+};
+export function navigate(
+  input: Record<string, unknown>,
+  betweenFrames?: (container: Element, frameIndex: number) => unknown,
+  abortAfterFrame?: number,
+): Navigate {
+  return { navigateInput: input, betweenFrames, abortAfterFrame };
+}
+
+export function isNavigate(value: any): value is Navigate {
+  return (
+    typeof value === "object" && value !== null && "navigateInput" in value
+  );
+}
+
+/**
+ * Extract the persisted render mode from a fixture's ergonomic `$global` flags
+ * (`persisted` / `persistedSeed` / `persistedFragment`) to pass as `render()`'s
+ * second argument — the same translation @marko/run's context render does from
+ * its request-derived flags. Fixtures keep the readable flags; the mode never
+ * touches `$global`. Undefined when not persisted.
+ */
+export function persistedModeFrom(
+  $global: Record<string, unknown> | undefined,
+): PersistedRenderMode | undefined {
+  const persisted = $global?.persisted;
+  if (!persisted) return undefined;
+  const update = persisted === "update";
+  return {
+    update,
+    seed: update && !!$global!.persistedSeed,
+    fragment: update && !!$global!.persistedFragment,
+  };
 }
 
 export function isWait(value: any): value is Wait {

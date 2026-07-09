@@ -3,7 +3,7 @@ var my_tag_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { as: inputAs, class: inputClass, content: inputContent, ...htmlInput } = input;
-	let content = { content: _content("b0", () => {
+	let content = { content: _content("b1", () => {
 		_scope_id();
 		_scope_reason();
 		_html("default");
@@ -13,7 +13,7 @@ var my_tag_default = _template("b", (input) => {
 		class: ["foo", inputClass],
 		content
 	});
-	_script($scope0_id, "b1");
+	_script($scope0_id, "b0");
 	writeScope($scope0_id, {
 		d: inputAs,
 		e: inputClass,

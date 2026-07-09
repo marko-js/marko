@@ -5,15 +5,15 @@ var template_default = _template("a", (input) => {
 	const $clickCount__closures = /* @__PURE__ */ new Set();
 	let clickCount = 0;
 	_html(`<div></div>${_el_resume($scope0_id, "a")}`);
-	_try($scope0_id, "b", _content_resume("a1", () => {
+	_try($scope0_id, "b", _content_resume("a2", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<button>inc</button>${_el_resume($scope1_id, "a")} -- <!>${_escape(void 0)}${_el_resume($scope1_id, "b")}`);
-		_script($scope1_id, "a2");
-		_script($scope1_id, "a3");
+		_script($scope1_id, "a1");
+		_script($scope1_id, "a0");
 		_subscribe($clickCount__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
-	}, $scope0_id), { catch: attrTag({ content: _content_resume("a0", (err) => {
+	}, $scope0_id), { catch: attrTag({ content: _content_resume("a3", (err) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		_html(`${_escape(err)}${_el_resume($scope2_id, "a", _serialize_guard($scope2_reason, 0))}`);

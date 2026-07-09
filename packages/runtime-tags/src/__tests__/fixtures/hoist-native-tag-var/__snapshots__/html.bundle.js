@@ -10,14 +10,14 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	const $scope0_reason = _scope_reason(), $sg__input_show = _serialize_guard($scope0_reason, 0), $si__input_show = _serialize_if($scope0_reason, 0);
 	const $scope0_id = _scope_id();
-	const $el_getter = _hoist($scope0_id, "a0");
+	const $el_getter = _hoist($scope0_id, "a1");
 	_if(() => {
 		if (input.show) {
 			const $scope1_id = _scope_id();
 			_if(() => {
 				if (input.show) {
 					const $scope2_id = _scope_id();
-					const $el = _el($scope2_id, "a1");
+					const $el = _el($scope2_id, "a2");
 					_html(`<div></div>${_el_resume($scope2_id, "a")}`);
 					child_default({ value: $el });
 					writeScope($scope2_id, {});
@@ -38,6 +38,6 @@ var template_default = _template("a", (input) => {
 			return 0;
 		}
 	}, $scope0_id, "c", 1, 0, $sg__input_show, 0, 1);
-	_script($scope0_id, "a2");
+	_script($scope0_id, "a0");
 	$si__input_show && writeScope($scope0_id, { f: input.show });
 }, 1);

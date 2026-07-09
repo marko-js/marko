@@ -7,12 +7,12 @@ const $content = (input) => {
 		if (input.level) {
 			const $scope1_id = _scope_id();
 			_html(`<div${_attr("data-level", input.level)}>`);
-			_try($scope1_id, "b", _content_resume("b2", () => {
+			_try($scope1_id, "b", _content_resume("b0", () => {
 				const $scope2_id = _scope_id();
 				_scope_reason();
 				_await($scope2_id, "a", resolveAfter(0), () => {
 					const $scope3_id = _scope_id();
-					$si__input_level && _script($scope3_id, "b0");
+					$si__input_level && _script($scope3_id, "b1");
 					const $childScope = _peek_scope_id();
 					_set_serialize_reason($sg__input_level);
 					$content({ level: input.level - 1 });
@@ -23,7 +23,7 @@ const $content = (input) => {
 					_resume_branch($scope3_id);
 				}, $sg__input_level);
 				$si__input_level && writeScope($scope2_id, { _: _scope_with_id($scope1_id) });
-			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("b1", () => {
+			}, $scope1_id), { placeholder: attrTag({ content: _content_resume("b2", () => {
 				_scope_reason();
 				_scope_id();
 				_html("LOADING...");

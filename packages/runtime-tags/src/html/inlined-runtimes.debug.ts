@@ -39,8 +39,16 @@ export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
   let onNextSibling,
     placeholder,
     nextSibling,
+    // Nav epoch, captured at this reorder-runtime init. A persisted apply
+    // bumps \`runtime.n\` (\`dom/resume\`'s \`bumpNavEpoch\`, from
+    // \`dom/update\`'s \`createUpdate\` before any frame applies), so
+    // \`replace\` no-ops a swap whose epoch predates an applied navigation
+    // rather than splicing pre-nav content into the post-nav page.
+    // Streaming pages never advance \`runtime.n\`: \`0 > 0\` stays false.
+    epoch = runtime.n || 0,
     placeholders = runtime.p = {},
-    replace = (id, container) => runtime.l[id].replaceWith(...container.childNodes);
+    replace = (id, container) =>
+      runtime.n > epoch || runtime.l[id].replaceWith(...container.childNodes);
   runtime.j = {};
   runtime.x = (op, id, node, placeholderRoot, placeholderCb) => {
     if (node == nextSibling) {

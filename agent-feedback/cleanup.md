@@ -109,3 +109,35 @@ The HTML `enter` guards with `if (!getSectionForBody(tag.get("body")))` (line 90
 `packages/runtime-tags/src/translator/util/to-first-expression-or-block.ts:5` | 2026-07-13 | impact:low | effort:low
 
 The switch (lines 5–15) returns `toParenthesizedExpressionIfNeeded(expression)` for Object/Assignment expressions and `expression` otherwise — exactly what `toParenthesizedExpressionIfNeeded` (defined just below at line 17) already does for every input. Replace the whole block with a single `return toParenthesizedExpressionIfNeeded(...)` applied to the first statement's `.expression`.
+The `render` suite renders every vdom fixture into one module-level jsdom
+browser, and this fixture's inline `<script>var foo = ...</script>` executes
+there, defining `window.foo` for every later fixture. Three `syntax-*`
+fixtures silently depended on that leak (fixed to read `window.foo`
+defensively when `scripts/test-parallel` began slicing the suite across
+workers); any future fixture referencing a bare `foo` in an executed script
+would repeat the trap, and only off the happy path (`--grep`, slicing). Either
+rename the variable to something obviously fixture-scoped, drop the executed
+script in favor of a non-executing `type="text/template"`, or reset leaked
+globals between fixtures in `create-marko-jsdom-module`.
+## Make the node-marker run-register reset structural, not manual
+
+`packages/runtime-tags/src/html/writer.ts:546` | 2026-07-08 | impact:med | effort:low
+
+The persisted continuation encoding's invariant -- every non-node resume
+marker must reset the per-chunk node-marker run register
+(`lastNodeMarkScope = -1`) so the following node marker re-emits its full
+scope id -- is enforced entirely by convention: a dozen direct
+`$chunk.lastNodeMarkScope = -1` / `this.lastNodeMarkScope = -1` assignments
+scattered through `writer.ts` (lines 837, 893, 973, 997, 1149, 1154, 1200,
+1205, 1239, 1277, 1757, 1765) plus three calls through the exported
+`_reset_node_mark_run()` wrapper from `html/dynamic-tag.ts`. Commit
+3bfee46c had to add the reset at seven sites that had been missed
+(`_show_start`, both `_await` paths, `_try`, the fragment placeholder
+brackets, and `_dynamic_tag`'s two branch-marker sites) -- silent until a
+same-scope straddle across one of those specific markers corrupted a hole
+binding on the next navigation. A `writeMark(chunk, symbol, payload)`
+helper that writes the mark and resets the given chunk's register in one
+call (it must take the chunk explicitly -- some emitters write to
+`this`/a boundary's chunk rather than the module-level `$chunk`) would make
+every non-node marker site reset by construction instead of by remembering
+to.

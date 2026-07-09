@@ -4,7 +4,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $x__closures = /* @__PURE__ */ new Set();
 	let x = 1;
-	const MyTag = { content: _content("a0", () => {
+	const MyTag = { content: _content("a1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
 		_html(`<div>${_escape(x)}${_el_resume($scope1_id, "a")}</div>`);
@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 		}
 	}, $scope0_id, "b");
 	_html(`<button>${_escape(x)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		e: x,
 		f: $x__closures

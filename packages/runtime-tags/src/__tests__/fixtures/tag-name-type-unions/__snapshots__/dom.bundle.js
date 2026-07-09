@@ -16,10 +16,10 @@ var b_default = /*@__PURE__*/ _template("c", $template, $walks, $setup, $input);
 
 // template.marko
 const localTag = a_default;
-const $xdivA_content = _content_resume("a3", "m", "b");
-const $navigator_content = _content_resume("a2", "g", "b");
-const $xdivspan_content = _content_resume("a1", "n", "b");
-const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1, _content_resume("a0", "u", "b"));
+const $xdivA_content = _content_resume("a4", "m", "b");
+const $navigator_content = _content_resume("a3", "g", "b");
+const $xdivspan_content = _content_resume("a2", "n", "b");
+const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1, _content_resume("a1", "u", "b"));
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag(2, $xdivspan_content);
 const $dynamicTag4 = /*@__PURE__*/ _dynamic_tag(4);
 const $dynamicTag5 = /*@__PURE__*/ _dynamic_tag(5, $xdivA_content);
@@ -31,6 +31,6 @@ const $x = /*@__PURE__*/ _let(7, ($scope) => {
 	$dynamicTag5($scope, $scope.h ? "div" : a_default, () => ({ label: "ad" }));
 	$dynamicTag6($scope, $scope.h ? localTag : a_default, () => ({ label: "la" }));
 });
-const $setup__script = _script("a4", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$x($scope, !$scope.h);
 }));

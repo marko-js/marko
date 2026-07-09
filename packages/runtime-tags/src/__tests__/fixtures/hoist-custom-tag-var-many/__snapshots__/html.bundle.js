@@ -12,7 +12,7 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_hoist($scope0_id, "a0");
+	_hoist($scope0_id, "a3");
 	_for_to(5, 0, 1, () => {
 		writeScope(_scope_id(), { c: child_default({}) });
 	}, 0, $scope0_id, "a", 1, 0, 0, 0, 1);
@@ -31,6 +31,6 @@ var template_default = _template("a", (input) => {
 		_html("</ul>");
 		writeScope($scope3_id, {});
 	}, 0, $scope0_id, "c", 1, 0, 0, 0, 1);
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a0");
 	_resume_branch($scope0_id);
 }, 1);

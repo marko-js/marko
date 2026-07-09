@@ -6,8 +6,8 @@ var my_box_default = _template("b", (input) => {
 	_html("<div");
 	_attrs_content(input, "a", $scope0_id, "div");
 	_html(`</div>${_el_resume($scope0_id, "a")}<button type=button class=cap>check</button>${_el_resume($scope0_id, "b")}<div class=out>${_escape(captured)}${_el_resume($scope0_id, "c")}</div>`);
-	_script($scope0_id, "b0");
 	_script($scope0_id, "b1");
+	_script($scope0_id, "b0");
 	writeScope($scope0_id, {
 		e: input,
 		f: input.content

@@ -1,0 +1,21 @@
+import { getReport } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>welcome home</p>
+</define>
+<define/Reports>
+  // v1 limit (designs/persisted-pages-architecture.md, "Fragment frames"):
+  // a bare `<await>` on a fragment's main chain would hold the whole
+  // fragment frame open -- async content inside a fragment must sit behind
+  // a `<try>` placeholder boundary. This one doesn't, so the fragment
+  // capture must abort into the router's full-navigation fallback rather
+  // than emit a corrupt frame.
+  <await|data|=getReport($global.range)>
+    <p.report>${data}</p>
+  </await>
+</define>
+
+<${$global.view === "reports" ? Reports : Home}/>

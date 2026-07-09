@@ -7,7 +7,7 @@ const $input_as__OR__input_class__OR__htmlInput__OR__content = /*@__PURE__*/ _or
 	content: $scope.i
 })), 3);
 const $content = /*@__PURE__*/ _let(8, $input_as__OR__input_class__OR__htmlInput__OR__content);
-const $inputContent__script = _script("b1", ($scope) => $content($scope, $scope.f));
+const $inputContent__script = _script("b0", ($scope) => $content($scope, $scope.f));
 
 // template.marko
 const $mytag_content2 = _content_resume("a1", "Span", "b");

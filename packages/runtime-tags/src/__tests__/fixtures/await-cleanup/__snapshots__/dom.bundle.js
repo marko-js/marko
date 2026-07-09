@@ -1,13 +1,13 @@
 // template.marko
 _enable_catch();
-const $await_content2__setup__script = _script("a2", ($scope) => $signal($scope, 0).onabort = () => document.querySelector("#two").textContent = "Pass");
+const $await_content2__setup__script = _script("a5", ($scope) => $signal($scope, 0).onabort = () => document.querySelector("#two").textContent = "Pass");
 const $await_content2__setup = ($scope) => {
 	$signalReset($scope, 0);
 	$await_content2__setup__script($scope);
 };
-const $placeholder_content = _content_resume("a3", "loading...", "b");
-const $await_content__show = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._._._.c), ($scope) => $scope._._._, "a0");
-const $await_content__setup__script = _script("a1", ($scope) => $signal($scope, 0).onabort = () => document.querySelector("#one").textContent = "Pass");
+const $placeholder_content = _content_resume("a4", "loading...", "b");
+const $await_content__show = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._._._.c), ($scope) => $scope._._._, "a3");
+const $await_content__setup__script = _script("a2", ($scope) => $signal($scope, 0).onabort = () => document.querySelector("#one").textContent = "Pass");
 const $await_content__setup = ($scope) => {
 	$await_content__show($scope);
 	$signalReset($scope, 0);
@@ -31,6 +31,6 @@ const $show = /*@__PURE__*/ _let(2, ($scope) => {
 	$if($scope, $scope.c ? 0 : 1);
 	$show__closure($scope);
 });
-const $setup__script = _script("a5", ($scope) => _on($scope.a, "click", function() {
+const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$show($scope, 0);
 }));

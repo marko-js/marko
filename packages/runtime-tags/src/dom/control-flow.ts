@@ -225,20 +225,34 @@ function resolveAwait(
 ) {
   const awaitBranch = scope[branchAccessor] as BranchScope;
   if (awaitBranch[AccessorProp.DetachedAwait]) {
-    awaitBranch[AccessorProp.PendingScopes] =
-      awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
-    setupBranch(awaitBranch[AccessorProp.DetachedAwait], awaitBranch);
-    awaitBranch[AccessorProp.DetachedAwait] = 0;
-
-    insertBranchBefore(
-      awaitBranch,
-      (scope[nodeAccessor] as ChildNode).parentNode!,
-      scope[nodeAccessor] as ChildNode,
-    );
+    attachAwaitBranch(scope, nodeAccessor as string, awaitBranch);
     referenceNode.remove();
   }
   params?.(awaitBranch, [value]);
   return awaitBranch;
+}
+
+/**
+ * Sets up and inserts a detached (unresolved) await branch at its anchor.
+ * Shared by promise resolution above and persisted update applies, where a
+ * fresh subtree's await never ran its promise (compute is skipped while
+ * updating) and the body's own frame is the resolution.
+ */
+export function attachAwaitBranch(
+  scope: Scope,
+  nodeAccessor: string,
+  awaitBranch: BranchScope,
+) {
+  awaitBranch[AccessorProp.PendingScopes] =
+    awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
+  setupBranch(awaitBranch[AccessorProp.DetachedAwait] as Renderer, awaitBranch);
+  awaitBranch[AccessorProp.DetachedAwait] = 0;
+
+  insertBranchBefore(
+    awaitBranch,
+    (scope[nodeAccessor] as ChildNode).parentNode!,
+    scope[nodeAccessor] as ChildNode,
+  );
 }
 
 export function _await_content(

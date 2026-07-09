@@ -29,7 +29,7 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
 	let count = 0;
-	outer_default({ content: _content("a0", () => {
+	outer_default({ content: _content("a1", () => {
 		_scope_reason();
 		const $scope1_id = _scope_id();
 		_html(`<span>${_escape(count)}${_el_resume($scope1_id, "a")}</span>`);
@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 		_resume_branch($scope1_id);
 	}) });
 	_html(`<button id=increment>click</button>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		c: count,
 		d: $count__closures

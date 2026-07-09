@@ -20,6 +20,6 @@ const $x = /*@__PURE__*/ _let(7, ($scope) => {
 	$args($scope, [$scope.h, 2]);
 	$x__OR__args($scope);
 });
-const $setup__script = _script("a1", ($scope) => _on($scope.d, "click", function() {
+const $setup__script = _script("a0", ($scope) => _on($scope.d, "click", function() {
 	$x($scope, $scope.h + 1);
 }));

@@ -110,6 +110,50 @@ export interface $Global {
   /** @internal */
   __flush__?($global: $Global, html: string): string;
 }
+
+/**
+ * @internal Per-render options — the second argument to `render()`, kept a
+ * generic bag (not a positional persisted flag) so future render-time options
+ * extend it without another signature change. Distinct from `$global`, which
+ * is user/request data (in @marko/run `$global` _is_ the request context).
+ */
+export interface RenderOptions {
+  persisted?: PersistedRenderMode;
+}
+
+/**
+ * @internal The persisted render mode (single-page server-first updates),
+ * carried on `RenderOptions.persisted` rather than smuggled through `$global`.
+ * Omitted = the byte-identical non-persisted document.
+ *
+ * - `update`: an update (patch) response for an already-persisted page rather
+ *   than a document — request-derived values (computed holes, conditional
+ *   outcomes, branch lists) serialize so the client can merge them onto its
+ *   live scope tree, and effects for matched scopes are suppressed.
+ * - `seed`: the target subtree is created fresh on the client (a cross-route
+ *   update), so state values serialize too — seeded only into scopes created
+ *   during the apply (matched scopes' live state is never overwritten).
+ * - `fragment`: the first content-hop branch renders as a fragment frame
+ *   (resumable HTML inserted and resumed at the hop's anchor) instead of
+ *   serializing for client-side construction. See
+ *   designs/persisted-pages-architecture.md ("Fragment frames").
+ */
+export interface PersistedRenderMode {
+  update: boolean;
+  seed: boolean;
+  fragment: boolean;
+  /**
+   * @internal The possession echo (`x-marko-have`): for each dynamic-hop site
+   * the client holds, the site's build-stable id → the renderer id it
+   * currently shows. The id is the compiler's per-site register id (stashed on
+   * the hop scope so the client reads it back), not the runtime scope id --
+   * scope ids drift between the document and update renders, this constant does
+   * not. The server ships a fragment for a site whose target renderer differs
+   * from what the client echoed (same-route dynamic swaps included) rather than
+   * failing the apply. Absent map = no echo.
+   */
+  possessed?: { [siteId: string]: string };
+}
 export interface Input {
   [x: PropertyKey]: unknown;
 }
@@ -123,7 +167,7 @@ export interface Template {
     reference: Node,
     position?: InsertPosition,
   ): MountedTemplate;
-  render(input?: Input): RenderedTemplate;
+  render(input?: Input, options?: RenderOptions): RenderedTemplate;
 }
 
 export interface MountedTemplate {

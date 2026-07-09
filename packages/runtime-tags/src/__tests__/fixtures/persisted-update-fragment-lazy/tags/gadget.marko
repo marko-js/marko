@@ -1,0 +1,9 @@
+// A lazy child rendered INSIDE fragment-delivered content: server-fed
+// input (`label`) plus its own client state (`taps`) so the child is
+// non-generic (a compiled `?update` merge exists and registers when the
+// lazy module loads).
+<let/taps=0/>
+<div class="gadget">
+  <span class="gadget__label">${input.label}</span>
+  <button class="gadget__tap" onClick() { taps++ }>taps ${taps}</button>
+</div>

@@ -420,6 +420,11 @@ function writeControlledScope(
     assertHandlerIsFunction("valueChange", valueChange);
   }
 
+  // Controlled wiring is resume-only: update renders patch already-resumed
+  // pages (live handlers survive) and fresh branches wire their own from
+  // registered content.
+  if (getChunk()!.boundary.state.update) return;
+
   _scope(
     scopeId,
     serializeType

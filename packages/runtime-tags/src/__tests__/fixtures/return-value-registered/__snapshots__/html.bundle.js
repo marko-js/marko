@@ -13,6 +13,6 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let get = getter_default({});
 	_html(`<div></div>${_el_resume($scope0_id, "c")}`);
-	_script($scope0_id, "a0");
+	_script($scope0_id, "a1");
 	writeScope($scope0_id, { d: get });
 }, 1);

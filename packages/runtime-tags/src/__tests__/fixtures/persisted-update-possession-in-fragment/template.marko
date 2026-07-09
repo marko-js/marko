@@ -1,0 +1,25 @@
+import { getLabel } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/WidgetX>
+  <span.x>Widget X: ${getLabel?.($global.topic)}</span>
+</define>
+<define/WidgetY>
+  <section.y>Widget Y: ${getLabel?.($global.topic)}</section>
+</define>
+<define/Widget>
+  <${$global.widget === "y" ? WidgetY : WidgetX}/>
+</define>
+
+<define/Home>
+  <p.home>welcome home</p>
+  <Widget/>
+</define>
+<define/Dashboard>
+  <h2.dash>Dashboard</h2>
+  <Widget/>
+</define>
+
+<layout content=$global.view === "dashboard" ? Dashboard : Home/>

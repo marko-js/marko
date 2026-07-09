@@ -12,6 +12,11 @@ export enum AccessorPrefix {
   Lifecycle = "Lifecycle:",
   Promise = "Promise:",
   TagVariableChange = "TagVariableChange:",
+  // "UpdateAttr:" ("N" optimized) is reserved for update-render attr hole
+  // values (composed `UpdateAttr:<attrName>:<elementAccessor>`). It is
+  // deliberately not an enum member: only compiled HTML output and the
+  // update-only client runtime use it, and enum objects ship in every client
+  // bundle. See `getUpdateAttrPrefix` in the translator.
 }
 
 export enum AccessorProp {

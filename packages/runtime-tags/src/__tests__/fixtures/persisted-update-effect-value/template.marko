@@ -1,0 +1,12 @@
+// A request-derived value whose ONLY client-side consumer is an effect:
+// the effect read routes the value merge through the binding's registered
+// signal, and the queue re-queues the effect for the matched scope -- the
+// patched value propagates downstream to scripts like any value change.
+<const/label=input.label>
+<div.target/>
+<script>
+  const el = document.querySelector<HTMLDivElement>("div.target")!;
+  el.dataset.label = label;
+  el.textContent = `effect saw ${label}`;
+</script>
+<p.static>page body</p>

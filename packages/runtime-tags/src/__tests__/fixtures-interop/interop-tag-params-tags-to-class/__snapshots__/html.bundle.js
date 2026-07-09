@@ -24,11 +24,11 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	const $multiplier__closures = /* @__PURE__ */ new Set();
 	let multiplier = 1;
-	_dynamic_tag($scope0_id, "a", _marko_template, {}, _content_resume("a0", (baseCount, message) => {
+	_dynamic_tag($scope0_id, "a", _marko_template, {}, _content_resume("a1", (baseCount, message) => {
 		const $scope1_id = _scope_id();
 		const $scope1_reason = _scope_reason(), $sg__baseCount = _serialize_guard($scope1_reason, 0);
 		_html(`<h1>${_escape(message)}${_el_resume($scope1_id, "a", _serialize_guard($scope1_reason, 1))}</h1><button id=tags>${_escape(multiplier)}${_el_resume($scope1_id, "c")} * ${_sep($sg__baseCount)}${_escape(baseCount)}${_el_resume($scope1_id, "d", $sg__baseCount)} = <!>${_escape(multiplier * baseCount)}${_el_resume($scope1_id, "e")}</button>${_el_resume($scope1_id, "b")}`);
-		_script($scope1_id, "a1");
+		_script($scope1_id, "a0");
 		_subscribe($multiplier__closures, writeScope($scope1_id, {
 			g: baseCount,
 			_: _scope_with_id($scope0_id)

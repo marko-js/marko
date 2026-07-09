@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/clicks=0/>
+<button.clicks onClick() { clicks++ }>clicked ${clicks}</button>
+<section>
+  <try>
+    <@placeholder by=$global.pid>
+      <p.ph>loading detail…</p>
+    </@placeholder>
+    <await|detail|=resolveAfter(`${$global.pid}: ${$global.rev}`, $global.tick)>
+      <p.detail>detail ${detail}</p>
+    </await>
+  </try>
+</section>

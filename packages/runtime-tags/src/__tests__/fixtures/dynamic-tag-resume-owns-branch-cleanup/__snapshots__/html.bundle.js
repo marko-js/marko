@@ -3,10 +3,10 @@ var child_default = _template("b", (input) => {
 	const $scope0_reason = _scope_reason();
 	const $scope0_id = _scope_id();
 	const { show } = input;
-	_dynamic_tag($scope0_id, "a", show ? "div" : null, {}, _content_resume("b0", () => {
+	_dynamic_tag($scope0_id, "a", show ? "div" : null, {}, _content_resume("b1", () => {
 		const $scope1_id = _scope_id();
 		_scope_reason();
-		_script($scope1_id, "b1");
+		_script($scope1_id, "b0");
 		_resume_branch($scope1_id);
 	}, $scope0_id), 0, _serialize_guard($scope0_reason, 0));
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});

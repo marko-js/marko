@@ -27,8 +27,8 @@ var template_default = _template("a", (input) => {
 	_var($scope0_id, "b", $childScope, "a0");
 	const missing = void 0 !== $missing ? $missing : "fallback";
 	_html(`<button class=inc>inc</button>${_el_resume($scope0_id, "c")}<button class=assign>assign</button>${_el_resume($scope0_id, "d")}<div>${_escape(count)}${_el_resume($scope0_id, "e")}:<!>${_escape(missing)}${_el_resume($scope0_id, "f")}</div>`);
-	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
+	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		h: count,
 		i: $countChange,

@@ -20,10 +20,10 @@ var hello_default = _template("b", (input) => {
 			_html(`<div class=row${_attrs_partial(attrs, { class: 1 }, "a", $scope3_id, "div")}>`);
 			_dynamic_tag($scope3_id, "b", content, {}, 0, 0, $sg__input_col);
 			_html(`</div>${_el_resume($scope3_id, "a")}`);
-			_script($scope3_id, "b1");
+			_script($scope3_id, "b2");
 			writeScope($scope3_id, {});
 		}, 0, $scope2_id, "b", $sg__input_col, $sg__input_col, $sg__input_col, 0, 1);
-		_script($scope2_id, "b2");
+		_script($scope2_id, "b1");
 		writeScope($scope2_id, {});
 	}, 0, $scope0_id, "b", $sg__input_col, $sg__input_col, $sg__input_list_item__OR__input_col);
 	_serialize_if($scope0_reason, 0) && writeScope($scope0_id, {});

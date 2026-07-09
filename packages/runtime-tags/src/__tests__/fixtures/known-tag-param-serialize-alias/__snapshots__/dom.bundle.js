@@ -1,5 +1,5 @@
 // template.marko
-const $Child_content__a__script = _script("a2", ($scope) => {
+const $Child_content__a__script = _script("a0", ($scope) => {
 	if ($scope.e !== "a") throw new Error("did not serialize a");
 });
 const $Child_content__input_a__script = _script("a1", ($scope) => {

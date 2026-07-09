@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		2,
 		3
 	], (item) => {
-		$item = attrTags($item, { content: _content("a0", () => {
+		$item = attrTags($item, { content: _content("a1", () => {
 			_scope_reason();
 			const $scope1_id = _scope_id();
 			_html(`${_escape(item * mult)}${_el_resume($scope1_id, "a")}`);
@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 	});
 	list_default({ item: $item });
 	_html(`<button>Multiplier: <!>${_escape(mult)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "b")}`);
-	_script($scope0_id, "a1");
+	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		d: mult,
 		g: $mult__closures
