@@ -568,22 +568,106 @@ found:
    and independently fixes stale-PRG races; the settle token is a few
    lines on top of the same queue state and removes the version-key
    boilerplate before anyone learns it.
-3. **`<let by>` client half on main** (compiler 1–4 + `_let_by`), with
+3. **Early-input stamping for GET navigations** (router-only; the
+   link-driven half, see the dedicated section below) — `$global.url`
+   stamped through a synthetic frame zero at click; upgrades the shipped
+   recede to interaction-time and gives links the same instant-state
+   story forms get from the keyed cell.
+4. **`<let by>` client half on main** (compiler 1–4 + `_let_by`), with
    the F5 error, F4 lint, F1 fixtures, and the positional-loop fixture.
-4. **`<let by>` persisted delivery** on the feature branch (compiler 5 +
+5. **`<let by>` persisted delivery** on the feature branch (compiler 5 +
    merge dispatch), drift repro + rejected-mutation repro green.
-5. **`<context>`** per its own plan (reason-threading prototype first),
+6. **`<context>`** per its own plan (reason-threading prototype first),
    then the provider composition replaces `let-global` in the benchmark —
    **skip the interim "bless `let-global` + globals-merge hook" step**
    (optimistic doc phase 5): the context branch evaluation already
    validated the replacement end-to-end, so blessing the workaround now
    just creates a second migration.
-6. **`by=` on `<@placeholder>` for client re-awaits** (F3) + the shared
+7. **`by=` on `<@placeholder>` for client re-awaits** (F3) + the shared
    anti-flash hold — this is the "async transitions" DX milestone, see
    below.
-7. View Transitions behind the run option (both swap paths already
+8. View Transitions behind the run option (both swap paths already
    funnel through `applyBoundaryBody`/`dismissPlaceholder` — single
    choke points on each driver, so this stays cheap after F3).
+
+### Link-driven optimism: early input, not guesses
+
+Optimistic UX must work from links and GET forms, not just POST forms —
+filter chips, tabs, sort toggles, pagination, item→item navigation are
+most of what users click. The observation that organizes this half: a
+mutation's outcome is a **guess** (what will the server compute?), but a
+link's next input is **known** — the href is the new URL, in the
+client's hand at click time. So the two interaction kinds want two
+different things, and neither needs the other's machinery:
+
+|                | GET (links, GET forms)                       | POST (mutations)                                  |
+| -------------- | -------------------------------------------- | ------------------------------------------------- |
+| client knows   | the next **input**, deterministically        | only its own **guess** at the outcome             |
+| primitive      | apply the input early; content keeps stale   | keyed cell (`<let by>`) + settle signal (F1)      |
+| reconciliation | delivery confirms (dirty-check no-ops)       | settle re-seeds; fallback ladder on failure       |
+
+Applying the input early means: at click time, stamp the URL-derived
+globals (`$global.url`, and eventually matched `params`/raw `search`)
+into the live page and let the existing reactive promotion do the rest —
+the active chip highlights, the selected tab moves, URL-keyed
+`<let by>` cells re-seed, all in the click's own frame, while the fetch
+streams the content. This is not a violation of the "templates react to
+applied input, not transport state" non-goal — the URL is the
+navigation's *input*, not its transport state, and the whole persisted
+model is built on "new input to the root".
+
+The mechanism is nearly free, because it can be a **synthetic frame
+zero**: the router already loads the `?update` entry *before* the fetch
+(for the possession echo, persisted.ts:243-250), so at click time it can
+run the navigation's first apply with a globals-only partial —
+`[_ => [0, {url}]]` — through the same `createUpdate` context the real
+frames will use. Sparse semantics do the safety work: nothing else is in
+the patch, so nothing else changes; and because the stamp runs as an
+apply, the `!_updating` compute guards mean server-only-mixed
+expressions are *skipped*, not miscomputed client-side — those holes
+simply keep their stale values until the real frames deliver them, which
+is exactly the keep-stale policy the rest of the design wants. Pure
+URL-derived client expressions re-render now; server-derived content
+follows; the delivered globals partial later merges over the stamp and
+dirty-checks to a no-op.
+
+What this buys beyond chip highlighting:
+
+- **Interaction-time recede.** The recede doc cites Unpoly's lesson that
+  placeholders "should appear at interaction time, not at
+  first-response time" — but the shipped `<@placeholder by=>` recede is
+  server-driven, so today it costs a round trip before the skeleton
+  appears. With the identity's inputs stamped early, a `by=` keyed on
+  URL-derived identity can be *compared at click time*, and an
+  identity-changed boundary can recede immediately (anti-flash hold
+  still applies; the body or a confirming fill swaps in from the
+  stream). Item→item navigation gets the skeleton at click, not at
+  first flush.
+- **URL-keyed state resets at click.** `<let/expanded=false
+  by=$global.params.id/>` collapses the accordion the moment the user
+  commits to a different item, instead of one round trip later.
+- **The CSS-only first rung still ships first.** Layer 1's
+  `data-marko-pending` on the initiating link is the zero-machinery
+  version of this (style the clicked chip immediately); early-input
+  stamping is the full-state version. They compose — attr at click,
+  state at click, content on delivery, all three distinct moments.
+
+Edges to design deliberately rather than discover: the client matcher
+currently returns no `params` (the trie matches but its terminals are
+`[id, loadTemplate, loadUpdate]` — extracting params is the same trie
+walk, just not exposed yet), so v1 can stamp `url` alone and let
+`params`/validated-`search` derivations correct on delivery (run's
+validators are server code and must stay so — the stamp carries raw
+values, the delivery carries validated truth); history commit currently
+happens at first applied frame (deliberately, MPA-parity) and should
+*stay* there — the stamp may lead `history.pushState` by a beat without
+user-visible effect, and a fallback's `location.assign` unwinds
+everything anyway; supersede ordering is already right (a second click
+stamps over the first, whose fetch aborts); and popstate navigations
+should stamp too — back/forward gets the same instant chrome. Mutations
+deliberately get none of this: a PRG redirect's target URL is
+server-knowable only, which is precisely why POST optimism lives in the
+keyed-cell + settle-token column.
 
 ### The async-transition end state
 
@@ -602,6 +686,7 @@ the server work. Every surface then behaves identically on both drivers:
 | anti-flash hold      | one shared client constant (unbuilt)         | same constant, same site (unbuilt)                 |
 | visual continuity    | View Transitions at the swap choke point     | same choke point (`applyBoundaryBody`)             |
 | state inside         | `<let by>` reconciles across re-renders      | `<let by>` reconciles across deliveries            |
+| input latency        | none — the input is already local            | early-input stamp at click (proposed): URL-derived state and `by=` comparisons react at interaction time; content keeps stale behind the pending signal until frames land |
 
 Two deliberate omissions to keep: no template-visible transport state
 (`isPending` props for navigations), and no client data layer. The
@@ -670,6 +755,11 @@ drivers.
    authoritative value — local 7 holds through mutation #1's delivery
    and reconciles once on #2's (pins the rebase-gap behavior from the
    React cross-check).
+9. (Benchmark-suite smoke, run-side) Early-input stamp: a filter-chip
+   click renders the chip active before any frame arrives; a
+   server-only-mixed hole keeps its stale value through the stamp and
+   updates only on delivery; a superseding click re-stamps and the
+   aborted navigation leaves no residue.
 
 ---
 
