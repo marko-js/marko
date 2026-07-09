@@ -21,19 +21,19 @@ import {
   _attr_input_checked_script,
   _attr_input_checkedValue,
   _attr_input_checkedValue_script,
-} from "./controllable-input-checked";
+} from "./controllable/input-checked";
 import {
   _attr_input_value,
   _attr_input_value_script,
-} from "./controllable-input-value";
+} from "./controllable/input-value";
 import {
   _attr_details_or_dialog_open,
   _attr_details_or_dialog_open_script,
-} from "./controllable-open";
+} from "./controllable/open";
 import {
   _attr_select_value,
   _attr_select_value_script,
-} from "./controllable-select";
+} from "./controllable/select";
 import { _attr, _attr_class, _attr_style } from "./dom";
 import { _on } from "./event";
 import { createAndSetupBranch, type Renderer } from "./renderer";
@@ -46,11 +46,12 @@ export function _attrs(
   nextAttrs: Record<string, unknown>,
 ) {
   const el = scope[nodeAccessor] as Element;
-  for (let i = el.attributes.length; i--; ) {
+  for (let i = el.attributes.length; i--;) {
     const { name } = el.attributes.item(i)!;
-    if (
-      !(nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs)))
-    ) {
+    if (!(
+      nextAttrs &&
+      (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))
+    )) {
       el.removeAttribute(name);
     }
   }
@@ -92,7 +93,7 @@ export function _attrs_partial(
   const el = scope[nodeAccessor] as Element;
   const partial: Partial<typeof nextAttrs> = {};
 
-  for (let i = el.attributes.length; i--; ) {
+  for (let i = el.attributes.length; i--;) {
     const { name } = el.attributes.item(i)!;
     if (!skip[name] && !(nextAttrs && name in nextAttrs)) {
       el.removeAttribute(name);
@@ -128,8 +129,7 @@ function attrsInternal(
 ) {
   const el = scope[nodeAccessor] as Element;
   let events = scope[AccessorPrefix.EventAttributes + nodeAccessor] as
-    | undefined
-    | Record<string, unknown>;
+    undefined | Record<string, unknown>;
   let skip: RegExp | undefined;
   for (const name in events) events[name] = 0;
   scope[AccessorPrefix.ControlledType + nodeAccessor] = ControlledType.None;
@@ -222,9 +222,10 @@ function attrsInternal(
         if (isEventHandler(name)) {
           (events ||= scope[AccessorPrefix.EventAttributes + nodeAccessor] =
             {})[getEventHandlerName(name)] = value;
-        } else if (
-          !(skip?.test(name) || (name === "content" && el.tagName !== "META"))
-        ) {
+        } else if (!(
+          skip?.test(name) ||
+          (name === "content" && el.tagName !== "META")
+        )) {
           _attr(el, name, value);
         }
         break;

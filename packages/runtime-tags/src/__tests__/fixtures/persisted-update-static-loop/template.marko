@@ -1,0 +1,10 @@
+import { getCategories } from "./data";
+<const/categories=getCategories()>
+<let/count=0>
+<button.bump onClick() { count++ }>${count}</button>
+<for|cat| of=categories>
+  <span class=(cat === $global.params.pick && "active")>${cat}</span>
+</for>
+<if=categories.length>
+  <em class=(count && $global.params.tag && "hot")>pick:${$global.params.pick}</em>
+</if>

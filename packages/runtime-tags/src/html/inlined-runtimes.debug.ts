@@ -39,8 +39,19 @@ export const REORDER_RUNTIME_CODE = /* js */ `((runtime) => {
   let onNextSibling,
     placeholder,
     nextSibling,
+    // Captured once, here at this render's reorder-runtime init
+    // (effectively document-resume time): a persisted apply bumps
+    // \`runtime.n\` (see \`dom/resume\`'s \`bumpNavEpoch\`, called from
+    // \`dom/update\`'s \`createUpdate\` before any frame applies), so a swap
+    // whose epoch predates a navigation that has since applied is stale --
+    // \`replace\` no-ops it instead of splicing pre-navigation content into
+    // the post-navigation page. Ordinary streaming pages (no persisted
+    // navigation ever applies) never advance \`runtime.n\`, so this is
+    // always \`0 > 0\` (false) there and every swap proceeds as before.
+    epoch = runtime.n || 0,
     placeholders = runtime.p = {},
-    replace = (id, container) => runtime.l[id].replaceWith(...container.childNodes);
+    replace = (id, container) =>
+      runtime.n > epoch || runtime.l[id].replaceWith(...container.childNodes);
   runtime.j = {};
   runtime.x = (op, id, node, placeholderRoot, placeholderCb) => {
     if (node == nextSibling) {

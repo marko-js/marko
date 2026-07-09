@@ -161,8 +161,7 @@ export function setConditionalRenderer<T>(
 ) {
   const referenceNode = scope[nodeAccessor] as Comment | Element;
   const prevBranch = scope[AccessorPrefix.BranchScopes + nodeAccessor] as
-    | BranchScope
-    | undefined;
+    BranchScope | undefined;
   const parentNode =
     referenceNode.nodeType > NodeType.Element
       ? (prevBranch?.[AccessorProp.StartNode] || referenceNode).parentNode!

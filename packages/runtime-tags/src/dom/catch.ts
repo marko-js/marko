@@ -25,10 +25,11 @@ import {
  * Enables `<try>` catch/pending semantics: effects and renders check their
  * closest branch for pending awaits and caught errors. Lives in its own
  * module (not the queue, which only exposes the wrap hooks, and not
- * control-flow, which hosts branch construction plus its for/spread
- * imports) so an await/try page's slim hydration bundle pays only for the
- * catch machinery itself -- a module is hosted in one chunk and the queue
- * is eager in every bundle.
+ * control-flow, whose loop/dynamic-tag/spread imports would come along)
+ * so an await/try page's slim hydration bundle pays for the catch
+ * machinery plus the branch construction `renderCatch` needs, and nothing
+ * more -- a module is hosted in one chunk and the queue is eager in every
+ * bundle.
  */
 export function _enable_catch() {
   enableCatchPending(
@@ -39,7 +40,7 @@ export function _enable_catch() {
           let fn: (scope: Scope) => void;
           let scope: Scope;
           let branch: BranchScope | undefined;
-          for (; i < effects.length; ) {
+          for (; i < effects.length;) {
             fn = effects[i++] as (scope: Scope) => void;
             scope = effects[i++] as Scope;
             if (

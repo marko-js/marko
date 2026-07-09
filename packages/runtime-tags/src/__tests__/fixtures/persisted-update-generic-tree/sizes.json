@@ -1,0 +1,32 @@
+{
+  "dom": {
+    "template.marko.page.mjs": {
+      "total": {
+        "min": 268,
+        "brotli": 145
+      },
+      "files": {
+        "tags/badge.marko": 58,
+        "tags/card.marko": 57,
+        "tags/counter.marko": 259,
+        "tags/widget.marko": 59,
+        "template.marko": 262
+      }
+    },
+    "update.js": {
+      "total": {
+        "min": 5275,
+        "brotli": 2096
+      },
+      "files": {
+        "tags/counter.marko.update.mjs": 280,
+        "tags/widget.marko.update.mjs": 253,
+        "template.marko.update.mjs": 381
+      }
+    }
+  },
+  "html": {
+    "min": 710,
+    "brotli": 389
+  }
+}

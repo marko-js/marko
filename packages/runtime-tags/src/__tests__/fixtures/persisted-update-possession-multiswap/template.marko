@@ -1,0 +1,17 @@
+import { getLabel } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/PanelA>
+  <span.a>A: ${getLabel?.($global.topic)}</span>
+</define>
+<define/PanelB>
+  <section.b>B: ${getLabel?.($global.topic)}</section>
+</define>
+
+<ul>
+  <for|item| of=$global.items by(item) { return item.id }>
+    <${item.view === "b" ? PanelB : PanelA}/>
+  </for>
+</ul>

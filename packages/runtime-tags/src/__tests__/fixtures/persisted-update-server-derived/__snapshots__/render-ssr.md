@@ -1,0 +1,124 @@
+# Render `{"detailId":0,"$global":{"persisted":true}}`
+```html
+<button
+  class="count"
+>
+  clicked 0
+</button>
+<p>
+  no selection
+</p>
+```
+
+# Update
+```js
+container.querySelector("button.count").click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<p>
+  no selection
+</p>
+```
+## Change
+```
+UPDATE: .count::text@8 "0" => "1"
+```
+
+# Update `{"detailId":7,"$global":{"persisted":true}}`
+```html
+<button
+  class="count"
+>
+  clicked 1
+</button>
+<section>
+  <h2>
+    Part 7
+  </h2>
+  <p>
+    costs 70
+  </p>
+  <button
+    class="copy"
+  >
+    use price
+  </button>
+</section>
+```
+## Change
+```
+INSERT: .count + section
+REMOVE: section + p
+UPDATE: section > h2::text " " => "Part 7"
+UPDATE: section > p::text@6 "" => "70"
+```
+
+# Update
+```js
+container.querySelector("button.copy").click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 70
+</button>
+<section>
+  <h2>
+    Part 7
+  </h2>
+  <p>
+    costs 70
+  </p>
+  <button
+    class="copy"
+  >
+    use price
+  </button>
+</section>
+```
+## Change
+```
+UPDATE: .count::text@8 "1" => "70"
+```
+
+# Update `{"detailId":0,"$global":{"persisted":true}}`
+```html
+<button
+  class="count"
+>
+  clicked 70
+</button>
+<p>
+  no selection
+</p>
+```
+## Change
+```
+INSERT: .count + p
+REMOVE: p + section
+```
+
+# Update
+```js
+container.querySelector("button.count").click();
+```
+```html
+<button
+  class="count"
+>
+  clicked 71
+</button>
+<p>
+  no selection
+</p>
+```
+## Change
+```
+UPDATE: .count::text@8 "70" => "71"
+```

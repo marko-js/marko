@@ -1,0 +1,6 @@
+import Panel from "./tags/panel.marko" with { load: "idle" }
+
+<let/count=0/>
+<h1>${input.title}</h1>
+<button.count onClick() { count++ }>clicked ${count}</button>
+<Panel label=input.label/>

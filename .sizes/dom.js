@@ -1,4 +1,4 @@
-// size: 26037 (min) 9640 (brotli)
+// size: 33382 (min) 11945 (brotli)
 //#region packages/runtime-tags/dist/common/attr-tag.mjs
 let empty = [],
   rest = Symbol();
@@ -252,7 +252,7 @@ function _lifecycle(scope, thisObj, index = 0) {
 }
 function removeChildNodes(startNode, endNode) {
   let stop = endNode.nextSibling;
-  for (; startNode !== stop; ) {
+  for (; startNode !== stop;) {
     let next = startNode.nextSibling;
     (startNode.remove(), (startNode = next));
   }
@@ -264,7 +264,7 @@ function toInsertNode(startNode, endNode) {
   if (startNode === endNode) return startNode;
   let parent = new DocumentFragment(),
     stop = endNode.nextSibling;
-  for (; startNode !== stop; ) {
+  for (; startNode !== stop;) {
     let next = startNode.nextSibling;
     (parent.appendChild(startNode), (startNode = next));
   }
@@ -308,7 +308,7 @@ function skipScope() {
 }
 function findBranchWithKey(scope, key) {
   let branch = scope.F;
-  for (; branch && branch[key] == null; ) branch = branch.N;
+  for (; branch && branch[key] == null;) branch = branch.N;
   return branch;
 }
 function destroyBranch(branch) {
@@ -366,7 +366,7 @@ let walker = /* @__PURE__ */ document.createTreeWalker(document),
       currentMultiplier,
       storedMultiplier = 0,
       currentScopeIndex = 0;
-    for (; currentWalkIndex < walkCodes.length; )
+    for (; currentWalkIndex < walkCodes.length;)
       if (
         ((value = walkCodes.charCodeAt(currentWalkIndex++)),
         (currentMultiplier = storedMultiplier),
@@ -395,13 +395,13 @@ let walker = /* @__PURE__ */ document.createTreeWalker(document),
           value === 48 &&
             (scope[decodeAccessor(currentScopeIndex++)] = skipScope()));
       else if (value < 92)
-        for (value = 20 * currentMultiplier + value - 67; value--; )
+        for (value = 20 * currentMultiplier + value - 67; value--;)
           walker.nextNode();
       else if (value < 107)
-        for (value = 10 * currentMultiplier + value - 97; value--; )
+        for (value = 10 * currentMultiplier + value - 97; value--;)
           walker.nextSibling();
       else if (value < 117) {
-        for (value = 10 * currentMultiplier + value - 107; value--; )
+        for (value = 10 * currentMultiplier + value - 107; value--;)
           walker.parentNode();
         walker.nextSibling();
       } else storedMultiplier = currentMultiplier * 10 + value - 117;
@@ -509,13 +509,31 @@ let registeredValues = {},
   branchesEnabled,
   embedRenders,
   readyIds,
+  flushReadyUpdates = () => {},
   isResuming;
 function enableBranches() {
-  branchesEnabled || ((branchesEnabled = 1), skipDestroyedRenders());
+  if (!branchesEnabled) {
+    ((branchesEnabled = 1), skipDestroyedRenders());
+    for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
+  }
 }
 function ready(readyId) {
   (readyIds ||= /* @__PURE__ */ new Set()).add(readyId);
   for (let renderId in curRenders) runResumeEffects(curRenders[renderId]);
+  flushReadyUpdates();
+}
+/** See dom/update.ts `_update_load`: flushes parked lazy-child patches.
+ * Called by `ready()` above and by the CSR lazy path (dom/load.ts
+ * `insertLoaded`) — the slot lives here (core module) so neither the load
+ * runtime nor the persisted applier has to import the other. */
+function enableReadyUpdates(hook) {
+  flushReadyUpdates = hook;
+}
+/** Whether a lazy module has declared ready (its registrations are
+ * present). Persisted updates gate parked keyed resume batches on this --
+ * see dom/update.ts -- exactly as `render.m` gates document `.b` batches. */
+function isReady(readyId) {
+  return !!readyIds?.has(readyId);
 }
 function initEmbedded(readyId, runtimeId) {
   (embedRenders ||
@@ -644,9 +662,9 @@ function init(runtimeId = "M") {
                         visit.previousSibling === startVisit
                           ? startVisit
                           : parent.insertBefore(new Text(), visit)));
-                  for (; i && orphanBranches[--i].L > branchId; )
+                  for (; i && orphanBranches[--i].L > branchId;)
                     setParentBranch(orphanBranches.pop(), branch);
-                  for (; j && deferredOwners[--j].L > branchId; ) {
+                  for (; j && deferredOwners[--j].L > branchId;) {
                     let owner = deferredOwners.pop();
                     owner.F !== owner && (owner.F = branch);
                   }
@@ -679,22 +697,17 @@ function init(runtimeId = "M") {
               for (; i < resumes.length; i++) {
                 let serialized = resumes[i];
                 if (typeof serialized == "string")
-                  for (
-                    lastTokenIndex = 0, visitText = serialized;
-                    nextToken();
-                  )
+                  for (lastTokenIndex = 0, visitText = serialized; nextToken();)
                     /\D/.test(lastToken)
                       ? (lastEffect = registeredValues[lastToken])
                       : effects.push(lastEffect, getScope(lastToken));
                 else if (Array.isArray(serialized)) {
-                  if (
-                    !(
-                      readyIds &&
-                      serialized.every(
-                        (dep) => readyIds.has(dep) && !render.b[dep].length,
-                      )
+                  if (!(
+                    readyIds &&
+                    serialized.every(
+                      (dep) => readyIds.has(dep) && !render.b[dep].length,
                     )
-                  )
+                  ))
                     break;
                 } else if (readyIds && typeof serialized == "number") break;
                 else {
@@ -718,7 +731,7 @@ function init(runtimeId = "M") {
             (serializeContext._ = registeredValues),
             (render.m = (effects) => {
               if ((processResumes(render.r, effects), readyIds && render.b))
-                for (let progress = 1; progress; ) {
+                for (let progress = 1; progress;) {
                   progress = 0;
                   for (let readyId of readyIds) {
                     let resumes = render.b[readyId];
@@ -727,24 +740,33 @@ function init(runtimeId = "M") {
                       (progress = 1);
                   }
                 }
-              let retained = 0;
+              let retained = 0,
+                lastNodeVisitScopeId = "";
               for (visit of (visits = render.v))
                 if (
                   ((lastTokenIndex = render.i.length),
                   (visitText = visit.data),
                   (visitType = visitText[lastTokenIndex++]),
-                  (visitScope = getScope(nextToken())),
                   visitType === "*")
                 ) {
-                  let prev = visit.previousSibling;
-                  visitScope[nextToken()] =
+                  let scopeId = nextToken();
+                  visitScope = getScope(
+                    scopeId
+                      ? (lastNodeVisitScopeId = scopeId)
+                      : lastNodeVisitScopeId,
+                  );
+                  let accessor = nextToken(),
+                    prev = visit.previousSibling;
+                  visitScope[accessor] =
                     prev && (prev.nodeType < 8 || prev.data)
                       ? prev
                       : visit.parentNode.insertBefore(new Text(), visit);
                 } else
-                  branchesEnabled
-                    ? (visitBranches ||= createVisitBranches())()
-                    : render.b && (visits[retained++] = visit);
+                  ((lastNodeVisitScopeId = ""),
+                    (visitScope = getScope(nextToken())),
+                    branchesEnabled
+                      ? (visitBranches ||= createVisitBranches())()
+                      : (visits[retained++] = visit));
               return (
                 embedRenders &&
                   !embedAnchor &&
@@ -784,6 +806,42 @@ function runResumeEffects(render) {
     isResuming = 0;
   }
 }
+function getUpdateRoot(renderId) {
+  let root;
+  for (let id in curRenders)
+    if (!renderId || id === renderId) {
+      let render = curRenders[id];
+      if (
+        ((registeredValues.__update_root = (scope) => (root = scope)),
+        (render.r ||= []).push("__update_root 1"),
+        runResumeEffects(render),
+        root)
+      )
+        return root;
+    }
+  return root;
+}
+/**
+ * Bumped once per persisted apply attempt (`dom/update`'s `createUpdate`,
+ * before any frame applies), onto every render currently on the page. The
+ * document's own reorder runtime shares each render's entry in
+ * `self[runtimeId]` with the inline `REORDER_RUNTIME_CODE` script (see
+ * `html/inlined-runtimes.ts`): it captures this value once at its own
+ * (per-render) init -- effectively document-resume time -- and no-ops a
+ * placeholder swap once it observes the value has advanced, gating a
+ * reorder chunk generated for a boundary a navigation has since applied
+ * over (see agent-feedback/bugs.md, "Pre-navigation streamed await body
+ * lands in a post-navigation persisted page"). Only imported by
+ * `dom/update`, so apps without persisted updates never pay for it, and
+ * ordinary streaming pages (no persisted navigation ever applies) never
+ * advance it -- their reorder swaps proceed exactly as before.
+ */
+function bumpNavEpoch() {
+  for (let renderId in curRenders) {
+    let render = curRenders[renderId];
+    render.n = (render.n || 0) + 1;
+  }
+}
 function getRegisteredWithScope(id, scope) {
   let val = registeredValues[id];
   return scope ? val(scope) : val;
@@ -803,6 +861,7 @@ function _el(id, accessor) {
 //#endregion
 //#region packages/runtime-tags/dist/dom/queue.mjs
 let rendering,
+  updating,
   runId = 2,
   caughtError = /* @__PURE__ */ new WeakSet(),
   placeholderShown = /* @__PURE__ */ new WeakSet(),
@@ -810,10 +869,44 @@ let rendering,
   pendingRenders = [],
   scopeKeyOffset = 1e3,
   runEffects = (effects) => {
-    for (let i = 0; i < effects.length; ) effects[i++](effects[i++]);
+    for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled;
+/**
+ * Truthy while an update-render patch is being applied (set by
+ * `dom/update`). Persisted builds guard state-free request-derived compute
+ * invocations by reading the live binding directly (`if (!_updating)`):
+ * their values are the patch's payload (computing them client-side is at
+ * best redundant and at worst impossible -- the computation may live
+ * behind a `server import`), so during an apply the signal graph skips the
+ * compute and the merge delivers the server-computed value instead.
+ * Client-state (and state-mixing) computations are unaffected. Lives here
+ * (not with the applier in `dom/update`) because main persisted modules
+ * import it -- hydration bundles must not drag the applier graph eagerly.
+ */
+function setUpdating(value) {
+  updating = value;
+}
+/**
+ * Persisted builds' `_script`: identical to `_script`, except setup skips
+ * queueing while an update patch applies — fresh-branch wiring comes from
+ * the payload's effect entries instead (running both would double-bind).
+ */
+function _script_update(id, fn) {
+  return (_resume(id, fn), _script_shared(fn));
+}
+/**
+ * The register build's `_script_update`: the same skip-queueing-while-
+ * updating wrapper WITHOUT the registration — the main module already
+ * registered the id, and payload effect entries must keep resolving the
+ * main copies resume wired.
+ */
+function _script_shared(fn) {
+  return (scope) => {
+    updating || queueEffect(scope, fn);
+  };
+}
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
   if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
@@ -833,7 +926,7 @@ function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
 }
 function queuePendingRender(render) {
   let i = pendingRenders.push(render) - 1;
-  for (; i; ) {
+  for (; i;) {
     let parentIndex = (i - 1) >> 1,
       parent = pendingRenders[parentIndex];
     if (render.a - parent.a >= 0) break;
@@ -872,14 +965,14 @@ function prepareEffects(fn) {
   return preparedEffects;
 }
 function runRenders() {
-  for (; pendingRenders.length; ) {
+  for (; pendingRenders.length;) {
     let render = pendingRenders[0],
       item = pendingRenders.pop();
     if (render !== item) {
       let i = 0,
         mid = pendingRenders.length >> 1,
         key = (pendingRenders[0] = item).a;
-      for (; i < mid; ) {
+      for (; i < mid;) {
         let bestChild = (i << 1) + 1,
           right = bestChild + 1;
         if (
@@ -939,7 +1032,9 @@ function _let(id, fn) {
   let valueAccessor = decodeAccessor(id);
   return (scope, value) => (
     rendering
-      ? scope.H === runId && ((scope[valueAccessor] = value), fn?.(scope))
+      ? scope.H === runId &&
+        ((updating && valueAccessor in scope) || (scope[valueAccessor] = value),
+        fn?.(scope))
       : (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
         ((scope[valueAccessor] = value), fn) &&
         (schedule(), queueRender(scope, fn, id)),
@@ -966,7 +1061,9 @@ function _const(valueAccessor, fn) {
   return (
     (valueAccessor = decodeAccessor(valueAccessor)),
     (scope, value) => {
-      (scope[valueAccessor] !== value || !(valueAccessor in scope)) &&
+      (scope[valueAccessor] !== value ||
+        !(valueAccessor in scope) ||
+        (updating && rendering && scope.H === runId)) &&
         ((scope[valueAccessor] = value), fn?.(scope));
     }
   );
@@ -1086,7 +1183,7 @@ function _closure(...closureSignals) {
   let [firstSignal] = closureSignals,
     scopeInstances = firstSignal.a,
     signalIndex = firstSignal.b;
-  for (let i = closureSignals.length; i--; ) closureSignals[i].c = i;
+  for (let i = closureSignals.length; i--;) closureSignals[i].c = i;
   return (scope) => {
     if (scope[scopeInstances])
       for (let childScope of scope[scopeInstances])
@@ -1179,10 +1276,11 @@ function _hoist_resume(id, ...path) {
  * Enables `<try>` catch/pending semantics: effects and renders check their
  * closest branch for pending awaits and caught errors. Lives in its own
  * module (not the queue, which only exposes the wrap hooks, and not
- * control-flow, which hosts branch construction plus its for/spread
- * imports) so an await/try page's slim hydration bundle pays only for the
- * catch machinery itself -- a module is hosted in one chunk and the queue
- * is eager in every bundle.
+ * control-flow, whose loop/dynamic-tag/spread imports would come along)
+ * so an await/try page's slim hydration bundle pays for the catch
+ * machinery plus the branch construction `renderCatch` needs, and nothing
+ * more -- a module is hosted in one chunk and the queue is eager in every
+ * bundle.
  */
 function _enable_catch() {
   enableCatchPending(
@@ -1193,7 +1291,7 @@ function _enable_catch() {
             fn,
             scope,
             branch;
-          for (; i < effects.length; )
+          for (; i < effects.length;)
             ((fn = effects[i++]),
               (scope = effects[i++]),
               (branch = scope.F)?.H !== 0 &&
@@ -1204,7 +1302,7 @@ function _enable_catch() {
     (runRender) => (render) => {
       try {
         let branch = render.b.F;
-        for (; branch; ) {
+        for (; branch;) {
           if (branch.W) return ((render.f = 1), branch.W.push(render));
           branch = branch.N;
         }
@@ -1216,7 +1314,7 @@ function _enable_catch() {
   );
 }
 function handlePendingTry(fn, scope, branch) {
-  for (; branch; ) {
+  for (; branch;) {
     if (branch.O?.i) return (branch.J ||= []).push(fn, scope);
     branch = branch.N;
   }
@@ -1250,12 +1348,12 @@ function _on(element, type, handler) {
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
-  for (; target; )
+  for (; target;)
     (target["$" + ev.type]?.(ev, target),
       (target = ev.bubbles && !ev.cancelBubble && target.parentNode));
 }
 //#endregion
-//#region packages/runtime-tags/dist/dom/controllable-shared.mjs
+//#region packages/runtime-tags/dist/dom/controllable/shared.mjs
 function syncControllableFormInput(el, hasChanged, onChange) {
   ((el._ = onChange),
     delegate("input", handleChange),
@@ -1300,7 +1398,7 @@ function updateList(arr, val, push) {
   );
 }
 //#endregion
-//#region packages/runtime-tags/dist/dom/controllable-input-checked.mjs
+//#region packages/runtime-tags/dist/dom/controllable/input-checked.mjs
 function _attr_input_checked_default(scope, nodeAccessor, checked) {
   let el = scope[nodeAccessor],
     normalizedChecked = isNotVoid(checked);
@@ -1423,14 +1521,14 @@ function resolveCursorPosition(
     if (updatedValue.endsWith(after)) return updatedValue.length - after.length;
     let count = before.replace(R, "").length,
       pos = 0;
-    for (; count && updatedValue[pos]; )
+    for (; count && updatedValue[pos];)
       updatedValue[pos++].replace(R, "") && count--;
     return pos;
   }
   return -1;
 }
 //#endregion
-//#region packages/runtime-tags/dist/dom/controllable-input-value.mjs
+//#region packages/runtime-tags/dist/dom/controllable/input-value.mjs
 let inputType = "";
 function _attr_input_value_default(scope, nodeAccessor, value) {
   let el = scope[nodeAccessor],
@@ -1479,7 +1577,7 @@ function setInputValue(el, value) {
   }
 }
 //#endregion
-//#region packages/runtime-tags/dist/dom/controllable-open.mjs
+//#region packages/runtime-tags/dist/dom/controllable/open.mjs
 function _attr_details_or_dialog_open_default(scope, nodeAccessor, open) {
   scope.H === runId && (scope[nodeAccessor].open = isNotVoid(open));
 }
@@ -1509,7 +1607,7 @@ function _attr_details_or_dialog_open_script(scope, nodeAccessor) {
   });
 }
 //#endregion
-//#region packages/runtime-tags/dist/dom/controllable-select.mjs
+//#region packages/runtime-tags/dist/dom/controllable/select.mjs
 function _attr_select_value_default(scope, nodeAccessor, value) {
   let restoreValue,
     el = scope[nodeAccessor],
@@ -1596,7 +1694,7 @@ function getSelectValue(el, multiple) {
 //#region packages/runtime-tags/dist/dom/spread.mjs
 function _attrs(scope, nodeAccessor, nextAttrs) {
   let el = scope[nodeAccessor];
-  for (let i = el.attributes.length; i--; ) {
+  for (let i = el.attributes.length; i--;) {
     let { name } = el.attributes.item(i);
     (nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))) ||
       el.removeAttribute(name);
@@ -1617,7 +1715,7 @@ function hasAttrAlias(element, attr, nextAttrs) {
 function _attrs_partial(scope, nodeAccessor, nextAttrs, skip) {
   let el = scope[nodeAccessor],
     partial = {};
-  for (let i = el.attributes.length; i--; ) {
+  for (let i = el.attributes.length; i--;) {
     let { name } = el.attributes.item(i);
     !skip[name] &&
       !(nextAttrs && name in nextAttrs) &&
@@ -1963,14 +2061,14 @@ function _await_promise(nodeAccessor, params) {
                 ) {
                   let fnScopes = /* @__PURE__ */ new Map(),
                     effects = awaitCounter.m([]);
-                  for (let i = 0; i < pendingEffects.length; ) {
+                  for (let i = 0; i < pendingEffects.length;) {
                     let fn = pendingEffects[i++],
                       scopes = fnScopes.get(fn);
                     (scopes ||
                       fnScopes.set(fn, (scopes = /* @__PURE__ */ new Set())),
                       scopes.add(pendingEffects[i++]));
                   }
-                  for (let i = 0; i < effects.length; ) {
+                  for (let i = 0; i < effects.length;) {
                     let fn = effects[i++],
                       scope = effects[i++];
                     fnScopes.get(fn)?.has(scope) || queueEffect(scope, fn);
@@ -1999,18 +2097,27 @@ function resolveAwait(
   let awaitBranch = scope[branchAccessor];
   return (
     awaitBranch.V &&
-      ((awaitBranch.Y = awaitBranch.Y?.forEach(syncGen)),
-      setupBranch(awaitBranch.V, awaitBranch),
-      (awaitBranch.V = 0),
-      insertBranchBefore(
-        awaitBranch,
-        scope[nodeAccessor].parentNode,
-        scope[nodeAccessor],
-      ),
+      (attachAwaitBranch(scope, nodeAccessor, awaitBranch),
       referenceNode.remove()),
     params?.(awaitBranch, [value]),
     awaitBranch
   );
+}
+/**
+ * Sets up and inserts a detached (unresolved) await branch at its anchor.
+ * Shared by promise resolution above and by persisted update applies, where
+ * a fresh subtree's await never ran its promise (the compute is skipped
+ * while updating) and the body's own frame is the resolution.
+ */
+function attachAwaitBranch(scope, nodeAccessor, awaitBranch) {
+  ((awaitBranch.Y = awaitBranch.Y?.forEach(syncGen)),
+    setupBranch(awaitBranch.V, awaitBranch),
+    (awaitBranch.V = 0),
+    insertBranchBefore(
+      awaitBranch,
+      scope[nodeAccessor].parentNode,
+      scope[nodeAccessor],
+    ));
 }
 function _await_content(nodeAccessor, template, walks, setup) {
   nodeAccessor = decodeAccessor(nodeAccessor);
@@ -2115,7 +2222,7 @@ function _if(nodeAccessor, ...branchesArgs) {
   let branchAccessor = "D" + nodeAccessor,
     branches = [],
     i = 0;
-  for (; i < branchesArgs.length; )
+  for (; i < branchesArgs.length;)
     branches.push(
       _content("", branchesArgs[i++], branchesArgs[i++], branchesArgs[i++])(),
     );
@@ -2313,14 +2420,14 @@ function loop(forEach) {
           hi,
           mid;
         for (let i = start; i <= oldEnd; i++) oldPos.set(oldScopes[i], i);
-        for (let i = diffLen; i--; )
+        for (let i = diffLen; i--;)
           sources[i] = oldPos.get(newScopes[start + i]) ?? -1;
         for (let i = 0; i < diffLen; i++)
           if (~sources[i])
             if (tail < 0 || sources[tails[tail]] < sources[i])
               (~tail && (pred[i] = tails[tail]), (tails[++tail] = i));
             else {
-              for (lo = 0, hi = tail; lo < hi; )
+              for (lo = 0, hi = tail; lo < hi;)
                 ((mid = ((lo + hi) / 2) | 0),
                   sources[tails[mid]] < sources[i]
                     ? (lo = mid + 1)
@@ -2328,9 +2435,9 @@ function loop(forEach) {
               sources[i] < sources[tails[lo]] &&
                 (lo > 0 && (pred[i] = tails[lo - 1]), (tails[lo] = i));
             }
-        for (hi = tails[tail], lo = tail + 1; lo-- > 0; )
+        for (hi = tails[tail], lo = tail + 1; lo-- > 0;)
           ((tails[lo] = hi), (hi = pred[hi]));
-        for (let i = diffLen; i--; )
+        for (let i = diffLen; i--;)
           (~tail && i === tails[tail]
             ? tail--
             : insertBranchBefore(
@@ -2574,6 +2681,26 @@ function _load_template(id, load) {
     );
   return lazyTemplate;
 }
+/**
+ * Registers a lazy child's (trigger-gated) loader under its asset/ready id
+ * -- the compile constant the server's `withLoadAssets` wrapper uses -- so
+ * a persisted update that delivers the child's server-rendered markup
+ * inside a fragment can start the load without a document script: the
+ * applier fires this when the child's keyed resume batch arrives (see
+ * dom/update.ts). The loader resolves the same modules the document's
+ * injected asset script would (the child template plus its `?update`
+ * merge), so declaring `ready` afterward is what replays the parked batch
+ * against the already-inserted markup. Emitted by `?update` entry compiles
+ * only, so plain builds never carry it.
+ */
+function _load_ready(readyId, load) {
+  _resume(readyId, () => {
+    load().then(
+      () => ready(readyId),
+      () => 0,
+    );
+  });
+}
 function _load_setup(nodeAccessor, childScopeAccessor, load) {
   ((nodeAccessor = decodeAccessor(nodeAccessor)),
     (childScopeAccessor = decodeAccessor(childScopeAccessor)));
@@ -2628,12 +2755,13 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
                 (syncGen(branch),
                   renderer.c?.(branch),
                   values.forEach((e) => e.b._(branch, e.a)),
-                  insert());
+                  insert(),
+                  flushReadyUpdates());
               }));
         },
         () => 0,
       );
-  else (setupBranch(renderer, branch), insert());
+  else (setupBranch(renderer, branch), insert(), flushReadyUpdates());
 }
 function loadFailed(scope, awaitCounter) {
   return (error) => {
@@ -2704,5 +2832,714 @@ function _load_race_trigger(...triggers) {
 }
 function getSelectorOrResolve(selector, resolve) {
   return document.querySelector(selector) || resolve();
+}
+//#endregion
+//#region packages/runtime-tags/dist/dom/update.mjs
+let activePairs,
+  activeUpdate,
+  applyGen = 0,
+  pendingLoadUpdates = [],
+  flushPendingLoadUpdates = () => {
+    for (let i = pendingLoadUpdates.length; i--;) {
+      let [patch, live, mergeId] = pendingLoadUpdates[i],
+        merge = registeredValues[mergeId];
+      merge && live.H
+        ? (pendingLoadUpdates.splice(i, 1), merge(patch, live))
+        : live.H || pendingLoadUpdates.splice(i, 1);
+    }
+  },
+  parkedReadyBatches = [],
+  readyBatchDrained = (dep) =>
+    isReady(dep) && !parkedReadyBatches.some((batch) => batch.id === dep),
+  flushParkedReadyBatches = () => {
+    for (let progress = 1; progress;) {
+      progress = 0;
+      for (let i = 0; i < parkedReadyBatches.length; i++) {
+        let batch = parkedReadyBatches[i];
+        if (!isReady(batch.id)) continue;
+        let count = 0;
+        for (; count < batch.fills.length; count++) {
+          let fill = batch.fills[count];
+          if (Array.isArray(fill)) {
+            if (!fill.every(readyBatchDrained)) break;
+          } else batch.apply(fill);
+        }
+        (count && ((progress = 1), batch.fills.splice(0, count)),
+          batch.fills.length || parkedReadyBatches.splice(i--, 1));
+      }
+    }
+  };
+/**
+ * The possession echo (`x-marko-have`): what renderer the live page currently
+ * holds at each dynamic-tag hop, so a same-route navigation whose update
+ * renders a different renderer there ships a fragment for exactly that hop
+ * (see the html writer's `possessed` / `_dynamic_tag`) instead of failing the
+ * apply into a full navigation. Walks the resumed scope tree collecting, per
+ * hop, a **build-stable site id** -> renderer id from the string-valued
+ * `ConditionalRenderer:` keys -- dynamic tags serialize a renderer id string
+ * there, while `<if>`/loop branches store a numeric branch index, so control
+ * flow is excluded for free. The site id itself is read back off a sibling
+ * key the html runtime stashed under the reserved `HOP_SITE_PREFIX` ("Z")
+ * prefix: the compiler's per-site register id (`getUpdateDynamicRegisterId`),
+ * not the runtime scope id -- the document and update renders number scopes
+ * differently (the update elides matched scopes and omits the shell), so a
+ * scope-id key would silently miss, while the register id is a compile
+ * constant identical in both renders (see the "Possession echo" section of
+ * designs/persisted-pages-architecture.md). A hop repeated across a keyed `<for>`
+ * shares one site id, so the key appends the iteration's loop key
+ * (`siteId + " " + loopKey`, read off the branch scope's `LoopKey`) to
+ * disambiguate instances; positional loops expose no loop key and still
+ * collide on the bare site id. Returns the map JSON-encoded for the request
+ * header, or "" when the page holds no hops (the common case: the header is
+ * then omitted).
+ *
+ * The same walk also collects **pending `<try>` boundaries**: a matched
+ * boundary whose placeholder shipped in the document carries its
+ * build-stable site id stashed under the reserved `BOUNDARY_SITE_PREFIX`
+ * ("T") prefix (see `tryPlaceholder` in html/writer.ts), tombstoned to `0`
+ * once the body's first content ships or an update-delivered body applies
+ * (`_update_branch`) -- so a STRING value here means "still showing its
+ * placeholder", and a resolved boundary reads falsy. These echo into the
+ * SAME flat map under a `"!"`-prefixed key (the reserved placeholder token,
+ * so it can never collide with a hop's site-id key) with sentinel value
+ * `"1"` -- the server delivers the matching try's body as a boundary-body
+ * entry instead of ordinary fills (see the "Correctness" section of
+ * designs/persisted-pages-roadmap.md).
+ *
+ * `root` defaults to the resumed render's root; callers that already hold it
+ * (the router pairs the root once for the apply) pass it to avoid re-pairing.
+ */
+function _have(root = getUpdateRoot()) {
+  if (!root) return "";
+  let possessed = {},
+    seen = /* @__PURE__ */ new Set(),
+    stack = [root],
+    found;
+  for (; stack.length;) {
+    let scope = stack.pop();
+    if (!seen.has(scope)) {
+      seen.add(scope);
+      for (let key in scope) {
+        let value = scope[key];
+        if (
+          typeof value == "string" &&
+          key.length > 1 &&
+          key.slice(0, 1) === "D"
+        ) {
+          let siteId = scope["Z" + key.slice(1)];
+          if (typeof siteId == "string") {
+            found = 1;
+            let loopKey = scope.M;
+            possessed[loopKey === void 0 ? siteId : siteId + " " + loopKey] =
+              value;
+          }
+        } else if (
+          typeof value == "string" &&
+          key.length > 1 &&
+          key.slice(0, 1) === "T"
+        ) {
+          found = 1;
+          let loopKey = scope.M;
+          possessed["!" + value + (loopKey === void 0 ? "" : " " + loopKey)] =
+            "1";
+        } else if (
+          typeof value == "string" &&
+          key.length > 1 &&
+          key.slice(0, 1) === "U"
+        ) {
+          found = 1;
+          let sep = value.indexOf(" "),
+            loopKey = scope.M,
+            entryKey =
+              "!" +
+              value.slice(0, sep) +
+              (loopKey === void 0 ? "" : " " + loopKey);
+          possessed[entryKey] !== "1" &&
+            (possessed[entryKey] = "=" + value.slice(sep + 1));
+        } else if (value && typeof value == "object") {
+          if (typeof value.L == "number") stack.push(value);
+          else if (value instanceof Set || Array.isArray(value))
+            for (let child of value)
+              child && typeof child == "object" && stack.push(child);
+        }
+      }
+    }
+  }
+  return found ? JSON.stringify(possessed) : "";
+}
+/**
+ * Applies an update-render payload to a live (resumed) render.
+ *
+ * `merge` is the page template's compiled merge function (the `?update`
+ * module's default export) and `liveRoot` the live scope it pairs with
+ * (defaults to pairing the first render's root by convention). The
+ * patch root is scope 1 by convention (the first scope the update render
+ * allocates -- the root template's). Patch scopes are plain objects in a
+ * patch-local id space; `_(id, registryId)` references inside values resolve
+ * the same way resume fills do, against patch scopes. Scope 0 partials are
+ * the update's `$global` values and merge onto the live `$global`.
+ */
+function applyUpdate(merge, fills, liveRoot = getUpdateRoot()) {
+  createUpdate(merge, liveRoot)(fills);
+}
+/**
+ * The per-navigation form of `applyUpdate`: update responses are a stream of
+ * serializer frames, and the returned function applies one frame's fills at
+ * a time against a shared patch-scope space -- early frames settle in the
+ * page before slow async boundaries resolve, exactly like a streamed MPA
+ * render. Each call re-dispatches the root merge: sparse presence checks
+ * pick up the keys the new frame added (later frames extend earlier scopes,
+ * e.g. an `<await>` body's branch link), while already-applied keys re-apply
+ * through value/DOM primitives that all no-op on unchanged input.
+ */
+function createUpdate(merge, liveRoot = getUpdateRoot()) {
+  bumpNavEpoch();
+  let liveGlobal = liveRoot.$,
+    patchScopes = { 0: liveGlobal },
+    getScope = (id) => (patchScopes[id] ||= {}),
+    applyScopes = (partials) => {
+      let scopeId = partials[0];
+      for (let i = 1; i < partials.length; i++) {
+        let partial = partials[i];
+        typeof partial == "number"
+          ? (scopeId += partial)
+          : (scopeId
+              ? (patchScopes[scopeId] = Object.assign(
+                  patchScopes[scopeId] || partial,
+                  partial,
+                ))
+              : Object.assign(liveGlobal, partial),
+            scopeId++);
+      }
+    },
+    serializeContext = Object.assign(
+      (data, registryId) =>
+        typeof data == "number"
+          ? registryId
+            ? registryId in registeredValues
+              ? getRegisteredWithScope(registryId, getScope(data))
+              : void 0
+            : getScope(data)
+          : applyScopes(data),
+      { _: registeredValues },
+    ),
+    pairs = /* @__PURE__ */ new Map(),
+    stamp = (scope, id) =>
+      scope.H
+        ? !1
+        : ((scope.L = id),
+          (scope.H = runId),
+          (scope.$ = liveGlobal),
+          pairs.set(scope, scope),
+          !0),
+    processBatch = (entry, effectEntries) => {
+      let batch = {
+        id: entry[0],
+        fills: entry.slice(1),
+        apply: (fill) => {
+          if (typeof fill == "string") {
+            let effects = [],
+              fn;
+            for (let token of fill.split(" "))
+              if (/\D/.test(token)) fn = registeredValues[token];
+              else {
+                let scope = patchScopes[+token];
+                fn && scope && scope.H && effects.push(fn, scope);
+              }
+            runEffects(effects);
+          } else {
+            let scopes = fill(serializeContext);
+            Array.isArray(scopes) && applyScopes(scopes);
+          }
+        },
+      };
+      if (isReady(batch.id)) {
+        let count = 0;
+        for (; count < batch.fills.length; count++) {
+          let fill = batch.fills[count];
+          if (Array.isArray(fill)) {
+            if (!fill.every(readyBatchDrained)) break;
+          } else if (typeof fill == "string") effectEntries.push(fill);
+          else {
+            let scopes = fill(serializeContext);
+            Array.isArray(scopes) && applyScopes(scopes);
+          }
+        }
+        if (count === batch.fills.length) return;
+        (batch.fills.splice(0, count), parkedReadyBatches.push(batch));
+      } else (parkedReadyBatches.push(batch), registeredValues[batch.id]?.());
+    };
+  return (fills) => {
+    let effectEntries = [];
+    for (let fill of Array.isArray(fills) ? fills : [fills])
+      if (typeof fill == "string") effectEntries.push(fill);
+      else if (Array.isArray(fill))
+        typeof fill[0] == "string"
+          ? processBatch(fill, effectEntries)
+          : fill[1] === 0
+            ? (getScope(fill[0])["!"] = fill)
+            : fill[1] === 1
+              ? (getScope(fill[0])["?"] = fill)
+              : (getScope(fill[0])["P" + fill[1]] = fill);
+      else {
+        let scopes = fill(serializeContext);
+        Array.isArray(scopes) && applyScopes(scopes);
+      }
+    (setUpdating(1),
+      (activePairs = pairs),
+      (activeUpdate = {
+        getScope,
+        stamp,
+        adopt: (id, scope) => (patchScopes[id] = scope),
+      }),
+      (applyGen = runId));
+    try {
+      if ((merge(getScope(1), liveRoot), effectEntries.length)) {
+        let effects = [];
+        for (let entry of effectEntries) {
+          let fn;
+          for (let token of entry.split(" "))
+            if (/\D/.test(token)) fn = registeredValues[token];
+            else {
+              let live = pairs.get(patchScopes[+token]);
+              fn && live && live.H >= applyGen && effects.push(fn, live);
+            }
+        }
+        runEffects(effects);
+      }
+      run();
+    } finally {
+      (setUpdating(0), (activePairs = void 0), (activeUpdate = void 0));
+    }
+  };
+}
+/**
+ * Emitted at the top of compiled merge functions for sections with effects:
+ * records the patch → live scope pairing so payload effect entries (which
+ * carry patch-local scope ids) can resolve their live scope.
+ */
+function _update_pair(patch, live) {
+  activePairs?.set(patch, live);
+}
+/**
+ * Single-branch boundary (`<await>`/`<try>` body) dispatch. When the live
+ * branch is a detached await — a fresh subtree's await whose promise
+ * compute was skipped while updating — the body's frame is the resolution:
+ * attach it at its anchor, then fill it. A stashed boundary-body entry (see
+ * `createUpdate`/`PENDING_BODY_KEY`) -- a fragment-created boundary's second
+ * frame, or a client-pending matched boundary's body delivered as markup
+ * because no live branch exists to merge fills into -- applies instead of
+ * `bodyMerge` and is consumed so a later re-dispatch (a streamed frame
+ * re-applying, or this function's own same-frame retry) never double-
+ * applies it. Otherwise attached (or non-await) branches just fill; an
+ * absent live branch sparse-skips.
+ */
+function _update_branch(patch, live, accessor, bodyMerge) {
+  let branchKey = "A" + accessor,
+    patchBranch = patch[branchKey];
+  if (!patchBranch) return;
+  let liveBranch = live[branchKey];
+  if (!liveBranch && (run(), (liveBranch = live[branchKey]), !liveBranch))
+    return;
+  liveBranch.V && attachAwaitBranch(live, accessor, liveBranch);
+  let byKey = "U" + accessor;
+  typeof patch[byKey] == "string" && (live[byKey] = patch[byKey]);
+  let resetEntry = patchBranch["?"] || liveBranch["?"];
+  if (resetEntry) {
+    (delete patchBranch["?"],
+      delete liveBranch["?"],
+      applyPlaceholderReset(
+        liveBranch,
+        resetEntry[2],
+        resetEntry[3],
+        resetEntry[4],
+        resetEntry[0],
+      ));
+    let by = live[byKey];
+    by && (live["T" + accessor] = by.slice(0, by.indexOf(" ")));
+  }
+  let bodyEntry = patchBranch["!"] || liveBranch["!"];
+  bodyEntry
+    ? (delete patchBranch["!"],
+      delete liveBranch["!"],
+      applyBoundaryBody(
+        liveBranch,
+        bodyEntry[2],
+        bodyEntry[3],
+        bodyEntry[4],
+        bodyEntry[0],
+      ),
+      (live["T" + accessor] = 0))
+    : bodyMerge && bodyMerge(patchBranch, liveBranch);
+}
+function _update_content(contentId, merge) {
+  _resume(contentId + "!", merge);
+}
+/**
+ * `load=` lazy-child dispatch. The child's `?update` merge module rides its
+ * lazy chunk (the load-entry wrapper and the CSR setup virtual module both
+ * import it in persisted builds), registered under a register id both sides
+ * compute (`<childTemplateId>` + its root `update` key — a compile
+ * constant). Loaded child: dispatch directly. Still loading: park the
+ * (patch, live, id) triple and replay when a load completes
+ * (`enableLoadUpdates`/`enableReadyUpdates` hooks below) — request-derived
+ * values ride every update, so the NEWEST parked patch per live scope is
+ * complete and supersedes earlier ones.
+ */
+function _update_load(patch, live, mergeId) {
+  if (patch === live) return;
+  let merge = registeredValues[mergeId];
+  if (merge) merge(patch, live);
+  else {
+    for (let pending of pendingLoadUpdates)
+      if (pending[1] === live) {
+        pending[0] = patch;
+        return;
+      }
+    pendingLoadUpdates.push([patch, live, mergeId]);
+  }
+}
+enableReadyUpdates(() => {
+  (flushParkedReadyBatches(), flushPendingLoadUpdates());
+});
+function _update_dynamic(patch, live, rendererKey, branchKey, replay) {
+  let rendererId = patch[rendererKey];
+  if (typeof rendererId != "string") return;
+  let patchBranch = patch[branchKey],
+    accessor = branchKey.slice(1),
+    fragment = patch["P" + accessor];
+  if (fragment && patchBranch && live[rendererKey] !== rendererId)
+    (delete patch["P" + accessor],
+      stampFragmentScopes(fragment[4]),
+      applyFragment(live, accessor, patchBranch, fragment[2], fragment[3]),
+      (live[rendererKey] = rendererId));
+  else if (replay && live[rendererKey] !== rendererId) {
+    let renderer = getRegisteredWithScope(
+      rendererId,
+      patchBranch?._ || live._ || live,
+    );
+    if (!renderer) return;
+    replay(live, renderer);
+  } else if (live[rendererKey] !== rendererId) {
+    if (live[branchKey]) throw Error("update diverged");
+    return;
+  }
+  let merge = getRegisteredWithScope(rendererId + "!"),
+    liveBranch = live[branchKey];
+  if (patchBranch && liveBranch)
+    if (merge) merge(patchBranch, liveBranch);
+    else {
+      _update_scope(patchBranch, liveBranch);
+      for (let key in patchBranch)
+        key.length > 1 &&
+          key.slice(0, 1) === "D" &&
+          typeof patchBranch[key] == "string" &&
+          _update_dynamic(patchBranch, liveBranch, key, "A" + key.slice(1), 0);
+    }
+}
+function stampFragmentScopes(ids) {
+  if (ids) {
+    let { getScope, stamp } = activeUpdate;
+    for (let id of ids) stamp(getScope(id), id);
+  }
+}
+function applyFragment(live, accessor, branch, markerPrefix, html) {
+  let { stamp } = activeUpdate,
+    marker = live[accessor],
+    old = live["A" + accessor],
+    tpl = document.createElement("template");
+  tpl.innerHTML = html;
+  let { touched, orphans } = walkFragment(tpl.content, markerPrefix),
+    first = tpl.content.insertBefore(new Text(), tpl.content.firstChild),
+    last = tpl.content.appendChild(new Text());
+  (marker.parentNode.insertBefore(tpl.content, marker),
+    old && removeAndDestroyBranch(old),
+    stamp(branch, 0),
+    (branch.S = first),
+    (branch.K = last),
+    (branch._ ||= live),
+    setParentBranch(branch, live.F),
+    (live["A" + accessor] = branch));
+  for (let orphan of orphans) orphan.N || setParentBranch(orphan, branch);
+  for (let scope of touched) scope.F ||= branch;
+}
+/**
+ * Applies a boundary-body entry: a `<try>` placeholder boundary's resolved
+ * body. Two shapes reach here (see `_update_branch`):
+ *
+ * - **Fragment-created**: the body arrives after the fragment frame that
+ *   shipped the placeholder, bracketed as a dedicated `PlaceholderBranch`
+ *   (the reserved "!" accessor token -- see `walkFragment`). The new markup
+ *   swaps in where that placeholder branch sits, which is then destroyed.
+ * - **Matched (document-resumed)**: no separate placeholder branch was ever
+ *   built client-side -- a document render's placeholder resumes as the
+ *   try's own branch (there is no marker distinguishing "placeholder" from
+ *   "real content" in that format), so the still-pending try's OWN
+ *   Start/EndNode range IS what shows the placeholder. The new markup
+ *   replaces that range's contents wholesale, keeping the branch's own
+ *   boundary nodes so its identity survives the swap.
+ *
+ * In both cases the body's markup walks like a fragment (its scope data
+ * already landed through this frame's fills). No-ops if the try branch is
+ * gone or destroyed (a later navigation already superseded or removed this
+ * boundary) -- `_update_branch` already resolved a live, paired branch
+ * before calling this, so that only guards a race within the same apply.
+ */
+function applyBoundaryBody(
+  tryBranch,
+  markerPrefix,
+  html,
+  scopeIds,
+  patchBranchId,
+) {
+  if (!tryBranch.H) return;
+  let placeholderBranch = tryBranch.P;
+  (patchBranchId && activeUpdate.adopt(patchBranchId, tryBranch),
+    stampFragmentScopes(scopeIds));
+  let tpl = document.createElement("template");
+  tpl.innerHTML = html;
+  let { touched, orphans } = walkFragment(tpl.content, markerPrefix);
+  if (placeholderBranch)
+    ((tryBranch.P = 0),
+      placeholderBranch.S.parentNode.insertBefore(
+        tpl.content,
+        placeholderBranch.S,
+      ),
+      removeAndDestroyBranch(placeholderBranch));
+  else {
+    let start = tryBranch.S,
+      end = tryBranch.K;
+    (start !== end &&
+      start.nextSibling !== end &&
+      removeChildNodes(start.nextSibling, end.previousSibling),
+      end.parentNode.insertBefore(tpl.content, end));
+  }
+  for (let orphan of orphans) orphan.N || setParentBranch(orphan, tryBranch);
+  for (let scope of touched) scope.F ||= tryBranch;
+}
+/**
+ * Applies a `<@placeholder by=>` recede: the matched try's identity changed
+ * and its new body is still pending, so the stale body is replaced by the
+ * boundary's placeholder ahead of the body's own entry. The markup is
+ * bracketed exactly like a fragment-shipped pending boundary's placeholder
+ * (the reserved "!" accessor token), so the walk below binds it to
+ * `PlaceholderBranch` on the adopted live try branch -- from there the body
+ * entry swaps it out through `applyBoundaryBody`'s existing placeholder
+ * path with no new machinery. Content replacement keeps the try branch's
+ * own boundary nodes (its identity survives, like the matched body swap);
+ * the receded body's scopes share that path's recorded teardown edge (see
+ * the roadmap's matched-path note) -- `by=` is also the author's
+ * declaration that state inside the boundary does not survive a key
+ * change.
+ */
+function applyPlaceholderReset(
+  tryBranch,
+  markerPrefix,
+  html,
+  scopeIds,
+  patchBranchId,
+) {
+  if (!tryBranch.H) return;
+  (patchBranchId && activeUpdate.adopt(patchBranchId, tryBranch),
+    stampFragmentScopes(scopeIds));
+  let tpl = document.createElement("template");
+  tpl.innerHTML = html;
+  let { touched, orphans } = walkFragment(tpl.content, markerPrefix),
+    start = tryBranch.S,
+    end = tryBranch.K;
+  (start !== end &&
+    start.nextSibling !== end &&
+    removeChildNodes(start.nextSibling, end.previousSibling),
+    end.parentNode.insertBefore(tpl.content, end));
+  for (let orphan of orphans) orphan.N || setParentBranch(orphan, tryBranch);
+  for (let scope of touched) scope.F ||= tryBranch;
+}
+function walkFragment(root, prefix) {
+  let { getScope, stamp } = activeUpdate,
+    visits = [],
+    treeWalker = document.createTreeWalker(root, 128);
+  for (let node; (node = treeWalker.nextNode());)
+    node.data.startsWith(prefix) && visits.push(node);
+  let touched = [],
+    scopeOf = (id) => {
+      let scope = getScope(+id);
+      return (stamp(scope, +id) && touched.push(scope), scope);
+    },
+    branchStarts = [],
+    branchScopesStack = [],
+    orphanBranches = [],
+    curBranchScopes,
+    lastNodeScopeId = "",
+    visitText = "",
+    tokenIndex = 0,
+    lastToken = "",
+    nextToken = () =>
+      (lastToken = visitText.slice(
+        tokenIndex,
+        (tokenIndex =
+          visitText.indexOf(" ", tokenIndex) + 1 || visitText.length + 1) - 1,
+      ));
+  for (let visit of visits) {
+    ((visitText = visit.data), (tokenIndex = prefix.length));
+    let visitType = visitText[tokenIndex++];
+    if (visitType === "*") {
+      let scopeId = nextToken(),
+        scope = scopeOf(
+          scopeId ? (lastNodeScopeId = scopeId) : lastNodeScopeId,
+        ),
+        accessor = nextToken(),
+        prev = visit.previousSibling;
+      scope[accessor] =
+        prev && (prev.nodeType < 8 || prev.data)
+          ? prev
+          : visit.parentNode.insertBefore(new Text(), visit);
+      continue;
+    }
+    lastNodeScopeId = "";
+    let visitScope,
+      accessor,
+      singleNode = !1,
+      endedBranches,
+      startVisit = visit,
+      parent = visit.parentNode;
+    visitType === "["
+      ? nextToken()
+      : ((visitScope = scopeOf(nextToken())),
+        nextToken() === "!"
+          ? (accessor = "P")
+          : ((visitScope[lastToken] =
+              visitType === ")" || visitType === "}" ? parent : visit),
+            (accessor = "A" + lastToken)),
+        (singleNode = visitType !== "]" && visitType !== ")"),
+        nextToken());
+    let i = orphanBranches.length,
+      branchId;
+    for (; (branchId = +lastToken);) {
+      let branch = scopeOf(lastToken);
+      if (((endedBranches ||= []).push(branch), singleNode)) {
+        for (
+          ;
+          startVisit.previousSibling &&
+          ~visits.indexOf((startVisit = startVisit.previousSibling));
+        );
+        ((branch._ ??= visitScope),
+          (branch.K = branch.S = startVisit),
+          visitType === "'" && (branch.a = startVisit));
+      } else {
+        if (
+          ((curBranchScopes = curBranchScopes
+            ? (curBranchScopes.push(branch), curBranchScopes)
+            : [branch]),
+          accessor)
+        ) {
+          visitScope[accessor] =
+            curBranchScopes.length > 1 ? curBranchScopes : curBranchScopes[0];
+          for (let scope of curBranchScopes) scope._ ??= visitScope;
+          curBranchScopes = branchScopesStack.pop();
+        }
+        ((startVisit = branchStarts.pop()),
+          parent !== startVisit.parentNode && parent.prepend(startVisit),
+          (branch.S = startVisit),
+          (branch.K =
+            visit.previousSibling === startVisit
+              ? startVisit
+              : parent.insertBefore(new Text(), visit)));
+      }
+      for (; i && orphanBranches[--i].L > branchId;)
+        setParentBranch(orphanBranches.pop(), branch);
+      nextToken();
+    }
+    if (endedBranches) {
+      for (let ended of endedBranches) orphanBranches.push(ended);
+      singleNode &&
+        (visitScope[accessor] =
+          endedBranches.length > 1
+            ? endedBranches.reverse()
+            : endedBranches[0]);
+    }
+    visitType === "[" &&
+      (endedBranches ||
+        (branchScopesStack.push(curBranchScopes), (curBranchScopes = void 0)),
+      branchStarts.push(visit));
+  }
+  return {
+    touched,
+    orphans: orphanBranches,
+  };
+}
+/**
+ * The generic hole applier: places every typed hole capture a patch scope
+ * carries against its paired live scope -- text holes (`UpdateHole:`),
+ * unsafe-html holes (`UpdateHtml:`), and attr holes/controllables
+ * (`UpdateAttr:<name>:<accessor>`) -- replacing the per-template merge
+ * lines those keys used to compile to, and descends into update-generic
+ * child scopes through their typed links (`UpdateChild:<accessor>`,
+ * serialized by `_update_child` in update renders only) so server-only
+ * compositions need no compiled dispatch at any level. Controllable
+ * semantics are recovered from the live element: on their tags the
+ * controllable names always route through the controllable carve-out, so
+ * `value` on an input is never a plain attr hole. Fragment subtrees are
+ * naturally inert here: their captures and child links are suppressed
+ * server-side (values are baked into the markup), so the shared
+ * patch/live object carries no prefixed keys.
+ */
+function _update_scope(patch, live) {
+  for (let key in patch)
+    if (key.length > 1) {
+      if (key.startsWith("Q")) _text(live[key.slice(1)], patch[key]);
+      else if (key.startsWith("R"))
+        _update_html(live, patch, key, key.slice(1));
+      else if (key.startsWith("S"))
+        _update_scope(patch[key], live[key.slice(1)]);
+      else if (key.startsWith("N")) {
+        let sep = key.indexOf(":", 1),
+          name = key.slice(1, sep),
+          accessor = key.slice(sep + 1),
+          value = patch[key];
+        if (name === "class") _attr_class(live[accessor], value);
+        else if (name === "style") _attr_style(live[accessor], value);
+        else if (name === "textContent") _text_content(live[accessor], value);
+        else {
+          let tag = live[accessor].tagName;
+          name === "value" && (tag === "INPUT" || tag === "TEXTAREA")
+            ? _attr_input_value_default(live, accessor, value)
+            : name === "value" && tag === "SELECT"
+              ? _attr_select_value_default(live, accessor, value)
+              : name === "checked" && tag === "INPUT"
+                ? _attr_input_checked_default(live, accessor, value)
+                : name === "open" && (tag === "DETAILS" || tag === "DIALOG")
+                  ? _attr_details_or_dialog_open_default(live, accessor, value)
+                  : _attr(live[accessor], name, value);
+        }
+      }
+    }
+}
+function _update_html(live, patch, key, accessor) {
+  (_html(live, patch[key], accessor), delete patch[key]);
+}
+/**
+ * Applies a seed-mode state value: only into scopes created during this
+ * apply (fresh subtrees cannot compute state whose initializers live
+ * behind server-only expressions -- the seed IS the initial value), through
+ * the binding's registered signal so downstream derivations recompute.
+ * Matched (pre-existing) scopes keep their live state untouched.
+ */
+function _update_seed(live, signal, value) {
+  live.H >= applyGen && signal(live, value);
+}
+function _update_signal(id) {
+  return (scope, value) => getRegisteredWithScope(id, scope)(value);
+}
+function _update_for(nodeAccessor, contentId, merge) {
+  let signal;
+  return (scope, value) => {
+    if (!signal) {
+      let content = getRegisteredWithScope(contentId);
+      signal = _for_of(nodeAccessor, content[0], content[1], content[2], merge);
+    }
+    let branches = value[0];
+    (branches && !Array.isArray(branches) && (branches = value[0] = [branches]),
+      !branches?.[0]?.S && signal(scope, value));
+  };
 }
 //#endregion

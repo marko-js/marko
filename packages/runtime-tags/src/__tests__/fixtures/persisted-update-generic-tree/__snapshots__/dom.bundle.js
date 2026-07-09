@@ -1,0 +1,47 @@
+// tags/badge.marko
+enableBranches();
+
+// tags/card.marko
+enableBranches();
+
+// tags/counter.marko
+const $n = /*@__PURE__*/ _let(2, ($scope) => _text($scope.b, $scope.c));
+const $setup__script$1 = _script_update("d0", ($scope) => _on($scope.a, "click", function() {
+	$n($scope, $scope.c + 1);
+}));
+enableBranches();
+
+// tags/widget.marko
+enableBranches();
+
+// template.marko
+const $count = /*@__PURE__*/ _let(11, ($scope) => _text($scope.b, $scope.l));
+const $setup__script = _script_update("a0", ($scope) => _on($scope.a, "click", function() {
+	$count($scope, $scope.l + 1);
+}));
+enableBranches();
+
+// tags/counter.marko.update.mjs
+const $n_seed = _update_signal("d1");
+const $update$2 = (patch, live) => {
+	_update_pair(patch, live);
+	if ("c" in patch) _update_seed(live, $n_seed, patch["c"]);
+};
+var counter_marko_update_default = _resume("d2", $update$2);
+
+// tags/widget.marko.update.mjs
+const $update$1 = (patch, live) => {
+	_update_scope(patch, live);
+	if ("b" in patch) counter_marko_update_default(patch["b"], live["b"]);
+};
+var widget_marko_update_default = _resume("e0", $update$1);
+
+// template.marko.update.mjs
+const $count_seed = _update_signal("a1");
+const $update = (patch, live) => {
+	_update_pair(patch, live);
+	if ("l" in patch) _update_seed(live, $count_seed, patch["l"]);
+	_update_scope(patch, live);
+	if ("d" in patch) widget_marko_update_default(patch["d"], live["d"]);
+};
+var template_marko_update_default = _resume("a2", $update);

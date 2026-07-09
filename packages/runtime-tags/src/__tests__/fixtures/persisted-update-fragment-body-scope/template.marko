@@ -1,0 +1,29 @@
+import { getData } from "./data";
+
+<let/count=0/>
+<button.count onClick() { count++ }>clicked ${count}</button>
+
+<define/Home>
+  <p.home>home</p>
+</define>
+<define/Reports>
+  <try>
+    <@placeholder>
+      <p.loading>loading…</p>
+    </@placeholder>
+    <await|data|=getData($global.range)>
+      <let/ready=false/>
+      // `mounter` is a dom-less child (only a `<lifecycle>`, no elements and
+      // no consumed tag variable) inside the async fragment body, so the
+      // markup walk can never reach its scope -- it gets live identity only
+      // from the boundary-body entry's serialized scope ids. Its mount
+      // effect flips the parent's `ready` state; a mounter scope that was
+      // never stamped has its effect generation-gated out, so `.status`
+      // stays "waiting" forever after the fragment resolves.
+      <mounter onReady() { ready = true }/>
+      <p.status>${ready ? "ready" : "waiting"} of ${data.total}</p>
+    </await>
+  </try>
+</define>
+
+<layout content=$global.view === "reports" ? Reports : Home/>

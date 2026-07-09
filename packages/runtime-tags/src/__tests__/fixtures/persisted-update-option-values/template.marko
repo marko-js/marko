@@ -1,0 +1,8 @@
+<const/[cfg]=$global.cfg>
+<let/count=0/>
+<button onClick() { count++ }>clicked ${count}</button>
+<select name="sort">
+  <for|opt| of=cfg.options by(opt) { return opt.key }>
+    <option value=opt.id>${opt.label}</option>
+  </for>
+</select>

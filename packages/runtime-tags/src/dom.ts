@@ -26,7 +26,7 @@ export {
   _attr_input_checkedValue,
   _attr_input_checkedValue_default,
   _attr_input_checkedValue_script,
-} from "./dom/controllable-input-checked";
+} from "./dom/controllable/input-checked";
 export {
   _attr_input_value,
   _attr_input_value_default,
@@ -34,7 +34,7 @@ export {
   _attr_input_value as _attr_textarea_value,
   _attr_input_value_default as _attr_textarea_value_default,
   _attr_input_value_script as _attr_textarea_value_script,
-} from "./dom/controllable-input-value";
+} from "./dom/controllable/input-value";
 export {
   _attr_details_or_dialog_open as _attr_details_open,
   _attr_details_or_dialog_open_default as _attr_details_open_default,
@@ -42,12 +42,12 @@ export {
   _attr_details_or_dialog_open as _attr_dialog_open,
   _attr_details_or_dialog_open_default as _attr_dialog_open_default,
   _attr_details_or_dialog_open_script as _attr_dialog_open_script,
-} from "./dom/controllable-open";
+} from "./dom/controllable/open";
 export {
   _attr_select_value,
   _attr_select_value_default,
   _attr_select_value_script,
-} from "./dom/controllable-select";
+} from "./dom/controllable/select";
 export {
   _attr,
   _attr_class,
@@ -71,15 +71,17 @@ export {
   _load_idle_trigger,
   _load_media_trigger,
   _load_race_trigger,
+  _load_ready,
   _load_setup,
   _load_signal,
   _load_template,
   _load_visible_trigger,
 } from "./dom/load";
-export { run } from "./dom/queue";
+export { _script_shared, _script_update, _updating, run } from "./dom/queue";
 export { _content, _content_closures, _content_resume } from "./dom/renderer";
 export {
   _el,
+  enableBranches as _enable_branches,
   _resume,
   _var_resume,
   init,
@@ -117,3 +119,18 @@ export {
   _attrs_script,
 } from "./dom/spread";
 export { _template } from "./dom/template";
+export {
+  _have,
+  _update_branch,
+  _update_content,
+  _update_dynamic,
+  _update_for,
+  _update_html,
+  _update_load,
+  _update_pair,
+  _update_scope,
+  _update_seed,
+  _update_signal,
+  applyUpdate,
+  createUpdate,
+} from "./dom/update";

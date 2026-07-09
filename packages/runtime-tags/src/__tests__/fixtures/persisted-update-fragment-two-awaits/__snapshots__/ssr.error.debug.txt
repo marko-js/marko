@@ -1,0 +1,1 @@
+multiple pending awaits inside one fragment placeholder boundary are not supported yet

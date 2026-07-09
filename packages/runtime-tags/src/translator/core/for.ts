@@ -9,6 +9,7 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { detectForSelector, getForSelectorKey } from "../util/for-selector";
+import { generateUidIdentifier } from "../util/generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
@@ -16,6 +17,7 @@ import {
   getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
 } from "../util/is-only-child-in-parent";
+import { isPersisted, isPersistedEntryBuild } from "../util/marko-config";
 import {
   type Binding,
   BindingType,
@@ -43,6 +45,10 @@ import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  getSerializeSourcesForExpr,
+  isReasonDynamic,
+  isRequestDerivedSerializeReason,
+  isStateOnlySerializeReason,
   isStateSerializeReason,
   isStaticSerializeReason,
 } from "../util/serialize-reasons";
@@ -55,6 +61,10 @@ import {
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { getMemberExpressionPropString } from "../util/to-property-name";
+import {
+  addUpdateMerge,
+  getUpdateContentRegisterId,
+} from "../util/update-merges";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -217,7 +227,13 @@ export default {
           kStatefulReason,
         );
         if (
-          isStateSerializeReason(statefulSerializeReason) &&
+          // Purely state-driven loops keep marker-linked owners under the
+          // persisted option; anything patch-borne keeps serializing them
+          // (update payloads carry no markers) -- see the matching gate in
+          // core/if.ts.
+          (isPersisted()
+            ? isStateOnlySerializeReason(statefulSerializeReason)
+            : isStateSerializeReason(statefulSerializeReason)) &&
           isStaticSerializeReason(branchSerializeReason) &&
           isStaticSerializeReason(markerSerializeReason)
         ) {
@@ -340,13 +356,80 @@ export default {
 
         const forType = getForType(node)!;
         const signal = getSignal(tagSection, nodeRef, "for");
+        // Request-derived loops participate in persisted update renders: the
+        // server writes the branch list + keys explicitly (G3/G4) and the
+        // update entry reconciles it with a `_for_of` built from this loop's
+        // branch content, so persisted entry builds hoist that content into a
+        // registered `[template, walks, setup]` and update entries record a
+        // merge. The strings are shared, not duplicated -- the loop signal
+        // reads them from the same registered array. The main module's copy
+        // keeps the plain (unregistered) shape so hydration bundles may
+        // tree-shake it. Stable branch sets (a constant `of`, eg a module
+        // value -- render-once by contract) also participate when the BODY
+        // carries request-derived content: the branches never change but
+        // their merges (placement holes, mixed-statement re-invocations)
+        // must still dispatch. Client-state-driven sets stay excluded -- the
+        // server never pairs into them.
+        const tagSources = getSerializeSourcesForExpr(tagExtra);
+        const updateStructural =
+          isPersisted() &&
+          !isStateSerializeReason(tagSources) &&
+          (isReasonDynamic(tagSources) ||
+            isRequestDerivedSerializeReason(
+              getSerializeReason(bodySection, kBranchSerializeReason),
+            ));
+        if (updateStructural) {
+          addUpdateMerge(tagSection, {
+            kind: "for",
+            accessor: getScopeAccessorLiteral(nodeRef),
+            encodedAccessor: getScopeAccessorLiteral(nodeRef, true),
+            contentId: getUpdateContentRegisterId(bodySection),
+            bodySection,
+          });
+          // The patch's branch list is authoritative for participating
+          // loops, so the loop's own input invocation is skipped while a
+          // patch applies (`updateGuard`). Refs-less inputs (a render-once
+          // module value, possibly behind a `server import`) invoke at
+          // fresh-branch setup with no upstream guard -- without this the
+          // setup's empty/undefined list reconciles away the branches the
+          // merge just built.
+          signal.updateGuard = true;
+        }
         signal.build = () => {
+          const rendererArgs = replaceNullishAndEmptyFunctionsWith0(
+            getBranchRendererArgs(bodySection),
+          );
+          if (!(updateStructural && isPersistedEntryBuild())) {
+            return callRuntime(
+              forTypeToDOMRuntime(forType),
+              getScopeAccessorLiteral(nodeRef, true),
+              ...rendererArgs,
+            );
+          }
+
+          const contentIdentifier = generateUidIdentifier(
+            `${bodySection.name}_content`,
+          );
+          signal.prependStatements = [
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                contentIdentifier,
+                callRuntime(
+                  "_resume",
+                  t.stringLiteral(getUpdateContentRegisterId(bodySection)),
+                  t.arrayExpression(rendererArgs.slice(0, 3)),
+                ),
+              ),
+            ]),
+            ...(signal.prependStatements || []),
+          ];
           return callRuntime(
             forTypeToDOMRuntime(forType),
             getScopeAccessorLiteral(nodeRef, true),
-            ...replaceNullishAndEmptyFunctionsWith0(
-              getBranchRendererArgs(bodySection),
-            ),
+            t.memberExpression(contentIdentifier, t.numericLiteral(0), true),
+            t.memberExpression(contentIdentifier, t.numericLiteral(1), true),
+            t.memberExpression(contentIdentifier, t.numericLiteral(2), true),
+            ...rendererArgs.slice(3),
           );
         };
 

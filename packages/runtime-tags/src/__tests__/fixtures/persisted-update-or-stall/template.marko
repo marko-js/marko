@@ -1,0 +1,15 @@
+<const/[settings]=$global.settings>
+<let/count=0/>
+<button onClick() { count++ }>clicked ${count}</button>
+<if=$global.show>
+  // Shape A: a `<let>` seeded from an intersection of promoted globals --
+  // no server-captured hole carries the computed value, so the fresh
+  // branch's init must actually run client-side.
+  <let/pair=`${$global.info.a}-${$global.info.b}`>
+  <p.pair>${pair}</p>
+  <button.bump onClick() { pair += "!" }>bump</button>
+  // Shape B: state mixing the same global intersection through a side
+  // effect (valueChange fan-out) rather than a rendered hole.
+  <p.combo>${settings.prefix}:${$global.info.a}</p>
+</if>
+<else><p.empty>hidden</p></else>

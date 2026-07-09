@@ -18,6 +18,8 @@ import {
   getReadyId,
   isOutputDOM,
   isOutputHTML,
+  isPersisted,
+  isUpdateEntryBuild,
 } from "../../util/marko-config";
 import {
   BindingType,
@@ -28,10 +30,12 @@ import { resolveRelativeToEntry } from "../../util/resolve-relative-to-entry";
 import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
 import { startSection } from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
+import { analyzeUpdateGeneric } from "../../util/update-merges";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
 import { preAnalyze } from "./pre-analyze";
+import programUpdate from "./update";
 
 export let scopeIdentifier: t.Identifier;
 export function isScopeIdentifier(node: t.Node): node is t.Identifier {
@@ -45,6 +49,12 @@ declare module "@marko/compiler/dist/types" {
       walks: string;
       setup: string;
       setupEmpty?: true;
+      /**
+       * The template's whole `?update` module is the generic interpreter
+       * (`analyzeUpdateGeneric`); parents dispatch its patch scopes through
+       * `_update_scope` directly instead of importing the module.
+       */
+      updateGeneric?: true;
       params: BindingPropTree | undefined;
     };
     styleFile?: string;
@@ -105,6 +115,7 @@ export default {
         // importing and calling it (checked when this template translates).
         programExtra.domExports!.setupEmpty = true;
       }
+      analyzeUpdateGeneric(program);
     },
   },
   translate: {
@@ -120,7 +131,10 @@ export default {
           (output === "dom" && entry === "page") || output === "hydrate";
         const isServerEntry = output === "html" && entry === "page";
 
-        if (entry && !markoOpts.linkAssets) {
+        // The update/persisted entry kinds are bundler-resolved persisted
+        // artifacts with no assets to link; only the facade kinds bake
+        // linked-asset wiring in.
+        if ((entry === "page" || entry === "load") && !markoOpts.linkAssets) {
           throw program.buildCodeFrameError(
             'The "entry" option requires the `linkAssets` compiler option to be configured.',
           );
@@ -137,6 +151,31 @@ export default {
         if (isLoadEntry) {
           const entryFile = program.hub.file;
           const { filename } = entryFile.opts;
+          const relativePath = resolveRelativePath(entryFile, filename);
+          // Persisted builds also load the template's `?update` merge module
+          // before declaring ready: a resumed lazy child must be able to
+          // receive persisted update merges the moment it loads (a patch
+          // that arrived earlier is parked on its live scope -- see
+          // `_update_load` in dom/update.ts -- and the ready() below is
+          // what flushes it).
+          const loadExpr = isPersisted()
+            ? t.callExpression(
+                t.memberExpression(
+                  t.identifier("Promise"),
+                  t.identifier("all"),
+                ),
+                [
+                  t.arrayExpression([
+                    t.callExpression(t.import(), [
+                      t.stringLiteral(relativePath),
+                    ]),
+                    t.callExpression(t.import(), [
+                      t.stringLiteral(relativePath + "?update"),
+                    ]),
+                  ]),
+                ],
+              )
+            : t.callExpression(t.import(), [t.stringLiteral(relativePath)]);
           program.node.body = [
             t.importDeclaration(
               [t.importSpecifier(t.identifier("ready"), t.identifier("ready"))],
@@ -144,12 +183,7 @@ export default {
             ),
             t.expressionStatement(
               t.callExpression(
-                t.memberExpression(
-                  t.callExpression(t.import(), [
-                    t.stringLiteral(resolveRelativePath(entryFile, filename)),
-                  ]),
-                  t.identifier("then"),
-                ),
+                t.memberExpression(loadExpr, t.identifier("then")),
                 [
                   t.arrowFunctionExpression(
                     [],
@@ -243,6 +277,11 @@ export default {
     exit(program) {
       if (isOutputHTML()) {
         programHTML.translate.exit(program);
+      } else if (isUpdateEntryBuild()) {
+        // `?update` entry: the dom visitors ran in full (identical analysis
+        // and register ids), but the emitted module is the compiled patch
+        // merge instead of the template.
+        programUpdate.translate.exit(program);
       } else {
         programDOM.translate.exit(program);
       }

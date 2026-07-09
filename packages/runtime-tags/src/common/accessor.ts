@@ -13,6 +13,52 @@ export enum AccessorPrefix {
   Lifecycle = "K",
   Promise = "L",
   TagVariableChange = "M",
+  // "N" is reserved for UpdateAttr (update-render attr hole values). It is
+  // deliberately not an enum member: only compiled HTML output and the
+  // update-only client runtime use it, and enum objects ship in every client
+  // bundle. See `getUpdateAttrPrefix` in the translator.
+  // "P" is reserved for FragmentHtml (fragment frame entries stashed on
+  // their anchor's patch scope) under the same rule -- only the update
+  // applier uses it. See `FRAGMENT_PREFIX` in dom/update.
+  // "Q" is reserved for UpdateHole (update-render text hole values),
+  // "R" for UpdateHtml (unsafe-html holes), and "S" for UpdateChild
+  // (update-render child scope links for update-generic children) under
+  // the same rule. See `getUpdateHolePrefix`/`getUpdateHtmlPrefix`/
+  // `getUpdateChildPrefix` in the translator. Bare single-char scope
+  // PROPS (`Q` PlaceholderContent, `R` Renderer, `S` StartNode, `N`
+  // ParentBranch in `AccessorProp`) stay unambiguous: prefixed keys are
+  // always longer than one character, and the generic applier
+  // (`_update_scope` in dom/update) checks length before prefix.
+  // "Z" is reserved for the possession echo's per-hop site id (`HOP_SITE_
+  // PREFIX`), stashed on a dynamic-tag hop's scope alongside its
+  // `ConditionalRenderer:` key so the client can read it back off its live
+  // tree in `_have`. Deliberately not an enum member so it stays out of
+  // every client bundle -- only the html writer (html/dynamic-tag) and the
+  // update-only client runtime (dom/update) use it. Persisted resume only.
+  // "T" is reserved for a `<try>` placeholder boundary's site id
+  // (`BOUNDARY_SITE_PREFIX`), the possession echo's other half: stashed on
+  // the PARENT scope (alongside the ordinary `BranchScopes:` link) when a
+  // document render's placeholder is going to ship (`tryPlaceholder` in
+  // html/writer.ts), and tombstoned to `0` the moment the body's first
+  // content ships (server-side, riding the same flush as the placeholder
+  // swap) or an update-delivered body applies (client-side,
+  // `_update_branch`). A STRING value on a resumed scope therefore means
+  // "this matched boundary is still showing its placeholder" (see the
+  // "Correctness" section of designs/persisted-pages-roadmap.md and
+  // `_have`/`_try` in dom/update.ts and html/writer.ts). Deliberately not
+  // an enum member for the same client-bundle-size reason as "Z".
+  // Persisted resume only.
+  // "U" is reserved for a `<try>` boundary's `<@placeholder by=>` identity
+  // (`BOUNDARY_BY_PREFIX`): stashed on the PARENT scope as
+  // `<siteId> <identity>` whenever a persisted render evaluates a `by=`
+  // (documents, fragments, and update fills alike -- `_update_branch`
+  // copies the patch value onto the live scope so the NEXT navigation's
+  // echo compares against the latest identity). `_have` echoes it into
+  // the same "!"-keyed flat map as the pending half, value `"=" +
+  // identity` (pending's sentinel `"1"` wins when both exist); a
+  // navigation whose newly-evaluated identity differs recedes the matched
+  // boundary to its placeholder (see designs/persisted-pages-recede.md).
+  // Deliberately not an enum member, same rule as "Z"/"T". Persisted only.
 }
 
 export enum AccessorProp {

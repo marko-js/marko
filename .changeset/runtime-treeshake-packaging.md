@@ -18,18 +18,26 @@ Better tree-shaking for the browser runtime:
   re-export facade, so application bundlers chunk it at file granularity
   instead of hosting one big module in the first chunk that needs any of
   it.
-- Two phase splits so hydration-time imports stop dragging render-time
+- Three phase splits so hydration-time imports stop dragging render-time
   machinery: the spread/`content`-attr machinery moved out of the plain
-  write helpers (`dom/spread.ts`), and `<try>` catch/pending installation
-  moved out of the render queue (the queue exposes `enableCatchPending`
-  wrap hooks instead of importing branch machinery). Public exports are
-  unchanged.
+  write helpers (`dom/spread.ts`), `<try>` catch/pending installation
+  moved out of the render queue (compiled output still calls
+  `_enable_catch` — now hosted in `dom/catch` — which installs its
+  wrappers through an internal `enableCatchPending` hook, so the queue
+  never imports branch machinery), and `_script_update`/`_updating`
+  moved out of the persisted-update applier file into the queue. Public
+  exports are unchanged.
 
-Library packages need no `sideEffects` declaration of their own in Marko
-apps: `@marko/vite` treats imports from templates as pure unless
-explicitly side-effect-only (a bare import is author intent and always
-runs), so this declaration covers the runtime package itself and doubles
-as the reference pattern for packages consumed outside that policy.
+The declaration is still load-bearing despite `@marko/vite`'s pure-import
+policy: that policy only covers the template → module import edge (imports
+from `.marko` files are treated as pure unless explicitly
+side-effect-only; a bare import is author intent and always runs). The
+runtime's own module graph — the `dom.mjs` facade re-exporting the
+preserved modules — is plain module → module edges the policy never sees,
+and without the declaration bundlers keep every re-exported module body
+as a potential side effect. Other library packages consumed only from
+templates don't need a declaration of their own; this one doubles as the
+reference pattern for packages consumed outside that policy.
 
 Fixture `sizes.json` diffs from this change mix real wins with
 accounting: side-effect-free runtime modules that previously landed in a

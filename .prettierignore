@@ -17,3 +17,4 @@ input.*
 node_modules
 package-lock.json
 snapshots
+designs/experiments

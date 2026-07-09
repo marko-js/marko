@@ -2,6 +2,16 @@
 
 export interface Input {
   content: Marko.Body,
-  placeholder?: Marko.AttrTag<{ content?: Marko.Body }>,
+  placeholder?: Marko.AttrTag<{
+    content?: Marko.Body,
+    /**
+     * Identity this boundary's content is keyed by. On a persisted
+     * navigation whose newly evaluated identity differs from the one the
+     * page holds, the boundary recedes to this placeholder while the new
+     * body loads (a body that resolves in time swaps in directly). No
+     * effect outside persisted update renders.
+     */
+    by?: unknown,
+  }>,
   catch?: Marko.AttrTag<{ content?: Marko.Body<[unknown]> }>,
 }

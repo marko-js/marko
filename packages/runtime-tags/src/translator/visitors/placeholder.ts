@@ -3,9 +3,13 @@ import { types as t } from "@marko/compiler";
 import { isVoid } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
 import evaluate from "../util/evaluate";
+import {
+  getUpdateHolePrefix,
+  getUpdateHtmlPrefix,
+} from "../util/get-accessor-char";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
-import { isOutputHTML } from "../util/marko-config";
+import { isOutputHTML, isPersisted } from "../util/marko-config";
 import normalizeStringExpression from "../util/normalize-string-expression";
 import {
   type Binding,
@@ -19,16 +23,23 @@ import {
   ContentType,
   getNodeContentType,
   getOrCreateSection,
+  getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  isReasonDynamic,
 } from "../util/serialize-reasons";
 import { addSetupExpr } from "../util/setup-statements";
 import { addStatement } from "../util/signals";
 import { getPrevStaticSibling, isStaticText } from "../util/static-text";
+import {
+  addUpdateGlobalsStatement,
+  addUpdateMerge,
+  isUpdateCoveredByClientSignals,
+} from "../util/update-merges";
 import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -136,33 +147,90 @@ export default {
         }
 
         if (isHTML) {
+          // Persisted builds capture the computed value of request-derived
+          // holes so update renders can serialize it under the hole's
+          // accessor (`_hole_value` is a pass-through otherwise). Pure
+          // state-driven holes are excluded -- the client owns those values.
+          const holeValue =
+            nodeBinding &&
+            isPersisted() &&
+            isReasonDynamic(markerSerializeReason) &&
+            // Browser-code reuse: skip the capture when the client's
+            // registered signal chain already re-renders this hole from
+            // patched scope values -- no double-shipping the computed value.
+            !isUpdateCoveredByClientSignals(valueExtra)
+              ? callRuntime(
+                  "_hole_value",
+                  getScopeIdIdentifier(section),
+                  // Keyed off the node-accessor namespace (like attr holes)
+                  // so patch keys never collide with walker-bound node refs
+                  // when a fragment subtree shares one scope object; html
+                  // holes get their own prefix so the generic applier can
+                  // dispatch range replacement by key alone.
+                  t.stringLiteral(
+                    (method === "_escape"
+                      ? getUpdateHolePrefix()
+                      : getUpdateHtmlPrefix()) +
+                      getScopeAccessorLiteral(nodeBinding).value,
+                  ),
+                  value,
+                  // Captures only fire in update renders, which refresh
+                  // everything that is not client-owned -- the render-global
+                  // flag is the whole guard.
+                  callRuntime("_persisted_reason"),
+                )
+              : undefined;
           write`${
             method === "_escape"
-              ? buildEscapedTextExpression(value)
-              : callRuntime(method as HTMLMethod | DOMMethod, value)
+              ? holeValue
+                ? callRuntime("_escape", holeValue)
+                : buildEscapedTextExpression(value)
+              : callRuntime(
+                  method as HTMLMethod | DOMMethod,
+                  holeValue || value,
+                )
           }`;
           if (nodeBinding) {
             writer.markNode(placeholder, nodeBinding, markerSerializeReason);
           }
         } else {
+          // Update entries merge server-computed hole values (G1) for the
+          // same request-derived holes the html output captures.
+          if (
+            nodeBinding &&
+            isReasonDynamic(markerSerializeReason) &&
+            !isUpdateCoveredByClientSignals(valueExtra)
+          ) {
+            const accessor = getScopeAccessorLiteral(nodeBinding);
+            const isText = method === "_text";
+            addUpdateMerge(section, {
+              kind: isText ? "text" : "html",
+              key:
+                (isText ? getUpdateHolePrefix() : getUpdateHtmlPrefix()) +
+                accessor.value,
+              accessor,
+            });
+          }
+          const stmt = t.expressionStatement(
+            method === "_text"
+              ? callRuntime(
+                  "_text",
+                  createScopeReadExpression(nodeBinding!),
+                  value,
+                )
+              : callRuntime(
+                  "_html",
+                  scopeIdentifier,
+                  value,
+                  getScopeAccessorLiteral(nodeBinding!),
+                ),
+          );
+          addUpdateGlobalsStatement(section, valueExtra, stmt);
           addStatement(
             "render",
             section,
             valueExtra.referencedBindings,
-            t.expressionStatement(
-              method === "_text"
-                ? callRuntime(
-                    "_text",
-                    createScopeReadExpression(nodeBinding!),
-                    value,
-                  )
-                : callRuntime(
-                    "_html",
-                    scopeIdentifier,
-                    value,
-                    getScopeAccessorLiteral(nodeBinding!),
-                  ),
-            ),
+            stmt,
             undefined,
             true,
           );

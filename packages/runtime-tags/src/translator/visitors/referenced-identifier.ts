@@ -2,8 +2,8 @@ import { types as t } from "@marko/compiler";
 
 import { getAccessorProp } from "../util/get-accessor-char";
 import { getExprRoot } from "../util/get-root";
-import { isOutputHTML } from "../util/marko-config";
-import { setReferencesScope } from "../util/references";
+import { isOutputHTML, isPersisted } from "../util/marko-config";
+import { setReferencesScope, trackGlobalReference } from "../util/references";
 import { importRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
@@ -11,11 +11,16 @@ import { createSectionState } from "../util/state";
 import type { TemplateVisitor } from "../util/visitors";
 import { scopeIdentifier } from "./program";
 
-// Per-translate state (`createSectionState` keys off the current program):
-// the compiler cache shares one analyzed file (and its sections) across
-// every output/entry compile, and each translate pass works on a fresh AST
-// clone -- a module-level section-keyed map would leak allocations across
-// compiles and drift the ids.
+// Abort ids must be identical across every compile of a template (the dom
+// entry and its persisted `?update` entry address the same live scopes with
+// `$signal(scope, id)`), and they are: each translate allocates them in
+// visit order over a clone of the same analyzed AST, re-deriving the same
+// ids every pass. That's why this is per-translate state
+// (`createSectionState` keys off the current program) rather than a
+// module-level section-keyed map: sections are cached-analysis objects
+// shared across compiles while NodePath keys are per-clone, so the old map
+// never hit, kept growing, and shifted the ids on the second dom-mode
+// translate of a cached file.
 const [getAbortIdsByExpression] = createSectionState<
   Map<t.NodePath<t.Node>, number>
 >("abortIdsByExpression", () => new Map());
@@ -45,6 +50,12 @@ export default {
     if (identifier.scope.hasBinding(name)) return;
     if (name === "$global") {
       setReferencesScope(identifier);
+      // Under the persisted option, $global reads join the reactive graph as
+      // param-like sources so $global-derived holes get resume markers and
+      // spine serialization (values still read the live global object).
+      if (isPersisted()) {
+        trackGlobalReference(identifier);
+      }
     } else if (name === "$signal") {
       const section = getOrCreateSection(identifier);
       section.hasAbortSignal = true;

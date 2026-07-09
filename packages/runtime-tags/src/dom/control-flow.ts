@@ -176,8 +176,7 @@ export function _await_promise(
             );
 
             const pendingRenders = awaitBranch[AccessorProp.PendingRenders] as
-              | PendingRender[]
-              | undefined;
+              PendingRender[] | undefined;
             awaitBranch[AccessorProp.PendingRenders] = 0;
             pendingRenders?.forEach(queuePendingRender);
 
@@ -187,7 +186,7 @@ export function _await_promise(
             if (awaitCounter!.m) {
               const fnScopes = new Map<unknown, Set<Scope>>();
               const effects = awaitCounter!.m([]);
-              for (let i = 0; i < pendingEffects.length; ) {
+              for (let i = 0; i < pendingEffects.length;) {
                 const fn = pendingEffects[i++] as any;
                 let scopes = fnScopes.get(fn);
                 if (!scopes) {
@@ -195,7 +194,7 @@ export function _await_promise(
                 }
                 scopes.add(pendingEffects[i++] as Scope);
               }
-              for (let i = 0; i < effects.length; ) {
+              for (let i = 0; i < effects.length;) {
                 const fn = effects[i++] as any;
                 const scope = effects[i++] as Scope;
                 if (!fnScopes.get(fn)?.has(scope)) {
@@ -226,20 +225,34 @@ function resolveAwait(
 ) {
   const awaitBranch = scope[branchAccessor] as BranchScope;
   if (awaitBranch[AccessorProp.DetachedAwait]) {
-    awaitBranch[AccessorProp.PendingScopes] =
-      awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
-    setupBranch(awaitBranch[AccessorProp.DetachedAwait], awaitBranch);
-    awaitBranch[AccessorProp.DetachedAwait] = 0;
-
-    insertBranchBefore(
-      awaitBranch,
-      (scope[nodeAccessor] as ChildNode).parentNode!,
-      scope[nodeAccessor] as ChildNode,
-    );
+    attachAwaitBranch(scope, nodeAccessor as string, awaitBranch);
     referenceNode.remove();
   }
   params?.(awaitBranch, [value]);
   return awaitBranch;
+}
+
+/**
+ * Sets up and inserts a detached (unresolved) await branch at its anchor.
+ * Shared by promise resolution above and by persisted update applies, where
+ * a fresh subtree's await never ran its promise (the compute is skipped
+ * while updating) and the body's own frame is the resolution.
+ */
+export function attachAwaitBranch(
+  scope: Scope,
+  nodeAccessor: string,
+  awaitBranch: BranchScope,
+) {
+  awaitBranch[AccessorProp.PendingScopes] =
+    awaitBranch[AccessorProp.PendingScopes]?.forEach(syncGen);
+  setupBranch(awaitBranch[AccessorProp.DetachedAwait] as Renderer, awaitBranch);
+  awaitBranch[AccessorProp.DetachedAwait] = 0;
+
+  insertBranchBefore(
+    awaitBranch,
+    (scope[nodeAccessor] as ChildNode).parentNode!,
+    scope[nodeAccessor] as ChildNode,
+  );
 }
 
 export function _await_content(
@@ -838,7 +851,7 @@ function loop<T extends unknown[] = unknown[]>(
         oldPos.set(oldScopes[i], i);
       }
 
-      for (let i = diffLen; i--; ) {
+      for (let i = diffLen; i--;) {
         sources[i] = oldPos.get(newScopes[start + i]) ?? -1;
       }
 
@@ -871,7 +884,7 @@ function loop<T extends unknown[] = unknown[]>(
         hi = pred[hi];
       }
 
-      for (let i = diffLen; i--; ) {
+      for (let i = diffLen; i--;) {
         if (~tail && i === tails[tail]) {
           tail--;
         } else {

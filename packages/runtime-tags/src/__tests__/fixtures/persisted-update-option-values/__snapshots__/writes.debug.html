@@ -1,0 +1,32 @@
+<button>clicked <!>0<!--M_*1 #text/1--></button><!--M_* #button/0--><select
+  name=sort>
+  <option value=relevance>Relevance<!--M_*2 #text/1--></option>
+  <!--M_* #option/0-->
+  <option value=price-up>Price<!--M_*3 #text/1--></option>
+  <!--M_* #option/0--><!--M_}1 #select/2 3 2-->
+</select>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [0, {
+      cfg: [{
+        options: [{
+          key: "rel",
+          id: "relevance",
+          label: "Relevance"
+        }, {
+          key: "price",
+          id: "price-up",
+          label: "Price"
+        }]
+      }]
+    }, {
+      count: 0
+    }, {
+      "#LoopKey": "rel"
+    }, {
+      "#LoopKey": "price"
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/persisted-update-option-values/template.marko_0 1"
+  ];
+  M._.w()
+</script>
