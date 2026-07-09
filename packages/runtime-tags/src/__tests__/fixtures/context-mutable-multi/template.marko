@@ -1,0 +1,8 @@
+// Same-scope consumers of one provider compose into a single fan-out entry;
+// an update must reach both.
+<theme-provider>
+  <context/theme from="<theme-provider>"/>
+  <context/accent from="<theme-provider>"/>
+  <span>${theme}</span>
+  <em>${accent === "light" ? "gold" : "silver"}</em>
+</theme-provider>

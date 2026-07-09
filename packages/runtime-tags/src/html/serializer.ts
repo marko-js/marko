@@ -424,10 +424,15 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
     // skip count (the browser creates scopes on demand).
     const openIndex = buf.push("") - 1;
     if (writeObjectProps(state, flush[2], ref)) {
+      // The delta may be negative: a payload can carry two partials for the
+      // same slot under different identities (the serialized globals object
+      // and scope 0's own record both flush as slot 0 when a root mutable
+      // `<context>` provider stamps its branch link), and the browser's
+      // `applyScopes` sums deltas signed.
       buf[openIndex] =
         nextSlotId === -1
           ? "[" + scopeId + ",{"
-          : (scopeId > nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
+          : (scopeId !== nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
       if (fillIndex === -1) fillIndex = openIndex;
       nextSlotId = scopeId + 1;
       buf.push("}");

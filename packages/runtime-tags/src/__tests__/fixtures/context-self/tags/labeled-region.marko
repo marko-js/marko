@@ -1,0 +1,15 @@
+// A self-referencing consume (inside the provide's own body) resolves this
+// instance; nested instances shadow per dynamic extent. The `<if=open>`
+// gives each instance its own resumable branch (nested same-template
+// providers sharing one branch are rejected -- see `_context_branch`).
+<let/open=true/>
+<context=input.label>
+  <button class=`toggle-${input.label}` onClick() { open = !open }>
+    toggle
+  </button>
+  <if=open>
+    <${input.content}/>
+    <context/label from="<labeled-region>"/>
+    <div class="region-label">${label}</div>
+  </if>
+</context>

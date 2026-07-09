@@ -61,6 +61,7 @@ import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { kSkipEndTag } from "../visitors/tag/native-tag";
+import { buildContextReserve } from "./context";
 
 const kStatefulReason = Symbol("<if> stateful reason");
 const BRANCHES_LOOKUP = new WeakMap<
@@ -277,6 +278,17 @@ export const IfTag = {
                 singleChild ? t.numericLiteral(1) : undefined,
               ),
             );
+          }
+
+          // A stateful condition can create branch content client-side; any
+          // server-only contexts consumed beneath must serialize their box.
+          const reserveStatement = buildContextReserve(
+            ifTagSection,
+            getSerializeReason(ifTagSection, kStatefulReason),
+            branches.map(([, branchBody]) => branchBody),
+          );
+          if (reserveStatement) {
+            nextTag.insertBefore(reserveStatement);
           }
 
           nextTag.insertBefore(statement!);

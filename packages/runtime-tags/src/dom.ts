@@ -5,6 +5,14 @@ export { _call } from "./common/helpers";
 export { $signal, $signalReset } from "./dom/abort-signal";
 export { compat } from "./dom/compat";
 export {
+  _context_branch,
+  _context_change,
+  _context_closure,
+  _context_read,
+  _context_value,
+  _context_write,
+} from "./dom/context";
+export {
   _await_content,
   _await_promise,
   _dynamic_tag,

@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/context-error-self-not-provider/template.marko:1:12
+    > 1 | <context/x from="./template.marko"/>
+        |            ^^^^^^^^^^^^^^^^^^^^^^^ The template "./template.marko" does not provide a <context> value (it has no provide-mode `<context>` tag).
+      2 | <div>${x}</div>
+      3 |

@@ -1,0 +1,10 @@
+import Settings from "./settings.marko"
+
+<cart-provider>
+  <context/items from="<cart-provider>"/>
+  <cart-size/>
+  <Settings>
+    <context/theme from="./settings.marko"/>
+    <div>${items.join(",")}-${theme}</div>
+  </Settings>
+</cart-provider>

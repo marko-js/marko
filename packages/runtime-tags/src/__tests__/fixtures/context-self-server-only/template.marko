@@ -1,0 +1,10 @@
+import LabeledRegion from "./labeled-region.marko"
+
+<LabeledRegion>
+  <div>static</div>
+</LabeledRegion>
+
+// Unrelated interactivity keeps the client bundle nonempty, so the
+// `bundle_excludes` assertion is meaningful.
+<let/count=0/>
+<button.inc onClick() { count++ }>${count}</button>

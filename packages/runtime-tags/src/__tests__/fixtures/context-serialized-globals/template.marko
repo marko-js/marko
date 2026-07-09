@@ -1,0 +1,8 @@
+// A root writable provider stamps its branch link on scope 0, which must
+// coexist with the serialized-globals partial for the same slot (the
+// serializer's signed slot deltas) for post-resume writes to work.
+<let/count=0/>
+<context:=count>
+  <counter/>
+</context>
+<button.log onClick() { console.log($global.settings.message) }>log</button>

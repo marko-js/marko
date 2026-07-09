@@ -1,0 +1,9 @@
+// SSR renders the `<if>` off; the first click creates the consumer branch
+// client-side (resolved via the serialized entry), the second updates it.
+<theme-provider>
+  <let/show=false/>
+  <button.show onClick() { show = true }>show</button>
+  <if=show>
+    <theme-display/>
+  </if>
+</theme-provider>

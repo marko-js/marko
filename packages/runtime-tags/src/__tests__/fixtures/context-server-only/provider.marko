@@ -1,0 +1,7 @@
+import resolveTheme from "./resolve-theme.js"
+
+// `$global` is not client-reactive, so this classifies server-only; the
+// use-site sentinel is checked by the fixture's `bundle_excludes`.
+<context=resolveTheme($global, "context_value_sentinel")>
+  <${input.content}/>
+</context>

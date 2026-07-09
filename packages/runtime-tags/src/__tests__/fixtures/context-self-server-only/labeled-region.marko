@@ -1,0 +1,9 @@
+import resolveLabel from "./resolve-label.js"
+
+// A server-only value consumed by the providing template itself: the whole
+// context (provide and self-consume) compiles to zero client bytes.
+<context=resolveLabel($global, "self_context_sentinel")>
+  <context/label from="./labeled-region.marko"/>
+  <em>${label}</em>
+  <${input.content}/>
+</context>

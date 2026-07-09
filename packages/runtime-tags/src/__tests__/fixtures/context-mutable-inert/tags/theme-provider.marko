@@ -1,0 +1,9 @@
+// Mutable provider: `<let>`-derived, so consumers subscribe.
+<let/theme="light"/>
+<context=theme>
+  <span>${theme}</span>
+  <${input.content}/>
+</context>
+<button.toggle onClick() { theme = theme === "light" ? "dark" : "light" }>
+  toggle
+</button>

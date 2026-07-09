@@ -25,3 +25,9 @@ The dependency upgrade took everything to latest except two majors that are true
 `package.json:9` | 2026-07-07 | impact:low | effort:low
 
 Bare `npm audit` shows 3 advisories (`serialize-javascript` high, `js-yaml`/mocha moderate, `diff` low), all transitively under `mocha` and `@changesets/cli` — dev tooling that never ships. They can't be resolved by version bumps: the fixes live in higher majors than mocha's ranges allow (`serialize-javascript ^6`→fix in 7.x, `diff ^7`→8.x, `js-yaml ^4`→5.x), mocha 11.7.6 is the newest stable, and the latest `@changesets/parse` still pins `js-yaml ^4.1.1`. Rather than pin them via `overrides`, the repo audits production deps only: **`npm run audit`** (`npm audit --omit=dev`) is the gate and returns 0 — that's what consumers of the published packages actually receive. Revisit and drop the distinction once mocha/changesets update their transitive deps upstream.
+
+## Optimize-mode resumed behavior is never cross-checked against debug
+
+`packages/runtime-tags/src/__tests__/main.test.ts:127` | 2026-07-09 | impact:med | effort:med
+
+CSR is skipped in optimize mode (`skipCSR = optimize || ...`), and optimize ssr render logs snapshot to `render.md` independently of debug's `render.debug.md`, so nothing compares optimize-mode resumed interactions against known-good behavior. A mode-conditional runtime bug therefore gets immortalized by `npm run test:update` instead of caught: an argument-arity mismatch in `_context_link` (truthy in debug, undefined in optimize) shipped a `render.md` where update steps produced zero DOM mutations, and the suite stayed green because each mode only compares against its own snapshot. Suggested direction: after both modes run, assert the optimize ssr render log equals the debug one (modulo debug-only output), or enable the `equivalent` csr/ssr comparison in optimize mode.

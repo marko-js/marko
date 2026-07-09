@@ -1,0 +1,11 @@
+// Providers inside keyed `<for>` iterations: each iteration's branch carries
+// its own link entry, resolved by client-created consumers within it.
+<for|id| of=[0, 1] by=(id) => id>
+  <theme-provider id=id>
+    <let/show=false/>
+    <button class=`show-${id}` onClick() { show = true }>show</button>
+    <if=show>
+      <theme-display/>
+    </if>
+  </theme-provider>
+</for>

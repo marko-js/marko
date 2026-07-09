@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/context-error-readonly-assign/template.marko:2:21
+      1 | <context/val from="./provider.marko"/>
+    > 2 | <button onClick() { val = 5 }>click</button>
+        |                     ^^^^^^^ Cannot assign to `val`; the <context> provider for "./provider.marko" is read-only. Add `:=` to the provider's default attribute to make it writable.
+      3 |

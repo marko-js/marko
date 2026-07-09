@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/context-error-provide-no-body/template.marko:1:2
+    > 1 | <context=1/>
+        |  ^^^^^^^ A [`<context>` provider](https://markojs.com/docs/reference/core-tag#context) requires [body content](https://markojs.com/docs/reference/language#tag-content); wrap the tags that should see the provided value.
+      2 |

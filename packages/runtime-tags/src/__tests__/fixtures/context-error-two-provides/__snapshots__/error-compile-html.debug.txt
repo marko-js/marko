@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/context-error-two-provides/template.marko:4:2
+      2 |   <div>first</div>
+      3 | </context>
+    > 4 | <context=2>
+        |  ^^^^^^^ A template may only have a single provide-mode [`<context>` tag](https://markojs.com/docs/reference/core-tag#context); more than one makes the template's identity as a context provider ambiguous.
+      5 |   <div>second</div>
+      6 | </context>
+      7 |

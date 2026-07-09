@@ -1,0 +1,14 @@
+// Consumers of a server-only context created client-side (a toggled `<if>`
+// and appended `<for>` items) resolve the reserved provider box.
+<info-provider>
+  <let/show=false/>
+  <let/items=[]/>
+  <button.show onClick() { show = !show }>show</button>
+  <button.add onClick() { items = [...items, items.length] }>add</button>
+  <if=show>
+    <info-display/>
+  </if>
+  <for|i| of=items by=(x) => x>
+    <info-display/>
+  </for>
+</info-provider>
