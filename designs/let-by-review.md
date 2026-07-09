@@ -26,13 +26,14 @@ pattern*, and neither is a change to the primitive:
 1. **The flagship example is subtly wrong.** `by=input.cartCount` (the
    self-value key) cannot converge when the server *rejects* a mutation —
    the delivered key equals the stored key, so the wrong optimistic guess
-   survives forever. Pending-confirmation cells need a "my mutation
-   settled" signal, and hand-encoding it as an app-maintained version key
-   is fragile boilerplate — the platform should own the signal, since the
-   client router already has it (finding F1: a run-stamped settle token;
-   the userland version key is only the works-today interim). The
-   primitive is fine; the idiom taught with it decides whether real apps
-   are correct.
+   survives forever. The root cause is deeper than the example:
+   pending-confirmation state wants to be *derived at rest* with an
+   interaction-scoped overlay, not a durable fork patched with key
+   idioms. F1 lands on a dedicated optimistic primitive
+   (control/boundary-tied, settle-cleared, informed by persisted
+   deliveries) as the target, with the app-maintained version key as the
+   works-today interim. `<let by>` stays — scoped to the identity shape
+   it is actually right for.
 2. **The router's mutation-supersede drop** (the proposal's own open
    question 4 / optimistic doc's open question 5) is real and must be
    fixed in `@marko/run` before the persisted half ships — a concrete fix
@@ -52,9 +53,9 @@ one policy, keyed by `by=`, on both drivers (F3).
 A structured cross-check against React's Suspense / transition /
 optimistic APIs (its own section below) confirms the considerations map
 onto this design's answers, adds React 19's action sequencing as direct
-precedent for the F2 fix, and surfaced one refinement the proposal lacks:
-transition-scoped re-seed deferral, the keyed-cell answer to
-`useOptimistic`'s rebase behavior under multiple in-flight mutations.
+precedent for the F2 fix, and surfaced the rebase gap under multiple
+in-flight mutations — the finding that pushed F1 from "patch the keyed
+let" to "the pending-confirmation shape is its own primitive."
 
 ## What was validated, against what
 
@@ -102,7 +103,7 @@ transition-scoped re-seed deferral, the keyed-cell answer to
 Ordered by how much they matter. F1–F3 are semantic; the rest are spec
 gaps, hazards, and notes.
 
-### F1. The self-value key cannot represent "unconfirmed" — the settle signal should be platform-owned
+### F1. The self-value key cannot represent "unconfirmed" — pending confirmation is its own primitive
 
 The optimistic docs use `<let/cartCount=input.cartCount
 by=input.cartCount/>` as the flagship. Trace the rejected-mutation flow
@@ -136,9 +137,17 @@ reconciliation rule serves one of them:
   authoritative whether or not it changed the value. A self-value key
   can't express "the server answered and said no".
 
-No fix inside the primitive is needed — the reconciliation rule is
-right. What needs deciding is where the "the server answered" signal
-comes from, and there is a ladder of three answers:
+The deeper diagnosis (sharpened in review discussion, 2026-07-09): the
+two shapes differ in what the cell is **at rest**. In-progress input is
+*forked at rest* — a durable local copy, which is exactly what `<let>`
+is, and identity (`by=`) is the right rule for when the fork re-bases.
+Pending confirmation wants to be **derived at rest** — between
+interactions the cell simply *is* the server value, reactively fresh
+like a `<const>`; it becomes a local guess only for the window between
+an interaction and its navigation settling, then snaps back to derived.
+Every patch below (version keys, settle tokens) is an attempt to make a
+fork behave like that window-scoped overlay. The ladder, ending at the
+primitive that just *is* one:
 
 **Expressible today (userland version key — works, fragile).** Key on a
 server-side counter that bumps whenever the server *processes* a
@@ -167,57 +176,88 @@ counter's annoying property (changes even when data doesn't) *is* the
 load-bearing property, which is the tell that the key is smuggling in a
 fact that isn't identity at all: "my mutation settled."
 
-**Recommended: a run-owned settle token — the platform already knows.**
-The client router initiated the POST; it knows which delivery is a
-mutation response and whether more mutations are pending (the same state
-F2 introduces). Surface that as a client-stamped token — strawman:
-`$global.settled`, a counter the applier bumps when the **final pending
-mutation's** response applies (never on plain GET navigations, never
-server-serialized, so the server stays stateless):
+**Target: an interaction-scoped optimistic cell (design direction,
+2026-07-09 discussion).** A dedicated primitive whose semantics are the
+derived-at-rest overlay directly — seeded by a control-tied sketch from
+that discussion (`<a/nextTab href=…>` +
+`<optimistic/tab=input.tab for=nextTab onClick() { tab = … }>`), and
+generalized as follows:
 
-```marko
-<let/cart=$global.data.cart by=$global.settled/>
-```
+- **Derived at rest.** `<optimistic/cart=$global.data.cart/>` reads as a
+  `<const>`: between interactions it tracks its source reactively —
+  every delivery's fresh value flows through (including changes this
+  client didn't cause, which a fork-based cell misses). The source can
+  be `input`/`$global` (persisted canonical) *or* an await boundary's
+  param (client canonical) — in the param case, "boundary settles →
+  params re-fire → re-derive" is ordinary reactivity, no special
+  plumbing.
+- **Writable as a guess.** A write opens an overlay and increments a
+  per-cell pending count, associated with the transition the write
+  initiated. The overlay holds while any associated transition is
+  pending (React's overlay-while-actions-pending — the rebase-gap
+  answer, per cell instead of a global token, so independent resources
+  never couple).
+- **Settle = the transition's async work committed**, abstracted over
+  both drivers through the boundary machinery that already exists: a
+  persisted navigation settling (stream complete / mutation response
+  applied — `_update_branch` body commits, the `"!"` pending-echo
+  clearing) or a client re-await resolving (`AwaitCounter` reaching
+  zero). The last settle re-derives the cell from its source — which by
+  then *is* the authoritative answer. A rejected mutation re-derives to
+  the unchanged truth: rollback for free, no key comparison to strand
+  (the F1 hole is structurally impossible). A superseded navigation's
+  overlay dies with it. This is what a version key or settle token was
+  hand-encoding: the pending count is the only thing that can
+  distinguish "no news" from "news: same value", because the data
+  channel dirty-checks the two identically.
+- **Association: explicit cell, implicit write-capture, `for=` as the
+  escape hatch.** The sketch's `for=ref` is precise but strains exactly
+  where the feature matters: loops (N tab links, one cell — per-iteration
+  tag vars can't name it) and cross-template shells (the cart cell lives
+  in the layout provider; the forms live elsewhere — refs don't cross
+  templates). Resolution: declaring the cell is explicit; a write that
+  occurs during an event dispatch the router converts into a navigation
+  (including one arriving through a writable `<context>` change handler,
+  still synchronous in that dispatch) associates with that navigation;
+  `for=` remains for flows detection can't see (programmatic
+  `requestSubmit`, custom fetch). A write with no associated transition
+  degrades to "overlay until the next delivery" — `let-global`'s old
+  semantics as the fallback rung.
+- **Honest edges to design**: which client boundaries belong to a
+  write's transition ("boundaries whose awaited expressions re-ran
+  because of this write") is compile-time knowable per template from the
+  signal graph but needs cross-template reason threading for the general
+  case — the same spike `context.md` already names as its top compiler
+  risk, now with two consumers; error paths (boundary catch → re-derive,
+  persisted fallback ladder → full navigation) need fixtures; and values
+  with no server round trip behind them are *not* optimistic — that's
+  plain `<let>`, and the primitive should say so rather than absorb it.
 
-Zero app bookkeeping, nothing to forget, rejection-safe by construction.
-Mechanically it rides machinery that already exists: `by=` reading
-`$global` taints the keyed let global-sourced, the globals-merge re-run
-re-invokes it per apply, and the applier bumps the token before
-dispatching merges when the response settles the mutation queue.
-Bump-on-*final*-settle also **subsumes the rebase-gap deferral** from the
-React cross-check — two rapid bumps hold local state through mutation
-#1's delivery and reconcile once on #2's, with no separate flag in the
-merge dispatch. Degradation is graceful: in a non-persisted build the
-token never changes and the cell is an ordinary seed-once `<let>`. One
-honest caveat: a single token couples independent resources — a pending
-wishlist mutation delays the cart cell's reconciliation until the queue
-empties (still convergent, marginally later); per-resource tokens are
-the refinement if a real app ever needs it.
+*Considered and demoted — a run-owned settle token* (`$global.settled`,
+bumped when the final pending mutation's response applies, used as
+`<let … by=$global.settled/>`): zero app bookkeeping and rejection-safe,
+but it inherits the fork-at-rest staleness (a delivery caused by someone
+else never bumps *your* token, so the cell goes stale until your next
+mutation), couples independent resources through one counter, and
+teaches `by=` a meaning ("my mutation settled") that isn't identity. If
+the optimistic primitive proves too large for its first release, the
+token is the acceptable interim; the version key above is the
+works-today fallback either way.
 
-**Candidate end state (prototype before committing): implicit
-association.** React's `useOptimistic` needs no key at all because the
-optimistic write happens *inside* the action — the association between
-guess and transaction is syntactic. Marko's equivalent moment exists:
-the optimistic write happens in the submit handler of the very form the
-router intercepts. A runtime↔router handshake could stamp keyed-let
-writes made during a mutation-initiating dispatch as provisional under
-that mutation, and settle exactly those cells on its response — no
-token, no attribute, `useOptimistic` ergonomics with zero client data
-layer. Edges to resolve before believing it: async writes after the
-dispatch, `preventDefault`-plus-custom-`fetch` flows (no association —
-falls back to plain identity rules, arguably correct), and shared cells
-written from several forms. The settle token is the right v1 and remains
-the escape hatch if this proves out later.
-
-Whichever rung ships, the docs split stays: identity keys
-(`by=item.id`) for in-progress-input cells, the settle signal for
-pending-confirmation cells, and the self-value key demoted to a
-documented anti-pattern for mutation-confirmed state (fine for
-derived-overridable cells like the color mixer). Fixture: the drift
-repro (fixture 2) should include a rejected-mutation delivery (same key,
-same value, error content) and assert the guess is *not* kept under the
-settle signal and *is* kept when self-keyed — pinning the difference the
-docs teach.
+The docs split stays, sharpened: `<let by=>` for in-progress-input cells
+(durable fork, identity reset — drafts, accordions, follow-until-written
+via `by=hex`); the optimistic cell for pending-confirmation
+(derived-at-rest, interaction-scoped overlay — counts, carts, likes,
+tabs); the self-value key documented as an anti-pattern for
+mutation-confirmed state. A side effect worth auditing: with the guess
+shape moved out of `<let by>`, its dedicated persisted delivery channel
+(compiler item 5) may shrink to update-guarded seed expressions only —
+request-derived keys and values already re-evaluate client-side through
+the ordinary fan-out when deliveries land. Fixture: the drift repro
+(fixture 2) should include a rejected-mutation delivery (same data,
+error content) and assert the optimistic cell re-derives while a
+self-keyed let strands the guess — pinning the difference the docs
+teach.
 
 ### F2. The mutation-supersede drop: fix by ordering, not by salvage
 
@@ -425,7 +465,7 @@ what fell out of forcing the comparison follows.
 | `useTransition().isPending` | a programmatic pending read — necessary in React because a client state change has no DOM element to mark | a persisted transition always has an initiator element and affected boundary ranges, so attribute-first (`data-marko-pending`, `aria-busy`) reaches the same styling with zero app JS; the programmatic residue (swap a label, true `disabled` semantics) is mostly covered by CSS plus the F6 double-submit guard — hold the "no transport state in templates" line until real demand, then design one boundary-scoped read for both drivers |
 | `<Suspense>` reveal rules (fallback on first mount; revealed content never re-hides in a transition; `key=` forces reset; routers "should key automatically") | when stale content may be destroyed | matched boundaries keep stale; `<@placeholder by=>` is the key idiom — aligned on the persisted driver, **contradicted by the client driver today** (F3) |
 | coordinated reveal (multiple suspending children per boundary; `SuspenseList`) | staged/grouped appearance | the client runtime already does all-or-nothing per boundary (`AwaitCounter` counts every pending await under one placeholder, dom/control-flow.ts:100-127); the persisted driver's v1 rule aborts >1 pending await per placeholder body into a full navigation — that limit now looks like the *standard idiom* rather than an edge, prioritize lifting it |
-| `useOptimistic` (overlay over canonical state; auto-revert when the action settles; **rebases** queued deltas onto refreshed canonical state) | optimistic writes must never become truth, and must survive canonical refreshes that don't answer them | the keyed cell forks locally and reconciles by identity — same visible outcomes for the single-mutation case *given F1's version key* (revert-on-rejection included), with zero client bookkeeping; diverges under multiple in-flight mutations — the rebase gap, below |
+| `useOptimistic` (overlay over canonical state; auto-revert when the action settles; **rebases** queued deltas onto refreshed canonical state) | optimistic writes must never become truth, and must survive canonical refreshes that don't answer them | F1's target primitive is this exact shape made declarative: derived-at-rest cell, write opens an interaction-scoped overlay, settle (navigation stream / boundary re-await, per driver) re-derives; overlay-holds-while-pending is the rebase answer, per cell; the interim `<let by>` + version-key recipe approximates it for single mutations |
 | React 19 Actions + `useActionState` (overlapping submissions queue and run in order; the action's return value is a typed outcome channel for field errors) | mutation ordering and mutation outcomes | ordering: exactly F2's fix, now with ecosystem precedent; outcomes: the PRG patch re-rendering error state in place is the outcome channel, and it's why non-2xx patch responses deliberately apply in place (focus/scroll preserved, persisted.ts:286-298) |
 | `useFormStatus` | children of a form read its pending state | `form[data-marko-pending] …` CSS reaches the same nodes without a hook |
 | `useSyncExternalStore` | external stores tear under concurrent rendering without versioned subscription | `let-global` is this hack hand-rolled (module registry + manual subscribe); `<context>` moves the store into the signal graph, and no concurrent double-render exists to tear against |
@@ -439,26 +479,20 @@ the translation are precisely the wire-level ones (ordering, identity,
 pending signals) the findings above deal with. Two things did fall out
 of the pass:
 
-**The rebase gap** — the one capability `useOptimistic` has that the
-keyed cell lacks. React re-applies pending optimistic deltas on top of
-every refreshed canonical value, so N overlapping mutations never
-visibly regress. The keyed cell re-seeds on key change and discards
-local writes, so two rapid bumps flicker even with F1's version key and
+**The rebase gap** — the one capability `useOptimistic` has that a
+fork-shaped keyed cell lacks. React re-applies pending optimistic deltas
+on top of every refreshed canonical value, so N overlapping mutations
+never visibly regress. A keyed let re-seeds on key change and discards
+local writes, so two rapid bumps flicker even with a version key and
 F2's ordering: click-click takes the cell to 7 locally; mutation #1's
 delivery re-seeds to 6 (its authoritative answer); mutation #2's
 delivery re-seeds to 7. The fix is **not** a client delta queue (that is
-the data layer the charter rightly rejects) but transition-scoped
-reconciliation, one flag deep: **while a mutation navigation is in
-flight or queued — state F2's router change already tracks — keyed
-re-seeds defer**, and the final mutation's delivery reconciles the cell.
-That is `useOptimistic`'s "overlay holds until the actions settle"
-expressed in wire terms, with no queue, no reducer, and no new authoring
-surface. Better still, F1's settle token absorbs this for free: a token
-that bumps only when the *final* pending mutation's response applies IS
-the deferral — cells keyed on it cannot re-seed mid-queue, so no
-separate flag reaches the merge dispatch at all. Ship the persisted half
-without it (it eliminates a flicker, not an error state), but spec the
-token's bump-on-final-settle rule with this in mind.
+the data layer the charter rightly rejects) but exactly what F1's target
+primitive encodes: the overlay holds while *that cell's* pending
+interactions are unsettled and re-derives on the last settle — per-cell
+pending counting, no queue, no reducer, no cross-resource coupling. This
+is the finding that pushed F1 from "patch the keyed let with a settle
+signal" to "the pending-confirmation shape is a different primitive."
 
 **Reveal coordination priority** — the >1-pending-await-per-placeholder
 persisted abort should be scheduled, not just documented: one boundary
@@ -523,7 +557,7 @@ is careful to avoid.
 
   ```marko
   /* cart-provider.marko — in the persistent layout */
-  <let/cart=$global.data.cart by=$global.settled/>
+  <optimistic/cart=$global.data.cart/>
   <context:=cart/>
   ```
 
@@ -538,12 +572,14 @@ is careful to avoid.
   ```
 
   No fetch, no JSON negotiation, no registry, no reconcile write, no
-  event listener, no app-maintained version; the POST rides the router,
-  the settling PRG delivery bumps the token (F1 — strawman name), the
-  provider re-seeds, every consumer re-runs. Failure UX is
-  server-rendered content plus the settle-driven rollback. This example
-  should headline the optimistic doc. (Until the token exists, the same
-  shape runs today on a session-stored version key — F1's interim.)
+  event listener, no app-maintained version: the POST rides the router,
+  the write's overlay holds through the flight, and the settling PRG
+  delivery re-derives the cell (rejection included — rollback for free);
+  every consumer re-runs through the context subscription. Failure UX is
+  server-rendered content. This example should headline the optimistic
+  doc. (Until the optimistic primitive exists, the same shape runs today
+  as `<let … by=$global.data.cartVersion/>` on a session-stored version
+  key — F1's interim, fragility noted there.)
 - **Context's identity model** (template identity via taglib discovery,
   id-constant not import edge) is the standout design decision in the
   set — it makes cross-template state *improve* under the wire-economics
@@ -563,11 +599,9 @@ found:
 1. **Pending signal + double-submit guard** (run router + applier; F6,
    part of F2). Smallest item, unblocks real feedback, correctness for
    mutations.
-2. **Router mutation ordering + the settle token** (F2, F1) — the
-   ordering fix is a prerequisite for the persisted half of `<let by>`
-   and independently fixes stale-PRG races; the settle token is a few
-   lines on top of the same queue state and removes the version-key
-   boilerplate before anyone learns it.
+2. **Router mutation ordering** (F2) — prerequisite for any settle
+   semantics (F1's primitive included) and independently fixes stale-PRG
+   races; its queue state is also what write-association reads.
 3. **Early-input stamping for GET navigations** (router-only; the
    link-driven half, see the dedicated section below) — `$global.url`
    stamped through a synthetic frame zero at click; upgrades the shipped
@@ -583,10 +617,17 @@ found:
    (optimistic doc phase 5): the context branch evaluation already
    validated the replacement end-to-end, so blessing the workaround now
    just creates a second migration.
-7. **`by=` on `<@placeholder>` for client re-awaits** (F3) + the shared
+7. **The optimistic primitive** (F1's target) — spike the association
+   mechanics (write-capture during router-bound dispatches; the
+   boundary-membership analysis shares the cross-template
+   reason-threading spike with `<context>`), then land it as the
+   pending-confirmation shape; the version-key recipe is the documented
+   interim until here.
+8. **`by=` on `<@placeholder>` for client re-awaits** (F3) + the shared
    anti-flash hold — this is the "async transitions" DX milestone, see
-   below.
-8. View Transitions behind the run option (both swap paths already
+   below; its boundary pending/settle events are the same ones the
+   optimistic primitive consumes.
+9. View Transitions behind the run option (both swap paths already
    funnel through `applyBoundaryBody`/`dismissPlaceholder` — single
    choke points on each driver, so this stays cheap after F3).
 
@@ -603,8 +644,8 @@ different things, and neither needs the other's machinery:
 |                | GET (links, GET forms)                       | POST (mutations)                                  |
 | -------------- | -------------------------------------------- | ------------------------------------------------- |
 | client knows   | the next **input**, deterministically        | only its own **guess** at the outcome             |
-| primitive      | apply the input early; content keeps stale   | keyed cell (`<let by>`) + settle signal (F1)      |
-| reconciliation | delivery confirms (dirty-check no-ops)       | settle re-seeds; fallback ladder on failure       |
+| primitive      | apply the input early; content keeps stale   | optimistic cell — overlay until settle (F1)       |
+| reconciliation | delivery confirms (dirty-check no-ops)       | settle re-derives; fallback ladder on failure     |
 
 Applying the input early means: at click time, stamp the URL-derived
 globals (`$global.url`, and eventually matched `params`/raw `search`)
@@ -667,7 +708,7 @@ stamps over the first, whose fetch aborts); and popstate navigations
 should stamp too — back/forward gets the same instant chrome. Mutations
 deliberately get none of this: a PRG redirect's target URL is
 server-knowable only, which is precisely why POST optimism lives in the
-keyed-cell + settle-token column.
+optimistic-cell column.
 
 ### The async-transition end state
 
@@ -686,6 +727,7 @@ the server work. Every surface then behaves identically on both drivers:
 | anti-flash hold      | one shared client constant (unbuilt)         | same constant, same site (unbuilt)                 |
 | visual continuity    | View Transitions at the swap choke point     | same choke point (`applyBoundaryBody`)             |
 | state inside         | `<let by>` reconciles across re-renders      | `<let by>` reconciles across deliveries            |
+| guesses inside       | optimistic cell: overlay opens on write, settles when the boundary's re-await commits (param source re-fires) | same cell: overlay settles when the navigation/mutation stream commits its frames — persisted deliveries inform the same lifecycle |
 | input latency        | none — the input is already local            | early-input stamp at click (proposed): URL-derived state and `by=` comparisons react at interaction time; content keeps stale behind the pending signal until frames land |
 
 Two deliberate omissions to keep: no template-visible transport state
@@ -715,10 +757,10 @@ drivers.
 - **q3** (fresh-object-key lint): yes, and broaden it to the family under
   persisted builds (F4); decide once for `<for by>` as proposed.
 - **q4** (superseded-mutation drop): router ordering fix, F2; it is a
-  prerequisite, and F1's settle signal independently shrinks the blast
-  radius (monotonic settle keys converge on any later delivery). The
-  rebase-gap deferral (React cross-check) collapses into the token's
-  bump-on-final-settle rule.
+  prerequisite, and F1's settle lifecycle independently shrinks the
+  blast radius (an overlay that re-derives on settle converges on any
+  completed delivery). The rebase-gap deferral (React cross-check)
+  collapses into the optimistic cell's overlay-while-pending rule.
 - optimistic doc **q2** (default without `by=`): agree — no new default.
 - **q3** (identical on both drivers from day one): agree, and the same
   bar must eventually apply to `<@placeholder by=>` (F3).
@@ -735,9 +777,10 @@ drivers.
 
 ## Fixture additions (beyond let-by.md's four)
 
-1. Rejected-mutation delivery: same data + error content → a let keyed
-   on the settle signal (token, or interim version key) re-seeds; a
-   self-keyed let keeps the guess (pins F1's taught difference).
+1. Rejected-mutation delivery: same data + error content → an
+   optimistic cell re-derives to server truth (interim: a
+   version-keyed let re-seeds); a self-keyed let keeps the guess (pins
+   F1's taught difference).
 2. `by=` + `valueChange=` compile error; `by=` without `value=` compile
    error, including the bodiless no-shorthand form (F5).
 3. SSR'd keyed let without the persisted flag: resume, client re-render
@@ -750,11 +793,13 @@ drivers.
 6. Non-primitive `by=` dev-warning, all three surfaces (F4).
 7. Keyed let inside a client-state-driven branch reconciles via the
    globals fan-out on navigation (the delivery-less path noted above).
-8. Two overlapping mutations (with F2's ordering + the token's
-   bump-on-final-settle): the cell never shows the intermediate
-   authoritative value — local 7 holds through mutation #1's delivery
-   and reconciles once on #2's (pins the rebase-gap behavior from the
-   React cross-check).
+8. Two overlapping mutations (with F2's ordering): the optimistic
+   cell's overlay never shows the intermediate authoritative value —
+   local 7 holds through mutation #1's delivery and re-derives once on
+   #2's settle (pins the rebase-gap behavior from the React
+   cross-check). Companion cases: a superseded navigation's overlay
+   reverts; a boundary-catch settle re-derives; a client re-await whose
+   param is the cell's source re-derives on body commit.
 9. (Benchmark-suite smoke, run-side) Early-input stamp: a filter-chip
    click renders the chip active before any frame arrives; a
    server-only-mixed hole keeps its stale value through the stamp and
