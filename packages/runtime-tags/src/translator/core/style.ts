@@ -85,7 +85,7 @@ export default {
     // Resolve the style up front so the page entry builder can link it in for
     // server only templates (which never reach translate). The path is cached
     // on the node for translate to reuse.
-    const importPath = getStyleImportPath(file, node, names);
+    const importPath = getStyleImportPath(file, tag, names);
     (node.extra ??= {}).styleImportPath = importPath;
     if (importPath) {
       addAssetImport(file, importPath);
@@ -347,11 +347,13 @@ function buildStyleDecls(node: t.MarkoTag) {
 /**
  * Resolves a `<style>` block's text content to its client side import path
  * (eg `./template.marko.css`) by handing the css off to the configured
- * `resolveVirtualDependency` hook.
+ * `resolveVirtualDependency` hook. Later blocks of the same flavor get an
+ * index suffix (`./template.marko.1.css`) so they don't overwrite the first
+ * block's virtual file.
  */
 function getStyleImportPath(
   file: t.BabelFile,
-  node: t.MarkoTag,
+  tag: t.NodePath<t.MarkoTag>,
   names: string[] | undefined,
 ): string | null | undefined {
   const { resolveVirtualDependency } = file.markoOpts;
@@ -359,12 +361,10 @@ function getStyleImportPath(
     return undefined;
   }
 
+  const { node } = tag;
   const { filename, sourceMaps } = file.opts;
-  let ext = STYLE_EXT_REG.exec(node.rawValue || "")?.[1] || ".css";
-
-  if (node.var && !/\.module\./.test(ext)) {
-    ext = ".module" + ext;
-  }
+  const ext = styleTagExt(node);
+  const offset = styleTagOffset(tag, ext);
 
   const magicString = sourceMaps
     ? new MagicString(file.code, { filename })
@@ -420,8 +420,39 @@ function getStyleImportPath(
   }
 
   return resolveVirtualDependency(filename, {
-    virtualPath: `./${path.basename(filename) + ext}`,
+    virtualPath: `./${path.basename(filename)}${offset ? `.${offset}` : ""}${ext}`,
     code,
     map,
   });
+}
+
+function styleTagExt(node: t.MarkoTag): string {
+  let ext = STYLE_EXT_REG.exec(node.rawValue || "")?.[1] || ".css";
+  if (node.var && !/\.module\./.test(ext)) {
+    ext = ".module" + ext;
+  }
+  return ext;
+}
+
+// How many prior `<style>` tags in the file share this tag's resolved
+// extension (analyze runs in document order, so prior tags already carry
+// `extra.styleImportPath` — the same assumption `dynamicStyleNameOffset`
+// makes about `extra.dynamicStyle`).
+function styleTagOffset(tag: t.NodePath<t.MarkoTag>, ext: string): number {
+  const { start } = tag.node;
+  let offset = 0;
+  if (start != null) {
+    t.traverseFast(getProgram().node, (node) => {
+      if (
+        node.start != null &&
+        node.start < start &&
+        node.extra != null &&
+        "styleImportPath" in node.extra &&
+        styleTagExt(node as t.MarkoTag) === ext
+      ) {
+        offset++;
+      }
+    });
+  }
+  return offset;
 }

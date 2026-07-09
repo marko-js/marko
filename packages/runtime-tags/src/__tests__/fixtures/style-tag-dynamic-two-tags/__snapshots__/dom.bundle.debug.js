@@ -14,4 +14,7 @@ const $input = ($scope, input) => {
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, "  c", $setup, $input);
 
 // v:template.marko.css
-var v_template_marko_default = "\n  .b { color: var(--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19two-19tags-1btemplate-1amarko_1); }\n";
+var v_template_marko_default = "\n  .a { color: var(--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19two-19tags-1btemplate-1amarko_0); }\n";
+
+// v:template.marko.1.css
+var v_template_marko_1_default = "\n  .b { color: var(--M_packages-1bruntime-19tags-1bsrc-1b__tests__-1bfixtures-1bstyle-19tag-19dynamic-19two-19tags-1btemplate-1amarko_1); }\n";
