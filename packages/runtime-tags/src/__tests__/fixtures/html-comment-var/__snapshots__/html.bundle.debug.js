@@ -3,7 +3,7 @@ var parent_el_default = _template("__tests__/tags/parent-el.marko", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let tagName = undefined;
-	_html(`<!--Body Text-->${_el_resume($scope0_id, "#comment/0")}`);
+	_html(`<!--Body Text-->${_el_resume($scope0_id, "#comment/0", 1, "-")}`);
 	const $return = tagName;
 	_script($scope0_id, "__tests__/tags/parent-el.marko_0");
 	writeScope($scope0_id, {}, "__tests__/tags/parent-el.marko", 0);

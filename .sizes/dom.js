@@ -1,4 +1,4 @@
-// size: 25964 (min) 9537 (brotli)
+// size: 25982 (min) 9542 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1067,11 +1067,12 @@ function init(runtimeId = "M") {
                   (visitText = visit.data),
                   (visitType = visitText[lastTokenIndex++]),
                   (visitScope = getScope(nextToken())),
-                  visitType === "*")
+                  visitType === "*" || visitType === "-")
                 ) {
                   let prev = visit.previousSibling;
                   visitScope[nextToken()] =
-                    prev && (prev.nodeType < 8 || prev.data)
+                    visitType === "-" ||
+                    (prev && (prev.nodeType < 8 || prev.data))
                       ? prev
                       : visit.parentNode.insertBefore(new Text(), visit);
                 } else

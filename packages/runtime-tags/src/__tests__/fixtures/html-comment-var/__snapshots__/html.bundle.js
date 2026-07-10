@@ -2,7 +2,7 @@
 var parent_el_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	_html(`<!--Body Text-->${_el_resume($scope0_id, "a")}`);
+	_html(`<!--Body Text-->${_el_resume($scope0_id, "a", 1, "-")}`);
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, {});
 	_resume_branch($scope0_id);

@@ -31,6 +31,9 @@ export interface Scope {
 
 export enum ResumeSymbol {
   Node = "*",
+  // Claims the previous sibling even when it is an empty comment, which the
+  // Node heuristic would otherwise treat as a `<!>` separator.
+  NodeComment = "-",
   BranchStart = "[",
   BranchEnd = "]",
   BranchEndNativeTag = "'",

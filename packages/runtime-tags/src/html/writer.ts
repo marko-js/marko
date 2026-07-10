@@ -295,12 +295,13 @@ export function _el_resume(
   scopeId: number,
   accessor: Accessor,
   shouldResume?: 0 | 1,
+  symbol?: ResumeSymbol,
 ) {
   if (shouldResume === 0) return "";
 
   const { state } = $chunk.boundary;
   state.needsMainRuntime = true;
-  return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
+  return state.mark(symbol || ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
 export function _sep(shouldResume: 0 | 1) {

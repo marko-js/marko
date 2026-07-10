@@ -6,7 +6,7 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { WalkCode } from "../../common/types";
+import { ResumeSymbol, WalkCode } from "../../common/types";
 import { bodyToTextLiteral } from "../util/body-to-text-literal";
 import { isOutputHTML } from "../util/marko-config";
 import {
@@ -147,6 +147,7 @@ export default {
           tag,
           nodeBinding,
           getSerializeReason(tagSection, nodeBinding),
+          ResumeSymbol.NodeComment,
         );
       }
 

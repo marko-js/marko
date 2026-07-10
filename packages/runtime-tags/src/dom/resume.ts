@@ -398,13 +398,17 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             visitType = visitText[lastTokenIndex++] as ResumeSymbol;
             visitScope = getScope(nextToken(/* read scope id */));
 
-            if (visitType === ResumeSymbol.Node) {
+            if (
+              visitType === ResumeSymbol.Node ||
+              visitType === ResumeSymbol.NodeComment
+            ) {
               const prev = visit.previousSibling;
               visitScope[nextToken(/* read accessor */)] =
-                prev &&
-                (prev.nodeType < 8 /* Node.COMMENT_NODE */ ||
-                  (prev as Comment).data)
-                  ? prev
+                visitType === ResumeSymbol.NodeComment ||
+                (prev &&
+                  (prev.nodeType < 8 /* Node.COMMENT_NODE */ ||
+                    (prev as Comment).data))
+                  ? prev!
                   : visit.parentNode!.insertBefore(new Text(), visit);
             } else if (branchesEnabled) {
               (visitBranches ||= createVisitBranches())();

@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 
+import type { ResumeSymbol } from "../../common/types";
 import {
   ContentType,
   getScopeIdIdentifier,
@@ -143,6 +144,7 @@ export function markNode(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
   nodeBinding: Binding,
   reason: undefined | false | SerializeReason,
+  symbol?: ResumeSymbol,
 ) {
   if (nodeBinding.type !== BindingType.dom) {
     throw path.buildCodeFrameError(
@@ -157,7 +159,8 @@ export function markNode(
         "_el_resume",
         getScopeIdIdentifier(section),
         getScopeAccessorLiteral(nodeBinding),
-        getSerializeGuard(section, reason, true),
+        getSerializeGuard(section, reason, !symbol),
+        symbol && t.stringLiteral(symbol),
       )}`;
     }
   }
