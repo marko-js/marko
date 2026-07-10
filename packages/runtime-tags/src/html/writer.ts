@@ -818,7 +818,7 @@ export function _await<T>(
               withIsAsync(content, value);
             }
           });
-          boundary.endAsync(chunk);
+          boundary.endAsync();
         }
       }
     },
@@ -896,7 +896,7 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
   const chunk = $chunk;
   const { boundary } = chunk;
   const { state } = boundary;
-  const catchBoundary = new Boundary(state);
+  const catchBoundary = new Boundary(state, undefined, boundary);
   const body = chunk.fork(catchBoundary, null);
   const bodyEnd = body.render(content);
 
@@ -1064,7 +1064,8 @@ export class Boundary extends AbortController {
   public count = 0;
   constructor(
     public state: State,
-    parent?: AbortSignal,
+    signal?: AbortSignal,
+    public parent?: Boundary,
   ) {
     super();
     this.signal.addEventListener("abort", () => {
@@ -1073,12 +1074,12 @@ export class Boundary extends AbortController {
       this.onNext();
     });
 
-    if (parent) {
-      if (parent.aborted) {
-        this.abort(parent.reason);
+    if (signal) {
+      if (signal.aborted) {
+        this.abort(signal.reason);
       } else {
-        parent.addEventListener("abort", () => {
-          this.abort(parent.reason);
+        signal.addEventListener("abort", () => {
+          this.abort(signal.reason);
         });
       }
     }
@@ -1102,14 +1103,9 @@ export class Boundary extends AbortController {
     }
   }
 
-  endAsync(chunk?: Chunk) {
+  endAsync() {
     if (!this.signal.aborted && this.count) {
       this.count--;
-
-      if (chunk?.reorderId) {
-        this.state.reorder(chunk);
-      }
-
       this.onNext();
     }
   }
@@ -1394,17 +1390,35 @@ export class Chunk {
     }
 
     if (state.writeReorders) {
-      needsWalk = true;
-
-      if (!state.hasReorderRuntime) {
-        state.hasReorderRuntime = true;
-        scripts = concatScripts(
-          scripts,
-          REORDER_RUNTIME_CODE + "(" + runtimePrefix + ")",
-        );
-      }
+      let carried: Chunk[] | null = null;
 
       for (const reorderedChunk of state.writeReorders) {
+        // A chunk requeued when its reorder marker streamed delivers once
+        // settled, or as an empty reorder once an aborted boundary strands it.
+        if (reorderedChunk.async && reorderedChunk.consumed) {
+          let aborted: Boundary | undefined = reorderedChunk.boundary;
+          while (aborted && !aborted.signal.aborted) {
+            aborted = aborted.parent;
+          }
+
+          if (!aborted) {
+            (carried ||= []).push(reorderedChunk);
+            continue;
+          }
+
+          reorderedChunk.async = false;
+        }
+
+        needsWalk = true;
+
+        if (!state.hasReorderRuntime) {
+          state.hasReorderRuntime = true;
+          scripts = concatScripts(
+            scripts,
+            REORDER_RUNTIME_CODE + "(" + runtimePrefix + ")",
+          );
+        }
+
         const { reorderId } = reorderedChunk;
         const readyReservations: string[] = [];
         let reorderHTML = "";
@@ -1435,6 +1449,7 @@ export class Chunk {
               Mark.ReorderMarker,
               (cur.reorderId = state.nextReorderId()),
             );
+            state.reorder(cur);
             cur.html = cur.effects = cur.scripts = cur.lastEffect = "";
             cur.next = null;
           }
@@ -1486,7 +1501,7 @@ export class Chunk {
           "</t>";
       }
 
-      state.writeReorders = null;
+      state.writeReorders = carried;
     }
 
     if (needsWalk) {

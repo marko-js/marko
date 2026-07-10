@@ -37,3 +37,19 @@ The aggregate line parses worker output with `/(\d+) failing/`, but the snapshot
 `packages/runtime-tags/src/__tests__/main.test.ts:322` | 2026-07-10 | impact:low | effort:low
 
 The `after()` hook writes each fixture's `sizes.json` on every optimized test run, not just under `UPDATE_EXPECTATIONS=1`. A runtime helper change validated with `npm run test:update -- --grep <name>` therefore captures new sizes only for grep-matched fixtures; any other fixture bundling the same helper keeps stale numbers that a later unrelated full run silently rewrites into the working tree (e.g. a `_lifecycle` change also resizes `for-resume-owns-branch-cleanup` and `if-resume-owns-branch-cleanup`, whose names do not match "lifecycle"). Either gate the write on `UPDATE_EXPECTATIONS` and fail on drift otherwise, or document that runtime `src/dom`/`src/html` changes require a full-suite pass before committing so all affected `sizes.json` land in the same diff.
+
+## Shared-promise test util corrupts `wait()` when a stream ends with unconsumed promises
+
+`packages/runtime-tags/src/__tests__/utils/resolve.ts:106` | 2026-07-10 | impact:med | effort:low
+
+If an SSR fixture's stream completes while a registered `resolveAfter(_, id)`
+promise is still pending (e.g. a `@catch` fires and the boundary stops waiting
+on a sibling await), the abandoned `tick()` timer chain later runs
+`r(++state.lastId)` against the state that `resetResolveState()` just reset.
+The steps' first `wait()` then sees `state.lastId` ahead of
+`state.promises.size` and its `while (id !== nextId)` loop never converges —
+the ssr test times out at 10s and mocha hangs afterwards on the leaked timers.
+Workaround used by `catch-reject-sibling-pending-await`: model
+never-consumed awaits with `new Promise(() => {})` instead of the shared
+counter. A robust fix could stamp each state object (capture `state` in
+`tick()` and drop stray resolutions after reset).

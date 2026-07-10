@@ -1,0 +1,53 @@
+<!--M_[--><!--M_!^2-->loading outer...<!--M_!2--><!--M_]1 #text/0 2-->
+<t hidden M_=2><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    changes: 0,
+    "ClosureScopes:changes": new Set
+  }, {
+    _: _(1),
+    "#BranchAccessor": "#text/0",
+    "#PlaceholderContent": _(1,
+      "packages/runtime-tags/src/__tests__/fixtures/await-nested-event-handler/template.marko_5_content"
+      )
+  }]];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b><!--M_[--><!--M_[--><!--M_!^5-->loading
+  inner...<!--M_!5--><!--M_]4 #text/0 5--><!--M_]2 #text/0 4--></t>
+<t hidden M_=5><!--M_#c--></t>
+<script>
+  M._.r.push(_ => [4, {
+    _: _(2)
+  }, {
+    _: _(4),
+    "#BranchAccessor": "#text/0",
+    "#PlaceholderContent": _(4,
+      "packages/runtime-tags/src/__tests__/fixtures/await-nested-event-handler/template.marko_6_content"
+      )
+  }]);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c><!--M_[-->
+  <div>changes: <!>0<!--M_*7 #text/1--></div>
+  <!--M_*7 #div/0--><!--M_]5 #text/0 7-->
+</t>
+<script>
+  M._.r.push(_ => [7, {
+    _: _(5)
+  }]);
+  M._.j.c = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/await-nested-event-handler/template.marko_4_changes/pending 7 packages/runtime-tags/src/__tests__/fixtures/await-nested-event-handler/template.marko_4 7"
+      )
+  };
+  M._.w()
+</script>

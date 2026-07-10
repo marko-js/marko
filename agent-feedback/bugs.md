@@ -41,3 +41,38 @@ therefore relied upon for correctness. A real fix needs `isSupersetSources` to
 use a strict/proper-superset test (equal sources must not prune each other)
 _and_ the corrected arithmetic, then a full snapshot audit — out of scope for a
 one-line change.
+
+## CSR: rejected `<await>` under an ancestor `@placeholder` never dismisses the placeholder
+
+`packages/runtime-tags/src/dom/control-flow.ts:376` | 2026-07-10 | impact:med | effort:med
+
+In a pure client render of `<try @placeholder><await>…<try @catch><await=rejecting>…`,
+when the inner await rejects, `_await_promise`'s reject handler zeroes the
+ancestor placeholder's counter (`awaitCounter.i = 0`) without running the
+counter's completion, and `renderCatch` only unwinds a `PlaceholderBranch` on
+the try that owns the `@catch`. When the placeholder lives on an _ancestor_
+try (the nearest-placeholder lookup in `_await_promise` attaches the counter
+there), the detached content is never re-inserted and the page shows the
+placeholder forever; the catch content renders only into the detached tree.
+Observed in the `catch-reject-nested-in-await` fixture's `render-csr` snapshot
+(final state stays `loading outer...`; SSR of the same template shows
+`caught: ERROR!` plus the sibling `<div>`). A fix needs the reject path to
+complete (not zero) the pending counter so `dismissPlaceholder`/pending
+effects run, while keeping the forced-zero semantics for resumed reorder
+records — those `c()` implementations do stream-node surgery that must not run
+on rejection.
+
+## Inline reorder runtime holds only one pending `onNextSibling` callback
+
+`packages/runtime-tags/src/html/inlined-runtimes.debug.ts:37` | 2026-07-10 | impact:low | effort:med
+
+`runtime.x` keeps a single `nextSibling`/`onNextSibling` pair. A `<t hidden>`
+swap callback pending at the element's next sibling is overwritten if, while
+walking the `<t>`'s children, a placeholder-end comment (`!id`) matches the
+"content arrived before its end marker" branch and re-assigns the pair — the
+outer swap then never fires. Tracing current server emission orders suggests
+this is unreachable today (catch/content `<t>`s and their end markers always
+stream in an order where the earlier callback fires before the overwrite),
+but it is one flush-ordering change away from a silent hydration freeze. A
+queue (or firing the pending callback before re-assigning) would make the
+inline runtime robust; weigh against inline-runtime byte cost.

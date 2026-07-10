@@ -1,0 +1,49 @@
+<!--M_[--><!--M_!^2-->loading outer...<!--M_!2--><!--M_]1 #text/0 2-->
+<t hidden M_=2><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    changes: 0,
+    "ClosureScopes:changes": new Set
+  }, {
+    _: _(1),
+    "#BranchAccessor": "#text/0",
+    "#PlaceholderContent": _(1,
+      "packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await/template.marko_3_content"
+      )
+  }]];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b>
+  <!--M_[--><!--M_[--><!--M_!^c--><!--M_#d--><!--M_!c--><!--M_]4 #text/0 5-->
+  <div>changes: <!>0<!--M_*4 #text/2--></div>
+  <!--M_*4 #div/1--><!--M_]2 #text/0 4-->
+</t>
+<script>
+  M._.r.push(_ => [4, {
+    _: _(2)
+  }, {
+    "#BranchAccessor": "#text/0",
+    "#CatchContent": _(4,
+      "packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await/template.marko_5_content"
+      )
+  }]);
+  M._.j.b = _ => {
+    _.push(
+      "packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await/template.marko_2_changes/pending 4 packages/runtime-tags/src/__tests__/fixtures/catch-reject-nested-in-await/template.marko_2 4"
+      )
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=d></t>
+<t hidden M_=c>caught: ERROR!</t>
+<script>
+  M._.w()
+</script>

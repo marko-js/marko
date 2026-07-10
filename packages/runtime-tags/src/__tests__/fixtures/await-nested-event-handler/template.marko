@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/changes = 0/>
+<try>
+  <@placeholder>loading outer...</@placeholder>
+  <await=resolveAfter("outer", 1)>
+    <try>
+      <@placeholder>loading inner...</@placeholder>
+      <await=resolveAfter("inner", 2)>
+        <div onChange() { changes++ }>changes: ${changes}</div>
+      </await>
+    </try>
+  </await>
+</try>

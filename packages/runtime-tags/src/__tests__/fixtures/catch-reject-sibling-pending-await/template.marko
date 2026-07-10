@@ -1,0 +1,22 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+// A promise that outlives the stream: the sibling `<await>`'s content never
+// renders because the shared `<try>` catches first.
+static const never = new Promise(() => {});
+
+<let/changes = 0/>
+<try>
+  <@placeholder>loading outer...</@placeholder>
+  <await=resolveAfter("outer", 1)>
+    <try>
+      <await=never>
+        slow sibling
+      </await>
+      <await=rejectAfter(new Error("ERROR!"), 2)>
+        never
+      </await>
+      <@catch|err|>caught: ${err.message}</@catch>
+    </try>
+    <div onChange() { changes++ }>changes: ${changes}</div>
+  </await>
+</try>

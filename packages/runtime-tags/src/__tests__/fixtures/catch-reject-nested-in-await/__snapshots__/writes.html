@@ -1,0 +1,42 @@
+<!--M_[--><!--M_!^2-->loading outer...<!--M_!2--><!--M_]1 a 2-->
+<t hidden M_=2><!--M_#b--></t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    b: 0,
+    c: new Set
+  }, {
+    _: _(1),
+    C: "a",
+    Q: _(1, "a4")
+  }]];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=b>
+  <!--M_[--><!--M_[--><!--M_!^c--><!--M_#d--><!--M_!c--><!--M_]4 a 5-->
+  <div>changes: <!>0<!--M_*4 c--></div><!--M_*4 b--><!--M_]2 a 4-->
+</t>
+<script>
+  M._.r.push(_ => [4, {
+    _: _(2)
+  }, {
+    C: "a",
+    E: _(4, "a0")
+  }]);
+  M._.j.b = _ => {
+    _.push("a2 4 a3 4")
+  };
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=d></t>
+<t hidden M_=c>caught: ERROR!</t>
+<script>
+  M._.w()
+</script>

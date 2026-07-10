@@ -1,0 +1,15 @@
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
+
+<let/changes = 0/>
+<try>
+  <@placeholder>loading outer...</@placeholder>
+  <await=resolveAfter("outer", 1)>
+    <try>
+      <await=rejectAfter(new Error("ERROR!"), 2)>
+        never
+      </await>
+      <@catch|err|>caught: ${err.message}</@catch>
+    </try>
+    <div onChange() { changes++ }>changes: ${changes}</div>
+  </await>
+</try>
