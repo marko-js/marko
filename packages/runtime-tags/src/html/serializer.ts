@@ -1210,9 +1210,14 @@ function writeError(state: State, val: Error, ref: Reference) {
   const result =
     "new " + val.constructor.name + "(" + quote(val.message + "", 0);
   if (val.cause !== undefined) {
-    state.buf.push(result + ",{cause:");
-    writeProp(state, val.cause, ref, "cause");
-    state.buf.push("})");
+    const pos = state.buf.push(result + ",{cause:") - 1;
+    if (writeProp(state, val.cause, ref, "cause")) {
+      state.buf.push("})");
+    } else {
+      // A circular cause is applied through its deferred assignment instead;
+      // slicing preserves any id assignment prefixed onto the chunk.
+      state.buf[pos] = state.buf[pos].slice(0, -",{cause:".length) + ")";
+    }
   } else {
     state.buf.push(result + ")");
   }
@@ -1225,7 +1230,10 @@ function writeAggregateError(
   ref: Reference,
 ) {
   state.buf.push("new AggregateError(");
-  writeProp(state, val.errors, ref, "errors");
+  if (!writeProp(state, val.errors, ref, "errors")) {
+    // Circular errors are applied through their deferred assignment instead.
+    state.buf.push("[]");
+  }
   if (val.message) {
     state.buf.push("," + quote(val.message + "", 0) + ")");
   } else {

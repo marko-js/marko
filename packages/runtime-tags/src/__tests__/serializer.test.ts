@@ -935,6 +935,22 @@ describe("serializer", () => {
         ));
       it("absent", () =>
         assertStringify(new Error("test"), `new Error("test")`));
+      it("circular applied as a deferred assignment", () => {
+        const err = new Error("boom") as Error & { cause: unknown };
+        const wrapper = { err };
+        err.cause = wrapper;
+        assertStringify(
+          { wrapper },
+          `{wrapper:_.a={err:_.b=new Error("boom")}},_.b.cause=_.a`,
+        );
+      });
+      it("unserializable dropped but stays valid JS", () => {
+        class Thing {}
+        assertStringify(
+          new Error("test", { cause: new Thing() }),
+          `new Error("test")`,
+        );
+      });
     });
 
     describe("AggregateError", () => {
@@ -962,6 +978,15 @@ describe("serializer", () => {
         assertStringify(
           { errors: agg.errors, agg },
           `{errors:_.a=[new Error("test")],agg:new AggregateError(_.a,"test")}`,
+        );
+      });
+      it("circular errors applied as a deferred assignment", () => {
+        const agg = new AggregateError([], "test");
+        const arr = [agg];
+        agg.errors = arr;
+        assertStringify(
+          arr,
+          `_.a=[_.b=new AggregateError([],"test")],_.b.errors=_.a`,
         );
       });
     });
