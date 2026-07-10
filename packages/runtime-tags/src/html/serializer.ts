@@ -1733,37 +1733,57 @@ export function toAccess(accessor: string) {
 
 // Creates a JavaScript double quoted string and escapes all characters not listed as DoubleStringCharacters on
 // Also includes "<" to escape "</script>" and "\" to avoid invalid escapes in the output.
+// NUL is escaped (the HTML tokenizer replaces it with U+FFFD inside an inline
+// <script>) and so are unpaired surrogates (UTF-8 encoding the chunk would
+// replace them with U+FFFD); the `u` flag keeps well-formed pairs out of the
+// surrogate range match below.
 // http://www.ecma-international.org/ecma-262/5.1/#sec-7.8.4
+const unsafeQuoteReg = /["\\<\n\r\u2028\u2029\0\ud800-\udfff]/u;
 export function quote(str: string, startPos: number): string {
+  if (!unsafeQuoteReg.test(str)) return '"' + str + '"';
+
   let result = "";
   let lastPos = 0;
 
   for (let i = startPos; i < str.length; i++) {
     let replacement: string;
-    switch (str[i]) {
-      case '"':
+    const code = str.charCodeAt(i);
+    switch (code) {
+      case 34: // "
         replacement = '\\"';
         break;
-      case "\\":
+      case 92: // \
         replacement = "\\\\";
         break;
-      case "<":
+      case 60: // <
         replacement = "\\x3C";
         break;
-      case "\n":
+      case 10: // \n
         replacement = "\\n";
         break;
-      case "\r":
+      case 13: // \r
         replacement = "\\r";
         break;
-      case "\u2028":
+      case 0x2028:
         replacement = "\\u2028";
         break;
-      case "\u2029":
+      case 0x2029:
         replacement = "\\u2029";
         break;
+      case 0:
+        replacement = "\\x00";
+        break;
       default:
-        continue;
+        if (code < 0xd800 || code > 0xdfff) continue;
+        if (code < 0xdc00) {
+          const next = str.charCodeAt(i + 1);
+          if (next >= 0xdc00 && next <= 0xdfff) {
+            // Well-formed pair.
+            i++;
+            continue;
+          }
+        }
+        replacement = "\\u" + code.toString(16);
     }
 
     result += str.slice(lastPos, i) + replacement;

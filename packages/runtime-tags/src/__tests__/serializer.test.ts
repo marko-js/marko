@@ -66,8 +66,16 @@ describe("serializer", () => {
       it("special characters", () =>
         assertStringify(
           '"\b\t\n\f\r\v\0</script\u2028\u2029some other content',
-          `"\\"\b\t\\n\f\\r\x0B\x00\\x3C/script\\u2028\\u2029some other content"`,
+          `"\\"\b\t\\n\f\\r\x0B\\x00\\x3C/script\\u2028\\u2029some other content"`,
         ));
+      it("surrogate pairs stay raw", () =>
+        assertStringify("a\u{1F600}b", `"a\u{1F600}b"`));
+      it("lone surrogates escaped", () => {
+        assertStringify("bad\uD800end", `"bad\\ud800end"`);
+        assertStringify("bad\uDC00end", `"bad\\udc00end"`);
+        assertStringify("\uD83D", `"\\ud83d"`);
+        assertStringify("\uDE00\uD83D", `"\\ude00\\ud83d"`);
+      });
     });
 
     describe("number", () => {
