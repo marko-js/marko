@@ -23,6 +23,17 @@ export function preAnalyze(tag: t.NodePath<t.MarkoTag>) {
 
     const textValue = normalizeStringExpression(parts);
     if (textValue) {
+      const valueAttr = tag.node.attributes.find(
+        (attr) => t.isMarkoAttribute(attr) && attr.name === "value",
+      );
+      if (valueAttr) {
+        throw tag.hub.file.hub.buildError(
+          valueAttr,
+          "A textarea cannot have both a value attribute and body content.",
+          SyntaxError,
+        );
+      }
+
       tag.node.attributes.push(t.markoAttribute("value", textValue));
     }
 

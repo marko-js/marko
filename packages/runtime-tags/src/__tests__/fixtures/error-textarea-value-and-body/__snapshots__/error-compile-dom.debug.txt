@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-textarea-value-and-body/template.marko:1:11
+    > 1 | <textarea value=input.v>fallback</textarea>
+        |           ^^^^^^^^^^^^^ A textarea cannot have both a value attribute and body content.
+      2 |
