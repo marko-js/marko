@@ -165,6 +165,7 @@ declare module "@marko/compiler/dist/types" {
     downstream?: Opt<Binding>;
     binding?: Binding;
     defaultSource?: Binding;
+    defaultedValue?: t.ConditionalExpression;
     assignment?: Binding;
     assignmentTo?: Binding;
     read?: ExtraRead;
@@ -806,9 +807,34 @@ function createBindingsAndTrackReferences(
           }
         }
 
+        // The derivation the DOM translation registers for the binding,
+        // synthesized here so its source reads carry the same extras as any
+        // other analyzed reference. The conditional's own extra holds the
+        // source so the written signal can collapse it to a native parameter
+        // default (see `replaceDefaultedValueNode` in `signals.ts`).
+        const readSource = () => {
+          const id = t.identifier(defaultSource.name);
+          const idExtra = (id.extra = {} as t.NodeExtra);
+          idExtra.read = createRead(defaultSource, undefined);
+          idExtra.section = section;
+          return id;
+        };
+        const defaultedValue = t.conditionalExpression(
+          t.binaryExpression(
+            "!==",
+            t.unaryExpression("void", t.numericLiteral(0)),
+            readSource(),
+          ),
+          readSource(),
+          right,
+        );
+        (defaultedValue.extra = {} as t.NodeExtra).defaultSource =
+          defaultSource;
+
         const extra = (lVal.extra ??= {});
         extra.binding = binding;
         extra.defaultSource = defaultSource;
+        extra.defaultedValue = defaultedValue;
         setBindingDownstream(binding, valueExtra);
         addSetupExpr(section, right);
       }
