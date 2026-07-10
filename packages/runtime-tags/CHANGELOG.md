@@ -1,5 +1,31 @@
 # @marko/runtime-tags
 
+## 6.3.0
+
+### Minor Changes
+
+- [#2957](https://github.com/marko-js/marko/pull/2957) [`466a2fe`](https://github.com/marko-js/marko/commit/466a2fe29fbf20ff9a512d455224c6bb661a4842) Thanks [@kanashimia](https://github.com/kanashimia)! - Support returning an object from the `<lifecycle>` tag's `onMount` handler. The returned properties are assigned onto the lifecycle instance, making values created at mount (element references, third party instances, etc.) available as `this` properties in `onUpdate` and `onDestroy`.
+
+### Patch Changes
+
+- [#3373](https://github.com/marko-js/marko/pull/3373) [`2919dc3`](https://github.com/marko-js/marko/commit/2919dc3942c4b87123b1116c4da9e501d43614be) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix the debug attribute-value assertion whitelisting any `on*`/`*Change`-named attribute, which let function values render as literal attribute source with no warning (e.g. a spread `{checked, valueChange}` on a plain input wrote `valueChange="(v) => ..."` into the DOM). Handlers the runtime actually consumes never reach the attribute writers, so any function value there now errors in debug, with a hint for unapplied change handlers.
+
+- [#3348](https://github.com/marko-js/marko/pull/3348) [`a65f4bc`](https://github.com/marko-js/marko/commit/a65f4bcd666f32b592283948f52d3c5ca9f66025) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Shrink SSR output slightly by reserving dense accessor ids for closure and change-handler keys instead of prefixing the binding's accessor with a letter.
+
+- [#3368](https://github.com/marko-js/marko/pull/3368) [`f9061e6`](https://github.com/marko-js/marko/commit/f9061e67b87809ae1f91fc59d44a89de4391553e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a duplicate `value` attribute on `<let>` (e.g. `<let/x=input.a value=input.b/>`) wiring reactivity to one attribute while generating code for the other, which threw a `ReferenceError` on the client. It is now a compile error, matching `<script>`.
+
+- [#3367](https://github.com/marko-js/marko/pull/3367) [`9d4645b`](https://github.com/marko-js/marko/commit/9d4645b2e70eea7be210c21f56fa01d4b9fa0b4d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix assignments to a positional tag parameter (e.g. `<for|item|>` + `item = x` in a handler) generating code that referenced an undeclared binding, throwing `ReferenceError: $Change is not defined` during SSR. This is now a compile error pointing at the assignment, since a positional parameter has no object to carry a change handler.
+
+- [#3370](https://github.com/marko-js/marko/pull/3370) [`5d85bfa`](https://github.com/marko-js/marko/commit/5d85bfab0626f47de7f346e87383e9996062e98c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix assignments to `<id>` and `<define>` tag variables compiling to silent no-ops (the assignment was replaced with its bare right-hand side). They now report the same "readonly and cannot be mutated" compile error as `<const>`.
+
+- [#3366](https://github.com/marko-js/marko/pull/3366) [`c7fc346`](https://github.com/marko-js/marko/commit/c7fc34662204784b76f6bb99647a88b7f41d063a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix RegExp attribute values rendering differently on the client than on the server. SSR special-cased `RegExp` to write its `.source` while the DOM runtime stringified the whole expression, so the first post-hydration update corrupted an SSR-rendered attribute. The special case is removed: both targets now stringify RegExp values the same way (`pattern="/^a+$/"`).
+
+- [#3355](https://github.com/marko-js/marko/pull/3355) [`856f2ea`](https://github.com/marko-js/marko/commit/856f2ea1faeaf7310063a7eef50ddbe147c8e452) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix serialized `Error`/`AggregateError` values emitting invalid JS when the `cause`/`errors` value cannot be written inline (e.g. a circular reference back through the error), which aborted the entire resume script.
+
+- [#3356](https://github.com/marko-js/marko/pull/3356) [`14329cd`](https://github.com/marko-js/marko/commit/14329cd144479d575ee6f6dc28ed22700881257f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix serialization dispatching on `val.constructor`, which let an own `constructor` property (e.g. in parsed JSON data) silently corrupt or drop the value. Values are now classified by their prototype's constructor.
+
+- [#3369](https://github.com/marko-js/marko/pull/3369) [`924357d`](https://github.com/marko-js/marko/commit/924357df27b1e69efede9f32928693b1c8434184) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `<textarea value=x>body</textarea>` silently dropping the author's `value` attribute (the body was appended as a second, last-wins `value`). Combining both is now a compile error.
+
 ## 6.2.5
 
 ### Patch Changes
