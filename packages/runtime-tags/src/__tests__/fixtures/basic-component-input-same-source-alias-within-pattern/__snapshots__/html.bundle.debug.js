@@ -31,7 +31,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		value: attrTag({ text: clickCount })
 	});
 	writeScope($scope0_id, {
-		clickCount,
+		clickCount: clickCount === 0 ? void 0 : clickCount,
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/1": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0, { clickCount: "1:6" });

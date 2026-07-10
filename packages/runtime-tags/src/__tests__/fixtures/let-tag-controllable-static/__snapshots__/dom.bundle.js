@@ -2,7 +2,7 @@
 const $y = /*@__PURE__*/ _let_change(4, ($scope) => _text($scope.c, $scope.e));
 const $x = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
-	$y($scope, $scope.d, $valueChange($scope));
+	$y($scope, "d" in $scope ? $scope.d : 1, $valueChange($scope));
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	$y($scope, $scope.e + 1);

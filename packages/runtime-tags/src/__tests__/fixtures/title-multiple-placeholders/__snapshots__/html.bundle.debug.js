@@ -7,7 +7,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		input_a: input.a,
-		n
+		n: n === 1 ? void 0 : n
 	}, "__tests__/template.marko", 0, {
 		input_a: ["input.a"],
 		n: "1:6"

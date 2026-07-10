@@ -6,7 +6,7 @@ const $value = /*@__PURE__*/ _let(5, ($scope) => {
 	$load_ChildB_tag_input_value($scope.e, $scope.f);
 });
 const $setup__script = _script("c0", ($scope) => _on($scope.a, "click", function() {
-	$value($scope, $scope.f + 1);
+	$value($scope, ("f" in $scope ? $scope.f : 0) + 1);
 }));
 
 // child-a.marko

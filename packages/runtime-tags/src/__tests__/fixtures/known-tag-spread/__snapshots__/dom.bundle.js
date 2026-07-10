@@ -6,7 +6,7 @@ const $input_c = ($scope, input_c) => _text($scope.c, input_c);
 // template.marko
 const $extras__OR__n = /*@__PURE__*/ _or(10, ($scope) => {
 	const $childa_input_spread = {
-		a: $scope.j,
+		a: "j" in $scope ? $scope.j : 1,
 		...$scope.i
 	};
 	$input_a($scope.c, $childa_input_spread.a);
@@ -19,5 +19,5 @@ const $n = /*@__PURE__*/ _let(9, ($scope) => {
 	$extras__OR__n($scope);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$n($scope, $scope.j + 1);
+	$n($scope, ("j" in $scope ? $scope.j : 1) + 1);
 }));

@@ -6,13 +6,13 @@ const $x__script = _script("__tests__/template.marko_0_x", ($scope) => _lifecycl
 		this.onUpdate();
 	},
 	onUpdate: function() {
-		document.getElementById("ref").textContent = `x=${$scope.x}, was=${this.cur}`;
-		this.cur = $scope.x;
+		document.getElementById("ref").textContent = `x=${"x" in $scope ? $scope.x : 0}, was=${this.cur}`;
+		this.cur = "x" in $scope ? $scope.x : 0;
 	}
 }));
 const $x = /*@__PURE__*/ _let("x/1", $x__script);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
+	$x($scope, ("x" in $scope ? $scope.x : 0) + 1);
 }));
 function $setup($scope) {
 	$x($scope, 0);

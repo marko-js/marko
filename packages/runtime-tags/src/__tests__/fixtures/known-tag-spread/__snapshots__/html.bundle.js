@@ -46,7 +46,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		i: extras,
-		j: n,
+		j: void 0,
 		c: _existing_scope($childScope),
 		d: _existing_scope($childScope2),
 		e: _serialize_if($scope0_reason, 0) && _existing_scope($childScope3)

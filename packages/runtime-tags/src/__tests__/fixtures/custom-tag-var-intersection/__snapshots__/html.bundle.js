@@ -8,7 +8,7 @@ var child_default = _template("b", (input) => {
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, {
 		e: input.extra,
-		f: x
+		f: void 0
 	});
 	_resume_branch($scope0_id);
 	return $return;
@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	_var($scope0_id, "b", $childScope, "a0");
 	_html(`<div>${_escape(`${name} ${data}`)}${_el_resume($scope0_id, "c")}</div>`);
 	writeScope($scope0_id, {
-		d: name,
+		d: void 0,
 		a: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

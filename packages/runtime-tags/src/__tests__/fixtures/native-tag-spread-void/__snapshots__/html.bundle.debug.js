@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		cls,
+		cls: cls === "a" ? void 0 : cls,
 		"#childScope/1": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { cls: "1:6" });
 	_resume_branch($scope0_id);

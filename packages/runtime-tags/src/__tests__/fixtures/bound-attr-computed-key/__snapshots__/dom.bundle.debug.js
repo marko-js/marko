@@ -6,7 +6,7 @@ const $state = /*@__PURE__*/ _const("state", $key__OR__state);
 const $v = /*@__PURE__*/ _let("v/3", ($scope) => {
 	_text($scope["#text/0"], $scope.v);
 	$state($scope, {
-		v: $scope.v,
+		v: "v" in $scope ? $scope.v : "v1",
 		vChange(x) {
 			$v($scope, x);
 		},

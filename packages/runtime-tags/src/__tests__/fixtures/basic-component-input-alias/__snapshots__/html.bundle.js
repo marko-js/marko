@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 		}, "a0", $scope0_id)
 	});
 	writeScope($scope0_id, {
-		b: clickCount,
+		b: clickCount === 0 ? void 0 : clickCount,
 		a: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

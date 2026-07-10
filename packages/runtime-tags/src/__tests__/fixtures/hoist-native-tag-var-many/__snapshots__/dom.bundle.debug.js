@@ -14,7 +14,7 @@ const $el_getter = /*@__PURE__*/ _hoist("#div/0", "BranchScopes:#text/0");
 const $for = /*@__PURE__*/ _for_to("#text/0", "<div></div>", " b");
 const $for2 = /*@__PURE__*/ _for_to("#text/1", "<div></div>", " b");
 const $to = /*@__PURE__*/ _let("to/3", ($scope) => $for2($scope, [
-	$scope.to,
+	"to" in $scope ? $scope.to : 3,
 	0,
 	1
 ]));

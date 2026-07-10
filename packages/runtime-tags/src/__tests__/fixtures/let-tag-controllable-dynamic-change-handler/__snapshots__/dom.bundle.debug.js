@@ -2,7 +2,7 @@
 const $template = "<button id=inc><!>|<!></button><button id=toggle>toggle</button>";
 const $walks = " D%c%l b";
 const $y = /*@__PURE__*/ _let_change("y/7", ($scope) => _text($scope["#text/2"], $scope.y));
-const $x__OR__yChange = /*@__PURE__*/ _or(6, ($scope) => $y($scope, $scope.x, $scope.yChange));
+const $x__OR__yChange = /*@__PURE__*/ _or(6, ($scope) => $y($scope, "x" in $scope ? "x" in $scope ? $scope.x : 1 : 1, $scope.yChange));
 const $x = /*@__PURE__*/ _let("x/4", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
 	$x__OR__yChange($scope);

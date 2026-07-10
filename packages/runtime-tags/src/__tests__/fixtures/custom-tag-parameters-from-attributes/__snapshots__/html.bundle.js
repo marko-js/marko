@@ -12,7 +12,7 @@ var custom_tag_default = _template("b", (input) => {
 	writeScope($scope0_id, {
 		f: input.content,
 		g: input.name,
-		h: x
+		h: void 0
 	});
 	_resume_branch($scope0_id);
 });

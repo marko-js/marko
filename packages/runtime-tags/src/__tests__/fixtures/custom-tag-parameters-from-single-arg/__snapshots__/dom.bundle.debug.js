@@ -2,13 +2,13 @@
 const $template$1 = "<button class=inc> </button><!><!>";
 const $walks$1 = " D l%c";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", 0, 0, 1);
-const $input_content__OR__x = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_content, () => [$scope.x]));
+const $input_content__OR__x = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_content, () => ["x" in $scope ? "x" in $scope ? $scope.x : 1 : 1]));
 const $x = /*@__PURE__*/ _let("x/6", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
 	$input_content__OR__x($scope);
 });
 const $setup__script = _script("__tests__/tags/custom-tag.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
+	$x($scope, ("x" in $scope ? $scope.x : 1) + 1);
 }));
 function $setup$1($scope) {
 	$x($scope, 1);

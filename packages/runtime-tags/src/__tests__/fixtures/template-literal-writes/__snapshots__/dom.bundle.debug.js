@@ -8,7 +8,7 @@ const $d = /*@__PURE__*/ _let("d/4", ($scope) => {
 	_text($scope["#text/3"], `${$scope.d}`);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$d($scope, $scope.d + "!");
+	$d($scope, ("d" in $scope ? $scope.d : "y") + "!");
 }));
 function $setup($scope) {
 	$d($scope, "y");

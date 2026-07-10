@@ -21,7 +21,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	writeScope($scope0_id, {
 		rows,
 		selected,
-		nextId
+		nextId: nextId === 3 ? void 0 : nextId
 	}, "__tests__/template.marko", 0, {
 		rows: "1:6",
 		selected: "2:6",

@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>${_escape(clickCount)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		c: clickCount,
+		c: clickCount === 0 ? void 0 : clickCount,
 		d: increment
 	});
 	_resume_branch($scope0_id);

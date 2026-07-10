@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	])}></div>${_el_resume($scope0_id, "#div/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		d,
+		d: d === "dyn" ? void 0 : d,
 		more,
 		moreStyles,
 		obj,

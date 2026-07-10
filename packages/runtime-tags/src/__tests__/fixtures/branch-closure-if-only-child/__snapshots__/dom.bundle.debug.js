@@ -7,7 +7,7 @@ const $count = /*@__PURE__*/ _let("count/4", ($scope) => {
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$count($scope, $scope.count + 1);
+		$count($scope, ("count" in $scope ? $scope.count : 0) + 1);
 	});
 	_on($scope["#div/2"], "click", function() {});
 });

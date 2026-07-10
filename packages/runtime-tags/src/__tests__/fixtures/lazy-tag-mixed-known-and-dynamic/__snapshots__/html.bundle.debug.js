@@ -20,8 +20,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/4", show ? $Child_withLoadAssets : null, { value });
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		show,
-		value,
+		show: show === true ? void 0 : show,
+		value: value === 0 ? void 0 : value,
 		"#childScope/3": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, {
 		show: "3:6",

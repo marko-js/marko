@@ -2,7 +2,6 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let show = true;
 	let count = 0;
 	_html(`<button class=inc></button>${_el_resume($scope0_id, "a")}<button class=toggle></button>${_el_resume($scope0_id, "b")}`);
 	_if(() => {
@@ -15,7 +14,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "c", 1, 1, 1, 0, 1);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
-		d: show,
+		d: void 0,
 		e: count
 	});
 	_resume_branch($scope0_id);

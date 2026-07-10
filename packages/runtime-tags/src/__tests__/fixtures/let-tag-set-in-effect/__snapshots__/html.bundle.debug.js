@@ -6,6 +6,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let y = 0;
 	_html(`<span>${_escape(x)}${_el_resume($scope0_id, "#text/0")}</span><span>${_escape(y)}${_el_resume($scope0_id, "#text/1")}</span>`);
 	_script($scope0_id, "__tests__/template.marko_0_x");
-	writeScope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "1:6" });
+	writeScope($scope0_id, { x: x === 1 ? void 0 : x }, "__tests__/template.marko", 0, { x: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

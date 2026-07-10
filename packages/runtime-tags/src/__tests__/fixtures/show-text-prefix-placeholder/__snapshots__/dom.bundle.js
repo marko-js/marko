@@ -6,8 +6,8 @@ const $count = /*@__PURE__*/ _let(7, ($scope) => {
 	_text($scope.f, $scope.h);
 });
 const $show = /*@__PURE__*/ _show(4, 2);
-const $vis = /*@__PURE__*/ _let(8, ($scope) => $show($scope, $scope.i));
+const $vis = /*@__PURE__*/ _let(8, ($scope) => $show($scope, "i" in $scope ? $scope.i : true));
 const $setup__script = _script("a0", ($scope) => _on($scope.g, "click", function() {
-	$count($scope, $scope.h + 5);
-	$vis($scope, !$scope.i);
+	$count($scope, ("h" in $scope ? $scope.h : 3) + 5);
+	$vis($scope, !("i" in $scope ? $scope.i : true));
 }));

@@ -11,9 +11,9 @@ const $input_thing = ($scope, input_thing) => {
 const $myThing_content = /*@__PURE__*/ _content("a0", "<span>The thing</span>", "b");
 const $myThing = ($scope, myThing) => $input_thing($scope.a, myThing);
 const $selected = /*@__PURE__*/ _let(2, ($scope) => $myThing($scope, {
-	selected: $scope.c,
+	selected: "c" in $scope ? $scope.c : false,
 	content: $myThing_content($scope)
 }));
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
-	$selected($scope, !$scope.c);
+	$selected($scope, !("c" in $scope ? $scope.c : false));
 }));

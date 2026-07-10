@@ -47,7 +47,7 @@ var template_default = _template("a", (input) => {
 	});
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
-		c: x,
+		c: void 0,
 		d: y,
 		b: _existing_scope($childScope)
 	});

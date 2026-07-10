@@ -17,7 +17,7 @@ const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>inc</button>`)($templat
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D l");
 const $initial = /*@__PURE__*/ _let("initial/2", ($scope) => $initial$1($scope["#childScope/0"], $scope.initial));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$initial($scope, $scope.initial + 1);
+	$initial($scope, ("initial" in $scope ? $scope.initial : 1) + 1);
 }));
 function $setup($scope) {
 	$onValue$1($scope["#childScope/0"], $onValue);

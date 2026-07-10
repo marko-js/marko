@@ -4,26 +4,26 @@ const $Child_content = _content_resume("a0", "Hi", "b");
 const $Parent_content__input_value = /*@__PURE__*/ _closure_get(10, ($scope) => _html($scope, $scope._.k, "a"));
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag(5, _content_resume("a2", " ", " b", $Parent_content__input_value));
 const $Parent__OR__Child = /*@__PURE__*/ _or(13, _script("a3", ($scope) => {
-	$scope.l;
-	$scope.m;
+	"l" in $scope && $scope.l;
+	"m" in $scope && $scope.m;
 	for (const node of $scope.a.querySelectorAll("a")) if (node.getAttribute("ns") !== node.namespaceURI) node.setAttribute("ns", node.namespaceURI);
 }));
 const $Parent = /*@__PURE__*/ _let(11, ($scope) => {
-	$dynamicTag3($scope, $scope.l);
+	$dynamicTag3($scope, "l" in $scope ? $scope.l : "div");
 	$Parent__OR__Child($scope);
 });
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(2, $Child_content);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag(4, $Child_content2);
 const $Child = /*@__PURE__*/ _let(12, ($scope) => {
-	$dynamicTag($scope, $scope.m, () => ({ href: "#bar" }));
-	$dynamicTag2($scope, $scope.m, () => ({ href: "#bar" }));
+	$dynamicTag($scope, "m" in $scope ? $scope.m : "a", () => ({ href: "#bar" }));
+	$dynamicTag2($scope, "m" in $scope ? $scope.m : "a", () => ({ href: "#bar" }));
 	$Parent__OR__Child($scope);
 });
 const $setup__script = _script("a4", ($scope) => {
 	_on($scope.g, "click", function() {
-		$Parent($scope, $scope.l === "div" ? "svg" : "div");
+		$Parent($scope, ("l" in $scope ? $scope.l : "div") === "div" ? "svg" : "div");
 	});
 	_on($scope.h, "click", function() {
-		$Child($scope, $scope.m === "a" ? null : "a");
+		$Child($scope, ("m" in $scope ? $scope.m : "a") === "a" ? null : "a");
 	});
 });

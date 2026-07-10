@@ -12,5 +12,5 @@ const $x = /*@__PURE__*/ _let(2, ($scope) => {
 	$input_item($scope.a, $item);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
-	$x($scope, !$scope.c);
+	$x($scope, !("c" in $scope ? $scope.c : true));
 }));

@@ -28,14 +28,14 @@ const $n = /*@__PURE__*/ _let("n/11", ($scope) => {
 	_text($scope["#text/5"], $scope.n);
 	_text($scope["#text/7"], $scope.n);
 	_text($scope["#text/9"], $scope.n);
-	$await_promise($scope, multiply(1, $scope.n));
-	$await_promise2($scope, multiply(2, $scope.n));
-	$await_promise3($scope, multiply(3, $scope.n));
-	$await_promise4($scope, multiply(4, $scope.n));
-	$await_promise5($scope, multiply(5, $scope.n));
+	$await_promise($scope, multiply(1, "n" in $scope ? $scope.n : 2));
+	$await_promise2($scope, multiply(2, "n" in $scope ? $scope.n : 2));
+	$await_promise3($scope, multiply(3, "n" in $scope ? $scope.n : 2));
+	$await_promise4($scope, multiply(4, "n" in $scope ? $scope.n : 2));
+	$await_promise5($scope, multiply(5, "n" in $scope ? $scope.n : 2));
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
+	$n($scope, ("n" in $scope ? $scope.n : 2) + 1);
 }));
 function $setup($scope) {
 	$await_content($scope);

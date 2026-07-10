@@ -7,7 +7,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button class=up>up</button>${_el_resume($scope0_id, "a")}<button class=down>down</button>${_el_resume($scope0_id, "b")}<button class=change>${_escape(x)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
-		e: x,
+		e: void 0,
 		f: direction
 	});
 	_resume_branch($scope0_id);

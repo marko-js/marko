@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 		let y = 1;
 		_html(`<div>Hello ${_sep($sg__name)}${_escape(name)}${_el_resume($scope1_id, "a", $sg__name)} <!>${_escape(y)}${_el_resume($scope1_id, "b")}</div><button>${_escape(y)}${_el_resume($scope1_id, "d")}</button>${_el_resume($scope1_id, "c")}`);
 		_script($scope1_id, "a1");
-		writeScope($scope1_id, { h: y });
+		writeScope($scope1_id, { h: void 0 });
 		_resume_branch($scope1_id);
 	}) }).content({ name: "Ryan" });
 }, 1);

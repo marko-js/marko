@@ -5,12 +5,11 @@ var template_default = _template("a", (input) => {
 	debugger;
 	const x = 0;
 	debugger;
-	let y = 0;
 	debugger;
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		a: x,
-		b: y
+		b: void 0
 	});
 	_resume_branch($scope0_id);
 }, 1);

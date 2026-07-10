@@ -11,5 +11,5 @@ const $n = /*@__PURE__*/ _let(3, ($scope) => {
 	$Wrap_content__tag_param_($scope.c, [$scope.d, 10]);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
-	$n($scope, $scope.d + 1);
+	$n($scope, ("d" in $scope ? $scope.d : 2) + 1);
 }));

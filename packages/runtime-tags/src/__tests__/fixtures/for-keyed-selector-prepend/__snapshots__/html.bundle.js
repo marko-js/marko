@@ -10,7 +10,6 @@ var template_default = _template("a", (input) => {
 		label: "b"
 	}];
 	let selected = 1;
-	let nextId = 3;
 	_html(`<button class=add>add</button>${_el_resume($scope0_id, "a")}<ul>`);
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
@@ -21,7 +20,7 @@ var template_default = _template("a", (input) => {
 	writeScope($scope0_id, {
 		c: rows,
 		d: selected,
-		e: nextId
+		e: void 0
 	});
 	_resume_branch($scope0_id);
 }, 1);

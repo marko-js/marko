@@ -13,6 +13,6 @@ var template_default = _template("a", (input) => {
 		});
 	});
 	_html(`<div class=log>${_escape(log)}${_el_resume($scope0_id, "b")}</div>`);
-	writeScope($scope0_id, { c: log });
+	writeScope($scope0_id, { c: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

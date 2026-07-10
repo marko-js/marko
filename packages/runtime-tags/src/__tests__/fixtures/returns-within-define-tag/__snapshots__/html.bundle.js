@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 		}, "a0", $scope1_id);
 		writeScope($scope1_id, {
 			c: value,
-			d: call
+			d: call === 1 ? void 0 : call
 		});
 		_resume_branch($scope1_id);
 		return $return;
@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 		}, "a2", $scope2_id);
 		writeScope($scope2_id, {
 			c: value,
-			d: call
+			d: call === 2 ? void 0 : call
 		});
 		_resume_branch($scope2_id);
 		return $return2;
@@ -53,9 +53,9 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a8");
 	_script($scope0_id, "a9");
 	writeScope($scope0_id, {
-		i: clickOnceCount,
+		i: clickOnceCount === 0 ? void 0 : clickOnceCount,
 		j: onClickOnce,
-		k: clickTwiceCount,
+		k: clickTwiceCount === 0 ? void 0 : clickTwiceCount,
 		l: onClickTwice,
 		a: _existing_scope($childScope),
 		e: _existing_scope($childScope2)

@@ -9,7 +9,7 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__$checkedValueChange = /*@__PURE__*/ _if_closure(1, 0, $if_content__checkedValue__OR__$checkedValueChange);
 const $if = /*@__PURE__*/ _if(1, "<input type=radio>", " b", $if_content__setup);
-const $show = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
+const $show = /*@__PURE__*/ _let(5, ($scope) => $if($scope, ("f" in $scope ? $scope.f : true) ? 0 : 1));
 const $checkedValue__OR__$checkedValueChange = /*@__PURE__*/ _or(8, ($scope) => {
 	_attr_input_checkedValue($scope, "a", $scope.g, $scope.h, "a");
 	_attr_input_checkedValue($scope, "c", $scope.g, $scope.h, "c");
@@ -23,7 +23,7 @@ const $setup__script = _script("a2", ($scope) => {
 	_attr_input_checkedValue_script($scope, "a");
 	_attr_input_checkedValue_script($scope, "c");
 	_on($scope.e, "click", function() {
-		$show($scope, !$scope.f);
+		$show($scope, !("f" in $scope ? $scope.f : true));
 	});
 });
 function $checkedValueChange2($scope) {

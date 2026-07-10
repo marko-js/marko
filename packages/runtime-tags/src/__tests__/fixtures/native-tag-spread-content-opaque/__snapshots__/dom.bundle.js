@@ -12,9 +12,9 @@ const $if_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup($scope.a);
 };
 const $if = /*@__PURE__*/ _if(2, /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
-const $show = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
+const $show = /*@__PURE__*/ _let(5, ($scope) => $if($scope, ("f" in $scope ? $scope.f : false) ? 0 : 1));
 const $setup__script = _script("b0", ($scope) => _on($scope.b, "click", function() {
-	$show($scope, !$scope.f);
+	$show($scope, !("f" in $scope ? $scope.f : false));
 }));
 const $input__script = _script("b1", ($scope) => _attrs_script($scope, "a"));
 

@@ -14,7 +14,7 @@ var foo_default = /*@__PURE__*/ _template("__tests__/tags/foo.marko", $template$
 const $template = "<!><!><!>";
 const $walks = "b%c";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $x = /*@__PURE__*/ _let("x/1", ($scope) => $dynamicTag($scope, $scope.x === 1 ? baz_default : foo_default));
+const $x = /*@__PURE__*/ _let("x/1", ($scope) => $dynamicTag($scope, ("x" in $scope ? $scope.x : 1) === 1 ? baz_default : foo_default));
 function $setup($scope) {
 	$x($scope, 1);
 }

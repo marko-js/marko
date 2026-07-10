@@ -12,7 +12,7 @@ var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) =>
 	writeScope($scope0_id, {
 		input_content: input.content,
 		input_name: input.name,
-		x
+		x: x === 1 ? void 0 : x
 	}, "__tests__/tags/custom-tag.marko", 0, {
 		input_content: ["input.content"],
 		input_name: ["input.name"],

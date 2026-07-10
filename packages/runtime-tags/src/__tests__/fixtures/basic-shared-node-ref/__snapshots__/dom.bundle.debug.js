@@ -10,7 +10,7 @@ const $list = /*@__PURE__*/ _let("list/4", ($scope) => $for($scope, [$scope.list
 }]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {
-		$open($scope, !$scope.open);
+		$open($scope, !("open" in $scope ? $scope.open : true));
 	});
 	_on($scope["#button/2"], "click", function() {
 		$list($scope, [].concat($scope.list).reverse());

@@ -28,9 +28,9 @@ const $template = "<button id=tags>Tags</button><!><!>";
 const $walks = " b%c";
 _resume("__tests__/components/class-display.marko", _marko_template);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/1");
-const $msg = /*@__PURE__*/ _let("msg/2", ($scope) => $dynamicTag($scope, _marko_template, () => ({ value: $scope.msg })));
+const $msg = /*@__PURE__*/ _let("msg/2", ($scope) => $dynamicTag($scope, _marko_template, () => ({ value: "msg" in $scope ? $scope.msg : "hi" })));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$msg($scope, $scope.msg + "!");
+	$msg($scope, ("msg" in $scope ? $scope.msg : "hi") + "!");
 }));
 function $setup($scope) {
 	$msg($scope, "hi");

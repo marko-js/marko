@@ -1,0 +1,10 @@
+<let/count=0/>
+<let/label="none"/>
+<let/fromInput=input.start/>
+<button#count onClick() { count++ }>${count}</button>
+<button#label onClick() { label = label === "none" ? "some" : "none" }>${label}</button>
+<button#sum onClick() { fromInput += count }>${fromInput}</button>
+<for|item| of=input.items by="id">
+  <let/open=false/>
+  <button.row onClick() { open = !open }>${item.id}:${open && item.name}</button>
+</for>

@@ -1,7 +1,7 @@
 // template.marko
 const $count = /*@__PURE__*/ _let(8, ($scope) => _text($scope.b, $scope.i));
 const $setup__script = _script("c2", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.i + Object.keys($scope.g).length);
+	$count($scope, ("i" in $scope ? $scope.i : 0) + Object.keys($scope.g).length);
 }));
 function $isInner($scope) {
 	return function(o) {

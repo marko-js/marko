@@ -6,9 +6,9 @@ const $state3 = ($scope, state) => {
 	$state_bChange($scope, state.bChange);
 };
 const $a__OR__b = /*@__PURE__*/ _or(6, ($scope) => $state3($scope, {
-	a: $scope.e,
+	a: "e" in $scope ? "e" in $scope ? $scope.e : "a1" : "a1",
 	aChange: $state($scope),
-	b: $scope.f,
+	b: "f" in $scope ? "f" in $scope ? $scope.f : "b1" : "b1",
 	bChange: $state2($scope)
 }));
 const $a = /*@__PURE__*/ _let(4, ($scope) => {

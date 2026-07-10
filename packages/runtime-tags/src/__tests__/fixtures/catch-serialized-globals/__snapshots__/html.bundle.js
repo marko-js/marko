@@ -13,13 +13,12 @@ var template_default = _template("a", (input) => {
 		const $scope2_reason = _scope_reason();
 		const $scope2_id = _scope_id();
 		const message = $global().settings.message;
-		let clicked = false;
 		_html(`<button>${_escape(error.message)}${_el_resume($scope2_id, "b")}</button>${_el_resume($scope2_id, "a")}`);
 		_script($scope2_id, "a0");
 		writeScope($scope2_id, {
 			e: error?.message,
 			f: message,
-			g: _serialize_if($scope2_reason, 0) && clicked
+			g: _serialize_if($scope2_reason, 0) && void 0
 		});
 		_resume_branch($scope2_id);
 	}, $scope0_id) }) });

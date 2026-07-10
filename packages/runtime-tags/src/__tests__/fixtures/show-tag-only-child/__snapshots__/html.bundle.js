@@ -13,6 +13,6 @@ var template_default = _template("a", (input) => {
 	_html("fallback <b>content</b>");
 	_show_end($scope0_id, "c", $show, 1, 1, "</div>");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { d: open });
+	writeScope($scope0_id, { d: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

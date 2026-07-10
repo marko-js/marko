@@ -7,7 +7,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	const $return = x;
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	writeScope($scope0_id, {
-		x,
+		x: x === 1 ? void 0 : x,
 		"#TagVariableChange": _resume((_new_x) => {
 			x = _new_x;
 		}, "__tests__/tags/counter.marko_0/valueChange", $scope0_id) || void 0

@@ -16,12 +16,11 @@ var template_default = _template("a", (input) => {
 	const $childScope = _peek_scope_id();
 	let a = Let.content({});
 	_var($scope0_id, "b", $childScope, "a2");
-	let b = 0;
-	_html(`<button>${_escape(`${a}`)},${_escape(`${b}`)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button>${_escape(`${a}`)},${_escape(`0`)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
 		e: a,
-		f: b,
+		f: void 0,
 		a: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

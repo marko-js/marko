@@ -6,7 +6,7 @@ const $attrs4 = /*@__PURE__*/ _const("attrs", ($scope) => {
 	_attrs($scope, "#div/0", $scope.attrs);
 	$attrs4__script($scope);
 });
-const $phase__OR__log = /*@__PURE__*/ _or(5, ($scope) => $attrs4($scope, $scope.phase === 0 ? {
+const $phase__OR__log = /*@__PURE__*/ _or(5, ($scope) => $attrs4($scope, ("phase" in $scope ? "phase" in $scope ? $scope.phase : 0 : 0) === 0 ? {
 	onClick: $attrs($scope),
 	onMouseOver: $attrs2($scope)
 } : { onClick: $attrs3($scope) }));
@@ -29,7 +29,7 @@ function $attrs3($scope) {
 }
 function $attrs2($scope) {
 	return function() {
-		$log($scope, `${$scope.log}M`);
+		$log($scope, `${"log" in $scope ? $scope.log : ""}M`);
 	};
 }
 function $attrs($scope) {

@@ -18,9 +18,9 @@ const $if_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup$2($scope["#childScope/0"]);
 };
 const $if = /*@__PURE__*/ _if("#div/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$2), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/5", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = /*@__PURE__*/ _let("show/5", ($scope) => $if($scope, ("show" in $scope ? $scope.show : false) ? 0 : 1));
 const $setup__script = _script("__tests__/tags/my-box.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$show($scope, !$scope.show);
+	$show($scope, !("show" in $scope ? $scope.show : false));
 }));
 function $setup$1($scope) {
 	$show($scope, false);

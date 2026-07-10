@@ -2,14 +2,13 @@
 var child_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let hide = true;
 	let text = "";
 	const id = _id();
 	_html(`<div${_attr("id", id)}>`);
 	_if(() => {}, $scope0_id, "a", 1, 1, 1, "</div>", 1);
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, {
-		b: hide,
+		b: void 0,
 		c: text,
 		d: 0,
 		f: id

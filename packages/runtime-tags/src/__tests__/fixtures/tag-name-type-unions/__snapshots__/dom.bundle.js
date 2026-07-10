@@ -25,12 +25,12 @@ const $dynamicTag4 = /*@__PURE__*/ _dynamic_tag(4);
 const $dynamicTag5 = /*@__PURE__*/ _dynamic_tag(5, $xdivA_content);
 const $dynamicTag6 = /*@__PURE__*/ _dynamic_tag(6);
 const $x = /*@__PURE__*/ _let(7, ($scope) => {
-	$dynamicTag($scope, $scope.h ? "div" : void 0, () => ({ id: "d1" }));
-	$dynamicTag2($scope, $scope.h ? "div" : "span");
-	$dynamicTag4($scope, $scope.h ? a_default : b_default, () => ({ label: "ab" }));
-	$dynamicTag5($scope, $scope.h ? "div" : a_default, () => ({ label: "ad" }));
-	$dynamicTag6($scope, $scope.h ? localTag : a_default, () => ({ label: "la" }));
+	$dynamicTag($scope, ("h" in $scope ? $scope.h : true) ? "div" : void 0, () => ({ id: "d1" }));
+	$dynamicTag2($scope, ("h" in $scope ? $scope.h : true) ? "div" : "span");
+	$dynamicTag4($scope, ("h" in $scope ? $scope.h : true) ? a_default : b_default, () => ({ label: "ab" }));
+	$dynamicTag5($scope, ("h" in $scope ? $scope.h : true) ? "div" : a_default, () => ({ label: "ad" }));
+	$dynamicTag6($scope, ("h" in $scope ? $scope.h : true) ? localTag : a_default, () => ({ label: "la" }));
 });
 const $setup__script = _script("a4", ($scope) => _on($scope.a, "click", function() {
-	$x($scope, !$scope.h);
+	$x($scope, !("h" in $scope ? $scope.h : true));
 }));

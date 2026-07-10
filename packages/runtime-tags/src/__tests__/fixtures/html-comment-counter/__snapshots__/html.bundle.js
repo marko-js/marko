@@ -5,6 +5,6 @@ var template_default = _template("a", (input) => {
 	let count = 0;
 	_html(`<div><button>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}<!--${_escape_comment(count)} + ${_escape_comment(count)} = ${_escape_comment(0)}-->${_el_resume($scope0_id, "c")}</div>`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { d: count });
+	writeScope($scope0_id, { d: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

@@ -11,8 +11,8 @@ const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 		$direction($scope, "down");
 	});
 	_on($scope["#button/2"], "click", function() {
-		if ($scope.direction === "up") $x($scope, $scope.x + 1);
-		else if ($scope.direction === "down") $x($scope, $scope.x - 1);
+		if ($scope.direction === "up") $x($scope, ("x" in $scope ? $scope.x : 1) + 1);
+		else if ($scope.direction === "down") $x($scope, ("x" in $scope ? $scope.x : 1) - 1);
 	});
 });
 function $setup($scope) {

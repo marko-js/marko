@@ -1,6 +1,6 @@
 // tags/custom-tag.marko
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(3, 0, 0, 1);
-const $input_content__OR__x__OR__y = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.g, () => [$scope.h, $scope.i]), 2);
+const $input_content__OR__x__OR__y = /*@__PURE__*/ _or(9, ($scope) => $dynamicTag($scope, $scope.g, () => ["h" in $scope ? "h" in $scope ? $scope.h : 1 : 1, "i" in $scope ? "i" in $scope ? $scope.i : 10 : 10]), 2);
 const $x = /*@__PURE__*/ _let(7, ($scope) => {
 	_text($scope.b, $scope.h);
 	$input_content__OR__x__OR__y($scope);
@@ -10,8 +10,8 @@ const $y = /*@__PURE__*/ _let(8, ($scope) => {
 	$input_content__OR__x__OR__y($scope);
 });
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$x($scope, $scope.h + 1);
-	$y($scope, $scope.i + 1);
+	$x($scope, ("h" in $scope ? $scope.h : 1) + 1);
+	$y($scope, ("i" in $scope ? $scope.i : 10) + 1);
 }));
 
 // template.marko

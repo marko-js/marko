@@ -10,7 +10,7 @@ var child_default = _template("b", (input) => {
 		}, "b0", $scope0_id)
 	};
 	_html(`<span>child:<!>${_escape(count)}${_el_resume($scope0_id, "a")}</span>`);
-	writeScope($scope0_id, { b: count });
+	writeScope($scope0_id, { b: count === 1 ? void 0 : count });
 	_resume_branch($scope0_id);
 	return $return;
 });

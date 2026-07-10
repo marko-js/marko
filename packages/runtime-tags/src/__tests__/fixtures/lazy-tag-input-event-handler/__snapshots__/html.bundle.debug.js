@@ -33,7 +33,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		shared,
-		count
+		count: count === 0 ? void 0 : count
 	}, "__tests__/template.marko", 0, {
 		shared: "3:6",
 		count: "4:6"

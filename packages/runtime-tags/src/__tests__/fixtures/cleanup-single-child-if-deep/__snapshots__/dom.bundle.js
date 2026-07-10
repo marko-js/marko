@@ -39,12 +39,12 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__write = /*@__PURE__*/ _if_closure(4, 0, ($scope) => $write$1($scope.a, $scope._.i));
 const $if = /*@__PURE__*/ _if(4, /*@__PURE__*/ ((_w0) => `<div>${_w0}<!></div>`)($template), /*@__PURE__*/ ((_w0) => `D/${_w0}&%l`)("D l"), $if_content__setup);
-const $showOuter = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 1));
+const $showOuter = /*@__PURE__*/ _let(5, ($scope) => $if($scope, ("f" in $scope ? $scope.f : true) ? 0 : 1));
 const $showMiddle = /*@__PURE__*/ _let(6, $if_content__showMiddle);
 const $showInner = /*@__PURE__*/ _let(7, /* @__PURE__ */ _closure($if_content2__showInner));
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.a, "click", function() {
-		$showOuter($scope, !$scope.f);
+		$showOuter($scope, !("f" in $scope ? $scope.f : true));
 	});
 	_on($scope.b, "click", function() {
 		$showMiddle($scope, !$scope.g);

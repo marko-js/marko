@@ -10,8 +10,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_show_end($scope0_id, "#text/4", visible);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		visible,
-		count
+		visible: visible === false ? void 0 : visible,
+		count: count === 0 ? void 0 : count
 	}, "__tests__/template.marko", 0, {
 		visible: "1:6",
 		count: "4:8"

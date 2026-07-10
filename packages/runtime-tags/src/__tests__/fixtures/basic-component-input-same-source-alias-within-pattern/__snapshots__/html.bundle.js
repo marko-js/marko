@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		value: attrTag({ text: clickCount })
 	});
 	writeScope($scope0_id, {
-		c: clickCount,
+		c: clickCount === 0 ? void 0 : clickCount,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)
 	});

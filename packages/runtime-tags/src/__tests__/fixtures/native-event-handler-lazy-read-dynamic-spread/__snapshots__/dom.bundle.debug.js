@@ -15,10 +15,10 @@ const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/5"]
 const $log = /*@__PURE__*/ _let("log/9", ($scope) => _text($scope["#text/6"], $scope.log));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$enabled($scope, !$scope.enabled);
+		$enabled($scope, !("enabled" in $scope ? $scope.enabled : true));
 	});
 	_on($scope["#button/1"], "click", function() {
-		$count($scope, $scope.count + 1);
+		$count($scope, ("count" in $scope ? $scope.count : 0) + 1);
 	});
 });
 function $setup($scope) {
@@ -29,12 +29,12 @@ function $setup($scope) {
 }
 function $onClick($scope) {
 	return function() {
-		$log($scope, `${$scope.log}b(${$scope.count})`);
+		$log($scope, `${"log" in $scope ? $scope.log : ""}b(${"count" in $scope ? $scope.count : 0})`);
 	};
 }
 function $anonymous($scope) {
 	return () => {
-		$log($scope, `${$scope.log}a(${$scope.count})`);
+		$log($scope, `${"log" in $scope ? $scope.log : ""}a(${"count" in $scope ? $scope.count : 0})`);
 	};
 }
 _resume("__tests__/template.marko_0/onClick", $onClick);

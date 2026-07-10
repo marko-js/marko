@@ -8,6 +8,6 @@ var template_default = _template("a", (input) => {
 	_html(`${_escape(input.note)}${_el_resume($scope0_id, "c", _serialize_guard($scope0_reason, 0))}`);
 	_show_end($scope0_id, "d", reveal);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { h: reveal });
+	writeScope($scope0_id, { h: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

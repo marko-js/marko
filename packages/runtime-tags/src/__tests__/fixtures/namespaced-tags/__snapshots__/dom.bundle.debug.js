@@ -8,8 +8,8 @@ const $Parent_content__setup = $Parent_content__input_value;
 const $Parent_content = _content_resume("__tests__/template.marko_1_content", " ", " b", $Parent_content__setup);
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/5", $Parent_content);
 const $Parent__OR__Child__script = _script("__tests__/template.marko_0_Parent_Child", ($scope) => {
-	$scope.Parent;
-	$scope.Child;
+	"Parent" in $scope ? $scope.Parent : "div";
+	"Child" in $scope ? $scope.Child : "a";
 	for (const node of _el_read($scope["#div/0"]).querySelectorAll("a")) {
 		if (node.getAttribute("ns") !== node.namespaceURI) {
 			node.setAttribute("ns", node.namespaceURI);
@@ -18,22 +18,22 @@ const $Parent__OR__Child__script = _script("__tests__/template.marko_0_Parent_Ch
 });
 const $Parent__OR__Child = /*@__PURE__*/ _or(13, $Parent__OR__Child__script);
 const $Parent = /*@__PURE__*/ _let("Parent/11", ($scope) => {
-	$dynamicTag3($scope, $scope.Parent);
+	$dynamicTag3($scope, "Parent" in $scope ? $scope.Parent : "div");
 	$Parent__OR__Child($scope);
 });
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", $Child_content);
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/4", $Child_content2);
 const $Child = /*@__PURE__*/ _let("Child/12", ($scope) => {
-	$dynamicTag($scope, $scope.Child, () => ({ href: "#bar" }));
-	$dynamicTag2($scope, $scope.Child, () => ({ href: "#bar" }));
+	$dynamicTag($scope, "Child" in $scope ? $scope.Child : "a", () => ({ href: "#bar" }));
+	$dynamicTag2($scope, "Child" in $scope ? $scope.Child : "a", () => ({ href: "#bar" }));
 	$Parent__OR__Child($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/6"], "click", function() {
-		$Parent($scope, $scope.Parent === "div" ? "svg" : "div");
+		$Parent($scope, ("Parent" in $scope ? $scope.Parent : "div") === "div" ? "svg" : "div");
 	});
 	_on($scope["#button/7"], "click", function() {
-		$Child($scope, $scope.Child === "a" ? null : "a");
+		$Child($scope, ("Child" in $scope ? $scope.Child : "a") === "a" ? null : "a");
 	});
 });
 function $setup($scope) {

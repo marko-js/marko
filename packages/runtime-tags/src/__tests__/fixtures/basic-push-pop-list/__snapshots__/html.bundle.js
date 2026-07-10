@@ -2,7 +2,6 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let id = 0;
 	let items = [];
 	_html("<div>");
 	_for_of(items, (item) => {
@@ -13,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button id=add>Add</button>${_el_resume($scope0_id, "b")}<button id=remove>Remove</button>${_el_resume($scope0_id, "c")}</div>`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
-		d: id,
+		d: void 0,
 		e: items
 	});
 	_resume_branch($scope0_id);

@@ -30,12 +30,12 @@ function $setup($scope) {
 }
 function $onClick2($scope) {
 	return function() {
-		$clickCount($scope, $scope.clickCount + 1);
+		$clickCount($scope, ("clickCount" in $scope ? $scope.clickCount : 0) + 1);
 	};
 }
 function $onClick($scope) {
 	return function() {
-		$clickCount($scope, $scope.clickCount + 1);
+		$clickCount($scope, ("clickCount" in $scope ? $scope.clickCount : 0) + 1);
 	};
 }
 _resume("__tests__/template.marko_0/onClick2", $onClick2);

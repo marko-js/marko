@@ -1,7 +1,7 @@
 // template.marko
 const $count = /*@__PURE__*/ _let(5, ($scope) => _text($scope.b, $scope.f));
 const $setup__script = _script("b1", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.f + Object.keys($scope.e).length);
+	$count($scope, ("f" in $scope ? $scope.f : 0) + Object.keys($scope.e).length);
 }));
 function $report($scope) {
 	return function(o) {

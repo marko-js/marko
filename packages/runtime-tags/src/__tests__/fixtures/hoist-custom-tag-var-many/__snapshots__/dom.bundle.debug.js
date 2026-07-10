@@ -40,7 +40,7 @@ const $for_content__setup = ($scope) => {
 const $for = /*@__PURE__*/ _for_to("#text/0", $template$1, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $for_content__setup);
 const $for2 = /*@__PURE__*/ _for_to("#text/1", $template$1, /*@__PURE__*/ ((_w0) => `0${_w0}&`)(" b"), $for_content2__setup);
 const $to = /*@__PURE__*/ _let("to/3", ($scope) => $for2($scope, [
-	$scope.to,
+	"to" in $scope ? $scope.to : 3,
 	0,
 	1
 ]));

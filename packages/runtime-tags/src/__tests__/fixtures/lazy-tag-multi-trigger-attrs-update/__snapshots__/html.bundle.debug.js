@@ -24,7 +24,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$Child_withLoadAssets({ value });
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		value,
+		value: value === 0 ? void 0 : value,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { value: "3:6" });
 	_resume_branch($scope0_id);

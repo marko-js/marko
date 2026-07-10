@@ -14,7 +14,7 @@ const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
 	$MyTag_content__count($scope["#childScope/2"], $scope.count);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, ("count" in $scope ? $scope.count : 0) + 1);
 }));
 function $setup($scope) {
 	$MyTag_content__name($scope["#childScope/2"], "Ryan");

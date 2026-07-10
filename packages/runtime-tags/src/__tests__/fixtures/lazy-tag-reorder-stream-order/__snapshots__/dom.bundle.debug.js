@@ -8,7 +8,7 @@ function $setup($scope) {
 	$count($scope, 0);
 }
 const $input_label__script = _script("__tests__/child.marko_0_input_label", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + $scope.shared[$scope.input_label]);
+	$count($scope, ("count" in $scope ? $scope.count : 0) + $scope.shared[$scope.input_label]);
 }));
 const $input_label = /*@__PURE__*/ _const("input_label", ($scope) => {
 	_attr_class($scope["#button/0"], $scope.input_label);

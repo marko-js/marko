@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_input_rest_checked");
 	writeScope($scope0_id, {
 		input_rest: input.rest,
-		checked
+		checked: checked === false ? void 0 : checked
 	}, "__tests__/template.marko", 0, {
 		input_rest: ["input.rest"],
 		checked: "1:6"

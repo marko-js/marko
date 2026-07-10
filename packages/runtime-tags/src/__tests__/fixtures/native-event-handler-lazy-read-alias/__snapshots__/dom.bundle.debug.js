@@ -14,7 +14,7 @@ const $state = /*@__PURE__*/ _let("state/4", ($scope) => {
 	$state_n__OR__state_tag($scope);
 });
 const $state_tag__OR__n__script = _script("__tests__/template.marko_0_state_tag_n", ($scope) => _on($scope["#button/1"], "click", function() {
-	$log($scope, `${$scope.log}[${$scope.state_n}:${$scope.state_tag}]`);
+	$log($scope, `${"log" in $scope ? $scope.log : ""}[${$scope.state_n}:${$scope.state_tag}]`);
 }));
 const $state_tag__OR__n = /*@__PURE__*/ _or(8, $state_tag__OR__n__script);
 const $state_n = /*@__PURE__*/ _const("state_n", ($scope) => {

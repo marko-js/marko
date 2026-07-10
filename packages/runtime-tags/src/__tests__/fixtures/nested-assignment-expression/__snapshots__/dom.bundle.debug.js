@@ -5,7 +5,7 @@ const $clickCount = /*@__PURE__*/ _let("clickCount/4", ($scope) => _text($scope[
 const $lastCount = /*@__PURE__*/ _let("lastCount/5", ($scope) => _text($scope["#text/2"], $scope.lastCount));
 const $lastCount2 = /*@__PURE__*/ _let("lastCount2/6", ($scope) => _text($scope["#text/3"], $scope.lastCount2));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	const last = $lastCount($scope, $clickCount($scope, $scope.clickCount + 1) - 1);
+	const last = $lastCount($scope, $clickCount($scope, ("clickCount" in $scope ? $scope.clickCount : 0) + 1) - 1);
 	$lastCount2($scope, last);
 }));
 function $setup($scope) {

@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		obj_go: obj.go,
-		n
+		n: n === 1 ? void 0 : n
 	}, "__tests__/template.marko", 0, {
 		obj_go: ["obj.go", "6:8"],
 		n: "7:6"

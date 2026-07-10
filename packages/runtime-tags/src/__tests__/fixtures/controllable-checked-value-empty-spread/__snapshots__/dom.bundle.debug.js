@@ -5,7 +5,7 @@ const $v__OR__rest__script = _script("__tests__/template.marko_0_v_rest", ($scop
 const $v__OR__rest = /*@__PURE__*/ _or(5, ($scope) => {
 	_attrs($scope, "#input/1", {
 		type: "checkbox",
-		checkedValue: $scope.v,
+		checkedValue: "v" in $scope ? $scope.v : "",
 		value: "",
 		...$scope.rest
 	});
@@ -17,7 +17,7 @@ const $v = /*@__PURE__*/ _let("v/3", ($scope) => {
 });
 const $rest = /*@__PURE__*/ _const("rest", $v__OR__rest);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$v($scope, $scope.v === "" ? "x" : "");
+	$v($scope, ("v" in $scope ? $scope.v : "") === "" ? "x" : "");
 }));
 function $setup($scope) {
 	$v($scope, "");

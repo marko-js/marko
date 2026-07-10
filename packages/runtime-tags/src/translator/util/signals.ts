@@ -26,6 +26,7 @@ import {
   getDebugNames,
   getDebugNamesAsIdentifier,
   getDebugScopeAccess,
+  getElidableDefault,
   getReadReplacement,
   getScopeAccessor,
   getScopeAccessorLiteral,
@@ -1291,6 +1292,17 @@ export function writeHTMLResumeStatements(
         props.push(toObjectProperty(prop, t.identifier("undefined")));
       });
       expr = t.objectExpression(props);
+    } else {
+      const elidableDefault = getElidableDefault(binding);
+      if (elidableDefault) {
+        // Undefined props never reach the wire, so a value still equal to the
+        // client-known default resumes from the missing slot.
+        expr = t.conditionalExpression(
+          t.binaryExpression("===", expr, t.valueToNode(elidableDefault.value)),
+          t.unaryExpression("void", t.numericLiteral(0)),
+          t.cloneNode(expr),
+        );
+      }
     }
     serializedProperties.push(
       toObjectProperty(accessor, ifSerialized(reason, expr)),

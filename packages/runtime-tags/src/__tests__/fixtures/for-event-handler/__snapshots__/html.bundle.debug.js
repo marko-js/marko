@@ -9,6 +9,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_script($scope1_id, "__tests__/template.marko_1");
 		writeScope($scope1_id, {}, "__tests__/template.marko", "3:2");
 	}, 0, $scope0_id, "#text/0", 1, 1, 1, 0, 1);
-	writeScope($scope0_id, { num }, "__tests__/template.marko", 0, { num: "1:6" });
+	writeScope($scope0_id, { num: num === 0 ? void 0 : num }, "__tests__/template.marko", 0, { num: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

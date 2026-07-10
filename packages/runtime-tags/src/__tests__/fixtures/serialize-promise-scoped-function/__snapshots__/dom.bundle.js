@@ -8,9 +8,9 @@ const $count = /*@__PURE__*/ _let(2, ($scope) => {
 	$getCount2($scope, $getCount($scope));
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.c + 1);
+	$count($scope, ("c" in $scope ? $scope.c : 1) + 1);
 }));
 function $getCount($scope) {
-	return () => $scope.c;
+	return () => "c" in $scope ? $scope.c : 1;
 }
 _resume("a0", $getCount);

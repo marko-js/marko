@@ -5,10 +5,10 @@ const $message = /*@__PURE__*/ _let("message/4", ($scope) => _text($scope["#text
 const $log = /*@__PURE__*/ _let("log/5", ($scope) => _text($scope["#text/3"], $scope.log));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$log($scope, `${$scope.log}[${$scope.message}]`);
+		$log($scope, `${"log" in $scope ? $scope.log : ""}[${"message" in $scope ? $scope.message : "hello"}]`);
 	});
 	_on($scope["#button/1"], "click", function() {
-		$message($scope, $scope.message + "!");
+		$message($scope, ("message" in $scope ? $scope.message : "hello") + "!");
 	});
 });
 function $setup($scope) {

@@ -32,7 +32,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	$ChildB_withLoadAssets({ value });
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		value,
+		value: value === 0 ? void 0 : value,
 		"#childScope/2": _existing_scope($childScope),
 		"#childScope/4": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0, { value: "4:6" });

@@ -27,9 +27,9 @@ const $try_content__setup = ($scope) => {
 const $if_content__try = /*@__PURE__*/ _try("#text/0", "<!><!><!>", "b%c", $try_content__setup);
 const $if_content__setup = ($scope) => $if_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%c", $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/2", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = /*@__PURE__*/ _let("show/2", ($scope) => $if($scope, ("show" in $scope ? $scope.show : true) ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$show($scope, !$scope.show);
+	$show($scope, !("show" in $scope ? $scope.show : true));
 }));
 function $setup($scope) {
 	$show($scope, true);

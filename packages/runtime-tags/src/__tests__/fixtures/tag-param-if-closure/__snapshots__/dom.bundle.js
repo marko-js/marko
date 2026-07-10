@@ -8,5 +8,5 @@ const $Foo_content__$params = ($scope, $params3) => $Foo_content__v($scope, $par
 const $Foo_content = _content_resume("a1", "<!><!><!>", "b%c", 0, $Foo_content__$params);
 const $count = /*@__PURE__*/ _let(2, ($scope) => $Foo_content2__input_value($scope.b, $scope.c));
 const $setup__script = _script("a2", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.c + 1);
+	$count($scope, ("c" in $scope ? $scope.c : 0) + 1);
 }));

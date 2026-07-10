@@ -1,6 +1,6 @@
 // template.marko
 const $y = /*@__PURE__*/ _let_change(7, ($scope) => _text($scope.c, $scope.h));
-const $x__OR__yChange = /*@__PURE__*/ _or(6, ($scope) => $y($scope, $scope.e, $scope.f));
+const $x__OR__yChange = /*@__PURE__*/ _or(6, ($scope) => $y($scope, "e" in $scope ? "e" in $scope ? $scope.e : 1 : 1, $scope.f));
 const $x = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.b, $scope.e);
 	$x__OR__yChange($scope);

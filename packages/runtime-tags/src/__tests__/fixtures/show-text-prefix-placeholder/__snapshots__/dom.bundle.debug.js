@@ -8,10 +8,10 @@ const $count = /*@__PURE__*/ _let("count/7", ($scope) => {
 	_text($scope["#text/5"], $scope.count);
 });
 const $show = /*@__PURE__*/ _show("#text/4", "#text/2");
-const $vis = /*@__PURE__*/ _let("vis/8", ($scope) => $show($scope, $scope.vis));
+const $vis = /*@__PURE__*/ _let("vis/8", ($scope) => $show($scope, "vis" in $scope ? $scope.vis : true));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/6"], "click", function() {
-	$count($scope, $scope.count + 5);
-	$vis($scope, !$scope.vis);
+	$count($scope, ("count" in $scope ? $scope.count : 3) + 5);
+	$vis($scope, !("vis" in $scope ? $scope.vis : true));
 }));
 function $setup($scope) {
 	$count($scope, 3);

@@ -30,8 +30,8 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	writeScope($scope0_id, {
 		k: input.value,
-		l: Parent,
-		m: Child,
+		l: void 0,
+		m: void 0,
 		Bk: $si__input_value && $input_value__closures
 	});
 	_resume_branch($scope0_id);

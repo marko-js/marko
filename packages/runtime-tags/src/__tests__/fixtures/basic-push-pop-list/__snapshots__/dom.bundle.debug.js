@@ -8,7 +8,7 @@ const $for = /*@__PURE__*/ _for_of("#text/0", " ", " b", 0, $for_content__$param
 const $items = /*@__PURE__*/ _let("items/4", ($scope) => $for($scope, [$scope.items]));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/1"], "click", function() {
-		$items($scope, [...$scope.items, $id($scope, $scope.id + 1)]);
+		$items($scope, [...$scope.items, $id($scope, ("id" in $scope ? $scope.id : 0) + 1)]);
 	});
 	_on($scope["#button/2"], "click", function() {
 		$items($scope, $scope.items.slice(0, -1));

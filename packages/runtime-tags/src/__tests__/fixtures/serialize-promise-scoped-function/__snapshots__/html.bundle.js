@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
-		c: count,
+		c: void 0,
 		e: promise
 	});
 	_resume_branch($scope0_id);

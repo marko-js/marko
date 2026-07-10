@@ -13,6 +13,6 @@ var template_default = _template("a", (input) => {
 		_scope_reason();
 		_html("body content");
 	}, $scope0_id));
-	writeScope($scope0_id, { b: tagName });
+	writeScope($scope0_id, { b: tagName === "span" ? void 0 : tagName });
 	_resume_branch($scope0_id);
 }, 1);

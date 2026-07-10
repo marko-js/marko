@@ -5,7 +5,7 @@ const $input_rest__OR__checked__script = _script("__tests__/template.marko_0_inp
 const $input_rest__OR__checked = /*@__PURE__*/ _or(5, ($scope) => {
 	_attrs($scope, "#input/0", {
 		type: "radio",
-		checked: $scope.checked,
+		checked: "checked" in $scope ? $scope.checked : false,
 		checkedChange: $checkedChange($scope),
 		value: "x",
 		...$scope.input_rest

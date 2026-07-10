@@ -15,7 +15,6 @@ const $Child_withLoadAssets = withLoadAssets(child_default, "_a", [{
 var template_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let show = true;
 	let value = 0;
 	_html(`<button id=toggle>Toggle</button>${_el_resume($scope0_id, "a")}`);
 	_if(() => {
@@ -31,7 +30,7 @@ var template_default = _template("b", (input) => {
 	_html(`<button id=load>Load</button><button id=inc>Inc</button>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, {
-		d: show,
+		d: void 0,
 		e: value
 	});
 	_resume_branch($scope0_id);

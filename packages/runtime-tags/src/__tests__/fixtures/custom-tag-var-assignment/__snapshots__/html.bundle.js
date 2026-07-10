@@ -7,7 +7,7 @@ var counter_default = _template("b", (input) => {
 	const $return = x;
 	_script($scope0_id, "b1");
 	writeScope($scope0_id, {
-		c: x,
+		c: x === 1 ? void 0 : x,
 		U: _resume((_new_x) => {
 			x = _new_x;
 		}, "b0", $scope0_id) || void 0

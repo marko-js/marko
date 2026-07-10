@@ -8,7 +8,7 @@ function $setup$1($scope) {
 	$clickCount($scope, 0);
 }
 const $input_onCount__script = _script("__tests__/tags/counter.marko_0_input_onCount", ($scope) => _on($scope["#button/0"], "click", function() {
-	$scope.input_onCount($clickCount($scope, $scope.clickCount + 1));
+	$scope.input_onCount($clickCount($scope, ("clickCount" in $scope ? $scope.clickCount : 0) + 1));
 }));
 const $input_onCount = /*@__PURE__*/ _const("input_onCount", $input_onCount__script);
 const $input = ($scope, input) => $input_onCount($scope, input.onCount);
@@ -23,7 +23,7 @@ const $if_content__setup = ($scope) => {
 	$setup$1($scope["#childScope/0"]);
 };
 const $if = /*@__PURE__*/ _if("#div/0", /*@__PURE__*/ ((_w0) => `<div>${_w0}</div>`)($template$1), /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($walks$1), $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/1", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = /*@__PURE__*/ _let("show/1", ($scope) => $if($scope, ("show" in $scope ? $scope.show : true) ? 0 : 1));
 const $onCount2 = /*@__PURE__*/ _const("onCount");
 function $setup($scope) {
 	$show($scope, true);

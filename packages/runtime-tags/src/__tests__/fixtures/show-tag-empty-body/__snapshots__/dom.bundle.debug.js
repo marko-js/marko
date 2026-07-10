@@ -2,9 +2,9 @@
 const $template = "<button>reveal</button><!><!><!><!>";
 const $walks = " b%b%b%c";
 const $show = /*@__PURE__*/ _show("#text/3", "#text/1");
-const $reveal = /*@__PURE__*/ _let("reveal/7", ($scope) => $show($scope, $scope.reveal));
+const $reveal = /*@__PURE__*/ _let("reveal/7", ($scope) => $show($scope, "reveal" in $scope ? $scope.reveal : false));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$reveal($scope, !$scope.reveal);
+	$reveal($scope, !("reveal" in $scope ? $scope.reveal : false));
 }));
 function $setup($scope) {
 	$reveal($scope, false);

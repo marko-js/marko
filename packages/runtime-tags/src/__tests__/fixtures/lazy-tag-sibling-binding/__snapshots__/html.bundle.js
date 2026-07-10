@@ -35,8 +35,7 @@ var template_default = _template("c", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let shared = { inner: { value: 1 } };
-	let count = 0;
-	_html(`<button class=main>main:<!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button class=main>main:<!>${_escape(0)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	$ChildS_withLoadAssets({
 		holder: shared,
 		isShared: _resume(function(o) {
@@ -52,7 +51,7 @@ var template_default = _template("c", (input) => {
 	_script($scope0_id, "c2");
 	writeScope($scope0_id, {
 		g: shared,
-		i: count
+		i: void 0
 	});
 	_resume_branch($scope0_id);
 }, 1);

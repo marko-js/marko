@@ -5,9 +5,9 @@ function createWrapper(a) {
 	return { a };
 }
 const $pattern2 = ($scope, $pattern) => $a($scope, $pattern.a);
-const $count = /*@__PURE__*/ _let("count/3", ($scope) => $pattern2($scope, createWrapper($scope.count)));
+const $count = /*@__PURE__*/ _let("count/3", ($scope) => $pattern2($scope, createWrapper("count" in $scope ? $scope.count : 0)));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, ("count" in $scope ? $scope.count : 0) + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

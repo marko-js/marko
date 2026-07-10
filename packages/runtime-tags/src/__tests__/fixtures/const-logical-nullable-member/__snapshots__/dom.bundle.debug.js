@@ -5,12 +5,12 @@ const $viaAnd = ($scope, viaAnd) => $viaAnd_label($scope, viaAnd?.label);
 const $viaTernary = ($scope, viaTernary) => $viaTernary_label($scope, viaTernary?.label);
 const $box = ($scope, box) => $box_inner($scope, box.inner);
 const $on = /*@__PURE__*/ _let("on/4", ($scope) => {
-	$viaAnd($scope, $scope.on && { label: "and" });
-	$viaTernary($scope, $scope.on ? { label: "ternary" } : null);
-	$box($scope, { inner: $scope.on ? { label: "assign" } : null });
+	$viaAnd($scope, ("on" in $scope ? $scope.on : true) && { label: "and" });
+	$viaTernary($scope, ("on" in $scope ? $scope.on : true) ? { label: "ternary" } : null);
+	$box($scope, { inner: ("on" in $scope ? $scope.on : true) ? { label: "assign" } : null });
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
-	$on($scope, $scope.on ? null : true);
+	$on($scope, ("on" in $scope ? $scope.on : true) ? null : true);
 }));
 function $setup($scope) {
 	$on($scope, true);

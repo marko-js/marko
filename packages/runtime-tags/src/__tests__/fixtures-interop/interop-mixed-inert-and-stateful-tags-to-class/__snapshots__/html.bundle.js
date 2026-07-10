@@ -34,6 +34,6 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "c", _marko_template$1, { value: "Hello World" }, 0, 0, 0);
 	_dynamic_tag($scope0_id, "d", _marko_template, { count });
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { e: count });
+	writeScope($scope0_id, { e: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

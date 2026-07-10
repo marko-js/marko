@@ -9,6 +9,6 @@ const $items = /*@__PURE__*/ _let(3, ($scope) => {
 	$for($scope, [$scope.d]);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
-	$items($scope, [...$scope.d, $itemId($scope, $scope.c + 1)]);
+	$items($scope, [...$scope.d, $itemId($scope, ("c" in $scope ? $scope.c : 0) + 1)]);
 }));
 const $items_length = /*@__PURE__*/ _const(4, $for_content__items_length);

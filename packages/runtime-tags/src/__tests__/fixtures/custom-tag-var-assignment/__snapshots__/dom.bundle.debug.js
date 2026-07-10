@@ -6,7 +6,7 @@ const $x = /*@__PURE__*/ _let("x/2", ($scope) => {
 	_return($scope, $scope.x);
 });
 const $setup__script$1 = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
+	$x($scope, ("x" in $scope ? $scope.x : 1) + 1);
 }));
 function $setup$1($scope) {
 	_return_change($scope, $valueChange($scope));

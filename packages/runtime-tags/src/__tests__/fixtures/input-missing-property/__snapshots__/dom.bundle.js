@@ -9,5 +9,5 @@ const $count = /*@__PURE__*/ _let(3, ($scope) => {
 	$Child_content__input_count($scope.c, $scope.d);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.d + 1);
+	$count($scope, ("d" in $scope ? $scope.d : 0) + 1);
 }));

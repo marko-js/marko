@@ -13,14 +13,13 @@ var template_default = _template("a", (input) => {
 			g: _serialize_if($scope1_reason, 0) && a
 		});
 	}) };
-	let n = 1;
-	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>inc <!>${_escape(1)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
 	Wrap.content({ a: "z1" });
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
-		d: n,
+		d: void 0,
 		c: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

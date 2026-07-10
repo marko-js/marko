@@ -50,14 +50,14 @@ const $if_content__setup = ($scope) => {
 };
 const $if_content__write = /*@__PURE__*/ _if_closure("#text/4", 0, ($scope) => $write$1($scope["#childScope/0"], $scope._.write));
 const $if = /*@__PURE__*/ _if("#text/4", /*@__PURE__*/ ((_w0) => `<div>${_w0}<!></div>`)($template$1), /*@__PURE__*/ ((_w0) => `D/${_w0}&%l`)($walks$1), $if_content__setup);
-const $showOuter = /*@__PURE__*/ _let("showOuter/5", ($scope) => $if($scope, $scope.showOuter ? 0 : 1));
+const $showOuter = /*@__PURE__*/ _let("showOuter/5", ($scope) => $if($scope, ("showOuter" in $scope ? $scope.showOuter : true) ? 0 : 1));
 const $showMiddle = /*@__PURE__*/ _let("showMiddle/6", $if_content__showMiddle);
 const $showInner__closure = /*@__PURE__*/ _closure($if_content2__showInner);
 const $showInner = /*@__PURE__*/ _let("showInner/7", $showInner__closure);
 const $write2 = /*@__PURE__*/ _const("write");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$showOuter($scope, !$scope.showOuter);
+		$showOuter($scope, !("showOuter" in $scope ? $scope.showOuter : true));
 	});
 	_on($scope["#button/1"], "click", function() {
 		$showMiddle($scope, !$scope.showMiddle);

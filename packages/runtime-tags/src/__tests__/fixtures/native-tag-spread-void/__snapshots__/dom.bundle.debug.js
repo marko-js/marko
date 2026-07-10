@@ -18,7 +18,7 @@ const $cls = /*@__PURE__*/ _let("cls/2", ($scope) => $input($scope["#childScope/
 	alt: "pic"
 }));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$cls($scope, $scope.cls === "a" ? "b" : "a");
+	$cls($scope, ("cls" in $scope ? $scope.cls : "a") === "a" ? "b" : "a");
 }));
 function $setup($scope) {
 	$cls($scope, "a");

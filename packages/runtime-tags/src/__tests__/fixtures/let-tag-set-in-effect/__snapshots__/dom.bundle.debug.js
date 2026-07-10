@@ -2,7 +2,7 @@
 const $template = "<span> </span><span> </span>";
 const $walks = "D lD l";
 const $x__script = _script("__tests__/template.marko_0_x", ($scope) => {
-	$y($scope, $scope.x);
+	$y($scope, "x" in $scope ? $scope.x : 1);
 	$x($scope, 2);
 });
 const $x = /*@__PURE__*/ _let("x/2", ($scope) => {

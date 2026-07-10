@@ -17,17 +17,17 @@ const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `${_w0}${_w1}${_w2}<span> </
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => `/${_w0}&/${_w1}&/${_w2}&D l`)(" b", " b", " b");
 const $checkedValue__OR__$checkedValueChange = /*@__PURE__*/ _or(6, ($scope) => {
 	$input($scope["#childScope/0"], {
-		checkedValue: $scope.checkedValue,
+		checkedValue: "checkedValue" in $scope ? $scope.checkedValue : "a",
 		checkedValueChange: $scope.$checkedValueChange,
 		value: "a"
 	});
 	$input($scope["#childScope/1"], {
-		checkedValue: $scope.checkedValue,
+		checkedValue: "checkedValue" in $scope ? $scope.checkedValue : "a",
 		checkedValueChange: $scope.$checkedValueChange,
 		value: "b"
 	});
 	$input($scope["#childScope/2"], {
-		checkedValue: $scope.checkedValue,
+		checkedValue: "checkedValue" in $scope ? $scope.checkedValue : "a",
 		checkedValueChange: $scope.$checkedValueChange,
 		value: "c"
 	});

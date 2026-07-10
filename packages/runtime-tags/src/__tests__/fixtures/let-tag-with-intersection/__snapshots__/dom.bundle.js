@@ -7,8 +7,8 @@ const $y__OR__z = ($scope) => {
 };
 const $x = /*@__PURE__*/ _let(5, ($scope) => {
 	_text($scope.b, $scope.f);
-	$y($scope, $scope.f + 1);
-	$z($scope, $scope.f + 2);
+	$y($scope, ("f" in $scope ? $scope.f : 1) + 1);
+	$z($scope, ("f" in $scope ? $scope.f : 1) + 2);
 	$y__OR__z($scope);
 });
-const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", () => $x($scope, $scope.f + 1) - 1));
+const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", () => $x($scope, ("f" in $scope ? $scope.f : 1) + 1) - 1));

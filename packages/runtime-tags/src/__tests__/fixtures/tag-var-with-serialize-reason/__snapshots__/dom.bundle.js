@@ -8,6 +8,6 @@ const $count = /*@__PURE__*/ _let(4, ($scope) => {
 	$input_value($scope.c, $scope.e);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.e + 1);
+	$count($scope, ("e" in $scope ? $scope.e : 1) + 1);
 }));
 const $x = _var_resume("a0", ($scope, x) => {});

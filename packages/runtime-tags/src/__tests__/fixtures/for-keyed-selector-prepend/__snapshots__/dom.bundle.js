@@ -14,9 +14,9 @@ const $selected = /*@__PURE__*/ _let(3, $for_content__selected);
 const $nextId = /*@__PURE__*/ _let(4);
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
 	$rows($scope, [{
-		id: $scope.e,
+		id: "e" in $scope ? $scope.e : 3,
 		label: "new"
 	}, ...$scope.c]);
-	$selected($scope, $scope.e);
-	$nextId($scope, $scope.e + 1);
+	$selected($scope, "e" in $scope ? $scope.e : 3);
+	$nextId($scope, ("e" in $scope ? $scope.e : 3) + 1);
 }));

@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	writeScope($scope0_id, {
 		state_n: state.n,
 		state_tag: state.tag,
-		log
+		log: log === "" ? void 0 : log
 	}, "__tests__/template.marko", 0, {
 		state_n: ["state.n", "2:6"],
 		state_tag: ["state.tag", "2:6"],

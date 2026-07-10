@@ -8,7 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	writeScope($scope0_id, {
 		input_extra: input.extra,
-		x
+		x: x === 0 ? void 0 : x
 	}, "__tests__/tags/child.marko", 0, {
 		input_extra: ["input.extra"],
 		x: "1:6"
@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const message = `${name} ${data}`;
 	_html(`<div>${_escape(message)}${_el_resume($scope0_id, "#text/2")}</div>`);
 	writeScope($scope0_id, {
-		name,
+		name: name === "Marko" ? void 0 : name,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { name: "1:6" });
 	_resume_branch($scope0_id);

@@ -18,7 +18,7 @@ const $Wrap_content__onClick = /*@__PURE__*/ _const(4, $Wrap_content__as__OR__on
 const $x = /*@__PURE__*/ _let(1, ($scope) => $Wrap_content__onClick($scope.a, $onClick($scope)));
 function $onClick($scope) {
 	return function() {
-		console.log($x($scope, $scope.b + 1) - 1);
+		console.log($x($scope, ("b" in $scope ? $scope.b : 1) + 1) - 1);
 	};
 }
 _resume("a0", $onClick);

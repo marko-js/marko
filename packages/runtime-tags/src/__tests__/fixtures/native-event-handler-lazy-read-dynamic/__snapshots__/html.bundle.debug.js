@@ -9,9 +9,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_enabled");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		enabled,
-		other,
-		log
+		enabled: enabled === true ? void 0 : enabled,
+		other: other === 0 ? void 0 : other,
+		log: log === "" ? void 0 : log
 	}, "__tests__/template.marko", 0, {
 		enabled: "2:6",
 		other: "3:6",

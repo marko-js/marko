@@ -13,7 +13,7 @@ const $tagselect_content__setup = ($scope) => {
 };
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0, _content_resume("a1", "<option>A</option><option>B</option><option>C</option>", " b b b", $tagselect_content__setup));
 const $value__OR__tag = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $scope.d ? "select" : {}, () => ({
-	value: $scope.c,
+	value: "c" in $scope ? "c" in $scope ? $scope.c : "b" : "b",
 	valueChange: $valueChange($scope)
 })));
 const $value = /*@__PURE__*/ _let(2, ($scope) => {

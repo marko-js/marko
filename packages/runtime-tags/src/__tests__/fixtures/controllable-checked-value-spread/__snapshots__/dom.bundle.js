@@ -11,17 +11,17 @@ const $input = /*@__PURE__*/ _const(2, ($scope) => {
 // template.marko
 const $checkedValue__OR__$checkedValueChange = /*@__PURE__*/ _or(6, ($scope) => {
 	$input($scope.a, {
-		checkedValue: $scope.e,
+		checkedValue: "e" in $scope ? $scope.e : "a",
 		checkedValueChange: $scope.f,
 		value: "a"
 	});
 	$input($scope.b, {
-		checkedValue: $scope.e,
+		checkedValue: "e" in $scope ? $scope.e : "a",
 		checkedValueChange: $scope.f,
 		value: "b"
 	});
 	$input($scope.c, {
-		checkedValue: $scope.e,
+		checkedValue: "e" in $scope ? $scope.e : "a",
 		checkedValueChange: $scope.f,
 		value: "c"
 	});

@@ -43,7 +43,7 @@ var template_default = _template("a", (input) => {
 	parent_b_default({ value });
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
-		d: value,
+		d: void 0,
 		b: _existing_scope($childScope),
 		c: _existing_scope($childScope2)
 	});

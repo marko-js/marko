@@ -5,13 +5,12 @@ var template_default = _template("a", (input) => {
 	let visible = false;
 	_html(`<button id=toggle>toggle</button>${_el_resume($scope0_id, "a")}`);
 	_show_start(visible, 1);
-	let count = 0;
-	_html(`<button id=inc>count <!>${_escape(count)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
+	_html(`<button id=inc>count <!>${_escape(0)}${_el_resume($scope0_id, "d")}</button>${_el_resume($scope0_id, "c")}`);
 	_show_end($scope0_id, "e", visible);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
-		f: visible,
-		g: count
+		f: void 0,
+		g: void 0
 	});
 	_resume_branch($scope0_id);
 }, 1);

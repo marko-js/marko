@@ -19,11 +19,11 @@ const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)($walks$1);
 const $myThing_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<span>The thing</span>", "b");
 const $myThing = ($scope, myThing) => $input_thing($scope["#childScope/0"], myThing);
 const $selected = /*@__PURE__*/ _let("selected/2", ($scope) => $myThing($scope, {
-	selected: $scope.selected,
+	selected: "selected" in $scope ? $scope.selected : false,
 	content: $myThing_content($scope)
 }));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$selected($scope, !$scope.selected);
+	$selected($scope, !("selected" in $scope ? $scope.selected : false));
 }));
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
