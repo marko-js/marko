@@ -20,6 +20,7 @@ import {
   getNodeContentType,
   getOrCreateSection,
   getSection,
+  type Section,
 } from "../util/sections";
 import { getSerializeGuard } from "../util/serialize-guard";
 import {
@@ -43,6 +44,9 @@ enum SiblingText {
   None,
   Before,
   After,
+  // A non-text node (element/comment) directly precedes: no text to merge
+  // with, but resume must not claim that node when the text renders empty.
+  NodeBefore,
 }
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
@@ -121,17 +125,25 @@ export default {
 
         if (siblingText === SiblingText.Before) {
           if (isHTML && markerSerializeReason) {
-            if (markerSerializeReason === true || markerSerializeReason.state) {
-              write`<!>`;
-            } else {
-              write`${callRuntime("_sep", getSerializeGuard(section, markerSerializeReason, true))}`;
-            }
+            writeSeparator(write, section, markerSerializeReason);
           }
           walks.visit(placeholder, WalkCode.Replace);
         } else if (siblingText === SiblingText.After) {
           walks.visit(placeholder, WalkCode.Replace);
         } else {
-          if (!isHTML) write` `;
+          if (isHTML) {
+            // A preceding element/comment would be claimed as the text node
+            // when the value serializes empty, so it gets the same
+            // protective separator as sibling text.
+            if (
+              siblingText === SiblingText.NodeBefore &&
+              markerSerializeReason
+            ) {
+              writeSeparator(write, section, markerSerializeReason);
+            }
+          } else {
+            write` `;
+          }
           walks.visit(placeholder, WalkCode.Get);
         }
 
@@ -227,8 +239,23 @@ function buildEscapedTextExpression(value: t.Expression): t.Expression {
   }
 }
 
+// The `<!>` separator keeps resume from claiming the previous node as the
+// placeholder's text node when the serialized text is empty.
+function writeSeparator(
+  write: ReturnType<typeof writer.writeTo>,
+  section: Section,
+  reason: Exclude<ReturnType<typeof getSerializeReason>, undefined | false>,
+) {
+  if (reason === true || reason.state) {
+    write`<!>`;
+  } else {
+    write`${callRuntime("_sep", getSerializeGuard(section, reason, true))}`;
+  }
+}
+
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const placeholderExtra = placeholder.node.extra!;
+  let hasNodeBefore = false;
   let prev = placeholder.getPrevSibling();
   let prevParent: t.NodePath = placeholder.parentPath;
   for (;;) {
@@ -256,6 +283,7 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     ) {
       return (placeholderExtra[kSiblingText] = SiblingText.Before);
     } else {
+      hasNodeBefore = true;
       break;
     }
   }
@@ -294,7 +322,9 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     return (placeholderExtra[kSiblingText] = SiblingText.After);
   }
 
-  return (placeholderExtra[kSiblingText] = SiblingText.None);
+  return (placeholderExtra[kSiblingText] = hasNodeBefore
+    ? SiblingText.NodeBefore
+    : SiblingText.None);
 }
 
 // Returns the owner tag when `parent` is the body of a tag that inlines its
