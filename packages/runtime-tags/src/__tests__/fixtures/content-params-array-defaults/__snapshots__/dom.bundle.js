@@ -1,6 +1,6 @@
 // template.marko
 const $Wrap_content__a = ($scope, a) => _text($scope.a, a);
-const $Wrap_content__$a = ($scope, $a) => $Wrap_content__a($scope, void 0 !== $a ? $a : 1);
+const $Wrap_content__$a = ($scope, $a = 1) => $Wrap_content__a($scope, $a);
 const $Wrap_content__b = ($scope, b) => _text($scope.b, b);
 const $Wrap_content__tag_param_ = ($scope, $temp) => {
 	$Wrap_content__$a($scope, $temp[0]);

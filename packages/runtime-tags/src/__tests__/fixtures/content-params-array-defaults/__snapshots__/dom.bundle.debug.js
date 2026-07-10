@@ -3,7 +3,7 @@ const $Wrap_content__walks = "D%c%l", $Wrap_content__template = "<div><!>|<!></d
 const $template = /*@__PURE__*/ ((_w0, _w1) => `<button>inc</button>${_w0}${_w1}<!>`)($Wrap_content__template, $Wrap_content__template);
 const $walks = /*@__PURE__*/ ((_w0, _w1) => ` b/${_w0}&/${_w1}&b`)($Wrap_content__walks, $Wrap_content__walks);
 const $Wrap_content__a = ($scope, a) => _text($scope["#text/0"], a);
-const $Wrap_content__$a = ($scope, $a) => $Wrap_content__a($scope, void 0 !== $a ? $a : 1);
+const $Wrap_content__$a = ($scope, $a = 1) => $Wrap_content__a($scope, $a);
 const $Wrap_content__b = ($scope, b) => _text($scope["#text/1"], b);
 const $Wrap_content__tag_param_ = ($scope, $temp) => {
 	$Wrap_content__$a($scope, $temp[0]);

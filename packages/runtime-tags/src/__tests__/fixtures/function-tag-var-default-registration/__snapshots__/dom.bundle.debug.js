@@ -4,7 +4,7 @@ const $walks = " b";
 const updateText = $updateText;
 const $onClick2__script = _script("__tests__/template.marko_0_onClick", ($scope) => _on($scope["#button/0"], "click", $scope.onClick));
 const $onClick2 = /*@__PURE__*/ _const("onClick", $onClick2__script);
-const $onClick3 = ($scope, $onClick) => $onClick2($scope, void 0 !== $onClick ? $onClick : updateText);
+const $onClick3 = ($scope, $onClick = updateText) => $onClick2($scope, $onClick);
 const $pattern2 = ($scope, $pattern) => $onClick3($scope, $pattern.onClick);
 function $setup($scope) {
 	$pattern2($scope, {});

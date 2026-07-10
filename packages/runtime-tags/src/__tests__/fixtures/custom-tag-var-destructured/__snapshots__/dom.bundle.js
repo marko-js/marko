@@ -22,7 +22,7 @@ _resume("b0", $_return);
 
 // template.marko
 const $missing2 = ($scope, missing) => _text($scope.f, missing);
-const $missing3 = ($scope, $missing) => $missing2($scope, void 0 !== $missing ? $missing : "fallback");
+const $missing3 = ($scope, $missing = "fallback") => $missing2($scope, $missing);
 const $pattern2 = _var_resume("a0", ($scope, $pattern) => {
 	$count($scope, $pattern.count);
 	$countChange2($scope, $pattern.countChange);

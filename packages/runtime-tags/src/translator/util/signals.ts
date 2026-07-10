@@ -88,6 +88,7 @@ export interface Signal {
   hasSideEffect: boolean;
   forcePersist: boolean;
   inline: { value: t.Expression } | undefined;
+  valueParamDefault: t.Expression | undefined;
   export: boolean;
   extraArgs: t.Expression[] | undefined;
   prependStatements: t.Statement[] | undefined;
@@ -278,6 +279,7 @@ export function getSignal(
         hasDynamicSubscribers: false,
         forcePersist: false,
         inline: undefined,
+        valueParamDefault: undefined,
         extraArgs: undefined,
         prependStatements: undefined,
         buildAssignment: undefined,
@@ -689,7 +691,7 @@ export function getSignalFn(signal: Signal): t.Expression {
   }
 
   if (!signal.hasSideEffect) {
-    if (isValue && signal.render.length === 1) {
+    if (isValue && !signal.valueParamDefault && signal.render.length === 1) {
       const render = signal.render[0];
       if (render.type === "ExpressionStatement") {
         const { expression } = render;
@@ -701,7 +703,9 @@ export function getSignalFn(signal: Signal): t.Expression {
           isOwnValueRead(expression.arguments[1], binding as Binding)
         ) {
           // The signal only forwards its scope and value to another signal:
-          // `(scope, value) => fn(scope, value)` is equivalent to `fn`.
+          // `(scope, value) => fn(scope, value)` is equivalent to `fn`. A
+          // collapsed parameter default must keep its own function since
+          // the default would not apply to the forwarded signal's parameter.
           return expression.callee;
         }
       }
@@ -709,7 +713,15 @@ export function getSignalFn(signal: Signal): t.Expression {
 
     return t.arrowFunctionExpression(
       isValue
-        ? [scopeIdentifier, getSignalValueIdentifier(signal)]
+        ? [
+            scopeIdentifier,
+            signal.valueParamDefault
+              ? t.assignmentPattern(
+                  getSignalValueIdentifier(signal),
+                  signal.valueParamDefault,
+                )
+              : getSignalValueIdentifier(signal),
+          ]
         : [scopeIdentifier],
       toFirstExpressionOrBlock(signal.render),
     );
@@ -954,7 +966,13 @@ export function writeSignals(section: Section) {
 
     for (const value of signal.values) {
       writeSignal(value.signal);
-      traverseReplace(value, "value", replaceRenderNode);
+      if (value.signal.inline) {
+        // An inlined value is cloned into its reader and must keep its
+        // full expression.
+        traverseReplace(value, "value", replaceRenderNode);
+      } else {
+        traverseReplace(value, "value", replaceValueNode, signal);
+      }
     }
 
     forEach(signal.intersection, writeSignal);
@@ -1451,6 +1469,34 @@ function replaceRenderNode(node: t.Node, signal?: Signal) {
     replaceBindingReadNode(node, signal) ||
     replaceRegisteredFunctionNode(node)
   );
+}
+
+function replaceValueNode(node: t.Node, signal?: Signal) {
+  return replaceDefaultedValueNode(node, signal) || replaceRenderNode(node);
+}
+
+// A defaulted binding's derivation (`void 0 !== source ? source : fallback`,
+// see the AssignmentPattern case in references.ts) collapses to a native
+// parameter default when the source read becomes the signal's value
+// parameter: the fallback moves onto the parameter in getSignalFn and the
+// conditional reduces to the source read. A source that persists to the
+// scope (side effect, serialize reason, or inlined signal) keeps the full
+// conditional since its reads lower to scope reads instead.
+function replaceDefaultedValueNode(node: t.Node, signal?: Signal) {
+  if (node.type === "ConditionalExpression" && signal) {
+    const defaultSource = node.extra?.defaultSource;
+    if (
+      defaultSource &&
+      signal.referencedBindings === defaultSource &&
+      !signal.hasSideEffect &&
+      !signal.inline &&
+      !signal.valueParamDefault &&
+      !getSerializeReason(signal.section, defaultSource)
+    ) {
+      signal.valueParamDefault = node.alternate;
+      return node.consequent;
+    }
+  }
 }
 
 function replaceEffectNode(node: t.Node) {

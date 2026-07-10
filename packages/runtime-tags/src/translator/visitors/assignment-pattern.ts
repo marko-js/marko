@@ -29,20 +29,26 @@ export default {
         return id;
       };
 
+      // The written signal may collapse this conditional to a native
+      // parameter default when the source read becomes the signal's value
+      // parameter (see replaceDefaultedValueNode in signals.ts).
+      const value = t.conditionalExpression(
+        t.binaryExpression(
+          "!==",
+          t.unaryExpression("void", t.numericLiteral(0)),
+          readSource(),
+        ),
+        readSource(),
+        node.right,
+      );
+      (value.extra = {} as t.NodeExtra).defaultSource = defaultSource;
+
       const valueExtra = node.right.extra as ReferencedExtra;
       addValue(
         binding.section,
         valueExtra.referencedBindings,
         initValue(binding)!,
-        t.conditionalExpression(
-          t.binaryExpression(
-            "!==",
-            t.unaryExpression("void", t.numericLiteral(0)),
-            readSource(),
-          ),
-          readSource(),
-          node.right,
-        ),
+        value,
       );
     },
   },

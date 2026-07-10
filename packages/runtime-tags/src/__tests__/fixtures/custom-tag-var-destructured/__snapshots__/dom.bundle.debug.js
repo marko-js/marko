@@ -30,7 +30,7 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=inc>inc</button><button class=assign>assign</button><div><!>:<!></div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& b bD%c%l`)($walks$1);
 const $missing2 = ($scope, missing) => _text($scope["#text/5"], missing);
-const $missing3 = ($scope, $missing) => $missing2($scope, void 0 !== $missing ? $missing : "fallback");
+const $missing3 = ($scope, $missing = "fallback") => $missing2($scope, $missing);
 const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern/var", ($scope, $pattern) => {
 	$count($scope, $pattern.count);
 	$countChange2($scope, $pattern.countChange);
