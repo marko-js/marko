@@ -912,6 +912,20 @@ describe("serializer", () => {
       })();
       assertStringify(gen, `(function*(){yield 1;yield;yield 2;yield})()`);
     });
+
+    it("partially consumed resumes as an exhausted sync generator", () => {
+      const gen = (function* () {
+        yield 1;
+        yield 2;
+      })();
+      gen.next();
+      const [result] = assertSerializer().assertStringify(
+        gen,
+        `(function*(){}())`,
+      ) as [Generator];
+      assert.equal(typeof result[Symbol.iterator], "function");
+      assert.deepEqual([...result], []);
+    });
   });
 
   describe("errors", () => {

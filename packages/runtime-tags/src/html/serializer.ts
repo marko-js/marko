@@ -1443,7 +1443,7 @@ function writeReadableStream(
 
 function writeGenerator(state: State, iter: Generator, ref: Reference) {
   if ((iter as any)[kTouchedIterator]) {
-    state.buf.push("(async function*(){}())");
+    state.buf.push("(function*(){}())");
     return true;
   }
 
