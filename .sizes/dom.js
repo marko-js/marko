@@ -1,4 +1,4 @@
-// size: 25964 (min) 9537 (brotli)
+// size: 25992 (min) 9553 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1217,7 +1217,8 @@ function _attr_input_checkedValue_script(scope, nodeAccessor) {
     syncControllableFormInput(el, hasCheckboxChanged, () => {
       let checkedValueChange = scope["E" + nodeAccessor];
       if (checkedValueChange) {
-        let oldValue = scope["G" + nodeAccessor],
+        let controlledValueKey = "G" + nodeAccessor,
+          oldValue = scope[controlledValueKey],
           newValue = Array.isArray(oldValue)
             ? updateList(oldValue, el.value, el.checked)
             : el.checked
@@ -1230,7 +1231,9 @@ function _attr_input_checkedValue_script(scope, nodeAccessor) {
             radio.form === el.form &&
               (radio.checked = Array.isArray(oldValue)
                 ? oldValue.includes(radio.value)
-                : oldValue === radio.value);
+                : controlledValueKey in scope
+                  ? oldValue === radio.value
+                  : radio.defaultChecked);
         else el.checked = !el.checked;
         (checkedValueChange(newValue), run());
       }

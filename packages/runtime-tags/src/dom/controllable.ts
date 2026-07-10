@@ -143,7 +143,8 @@ export function _attr_input_checkedValue_script(
       AccessorPrefix.ControlledHandler + nodeAccessor
     ] as undefined | ((value: unknown) => unknown);
     if (checkedValueChange) {
-      const oldValue = scope[AccessorPrefix.ControlledValue + nodeAccessor];
+      const controlledValueKey = AccessorPrefix.ControlledValue + nodeAccessor;
+      const oldValue = scope[controlledValueKey];
       const newValue = Array.isArray(oldValue)
         ? updateList(oldValue, el.value, el.checked)
         : el.checked
@@ -155,9 +156,13 @@ export function _attr_input_checkedValue_script(
           `[type=radio][name=${CSS.escape(el.name)}]`,
         )) {
           if (radio.form === el.form) {
+            // A member whose controlled slot was never written (a non-default
+            // member on a pristine resume) reverts to its SSR default.
             radio.checked = Array.isArray(oldValue)
               ? oldValue.includes(radio.value)
-              : oldValue === radio.value;
+              : controlledValueKey in scope
+                ? oldValue === radio.value
+                : radio.defaultChecked;
           }
         }
       } else {
