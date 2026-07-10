@@ -1,4 +1,5 @@
 import * as assert from "assert/strict";
+import { JSDOM } from "jsdom";
 
 import * as helpers from "../html/content";
 
@@ -40,6 +41,22 @@ describe("runtime-tags/html/content", () => {
         helpers._escape_script("foo </script> bar"),
         "foo \\x3C/script> bar",
       );
+    });
+
+    it("should escape <script and <!--", () => {
+      assert.equal(
+        helpers._escape_script("foo <!--<script> bar"),
+        "foo \\x3C!--\\x3Cscript> bar",
+      );
+    });
+
+    it("prevents the double-escaped state from swallowing later content", () => {
+      const dom = new JSDOM(
+        `<script>var s = "${helpers._escape_script(
+          "<!--<script>alert(1)</script>",
+        )}";</script><div id="after"></div>`,
+      );
+      assert.ok(dom.window.document.getElementById("after"));
     });
 
     it("should allow normally escaped html stuff", () => {
@@ -99,10 +116,10 @@ describe("runtime-tags/html/content", () => {
   });
 
   describe("escapeScript", () => {
-    it("should escape </SCRIPT case-insensitively", () => {
+    it("should escape </SCRIPT case-insensitively, preserving case", () => {
       assert.equal(
         helpers._escape_script("foo </SCRIPT> bar"),
-        "foo \\x3C/script> bar",
+        "foo \\x3C/SCRIPT> bar",
       );
     });
   });
