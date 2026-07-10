@@ -292,6 +292,9 @@ class State {
   ids = 0;
   flush = 0;
   wroteUndefined = false;
+  // False once the current scope fill writes a value that cannot be shared
+  // across scopes (identity/position sensitive), disqualifying repeat tokens.
+  repeatableFill = false;
   buf = [] as string[];
   strs = new Map<string, Reference>();
   refs = new WeakMap<WeakKey, Reference>();
@@ -412,6 +415,8 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
   const { buf } = state;
   let nextSlotId = -1;
   let fillIndex = -1;
+  let repeatChunk = "";
+  let repeatCount = 0;
 
   for (const flush of flushes) {
     const scopeId = flush[0];
@@ -423,20 +428,43 @@ function writeScopesRoot(state: State, flushes: ScopeFlush[]) {
     // that serialize no props are folded into the next emitted slot's
     // skip count (the browser creates scopes on demand).
     const openIndex = buf.push("") - 1;
+    state.repeatableFill = true;
     if (writeObjectProps(state, flush[2], ref)) {
-      buf[openIndex] =
-        nextSlotId === -1
-          ? "[" + scopeId + ",{"
-          : (scopeId > nextSlotId ? "," + (scopeId - nextSlotId) : "") + ",{";
-      if (fillIndex === -1) fillIndex = openIndex;
+      let chunk = "";
+      for (let i = openIndex + 1; i < buf.length; i++) chunk += buf[i];
+      if (repeatChunk === chunk && state.repeatableFill) {
+        // A fill identical to the previous emitted one becomes part of a
+        // negative repeat token; its side effects (refs, channels) already
+        // ran, so only the text is dropped.
+        buf.length = openIndex;
+        if (scopeId > nextSlotId) {
+          if (repeatCount) {
+            buf.push(",-" + repeatCount);
+            repeatCount = 0;
+          }
+          buf.push("," + (scopeId - nextSlotId));
+        }
+        repeatCount++;
+      } else {
+        buf[openIndex] =
+          nextSlotId === -1
+            ? "[" + scopeId + ",{"
+            : (repeatCount ? ",-" + repeatCount : "") +
+              (scopeId > nextSlotId ? "," + (scopeId - nextSlotId) : "") +
+              ",{";
+        if (fillIndex === -1) fillIndex = openIndex;
+        repeatCount = 0;
+        repeatChunk = state.repeatableFill ? chunk : "";
+        buf.push("}");
+      }
       nextSlotId = scopeId + 1;
-      buf.push("}");
     } else {
       buf.pop();
     }
   }
 
   if (nextSlotId !== -1) {
+    if (repeatCount) buf.push(",-" + repeatCount);
     buf.push("]");
   }
 
@@ -639,6 +667,7 @@ function writeReferenceOr(
   if (registered)
     return writeRegistered(state, val, parent, accessor, registered);
 
+  state.repeatableFill = false;
   state.refs.set(
     val,
     (ref = new Reference(parent, accessor, state.flush, state.buf.length)),
@@ -690,6 +719,7 @@ function writeRegistered(
     // over (reads happen inside the returned implementations) and scopes
     // are self-resolving, so the call is written inline at the value
     // position. The reference dedups repeated uses to a single invocation.
+    state.repeatableFill = false;
     const ref = new Reference(parent, accessor, state.flush, state.buf.length);
     ref.channel = state.channel;
     state.refs.set(val, ref);
@@ -908,6 +938,23 @@ function writePlainObject(state: State, val: object, ref: Reference) {
 }
 
 function writeArray(state: State, val: unknown[], ref: Reference) {
+  const step = getScopeIdStep(val);
+  if (step !== undefined) {
+    // An arithmetic run of scope references collapses to `_.s(from,count[,step])`.
+    for (const item of val as ScopeInternals[]) {
+      trackScope(state, item, item[K_SCOPE_ID]!);
+    }
+    state.buf.push(
+      "_.s(" +
+        (val[0] as ScopeInternals)[K_SCOPE_ID] +
+        "," +
+        val.length +
+        (step === 1 ? "" : "," + step) +
+        ")",
+    );
+    return true;
+  }
+
   let sep = "[";
 
   for (let i = 0; i < val.length; i++) {
@@ -1093,6 +1140,26 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
     needsId,
   );
   return true;
+}
+
+// The common id step when an array is entirely scope references whose ids
+// form an arithmetic run long enough for the compact form to pay off.
+function getScopeIdStep(val: unknown[]) {
+  if (val.length < 3) return;
+  let prevId: number | undefined;
+  let step: number | undefined;
+  for (const item of val) {
+    const scopeId =
+      item != null ? (item as ScopeInternals)[K_SCOPE_ID] : undefined;
+    if (scopeId === undefined) return;
+    if (prevId !== undefined) {
+      const delta = scopeId - prevId;
+      if (!delta || (step !== undefined && delta !== step)) return;
+      step = delta;
+    }
+    prevId = scopeId;
+  }
+  return step;
 }
 
 // Writes the backing array argument for a Map/Set. The array has no

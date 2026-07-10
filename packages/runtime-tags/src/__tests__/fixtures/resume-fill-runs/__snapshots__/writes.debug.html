@@ -1,0 +1,32 @@
+<button>inc</button><!--M_*1 #button/0--><span>a: <!>
+    0<!--M_*2 #text/1--></span><span>b: <!>0<!--M_*3 #text/1--></span><span>c:
+  <!>0<!--M_*4 #text/1--></span><span>d: <!>0<!--M_*5 #text/1--></span>
+<div><span>a</span><em>0<!--M_*7 #text/1--></em></div>
+<div><span>b</span><em>0<!--M_*9 #text/1--></em></div>
+<div><span>c</span><em>0<!--M_*11 #text/1--></em></div>
+<div><span>d</span><em>0<!--M_*13 #text/1--></em></div>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "BranchScopes:#text/1": _.s(2, 4),
+      "BranchScopes:#text/2": _.s(6, 4, 2),
+      count: 0
+    }, {
+      _: _(1)
+    }, -3, {
+      _: _(1),
+      "#childScope/0": _(7)
+    }, 1, {
+      _: _(1),
+      "#childScope/0": _(9)
+    }, 1, {
+      _: _(1),
+      "#childScope/0": _(11)
+    }, 1, {
+      _: _(1),
+      "#childScope/0": _(13)
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/resume-fill-runs/template.marko_0 1"
+  ];
+  M._.w()
+</script>

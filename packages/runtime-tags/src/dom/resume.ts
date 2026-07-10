@@ -21,6 +21,7 @@ type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
 interface SerializeContext {
   (data: number | (Scope | number)[], registryId?: string): unknown;
   _: Record<string, unknown>;
+  s(from: number, count: number, step?: number): Scope[];
 }
 export interface Renders {
   (renderId: string): RenderData;
@@ -146,10 +147,24 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         };
         const applyScopes = (partials: (Scope | number)[]) => {
           let scopeId = partials[0] as number;
+          let prev!: Scope;
           for (let i = 1; i < partials.length; i++) {
             const partial = partials[i];
             if (typeof partial === "number") {
-              scopeId += partial;
+              if (partial < 0) {
+                // A repeat token: the previous fill also applies to the
+                // next -N scopes, each merged as its own copy.
+                for (let n = -partial; n--; scopeId++) {
+                  const scope = Object.assign(
+                    (scopeLookup[scopeId] ||= {} as Scope),
+                    prev,
+                  );
+                  scope[AccessorProp.Id] = scopeId;
+                  initScope(scope);
+                }
+              } else {
+                scopeId += partial;
+              }
             } else {
               if (scopeId) {
                 // Adopts the partial as the scope when it is new (assigning
@@ -166,6 +181,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               } else {
                 Object.assign(initGlobal(), partial);
               }
+              prev = partial;
               scopeId++;
             }
           }
@@ -365,6 +381,13 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         let visitBranches: undefined | (() => void);
         let embedAnchor: Text | undefined;
         serializeContext._ = registeredValues;
+        serializeContext.s = (from, count, step = 1) => {
+          const scopes: Scope[] = [];
+          for (; count--; from += step) {
+            scopes.push(getScope(from) as Scope);
+          }
+          return scopes;
+        };
 
         if (MARKO_DEBUG) {
           if (render.m) {
