@@ -118,14 +118,24 @@ export const [getTryHasPlaceholder, setTryHasPlaceholder] = createSectionState<
   true | undefined
 >("tryWithPlaceholder");
 
-// A branch section whose scope ids are guaranteed to ride a resume marker
-// carrying the parent scope id whenever its scopes serialize; the client
-// links the owner from the marker so `_` is not serialized.
+// A branch section whose scopes are guaranteed linked to their owner at
+// resume (via markers or the parent's branch list), so `_` is not serialized.
 const [getOwnerResumedByMarker, setOwnerResumedByMarker] = createSectionState<
   true | undefined
 >("ownerResumedByMarker");
 export function setSectionOwnerResumedByMarker(section: Section) {
   setOwnerResumedByMarker(section, true);
+}
+
+// A branch section whose scopes ride the parent's serialized branch list
+// (linking owners) whenever this marker reason's runtime guard is off.
+const [getOwnerNeededWithMarkerReason, setOwnerNeededWithMarkerReason] =
+  createSectionState<SerializeReason | undefined>("ownerNeededWithMarker");
+export function setSectionOwnerNeededWithMarkerReason(
+  section: Section,
+  reason: SerializeReason,
+) {
+  setOwnerNeededWithMarkerReason(section, reason);
 }
 
 const [getSerializedAccessors] = createSectionState<
@@ -1333,17 +1343,16 @@ export function writeHTMLResumeStatements(
     if (ownerReason) {
       serializedLookup.delete(ownerAccessor);
       if (!getOwnerResumedByMarker(section)) {
+        let ownerExpr: t.Expression = callRuntime(
+          "_scope_with_id",
+          getScopeIdIdentifier(section.parent),
+        );
+        const markerReason = getOwnerNeededWithMarkerReason(section);
+        if (markerReason) {
+          ownerExpr = getExprIfSerialized(section, markerReason, ownerExpr);
+        }
         serializedProperties.push(
-          toObjectProperty(
-            ownerAccessor,
-            ifSerialized(
-              ownerReason,
-              callRuntime(
-                "_scope_with_id",
-                getScopeIdIdentifier(section.parent),
-              ),
-            ),
-          ),
+          toObjectProperty(ownerAccessor, ifSerialized(ownerReason, ownerExpr)),
         );
       }
     }

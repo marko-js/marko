@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_html(`<li${enabled && input.selected === row.id ? " class=sel" : ""}>${_escape(row.label)}${_el_resume($scope1_id, "#text/1", $sg__input_rows)}</li>${_el_resume($scope1_id, "#li/0")}`);
 		writeScope($scope1_id, {
 			row_id: row?.id,
-			_: _scope_with_id($scope0_id)
+			_: _serialize_if($scope0_reason, 0) && _scope_with_id($scope0_id)
 		}, "__tests__/template.marko", "4:4", { row_id: ["row.id", "4:8"] });
 	}, "id", $scope0_id, "#ul/1", 1, $sg__input_rows, $sg__input_rows, "</ul>", 1);
 	_script($scope0_id, "__tests__/template.marko_0");

@@ -22,10 +22,7 @@ var template_default = _template("a", (input) => {
 	_for_of(rows, (row) => {
 		const $scope1_id = _scope_id();
 		_html(`<li${_attr_class([selected === row.id && "sel", hovered === row.id && "hov"])}>${_escape(row.label)}</li>${_el_resume($scope1_id, "a")}`);
-		writeScope($scope1_id, {
-			e: row?.id,
-			_: _scope_with_id($scope0_id)
-		});
+		writeScope($scope1_id, { e: row?.id });
 	}, "id", $scope0_id, "c", 1, 0, 0, 0, 1);
 	_html("</ul>");
 	_script($scope0_id, "a0");

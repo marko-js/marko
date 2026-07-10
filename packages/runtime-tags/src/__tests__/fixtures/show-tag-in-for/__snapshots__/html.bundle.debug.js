@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		_show_start($show);
 		_html(`<li>${_escape(label)}</li>`);
 		_show_end($scope1_id, "#text/2", $show, 1, 1, 0, 1);
-		writeScope($scope1_id, { _: _scope_with_id($scope0_id) }, "__tests__/template.marko", "6:4");
+		writeScope($scope1_id, {}, "__tests__/template.marko", "6:4");
 	}, 0, $scope0_id, "#ul/1", 1, 0, 0);
 	_html("</ul>");
 	_script($scope0_id, "__tests__/template.marko_0");

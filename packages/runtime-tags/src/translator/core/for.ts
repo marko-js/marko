@@ -43,6 +43,7 @@ import { getSerializeGuard } from "../util/serialize-guard";
 import {
   addSerializeExpr,
   getSerializeReason,
+  isReasonDynamic,
   isStateSerializeReason,
   isStaticSerializeReason,
 } from "../util/serialize-reasons";
@@ -51,6 +52,7 @@ import {
   getSignal,
   replaceNullishAndEmptyFunctionsWith0,
   setClosureSignalBuilder,
+  setSectionOwnerNeededWithMarkerReason,
   setSectionOwnerResumedByMarker,
   writeHTMLResumeStatements,
 } from "../util/signals";
@@ -227,6 +229,20 @@ export default {
           // in any bundle that can update these scopes, so the owner is
           // linked at resume instead of serialized.
           setSectionOwnerResumedByMarker(bodySection);
+        } else if (branchSerializeReason && !markerSerializeReason) {
+          // Markers are statically off, so any serialized iteration lands in
+          // the parent's serialized branch list, which links owners.
+          setSectionOwnerResumedByMarker(bodySection);
+        } else if (
+          branchSerializeReason &&
+          isReasonDynamic(markerSerializeReason)
+        ) {
+          // Marker-off renders land in the parent's serialized branch list,
+          // so the owner only serializes when the marker guard is on.
+          setSectionOwnerNeededWithMarkerReason(
+            bodySection,
+            markerSerializeReason,
+          );
         }
 
         writer.flushInto(tag);

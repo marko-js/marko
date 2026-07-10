@@ -1,4 +1,4 @@
-// size: 25857 (min) 9518 (brotli)
+// size: 25909 (min) 9529 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1038,6 +1038,15 @@ function init(runtimeId = "M") {
             embedAnchor;
           return (
             (serializeContext._ = registeredValues),
+            (serializeContext.o = (ownerId, scopes) => {
+              let owner = getScope(ownerId);
+              return (
+                forEach(scopes, (scope) => {
+                  scope._ ??= owner;
+                }),
+                scopes
+              );
+            }),
             (render.m = (effects) => {
               if ((processResumes(render.r, effects), readyIds && render.b))
                 for (let progress = 1; progress;) {

@@ -35,7 +35,7 @@ const $content = (input) => {
 			M: _serialize_if($scope0_reason, 2) && i,
 			l: $si__input_comments && id,
 			m: open,
-			_: $si__input_comments__OR__input_path && _scope_with_id($scope0_id)
+			_: $si__input_comments__OR__input_path && $si__input_comments && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", $sg__input_comments__OR__input_path, $sg__input_comments, $sg__input_comments, "</ul>", 1);
 	$si__input_comments && writeScope($scope0_id, { e: input.path });
