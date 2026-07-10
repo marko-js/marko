@@ -350,14 +350,26 @@ export function _for_of(
   serializeStateful?: 0 | 1,
   parentEndTag?: string | 0,
   singleNode?: 1,
+  serializeKeyList?: 0 | 1,
 ): void {
+  // Branch keys are derivable client side from the serialized list, so they
+  // resume from one list reference rather than a key per branch.
+  const keyList =
+    serializeKeyList &&
+    by &&
+    serializeBranch !== 0 &&
+    serializeMarker !== 0 &&
+    Array.isArray(list) &&
+    list;
   forBranches(
     by,
     (each) =>
       each
         ? forOf(list, (item, index) => {
             const itemKey = forOfBy(by, item, index);
-            each(itemKey, itemKey === index, () => cb(item, index));
+            each(itemKey, keyList ? true : itemKey === index, () =>
+              cb(item, index),
+            );
           })
         : forOf(list, cb),
     scopeId,
@@ -368,6 +380,11 @@ export function _for_of(
     parentEndTag,
     singleNode,
   );
+  if (keyList && keyList.length) {
+    writeScope(scopeId, {
+      [AccessorPrefix.LoopKeyList + accessor]: keyList,
+    });
+  }
 }
 
 export function _for_in(

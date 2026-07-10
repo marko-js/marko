@@ -1,0 +1,19 @@
+<button>reverse</button><!--M_*1 a--><span>a<!--M_*2 a--></span><span>b<!--M_*3 a--></span><span>c<!--M_*4 a--></span><!--M_|1 b 4 3 2--><em>a<!--M_*5 a--></em><em>b<!--M_*6 a--></em><em>c<!--M_*7 a--></em><!--M_|1 c 7 6 5-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    Nb: _.a = [{
+      id: 1,
+      name: "a"
+    }, {
+      id: 2,
+      name: "b"
+    }, {
+      id: 3,
+      name: "c"
+    }],
+    Nc: _.a,
+    g: _.a
+  }], "a0 1"];
+  M._.w()
+</script>

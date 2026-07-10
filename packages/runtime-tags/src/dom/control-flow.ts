@@ -737,15 +737,18 @@ export function setConditionalRenderer<T>(
 
 export const _for_of = loop<
   [all: unknown[], by?: (item: unknown, index: number) => unknown]
->(([all, by = bySecondArg], cb) => {
-  if (typeof by === "string") {
-    forOf(all, (item, i) =>
-      cb((item as Record<string, unknown>)[by], [item, i]),
-    );
-  } else {
-    forOf(all, (item, i) => cb(by(item, i), [item, i]));
-  }
-});
+>(
+  ([all, by = bySecondArg], cb) => {
+    if (typeof by === "string") {
+      forOf(all, (item, i) =>
+        cb((item as Record<string, unknown>)[by], [item, i]),
+      );
+    } else {
+      forOf(all, (item, i) => cb(by(item, i), [item, i]));
+    }
+  },
+  (oldList, [, by]) => [oldList as unknown[], by],
+);
 
 export const _for_in = loop<
   [obj: {}, by?: (key: string, v: unknown) => unknown]
@@ -768,6 +771,7 @@ export const _for_until = loop<
 /* @__NO_SIDE_EFFECTS__ */
 function loop<T extends unknown[] = unknown[]>(
   forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
+  toOldValue?: (oldList: unknown, value: T) => T,
 ) {
   return (
     nodeAccessor: EncodedAccessor,
@@ -779,6 +783,7 @@ function loop<T extends unknown[] = unknown[]>(
     if (!MARKO_DEBUG) nodeAccessor = decodeAccessor(nodeAccessor as number);
     const scopesAccessor = AccessorPrefix.BranchScopes + nodeAccessor;
     const keyedScopesAccessor = AccessorPrefix.KeyedScopes + nodeAccessor;
+    const keyListAccessor = AccessorPrefix.LoopKeyList + nodeAccessor;
     const renderer = _content("", template, walks, setup)();
     enableBranches();
     return (scope: Scope, value: T) => {
@@ -787,6 +792,17 @@ function loop<T extends unknown[] = unknown[]>(
       const newScopes: BranchScope[] = (scope[scopesAccessor] = []);
       scope[keyedScopesAccessor] = null;
       const oldLen = oldScopes.length;
+      if (toOldValue && scope[keyListAccessor]) {
+        // Resumed branch keys derive from the serialized list on first use.
+        const serializedList = scope[keyListAccessor];
+        scope[keyListAccessor] = undefined;
+        let keyIndex = 0;
+        forEach(toOldValue(serializedList, value), (key) => {
+          if (keyIndex < oldLen) {
+            oldScopes[keyIndex++][AccessorProp.LoopKey] = key;
+          }
+        });
+      }
       const parentNode = (
         referenceNode.nodeType > NodeType.Element
           ? referenceNode.parentNode ||
