@@ -309,7 +309,12 @@ export const translate = {
                 t.identifier("withPageAssets"),
               ),
             ],
-            t.stringLiteral("marko/src/runtime/helpers/load-tag.js"),
+            t.stringLiteral(
+              resolveRelativePath(
+                file,
+                "marko/src/runtime/helpers/load-tag.js",
+              ),
+            ),
           ),
           t.exportAllDeclaration(t.stringLiteral(relPath)),
           t.exportDefaultDeclaration(
