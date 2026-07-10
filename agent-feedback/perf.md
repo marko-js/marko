@@ -2,6 +2,20 @@
 
 Runtime speed and bundle size opportunities. Format and rules: [README.md](README.md).
 
+## Emit native JS param defaults in HTML when the source needs no serialization
+
+`packages/runtime-tags/src/translator/util/strip-default-values.ts:1` | 2026-07-10 | impact:low | effort:med
+
+The HTML translation always materializes a defaulted binding's source
+variable (`(a, $b) => { const b = void 0 !== $b ? $b : x; ... }`) so the
+pre default value can be serialized for resume. When the source binding
+has no serialize reason (eg the default's dependencies are constants, or
+nothing in the body can re-derive client side), the native JS form
+(`(a, b = x) =>`) is smaller and needs no extra statement. Serialize
+reasons are known at translate time, so the strip could skip patterns
+whose sources all lack one; needs care that DOM/HTML accessor naming
+stays aligned for the cases that do serialize.
+
 ## Derive await/try branch scope owners without serialization
 
 `packages/runtime-tags/src/translator/util/signals.ts:1330` | 2026-07-02 | impact:low | effort:high

@@ -1259,9 +1259,10 @@ function writeAttrsToSignals(
         addStatement(
           "render",
           info.tagSection,
-          // Content renders once per scope; param defaults are rewritten into
-          // body `const` tags during pre-analyze, so their references belong
-          // to the body section rather than this statement.
+          // Content renders once per scope; param defaults are derived
+          // bindings within the body section (see the AssignmentPattern case
+          // in references.ts), so their references belong to the body rather
+          // than this statement.
           undefined,
           t.expressionStatement(
             t.callExpression(

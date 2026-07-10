@@ -22,6 +22,7 @@ import {
   type Binding,
   bindingUtil,
   compareReferences,
+  type DefaultedValue,
   getAllSerializeReasonsForBinding,
   getDebugNames,
   type InputBinding,
@@ -58,6 +59,7 @@ export interface Section {
   parent: Section | undefined;
   sectionAccessor: { binding: Binding; prefix: AccessorPrefix } | undefined;
   params: undefined | ParamBinding | InputBinding;
+  defaultedValues: undefined | DefaultedValue[];
   referencedLocalClosures: ReferencedBindings;
   referencedClosures: ReferencedBindings;
   referencedHoists: ReferencedBindings;
@@ -132,6 +134,7 @@ export function startSection(
       parent: parentSection,
       sectionAccessor: undefined,
       params: undefined,
+      defaultedValues: undefined,
       referencedLocalClosures: undefined,
       referencedClosures: undefined,
       referencedHoists: undefined,

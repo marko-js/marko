@@ -28,6 +28,7 @@ import {
 import { getScopeReasonDeclaration } from "./serialize-guard";
 import { isReasonDynamic } from "./serialize-reasons";
 import { getResumeRegisterId } from "./signals";
+import { stripDefaultValuesFromParams } from "./strip-default-values";
 import { toObjectProperty } from "./to-property-name";
 
 const contentProps = new WeakSet<t.Node>();
@@ -284,6 +285,9 @@ function translateForAttrTag(
 ) {
   const forTag = attrTags[index] as t.NodePath<t.MarkoTag>;
   const bodyStatements: t.Statement[] = [];
+  if (isOutputHTML()) {
+    stripDefaultValuesFromParams(forTag.node.body.params, bodyStatements);
+  }
   addAllAttrTagsAsDynamic(
     forTag,
     attrTagLookup,
@@ -420,6 +424,11 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   const bodySection = body.node.extra?.section;
   if (bodySection) {
     if (isOutputHTML()) {
+      const defaultStatements: t.Statement[] = [];
+      stripDefaultValuesFromParams(body.node.params, defaultStatements);
+      if (defaultStatements.length) {
+        body.node.body.unshift(...(defaultStatements as any));
+      }
       const serialized = getSectionRegisterReasons(bodySection);
       let dynamicSerializeReason =
         !!bodySection.paramReasonGroups ||

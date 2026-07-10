@@ -5,6 +5,7 @@ import { decodeAccessor } from "../../common/helpers";
 import { toAccess } from "../../html/serializer";
 import { finalizeFunctionRegistry } from "../visitors/function";
 import { scopeIdentifier } from "../visitors/program";
+import evaluate from "./evaluate";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-char";
@@ -59,7 +60,7 @@ import {
   type SerializeReason,
 } from "./serialize-reasons";
 import { finalizeTagDownstreams } from "./set-tag-sections-downstream";
-import { addSetupStatement } from "./setup-statements";
+import { addSetupExpr, addSetupStatement } from "./setup-statements";
 import {
   getBindingGetterIdentifier,
   getSignals,
@@ -163,6 +164,7 @@ declare module "@marko/compiler/dist/types" {
     referencedBindings?: ReferencedBindings;
     downstream?: Opt<Binding>;
     binding?: Binding;
+    defaultSource?: Binding;
     assignment?: Binding;
     assignmentTo?: Binding;
     read?: ExtraRead;
@@ -600,6 +602,22 @@ export function setReferencesScope(path: t.NodePath<any>) {
   }
 }
 
+/**
+ * A defaulted binding (`b = x` in tag params or a destructured tag variable)
+ * is represented by two bindings: `defaultSource` holds the value applied at
+ * the pattern's position, and `binding` is derived from it by `value`
+ * (`void 0 !== source ? source : fallback`). The DOM translation registers
+ * the derivation as a signal value (see `visitors/program/dom.ts`); the HTML
+ * translation materializes it as a const statement so the source stays
+ * serializable for resume (see `strip-default-values.ts`).
+ */
+export interface DefaultedValue {
+  binding: Binding;
+  defaultSource: Binding;
+  value: t.ConditionalExpression;
+  valueExtra: ReferencedExtra;
+}
+
 function createBindingsAndTrackReferences(
   lVal: t.LVal,
   type: BindingType,
@@ -746,6 +764,87 @@ function createBindingsAndTrackReferences(
             );
           }
         }
+      }
+      break;
+    }
+    case "AssignmentPattern": {
+      const { left, right } = lVal;
+      const defaultSource = createBinding(
+        generateUid(
+          (left.type === "Identifier" ? left.name : property) || "pattern",
+        ),
+        type,
+        section,
+        upstreamAlias,
+        property,
+        excludeProperties,
+        left.loc,
+        true,
+      );
+      const valueExtra = evaluate(right) as unknown as ReferencedExtra;
+      const testId = t.identifier(defaultSource.name);
+      const consequentId = t.identifier(defaultSource.name);
+      addRead(
+        valueExtra,
+        (testId.extra = {}),
+        defaultSource,
+        section,
+        undefined,
+      );
+      addRead(
+        valueExtra,
+        (consequentId.extra = {}),
+        defaultSource,
+        section,
+        undefined,
+      );
+
+      createBindingsAndTrackReferences(
+        left,
+        BindingType.derived,
+        scope,
+        section,
+        undefined,
+        undefined,
+        undefined,
+      );
+
+      const binding = left.extra?.binding;
+      if (binding) {
+        if (left.type === "Identifier") {
+          const constantViolations = scope.getBinding(
+            left.name,
+          )?.constantViolations;
+          if (constantViolations?.length) {
+            for (const assignment of constantViolations) {
+              if (assignment.type !== "MarkoTag") {
+                throw assignment.buildCodeFrameError(
+                  `${left.name} is readonly and cannot be mutated.`,
+                );
+              }
+            }
+          }
+        }
+
+        const extra = (lVal.extra ??= {});
+        extra.binding = binding;
+        extra.defaultSource = defaultSource;
+        setBindingDownstream(binding, valueExtra);
+        addSetupExpr(section, right);
+        (section.defaultedValues ??= []).push({
+          binding,
+          defaultSource,
+          value: t.conditionalExpression(
+            t.binaryExpression(
+              "!==",
+              t.unaryExpression("void", t.numericLiteral(0)),
+              testId,
+            ),
+            consequentId,
+            right,
+          ),
+          valueExtra,
+        });
       }
       break;
     }

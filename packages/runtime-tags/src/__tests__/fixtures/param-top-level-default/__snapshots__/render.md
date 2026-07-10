@@ -15,6 +15,14 @@
 >
   L:101
 </div>
+<ul>
+  <li>
+    1
+  </li>
+  <li>
+    a
+  </li>
+</ul>
 <button
   id="x"
 >
@@ -47,6 +55,14 @@ container.querySelector("#x").click();
 >
   L:101
 </div>
+<ul>
+  <li>
+    2
+  </li>
+  <li>
+    a
+  </li>
+</ul>
 <button
   id="x"
 >
@@ -61,6 +77,7 @@ container.querySelector("#x").click();
 ## Change
 ```
 UPDATE: #known::text@4 "10" => "20"
+UPDATE: ul > li:nth-of-type(1)::text "1" => "2"
 ```
 
 # Update
@@ -83,6 +100,14 @@ container.querySelector("#y").click();
 >
   L:102
 </div>
+<ul>
+  <li>
+    2
+  </li>
+  <li>
+    a
+  </li>
+</ul>
 <button
   id="x"
 >

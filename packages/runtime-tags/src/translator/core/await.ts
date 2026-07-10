@@ -37,6 +37,7 @@ import {
   replaceNullishAndEmptyFunctionsWith0,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import { stripDefaultValuesFromParams } from "../util/strip-default-values";
 import { toFirstExpressionOrBlock } from "../util/to-first-expression-or-block";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
@@ -141,6 +142,14 @@ export default {
         const bodySection = getSectionForBody(tagBody);
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
+
+        const defaultStatements: t.Statement[] = [];
+        stripDefaultValuesFromParams(node.body.params, defaultStatements);
+        if (defaultStatements.length) {
+          (node.body.body as unknown as t.Statement[]).unshift(
+            ...defaultStatements,
+          );
+        }
 
         tag
           .replaceWith(

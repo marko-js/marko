@@ -10,5 +10,11 @@
 </define>
 <Local("L")/>
 
+<ul>
+  <for|{ label = x }| of=[{}, { label: "a" }]>
+    <li>${label}</li>
+  </for>
+</ul>
+
 <button id="x" onClick() { x++ }>x</button>
 <button id="y" onClick() { y++ }>y</button>
