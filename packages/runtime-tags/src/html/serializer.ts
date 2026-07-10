@@ -519,7 +519,13 @@ function writeAssigned(state: State) {
       if (mutation.value === undefined) {
         // Settling with undefined writes no argument (`_.x.f()`).
       } else if (writeProp(state, mutation.value, null, "")) {
-        const valueRef = state.refs.get(mutation.value as object);
+        // Mutation values have no parent accessor path, so a later reuse can
+        // only reach them through an eagerly claimed binding (strings dedup
+        // through `strs` and would otherwise crash resolving cross flush).
+        const valueRef =
+          typeof mutation.value === "string"
+            ? state.strs.get(mutation.value)
+            : state.refs.get(mutation.value as object);
         // Scopes never claim a binding (`_(N)` is self-resolving).
         if (valueRef && !valueRef.id && valueRef.scopeId === undefined) {
           valueRef.id = mutation.valueId || nextRefAccess(state);

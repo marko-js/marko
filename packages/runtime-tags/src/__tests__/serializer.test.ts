@@ -1258,6 +1258,18 @@ describe("serializer", () => {
       assert.deepEqual(serializer.get("a"), error);
       await assert.rejects(result, error);
     });
+
+    it("dedupes a settled long string reused in a later flush", async () => {
+      const serializer = assertSerializer();
+      const msg = "this string is long enough to dedup";
+      const [result] = await serializer.assertStringify(
+        Promise.resolve(msg),
+        `(p=>p=new Promise((f,r)=>_.a={f,r(e){p.catch(_=>0);r(e)}}))()`,
+        `_.a.f(_.a="${msg}")`,
+      );
+      assert.equal(await result, msg);
+      serializer.assertStringify({ msg }, `{msg:_.a}`);
+    });
   });
 
   describe("async generator", () => {
