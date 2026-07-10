@@ -30,6 +30,9 @@ import * as writer from "../util/writer";
 
 const kNodeBinding = Symbol("comment tag binding");
 
+// Matches the runtime `_escape_comment` transform.
+const escapeCommentText = (text: string) => text.replace(/>/g, "&gt;");
+
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kNodeBinding]?: Binding;
@@ -108,7 +111,7 @@ export default {
       if (isOutputHTML()) {
         for (const child of tag.node.body.body) {
           if (t.isMarkoText(child)) {
-            write`${child.value}`;
+            write`${escapeCommentText(child.value)}`;
           } else if (t.isMarkoPlaceholder(child)) {
             write`${callRuntime(child.escape ? "_escape_comment" : "_unescaped", child.value)}`;
           }
@@ -117,7 +120,9 @@ export default {
         const textLiteral = bodyToTextLiteral(tag.node.body);
 
         if (t.isStringLiteral(textLiteral)) {
-          write`${textLiteral}`;
+          // Written into parsed markup, so it gets `_escape_comment`'s
+          // transform at compile time.
+          write`${escapeCommentText(textLiteral.value)}`;
         } else {
           addStatement(
             "render",
