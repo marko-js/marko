@@ -6,6 +6,7 @@ const $checked = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.d, $scope.e);
 });
 const $setup__script = _script("a3", ($scope) => {
+	$scope.e ??= 0;
 	_attr_input_checkedValue_script($scope, "a");
 	_attr_input_checkedValue_script($scope, "b");
 	_attr_input_checkedValue_script($scope, "c");

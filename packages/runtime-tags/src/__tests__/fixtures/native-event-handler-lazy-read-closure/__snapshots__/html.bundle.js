@@ -20,8 +20,8 @@ var template_default = _template("a", (input) => {
 	_html(`<button>inc</button>${_el_resume($scope0_id, "b")}<div class=total>${_escape(total)}${_el_resume($scope0_id, "c")}</div><div class=seen>${_escape(seen)}${_el_resume($scope0_id, "d")}</div>`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		e: total,
-		f: seen
+		e: void 0,
+		f: void 0
 	});
 	_resume_branch($scope0_id);
 }, 1);

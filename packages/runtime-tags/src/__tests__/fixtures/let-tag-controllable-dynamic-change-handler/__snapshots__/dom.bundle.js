@@ -7,6 +7,7 @@ const $x = /*@__PURE__*/ _let(4, ($scope) => {
 });
 const $yChange2 = /*@__PURE__*/ _let(5, $x__OR__yChange);
 const $setup__script = _script("a1", ($scope) => {
+	$scope.e ??= 1;
 	_on($scope.a, "click", function() {
 		$y($scope, $scope.h + 1);
 	});

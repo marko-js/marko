@@ -5,6 +5,9 @@ const $d = /*@__PURE__*/ _let(4, ($scope) => {
 	_attr($scope.c, "data-x", `${$scope.e}`);
 	_text($scope.d, `${$scope.e}`);
 });
-const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$d($scope, $scope.e + "!");
-}));
+const $setup__script = _script("a0", ($scope) => {
+	$scope.e ??= "y";
+	_on($scope.a, "click", function() {
+		$d($scope, $scope.e + "!");
+	});
+});

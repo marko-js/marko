@@ -11,9 +11,12 @@ const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)("D l");
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => $input($scope["#childScope/1"], { get: function() {
 	return $scope.count;
 } }));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 0;
+	_on($scope["#button/0"], "click", function() {
+		$count($scope, $scope.count + 1);
+	});
+});
 function $setup($scope) {
 	$count($scope, 0);
 	$setup__script($scope);

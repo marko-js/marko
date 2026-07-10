@@ -5,7 +5,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	let clickCount = 0;
 	_html(`<button>${_escape(clickCount)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
-	writeScope($scope0_id, { clickCount }, "__tests__/tags/counter.marko", 0, { clickCount: "1:6" });
+	writeScope($scope0_id, { clickCount: clickCount === 0 ? void 0 : clickCount }, "__tests__/tags/counter.marko", 0, { clickCount: "1:6" });
 	_resume_branch($scope0_id);
 });
 

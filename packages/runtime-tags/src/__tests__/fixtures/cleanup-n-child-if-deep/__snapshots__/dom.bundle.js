@@ -46,6 +46,7 @@ const $showOuter = /*@__PURE__*/ _let(5, ($scope) => $if($scope, $scope.f ? 0 : 
 const $showMiddle = /*@__PURE__*/ _let(6, $if_content__showMiddle);
 const $showInner = /*@__PURE__*/ _let(7, /* @__PURE__ */ _closure($if_content2__showInner));
 const $setup__script = _script("a1", ($scope) => {
+	$scope.f ??= true;
 	_on($scope.a, "click", function() {
 		$showOuter($scope, !$scope.f);
 	});

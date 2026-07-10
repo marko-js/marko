@@ -13,6 +13,9 @@ const $min = /*@__PURE__*/ _let("min/5", $items__OR__min__OR__max);
 const $max = /*@__PURE__*/ _let("max/6", $items__OR__min__OR__max);
 const $index = /*@__PURE__*/ _let("index/8", $index__OR__filtered);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.min ??= 0;
+	$scope.max ??= 4;
+	$scope.index ??= 0;
 	_on($scope["#button/2"], "click", function() {
 		$min($scope, 2);
 		$max($scope, 3);

@@ -6,8 +6,11 @@ const $items = /*@__PURE__*/ _let(3, ($scope) => {
 });
 const $items_ = /*@__PURE__*/ _const(4, ($scope) => _text($scope.a, $scope.e));
 const $index = /*@__PURE__*/ _let(5, $items__OR__index);
-const $setup__script = _script("a0", ($scope) => _on($scope.c, "click", function() {
-	const newItems = $scope.d.slice(1);
-	$items($scope, newItems);
-	$index($scope, ($scope.f + 1) % newItems.length);
-}));
+const $setup__script = _script("a0", ($scope) => {
+	$scope.f ??= 0;
+	_on($scope.c, "click", function() {
+		const newItems = $scope.d.slice(1);
+		$items($scope, newItems);
+		$index($scope, ($scope.f + 1) % newItems.length);
+	});
+});

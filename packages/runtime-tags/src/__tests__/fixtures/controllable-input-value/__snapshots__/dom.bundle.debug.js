@@ -5,7 +5,10 @@ const $value = /*@__PURE__*/ _let("value/2", ($scope) => {
 	_attr_input_value($scope, "#input/0", $scope.value, $valueChange($scope));
 	_text($scope["#text/1"], $scope.value);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_input_value_script($scope, "#input/0"));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.value ??= "hello";
+	_attr_input_value_script($scope, "#input/0");
+});
 function $setup($scope) {
 	$value($scope, "hello");
 	$setup__script($scope);

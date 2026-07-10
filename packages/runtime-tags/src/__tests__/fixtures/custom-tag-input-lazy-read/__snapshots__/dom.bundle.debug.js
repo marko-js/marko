@@ -12,9 +12,13 @@ const $template = /*@__PURE__*/ ((_w0) => `<button class=inc>inc</button>${_w0}<
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&D l`)(" b");
 const $count = /*@__PURE__*/ _let("count/3");
 const $log = /*@__PURE__*/ _let("log/4", ($scope) => _text($scope["#text/2"], $scope.log));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 0;
+	$scope.log ??= "";
+	_on($scope["#button/0"], "click", function() {
+		$count($scope, $scope.count + 1);
+	});
+});
 function $setup($scope) {
 	$input_onPress($scope["#childScope/1"], $onPress($scope));
 	$count($scope, 0);

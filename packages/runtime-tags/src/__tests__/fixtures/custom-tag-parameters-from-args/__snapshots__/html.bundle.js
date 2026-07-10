@@ -9,8 +9,8 @@ var custom_tag_default = _template("b", (input) => {
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, {
 		g: input.content,
-		h: x,
-		i: y
+		h: void 0,
+		i: void 0
 	});
 	_resume_branch($scope0_id);
 });

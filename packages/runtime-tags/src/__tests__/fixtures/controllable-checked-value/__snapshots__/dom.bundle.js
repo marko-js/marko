@@ -9,6 +9,7 @@ const $checkedValue = /*@__PURE__*/ _let(4, ($scope) => {
 	$checkedValue__OR__$checkedValueChange($scope);
 });
 const $setup__script = _script("a1", ($scope) => {
+	$scope.e ??= "a";
 	_attr_input_checkedValue_script($scope, "a");
 	_attr_input_checkedValue_script($scope, "b");
 	_attr_input_checkedValue_script($scope, "c");

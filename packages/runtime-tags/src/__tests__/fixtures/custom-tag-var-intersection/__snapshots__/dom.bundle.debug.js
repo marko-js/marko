@@ -6,9 +6,12 @@ const $x = /*@__PURE__*/ _let("x/5", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
 	$input_extra__OR__x($scope);
 });
-const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
-}));
+const $setup__script = _script("__tests__/tags/child.marko_0", ($scope) => {
+	$scope.x ??= 0;
+	_on($scope["#button/0"], "click", function() {
+		$x($scope, $scope.x + 1);
+	});
+});
 function $setup$1($scope) {
 	$x($scope, 0);
 	$setup__script($scope);

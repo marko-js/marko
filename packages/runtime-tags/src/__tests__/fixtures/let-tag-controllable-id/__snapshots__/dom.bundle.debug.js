@@ -8,9 +8,12 @@ const $x = /*@__PURE__*/ _let("x/3", ($scope) => {
 	$x__OR__handler($scope);
 });
 const $handler2 = /*@__PURE__*/ _let("handler/4", $x__OR__handler);
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$y($scope, $scope.y + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.x ??= 1;
+	_on($scope["#button/0"], "click", function() {
+		$y($scope, $scope.y + 1);
+	});
+});
 function $setup($scope) {
 	$x($scope, 1);
 	$handler2($scope, $handler($scope));

@@ -7,6 +7,8 @@ const $multiplier = /*@__PURE__*/ _let(5, ($scope) => {
 	$count__OR__multiplier($scope);
 });
 const $setup__script = _script("a0", ($scope) => {
+	$scope.e ??= 0;
+	$scope.f ??= 1;
 	_on($scope.a, "click", function() {
 		$multiplier($scope, $scope.f + 1);
 	});

@@ -12,8 +12,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button></button>${_el_resume($scope0_id, "#button/1")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		tagName,
-		className
+		tagName: tagName === "span" ? void 0 : tagName,
+		className: className === "A" ? void 0 : className
 	}, "__tests__/template.marko", 0, {
 		tagName: "1:6",
 		className: "2:6"

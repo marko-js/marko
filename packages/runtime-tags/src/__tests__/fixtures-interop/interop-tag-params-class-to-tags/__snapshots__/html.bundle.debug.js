@@ -11,7 +11,7 @@ var tags_layout_default = _template("__tests__/components/tags-layout.marko", (i
 	_script($scope0_id, "__tests__/components/tags-layout.marko_0");
 	writeScope($scope0_id, {
 		input_content: input.content,
-		count
+		count: count === 0 ? void 0 : count
 	}, "__tests__/components/tags-layout.marko", 0, {
 		input_content: ["input.content"],
 		count: "1:6"

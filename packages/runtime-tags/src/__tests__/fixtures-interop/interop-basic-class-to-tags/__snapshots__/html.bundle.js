@@ -4,10 +4,9 @@ var import_html = require_html();
 var tags_counter_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let count = 0;
-	_html(`<button id=tags${_attr("data-parent", input.count)}>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=tags${_attr("data-parent", input.count)}>${_escape(0)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { f: count });
+	writeScope($scope0_id, { f: void 0 });
 	_resume_branch($scope0_id);
 });
 

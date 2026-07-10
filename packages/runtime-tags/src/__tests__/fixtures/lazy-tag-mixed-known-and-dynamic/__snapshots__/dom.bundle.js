@@ -9,6 +9,8 @@ const $value = /*@__PURE__*/ _let(6, ($scope) => {
 	$show__OR__value($scope);
 });
 const $setup__script = _script("b0", ($scope) => {
+	$scope.f ??= true;
+	$scope.g ??= 0;
 	_on($scope.a, "click", function() {
 		$show($scope, !$scope.f);
 	});

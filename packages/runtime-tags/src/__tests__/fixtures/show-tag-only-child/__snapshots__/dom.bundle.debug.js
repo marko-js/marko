@@ -7,9 +7,12 @@ const $open = /*@__PURE__*/ _let("open/3", ($scope) => {
 	$show($scope, $scope.open);
 	$show2($scope, !$scope.open);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$open($scope, !$scope.open);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.open ??= true;
+	_on($scope["#button/0"], "click", function() {
+		$open($scope, !$scope.open);
+	});
+});
 function $setup($scope) {
 	$open($scope, true);
 	$setup__script($scope);

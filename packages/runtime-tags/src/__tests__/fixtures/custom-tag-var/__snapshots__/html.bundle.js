@@ -6,7 +6,7 @@ var child_default = _template("b", (input) => {
 	_html(`<button class=inc>${_escape(x)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	const $return = x;
 	_script($scope0_id, "b0");
-	writeScope($scope0_id, { c: x });
+	writeScope($scope0_id, { c: void 0 });
 	_resume_branch($scope0_id);
 	return $return;
 });

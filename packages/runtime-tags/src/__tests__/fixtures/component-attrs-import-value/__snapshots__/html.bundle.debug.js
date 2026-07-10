@@ -12,7 +12,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/counter.marko_0");
 	writeScope($scope0_id, {
 		input,
-		count
+		count: count === 0 ? void 0 : count
 	}, "__tests__/tags/counter.marko", 0, {
 		input: 0,
 		count: "1:6"

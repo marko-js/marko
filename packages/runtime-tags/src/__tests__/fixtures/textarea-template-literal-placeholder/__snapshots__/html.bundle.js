@@ -5,6 +5,6 @@ var template_default = _template("a", (input) => {
 	let n = 1;
 	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}<textarea>${_escape(`premid-${n}-postend`)}</textarea>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { d: n });
+	writeScope($scope0_id, { d: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

@@ -38,7 +38,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	});
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		quantity,
+		quantity: quantity === 2 ? void 0 : quantity,
 		"#childScope/1": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { quantity: "1:6" });
 	_resume_branch($scope0_id);

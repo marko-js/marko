@@ -3,6 +3,7 @@ const $el3_getter = _hoist_resume("a0", 0, "Aa", "Ac");
 const $el2_getter = /*@__PURE__*/ _hoist(0, "Ab");
 const $el_getter = /*@__PURE__*/ _hoist(0, "Aa");
 const $setup__script = _script("a1", ($scope) => {
+	$scope.d ??= 3;
 	{
 		const el = $el_getter($scope)();
 		if (el) el.innerHTML = "First Only";

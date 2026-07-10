@@ -6,9 +6,12 @@ const $n = /*@__PURE__*/ _let("n/4", ($scope) => {
 	_text($scope["#text/2"], $scope.n);
 	_text($scope["#text/3"], $scope.n + 1);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.n ??= 1;
+	_on($scope["#button/0"], "click", function() {
+		$n($scope, $scope.n + 1);
+	});
+});
 function $setup($scope) {
 	$n($scope, 1);
 	$setup__script($scope);

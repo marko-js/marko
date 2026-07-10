@@ -23,6 +23,7 @@ const $checkedValue = /*@__PURE__*/ _let("checkedValue/6", ($scope) => {
 });
 const $checkedValueChange3 = /*@__PURE__*/ _const("$checkedValueChange", $checkedValue__OR__$checkedValueChange);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.show ??= true;
 	_attr_input_checkedValue_script($scope, "#input/0");
 	_attr_input_checkedValue_script($scope, "#input/2");
 	_on($scope["#button/4"], "click", function() {

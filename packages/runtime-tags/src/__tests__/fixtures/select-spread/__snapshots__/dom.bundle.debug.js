@@ -2,9 +2,12 @@
 const $template = "<button>swap</button><select><option value=a>a</option><option>dyn</option></select>";
 const $walks = " b Db l";
 const $n = /*@__PURE__*/ _let("n/6", ($scope) => _attr($scope["#option/2"], "value", $scope.n));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, "a");
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.n ??= "b";
+	_on($scope["#button/0"], "click", function() {
+		$n($scope, "a");
+	});
+});
 function $setup($scope) {
 	$n($scope, "b");
 	$setup__script($scope);

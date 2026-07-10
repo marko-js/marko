@@ -23,6 +23,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	reveal_default({ value: a });
 	reveal_default({ value: b });
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "3:6" });
+	writeScope($scope0_id, { n: n === 1 ? void 0 : n }, "__tests__/template.marko", 0, { n: "3:6" });
 	_resume_branch($scope0_id);
 }, 1);

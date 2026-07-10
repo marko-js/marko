@@ -2,9 +2,12 @@
 const $template$1 = "<button id=count> </button>";
 const $walks$1 = " D l";
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => _text($scope["#text/1"], $scope.count));
-const $setup__script$1 = _script("__tests__/tags/counter.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
-}));
+const $setup__script$1 = _script("__tests__/tags/counter.marko_0", ($scope) => {
+	$scope.count ??= 0;
+	_on($scope["#button/0"], "click", function() {
+		$count($scope, $scope.count + 1);
+	});
+});
 function $setup$1($scope) {
 	$count($scope, 0);
 	$setup__script$1($scope);
@@ -20,9 +23,12 @@ const $tagName_content__setup = ($scope) => {
 const $tagName_content = _content_resume("__tests__/template.marko_1_content", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)($walks$1), $tagName_content__setup);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0", $tagName_content);
 const $tagName = /*@__PURE__*/ _let("tagName/2", ($scope) => $dynamicTag($scope, $scope.tagName));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$tagName($scope, $scope.tagName === "span" ? "div" : "span");
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.tagName ??= "div";
+	_on($scope["#button/1"], "click", function() {
+		$tagName($scope, $scope.tagName === "span" ? "div" : "span");
+	});
+});
 function $setup($scope) {
 	$tagName($scope, "div");
 	$setup__script($scope);

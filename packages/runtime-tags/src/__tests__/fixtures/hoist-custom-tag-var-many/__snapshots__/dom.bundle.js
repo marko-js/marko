@@ -12,6 +12,7 @@ const $for_content2__setHtml = _var_resume("a3", /*@__PURE__*/ _const(2));
 const $setHtml_getter = /*@__PURE__*/ _hoist(2, "Aa");
 const $for_content__setHtml = _var_resume("a4", /*@__PURE__*/ _const(2));
 const $setup__script = _script("a1", ($scope) => {
+	$scope.d ??= 3;
 	$setHtml_getter($scope)()("First Only");
 	$setHtml2_getter($scope)()("First Only");
 	{

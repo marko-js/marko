@@ -26,9 +26,12 @@ const $shared = /*@__PURE__*/ _let("shared/4", ($scope) => $load_Child_tag_input
 	report: $report($scope)
 }));
 const $count = /*@__PURE__*/ _let("count/5", ($scope) => _text($scope["#text/1"], $scope.count));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + Object.keys($scope.shared).length);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 0;
+	_on($scope["#button/0"], "click", function() {
+		$count($scope, $scope.count + Object.keys($scope.shared).length);
+	});
+});
 function $setup($scope) {
 	$load_Child_setup($scope);
 	$shared($scope, { value: 1 });

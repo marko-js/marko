@@ -48,9 +48,12 @@ const $n = /*@__PURE__*/ _let("n/9", ($scope) => {
 	$input_a$1($scope["#childScope/3"], $scope.n);
 	$extras__OR__n($scope);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.n ??= 1;
+	_on($scope["#button/0"], "click", function() {
+		$n($scope, $scope.n + 1);
+	});
+});
 function $setup($scope) {
 	$extras($scope, {
 		b: 2,

@@ -7,9 +7,12 @@ const $await_content__$params = ($scope, $params3) => $await_content__data($scop
 const $catch_content__error_message__OR__message__OR__clicked = /*@__PURE__*/ _or(7, ($scope) => _text($scope["#text/1"], $scope.clicked ? $scope.message : $scope.error_message), 2);
 const $catch_content__message = /*@__PURE__*/ _const("message", $catch_content__error_message__OR__message__OR__clicked);
 const $catch_content__clicked = /*@__PURE__*/ _let("clicked/6", $catch_content__error_message__OR__message__OR__clicked);
-const $catch_content__setup__script = _script("__tests__/template.marko_2", ($scope) => _on($scope["#button/0"], "click", function() {
-	$catch_content__clicked($scope, true);
-}));
+const $catch_content__setup__script = _script("__tests__/template.marko_2", ($scope) => {
+	$scope.clicked ??= false;
+	_on($scope["#button/0"], "click", function() {
+		$catch_content__clicked($scope, true);
+	});
+});
 const $catch_content__setup = ($scope) => {
 	$catch_content__message($scope, $scope.$global.settings.message);
 	$catch_content__clicked($scope, false);

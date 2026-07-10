@@ -2,10 +2,9 @@
 var child_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let count = 0;
-	_html(`<button>count: <!>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>count: <!>${_escape(0)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { c: count });
+	writeScope($scope0_id, { c: void 0 });
 	_resume_branch($scope0_id);
 });
 

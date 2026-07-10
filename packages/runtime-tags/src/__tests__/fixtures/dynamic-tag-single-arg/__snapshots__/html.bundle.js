@@ -17,6 +17,6 @@ var template_default = _template("a", (input) => {
 	_html(`<button>Count: <!>${_escape(x)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	_dynamic_tag($scope0_id, "c", tags[0], [x], 0, 1);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { d: x });
+	writeScope($scope0_id, { d: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

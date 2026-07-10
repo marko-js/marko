@@ -4,9 +4,12 @@ function createWrapper(a) {
 }
 const $pattern2 = ($scope, $pattern) => $a($scope, $pattern.a);
 const $count = /*@__PURE__*/ _let(3, ($scope) => $pattern2($scope, createWrapper($scope.d)));
-const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.d + 1);
-}));
+const $setup__script = _script("a0", ($scope) => {
+	$scope.d ??= 0;
+	_on($scope.a, "click", function() {
+		$count($scope, $scope.d + 1);
+	});
+});
 const $a = ($scope, a) => {
 	_text($scope.b, a);
 	$b($scope, a);

@@ -10,7 +10,10 @@ const $A_content__value = ($scope, value) => _text($scope["#text/0"], value);
 const $A_content__$params = ($scope, $params2) => $A_content__$temp($scope, $params2?.[0]);
 const $A_content__$temp = ($scope, $temp) => $A_content__value($scope, $temp.value);
 const $value = /*@__PURE__*/ _let("value/1", ($scope) => $B_content__tag_input_value($scope["#childScope/0"], $scope.value));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => $value($scope, "hello"));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.value ??= "";
+	$value($scope, "hello");
+});
 function $setup($scope) {
 	$value($scope, "");
 	$setup__script($scope);

@@ -10,6 +10,9 @@ const $min = /*@__PURE__*/ _let(5, $items__OR__min__OR__max);
 const $max = /*@__PURE__*/ _let(6, $items__OR__min__OR__max);
 const $index = /*@__PURE__*/ _let(8, $index__OR__filtered);
 const $setup__script = _script("a0", ($scope) => {
+	$scope.f ??= 0;
+	$scope.g ??= 4;
+	$scope.i ??= 0;
 	_on($scope.c, "click", function() {
 		$min($scope, 2);
 		$max($scope, 3);

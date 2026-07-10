@@ -5,9 +5,12 @@ const $x = /*@__PURE__*/ _let(6, ($scope) => {
 	_text($scope.c, $scope.g);
 	$if($scope, $scope.g ? 0 : 1);
 });
-const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
-	$x($scope, $scope.g + 1);
-}));
+const $setup__script = _script("a1", ($scope) => {
+	$scope.g ??= 0;
+	_on($scope.b, "click", function() {
+		$x($scope, $scope.g + 1);
+	});
+});
 function $getMessage($scope) {
 	return () => $scope.f;
 }

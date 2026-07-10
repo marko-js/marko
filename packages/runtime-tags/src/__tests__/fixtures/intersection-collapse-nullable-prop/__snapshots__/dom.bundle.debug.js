@@ -9,9 +9,12 @@ const $show = /*@__PURE__*/ _let("show/2", ($scope) => {
 	$obj($scope, $scope.show && { label: "hi" });
 	$obj_label__OR__n($scope);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$show($scope, !$scope.show);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.show ??= false;
+	_on($scope["#button/0"], "click", function() {
+		$show($scope, !$scope.show);
+	});
+});
 function $setup($scope) {
 	$show($scope, false);
 	$setup__script($scope);

@@ -19,7 +19,6 @@ const localTag = a_default;
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let x = true;
 	_html(`<button>toggle</button>${_el_resume($scope0_id, "a")}`);
 	_dynamic_tag($scope0_id, "b", "div", { id: "d1" }, _content_resume("a0", () => {
 		_scope_id();
@@ -44,6 +43,6 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id));
 	_dynamic_tag($scope0_id, "g", localTag, { label: "la" });
 	_script($scope0_id, "a4");
-	writeScope($scope0_id, { h: x });
+	writeScope($scope0_id, { h: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

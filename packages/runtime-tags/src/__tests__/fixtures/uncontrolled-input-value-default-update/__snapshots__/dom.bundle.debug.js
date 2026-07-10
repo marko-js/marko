@@ -6,6 +6,7 @@ const $value = /*@__PURE__*/ _let("value/3", ($scope) => {
 	_attr_input_value($scope, "#input/1", $scope.value, undefined);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.value ??= "a";
 	_attr_input_value_script($scope, "#input/1");
 	_on($scope["#button/2"], "click", function() {
 		$value($scope, "b");

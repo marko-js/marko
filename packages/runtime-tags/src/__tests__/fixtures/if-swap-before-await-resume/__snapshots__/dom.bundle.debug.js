@@ -9,6 +9,7 @@ function subscribeCartState(callback) {
 }
 const $cart$1 = /*@__PURE__*/ _let("cart/0", ($scope) => _return($scope, { cart: $scope.cart }));
 const $setup__script = _script("__tests__/tags/cart-state.marko_0", ($scope) => {
+	$scope.cart ??= null;
 	{
 		const unsubscribe = subscribeCartState((state) => {
 			$cart$1($scope, state);

@@ -13,9 +13,12 @@ const $pattern3 = ($scope, $pattern) => $a($scope, $pattern.a);
 const $a = ($scope, a) => $input_value($scope["#childScope/2"], a);
 const $pattern4 = ($scope, $pattern2) => $b($scope, $pattern2.b);
 const $n = /*@__PURE__*/ _let("n/8", ($scope) => _text($scope["#text/1"], $scope.n));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.n ??= 1;
+	_on($scope["#button/0"], "click", function() {
+		$n($scope, $scope.n + 1);
+	});
+});
 function $setup($scope) {
 	$pattern3($scope, {
 		a: "A",

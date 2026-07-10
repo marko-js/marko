@@ -12,9 +12,8 @@ var child_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let selected = false;
 	const myThing = {
-		selected,
+		selected: false,
 		content: _content("a0", () => {
 			_scope_id();
 			_scope_reason();
@@ -27,7 +26,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>Toggle</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		c: selected,
+		c: void 0,
 		a: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

@@ -10,7 +10,10 @@ const $count = /*@__PURE__*/ _let(2, ($scope) => {
 	});
 	$pos_x__OR__scale($scope);
 });
-const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.c + 1);
-}));
+const $setup__script = _script("a0", ($scope) => {
+	$scope.c ??= 1;
+	_on($scope.a, "click", function() {
+		$count($scope, $scope.c + 1);
+	});
+});
 const $pos_x = /*@__PURE__*/ _const(4);

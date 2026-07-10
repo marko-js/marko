@@ -6,6 +6,7 @@ const $open = /*@__PURE__*/ _let("open/3", ($scope) => {
 	_attr_details_or_dialog_open($scope, "#details/1", $scope.open, undefined);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.open ??= false;
 	_attr_details_or_dialog_open_script($scope, "#details/1");
 	_on($scope["#button/2"], "click", function() {
 		$open($scope, true);

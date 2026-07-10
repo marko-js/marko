@@ -8,8 +8,8 @@ var template_default = _template("a", (input) => {
 	_html(`<button id=multiplier>increase multiplier (<!>${_escape(multiplier)}${_el_resume($scope0_id, "b")})</button>${_el_resume($scope0_id, "a")}<button id=count>increase count</button>${_el_resume($scope0_id, "c")}<div>${_escape(multipliedCount)}${_el_resume($scope0_id, "d")}</div>`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
-		e: count,
-		f: multiplier
+		e: void 0,
+		f: void 0
 	});
 	_resume_branch($scope0_id);
 }, 1);

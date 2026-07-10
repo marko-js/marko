@@ -7,6 +7,7 @@ const $if = /*@__PURE__*/ _if("#text/2", "The count is <!>", "b%b", $if_content_
 const $show = /*@__PURE__*/ _let("show/3", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $count = /*@__PURE__*/ _let("count/4", $if_content__count);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.show ??= true;
 	_on($scope["#button/0"], "click", function() {
 		$count($scope, $scope.count + 1);
 	});

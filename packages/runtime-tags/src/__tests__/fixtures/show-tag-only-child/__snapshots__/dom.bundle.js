@@ -5,6 +5,9 @@ const $open = /*@__PURE__*/ _let(3, ($scope) => {
 	$show($scope, $scope.d);
 	$show2($scope, !$scope.d);
 });
-const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$open($scope, !$scope.d);
-}));
+const $setup__script = _script("a0", ($scope) => {
+	$scope.d ??= true;
+	_on($scope.a, "click", function() {
+		$open($scope, !$scope.d);
+	});
+});

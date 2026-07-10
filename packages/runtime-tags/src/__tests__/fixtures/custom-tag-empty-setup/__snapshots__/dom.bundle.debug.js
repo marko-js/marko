@@ -22,9 +22,12 @@ var row_default = /*@__PURE__*/ _template("__tests__/tags/row/index.marko", $tem
 const $template = /*@__PURE__*/ ((_w0) => `<button>add</button>${_w0}`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)($walks$1);
 const $quantity = /*@__PURE__*/ _let("quantity/2", ($scope) => $input_quantity($scope["#childScope/1"], $scope.quantity));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$quantity($scope, $scope.quantity + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.quantity ??= 2;
+	_on($scope["#button/0"], "click", function() {
+		$quantity($scope, $scope.quantity + 1);
+	});
+});
 function $setup($scope) {
 	$input_name($scope["#childScope/1"], "Widget");
 	$quantity($scope, 2);

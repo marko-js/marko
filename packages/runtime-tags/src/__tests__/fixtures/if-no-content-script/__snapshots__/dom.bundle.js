@@ -4,6 +4,9 @@ const $count = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.c, $scope.e);
 	$if($scope, !$scope.e ? 0 : 1);
 });
-const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
-	$count($scope, $scope.e + 1);
-}));
+const $setup__script = _script("a1", ($scope) => {
+	$scope.e ??= 0;
+	_on($scope.b, "click", function() {
+		$count($scope, $scope.e + 1);
+	});
+});

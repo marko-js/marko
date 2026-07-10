@@ -15,7 +15,10 @@ const $x = /*@__PURE__*/ _let(5, ($scope) => {
 	_text($scope.b, $scope.f);
 	$dynamicTag($scope, tags[0], () => [$scope.f]);
 });
-const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
-	$x($scope, $scope.f + 1);
-}));
+const $setup__script = _script("a1", ($scope) => {
+	$scope.f ??= 1;
+	_on($scope.a, "click", function() {
+		$x($scope, $scope.f + 1);
+	});
+});
 const $y = _var_resume("a0", ($scope, y) => _text($scope.e, y));

@@ -20,9 +20,12 @@ const $walks = " b b%c";
 const $if_content__setup = ($scope) => $input($scope["#childScope/0"], { write: $write($scope) });
 const $if = /*@__PURE__*/ _if("#text/2", $template$1, /*@__PURE__*/ ((_w0) => `/${_w0}&`)("b"), $if_content__setup);
 const $show = /*@__PURE__*/ _let("show/3", ($scope) => $if($scope, $scope.show ? 0 : 1));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$show($scope, !$scope.show);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.show ??= true;
+	_on($scope["#button/0"], "click", function() {
+		$show($scope, !$scope.show);
+	});
+});
 function $setup($scope) {
 	$show($scope, true);
 	$setup__script($scope);

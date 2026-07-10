@@ -11,9 +11,12 @@ const $value = /*@__PURE__*/ _let(3, ($scope) => {
 		valueChange: $attrs($scope)
 	});
 });
-const $setup__script = _script("a1", ($scope) => _on($scope.c, "click", function() {
-	$attrs2($scope, { type: "text" });
-}));
+const $setup__script = _script("a1", ($scope) => {
+	$scope.d ??= "init";
+	_on($scope.c, "click", function() {
+		$attrs2($scope, { type: "text" });
+	});
+});
 function $attrs($scope) {
 	return function(next) {
 		$value($scope, next);

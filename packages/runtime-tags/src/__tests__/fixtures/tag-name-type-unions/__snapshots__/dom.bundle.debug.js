@@ -35,9 +35,12 @@ const $x = /*@__PURE__*/ _let("x/7", ($scope) => {
 	$dynamicTag6($scope, $scope.x ? localTag : a_default, () => ({ label: "la" }));
 });
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/3", $navigator_content);
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, !$scope.x);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.x ??= true;
+	_on($scope["#button/0"], "click", function() {
+		$x($scope, !$scope.x);
+	});
+});
 function $setup($scope) {
 	$x($scope, true);
 	$dynamicTag3($scope, navigator);

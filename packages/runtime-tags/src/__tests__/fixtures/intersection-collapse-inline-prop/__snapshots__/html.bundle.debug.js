@@ -10,6 +10,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const scale = count * 10;
 	_html(`<button>inc</button>${_el_resume($scope0_id, "#button/0")}<div>${_escape(pos.x + scale)}${_el_resume($scope0_id, "#text/1")}</div>`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { count }, "__tests__/template.marko", 0, { count: "1:6" });
+	writeScope($scope0_id, { count: count === 1 ? void 0 : count }, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

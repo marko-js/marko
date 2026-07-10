@@ -8,7 +8,10 @@ const $x = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.c, $scope.e);
 	$if_content__x($scope);
 });
-const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
-	$x($scope, $scope.e + 1);
-	$show($scope, true);
-}));
+const $setup__script = _script("a1", ($scope) => {
+	$scope.d ??= true;
+	_on($scope.b, "click", function() {
+		$x($scope, $scope.e + 1);
+		$show($scope, true);
+	});
+});

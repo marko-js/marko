@@ -13,9 +13,12 @@ const $value = /*@__PURE__*/ _let("value/3", ($scope) => {
 		valueChange: $attrs($scope)
 	});
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
-	$attrs2($scope, { type: "text" });
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.value ??= "init";
+	_on($scope["#button/2"], "click", function() {
+		$attrs2($scope, { type: "text" });
+	});
+});
 function $setup($scope) {
 	$value($scope, "init");
 	$setup__script($scope);

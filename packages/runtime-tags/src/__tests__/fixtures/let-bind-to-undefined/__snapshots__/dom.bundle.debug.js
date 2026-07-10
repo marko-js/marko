@@ -16,9 +16,12 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button>clear</button>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}& b`)("D l");
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => $input_value($scope["#childScope/0"], $scope.count));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$count($scope, undefined);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 3;
+	_on($scope["#button/1"], "click", function() {
+		$count($scope, undefined);
+	});
+});
 function $setup($scope) {
 	$input_valueChange($scope["#childScope/0"], $valueChange($scope));
 	$count($scope, 3);

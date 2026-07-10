@@ -9,6 +9,7 @@ const $x = /*@__PURE__*/ _let(5, ($scope) => {
 	$x__OR__$valueChange($scope);
 });
 const $setup__script = _script("a1", ($scope) => {
+	$scope.f ??= "start";
 	_on($scope.a, "click", function() {
 		$x($scope, $scope.f + "!");
 	});

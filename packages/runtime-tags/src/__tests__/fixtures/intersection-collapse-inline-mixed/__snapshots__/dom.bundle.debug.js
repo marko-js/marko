@@ -9,9 +9,12 @@ const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
 	$shared($scope, $scope.count * 2);
 	$shared__OR__once($scope);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 1;
+	_on($scope["#button/0"], "click", function() {
+		$count($scope, $scope.count + 1);
+	});
+});
 function $setup($scope) {
 	$count($scope, 1);
 	$setup__script($scope);

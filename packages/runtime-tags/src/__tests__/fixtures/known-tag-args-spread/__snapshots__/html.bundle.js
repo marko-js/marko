@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>inc <!>${_escape(x)}${_el_resume($scope0_id, "e")}</button>${_el_resume($scope0_id, "d")}`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		h: x,
+		h: void 0,
 		Bg: $si__input && $input__closures,
 		a: _existing_scope($childScope),
 		c: _existing_scope($childScope2)

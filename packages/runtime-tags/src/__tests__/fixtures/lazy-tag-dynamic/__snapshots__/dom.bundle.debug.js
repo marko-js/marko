@@ -22,6 +22,8 @@ const $show__OR__value = /*@__PURE__*/ _or(5, ($scope) => $dynamicTag($scope, $s
 const $show = /*@__PURE__*/ _let("show/3", $show__OR__value);
 const $value = /*@__PURE__*/ _let("value/4", $show__OR__value);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.show ??= true;
+	$scope.value ??= 1;
 	_on($scope["#button/0"], "click", function() {
 		$show($scope, !$scope.show);
 	});

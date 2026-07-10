@@ -5,9 +5,12 @@ const $input_value = /*@__PURE__*/ _const(3, $input_value__OR__input_valueChange
 
 // template.marko
 const $count = /*@__PURE__*/ _let(2, ($scope) => $input_value($scope.a, $scope.c));
-const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
-	$count($scope, void 0);
-}));
+const $setup__script = _script("a1", ($scope) => {
+	$scope.c ??= 3;
+	_on($scope.b, "click", function() {
+		$count($scope, void 0);
+	});
+});
 function $valueChange($scope) {
 	return (_new_count) => {
 		$count($scope, _new_count);

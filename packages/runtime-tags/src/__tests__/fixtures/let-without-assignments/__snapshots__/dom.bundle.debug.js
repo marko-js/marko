@@ -8,7 +8,10 @@ const $count = /*@__PURE__*/ _let("count/1", ($scope) => $for($scope, [
 	0,
 	1
 ]));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _el_read($scope["#ul/0"]).classList.add("mounted"));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 1;
+	_el_read($scope["#ul/0"]).classList.add("mounted");
+});
 function $setup($scope) {
 	$count($scope, 1);
 	$setup__script($scope);

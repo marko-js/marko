@@ -22,6 +22,8 @@ const $b = /*@__PURE__*/ _let("b/5", ($scope) => {
 	$a__OR__b($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.a ??= "a1";
+	$scope.b ??= "b1";
 	_attr_input_value_script($scope, "#input/2");
 	_attr_input_value_script($scope, "#input/3");
 });

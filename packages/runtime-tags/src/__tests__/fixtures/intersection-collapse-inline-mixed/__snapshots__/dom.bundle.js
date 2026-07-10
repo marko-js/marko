@@ -7,6 +7,9 @@ const $count = /*@__PURE__*/ _let(3, ($scope) => {
 	$shared($scope, $scope.d * 2);
 	$shared__OR__once($scope);
 });
-const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.d + 1);
-}));
+const $setup__script = _script("a0", ($scope) => {
+	$scope.d ??= 1;
+	_on($scope.a, "click", function() {
+		$count($scope, $scope.d + 1);
+	});
+});

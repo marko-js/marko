@@ -18,6 +18,6 @@ var template_default = _template("a", (input) => {
 	_dynamic_tag($scope0_id, "e", tags[0], [true], 0, 1, 0);
 	_dynamic_tag($scope0_id, "f", tags[0], [...["spread1", "spread2"]], 0, 1, 0);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { g: x });
+	writeScope($scope0_id, { g: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

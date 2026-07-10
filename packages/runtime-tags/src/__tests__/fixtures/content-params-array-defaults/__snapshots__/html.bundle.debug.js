@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	Wrap.content([n, 10]);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		n,
+		n: n === 2 ? void 0 : n,
 		"#childScope/1": _existing_scope($childScope),
 		"#childScope/2": _existing_scope($childScope2)
 	}, "__tests__/template.marko", 0, { n: "4:6" });

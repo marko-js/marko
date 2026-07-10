@@ -5,6 +5,7 @@ const $count__OR__$valueChange = /*@__PURE__*/ _or(5, ($scope) => {
 });
 const $count = /*@__PURE__*/ _let(3, $count__OR__$valueChange);
 const $setup__script = _script("a1", ($scope) => {
+	$scope.d ??= 0;
 	_on($scope.a, "click", function() {
 		$count($scope, $scope.d + 1);
 	});

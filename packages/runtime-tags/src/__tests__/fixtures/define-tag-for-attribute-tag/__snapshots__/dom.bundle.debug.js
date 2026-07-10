@@ -22,9 +22,12 @@ const $selected = /*@__PURE__*/ _let("selected/2", ($scope) => $myThing($scope, 
 	selected: $scope.selected,
 	content: $myThing_content($scope)
 }));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$selected($scope, !$scope.selected);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.selected ??= false;
+	_on($scope["#button/1"], "click", function() {
+		$selected($scope, !$scope.selected);
+	});
+});
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$selected($scope, false);

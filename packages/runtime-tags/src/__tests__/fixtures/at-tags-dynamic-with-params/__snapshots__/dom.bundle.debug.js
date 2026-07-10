@@ -20,9 +20,12 @@ const $x = /*@__PURE__*/ _let("x/2", ($scope) => {
 	}
 	$input_item($scope["#childScope/0"], $item);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$x($scope, !$scope.x);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.x ??= true;
+	_on($scope["#button/1"], "click", function() {
+		$x($scope, !$scope.x);
+	});
+});
 function $setup($scope) {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 	$x($scope, true);

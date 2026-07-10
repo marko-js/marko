@@ -14,6 +14,8 @@ const $enabled = /*@__PURE__*/ _let("enabled/7", ($scope) => {
 const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/5"], $scope.count));
 const $log = /*@__PURE__*/ _let("log/9", ($scope) => _text($scope["#text/6"], $scope.log));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 0;
+	$scope.log ??= "";
 	_on($scope["#button/0"], "click", function() {
 		$enabled($scope, !$scope.enabled);
 	});

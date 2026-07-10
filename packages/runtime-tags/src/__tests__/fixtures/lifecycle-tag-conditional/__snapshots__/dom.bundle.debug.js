@@ -18,6 +18,7 @@ const $x = /*@__PURE__*/ _let("x/3", $if_content__x);
 const $if = /*@__PURE__*/ _if("#text/0", 0, 0, $if_content__setup);
 const $show = /*@__PURE__*/ _let("show/4", ($scope) => $if($scope, $scope.show ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.show ??= true;
 	_on($scope["#button/1"], "click", function() {
 		$x($scope, $scope.x + 1);
 	});

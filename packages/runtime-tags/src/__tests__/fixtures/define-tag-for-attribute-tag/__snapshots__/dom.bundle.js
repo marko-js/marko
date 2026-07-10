@@ -14,6 +14,9 @@ const $selected = /*@__PURE__*/ _let(2, ($scope) => $myThing($scope, {
 	selected: $scope.c,
 	content: $myThing_content($scope)
 }));
-const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
-	$selected($scope, !$scope.c);
-}));
+const $setup__script = _script("a1", ($scope) => {
+	$scope.c ??= false;
+	_on($scope.b, "click", function() {
+		$selected($scope, !$scope.c);
+	});
+});

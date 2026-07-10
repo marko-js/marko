@@ -16,9 +16,12 @@ const $count = /*@__PURE__*/ _let("count/4", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$input_value($scope["#childScope/2"], $scope.count);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 1;
+	_on($scope["#button/0"], "click", function() {
+		$count($scope, $scope.count + 1);
+	});
+});
 function $setup($scope) {
 	_var($scope, "#childScope/2", $x);
 	$setup$1($scope["#childScope/2"]);

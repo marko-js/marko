@@ -23,9 +23,12 @@ const $outer = /*@__PURE__*/ _let("outer/2", ($scope) => $if($scope, $scope.oute
 const $inner = /*@__PURE__*/ _let("inner/3", $if_content__inner);
 const $count__closure = /*@__PURE__*/ _closure($if_content2__count);
 const $count = /*@__PURE__*/ _let("count/4", $count__closure);
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$outer($scope, !$scope.outer);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.outer ??= true;
+	_on($scope["#button/0"], "click", function() {
+		$outer($scope, !$scope.outer);
+	});
+});
 function $setup($scope) {
 	$outer($scope, true);
 	$inner($scope, true);

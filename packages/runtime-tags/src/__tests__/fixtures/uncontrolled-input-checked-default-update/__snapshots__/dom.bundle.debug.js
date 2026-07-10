@@ -6,6 +6,7 @@ const $checked = /*@__PURE__*/ _let("checked/3", ($scope) => {
 	_attr_input_checked($scope, "#input/1", $scope.checked, undefined);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.checked ??= false;
 	_attr_input_checked_script($scope, "#input/1");
 	_on($scope["#button/2"], "click", function() {
 		$checked($scope, true);

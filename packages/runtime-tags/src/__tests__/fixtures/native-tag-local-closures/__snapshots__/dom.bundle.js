@@ -17,6 +17,9 @@ const $size = /*@__PURE__*/ _let(2, ($scope) => {
 	});
 	$Child_content__input_item($scope.a, $item);
 });
-const $setup__script = _script("a3", ($scope) => _on($scope.b, "click", function() {
-	$size($scope, $scope.c + 1);
-}));
+const $setup__script = _script("a3", ($scope) => {
+	$scope.c ??= 1;
+	_on($scope.b, "click", function() {
+		$size($scope, $scope.c + 1);
+	});
+});

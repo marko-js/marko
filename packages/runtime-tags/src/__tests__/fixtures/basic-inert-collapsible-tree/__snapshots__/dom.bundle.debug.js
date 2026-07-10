@@ -17,9 +17,12 @@ const $for_content__open = /*@__PURE__*/ _let("open/12", ($scope) => {
 	_attr($scope["#li/0"], "hidden", !$scope.open);
 	_text($scope["#text/3"], $scope.open ? "[-]" : "[+]");
 });
-const $for_content__setup__script = _script("__tests__/tags/comments.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {
-	$for_content__open($scope, !$scope.open);
-}));
+const $for_content__setup__script = _script("__tests__/tags/comments.marko_1", ($scope) => {
+	$scope.open ??= true;
+	_on($scope["#button/2"], "click", function() {
+		$for_content__open($scope, !$scope.open);
+	});
+});
 const $for_content__setup = ($scope) => {
 	$for_content__input_path._($scope);
 	$for_content__open($scope, true);

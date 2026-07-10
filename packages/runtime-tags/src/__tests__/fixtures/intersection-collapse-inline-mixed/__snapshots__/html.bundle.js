@@ -2,10 +2,8 @@
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let count = 1;
-	const shared = count * 2;
-	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}<div>${_escape(shared)}${_el_resume($scope0_id, "b")} | <!>${_escape(5)}${_el_resume($scope0_id, "c")}</div>`);
+	_html(`<button>inc</button>${_el_resume($scope0_id, "a")}<div>${_escape(2)}${_el_resume($scope0_id, "b")} | <!>${_escape(5)}${_el_resume($scope0_id, "c")}</div>`);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { d: count });
+	writeScope($scope0_id, { d: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

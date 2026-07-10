@@ -9,8 +9,8 @@ var custom_tag_default = _template("__tests__/tags/custom-tag.marko", (input) =>
 	_script($scope0_id, "__tests__/tags/custom-tag.marko_0");
 	writeScope($scope0_id, {
 		input_content: input.content,
-		x,
-		y
+		x: x === 1 ? void 0 : x,
+		y: y === 10 ? void 0 : y
 	}, "__tests__/tags/custom-tag.marko", 0, {
 		input_content: ["input.content"],
 		x: "1:6",

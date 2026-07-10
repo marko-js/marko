@@ -21,6 +21,7 @@ const $if = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)
 const $outer = /*@__PURE__*/ _let("outer/3", ($scope) => $if($scope, $scope.outer ? 0 : 1));
 const $n = /*@__PURE__*/ _let("n/4", $if_content__n);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.outer ??= true;
 	_on($scope["#button/0"], "click", function() {
 		$outer($scope, !$scope.outer);
 	});

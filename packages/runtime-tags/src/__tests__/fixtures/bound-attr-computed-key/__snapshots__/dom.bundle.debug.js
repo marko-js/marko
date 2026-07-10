@@ -17,7 +17,11 @@ const $v = /*@__PURE__*/ _let("v/3", ($scope) => {
 });
 const $wrong = /*@__PURE__*/ _let("wrong/4", ($scope) => _text($scope["#text/1"], $scope.wrong));
 const $key = /*@__PURE__*/ _const("key", $key__OR__state);
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_input_value_script($scope, "#input/2"));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.v ??= "v1";
+	$scope.wrong ??= "";
+	_attr_input_value_script($scope, "#input/2");
+});
 function $setup($scope) {
 	$v($scope, "v1");
 	$wrong($scope, "");

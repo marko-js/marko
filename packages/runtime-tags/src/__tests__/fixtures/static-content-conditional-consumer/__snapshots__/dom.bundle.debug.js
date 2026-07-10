@@ -6,9 +6,12 @@ const $if_content__input_content = /*@__PURE__*/ _if_closure("#text/1", 0, ($sco
 const $if_content__setup = $if_content__input_content;
 const $if = /*@__PURE__*/ _if("#text/1", "<!><!><!>", "b%c", $if_content__setup);
 const $show = /*@__PURE__*/ _let("show/5", ($scope) => $if($scope, $scope.show ? 0 : 1));
-const $setup__script = _script("__tests__/tags/consumer.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$show($scope, !$scope.show);
-}));
+const $setup__script = _script("__tests__/tags/consumer.marko_0", ($scope) => {
+	$scope.show ??= false;
+	_on($scope["#button/0"], "click", function() {
+		$show($scope, !$scope.show);
+	});
+});
 function $setup$1($scope) {
 	$show($scope, false);
 	$setup__script($scope);

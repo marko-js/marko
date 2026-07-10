@@ -20,6 +20,7 @@ const $checkedValue = /*@__PURE__*/ _let(6, ($scope) => {
 	$if_content__checkedValue($scope);
 });
 const $setup__script = _script("a2", ($scope) => {
+	$scope.f ??= true;
 	_attr_input_checkedValue_script($scope, "a");
 	_attr_input_checkedValue_script($scope, "c");
 	_on($scope.e, "click", function() {

@@ -6,6 +6,10 @@ const $count5 = /*@__PURE__*/ _let("$count/9", ($scope) => _text($scope["#text/3
 const $count6 = /*@__PURE__*/ _let("$count2/10", ($scope) => _text($scope["#text/5"], $scope.$count2));
 const $count7 = /*@__PURE__*/ _let("$count3/11", ($scope) => _text($scope["#text/7"], $scope.$count3));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 0;
+	$scope.$count ??= 0;
+	$scope.$count2 ??= 0;
+	$scope.$count3 ??= 0;
 	_on($scope["#button/0"], "click", function() {
 		$count4($scope, $scope.count + 1);
 	});

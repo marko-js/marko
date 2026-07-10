@@ -13,10 +13,13 @@ const $x = /*@__PURE__*/ _let("x/4", ($scope) => {
 	_text($scope["#text/2"], $scope.x);
 	$if_content__x($scope);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$x($scope, $scope.x + 1);
-	$show($scope, true);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.show ??= true;
+	_on($scope["#button/1"], "click", function() {
+		$x($scope, $scope.x + 1);
+		$show($scope, true);
+	});
+});
 function $setup($scope) {
 	$show($scope, true);
 	$x($scope, 1);

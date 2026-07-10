@@ -7,6 +7,7 @@ const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
 	_text($scope["#text/5"], $scope.count);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 0;
 	_on($scope["#button/0"], "click", function() {
 		$count($scope, $scope.count + 2);
 	});

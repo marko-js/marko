@@ -8,7 +8,7 @@ var child_default = _template("b", (input) => {
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, {
 		e: input.extra,
-		f: x
+		f: void 0
 	});
 	_resume_branch($scope0_id);
 	return $return;

@@ -4,9 +4,12 @@ const $x = /*@__PURE__*/ _let(5, ($scope) => {
 	_text($scope.b, $scope.f);
 	$input_extra__OR__x($scope);
 });
-const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$x($scope, $scope.f + 1);
-}));
+const $setup__script = _script("b0", ($scope) => {
+	$scope.f ??= 0;
+	_on($scope.a, "click", function() {
+		$x($scope, $scope.f + 1);
+	});
+});
 
 // template.marko
 const $message = ($scope, message) => _text($scope.c, message);

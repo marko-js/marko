@@ -6,7 +6,6 @@ const $content = (input) => {
 	_for_of(input.comments, (comment, i) => {
 		const $scope1_id = _scope_id();
 		const id = `${input.path || "c"}-${i}`;
-		let open = true;
 		_html(`<li${_attr("id", id)}${_attr("hidden", false)}><span>${_escape(comment.text)}${_el_resume($scope1_id, "b", $sg__input_comments)}</span><button>[-]${_el_resume($scope1_id, "d")}</button>${_el_resume($scope1_id, "c")}`);
 		_if(() => {
 			if (comment.comments) {
@@ -34,7 +33,7 @@ const $content = (input) => {
 			i: $si__input_comments && comment?.comments,
 			M: _serialize_if($scope0_reason, 2) && i,
 			l: $si__input_comments && id,
-			m: open,
+			m: void 0,
 			_: $si__input_comments__OR__input_path && _scope_with_id($scope0_id)
 		});
 	}, 0, $scope0_id, "a", $sg__input_comments__OR__input_path, $sg__input_comments, $sg__input_comments, "</ul>", 1);

@@ -17,9 +17,12 @@ const $cls = /*@__PURE__*/ _let("cls/2", ($scope) => $input($scope["#childScope/
 	src: "x.png",
 	alt: "pic"
 }));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$cls($scope, $scope.cls === "a" ? "b" : "a");
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.cls ??= "a";
+	_on($scope["#button/0"], "click", function() {
+		$cls($scope, $scope.cls === "a" ? "b" : "a");
+	});
+});
 function $setup($scope) {
 	$cls($scope, "a");
 	$setup__script($scope);

@@ -4,6 +4,7 @@ const $walks = " b b D l";
 const $x = /*@__PURE__*/ _let("x/4", ($scope) => _text($scope["#text/3"], $scope.x));
 const $direction = /*@__PURE__*/ _let("direction/5");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.x ??= 1;
 	_on($scope["#button/0"], "click", function() {
 		$direction($scope, "up");
 	});

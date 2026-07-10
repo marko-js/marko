@@ -31,6 +31,9 @@ const $x = /*@__PURE__*/ _let(7, ($scope) => {
 	$dynamicTag5($scope, $scope.h ? "div" : a_default, () => ({ label: "ad" }));
 	$dynamicTag6($scope, $scope.h ? localTag : a_default, () => ({ label: "la" }));
 });
-const $setup__script = _script("a4", ($scope) => _on($scope.a, "click", function() {
-	$x($scope, !$scope.h);
-}));
+const $setup__script = _script("a4", ($scope) => {
+	$scope.h ??= true;
+	_on($scope.a, "click", function() {
+		$x($scope, !$scope.h);
+	});
+});

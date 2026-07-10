@@ -34,9 +34,12 @@ const $value = /*@__PURE__*/ _let("value/3", ($scope) => {
 	$input_value$1($scope["#childScope/1"], $scope.value);
 	$input_value($scope["#childScope/2"], $scope.value);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$value($scope, $scope.value + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.value ??= 1;
+	_on($scope["#button/0"], "click", function() {
+		$value($scope, $scope.value + 1);
+	});
+});
 function $setup($scope) {
 	$setup$2($scope["#childScope/1"]);
 	$setup$1($scope["#childScope/2"]);

@@ -4,7 +4,10 @@ const $value = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	_text($scope.c, typeof $scope.d);
 });
-const $setup__script = _script("a1", ($scope) => _attr_input_value_script($scope, "a"));
+const $setup__script = _script("a1", ($scope) => {
+	$scope.d ??= 0;
+	_attr_input_value_script($scope, "a");
+});
 function $valueChange($scope) {
 	return (_new_value) => {
 		$value($scope, parseInt(_new_value));

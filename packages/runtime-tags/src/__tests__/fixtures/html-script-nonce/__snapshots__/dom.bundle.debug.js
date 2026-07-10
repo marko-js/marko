@@ -13,7 +13,10 @@ const $spreadAttrs = /*@__PURE__*/ _const("spreadAttrs", ($scope) => {
 });
 const $if = /*@__PURE__*/ _if("#text/2", "<script type=magic>\n    D\n  <\/script>", " b", $if_content__setup);
 const $mounted = /*@__PURE__*/ _let("mounted/4", ($scope) => $if($scope, $scope.mounted ? 0 : 1));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => $mounted($scope, true));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.mounted ??= false;
+	$mounted($scope, true);
+});
 function $setup($scope) {
 	_attr_nonce($scope, "#script/0");
 	$spreadAttrs($scope, { nonce: "override-spread" });

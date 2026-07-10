@@ -9,6 +9,7 @@ const $x = /*@__PURE__*/ _let("x/4", ($scope) => {
 });
 const $yChange2 = /*@__PURE__*/ _let("yChange/5", $x__OR__yChange);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.x ??= 1;
 	_on($scope["#button/0"], "click", function() {
 		$y($scope, $scope.y + 1);
 	});

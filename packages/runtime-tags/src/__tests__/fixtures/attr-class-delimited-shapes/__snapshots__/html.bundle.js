@@ -24,7 +24,7 @@ var template_default = _template("a", (input) => {
 	])}></div>${_el_resume($scope0_id, "c")}`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
-		d,
+		d: void 0,
 		e: more,
 		f: moreStyles,
 		h: obj,

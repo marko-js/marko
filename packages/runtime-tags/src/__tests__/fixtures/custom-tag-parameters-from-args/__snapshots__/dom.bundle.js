@@ -9,10 +9,14 @@ const $y = /*@__PURE__*/ _let(8, ($scope) => {
 	_text($scope.c, $scope.i);
 	$input_content__OR__x__OR__y($scope);
 });
-const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$x($scope, $scope.h + 1);
-	$y($scope, $scope.i + 1);
-}));
+const $setup__script = _script("b0", ($scope) => {
+	$scope.h ??= 1;
+	$scope.i ??= 10;
+	_on($scope.a, "click", function() {
+		$x($scope, $scope.h + 1);
+		$y($scope, $scope.i + 1);
+	});
+});
 
 // template.marko
 const $customtag_content__count = ($scope, count) => _text($scope.a, count);

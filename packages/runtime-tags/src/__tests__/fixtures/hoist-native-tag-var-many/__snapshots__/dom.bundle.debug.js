@@ -20,6 +20,7 @@ const $to = /*@__PURE__*/ _let("to/3", ($scope) => $for2($scope, [
 ]));
 const $for3 = /*@__PURE__*/ _for_to("#text/2", "<ul></ul>", " b", $for_content3__setup);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.to ??= 3;
 	{
 		const el = $el_getter($scope)();
 		if (el) {

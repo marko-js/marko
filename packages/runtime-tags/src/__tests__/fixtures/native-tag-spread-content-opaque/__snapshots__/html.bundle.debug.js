@@ -28,7 +28,7 @@ var my_box_default = _template("__tests__/tags/my-box.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/my-box.marko_0_input");
 	writeScope($scope0_id, {
 		input,
-		show
+		show: show === false ? void 0 : show
 	}, "__tests__/tags/my-box.marko", 0, {
 		input: 0,
 		show: "1:6"

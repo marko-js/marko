@@ -17,8 +17,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`</b><button>inc</button>${_el_resume($scope0_id, "#button/6")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		count,
-		vis
+		count: count === 3 ? void 0 : count,
+		vis: vis === true ? void 0 : vis
 	}, "__tests__/template.marko", 0, {
 		count: "1:6",
 		vis: "2:6"

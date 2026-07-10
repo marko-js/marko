@@ -6,9 +6,12 @@ const $input_isInner = $isInner;
 const $inner = /*@__PURE__*/ _let("inner/7");
 const $input_inner = $inner;
 const $verified = /*@__PURE__*/ _let("verified/8", ($scope) => _text($scope["#text/1"], $scope.verified));
-const $setup__script = _script("__tests__/child-b.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$verified($scope, String($scope.isInner($scope.inner)));
-}));
+const $setup__script = _script("__tests__/child-b.marko_0", ($scope) => {
+	$scope.verified ??= "?";
+	_on($scope["#button/0"], "click", function() {
+		$verified($scope, String($scope.isInner($scope.inner)));
+	});
+});
 function $setup($scope) {
 	$verified($scope, "?");
 	$setup__script($scope);
@@ -27,9 +30,12 @@ const $input_isShared = $isShared;
 const $holder = /*@__PURE__*/ _let("holder/7");
 const $input_holder = $holder;
 const $verified = /*@__PURE__*/ _let("verified/8", ($scope) => _text($scope["#text/1"], $scope.verified));
-const $setup__script = _script("__tests__/child-s.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$verified($scope, String($scope.isShared($scope.holder)));
-}));
+const $setup__script = _script("__tests__/child-s.marko_0", ($scope) => {
+	$scope.verified ??= "?";
+	_on($scope["#button/0"], "click", function() {
+		$verified($scope, String($scope.isShared($scope.holder)));
+	});
+});
 function $setup($scope) {
 	$verified($scope, "?");
 	$setup__script($scope);
@@ -57,9 +63,12 @@ const $shared = /*@__PURE__*/ _let("shared/6", ($scope) => {
 });
 const $shared_inner = /*@__PURE__*/ _const("shared_inner", ($scope) => $load_ChildB_tag_input_inner($scope["#childScope/5"], $scope.shared_inner));
 const $count = /*@__PURE__*/ _let("count/8", ($scope) => _text($scope["#text/1"], $scope.count));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + Object.keys($scope.shared).length);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 0;
+	_on($scope["#button/0"], "click", function() {
+		$count($scope, $scope.count + Object.keys($scope.shared).length);
+	});
+});
 function $setup($scope) {
 	$load_ChildS_setup($scope);
 	$load_ChildB_setup($scope);

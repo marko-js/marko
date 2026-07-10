@@ -30,9 +30,12 @@ const $count = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.b, $scope.e);
 	$dynamicTag($scope, _marko_template, () => ({ count: $scope.e }));
 });
-const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.e + 1);
-}));
+const $setup__script = _script("a0", ($scope) => {
+	$scope.e ??= 0;
+	_on($scope.a, "click", function() {
+		$count($scope, $scope.e + 1);
+	});
+});
 
 // v:template.marko.hydrate-6.js
 var v_template_marko_hydrate_6_default = () => init$1();

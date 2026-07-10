@@ -27,6 +27,9 @@ const $n = /*@__PURE__*/ _let(11, ($scope) => {
 	$await_promise4($scope, multiply(4, $scope.l));
 	$await_promise5($scope, multiply(5, $scope.l));
 });
-const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$n($scope, $scope.l + 1);
-}));
+const $setup__script = _script("a0", ($scope) => {
+	$scope.l ??= 2;
+	_on($scope.a, "click", function() {
+		$n($scope, $scope.l + 1);
+	});
+});

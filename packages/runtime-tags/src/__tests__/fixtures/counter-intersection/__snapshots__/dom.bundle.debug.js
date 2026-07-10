@@ -11,6 +11,8 @@ const $b = /*@__PURE__*/ _let("b/6", ($scope) => {
 	$a__OR__b($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.a ??= 0;
+	$scope.b ??= 0;
 	_on($scope["#button/0"], "click", function() {
 		$a($scope, 10);
 	});

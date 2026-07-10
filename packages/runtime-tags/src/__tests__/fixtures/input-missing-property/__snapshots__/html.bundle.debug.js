@@ -30,7 +30,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	Child.content({ count });
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		count,
+		count: count === 0 ? void 0 : count,
 		"#childScope/2": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);

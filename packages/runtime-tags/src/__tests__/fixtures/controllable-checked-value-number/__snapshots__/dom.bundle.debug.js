@@ -8,6 +8,7 @@ const $checked = /*@__PURE__*/ _let("checked/4", ($scope) => {
 	_text($scope["#text/3"], $scope.checked);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.checked ??= 0;
 	_attr_input_checkedValue_script($scope, "#input/0");
 	_attr_input_checkedValue_script($scope, "#input/1");
 	_attr_input_checkedValue_script($scope, "#input/2");

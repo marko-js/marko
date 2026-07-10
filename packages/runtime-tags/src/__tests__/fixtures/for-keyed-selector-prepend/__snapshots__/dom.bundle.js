@@ -12,11 +12,14 @@ const $for = /*@__PURE__*/ _for_of(1, "<li> </li>", " D l", $for_content__setup,
 const $rows = /*@__PURE__*/ _let(2, ($scope) => $for($scope, [$scope.c, "id"]));
 const $selected = /*@__PURE__*/ _let(3, $for_content__selected);
 const $nextId = /*@__PURE__*/ _let(4);
-const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$rows($scope, [{
-		id: $scope.e,
-		label: "new"
-	}, ...$scope.c]);
-	$selected($scope, $scope.e);
-	$nextId($scope, $scope.e + 1);
-}));
+const $setup__script = _script("a0", ($scope) => {
+	$scope.e ??= 3;
+	_on($scope.a, "click", function() {
+		$rows($scope, [{
+			id: $scope.e,
+			label: "new"
+		}, ...$scope.c]);
+		$selected($scope, $scope.e);
+		$nextId($scope, $scope.e + 1);
+	});
+});

@@ -8,6 +8,6 @@ var template_default = _template("a", (input) => {
 	_html("<div>Hello!</div>");
 	_show_end($scope0_id, "c", show, 1, 1, 0, 1);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { d: show });
+	writeScope($scope0_id, { d: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

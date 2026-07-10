@@ -4,6 +4,7 @@ const $selected = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 });
 const $setup__script = _script("a1", ($scope) => {
+	$scope.d ??= 1;
 	_attr_select_value_script($scope, "a");
 	_on($scope.c, "click", function() {
 		$selected($scope, 1);

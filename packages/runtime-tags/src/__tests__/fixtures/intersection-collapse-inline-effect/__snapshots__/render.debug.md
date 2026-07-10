@@ -16,5 +16,5 @@ c.querySelector("button").click();
 ```
 ## Change
 ```
-UPDATE: body[data-sum] "5" => "7"
+UPDATE: body[data-sum] "NaN" => "7"
 ```

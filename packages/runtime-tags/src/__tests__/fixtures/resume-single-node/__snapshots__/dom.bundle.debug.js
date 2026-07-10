@@ -10,9 +10,12 @@ const $items = /*@__PURE__*/ _let("items/3", ($scope) => {
 	$items_length($scope, $scope.items?.length);
 	$for($scope, [$scope.items]);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$items($scope, [...$scope.items, $itemId($scope, $scope.itemId + 1)]);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.itemId ??= 0;
+	_on($scope["#button/1"], "click", function() {
+		$items($scope, [...$scope.items, $itemId($scope, $scope.itemId + 1)]);
+	});
+});
 function $setup($scope) {
 	$itemId($scope, 0);
 	$items($scope, [0]);

@@ -5,9 +5,12 @@ const $disabled = /*@__PURE__*/ _let("disabled/3", ($scope) => {
 	_attr($scope["#input/0"], "disabled", $scope.disabled);
 	_text($scope["#text/2"], $scope.disabled ? "enable" : "disable");
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$disabled($scope, !$scope.disabled);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.disabled ??= true;
+	_on($scope["#button/1"], "click", function() {
+		$disabled($scope, !$scope.disabled);
+	});
+});
 function $setup($scope) {
 	$disabled($scope, true);
 	$setup__script($scope);

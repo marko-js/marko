@@ -9,9 +9,12 @@ const $on = /*@__PURE__*/ _let("on/4", ($scope) => {
 	$viaTernary($scope, $scope.on ? { label: "ternary" } : null);
 	$box($scope, { inner: $scope.on ? { label: "assign" } : null });
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
-	$on($scope, $scope.on ? null : true);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.on ??= true;
+	_on($scope["#button/3"], "click", function() {
+		$on($scope, $scope.on ? null : true);
+	});
+});
 function $setup($scope) {
 	$on($scope, true);
 	$setup__script($scope);

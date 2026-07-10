@@ -10,7 +10,10 @@ const $placeholder = /*@__PURE__*/ _const("placeholder", ($scope) => {
 	_attrs($scope, "#option/1", $scope.placeholder);
 	$placeholder__script($scope);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_select_value_script($scope, "#select/0"));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.value ??= "";
+	_attr_select_value_script($scope, "#select/0");
+});
 function $setup($scope) {
 	$value($scope, "");
 	$placeholder($scope, { value: "" });

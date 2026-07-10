@@ -7,9 +7,12 @@ const $d = /*@__PURE__*/ _let("d/4", ($scope) => {
 	_attr($scope["#div/2"], "data-x", `${$scope.d}`);
 	_text($scope["#text/3"], `${$scope.d}`);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$d($scope, $scope.d + "!");
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.d ??= "y";
+	_on($scope["#button/0"], "click", function() {
+		$d($scope, $scope.d + "!");
+	});
+});
 function $setup($scope) {
 	$d($scope, "y");
 	$setup__script($scope);

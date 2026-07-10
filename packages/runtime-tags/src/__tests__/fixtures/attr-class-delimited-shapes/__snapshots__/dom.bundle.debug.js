@@ -25,9 +25,12 @@ const $more = /*@__PURE__*/ _const("more", $d__OR__more__OR__obj__OR__k);
 const $moreStyles = /*@__PURE__*/ _const("moreStyles", $d__OR__moreStyles);
 const $obj = /*@__PURE__*/ _const("obj", $d__OR__more__OR__obj__OR__k);
 const $k = /*@__PURE__*/ _const("k", $d__OR__more__OR__obj__OR__k);
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$d($scope, $scope.d + "2");
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.d ??= "dyn";
+	_on($scope["#button/0"], "click", function() {
+		$d($scope, $scope.d + "2");
+	});
+});
 function $setup($scope) {
 	$d($scope, "dyn");
 	$more($scope, ["m1"]);

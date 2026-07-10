@@ -17,9 +17,12 @@ const $x = /*@__PURE__*/ _let("x/6", ($scope) => {
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/3", 0, 0, 1);
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/4", 0, 0, 1);
 const $dynamicTag4 = /*@__PURE__*/ _dynamic_tag("#text/5", 0, 0, 1);
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.x ??= 1;
+	_on($scope["#button/0"], "click", function() {
+		$x($scope, $scope.x + 1);
+	});
+});
 function $setup($scope) {
 	$x($scope, 1);
 	$dynamicTag2($scope, tags[0], () => [false]);

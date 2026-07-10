@@ -9,6 +9,8 @@ const $multiplier = /*@__PURE__*/ _let("multiplier/5", ($scope) => {
 	$count__OR__multiplier($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 0;
+	$scope.multiplier ??= 1;
 	_on($scope["#button/0"], "click", function() {
 		$multiplier($scope, $scope.multiplier + 1);
 	});

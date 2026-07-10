@@ -12,9 +12,13 @@ const $for_content__$params = ($scope, $params2) => $for_content__i($scope, $par
 const $total = /*@__PURE__*/ _let("total/4", ($scope) => _text($scope["#text/2"], $scope.total));
 const $seen = /*@__PURE__*/ _let("seen/5", ($scope) => _text($scope["#text/3"], $scope.seen));
 const $for = /*@__PURE__*/ _for_of("#text/0", "<button>pick <!></button>", " Db%l", 0, $for_content__$params);
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$total($scope, $scope.total + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.total ??= 0;
+	$scope.seen ??= "";
+	_on($scope["#button/1"], "click", function() {
+		$total($scope, $scope.total + 1);
+	});
+});
 function $setup($scope) {
 	$total($scope, 0);
 	$seen($scope, "");

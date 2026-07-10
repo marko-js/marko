@@ -13,7 +13,10 @@ const $x = /*@__PURE__*/ _let("x/5", ($scope) => {
 	$z($scope, $scope.x + 2);
 	$y__OR__z($scope);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", () => $x($scope, $scope.x + 1) - 1));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.x ??= 1;
+	_on($scope["#button/0"], "click", () => $x($scope, $scope.x + 1) - 1);
+});
 function $setup($scope) {
 	$x($scope, 1);
 	$setup__script($scope);

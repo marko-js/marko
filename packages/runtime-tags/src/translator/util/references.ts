@@ -121,6 +121,7 @@ export interface Binding {
   pruned: boolean | undefined;
   exposed: boolean;
   forcePersist: boolean;
+  staticDefault: { value: string | number | boolean | null } | undefined;
 }
 
 export interface InputBinding extends Binding {
@@ -236,6 +237,7 @@ export function createBinding(
     pruned: undefined,
     exposed: false,
     forcePersist: false,
+    staticDefault: undefined,
   };
 
   if (property) {
@@ -1702,6 +1704,25 @@ function addReadToExpression(
     const fnExtra = (fnRoot.node.extra ??= {}) as ReferencedFunctionExtra;
     fnExtra.section = section;
     exprFnReads.set(fnExtra, push(exprFnReads.get(fnExtra), read));
+  }
+}
+
+// A `<let>` default that the section's setup effect rebuilds at resume,
+// letting equal values skip serialization; reads that can run first disqualify it.
+export function getElidableDefault(binding: Binding) {
+  if (
+    binding.staticDefault &&
+    !binding.closureSections &&
+    !binding.hoists &&
+    !binding.getters.size &&
+    getSignals(binding.section).get(undefined)?.effect.length
+  ) {
+    for (const expr of binding.reads) {
+      if (expr.isEffect && !bindingUtil.has(expr.lazyBindings, binding)) {
+        return;
+      }
+    }
+    return binding.staticDefault;
   }
 }
 

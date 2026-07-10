@@ -7,10 +7,13 @@ const $message = /*@__PURE__*/ _let("message/2", ($scope) => $message_text($scop
 const $message_text = /*@__PURE__*/ _const("message_text", $if_content__message_text);
 const $if = /*@__PURE__*/ _if("#text/1", " ", " b", $if_content__setup);
 const $show = /*@__PURE__*/ _let("show/4", ($scope) => $if($scope, $scope.show ? 0 : 1));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$message($scope, null);
-	$show($scope, false);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.show ??= true;
+	_on($scope["#button/0"], "click", function() {
+		$message($scope, null);
+		$show($scope, false);
+	});
+});
 function $setup($scope) {
 	$message($scope, { text: "hi" });
 	$show($scope, true);

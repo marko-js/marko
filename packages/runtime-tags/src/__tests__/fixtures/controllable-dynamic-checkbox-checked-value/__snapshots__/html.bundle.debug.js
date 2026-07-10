@@ -20,7 +20,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<input${_attr_input_checkedValue($scope0_id, "#input/2", checkedValue, $checkedValueChange, "c")} type=radio>${_el_resume($scope0_id, "#input/2")}<span>${_escape(checkedValue)}${_el_resume($scope0_id, "#text/3")}</span><button>Toggle</button>${_el_resume($scope0_id, "#button/4")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		show,
+		show: show === true ? void 0 : show,
 		checkedValue,
 		$checkedValueChange
 	}, "__tests__/template.marko", 0, {

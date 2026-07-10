@@ -14,14 +14,17 @@ const $for = /*@__PURE__*/ _for_of("#ul/1", "<li> </li>", " D l", $for_content__
 const $rows = /*@__PURE__*/ _let("rows/2", ($scope) => $for($scope, [$scope.rows, "id"]));
 const $selected = /*@__PURE__*/ _let("selected/3", $for_content__selected);
 const $nextId = /*@__PURE__*/ _let("nextId/4");
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$rows($scope, [{
-		id: $scope.nextId,
-		label: "new"
-	}, ...$scope.rows]);
-	$selected($scope, $scope.nextId);
-	$nextId($scope, $scope.nextId + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.nextId ??= 3;
+	_on($scope["#button/0"], "click", function() {
+		$rows($scope, [{
+			id: $scope.nextId,
+			label: "new"
+		}, ...$scope.rows]);
+		$selected($scope, $scope.nextId);
+		$nextId($scope, $scope.nextId + 1);
+	});
+});
 function $setup($scope) {
 	$rows($scope, [{
 		id: 1,

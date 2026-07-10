@@ -12,4 +12,7 @@ const $if_content__try = /*@__PURE__*/ _try(0, "<!><!><!>", "b%c", $try_content_
 const $if_content__setup = ($scope) => $if_content__try($scope, { placeholder: attrTag({ content: $placeholder_content($scope) }) });
 const $if = /*@__PURE__*/ _if(0, "<!><!><!>", "b%c", $if_content__setup);
 const $show = /*@__PURE__*/ _let(1, ($scope) => $if($scope, $scope.b ? 0 : 1));
-const $setup__script = _script("a3", ($scope) => $show($scope, 0));
+const $setup__script = _script("a3", ($scope) => {
+	$scope.b ??= 1;
+	$show($scope, 0);
+});

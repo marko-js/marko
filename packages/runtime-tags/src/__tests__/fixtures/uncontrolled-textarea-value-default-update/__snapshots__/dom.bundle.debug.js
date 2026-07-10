@@ -8,6 +8,7 @@ const $value = /*@__PURE__*/ _let("value/7", ($scope) => {
 	_attr_input_value($scope, "#textarea/5", $scope.value, undefined);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.value ??= "a";
 	_attr_input_value_script($scope, "#textarea/4");
 	_attr_input_value_script($scope, "#textarea/5");
 	_on($scope["#button/6"], "click", function() {

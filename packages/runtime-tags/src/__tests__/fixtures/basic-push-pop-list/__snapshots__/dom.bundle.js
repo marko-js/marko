@@ -5,6 +5,7 @@ const $id = /*@__PURE__*/ _let(3);
 const $for = /*@__PURE__*/ _for_of(0, " ", " b", 0, $for_content__$params);
 const $items = /*@__PURE__*/ _let(4, ($scope) => $for($scope, [$scope.e]));
 const $setup__script = _script("a0", ($scope) => {
+	$scope.d ??= 0;
 	_on($scope.b, "click", function() {
 		$items($scope, [...$scope.e, $id($scope, $scope.d + 1)]);
 	});

@@ -11,7 +11,6 @@ const $Child_withLoadAssets = withLoadAssets(child_default, "_a");
 var template_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let show = true;
 	let value = 0;
 	_html(`<button class=toggle>Toggle</button>${_el_resume($scope0_id, "a")}<button class=inc>Inc</button>${_el_resume($scope0_id, "b")}`);
 	const $childScope = _peek_scope_id();
@@ -20,8 +19,8 @@ var template_default = _template("b", (input) => {
 	_dynamic_tag($scope0_id, "e", $Child_withLoadAssets, { value });
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, {
-		f: show,
-		g: value,
+		f: void 0,
+		g: void 0,
 		d: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

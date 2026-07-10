@@ -4,9 +4,12 @@ const $value = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.b, $scope.e);
 	$load_Child_tag_input_value($scope.d, $scope.e);
 });
-const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$value($scope, $scope.e + 1);
-}));
+const $setup__script = _script("b0", ($scope) => {
+	$scope.e ??= 0;
+	_on($scope.a, "click", function() {
+		$value($scope, $scope.e + 1);
+	});
+});
 
 // child.marko
 const $count = /*@__PURE__*/ _let(6, ($scope) => _text($scope.c, $scope.g));

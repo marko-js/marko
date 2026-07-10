@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button><input${_attr_input_value($scope0_id, "b", count, $valueChange)}>${_el_resume($scope0_id, "b")}<input${_attr_input_value($scope0_id, "c", count, $valueChange)}>${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		d: count,
+		d: count === 0 ? void 0 : count,
 		e: $valueChange
 	});
 	_resume_branch($scope0_id);

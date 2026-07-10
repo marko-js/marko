@@ -58,9 +58,12 @@ const $count = /*@__PURE__*/ _let("count/4", ($scope) => {
 	$dynamicTag2($scope, _marko_template, () => ({ count: $scope.count }));
 });
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2");
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 0;
+	_on($scope["#button/0"], "click", function() {
+		$count($scope, $scope.count + 1);
+	});
+});
 function $setup($scope) {
 	$count($scope, 0);
 	$dynamicTag($scope, _marko_template$1, () => ({ value: "Hello World" }));

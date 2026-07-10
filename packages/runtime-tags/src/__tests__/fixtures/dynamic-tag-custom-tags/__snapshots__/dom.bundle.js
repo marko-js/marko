@@ -18,6 +18,9 @@ var child2_default = /*@__PURE__*/ _template("c", $template, $walks, $setup, $in
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(0);
 const $tagName__OR__val = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $scope.c, () => ({ value: $scope.d })));
 const $tagName = /*@__PURE__*/ _let(2, $tagName__OR__val);
-const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
-	$tagName($scope, $scope.c === child1_default ? child2_default : child1_default);
-}));
+const $setup__script = _script("a0", ($scope) => {
+	$scope.d ??= 3;
+	_on($scope.b, "click", function() {
+		$tagName($scope, $scope.c === child1_default ? child2_default : child1_default);
+	});
+});

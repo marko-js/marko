@@ -6,6 +6,8 @@ const $outer = /*@__PURE__*/ _let("outer/6", ($scope) => $show2($scope, $scope.o
 const $show = /*@__PURE__*/ _show("#text/4", "#text/3");
 const $inner = /*@__PURE__*/ _let("inner/7", ($scope) => $show($scope, $scope.inner));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.outer ??= true;
+	$scope.inner ??= false;
 	_on($scope["#button/0"], "click", function() {
 		$outer($scope, !$scope.outer);
 	});

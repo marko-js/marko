@@ -8,7 +8,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/child.marko_0");
 	writeScope($scope0_id, {
 		input_extra: input.extra,
-		x
+		x: x === 0 ? void 0 : x
 	}, "__tests__/tags/child.marko", 0, {
 		input_extra: ["input.extra"],
 		x: "1:6"

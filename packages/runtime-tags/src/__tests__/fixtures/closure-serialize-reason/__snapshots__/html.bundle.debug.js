@@ -17,7 +17,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		input_message: input.message,
-		x,
+		x: x === 0 ? void 0 : x,
 		getMessage
 	}, "__tests__/template.marko", 0, {
 		input_message: ["input.message"],

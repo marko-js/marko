@@ -21,13 +21,12 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	let tagName = child1_default;
-	let val = 3;
-	_dynamic_tag($scope0_id, "a", tagName, { value: val });
+	_dynamic_tag($scope0_id, "a", tagName, { value: 3 });
 	_html(`<button></button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		c: tagName,
-		d: val
+		d: void 0
 	});
 	_resume_branch($scope0_id);
 }, 1);

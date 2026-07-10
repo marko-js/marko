@@ -18,6 +18,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_dynamic_tag($scope0_id, "#text/4", tags[0], [true], 0, 1, 0);
 	_dynamic_tag($scope0_id, "#text/5", tags[0], [...["spread1", "spread2"]], 0, 1, 0);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "3:6" });
+	writeScope($scope0_id, { x: x === 1 ? void 0 : x }, "__tests__/template.marko", 0, { x: "3:6" });
 	_resume_branch($scope0_id);
 }, 1);

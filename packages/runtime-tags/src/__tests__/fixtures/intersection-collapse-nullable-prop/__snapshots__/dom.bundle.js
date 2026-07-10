@@ -7,7 +7,10 @@ const $show = /*@__PURE__*/ _let(2, ($scope) => {
 	$obj($scope, $scope.c && { label: "hi" });
 	$obj_label__OR__n($scope);
 });
-const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$show($scope, !$scope.c);
-}));
+const $setup__script = _script("a0", ($scope) => {
+	$scope.c ??= false;
+	_on($scope.a, "click", function() {
+		$show($scope, !$scope.c);
+	});
+});
 const $obj_label = /*@__PURE__*/ _const(4);

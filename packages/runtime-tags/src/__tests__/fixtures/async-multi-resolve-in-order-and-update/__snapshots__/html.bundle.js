@@ -36,6 +36,6 @@ var template_default = _template("a", (input) => {
 	});
 	_html("</p>");
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { l: n });
+	writeScope($scope0_id, { l: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

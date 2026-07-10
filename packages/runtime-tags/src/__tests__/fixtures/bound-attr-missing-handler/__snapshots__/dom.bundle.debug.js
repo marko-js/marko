@@ -7,6 +7,7 @@ const $state = ($scope, state) => {
 	$state_xChange($scope, state.xChange);
 };
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.n ??= 1;
 	_on($scope["#button/0"], "click", function() {
 		$n($scope, $scope.n + 1);
 	});

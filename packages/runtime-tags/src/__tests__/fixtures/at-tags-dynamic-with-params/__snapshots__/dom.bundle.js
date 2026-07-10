@@ -11,6 +11,9 @@ const $x = /*@__PURE__*/ _let(2, ($scope) => {
 	if ($scope.c) $item = attrTag({ content: $item_content($scope) });
 	$input_item($scope.a, $item);
 });
-const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
-	$x($scope, !$scope.c);
-}));
+const $setup__script = _script("a1", ($scope) => {
+	$scope.c ??= true;
+	_on($scope.b, "click", function() {
+		$x($scope, !$scope.c);
+	});
+});

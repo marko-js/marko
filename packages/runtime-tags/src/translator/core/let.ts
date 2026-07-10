@@ -102,6 +102,13 @@ export default {
       valueChangeAttr?.value,
     ]);
 
+    if (valueAttr && !valueChangeAttr) {
+      const computed = computeNode(valueAttr.value);
+      if (computed && isElidableDefaultValue(computed.value)) {
+        binding.staticDefault = { value: computed.value };
+      }
+    }
+
     if (valueChangeAttr) {
       setBindingDownstream(binding, tagExtra);
       // The serialized change handler is only ever invoked by an assignment
@@ -184,3 +191,21 @@ export default {
   ],
   types: runtimeInfo.name + "/tags/let.d.marko",
 } as Tag;
+
+// Only primitives `===` can test are elidable: NaN never equals itself and
+// -0 is indistinguishable from 0, so both always serialize.
+function isElidableDefaultValue(
+  value: unknown,
+): value is string | number | boolean | null {
+  switch (typeof value) {
+    case "string":
+    case "boolean":
+      return true;
+    case "number":
+      return value === value && !Object.is(value, -0);
+    case "object":
+      return value === null;
+    default:
+      return false;
+  }
+}

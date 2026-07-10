@@ -7,8 +7,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button>${_escape(a + b)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		a,
-		b
+		a: a === 0 ? void 0 : a,
+		b: b === 0 ? void 0 : b
 	}, "__tests__/template.marko", 0, {
 		a: "1:6",
 		b: "2:6"

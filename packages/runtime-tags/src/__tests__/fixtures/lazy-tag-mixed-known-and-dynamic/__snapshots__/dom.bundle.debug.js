@@ -20,6 +20,8 @@ const $value = /*@__PURE__*/ _let("value/6", ($scope) => {
 	$show__OR__value($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.show ??= true;
+	$scope.value ??= 0;
 	_on($scope["#button/0"], "click", function() {
 		$show($scope, !$scope.show);
 	});

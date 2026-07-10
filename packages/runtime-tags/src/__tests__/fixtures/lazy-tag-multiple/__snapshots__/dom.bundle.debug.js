@@ -27,9 +27,12 @@ const $value = /*@__PURE__*/ _let("value/5", ($scope) => {
 	$load_ChildA_tag_input_value($scope["#childScope/2"], $scope.value);
 	$load_ChildB_tag_input_value($scope["#childScope/4"], $scope.value);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$value($scope, $scope.value + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.value ??= 0;
+	_on($scope["#button/0"], "click", function() {
+		$value($scope, $scope.value + 1);
+	});
+});
 function $setup($scope) {
 	$load_ChildA_setup($scope);
 	$load_ChildB_setup($scope);

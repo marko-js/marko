@@ -8,6 +8,7 @@ const $count__OR__$valueChange = /*@__PURE__*/ _or(5, ($scope) => {
 const $count = /*@__PURE__*/ _let("count/3", $count__OR__$valueChange);
 const $valueChange3 = /*@__PURE__*/ _const("$valueChange", $count__OR__$valueChange);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.count ??= 0;
 	_on($scope["#button/0"], "click", function() {
 		$count($scope, $scope.count + 1);
 	});

@@ -7,6 +7,7 @@ const $list = /*@__PURE__*/ _let(4, ($scope) => $for($scope, [$scope.e, function
 	return x;
 }]));
 const $setup__script = _script("a0", ($scope) => {
+	$scope.d ??= true;
 	_on($scope.b, "click", function() {
 		$open($scope, !$scope.d);
 	});

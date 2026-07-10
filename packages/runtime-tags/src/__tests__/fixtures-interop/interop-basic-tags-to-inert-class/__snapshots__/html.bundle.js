@@ -14,10 +14,9 @@ _marko_template._ = (0, import_renderer.default)(function(input, out, _component
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let count = 0;
-	_html(`<button id=tags>${_escape(count)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button id=tags>${_escape(0)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	_dynamic_tag($scope0_id, "c", _marko_template, { value: "Hello World" }, 0, 0, 0);
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { d: count });
+	writeScope($scope0_id, { d: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

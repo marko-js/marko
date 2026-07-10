@@ -20,6 +20,8 @@ const $b = /*@__PURE__*/ _let(5, ($scope) => {
 	$a__OR__b($scope);
 });
 const $setup__script = _script("a2", ($scope) => {
+	$scope.e ??= "a1";
+	$scope.f ??= "b1";
 	_attr_input_value_script($scope, "c");
 	_attr_input_value_script($scope, "d");
 });

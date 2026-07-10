@@ -12,6 +12,7 @@ const $x = /*@__PURE__*/ _let("x/5", ($scope) => {
 });
 const $valueChange3 = /*@__PURE__*/ _const("$valueChange", $x__OR__$valueChange);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.x ??= "start";
 	_on($scope["#button/0"], "click", function() {
 		$x($scope, $scope.x + "!");
 	});

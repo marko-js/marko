@@ -5,7 +5,10 @@ const $open = /*@__PURE__*/ _let("open/2", ($scope) => {
 	_attr_details_or_dialog_open($scope, "#dialog/0", $scope.open, $openChange($scope));
 	_text($scope["#text/1"], String($scope.open));
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _attr_details_or_dialog_open_script($scope, "#dialog/0"));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.open ??= true;
+	_attr_details_or_dialog_open_script($scope, "#dialog/0");
+});
 function $setup($scope) {
 	$open($scope, true);
 	$setup__script($scope);

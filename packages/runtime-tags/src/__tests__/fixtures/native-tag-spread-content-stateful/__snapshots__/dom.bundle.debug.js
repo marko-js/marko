@@ -13,9 +13,12 @@ var my_box_default = /*@__PURE__*/ _template("__tests__/tags/my-box.marko", $tem
 const $template = $template$1;
 const $walks = /*@__PURE__*/ ((_w0) => `/${_w0}&`)(" b");
 const $mybox_content__count = /*@__PURE__*/ _let("count/2", ($scope) => _text($scope["#text/1"], $scope.count));
-const $mybox_content__setup__script = _script("__tests__/template.marko_1", ($scope) => _on($scope["#button/0"], "click", function() {
-	$mybox_content__count($scope, $scope.count + 1);
-}));
+const $mybox_content__setup__script = _script("__tests__/template.marko_1", ($scope) => {
+	$scope.count ??= 0;
+	_on($scope["#button/0"], "click", function() {
+		$mybox_content__count($scope, $scope.count + 1);
+	});
+});
 const $mybox_content__setup = ($scope) => {
 	$mybox_content__count($scope, 0);
 	$mybox_content__setup__script($scope);

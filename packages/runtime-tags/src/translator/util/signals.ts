@@ -26,6 +26,7 @@ import {
   getDebugNames,
   getDebugNamesAsIdentifier,
   getDebugScopeAccess,
+  getElidableDefault,
   getReadReplacement,
   getScopeAccessor,
   getScopeAccessorLiteral,
@@ -939,6 +940,27 @@ export function getResumeRegisterId(
   );
 }
 
+// Registered section effects first fill elided `<let>` slots with their
+// defaults, so resumed scopes hold them before any read runs.
+function getElidedDefaultAssignments(section: Section): t.Statement[] {
+  const statements: t.Statement[] = [];
+  forEach(section.bindings, (binding) => {
+    const elidableDefault = getElidableDefault(binding);
+    if (elidableDefault) {
+      statements.push(
+        t.expressionStatement(
+          t.assignmentExpression(
+            "??=",
+            toMemberExpression(scopeIdentifier, getScopeAccessor(binding)),
+            t.valueToNode(elidableDefault.value),
+          ),
+        ),
+      );
+    }
+  });
+  return statements;
+}
+
 export function writeSignals(section: Section) {
   const seen = new Set<Signal>();
   const written = new Set<Signal>();
@@ -974,7 +996,13 @@ export function writeSignals(section: Section) {
           ),
           t.arrowFunctionExpression(
             [scopeIdentifier],
-            toFirstExpressionOrBlock(signal.effect),
+            toFirstExpressionOrBlock(
+              // Only the setup effect runs exactly once per scope, so it
+              // alone materializes elided defaults.
+              signal.referencedBindings
+                ? signal.effect
+                : [...getElidedDefaultAssignments(section), ...signal.effect],
+            ),
           ),
         ),
       );
@@ -1291,6 +1319,17 @@ export function writeHTMLResumeStatements(
         props.push(toObjectProperty(prop, t.identifier("undefined")));
       });
       expr = t.objectExpression(props);
+    } else {
+      const elidableDefault = getElidableDefault(binding);
+      if (elidableDefault) {
+        // Undefined props never reach the wire, so a value still equal to the
+        // client-known default resumes from the missing slot.
+        expr = t.conditionalExpression(
+          t.binaryExpression("===", expr, t.valueToNode(elidableDefault.value)),
+          t.unaryExpression("void", t.numericLiteral(0)),
+          t.cloneNode(expr),
+        );
+      }
     }
     serializedProperties.push(
       toObjectProperty(accessor, ifSerialized(reason, expr)),

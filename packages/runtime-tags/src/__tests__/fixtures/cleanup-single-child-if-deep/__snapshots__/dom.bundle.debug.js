@@ -54,6 +54,7 @@ const $showInner__closure = /*@__PURE__*/ _closure($if_content2__showInner);
 const $showInner = /*@__PURE__*/ _let("showInner/7", $showInner__closure);
 const $write2 = /*@__PURE__*/ _const("write");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.showOuter ??= true;
 	_on($scope["#button/0"], "click", function() {
 		$showOuter($scope, !$scope.showOuter);
 	});

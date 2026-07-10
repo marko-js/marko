@@ -12,10 +12,14 @@ const $y = /*@__PURE__*/ _let("y/8", ($scope) => {
 	_text($scope["#text/2"], $scope.y);
 	$input_content__OR__x__OR__y($scope);
 });
-const $setup__script = _script("__tests__/components/custom-tag.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
-	$y($scope, $scope.y + 1);
-}));
+const $setup__script = _script("__tests__/components/custom-tag.marko_0", ($scope) => {
+	$scope.x ??= 1;
+	$scope.y ??= 10;
+	_on($scope["#button/0"], "click", function() {
+		$x($scope, $scope.x + 1);
+		$y($scope, $scope.y + 1);
+	});
+});
 function $setup($scope) {
 	$x($scope, 1);
 	$y($scope, 10);

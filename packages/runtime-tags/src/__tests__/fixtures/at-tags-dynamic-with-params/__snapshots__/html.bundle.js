@@ -10,7 +10,6 @@ var hello_default = _template("b", (input) => {
 var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let x = true;
 	const $childScope = _peek_scope_id();
 	_set_serialize_reason(1);
 	let $item;
@@ -24,7 +23,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>Toggle</button>${_el_resume($scope0_id, "b")}`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		c: x,
+		c: void 0,
 		a: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

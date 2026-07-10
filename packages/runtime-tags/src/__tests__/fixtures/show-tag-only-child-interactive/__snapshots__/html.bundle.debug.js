@@ -10,8 +10,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_show_end($scope0_id, "#div/1", open, 1, 1, "</div>", 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		open,
-		n
+		open: open === true ? void 0 : open,
+		n: n === 0 ? void 0 : n
 	}, "__tests__/template.marko", 0, {
 		open: "1:6",
 		n: "2:6"

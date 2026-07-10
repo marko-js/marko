@@ -7,21 +7,26 @@ const $b = /*@__PURE__*/ _let("b/7", ($scope) => _text($scope["#text/2"], $scope
 const $c = /*@__PURE__*/ _let("c/8", ($scope) => _text($scope["#text/3"], JSON.stringify($scope.c)));
 const $d = /*@__PURE__*/ _let("d/9", ($scope) => _text($scope["#text/4"], $scope.d));
 const $e = /*@__PURE__*/ _let("e/10", ($scope) => _text($scope["#text/5"], JSON.stringify($scope.e)));
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	let local;
-	(($result2, $a2, $b2, unused, $c2) => ({a: $a2, _b: {_b: $b2}, local, unused, ...$c2} = $result2, $a($scope, $a2), $b($scope, $b2), $c($scope, $c2), $result2))({
-		a: 1,
-		_b: { _b: 2 },
-		local: 3,
-		c: 4
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.a ??= 0;
+	$scope.b ??= 0;
+	$scope.d ??= 0;
+	_on($scope["#button/0"], "click", function() {
+		let local;
+		(($result2, $a2, $b2, unused, $c2) => ({a: $a2, _b: {_b: $b2}, local, unused, ...$c2} = $result2, $a($scope, $a2), $b($scope, $b2), $c($scope, $c2), $result2))({
+			a: 1,
+			_b: { _b: 2 },
+			local: 3,
+			c: 4
+		});
+		noop((($result, $d2, $e2) => ([{arr: [local, $d2, , ...$e2]}] = $result, $d($scope, $d2), $e($scope, $e2), $result))([{ arr: [
+			6,
+			7,
+			8,
+			9
+		] }]));
 	});
-	noop((($result, $d2, $e2) => ([{arr: [local, $d2, , ...$e2]}] = $result, $d($scope, $d2), $e($scope, $e2), $result))([{ arr: [
-		6,
-		7,
-		8,
-		9
-	] }]));
-}));
+});
 function $setup($scope) {
 	$a($scope, 0);
 	$b($scope, 0);

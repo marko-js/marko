@@ -22,9 +22,12 @@ const $value = /*@__PURE__*/ _let("value/4", ($scope) => {
 	_text($scope["#text/1"], $scope.value);
 	$load_Child_tag_input_value($scope["#childScope/3"], $scope.value);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$value($scope, $scope.value + 1);
-}));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
+	$scope.value ??= 0;
+	_on($scope["#button/0"], "click", function() {
+		$value($scope, $scope.value + 1);
+	});
+});
 function $setup($scope) {
 	$load_Child_setup($scope);
 	$value($scope, 0);

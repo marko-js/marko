@@ -20,6 +20,6 @@ var template_default = _template("a", (input) => {
 	_var($scope0_id, "d", $tags0_scope, "a0");
 	_html(`<div>Parent: <!>${_escape(y)}${_el_resume($scope0_id, "e")}</div>`);
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, { f: x });
+	writeScope($scope0_id, { f: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

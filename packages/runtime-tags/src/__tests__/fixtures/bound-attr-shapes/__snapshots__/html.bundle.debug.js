@@ -17,8 +17,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<div>${_escape(a)}${_el_resume($scope0_id, "#text/0")}|<!>${_escape(b)}${_el_resume($scope0_id, "#text/1")}</div><input${_attr_input_value($scope0_id, "#input/2", state.a, state.aChange)}>${_el_resume($scope0_id, "#input/2")}<input${_attr_input_value($scope0_id, "#input/3", state?.b, state?.bChange)}>${_el_resume($scope0_id, "#input/3")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		a,
-		b,
+		a: a === "a1" ? void 0 : a,
+		b: b === "b1" ? void 0 : b,
 		state_a: state.a,
 		state_aChange: state.aChange,
 		state_b: state.b,
