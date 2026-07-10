@@ -219,3 +219,18 @@ event regardless of interop, and `compat.onFlush` permanently patches
 Marko 6 chunk flush with a `writersByGlobal.get` miss once the class-compat
 module is loaded. Each is minor individually; worth gating the resolver loop on a
 "has bridged events" flag and scoping the patches.
+
+## Prune statically-confident `<if>` branches like `<show>` does
+
+`packages/runtime-tags/src/translator/core/if.ts:583` | 2026-07-09 | impact:med | effort:med
+
+`<show>` consults `evaluate()` and, when `.confident`, collapses to plain markup
+(`packages/runtime-tags/src/translator/core/show.ts:80`), but `core/if.ts` never
+calls the evaluator: `<if=false><p>never</p></if><else><p>always</p></else>`
+compiles (optimized html output) to a literal `if (false) {...} else {...}` with
+both branches' `_html` strings, scope ids, and analysis metadata emitted. A
+confident condition could instead select the surviving branch in `getBranches`
+(if.ts:583) before analysis, dropping the dead branch from both output targets.
+Care needed with branch chains (a confident-false head still leaves a live
+`else-if`/`else` chain) and with tag variables/attribute tags inside dropped
+branches.

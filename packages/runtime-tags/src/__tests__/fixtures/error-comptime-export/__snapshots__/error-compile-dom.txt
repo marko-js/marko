@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-export/template.marko:1:10
+    > 1 | comptime export const x = 1;
+        |          ^^^^^^^^^^^^^^^^^^^ `export` is not supported in `comptime` statements.
+      2 |
+      3 | <p>${x}</p>
+      4 |

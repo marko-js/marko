@@ -5,6 +5,7 @@ import {
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 
+import { comptimeTransform } from "../../comptime";
 import { hasAnalyzeErrors } from "../../util/analyze-errors";
 import { addAssetImport } from "../../util/asset-imports";
 import {
@@ -62,6 +63,7 @@ export default {
     },
   },
   transform: {
+    enter: comptimeTransform,
     exit: preAnalyze,
   },
   analyze: {

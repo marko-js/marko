@@ -1,0 +1,13 @@
+comptime const site = {
+  name: "Marko",
+  tagline: undefined,
+  counts: [10, 20, 30],
+  nested: { deep: null },
+};
+comptime const flags = { seen: false };
+
+<h1>${site.name} at ${site["counts"][1]}</h1>
+<p>${site.tagline ?? "no tagline yet"}</p>
+<p>${site.nested.deep?.missing ?? "none"}</p>
+<p>${site.counts.join("/")}</p>
+<button onClick() { flags.seen = true; }>mark seen</button>

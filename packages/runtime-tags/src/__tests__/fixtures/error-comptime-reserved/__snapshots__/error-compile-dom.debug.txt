@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-reserved/template.marko:1:22
+    > 1 | comptime const mod = $ctRequire("./anything");
+        |                      ^^^^^^^^^^ `$ctRequire` is reserved: the `$ct` prefix belongs to the comptime evaluator.
+      2 |
+      3 | <p>${mod}</p>
+      4 |

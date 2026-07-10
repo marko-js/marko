@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-else/template.marko:6:1
+      4 |   <p>kept</p>
+      5 | </-if>
+    > 6 | <else>
+        | ^ `<else>` cannot follow `<-if>`: the branch is decided while compiling, and a false `<-if>` leaves nothing behind. Invert the condition in another `<-if>` (or use a runtime `<if>`).
+      7 |   <p>fallback</p>
+      8 | </else>
+      9 |

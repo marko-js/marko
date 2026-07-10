@@ -1,0 +1,9 @@
+comptime import { repeat } from "./util/repeat";
+comptime const banner = repeat("=", 6);
+comptime const site = { name: "Marko", since: 2014 };
+
+<-log=`built ${site.name}`/>
+<-debug/>
+
+<h1>${banner} ${site.name} ${banner}</h1>
+<p>since ${site.since}</p>

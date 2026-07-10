@@ -1,0 +1,5 @@
+comptime const data = Promise.resolve(1);
+
+<-if=data>
+  <p>never</p>
+</-if>

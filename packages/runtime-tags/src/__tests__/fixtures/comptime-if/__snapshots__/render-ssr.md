@@ -1,0 +1,24 @@
+# Render `{"rows":[{"name":"Widget","price":"$3"}]}`
+```html
+<table>
+  <tbody>
+    <tr>
+      <td>
+        Widget
+      </td>
+      <td>
+        $3
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td
+        colspan="2"
+      >
+        end of table
+      </td>
+    </tr>
+  </tfoot>
+</table>
+```

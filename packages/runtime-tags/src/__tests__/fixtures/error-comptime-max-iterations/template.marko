@@ -1,0 +1,7 @@
+comptime const forever = (function* () {
+  for (let i = 0; ; i++) yield i;
+})();
+
+<-for|i| of=forever>
+  <p>${i}</p>
+</-for>

@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-input/template.marko:1:6
+    > 1 | <-if=input.debug>
+        |      ^^^^^ `input` is a comptime binding only when this template is invoked as a comptime tag (`<-tag-name>`); add the `-` prefix at the call site, or move this expression out of comptime position to support runtime use.
+      2 |   <p>never</p>
+      3 | </-if>
+      4 |

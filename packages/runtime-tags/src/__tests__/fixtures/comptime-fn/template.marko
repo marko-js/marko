@@ -1,0 +1,7 @@
+comptime const step = 3;
+comptime function stepper(n) {
+  return n + step;
+}
+
+<let/count=5/>
+<button onClick() { count = stepper(count); }>count ${count}</button>

@@ -1,0 +1,15 @@
+./packages/runtime-tags/src/__tests__/fixtures/error-comptime-depth/template.marko: 
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-depth/tags/loop-tag/index.marko:2:1
+      1 | <p>${input.n}</p>
+    > 2 | <-loop-tag n=input.n + 1/>
+        | ^^^^^^^^^^^^^^^^^^^^^^^^^^ `<-loop-tag>` exceeded the fixed 100 macro expansion depth; comptime tags must not recurse unboundedly.
+      3 |
+  while expanding `<-loop-tag>` at packages/runtime-tags/src/__tests__/fixtures/error-comptime-depth/tags/loop-tag/index.marko:2:1
+  while expanding `<-loop-tag>` at packages/runtime-tags/src/__tests__/fixtures/error-comptime-depth/tags/loop-tag/index.marko:2:1
+  while expanding `<-loop-tag>` at packages/runtime-tags/src/__tests__/fixtures/error-comptime-depth/tags/loop-tag/index.marko:2:1
+  while expanding `<-loop-tag>` at packages/runtime-tags/src/__tests__/fixtures/error-comptime-depth/tags/loop-tag/index.marko:2:1
+  while expanding `<-loop-tag>` at packages/runtime-tags/src/__tests__/fixtures/error-comptime-depth/tags/loop-tag/index.marko:2:1
+  while expanding `<-loop-tag>` at packages/runtime-tags/src/__tests__/fixtures/error-comptime-depth/tags/loop-tag/index.marko:2:1
+  while expanding `<-loop-tag>` at packages/runtime-tags/src/__tests__/fixtures/error-comptime-depth/tags/loop-tag/index.marko:2:1
+  … (deeper expansions omitted)
+

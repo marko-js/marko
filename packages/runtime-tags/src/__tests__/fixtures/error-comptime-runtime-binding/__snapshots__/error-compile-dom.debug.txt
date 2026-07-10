@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-comptime-runtime-binding/template.marko:2:6
+      1 | <let/count = 0/>
+    > 2 | <-if=count>
+        |      ^^^^^ `count` is a runtime binding and cannot be read from comptime code.
+      3 |   <p>never</p>
+      4 | </-if>
+      5 |

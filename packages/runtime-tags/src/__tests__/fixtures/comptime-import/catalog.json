@@ -1,0 +1,6 @@
+{
+  "items": [
+    { "name": "plain tee", "cents": 1200, "featured": false },
+    { "name": "logo tee", "cents": 2400, "featured": true }
+  ]
+}
