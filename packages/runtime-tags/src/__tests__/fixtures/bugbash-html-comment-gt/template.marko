@@ -1,5 +1,6 @@
 <html-comment/comment>${input.text}</html-comment>
 <div/out/>
 <script>
-  out().textContent = comment().data;
+  const data = comment().data;
+  out().textContent = `${data.replace(/>/g, "[GT]")} (length ${data.length})`;
 </script>

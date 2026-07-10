@@ -1,0 +1,30 @@
+before<!--M_[--><!--M_!^b--><!--M_!^2-->LOADING<!--M_!2--><!--M_!b--><!--M_]1 a 2-->after
+<t hidden M_=2>a <!--M_#c--> b <!--M_#d--> c</t>
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+    C: "a",
+    E: _(1, "a1"),
+    Q: _(1, "a0")
+  }]];
+  REORDER_RUNTIME(M._);
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+<t hidden M_=c>first</t>
+<script>
+  M._.w()
+</script>
+
+<!-- FLUSH -->
+
+outer
+
+<!-- FLUSH -->
+
+<t hidden M_=b>CAUGHT:boom</t>
+<script>
+  M._.w()
+</script>

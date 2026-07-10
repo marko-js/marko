@@ -1,0 +1,11 @@
+<let/items=["x","y","z"]/>
+<div.sink/sink/>
+<const/log(msg) { sink().textContent += msg + ";" }/>
+<div#list>
+  <for|name| of=items by=(name)=>name>
+    <probe name=name log=log/>
+  </for>
+</div>
+<button#reorder onClick() { items = ["z", "x", "y"] }>reorder</button>
+<button#remove onClick() { items = ["z", "y"] }>remove x</button>
+<button#clear onClick() { items = [] }>clear</button>
