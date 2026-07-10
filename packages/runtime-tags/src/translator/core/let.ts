@@ -42,8 +42,20 @@ export default {
     for (const attr of node.attributes) {
       if (t.isMarkoAttribute(attr)) {
         if (attr.name === "value") {
+          if (valueAttr) {
+            throw tag.hub.buildError(
+              attr,
+              "Invalid duplicate value attribute.",
+            );
+          }
           valueAttr = attr;
         } else if (attr.name === "valueChange") {
+          if (valueChangeAttr) {
+            throw tag.hub.buildError(
+              attr,
+              "Invalid duplicate valueChange attribute.",
+            );
+          }
           valueChangeAttr = attr;
         } else {
           const start = attr.loc?.start;
