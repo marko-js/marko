@@ -18,13 +18,14 @@ Everything an app author can touch, in one list:
   `<const>` derived from `source`; writes like a `<let>`. A write
   during an action's window becomes a held guess; settle re-derives
   from source.
-- **`<optimistic/{ value: x, pending }=source/>`** — the destructured
-  form, for when held-ness matters: `value:` names the same writable
-  cell; `pending` is a read-only reactive boolean, true while any
-  action holds the cell. Patterns are already legal tag variables for
-  derived tags (const.ts:71 branches on them; let.ts:81 restricts to
-  identifiers — a per-tag choice), so this is existing syntax with
-  this tag's own translator rule.
+- **`<optimistic/[x, pending]=source/>`** — the tuple form, for when
+  held-ness matters: position 0 is the same writable cell (the
+  identifier form is sugar for `[x]`), position 1 a read-only reactive
+  boolean, true while any action holds the cell. Array-pattern tag
+  variables are established syntax (`<const/[first, ...rest]=list>`
+  has fixtures today), and for a core tag the positions resolve
+  statically — no tuple allocates, no runtime protocol. Mechanics and
+  the userland-parity question (`0Change`) are worked in E6.
 - **Assignment** — the only "optimistic update" verb. `x = guess`,
   `x++`, `cart = [...cart, item]` in an event handler. No wrapper
   function, no dispatch call.
@@ -239,16 +240,63 @@ surface it as one:
 
 ```marko
 /* cart-provider.marko */
-<optimistic/{ value: cart, pending: syncing }=$global.data.cart.count/>
+<optimistic/[cart, syncing]=$global.data.cart.count/>
 <span class=(syncing && "badge--syncing")>${cart}</span>
 ```
 
 The reviewed handler-shape rationale does not bind here. The `:=` kill
 and the driven-`<let>` no-op hazard (R-F1) were about _user-declared_
-state driven from settle contexts; `pending` is the tag's **own**
+state driven from settle contexts; `syncing` is the tag's **own**
 variable — the same footing as `<form-status>`'s `status.pending`,
 flipping through the same queue bracket. (`:=` stays dead: this is a
 tag variable the tag declares, not a bind onto author state.)
+
+**Tuple mechanics, grounded.** Array-pattern tag variables already
+parse, track, and compile: `<const/[first, second]=list>` and
+`<const/[first, ...rest]=list>` are live fixtures, and the reference
+tracker gives each element its index as the binding's property
+(references.ts:779, `` `${i}` ``). As a core tag, `<optimistic>`
+resolves the positions statically: element 0 is a let-kind binding
+whose writes compile through the same `buildAssignment` seam `<let>`
+uses (let.ts:148), element 1 a derived read-only signal flipped by the
+settle machinery — writes to it are the const-style readonly compile
+error. The tuple never exists at runtime; each element is its own
+scope slot, so a `syncing` read does not wake `cart` readers.
+Identifier form is sugar for `[x]`; a hole (`<optimistic/[, syncing]=…>`)
+is legal for pending-only consumers (element holes are already skipped
+in tracking, references.ts:750).
+
+**Userland parity is where `0Change` lives — and it is real, not
+invented.** Marko's change protocol is generic over property _keys_:
+assignment to a destructured binding synthesizes
+`binding.property + "Change"` on its upstream (references.ts:590), the
+HTML path splices the implicit handler into the pattern
+(translate-var.ts:37), and the `:=` desugar even builds
+`obj[key + "Change"]` for computed members (pre-analyze.ts:296-300).
+With an array element's property being `"0"`, the protocol names its
+handler `0Change` by construction. Two walls keep arrays out today,
+both "no branch written" rather than "impossible": the `:=` desugar
+has no ArrayPattern branch (pre-analyze.ts:222-227 — pinned by the
+`error-bound-attr-array-pattern` fixture, "Unable to bind to value"),
+and translate-var's change-splice targets ObjectPattern only (a keyed
+sibling cannot be pulled _out of_ an array pattern positionally, so
+arrays need auxiliary-read codegen instead:
+`const _c = upstream["0Change"]`). A taglib author expressing this
+tag's shape through `<return>` would therefore need those branches
+plus a producing convention —
+`Object.assign([value, pending], { "0Change": handler })` — which is
+legal (arrays take expando keys) but is the idiom's weak joint,
+including its TS type. The consumer side is unaffected either way:
+nobody ever types `0Change`; they type `cart = v`. Meanwhile the
+_semantics_ are already userland-expressible today through the object
+protocol (`<return={ value, pending, valueChange }/>` with a
+destructured consumer), so the gap the tuple form opens is spelling,
+not capability. One work item Path A shares with Path B: `:=`
+forwarding of a pattern-declared assignable binding
+(`<input value:=cart/>`) needs the desugar to synthesize the
+assignment arrow for pattern elements whose binding is writable — the
+current branch only does so for direct declarators
+(pre-analyze.ts:216-217).
 
 Deleted along with the handler: cell-side `p.waitUntil(...)`
 composition. An earlier draft of this document sold minimum display
@@ -372,9 +420,13 @@ fixture.
 1. `waitUntil`'s export home — `marko` core is forced by the
    client-only driver (E5), but the bare-import ergonomics vs. a
    namespaced entry (`marko/interaction`?) is naming-review material.
-2. The destructured form's key names (`value`/`pending`), and the
-   fixture set for its translator rules: `value:` writable, `pending`
-   readonly (write = compile error), plain-identifier form unchanged.
+2. The tuple form's outer edges: whether to bless the userland
+   tuple-return protocol now or later (the `0Change` producer
+   convention plus the two consumer-side ArrayPattern branches — E6),
+   and the discipline that keeps core-tag compilation honest if it
+   lands: `<optimistic>` must behave observably as if it returned
+   `Object.assign([value, pending], { "0Change": write })`, so the
+   compiled fast path and the protocol never disagree.
 3. Whether `<form-status>`'s value should expose the action
    (`status.action?.waitUntil(...)`) or stay `{ pending }`-minimal —
    with cell-side action access dropped (E6), no known use case

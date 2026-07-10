@@ -232,8 +232,8 @@ the window.
   (the second supersedes the first mutation, transferring its keys, so
   the set collapses to one).
 - _Cell pending_ (grain 1) is a read-only companion binding in the
-  cell's destructured tag-var form
-  (`<optimistic/{ value: x, pending }=…>` — the respec from the
+  cell's tuple tag-var form
+  (`<optimistic/[x, pending]=…>` — the respec from the
   reviewed `onPending` handler is argued in actions-api.md E6): true
   while the holding-action set is non-empty, so multiplicity
   aggregates with no API. Cell-side access to the holding action is
