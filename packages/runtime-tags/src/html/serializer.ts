@@ -1787,6 +1787,12 @@ export function toObjectKey(name: string) {
           return quote(name, i);
         }
       }
+
+      // A bare digit key round-trips through ToString(ToNumber(...)); only 16+
+      // digit runs can break that (precision loss or 1e21 form) and need quoting.
+      if (len > 15 && "" + +name !== name) {
+        return quote(name, 0);
+      }
     }
   } else if (
     (c0 >= Char.LowerA && c0 <= Char.LowerZ) ||

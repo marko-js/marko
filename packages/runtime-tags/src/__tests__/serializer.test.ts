@@ -298,6 +298,25 @@ describe("serializer", () => {
     it("dashed-keys", () => assertStringify({ "a-b": 1 }, `{"a-b":1}`));
     it("invalid-keys", () =>
       assertStringify({ "0": 1, "a:": 2, "[": 3 }, `{0:1,"a:":2,"[":3}`));
+    // Bare numeric keys are canonicalized through ToString(ToNumber(...)):
+    // `{9007199254740993:1}` would resume with key "9007199254740992".
+    it("numeric keys beyond 2**53", () =>
+      assertStringify(
+        { "9007199254740991": 1, "9007199254740993": 2, "1e+21": 3 },
+        `{9007199254740991:1,"9007199254740993":2,"1e+21":3}`,
+      ));
+    it("numeric key accessor beyond 2**53 across flushes", () => {
+      const serializer = assertSerializer();
+      const nested = { b: 1 };
+      serializer.assertStringify(
+        { "9007199254740993": nested },
+        `{"9007199254740993":{b:1}}`,
+      );
+      serializer.assertStringify(
+        { c: nested },
+        `{c:_.a=_(1).value["9007199254740993"]}`,
+      );
+    });
     // An own `__proto__` data property (e.g. from `JSON.parse`) must serialize
     // as a computed key so it round-trips as a normal property rather than
     // mutating the prototype (`assertStringify` also deserializes + compares).
