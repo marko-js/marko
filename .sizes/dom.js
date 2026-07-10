@@ -1,4 +1,4 @@
-// size: 25857 (min) 9518 (brotli)
+// size: 25963 (min) 9535 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -178,11 +178,14 @@ let empty = [],
       }
     );
   },
-  _for_of = /* @__PURE__ */ loop(([all, by = bySecondArg], cb) => {
-    typeof by == "string"
-      ? forOf(all, (item, i) => cb(item[by], [item, i]))
-      : forOf(all, (item, i) => cb(by(item, i), [item, i]));
-  }),
+  _for_of = /* @__PURE__ */ loop(
+    ([all, by = bySecondArg], cb) => {
+      typeof by == "string"
+        ? forOf(all, (item, i) => cb(item[by], [item, i]))
+        : forOf(all, (item, i) => cb(by(item, i), [item, i]));
+    },
+    (oldList, [, by]) => [oldList, by],
+  ),
   _for_in = /* @__PURE__ */ loop(([obj, by = byFirstArg], cb) =>
     forIn(obj, (key, value) => cb(by(key, value), [key, value])),
   ),
@@ -2096,11 +2099,12 @@ function setConditionalRenderer(
         referenceNode.remove());
 }
 /* @__NO_SIDE_EFFECTS__ */
-function loop(forEach) {
+function loop(forEach, toOldValue) {
   return (nodeAccessor, template, walks, setup, params) => {
     nodeAccessor = decodeAccessor(nodeAccessor);
     let scopesAccessor = "A" + nodeAccessor,
       keyedScopesAccessor = "O" + nodeAccessor,
+      keyListAccessor = "N" + nodeAccessor,
       renderer = _content("", template, walks, setup)();
     return (
       enableBranches(),
@@ -2109,8 +2113,16 @@ function loop(forEach) {
           oldScopes = toArray(scope[scopesAccessor]),
           newScopes = (scope[scopesAccessor] = []);
         scope[keyedScopesAccessor] = null;
-        let oldLen = oldScopes.length,
-          parentNode =
+        let oldLen = oldScopes.length;
+        if (toOldValue && scope[keyListAccessor]) {
+          let serializedList = scope[keyListAccessor];
+          scope[keyListAccessor] = void 0;
+          let keyIndex = 0;
+          forEach(toOldValue(serializedList, value), (key) => {
+            keyIndex < oldLen && (oldScopes[keyIndex++].M = key);
+          });
+        }
+        let parentNode =
             referenceNode.nodeType > 1
               ? referenceNode.parentNode || oldScopes[0]?.S.parentNode
               : referenceNode,

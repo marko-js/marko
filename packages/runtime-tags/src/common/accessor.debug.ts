@@ -11,6 +11,7 @@ export enum AccessorPrefix {
   Getter = "Getter:",
   KeyedScopes = "KeyedScopes:",
   Lifecycle = "Lifecycle:",
+  LoopKeyList = "LoopKeyList:",
   Promise = "Promise:",
   TagVariableChange = "TagVariableChange:",
 }

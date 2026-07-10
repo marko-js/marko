@@ -280,6 +280,20 @@ export default {
 
             forTagArgs.push(t.numericLiteral(1));
           }
+
+          if (
+            forType === "of" &&
+            forAttrs.by &&
+            isSerializedListRead(forAttrs.of)
+          ) {
+            if (!skipParentEnd && !singleChild) {
+              forTagArgs.push(t.numericLiteral(0));
+            }
+            if (!singleChild) {
+              forTagArgs.push(t.numericLiteral(0));
+            }
+            forTagArgs.push(t.numericLiteral(1));
+          }
         }
 
         statements.push(
@@ -468,6 +482,23 @@ export function getForType(tag: t.MarkoTag): ForType | undefined {
       }
     }
   }
+}
+
+// A keyed `<for of>` list that is a plain read of a binding that always
+// serializes; branch keys then derive from that list at resume.
+function isSerializedListRead(value: t.Expression | undefined) {
+  const read = value?.type === "Identifier" ? value.extra?.read : undefined;
+  return !!(
+    read &&
+    !read.props &&
+    !read.getter &&
+    read.binding.type !== BindingType.dom &&
+    !read.binding.noSerialize &&
+    !read.binding.noSerializeProperties &&
+    isStaticSerializeReason(
+      getSerializeReason(read.binding.section, read.binding),
+    )
+  );
 }
 
 function getLoopKeyBinding(

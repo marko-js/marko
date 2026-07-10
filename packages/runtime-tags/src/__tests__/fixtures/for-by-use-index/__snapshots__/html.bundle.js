@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 		_html(`<button>${_unescaped(message)}${_el_resume($scope1_id, "b")}</button>${_el_resume($scope1_id, "a")}`);
 		_script($scope1_id, "a0");
 		writeScope($scope1_id, { e: index });
-	}, (f) => f, $scope0_id, "a", 1, 1, 1, "</div>", 1);
+	}, (f) => f, $scope0_id, "a", 1, 1, 1, "</div>", 1, 1);
 	_if(() => {}, $scope0_id, "b", 1, 1, 1, 0, 1);
 	writeScope($scope0_id, {
 		c: messages,

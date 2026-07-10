@@ -1,0 +1,8 @@
+<let/items=input.items/>
+<button onClick() { items = items.toReversed() }>reverse</button>
+<for|item| of=items by="id">
+  <span>${item.name}</span>
+</for>
+<for|item| of=items by=(item) => item.id>
+  <em>${item.name}</em>
+</for>

@@ -1,0 +1,21 @@
+<button>reverse</button><!--M_*1 #button/0--><span>a<!--M_*2 #text/0--></span><span>b<!--M_*3 #text/0--></span><span>c<!--M_*4 #text/0--></span><!--M_|1 #text/1 4 3 2--><em>a<!--M_*5 #text/0--></em><em>b<!--M_*6 #text/0--></em><em>c<!--M_*7 #text/0--></em><!--M_|1 #text/2 7 6 5-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+      "LoopKeyList:#text/1": _.a = [{
+        id: 1,
+        name: "a"
+      }, {
+        id: 2,
+        name: "b"
+      }, {
+        id: 3,
+        name: "c"
+      }],
+      "LoopKeyList:#text/2": _.a,
+      items: _.a
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/for-keyed-derived-keys/template.marko_0 1"
+  ];
+  M._.w()
+</script>
