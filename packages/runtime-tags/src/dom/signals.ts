@@ -105,12 +105,13 @@ export function _or(
 
   return (scope) => {
     if (scope[AccessorProp.Gen] === runId) {
-      if (id in scope) {
-        if (!--scope[id]) {
+      // Complemented keys cannot collide with the render slots at `id`.
+      if ((~id) in scope) {
+        if (!--scope[~id]) {
           fn(scope);
         }
       } else {
-        scope[id] = defaultPending;
+        scope[~id] = defaultPending;
       }
     } else {
       queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);

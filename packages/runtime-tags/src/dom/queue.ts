@@ -25,7 +25,9 @@ export const placeholderShown = new WeakSet<unknown[]>();
 export let pendingEffects: unknown[] = [];
 let pendingRenders: PendingRender[] = [];
 
-const scopeKeyOffset = 1e3;
+// Orders pending renders across scopes; signal keys are per-section
+// binding ids, so they always fit well below the offset.
+const scopeKeyOffset = 1e6;
 export function queueRender<T, U extends Scope = Scope>(
   scope: U,
   signal: Signal<T, U>,
@@ -34,7 +36,9 @@ export function queueRender<T, U extends Scope = Scope>(
   scopeKey = scope[AccessorProp.Id],
 ) {
   let render: PendingRender | undefined;
-  if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
+  // Slots live at the signal key (small indexes stay fast elements);
+  // accessors are strings and pending counters use complemented keys.
+  if (signalKey >= 0 && (render = scope[signalKey])) {
     render[PendingRenderProp.Value] = value;
     if (
       render[PendingRenderProp.Gen] === runId ||
@@ -51,7 +55,7 @@ export function queueRender<T, U extends Scope = Scope>(
       [PendingRenderProp.Value]: value,
       [PendingRenderProp.Gen]: runId,
     };
-    if (signalKey >= 0) scope[signalKey + scopeKeyOffset] = render;
+    if (signalKey >= 0) scope[signalKey] = render;
   }
   queuePendingRender(render);
 }

@@ -1,4 +1,4 @@
-// size: 3912 (min) 1727 (brotli)
+// size: 3904 (min) 1732 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -66,7 +66,6 @@ let decodeAccessor = (num) =>
   runId = 2,
   pendingEffects = [],
   pendingRenders = [],
-  scopeKeyOffset = 1e3,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
@@ -237,18 +236,18 @@ function toInsertNode(startNode, endNode) {
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
-  if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
+  if (signalKey >= 0 && (render = scope[signalKey])) {
     if (((render.d = value), render.e === runId || catchEnabled)) return;
     render.e = runId;
   } else
     ((render = {
-      a: scopeKey * scopeKeyOffset + signalKey,
+      a: scopeKey * 1e6 + signalKey,
       b: scope,
       c: signal,
       d: value,
       e: runId,
     }),
-      signalKey >= 0 && (scope[signalKey + scopeKeyOffset] = render));
+      signalKey >= 0 && (scope[signalKey] = render));
   queuePendingRender(render);
 }
 function queuePendingRender(render) {

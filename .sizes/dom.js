@@ -1,4 +1,4 @@
-// size: 25866 (min) 9518 (brotli)
+// size: 25857 (min) 9518 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -199,7 +199,6 @@ let empty = [],
   placeholderShown = /* @__PURE__ */ new WeakSet(),
   pendingEffects = [],
   pendingRenders = [],
-  scopeKeyOffset = 1e3,
   runEffects = (effects) => {
     for (let i = 0; i < effects.length;) effects[i++](effects[i++]);
   },
@@ -549,9 +548,9 @@ function _or(id, fn, defaultPending = 1, scopeIdAccessor = "L") {
       (scopeIdAccessor = decodeAccessor(scopeIdAccessor)),
     (scope) => {
       scope.H === runId
-        ? id in scope
-          ? --scope[id] || fn(scope)
-          : (scope[id] = defaultPending)
+        ? (~id) in scope
+          ? --scope[~id] || fn(scope)
+          : (scope[~id] = defaultPending)
         : queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
     }
   );
@@ -2264,19 +2263,19 @@ function byFirstArg(name) {
 }
 function queueRender(scope, signal, signalKey, value, scopeKey = scope.L) {
   let render;
-  if (signalKey >= 0 && (render = scope[signalKey + scopeKeyOffset])) {
+  if (signalKey >= 0 && (render = scope[signalKey])) {
     if (((render.d = value), render.e === runId || (catchEnabled && render.f)))
       return;
     render.e = runId;
   } else
     ((render = {
-      a: scopeKey * scopeKeyOffset + signalKey,
+      a: scopeKey * 1e6 + signalKey,
       b: scope,
       c: signal,
       d: value,
       e: runId,
     }),
-      signalKey >= 0 && (scope[signalKey + scopeKeyOffset] = render));
+      signalKey >= 0 && (scope[signalKey] = render));
   queuePendingRender(render);
 }
 function queuePendingRender(render) {
