@@ -1,4 +1,4 @@
-// size: 2668 (min) 1309 (brotli)
+// size: 2790 (min) 1352 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -20,6 +20,11 @@ let decodeAccessor = (num) =>
   catchEnabled;
 function isNotVoid(value) {
   return value != null && value !== !1;
+}
+function forEach(opt, cb) {
+  if (opt)
+    if (Array.isArray(opt)) for (let item of opt) cb(item);
+    else cb(opt);
 }
 function _on(element, type, handler) {
   (element["$" + type] === void 0 && delegate(type, handleDelegated),
@@ -146,6 +151,15 @@ function init(runtimeId = "M") {
             lastTokenIndex;
           return (
             (serializeContext._ = registeredValues),
+            (serializeContext.o = (ownerId, scopes) => {
+              let owner = getScope(ownerId);
+              return (
+                forEach(scopes, (scope) => {
+                  scope._ ??= owner;
+                }),
+                scopes
+              );
+            }),
             (render.m = (effects) => {
               if ((processResumes(render.r, effects), readyIds));
               let retained = 0;

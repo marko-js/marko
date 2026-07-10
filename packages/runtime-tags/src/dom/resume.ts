@@ -21,6 +21,7 @@ type ResumeData = (string | number | (string | number)[] | ResumeFn)[];
 interface SerializeContext {
   (data: number | (Scope | number)[], registryId?: string): unknown;
   _: Record<string, unknown>;
+  o<T extends Scope | Scope[]>(ownerId: number, scopes: T): T;
 }
 export interface Renders {
   (renderId: string): RenderData;
@@ -365,6 +366,15 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         let visitBranches: undefined | (() => void);
         let embedAnchor: Text | undefined;
         serializeContext._ = registeredValues;
+        serializeContext.o = (ownerId, scopes) => {
+          // A serialized owner (non-lexical content) always wins over the
+          // one implied by the branch list.
+          const owner = getScope(ownerId);
+          forEach(scopes as Opt<Scope>, (scope) => {
+            scope[AccessorProp.Owner] ??= owner;
+          });
+          return scopes;
+        };
 
         if (MARKO_DEBUG) {
           if (render.m) {

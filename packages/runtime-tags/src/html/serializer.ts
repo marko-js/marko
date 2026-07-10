@@ -20,6 +20,15 @@ interface ScopeInternals {
 
 export type ScopeFlush = [scopeId: number, scope: object, props: object];
 
+// Branch scopes paired with the scope that owns them; resume links each
+// branch's owner from the wrapper instead of a per-branch `_` prop.
+export class OwnedScopes {
+  constructor(
+    public owner: ScopeInternals,
+    public scopes: ScopeInternals | ScopeInternals[],
+  ) {}
+}
+
 export interface SerializeChannel {
   readyId?: string;
   parent?: SerializeChannel;
@@ -838,6 +847,8 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
       return writePlainObject(state, val, ref);
     case Array:
       return writeArray(state, val as unknown[], ref);
+    case OwnedScopes:
+      return writeOwnedScopes(state, val as OwnedScopes, ref);
     case Date:
       return writeDate(state, val as Date);
     case RegExp:
@@ -904,6 +915,19 @@ function writePlainObject(state: State, val: object, ref: Reference) {
   state.buf.push("{");
   writeObjectProps(state, val, ref);
   state.buf.push("}");
+  return true;
+}
+
+function writeOwnedScopes(state: State, val: OwnedScopes, ref: Reference) {
+  const { owner, scopes } = val;
+  trackScope(state, owner, owner[K_SCOPE_ID]!);
+  state.buf.push("_.o(" + owner[K_SCOPE_ID] + ",");
+  if (Array.isArray(scopes)) {
+    writeArray(state, scopes, ref);
+  } else {
+    writeProp(state, scopes, ref, "");
+  }
+  state.buf.push(")");
   return true;
 }
 

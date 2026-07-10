@@ -24,6 +24,7 @@ import {
 } from "./inlined-runtimes.debug";
 import {
   K_SCOPE_ID,
+  OwnedScopes,
   quote,
   register as serializerRegister,
   type ScopeFlush,
@@ -553,7 +554,10 @@ function forBranches(
 
   if (loopScopes) {
     writeScope(scopeId, {
-      [AccessorPrefix.BranchScopes + accessor]: loopScopes,
+      [AccessorPrefix.BranchScopes + accessor]: new OwnedScopes(
+        _scope_with_id(scopeId),
+        loopScopes,
+      ),
     });
   }
 

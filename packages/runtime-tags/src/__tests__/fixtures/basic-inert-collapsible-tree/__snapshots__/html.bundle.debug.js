@@ -35,7 +35,7 @@ const $content = (input) => {
 			"#LoopKey": _serialize_if($scope0_reason, 2) && i,
 			id: $si__input_comments && id,
 			open,
-			_: $si__input_comments__OR__input_path && _scope_with_id($scope0_id)
+			_: $si__input_comments__OR__input_path && $si__input_comments && _scope_with_id($scope0_id)
 		}, "__tests__/tags/comments.marko", "2:4", {
 			comment_comments: ["comment.comments", "2:8"],
 			"#LoopKey": "2:17",
