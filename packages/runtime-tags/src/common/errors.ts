@@ -14,10 +14,16 @@ export function assertValidAttrValue(name: string, value: unknown) {
   }
 
   if (typeof value === "function") {
-    if (name === "content" || /^on/i.test(name) || /Change$/.test(name)) {
-      return;
-    }
-    throw new Error(`The \`${name}\` attribute cannot be a function.`);
+    // Consumed handlers (events, applied controllable change handlers,
+    // content) never reach the attribute writers, so a function here would
+    // render as its source code.
+    throw new Error(
+      `The \`${name}\` attribute cannot be a function.${
+        /Change$/.test(name)
+          ? " A change handler is only used when its matching controllable attribute combination applies."
+          : ""
+      }`,
+    );
   }
 
   const unrenderable = describeUnrenderable(value);
