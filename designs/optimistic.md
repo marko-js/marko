@@ -11,6 +11,12 @@ replaced the task-drain bracket with dispatch-grounded rules, and
 forced the early-input revision through the companion docs. The verdict
 ledgers, kill list, and repair rationale live in
 [optimistic-adversarial-review.md](./optimistic-adversarial-review.md).
+A proposed evolution — grouping holds, settle, and pending surfaces
+under a per-dispatch **action** with `waitUntil` lifetime extension —
+is explored in [actions.md](./actions.md); it respecifies the settle
+authority (per-action completion instead of channel-quiet) and answers
+in-flight multiplicity, but has not had its own adversarial round, so
+this document remains the reviewed record.
 Companion to [let-by-review.md](./let-by-review.md) (finding F1, which
 motivates this) and
 [persisted-pages-optimistic-transitions.md](./persisted-pages-optimistic-transitions.md)
