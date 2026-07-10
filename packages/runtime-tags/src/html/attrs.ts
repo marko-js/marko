@@ -455,9 +455,12 @@ function nonVoidAttr(name: string, value: unknown) {
   return " " + name + attrAssignment(value + "");
 }
 
-const singleQuoteAttrReplacements = /'|&(?=#?\w+;)/g;
-const doubleQuoteAttrReplacements = /"|&(?=#?\w+;)/g;
-const needsQuotedAttr = /["'>\s]|&#?\w+;|\/$/g;
+// Every character reference starts `&#` or `&` + an ASCII letter — and
+// parsers also decode semicolon-less numeric and legacy named references —
+// so any such `&` must be escaped to round-trip (a bare `&` never decodes).
+const singleQuoteAttrReplacements = /'|&(?=[#a-zA-Z])/g;
+const doubleQuoteAttrReplacements = /"|&(?=[#a-zA-Z])/g;
+const needsQuotedAttr = /["'>\s]|&[#a-zA-Z]|\/$/g;
 export function attrAssignment(value: string) {
   return value
     ? needsQuotedAttr.test(value)

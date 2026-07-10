@@ -1,4 +1,5 @@
 import * as assert from "assert/strict";
+import { JSDOM } from "jsdom";
 
 import * as helpers from "../html/attrs";
 
@@ -26,7 +27,9 @@ describe("runtime-tags/html/attrs", () => {
       assert.equal(helpers._attr("foo", "bar/baz"), " foo=bar/baz"); // only escape slash at end.
       assert.equal(helpers._attr("foo", "bar/"), ' foo="bar/"');
       assert.equal(helpers._attr("foo", 'bar"baz'), " foo='bar\"baz'");
-      assert.equal(helpers._attr("foo", "bar&baz"), " foo=bar&baz"); // only escape entity like ranges.
+      assert.equal(helpers._attr("foo", "bar&baz"), ' foo="bar&amp;baz"');
+      assert.equal(helpers._attr("foo", "a && b"), ' foo="a && b"'); // a bare `&` never decodes.
+      assert.equal(helpers._attr("foo", "1&2"), " foo=1&2");
       assert.equal(
         helpers._attr("foo", "bar&quot;baz"),
         ' foo="bar&amp;quot;baz"',
@@ -50,6 +53,29 @@ describe("runtime-tags/html/attrs", () => {
 
     it("should stringify a regexp like any other object", () => {
       assert.equal(helpers._attr("foo", /foo/), ` foo="/foo/"`);
+    });
+
+    it("round-trips values containing reference-like sequences", () => {
+      // Parsers also decode semicolon-less numeric and legacy named
+      // references, so these historically parsed back differently.
+      for (const value of [
+        "x &amp y",
+        "AT&amp",
+        "&#38x",
+        "&#x26end",
+        "?q=a&sect=1",
+        "a && b",
+        "tom & jerry",
+        "&bogus name",
+      ]) {
+        const html = `<div${helpers._attr("data-x", value)}></div>`;
+        const dom = new JSDOM(html);
+        assert.equal(
+          dom.window.document.querySelector("div")!.getAttribute("data-x"),
+          value,
+          html,
+        );
+      }
     });
   });
 
