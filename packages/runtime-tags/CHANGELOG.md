@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.2.4
+
+### Patch Changes
+
+- [#3337](https://github.com/marko-js/marko/pull/3337) [`9a6d2bc`](https://github.com/marko-js/marko/commit/9a6d2bc82e5c4ef4e7f9eeeea8a5073746302edf) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a code-frame compile error for unsupported keys in destructuring patterns. Previously a computed key with an identifier expression (`{ [key]: value }`) was silently treated as a literal property name, producing mismatched server/client values, and other computed keys threw a raw error with no template location.
+
+- [#3345](https://github.com/marko-js/marko/pull/3345) [`c19f592`](https://github.com/marko-js/marko/commit/c19f5925585e37163661eec4619d9e891c526e65) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix multiple `<style>` tags of the same flavor in one template clobbering each other's CSS. Each block's virtual file now resolves to a distinct path; single-style templates are unchanged.
+
 ## 6.2.3
 
 ### Patch Changes
