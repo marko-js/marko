@@ -26,6 +26,12 @@ The dependency upgrade took everything to latest except two majors that are true
 
 Bare `npm audit` shows 3 advisories (`serialize-javascript` high, `js-yaml`/mocha moderate, `diff` low), all transitively under `mocha` and `@changesets/cli` — dev tooling that never ships. They can't be resolved by version bumps: the fixes live in higher majors than mocha's ranges allow (`serialize-javascript ^6`→fix in 7.x, `diff ^7`→8.x, `js-yaml ^4`→5.x), mocha 11.7.6 is the newest stable, and the latest `@changesets/parse` still pins `js-yaml ^4.1.1`. Rather than pin them via `overrides`, the repo audits production deps only: **`npm run audit`** (`npm audit --omit=dev`) is the gate and returns 0 — that's what consumers of the published packages actually receive. Revisit and drop the distinction once mocha/changesets update their transitive deps upstream.
 
+## `test:parallel` summary reports "0 failing" while workers have failures
+
+`scripts/test-parallel.js:146` | 2026-07-10 | impact:med | effort:low
+
+The aggregate line parses worker output with `/(\d+) failing/`, but the snapshot harness prints failures as `N unexpectedly failing`, which the regex does not match — a run with failing snapshots prints `… 0 failing across N workers` while still exiting 1. Anyone reading the summary (or piping it, which masks the exit code) concludes the suite is green; this shipped a stale-snapshot commit to `main` that CI then caught. Match `unexpectedly failing` too, or derive the failure count from the worker exit codes.
+
 ## Fixture `sizes.json` rewrites are unconditional, so `--grep`-scoped runs leave other fixtures stale
 
 `packages/runtime-tags/src/__tests__/main.test.ts:322` | 2026-07-10 | impact:low | effort:low

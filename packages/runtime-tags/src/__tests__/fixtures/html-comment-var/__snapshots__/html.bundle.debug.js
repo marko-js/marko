@@ -19,11 +19,11 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	const $childScope = _peek_scope_id();
 	let divName = parent_el_default({});
 	_var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_divName/var");
-	_html(`${_escape(divName)}${_el_resume($scope0_id, "#text/2")}</div><span>`);
+	_html(`<!>${_escape(divName)}${_el_resume($scope0_id, "#text/2")}</div><span>`);
 	const $childScope2 = _peek_scope_id();
 	let spanName = parent_el_default({});
 	_var($scope0_id, "#scopeOffset/4", $childScope2, "__tests__/template.marko_0_spanName/var");
-	_html(`${_escape(spanName)}${_el_resume($scope0_id, "#text/5")}</span>`);
+	_html(`<!>${_escape(spanName)}${_el_resume($scope0_id, "#text/5")}</span>`);
 	writeScope($scope0_id, {
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/3": _existing_scope($childScope2)

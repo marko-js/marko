@@ -12,15 +12,15 @@
 ```html
 <div>
   <!--Body Text-->
-  <!--DIV-->
+  DIV
 </div>
 <span>
   <!--Body Text-->
-  <!--SPAN-->
+  SPAN
 </span>
 ```
 ## Change
 ```
-UPDATE: div > #comment:nth-of-type(2) "M_*2 #comment/0" => "DIV"
-UPDATE: span > #comment:nth-of-type(2) "M_*4 #comment/0" => "SPAN"
+UPDATE: div::text "" => "DIV"
+UPDATE: span::text "" => "SPAN"
 ```
