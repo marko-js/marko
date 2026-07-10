@@ -1,5 +1,18 @@
 import type { Opt } from "./optional";
 import type { Binding } from "./references";
+import type { Section } from "./sections";
+
+// A content section that only flows into a binding which never reads it has
+// its renderer elided; references to the renderer must be elided in sync.
+export function isSectionRendererElided(section: Section) {
+  return (
+    !!section.downstreamBinding &&
+    !bindingHasProperty(
+      section.downstreamBinding.binding,
+      section.downstreamBinding.properties,
+    )
+  );
+}
 
 export function bindingHasProperty(binding: Binding, properties: Opt<string>) {
   if (binding.pruned) {

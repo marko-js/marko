@@ -3,6 +3,7 @@ import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { buildForRuntimeCall, getForType } from "../core/for";
 import { scopeIdentifier } from "../visitors/program";
+import { isSectionRendererElided } from "./binding-has-prop";
 import {
   type BindingPropTree,
   getKnownFromPropTree,
@@ -459,6 +460,10 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
           : undefined,
       );
     } else {
+      // The section renderer declaration is elided when nothing reads the
+      // content, so the property must be too.
+      if (isSectionRendererElided(bodySection)) return;
+
       return t.callExpression(
         t.identifier(bodySection.name),
         bodySection.referencedLocalClosures

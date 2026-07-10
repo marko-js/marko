@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { importDefault } from "@marko/compiler/babel-utils";
 
-import { bindingHasProperty } from "../../util/binding-has-prop";
+import { isSectionRendererElided } from "../../util/binding-has-prop";
 import { forEach } from "../../util/optional";
 import {
   BindingType,
@@ -100,13 +100,7 @@ export default {
           const setupIdentifier =
             setup && written.has(setup) ? setup.identifier : undefined;
 
-          if (
-            !childSection.downstreamBinding ||
-            bindingHasProperty(
-              childSection.downstreamBinding.binding,
-              childSection.downstreamBinding.properties,
-            )
-          ) {
+          if (!isSectionRendererElided(childSection)) {
             if (getSectionParentIsOwner(childSection)) {
               setBranchRendererArgs(childSection, [
                 writes,
