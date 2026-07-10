@@ -38,7 +38,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		d: mult,
-		Bd: $mult__closures
+		g: $mult__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

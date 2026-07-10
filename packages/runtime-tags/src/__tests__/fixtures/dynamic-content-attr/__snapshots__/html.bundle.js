@@ -19,7 +19,7 @@ var template_default = _template("a", (input) => {
 	writeScope($scope0_id, {
 		b: count,
 		c: MyThing,
-		Bb: $count__closures
+		e: $count__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

@@ -11,11 +11,11 @@ var child_default = _template("b", (input) => {
 		l: _serialize_if($scope0_reason, 1) && input.value,
 		m: _serialize_if($scope0_reason, 0) && input.valueChange,
 		o: state,
-		p: otherState,
-		q: thirdState,
-		Mo: input.valueChange || void 0,
-		Mp: input["valueChange"] || void 0,
-		Mq: input.valueChange || void 0
+		q: otherState,
+		s: thirdState,
+		p: input.valueChange || void 0,
+		r: input["valueChange"] || void 0,
+		t: input.valueChange || void 0
 	});
 	_resume_branch($scope0_id);
 });

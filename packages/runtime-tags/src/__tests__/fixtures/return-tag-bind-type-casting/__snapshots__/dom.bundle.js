@@ -8,7 +8,7 @@ function $valueChange($scope) {
 _resume("b0", $valueChange);
 
 // template.marko
-const $mytag_content__count = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.b, $scope._.d));
+const $mytag_content__count = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.b, $scope._.d));
 const $mytag_content__setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
 	_var_change($scope._.a, $scope._.d + 1);
 }));

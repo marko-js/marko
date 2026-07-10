@@ -22,10 +22,12 @@ import {
   bindingUtil,
   collapsedIntersectionSource,
   getCanonicalBinding,
+  getClosureAccessorId,
   getDebugName,
   getDebugNames,
   getDebugNamesAsIdentifier,
   getDebugScopeAccess,
+  getPrefixedScopeAccessor,
   getReadReplacement,
   getScopeAccessor,
   getScopeAccessorLiteral,
@@ -150,7 +152,9 @@ export function setBindingSerializedValue(
   const reason = getSerializeReason(section, binding, prefix);
   if (reason) {
     getSerializedAccessors(section).set(
-      (prefix || "") + getScopeAccessor(binding),
+      prefix === undefined
+        ? getScopeAccessor(binding)
+        : getPrefixedScopeAccessor(binding, prefix),
       { expression, reason },
     );
   }
@@ -337,7 +341,10 @@ export function getSignal(
 
         return callRuntime(
           "_closure_get",
-          getScopeAccessorLiteral(closure, true),
+          // Optimized builds pass the reserved closure accessor id.
+          isOptimize()
+            ? t.numericLiteral(getClosureAccessorId(closure))
+            : getScopeAccessorLiteral(closure, true),
           render,
           isImmediateOwner(section, closure)
             ? undefined

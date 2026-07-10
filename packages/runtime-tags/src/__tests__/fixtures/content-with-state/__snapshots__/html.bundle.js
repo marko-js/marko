@@ -20,7 +20,7 @@ var outer_default = _template("c", (input) => {
 		_subscribe($si__input_content && $input_content__closures, writeScope($scope1_id, { _: $si__input_content && _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}) });
-	$si__input_content && writeScope($scope0_id, { Bd: $input_content__closures });
+	$si__input_content && writeScope($scope0_id, { e: $input_content__closures });
 });
 
 // template.marko
@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		c: count,
-		Bc: $count__closures
+		d: $count__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

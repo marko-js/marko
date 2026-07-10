@@ -9,7 +9,7 @@ const $await_content__setup = _script("a1", ($scope) => console.log(`setup effec
 const $await_content__$params = ($scope, $params2) => $await_content__value($scope, $params2[0]);
 const $placeholder_content = _content_resume("a2", "loading...", "b");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
-const $try_content__value = /*@__PURE__*/ _closure_get(2, ($scope) => $try_content__await_promise($scope, resolveAfter($scope._.c)));
+const $try_content__value = /*@__PURE__*/ _closure_get(3, ($scope) => $try_content__await_promise($scope, resolveAfter($scope._.c)));
 const $value__closure = /*@__PURE__*/ _closure($try_content__value);
 const $value = /*@__PURE__*/ _let(2, ($scope) => {
 	_text($scope.a, $scope.c);

@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 	$si__input_show__OR__input_value1__OR__input_value && writeScope($scope0_id, {
 		e: $si__input_show__OR__input_value && value1,
 		f: $si__input_show__OR__input_value2 && value2,
-		Be: $si__input_value && $value__closures,
-		Bf: $si__input_value2 && $value2__closures
+		g: $si__input_value && $value__closures,
+		h: $si__input_value2 && $value2__closures
 	});
 }, 1);

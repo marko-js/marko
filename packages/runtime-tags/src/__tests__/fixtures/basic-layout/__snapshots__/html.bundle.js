@@ -22,5 +22,5 @@ var template_default = _template("a", (input) => {
 		$si__input_name && _subscribe($name__closures, writeScope($scope1_id, { _: _scope_with_id($scope0_id) }));
 		_resume_branch($scope1_id);
 	}) });
-	$si__input_name && writeScope($scope0_id, { Bd: $name__closures });
+	$si__input_name && writeScope($scope0_id, { e: $name__closures });
 }, 1);

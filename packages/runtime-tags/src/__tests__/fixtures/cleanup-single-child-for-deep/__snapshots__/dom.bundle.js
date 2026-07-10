@@ -14,7 +14,7 @@ const $name = /*@__PURE__*/ _const(3, ($scope) => {
 const $write$1 = /*@__PURE__*/ _const(4, $input_name__OR__input_write);
 
 // template.marko
-const $for_content2__write = /*@__PURE__*/ _closure_get(4, ($scope) => $write$1($scope.a, $scope._._.e), ($scope) => $scope._._);
+const $for_content2__write = /*@__PURE__*/ _closure_get(6, ($scope) => $write$1($scope.a, $scope._._.e), ($scope) => $scope._._);
 const $for_content2__setup = ($scope) => {
 	$for_content2__write($scope);
 	$for_content2__outerItem._($scope);

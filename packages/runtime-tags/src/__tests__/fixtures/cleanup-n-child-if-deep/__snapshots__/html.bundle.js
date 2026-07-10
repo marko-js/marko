@@ -67,7 +67,7 @@ var template_default = _template("a", (input) => {
 		g: showMiddle,
 		h: showInner,
 		i: write,
-		Bh: $showInner__closures
+		k: $showInner__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

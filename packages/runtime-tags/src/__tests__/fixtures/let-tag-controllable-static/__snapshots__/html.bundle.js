@@ -8,7 +8,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		e: y,
-		Me: _resume(function(newValue) {
+		f: _resume(function(newValue) {
 			x = newValue + 1;
 		}, "a0", $scope0_id) || void 0
 	});

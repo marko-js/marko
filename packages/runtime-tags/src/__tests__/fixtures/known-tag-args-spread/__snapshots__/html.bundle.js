@@ -28,7 +28,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		h: x,
-		Bg: $si__input && $input__closures,
+		j: $si__input && $input__closures,
 		a: _existing_scope($childScope),
 		c: _existing_scope($childScope2)
 	});

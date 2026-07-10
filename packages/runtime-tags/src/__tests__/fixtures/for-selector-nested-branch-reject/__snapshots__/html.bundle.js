@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 	writeScope($scope0_id, {
 		e: $si__input_show && selected,
 		f: $si__input_show && rows,
-		Be: $selected__closures
+		g: $selected__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

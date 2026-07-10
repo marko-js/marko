@@ -32,13 +32,13 @@ var template_default = _template("a", (input) => {
 			_html(`${_escape(a)} ${_escape(b)} <!>${_escape(c)}${_el_resume($scope3_id, "c")}`);
 			_subscribe($c__closures, writeScope($scope3_id, {
 				_: _scope_with_id($scope2_id),
-				Ce: 1
+				Cg: 1
 			}));
 		}
 		writeScope($scope2_id, { _: _scope_with_id($scope0_id) });
 	}
 	_html("</div>");
 	_script($scope0_id, "a1");
-	writeScope($scope0_id, { Be: $c__closures });
+	writeScope($scope0_id, { g: $c__closures });
 	_resume_branch($scope0_id);
 }, 1);

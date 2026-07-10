@@ -10,7 +10,7 @@ const $catch_content = _content_resume("a1", " ", " b", 0, $catch_content__$para
 const $placeholder_content = _content_resume("a0", "LOADING...", "b");
 const $try_content__await_promise = /*@__PURE__*/ _await_promise(0, $await_content__$params);
 const $try_content__clickCount__script = _script("a3", ($scope) => $scope._.b.textContent = $scope._.d);
-const $try_content__clickCount = /*@__PURE__*/ _closure_get(3, ($scope) => {
+const $try_content__clickCount = /*@__PURE__*/ _closure_get(4, ($scope) => {
 	$try_content__await_promise($scope, resolveAfter($scope._.d));
 	$try_content__clickCount__script($scope);
 });

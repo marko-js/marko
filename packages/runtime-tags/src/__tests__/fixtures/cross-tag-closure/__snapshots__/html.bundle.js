@@ -38,6 +38,6 @@ var template_default = _template("a", (input) => {
 	writeScope($scope0_id, {
 		d: count,
 		a: _existing_scope($childScope),
-		Bd: $count__closures
+		e: $count__closures
 	});
 }, 1);

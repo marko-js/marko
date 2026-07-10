@@ -1,4 +1,4 @@
-// size: 25857 (min) 9518 (brotli)
+// size: 25854 (min) 9540 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -519,7 +519,7 @@ function _let(id, fn) {
 }
 function _let_change(id, fn) {
   let valueAccessor = decodeAccessor(id),
-    valueChangeAccessor = "M" + valueAccessor,
+    valueChangeAccessor = decodeAccessor(id + 1),
     base = _let(id, fn);
   return (scope, value, valueChange) => (
     rendering
@@ -682,7 +682,7 @@ function _closure_get(valueAccessor, fn, getOwnerScope, resumeId) {
       ));
   };
   return (
-    (closureSignal.a = "B" + valueAccessor),
+    (closureSignal.a = valueAccessor),
     (closureSignal.b = "C" + valueAccessor),
     resumeId && _resume(resumeId, closureSignal),
     closureSignal

@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
 		c: clickCount,
-		Bc: $clickCount__closures
+		d: $clickCount__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

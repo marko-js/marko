@@ -13,7 +13,7 @@ var child_default = _template("a", (input) => {
 	});
 	writeScope($scope0_id, {
 		e: count,
-		Be: $count__closures
+		f: $count__closures
 	});
 	_resume_branch($scope0_id);
 });

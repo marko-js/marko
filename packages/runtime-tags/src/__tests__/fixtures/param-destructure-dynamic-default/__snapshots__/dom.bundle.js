@@ -3,7 +3,7 @@ const $ChildB_content__$pattern = ($scope, $pattern2) => $ChildB_content__$bar($
 const $ChildB_content__count__OR__$foo = /*@__PURE__*/ _or(10, ($scope) => $ChildB_content__$pattern($scope, void 0 !== $scope.g ? $scope.g : { bar: $scope._.h + 2 }));
 const $ChildB_content__bar = ($scope, bar) => _text($scope.b, bar);
 const $ChildB_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => $ChildB_content__bar($scope, void 0 !== $scope.i ? $scope.i : $scope._.h + 1));
-const $ChildB_content__count = /*@__PURE__*/ _closure_get(7, ($scope) => {
+const $ChildB_content__count = /*@__PURE__*/ _closure_get(8, ($scope) => {
 	$ChildB_content__count__OR__$foo($scope);
 	$ChildB_content__count__OR__$bar($scope);
 });
@@ -12,7 +12,7 @@ const $ChildA_content__$pattern = ($scope, $pattern) => $ChildA_content__$bar($s
 const $ChildA_content__count__OR__$foo = /*@__PURE__*/ _or(10, ($scope) => $ChildA_content__$pattern($scope, void 0 !== $scope.g ? $scope.g : { bar: $scope._.h + 2 }));
 const $ChildA_content__bar = ($scope, bar) => _text($scope.b, bar);
 const $ChildA_content__count__OR__$bar = /*@__PURE__*/ _or(11, ($scope) => $ChildA_content__bar($scope, void 0 !== $scope.i ? $scope.i : $scope._.h + 1));
-const $ChildA_content__count = /*@__PURE__*/ _closure_get(7, ($scope) => {
+const $ChildA_content__count = /*@__PURE__*/ _closure_get(8, ($scope) => {
 	$ChildA_content__count__OR__$foo($scope);
 	$ChildA_content__count__OR__$bar($scope);
 });

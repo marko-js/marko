@@ -34,7 +34,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a4");
 	writeScope($scope0_id, {
 		d: clickCount,
-		Bd: $clickCount__closures
+		e: $clickCount__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

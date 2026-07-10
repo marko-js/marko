@@ -35,7 +35,7 @@ var template_default = _template("a", (input) => {
 		_subscribe($count__closures, writeScope($scope2_id, {
 			g: foo,
 			_: _scope_with_id($scope0_id),
-			Ch: 1
+			Ci: 1
 		}));
 		_resume_branch($scope2_id);
 	}) };
@@ -52,7 +52,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
 		h: count,
-		Bh: $count__closures
+		i: $count__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

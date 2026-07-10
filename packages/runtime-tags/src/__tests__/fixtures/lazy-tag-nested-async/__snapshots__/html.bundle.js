@@ -36,7 +36,7 @@ var child_default = _template("a", (input) => {
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		g: count,
-		Bg: $count__closures
+		h: $count__closures
 	});
 	_resume_branch($scope0_id);
 });

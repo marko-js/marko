@@ -11,7 +11,7 @@ const $for = /*@__PURE__*/ _for_of(0, "<!><!><!>", "b%c", 0, $for_content__$para
 const $input_section = ($scope, input_section) => $for($scope, [input_section]);
 
 // template.marko
-const $section_content__count = /*@__PURE__*/ _closure_get(1, ($scope) => _text($scope.a, $scope._.b));
+const $section_content__count = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._.b));
 const $section_content = _content_resume("a1", " ", " b", $section_content__count);
 const $count__closure = /*@__PURE__*/ _closure($section_content__count);
 const $count = /*@__PURE__*/ _let(1, ($scope) => {

@@ -14,7 +14,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		c: n,
-		Bc: $n__closures
+		d: $n__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

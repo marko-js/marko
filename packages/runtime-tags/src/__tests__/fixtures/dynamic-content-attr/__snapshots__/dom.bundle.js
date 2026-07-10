@@ -1,6 +1,6 @@
 // template.marko
 let sideEffect = 3;
-const $MyThing_content__count = /*@__PURE__*/ _closure_get(1, ($scope) => _text($scope.a, $scope._.b));
+const $MyThing_content__count = /*@__PURE__*/ _closure_get(4, ($scope) => _text($scope.a, $scope._.b));
 const $MyThing_content__setup = ($scope) => {
 	$MyThing_content__count($scope);
 	_text($scope.b, sideEffect++);

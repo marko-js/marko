@@ -9,7 +9,7 @@ var template_default = _template("a", (input) => {
 	writeScope($scope0_id, {
 		d: x,
 		e: y,
-		Me: void 0
+		f: void 0
 	});
 	_resume_branch($scope0_id);
 }, 1);

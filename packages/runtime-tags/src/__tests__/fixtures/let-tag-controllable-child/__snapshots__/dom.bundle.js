@@ -1,6 +1,6 @@
 // tags/child.marko
 const $state = /*@__PURE__*/ _let_change(14, ($scope) => _text($scope.c, $scope.o));
-const $thirdState = /*@__PURE__*/ _let_change(16, ($scope) => _text($scope.i, $scope.q));
+const $thirdState = /*@__PURE__*/ _let_change(18, ($scope) => _text($scope.i, $scope.s));
 const $input_value__OR__input_valueChange = /*@__PURE__*/ _or(13, ($scope) => {
 	$state($scope, $scope.l, $scope.m);
 	$thirdState($scope, $scope.l, $scope.m);
@@ -17,13 +17,13 @@ const $setup__script = _script("b0", ($scope) => {
 		$state($scope, $scope.o + 1);
 	});
 	_on($scope.d, "click", function() {
-		$otherState($scope, $scope.p + 1);
+		$otherState($scope, $scope.q + 1);
 	});
 	_on($scope.g, "click", function() {
-		$thirdState($scope, $scope.q + 1);
+		$thirdState($scope, $scope.s + 1);
 	});
 });
-const $otherState = /*@__PURE__*/ _let_change(15, ($scope) => _text($scope.f, $scope.p));
+const $otherState = /*@__PURE__*/ _let_change(16, ($scope) => _text($scope.f, $scope.q));
 const $input = ($scope, input) => {
 	$input_value($scope, input.value);
 	$input_valueChange($scope, input.valueChange);

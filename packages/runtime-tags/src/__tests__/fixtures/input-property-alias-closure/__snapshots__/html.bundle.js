@@ -27,7 +27,7 @@ var template_default = _template("a", (input) => {
 		})
 	});
 	$si__input_text && writeScope($scope0_id, {
-		Bd: $input_text__closures,
+		e: $input_text__closures,
 		a: _existing_scope($childScope)
 	});
 }, 1);

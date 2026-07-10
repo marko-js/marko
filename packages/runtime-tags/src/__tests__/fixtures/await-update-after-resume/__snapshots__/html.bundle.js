@@ -23,6 +23,6 @@ var template_default = _template("a", (input) => {
 		_html("loading...");
 	}, $scope0_id) }) });
 	_script($scope0_id, "a4");
-	writeScope($scope0_id, { Bc: $value__closures });
+	writeScope($scope0_id, { d: $value__closures });
 	_resume_branch($scope0_id);
 }, 1);

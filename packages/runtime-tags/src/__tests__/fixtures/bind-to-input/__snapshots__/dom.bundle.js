@@ -7,8 +7,8 @@ const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function
 }));
 
 // template.marko
-const $counter_content2__x = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._.c));
-const $counter_content__x = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._.c));
+const $counter_content2__x = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._.c));
+const $counter_content__x = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._.c));
 const $x__closure = /*@__PURE__*/ _closure($counter_content__x, $counter_content2__x);
 const $x = /*@__PURE__*/ _let(2, ($scope) => {
 	$count($scope.a, $scope.c);

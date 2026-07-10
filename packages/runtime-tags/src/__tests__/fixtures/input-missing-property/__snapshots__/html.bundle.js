@@ -22,7 +22,7 @@ var template_default = _template("a", (input) => {
 		}, $scope1_id, "a", $sg__input_count, $sg__input_count, $sg__input_count);
 		$si__input_count__OR__input_name && writeScope($scope1_id, {
 			e: _serialize_if($scope1_reason, 1) && input.name,
-			Be: $si__input_name && $Child_content__input_name__closures
+			f: $si__input_name && $Child_content__input_name__closures
 		});
 	}) };
 	const $childScope = _peek_scope_id();

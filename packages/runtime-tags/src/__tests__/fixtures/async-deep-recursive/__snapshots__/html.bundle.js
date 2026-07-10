@@ -35,7 +35,7 @@ const $content = (input) => {
 	}, $scope0_id, "a", $sg__input_level, $sg__input_level, $sg__input_level, 0, 1);
 	$si__input_level && writeScope($scope0_id, {
 		d: input.level,
-		Bd: $input_level__closures
+		e: $input_level__closures
 	});
 };
 var recurse_default = _template("b", $content);

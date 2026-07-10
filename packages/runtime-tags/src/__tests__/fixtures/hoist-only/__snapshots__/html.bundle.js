@@ -27,6 +27,6 @@ var template_default = _template("a", (input) => {
 	writeScope($scope0_id, {
 		d: input.value,
 		e: hoist1,
-		Bd: $si__input_value && $input_value__closures
+		f: $si__input_value && $input_value__closures
 	});
 }, 1);

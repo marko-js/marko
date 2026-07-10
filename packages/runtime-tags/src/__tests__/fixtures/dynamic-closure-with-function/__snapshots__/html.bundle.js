@@ -29,6 +29,6 @@ var template_default = _template("a", (input) => {
 		d: $si__input_a__OR__input_b && input.c,
 		f: _serialize_if($scope0_reason, 4) && input.b,
 		g: $si__input_a__OR__input_b && bar,
-		Bg: $si__input_c && $bar2__closures
+		i: $si__input_c && $bar2__closures
 	});
 }, 1);

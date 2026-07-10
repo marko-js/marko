@@ -26,7 +26,7 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 
 // template.marko
 const $classlayout_content__multiplier__OR__baseCount = /*@__PURE__*/ _or(7, ($scope) => _text($scope.e, $scope._.b * $scope.g));
-const $classlayout_content__multiplier = /*@__PURE__*/ _closure_get(1, ($scope) => {
+const $classlayout_content__multiplier = /*@__PURE__*/ _closure_get(2, ($scope) => {
 	_text($scope.c, $scope._.b);
 	$classlayout_content__multiplier__OR__baseCount($scope);
 });

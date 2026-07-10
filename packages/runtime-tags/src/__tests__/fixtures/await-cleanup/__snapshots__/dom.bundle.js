@@ -6,7 +6,7 @@ const $await_content2__setup = ($scope) => {
 	$await_content2__setup__script($scope);
 };
 const $placeholder_content = _content_resume("a3", "loading...", "b");
-const $await_content__show = /*@__PURE__*/ _closure_get(2, ($scope) => _text($scope.a, $scope._._._.c), ($scope) => $scope._._._, "a0");
+const $await_content__show = /*@__PURE__*/ _closure_get(3, ($scope) => _text($scope.a, $scope._._._.c), ($scope) => $scope._._._, "a0");
 const $await_content__setup__script = _script("a1", ($scope) => $signal($scope, 0).onabort = () => document.querySelector("#one").textContent = "Pass");
 const $await_content__setup = ($scope) => {
 	$await_content__show($scope);

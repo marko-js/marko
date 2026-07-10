@@ -37,7 +37,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id), 0, 0);
 	writeScope($scope0_id, {
 		b: multiplier,
-		Bb: $multiplier__closures
+		c: $multiplier__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

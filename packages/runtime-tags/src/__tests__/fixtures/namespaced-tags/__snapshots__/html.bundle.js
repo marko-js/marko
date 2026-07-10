@@ -32,7 +32,7 @@ var template_default = _template("a", (input) => {
 		k: input.value,
 		l: Parent,
 		m: Child,
-		Bk: $si__input_value && $input_value__closures
+		o: $si__input_value && $input_value__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

@@ -40,7 +40,7 @@ var wrap_default = _template("c", (input) => {
 		d: input.foo,
 		e: _serialize_if($scope0_reason, 3) && _class,
 		f: _serialize_if($scope0_reason, 2) && rest,
-		Bd: $si__input_foo && $input_foo__closures
+		h: $si__input_foo && $input_foo__closures
 	});
 });
 

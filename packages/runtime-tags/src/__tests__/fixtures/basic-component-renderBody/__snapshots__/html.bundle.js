@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	});
 	writeScope($scope0_id, {
 		b: clickCount,
-		Bb: $clickCount__closures
+		c: $clickCount__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

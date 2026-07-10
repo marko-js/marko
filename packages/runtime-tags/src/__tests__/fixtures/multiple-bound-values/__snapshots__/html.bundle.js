@@ -12,9 +12,9 @@ var _2counters_default = _template("b", (input) => {
 		j: _serialize_if($scope0_reason, 3) && input.count2,
 		k: _serialize_if($scope0_reason, 2) && input.count2Change,
 		m: count1,
-		n: count2,
-		Mm: input.count1Change || void 0,
-		Mn: input.count2Change || void 0
+		o: count2,
+		n: input.count1Change || void 0,
+		p: input.count2Change || void 0
 	});
 	_resume_branch($scope0_id);
 });

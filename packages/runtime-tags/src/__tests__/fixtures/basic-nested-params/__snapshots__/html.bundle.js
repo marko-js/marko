@@ -40,7 +40,7 @@ var template_default = _template("a", (input) => {
 			writeScope($scope1_id, {
 				c: outer,
 				_: _scope_with_id($scope0_id),
-				Bc: $si__outer && $child_content__outer__closures
+				d: $si__outer && $child_content__outer__closures
 			});
 			_resume_branch($scope1_id);
 		}, $scope0_id)

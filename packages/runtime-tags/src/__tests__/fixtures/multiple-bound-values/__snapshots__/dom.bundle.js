@@ -2,7 +2,7 @@
 const $count$1 = /*@__PURE__*/ _let_change(12, ($scope) => _text($scope.b, $scope.m));
 const $input_count1__OR__input_count1Change = /*@__PURE__*/ _or(8, ($scope) => $count$1($scope, $scope.g, $scope.h));
 const $input_count = /*@__PURE__*/ _const(6, $input_count1__OR__input_count1Change);
-const $count2$1 = /*@__PURE__*/ _let_change(13, ($scope) => _text($scope.d, $scope.n));
+const $count2$1 = /*@__PURE__*/ _let_change(14, ($scope) => _text($scope.d, $scope.o));
 const $input_count2__OR__input_count2Change = /*@__PURE__*/ _or(11, ($scope) => $count2$1($scope, $scope.j, $scope.k));
 const $input_count2 = /*@__PURE__*/ _const(9, $input_count2__OR__input_count2Change);
 const $setup__script = _script("b0", ($scope) => {
@@ -10,7 +10,7 @@ const $setup__script = _script("b0", ($scope) => {
 		$count$1($scope, $scope.m + 1);
 	});
 	_on($scope.c, "click", function() {
-		$count2$1($scope, $scope.n + 1);
+		$count2$1($scope, $scope.o + 1);
 	});
 });
 

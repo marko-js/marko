@@ -39,7 +39,7 @@ var template_default = _template("a", (input) => {
 	}) });
 	writeScope($scope0_id, {
 		b: count,
-		Bb: $count__closures,
+		c: $count__closures,
 		a: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

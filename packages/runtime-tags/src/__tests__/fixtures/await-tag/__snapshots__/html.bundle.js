@@ -16,7 +16,7 @@ var template_default = _template("a", (input) => {
 		_html(`Got: ${_escape(value)} <!>${_escape(count)}${_el_resume($scope2_id, "b")}`);
 		_subscribe($count__closures, writeScope($scope2_id, {
 			_: _scope_with_id($scope0_id),
-			Ce: 1
+			Cf: 1
 		}));
 		_resume_branch($scope2_id);
 	});
@@ -25,7 +25,7 @@ var template_default = _template("a", (input) => {
 		_html(`Got: ${_escape(value)} <!>${_escape(count)}${_el_resume($scope3_id, "b")}`);
 		_subscribe($count__closures, writeScope($scope3_id, {
 			_: _scope_with_id($scope0_id),
-			Ce: 2
+			Cf: 2
 		}));
 		_resume_branch($scope3_id);
 	});
@@ -33,7 +33,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
 		e: count,
-		Be: $count__closures
+		f: $count__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

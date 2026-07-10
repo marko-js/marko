@@ -25,6 +25,6 @@ var template_default = _template("a", (input) => {
 	_var($scope0_id, "b", $Child_scope, "a2");
 	writeScope($scope0_id, {
 		c: setHtml,
-		Bc: $setHtml__closures
+		d: $setHtml__closures
 	});
 }, 1);

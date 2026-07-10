@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
+import type { AccessorPrefix } from "../../common/accessor.debug";
 import { decodeAccessor } from "../../common/helpers";
 import { toAccess } from "../../html/serializer";
 import { finalizeFunctionRegistry } from "../visitors/function";
@@ -121,6 +122,8 @@ export interface Binding {
   pruned: boolean | undefined;
   exposed: boolean;
   forcePersist: boolean;
+  // Extra ids reserved after `id` for derived accessors (eg TagVariableChange).
+  reserveSize: number;
 }
 
 export interface InputBinding extends Binding {
@@ -236,6 +239,7 @@ export function createBinding(
     pruned: undefined,
     exposed: false,
     forcePersist: false,
+    reserveSize: 0,
   };
 
   if (property) {
@@ -1306,18 +1310,22 @@ export function finalizeReferences() {
     }
 
     let intersectionIndex = 0;
-    let lastBindingIndex = 0;
+    let nextId = 0;
     let intersection: Intersection;
-    forEach(filter(bindings, isOwnedBinding), (binding, bindingIndex) => {
-      binding.id = (lastBindingIndex = bindingIndex) + intersectionIndex;
+    forEach(filter(bindings, isOwnedBinding), (binding) => {
+      binding.id = nextId++;
+      // Reserved ids follow the binding's own; dom bindings never reserve
+      // since their ids are the walker's dense indexes.
+      nextId += binding.reserveSize;
       while (
         intersectionIndex < intersections.length &&
         (intersection = intersections[intersectionIndex])
           .filter(isOwnedBinding)
           .at(-1) === binding
       ) {
+        intersectionIndex++;
         intersectionMeta.set(intersection, {
-          id: bindingIndex + ++intersectionIndex,
+          id: nextId++,
           scopeOffset: getMaxOwnSourceOffset(intersection, section),
         });
       }
@@ -1325,11 +1333,20 @@ export function finalizeReferences() {
 
     while (intersectionIndex < intersections.length) {
       intersection = intersections[intersectionIndex];
+      intersectionIndex++;
       intersectionMeta.set(intersection, {
-        id: lastBindingIndex + ++intersectionIndex,
+        id: nextId++,
         scopeOffset: getMaxOwnSourceOffset(intersection, section),
       });
     }
+
+    // Closure accessor ids trail the id space; `_closure_get` receives the
+    // id directly, so unused reservations never reach the wire.
+    forEach(filter(bindings, isOwnedBinding), (binding) => {
+      if (binding.closureSections) {
+        closureAccessorIds.set(binding, nextId++);
+      }
+    });
   });
 
   const programSection = getProgram().node.extra.section!;
@@ -1372,6 +1389,8 @@ export const intersectionMeta = new WeakMap<
   Intersection,
   { id: number; scopeOffset: Binding | undefined }
 >();
+
+const closureAccessorIds = new WeakMap<Binding, number>();
 
 export const collapsedIntersectionSource = new WeakMap<Intersection, Binding>();
 
@@ -1788,6 +1807,38 @@ export function getScopeAccessor(
     return `${canonicalBinding.name}/${canonicalBinding.id}`;
   }
   return canonicalBinding.scopeAccessor ?? canonicalBinding.name;
+}
+
+// Value-coupled prefixes use reserved ids instead of prepending a letter;
+// other prefixes (and debug output) keep the letter scheme.
+export function getPrefixedScopeAccessor(
+  binding: Binding,
+  prefix: AccessorPrefix,
+) {
+  const canonicalBinding = getCanonicalBinding(binding)!;
+  if (isOptimize()) {
+    switch (prefix) {
+      case getAccessorPrefix().TagVariableChange:
+        return decodeAccessor(canonicalBinding.id + 1);
+      case getAccessorPrefix().ClosureScopes:
+        return decodeAccessor(getClosureAccessorId(canonicalBinding));
+      case getAccessorPrefix().ClosureSignalIndex:
+        // Lives on the closing sections' scopes where a bare id could
+        // collide, so it keeps the letter but keys off the closure id.
+        return prefix + decodeAccessor(getClosureAccessorId(canonicalBinding));
+    }
+  }
+  return prefix + getScopeAccessor(binding);
+}
+
+export function getClosureAccessorId(binding: Binding) {
+  const id = closureAccessorIds.get(getCanonicalBinding(binding)!);
+  if (id === undefined) {
+    throw new Error(
+      `No closure accessor id was reserved for "${binding.name}".`,
+    );
+  }
+  return id;
 }
 
 export function getDebugScopeAccess(binding: Binding) {

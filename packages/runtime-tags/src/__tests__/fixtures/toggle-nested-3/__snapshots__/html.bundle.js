@@ -31,7 +31,7 @@ var template_default = _template("a", (input) => {
 		c: outer,
 		d: inner,
 		e: count,
-		Be: $count__closures
+		g: $count__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

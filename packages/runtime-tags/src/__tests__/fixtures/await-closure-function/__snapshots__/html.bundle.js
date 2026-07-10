@@ -23,7 +23,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id) }) });
 	writeScope($scope0_id, {
 		b: value,
-		Bb: $value__closures
+		c: $value__closures
 	});
 	_resume_branch($scope0_id);
 }, 1);

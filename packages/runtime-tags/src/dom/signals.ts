@@ -57,7 +57,10 @@ export function _let_change<T>(id: EncodedAccessor, fn?: SignalFn) {
   const valueAccessor = MARKO_DEBUG
     ? (id as string).slice(0, (id as string).lastIndexOf("/"))
     : decodeAccessor(id as number);
-  const valueChangeAccessor = AccessorPrefix.TagVariableChange + valueAccessor;
+  // The change handler owns the id after the value's.
+  const valueChangeAccessor = MARKO_DEBUG
+    ? AccessorPrefix.TagVariableChange + valueAccessor
+    : decodeAccessor((id as number) + 1);
   const base = _let<T>(id, fn);
 
   return (scope: Scope, value: T, valueChange?: (v: T) => void) => {
@@ -320,8 +323,11 @@ export function _closure_get(
     [ClosureSignalProp.SignalIndexAccessor]: string;
     [ClosureSignalProp.Index]: number;
   };
-  closureSignal[ClosureSignalProp.ScopeInstancesAccessor] =
-    AccessorPrefix.ClosureScopes + valueAccessor;
+  // The closure accessor id is the scope instances key itself; the signal
+  // index key keeps its letter to avoid colliding with the closing scopes.
+  closureSignal[ClosureSignalProp.ScopeInstancesAccessor] = MARKO_DEBUG
+    ? AccessorPrefix.ClosureScopes + valueAccessor
+    : (valueAccessor as string);
   closureSignal[ClosureSignalProp.SignalIndexAccessor] =
     AccessorPrefix.ClosureSignalIndex + valueAccessor;
 

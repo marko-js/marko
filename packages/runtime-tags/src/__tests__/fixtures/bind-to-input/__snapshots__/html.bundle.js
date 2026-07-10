@@ -12,7 +12,7 @@ var counter_default = _template("b", (input) => {
 		g: _serialize_if($scope0_reason, 2) && $countChange,
 		h: _serialize_if($scope0_reason, 1) && count,
 		j: x,
-		Mj: $countChange || void 0
+		k: $countChange || void 0
 	});
 	_resume_branch($scope0_id);
 });
@@ -50,13 +50,13 @@ var template_default = _template("a", (input) => {
 			_html(`${_escape(x)}${_el_resume($scope2_id, "a")}`);
 			_subscribe($x__closures, writeScope($scope2_id, {
 				_: _scope_with_id($scope0_id),
-				Cc: 1
+				Cd: 1
 			}));
 			_resume_branch($scope2_id);
 		})
 	});
 	writeScope($scope0_id, {
-		Bc: $x__closures,
+		d: $x__closures,
 		a: _existing_scope($childScope),
 		b: _existing_scope($childScope2)
 	});

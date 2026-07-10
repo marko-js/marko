@@ -2,17 +2,17 @@
   "dom": {
     "template.marko.page.mjs": {
       "total": {
-        "min": 7542,
-        "brotli": 3332
+        "min": 7541,
+        "brotli": 3325
       },
       "files": {
         "tags/child.marko": 604,
-        "template.marko": 2150
+        "template.marko": 2153
       }
     }
   },
   "html": {
-    "min": 719,
-    "brotli": 408
+    "min": 718,
+    "brotli": 407
   }
 }
