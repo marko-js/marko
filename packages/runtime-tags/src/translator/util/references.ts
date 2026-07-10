@@ -577,6 +577,14 @@ function trackAssignment(
       }
 
       if (binding.upstreamAlias && binding.property !== undefined) {
+        // A positional parameter (`<for|item|>`) has no object that could
+        // carry a change handler, so the assignment can never write back.
+        if (binding.upstreamAlias === binding.section.params) {
+          throw assignment.buildCodeFrameError(
+            `\`${binding.name}\` is a tag parameter and cannot be assigned to.`,
+          );
+        }
+
         const changePropName = binding.property + "Change";
         const changeBinding =
           binding.upstreamAlias.propertyAliases.get(changePropName) ||
