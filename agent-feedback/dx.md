@@ -25,3 +25,9 @@ The dependency upgrade took everything to latest except two majors that are true
 `package.json:9` | 2026-07-07 | impact:low | effort:low
 
 Bare `npm audit` shows 3 advisories (`serialize-javascript` high, `js-yaml`/mocha moderate, `diff` low), all transitively under `mocha` and `@changesets/cli` — dev tooling that never ships. They can't be resolved by version bumps: the fixes live in higher majors than mocha's ranges allow (`serialize-javascript ^6`→fix in 7.x, `diff ^7`→8.x, `js-yaml ^4`→5.x), mocha 11.7.6 is the newest stable, and the latest `@changesets/parse` still pins `js-yaml ^4.1.1`. Rather than pin them via `overrides`, the repo audits production deps only: **`npm run audit`** (`npm audit --omit=dev`) is the gate and returns 0 — that's what consumers of the published packages actually receive. Revisit and drop the distinction once mocha/changesets update their transitive deps upstream.
+
+## Fixture `sizes.json` rewrites are unconditional, so `--grep`-scoped runs leave other fixtures stale
+
+`packages/runtime-tags/src/__tests__/main.test.ts:322` | 2026-07-10 | impact:low | effort:low
+
+The `after()` hook writes each fixture's `sizes.json` on every optimized test run, not just under `UPDATE_EXPECTATIONS=1`. A runtime helper change validated with `npm run test:update -- --grep <name>` therefore captures new sizes only for grep-matched fixtures; any other fixture bundling the same helper keeps stale numbers that a later unrelated full run silently rewrites into the working tree (e.g. a `_lifecycle` change also resizes `for-resume-owns-branch-cleanup` and `if-resume-owns-branch-cleanup`, whose names do not match "lifecycle"). Either gate the write on `UPDATE_EXPECTATIONS` and fail on drift otherwise, or document that runtime `src/dom`/`src/html` changes require a full-suite pass before committing so all affected `sizes.json` land in the same diff.

@@ -475,20 +475,18 @@ export function _lifecycle(
     instance.onUpdate?.();
   } else {
     scope[accessor] = thisObj;
-    let snapshot = undefined;
     if (MARKO_DEBUG) {
-      snapshot = Object.assign({}, thisObj);
-    }
-    const newProps = thisObj.onMount?.();
-    Object.assign(thisObj, newProps);
-    if (MARKO_DEBUG) {
-      for (const [prop, prevVal] of Object.entries(snapshot!)) {
-        const nextVal = thisObj[prop];
-        if (Object.is(prevVal, nextVal)) continue;
-        throw new Error(
-          `Tried to overwrite existing property "${prop}" in <lifecycle> onMount.`,
-        );
+      const snapshot = { ...thisObj };
+      Object.assign(thisObj, thisObj.onMount?.());
+      for (const prop in snapshot) {
+        if (!Object.is(snapshot[prop], thisObj[prop])) {
+          throw new Error(
+            `Tried to overwrite existing property "${prop}" in <lifecycle> onMount.`,
+          );
+        }
       }
+    } else {
+      Object.assign(thisObj, thisObj.onMount?.());
     }
     $signal(scope, accessor).onabort = () => thisObj.onDestroy?.();
   }
