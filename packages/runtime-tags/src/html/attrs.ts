@@ -450,11 +450,6 @@ function nonVoidAttr(name: string, value: unknown) {
       return " " + name;
     case "number":
       return " " + name + "=" + value;
-    case "object":
-      if (value instanceof RegExp) {
-        return " " + name + attrAssignment(value.source);
-      }
-      break;
   }
 
   return " " + name + attrAssignment(value + "");

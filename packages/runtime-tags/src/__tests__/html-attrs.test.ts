@@ -48,9 +48,8 @@ describe("runtime-tags/html/attrs", () => {
       );
     });
 
-    it("should return the source when passed a regexp", () => {
-      const regexp = /foo/;
-      assert.equal(helpers._attr("foo", regexp), ` foo=${regexp.source}`);
+    it("should stringify a regexp like any other object", () => {
+      assert.equal(helpers._attr("foo", /foo/), ` foo="/foo/"`);
     });
   });
 
