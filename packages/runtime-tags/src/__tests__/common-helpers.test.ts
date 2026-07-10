@@ -92,5 +92,16 @@ describe("runtime-tags/common/helpers", () => {
         );
       }
     });
+
+    it("should escape object values so they cannot inject declarations", () => {
+      assert.equal(
+        styleValue({ color: "red;background:blue" }),
+        "color:red\\3B background:blue",
+      );
+      assert.equal(
+        styleValue({ fontFamily: '"My Font"' }),
+        'fontFamily:\\"My Font\\"',
+      );
+    });
   });
 });

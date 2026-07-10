@@ -58,7 +58,10 @@ export function stringifyClassObject(name: string, value: unknown) {
 }
 
 export function stringifyStyleObject(name: string, value: unknown) {
-  return value || value === 0 ? name + ":" + value : "";
+  // Escaping guarantees a value cannot terminate its declaration, so a
+  // `;`-containing value cannot inject declarations that the granular
+  // client updates would never manage.
+  return value || value === 0 ? name + ":" + escapeStyleValue(value + "") : "";
 }
 
 export function escapeStyleValue(str: string) {

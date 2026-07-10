@@ -1,4 +1,4 @@
-// size: 25871 (min) 9521 (brotli)
+// size: 25878 (min) 9510 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -327,7 +327,7 @@ function stringifyClassObject(name, value) {
   return value ? name : "";
 }
 function stringifyStyleObject(name, value) {
-  return value || value === 0 ? name + ":" + value : "";
+  return value || value === 0 ? name + ":" + escapeStyleValue(value + "") : "";
 }
 function escapeStyleValue(str) {
   let closers = "",
