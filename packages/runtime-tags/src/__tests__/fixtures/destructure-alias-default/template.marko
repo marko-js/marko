@@ -1,0 +1,16 @@
+<let/x=1/>
+<let/source = { item: "i", other: "o" }/>
+
+// Plain alias first, defaulted alias second.
+<const/{ item } = source/>
+<const/{ item: fallback = x * 10 } = source/>
+
+// Defaulted alias first, plain alias second.
+<const/{ other = x + 100 } = source/>
+<const/{ other: raw } = source/>
+
+<div id="a">${String(item)}:${fallback}</div>
+<div id="b">${other}:${String(raw)}</div>
+
+<button id="clear" onClick() { source = {} }>clear</button>
+<button id="inc" onClick() { x++ }>inc</button>

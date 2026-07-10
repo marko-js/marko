@@ -249,7 +249,10 @@ export function createBinding(
       binding.upstreamAlias = propBinding;
       propBinding.aliases.add(binding);
     } else {
-      // TODO: check if default is used, if so an intermediate binding is needed
+      // The alias root always holds the raw property value: a defaulted
+      // destructure roots its source binding here (see the AssignmentPattern
+      // case), never the derived binding, so later aliases of the same
+      // property observe the value before any default is applied.
       upstreamAlias!.propertyAliases.set(property, binding);
     }
   } else if (upstreamAlias) {
