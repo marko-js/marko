@@ -26,9 +26,16 @@ multiplicity, and a lifetime API. Several pieces of round-2 machinery
 exist only to compensate for the group being global, and fall away once
 it isn't.
 
-An action is born at most once per event dispatch (a link click the
-router intercepts, a form submit, any handler that writes an optimistic
-cell) and owns three things:
+An action is born at most once per **task**, not per dispatch: a
+dispatch chain — click handler → default action → submit dispatch → the
+router's submit listener — runs as one task (the round-2 dispatch
+fact), and must share one action, or a guess written in a button's
+click handler could never coalesce with the round-trip the router
+registers two dispatches later. "Captures all updates queued from the
+event that started it" is precisely task scope. The window closes at
+task end; an action still holding guesses but with no extenders by
+then demotes (see "Writes with no ambient action"). An action owns
+three things:
 
 - **holds** — the optimistic cells guessed during its window;
 - **lifetime extenders** — a reference count of outstanding work:
@@ -235,9 +242,13 @@ Not every optimistic-cell write happens inside a dispatch: timers,
 socket pushes, code reacting inside another action's settle pass. Such
 a write creates **no hold** — the guess exposes immediately (writes
 are ordinary assignments) but the next source emission overwrites it,
-per the gate's not-held emission path. Under `MARKO_DEBUG`, warn: a
-write that nothing will confirm is almost always a bug (a socket push
-should feed the _source_, not guess past it). This rule is also what
+per the gate's not-held emission path. An action that reaches the end
+of its task with guesses but **no extenders** demotes to the same
+state: its holds become plain exposed writes (no rollback flash — the
+guess simply stops being defended). Under `MARKO_DEBUG`, warn in both
+cases: a write that nothing will confirm is almost always a bug (a
+socket push should feed the _source_, not guess past it). This rule is
+also what
 retires the pass-generation guard, and it answers async handlers: a
 write after the handler's first `await` has left the dispatch and does
 not join the action (the platform gives no ambient async context to
