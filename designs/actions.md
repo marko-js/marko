@@ -148,8 +148,10 @@ global quiet — only for its own action.
 **Machinery kept verbatim:** the gate cell's three-path semantics
 (exposed/shadow/held, emission/write/settle), the boundary-settle
 hooks (`render.j` + in-place `c` chaining), the router's supersede
-asymmetry, and all four pending grains — now keyed to the action as
-their shared authority, which is itself a coherence win: round 2 left
+asymmetry, and the four pending grains' scopes (grain 1's _surface_
+is respecified handler→binding in actions-api.md) — now keyed to the
+action as their shared authority, which is itself a coherence win:
+round 2 left
 settle _coarser_ than the pending grains (global vs per-form /
 per-navigation); actions align them.
 
@@ -229,9 +231,14 @@ the window.
   from its submits: a double submit keeps it pending until both settle
   (the second supersedes the first mutation, transferring its keys, so
   the set collapses to one).
-- _`onPending(p)`_: `p` is the action created or joined by the write
-  that fired the callback, so `p.waitUntil(...)` composes — the cell
-  author can extend the very interaction that guessed through it.
+- _Cell pending_ (grain 1) is a read-only companion binding in the
+  cell's destructured tag-var form
+  (`<optimistic/{ value: x, pending }=…>` — the respec from the
+  reviewed `onPending` handler is argued in actions-api.md E6): true
+  while the holding-action set is non-empty, so multiplicity
+  aggregates with no API. Cell-side access to the holding action is
+  deliberately absent — a cell extending the interaction proved to be
+  a layering violation, not a composition win.
 - _`<try|{ pending }|>`_ params follow the boundary's current promise
   exactly as specced; the boundary's completion decrements whichever
   actions extended on it.
@@ -294,11 +301,12 @@ become the acceptance tests if round 3 upholds the model.
 
 ## Open questions
 
-1. **The `waitUntil` surface.** Candidates: the nav-context handle
-   (grain 2) growing `waitUntil`; `onPending`'s `p` (decided above);
-   and — for plain handlers with neither in scope — a module import
-   from `@marko/run` reading the ambient dispatch. The last is the
-   contentious one and the naming question rides on it.
+1. **The `waitUntil` surface.** The module import reading the ambient
+   dispatch is the working shape (used throughout actions-api.md; its
+   export home and name are the open part), with the nav-context
+   handle (grain 2) growing `waitUntil` as a possible second reach.
+   Cell-side access — the holding action as an `onPending` argument —
+   was tried and dropped as a layering violation (actions-api.md E6).
 2. **Async-handler membership** (`AsyncContext` dependency, above).
 3. **Transfer vs release for superseded client re-awaits** — the
    weakest of the three supersession rules; round 3 should attack it.

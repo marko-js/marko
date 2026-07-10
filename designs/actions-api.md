@@ -3,20 +3,28 @@
 Status: **strawman surface for the [actions.md](./actions.md) model —
 not reviewed, names not final.** This document shows the complete
 authored API and works each surface through a realistic example. It
-adds two decisions on top of actions.md (the `onPending` argument is
-the holding action; `waitUntil` doubles as the bare client driver) and
-inherits everything else from the reviewed
-[optimistic.md](./optimistic.md) grain designs. Where a shape was
-already specced there, it appears here verbatim.
+adds two decisions on top of actions.md — cell pending is a
+**read-only companion binding**, replacing reviewed grain 1's
+`onPending` handler (the respec is argued in E6), and `waitUntil`
+doubles as the bare client driver (E5) — and inherits everything else
+from the reviewed [optimistic.md](./optimistic.md) grain designs,
+verbatim where already specced.
 
 ## The whole surface
 
 Everything an app author can touch, in one list:
 
-- **`<optimistic/x=source onPending(p) { ... }/>`** — the cell (marko
-  core). Reads like a `<const>` derived from `source`; writes like a
-  `<let>`. A write during an action's window becomes a held guess;
-  settle re-derives from source. `onPending` is optional.
+- **`<optimistic/x=source/>`** — the cell (marko core). Reads like a
+  `<const>` derived from `source`; writes like a `<let>`. A write
+  during an action's window becomes a held guess; settle re-derives
+  from source.
+- **`<optimistic/{ value: x, pending }=source/>`** — the destructured
+  form, for when held-ness matters: `value:` names the same writable
+  cell; `pending` is a read-only reactive boolean, true while any
+  action holds the cell. Patterns are already legal tag variables for
+  derived tags (const.ts:71 branches on them; let.ts:81 restricts to
+  identifiers — a per-tag choice), so this is existing syntax with
+  this tag's own translator rule.
 - **Assignment** — the only "optimistic update" verb. `x = guess`,
   `x++`, `cart = [...cart, item]` in an event handler. No wrapper
   function, no dispatch call.
@@ -26,9 +34,6 @@ Everything an app author can touch, in one list:
   runtime, not run, because the client-only driver uses it). Callable
   synchronously during the event or while the action is still
   unsettled; throws otherwise.
-- **`onPending(p)`** on the cell — fires at effect time when a write
-  opens a hold (`p` = the holding action, so `p.waitUntil(...)`
-  composes) and once when the last hold settles (`p` = `null`).
 - **`<context/nav from="<marko-run-nav>"/>`** — run's navigation
   context, `{ pending, url, method }` (provider name TBD). At most one
   router action applies at a time, so this is scalar by construction.
@@ -216,26 +221,51 @@ resolves the action (settled-by-failure), `serverLikes` never changed,
 and the guess rolls back — same shape as E1's non-2xx, authored in
 five lines.
 
-## E6 — `onPending` composing with the action: minimum display time
+## E6 — cell pending is state, not a callback
 
-The classic spinner-flash fix, expressed as the cell extending the
-very interaction that guessed through it:
+Grain 1 respecified. The reviewed design's
+
+```marko
+<let/syncing=false/>
+<optimistic/cart=$global.data.cart onPending(p) { syncing = p }/>
+```
+
+was the one pending surface in the whole system shaped as a
+notification: every other grain hands the author reactive state
+(`status.pending`, the `<try>` param, `nav.pending`), while the cell
+called back so the author could mirror runtime-owned state into a
+`<let>` by hand. Held-ness already _is_ reactive state the cell owns —
+surface it as one:
 
 ```marko
 /* cart-provider.marko */
-<let/syncing=false/>
-<optimistic/cart=$global.data.cart onPending(p) {
-  syncing = !!p;
-  if (p) p.waitUntil(new Promise((r) => setTimeout(r, 300)));
-}/>
+<optimistic/{ value: cart, pending: syncing }=$global.data.cart.count/>
+<span class=(syncing && "badge--syncing")>${cart}</span>
 ```
 
-A sub-300ms round-trip now settles at 300ms: no flash, and every
-surface keyed to the action — this cell, `<form-status>`, the nav
-context — agrees, because they share one settle authority. (This is
-the concrete payoff of "everything is waitUntil": a _cell author_ can
-stretch _interaction_ pending without touching the form or the
-router.)
+The reviewed handler-shape rationale does not bind here. The `:=` kill
+and the driven-`<let>` no-op hazard (R-F1) were about _user-declared_
+state driven from settle contexts; `pending` is the tag's **own**
+variable — the same footing as `<form-status>`'s `status.pending`,
+flipping through the same queue bracket. (`:=` stays dead: this is a
+tag variable the tag declares, not a bind onto author state.)
+
+Deleted along with the handler: cell-side `p.waitUntil(...)`
+composition. An earlier draft of this document sold minimum display
+time through it — a layering violation dressed as a payoff, since a
+_cell_ extending the _action_ stretches `<form-status>` and
+`nav.pending` for every interaction touching that cell, to serve one
+consumer's display concern. Minimum display time lands where the
+concern lives: in the handler (`waitUntil(minDelay(300))` at the form,
+E7's mechanism) when the _interaction's_ spinner must not flash, and
+in CSS (a minimum-duration animation on `badge--syncing`) when a
+_value badge_ must not flicker.
+
+Semantics: `pending` is true while the cell's holding-action set is
+non-empty — so multiplicity aggregates with no API (E2's badge pulses
+across both stacked add-to-carts) — and it is always false under
+SSR/resume until a client write. Writing `pending` is a compile error
+(const.ts:80 already has the readonly-mutation error to reuse).
 
 ## E7 — `waitUntil` from the handler: animation-extended pending
 
@@ -342,11 +372,12 @@ fixture.
 1. `waitUntil`'s export home — `marko` core is forced by the
    client-only driver (E5), but the bare-import ergonomics vs. a
    namespaced entry (`marko/interaction`?) is naming-review material.
-2. Whether `onPending`'s `null`-at-settle convention should instead be
-   a second boolean argument (`onPending(action, pending)`) — the
-   `syncing = !!p` coercion in E2/E6 is the smell to weigh.
+2. The destructured form's key names (`value`/`pending`), and the
+   fixture set for its translator rules: `value:` writable, `pending`
+   readonly (write = compile error), plain-identifier form unchanged.
 3. Whether `<form-status>`'s value should expose the action
    (`status.action?.waitUntil(...)`) or stay `{ pending }`-minimal —
-   E6 covers the known use case from the cell side, so start minimal.
+   with cell-side action access dropped (E6), no known use case
+   demands it, so start minimal.
 4. A debug duration warning for runaway extenders (E7's analytics
    abuse).
