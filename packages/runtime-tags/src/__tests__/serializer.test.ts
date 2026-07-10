@@ -484,6 +484,23 @@ describe("serializer", () => {
       assertStringify(obj, `{y:{z:2}}`);
     });
 
+    describe("own constructor property", () => {
+      it("plain object", () =>
+        assertStringify({ constructor: 1, x: 2 }, `{constructor:1,x:2}`));
+      it("known function value", () =>
+        assertStringify({ constructor: Date, x: 2 }, `{constructor:Date,x:2}`));
+      it("parsed JSON", () =>
+        assertStringify(
+          JSON.parse('{"constructor":{"x":1}}'),
+          `{constructor:{x:1}}`,
+        ));
+      it("array", () => {
+        const arr: any = [1, 2];
+        arr.constructor = Map;
+        assertStringify(arr, `[1,2]`);
+      });
+    });
+
     it("Symbol.iterator inline", () => {
       const obj = {
         x: 1,
@@ -1833,9 +1850,13 @@ function assertIsDeepSubset(
   if (seen.has(subset)) return;
   seen.add(subset);
 
-  const aConstructor = subset.constructor?.name || "Null Prototype";
+  // Classified by prototype so an own `constructor` property on either
+  // side cannot change the comparison.
+  const aConstructor =
+    Object.getPrototypeOf(subset)?.constructor?.name || "Null Prototype";
   const bConstructor =
-    (superset as object).constructor?.name || "Null Prototype";
+    Object.getPrototypeOf(superset as object)?.constructor?.name ||
+    "Null Prototype";
   assert.equal(
     aConstructor,
     bConstructor,

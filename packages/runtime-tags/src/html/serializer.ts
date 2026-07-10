@@ -831,7 +831,9 @@ function writeObject(
 }
 
 function writeUnknownObject(state: State, val: object, ref: Reference) {
-  switch (val.constructor) {
+  // The constructor is read from the prototype so an own `constructor`
+  // property (e.g. parsed JSON data) cannot change how a value is written.
+  switch (Object.getPrototypeOf(val)?.constructor) {
     case undefined:
       return writeNullObject(state, val, ref);
     case Object:
