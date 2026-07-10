@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { assertNoArgs, type Tag } from "@marko/compiler/babel-utils";
 
+import { assertNoTagVarMutation } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
 import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
@@ -54,6 +55,8 @@ export default {
       dropNodes(getAllTagReferenceNodes(tag.node));
       return;
     }
+
+    assertNoTagVarMutation(tag);
 
     const paramsBinding = trackParamsReferences(tagBody, BindingType.param);
     setTagDownstream(tag, varBinding);

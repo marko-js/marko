@@ -11,6 +11,25 @@ export function assertNoSpreadAttrs(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
+export function assertNoTagVarMutation(tag: t.NodePath<t.MarkoTag>) {
+  const tagVar = tag.node.var;
+  if (tagVar?.type === "Identifier") {
+    const constantViolations = tag.scope.getBinding(
+      tagVar.name,
+    )?.constantViolations;
+    if (constantViolations?.length) {
+      for (const assignment of constantViolations) {
+        // Ignore duplicate declaration violations.
+        if (assignment.type !== "MarkoTag") {
+          throw assignment.buildCodeFrameError(
+            `${tagVar.name} is readonly and cannot be mutated.`,
+          );
+        }
+      }
+    }
+  }
+}
+
 export function assertNoBodyContent(tag: t.NodePath<t.MarkoTag>) {
   if (tag.node.body.body.length) {
     const tagName = tag.get("name");

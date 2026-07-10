@@ -1,0 +1,6 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-assign-to-id-var/template.marko:2:21
+      1 | <id/uid/>
+    > 2 | <button onClick() { uid = "changed" }>${uid}</button>
+        |                     ^^^^^^^^^^^^^^^ uid is readonly and cannot be mutated.
+      3 |

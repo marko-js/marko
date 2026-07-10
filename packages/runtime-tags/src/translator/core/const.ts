@@ -5,7 +5,7 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoBodyContent } from "../util/assert";
+import { assertNoBodyContent, assertNoTagVarMutation } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
 import {
@@ -68,21 +68,7 @@ export default {
     const binding = trackVarReferences(tag, BindingType.derived, upstreamAlias);
 
     if (binding) {
-      if (node.var!.type === "Identifier") {
-        const constantViolations = tag.scope.getBinding(
-          node.var.name,
-        )?.constantViolations;
-        if (constantViolations?.length) {
-          for (const assignment of constantViolations) {
-            if (assignment.type !== "MarkoTag") {
-              // Ignore duplicate declaration violations.
-              throw assignment.buildCodeFrameError(
-                `${node.var.name} is readonly and cannot be mutated.`,
-              );
-            }
-          }
-        }
-      }
+      assertNoTagVarMutation(tag);
       if (!valueExtra.nullable) binding.nullable = false;
       if (!upstreamAlias) {
         setBindingDownstream(binding, valueExtra);

@@ -6,7 +6,7 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { assertNoBodyContent } from "../util/assert";
+import { assertNoBodyContent, assertNoTagVarMutation } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
 import {
@@ -62,6 +62,7 @@ export default {
 
     const binding = trackVarReferences(tag, BindingType.derived);
     if (binding) {
+      assertNoTagVarMutation(tag);
       setBindingDownstream(binding, !!valueAttr && evaluate(valueAttr.value));
     }
 
