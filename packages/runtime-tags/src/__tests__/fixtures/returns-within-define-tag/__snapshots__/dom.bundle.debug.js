@@ -35,28 +35,28 @@ const $onClickTwice2__script = _script("__tests__/template.marko_0_onClickTwice"
 const $onClickTwice2 = _var_resume("__tests__/template.marko_0_onClickTwice/var", /*@__PURE__*/ _const("onClickTwice", $onClickTwice2__script));
 function $_return2($scope) {
 	return function() {
-		if ($scope.call) {
-			$Twice_content__call($scope, $scope.call - 1);
+		if ("call" in $scope ? $scope.call : 2) {
+			$Twice_content__call($scope, ("call" in $scope ? $scope.call : 2) - 1);
 			$scope.value();
 		}
 	};
 }
 function $_return($scope) {
 	return function() {
-		if ($scope.call) {
-			$Once_content__call($scope, $scope.call - 1);
+		if ("call" in $scope ? $scope.call : 1) {
+			$Once_content__call($scope, ("call" in $scope ? $scope.call : 1) - 1);
 			$scope.value();
 		}
 	};
 }
 function $onClickOnce($scope) {
 	return function() {
-		$clickOnceCount($scope, $scope.clickOnceCount + 1);
+		$clickOnceCount($scope, ("clickOnceCount" in $scope ? $scope.clickOnceCount : 0) + 1);
 	};
 }
 function $onClickTwice($scope) {
 	return function() {
-		$clickTwiceCount($scope, $scope.clickTwiceCount + 1);
+		$clickTwiceCount($scope, ("clickTwiceCount" in $scope ? $scope.clickTwiceCount : 0) + 1);
 	};
 }
 _resume("__tests__/template.marko_2/_return2", $_return2);

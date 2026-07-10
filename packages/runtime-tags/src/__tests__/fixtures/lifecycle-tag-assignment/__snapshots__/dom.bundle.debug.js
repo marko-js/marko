@@ -3,11 +3,11 @@ const $template = "<div>x=<span> </span>, was=<!></div><button id=increment>Incr
 const $walks = "DbD lb%l b";
 const $x__script = _script("__tests__/template.marko_0_x", ($scope) => _lifecycle($scope, {
 	onMount: function() {
-		this.cur = $scope.x;
+		this.cur = "x" in $scope ? $scope.x : 0;
 	},
 	onUpdate: function() {
 		$prev($scope, this.cur);
-		this.cur = $scope.x;
+		this.cur = "x" in $scope ? $scope.x : 0;
 	}
 }));
 const $x = /*@__PURE__*/ _let("x/3", ($scope) => {
@@ -16,7 +16,7 @@ const $x = /*@__PURE__*/ _let("x/3", ($scope) => {
 });
 const $prev = /*@__PURE__*/ _let("prev/4", ($scope) => _text($scope["#text/1"], $scope.prev));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
-	$x($scope, $scope.x + 1);
+	$x($scope, ("x" in $scope ? $scope.x : 0) + 1);
 }));
 function $setup($scope) {
 	$x($scope, 0);

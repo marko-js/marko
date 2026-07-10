@@ -7,12 +7,12 @@ const $v__OR__rest__script = _script("__tests__/template.marko_0_v_rest", ($scop
 });
 const $v__OR__rest = /*@__PURE__*/ _or(6, ($scope) => {
 	_attrs($scope, "#input/1", {
-		checkedValue: $scope.v,
+		checkedValue: "v" in $scope ? $scope.v : "a",
 		...$scope.rest
 	});
 	_attrs($scope, "#input/2", {
 		...$scope.rest,
-		checkedValue: $scope.v
+		checkedValue: "v" in $scope ? $scope.v : "a"
 	});
 	$v__OR__rest__script($scope);
 });
@@ -31,7 +31,7 @@ const $rest = /*@__PURE__*/ _const("rest", ($scope) => {
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$v($scope, $scope.v + "!");
+		$v($scope, ("v" in $scope ? $scope.v : "a") + "!");
 	});
 	_attr_input_value_script($scope, "#input/3");
 });

@@ -9,7 +9,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_y_z");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		count,
+		count: count === 1 ? void 0 : count,
 		y,
 		z
 	}, "__tests__/template.marko", 0, {

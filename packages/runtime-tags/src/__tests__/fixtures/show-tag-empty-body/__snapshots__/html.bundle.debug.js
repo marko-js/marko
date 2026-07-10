@@ -8,6 +8,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`${_escape(input.note)}${_el_resume($scope0_id, "#text/2", _serialize_guard($scope0_reason, 0))}`);
 	_show_end($scope0_id, "#text/3", reveal);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { reveal }, "__tests__/template.marko", 0, { reveal: "1:6" });
+	writeScope($scope0_id, { reveal: reveal === false ? void 0 : reveal }, "__tests__/template.marko", 0, { reveal: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

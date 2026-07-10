@@ -42,7 +42,7 @@ const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$dynamicTag($scope, _marko_template, () => ({
-		value: $scope.count,
+		value: "count" in $scope ? $scope.count : 0,
 		onIncrement: $onIncrement($scope)
 	}));
 });
@@ -51,7 +51,7 @@ function $setup($scope) {
 }
 function $onIncrement($scope) {
 	return function() {
-		$count($scope, $scope.count + 1);
+		$count($scope, ("count" in $scope ? $scope.count : 0) + 1);
 	};
 }
 _resume("__tests__/template.marko_0/onIncrement", $onIncrement);

@@ -2,9 +2,9 @@
 const $template = "<input type=radio><input type=radio><input type=radio><span> </span>";
 const $walks = " b b bD l";
 const $checkedValue__OR__$checkedValueChange = /*@__PURE__*/ _or(6, ($scope) => {
-	_attr_input_checkedValue($scope, "#input/0", $scope.checkedValue, $scope.$checkedValueChange, "a");
-	_attr_input_checkedValue($scope, "#input/1", $scope.checkedValue, $scope.$checkedValueChange, "b");
-	_attr_input_checkedValue($scope, "#input/2", $scope.checkedValue, $scope.$checkedValueChange, "c");
+	_attr_input_checkedValue($scope, "#input/0", "checkedValue" in $scope ? $scope.checkedValue : "a", $scope.$checkedValueChange, "a");
+	_attr_input_checkedValue($scope, "#input/1", "checkedValue" in $scope ? $scope.checkedValue : "a", $scope.$checkedValueChange, "b");
+	_attr_input_checkedValue($scope, "#input/2", "checkedValue" in $scope ? $scope.checkedValue : "a", $scope.$checkedValueChange, "c");
 });
 const $checkedValue = /*@__PURE__*/ _let("checkedValue/4", ($scope) => {
 	_text($scope["#text/3"], $scope.checkedValue);

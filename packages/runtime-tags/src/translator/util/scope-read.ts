@@ -6,6 +6,7 @@ import {
   type Binding,
   BindingType,
   createRead,
+  getElidableDefault,
   getScopeAccessor,
 } from "./references";
 import type { Section } from "./sections";
@@ -27,12 +28,16 @@ export function getScopeExpression(section: Section, targetSection: Section) {
 export function createScopeReadExpression(
   reference: Binding,
   section = reference.section,
-) {
-  const propName = toPropertyName(getScopeAccessor(reference));
-  const expr = t.memberExpression(
+  fresh?: boolean,
+): t.Expression {
+  const accessor = getScopeAccessor(reference);
+  const propName = toPropertyName(accessor);
+  const scope =
     reference.type === BindingType.local
       ? scopeIdentifier
-      : getScopeExpression(section, reference.section),
+      : getScopeExpression(section, reference.section);
+  const expr = t.memberExpression(
+    scope,
     propName,
     propName.type !== "Identifier",
   );
@@ -42,5 +47,19 @@ export function createScopeReadExpression(
     exprExtra.read = createRead(reference, undefined);
     exprExtra.section = section;
   }
-  return expr;
+
+  // A resumed scope holds no slot for a value that still equals its static
+  // default, so reads outside the binding's own signal fall back to it.
+  const elidableDefault = fresh ? undefined : getElidableDefault(reference);
+  return elidableDefault
+    ? t.conditionalExpression(
+        t.binaryExpression(
+          "in",
+          t.stringLiteral(accessor),
+          t.cloneNode(scope, true),
+        ),
+        expr,
+        t.valueToNode(elidableDefault.value),
+      )
+    : expr;
 }

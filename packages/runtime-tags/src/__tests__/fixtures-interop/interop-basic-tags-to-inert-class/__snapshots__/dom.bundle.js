@@ -1,7 +1,7 @@
 // template.marko
 const $count = /*@__PURE__*/ _let(3, ($scope) => _text($scope.b, $scope.d));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.d + 1);
+	$count($scope, ("d" in $scope ? $scope.d : 0) + 1);
 }));
 
 // v:template.marko.hydrate-6.js

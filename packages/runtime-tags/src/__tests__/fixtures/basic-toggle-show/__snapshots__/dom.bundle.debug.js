@@ -3,7 +3,7 @@ const $template = "<div> <button>Toggle</button></div>";
 const $walks = "D b l";
 const $show = /*@__PURE__*/ _let("show/2", ($scope) => _text($scope["#text/0"], $scope.show ? "Hello!" : ""));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$show($scope, !$scope.show);
+	$show($scope, !("show" in $scope ? $scope.show : true));
 }));
 function $setup($scope) {
 	$show($scope, true);

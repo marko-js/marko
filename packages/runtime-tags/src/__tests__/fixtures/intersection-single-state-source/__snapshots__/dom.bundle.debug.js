@@ -8,12 +8,12 @@ const $doubled__OR__tripled = ($scope) => {
 };
 const $count = /*@__PURE__*/ _let("count/5", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
-	$doubled($scope, $scope.count * 2);
-	$tripled($scope, $scope.count * 3);
+	$doubled($scope, ("count" in $scope ? $scope.count : 1) * 2);
+	$tripled($scope, ("count" in $scope ? $scope.count : 1) * 3);
 	$doubled__OR__tripled($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, ("count" in $scope ? $scope.count : 1) + 1);
 }));
 function $setup($scope) {
 	$count($scope, 1);

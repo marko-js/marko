@@ -3,7 +3,7 @@ const $input_rest__OR__checked__script = _script("a1", ($scope) => _attrs_script
 const $input_rest__OR__checked = /*@__PURE__*/ _or(5, ($scope) => {
 	_attrs($scope, "a", {
 		type: "radio",
-		checked: $scope.e,
+		checked: "e" in $scope ? $scope.e : false,
 		checkedChange: $checkedChange($scope),
 		value: "x",
 		...$scope.d

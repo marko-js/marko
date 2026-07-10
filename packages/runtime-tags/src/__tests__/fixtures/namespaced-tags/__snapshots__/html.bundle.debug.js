@@ -30,8 +30,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		input_value: input.value,
-		Parent,
-		Child,
+		Parent: Parent === "div" ? void 0 : Parent,
+		Child: Child === "a" ? void 0 : Child,
 		"ClosureScopes:input_value": $si__input_value && $input_value__closures
 	}, "__tests__/template.marko", 0, {
 		input_value: ["input.value"],

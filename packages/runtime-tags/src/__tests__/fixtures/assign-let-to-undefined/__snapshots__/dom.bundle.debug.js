@@ -2,7 +2,7 @@
 const $template = "<div> </div><button>clear</button>";
 const $walks = "D l b";
 const $double = ($scope, double) => _text($scope["#text/0"], double == null ? "none" : double);
-const $num = /*@__PURE__*/ _let("num/2", ($scope) => $double($scope, $scope.num && $scope.num * 2));
+const $num = /*@__PURE__*/ _let("num/2", ($scope) => $double($scope, ("num" in $scope ? $scope.num : 1) && ("num" in $scope ? $scope.num : 1) * 2));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
 	$num($scope, undefined);
 }));

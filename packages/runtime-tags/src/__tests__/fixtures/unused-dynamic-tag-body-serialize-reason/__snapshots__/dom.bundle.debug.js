@@ -38,7 +38,7 @@ function $setup($scope) {
 }
 function $onClick($scope) {
 	return function() {
-		console.log($x($scope, $scope.x + 1) - 1);
+		console.log($x($scope, ("x" in $scope ? $scope.x : 1) + 1) - 1);
 	};
 }
 _resume("__tests__/template.marko_0/onClick", $onClick);

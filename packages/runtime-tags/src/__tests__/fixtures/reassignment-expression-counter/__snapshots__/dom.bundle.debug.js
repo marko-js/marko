@@ -8,13 +8,13 @@ const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$count($scope, $scope.count + 2);
+		$count($scope, ("count" in $scope ? $scope.count : 0) + 2);
 	});
 	_on($scope["#button/2"], "click", function() {
-		$count($scope, $scope.count * 3);
+		$count($scope, ("count" in $scope ? $scope.count : 0) * 3);
 	});
 	_on($scope["#button/4"], "click", function() {
-		$count($scope, $scope.count ** 3);
+		$count($scope, ("count" in $scope ? $scope.count : 0) ** 3);
 	});
 });
 function $setup($scope) {

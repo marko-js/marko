@@ -1567,18 +1567,20 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
       const props = writeScopes[scopeId];
       // Only props written by this state are transmitted; scopes that were
       // merely referenced are resolved by id wherever they are used.
-      if (Object.getOwnPropertyNames(props).length) {
+      if (hasSerializedProps(props)) {
         flushes.push([scopeId, state.scopes.get(scopeId)!, props]);
       }
     }
 
+    if (isBlockingState && !state.hasGlobals) {
+      // Globals must be stringified before any ready data so that ready
+      // data may reference them, never the reverse — ready data is only
+      // deserialized in the browser once its module loads. This holds even
+      // when every written scope elided: the channel's effects read them.
+      flushSerializerGlobals(boundary);
+    }
+
     if (flushes.length || pending) {
-      if (isBlockingState && !state.hasGlobals) {
-        // Globals must be stringified before any ready data so that ready
-        // data may reference them, never the reverse — ready data is only
-        // deserialized in the browser once its module loads.
-        flushSerializerGlobals(boundary);
-      }
       serializeState.resumes = concatSequence(
         serializeState.resumes,
         serializer.stringifyScopes(flushes, boundary, serializeState),
@@ -1590,6 +1592,15 @@ function flushSerializer(boundary: Boundary, serializeState: SerializeState) {
       state.walkOnNextFlush = true;
     }
   }
+}
+
+// Undefined props never reach the wire, so a scope holding nothing else is
+// elided from the fill entirely.
+function hasSerializedProps(props: PartialScope) {
+  for (const key in props) {
+    if (props[key] !== undefined) return true;
+  }
+  return false;
 }
 
 function flushSerializerGlobals(boundary: Boundary) {

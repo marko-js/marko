@@ -14,7 +14,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_1/_return", $scope1_id);
 		writeScope($scope1_id, {
 			value,
-			call
+			call: call === 1 ? void 0 : call
 		}, "__tests__/template.marko", "1:1", {
 			value: "1:15",
 			call: "2:7"
@@ -41,7 +41,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_2/_return2", $scope2_id);
 		writeScope($scope2_id, {
 			value,
-			call
+			call: call === 2 ? void 0 : call
 		}, "__tests__/template.marko", "15:1", {
 			value: "15:16",
 			call: "16:7"
@@ -59,9 +59,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_onClickTwice");
 	_script($scope0_id, "__tests__/template.marko_0_onClickOnce");
 	writeScope($scope0_id, {
-		clickOnceCount,
+		clickOnceCount: clickOnceCount === 0 ? void 0 : clickOnceCount,
 		onClickOnce,
-		clickTwiceCount,
+		clickTwiceCount: clickTwiceCount === 0 ? void 0 : clickTwiceCount,
 		onClickTwice,
 		"#childScope/0": _existing_scope($childScope),
 		"#childScope/4": _existing_scope($childScope2)

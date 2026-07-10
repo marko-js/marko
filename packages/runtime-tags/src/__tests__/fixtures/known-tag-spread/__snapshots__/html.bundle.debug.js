@@ -46,7 +46,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		extras,
-		n,
+		n: n === 1 ? void 0 : n,
 		"#childScope/2": _existing_scope($childScope),
 		"#childScope/3": _existing_scope($childScope2),
 		"#childScope/4": _serialize_if($scope0_reason, 0) && _existing_scope($childScope3)

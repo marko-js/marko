@@ -29,7 +29,7 @@ const $template = /*@__PURE__*/ ((_w0, _w1, _w2) => `<button>inc <!></button>${_
 const $walks = /*@__PURE__*/ ((_w0, _w1, _w2) => ` Db%l/${_w0}&/${_w1}&/${_w2}&`)($walks$2, $walks$2, $walks$1);
 const $extras__OR__n = /*@__PURE__*/ _or(10, ($scope) => {
 	const $childa_input_spread = {
-		a: $scope.n,
+		a: "n" in $scope ? $scope.n : 1,
 		...$scope.extras
 	};
 	$input_a$1($scope["#childScope/2"], $childa_input_spread.a);
@@ -49,7 +49,7 @@ const $n = /*@__PURE__*/ _let("n/9", ($scope) => {
 	$extras__OR__n($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
+	$n($scope, ("n" in $scope ? $scope.n : 1) + 1);
 }));
 function $setup($scope) {
 	$extras($scope, {

@@ -1,8 +1,8 @@
 // template.marko
 const $n__OR__log = /*@__PURE__*/ _or(6, _script("a0", ($scope) => _on($scope.b, "click", (() => {
-	const captured = $scope.e;
+	const captured = "e" in $scope ? $scope.e : 0;
 	return () => {
-		$log($scope, `${$scope.f}[${captured}:${$scope.e}]`);
+		$log($scope, `${"f" in $scope ? $scope.f : ""}[${captured}:${"e" in $scope ? $scope.e : 0}]`);
 	};
 })())));
 const $n = /*@__PURE__*/ _let(4, ($scope) => {
@@ -14,5 +14,5 @@ const $log = /*@__PURE__*/ _let(5, ($scope) => {
 	$n__OR__log($scope);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
-	$n($scope, $scope.e + 1);
+	$n($scope, ("e" in $scope ? $scope.e : 0) + 1);
 }));

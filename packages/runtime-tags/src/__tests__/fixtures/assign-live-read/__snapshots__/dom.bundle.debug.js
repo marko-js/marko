@@ -3,15 +3,15 @@ const $template = "<button> </button><button></button>";
 const $walks = " D l b";
 const $resetCount2__script = _script("__tests__/template.marko_0_resetCount", ($scope) => _on($scope["#button/2"], "click", $scope.resetCount));
 const $resetCount2 = /*@__PURE__*/ _const("resetCount", $resetCount2__script);
-const $count__script = _script("__tests__/template.marko_0_count", ($scope) => $scope.count);
+const $count__script = _script("__tests__/template.marko_0_count", ($scope) => "count" in $scope ? $scope.count : 0);
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$resetCount2($scope, $resetCount($scope));
 	$count__script($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
-	$count($scope, $scope.count + 1);
+	$count($scope, ("count" in $scope ? $scope.count : 0) + 1);
+	$count($scope, ("count" in $scope ? $scope.count : 0) + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);
@@ -19,7 +19,7 @@ function $setup($scope) {
 }
 function $resetCount($scope) {
 	return function() {
-		if ($scope.count > 0) {
+		if (("count" in $scope ? $scope.count : 0) > 0) {
 			$count($scope, 0);
 		}
 	};

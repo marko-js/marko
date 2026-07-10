@@ -2,7 +2,7 @@
 const $template = "<!><!><div class=log> </div>";
 const $walks = "b%bD l";
 const $for_content__label__script = _script("__tests__/template.marko_1_label", ($scope) => _on($scope["#button/0"], "click", function() {
-	$log($scope._, `${$scope._.log}[${$scope.label}]`);
+	$log($scope._, `${"log" in $scope._ ? $scope._.log : ""}[${$scope.label}]`);
 }));
 const $for_content__label = /*@__PURE__*/ _const("label", $for_content__label__script);
 const $for_content__$params = ($scope, $params2) => $for_content__label($scope, $params2[0]);

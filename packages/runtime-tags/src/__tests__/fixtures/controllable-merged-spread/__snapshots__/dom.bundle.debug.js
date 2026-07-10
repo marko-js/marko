@@ -5,7 +5,7 @@ const $v__OR__rest__script = _script("__tests__/template.marko_0_v_rest", ($scop
 const $v__OR__rest = /*@__PURE__*/ _or(5, ($scope) => {
 	_attrs($scope, "#input/1", {
 		type: "radio",
-		checkedValue: $scope.v,
+		checkedValue: "v" in $scope ? $scope.v : "a",
 		...$scope.rest
 	});
 	$v__OR__rest__script($scope);
@@ -16,7 +16,7 @@ const $v = /*@__PURE__*/ _let("v/3", ($scope) => {
 });
 const $rest = /*@__PURE__*/ _const("rest", $v__OR__rest);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$v($scope, $scope.v === "a" ? "z" : "a");
+	$v($scope, ("v" in $scope ? $scope.v : "a") === "a" ? "z" : "a");
 }));
 function $setup($scope) {
 	$v($scope, "a");

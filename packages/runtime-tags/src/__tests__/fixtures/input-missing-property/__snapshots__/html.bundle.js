@@ -30,7 +30,7 @@ var template_default = _template("a", (input) => {
 	Child.content({ count });
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		d: count,
+		d: void 0,
 		c: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

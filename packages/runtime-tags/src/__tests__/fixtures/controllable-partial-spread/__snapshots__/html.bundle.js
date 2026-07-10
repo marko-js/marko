@@ -20,7 +20,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a2");
 	_script($scope0_id, "a3");
 	writeScope($scope0_id, {
-		e: v,
+		e: v === "a" ? void 0 : v,
 		f: rest
 	});
 	_resume_branch($scope0_id);

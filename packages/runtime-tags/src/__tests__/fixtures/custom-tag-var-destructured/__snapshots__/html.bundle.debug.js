@@ -13,7 +13,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 		}, "__tests__/tags/child.marko_0/_return2", $scope0_id)
 	};
 	_html(`<span>child:<!>${_escape(count)}${_el_resume($scope0_id, "#text/0")}</span>`);
-	writeScope($scope0_id, { count }, "__tests__/tags/child.marko", 0, { count: "1:6" });
+	writeScope($scope0_id, { count: count === 1 ? void 0 : count }, "__tests__/tags/child.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 	return $return;
 });

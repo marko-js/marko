@@ -1,8 +1,8 @@
 // template.marko
 const $x__OR__$valueChange = /*@__PURE__*/ _or(7, ($scope) => {
-	_attr_input_value($scope, "c", $scope.f, $scope.g);
-	_attr_input_value($scope, "d", $scope.f, $scope.g);
-	_attr_input_value($scope, "e", $scope.f, $scope.g);
+	_attr_input_value($scope, "c", "f" in $scope ? $scope.f : "start", $scope.g);
+	_attr_input_value($scope, "d", "f" in $scope ? $scope.f : "start", $scope.g);
+	_attr_input_value($scope, "e", "f" in $scope ? $scope.f : "start", $scope.g);
 });
 const $x = /*@__PURE__*/ _let(5, ($scope) => {
 	_text($scope.b, $scope.f);
@@ -10,7 +10,7 @@ const $x = /*@__PURE__*/ _let(5, ($scope) => {
 });
 const $setup__script = _script("a1", ($scope) => {
 	_on($scope.a, "click", function() {
-		$x($scope, $scope.f + "!");
+		$x($scope, ("f" in $scope ? $scope.f : "start") + "!");
 	});
 	_attr_input_value_script($scope, "c");
 	_attr_input_value_script($scope, "d");

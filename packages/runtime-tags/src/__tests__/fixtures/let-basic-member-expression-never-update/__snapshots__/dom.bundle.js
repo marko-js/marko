@@ -1,7 +1,7 @@
 // template.marko
 const $user = /*@__PURE__*/ _let(3, ($scope) => $user_id($scope, $scope.d?.id));
-const $index = /*@__PURE__*/ _let(2, ($scope) => $user($scope, $scope.c !== -1 && { id: $scope.c }));
+const $index = /*@__PURE__*/ _let(2, ($scope) => $user($scope, ("c" in $scope ? $scope.c : -1) !== -1 && { id: "c" in $scope ? $scope.c : -1 }));
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
-	$index($scope, $scope.c + 1);
+	$index($scope, ("c" in $scope ? $scope.c : -1) + 1);
 }));
 const $user_id = /*@__PURE__*/ _const(4, ($scope) => _text($scope.a, $scope.e));

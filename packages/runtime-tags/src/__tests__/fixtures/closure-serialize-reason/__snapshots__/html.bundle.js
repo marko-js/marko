@@ -10,7 +10,7 @@ var template_default = _template("a", (input) => {
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
 		f: input.message,
-		g: x,
+		g: void 0,
 		h: getMessage
 	});
 	_resume_branch($scope0_id);

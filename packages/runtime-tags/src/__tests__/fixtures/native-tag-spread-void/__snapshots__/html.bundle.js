@@ -21,7 +21,7 @@ var template_default = _template("a", (input) => {
 	});
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
-		c: cls,
+		c: void 0,
 		b: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

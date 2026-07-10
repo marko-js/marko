@@ -49,7 +49,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, $scope0_id)
 	});
 	writeScope($scope0_id, {
-		x,
+		x: x === 1 ? void 0 : x,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { x: "7:5" });
 	_resume_branch($scope0_id);

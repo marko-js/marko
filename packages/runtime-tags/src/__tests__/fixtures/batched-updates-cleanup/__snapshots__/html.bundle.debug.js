@@ -15,7 +15,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	}, $scope0_id, "#text/1", 1, 1, 1, 0, 1);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		show,
+		show: show === true ? void 0 : show,
 		message
 	}, "__tests__/template.marko", 0, {
 		show: "1:6",

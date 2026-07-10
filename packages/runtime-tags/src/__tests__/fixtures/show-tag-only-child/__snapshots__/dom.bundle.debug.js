@@ -4,11 +4,11 @@ const $walks = " b b b";
 const $show = /*@__PURE__*/ _show("#div/1");
 const $show2 = /*@__PURE__*/ _show("#div/2");
 const $open = /*@__PURE__*/ _let("open/3", ($scope) => {
-	$show($scope, $scope.open);
-	$show2($scope, !$scope.open);
+	$show($scope, "open" in $scope ? $scope.open : true);
+	$show2($scope, !("open" in $scope ? $scope.open : true));
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$open($scope, !$scope.open);
+	$open($scope, !("open" in $scope ? $scope.open : true));
 }));
 function $setup($scope) {
 	$open($scope, true);

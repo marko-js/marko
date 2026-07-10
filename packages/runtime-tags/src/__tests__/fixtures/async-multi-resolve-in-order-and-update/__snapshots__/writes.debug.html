@@ -1,9 +1,6 @@
 <button>increment</button><!--M_*1 #button/0-->
 <p>1 * <!>2<!--M_*1 #text/1--> = <script>
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ => [1, {
-        n: 2
-      }]]
+      WALKER_RUNTIME("M")("_")
     </script>
 
     <!-- FLUSH -->
@@ -18,8 +15,8 @@
 <p>5 * <!>2<!--M_*1 #text/9--> =
     <!--M_[-->10<!--M_*6 #text/0--><!--M_]1 #text/10 6--></p>
 <script>
-  M._.r.push(
+  M._.r = [
     "packages/runtime-tags/src/__tests__/fixtures/async-multi-resolve-in-order-and-update/template.marko_0 1"
-    );
+  ];
   M._.w()
 </script>

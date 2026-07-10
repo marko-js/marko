@@ -4,5 +4,5 @@ const $disabled = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.c, $scope.d ? "enable" : "disable");
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.b, "click", function() {
-	$disabled($scope, !$scope.d);
+	$disabled($scope, !("d" in $scope ? $scope.d : true));
 }));

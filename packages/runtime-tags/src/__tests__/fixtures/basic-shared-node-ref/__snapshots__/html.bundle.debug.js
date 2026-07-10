@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<button id=toggle>Toggle</button>${_el_resume($scope0_id, "#button/1")}<button id=reverse>Reverse</button>${_el_resume($scope0_id, "#button/2")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		open,
+		open: open === true ? void 0 : open,
 		list
 	}, "__tests__/template.marko", 0, {
 		open: "1:6",

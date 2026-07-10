@@ -121,6 +121,7 @@ export interface Binding {
   pruned: boolean | undefined;
   exposed: boolean;
   forcePersist: boolean;
+  staticDefault: { value: string | number | boolean | null } | undefined;
 }
 
 export interface InputBinding extends Binding {
@@ -236,6 +237,7 @@ export function createBinding(
     pruned: undefined,
     exposed: false,
     forcePersist: false,
+    staticDefault: undefined,
   };
 
   if (property) {
@@ -1705,6 +1707,14 @@ function addReadToExpression(
   }
 }
 
+// A `<let>` default the client can rebuild, so equal values skip serialization.
+// Excluded when reads (getters, cross-section closures) bypass the fallback.
+export function getElidableDefault(binding: Binding) {
+  return binding.closureSections || binding.hoists || binding.getters.size
+    ? undefined
+    : binding.staticDefault;
+}
+
 export function getCanonicalBinding(binding: Binding) {
   const alias = binding.upstreamAlias;
   if (
@@ -1933,7 +1943,11 @@ export function getReadReplacement(
             getScopeAccessorLiteral(readBinding),
           );
         } else {
-          replacement = createScopeReadExpression(readBinding, extra.section);
+          replacement = createScopeReadExpression(
+            readBinding,
+            extra.section,
+            signal?.referencedBindings === readBinding,
+          );
         }
       } else {
         if (node.type !== "Identifier") {
@@ -1971,7 +1985,11 @@ export function getReadReplacement(
         ) {
           replacement = getSignalValueIdentifier(signal);
         } else {
-          replacement = createScopeReadExpression(readBinding, extra.section);
+          replacement = createScopeReadExpression(
+            readBinding,
+            extra.section,
+            signal?.referencedBindings === readBinding,
+          );
         }
       } else {
         replacement = t.identifier(readBinding.name);

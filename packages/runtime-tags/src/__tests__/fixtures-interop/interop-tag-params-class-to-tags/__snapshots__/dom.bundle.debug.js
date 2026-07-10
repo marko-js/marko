@@ -3,13 +3,13 @@ var import_vdom = require_vdom();
 const $template = "<button id=tags> </button><div><!></div>";
 const $walks = " D lD%l";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", 0, 0, 1);
-const $input_content__OR__count = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_content, () => [$scope.count, "hello"]));
+const $input_content__OR__count = /*@__PURE__*/ _or(7, ($scope) => $dynamicTag($scope, $scope.input_content, () => ["count" in $scope ? "count" in $scope ? $scope.count : 0 : 0, "hello"]));
 const $count = /*@__PURE__*/ _let("count/6", ($scope) => {
 	_text($scope["#text/1"], $scope.count);
 	$input_content__OR__count($scope);
 });
 const $setup__script = _script("__tests__/components/tags-layout.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, ("count" in $scope ? $scope.count : 0) + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

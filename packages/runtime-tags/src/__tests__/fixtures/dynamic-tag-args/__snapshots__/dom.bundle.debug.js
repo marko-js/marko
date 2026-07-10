@@ -12,13 +12,13 @@ const tags = [custom_tag_default];
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/2", 0, 0, 1);
 const $x = /*@__PURE__*/ _let("x/6", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
-	$dynamicTag($scope, tags[0], () => [$scope.x, "foo"]);
+	$dynamicTag($scope, tags[0], () => ["x" in $scope ? $scope.x : 1, "foo"]);
 });
 const $dynamicTag2 = /*@__PURE__*/ _dynamic_tag("#text/3", 0, 0, 1);
 const $dynamicTag3 = /*@__PURE__*/ _dynamic_tag("#text/4", 0, 0, 1);
 const $dynamicTag4 = /*@__PURE__*/ _dynamic_tag("#text/5", 0, 0, 1);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
+	$x($scope, ("x" in $scope ? $scope.x : 1) + 1);
 }));
 function $setup($scope) {
 	$x($scope, 1);

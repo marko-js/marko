@@ -9,11 +9,11 @@ const $y__OR__z = ($scope) => {
 };
 const $x = /*@__PURE__*/ _let("x/5", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
-	$y($scope, $scope.x + 1);
-	$z($scope, $scope.x + 2);
+	$y($scope, ("x" in $scope ? $scope.x : 1) + 1);
+	$z($scope, ("x" in $scope ? $scope.x : 1) + 2);
 	$y__OR__z($scope);
 });
-const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", () => $x($scope, $scope.x + 1) - 1));
+const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", () => $x($scope, ("x" in $scope ? $scope.x : 1) + 1) - 1));
 function $setup($scope) {
 	$x($scope, 1);
 	$setup__script($scope);

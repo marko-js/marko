@@ -12,7 +12,7 @@ const $foo__OR__$fooChange = $foo__OR__$fooChange__script;
 const $bar = /*@__PURE__*/ _let("bar/3", ($scope) => {
 	_text($scope["#text/2"], $scope.bar);
 	$pattern2($scope, {
-		foo: $scope.bar,
+		foo: "bar" in $scope ? $scope.bar : 0,
 		fooChange: $foo($scope)
 	});
 	$foo__OR__$fooChange($scope);

@@ -4,10 +4,10 @@ const $x = /*@__PURE__*/ _let(1, _script("a1", ($scope) => _lifecycle($scope, {
 		this.onUpdate();
 	},
 	onUpdate: function() {
-		document.getElementById("ref").textContent = `x=${$scope.b}, was=${this.cur}`;
-		this.cur = $scope.b;
+		document.getElementById("ref").textContent = `x=${"b" in $scope ? $scope.b : 0}, was=${this.cur}`;
+		this.cur = "b" in $scope ? $scope.b : 0;
 	}
 })));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$x($scope, $scope.b + 1);
+	$x($scope, ("b" in $scope ? $scope.b : 0) + 1);
 }));

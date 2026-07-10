@@ -5,7 +5,7 @@ const $count = /*@__PURE__*/ _let("count/3");
 const $log = /*@__PURE__*/ _let("log/4", ($scope) => _text($scope["#text/2"], $scope.log));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$count($scope, $scope.count + 1);
+		$count($scope, ("count" in $scope ? $scope.count : 0) + 1);
 	});
 	_attrs_script($scope, "#button/1");
 });
@@ -17,7 +17,7 @@ function $setup($scope) {
 }
 function $onClick($scope) {
 	return function() {
-		$log($scope, `${$scope.log}[${$scope.count}]`);
+		$log($scope, `${"log" in $scope ? $scope.log : ""}[${"count" in $scope ? $scope.count : 0}]`);
 	};
 }
 _resume("__tests__/template.marko_0/onClick", $onClick);

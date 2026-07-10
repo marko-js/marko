@@ -13,10 +13,10 @@ const $user = /*@__PURE__*/ _let("user/4", ($scope) => {
 	$user_name($scope, $scope.user?.name);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/2"], "click", function() {
-	$index($scope, $scope.index === names.length - 1 ? -1 : $scope.index + 1);
-	$user($scope, $scope.index !== -1 && {
-		id: $scope.index,
-		name: names[$scope.index]
+	$index($scope, ("index" in $scope ? $scope.index : -1) === names.length - 1 ? -1 : ("index" in $scope ? $scope.index : -1) + 1);
+	$user($scope, ("index" in $scope ? $scope.index : -1) !== -1 && {
+		id: "index" in $scope ? $scope.index : -1,
+		name: names["index" in $scope ? $scope.index : -1]
 	});
 }));
 function $setup($scope) {

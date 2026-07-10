@@ -6,7 +6,7 @@ const $clickCount = /*@__PURE__*/ _let(2, ($scope) => {
 });
 function $increment($scope) {
 	return function() {
-		$clickCount($scope, $scope.c + 1);
+		$clickCount($scope, ("c" in $scope ? $scope.c : 0) + 1);
 	};
 }
 _resume("a0", $increment);

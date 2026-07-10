@@ -8,8 +8,8 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0_n_log");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		n,
-		log
+		n: n === 0 ? void 0 : n,
+		log: log === "" ? void 0 : log
 	}, "__tests__/template.marko", 0, {
 		n: "2:6",
 		log: "3:6"

@@ -14,7 +14,7 @@ function $_return2($scope) {
 }
 function $_return($scope) {
 	return function() {
-		$count$1($scope, $scope.b + 1);
+		$count$1($scope, ("b" in $scope ? $scope.b : 1) + 1);
 	};
 }
 _resume("b1", $_return2);

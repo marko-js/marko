@@ -3,15 +3,15 @@ const $template = "<div id=ref></div><button id=increment>Increment</button>";
 const $walks = "b b";
 const $x__script = _script("__tests__/template.marko_0_x", ($scope) => _lifecycle($scope, {
 	onMount: function() {
-		document.getElementById("ref").textContent = "Mount " + $scope.x;
+		document.getElementById("ref").textContent = "Mount " + ("x" in $scope ? $scope.x : 0);
 	},
 	onUpdate: function() {
-		document.getElementById("ref").textContent = "Update " + $scope.x;
+		document.getElementById("ref").textContent = "Update " + ("x" in $scope ? $scope.x : 0);
 	}
 }));
 const $x = /*@__PURE__*/ _let("x/1", $x__script);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$x($scope, $scope.x + 1);
+	$x($scope, ("x" in $scope ? $scope.x : 0) + 1);
 }));
 function $setup($scope) {
 	$x($scope, 0);

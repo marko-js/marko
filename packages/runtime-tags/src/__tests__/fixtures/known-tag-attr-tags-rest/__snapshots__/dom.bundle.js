@@ -28,5 +28,5 @@ const $cond = /*@__PURE__*/ _let(2, ($scope) => {
 	});
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$cond($scope, !$scope.c);
+	$cond($scope, !("c" in $scope ? $scope.c : true));
 }));

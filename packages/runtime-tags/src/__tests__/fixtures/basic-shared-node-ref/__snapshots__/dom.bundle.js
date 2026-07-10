@@ -8,7 +8,7 @@ const $list = /*@__PURE__*/ _let(4, ($scope) => $for($scope, [$scope.e, function
 }]));
 const $setup__script = _script("a0", ($scope) => {
 	_on($scope.b, "click", function() {
-		$open($scope, !$scope.d);
+		$open($scope, !("d" in $scope ? $scope.d : true));
 	});
 	_on($scope.c, "click", function() {
 		$list($scope, [].concat($scope.e).reverse());

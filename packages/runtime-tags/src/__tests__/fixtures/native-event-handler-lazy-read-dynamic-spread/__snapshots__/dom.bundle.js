@@ -13,20 +13,20 @@ const $count = /*@__PURE__*/ _let(8, ($scope) => _text($scope.f, $scope.i));
 const $log = /*@__PURE__*/ _let(9, ($scope) => _text($scope.g, $scope.j));
 const $setup__script = _script("a3", ($scope) => {
 	_on($scope.a, "click", function() {
-		$enabled($scope, !$scope.h);
+		$enabled($scope, !("h" in $scope ? $scope.h : true));
 	});
 	_on($scope.b, "click", function() {
-		$count($scope, $scope.i + 1);
+		$count($scope, ("i" in $scope ? $scope.i : 0) + 1);
 	});
 });
 function $onClick($scope) {
 	return function() {
-		$log($scope, `${$scope.j}b(${$scope.i})`);
+		$log($scope, `${"j" in $scope ? $scope.j : ""}b(${"i" in $scope ? $scope.i : 0})`);
 	};
 }
 function $anonymous($scope) {
 	return () => {
-		$log($scope, `${$scope.j}a(${$scope.i})`);
+		$log($scope, `${"j" in $scope ? $scope.j : ""}a(${"i" in $scope ? $scope.i : 0})`);
 	};
 }
 _resume("a1", $onClick);

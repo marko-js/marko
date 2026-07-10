@@ -27,7 +27,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		tagName,
-		val
+		val: val === 3 ? void 0 : val
 	}, "__tests__/template.marko", 0, {
 		tagName: "4:6",
 		val: "5:6"

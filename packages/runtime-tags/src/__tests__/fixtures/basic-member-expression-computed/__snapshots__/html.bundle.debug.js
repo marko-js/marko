@@ -12,7 +12,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		items,
-		index
+		index: index === 0 ? void 0 : index
 	}, "__tests__/template.marko", 0, {
 		items: "1:5",
 		index: "2:5"

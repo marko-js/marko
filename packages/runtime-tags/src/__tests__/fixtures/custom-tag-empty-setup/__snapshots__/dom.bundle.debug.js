@@ -23,7 +23,7 @@ const $template = /*@__PURE__*/ ((_w0) => `<button>add</button>${_w0}`)($templat
 const $walks = /*@__PURE__*/ ((_w0) => ` b/${_w0}&`)($walks$1);
 const $quantity = /*@__PURE__*/ _let("quantity/2", ($scope) => $input_quantity($scope["#childScope/1"], $scope.quantity));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$quantity($scope, $scope.quantity + 1);
+	$quantity($scope, ("quantity" in $scope ? $scope.quantity : 2) + 1);
 }));
 function $setup($scope) {
 	$input_name($scope["#childScope/1"], "Widget");

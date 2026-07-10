@@ -6,10 +6,10 @@ const $doubled__OR__tripled = ($scope) => {
 };
 const $count = /*@__PURE__*/ _let(5, ($scope) => {
 	_text($scope.b, $scope.f);
-	$doubled($scope, $scope.f * 2);
-	$tripled($scope, $scope.f * 3);
+	$doubled($scope, ("f" in $scope ? $scope.f : 1) * 2);
+	$tripled($scope, ("f" in $scope ? $scope.f : 1) * 3);
 	$doubled__OR__tripled($scope);
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.f + 1);
+	$count($scope, ("f" in $scope ? $scope.f : 1) + 1);
 }));

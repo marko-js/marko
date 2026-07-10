@@ -24,6 +24,6 @@ var template_default = _template("a", (input) => {
 		}, "a0", $scope0_id)
 	});
 	_html(`<div id=tags-api>${_escape(count)}${_el_resume($scope0_id, "b")}</div>`);
-	writeScope($scope0_id, { c: count });
+	writeScope($scope0_id, { c: count === 0 ? void 0 : count });
 	_resume_branch($scope0_id);
 }, 1);

@@ -2,9 +2,9 @@
 const $template = "<button> </button><input><input><input>";
 const $walks = " D l b b b";
 const $x__OR__$valueChange = /*@__PURE__*/ _or(7, ($scope) => {
-	_attr_input_value($scope, "#input/2", $scope.x, $scope.$valueChange);
-	_attr_input_value($scope, "#input/3", $scope.x, $scope.$valueChange);
-	_attr_input_value($scope, "#input/4", $scope.x, $scope.$valueChange);
+	_attr_input_value($scope, "#input/2", "x" in $scope ? $scope.x : "start", $scope.$valueChange);
+	_attr_input_value($scope, "#input/3", "x" in $scope ? $scope.x : "start", $scope.$valueChange);
+	_attr_input_value($scope, "#input/4", "x" in $scope ? $scope.x : "start", $scope.$valueChange);
 });
 const $x = /*@__PURE__*/ _let("x/5", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
@@ -13,7 +13,7 @@ const $x = /*@__PURE__*/ _let("x/5", ($scope) => {
 const $valueChange3 = /*@__PURE__*/ _const("$valueChange", $x__OR__$valueChange);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$x($scope, $scope.x + "!");
+		$x($scope, ("x" in $scope ? $scope.x : "start") + "!");
 	});
 	_attr_input_value_script($scope, "#input/2");
 	_attr_input_value_script($scope, "#input/3");

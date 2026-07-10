@@ -16,7 +16,7 @@ var child_default = _template("__tests__/tags/child.marko", (input) => {
 	}, $scope0_id, "#div/0", 1, 1, 1, "</div>", 1);
 	_script($scope0_id, "__tests__/tags/child.marko_0_id");
 	writeScope($scope0_id, {
-		hide,
+		hide: hide === true ? void 0 : hide,
 		text,
 		text_length: text?.length,
 		id

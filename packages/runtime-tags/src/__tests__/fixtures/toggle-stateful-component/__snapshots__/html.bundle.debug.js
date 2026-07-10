@@ -9,7 +9,7 @@ var counter_default = _template("__tests__/tags/counter.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/counter.marko_0_input_onCount");
 	writeScope($scope0_id, {
 		input_onCount: input.onCount,
-		clickCount
+		clickCount: clickCount === 0 ? void 0 : clickCount
 	}, "__tests__/tags/counter.marko", 0, {
 		input_onCount: ["input.onCount"],
 		clickCount: "1:6"

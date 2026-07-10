@@ -10,9 +10,9 @@ const $Layout_content__content = $Layout_content__dynamicTag;
 const $Layout_content__$params = ($scope, $params2) => $Layout_content__$temp($scope, $params2?.[0]);
 const $Layout_content__$temp = ($scope, $temp) => $Layout_content__content($scope, $temp.content);
 const $if = /*@__PURE__*/ _if("#text/1", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($Layout_content__template), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)($Layout_content__walks), $if_content__setup);
-const $show = /*@__PURE__*/ _let("show/2", ($scope) => $if($scope, $scope.show ? 0 : 1));
+const $show = /*@__PURE__*/ _let("show/2", ($scope) => $if($scope, ("show" in $scope ? $scope.show : false) ? 0 : 1));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$show($scope, !$scope.show);
+	$show($scope, !("show" in $scope ? $scope.show : false));
 }));
 function $setup($scope) {
 	$show($scope, false);

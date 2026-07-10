@@ -6,10 +6,10 @@ const $if_content__setup = $if_content__getMessage;
 const $if = /*@__PURE__*/ _if("#div/0", "<span> </span>", "D l", $if_content__setup);
 const $x = /*@__PURE__*/ _let("x/6", ($scope) => {
 	_text($scope["#text/2"], $scope.x);
-	$if($scope, $scope.x ? 0 : 1);
+	$if($scope, ("x" in $scope ? $scope.x : 0) ? 0 : 1);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$x($scope, $scope.x + 1);
+	$x($scope, ("x" in $scope ? $scope.x : 0) + 1);
 }));
 function $setup($scope) {
 	$x($scope, 0);

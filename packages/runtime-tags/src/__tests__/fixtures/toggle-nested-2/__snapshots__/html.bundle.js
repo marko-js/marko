@@ -3,7 +3,6 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $count__closures = /* @__PURE__ */ new Set();
-	let outer = true;
 	let inner = true;
 	let count = 0;
 	_html(`<div><button id=outer></button>${_el_resume($scope0_id, "a")}`);
@@ -28,7 +27,7 @@ var template_default = _template("a", (input) => {
 	_html("</div>");
 	_script($scope0_id, "a2");
 	writeScope($scope0_id, {
-		c: outer,
+		c: void 0,
 		d: inner,
 		e: count,
 		Be: $count__closures

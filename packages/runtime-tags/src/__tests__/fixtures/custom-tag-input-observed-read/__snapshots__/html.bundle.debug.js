@@ -19,7 +19,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	} });
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		count,
+		count: count === 0 ? void 0 : count,
 		"#childScope/1": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { count: "3:6" });
 	_resume_branch($scope0_id);

@@ -21,11 +21,11 @@ const $if_content__setup = ($scope) => {
 	/* @__PURE__ */ $setup$1($scope["#childScope/0"]);
 };
 const $if = /*@__PURE__*/ _if("#text/2", /*@__PURE__*/ ((_w0) => `<!>${_w0}<!>`)($template$1), /*@__PURE__*/ ((_w0) => `b/${_w0}&b`)("b%c"), $if_content__setup);
-const $outer = /*@__PURE__*/ _let("outer/3", ($scope) => $if($scope, $scope.outer ? 0 : 1));
+const $outer = /*@__PURE__*/ _let("outer/3", ($scope) => $if($scope, ("outer" in $scope ? $scope.outer : true) ? 0 : 1));
 const $show = /*@__PURE__*/ _let("show/4", $if_content__show);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$outer($scope, !$scope.outer);
+		$outer($scope, !("outer" in $scope ? $scope.outer : true));
 	});
 	_on($scope["#button/1"], "click", function() {
 		$show($scope, !$scope.show);

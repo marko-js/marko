@@ -47,7 +47,7 @@ const $cond = /*@__PURE__*/ _let("cond/2", ($scope) => {
 	});
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$cond($scope, !$scope.cond);
+	$cond($scope, !("cond" in $scope ? $scope.cond : true));
 }));
 function $setup($scope) {
 	$title($scope["#childScope/1"], "t");

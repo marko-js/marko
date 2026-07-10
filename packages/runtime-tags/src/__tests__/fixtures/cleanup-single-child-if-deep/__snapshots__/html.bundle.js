@@ -17,7 +17,6 @@ var template_default = _template("a", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
 	const $showInner__closures = /* @__PURE__ */ new Set();
-	let showOuter = true;
 	let showMiddle = true;
 	let showInner = true;
 	const write = _resume(function(msg) {
@@ -63,7 +62,7 @@ var template_default = _template("a", (input) => {
 	}, $scope0_id, "e", 1, 1, 1, 0, 1);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		f: showOuter,
+		f: void 0,
 		g: showMiddle,
 		h: showInner,
 		i: write,

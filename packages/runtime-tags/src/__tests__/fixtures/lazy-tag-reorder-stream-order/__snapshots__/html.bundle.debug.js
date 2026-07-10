@@ -9,7 +9,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	writeScope($scope0_id, {
 		input_label: input.label,
 		shared,
-		count
+		count: count === 0 ? void 0 : count
 	}, "__tests__/child.marko", 0, {
 		input_label: ["input.label"],
 		shared: "6:6",

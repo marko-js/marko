@@ -6,7 +6,7 @@ const $text = ($scope, text) => _text($scope.b, text);
 const $clickCount = /*@__PURE__*/ _let(1, ($scope) => $text($scope.a, $scope.b));
 function $onClick($scope) {
 	return function() {
-		$clickCount($scope, $scope.b + 1);
+		$clickCount($scope, ("b" in $scope ? $scope.b : 0) + 1);
 	};
 }
 _resume("a0", $onClick);

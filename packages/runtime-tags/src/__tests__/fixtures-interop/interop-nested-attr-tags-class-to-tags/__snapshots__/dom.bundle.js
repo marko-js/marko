@@ -5,7 +5,7 @@ const $template = "<button id=tags> </button><div><!></div>";
 const $walks = " D lD%l";
 const $count = /*@__PURE__*/ _let(7, ($scope) => _text($scope.b, $scope.h));
 const $setup__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$count($scope, $scope.h + 1);
+	$count($scope, ("h" in $scope ? $scope.h : 0) + 1);
 }));
 function $setup($scope) {
 	$count($scope, 0);

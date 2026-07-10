@@ -6,7 +6,7 @@ const $disabled = /*@__PURE__*/ _let("disabled/3", ($scope) => {
 	_text($scope["#text/2"], $scope.disabled ? "enable" : "disable");
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$disabled($scope, !$scope.disabled);
+	$disabled($scope, !("disabled" in $scope ? $scope.disabled : true));
 }));
 function $setup($scope) {
 	$disabled($scope, true);

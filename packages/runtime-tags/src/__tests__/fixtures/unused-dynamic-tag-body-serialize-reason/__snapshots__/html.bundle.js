@@ -42,7 +42,7 @@ var template_default = _template("a", (input) => {
 		}, $scope0_id)
 	});
 	writeScope($scope0_id, {
-		b: x,
+		b: x === 1 ? void 0 : x,
 		a: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

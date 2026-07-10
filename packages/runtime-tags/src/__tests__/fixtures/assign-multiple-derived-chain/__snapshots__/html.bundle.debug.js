@@ -17,9 +17,9 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
 		items,
-		min,
-		max,
-		index,
+		min: min === 0 ? void 0 : min,
+		max: max === 4 ? void 0 : max,
+		index: index === 0 ? void 0 : index,
 		filtered
 	}, "__tests__/template.marko", 0, {
 		items: "1:6",

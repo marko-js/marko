@@ -18,7 +18,7 @@ var child2_default = /*@__PURE__*/ _template("__tests__/tags/child2.marko", $tem
 const $template = "<!><!><button></button>";
 const $walks = "b%b b";
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag("#text/0");
-const $tagName__OR__val = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $scope.tagName, () => ({ value: $scope.val })));
+const $tagName__OR__val = /*@__PURE__*/ _or(4, ($scope) => $dynamicTag($scope, $scope.tagName, () => ({ value: "val" in $scope ? "val" in $scope ? $scope.val : 3 : 3 })));
 const $tagName = /*@__PURE__*/ _let("tagName/2", $tagName__OR__val);
 const $val = /*@__PURE__*/ _let("val/3", $tagName__OR__val);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {

@@ -15,7 +15,7 @@ var consumer_default = _template("__tests__/tags/consumer.marko", (input) => {
 	_script($scope0_id, "__tests__/tags/consumer.marko_0");
 	writeScope($scope0_id, {
 		input_content: input.content,
-		show
+		show: show === false ? void 0 : show
 	}, "__tests__/tags/consumer.marko", 0, {
 		input_content: ["input.content"],
 		show: "1:6"

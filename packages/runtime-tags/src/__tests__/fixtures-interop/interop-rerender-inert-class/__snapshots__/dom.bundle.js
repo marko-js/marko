@@ -19,9 +19,9 @@ _marko_template.Component = (0, import_defineComponent.default)(_marko_component
 // template.marko
 _resume("b", _marko_template);
 const $dynamicTag = /*@__PURE__*/ _dynamic_tag(1);
-const $msg = /*@__PURE__*/ _let(2, ($scope) => $dynamicTag($scope, _marko_template, () => ({ value: $scope.c })));
+const $msg = /*@__PURE__*/ _let(2, ($scope) => $dynamicTag($scope, _marko_template, () => ({ value: "c" in $scope ? $scope.c : "hi" })));
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$msg($scope, $scope.c + "!");
+	$msg($scope, ("c" in $scope ? $scope.c : "hi") + "!");
 }));
 
 // v:template.marko.hydrate-6.js

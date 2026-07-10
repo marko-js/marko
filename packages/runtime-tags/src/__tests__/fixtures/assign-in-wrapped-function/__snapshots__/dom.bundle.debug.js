@@ -5,7 +5,7 @@ function identity(fn) {
 	return fn;
 }
 const $count__script = _script("__tests__/template.marko_0_count", ($scope) => _on($scope["#button/0"], "click", identity(() => {
-	$count($scope, $scope.count + 1);
+	$count($scope, ("count" in $scope ? $scope.count : 0) + 1);
 })));
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
 	_text($scope["#text/1"], $scope.count);

@@ -7,7 +7,7 @@ const $attrs2 = /*@__PURE__*/ _let(4, ($scope) => {
 const $value = /*@__PURE__*/ _let(3, ($scope) => {
 	_text($scope.b, $scope.d);
 	$attrs2($scope, {
-		value: $scope.d,
+		value: "d" in $scope ? $scope.d : "init",
 		valueChange: $attrs($scope)
 	});
 });

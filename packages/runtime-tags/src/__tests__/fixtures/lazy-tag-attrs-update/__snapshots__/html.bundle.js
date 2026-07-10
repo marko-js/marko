@@ -19,7 +19,7 @@ var template_default = _template("b", (input) => {
 	$Child_withLoadAssets({ value });
 	_script($scope0_id, "b0");
 	writeScope($scope0_id, {
-		d: value,
+		d: void 0,
 		c: _existing_scope($childScope)
 	});
 	_resume_branch($scope0_id);

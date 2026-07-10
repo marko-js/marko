@@ -3,14 +3,14 @@ const $template = "<button>inc</button><div><!> | <!></div>";
 const $walks = " bD%c%l";
 const $shared = /*@__PURE__*/ _const("shared", ($scope) => _text($scope["#text/1"], $scope.shared));
 const $shared__OR__once = ($scope) => {
-	_text($scope["#text/2"], $scope.shared + $scope.count * 3);
+	_text($scope["#text/2"], $scope.shared + ("count" in $scope ? $scope.count : 1) * 3);
 };
 const $count = /*@__PURE__*/ _let("count/3", ($scope) => {
-	$shared($scope, $scope.count * 2);
+	$shared($scope, ("count" in $scope ? $scope.count : 1) * 2);
 	$shared__OR__once($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, ("count" in $scope ? $scope.count : 1) + 1);
 }));
 function $setup($scope) {
 	$count($scope, 1);

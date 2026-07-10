@@ -3,18 +3,18 @@ const $template = "<button>inc</button><div></div><div></div>";
 const $walks = " b b b";
 const $d__OR__more__OR__obj__OR__k = /*@__PURE__*/ _or(9, ($scope) => _attr_class($scope["#div/1"], [
 	"a",
-	["b", $scope.d],
+	["b", "d" in $scope ? $scope.d : "dyn"],
 	...$scope.more,
-	...["n1", $scope.d],
+	...["n1", "d" in $scope ? $scope.d : "dyn"],
 	{
-		[$scope.k]: $scope.d,
+		[$scope.k]: "d" in $scope ? $scope.d : "dyn",
 		...$scope.obj,
-		"q": $scope.d
+		"q": "d" in $scope ? $scope.d : "dyn"
 	}
 ]), 3);
 const $d__OR__moreStyles = /*@__PURE__*/ _or(6, ($scope) => _attr_style($scope["#div/2"], [
 	"color:red",
-	["margin:0", $scope.d && "padding:0"],
+	["margin:0", ("d" in $scope ? $scope.d : "dyn") && "padding:0"],
 	...$scope.moreStyles
 ]));
 const $d = /*@__PURE__*/ _let("d/3", ($scope) => {
@@ -26,7 +26,7 @@ const $moreStyles = /*@__PURE__*/ _const("moreStyles", $d__OR__moreStyles);
 const $obj = /*@__PURE__*/ _const("obj", $d__OR__more__OR__obj__OR__k);
 const $k = /*@__PURE__*/ _const("k", $d__OR__more__OR__obj__OR__k);
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$d($scope, $scope.d + "2");
+	$d($scope, ("d" in $scope ? $scope.d : "dyn") + "2");
 }));
 function $setup($scope) {
 	$d($scope, "dyn");

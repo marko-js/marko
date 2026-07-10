@@ -382,7 +382,8 @@
     "vmax",
     "cqmin",
     "cqmax",
-    "whib"
+    "whib",
+    "elidable"
   ],
   "ignoreRegExpList": [],
   "files": ["*"],

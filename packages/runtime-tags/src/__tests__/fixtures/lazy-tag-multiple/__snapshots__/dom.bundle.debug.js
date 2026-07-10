@@ -28,7 +28,7 @@ const $value = /*@__PURE__*/ _let("value/5", ($scope) => {
 	$load_ChildB_tag_input_value($scope["#childScope/4"], $scope.value);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$value($scope, $scope.value + 1);
+	$value($scope, ("value" in $scope ? $scope.value : 0) + 1);
 }));
 function $setup($scope) {
 	$load_ChildA_setup($scope);

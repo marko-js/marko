@@ -1,8 +1,8 @@
 // template.marko
 const $checkedValue__OR__$checkedValueChange = /*@__PURE__*/ _or(6, ($scope) => {
-	_attr_input_checkedValue($scope, "a", $scope.e, $scope.f, "a");
-	_attr_input_checkedValue($scope, "b", $scope.e, $scope.f, "b");
-	_attr_input_checkedValue($scope, "c", $scope.e, $scope.f, "c");
+	_attr_input_checkedValue($scope, "a", "e" in $scope ? $scope.e : "a", $scope.f, "a");
+	_attr_input_checkedValue($scope, "b", "e" in $scope ? $scope.e : "a", $scope.f, "b");
+	_attr_input_checkedValue($scope, "c", "e" in $scope ? $scope.e : "a", $scope.f, "c");
 });
 const $checkedValue = /*@__PURE__*/ _let(4, ($scope) => {
 	_text($scope.d, $scope.e);

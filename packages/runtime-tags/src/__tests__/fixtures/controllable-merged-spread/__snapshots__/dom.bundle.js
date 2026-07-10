@@ -3,7 +3,7 @@ const $v__OR__rest__script = _script("a0", ($scope) => _attrs_script($scope, "b"
 const $v__OR__rest = /*@__PURE__*/ _or(5, ($scope) => {
 	_attrs($scope, "b", {
 		type: "radio",
-		checkedValue: $scope.d,
+		checkedValue: "d" in $scope ? $scope.d : "a",
 		...$scope.e
 	});
 	$v__OR__rest__script($scope);
@@ -13,5 +13,5 @@ const $v = /*@__PURE__*/ _let(3, ($scope) => {
 	$v__OR__rest($scope);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.a, "click", function() {
-	$v($scope, $scope.d === "a" ? "z" : "a");
+	$v($scope, ("d" in $scope ? $scope.d : "a") === "a" ? "z" : "a");
 }));

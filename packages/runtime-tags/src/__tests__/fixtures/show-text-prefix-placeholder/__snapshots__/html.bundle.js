@@ -17,8 +17,8 @@ var template_default = _template("a", (input) => {
 	_html(`</b><button>inc</button>${_el_resume($scope0_id, "g")}`);
 	_script($scope0_id, "a0");
 	writeScope($scope0_id, {
-		h: count,
-		i: vis
+		h: void 0,
+		i: void 0
 	});
 	_resume_branch($scope0_id);
 }, 1);

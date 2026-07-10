@@ -22,7 +22,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 		}, "__tests__/template.marko_0/onClick", $scope0_id)
 	});
 	writeScope($scope0_id, {
-		clickCount,
+		clickCount: clickCount === 0 ? void 0 : clickCount,
 		"#childScope/0": _existing_scope($childScope)
 	}, "__tests__/template.marko", 0, { clickCount: "1:6" });
 	_resume_branch($scope0_id);

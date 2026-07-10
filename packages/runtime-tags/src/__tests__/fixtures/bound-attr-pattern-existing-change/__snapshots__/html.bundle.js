@@ -18,11 +18,10 @@ var template_default = _template("a", (input) => {
 		b: "B",
 		bChange(v) {}
 	};
-	let n = 1;
-	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
+	_html(`<button>inc <!>${_escape(1)}${_el_resume($scope0_id, "b")}</button>${_el_resume($scope0_id, "a")}`);
 	reveal_default({ value: a });
 	reveal_default({ value: b });
 	_script($scope0_id, "a0");
-	writeScope($scope0_id, { i: n });
+	writeScope($scope0_id, { i: void 0 });
 	_resume_branch($scope0_id);
 }, 1);

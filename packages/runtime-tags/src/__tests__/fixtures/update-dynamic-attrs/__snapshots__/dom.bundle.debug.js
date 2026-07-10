@@ -4,7 +4,7 @@ const $walks = " b b b";
 const $input_value__OR__a__script = _script("__tests__/template.marko_0_input_value_a", ($scope) => _attrs_script($scope, "#div/1"));
 const $input_value__OR__a = /*@__PURE__*/ _or(7, ($scope) => {
 	_attrs_content($scope, "#div/1", {
-		a: $scope.a,
+		a: "a" in $scope ? $scope.a : 0,
 		...$scope.input_value
 	});
 	$input_value__OR__a__script($scope);

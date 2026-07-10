@@ -1,6 +1,6 @@
 // template.marko
 _enable_catch();
-const $catch_content__error_message__OR__message__OR__clicked = /*@__PURE__*/ _or(7, ($scope) => _text($scope.b, $scope.g ? $scope.f : $scope.e), 2);
+const $catch_content__error_message__OR__message__OR__clicked = /*@__PURE__*/ _or(7, ($scope) => _text($scope.b, ("g" in $scope ? $scope.g : false) ? $scope.f : $scope.e), 2);
 const $catch_content__message = /*@__PURE__*/ _const(5, $catch_content__error_message__OR__message__OR__clicked);
 const $catch_content__clicked = /*@__PURE__*/ _let(6, $catch_content__error_message__OR__message__OR__clicked);
 const $catch_content__setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {

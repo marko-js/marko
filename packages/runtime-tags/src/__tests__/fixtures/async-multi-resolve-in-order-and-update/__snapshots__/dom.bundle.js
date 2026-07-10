@@ -21,12 +21,12 @@ const $n = /*@__PURE__*/ _let(11, ($scope) => {
 	_text($scope.f, $scope.l);
 	_text($scope.h, $scope.l);
 	_text($scope.j, $scope.l);
-	$await_promise($scope, multiply(1, $scope.l));
-	$await_promise2($scope, multiply(2, $scope.l));
-	$await_promise3($scope, multiply(3, $scope.l));
-	$await_promise4($scope, multiply(4, $scope.l));
-	$await_promise5($scope, multiply(5, $scope.l));
+	$await_promise($scope, multiply(1, "l" in $scope ? $scope.l : 2));
+	$await_promise2($scope, multiply(2, "l" in $scope ? $scope.l : 2));
+	$await_promise3($scope, multiply(3, "l" in $scope ? $scope.l : 2));
+	$await_promise4($scope, multiply(4, "l" in $scope ? $scope.l : 2));
+	$await_promise5($scope, multiply(5, "l" in $scope ? $scope.l : 2));
 });
 const $setup__script = _script("a0", ($scope) => _on($scope.a, "click", function() {
-	$n($scope, $scope.l + 1);
+	$n($scope, ("l" in $scope ? $scope.l : 2) + 1);
 }));

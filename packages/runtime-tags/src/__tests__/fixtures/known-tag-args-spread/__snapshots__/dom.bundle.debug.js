@@ -13,23 +13,23 @@ const $MyTag_content__tag_params = ($scope, $params2) => {
 const $args = /*@__PURE__*/ _const("args", ($scope) => $MyTag_content__tag_params($scope["#childScope/0"], [...$scope.args]));
 const $x__OR__args = ($scope) => {
 	let $cgrp;
-	if ($scope.x) {
+	if ("x" in $scope ? $scope.x : 1) {
 		$cgrp = attrTag({ y: 1 });
 	} else {
 		$cgrp = attrTag({ y: 2 });
 	}
 	$MyTag_content__tag_params($scope["#childScope/2"], [...$scope.args, {
 		cgrp: $cgrp,
-		row: attrTag({ r: $scope.x })
+		row: attrTag({ r: "x" in $scope ? $scope.x : 1 })
 	}]);
 };
 const $x = /*@__PURE__*/ _let("x/7", ($scope) => {
 	_text($scope["#text/4"], $scope.x);
-	$args($scope, [$scope.x, 2]);
+	$args($scope, ["x" in $scope ? $scope.x : 1, 2]);
 	$x__OR__args($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/3"], "click", function() {
-	$x($scope, $scope.x + 1);
+	$x($scope, ("x" in $scope ? $scope.x : 1) + 1);
 }));
 function $setup($scope) {
 	$MyTag_content__setup._($scope["#childScope/0"], $scope);

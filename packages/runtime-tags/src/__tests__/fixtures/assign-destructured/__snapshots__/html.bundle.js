@@ -12,7 +12,7 @@ var template_default = _template("a", (input) => {
 	_html(`<button>${_escape(foo)}:<!>${_escape(bar)}${_el_resume($scope0_id, "c")}</button>${_el_resume($scope0_id, "a")}`);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		d: bar,
+		d: bar === 0 ? void 0 : bar,
 		g: $fooChange
 	});
 	_resume_branch($scope0_id);

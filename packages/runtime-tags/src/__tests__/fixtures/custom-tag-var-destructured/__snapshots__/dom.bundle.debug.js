@@ -19,7 +19,7 @@ function $_return2($scope) {
 }
 function $_return($scope) {
 	return function() {
-		$count$1($scope, $scope.count + 1);
+		$count$1($scope, ("count" in $scope ? $scope.count : 1) + 1);
 	};
 }
 _resume("__tests__/tags/child.marko_0/_return2", $_return2);

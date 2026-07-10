@@ -8,7 +8,7 @@ const $count$1 = /*@__PURE__*/ _let(1, ($scope) => {
 });
 function $_return($scope) {
 	return function() {
-		$count$1($scope, $scope.b + 1);
+		$count$1($scope, ("b" in $scope ? $scope.b : 1) + 1);
 	};
 }
 _resume("b0", $_return);

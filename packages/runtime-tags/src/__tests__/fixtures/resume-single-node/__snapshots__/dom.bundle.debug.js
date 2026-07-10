@@ -11,7 +11,7 @@ const $items = /*@__PURE__*/ _let("items/3", ($scope) => {
 	$for($scope, [$scope.items]);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/1"], "click", function() {
-	$items($scope, [...$scope.items, $itemId($scope, $scope.itemId + 1)]);
+	$items($scope, [...$scope.items, $itemId($scope, ("itemId" in $scope ? $scope.itemId : 0) + 1)]);
 }));
 function $setup($scope) {
 	$itemId($scope, 0);

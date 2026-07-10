@@ -6,6 +6,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html(`<div id=ref></div><button id=increment>Increment</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
 	_script($scope0_id, "__tests__/template.marko_0_x");
-	writeScope($scope0_id, { x }, "__tests__/template.marko", 0, { x: "1:6" });
+	writeScope($scope0_id, { x: x === 0 ? void 0 : x }, "__tests__/template.marko", 0, { x: "1:6" });
 	_resume_branch($scope0_id);
 }, 1);

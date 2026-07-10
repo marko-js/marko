@@ -11,14 +11,14 @@ const $count = /*@__PURE__*/ _let("count/2", ($scope) => {
 	$getCount2($scope, $getCount($scope));
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + 1);
+	$count($scope, ("count" in $scope ? $scope.count : 1) + 1);
 }));
 function $setup($scope) {
 	$count($scope, 1);
 	$setup__script($scope);
 }
 function $getCount($scope) {
-	return () => $scope.count;
+	return () => "count" in $scope ? $scope.count : 1;
 }
 _resume("__tests__/template.marko_0/getCount", $getCount);
 var template_default = /*@__PURE__*/ _template("__tests__/template.marko", $template, $walks, $setup);

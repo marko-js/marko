@@ -11,7 +11,7 @@ const $state = /*@__PURE__*/ _let(4, ($scope) => {
 	$state_n__OR__state_tag($scope);
 });
 const $state_tag__OR__n = /*@__PURE__*/ _or(8, _script("a0", ($scope) => _on($scope.b, "click", function() {
-	$log($scope, `${$scope.h}[${$scope.f}:${$scope.g}]`);
+	$log($scope, `${"h" in $scope ? $scope.h : ""}[${$scope.f}:${$scope.g}]`);
 })));
 const $state_n = /*@__PURE__*/ _const(5, ($scope) => {
 	$n($scope, $scope.f);

@@ -18,7 +18,7 @@ var template_default = _template("a", (input) => {
 	Wrap.content([n, 10]);
 	_script($scope0_id, "a1");
 	writeScope($scope0_id, {
-		d: n,
+		d: void 0,
 		b: _existing_scope($childScope),
 		c: _existing_scope($childScope2)
 	});

@@ -5,7 +5,7 @@ var child_default = _template("__tests__/child.marko", (input) => {
 	let count = 0;
 	_html(`<button>count: <!>${_escape(count)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/child.marko_0");
-	writeScope($scope0_id, { count }, "__tests__/child.marko", 0, { count: "1:6" });
+	writeScope($scope0_id, { count: count === 0 ? void 0 : count }, "__tests__/child.marko", 0, { count: "1:6" });
 	_resume_branch($scope0_id);
 });
 

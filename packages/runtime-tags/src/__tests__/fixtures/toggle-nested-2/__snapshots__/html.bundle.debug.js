@@ -28,7 +28,7 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	_html("</div>");
 	_script($scope0_id, "__tests__/template.marko_0");
 	writeScope($scope0_id, {
-		outer,
+		outer: outer === true ? void 0 : outer,
 		inner,
 		count,
 		"ClosureScopes:count": $count__closures

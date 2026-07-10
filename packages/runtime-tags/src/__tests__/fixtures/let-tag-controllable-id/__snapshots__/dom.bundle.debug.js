@@ -2,7 +2,7 @@
 const $template = "<button><!>|<!></button>";
 const $walks = " D%c%l";
 const $y = /*@__PURE__*/ _let_change("y/6", ($scope) => _text($scope["#text/2"], $scope.y));
-const $x__OR__handler = /*@__PURE__*/ _or(5, ($scope) => $y($scope, $scope.x, $scope.handler));
+const $x__OR__handler = /*@__PURE__*/ _or(5, ($scope) => $y($scope, "x" in $scope ? "x" in $scope ? $scope.x : 1 : 1, $scope.handler));
 const $x = /*@__PURE__*/ _let("x/3", ($scope) => {
 	_text($scope["#text/1"], $scope.x);
 	$x__OR__handler($scope);

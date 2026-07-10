@@ -1,7 +1,7 @@
 // tags/child.marko
 const $template$1 = "<span>child</span>";
 const $walks$1 = "b";
-const $x__OR__y = /*@__PURE__*/ _or(2, ($scope) => _return($scope, $scope.x + $scope.y));
+const $x__OR__y = /*@__PURE__*/ _or(2, ($scope) => _return($scope, ("x" in $scope ? $scope.x : 1) + ("y" in $scope ? $scope.y : 2)));
 const $x = /*@__PURE__*/ _let("x/0", $x__OR__y);
 const $y = /*@__PURE__*/ _let("y/1", $x__OR__y);
 function $setup$1($scope) {

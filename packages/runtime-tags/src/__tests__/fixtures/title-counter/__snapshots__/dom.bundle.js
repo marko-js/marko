@@ -1,6 +1,6 @@
 // template.marko
 const $count__script = _script("a0", ($scope) => {
-	$scope.d;
+	"d" in $scope && $scope.d;
 	$scope.c.textContent = document.title;
 });
 const $count = /*@__PURE__*/ _let(3, ($scope) => {
@@ -8,5 +8,5 @@ const $count = /*@__PURE__*/ _let(3, ($scope) => {
 	$count__script($scope);
 });
 const $setup__script = _script("a1", ($scope) => _on($scope.b, "click", function() {
-	$count($scope, $scope.d + 1);
+	$count($scope, ("d" in $scope ? $scope.d : 0) + 1);
 }));

@@ -4,5 +4,5 @@ const $for_content__open = /*@__PURE__*/ _let(12, ($scope) => {
 	_text($scope.d, $scope.m ? "[-]" : "[+]");
 });
 const $for_content__setup__script = _script("b0", ($scope) => _on($scope.c, "click", function() {
-	$for_content__open($scope, !$scope.m);
+	$for_content__open($scope, !("m" in $scope ? $scope.m : true));
 }));

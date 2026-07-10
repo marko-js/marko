@@ -5,12 +5,12 @@ const $v__OR__rest__script = _script("a2", ($scope) => {
 });
 const $v__OR__rest = /*@__PURE__*/ _or(6, ($scope) => {
 	_attrs($scope, "b", {
-		checkedValue: $scope.e,
+		checkedValue: "e" in $scope ? $scope.e : "a",
 		...$scope.f
 	});
 	_attrs($scope, "c", {
 		...$scope.f,
-		checkedValue: $scope.e
+		checkedValue: "e" in $scope ? $scope.e : "a"
 	});
 	$v__OR__rest__script($scope);
 });
@@ -21,7 +21,7 @@ const $v = /*@__PURE__*/ _let(4, ($scope) => {
 const $rest__script = _script("a1", ($scope) => _attrs_script($scope, "d"));
 const $setup__script = _script("a3", ($scope) => {
 	_on($scope.a, "click", function() {
-		$v($scope, $scope.e + "!");
+		$v($scope, ("e" in $scope ? $scope.e : "a") + "!");
 	});
 	_attr_input_value_script($scope, "d");
 });

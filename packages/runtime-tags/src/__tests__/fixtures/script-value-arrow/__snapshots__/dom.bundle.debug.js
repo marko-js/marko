@@ -1,13 +1,13 @@
 // template.marko
 const $template = "<button>inc <!></button>";
 const $walks = " Db%l";
-const $n__script = _script("__tests__/template.marko_0_n", ($scope) => console.log($scope.n));
+const $n__script = _script("__tests__/template.marko_0_n", ($scope) => console.log("n" in $scope ? $scope.n : 1));
 const $n = /*@__PURE__*/ _let("n/2", ($scope) => {
 	_text($scope["#text/1"], $scope.n);
 	$n__script($scope);
 });
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$n($scope, $scope.n + 1);
+	$n($scope, ("n" in $scope ? $scope.n : 1) + 1);
 }));
 function $setup($scope) {
 	$n($scope, 1);

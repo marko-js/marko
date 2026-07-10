@@ -8,7 +8,7 @@ function $setup($scope) {
 	$clickCount($scope, 0);
 }
 const $input_onCount__script = _script("b0", ($scope) => _on($scope.a, "click", function() {
-	$scope.e($clickCount($scope, $scope.f + 1));
+	$scope.e($clickCount($scope, ("f" in $scope ? $scope.f : 0) + 1));
 }));
 const $input_onCount = /*@__PURE__*/ _const(4, $input_onCount__script);
 
@@ -19,7 +19,7 @@ const $if_content__setup = ($scope) => {
 	$setup($scope.a);
 };
 const $if = /*@__PURE__*/ _if(0, /*@__PURE__*/ ((_w0) => `<div>${_w0}</div>`)($template), /*@__PURE__*/ ((_w0) => `D/${_w0}&l`)($walks), $if_content__setup);
-const $show = /*@__PURE__*/ _let(1, ($scope) => $if($scope, $scope.b ? 0 : 1));
+const $show = /*@__PURE__*/ _let(1, ($scope) => $if($scope, ("b" in $scope ? $scope.b : true) ? 0 : 1));
 function $onCount($scope) {
 	return function(count) {
 		$show($scope, count < 1);

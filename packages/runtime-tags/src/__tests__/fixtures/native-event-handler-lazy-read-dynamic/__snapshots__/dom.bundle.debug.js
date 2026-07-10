@@ -1,8 +1,8 @@
 // template.marko
 const $template = "<button class=toggle>toggle</button><button class=bump>bump</button><button class=act>act</button><div class=state><!>:<!></div><div class=log> </div>";
 const $walks = " b b bD%c%lD l";
-const $enabled__script = _script("__tests__/template.marko_0_enabled", ($scope) => _on($scope["#button/2"], "click", $scope.enabled && (() => {
-	$log($scope, `${$scope.log}(${$scope.other})`);
+const $enabled__script = _script("__tests__/template.marko_0_enabled", ($scope) => _on($scope["#button/2"], "click", ("enabled" in $scope ? $scope.enabled : true) && (() => {
+	$log($scope, `${"log" in $scope ? $scope.log : ""}(${"other" in $scope ? $scope.other : 0})`);
 })));
 const $enabled = /*@__PURE__*/ _let("enabled/6", ($scope) => {
 	_text($scope["#text/3"], $scope.enabled);
@@ -12,10 +12,10 @@ const $other = /*@__PURE__*/ _let("other/7", ($scope) => _text($scope["#text/4"]
 const $log = /*@__PURE__*/ _let("log/8", ($scope) => _text($scope["#text/5"], $scope.log));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => {
 	_on($scope["#button/0"], "click", function() {
-		$enabled($scope, !$scope.enabled);
+		$enabled($scope, !("enabled" in $scope ? $scope.enabled : true));
 	});
 	_on($scope["#button/1"], "click", function() {
-		$other($scope, $scope.other + 1);
+		$other($scope, ("other" in $scope ? $scope.other : 0) + 1);
 	});
 });
 function $setup($scope) {

@@ -8,6 +8,6 @@ var template_default = _template("__tests__/template.marko", (input) => {
 	let n = 1;
 	_html(`<button>inc <!>${_escape(n)}${_el_resume($scope0_id, "#text/1")}</button>${_el_resume($scope0_id, "#button/0")}`);
 	_script($scope0_id, "__tests__/template.marko_0");
-	writeScope($scope0_id, { n }, "__tests__/template.marko", 0, { n: "10:6" });
+	writeScope($scope0_id, { n: n === 1 ? void 0 : n }, "__tests__/template.marko", 0, { n: "10:6" });
 	_resume_branch($scope0_id);
 }, 1);

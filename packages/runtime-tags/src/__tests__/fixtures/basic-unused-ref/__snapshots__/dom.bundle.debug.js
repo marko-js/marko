@@ -3,7 +3,7 @@ const $template = "<div><button> </button></div>";
 const $walks = "D D m";
 const $clickCount = /*@__PURE__*/ _let("clickCount/2", ($scope) => _text($scope["#text/1"], $scope.clickCount));
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$clickCount($scope, $scope.clickCount + 1);
+	$clickCount($scope, ("clickCount" in $scope ? $scope.clickCount : 0) + 1);
 }));
 function $setup($scope) {
 	123;

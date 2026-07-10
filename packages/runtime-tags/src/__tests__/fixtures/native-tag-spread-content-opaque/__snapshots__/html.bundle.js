@@ -10,7 +10,6 @@ var render_input_default = _template("c", (input) => {
 var my_box_default = _template("b", (input) => {
 	_scope_reason();
 	const $scope0_id = _scope_id();
-	let show = false;
 	_html("<div");
 	_attrs_content(input, "a", $scope0_id, "div");
 	_html(`</div>${_el_resume($scope0_id, "a")}<button type=button class=toggle>toggle</button>${_el_resume($scope0_id, "b")}<div class=echo>`);
@@ -19,7 +18,7 @@ var my_box_default = _template("b", (input) => {
 	_script($scope0_id, "b1");
 	writeScope($scope0_id, {
 		e: input,
-		f: show
+		f: void 0
 	});
 	_resume_branch($scope0_id);
 });

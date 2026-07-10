@@ -18,7 +18,7 @@ const $for_content__open = /*@__PURE__*/ _let("open/12", ($scope) => {
 	_text($scope["#text/3"], $scope.open ? "[-]" : "[+]");
 });
 const $for_content__setup__script = _script("__tests__/tags/comments.marko_1", ($scope) => _on($scope["#button/2"], "click", function() {
-	$for_content__open($scope, !$scope.open);
+	$for_content__open($scope, !("open" in $scope ? $scope.open : true));
 }));
 const $for_content__setup = ($scope) => {
 	$for_content__input_path._($scope);

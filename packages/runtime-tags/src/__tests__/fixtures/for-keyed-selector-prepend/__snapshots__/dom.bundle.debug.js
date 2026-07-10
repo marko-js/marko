@@ -16,11 +16,11 @@ const $selected = /*@__PURE__*/ _let("selected/3", $for_content__selected);
 const $nextId = /*@__PURE__*/ _let("nextId/4");
 const $setup__script = _script("__tests__/template.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
 	$rows($scope, [{
-		id: $scope.nextId,
+		id: "nextId" in $scope ? $scope.nextId : 3,
 		label: "new"
 	}, ...$scope.rows]);
-	$selected($scope, $scope.nextId);
-	$nextId($scope, $scope.nextId + 1);
+	$selected($scope, "nextId" in $scope ? $scope.nextId : 3);
+	$nextId($scope, ("nextId" in $scope ? $scope.nextId : 3) + 1);
 }));
 function $setup($scope) {
 	$rows($scope, [{

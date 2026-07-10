@@ -32,7 +32,7 @@ var template_default = _template("c", (input) => {
 	$ChildB_withLoadAssets({ value });
 	_script($scope0_id, "c0");
 	writeScope($scope0_id, {
-		f: value,
+		f: void 0,
 		c: _existing_scope($childScope),
 		e: _existing_scope($childScope2)
 	});

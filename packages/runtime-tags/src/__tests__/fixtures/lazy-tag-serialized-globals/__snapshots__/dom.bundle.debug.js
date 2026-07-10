@@ -3,7 +3,7 @@ const $template = "<button>count: <!></button>";
 const $walks = " Db%l";
 const $count = /*@__PURE__*/ _let("count/2", ($scope) => _text($scope["#text/1"], $scope.count));
 const $setup__script = _script("__tests__/child.marko_0", ($scope) => _on($scope["#button/0"], "click", function() {
-	$count($scope, $scope.count + $scope.$global.config.step);
+	$count($scope, ("count" in $scope ? $scope.count : 0) + $scope.$global.config.step);
 }));
 function $setup($scope) {
 	$count($scope, 0);
