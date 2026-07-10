@@ -1,7 +1,9 @@
 # Render
 ```html
 <select>
-  <option />
+  <option
+    value=""
+  />
   <option
     selected=""
     value="a"
@@ -10,6 +12,7 @@
 <select>
   <option
     selected=""
+    value=""
   />
   <option
     value="b"
@@ -18,6 +21,7 @@
 <select>
   <option
     selected=""
+    value=""
   />
   <option
     value="b"
@@ -26,6 +30,7 @@
 <select>
   <option
     selected=""
+    value=""
   />
   <option
     value="b"
@@ -42,7 +47,9 @@ container.querySelector("button").click();
 ```
 ```html
 <select>
-  <option />
+  <option
+    value=""
+  />
   <option
     selected=""
     value="a"
@@ -51,6 +58,7 @@ container.querySelector("button").click();
 <select>
   <option
     selected=""
+    value=""
   />
   <option
     value="b"
@@ -59,6 +67,7 @@ container.querySelector("button").click();
 <select>
   <option
     selected=""
+    value=""
   />
   <option
     default-selected=""
@@ -68,6 +77,7 @@ container.querySelector("button").click();
 <select>
   <option
     selected=""
+    value=""
   />
   <option
     default-selected=""

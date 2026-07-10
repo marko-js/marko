@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-select-value-option-no-value/template.marko:4:3
+      2 |
+      3 | <select value=color valueChange(v) { color = v }>
+    > 4 |   <option>red</option>
+        |   ^^^^^^^^^^^^^^^^^^^^ An `<option>` within a `<select>` that has a `value` attribute must also have a `value` attribute.
+      5 |   <option value="green">green</option>
+      6 | </select>
+      7 |

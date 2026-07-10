@@ -1,5 +1,5 @@
 // template.marko
-const $template = "<select multiple><option></option><option value=a></option></select><select multiple><option></option><option value=b></option></select><select multiple><option></option><option value=b></option></select><select multiple><option></option><option value=b></option></select><button>Update</button>";
+const $template = "<select multiple><option value></option><option value=a></option></select><select multiple><option value></option><option value=b></option></select><select multiple><option value></option><option value=b></option></select><select multiple><option value></option><option value=b></option></select><button>Update</button>";
 const $walks = " b b b b b";
 const initialValue = ["a"];
 const $value = /*@__PURE__*/ _let("value/5", ($scope) => {

@@ -4,16 +4,16 @@ var template_default = _template("a", (input) => {
 	const $scope0_id = _scope_id();
 	let value = "a";
 	_attr_select_value($scope0_id, "a", "a", void 0, () => {
-		_html(`<select><option></option><option${_attr_option_value("a")}></option></select>`);
+		_html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("a")}></option></select>`);
 	});
 	_attr_select_value($scope0_id, "b", "a", void 0, () => {
-		_html(`<select><option></option><option${_attr_option_value("b")}></option></select>`);
+		_html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("b")}></option></select>`);
 	});
 	_attr_select_value($scope0_id, "c", value, void 0, () => {
-		_html(`<select><option></option><option${_attr_option_value("b")}></option></select>`);
+		_html(`<select><option${_attr_option_value("")}></option><option${_attr_option_value("b")}></option></select>`);
 	});
 	_attr_select_value($scope0_id, "d", value, void 0, () => {
-		_html(`${_el_resume($scope0_id, "c")}<select><option></option><option${_attr_option_value("b")}></option></select>`);
+		_html(`${_el_resume($scope0_id, "c")}<select><option${_attr_option_value("")}></option><option${_attr_option_value("b")}></option></select>`);
 	});
 	_html(`${_el_resume($scope0_id, "d")}<button>Update</button>${_el_resume($scope0_id, "e")}`);
 	_script($scope0_id, "a0");

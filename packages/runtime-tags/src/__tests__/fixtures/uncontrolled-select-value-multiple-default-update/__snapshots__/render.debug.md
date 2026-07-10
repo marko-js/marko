@@ -3,7 +3,9 @@
 <select
   multiple=""
 >
-  <option />
+  <option
+    value=""
+  />
   <option
     selected=""
     value="a"
@@ -12,7 +14,9 @@
 <select
   multiple=""
 >
-  <option />
+  <option
+    value=""
+  />
   <option
     value="b"
   />
@@ -20,7 +24,9 @@
 <select
   multiple=""
 >
-  <option />
+  <option
+    value=""
+  />
   <option
     value="b"
   />
@@ -28,7 +34,9 @@
 <select
   multiple=""
 >
-  <option />
+  <option
+    value=""
+  />
   <option
     value="b"
   />
@@ -46,7 +54,9 @@ container.querySelector("button").click();
 <select
   multiple=""
 >
-  <option />
+  <option
+    value=""
+  />
   <option
     selected=""
     value="a"
@@ -55,7 +65,9 @@ container.querySelector("button").click();
 <select
   multiple=""
 >
-  <option />
+  <option
+    value=""
+  />
   <option
     value="b"
   />
@@ -63,7 +75,9 @@ container.querySelector("button").click();
 <select
   multiple=""
 >
-  <option />
+  <option
+    value=""
+  />
   <option
     default-selected=""
     value="b"
@@ -72,7 +86,9 @@ container.querySelector("button").click();
 <select
   multiple=""
 >
-  <option />
+  <option
+    value=""
+  />
   <option
     default-selected=""
     value="b"

@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-select-value-option-selected/template.marko:3:21
+      1 | <select value="b">
+      2 |   <option value="a">A</option>
+    > 3 |   <option value="b" selected>B</option>
+        |                     ^^^^^^^^ The `selected` attribute is not supported on an `<option>` within a `<select>` that has a `value` attribute; include the option's `value` in the select's `value` instead.
+      4 | </select>
+      5 |

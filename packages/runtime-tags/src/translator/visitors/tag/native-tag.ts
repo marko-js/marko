@@ -22,6 +22,7 @@ import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorProp } from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
+import { isControlFlowTag } from "../../util/is-core-tag";
 import { isEventOrChangeHandler } from "../../util/is-event-or-change-handler";
 import { isTextOnlyNativeTag } from "../../util/is-non-html-text";
 import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
@@ -50,6 +51,7 @@ import {
 } from "../../util/serialize-reasons";
 import { addSetupExpr, addSetupStatement } from "../../util/setup-statements";
 import { addHTMLEffectCall, addStatement } from "../../util/signals";
+import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import {
   toMemberExpression,
   toObjectProperty,
@@ -107,6 +109,10 @@ export default {
         case "head":
           getProgram().node.extra.page ??= true;
           break;
+      }
+
+      if (tagName === "option") {
+        assertOptionInSelectWithValue(tag);
       }
 
       const isTextOnly = isTextOnlyNativeTag(tag);
@@ -1293,6 +1299,56 @@ function getCanonicalTagName(tag: t.NodePath<t.MarkoTag>) {
       return "style";
     default:
       return tagName;
+  }
+}
+
+// A `<select>` with a `value` attribute matches options by their `value`
+// attributes, so nested options must provide one and cannot use `selected`.
+function assertOptionInSelectWithValue(tag: t.NodePath<t.MarkoTag>) {
+  let parent: t.NodePath | null = tag.parentPath;
+  while (parent) {
+    if (parent.isMarkoTag()) {
+      if (analyzeTagNameType(parent) === TagNameType.NativeTag) {
+        const parentName = getCanonicalTagName(parent);
+        if (parentName === "select") {
+          if (
+            parent.node.attributes.some(
+              (attr) =>
+                t.isMarkoAttribute(attr) &&
+                (attr.name === "value" || attr.name === "valueChange"),
+            )
+          ) {
+            let hasValue = false;
+            const attributes = tag.get("attributes");
+            for (let i = 0; i < attributes.length; i++) {
+              const attr = attributes[i].node;
+              if (!t.isMarkoAttribute(attr) || attr.name === "value") {
+                hasValue = true;
+              } else if (attr.name === "selected") {
+                throw attributes[i].buildCodeFrameError(
+                  "The `selected` attribute is not supported on an `<option>` within a `<select>` that has a `value` attribute; include the option's `value` in the select's `value` instead.",
+                );
+              }
+            }
+
+            if (!hasValue) {
+              throw tag.buildCodeFrameError(
+                "An `<option>` within a `<select>` that has a `value` attribute must also have a `value` attribute.",
+              );
+            }
+          }
+          return;
+        }
+
+        if (parentName !== "optgroup") return;
+      } else if (!isControlFlowTag(parent)) {
+        return;
+      }
+    } else if (parent.isProgram()) {
+      return;
+    }
+
+    parent = parent.parentPath;
   }
 }
 
