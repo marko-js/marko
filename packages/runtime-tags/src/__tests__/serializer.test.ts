@@ -882,7 +882,7 @@ describe("serializer", () => {
         (function* () {
           yield 1;
         })(),
-        `(function*(){yield 1})()`,
+        `(function*(a){yield*a})([1])`,
       ));
     it("multiple", () =>
       assertStringify(
@@ -891,7 +891,7 @@ describe("serializer", () => {
           yield 2;
           yield 3;
         })(),
-        `(function*(){yield 1;yield 2;yield 3})()`,
+        `(function*(a){yield*a})([1,2,3])`,
       ));
     it("nested", () =>
       assertStringify(
@@ -900,7 +900,7 @@ describe("serializer", () => {
             yield 1;
           })();
         })(),
-        `(function*(){yield 1})()`,
+        `(function*(a){yield*a})([1])`,
       ));
 
     it("yield undefined", () => {
@@ -910,7 +910,59 @@ describe("serializer", () => {
         yield 2;
         yield undefined;
       })();
-      assertStringify(gen, `(function*(){yield 1;yield;yield 2;yield})()`);
+      assertStringify(gen, `(function*(a){yield*a})([1,$,2,$])`);
+    });
+
+    it("replays yields and return on resume", async () => {
+      const gen = (function* () {
+        yield 1;
+        yield 2;
+        return 3;
+      })();
+      const [result] = assertSerializer().assertStringify(
+        gen,
+        `(function*(a,r){yield*a;return r})([1,2],3)`,
+      ) as [Generator];
+      assert.deepEqual(await consumeIterator(result), {
+        yielded: [1, 2],
+        returned: 3,
+        errored: undefined,
+      });
+    });
+
+    it("dedupes a yielded value reused in the same flush", () => {
+      const shared = { x: 1 };
+      const gen = (function* () {
+        yield shared;
+      })();
+      assertStringify(
+        { gen, shared },
+        `{gen:(function*(a){yield*a})(_.a=[_.b={x:1}]),shared:_.b}`,
+      );
+    });
+
+    it("dedupes a yielded value reused across flushes", () => {
+      const serializer = assertSerializer();
+      const shared = { x: 1 };
+      const gen = (function* () {
+        yield shared;
+      })();
+      serializer.assertStringify(gen, `(function*(a){yield*a})(_.a=[{x:1}])`);
+      serializer.assertStringify({ c: shared }, `{c:_.b=_.a[0]}`);
+    });
+
+    it("dedupes a returned value reused across flushes", () => {
+      const serializer = assertSerializer();
+      const shared = { x: 1 };
+      // eslint-disable-next-line require-yield
+      const gen = (function* () {
+        return shared;
+      })();
+      serializer.assertStringify(
+        gen,
+        `(function*(a,r){yield*a;return r})([],_.a={x:1})`,
+      );
+      serializer.assertStringify({ c: shared }, `{c:_.a}`);
     });
 
     it("partially consumed resumes as an exhausted sync generator", () => {
@@ -1961,7 +2013,9 @@ function assertEqualAtAccessor<T>(
   assert.deepEqual(a, b, `${inspect(a)} !== ${inspect(b)} at ${accessor}`);
 }
 
-async function consumeIterator(iter: AsyncIterator<unknown>) {
+async function consumeIterator(
+  iter: AsyncIterator<unknown> | Iterator<unknown>,
+) {
   const yielded: unknown[] = [];
   let errored: unknown = undefined;
   let returned: unknown = undefined;

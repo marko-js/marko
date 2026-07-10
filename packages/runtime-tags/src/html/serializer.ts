@@ -1456,29 +1456,71 @@ function writeGenerator(state: State, iter: Generator, ref: Reference) {
     return true;
   }
 
-  let sep = "";
-  state.buf.push("(function*(){");
+  const yields: unknown[] = [];
+  let returnValue: unknown;
+  let needsId: undefined | boolean;
 
   while (true) {
     const { value, done } = iter.next();
     if (done) {
-      if (value !== undefined) {
-        state.buf.push(sep + "return ");
-        writeProp(state, value, ref, "");
-      }
+      returnValue = value;
       break;
     }
 
-    if (value === undefined) {
-      state.buf.push(sep + "yield");
-    } else {
-      state.buf.push(sep + "yield ");
-      writeProp(state, value, ref, "");
-    }
-    sep = ";";
+    needsId ||= isDedupedMember(value);
+    yields.push(value);
   }
 
-  state.buf.push("})()");
+  if (returnValue === undefined && !yields.length) {
+    state.buf.push("(function*(){})()");
+    return true;
+  }
+
+  // Yield/return values live in eagerly evaluated arguments — the body only
+  // runs when iterated, so values written there would break reference dedup.
+  state.buf.push(
+    returnValue === undefined
+      ? "(function*(a){yield*a})("
+      : "(function*(a,r){yield*a;return r})(",
+  );
+  if (needsId) {
+    const arrayRef = new Reference(
+      ref,
+      null,
+      state.flush,
+      null,
+      nextRefAccess(state),
+    );
+    state.buf.push(arrayRef.id + "=");
+    writeArray(state, yields, arrayRef);
+  } else {
+    writeArray(
+      state,
+      yields,
+      new Reference(ref, null, state.flush, state.buf.length),
+    );
+  }
+
+  if (returnValue !== undefined) {
+    const sepIndex = state.buf.push(",") - 1;
+    if (
+      writeProp(state, returnValue, ref, "") &&
+      isDedupedMember(returnValue)
+    ) {
+      // The return value has no accessor path from the generator, so a
+      // later reuse can only reach it through an eagerly claimed binding.
+      const retRef =
+        typeof returnValue === "string"
+          ? state.strs.get(returnValue)
+          : state.refs.get(returnValue as WeakKey);
+      if (retRef && !retRef.id && retRef.scopeId === undefined) {
+        retRef.id = nextRefAccess(state);
+        state.buf[sepIndex] = "," + retRef.id + "=";
+      }
+    }
+  }
+
+  state.buf.push(")");
   return true;
 }
 
