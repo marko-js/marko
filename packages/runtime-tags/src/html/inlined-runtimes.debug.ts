@@ -22,6 +22,11 @@ export const WALKER_RUNTIME_CODE = /* js */ `((runtimeId) => (self[runtimeId] ||
           (op =
             (op = node.data) &&
             !op.indexOf(prefix) &&
+            // Only a known op char after the prefix is a marker; a user
+            // comment that merely shares the prefix must not register/visit.
+            ~"!#*-[]'|)}".indexOf(op[prefixLen]) &&
+            // ... and its id starts with a digit, "^", or is empty.
+            !((id = op[prefixLen + 1]) && (id < "0" || id > "9") && id != "^") &&
             ((lookup[(id = op.slice(prefixLen + 1))] = node), op[prefixLen])),
           id,
           node,
