@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.2.5
+
+### Patch Changes
+
+- [#3347](https://github.com/marko-js/marko/pull/3347) [`9849a13`](https://github.com/marko-js/marko/commit/9849a1338a2c88245d3fa9537ff55737b30059ab) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve render queue speed and memory by storing pending render slots at the signal key; intersection pending counters move to complemented keys so the two cannot collide.
+
 ## 6.2.4
 
 ### Patch Changes

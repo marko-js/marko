@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.39.15
+
+### Patch Changes
+
+- [#3350](https://github.com/marko-js/marko/pull/3350) [`d823383`](https://github.com/marko-js/marko/commit/d823383ec76327e49be5c83a7c41160ab1f5c7dd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `TypeError: assetFlush is not a function` when using lazy-loaded components (`import ... with { load }`) in an optimized/production build. The generated page entry now resolves the `load-tag.js` helper through the same src→dist rewrite as every other runtime import, so the page and lazy-load wrappers share a single module instance.
+
+- Updated dependencies [[`9849a13`](https://github.com/marko-js/marko/commit/9849a1338a2c88245d3fa9537ff55737b30059ab)]:
+  - @marko/runtime-tags@6.2.5
+
 ## 5.39.14
 
 ### Patch Changes
