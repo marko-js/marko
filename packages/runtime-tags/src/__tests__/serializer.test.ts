@@ -72,6 +72,7 @@ describe("serializer", () => {
 
     describe("number", () => {
       it("zero", () => assertStringify(0, `0`));
+      it("negative zero", () => assertStringify(-0, `-0`));
       it("positive", () => assertStringify(1, `1`));
       it("negative", () => assertStringify(-1, `-1`));
       it("decimal", () => assertStringify(0.1, `0.1`));
@@ -629,6 +630,10 @@ describe("serializer", () => {
         new Float64Array([1, 2, 3]),
         `new Float64Array([1,2,3])`,
       ));
+    it("Float64Array with negative zero", () =>
+      assertStringify(new Float64Array([-0, 1]), `new Float64Array([-0,1])`));
+    it("Float64Array with only negative zero", () =>
+      assertStringify(new Float64Array([-0, 0]), `new Float64Array([-0,0])`));
 
     it("shared buffer, multiple views", () => {
       const buffer = new ArrayBuffer(32);

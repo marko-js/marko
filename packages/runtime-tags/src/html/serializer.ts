@@ -747,7 +747,7 @@ function writeString(
 }
 
 function writeNumber(state: State, val: number) {
-  state.buf.push(val + "");
+  state.buf.push(isNegativeZero(val) ? "-0" : val + "");
   return true;
 }
 
@@ -1885,7 +1885,7 @@ function typedArrayToInitString(view: TypedArray) {
   let result = "[";
   let sep = "";
   for (let i = 0; i < view.length; i++) {
-    result += sep + view[i];
+    result += sep + (isNegativeZero(view[i]) ? "-0" : view[i]);
     sep = ",";
   }
 
@@ -1895,10 +1895,14 @@ function typedArrayToInitString(view: TypedArray) {
 
 function hasOnlyZeros(typedArray: TypedArray) {
   for (let i = 0; i < typedArray.length; i++) {
-    if (typedArray[i] !== 0) return false;
+    if (typedArray[i] !== 0 || isNegativeZero(typedArray[i])) return false;
   }
 
   return true;
+}
+
+function isNegativeZero(val: number) {
+  return val === 0 && 1 / val < 0;
 }
 
 function isWordOrDigit(char: string) {
