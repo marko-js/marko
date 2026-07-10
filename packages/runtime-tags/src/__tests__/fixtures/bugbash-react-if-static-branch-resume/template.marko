@@ -1,0 +1,13 @@
+<let/show=true/>
+<let/hide=false/>
+<div#a>
+  <if=show>
+    <span>static content</span>
+  </if>
+</div>
+<div#b>
+  <if=hide>
+    <span>other static</span>
+  </if>
+</div>
+<button#toggle onClick() { show = !show; hide = !hide }>toggle</button>

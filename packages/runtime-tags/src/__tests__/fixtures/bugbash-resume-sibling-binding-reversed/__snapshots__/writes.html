@@ -1,0 +1,27 @@
+<button class=main>main:<!>0<!--M_*1 b--></button><!--M_*1 a-->
+<script async type=module src="child-s.marko.load.mjs"></script><button
+  class=s>s:<!>?<!--M_*2 b--></button><!--M_*2 a-->
+<script async type=module src="child-b.marko.load.mjs"></script><button
+  class=b>b:<!>?<!--M_*3 b--></button><!--M_*3 a-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.b = {
+    _b: [_ => [2, {
+      g: _(1, "c0"),
+      h: _.a = _(1).g
+    }], "b0 2"]
+  };
+  M._.b._a = [_ => [3, {
+    g: _(1, "c1"),
+    h: _.b = _(1).g.inner
+  }], "a0 3"];
+  M._.r = [_ => [1, {
+    g: {
+      inner: {
+        value: 1
+      }
+    },
+    i: 0
+  }], "c2 1"];
+  M._.w()
+</script>

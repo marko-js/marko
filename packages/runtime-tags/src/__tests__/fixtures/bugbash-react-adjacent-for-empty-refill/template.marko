@@ -1,0 +1,14 @@
+<let/a=[1,2]/>
+<let/b=[8,9]/>
+<div#wrap>
+  <for|x| of=a by=(x)=>x>
+    <i>a${x}</i>
+  </for>
+  <for|x| of=b by=(x)=>x>
+    <b>b${x}</b>
+  </for>
+</div>
+<button#empty-a onClick() { a = [] }>empty a</button>
+<button#refill-a onClick() { a = [3, 1] }>refill a</button>
+<button#empty-both onClick() { a = []; b = [] }>empty both</button>
+<button#refill-both onClick() { a = [7]; b = [5, 6] }>refill both</button>

@@ -1,0 +1,13 @@
+import { resolveAfter } from "../../utils/resolve";
+<try>
+  <await|v|=resolveAfter("v", 1)>
+    <span>${v}</span>
+  </await>
+  <@placeholder>
+    <div>loading</div>
+    <script>
+      console.log("ph script ran");
+      $signal.onabort = () => console.log("ph aborted");
+    </script>
+  </@placeholder>
+</try>

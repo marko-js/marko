@@ -1,0 +1,9 @@
+<let/show=true/>
+<button onClick() { show = !show }>toggle</button>
+<if=show>
+  <div>shown</div>
+  <script>
+    console.log("script ran");
+    $signal.onabort = () => console.log("aborted");
+  </script>
+</if>

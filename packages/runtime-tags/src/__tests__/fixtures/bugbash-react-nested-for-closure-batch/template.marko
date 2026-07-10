@@ -1,0 +1,19 @@
+<let/count=0/>
+<let/rows=[{ id: "a", cells: [1,2,3] }, { id: "b", cells: [4,5] }]/>
+<div#grid>
+  <for|row| of=rows by="id">
+    <div>
+      <for|cell| of=row.cells by=(cell)=>cell>
+        <span>${row.id}${cell}.${count}</span>
+      </for>
+    </div>
+  </for>
+</div>
+<button#both onClick() {
+  count++;
+  rows = [
+    { id: "b", cells: [5, 6, 4] },
+    { id: "a", cells: [3, 1] },
+  ];
+}>both</button>
+<button#count onClick() { count++ }>count</button>

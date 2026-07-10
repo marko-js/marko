@@ -1,0 +1,10 @@
+import ChildS from "./child-s.marko" with { load: "render" }
+import ChildB from "./child-b.marko" with { load: "render" }
+
+<let/shared={ inner: { value: 1 } }/>
+<let/count=0/>
+<button.main onClick() { count += Object.keys(shared).length }>
+  main:${count}
+</button>
+<ChildS holder=shared isShared(o) { return o === shared }/>
+<ChildB inner=shared.inner isInner(o) { return o === Object.values(shared)[0] }/>

@@ -1,0 +1,17 @@
+<let/show=true/>
+<let/count=0/>
+<div#a>
+  <if=show>
+    <span>a:${count}</span>
+  </if>
+</div>
+// second copy with opposite let declaration order exercised via same lets
+<div#b>
+  <if=!show>
+    <span>b:${count}</span>
+  </if>
+</div>
+<button#both onClick() {
+  show = !show;
+  count++;
+}>both</button>

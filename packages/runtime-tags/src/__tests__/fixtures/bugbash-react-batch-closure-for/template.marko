@@ -1,0 +1,12 @@
+<let/count=0/>
+<let/items=[1,2,3]/>
+<div>
+  <for|item| of=items by=(item)=>item>
+    <span>${item}:${count}</span>
+  </for>
+</div>
+<button#both onClick() {
+  count++;
+  items = [4, ...items.slice(0, 2).reverse()];
+}>both</button>
+<button#count onClick() { count++ }>count</button>

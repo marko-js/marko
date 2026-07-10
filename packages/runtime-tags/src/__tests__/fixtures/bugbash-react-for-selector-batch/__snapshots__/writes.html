@@ -1,0 +1,42 @@
+<ul id=list>
+  <li class=sel>a<!--M_*2 b--></li><!--M_*2 a-->
+  <li>b<!--M_*3 b--></li><!--M_*3 a-->
+  <li>c<!--M_*4 b--></li><!--M_*4 a-->
+  <li>d<!--M_*5 b--></li><!--M_*5 a--><!--M_}1 a 5 4 3 2-->
+</ul><button id=sel2>sel2</button><!--M_*1 b--><button
+  id=batch>batch</button><!--M_*1 c--><button id=swap>swap</button><!--M_*1 d-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [1, {
+    e: 1,
+    f: [_.c = {
+      id: 1,
+      label: "a"
+    }, {
+      id: 2,
+      label: "b"
+    }, _.b = {
+      id: 3,
+      label: "c"
+    }, _.a = {
+      id: 4,
+      label: "d"
+    }],
+    g: _.a,
+    h: _.b,
+    i: _.c
+  }, {
+    e: 1,
+    M: 1
+  }, {
+    e: 2,
+    M: 2
+  }, {
+    e: 3,
+    M: 3
+  }, {
+    e: 4,
+    M: 4
+  }], "a0 1 a1 1"];
+  M._.w()
+</script>

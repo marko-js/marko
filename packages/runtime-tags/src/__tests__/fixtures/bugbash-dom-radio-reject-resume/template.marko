@@ -1,0 +1,6 @@
+<let/sel = "a"/>
+<form>
+  <input type="radio" name="g" value="a" checkedValue=sel checkedValueChange(v) { /* reject */ }/>
+  <input type="radio" name="g" value="b" checkedValue=sel checkedValueChange(v) { /* reject */ }/>
+</form>
+<span>sel:${sel}</span>

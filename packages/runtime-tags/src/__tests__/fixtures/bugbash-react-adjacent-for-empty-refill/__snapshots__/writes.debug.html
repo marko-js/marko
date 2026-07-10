@@ -1,0 +1,23 @@
+<div id=wrap><i>a<!>1<!--M_*2 #text/0--></i><i>a<!>
+      2<!--M_*3 #text/0--></i><!--M_|1 #text/0 3 2--><b>b<!>
+      8<!--M_*4 #text/0--></b><b>b<!>
+      9<!--M_*5 #text/0--></b><!--M_|1 #text/1 5 4--></div><button
+  id=empty-a>empty a</button><!--M_*1 #button/2--><button id=refill-a>refill
+  a</button><!--M_*1 #button/3--><button id=empty-both>empty
+  both</button><!--M_*1 #button/4--><button id=refill-both>refill
+  both</button><!--M_*1 #button/5-->
+<script>
+  WALKER_RUNTIME("M")("_");
+  M._.r = [_ => [2, {
+      "#LoopKey": 1
+    }, {
+      "#LoopKey": 2
+    }, {
+      "#LoopKey": 8
+    }, {
+      "#LoopKey": 9
+    }],
+    "packages/runtime-tags/src/__tests__/fixtures/bugbash-react-adjacent-for-empty-refill/template.marko_0 1"
+  ];
+  M._.w()
+</script>
