@@ -15,12 +15,10 @@ import {
   getSectionParentIsOwner,
   getSectionRegisterReasons,
   isDynamicClosure,
-  type Section,
   setBranchRendererArgs,
 } from "../../util/sections";
 import {
   addStatement,
-  addValue,
   getResumeRegisterId,
   getSetup,
   getSignal,
@@ -90,7 +88,6 @@ export default {
 
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
-          initDefaultedValues(childSection);
           const tagParamsSignal =
             childSection.params && initValue(childSection.params);
           const tagParamsIdentifier =
@@ -177,7 +174,6 @@ export default {
         }
       });
 
-      initDefaultedValues(section);
       const written = writeSignals(section);
       writeRegisteredFns();
 
@@ -239,22 +235,3 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
-
-// Defaulted bindings (`b = x` in tag params or a destructured tag variable)
-// have no tag of their own to translate; their derivation is registered here
-// before the section's signals are written, mirroring what the `<const>` tag
-// does for its variable.
-function initDefaultedValues(section: Section) {
-  if (section.defaultedValues) {
-    for (const { binding, value, valueExtra } of section.defaultedValues) {
-      if (!binding.pruned) {
-        addValue(
-          section,
-          valueExtra.referencedBindings,
-          initValue(binding)!,
-          value,
-        );
-      }
-    }
-  }
-}

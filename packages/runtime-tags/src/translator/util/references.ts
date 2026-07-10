@@ -605,22 +605,6 @@ export function setReferencesScope(path: t.NodePath<any>) {
   }
 }
 
-/**
- * A defaulted binding (`b = x` in tag params or a destructured tag variable)
- * is represented by two bindings: `defaultSource` holds the value applied at
- * the pattern's position, and `binding` is derived from it by `value`
- * (`void 0 !== source ? source : fallback`). The DOM translation registers
- * the derivation as a signal value (see `visitors/program/dom.ts`); the HTML
- * translation materializes it as a const statement so the source stays
- * serializable for resume (see `strip-default-values.ts`).
- */
-export interface DefaultedValue {
-  binding: Binding;
-  defaultSource: Binding;
-  value: t.ConditionalExpression;
-  valueExtra: ReferencedExtra;
-}
-
 function createBindingsAndTrackReferences(
   lVal: t.LVal,
   type: BindingType,
@@ -770,6 +754,14 @@ function createBindingsAndTrackReferences(
       }
       break;
     }
+    // A defaulted binding (`b = x` in tag params or a destructured tag
+    // variable) is represented by two bindings: `defaultSource` holds the
+    // value applied at the pattern's position, and the binding for `left` is
+    // derived from it (`void 0 !== source ? source : fallback`). The DOM
+    // translation registers the derivation as a signal value (see
+    // `visitors/assignment-pattern.ts`); the HTML translation materializes it
+    // as a const statement so the source stays serializable for resume (see
+    // `strip-default-values.ts`).
     case "AssignmentPattern": {
       const { left, right } = lVal;
       const defaultSource = createBinding(
@@ -785,22 +777,7 @@ function createBindingsAndTrackReferences(
         true,
       );
       const valueExtra = evaluate(right) as unknown as ReferencedExtra;
-      const testId = t.identifier(defaultSource.name);
-      const consequentId = t.identifier(defaultSource.name);
-      addRead(
-        valueExtra,
-        (testId.extra = {}),
-        defaultSource,
-        section,
-        undefined,
-      );
-      addRead(
-        valueExtra,
-        (consequentId.extra = {}),
-        defaultSource,
-        section,
-        undefined,
-      );
+      addRead(valueExtra, {}, defaultSource, section, undefined);
 
       createBindingsAndTrackReferences(
         left,
@@ -834,20 +811,6 @@ function createBindingsAndTrackReferences(
         extra.defaultSource = defaultSource;
         setBindingDownstream(binding, valueExtra);
         addSetupExpr(section, right);
-        (section.defaultedValues ??= []).push({
-          binding,
-          defaultSource,
-          value: t.conditionalExpression(
-            t.binaryExpression(
-              "!==",
-              t.unaryExpression("void", t.numericLiteral(0)),
-              testId,
-            ),
-            consequentId,
-            right,
-          ),
-          valueExtra,
-        });
       }
       break;
     }

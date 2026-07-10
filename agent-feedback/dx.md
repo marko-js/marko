@@ -2,7 +2,20 @@
 
 Friction in builds, tests, tooling, or repo workflows. Format and rules: [README.md](README.md).
 
-## Fix the broken default translator in `npm run compile`
+## `test:parallel` summary reports "0 failing" while workers fail
+
+`scripts/test-parallel.js:1` | 2026-07-10 | impact:high | effort:low
+
+The aggregate line (`8361 passing, 0 failing across 4 workers`) can report
+zero failures while individual workers print `N unexpectedly failing` and
+`UNEXPECTED FAILURES` blocks above it. The parallel runner appears to sum
+mocha's `failures` count, but fixture snapshot mismatches surface through
+the suite's "unexpectedly failing" accounting instead, so they never reach
+the total and the exit code stays green-looking in the summary. Observed
+concretely: a run with 10 snapshot mismatches across 3 workers still
+printed `0 failing`. Anything scripting on the summary line (or skimming
+it) silently misses real failures; the fix is to fold each worker's
+unexpected-failure count into the aggregate and the exit code.
 
 `scripts/inspect-compiled-output.ts:22` | 2026-07-02 | impact:med | effort:low
 

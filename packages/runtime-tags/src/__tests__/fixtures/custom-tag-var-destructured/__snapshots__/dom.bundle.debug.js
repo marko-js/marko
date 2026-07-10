@@ -29,11 +29,13 @@ var child_default = /*@__PURE__*/ _template("__tests__/tags/child.marko", $templ
 // template.marko
 const $template = /*@__PURE__*/ ((_w0) => `${_w0}<button class=inc>inc</button><button class=assign>assign</button><div><!>:<!></div>`)($template$1);
 const $walks = /*@__PURE__*/ ((_w0) => `0${_w0}& b bD%c%l`)($walks$1);
+const $missing2 = ($scope, missing) => _text($scope["#text/5"], missing);
+const $missing3 = ($scope, $missing) => $missing2($scope, void 0 !== $missing ? $missing : "fallback");
 const $pattern2 = _var_resume("__tests__/template.marko_0_$pattern/var", ($scope, $pattern) => {
 	$count($scope, $pattern.count);
 	$countChange2($scope, $pattern.countChange);
 	$inc($scope, $pattern.inc);
-	$missing2($scope, $pattern.missing);
+	$missing3($scope, $pattern.missing);
 });
 const $count__OR__$countChange__script = _script("__tests__/template.marko_0_count_$countChange", ($scope) => _on($scope["#button/3"], "click", function() {
 	$scope.$countChange($scope.count + 10);
@@ -48,8 +50,6 @@ const $inc__script = _script("__tests__/template.marko_0_inc", ($scope) => _on($
 	$scope.inc();
 }));
 const $inc = /*@__PURE__*/ _const("inc", $inc__script);
-const $missing3 = ($scope, missing) => _text($scope["#text/5"], missing);
-const $missing2 = ($scope, $missing) => $missing3($scope, void 0 !== $missing ? $missing : "fallback");
 function $setup($scope) {
 	_var($scope, "#childScope/0", $pattern2);
 	$setup$1($scope["#childScope/0"]);
