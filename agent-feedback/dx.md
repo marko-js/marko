@@ -25,3 +25,57 @@ The dependency upgrade took everything to latest except two majors that are true
 `package.json:9` | 2026-07-07 | impact:low | effort:low
 
 Bare `npm audit` shows 3 advisories (`serialize-javascript` high, `js-yaml`/mocha moderate, `diff` low), all transitively under `mocha` and `@changesets/cli` — dev tooling that never ships. They can't be resolved by version bumps: the fixes live in higher majors than mocha's ranges allow (`serialize-javascript ^6`→fix in 7.x, `diff ^7`→8.x, `js-yaml ^4`→5.x), mocha 11.7.6 is the newest stable, and the latest `@changesets/parse` still pins `js-yaml ^4.1.1`. Rather than pin them via `overrides`, the repo audits production deps only: **`npm run audit`** (`npm audit --omit=dev`) is the gate and returns 0 — that's what consumers of the published packages actually receive. Revisit and drop the distinction once mocha/changesets update their transitive deps upstream.
+
+## Fixture `wait` step hangs when the SSR stream completes before all shared promises settle
+
+`packages/runtime-tags/src/__tests__/utils/resolve.ts:19` | 2026-07-10 | impact:med | effort:med
+
+`resetResolveState()` replaces `state.promises` and zeroes `state.lastId` but cannot cancel tick chains already scheduled by the previous generation (`tick()` at `resolve.ts:117` closes over `state` and does `r(++state.lastId)` on a setTimeout/setImmediate/setTimeout cascade). Any fixture whose SSR stream legitimately finishes while a `resolveAfter`/`rejectAfter` promise is still pending — e.g. `<try>` whose `@catch` renders because a sibling `<await>` rejected first, so the still-pending sibling's promise is abandoned — leaves a straggler tick that fires after `main.test.ts`'s post-render `resetResolveState()`, bumping `lastId` past `promises.size` in the new generation. `wait`'s termination test (`id !== state.promises.size`) then never becomes true and the `ssr` test times out after 10s (and mocha's process lingers on open handles). Repro: a fixture whose `<try>` body awaits two sibling promises where one rejects first (rendering `@catch` and abandoning the still-pending sibling), with a trailing `wait` step. Fix direction: have `resetResolveState` bump a generation counter that `tick` checks before `++state.lastId`, or have `wait` compare against the max created id rather than map size.
+
+## `pretty-format` DOM serialization in `render.md` masks comment/text `&`-vs-`>` differences
+
+`packages/runtime-tags/src/__tests__/utils/track-mutations.ts:250` | 2026-07-10 | impact:low | effort:low
+
+The snapshot serializer escapes `>` (as `&gt;`) but not `&` when printing comment/text nodes, so a DOM whose comment data is literally `a &gt; b` (SSR, from `_escape_comment`) and one whose data is `a > b` (CSR) both print as `<!--a &gt; b-->` — real SSR/CSR equivalence differences render identically in `render.md` and the harness cannot catch them. Escaping `&` in the printer (or printing `JSON.stringify(data)`) would surface such mismatches.
+
+## Fixture harness silently truncates SSR runs at the first input-update step
+
+`packages/runtime-tags/src/__tests__/main.test.ts:420` | 2026-07-10 | impact:med | effort:low
+
+In the `ssr` variant, `runSteps` handles an input-object step by calling
+`opts.onInput` when present, else hitting the `// if new input is detected,
+stop testing` branch — the remaining steps are skipped with no output. A
+fixture author who adds input-update steps but forgets `equivalent: false`
+gets a green `ssr` test that exercised only the first render, and the usual
+first symptom is the opaque `Snapshot conflict: "<file>" was written with
+different content by two tests.` from `src/__tests__/utils/snap.ts:64`, which
+names neither the differing steps nor a diff. Log a skipped-steps notice (or
+fail with "input update steps require `equivalent: false`"), and include a
+short diff or at least both writers' test titles in the snapshot-conflict
+error.
+
+## Client-bundle load crashes surface as `TypeError: run is not a function`
+
+`packages/runtime-tags/src/__tests__/utils/bundle.ts:88` | 2026-07-10 | impact:med | effort:low
+
+The browser harness injects `export function run() ...` into the client
+bundle and `main.test.ts` calls it unconditionally after each flush
+(`main.test.ts:285`). If the bundle throws at module top level (bad generated
+import, runtime init error), the export never materializes and every fixture
+step fails with `TypeError: run is not a function` — the real load error is
+swallowed (jsdom script errors don't propagate). During the bug bash this
+cost several debugging detours. Capture window `error` events (or wrap script
+evaluation) and re-throw the original load error before the first `run()`
+call.
+
+## jsdom harness lacks `CSS.escape`, so radio-group controllable code throws only in tests
+
+`packages/runtime-tags/src/dom/controllable.ts:155` | 2026-07-10 | impact:low | effort:low
+
+`_controllable_input_checkedValue` builds a
+`[type=radio][name=${CSS.escape(el.name)}]` selector; jsdom does not
+implement `CSS.escape`, so any fixture exercising named radio groups dies
+with `CSS.escape is not a function` even though browsers are fine. A
+one-line polyfill in the test browser setup (`src/__tests__/utils`) unblocks
+writing radio-group fixtures — which the resume/controllable bugs recorded
+in `bugs.md` need.

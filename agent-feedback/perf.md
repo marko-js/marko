@@ -61,3 +61,41 @@ A custom-tag call site always emits the child's client wiring — `_child($scope
 `packages/runtime-tags/src/translator/visitors/tag/native-tag.ts:1025` | 2026-07-09 | impact:low | effort:med
 
 `value:=` on a native input always binds the generic `_attr_input_value` helper, which drags `dom/controllable.ts`'s value path plus `dom/resolve-cursor-position.ts` (caret preservation across external value writes) into the bundle. Selection APIs don't apply to non-text input types — `selectionStart` is null and `setSelectionRange` throws on `type="number"` — yet an app whose only controllable is a number stepper still ships the caret machinery — measured at ~1.25 kB raw of controllable + cursor-position code in the shared runtime chunk for a single `value:clamp:=` on a statically-typed `type="number"` input. When the `type` attribute is a static literal outside the text family (text/search/tel/url/password/textarea), the translator could bind a caret-free variant of the value helper; a dynamic or missing `type` keeps the generic path.
+
+## Importing the serializer patches `Generator.prototype.next` globally
+
+`packages/runtime-tags/src/html/serializer.ts:8` | 2026-07-10 | impact:low | effort:med
+
+Module top level calls `patchIteratorNext(Generator.prototype)` and
+`patchIteratorNext(AsyncGenerator.prototype)`, replacing `next` on the shared
+intrinsic prototypes for every generator in the process — including
+generators in user/app code and third-party libraries that never touch Marko.
+Each `next()` call pays the wrapper, and the `Symbol.for("marko.touchedIterator")`
+own-property write is observable (`Object.getOwnPropertySymbols`, proxies,
+frozen-prototype environments throw). It also only exists to support the
+touched-generator resume path that is itself buggy (see `bugs.md`, sync
+generator entries). Consider patching lazily on first serialization of a
+generator, or tracking touched iterators in a `WeakSet` populated by a
+serializer-owned wrapper instead of mutating intrinsics.
+
+## Spread-attr controllables leak one MutationObserver per update
+
+`packages/runtime-tags/src/dom/controllable.ts:348` | 2026-07-10 | impact:med | effort:low
+
+`_controllable_select_value` (line 348) and the textarea/content variant
+(line 437) create a `new MutationObserver(...)` and `observe(...)` on each
+invocation without ever disconnecting the previous one. The spread-attrs path
+(`_attrs_script` and dynamic attr re-application) re-invokes these on every
+update, so a frequently-updating `<select ...attrs>` accumulates O(updates)
+live observers all firing on each child mutation. Store the observer on the
+element (or a WeakMap) and reuse/disconnect on re-invocation.
+
+## `<let>` holding `NaN` re-schedules a render on every same-value assignment
+
+`packages/runtime-tags/src/dom/signals.ts:44` | 2026-07-10 | impact:low | effort:low
+
+The dirty check is `scope[valueAccessor] !== value`, and `NaN !== NaN`, so a
+state value that is `NaN` treats every re-assignment of `NaN` as a change and
+queues a render each time. Switching to an `Object.is`-style check (or
+`value === value || scope[...] === scope[...]` fast path) matches what
+React/Vue/Solid do; measure the byte cost since this helper is hot.
