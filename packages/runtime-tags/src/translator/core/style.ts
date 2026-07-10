@@ -62,6 +62,11 @@ declare module "@marko/compiler/dist/types" {
 }
 
 const STYLE_EXT_REG = /^style((?:\.[a-zA-Z0-9$_-]+)+)?/;
+// Same-extension <style> block count per program, so each block's virtual file path is distinct.
+const programStyleCounts = new WeakMap<
+  t.Program,
+  Partial<Record<string, number>>
+>();
 
 export default {
   analyze(tag) {
@@ -366,6 +371,12 @@ function getStyleImportPath(
     ext = ".module" + ext;
   }
 
+  const program = getProgram().node;
+  let counts = programStyleCounts.get(program);
+  if (!counts) programStyleCounts.set(program, (counts = {}));
+  const index = counts[ext] || 0;
+  counts[ext] = index + 1;
+
   const magicString = sourceMaps
     ? new MagicString(file.code, { filename })
     : undefined;
@@ -420,7 +431,7 @@ function getStyleImportPath(
   }
 
   return resolveVirtualDependency(filename, {
-    virtualPath: `./${path.basename(filename) + ext}`,
+    virtualPath: `./${path.basename(filename)}${index ? `.${index}` : ""}${ext}`,
     code,
     map,
   });
