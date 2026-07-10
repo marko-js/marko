@@ -29,7 +29,10 @@ export function forTo(
 ) {
   const start = from || 0;
   const delta = step || 1;
-  for (let steps = (to - start) / delta, i = 0; i <= steps; i++) {
+  // The epsilon keeps fractional steps whose division lands just outside an
+  // integer from dropping the inclusive endpoint (or, for `until`, from
+  // including the exclusive one).
+  for (let steps = (to - start) / delta + 1e-9, i = 0; i <= steps; i++) {
     cb(start + i * delta);
   }
 }
@@ -42,7 +45,7 @@ export function forUntil(
 ) {
   const start = from || 0;
   const delta = step || 1;
-  for (let steps = (until - start) / delta, i = 0; i < steps; i++) {
+  for (let steps = (until - start) / delta - 1e-9, i = 0; i < steps; i++) {
     cb(start + i * delta);
   }
 }

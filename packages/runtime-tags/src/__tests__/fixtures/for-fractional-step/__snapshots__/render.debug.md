@@ -1,0 +1,24 @@
+# Render
+```html
+<div>
+  0
+</div>
+<div>
+  0.1
+</div>
+<div>
+  0.2
+</div>
+<div>
+  0.30000000000000004
+</div>
+<span>
+  0
+</span>
+<span>
+  1.7
+</span>
+<span>
+  3.4
+</span>
+```

@@ -1,4 +1,4 @@
-// size: 25871 (min) 9521 (brotli)
+// size: 25881 (min) 9528 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -380,13 +380,13 @@ function forOf(list, cb) {
 function forTo(to, from, step, cb) {
   let start = from || 0,
     delta = step || 1;
-  for (let steps = (to - start) / delta, i = 0; i <= steps; i++)
+  for (let steps = (to - start) / delta + 1e-9, i = 0; i <= steps; i++)
     cb(start + i * delta);
 }
 function forUntil(until, from, step, cb) {
   let start = from || 0,
     delta = step || 1;
-  for (let steps = (until - start) / delta, i = 0; i < steps; i++)
+  for (let steps = (until - start) / delta - 1e-9, i = 0; i < steps; i++)
     cb(start + i * delta);
 }
 function toArray(opt) {
