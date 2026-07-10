@@ -1,5 +1,19 @@
 # @marko/runtime-tags
 
+## 6.3.1
+
+### Patch Changes
+
+- [#3381](https://github.com/marko-js/marko/pull/3381) [`bb2441a`](https://github.com/marko-js/marko/commit/bb2441a55381e5776fb0856acbb9416c5b0decc3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix attribute escaping only handling fully-formed, semicolon-terminated character references. HTML parsers also decode semicolon-less numeric references (`&#38x` parses as `&x`) and, in attribute values, legacy named references when the next character is not `=` or alphanumeric (`x &amp y` parses as `x & y`), so several authored values round-tripped to different strings. `&` is now escaped whenever it starts anything that could parse as a reference (`&#` or `&` + ASCII letter); a bare `&` still passes through raw.
+
+- [#3379](https://github.com/marko-js/marko/pull/3379) [`f901f42`](https://github.com/marko-js/marko/commit/f901f4200a5ba4904311b071d7bb5df230d9bb8a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `<define>` with a destructured tag variable plus body content crashing on the client with `ReferenceError: $define_content is not defined` (also reproducible with an identifier variable whose content is never read). The content section's renderer declaration is elided when nothing reads the content, but the `content:` property still referenced it; both are now elided under the same condition.
+
+- [#3376](https://github.com/marko-js/marko/pull/3376) [`7c0c0b5`](https://github.com/marko-js/marko/commit/7c0c0b5c457a759d8fede43e76aa5e4d744e0d84) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix resume claiming the wrong node for stateful text that serializes empty directly after an element or comment sibling (`<div><span>s</span>${text}</div>` with empty text bound updates to a `.data` expando on the span, and a preceding `<html-comment>`'s content was overwritten). Such placeholders now emit the same protective `<!>` separator used between sibling text.
+
+- [#3382](https://github.com/marko-js/marko/pull/3382) [`a986ea6`](https://github.com/marko-js/marko/commit/a986ea6c96787c4645e6c013c26dc8ff7c534e40) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix hydration never completing when an `<await>` inside streamed content is dropped by a `<try>` catch. Reorder markers whose content can no longer render now flush as empty reorders so client counters settle.
+
+- [#3358](https://github.com/marko-js/marko/pull/3358) [`73572f1`](https://github.com/marko-js/marko/commit/73572f11dc8b6dbc7a3aa35f7fd4c7c2e091cfb4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix serialized strings corrupting in transit: unpaired surrogates and NUL were emitted raw, so UTF-8 encoding (or the HTML tokenizer inside the inline script) replaced them with U+FFFD before the client could resume them. Both now escape, and a fast-path regex guard skips the escape loop entirely for strings that need no escaping (the common case, measurably faster than before).
+
 ## 6.3.0
 
 ### Minor Changes
