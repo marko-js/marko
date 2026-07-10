@@ -1,0 +1,13 @@
+<let/list=[[{ n: 1 }], []]/>
+<let/obj={ kept: "k" }/>
+
+// Dead defaults must prune without pinning their source to the pattern.
+<const/[skipped = { n: 0 }, ...rest] = list[0]/>
+<const/{ ignored = 1, kept } = obj/>
+<const/[{ b = kept, c = "c" } = {}] = list[1]/>
+
+<div id="out">${rest.length}:${String(kept)}:${c}</div>
+<button id="update" onClick() {
+  obj = {};
+  list = [[{ n: 1 }, { n: 2 }], [{ c: "C" }]];
+}>u</button>
