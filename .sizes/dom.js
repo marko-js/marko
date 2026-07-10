@@ -1,4 +1,4 @@
-// size: 25964 (min) 9537 (brotli)
+// size: 26049 (min) 9582 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -99,9 +99,7 @@ let empty = [],
       (scope, newRenderer, getInput) => {
         let normalizedRenderer = normalizeDynamicRenderer(newRenderer);
         if (
-          scope[rendererAccessor] !==
-            (scope[rendererAccessor] =
-              normalizedRenderer?.a || normalizedRenderer) ||
+          rendererChanged(scope, rendererAccessor, normalizedRenderer) ||
           (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
         )
           if (
@@ -1633,7 +1631,7 @@ function attrsInternal(scope, nodeAccessor, nextAttrs) {
 }
 function _attr_content(scope, nodeAccessor, value) {
   let content = normalizeClientRender(value);
-  scope["D" + nodeAccessor] !== (scope["D" + nodeAccessor] = content?.a) &&
+  rendererChanged(scope, "D" + nodeAccessor, content) &&
     (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
     content?.f &&
       subscribeToScopeSet(content.e, content.f, scope["A" + nodeAccessor]));
@@ -2044,6 +2042,15 @@ function _show(nodeAccessor, startNodeAccessor) {
 function patchDynamicTag(fn) {
   _dynamic_tag = fn(_dynamic_tag);
 }
+function rendererChanged(scope, rendererAccessor, renderer) {
+  let prev = scope[rendererAccessor],
+    changed =
+      (prev?.a || prev) !== (renderer?.a || renderer) ||
+      (typeof prev != "string" &&
+        typeof renderer != "string" &&
+        prev?.e !== renderer?.e);
+  return ((scope[rendererAccessor] = renderer), changed);
+}
 function _dynamic_tag_content(nodeAccessor) {
   nodeAccessor = decodeAccessor(nodeAccessor);
   let childScopeAccessor = "A" + nodeAccessor,
@@ -2052,8 +2059,7 @@ function _dynamic_tag_content(nodeAccessor) {
     enableBranches(),
     (scope, renderer) => {
       if (
-        (scope[rendererAccessor] !==
-          (scope[rendererAccessor] = renderer?.a || renderer) &&
+        (rendererChanged(scope, rendererAccessor, renderer) &&
           (setConditionalRenderer(
             scope,
             nodeAccessor,

@@ -3,10 +3,10 @@
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
     Aa: _(2),
-    Da: "a0",
+    Da: _.a = _(1, "a0"),
     b: 0,
     c: {
-      content: _(1, "a0")
+      content: _.a
     },
     e: new Set([_(2)])
   }, {

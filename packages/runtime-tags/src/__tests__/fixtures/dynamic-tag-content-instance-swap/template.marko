@@ -1,0 +1,5 @@
+<let/idx=0/>
+<panel/a label="alpha"/>
+<panel/b label="beta"/>
+<div><${(idx ? b : a).section}/></div>
+<button onClick() { idx = 1 - idx }>swap</button>

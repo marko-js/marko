@@ -9,6 +9,7 @@ import {
   ResumeSymbol,
 } from "../common/types";
 import { _attr_select_value, _attr_textarea_value, _attrs } from "./attrs";
+import { getRegistered } from "./serializer";
 import type { ServerRenderer } from "./template";
 import {
   _html,
@@ -186,9 +187,16 @@ export let _dynamic_tag = (
   if (rendered) {
     if (shouldResume) {
       _scope(scopeId, {
+        // A renderer registered with a scope resumes as the owned client
+        // renderer so instances of the same content stay distinguishable;
+        // otherwise the bare id matches any instance-less renderer.
         [AccessorPrefix.ConditionalRenderer + accessor]:
-          (renderer as ServerRenderer | undefined)?.[RendererProp.Id] ||
-          renderer,
+          renderer &&
+          typeof renderer !== "string" &&
+          getRegistered(renderer)?.scope
+            ? renderer
+            : (renderer as ServerRenderer | undefined)?.[RendererProp.Id] ||
+              renderer,
       });
     }
   } else {

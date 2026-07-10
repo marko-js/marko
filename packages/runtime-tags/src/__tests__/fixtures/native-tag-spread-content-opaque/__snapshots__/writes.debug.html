@@ -5,12 +5,12 @@
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [2, {
       "BranchScopes:#div/0": _(3),
-      "ConditionalRenderer:#div/0": "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content-opaque/template.marko_1_content",
+      "ConditionalRenderer:#div/0": _.a = _(1,
+        "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content-opaque/template.marko_1_content"
+        ),
       input: {
         class: "x",
-        content: _(1,
-          "packages/runtime-tags/src/__tests__/fixtures/native-tag-spread-content-opaque/template.marko_1_content"
-          )
+        content: _.a
       },
       show: !1
     }],

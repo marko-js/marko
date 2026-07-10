@@ -530,10 +530,7 @@ export let _dynamic_tag = function dynamicTag(
   return (scope, newRenderer, getInput?: () => any) => {
     const normalizedRenderer = normalizeDynamicRenderer<Renderer>(newRenderer);
     if (
-      scope[rendererAccessor] !==
-        (scope[rendererAccessor] =
-          (normalizedRenderer as Renderer | undefined)?.[RendererProp.Id] ||
-          normalizedRenderer) ||
+      rendererChanged(scope, rendererAccessor, normalizedRenderer) ||
       (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
     ) {
       setConditionalRenderer(
@@ -631,6 +628,26 @@ export let _dynamic_tag = function dynamicTag(
   };
 };
 
+// The renderer id is shared by every instance of a content section, so a
+// renderer only counts as unchanged when its owner scope also matches;
+// bare string slots (tag names, resumed unregistered ids) have no owner.
+export function rendererChanged(
+  scope: Scope,
+  rendererAccessor: string,
+  renderer: Renderer | string | undefined,
+) {
+  const prev = scope[rendererAccessor] as Renderer | string | undefined;
+  const changed =
+    ((prev as Renderer | undefined)?.[RendererProp.Id] || prev) !==
+      ((renderer as Renderer | undefined)?.[RendererProp.Id] || renderer) ||
+    (typeof prev !== "string" &&
+      typeof renderer !== "string" &&
+      (prev as Renderer | undefined)?.[RendererProp.Owner] !==
+        (renderer as Renderer | undefined)?.[RendererProp.Owner]);
+  scope[rendererAccessor] = renderer;
+  return changed;
+}
+
 // Specialized `_dynamic_tag` for a content passthrough. The caller guarantees a
 // normalized content `Renderer` (or undefined) rendered with no input or
 // parameters.
@@ -642,10 +659,7 @@ export function _dynamic_tag_content(
   const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
   enableBranches();
   return (scope, renderer) => {
-    if (
-      scope[rendererAccessor] !==
-      (scope[rendererAccessor] = renderer?.[RendererProp.Id] || renderer)
-    ) {
+    if (rendererChanged(scope, rendererAccessor, renderer)) {
       setConditionalRenderer(
         scope,
         nodeAccessor as string,

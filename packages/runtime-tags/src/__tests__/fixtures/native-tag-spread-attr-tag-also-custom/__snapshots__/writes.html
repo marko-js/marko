@@ -4,10 +4,10 @@
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [2, {
     Aa: _(3),
-    Da: "a0",
+    Da: _.a = _(1, "a0"),
     e: {
       class: "h",
-      content: _(1, "a0"),
+      content: _.a,
       *[Symbol.iterator]() {
         yield this
       }
