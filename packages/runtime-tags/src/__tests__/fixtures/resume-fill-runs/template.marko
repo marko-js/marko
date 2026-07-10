@@ -1,0 +1,8 @@
+<let/count=0/>
+<button onClick() { count++ }>inc</button>
+<for|item| of=input.items>
+  <span>${item.name}: ${count}</span>
+</for>
+<for|item| of=input.items>
+  <x-pair label=item.name count=count/>
+</for>

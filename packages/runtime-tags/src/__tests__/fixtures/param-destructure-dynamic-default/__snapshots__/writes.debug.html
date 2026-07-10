@@ -9,7 +9,7 @@
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
       count: 0,
-      "ClosureScopes:count": new Set([_(2), _(3), _(4), _(5), _(6), _(7)])
+      "ClosureScopes:count": new Set(_.s(2, 6))
     }, {
       foo: {
         bar: 0

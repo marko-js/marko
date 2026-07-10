@@ -1,4 +1,4 @@
-// size: 2463 (min) 1239 (brotli)
+// size: 2615 (min) 1305 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let decodeAccessor = (num) =>
     (num + (num < 26 ? 10 : num < 962 ? 334 : 11998)).toString(36),
@@ -86,20 +86,31 @@ function init(runtimeId = "M") {
               scope
             ),
             applyScopes = (partials) => {
-              let scopeId = partials[0];
+              let scopeId = partials[0],
+                prev;
               for (let i = 1; i < partials.length; i++) {
                 let partial = partials[i];
-                typeof partial == "number"
-                  ? (scopeId += partial)
-                  : (scopeId
-                      ? initScope(
-                          Object.assign(
-                            (scopeLookup[scopeId] ||=
-                              ((partial.L = scopeId), partial)),
-                            partial,
-                          ),
-                        )
-                      : Object.assign(initGlobal(), partial),
+                if (typeof partial == "number")
+                  if (partial < 0)
+                    for (let n = -partial; n--; scopeId++) {
+                      let scope = Object.assign(
+                        (scopeLookup[scopeId] ||= {}),
+                        prev,
+                      );
+                      ((scope.L = scopeId), initScope(scope));
+                    }
+                  else scopeId += partial;
+                else
+                  (scopeId
+                    ? initScope(
+                        Object.assign(
+                          (scopeLookup[scopeId] ||=
+                            ((partial.L = scopeId), partial)),
+                          partial,
+                        ),
+                      )
+                    : Object.assign(initGlobal(), partial),
+                    (prev = partial),
                     scopeId++);
               }
             },
@@ -143,6 +154,11 @@ function init(runtimeId = "M") {
             lastTokenIndex;
           return (
             (serializeContext._ = registeredValues),
+            (serializeContext.s = (from, count, step = 1) => {
+              let scopes = [];
+              for (; count--; from += step) scopes.push(getScope(from));
+              return scopes;
+            }),
             (render.m = (effects) => {
               if ((processResumes(render.r, effects), readyIds));
               let retained = 0;

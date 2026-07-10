@@ -4,7 +4,7 @@
   WALKER_RUNTIME("M")("_");
   M._.r = [_ => [1, {
       mult: 2,
-      "ClosureScopes:mult": new Set([_(4), _(6), _(8)])
+      "ClosureScopes:mult": new Set(_.s(4, 3, 2))
     }, 2, {
       item: 1,
       _: _(1)
