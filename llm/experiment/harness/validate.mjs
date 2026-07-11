@@ -1,4 +1,5 @@
 import { cp, rm, mkdir } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import { gradeRun, closeBrowser, ROOT } from "./lib.mjs";
 
@@ -7,6 +8,7 @@ const all = [
   "t1-counter", "t2-temperature", "t3-todos", "t4-tabs", "t5-await",
   "t6-layout", "t7-products", "t8-guestbook", "t9-headlines",
   "h1-drawer", "h2-search", "h3-admin",
+  "e1-filter", "e2-field", "e3-extract", "e4-bugfix",
 ];
 const tasks = only.length ? only : all;
 
@@ -17,7 +19,10 @@ for (const id of tasks) {
   const runDir = path.join(ROOT, "runs", "_validate", id);
   await rm(runDir, { recursive: true, force: true });
   await mkdir(runDir, { recursive: true });
-  await cp(path.join(taskDir, "solution"), runDir, { recursive: true });
+  // Edit tasks: solution holds only changed files, layered over the app base.
+  const baseDir = path.join(taskDir, "base");
+  if (existsSync(baseDir)) await cp(baseDir, runDir, { recursive: true });
+  await cp(path.join(taskDir, "solution"), runDir, { recursive: true, force: true });
   const t0 = Date.now();
   const result = await gradeRun({ taskDir, runDir, port: port++ });
   const secs = ((Date.now() - t0) / 1000).toFixed(1);

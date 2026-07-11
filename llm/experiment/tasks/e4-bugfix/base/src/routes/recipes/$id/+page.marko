@@ -1,0 +1,40 @@
+<try>
+  <await|recipe|=$global.data.recipe>
+    <if=recipe>
+      <h1 id="title">${recipe.title}</h1>
+      <p class="meta">
+        <span class="minutes">${recipe.minutes} min</span>
+        <span class="stars">${"★".repeat(recipe.rating)}</span>
+      </p>
+      <star-rating value=recipe.rating/>
+
+      <h2>Ingredients</h2>
+      <ul id="ingredients">
+        <for|item| of=recipe.ingredients>
+          <li>${item}</li>
+        </for>
+      </ul>
+
+      <h2>Cooking notes</h2>
+      <let/notes=[]>
+      <let/draft="">
+      <input id="note-input" value:=draft placeholder="What did you learn?">
+      <button id="add-note" onClick() {
+        const text = draft.trim();
+        if (text) {
+          notes.push(text);
+          draft = "";
+        }
+      }>Add note</button>
+      <ul id="notes">
+        <for|note| of=notes>
+          <li class="note">${note}</li>
+        </for>
+      </ul>
+    </if>
+    <else>
+      <h1>Not found</h1>
+    </else>
+  </await>
+  <@placeholder><p>Loading recipe</p></@placeholder>
+</try>

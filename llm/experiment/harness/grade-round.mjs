@@ -1,6 +1,7 @@
 // Materialize generated files and grade every run in a round.
 // Usage: node harness/grade-round.mjs <round> <generationsFile> [--out results.json]
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { readFile, writeFile, mkdir, cp, rm } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import { gradeRun, materialize, closeBrowser, ROOT } from "./lib.mjs";
 
@@ -21,7 +22,15 @@ for (const g of generations) {
   if (!g.files || !g.files.length) {
     result = { pass: false, fatal: { phase: "no-output", detail: "agent returned no files" }, checks: [] };
   } else {
-    await materialize(runDir, g.files);
+    // Edit tasks lay the app base down first; the subject's returned files win.
+    const baseDir = path.join(ROOT, "tasks", g.taskId, g.baseVariant || "base");
+    if (existsSync(baseDir)) {
+      await rm(runDir, { recursive: true, force: true });
+      await cp(baseDir, runDir, { recursive: true });
+      await materialize(runDir, g.files, { clean: false });
+    } else {
+      await materialize(runDir, g.files);
+    }
     result = await gradeRun({ taskDir: path.join(ROOT, "tasks", g.taskId), runDir, port: port++ });
   }
   runs.push({ ...g, ...result });

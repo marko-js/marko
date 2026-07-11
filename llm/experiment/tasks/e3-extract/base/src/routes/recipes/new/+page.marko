@@ -1,0 +1,8 @@
+<h1>Add a recipe</h1>
+<let/title="">
+<form method="post">
+  <label>Title <input name="title" value:=title></label>
+  <label>Minutes <input name="minutes" type="number" value="20"></label>
+  <button type="submit">Save</button>
+</form>
+<p id="preview"><if=title>Adding: ${title}</if><else>Type a title to begin</else></p>

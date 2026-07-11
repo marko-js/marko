@@ -1,0 +1,437 @@
+[
+ {
+  "runId": "e1-filter.C0.r1",
+  "taskId": "e1-filter",
+  "condition": "C0",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0.r2",
+  "taskId": "e1-filter",
+  "condition": "C0",
+  "pass": true,
+  "vanillaDom": true,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0.r3",
+  "taskId": "e1-filter",
+  "condition": "C0",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C1.r1",
+  "taskId": "e1-filter",
+  "condition": "C1",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C1.r2",
+  "taskId": "e1-filter",
+  "condition": "C1",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C1.r3",
+  "taskId": "e1-filter",
+  "condition": "C1",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0d.r1",
+  "taskId": "e1-filter",
+  "condition": "C0d",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": true,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0d.r2",
+  "taskId": "e1-filter",
+  "condition": "C0d",
+  "pass": true,
+  "vanillaDom": true,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0d.r3",
+  "taskId": "e1-filter",
+  "condition": "C0d",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": true,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e2-field.C0.r1",
+  "taskId": "e2-field",
+  "condition": "C0",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko",
+   "src/routes/recipes/new/+handler.js",
+   "src/routes/recipes/new/+page.marko",
+   "src/store.js"
+  ]
+ },
+ {
+  "runId": "e2-field.C0.r2",
+  "taskId": "e2-field",
+  "condition": "C0",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko",
+   "src/routes/recipes/new/+handler.js",
+   "src/routes/recipes/new/+page.marko",
+   "src/store.js"
+  ]
+ },
+ {
+  "runId": "e2-field.C0.r3",
+  "taskId": "e2-field",
+  "condition": "C0",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko",
+   "src/routes/recipes/new/+handler.js",
+   "src/routes/recipes/new/+page.marko",
+   "src/store.js"
+  ]
+ },
+ {
+  "runId": "e2-field.C1.r1",
+  "taskId": "e2-field",
+  "condition": "C1",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko",
+   "src/routes/recipes/new/+handler.js",
+   "src/routes/recipes/new/+page.marko",
+   "src/store.js"
+  ]
+ },
+ {
+  "runId": "e2-field.C1.r2",
+  "taskId": "e2-field",
+  "condition": "C1",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko",
+   "src/routes/recipes/new/+handler.js",
+   "src/routes/recipes/new/+page.marko",
+   "src/store.js"
+  ]
+ },
+ {
+  "runId": "e2-field.C1.r3",
+  "taskId": "e2-field",
+  "condition": "C1",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko",
+   "src/routes/recipes/new/+handler.js",
+   "src/routes/recipes/new/+page.marko",
+   "src/store.js"
+  ]
+ },
+ {
+  "runId": "e3-extract.C0.r1",
+  "taskId": "e3-extract",
+  "condition": "C0",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko",
+   "src/tags/recipe-card.marko",
+   "src/tags/recipe-meta.marko"
+  ]
+ },
+ {
+  "runId": "e3-extract.C0.r2",
+  "taskId": "e3-extract",
+  "condition": "C0",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko",
+   "src/tags/recipe-card.marko",
+   "src/tags/recipe-meta.marko"
+  ]
+ },
+ {
+  "runId": "e3-extract.C0.r3",
+  "taskId": "e3-extract",
+  "condition": "C0",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko",
+   "src/tags/recipe-card.marko",
+   "src/tags/recipe-meta.marko"
+  ]
+ },
+ {
+  "runId": "e3-extract.C1.r1",
+  "taskId": "e3-extract",
+  "condition": "C1",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko",
+   "src/tags/recipe-card.marko",
+   "src/tags/recipe-meta.marko"
+  ]
+ },
+ {
+  "runId": "e3-extract.C1.r2",
+  "taskId": "e3-extract",
+  "condition": "C1",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko",
+   "src/tags/recipe-card.marko",
+   "src/tags/recipe-meta.marko"
+  ]
+ },
+ {
+  "runId": "e3-extract.C1.r3",
+  "taskId": "e3-extract",
+  "condition": "C1",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko",
+   "src/tags/recipe-card.marko",
+   "src/tags/recipe-meta.marko"
+  ]
+ },
+ {
+  "runId": "e4-bugfix.C0.r1",
+  "taskId": "e4-bugfix",
+  "condition": "C0",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko"
+  ]
+ },
+ {
+  "runId": "e4-bugfix.C0.r2",
+  "taskId": "e4-bugfix",
+  "condition": "C0",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko"
+  ]
+ },
+ {
+  "runId": "e4-bugfix.C0.r3",
+  "taskId": "e4-bugfix",
+  "condition": "C0",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko"
+  ]
+ },
+ {
+  "runId": "e4-bugfix.C1.r1",
+  "taskId": "e4-bugfix",
+  "condition": "C1",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko"
+  ]
+ },
+ {
+  "runId": "e4-bugfix.C1.r2",
+  "taskId": "e4-bugfix",
+  "condition": "C1",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko"
+  ]
+ },
+ {
+  "runId": "e4-bugfix.C1.r3",
+  "taskId": "e4-bugfix",
+  "condition": "C1",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/recipes/$id/+page.marko"
+  ]
+ }
+]

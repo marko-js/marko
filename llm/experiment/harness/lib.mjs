@@ -121,10 +121,25 @@ export async function gradeRun({ taskDir, runDir, port }) {
     checks.push({ name, pass: !!pass, detail: String(detail).slice(0, 500) });
     return !!pass;
   };
+  // Source access for graders that assert structure (eg extraction tasks).
+  const readSource = (rel) => readFile(path.join(runDir, rel), "utf8").catch(() => null);
+  const listSource = async (dir = "src") => {
+    const out = [];
+    const walk = async (d) => {
+      for (const ent of await readdir(path.join(runDir, d), { withFileTypes: true }).catch(() => [])) {
+        if (ent.name === "node_modules") continue;
+        const rel = path.join(d, ent.name);
+        if (ent.isDirectory()) await walk(rel);
+        else out.push(rel);
+      }
+    };
+    await walk(dir);
+    return out;
+  };
 
   try {
     const { grade } = await import(path.join(taskDir, "grade.mjs") + `?t=${Date.now()}`);
-    await grade({ baseUrl: server.baseUrl, fetchRes, fetchText, withPage, check, htmlText });
+    await grade({ baseUrl: server.baseUrl, fetchRes, fetchText, withPage, check, htmlText, readSource, listSource });
   } catch (err) {
     fatal = {
       phase: err.serverError ? "compile-or-runtime" : "grader-exception",
@@ -177,8 +192,8 @@ function trimLog(log) {
 
 // ---------- materialization ----------
 // files: [{ path, content }] from the agent. Refuses path escapes.
-export async function materialize(runDir, files) {
-  await rm(runDir, { recursive: true, force: true });
+export async function materialize(runDir, files, { clean = true } = {}) {
+  if (clean) await rm(runDir, { recursive: true, force: true });
   await mkdir(runDir, { recursive: true });
   const written = [];
   for (const f of files || []) {

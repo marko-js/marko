@@ -1,0 +1,15 @@
+<h1>Recipes</h1>
+<let/q="">
+<input id="q" value:=q placeholder="Search recipes">
+<try>
+  <await|recipes|=$global.data.recipes>
+    <const/visible=recipes.filter((r) => r.title.toLowerCase().includes(q.toLowerCase()))>
+    <p id="match-count">${visible.length} shown</p>
+    <ul id="recipes">
+      <for|recipe| of=visible by="id">
+        <recipe-card recipe=recipe/>
+      </for>
+    </ul>
+  </await>
+  <@placeholder><p>Loading recipes</p></@placeholder>
+</try>
