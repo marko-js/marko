@@ -1,5 +1,19 @@
 # @marko/runtime-tags
 
+## 6.3.2
+
+### Patch Changes
+
+- [#3364](https://github.com/marko-js/marko/pull/3364) [`3327f22`](https://github.com/marko-js/marko/commit/3327f22dbbe50e5965392a9ca4368bc1700c5b2a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix `<script>` content escaping only handling `</script`. A body containing `<!--` followed by `<script` put the HTML tokenizer in the script-data double-escaped state, where the real `</script>` no longer closes the element and the rest of the page is swallowed into it. `<script` and `<!--` now receive the same `\x3C` escape, and the escaped remainder preserves its original case.
+
+- [#3371](https://github.com/marko-js/marko/pull/3371) [`b41967c`](https://github.com/marko-js/marko/commit/b41967c636689e064d5f0e4324797d1392f07b87) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix static `-->` inside `<html-comment>` being written unescaped: SSR markup closed the comment early (leaking the rest as visible text) and the client template parsed into extra nodes, crashing hydration walks. Static comment text now gets `_escape_comment`'s transform at compile time in both output targets.
+
+- [#3375](https://github.com/marko-js/marko/pull/3375) [`d7e5ad1`](https://github.com/marko-js/marko/commit/d7e5ad117e022bb4c076cc60937babaddc9713eb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report a compile error when an `<option>` nested within a `<select>` that has a `value` attribute is missing its own `value` attribute or uses `selected`. The select's `value` only matches options by their `value` attributes, so these silently rendered with no selection applied.
+
+- [#3363](https://github.com/marko-js/marko/pull/3363) [`f520a70`](https://github.com/marko-js/marko/commit/f520a70d22986c0991a8a9266d175d9aafc9079d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix an SSR crash (`TypeError: Cannot read properties of null (reading 'id')`) when a long string first serialized as a promise/stream/async-generator settled value was reused in a later flush. Such strings now claim their dedup binding eagerly, matching how object values on that path already behave.
+
+- [#3361](https://github.com/marko-js/marko/pull/3361) [`a8cfae7`](https://github.com/marko-js/marko/commit/a8cfae7143dac43bb4b60c2fab622cf37af1699b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix a partially-consumed sync generator resuming as an async generator, which broke client-side `for..of`/spread over the resumed value (no `Symbol.iterator`).
+
 ## 6.3.1
 
 ### Patch Changes
