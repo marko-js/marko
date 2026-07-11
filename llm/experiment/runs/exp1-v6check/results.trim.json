@@ -1,0 +1,217 @@
+{
+ "round": "exp1-v6check",
+ "runs": [
+  {
+   "runId": "t1-counter.C1.r1",
+   "taskId": "t1-counter",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/count=0>\n\n<button id=\"like\" onClick() { count++ }>\n  Likes: ${count}\n</button>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: initial Likes: 0",
+     "pass": true,
+     "detail": " Likes: 0 "
+    },
+    {
+     "name": "browser: button exists",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: two clicks -> Likes: 2",
+     "pass": true,
+     "detail": "Likes: 2"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t1-counter.C1.r2",
+   "taskId": "t1-counter",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/count=0>\n\n<button id=\"like\" onClick() {\n  count++;\n}>\n  Likes: ${count}\n</button>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: initial Likes: 0",
+     "pass": true,
+     "detail": " Likes: 0 "
+    },
+    {
+     "name": "browser: button exists",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: two clicks -> Likes: 2",
+     "pass": true,
+     "detail": "Likes: 2"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t4-tabs.C1.r1",
+   "taskId": "t4-tabs",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "<let/active=0>\n<const/tabs=[...input.tab ?? []]>\n\n<div role=\"tablist\">\n  <for|tab, i| of=tabs>\n    <button\n      aria-selected=(i === active && \"true\")\n      onClick() { active = i }\n    >\n      ${tab.label}\n    </button>\n  </for>\n</div>\n\n<div id=\"panel\">\n  <${tabs[active].content}/>\n</div>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: labels present",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp1-v6check_apps_t4-tabs.C1.r1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp1-v6check_apps_t4-tabs.C1.r1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-preload=\"runs_exp1-v6check_apps_t4-tabs.C1.r1_dist_.marko-run_index.marko\"]').forEach(el=>el.r"
+    },
+    {
+     "name": "ssr: first tab content present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: three tab buttons",
+     "pass": true,
+     "detail": "3"
+    },
+    {
+     "name": "browser: first content visible",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content hidden",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first aria-selected",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content visible after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first content hidden after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: aria-selected moved",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t4-tabs.C1.r2",
+   "taskId": "t4-tabs",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "<let/active=0>\n<const/tabs=[...input.tab ?? []]>\n\n<div role=\"tablist\">\n  <for|tab, i| of=tabs>\n    <button\n      onClick() { active = i }\n      aria-selected=(i === active && \"true\")\n    >\n      ${tab.label}\n    </button>\n  </for>\n</div>\n\n<div id=\"panel\">\n  <${tabs[active].content}/>\n</div>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: labels present",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp1-v6check_apps_t4-tabs.C1.r2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp1-v6check_apps_t4-tabs.C1.r2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-preload=\"runs_exp1-v6check_apps_t4-tabs.C1.r2_dist_.marko-run_index.marko\"]').forEach(el=>el.r"
+    },
+    {
+     "name": "ssr: first tab content present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: three tab buttons",
+     "pass": true,
+     "detail": "3"
+    },
+    {
+     "name": "browser: first content visible",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content hidden",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first aria-selected",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content visible after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first content hidden after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: aria-selected moved",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  }
+ ]
+}

@@ -4,7 +4,7 @@ Marko 6 = HTML superset. NOT JSX, NOT old Marko 4/5. `.marko` files are componen
 
 ## Golden rules
 
-1. Text interpolation: `${expr}` inside tag bodies. Text must live inside an element — a bare line like `Welcome aboard` at the root of the template parses as a TAG named `Welcome` (concise mode) and fails to compile. Wrap it: `<p>Welcome aboard</p>`. Attributes take raw JS after `=` with NO braces/quotes needed: `<div title=user.name data-n=1 + 1>` (parenthesize if the value contains `>`).
+1. Text interpolation: `${expr}` inside tag bodies. A bare line like `Welcome aboard` at the root of the template parses as a TAG named `Welcome` (concise mode) and fails to compile. Wrap it in an element (`<p>Welcome aboard</p>`) or prefix the line with `-- ` to mark it as text (`-- Welcome ${name}` works at the top level). Attributes take raw JS after `=` with NO braces/quotes needed: `<div title=user.name data-n=1 + 1>` (parenthesize if the value contains `>`).
 2. State: `<let/name=initial>` (slash then var name!). Update by plain assignment in an event handler: `count++`, `text = "hi"`. No setState, no hooks.
 3. Derived values: `<const/total=items.length * price>` — auto-recomputes. Never use an effect to derive state.
 4. NEVER mutate state in place. `items.push(x)` will NOT update the UI. Always reassign:
@@ -104,7 +104,7 @@ import { getUser } from "../data.js";
 </div>
 ```
 
-- Repeated attr tags (many `<@tab ...>`) arrive as the SINGULAR prop `input.tab`, which is iterable but NOT an array: `input.tab[i]` and `input.tab.length` are undefined. To index or count, spread first: `<const/tabs=[...input.tab || []]>` then `tabs[active]`/`tabs.length`. Looping directly is fine: `<for|tab| of=input.tab>`.
+- Repeated attr tags (many `<@tab ...>`) arrive as the SINGULAR prop `input.tab`, which is iterable but NOT an array: `input.tab[i]` and `input.tab.length` are undefined. To index or count, spread first: `<const/tabs=[...input.tab ?? []]>` then `tabs[active]`/`tabs.length`. Looping directly is fine: `<for|tab| of=input.tab>`.
 - Conditional attrs: `false`/`null` attrs are omitted from HTML. `aria-selected` etc. want strings: `aria-selected=(i === active && "true")`.
 - `class=` / `style=` accept strings, objects, arrays: `class=["btn", { active }]`, `style={ color }` (single braces).
 
@@ -124,17 +124,17 @@ import { getUser } from "../data.js";
 
 ## DON'T (these are errors or silently wrong)
 
-| Wrong (React/Vue/Marko5 habit)                              | Right                                                        |
-| ----------------------------------------------------------- | ------------------------------------------------------------ |
-| `{expr}` in markup, `className`, `key=`, `style={{...}}`    | `${expr}`, `class`, `by=` on `<for>`, `style={...}`          |
-| `onClick={() => ...}` / `@click` / `on-click("name")`       | `onClick() { ... }`                                          |
-| `const [x, setX] = useState()` / `state` / `class {}` block | `<let/x=0>` then `x = 1`                                     |
-| `$ const y = x * 2;` (scriptlets are removed)               | `<const/y=x * 2>`                                            |
-| `<let x=0>`                                                 | `<let/x=0>`                                                  |
-| `<if(cond)>`                                                | `<if=cond>`                                                  |
-| `items.push(x)`                                             | `items = items.concat(x)`                                    |
-| `input.renderBody`                                          | `input.content`                                              |
-| `<await>` with `@placeholder`/`@catch`                      | wrap in `<try>`                                              |
-| `el.focus()` on a ref                                       | `el().focus()` inside `<script>`/handler                     |
-| `input.tab[0]` / `input.tab.length`                         | `[...input.tab                                               |     | []]` first (attr tags are iterables, not arrays) |
-| bare text on its own line at template root                  | wrap in an element (`<p>...`), or prefix the line with `-- ` |
+| Wrong (React/Vue/Marko5 habit)                              | Right                                                              |
+| ----------------------------------------------------------- | ------------------------------------------------------------------ |
+| `{expr}` in markup, `className`, `key=`, `style={{...}}`    | `${expr}`, `class`, `by=` on `<for>`, `style={...}`                |
+| `onClick={() => ...}` / `@click` / `on-click("name")`       | `onClick() { ... }`                                                |
+| `const [x, setX] = useState()` / `state` / `class {}` block | `<let/x=0>` then `x = 1`                                           |
+| `$ const y = x * 2;` (scriptlets are removed)               | `<const/y=x * 2>`                                                  |
+| `<let x=0>`                                                 | `<let/x=0>`                                                        |
+| `<if(cond)>`                                                | `<if=cond>`                                                        |
+| `items.push(x)`                                             | `items = items.concat(x)`                                          |
+| `input.renderBody`                                          | `input.content`                                                    |
+| `<await>` with `@placeholder`/`@catch`                      | wrap in `<try>`                                                    |
+| `el.focus()` on a ref                                       | `el().focus()` inside `<script>`/handler                           |
+| `input.tab[0]` / `input.tab.length`                         | `[...input.tab ?? []]` first (attr tags are iterables, not arrays) |
+| bare text on its own line at template root                  | wrap in an element (`<p>...`), or prefix the line with `-- `       |
