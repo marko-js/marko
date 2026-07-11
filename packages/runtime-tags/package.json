@@ -34,7 +34,8 @@
     "tags-html.d.ts",
     "!**/meta.*.json",
     "!**/__tests__",
-    "!**/*.tsbuildinfo"
+    "!**/*.tsbuildinfo",
+    "cheatsheet.md"
   ],
   "scripts": {
     "build": "node -r ~ts ./scripts/bundle.mts"

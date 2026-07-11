@@ -93,7 +93,8 @@ To add a fixture: create the dir + `template.marko` (+ `test.ts` with steps exer
 2. Runtime helpers in `src/dom/` / `src/html/`, exported from `src/dom.ts` / `src/html.ts`; add to `util/runtime.ts` lists as needed.
 3. Several small fixtures covering static values, dynamic updates, nesting, and interaction with `<for>`/`<if>`.
 4. `npm run change` — user-facing changes need a changeset.
-5. Expect broad snapshot/`sizes.json` churn and an update to `packages/runtime-class/test/taglib-lookup/fixtures/getTagsSorted/expected.json` (interop taglib lookup).
+5. Update `cheatsheet.md` (the LLM syntax reference shipped in the published package) when the change affects user-facing syntax, idioms, or guidance.
+6. Expect broad snapshot/`sizes.json` churn and an update to `packages/runtime-class/test/taglib-lookup/fixtures/getTagsSorted/expected.json` (interop taglib lookup).
 
 **Changing generated output**: iterate with `npm run compile -- -t "" -o dom -d file.marko` (and `-o html`), then `test:update` and audit snapshot diffs — output shape changes ripple through hundreds of fixtures; verify a sample by hand, don't rubber-stamp.
 
