@@ -1,0 +1,139 @@
+[
+ {
+  "runId": "e1-filter.C0.r4",
+  "taskId": "e1-filter",
+  "condition": "C0",
+  "pass": true,
+  "vanillaDom": true,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0.r5",
+  "taskId": "e1-filter",
+  "condition": "C0",
+  "pass": true,
+  "vanillaDom": true,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko",
+   "src/tags/recipe-card.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0.r6",
+  "taskId": "e1-filter",
+  "condition": "C0",
+  "pass": true,
+  "vanillaDom": true,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0c.r1",
+  "taskId": "e1-filter",
+  "condition": "C0c",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0c.r2",
+  "taskId": "e1-filter",
+  "condition": "C0c",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0c.r3",
+  "taskId": "e1-filter",
+  "condition": "C0c",
+  "pass": true,
+  "vanillaDom": true,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko",
+   "src/tags/recipe-card.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0c.r4",
+  "taskId": "e1-filter",
+  "condition": "C0c",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0c.r5",
+  "taskId": "e1-filter",
+  "condition": "C0c",
+  "pass": true,
+  "vanillaDom": true,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0c.r6",
+  "taskId": "e1-filter",
+  "condition": "C0c",
+  "pass": true,
+  "vanillaDom": true,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ }
+]

@@ -157,7 +157,7 @@ in `unclear.md` (AttrTag numeric indexing silently undefined). @marko/run
 findings (silently non-routable lookalike files) recorded with the run-repo
 deliverables.
 
-## Post-review revisions (v4–v7)
+## Post-review revisions (v4–v8)
 
 Review passes on the shipped sheet, each revalidated with fresh subject
 runs before landing:
@@ -219,3 +219,13 @@ pairing and a single occurrence — below the sheet's evidence bar for a new
 line. Note the probe's spec fixes the architecture (load in the route layer);
 it measures mechanism clarity given that requirement, not whether subjects
 choose handler loading unprompted.
+- **v7 → v8** — the capability sweep (`RESULTS5.md`) exposed a
+  stronger-subject gap: sonnet diligently keyed a primitive list as
+  `by=city` (the loop variable — but `by=` evaluates outside the loop, so
+  SSR dies on an undefined reference; 2/2 h2-search C1 failures at
+  sonnet-low, a form haiku never produces because it omits `by=`). The
+  control-flow block gains the function-form line
+  (`by=(city) => city`, with the not-in-scope warning) and a matching DON'T
+  row. Revalidated on the exact failing cell (h2-search, C1, sonnet-low,
+  n=2): **2/2**, both adopting `by=(city) => city` verbatim. The
+  compiler-side hint is recorded in `agent-feedback/dx.md`.

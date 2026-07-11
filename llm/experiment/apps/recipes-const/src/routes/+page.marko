@@ -1,0 +1,11 @@
+<h1>Recipes</h1>
+<try>
+  <await|recipes|=$global.data.recipes>
+    <ul id="recipes">
+      <for|recipe| of=recipes by="id">
+        <recipe-card recipe=recipe/>
+      </for>
+    </ul>
+  </await>
+  <@placeholder><p>Loading recipes</p></@placeholder>
+</try>

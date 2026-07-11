@@ -1,0 +1,411 @@
+[
+ {
+  "runId": "t1-counter.C0.hh.r1",
+  "taskId": "t1-counter",
+  "condition": "C0-hh",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "t1-counter.C0.hh.r2",
+  "taskId": "t1-counter",
+  "condition": "C0-hh",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "t1-counter.C1.hh.r1",
+  "taskId": "t1-counter",
+  "condition": "C1-hh",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "t1-counter.C1.hh.r2",
+  "taskId": "t1-counter",
+  "condition": "C1-hh",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "t2-temperature.C0.hh.r1",
+  "taskId": "t2-temperature",
+  "condition": "C0-hh",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "t2-temperature.C0.hh.r2",
+  "taskId": "t2-temperature",
+  "condition": "C0-hh",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "t2-temperature.C1.hh.r1",
+  "taskId": "t2-temperature",
+  "condition": "C1-hh",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "t2-temperature.C1.hh.r2",
+  "taskId": "t2-temperature",
+  "condition": "C1-hh",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "t3-todos.C0.hh.r1",
+  "taskId": "t3-todos",
+  "condition": "C0-hh",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": true,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "t3-todos.C0.hh.r2",
+  "taskId": "t3-todos",
+  "condition": "C0-hh",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": true,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "t3-todos.C1.hh.r1",
+  "taskId": "t3-todos",
+  "condition": "C1-hh",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "t3-todos.C1.hh.r2",
+  "taskId": "t3-todos",
+  "condition": "C1-hh",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "t4-tabs.C0.hh.r1",
+  "taskId": "t4-tabs",
+  "condition": "C0-hh",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/tags/tab-panel.marko"
+  ]
+ },
+ {
+  "runId": "t4-tabs.C0.hh.r2",
+  "taskId": "t4-tabs",
+  "condition": "C0-hh",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/tags/tab-panel.marko"
+  ]
+ },
+ {
+  "runId": "t4-tabs.C1.hh.r1",
+  "taskId": "t4-tabs",
+  "condition": "C1-hh",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/tags/tab-panel.marko"
+  ]
+ },
+ {
+  "runId": "t4-tabs.C1.hh.r2",
+  "taskId": "t4-tabs",
+  "condition": "C1-hh",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/tags/tab-panel.marko"
+  ]
+ },
+ {
+  "runId": "h2-search.C0.hh.r1",
+  "taskId": "h2-search",
+  "condition": "C0-hh",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "h2-search.C0.hh.r2",
+  "taskId": "h2-search",
+  "condition": "C0-hh",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "h2-search.C1.hh.r1",
+  "taskId": "h2-search",
+  "condition": "C1-hh",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "h2-search.C1.hh.r2",
+  "taskId": "h2-search",
+  "condition": "C1-hh",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": true,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "t8-guestbook.C0.hh.r1",
+  "taskId": "t8-guestbook",
+  "condition": "C0-hh",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/guestbook/+page.marko",
+   "src/routes/guestbook/+page.server.js"
+  ]
+ },
+ {
+  "runId": "t8-guestbook.C0.hh.r2",
+  "taskId": "t8-guestbook",
+  "condition": "C0-hh",
+  "pass": false,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/guestbook.marko",
+   "src/routes/guestbook.server.js"
+  ]
+ },
+ {
+  "runId": "t8-guestbook.C1.hh.r1",
+  "taskId": "t8-guestbook",
+  "condition": "C1-hh",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/guestbook/+handler.js",
+   "src/routes/guestbook/+page.marko"
+  ]
+ },
+ {
+  "runId": "t8-guestbook.C1.hh.r2",
+  "taskId": "t8-guestbook",
+  "condition": "C1-hh",
+  "pass": true,
+  "vanillaDom": false,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/guestbook/+handler.js",
+   "src/routes/guestbook/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0.hh.r1",
+  "taskId": "e1-filter",
+  "condition": "C0-hh",
+  "pass": true,
+  "vanillaDom": true,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0.hh.r2",
+  "taskId": "e1-filter",
+  "condition": "C0-hh",
+  "pass": true,
+  "vanillaDom": true,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ },
+ {
+  "runId": "e1-filter.C0.hh.r3",
+  "taskId": "e1-filter",
+  "condition": "C0-hh",
+  "pass": true,
+  "vanillaDom": true,
+  "eventSync": false,
+  "changeHandler": false,
+  "wrongDialect": false,
+  "scriptlet": false,
+  "stateMutation": false,
+  "touched": [
+   "src/routes/+page.marko"
+  ]
+ }
+]

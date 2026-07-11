@@ -1,0 +1,111 @@
+{
+ "round": "exp5-v8check",
+ "runs": [
+  {
+   "runId": "h2-search.C1.r1.sl",
+   "taskId": "h2-search",
+   "condition": "C1-sl",
+   "rep": 1,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\n<let/q=\"\">\n<const/results=cities.filter((city) => city.toLowerCase().includes(q.toLowerCase()))>\n\n<input id=\"q\" value:=q placeholder=\"Search cities...\">\n<p id=\"count\">${results.length} matches</p>\n<ul id=\"results\">\n  <for|city| of=results by=(city) => city>\n    <li>${city}</li>\n  </for>\n</ul>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cities",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp5-v8check_apps_h2-search.C1.r1.sl_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp5-v8check_apps_h2-search.C1.r1.sl_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorA"
+    },
+    {
+     "name": "ssr: 10 matches",
+     "pass": true,
+     "detail": " 10 matchesAmsterdamAustinBarcelonaBerlinBostonLisbonLondonMelbourneOsloOsaka "
+    },
+    {
+     "name": "browser: 'os' filters case-insensitively",
+     "pass": true,
+     "detail": "Boston,Osaka,Oslo"
+    },
+    {
+     "name": "browser: count 3 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: count 0 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "h2-search.C1.r2.sl",
+   "taskId": "h2-search",
+   "condition": "C1-sl",
+   "rep": 2,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\n<let/query=\"\">\n<const/results=cities.filter((city) => city.toLowerCase().includes(query.toLowerCase()))>\n\n<input id=\"q\" value:=query placeholder=\"Search cities\">\n<p id=\"count\">${results.length} matches</p>\n<ul id=\"results\">\n  <for|city| of=results by=(city) => city>\n    <li>${city}</li>\n  </for>\n</ul>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cities",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp5-v8check_apps_h2-search.C1.r2.sl_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp5-v8check_apps_h2-search.C1.r2.sl_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorA"
+    },
+    {
+     "name": "ssr: 10 matches",
+     "pass": true,
+     "detail": " 10 matchesAmsterdamAustinBarcelonaBerlinBostonLisbonLondonMelbourneOsloOsaka "
+    },
+    {
+     "name": "browser: 'os' filters case-insensitively",
+     "pass": true,
+     "detail": "Boston,Osaka,Oslo"
+    },
+    {
+     "name": "browser: count 3 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: count 0 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  }
+ ]
+}

@@ -87,3 +87,29 @@ For agentic edit-mode work on Marko apps, the guidance stack ranks:
 
 Subject cost: 27 generations, ~0.66M tokens. Grand total across
 experiments 1–4: ~650 subject generations.
+
+## Addendum — scaffold-content A/B (H-scaffold refuted)
+
+Protocol: `EXPERIMENT4.md` addendum. One `<const/stars="★".repeat(...)>`
+exemplar added to `recipe-card.marko` (`apps/recipes-const`); e1-filter with
+no sheets, C0c n=6 vs C0 pooled n=6.
+
+| arm | pass | const-derive | let-derive | vanilla DOM |
+|---|---|---|---|---|
+| C0 (n=6 pooled) | 4/6 | 0 | 2 (both fail) | 4 (all pass) |
+| C0c (n=6, const exemplar) | 3/6 | **0** | 3 (all fail) | 3 (all pass) |
+
+**Refuted.** Not one C0c subject adopted `<const/>` for its own derived
+value; one even edited `recipe-card.marko`, preserved the `<const/stars>`
+line it saw there, and still wrote a vanilla-DOM filter for itself. Combined
+with experiment 4's imitation flip, the boundary is now precise: **imitation
+transfers surface style (which handler syntax to write), not semantic rules
+(which of two similar forms to choose and why)**. The let-vs-const
+distinction is invisible in surface syntax; it has to be *stated* — the
+sheet's rule 3 (C1: 3/3 idiomatic) or an AGENTS.md note — not merely
+demonstrated. The create-marko recommendation stands for style-shaped idioms
+(change handlers, immutable updates) and is withdrawn for rule-shaped ones.
+
+At n=6 the unguided condition also shows its true modal behavior: vanilla-DOM
+escapes (7/12 across both arms) that pass behaviorally while abandoning the
+reactive model — reinforcing idiom auditing as a first-class metric.

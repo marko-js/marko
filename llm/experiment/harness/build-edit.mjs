@@ -56,7 +56,8 @@ const units = [];
 for (const taskId of tasks) {
   const spec = await readFile(path.join(ROOT, "tasks", taskId, "spec.md"), "utf8");
   for (const condition of flags.conditions) {
-    const baseVariant = condition === "C0d" ? "base-degraded" : "base";
+    const baseVariant =
+      { C0d: "base-degraded", C0c: "base-const" }[condition] || "base";
     let files;
     try {
       files = await appFiles(path.join(ROOT, "tasks", taskId, baseVariant));

@@ -1,0 +1,11 @@
+<let/current=input.value ?? 0>
+<div class="stars-input" role="radiogroup" aria-label="rate this recipe">
+  <for|n| from=1 until=6>
+    <button
+      class=["star", { filled: n <= current }]
+      aria-pressed=(n <= current && "true")
+      onClick() { current = n }
+    >★</button>
+  </for>
+</div>
+<p id="your-rating">Your rating: ${current}</p>

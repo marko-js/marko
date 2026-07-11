@@ -60,6 +60,7 @@ Marko 6 = HTML superset. NOT JSX, NOT old Marko 4/5. `.marko` files are componen
 <else> C </else>
 
 <for|item, index| of=list by="id"> ${item.name} </for>   // by keys the loop (no key= attr!)
+<for|city| of=cities by=(city) => city> ${city} </for>    // primitives: by takes a FUNCTION — by=city would be an undefined variable (the loop param is not in scope in by=)
 <for|i| from=0 until=5> ${i} </for>                       // 0..4
 
 <show=open> stays mounted, keeps state (form drafts) when hidden </show>
@@ -140,5 +141,6 @@ Don't fetch while rendering: start data loads early, pass the PROMISE through th
 | `el.focus()` on a ref                                       | `el().focus()` inside `<script>`/handler                                             |
 | `input.tab[0]` / `input.tab.length`                         | `[...input.tab ?? []]` first (attr tags are iterables, not arrays)                   |
 | bare text on its own line at template root                  | wrap in an element (`<p>...`), or prefix the line with `-- `                         |
+| `by=item` using the loop variable                           | `by="propName"` or `by=(item) => key` — `by=` is evaluated outside the loop          |
 | `onInput(e) { q = e.target.value }` to sync an input        | `value:=q` — the change handler owns the value                                       |
 | fetching inside the component that renders the data         | start the promise early (route handler / top of template), pass it down to `<await>` |

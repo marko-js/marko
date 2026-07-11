@@ -81,6 +81,27 @@ n=3 per task per condition: e1–e4 × {C0, C1} × 3 = 24, plus e1 × C0d × 3 =
   style; e1/C0d flips toward `onInput` syncing despite an identical spec —
   i.e. subjects copy the repo, not an internal prior.
 
+## Addendum — scaffold-content A/B (pre-registered before running)
+
+Experiment 4's only failure mode was `<let/>` used for a derived value — the
+one idiom the seeded app never demonstrates. If adding a single `<const/>`
+exemplar to the app fixes it, "scaffolds should exemplify the core reactive
+idioms" becomes a data-validated create-marko recommendation.
+
+- **Variant** (`apps/recipes-const`): identical app except
+  `src/tags/recipe-card.marko` computes its star string with
+  `<const/stars="★".repeat(input.recipe.rating)>` — one derived-value
+  example, in a file e1 subjects see but do not edit (repo-level, not
+  edit-site, teaching — the same distance at which C0d's degraded style
+  propagated).
+- **Arm C0c**: e1-filter on the const-seeded app, no sheets, n=6.
+- **Baseline**: e1-filter C0 pooled to n=6 (the three frozen exp4 runs plus
+  three new replicates of the identical prompt).
+- **Metrics**: behavioral pass; the let-vs-const choice for the filter
+  derivation (hand-read, it is one line); idiom audit.
+- **H-scaffold**: C0c's derived-state failures drop vs C0 (whose let-derive
+  rate was 2/3, plus both C0d non-vanilla runs); pass rises accordingly.
+
 ## Threats & mitigations
 
 - *Task ease confound (C0 high because tasks are easy)*: C0d isolates style
