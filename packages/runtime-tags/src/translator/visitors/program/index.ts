@@ -5,6 +5,7 @@ import {
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
 
+import { hasAnalyzeErrors } from "../../util/analyze-errors";
 import { addAssetImport } from "../../util/asset-imports";
 import {
   type BindingPropTree,
@@ -92,6 +93,10 @@ export default {
     },
 
     exit(program) {
+      // Analyze failures were reported as diagnostics (the compiler throws
+      // them together right after this stage); failed tags were skipped, so
+      // skip finalization work that assumes an error-free template.
+      if (hasAnalyzeErrors()) return;
       finalizeReferences();
       const programExtra = program.node.extra!;
       const paramsBinding = programExtra.binding;

@@ -5,7 +5,7 @@ import {
 } from "@marko/compiler/internal/babel";
 import path from "path";
 
-import { diagnosticError } from "../babel-utils/diagnostics";
+import { diagnosticError, DiagnosticType } from "../babel-utils/diagnostics";
 import { getFileInternal, setFileInternal } from "../babel-utils/get-file";
 import { getTemplateId } from "../babel-utils/tags";
 import { buildLookup } from "../taglib";
@@ -323,6 +323,29 @@ function getMarkoFile(code, fileOpts, markoOpts) {
       try {
         file.___compileStage = "analyze";
         traverseAll(file, translator.analyze);
+
+        if (!markoOpts.errorRecovery) {
+          // Analyze failures are recorded as error diagnostics so the whole
+          // template reports at once (and editors compiling with
+          // `errorRecovery` keep them as recoverable diagnostics); mirror
+          // the parse layer by throwing them together at the stage's end.
+          const seen = new Set();
+          const errors = [];
+          for (const diag of meta.diagnostics) {
+            if (diag.type !== DiagnosticType.Error) continue;
+            const key = `${
+              diag.loc ? `${diag.loc.start.line}:${diag.loc.start.column}` : ""
+            }:${diag.label}`;
+            if (seen.has(key)) continue;
+            seen.add(key);
+            errors.push(
+              buildCodeFrameError(filename, file.code, diag.loc, diag.label),
+            );
+            if (errors.length === 8) break;
+          }
+
+          throwAggregateError(errors);
+        }
       } catch (e) {
         compileCache.delete(id);
         throw e;

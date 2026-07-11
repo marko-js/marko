@@ -6,3 +6,10 @@
       3 | </if>
       4 | <else>
       5 |   <return=2/>
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-return-if-else/template.marko:5:4
+      3 | </if>
+      4 | <else>
+    > 5 |   <return=2/>
+        |    ^^^^^^ The [`<return>` tag](https://markojs.com/docs/reference/core-tag#return) can not be used under the `<"else">` tag.
+      6 | </else>
