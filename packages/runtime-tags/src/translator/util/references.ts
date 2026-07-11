@@ -112,7 +112,7 @@ export interface Binding {
   noSerialize: boolean;
   noSerializeProperties: Opt<string>;
   upstreamAlias: Binding | undefined;
-  default: { source: Binding; value: t.Expression } | undefined;
+  defaultSource: Binding | undefined;
   restOffset: number | undefined;
   scopeOffset: Binding | undefined;
   scopeAccessor: string | undefined;
@@ -229,7 +229,7 @@ export function createBinding(
     getters: new Map(),
     propertyAliases: new Map(),
     upstreamAlias,
-    default: undefined,
+    defaultSource: undefined,
     restOffset: undefined,
     scopeOffset: undefined,
     scopeAccessor: undefined,
@@ -759,11 +759,11 @@ function createBindingsAndTrackReferences(
     // variable) is represented by two bindings: a source binding holds the
     // value applied at the pattern's position, and the binding for `left` is
     // derived from it (`void 0 !== source ? source : fallback`) through its
-    // `default` edge. The DOM translation registers the derivation when the
-    // section's signals are written (see `initDefaultedValues` in
-    // `signals.ts`); the HTML translation materializes it as a const
-    // statement so the source stays serializable for resume (see
-    // `strip-default-values.ts`).
+    // `defaultSource` edge; the fallback itself stays in the tree on the
+    // pattern. The DOM translation registers the derivation from the
+    // pattern's translate visitor (see `initDefaultedValue` in `signals.ts`);
+    // the HTML translation materializes it as a const statement so the
+    // source stays serializable for resume (see `strip-default-values.ts`).
     case "AssignmentPattern": {
       const { left, right } = lVal;
       const defaultSource = createBinding(
@@ -808,7 +808,7 @@ function createBindingsAndTrackReferences(
           }
         }
 
-        binding.default = { source: defaultSource, value: right };
+        binding.defaultSource = defaultSource;
         (lVal.extra ??= {}).binding = binding;
         setBindingDownstream(binding, valueExtra);
         addSetupExpr(section, right);

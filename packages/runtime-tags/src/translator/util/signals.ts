@@ -954,7 +954,7 @@ export function getResumeRegisterId(
 export function writeSignals(section: Section) {
   const seen = new Set<Signal>();
   const written = new Set<Signal>();
-  initDefaultedValues(section);
+  collapseDefaultedValues(section);
   writeGetters(section);
 
   for (const signal of getSignals(section).values()) {
@@ -1069,32 +1069,62 @@ export function writeSignals(section: Section) {
 // itself), otherwise on the source's parameter when the derived signal
 // must persist its value. A derivation driven by a join keeps the
 // conditional since its reads lower to scope reads.
-function initDefaultedValues(section: Section) {
+// A defaulted binding derives from its raw source through its
+// `defaultSource` edge (see the AssignmentPattern case in references.ts);
+// the fallback stays in the tree and arrives here from the pattern's
+// translate visitor. The derivation registers against the fallback's
+// references like any other derived value; once every signal exists,
+// `collapseDefaultedValues` trades the conditional for a native parameter
+// default where the source read would lower to a value parameter.
+export function initDefaultedValue(binding: Binding, value: t.Expression) {
+  if (!binding.pruned) {
+    const section = binding.section;
+    const source = binding.defaultSource!;
+    addValue(
+      section,
+      value.extra!.referencedBindings,
+      initValue(binding),
+      t.conditionalExpression(
+        t.binaryExpression(
+          "!==",
+          t.unaryExpression("void", t.numericLiteral(0)),
+          createScopeReadExpression(source, section),
+        ),
+        createScopeReadExpression(source, section),
+        value,
+      ),
+    );
+  }
+}
+
+// A derivation registered on its raw source's own signal (the source alone
+// drives it) moves its fallback onto a value parameter when the source
+// read would lower to one: preferably the derived signal's own value
+// parameter, leaving the source forwarding alias style (which reduces to
+// the derived signal itself), otherwise the source's parameter when the
+// derived signal must persist its value. A join driven derivation keeps
+// the conditional since its reads lower to scope reads, as does an inlined
+// one since its full value is cloned into its readers.
+function collapseDefaultedValues(section: Section) {
+  const signals = getSignals(section);
   forEach(section.bindings, (binding) => {
-    const bindingDefault = binding.default;
-    if (bindingDefault && !binding.pruned) {
-      const { source, value } = bindingDefault;
-      const derivedSignal = initValue(binding);
-      const sourceSignal = getSignal(section, source);
-      const refs = value.extra!.referencedBindings;
-      let derivation: t.Expression = createScopeReadExpression(source, section);
-      if (refs === source && canDefaultValueParam(sourceSignal)) {
+    const source = binding.defaultSource;
+    if (source && !binding.pruned) {
+      const derivedSignal = signals.get(binding);
+      const sourceSignal = signals.get(source);
+      const entry =
+        derivedSignal &&
+        !derivedSignal.inline &&
+        sourceSignal &&
+        canDefaultValueParam(sourceSignal) &&
+        sourceSignal.values.find((value) => value.signal === derivedSignal);
+      if (entry && entry.value.type === "ConditionalExpression") {
         const target = canDefaultValueParam(derivedSignal)
           ? derivedSignal
           : sourceSignal;
-        target.valueParamDefault = value;
-      } else {
-        derivation = t.conditionalExpression(
-          t.binaryExpression(
-            "!==",
-            t.unaryExpression("void", t.numericLiteral(0)),
-            derivation,
-          ),
-          createScopeReadExpression(source, section),
-          value,
-        );
+        target.valueParamDefault = entry.value.alternate;
+        entry.value = entry.value.consequent;
       }
-      addValue(section, refs, derivedSignal, derivation);
     }
   });
 }
