@@ -87,3 +87,28 @@ Marko repo (compiler + runtime-tags translator):
   marko repo keep messages honest for human users too.
 - **Repair-time contamination** — subjects still receive no cheat sheet;
   prompts are the experiment-1 C0 wrapper + previous files + evidence only.
+
+## Extension — two-round repair loop (pre-registered before running)
+
+Question: do guided errors *compound* across repair rounds, and does the
+round-2-only route-suffix warning (G6b) become measurable once the mistake it
+targets exists in repaired output?
+
+- **Chaining rule**: every failed round-1 repair (from Arm A and Arm B2)
+  becomes one round-2 unit: previous files = that repair's output, evidence =
+  that repair's own graded failure (same unified pipeline: compile error, or
+  failed checks + dev-server guidance lines). Round-1 passes are terminal.
+  Chains whose round-1 repair returned no files terminate (recorded as such).
+- **Arms**: A2R continues Arm A chains and is graded under stock packages;
+  B2R continues Arm B2 chains and is graded under the shipped guided packages.
+  Each original app carries two independent chains per arm (round-1 n=2).
+- **Metrics**: cumulative pass after two rounds per arm; compile/serve ladder
+  progression per round; mechanism attribution — specifically whether new
+  hints surfaced by round-1 fixes (the `on:click` suggestion, the `$id.marko`
+  suffix warning) convert their chains in round 2; evidence-progression rate
+  (round-2 evidence differs from round-1) as the anti-stall measure.
+- **Hypotheses**: (H1) B2R cumulative pass exceeds Arm B2 round-1 by more than
+  A2R exceeds Arm A round-1 (compounding). (H2) B2R round-2 gains concentrate
+  in chains whose round-1 output compiled or newly surfaced a guided message
+  (t1 on:click, t6 remaining, t7 suffix warning). (H3) A2R chains mostly
+  re-present the same stock error (stall), as in round 1.

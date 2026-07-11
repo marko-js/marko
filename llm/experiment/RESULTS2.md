@@ -114,3 +114,53 @@ namespace (`Run.GET(handler)`, `Run.ALL(...)` middleware, validation options,
 **6/6 first-pass**, and all six generated handlers/middleware idiomatically
 used `Run.*` (zero legacy exports). Reference solutions updated to `Run.*` and
 re-validated 11/11.
+
+## Extension — two-round repair loop
+
+Chains: every failed round-1 repair continued once more with its own graded
+evidence (A2R: 42 stock chains, B2R: 40 guided chains; round-1 passes
+terminal). Protocol in `EXPERIMENT2.md`.
+
+| cumulative outcome (44 chains/arm) | stock | guided |
+|---|---|---|
+| pass after round 1 | 1 | 4 |
+| pass after round 2 | 5 | 6 |
+| pass after round 2, idiomatic Marko | **0** | **4** |
+| serving (compiles + responds) after round 2 | 13 | 15 |
+
+- **Every round-2 pass in both arms abandoned Marko** for static HTML +
+  vanilla DOM (`document.querySelector`, manual listeners). The only
+  idiomatic-Marko passes across the whole error-repair experiment are the
+  guided arm's round-1 slot-alias fixes (t6-layout). Stock's round-2 ladder
+  climb (9 → 13 serving) is abandoning Marko, not learning it: with opaque
+  errors the subject pivots dialects (same-error stall fell to 3/28) and
+  eventually lands on plain JS.
+- **Guided chains consume each message correctly, one layer per round.** The
+  t7 chains validated G6b end to end: round 1's bracket warning produced
+  `$id.marko`; round 2's suffix warning produced `$id+page.marko` /
+  `$id+handler.js` — correctly routable at last — which surfaced the page's
+  `<if(cond)>` hint as layer three. Four "regressions" (serving →
+  compile-fail) are this same phenomenon: fixing the routing layer exposes
+  the Marko layer to compilation for the first time.
+- **But a weak subject can't hold prior fixes without reference material**:
+  the t1 chain removed the JSX braces in round 1, then — while correctly
+  applying round 2's `on:click` → `onClick` suggestion — reintroduced the
+  braces. Error-driven repair for haiku-low is a bounded random walk through
+  its priors, advancing roughly one guided layer per round while sometimes
+  un-fixing another.
+
+**Verdict on H1–H3**: H1 (raw-pass compounding) not supported at two rounds —
+cumulative passes are statistically tied (5 vs 6/44). H2 supported at the
+mechanism level: every newly surfaced guided message was applied as written
+(on:click, route suffix). H3 refuted in an informative way: stock chains
+don't stall on the same error in round 2, they pivot away from Marko
+entirely. The practical ranking for weak coding agents is unchanged and now
+better quantified: **docs-in-context (one round, 87–100%, idiomatic) ≫
+guided errors (one layer per round, idiomatic where they land) ≫ stock
+errors (converges only by abandoning the framework)**. Guided errors remain
+worth shipping — they are the only error-side path that keeps subjects
+writing real Marko, and each message demonstrably lands — but they are a
+ladder, not an elevator.
+
+Round-2 subject cost: 82 generations, ~1.83M tokens. Experiment-2 total:
+214 repair generations, ~4.8M subject tokens.
