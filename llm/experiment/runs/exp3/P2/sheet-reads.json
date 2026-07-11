@@ -1,0 +1,178 @@
+{
+ "t1-counter.C0.r2.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "h2-search.C0.r1.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t3-todos.C0.r2.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 8
+ },
+ "h3-admin.C0.r1.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 5
+ },
+ "t6-layout.C0.r2.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t7-products.C0.r1.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "h3-admin.C0.r2.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t3-todos.C0.r2.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t2-temperature.C0.r2.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t1-counter.C0.r1.P2.s1": {
+  "sheetRead": false,
+  "toolCalls": 0
+ },
+ "t1-counter.C0.r2.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t4-tabs.C0.r1.P2.s2": {
+  "sheetRead": false,
+  "toolCalls": 0
+ },
+ "h2-search.C0.r2.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "h2-search.C0.r1.P2.s2": {
+  "sheetRead": false,
+  "toolCalls": 0
+ },
+ "h3-admin.C0.r2.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t2-temperature.C0.r2.P2.s1": {
+  "sheetRead": false,
+  "toolCalls": 0
+ },
+ "t4-tabs.C0.r2.P2.s2": {
+  "sheetRead": false,
+  "toolCalls": 0
+ },
+ "t5-await.C0.r2.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t6-layout.C0.r1.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "h1-drawer.C0.r2.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t1-counter.C0.r1.P2.s2": {
+  "sheetRead": false,
+  "toolCalls": 0
+ },
+ "t8-guestbook.C0.r2.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 4
+ },
+ "t5-await.C0.r2.P2.s1": {
+  "sheetRead": false,
+  "toolCalls": 0
+ },
+ "t2-temperature.C0.r1.P2.s1": {
+  "sheetRead": false,
+  "toolCalls": 0
+ },
+ "t8-guestbook.C0.r2.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t8-guestbook.C0.r1.P2.s1": {
+  "sheetRead": false,
+  "toolCalls": 0
+ },
+ "h1-drawer.C0.r1.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "h2-search.C0.r2.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t5-await.C0.r1.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "h1-drawer.C0.r2.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 3
+ },
+ "t7-products.C0.r2.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t6-layout.C0.r2.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t4-tabs.C0.r2.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t6-layout.C0.r1.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t5-await.C0.r1.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t7-products.C0.r1.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t7-products.C0.r2.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 7
+ },
+ "h1-drawer.C0.r1.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "h3-admin.C0.r1.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 8
+ },
+ "t2-temperature.C0.r1.P2.s2": {
+  "sheetRead": false,
+  "toolCalls": 0
+ },
+ "t8-guestbook.C0.r1.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t3-todos.C0.r1.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t4-tabs.C0.r1.P2.s1": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t3-todos.C0.r1.P2.s2": {
+  "sheetRead": true,
+  "toolCalls": 2
+ }
+}

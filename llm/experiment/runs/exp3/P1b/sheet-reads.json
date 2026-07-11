@@ -1,0 +1,178 @@
+{
+ "h2-search.C0.r1.P1b.s2": {
+  "sheetRead": false,
+  "toolCalls": 2
+ },
+ "t2-temperature.C0.r1.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 3
+ },
+ "h1-drawer.C0.r1.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 3
+ },
+ "t7-products.C0.r2.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 6
+ },
+ "t1-counter.C0.r1.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 5
+ },
+ "t5-await.C0.r2.P1b.s1": {
+  "sheetRead": false,
+  "toolCalls": 0
+ },
+ "t8-guestbook.C0.r1.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "h3-admin.C0.r2.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "h3-admin.C0.r2.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t7-products.C0.r1.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 5
+ },
+ "t5-await.C0.r2.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t1-counter.C0.r2.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "h1-drawer.C0.r1.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t4-tabs.C0.r1.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 3
+ },
+ "t1-counter.C0.r1.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 7
+ },
+ "h1-drawer.C0.r2.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 4
+ },
+ "t6-layout.C0.r2.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 9
+ },
+ "t2-temperature.C0.r2.P1b.s2": {
+  "sheetRead": false,
+  "toolCalls": 0
+ },
+ "t3-todos.C0.r2.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t2-temperature.C0.r2.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t1-counter.C0.r2.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 6
+ },
+ "t4-tabs.C0.r2.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t7-products.C0.r2.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 7
+ },
+ "t8-guestbook.C0.r2.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 16
+ },
+ "h2-search.C0.r1.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t6-layout.C0.r1.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 6
+ },
+ "t8-guestbook.C0.r1.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 7
+ },
+ "t3-todos.C0.r1.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t3-todos.C0.r2.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "t4-tabs.C0.r1.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 11
+ },
+ "t6-layout.C0.r2.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 9
+ },
+ "t7-products.C0.r1.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 2
+ },
+ "t6-layout.C0.r1.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 7
+ },
+ "h3-admin.C0.r1.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 4
+ },
+ "t5-await.C0.r1.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "h1-drawer.C0.r2.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 4
+ },
+ "t4-tabs.C0.r2.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 4
+ },
+ "t2-temperature.C0.r1.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 4
+ },
+ "h2-search.C0.r2.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 3
+ },
+ "h3-admin.C0.r1.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 6
+ },
+ "t3-todos.C0.r1.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 4
+ },
+ "t8-guestbook.C0.r2.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 11
+ },
+ "t5-await.C0.r1.P1b.s1": {
+  "sheetRead": true,
+  "toolCalls": 1
+ },
+ "h2-search.C0.r2.P1b.s2": {
+  "sheetRead": true,
+  "toolCalls": 2
+ }
+}
