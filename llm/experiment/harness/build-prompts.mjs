@@ -4,7 +4,7 @@ import { readFile, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { ROOT } from "./lib.mjs";
 
-const RUN_TASKS = new Set(["t6-layout", "t7-products", "t8-guestbook", "h3-admin"]);
+const RUN_TASKS = new Set(["t6-layout", "t7-products", "t8-guestbook", "t9-headlines", "h3-admin"]);
 
 const args = process.argv.slice(2);
 const round = args[0];

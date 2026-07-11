@@ -1,0 +1,11 @@
+<h1>News</h1>
+<try>
+  <await|headlines|=$global.data.headlines>
+    <ul id="headlines">
+      <for|h| of=headlines>
+        <li class="headline">${h.title}</li>
+      </for>
+    </ul>
+  </await>
+  <@placeholder><p>Loading headlines</p></@placeholder>
+</try>

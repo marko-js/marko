@@ -1,0 +1,133 @@
+{
+ "round": "probe-v7-next",
+ "runs": [
+  {
+   "runId": "t9-headlines.C1.r1",
+   "taskId": "t9-headlines",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/news/+handler.js",
+     "content": "import { loadHeadlines } from \"../../store.js\";\n\nexport const GET = Run.GET((context, next) => {\n  return next({ headlines: loadHeadlines() });\n});\n"
+    },
+    {
+     "path": "src/routes/news/+page.marko",
+     "content": "<try>\n  <await|headlines|=$global.data.headlines>\n    <ul id=\"headlines\">\n      <for|headline| of=headlines>\n        <li class=\"headline\">${headline.title}</li>\n      </for>\n    </ul>\n  </await>\n\n  <@placeholder>Loading headlines</@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "raw: loading text present",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_probe-v7-next_apps_t9-headlines.C1.r1_dist_.marko-run_news.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_probe-v7-next_apps_t9-headlines.C1.r1_dist_.marko-run_news.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/news.client-entry.marko\")]);document.querySelectorAl"
+    },
+    {
+     "name": "raw: all three headlines present",
+     "pass": true,
+     "detail": "   },\n          });\n      // repurpose \"op\" for callbacks ...carefully\n      if ((op = runtime.j[id])) {\n        placeholderCb = placeholder.c;\n        placeholder.c = () => placeholderCb() || op(runtime.r);\n      }\n    }\n  };\n})(M.LowNue);M.LowNue.w()</script><t hidden MLowNue=b><ul id=headlines><li class=headline>Local otter learns to juggle</li><li class=headline>Harbor bridge repainted overnight</li><li class=headline>Rare comet visible this weekend</li></ul></t><script>M.LowNue.w()</script>"
+    },
+    {
+     "name": "raw: loading text streams before headlines",
+     "pass": true,
+     "detail": "loading@699 otter@3543"
+    },
+    {
+     "name": "dom: three headline items",
+     "pass": true,
+     "detail": "[\"Local otter learns to juggle\",\"Harbor bridge repainted overnight\",\"Rare comet visible this weekend\"]"
+    },
+    {
+     "name": "dom: first item text",
+     "pass": true,
+     "detail": "Local otter learns to juggle"
+    },
+    {
+     "name": "dom: loading text gone",
+     "pass": true,
+     "detail": "Local otter learns to juggleHarbor bridge repainted overnightRare comet visible this weekend((runtimeId) => (self[runtimeId] ||= (\n  renderId,\n  prefix = runtimeId + renderId,\n  prefixLen = prefix.len"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t9-headlines.C1.r2",
+   "taskId": "t9-headlines",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/news/+handler.js",
+     "content": "export const GET = Run.GET((context, next) => {\n  const { loadHeadlines } = require(\"../../store.js\");\n  return next({ headlines: loadHeadlines() });\n});\n"
+    },
+    {
+     "path": "src/routes/news/+page.marko",
+     "content": "<try>\n  <await|headlines|=$global.data.headlines>\n    <ul id=\"headlines\">\n      <for|headline| of=headlines>\n        <li class=\"headline\">${headline.title}</li>\n      </for>\n    </ul>\n  </await>\n\n  <@placeholder>Loading headlines</@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \nrequire is not defined\n    \n    at eval (/home/user/experiment/runs/probe-v7-next/apps/t9-headlines.C1.r2/src/routes/news/+handler.js:6:29)\n    at call (/home/user/experiment/node_modules/@marko/run/dist/runtime/internal.js:376:24)\n    at Object.get1 [as handler] (/home/user/experiment/runs/probe-v7-next/apps/t9-headlines.C1.r2/__marko-run__news.js:22:39)\n    at invoke (/home/user/experiment/runs/probe-v7-next/apps/t9-headlines.C1.r2/__marko-run__router.js:50:33)\n    at Object.fetch (/home/user/experiment/runs/probe-v7-next/apps/t9-headlines.C1.r2/__marko-run__router.js:75:18)\n    at file:///home/user/experiment/node_modules/@marko/run/dist/adapter/index.js:884:53\n    at file:///home/user/experiment/node_modules/@marko/run/dist/adapter/index.js:810:30\n    at file:///home/user/experiment/node_modules/@marko/run/dist/adapter/index.js:892:5\n---server log---\nerror: require is not defined\u001b[0m\n      at eval (/home/user/experiment/runs/probe-v7-next/apps/t9-headlines.C1.r2/src/routes/news/+handler.js:6:29)\n      at call (/home/user/experiment/node_modules/@marko/run/dist/runtime/internal.js:376:24)\n      at Object.get1 [as handler] (/home/user/experiment/runs/probe-v7-next/apps/t9-headlines.C1.r2/__marko-run__news.js:22:39)\n      at invoke (/home/user/experiment/runs/probe-v7-next/apps/t9-headlines.C1.r2/__marko-run__router.js:50:33)\n      at Object.fetch (/home/user/experiment/runs/probe-v7-next/apps/t9-headlines.C1.r2/__marko-run__router.js:75:18)\n      at file:///home/user/experiment/node_modules/@marko/run/dist/adapter/index.js:884:53\n      at file:///home/user/experiment/node_modules/@marko/run/dist/adapter/index.js:810:30\n      at file:///home/user/experiment/node_modules/@marko/run/dist/adapter/index.js:892:5\n"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t9-headlines.C1.r3",
+   "taskId": "t9-headlines",
+   "condition": "C1",
+   "rep": 3,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/news/+handler.js",
+     "content": "import { loadHeadlines } from \"../../store.js\";\n\nexport const GET = Run.GET((context, next) => {\n  return next({ headlines: loadHeadlines() });\n});\n"
+    },
+    {
+     "path": "src/routes/news/+page.marko",
+     "content": "<h1>News</h1>\n\n<try>\n  <await|headlines|=$global.data.headlines>\n    <ul id=\"headlines\">\n      <for|headline| of=headlines>\n        <li class=\"headline\">${headline.title}</li>\n      </for>\n    </ul>\n  </await>\n\n  <@placeholder>Loading headlines</@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "raw: loading text present",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_probe-v7-next_apps_t9-headlines.C1.r3_dist_.marko-run_news.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_probe-v7-next_apps_t9-headlines.C1.r3_dist_.marko-run_news.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/news.client-entry.marko\")]);document.querySelectorAl"
+    },
+    {
+     "name": "raw: all three headlines present",
+     "pass": true,
+     "detail": "   },\n          });\n      // repurpose \"op\" for callbacks ...carefully\n      if ((op = runtime.j[id])) {\n        placeholderCb = placeholder.c;\n        placeholder.c = () => placeholderCb() || op(runtime.r);\n      }\n    }\n  };\n})(M.Y45mWc);M.Y45mWc.w()</script><t hidden MY45mWc=b><ul id=headlines><li class=headline>Local otter learns to juggle</li><li class=headline>Harbor bridge repainted overnight</li><li class=headline>Rare comet visible this weekend</li></ul></t><script>M.Y45mWc.w()</script>"
+    },
+    {
+     "name": "raw: loading text streams before headlines",
+     "pass": true,
+     "detail": "loading@712 otter@3556"
+    },
+    {
+     "name": "dom: three headline items",
+     "pass": true,
+     "detail": "[\"Local otter learns to juggle\",\"Harbor bridge repainted overnight\",\"Rare comet visible this weekend\"]"
+    },
+    {
+     "name": "dom: first item text",
+     "pass": true,
+     "detail": "Local otter learns to juggle"
+    },
+    {
+     "name": "dom: loading text gone",
+     "pass": true,
+     "detail": "NewsLocal otter learns to juggleHarbor bridge repainted overnightRare comet visible this weekend((runtimeId) => (self[runtimeId] ||= (\n  renderId,\n  prefix = runtimeId + renderId,\n  prefixLen = prefix"
+    }
+   ],
+   "guidance": ""
+  }
+ ]
+}

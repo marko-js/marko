@@ -204,3 +204,18 @@ runs before landing:
   both t2 runs using `valueChange` casts, both h2 runs `value:=q`, both t8
   runs `next({ entries })` → `$global.data`, and zero `onInput` listeners
   (`runs/exp1-v7check`).
+
+Follow-up clarity probe (`runs/probe-v7-next`): review asked whether v7 makes
+it unambiguous that promises are passed to `next()` for the template to
+`<await>`. New held-out task `t9-headlines` (genuinely async store; the graded
+contract requires the loading text to stream before the headline markup in a
+single response, so awaiting in the handler and client-side fetching both
+fail): 3/3 fresh subjects produced exactly the intended shape —
+`next({ headlines: loadHeadlines() })` unawaited, `<try>` +
+`<await|headlines|=$global.data.headlines>` + placeholder in the page. 2/3
+passed all six checks; the one failure wrote CommonJS `require()` inside the
+ESM handler (`require is not defined`), a module-system slip unrelated to the
+pairing and a single occurrence — below the sheet's evidence bar for a new
+line. Note the probe's spec fixes the architecture (load in the route layer);
+it measures mechanism clarity given that requirement, not whether subjects
+choose handler loading unprompted.

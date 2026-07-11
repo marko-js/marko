@@ -5,7 +5,7 @@ import { gradeRun, closeBrowser, ROOT } from "./lib.mjs";
 const only = process.argv.slice(2);
 const all = [
   "t1-counter", "t2-temperature", "t3-todos", "t4-tabs", "t5-await",
-  "t6-layout", "t7-products", "t8-guestbook",
+  "t6-layout", "t7-products", "t8-guestbook", "t9-headlines",
   "h1-drawer", "h2-search", "h3-admin",
 ];
 const tasks = only.length ? only : all;
