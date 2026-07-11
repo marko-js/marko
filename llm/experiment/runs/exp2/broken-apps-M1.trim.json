@@ -1,0 +1,626 @@
+{
+ "round": "exp2-armB-evidence",
+ "runs": [
+  {
+   "runId": "t1-counter.C0.r1",
+   "taskId": "t1-counter",
+   "condition": "C0",
+   "rep": 1,
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<script>\n  let likes = 0;\n</script>\n\n<button id=\"like\" on:click={() => likes++}>\n  Likes: ${ likes }\n</button>\n"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:5:29\n      3 | \\u003c/script>\n      4 |\n    > 5 | \\u003cbutton id=\"like\" on:click={() => likes++}>\n        |                             ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n      6 |   Likes: ${ likes }\n      7 | \\u003c/button>\n      8 |\n    \n    at src/routes/+page.marko:5:29\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/t1-counter.C0.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:5:29\n      3 | </script>\n      4 |\n    > 5 | <button id=\"like\" on:click={() => likes++}>\n        |                             ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n      6 |   Likes: ${ likes }\n      7 | </button>\n      8 |\n  3 | </script>\n  4 |\n> 5 | <button id=\"like\" on:click={() => likes++}>\n    |                             ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n  6 |   Likes: ${ likes }\n  7 | </button>\n  8 |\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "t1-counter.C0.r2",
+   "taskId": "t1-counter",
+   "condition": "C0",
+   "rep": 2,
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<script>\nlet likes = 0;\n\nfunction handleClick() {\n  likes++;\n}\n</script>\n\n<button id=\"like\" on:click={handleClick}>\n  Likes: ${likes}\n</button>\n"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:9:19\n       7 | \\u003c/script>\n       8 |\n    >  9 | \\u003cbutton id=\"like\" on:click={handleClick}>\n         |                   ^^^^^^^^ `on:click` is not a valid attribute, did you mean `onClick`?\n      10 |   Likes: ${likes}\n      11 | \\u003c/button>\n      12 |\n    \n    at src/routes/+page.marko:9:19\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/t1-counter.C0.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:9:19\n       7 | </script>\n       8 |\n    >  9 | <button id=\"like\" on:click={handleClick}>\n         |                   ^^^^^^^^ `on:click` is not a valid attribute, did you mean `onClick`?\n      10 |   Likes: ${likes}\n      11 | </button>\n      12 |\n   7 | </script>\n   8 |\n>  9 | <button id=\"like\" on:click={handleClick}>\n     |                   ^^^^^^^^ `on:click` is not a valid attribute, did you mean `onClick`?\n  10 |   Likes: ${likes}\n  11 | </button>\n  12 |\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experiment/runs/exp2/regrade-apps/t1-count"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "t2-temperature.C0.r1",
+   "taskId": "t2-temperature",
+   "condition": "C0",
+   "rep": 1,
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "let celsius = 20;\n\n<input\n  id=\"celsius\"\n  type=\"number\"\n  value=celsius\n  on-input=(e) => {\n    celsius = Number(e.target.value) || 0;\n  }\n/>\n\n<div id=\"fahrenheit\">\n  ${celsius * 9 / 5 + 32}\n</div>\n\n<button id=\"warmer\" on-click=() => {\n  celsius++;\n}>\n  Warmer\n</button>"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:1:5\n    > 1 | let celsius = 20;\n        |     ^^^^^^^^^^^^ The [`\\u003clet>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler. To declare reactive state, the variable goes after a slash: `\\u003clet/celsius=...>`. For a one time module level value, prefix a plain JavaScript statement with `static`.\n      2 |\n      3 | \\u003cinput\n      4 |   id=\"celsius\"\n    \n    at src/routes/+page.marko:1:5\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/t2-temperature.C0.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:1:5\n    > 1 | let celsius = 20;\n        |     ^^^^^^^^^^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler. To declare reactive state, the variable goes after a slash: `<let/celsius=...>`. For a one time module level value, prefix a plain JavaScript statement with `static`.\n      2 |\n      3 | <input\n      4 |   id=\"celsius\"\n> 1 | let celsius = 20;\n    |     ^^^^^^^^^^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler. To declare reactive state, the variable goes after a slash: `<let/celsius=...>`. For a one time module level value, prefix a plain JavaScript statement with `static`.\n  2 |\n  3 | <input\n  4 |   id=\"celsius\"\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "t2-temperature.C0.r2",
+   "taskId": "t2-temperature",
+   "condition": "C0",
+   "rep": 2,
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Temperature Converter</title>\n  </head>\n  <body>\n    <let celsius = 20>\n      <input\n        id=\"celsius\"\n        type=\"number\"\n        value=celsius\n        on-input=(e) => { celsius = Number(e.target.value) }\n      />\n\n      <div id=\"fahrenheit\">\n        ${celsius * 9 / 5 + 32}\n      </div>\n\n      <button\n        id=\"warmer\"\n        on-click={() => { celsius++ }}\n      >\n        Warmer\n      </button>\n    </let>\n  </body>\n</html>\n"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:21:19\n      19 |       \\u003cbutton\n      20 |         id=\"warmer\"\n    > 21 |         on-click={() => { celsius++ }}\n         |                   ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n      22 |       >\n      23 |         Warmer\n      24 |       \\u003c/button>\n    at src/routes/+page.marko:25:5\n      23 |         Warmer\n      24 |       \\u003c/button>\n    > 25 |     \\u003c/let>\n         |     ^^^^^^ The closing \"let\" tag does not match the corresponding opening \"body\" tag\n      26 |   \\u003c/body>\n      27 | \\u003c/html>\n      28 |\n    \n    at src/routes/+page.marko:21:19\n    at src/routes/+page.marko:25:5\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/t2-temperature.C0.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileErrors: \n    at src/routes/+page.marko:21:19\n      19 |       <button\n      20 |         id=\"warmer\"\n    > 21 |         on-click={() => { celsius++ }}\n         |                   ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n      22 |       >\n      23 |         Warmer\n      24 |       </button>\n\n    at src/routes/+page.marko:25:5\n      23 |         Warmer\n      24 |       </button>\n    > 25 |     </let>\n         |     ^^^^^^ The closing \"let\" tag does not match the corresponding opening \"body\" tag\n      26 |   </body>\n      27 | </html>\n      28 |\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "t3-todos.C0.r1",
+   "taskId": "t3-todos",
+   "condition": "C0",
+   "rep": 1,
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<script>\nlet todos = [];\nlet newTodoText = '';\n\nfunction addTodo() {\n  const text = newTodoText.trim();\n  if (text) {\n    todos = [...todos, { text, done: false }];\n    newTodoText = '';\n  }\n}\n</script>\n\n<input \n  id=\"new-todo\" \n  type=\"text\" \n  value=newTodoText\n  on-input(e => {\n    newTodoText = e.target.value;\n  })\n/>\n<button \n  id=\"add\"\n  on-click(addTodo)\n>Add</button>\n\n{#if todos.length === 0}\n  <div id=\"empty\">No todos yet</div>\n{/if}\n\n{#if todos.length > 0}\n  <ul id=\"list\">\n    {#each todos as todo, index}\n      <li>\n        <input \n          type=\"checkbox\" \n          checked={todo.done}\n          on-change(e => {\n            todos[index].done = e.target.checked;\n            todos = [...todos];\n          })\n        />\n        {todo.text}\n      </li>\n    {/each}\n  </ul>\n{/if}\n\n<div id=\"remaining\">{todos.filter(t => !t.done).length} left</div>"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:27:20\n      25 | >Add\\u003c/button>\n      26 |\n    > 27 | {#if todos.length === 0}\n         |                    ^ Mismatched group. A closing \"}\" character was found but it is not matched with a corresponding opening character.\n      28 |   \\u003cdiv id=\"empty\">No todos yet\\u003c/div>\n      29 | {/if}\n      30 |\n    \n    at src/routes/+page.marko:27:20\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/t3-todos.C0.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:27:20\n      25 | >Add</button>\n      26 |\n    > 27 | {#if todos.length === 0}\n         |                    ^ Mismatched group. A closing \"}\" character was found but it is not matched with a corresponding opening character.\n      28 |   <div id=\"empty\">No todos yet</div>\n      29 | {/if}\n      30 |\n  25 | >Add</button>\n  26 |\n> 27 | {#if todos.length === 0}\n     |                    ^ Mismatched group. A closing \"}\" character was found but it is not matched with a corresponding opening character.\n  28 |   <div id=\"empty\">No todos yet</div>\n  29 | {/if}\n  30 |\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "t3-todos.C0.r2",
+   "taskId": "t3-todos",
+   "condition": "C0",
+   "rep": 2,
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<state {\n  todos: [],\n  nextId: 0\n}>\n\n<div>\n  <div>\n    <input id=\"new-todo\" type=\"text\" />\n    <button\n      id=\"add\"\n      on-click=() => {\n        const input = document.getElementById('new-todo')\n        const text = input.value.trim()\n        if (text) {\n          todos.push({\n            id: nextId++,\n            text: text,\n            done: false\n          })\n          input.value = ''\n        }\n      }\n    >\n      Add\n    </button>\n  </div>\n\n  <if (todos.length === 0)>\n    <div id=\"empty\">No todos yet</div>\n  </if>\n  <else>\n    <ul id=\"list\">\n      <for (todo of todos) key=todo.id>\n        <li>\n          <input\n            type=\"checkbox\"\n            checked=todo.done\n            on-change=() => {\n              todo.done = !todo.done\n            }\n          />\n          ${todo.text}\n        </li>\n      </for>\n    </ul>\n  </else>\n\n  <div id=\"remaining\">\n    ${todos.filter(t => !t.done).length} left\n  </div>\n</div>\n"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:33:18\n      31 |   \\u003celse>\n      32 |     \\u003cul id=\"list\">\n    > 33 |       \\u003cfor (todo of todos) key=todo.id>\n         |                  ^ Unexpected token, expected \",\"\n      34 |         \\u003cli>\n      35 |           \\u003cinput\n      36 |             type=\"checkbox\"\n    at src/routes/+page.marko:1:1\n    > 1 | \\u003cstate {\n        | ^ Missing ending \"state\" tag\n      2 |   todos: [],\n      3 |   nextId: 0\n      4 | }>\n    \n    at src/routes/+page.marko:33:18\n    at src/routes/+page.marko:1:1\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/t3-todos.C0.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileErrors: \n    at src/routes/+page.marko:33:18\n      31 |   <else>\n      32 |     <ul id=\"list\">\n    > 33 |       <for (todo of todos) key=todo.id>\n         |                  ^ Unexpected token, expected \",\"\n      34 |         <li>\n      35 |           <input\n      36 |             type=\"checkbox\"\n\n    at src/routes/+page.marko:1:1\n    > 1 | <state {\n        | ^ Missing ending \"state\" tag\n      2 |   todos: [],\n      3 |   nextId: 0\n      4 | }>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experiment/runs/exp2/regrade-apps/t3-todos.C0.r2/src/routes/+page.marko\n      at src/routes/+page.ma"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "t4-tabs.C0.r1",
+   "taskId": "t4-tabs",
+   "condition": "C0",
+   "rep": 1,
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "$ {\n  let activeIndex = 0;\n}\n\n<div>\n  <div role=\"tablist\">\n    <for|tab, i| of=input.tab>\n      <button\n        aria-selected=(i === activeIndex ? \"true\" : undefined)\n        on-click() {\n          activeIndex = i;\n        }\n      >\n        ${tab.label}\n      </button>\n    </for>\n  </div>\n  \n  <div id=\"panel\">\n    ${input.tab[activeIndex]?.renderBody()}\n  </div>\n</div>\n\n<@slot name=\"tab\" label />\n"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/tags/tab-panel.marko:24:2\n      22 | \\u003c/div>\n      23 |\n    > 24 | \\u003c@slot name=\"tab\" label />\n         |  ^^^^^ @tags must be nested within another element.\n      25 |\n    \n    at src/tags/tab-panel.marko:24:2\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/t4-tabs.C0.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/tags/tab-panel.marko:24:2\n      22 | </div>\n      23 |\n    > 24 | <@slot name=\"tab\" label />\n         |  ^^^^^ @tags must be nested within another element.\n      25 |\n  22 | </div>\n  23 |\n> 24 | <@slot name=\"tab\" label />\n     |  ^^^^^ @tags must be nested within another element.\n  25 |\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experiment/runs/exp2/regrade-apps/t4-tabs.C0.r1/src/tags/tab-panel.marko\n      at src/tags/tab-panel.marko:24:2\n\u001b7\u001b[1A\u001b[2K\u001b[1G◀━━ GET /__ping__\n\u001b8━━▶ GET /__ping__ 500 157ms 1.67kb\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /\n\u001b8"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "t4-tabs.C0.r2",
+   "taskId": "t4-tabs",
+   "condition": "C0",
+   "rep": 2,
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "<div role=\"tablist\">\n  <for|tab, index| of=input.tabs>\n    <button\n      type=\"button\"\n      aria-selected=index === state.activeTab ? \"true\" : undefined\n      on-click={() => {\n        state.activeTab = index;\n      }}\n    >\n      ${tab.label}\n    </button>\n  </for>\n</div>\n\n<div id=\"panel\">\n  <for|tab, index| of=input.tabs>\n    <if(index === state.activeTab)>\n      <tab />\n    </if>\n  </for>\n</div>\n\n<script>\nexport default {\n  onCreate() {\n    this.state = {\n      activeTab: 0\n    };\n  }\n};\n</script>\n"
+    }
+   ],
+   "fatal": {
+    "phase": "server-start",
+    "detail": "3:20:27 PM [vite] (client) Re-optimizing dependencies because vite config has changed\n╭───────────────────────────────────────────────────╮\n│     ____  ____  ____                              │\n│    ╱╲   ╲╱╲   ╲ ╲   ╲                             │\n│   ╱  ╲  ╱  ╲   ╲ ╲   ╲    Marko Run v0.11.4       │\n│  ╱   ╱╲╱   ╱╲   ╲ ╲   ╲                           │\n│  ╲   ╲ ‾‾‾‾ ╱   ╱ ╱   ╱   Server listening at     │\n│   ╲   ╲    ╱   ╱ ╱   ╱    http://localhost:6000   │\n│    ╲   ╲  ╱   ╱ ╱   ╱                             │\n│     ‾‾‾‾  ‾‾‾‾  ‾‾‾‾                              │\n╰───────────────────────────────────────────────────╯\n\n(!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/t4-tabs.C0.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/tags/tab-panel.marko:6:17\n      4 |       type=\"button\"\n      5 |       aria-selected=index === state.activeTab ? \"true\" : undefined\n    > 6 |       on-click={() => {\n        |                 ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n      7 |         state.activeTab = index;\n      8 |       }}\n      9 |     >\n  4 |       type=\"button\"\n  5 |       aria-selected=index === state.activeTab ? \"true\" : undefined\n> 6 |       on-click={() => {\n    |                 ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n  7 |         state.activeTab = index;\n  8 |       }}\n  9 |     >\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n"
+   },
+   "checks": [],
+   "pass": false
+  },
+  {
+   "runId": "t5-await.C0.r1",
+   "taskId": "t5-await",
+   "condition": "C0",
+   "rep": 1,
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { getUser } from '../data.js'\n\n<h1>Profile</h1>\n<await(user from getUser())>\n  Loading profile\n<else>\n  <h2 id=\"user-name\">${user.name}</h2>\n  <p id=\"user-role\">${user.role}</p>\n</else>\n</await>"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:4:13\n      2 |\n      3 | \\u003ch1>Profile\\u003c/h1>\n    > 4 | \\u003cawait(user from getUser())>\n        |             ^ Unexpected token, expected \",\"\n      5 |   Loading profile\n      6 | \\u003celse>\n      7 |   \\u003ch2 id=\"user-name\">${user.name}\\u003c/h2>\n    \n    at src/routes/+page.marko:4:13\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/t5-await.C0.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:4:13\n      2 |\n      3 | <h1>Profile</h1>\n    > 4 | <await(user from getUser())>\n        |             ^ Unexpected token, expected \",\"\n      5 |   Loading profile\n      6 | <else>\n      7 |   <h2 id=\"user-name\">${user.name}</h2>\n  2 |\n  3 | <h1>Profile</h1>\n> 4 | <await(user from getUser())>\n    |             ^ Unexpected token, expected \",\"\n  5 |   Loading profile\n  6 | <else>\n  7 |   <h2 id=\"user-name\">${user.name}</h2>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experiment/runs/exp2/regrade-apps/t5-await.C0.r1/src/routes/+page.marko\n      at src"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "t5-await.C0.r2",
+   "taskId": "t5-await",
+   "condition": "C0",
+   "rep": 2,
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { getUser } from \"../data.js\"\n\n<h1>Profile</h1>\n\n<await(user) getUser()>\n  <@pending>\n    <div>Loading profile</div>\n  </@pending>\n  <@fulfilled>\n    <h2 id=\"user-name\">${user.name}</h2>\n    <p id=\"user-role\">${user.role}</p>\n  </@fulfilled>\n</await>"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:5:8\n      3 | \\u003ch1>Profile\\u003c/h1>\n      4 |\n    > 5 | \\u003cawait(user) getUser()>\n        |        ^^^^ Tag does not support arguments. Write the promise as a value attribute and receive the result as a tag parameter instead: `\\u003cawait|result|=promise>`.\n      6 |   \\u003c@pending>\n      7 |     \\u003cdiv>Loading profile\\u003c/div>\n      8 |   \\u003c/@pending>\n    \n    at src/routes/+page.marko:5:8\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/t5-await.C0.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:5:8\n      3 | <h1>Profile</h1>\n      4 |\n    > 5 | <await(user) getUser()>\n        |        ^^^^ Tag does not support arguments. Write the promise as a value attribute and receive the result as a tag parameter instead: `<await|result|=promise>`.\n      6 |   <@pending>\n      7 |     <div>Loading profile</div>\n      8 |   </@pending>\n  3 | <h1>Profile</h1>\n  4 |\n> 5 | <await(user) getUser()>\n    |        ^^^^ Tag does not support arguments. Write the promise as a value attribute and receive the result as a tag parameter instead: `<await|result|=promise>`.\n  6 |   <@pending>\n  7 |     <div>Loading profile</div>\n  8 |   </@pending>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node."
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "t6-layout.C0.r1",
+   "taskId": "t6-layout",
+   "condition": "C0",
+   "rep": 1,
+   "files": [
+    {
+     "path": "src/routes/+layout.marko",
+     "content": "<!DOCTYPE html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <title>Marko Site</title>\n  </head>\n  <body>\n    <header id=\"site-header\">\n      <nav>\n        <a href=\"/\">Home</a>\n        <a href=\"/about\">About</a>\n      </nav>\n    </header>\n    <main>\n      <slot />\n    </main>\n    <footer id=\"site-footer\">\n      built with marko\n    </footer>\n  </body>\n</html>\n"
+    },
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Home</h1>\n<p>Welcome to this Marko site built with @marko/run file-based routing.</p>\n"
+    },
+    {
+     "path": "src/routes/about/+page.marko",
+     "content": "<h1>About</h1>\n<p>This is a two-page site demonstrating shared layouts in Marko 6. Both pages use the same layout component to avoid duplication.</p>\n"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+layout.marko:16:8\n      14 |     \\u003c/header>\n      15 |     \\u003cmain>\n    > 16 |       \\u003cslot />\n         |        ^^^^ Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) `\\u003cslot>`. To render content passed to this tag, use a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags): `\\u003c${input.content}/>`.\n      17 |     \\u003c/main>\n      18 |     \\u003cfooter id=\"site-footer\">\n      19 |       built with marko\n    \n    at src/routes/+layout.marko:16:8\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/t6-layout.C0.r1/src/routes/+layout.marko\n/home/user/experiment/runs/exp2/regrade-apps/t6-layout.C0.r1/src/routes/+page.marko\n/home/user/experiment/runs/exp2/regrade-apps/t6-layout.C0.r1/src/routes/about/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+layout.marko:16:8\n      14 |     </header>\n      15 |     <main>\n    > 16 |       <slot />\n         |        ^^^^ Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) `<slot>`. To render content passed to this tag, use a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags): `<${input.content}/>`.\n      17 |     </main>\n      18 |     <footer id=\"site-footer\">\n      19 |       built with marko\n  14 |     </header>\n  15 |     <main>\n> 16 |       <slot />\n     |        ^^^^ Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) `<slot>`. To render content passed to this tag, use a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags): `<${input.content}/>`.\n  17 |     </main>\n  18 |     <footer id=\"site-footer\">\n  19 |       built with marko\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolld"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "t6-layout.C0.r2",
+   "taskId": "t6-layout",
+   "condition": "C0",
+   "rep": 2,
+   "files": [
+    {
+     "path": "src/routes/+layout.marko",
+     "content": "<header id=\"site-header\">\n  <nav>\n    <a href=\"/\">Home</a>\n    <a href=\"/about\">About</a>\n  </nav>\n</header>\n<main>\n  <slot/>\n</main>\n<footer id=\"site-footer\">built with marko</footer>"
+    },
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Home</h1>\n<p>Welcome to our site built with Marko 6!</p>"
+    },
+    {
+     "path": "src/routes/about/+page.marko",
+     "content": "<h1>About</h1>\n<p>This site demonstrates Marko 6 and @marko/run file-based routing with a shared layout component.</p>"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+layout.marko:8:4\n       6 | \\u003c/header>\n       7 | \\u003cmain>\n    >  8 |   \\u003cslot/>\n         |    ^^^^ Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) `\\u003cslot>`. To render content passed to this tag, use a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags): `\\u003c${input.content}/>`.\n       9 | \\u003c/main>\n      10 | \\u003cfooter id=\"site-footer\">built with marko\\u003c/footer>\n    \n    at src/routes/+layout.marko:8:4\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/t6-layout.C0.r2/src/routes/+layout.marko\n/home/user/experiment/runs/exp2/regrade-apps/t6-layout.C0.r2/src/routes/+page.marko\n/home/user/experiment/runs/exp2/regrade-apps/t6-layout.C0.r2/src/routes/about/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+layout.marko:8:4\n       6 | </header>\n       7 | <main>\n    >  8 |   <slot/>\n         |    ^^^^ Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) `<slot>`. To render content passed to this tag, use a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags): `<${input.content}/>`.\n       9 | </main>\n      10 | <footer id=\"site-footer\">built with marko</footer>\n   6 | </header>\n   7 | <main>\n>  8 |   <slot/>\n     |    ^^^^ Unable to find entry point for [custom tag](https://markojs.com/docs/reference/custom-tag#relative-custom-tags) `<slot>`. To render content passed to this tag, use a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags): `<${input.content}/>`.\n   9 | </main>\n  10 | <footer id=\"site-footer\">built with marko</footer>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///h"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "t7-products.C0.r1",
+   "taskId": "t7-products",
+   "condition": "C0",
+   "rep": 1,
+   "files": [
+    {
+     "path": "src/routes/products/[id].marko",
+     "content": "import { getProduct } from \"../../catalog.js\";\n\nexport const params = {\n  id: String,\n};\n\nexport async function getData({ params }) {\n  return {\n    product: getProduct(params.id),\n  };\n}\n\n<h1 id=\"product-name\">\n  ${data.product?.name ?? \"Product not found\"}\n</h1>\n\n<if(data.product)>\n  <p id=\"product-price\">${`$${data.product.price}`}</p>\n</if>"
+    },
+    {
+     "path": "src/routes/api/products/[id].js",
+     "content": "import { getProduct } from \"../../../catalog.js\";\n\nexport const GET = async (req, res) => {\n  const { id } = req.params;\n  const product = getProduct(id);\n\n  if (!product) {\n    res.statusCode = 404;\n    res.setHeader(\"content-type\", \"application/json\");\n    res.end(JSON.stringify({ error: \"not found\" }));\n    return;\n  }\n\n  res.setHeader(\"content-type\", \"application/json\");\n  res.end(JSON.stringify(product));\n};"
+    }
+   ],
+   "fatal": null,
+   "checks": [
+    {
+     "name": "page: product name",
+     "pass": false,
+     "detail": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /products/2</pre>\n</body>\n</html>\n"
+    },
+    {
+     "name": "page: price format",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "name": "page: not found text",
+     "pass": false,
+     "detail": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /products/999</pre>\n</body>\n</html>\n"
+    },
+    {
+     "name": "api: 200",
+     "pass": false,
+     "detail": "404"
+    },
+    {
+     "name": "api: json content-type",
+     "pass": false,
+     "detail": "text/html; charset=utf-8"
+    },
+    {
+     "name": "api: body matches product",
+     "pass": false,
+     "detail": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/products/2</pre>\n</body>\n</html>\n"
+    },
+    {
+     "name": "api: unknown id -> 404",
+     "pass": true,
+     "detail": "404"
+    },
+    {
+     "name": "api: 404 body",
+     "pass": false,
+     "detail": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/products/999</pre>\n</body>\n</html>\n"
+    }
+   ],
+   "guidance": "[marko-run] src/routes/api/products/[id].js is not routable; dynamic path segments are written `$param` (catch-all `$$param`), not `[param]`.\n[marko-run] src/routes/products/[id].marko is not routable; dynamic path segments are written `$param` (catch-all `$$param`), not `[param]`.",
+   "pass": false
+  },
+  {
+   "runId": "t7-products.C0.r2",
+   "taskId": "t7-products",
+   "condition": "C0",
+   "rep": 2,
+   "files": [
+    {
+     "path": "src/routes/products/[id].marko",
+     "content": "import { getProduct } from \"../../catalog.js\";\n\nconst product = getProduct(id);\n\nif (product) {\n  <h1 id=\"product-name\">${product.name}</h1>\n  <p id=\"product-price\">${\"$\" + product.price}</p>\n} else {\n  <h1 id=\"product-name\">Product not found</h1>\n}\n"
+    },
+    {
+     "path": "src/routes/api/products/[id].js",
+     "content": "import { getProduct } from \"../../../catalog.js\";\n\nexport async function get({ params }) {\n  const product = getProduct(params.id);\n\n  if (!product) {\n    return new Response(JSON.stringify({ error: \"not found\" }), {\n      status: 404,\n      headers: { \"content-type\": \"application/json\" },\n    });\n  }\n\n  return new Response(JSON.stringify(product), {\n    headers: { \"content-type\": \"application/json\" },\n  });\n}\n"
+    }
+   ],
+   "fatal": null,
+   "checks": [
+    {
+     "name": "page: product name",
+     "pass": false,
+     "detail": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /products/2</pre>\n</body>\n</html>\n"
+    },
+    {
+     "name": "page: price format",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "name": "page: not found text",
+     "pass": false,
+     "detail": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /products/999</pre>\n</body>\n</html>\n"
+    },
+    {
+     "name": "api: 200",
+     "pass": false,
+     "detail": "404"
+    },
+    {
+     "name": "api: json content-type",
+     "pass": false,
+     "detail": "text/html; charset=utf-8"
+    },
+    {
+     "name": "api: body matches product",
+     "pass": false,
+     "detail": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/products/2</pre>\n</body>\n</html>\n"
+    },
+    {
+     "name": "api: unknown id -> 404",
+     "pass": true,
+     "detail": "404"
+    },
+    {
+     "name": "api: 404 body",
+     "pass": false,
+     "detail": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /api/products/999</pre>\n</body>\n</html>\n"
+    }
+   ],
+   "guidance": "[marko-run] src/routes/api/products/[id].js is not routable; dynamic path segments are written `$param` (catch-all `$$param`), not `[param]`.\n[marko-run] src/routes/products/[id].marko is not routable; dynamic path segments are written `$param` (catch-all `$$param`), not `[param]`.",
+   "pass": false
+  },
+  {
+   "runId": "t8-guestbook.C0.r1",
+   "taskId": "t8-guestbook",
+   "condition": "C0",
+   "rep": 1,
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "import { entries } from \"../../store.js\";\n\n<ul id=\"entries\">\n  <if(entries.length === 0)>\n    <li>Be the first to sign!</li>\n  </if>\n  <for|entry| of=entries>\n    <li class=\"entry\">${entry.message}</li>\n  </for>\n</ul>\n\n<form method=\"post\">\n  <input type=\"text\" name=\"message\" />\n  <button type=\"submit\">Sign</button>\n</form>"
+    },
+    {
+     "path": "src/routes/guestbook/+server.js",
+     "content": "import { addEntry } from \"../../store.js\";\n\nexport async function post(req) {\n  const formData = await req.formData();\n  const message = formData.get(\"message\");\n  \n  if (message && message.trim()) {\n    addEntry(message.trim());\n  }\n  \n  return new Response(null, {\n    status: 303,\n    headers: {\n      \"Location\": \"/guestbook\"\n    }\n  });\n}"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/guestbook/+page.marko:4:7\n      2 |\n      3 | \\u003cul id=\"entries\">\n    > 4 |   \\u003cif(entries.length === 0)>\n        |       ^^^^^^^^^^^^^^^^^^^^ Tag does not support arguments. Write the condition as a value attribute instead: `\\u003cif=condition>`.\n      5 |     \\u003cli>Be the first to sign!\\u003c/li>\n      6 |   \\u003c/if>\n      7 |   \\u003cfor|entry| of=entries>\n    \n    at src/routes/guestbook/+page.marko:4:7\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/t8-guestbook.C0.r1/src/routes/guestbook/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/guestbook/+page.marko:4:7\n      2 |\n      3 | <ul id=\"entries\">\n    > 4 |   <if(entries.length === 0)>\n        |       ^^^^^^^^^^^^^^^^^^^^ Tag does not support arguments. Write the condition as a value attribute instead: `<if=condition>`.\n      5 |     <li>Be the first to sign!</li>\n      6 |   </if>\n      7 |   <for|entry| of=entries>\n  2 |\n  3 | <ul id=\"entries\">\n> 4 |   <if(entries.length === 0)>\n    |       ^^^^^^^^^^^^^^^^^^^^ Tag does not support arguments. Write the condition as a value attribute instead: `<if=condition>`.\n  5 |     <li>Be the first to sign!</li>\n  6 |   </if>\n  7 |   <for|entry| of=entries>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:1"
+   },
+   "checks": [],
+   "guidance": "[marko-run] src/routes/guestbook/+server.js is not routable; request handlers are named `+handler.<ext>`.",
+   "pass": false
+  },
+  {
+   "runId": "t8-guestbook.C0.r2",
+   "taskId": "t8-guestbook",
+   "condition": "C0",
+   "rep": 2,
+   "files": [
+    {
+     "path": "src/routes/guestbook.marko",
+     "content": "import { entries } from \"../store.js\"\n\n<form method=\"post\" action=\"/guestbook\">\n  <input name=\"message\" type=\"text\" />\n  <button type=\"submit\">Sign</button>\n</form>\n\n<if(entries.length > 0)>\n  <ul id=\"entries\">\n    <for|entry| of=entries>\n      <li class=\"entry\">${entry.message}</li>\n    </for>\n  </ul>\n</if>\n<else>\n  Be the first to sign!\n</else>"
+    },
+    {
+     "path": "src/routes/guestbook.js",
+     "content": "import { addEntry } from \"../store.js\";\n\nexport async function POST(req, res) {\n  const formData = await req.formData();\n  const message = formData.get(\"message\");\n  \n  if (message && message.trim()) {\n    addEntry(message);\n  }\n  \n  res.writeHead(302, { 'Location': '/guestbook' });\n  res.end();\n}"
+    }
+   ],
+   "fatal": null,
+   "checks": [
+    {
+     "name": "get: empty prompt",
+     "pass": false,
+     "detail": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /guestbook</pre>\n</body>\n</html>\n"
+    },
+    {
+     "name": "post: redirect status",
+     "pass": false,
+     "detail": "404"
+    },
+    {
+     "name": "post: location back to guestbook",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "name": "get: entry rendered",
+     "pass": false,
+     "detail": " Error Cannot GET /guestbook "
+    },
+    {
+     "name": "get: entry li present",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "name": "get: empty prompt gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "post: whitespace redirects",
+     "pass": false,
+     "detail": "404"
+    },
+    {
+     "name": "get: whitespace not added",
+     "pass": false,
+     "detail": "entries=0"
+    }
+   ],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "h1-drawer.C0.r1",
+   "taskId": "h1-drawer",
+   "condition": "C0",
+   "rep": 1,
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<script>\n  let isDrawerOpen = false;\n</script>\n\n<button id=\"toggle\" @click={() => {\n  isDrawerOpen = !isDrawerOpen;\n}}>\n  Toggle\n</button>\n\n<div id=\"drawer\" style=\"display: ${isDrawerOpen ? 'block' : 'none'}\">\n  <textarea id=\"notes\"></textarea>\n</div>\n"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:5:29\n      3 | \\u003c/script>\n      4 |\n    > 5 | \\u003cbutton id=\"toggle\" @click={() => {\n        |                             ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n      6 |   isDrawerOpen = !isDrawerOpen;\n      7 | }}>\n      8 |   Toggle\n    \n    at src/routes/+page.marko:5:29\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/h1-drawer.C0.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:5:29\n      3 | </script>\n      4 |\n    > 5 | <button id=\"toggle\" @click={() => {\n        |                             ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n      6 |   isDrawerOpen = !isDrawerOpen;\n      7 | }}>\n      8 |   Toggle\n  3 | </script>\n  4 |\n> 5 | <button id=\"toggle\" @click={() => {\n    |                             ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n  6 |   isDrawerOpen = !isDrawerOpen;\n  7 | }}>\n  8 |   Toggle\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "h1-drawer.C0.r2",
+   "taskId": "h1-drawer",
+   "condition": "C0",
+   "rep": 2,
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "let isOpen = $state(false);\n\n<button id=\"toggle\" onclick={() => { isOpen = !isOpen; }}>\n  Toggle\n</button>\n\n<div id=\"drawer\" style={ `display: ${isOpen ? 'block' : 'none'};` }>\n  <textarea id=\"notes\"></textarea>\n</div>\n"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:3:30\n      1 | let isOpen = $state(false);\n      2 |\n    > 3 | \\u003cbutton id=\"toggle\" onclick={() => { isOpen = !isOpen; }}>\n        |                              ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n      4 |   Toggle\n      5 | \\u003c/button>\n      6 |\n    at src/routes/+page.marko:7:26\n       5 | \\u003c/button>\n       6 |\n    >  7 | \\u003cdiv id=\"drawer\" style={ `display: ${isOpen ? 'block' : 'none'};` }>\n         |                          ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n       8 |   \\u003ctextarea id=\"notes\">\\u003c/textarea>\n       9 | \\u003c/div>\n      10 |\n    \n    at src/routes/+page.marko:3:30\n    at src/routes/+page.marko:7:26\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/h1-drawer.C0.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileErrors: \n    at src/routes/+page.marko:3:30\n      1 | let isOpen = $state(false);\n      2 |\n    > 3 | <button id=\"toggle\" onclick={() => { isOpen = !isOpen; }}>\n        |                              ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n      4 |   Toggle\n      5 | </button>\n      6 |\n\n    at src/routes/+page.marko:7:26\n       5 | </button>\n       6 |\n    >  7 | <div id=\"drawer\" style={ `display: ${isOpen ? 'block' : 'none'};` }>\n         |                          ^ Unexpected token. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n       8 |   <textarea id=\"notes\"></textarea>\n       9 | </div>\n      10 |\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async fi"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "h2-search.C0.r1",
+   "taskId": "h2-search",
+   "condition": "C0",
+   "rep": 1,
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\nlet searchQuery = \"\";\nlet filteredCities = cities.filter(city =>\n  city.toLowerCase().includes(searchQuery.toLowerCase())\n);\n\n<input\n  id=\"q\"\n  type=\"text\"\n  placeholder=\"Search cities...\"\n  on-input(event) {\n    searchQuery = event.target.value;\n  }\n/>\n\n<ul id=\"results\">\n  <for|city| of=filteredCities>\n    <li>${city}</li>\n  </for>\n</ul>\n\n<div id=\"count\">${filteredCities.length} matches</div>\n"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:3:5\n      1 | import { cities } from \"../cities.js\";\n      2 |\n    > 3 | let searchQuery = \"\";\n        |     ^^^^^^^^^^^^^^^^ The [`\\u003clet>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler. To declare reactive state, the variable goes after a slash: `\\u003clet/searchQuery=...>`. For a one time module level value, prefix a plain JavaScript statement with `static`.\n      4 | let filteredCities = cities.filter(city =>\n      5 |   city.toLowerCase().includes(searchQuery.toLowerCase())\n      6 | );\n    at src/routes/+page.marko:4:5\n      2 |\n      3 | let searchQuery = \"\";\n    > 4 | let filteredCities = cities.filter(city =>\n        |     ^ The [`\\u003clet>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler. To declare reactive state, the variable goes after a slash: `\\u003clet/filteredCities=...>`. For a one time module level value, prefix a plain JavaScript statement with `static`.\n      5 |   city.toLowerCase().includes(searchQuery.toLowerCase())\n      6 | );\n      7 |\n    \n    at src/routes/+page.marko:3:5\n    at src/routes/+page.marko:4:5\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/h2-search.C0.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileErrors: \n    at src/routes/+page.marko:3:5\n      1 | import { cities } from \"../cities.js\";\n      2 |\n    > 3 | let searchQuery = \"\";\n        |     ^^^^^^^^^^^^^^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler. To declare reactive state, the variable goes after a slash: `<let/searchQuery=...>`. For a one time module level value, prefix a plain JavaScript statement with `static`.\n      4 | let filteredCities = cities.filter(city =>\n      5 |   city.toLowerCase().includes(searchQuery.toLowerCase())\n      6 | );\n\n    at src/routes/+page.marko:4:5\n      2 |\n      3 | let searchQuery = \"\";\n    > 4 | let filteredCities = cities.filter(city =>\n        |     ^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`val"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "h2-search.C0.r2",
+   "taskId": "h2-search",
+   "condition": "C0",
+   "rep": 2,
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<script>\nimport { cities } from \"../cities.js\";\n\nlet q = \"\";\n\nfunction handleInput(e) {\n  q = e.target.value;\n}\n</script>\n\n<input id=\"q\" type=\"text\" value=q @input=handleInput />\n\n<% const filtered = cities.filter(c => c.toLowerCase().includes(q.toLowerCase())) %>\n\n<ul id=\"results\">\n  <for|city| of=filtered>\n    <li>${city}</li>\n  </for>\n</ul>\n\n<div id=\"count\">${filtered.length} matches</div>\n"
+    }
+   ],
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:13:2\n      11 | \\u003cinput id=\"q\" type=\"text\" value=q @input=handleInput />\n      12 |\n    > 13 | \\u003c% const filtered = cities.filter(c => c.toLowerCase().includes(q.toLowerCase())) %>\n         |  ^ \\u003c% scriptlets %> are no longer supported.\n      14 |\n      15 | \\u003cul id=\"results\">\n      16 |   \\u003cfor|city| of=filtered>\n    \n    at src/routes/+page.marko:13:2\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp2/regrade-apps/h2-search.C0.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:13:2\n      11 | <input id=\"q\" type=\"text\" value=q @input=handleInput />\n      12 |\n    > 13 | <% const filtered = cities.filter(c => c.toLowerCase().includes(q.toLowerCase())) %>\n         |  ^ <% scriptlets %> are no longer supported.\n      14 |\n      15 | <ul id=\"results\">\n      16 |   <for|city| of=filtered>\n  11 | <input id=\"q\" type=\"text\" value=q @input=handleInput />\n  12 |\n> 13 | <% const filtered = cities.filter(c => c.toLowerCase().includes(q.toLowerCase())) %>\n     |  ^ <% scriptlets %> are no longer supported.\n  14 |\n  15 | <ul id=\"results\">\n  16 |   <for|city| of=filtered>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__"
+   },
+   "checks": [],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "h3-admin.C0.r1",
+   "taskId": "h3-admin",
+   "condition": "C0",
+   "rep": 1,
+   "files": [
+    {
+     "path": "src/routes/admin/+middleware.js",
+     "content": "export default function middleware(input) {\n  const url = new URL(input.request.url, 'http://localhost');\n  const key = url.searchParams.get('key');\n  \n  if (key !== 'letmein') {\n    input.response.statusCode = 401;\n    input.response.setHeader('content-type', 'text/plain');\n    input.response.end('unauthorized');\n  }\n}"
+    },
+    {
+     "path": "src/routes/admin/dashboard.marko",
+     "content": "<h1>Dashboard</h1>\nSecret metrics"
+    }
+   ],
+   "fatal": null,
+   "checks": [
+    {
+     "name": "no key: 401",
+     "pass": false,
+     "detail": "404"
+    },
+    {
+     "name": "no key: unauthorized text",
+     "pass": false,
+     "detail": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /admin/dashboard</pre>\n</body>\n</html>\n"
+    },
+    {
+     "name": "no key: page not rendered",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "key: 200",
+     "pass": false,
+     "detail": "404"
+    },
+    {
+     "name": "key: dashboard rendered",
+     "pass": false,
+     "detail": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /admin/dashboard</pre>\n</body>\n</html>\n"
+    }
+   ],
+   "guidance": "",
+   "pass": false
+  },
+  {
+   "runId": "h3-admin.C0.r2",
+   "taskId": "h3-admin",
+   "condition": "C0",
+   "rep": 2,
+   "files": [
+    {
+     "path": "src/routes/admin/+layout.server.js",
+     "content": "export async function onRequest({ request }) {\n  const url = new URL(request.url);\n  const key = url.searchParams.get('key');\n  \n  if (key !== 'letmein') {\n    return new Response('unauthorized', { status: 401 });\n  }\n}\n"
+    },
+    {
+     "path": "src/routes/admin/+layout.marko",
+     "content": "<slot/>\n"
+    },
+    {
+     "path": "src/routes/admin/dashboard/+page.marko",
+     "content": "<h1>Dashboard</h1>\nSecret metrics\n"
+    }
+   ],
+   "fatal": null,
+   "checks": [
+    {
+     "name": "no key: 401",
+     "pass": false,
+     "detail": "500"
+    },
+    {
+     "name": "no key: unauthorized text",
+     "pass": false,
+     "detail": "\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Error</title>\n    <script type=\"module\">\n      const error = {\"message\":\"\\n    at src/routes/admin/+layout.marko:1:2\\"
+    },
+    {
+     "name": "no key: page not rendered",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "key: 200",
+     "pass": false,
+     "detail": "500"
+    },
+    {
+     "name": "key: dashboard rendered",
+     "pass": false,
+     "detail": "\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Error</title>\n    <script type=\"module\">\n      const error = {\"message\":\"\\n    at src/routes/admin/+layout.marko:1:2\\n    > 1 | \\u003cslot/>\\n        |  ^^^^ Unable to find entry point for [custom tag](https://markojs"
+    }
+   ],
+   "guidance": "[marko-run] src/routes/admin/+layout.server.js is not routable; routable files are `+page.marko`, `+layout.marko`, `+handler.*`, `+middleware.*`, `+meta.*`, `+404.marko` and `+500.marko`.",
+   "pass": false
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-multiple-analyze-else-chain/template.marko:1:5
+    > 1 | <if(input.a)>a</if>
+        |     ^^^^^^^ Tag does not support arguments. Write the condition as a value attribute instead: `<if=condition>`.
+      2 | <else if=input.b>b</else>
+      3 |
+      4 | <show(input.c)>c</show>
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-multiple-analyze-else-chain/template.marko:4:7
+      2 | <else if=input.b>b</else>
+      3 |
+    > 4 | <show(input.c)>c</show>
+        |       ^^^^^^^ Tag does not support arguments. Write the condition as a value attribute instead: `<show=condition>`.
+      5 |

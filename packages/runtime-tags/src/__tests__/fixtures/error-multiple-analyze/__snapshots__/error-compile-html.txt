@@ -1,0 +1,23 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-multiple-analyze/template.marko:1:6
+    > 1 | <let count=0>
+        |      ^^^^^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler. To declare reactive state, the variable goes after a slash: `<let/count=...>`. For a one time module level value, prefix a plain JavaScript statement with `static`.
+      2 |
+      3 | <if(count > 1)>big</if>
+      4 |
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-multiple-analyze/template.marko:3:5
+      1 | <let count=0>
+      2 |
+    > 3 | <if(count > 1)>big</if>
+        |     ^^^^^^^^^ Tag does not support arguments. Write the condition as a value attribute instead: `<if=condition>`.
+      4 |
+      5 | <button onClick={handleClick}>Click</button>
+      6 |
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-multiple-analyze/template.marko:5:17
+      3 | <if(count > 1)>big</if>
+      4 |
+    > 5 | <button onClick={handleClick}>Click</button>
+        |                 ^^^^^^^^^^^^^ The `onClick` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }` (e.g. `onClick=myHandler` or `onClick() { ... }`).
+      6 |

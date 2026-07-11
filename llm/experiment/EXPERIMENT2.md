@@ -112,3 +112,26 @@ targets exists in repaired output?
   in chains whose round-1 output compiled or newly surfaced a guided message
   (t1 on:click, t6 remaining, t7 suffix warning). (H3) A2R chains mostly
   re-present the same stock error (stall), as in round 1.
+
+## Extension 2 — multi-error reporting prototype (pre-registered before running)
+
+The top API-shaped candidate from the two-round loop, prototyped in
+runtime-tags: the analyze stage now collects every tag-level error (skipping
+the failed tag's subtree) and throws them together from the program's analyze
+exit, reusing the parse layer's aggregate format. Single-error templates are
+byte-identical to before; identical duplicate messages dedupe; capped at 8.
+
+- **Arm M1**: the 22 frozen broken apps regraded under the multi-error build
+  (llms.md removed from the sandbox runtime so no fix-guide pointer appears —
+  evidence format matches Arm B2 exactly, plus the extra errors). One repair,
+  n=2, no cheat sheet, no tools. Graded under the same build.
+- **Paired baseline**: Arm B2 (single guided error): 4/44 pass, 15/44 serving.
+- **Reach audit first**: the intervention only differentiates on templates
+  whose regrade surfaces 2+ analyze-layer errors at once (parse-layer errors
+  already aggregate among themselves and mask the analyze stage). The audit
+  count is reported before subject runs; per-template deltas are interpreted
+  within reach.
+- **Hypotheses**: (M-H1) among in-reach templates, errors-fixed-per-round
+  exceeds 1 and compile-recovery beats B2's; (M-H2) out-of-reach templates
+  match B2 (no regression from the mechanism itself); (M-H3) cascade noise
+  stays low (spurious-error rate in evidence, hand-audited).

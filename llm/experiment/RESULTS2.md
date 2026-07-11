@@ -164,3 +164,43 @@ ladder, not an elevator.
 
 Round-2 subject cost: 82 generations, ~1.83M tokens. Experiment-2 total:
 214 repair generations, ~4.8M subject tokens.
+
+## Extension 2 — multi-error reporting prototype (Arm M1)
+
+Implemented in runtime-tags per the pre-registered addendum: the analyze stage
+collects every tag-level error (failed tag's subtree skipped, duplicates
+deduped, capped at 8) and throws them together from the program's analyze
+exit in the parse layer's aggregate format. Single-error output is
+byte-identical; 8512-test suite green; two new multi-error fixtures plus two
+existing fixtures now correctly reporting their second latent error
+(both misplaced `<return>`s, both invalid assignments).
+
+**Reach**: 16/17 compile-fatal frozen apps surface 2–4 distinct errors at
+once under the new build (the stacked mistakes were overwhelmingly
+analyze-layer: multiple bare `let`s, `<let x=>` + `<if(x)>` + `onClick={}`
+combos).
+
+| per 44 repairs (vs Arm B2 paired) | B2 (single error) | M1 (multi-error) |
+|---|---|---|
+| repaired to full pass | 4 | 5 |
+| serving after repair | 15 | 18 |
+| compile-fatal chains clearing **all reported** errors | — | **32/34 (94%)** |
+
+Outcome classes for M1's 34 compile-fatal chains: 5 pass, 4 clear to
+serving, **23 fix every shown error and advance to entirely new errors**,
+2 still show a reported error. The h2-search chains are the clean
+demonstration: both bare-`let` hints consumed in one round, producing an
+idiomatic pass (`<let/searchQuery="">`, proper event handler, `static`
+import).
+
+**Interpretation**: multi-error reporting does exactly what the two-round
+loop predicted — rounds-to-converge now scale with *layer* count (parse →
+analyze → runtime, usually two) instead of *error* count (2–4+). The
+aggregate pass-rate gain per single round is modest because most frozen apps
+carry both parse-layer and analyze-layer mistakes and the parse boundary is
+structural (analysis cannot run on a broken AST). The intervention's value
+compounds in multi-round loops and applies equally to humans fixing
+migrated files. Resolves the "translator reports only the first error"
+agent-feedback entry.
+
+M1 subject cost: 44 generations, ~0.99M tokens.

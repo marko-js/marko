@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getTagDef, type Plugin } from "@marko/compiler/babel-utils";
 
+import { recordAnalyzeError } from "../../util/analyze-errors";
 import * as hooks from "../../util/plugin-hooks";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -12,37 +13,54 @@ import NativeTag from "./native-tag";
 export default {
   analyze: {
     enter(tag) {
-      const tagDef = getTagDef(tag);
-      const type = analyzeTagNameType(tag);
-      const hook = tagDef?.analyzer?.hook as Plugin;
+      // Collect analyze errors (instead of aborting on the first) so a
+      // template with several mistakes reports them all together; the
+      // aggregate is thrown from the program's analyze exit. A failed tag's
+      // subtree is skipped to limit cascading follow-on errors.
+      try {
+        const tagDef = getTagDef(tag);
+        const type = analyzeTagNameType(tag);
+        const hook = tagDef?.analyzer?.hook as Plugin;
 
-      if (hook) {
-        hooks.enter(hook, tag);
-        return;
-      }
+        if (hook) {
+          hooks.enter(hook, tag);
+          return;
+        }
 
-      if (type === TagNameType.NativeTag) {
-        NativeTag.analyze.enter(tag);
-        return;
-      }
+        if (type === TagNameType.NativeTag) {
+          NativeTag.analyze.enter(tag);
+          return;
+        }
 
-      switch (type) {
-        case TagNameType.CustomTag:
-          CustomTag.analyze.enter(tag);
-          break;
-        case TagNameType.AttributeTag:
-          AttributeTag.analyze.enter(tag);
-          break;
-        case TagNameType.DynamicTag:
-          DynamicTag.analyze.enter(tag);
-          break;
+        switch (type) {
+          case TagNameType.CustomTag:
+            CustomTag.analyze.enter(tag);
+            break;
+          case TagNameType.AttributeTag:
+            AttributeTag.analyze.enter(tag);
+            break;
+          case TagNameType.DynamicTag:
+            DynamicTag.analyze.enter(tag);
+            break;
+        }
+      } catch (err) {
+        (tag.node.extra ??= {}).analyzeFailed = true;
+        recordAnalyzeError(tag.hub.file, err);
+        tag.skip();
       }
     },
     exit(tag) {
-      const hook = getTagDef(tag)?.analyzer?.hook as Plugin;
+      if (tag.node.extra?.analyzeFailed) return;
+      try {
+        const hook = getTagDef(tag)?.analyzer?.hook as Plugin;
 
-      if (hook) {
-        hooks.exit(hook, tag);
+        if (hook) {
+          hooks.exit(hook, tag);
+          return;
+        }
+      } catch (err) {
+        (tag.node.extra ??= {}).analyzeFailed = true;
+        recordAnalyzeError(tag.hub.file, err);
         return;
       }
 
