@@ -68,3 +68,18 @@ another test's `captureConsole` window (`utils/capture-console.ts` patches the
 global console), corrupting `writes.html`/log snapshots. If someone wants the
 ~10-20% win, scope the console capture (or buffer build diagnostics) first,
 then pipeline builds one fixture ahead gated on `MARKO_TEST_SLOTS`.
+
+On the CI (`@ci:test`) shape specifically, measured on a 4-core runner clone:
+~81s tests + ~15s c8/V8 coverage collection on the workers + ~12s cold
+`@babel/register` cache (fresh checkouts never hit the mtime-keyed cache, so
+caching `node_modules/.cache` in CI is pointless) + ~65s single-threaded `c8
+report`. The report profile: ~36% istanbul report generation, ~19% GC (fixed:
+`--max-semi-space-size=128` cuts the step to ~56s), ~11% v8-to-istanbul remap
+over 182MB of dumps — `--reporter=lcovonly` and `--merge-async` measured
+neutral, and dropping `excludeAfterRemap`/`all` would corrupt the numbers
+(runtime coverage arrives via fixture-bundle sourcemaps; see `.c8rc.json`).
+Two unexplored wins: remap+report each worker's dumps in parallel processes
+and merge the istanbul JSON at the end (the ~50s remap work splits cleanly
+per dump); prewarm the babel cache with one serial require pass in
+`scripts/test-parallel.js` before spawning workers on a cold cache (~6s net,
+needs a hardcoded heavy-module list that can rot).

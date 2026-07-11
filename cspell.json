@@ -385,7 +385,8 @@
     "vmax",
     "cqmin",
     "cqmax",
-    "whib"
+    "whib",
+    "lcovonly"
   ],
   "ignoreRegExpList": [],
   "files": ["*"],

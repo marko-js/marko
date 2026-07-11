@@ -44,9 +44,17 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      # Coverage collection + the c8 report add ~45% to the job (the report
+      # alone is ~1 min of single-threaded remapping), so only the newest node
+      # version pays for it — coverage is version-independent for this suite.
       - name: Run tests
+        if: ${{ matrix.node != 26 }}
+        run: npm run @ci:test:fast
+      - name: Run tests with coverage
+        if: ${{ matrix.node == 26 }}
         run: npm run @ci:test
       - name: Report code coverage
+        if: ${{ matrix.node == 26 }}
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
