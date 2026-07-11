@@ -5,15 +5,32 @@ import { getExprRoot } from "../util/get-root";
 import { isOutputHTML } from "../util/marko-config";
 import { setReferencesScope } from "../util/references";
 import { importRuntime } from "../util/runtime";
-import { getOrCreateSection, getSection, type Section } from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
+import { createSectionState } from "../util/state";
 import type { TemplateVisitor } from "../util/visitors";
 import { scopeIdentifier } from "./program";
 
-const abortIdsByExpressionForSection = new WeakMap<
-  Section,
-  Map<t.NodePath<t.Node>, number>
->();
+declare module "@marko/compiler/dist/types" {
+  export interface NodeExtra {
+    /** `$signal` abort id for this expression root, allocated in analyze
+     * (see below) so every translate reads the same id. */
+    abortId?: number;
+  }
+}
+
+// Abort ids must be identical across every compile of a template (each
+// output/entry compile addresses the same resumed scopes with
+// `$signal(scope, id)`). Analyze runs once per cached file and stamps
+// each id on its expression root's extra, so translates are REQUIRED to
+// agree by construction — they read, never allocate. The only
+// per-translate state is which roots already emitted their `$signalReset`
+// this pass (`createSectionState` keys off the current program; each
+// translate works on a fresh AST clone).
+const [getAbortResetEmitted] = createSectionState<Set<t.NodePath<t.Node>>>(
+  "abortResetEmitted",
+  () => new Set<t.NodePath<t.Node>>(),
+);
 
 export default {
   migrate(identifier) {
@@ -44,6 +61,13 @@ export default {
       const section = getOrCreateSection(identifier);
       section.hasAbortSignal = true;
       setReferencesScope(identifier);
+      // Stamped on the raw (not canonical) extra: ids stay one-per-root
+      // even if this extra later merges with another expression's.
+      const exprRoot = getExprRoot(identifier);
+      const rootExtra = (exprRoot.node.extra ??= { section });
+      if (rootExtra.abortId === undefined) {
+        rootExtra.abortId = section.abortSignalExprs++;
+      }
     }
   },
   translate(identifier) {
@@ -84,20 +108,11 @@ export default {
         } else {
           const section = getSection(identifier);
           const exprRoot = getExprRoot(identifier);
-          let abortIdsByExpression =
-            abortIdsByExpressionForSection.get(section);
-          let exprId: number | undefined;
+          const exprId = exprRoot.node.extra!.abortId!;
+          const resetEmitted = getAbortResetEmitted(section);
 
-          if (abortIdsByExpression) {
-            exprId = abortIdsByExpression.get(exprRoot);
-          } else {
-            abortIdsByExpression = new Map();
-            abortIdsByExpressionForSection.set(section, abortIdsByExpression);
-          }
-
-          if (exprId === undefined) {
-            exprId = abortIdsByExpression.size;
-            abortIdsByExpression.set(exprRoot, exprId);
+          if (!resetEmitted.has(exprRoot)) {
+            resetEmitted.add(exprRoot);
             addStatement(
               "render",
               section,
