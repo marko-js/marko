@@ -1,0 +1,12 @@
+import { cities } from "../cities.js";
+
+<let/q="">
+<const/matches=cities.filter(c => c.toLowerCase().includes(q.toLowerCase()))>
+
+<input id="q" value:=q>
+<p id="count">${matches.length} matches</p>
+<ul id="results">
+  <for|city| of=matches>
+    <li>${city}</li>
+  </for>
+</ul>

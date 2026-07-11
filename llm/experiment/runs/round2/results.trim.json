@@ -1,0 +1,1195 @@
+{
+ "round": "round2",
+ "runs": [
+  {
+   "runId": "t1-counter.C1.r1",
+   "taskId": "t1-counter",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "aef33a54a34e29d42",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/likes=0>\n\n<button id=\"like\" onClick() {\n  likes++\n}>\n  Likes: ${likes}\n</button>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: initial Likes: 0",
+     "pass": true,
+     "detail": " Likes: 0 "
+    },
+    {
+     "name": "browser: button exists",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: two clicks -> Likes: 2",
+     "pass": true,
+     "detail": "Likes: 2"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t1-counter.C1.r2",
+   "taskId": "t1-counter",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "a6576eaa3d832e898",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/likes=0>\n\n<button id=\"like\" onClick() { likes++ }>\n  Likes: ${likes}\n</button>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: initial Likes: 0",
+     "pass": true,
+     "detail": " Likes: 0 "
+    },
+    {
+     "name": "browser: button exists",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: two clicks -> Likes: 2",
+     "pass": true,
+     "detail": "Likes: 2"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t2-temperature.C1.r1",
+   "taskId": "t2-temperature",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "ae91266841a1e5caf",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/celsius=20>\n<const/fahrenheit=celsius * 9 / 5 + 32>\n\n<input type=\"number\" id=\"celsius\" value=celsius valueChange(v) { celsius = +v }>\n<div id=\"fahrenheit\">${fahrenheit}</div>\n<button id=\"warmer\" onClick() { celsius++ }>Warmer</button>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: fahrenheit 68",
+     "pass": true,
+     "detail": " 68Warmer "
+    },
+    {
+     "name": "browser: 100C -> 212F",
+     "pass": true,
+     "detail": "212"
+    },
+    {
+     "name": "browser: warmer -> celsius 101",
+     "pass": true,
+     "detail": "101"
+    },
+    {
+     "name": "browser: warmer -> fahrenheit 213.8",
+     "pass": true,
+     "detail": "213.8"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t2-temperature.C1.r2",
+   "taskId": "t2-temperature",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "a72189d128cc5463b",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/celsius=20>\n<const/fahrenheit=celsius * 9 / 5 + 32>\n\n<input id=\"celsius\" type=\"number\" value=celsius valueChange(v) { celsius = +v }>\n<div id=\"fahrenheit\">${fahrenheit}</div>\n<button id=\"warmer\" onClick() { celsius++ }>Warmer</button>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: fahrenheit 68",
+     "pass": true,
+     "detail": " 68Warmer "
+    },
+    {
+     "name": "browser: 100C -> 212F",
+     "pass": true,
+     "detail": "212"
+    },
+    {
+     "name": "browser: warmer -> celsius 101",
+     "pass": true,
+     "detail": "101"
+    },
+    {
+     "name": "browser: warmer -> fahrenheit 213.8",
+     "pass": true,
+     "detail": "213.8"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t3-todos.C1.r1",
+   "taskId": "t3-todos",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "a9f7c35bc9a70b587",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/todos=[]>\n<let/draft=\"\">\n<const/remaining=todos.filter(t => !t.done).length>\n\n<input id=\"new-todo\" value:=draft placeholder=\"Add a todo\">\n<button id=\"add\" onClick() {\n  const text = draft.trim();\n  if (text) {\n    todos = todos.concat({ id: todos.length + 1, text, done: false });\n    draft = \"\";\n  }\n}>Add</button>\n\n<if=todos.length>\n  <ul id=\"list\">\n    <for|todo, i| of=todos by=\"id\">\n      <li>\n        <input\n          type=\"checkbox\"\n          checked=todo.done\n          checkedChange(v) { todos = todos.toSpliced(i, 1, { ...todo, done: v }) }\n        >\n        ${todo.text}\n      </li>\n    </for>\n  </ul>\n  <div id=\"remaining\">${remaining} left</div>\n</if>\n<else>\n  <div id=\"empty\">No todos yet</div>\n</else>"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: empty state",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t3-todos.C1.r1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t3-todos.C1.r1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-prel"
+    },
+    {
+     "name": "browser: two items",
+     "pass": true,
+     "detail": "2"
+    },
+    {
+     "name": "browser: empty state removed",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: remaining 2 left",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: input cleared",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: remaining 1 left after check",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: whitespace not added",
+     "pass": true,
+     "detail": "2"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t3-todos.C1.r2",
+   "taskId": "t3-todos",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "a4546dc7854a360bd",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/todos=[]>\n<let/draft=\"\">\n<const/remaining=todos.filter(t => !t.done).length>\n\n<input id=\"new-todo\" value:=draft>\n<button id=\"add\" onClick() {\n  const text = draft.trim();\n  if (text) {\n    todos = todos.concat({ id: todos.length + 1, text, done: false });\n    draft = \"\";\n  }\n}>Add</button>\n\n<if=todos.length>\n  <ul id=\"list\">\n    <for|todo, i| of=todos by=\"id\">\n      <li>\n        <input\n          type=\"checkbox\"\n          checked=todo.done\n          checkedChange(v) { todos = todos.toSpliced(i, 1, { ...todo, done: v }) }\n        >\n        ${todo.text}\n      </li>\n    </for>\n  </ul>\n  <div id=\"remaining\">${remaining} left</div>\n</if>\n<else>\n  <div id=\"empty\">No todos yet</div>\n</else>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: empty state",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t3-todos.C1.r2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t3-todos.C1.r2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-prel"
+    },
+    {
+     "name": "browser: two items",
+     "pass": true,
+     "detail": "2"
+    },
+    {
+     "name": "browser: empty state removed",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: remaining 2 left",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: input cleared",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: remaining 1 left after check",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: whitespace not added",
+     "pass": true,
+     "detail": "2"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t4-tabs.C1.r1",
+   "taskId": "t4-tabs",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "a4a825482278abbb2",
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "<let/active=0>\n<const/tabs=[...input.tab || []]>\n\n<div role=\"tablist\">\n  <for|tab, i| of=tabs>\n    <button aria-selected=(i === active && \"true\") onClick() { active = i }>\n      ${tab.label}\n    </button>\n  </for>\n</div>\n\n<div id=\"panel\">\n  <${tabs[active].content}/>\n</div>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: labels present",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t4-tabs.C1.r1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t4-tabs.C1.r1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-preload=\"runs_round2_apps_t4-tabs.C1.r1_dist_.marko-run_index.marko\"]').forEach(el=>el.remove());</script>"
+    },
+    {
+     "name": "ssr: first tab content present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: three tab buttons",
+     "pass": true,
+     "detail": "3"
+    },
+    {
+     "name": "browser: first content visible",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content hidden",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first aria-selected",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content visible after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first content hidden after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: aria-selected moved",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t4-tabs.C1.r2",
+   "taskId": "t4-tabs",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "a3883beaa63e17007",
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "<let/active=0>\n<const/tabs=[...input.tab || []]>\n\n<div role=\"tablist\">\n  <for|tab, i| of=tabs>\n    <button\n      aria-selected=(i === active && \"true\")\n      onClick() { active = i }\n    >\n      ${tab.label}\n    </button>\n  </for>\n</div>\n\n<div id=\"panel\">\n  <${tabs[active].content}/>\n</div>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: labels present",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t4-tabs.C1.r2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t4-tabs.C1.r2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-preload=\"runs_round2_apps_t4-tabs.C1.r2_dist_.marko-run_index.marko\"]').forEach(el=>el.remove());</script>"
+    },
+    {
+     "name": "ssr: first tab content present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: three tab buttons",
+     "pass": true,
+     "detail": "3"
+    },
+    {
+     "name": "browser: first content visible",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content hidden",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first aria-selected",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content visible after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first content hidden after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: aria-selected moved",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t4-tabs.C1.r3",
+   "taskId": "t4-tabs",
+   "condition": "C1",
+   "rep": 3,
+   "stage": "first",
+   "agentId": "aaa256c80713298c6",
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "<let/active=0>\n<const/tabs=[...input.tab || []]>\n\n<div role=\"tablist\">\n  <for|tab, i| of=tabs>\n    <button\n      aria-selected=(i === active && \"true\")\n      onClick() { active = i }\n    >\n      ${tab.label}\n    </button>\n  </for>\n</div>\n\n<div id=\"panel\">\n  <${tabs[active].content}/>\n</div>"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: labels present",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t4-tabs.C1.r3_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t4-tabs.C1.r3_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-preload=\"runs_round2_apps_t4-tabs.C1.r3_dist_.marko-run_index.marko\"]').forEach(el=>el.remove());</script>"
+    },
+    {
+     "name": "ssr: first tab content present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: three tab buttons",
+     "pass": true,
+     "detail": "3"
+    },
+    {
+     "name": "browser: first content visible",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content hidden",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first aria-selected",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content visible after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first content hidden after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: aria-selected moved",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t4-tabs.C1.r4",
+   "taskId": "t4-tabs",
+   "condition": "C1",
+   "rep": 4,
+   "stage": "first",
+   "agentId": "ad980c948065be63c",
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "<let/active=0>\n<const/tabs=[...input.tab || []]>\n\n<div role=\"tablist\">\n  <for|tab, i| of=tabs>\n    <button \n      onClick() { active = i }\n      aria-selected=(i === active && \"true\")\n    >\n      ${tab.label}\n    </button>\n  </for>\n</div>\n\n<div id=\"panel\">\n  <${tabs[active].content}/>\n</div>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: labels present",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t4-tabs.C1.r4_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t4-tabs.C1.r4_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-preload=\"runs_round2_apps_t4-tabs.C1.r4_dist_.marko-run_index.marko\"]').forEach(el=>el.remove());</script>"
+    },
+    {
+     "name": "ssr: first tab content present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: three tab buttons",
+     "pass": true,
+     "detail": "3"
+    },
+    {
+     "name": "browser: first content visible",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content hidden",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first aria-selected",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content visible after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first content hidden after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: aria-selected moved",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t5-await.C1.r1",
+   "taskId": "t5-await",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "a1267f7eec6033e27",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { getUser } from \"../data.js\";\n\n<h1>Profile</h1>\n\n<try>\n  <await|user|=getUser()>\n    <h2 id=\"user-name\">${user.name}</h2>\n    <p id=\"user-role\">${user.role}</p>\n  </await>\n\n  <@placeholder>Loading profile</@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: streamed placeholder present in raw html",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t5-await.C1.r1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t5-await.C1.r1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-preload=\"runs_round2_apps_t5-await.C1.r1_dist_.marko-run_index.marko\"]').forEach(el=>el.remove());</scri"
+    },
+    {
+     "name": "ssr: resolved name present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "ssr: placeholder flushed before data",
+     "pass": true,
+     "detail": "load@687 name@3480"
+    },
+    {
+     "name": "browser: name rendered",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: role rendered",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: loading indicator gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t5-await.C1.r2",
+   "taskId": "t5-await",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "a9e38995035eb608c",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { getUser } from \"../data.js\";\n\n<h1>Profile</h1>\n\n<try>\n  <await|user|=getUser()>\n    <h2 id=\"user-name\">${user.name}</h2>\n    <p id=\"user-role\">${user.role}</p>\n  </await>\n\n  <@placeholder>Loading profile</@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: streamed placeholder present in raw html",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t5-await.C1.r2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t5-await.C1.r2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-preload=\"runs_round2_apps_t5-await.C1.r2_dist_.marko-run_index.marko\"]').forEach(el=>el.remove());</scri"
+    },
+    {
+     "name": "ssr: resolved name present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "ssr: placeholder flushed before data",
+     "pass": true,
+     "detail": "load@687 name@3480"
+    },
+    {
+     "name": "browser: name rendered",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: role rendered",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: loading indicator gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t6-layout.C1.r1",
+   "taskId": "t6-layout",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "a8d7283be504c88ce",
+   "files": [
+    {
+     "path": "src/routes/+layout.marko",
+     "content": "<header id=\"site-header\">\n  <nav>\n    <a href=\"/\">Home</a>\n    <a href=\"/about\">About</a>\n  </nav>\n</header>\n<main>\n  <${input.content}/>\n</main>\n<footer id=\"site-footer\">\n  built with marko\n</footer>"
+    },
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Home</h1>\n<p>Welcome to this site built with Marko 6!</p>"
+    },
+    {
+     "path": "src/routes/about/+page.marko",
+     "content": "<h1>About</h1>\n<p>This is a simple two-page site demonstrating Marko 6 and file-based routing with @marko/run.</p>"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "home: h1",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t6-layout.C1.r1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t6-layout.C1.r1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/clie"
+    },
+    {
+     "name": "about: h1",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t6-layout.C1.r1_dist_.marko-run_about.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t6-layout.C1.r1_dist_.marko-run_about.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/clie"
+    },
+    {
+     "name": "home: header present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "home: footer present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "home: nav links",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "home: content inside main",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "about: header present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "about: footer present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "about: nav links",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "about: content inside main",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "about: no home text bleed",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t6-layout.C1.r2",
+   "taskId": "t6-layout",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "afecd091b49a15b08",
+   "files": [
+    {
+     "path": "src/routes/+layout.marko",
+     "content": "<header id=\"site-header\">\n  <nav>\n    <a href=\"/\">Home</a>\n    <a href=\"/about\">About</a>\n  </nav>\n</header>\n<main>\n  <${input.content}/>\n</main>\n<footer id=\"site-footer\">\n  built with marko\n</footer>"
+    },
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Home</h1>\n<p>Welcome to this Marko site built with @marko/run file-based routing.</p>"
+    },
+    {
+     "path": "src/routes/about/+page.marko",
+     "content": "<h1>About</h1>\n<p>This site demonstrates a shared layout component in Marko 6, with multiple pages served by @marko/run's file-based routing.</p>"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "home: h1",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t6-layout.C1.r2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t6-layout.C1.r2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/clie"
+    },
+    {
+     "name": "about: h1",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t6-layout.C1.r2_dist_.marko-run_about.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t6-layout.C1.r2_dist_.marko-run_about.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/clie"
+    },
+    {
+     "name": "home: header present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "home: footer present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "home: nav links",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "home: content inside main",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "about: header present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "about: footer present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "about: nav links",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "about: content inside main",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "about: no home text bleed",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "t7-products.C1.r1",
+   "taskId": "t7-products",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "af71cfb95189225ee",
+   "files": [
+    {
+     "path": "src/routes/products/$id/+page.marko",
+     "content": "import { getProduct } from \"../../../catalog.js\";\n\n<let/product=getProduct($global.params.id)>\n\n<if=product>\n  <h1 id=\"product-name\">${product.name}</h1>\n  <p id=\"product-price\">$${product.price}</p>\n</if>\n<else>\n  <h1 id=\"product-name\">Product not found</h1>\n</else>\n"
+    },
+    {
+     "path": "src/routes/api/products/$id/+handler.js",
+     "content": "import { getProduct } from \"../../../../catalog.js\";\n\nexport function GET(context) {\n  const product = getProduct(context.params.id);\n  \n  if (!product) {\n    return new Response(JSON.stringify({ error: \"not found\" }), {\n      status: 404,\n      headers: { \"content-type\": \"application/json\" }\n    });\n  }\n  \n  return new Response(JSON.stringify(product), {\n    status: 200,\n    headers: { \"content-type\": \"application/json\" }\n  });\n}\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "page: product name",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t7-products.C1.r1_dist_.marko-run_products._.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t7-products.C1.r1_dist_.marko-run_products._.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/products.$.client-entry.marko\")]);document.querySelector"
+    },
+    {
+     "name": "page: price format",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "page: not found text",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t7-products.C1.r1_dist_.marko-run_products._.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t7-products.C1.r1_dist_.marko-run_products._.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "api: 200",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "name": "api: json content-type",
+     "pass": true,
+     "detail": "application/json"
+    },
+    {
+     "name": "api: body matches product",
+     "pass": true,
+     "detail": "{\"id\":\"2\",\"name\":\"Basalt Mug\",\"price\":18}"
+    },
+    {
+     "name": "api: unknown id -> 404",
+     "pass": true,
+     "detail": "404"
+    },
+    {
+     "name": "api: 404 body",
+     "pass": true,
+     "detail": "{\"error\":\"not found\"}"
+    }
+   ]
+  },
+  {
+   "runId": "t7-products.C1.r2",
+   "taskId": "t7-products",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "a3eecf16d40660e65",
+   "files": [
+    {
+     "path": "src/routes/products/$id/+page.marko",
+     "content": "import { getProduct } from \"../../../catalog.js\";\n\n<const/product=getProduct($global.params.id)>\n\n<if=product>\n  <h1 id=\"product-name\">${product.name}</h1>\n  <p id=\"product-price\">$${product.price}</p>\n</if>\n<else>\n  <h1 id=\"product-name\">Product not found</h1>\n</else>"
+    },
+    {
+     "path": "src/routes/api/products/$id/+handler.js",
+     "content": "import { getProduct } from \"../../../../catalog.js\";\n\nexport function GET(context) {\n  const product = getProduct(context.params.id);\n\n  if (product) {\n    return new Response(JSON.stringify(product), {\n      status: 200,\n      headers: { \"content-type\": \"application/json\" }\n    });\n  }\n\n  return new Response(JSON.stringify({ error: \"not found\" }), {\n    status: 404,\n    headers: { \"content-type\": \"application/json\" }\n  });\n}"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "page: product name",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t7-products.C1.r2_dist_.marko-run_products._.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t7-products.C1.r2_dist_.marko-run_products._.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/products.$.client-entry.marko\")]);document.querySelector"
+    },
+    {
+     "name": "page: price format",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "page: not found text",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t7-products.C1.r2_dist_.marko-run_products._.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t7-products.C1.r2_dist_.marko-run_products._.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "api: 200",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "name": "api: json content-type",
+     "pass": true,
+     "detail": "application/json"
+    },
+    {
+     "name": "api: body matches product",
+     "pass": true,
+     "detail": "{\"id\":\"2\",\"name\":\"Basalt Mug\",\"price\":18}"
+    },
+    {
+     "name": "api: unknown id -> 404",
+     "pass": true,
+     "detail": "404"
+    },
+    {
+     "name": "api: 404 body",
+     "pass": true,
+     "detail": "{\"error\":\"not found\"}"
+    }
+   ]
+  },
+  {
+   "runId": "t7-products.C1.r3",
+   "taskId": "t7-products",
+   "condition": "C1",
+   "rep": 3,
+   "stage": "first",
+   "agentId": "a8a7f52bbf769a230",
+   "files": [
+    {
+     "path": "src/routes/products/$id/+page.marko",
+     "content": "import { getProduct } from \"../../../catalog.js\";\n\n<const/product=getProduct($global.params.id)>\n\n<if=product>\n  <h1 id=\"product-name\">${product.name}</h1>\n  <p id=\"product-price\">$${product.price}</p>\n</if>\n<else>\n  <h1 id=\"product-name\">Product not found</h1>\n</else>"
+    },
+    {
+     "path": "src/routes/api/products/$id/+handler.js",
+     "content": "import { getProduct } from \"../../../../catalog.js\";\n\nexport function GET(context) {\n  const product = getProduct(context.params.id);\n  \n  if (product) {\n    return new Response(JSON.stringify(product), {\n      status: 200,\n      headers: { \"content-type\": \"application/json\" }\n    });\n  }\n  \n  return new Response(JSON.stringify({ error: \"not found\" }), {\n    status: 404,\n    headers: { \"content-type\": \"application/json\" }\n  });\n}"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "page: product name",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t7-products.C1.r3_dist_.marko-run_products._.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t7-products.C1.r3_dist_.marko-run_products._.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/products.$.client-entry.marko\")]);document.querySelector"
+    },
+    {
+     "name": "page: price format",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "page: not found text",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t7-products.C1.r3_dist_.marko-run_products._.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t7-products.C1.r3_dist_.marko-run_products._.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "api: 200",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "name": "api: json content-type",
+     "pass": true,
+     "detail": "application/json"
+    },
+    {
+     "name": "api: body matches product",
+     "pass": true,
+     "detail": "{\"id\":\"2\",\"name\":\"Basalt Mug\",\"price\":18}"
+    },
+    {
+     "name": "api: unknown id -> 404",
+     "pass": true,
+     "detail": "404"
+    },
+    {
+     "name": "api: 404 body",
+     "pass": true,
+     "detail": "{\"error\":\"not found\"}"
+    }
+   ]
+  },
+  {
+   "runId": "t7-products.C1.r4",
+   "taskId": "t7-products",
+   "condition": "C1",
+   "rep": 4,
+   "stage": "first",
+   "agentId": "a7473337f3d60d31d",
+   "files": [
+    {
+     "path": "src/routes/products/$id/+page.marko",
+     "content": "import { getProduct } from \"../../../catalog.js\";\n\n<const/product=getProduct($global.params.id)>\n\n<if=product>\n  <h1 id=\"product-name\">${product.name}</h1>\n  <p id=\"product-price\">$${product.price}</p>\n</if>\n<else>\n  <h1 id=\"product-name\">Product not found</h1>\n</else>"
+    },
+    {
+     "path": "src/routes/api/products/$id/+handler.js",
+     "content": "import { getProduct } from \"../../../../catalog.js\";\n\nexport function GET(context) {\n  const product = getProduct(context.params.id);\n\n  if (!product) {\n    return new Response(JSON.stringify({ error: \"not found\" }), {\n      status: 404,\n      headers: { \"content-type\": \"application/json\" }\n    });\n  }\n\n  return new Response(JSON.stringify(product), {\n    status: 200,\n    headers: { \"content-type\": \"application/json\" }\n  });\n}"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "page: product name",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t7-products.C1.r4_dist_.marko-run_products._.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t7-products.C1.r4_dist_.marko-run_products._.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/products.$.client-entry.marko\")]);document.querySelector"
+    },
+    {
+     "name": "page: price format",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "page: not found text",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t7-products.C1.r4_dist_.marko-run_products._.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t7-products.C1.r4_dist_.marko-run_products._.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "api: 200",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "name": "api: json content-type",
+     "pass": true,
+     "detail": "application/json"
+    },
+    {
+     "name": "api: body matches product",
+     "pass": true,
+     "detail": "{\"id\":\"2\",\"name\":\"Basalt Mug\",\"price\":18}"
+    },
+    {
+     "name": "api: unknown id -> 404",
+     "pass": true,
+     "detail": "404"
+    },
+    {
+     "name": "api: 404 body",
+     "pass": true,
+     "detail": "{\"error\":\"not found\"}"
+    }
+   ]
+  },
+  {
+   "runId": "t8-guestbook.C1.r1",
+   "taskId": "t8-guestbook",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "af6648ebc081da892",
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "import { entries } from \"../../store.js\";\n\n<ul id=\"entries\">\n  <if=entries.length>\n    <for|entry| of=entries>\n      <li class=\"entry\">${entry.message}</li>\n    </for>\n  </if>\n  <else>\n    <li>Be the first to sign!</li>\n  </else>\n</ul>\n\n<form method=\"post\">\n  <input name=\"message\" type=\"text\" required>\n  <button type=\"submit\">Sign</button>\n</form>"
+    },
+    {
+     "path": "src/routes/guestbook/+handler.js",
+     "content": "import { addEntry } from \"../../store.js\";\n\nexport async function POST(context) {\n  const form = await context.request.formData();\n  const msg = String(form.get(\"message\") || \"\").trim();\n  if (msg) {\n    addEntry(msg);\n  }\n  return context.redirect(\"/guestbook\", 303);\n}"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "get: empty prompt",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t8-guestbook.C1.r1_dist_.marko-run_guestbook.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t8-guestbook.C1.r1_dist_.marko-run_guestbook.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/guestbook.client-entry.marko\")]);document.querySelectorA"
+    },
+    {
+     "name": "post: redirect status",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "post: location back to guestbook",
+     "pass": true,
+     "detail": "http://localhost:5260/guestbook"
+    },
+    {
+     "name": "get: entry rendered",
+     "pass": true,
+     "detail": " Hello from the graderSign"
+    },
+    {
+     "name": "get: entry li present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "get: empty prompt gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "post: whitespace redirects",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "get: whitespace not added",
+     "pass": true,
+     "detail": "entries=1"
+    }
+   ]
+  },
+  {
+   "runId": "t8-guestbook.C1.r2",
+   "taskId": "t8-guestbook",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "a784cc4e490af5b59",
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "import { entries } from \"../../store.js\";\n\n<h1>Guestbook</h1>\n\n<if=entries.length>\n  <ul id=\"entries\">\n    <for|entry| of=entries>\n      <li class=\"entry\">${entry.message}</li>\n    </for>\n  </ul>\n</if>\n<else>\n  <p>Be the first to sign!</p>\n</else>\n\n<form method=\"post\">\n  <input type=\"text\" name=\"message\" required>\n  <button type=\"submit\">Sign</button>\n</form>\n"
+    },
+    {
+     "path": "src/routes/guestbook/+handler.js",
+     "content": "import { addEntry } from \"../../store.js\";\n\nexport async function POST(context) {\n  const form = await context.request.formData();\n  const msg = String(form.get(\"message\") || \"\").trim();\n  if (msg) addEntry(msg);\n  return context.redirect(\"/guestbook\", 303);\n}\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "get: empty prompt",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round2_apps_t8-guestbook.C1.r2_dist_.marko-run_guestbook.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round2_apps_t8-guestbook.C1.r2_dist_.marko-run_guestbook.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/guestbook.client-entry.marko\")]);document.querySelectorA"
+    },
+    {
+     "name": "post: redirect status",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "post: location back to guestbook",
+     "pass": true,
+     "detail": "http://localhost:5261/guestbook"
+    },
+    {
+     "name": "get: entry rendered",
+     "pass": true,
+     "detail": " GuestbookHello from the graderSign"
+    },
+    {
+     "name": "get: entry li present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "get: empty prompt gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "post: whitespace redirects",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "get: whitespace not added",
+     "pass": true,
+     "detail": "entries=1"
+    }
+   ]
+  }
+ ]
+}

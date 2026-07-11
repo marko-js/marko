@@ -1,0 +1,11 @@
+{
+  "name": "marko-cheatsheet-experiment",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@marko/run": "^0.11.4",
+    "@marko/run-adapter-node": "^2.0.6",
+    "marko": "^6.3.2",
+    "playwright-core": "^1.50.0"
+  }
+}

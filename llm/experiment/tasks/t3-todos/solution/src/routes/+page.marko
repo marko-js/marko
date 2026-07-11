@@ -1,0 +1,32 @@
+<let/todos=[]>
+<let/nextId=1>
+<let/draft="">
+
+<input id="new-todo" value:=draft>
+<button id="add" onClick() {
+  const text = draft.trim();
+  if (text) {
+    todos = todos.concat({ id: nextId, text, done: false });
+    nextId = nextId + 1;
+    draft = "";
+  }
+}>Add</button>
+
+<if=todos.length>
+  <ul id="list">
+    <for|todo, i| of=todos by="id">
+      <li>
+        <input
+          type="checkbox"
+          checked=todo.done
+          checkedChange(done) { todos = todos.toSpliced(i, 1, { ...todo, done }) }
+        >
+        ${todo.text}
+      </li>
+    </for>
+  </ul>
+  <p id="remaining">${todos.filter(t => !t.done).length} left</p>
+</if>
+<else>
+  <p id="empty">No todos yet</p>
+</else>

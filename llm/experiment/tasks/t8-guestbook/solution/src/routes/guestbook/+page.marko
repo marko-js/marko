@@ -1,0 +1,18 @@
+import { entries } from "../../store.js";
+
+<h1>Guestbook</h1>
+<if=entries.length>
+  <ul id="entries">
+    <for|entry| of=entries by="id">
+      <li class="entry">${entry.message}</li>
+    </for>
+  </ul>
+</if>
+<else>
+  <p>Be the first to sign!</p>
+</else>
+
+<form method="post">
+  <input type="text" name="message">
+  <button type="submit">Sign</button>
+</form>

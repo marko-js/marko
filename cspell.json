@@ -385,15 +385,28 @@
     "vmax",
     "cqmin",
     "cqmax",
-    "whib"
+    "whib",
+    "resumability",
+    "beforeend",
+    "letmein",
+    "repstart",
+    "conds",
+    "overfitting",
+    "networkidle",
+    "cheatsheet",
+    "cheatsheets",
+    "fixability"
   ],
   "ignoreRegExpList": [],
-  "files": ["*"],
+  "files": [
+    "*"
+  ],
   "ignorePaths": [
     "dist",
     "fixtures",
     "fixtures-interop",
     "**/node_modules",
-    "**/CHANGELOG.md"
+    "**/CHANGELOG.md",
+    "llm/experiment/runs/"
   ]
 }

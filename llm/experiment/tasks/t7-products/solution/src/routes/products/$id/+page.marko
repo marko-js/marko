@@ -1,0 +1,11 @@
+import { getProduct } from "../../../catalog.js";
+
+<const/product=getProduct($global.params.id)>
+
+<if=product>
+  <h1 id="product-name">${product.name}</h1>
+  <p id="product-price">$${product.price}</p>
+</if>
+<else>
+  <h1 id="product-name">Product not found</h1>
+</else>

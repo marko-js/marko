@@ -1,0 +1,6 @@
+<let/celsius=20>
+<const/fahrenheit=celsius * 9 / 5 + 32>
+
+<input id="celsius" type="number" value=celsius valueChange(v) { celsius = +v }>
+<output id="fahrenheit">${fahrenheit}</output>
+<button id="warmer" onClick() { celsius = celsius + 1 }>Warmer</button>

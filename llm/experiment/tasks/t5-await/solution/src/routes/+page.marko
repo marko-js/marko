@@ -1,0 +1,17 @@
+import { getUser } from "../data.js";
+
+<h1>Profile</h1>
+<try>
+  <await|user|=getUser()>
+    <h2 id="user-name">${user.name}</h2>
+    <p id="user-role">${user.role}</p>
+  </await>
+
+  <@placeholder>
+    <p>Loading profile...</p>
+  </@placeholder>
+
+  <@catch|err|>
+    <p>Something went wrong: ${err.message}</p>
+  </@catch>
+</try>

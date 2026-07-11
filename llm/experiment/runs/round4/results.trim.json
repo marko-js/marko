@@ -1,0 +1,755 @@
+{
+ "round": "round4",
+ "runs": [
+  {
+   "runId": "h1-drawer.C0.r1",
+   "taskId": "h1-drawer",
+   "condition": "C0",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "aeb85c998acf8a991",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<script>\n  let isDrawerOpen = false;\n</script>\n\n<button id=\"toggle\" @click={() => {\n  isDrawerOpen = !isDrawerOpen;\n}}>\n  Toggle\n</button>\n\n<div id=\"drawer\" style=\"display: ${isDrawerOpen ? 'block' : 'none'}\">\n  <textarea id=\"notes\"></textarea>\n</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:5:29\n      3 | \\u003c/script>\n      4 |\n    > 5 | \\u003cbutton id=\"toggle\" @click={() => {\n        |                             ^ Unexpected token\n      6 |   isDrawerOpen = !isDrawerOpen;\n      7 | }}>\n      8 |   Toggle\n    \n    at src/routes/+page.marko:5:29\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/round4/apps/h1-drawer.C0.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:5:29\n      3 | </script>\n      4 |\n    > 5 | <button id=\"toggle\" @click={() => {\n        |                             ^ Unexpected token\n      6 |   isDrawerOpen = !isDrawerOpen;\n      7 | }}>\n      8 |   Toggle\n  3 | </script>\n  4 |\n> 5 | <button id=\"toggle\" @click={() => {\n    |                             ^ Unexpected token\n  6 |   isDrawerOpen = !isDrawerOpen;\n  7 | }}>\n  8 |   Toggle\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experiment/runs/round4/apps/h1-drawer.C0.r1/src/routes/+page.marko\n      at src/routes/+page.marko:5:29\n\u001b7\u001b[1A\u001b[2K\u001b[1G◀━━ G"
+   },
+   "checks": []
+  },
+  {
+   "runId": "h1-drawer.C0.r2",
+   "taskId": "h1-drawer",
+   "condition": "C0",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "aabf3614897cef612",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "let isOpen = $state(false);\n\n<button id=\"toggle\" onclick={() => { isOpen = !isOpen; }}>\n  Toggle\n</button>\n\n<div id=\"drawer\" style={ `display: ${isOpen ? 'block' : 'none'};` }>\n  <textarea id=\"notes\"></textarea>\n</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:3:30\n      1 | let isOpen = $state(false);\n      2 |\n    > 3 | \\u003cbutton id=\"toggle\" onclick={() => { isOpen = !isOpen; }}>\n        |                              ^ Unexpected token\n      4 |   Toggle\n      5 | \\u003c/button>\n      6 |\n    at src/routes/+page.marko:7:26\n       5 | \\u003c/button>\n       6 |\n    >  7 | \\u003cdiv id=\"drawer\" style={ `display: ${isOpen ? 'block' : 'none'};` }>\n         |                          ^ Unexpected token\n       8 |   \\u003ctextarea id=\"notes\">\\u003c/textarea>\n       9 | \\u003c/div>\n      10 |\n    \n    at src/routes/+page.marko:3:30\n    at src/routes/+page.marko:7:26\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/round4/apps/h1-drawer.C0.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileErrors: \n    at src/routes/+page.marko:3:30\n      1 | let isOpen = $state(false);\n      2 |\n    > 3 | <button id=\"toggle\" onclick={() => { isOpen = !isOpen; }}>\n        |                              ^ Unexpected token\n      4 |   Toggle\n      5 | </button>\n      6 |\n\n    at src/routes/+page.marko:7:26\n       5 | </button>\n       6 |\n    >  7 | <div id=\"drawer\" style={ `display: ${isOpen ? 'block' : 'none'};` }>\n         |                          ^ Unexpected token\n       8 |   <textarea id=\"notes\"></textarea>\n       9 | </div>\n      10 |\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experime"
+   },
+   "checks": []
+  },
+  {
+   "runId": "h1-drawer.C1.r1",
+   "taskId": "h1-drawer",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "abcfabb5f1f78a5a7",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/open=false>\n<let/notes=\"\">\n\n<button id=\"toggle\" onClick() { open = !open }>Toggle Drawer</button>\n\n<show=open>\n  <div id=\"drawer\">\n    <textarea id=\"notes\" value:=notes/>\n  </div>\n</show>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "browser: drawer hidden initially",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: drawer visible after toggle",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: drawer hidden again",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: draft preserved",
+     "pass": true,
+     "detail": "remember the milk"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "h1-drawer.C1.r2",
+   "taskId": "h1-drawer",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "adab857073a89d6ef",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/isOpen=false>\n<let/notes=\"\">\n\n<button id=\"toggle\" onClick() {\n  isOpen = !isOpen;\n}>\n  ${isOpen ? \"Hide\" : \"Show\"} Drawer\n</button>\n\n<show=isOpen>\n  <div id=\"drawer\">\n    <textarea id=\"notes\" value:=notes/>\n  </div>\n</show>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "browser: drawer hidden initially",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: drawer visible after toggle",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: drawer hidden again",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: draft preserved",
+     "pass": true,
+     "detail": "remember the milk"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "h1-drawer.C1S.r1",
+   "taskId": "h1-drawer",
+   "condition": "C1S",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "a4f215359d9538c54",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/isOpen=false>\n<let/notes=\"\">\n\n<button id=\"toggle\" onClick() { isOpen = !isOpen }>\n  ${isOpen ? 'Hide' : 'Show'} Drawer\n</button>\n\n<if=isOpen>\n  <div id=\"drawer\">\n    <textarea id=\"notes\" value:=notes></textarea>\n  </div>\n</if>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "browser: drawer hidden initially",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: drawer visible after toggle",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: drawer hidden again",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: draft preserved",
+     "pass": true,
+     "detail": "remember the milk"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "h1-drawer.C1S.r2",
+   "taskId": "h1-drawer",
+   "condition": "C1S",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "a7bb2a1fa9ce14b97",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/isOpen=false>\n<let/notes=\"\">\n\n<button id=\"toggle\" onClick() { isOpen = !isOpen }>\n  Toggle Drawer\n</button>\n\n<if=isOpen>\n  <div id=\"drawer\">\n    <textarea id=\"notes\" value:=notes></textarea>\n  </div>\n</if>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "browser: drawer hidden initially",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: drawer visible after toggle",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: drawer hidden again",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: draft preserved",
+     "pass": true,
+     "detail": "remember the milk"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "h2-search.C0.r1",
+   "taskId": "h2-search",
+   "condition": "C0",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "aefa65ac798ecfcdf",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\nlet searchQuery = \"\";\nlet filteredCities = cities.filter(city =>\n  city.toLowerCase().includes(searchQuery.toLowerCase())\n);\n\n<input\n  id=\"q\"\n  type=\"text\"\n  placeholder=\"Search cities...\"\n  on-input(event) {\n    searchQuery = event.target.value;\n  }\n/>\n\n<ul id=\"results\">\n  <for|city| of=filteredCities>\n    <li>${city}</li>\n  </for>\n</ul>\n\n<div id=\"count\">${filteredCities.length} matches</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:3:5\n      1 | import { cities } from \"../cities.js\";\n      2 |\n    > 3 | let searchQuery = \"\";\n        |     ^^^^^^^^^^^^^^^^ The [`\\u003clet>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler.\n      4 | let filteredCities = cities.filter(city =>\n      5 |   city.toLowerCase().includes(searchQuery.toLowerCase())\n      6 | );\n    \n    at src/routes/+page.marko:3:5\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/round4/apps/h2-search.C0.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:3:5\n      1 | import { cities } from \"../cities.js\";\n      2 |\n    > 3 | let searchQuery = \"\";\n        |     ^^^^^^^^^^^^^^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler.\n      4 | let filteredCities = cities.filter(city =>\n      5 |   city.toLowerCase().includes(searchQuery.toLowerCase())\n      6 | );\n  1 | import { cities } from \"../cities.js\";\n  2 |\n> 3 | let searchQuery = \"\";\n    |     ^^^^^^^^^^^^^^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler.\n  4 | let filteredCities = cities.filter(city =>\n  5 |   city.toLowerCase().includes(searchQuery.toLowerCase())\n  6 | );\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_mo"
+   },
+   "checks": []
+  },
+  {
+   "runId": "h2-search.C0.r2",
+   "taskId": "h2-search",
+   "condition": "C0",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "a82ff66f5affd4883",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<script>\nimport { cities } from \"../cities.js\";\n\nlet q = \"\";\n\nfunction handleInput(e) {\n  q = e.target.value;\n}\n</script>\n\n<input id=\"q\" type=\"text\" value=q @input=handleInput />\n\n<% const filtered = cities.filter(c => c.toLowerCase().includes(q.toLowerCase())) %>\n\n<ul id=\"results\">\n  <for|city| of=filtered>\n    <li>${city}</li>\n  </for>\n</ul>\n\n<div id=\"count\">${filtered.length} matches</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:13:2\n      11 | \\u003cinput id=\"q\" type=\"text\" value=q @input=handleInput />\n      12 |\n    > 13 | \\u003c% const filtered = cities.filter(c => c.toLowerCase().includes(q.toLowerCase())) %>\n         |  ^ \\u003c% scriptlets %> are no longer supported.\n      14 |\n      15 | \\u003cul id=\"results\">\n      16 |   \\u003cfor|city| of=filtered>\n    \n    at src/routes/+page.marko:13:2\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/round4/apps/h2-search.C0.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:13:2\n      11 | <input id=\"q\" type=\"text\" value=q @input=handleInput />\n      12 |\n    > 13 | <% const filtered = cities.filter(c => c.toLowerCase().includes(q.toLowerCase())) %>\n         |  ^ <% scriptlets %> are no longer supported.\n      14 |\n      15 | <ul id=\"results\">\n      16 |   <for|city| of=filtered>\n  11 | <input id=\"q\" type=\"text\" value=q @input=handleInput />\n  12 |\n> 13 | <% const filtered = cities.filter(c => c.toLowerCase().includes(q.toLowerCase())) %>\n     |  ^ <% scriptlets %> are no longer supported.\n  14 |\n  15 | <ul id=\"results\">\n  16 |   <for|city| of=filtered>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b"
+   },
+   "checks": []
+  },
+  {
+   "runId": "h2-search.C1.r1",
+   "taskId": "h2-search",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "aea317f1ec34b23b2",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\n<let/q=\"\">\n<const/filtered=cities.filter(city => city.toLowerCase().includes(q.toLowerCase()))>\n\n<input id=\"q\" value:=q placeholder=\"Search cities...\">\n\n<ul id=\"results\">\n  <for|city| of=filtered>\n    <li>${city}</li>\n  </for>\n</ul>\n\n<div id=\"count\">${filtered.length} matches</div>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cities",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round4_apps_h2-search.C1.r1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round4_apps_h2-search.C1.r1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-pr"
+    },
+    {
+     "name": "ssr: 10 matches",
+     "pass": true,
+     "detail": " AmsterdamAustinBarcelonaBerlinBostonLisbonLondonMelbourneOsloOsaka10 matches "
+    },
+    {
+     "name": "browser: 'os' filters case-insensitively",
+     "pass": true,
+     "detail": "Boston,Osaka,Oslo"
+    },
+    {
+     "name": "browser: count 3 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: count 0 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "h2-search.C1.r2",
+   "taskId": "h2-search",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "aac1e378c32411266",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\n<let/q=\"\">\n<const/filtered=cities.filter(city => city.toLowerCase().includes(q.toLowerCase()))>\n\n<input id=\"q\" value:=q>\n\n<ul id=\"results\">\n  <for|city| of=filtered>\n    <li>${city}</li>\n  </for>\n</ul>\n\n<div id=\"count\">${filtered.length} matches</div>"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cities",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round4_apps_h2-search.C1.r2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round4_apps_h2-search.C1.r2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-pr"
+    },
+    {
+     "name": "ssr: 10 matches",
+     "pass": true,
+     "detail": " AmsterdamAustinBarcelonaBerlinBostonLisbonLondonMelbourneOsloOsaka10 matches "
+    },
+    {
+     "name": "browser: 'os' filters case-insensitively",
+     "pass": true,
+     "detail": "Boston,Osaka,Oslo"
+    },
+    {
+     "name": "browser: count 3 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: count 0 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "h2-search.C1S.r1",
+   "taskId": "h2-search",
+   "condition": "C1S",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "ace89561af8651116",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\n<let/q=\"\">\n<const/filteredCities=cities.filter(city => city.toLowerCase().includes(q.toLowerCase()))>\n\n<input id=\"q\" type=\"text\" value:=q placeholder=\"Search cities...\">\n\n<ul id=\"results\">\n  <for|city| of=filteredCities>\n    <li>${city}</li>\n  </for>\n</ul>\n\n<div id=\"count\">${filteredCities.length} matches</div>"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cities",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round4_apps_h2-search.C1S.r1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round4_apps_h2-search.C1S.r1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-"
+    },
+    {
+     "name": "ssr: 10 matches",
+     "pass": true,
+     "detail": " AmsterdamAustinBarcelonaBerlinBostonLisbonLondonMelbourneOsloOsaka10 matches "
+    },
+    {
+     "name": "browser: 'os' filters case-insensitively",
+     "pass": true,
+     "detail": "Boston,Osaka,Oslo"
+    },
+    {
+     "name": "browser: count 3 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: count 0 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "h2-search.C1S.r2",
+   "taskId": "h2-search",
+   "condition": "C1S",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "a824f0ef15105f765",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\n<let/q=\"\">\n<const/results=cities.filter(city => city.toLowerCase().includes(q.toLowerCase()))>\n\n<input id=\"q\" value:=q placeholder=\"Search cities...\">\n\n<ul id=\"results\">\n  <for|city| of=results>\n    <li>${city}</li>\n  </for>\n</ul>\n\n<div id=\"count\">${results.length} matches</div>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cities",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round4_apps_h2-search.C1S.r2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round4_apps_h2-search.C1S.r2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-"
+    },
+    {
+     "name": "ssr: 10 matches",
+     "pass": true,
+     "detail": " AmsterdamAustinBarcelonaBerlinBostonLisbonLondonMelbourneOsloOsaka10 matches "
+    },
+    {
+     "name": "browser: 'os' filters case-insensitively",
+     "pass": true,
+     "detail": "Boston,Osaka,Oslo"
+    },
+    {
+     "name": "browser: count 3 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: count 0 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ]
+  },
+  {
+   "runId": "h3-admin.C0.r1",
+   "taskId": "h3-admin",
+   "condition": "C0",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "af83e7d9ae8d38c39",
+   "files": [
+    {
+     "path": "src/routes/admin/+middleware.js",
+     "content": "export default function middleware(input) {\n  const url = new URL(input.request.url, 'http://localhost');\n  const key = url.searchParams.get('key');\n  \n  if (key !== 'letmein') {\n    input.response.statusCode = 401;\n    input.response.setHeader('content-type', 'text/plain');\n    input.response.end('unauthorized');\n  }\n}"
+    },
+    {
+     "path": "src/routes/admin/dashboard.marko",
+     "content": "<h1>Dashboard</h1>\nSecret metrics"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "no key: 401",
+     "pass": false,
+     "detail": "404"
+    },
+    {
+     "name": "no key: unauthorized text",
+     "pass": false,
+     "detail": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /admin/dashboard</pre>\n</body>\n</html>\n"
+    },
+    {
+     "name": "no key: page not rendered",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "key: 200",
+     "pass": false,
+     "detail": "404"
+    },
+    {
+     "name": "key: dashboard rendered",
+     "pass": false,
+     "detail": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /admin/dashboard</pre>\n</body>\n</html>\n"
+    }
+   ]
+  },
+  {
+   "runId": "h3-admin.C0.r2",
+   "taskId": "h3-admin",
+   "condition": "C0",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "ad3f4a4c982cc5f90",
+   "files": [
+    {
+     "path": "src/routes/admin/+layout.server.js",
+     "content": "export async function onRequest({ request }) {\n  const url = new URL(request.url);\n  const key = url.searchParams.get('key');\n  \n  if (key !== 'letmein') {\n    return new Response('unauthorized', { status: 401 });\n  }\n}\n"
+    },
+    {
+     "path": "src/routes/admin/+layout.marko",
+     "content": "<slot/>\n"
+    },
+    {
+     "path": "src/routes/admin/dashboard/+page.marko",
+     "content": "<h1>Dashboard</h1>\nSecret metrics\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "no key: 401",
+     "pass": false,
+     "detail": "500"
+    },
+    {
+     "name": "no key: unauthorized text",
+     "pass": false,
+     "detail": "\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Error</title>\n    <script type=\"module\">\n      const error = {\"message\":\"\\n    at src/routes/admin/+layout.marko:1:2\\"
+    },
+    {
+     "name": "no key: page not rendered",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "key: 200",
+     "pass": false,
+     "detail": "500"
+    },
+    {
+     "name": "key: dashboard rendered",
+     "pass": false,
+     "detail": "\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Error</title>\n    <script type=\"module\">\n      const error = {\"message\":\"\\n    at src/routes/admin/+layout.marko:1:2\\n    > 1 | \\u003cslot/>\\n        |  ^^^^ Unable to find entry point for [custom tag](https://markojs"
+    }
+   ]
+  },
+  {
+   "runId": "h3-admin.C1.r1",
+   "taskId": "h3-admin",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "a6cbd27c7c1392b22",
+   "files": [
+    {
+     "path": "src/routes/admin/+middleware.js",
+     "content": "export default function (context, next) {\n  if (context.url.searchParams.get(\"key\") !== \"letmein\") {\n    return new Response(\"unauthorized\", { status: 401 });\n  }\n  return next();\n}\n"
+    },
+    {
+     "path": "src/routes/admin/dashboard/+page.marko",
+     "content": "<h1>Dashboard</h1>\nSecret metrics\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "no key: 401",
+     "pass": false,
+     "detail": "500"
+    },
+    {
+     "name": "no key: unauthorized text",
+     "pass": false,
+     "detail": "\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Error</title>\n    <script type=\"module\">\n      const error = {\"message\":\"\\n    at src/routes/admin/dashboard/+page.ma"
+    },
+    {
+     "name": "no key: page not rendered",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "name": "key: 200",
+     "pass": false,
+     "detail": "500"
+    },
+    {
+     "name": "key: dashboard rendered",
+     "pass": true,
+     "detail": "\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Error</title>\n    <script type=\"module\">\n      const error = {\"message\":\"\\n    at src/routes/admin/dashboard/+page.marko:2:1\\n      1 | \\u003ch1>Dashboard\\u003c/h1>\\n    > 2 | Secret metrics\\n        | ^^^^^^ Unable t"
+    }
+   ]
+  },
+  {
+   "runId": "h3-admin.C1.r2",
+   "taskId": "h3-admin",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "a3a8cb2f4d768c8e5",
+   "files": [
+    {
+     "path": "src/routes/admin/+middleware.js",
+     "content": "export default function (context, next) {\n  if (context.url.searchParams.get(\"key\") !== \"letmein\") {\n    return new Response(\"unauthorized\", { status: 401 });\n  }\n  return next();\n}\n"
+    },
+    {
+     "path": "src/routes/admin/dashboard/+page.marko",
+     "content": "<h1>Dashboard</h1>\n<p>Secret metrics</p>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "no key: 401",
+     "pass": true,
+     "detail": "401"
+    },
+    {
+     "name": "no key: unauthorized text",
+     "pass": true,
+     "detail": "unauthorized"
+    },
+    {
+     "name": "no key: page not rendered",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "key: 200",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "name": "key: dashboard rendered",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round4_apps_h3-admin.C1.r2_dist_.marko-run_admin.dashboard.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round4_apps_h3-admin.C1.r2_dist_.marko-run_admin.dashboard.marko\" async blocking=render type=module>await Promise.allSettled([i"
+    }
+   ]
+  },
+  {
+   "runId": "h3-admin.C1S.r1",
+   "taskId": "h3-admin",
+   "condition": "C1S",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "a88cc6c873c6e9a1b",
+   "files": [
+    {
+     "path": "src/routes/admin/+handler.js",
+     "content": "function authHandler(context, next) {\n  if (context.url.searchParams.get(\"key\") !== \"letmein\") {\n    return new Response(\"unauthorized\", { status: 401 });\n  }\n  return next();\n}\n\nexport function GET(context, next) {\n  return authHandler(context, next);\n}\n\nexport function POST(context, next) {\n  return authHandler(context, next);\n}\n\nexport function PUT(context, next) {\n  return authHandler(context, next);\n}\n\nexport function DELETE(context, next) {\n  return authHandler(context, next);\n}\n"
+    },
+    {
+     "path": "src/routes/admin/dashboard/+page.marko",
+     "content": "<h1>Dashboard</h1>\n<p>Secret metrics</p>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "no key: 401",
+     "pass": false,
+     "detail": "200"
+    },
+    {
+     "name": "no key: unauthorized text",
+     "pass": false,
+     "detail": "<style marko-vite-preload=\"runs_round4_apps_h3-admin.C1S.r1_dist_.marko-run_admin.dashboard.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round4_apps_h3-admin.C1S.r"
+    },
+    {
+     "name": "no key: page not rendered",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "name": "key: 200",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "name": "key: dashboard rendered",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_round4_apps_h3-admin.C1S.r1_dist_.marko-run_admin.dashboard.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_round4_apps_h3-admin.C1S.r1_dist_.marko-run_admin.dashboard.marko\" async blocking=render type=module>await Promise.allSettled("
+    }
+   ]
+  },
+  {
+   "runId": "h3-admin.C1S.r2",
+   "taskId": "h3-admin",
+   "condition": "C1S",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "acbaa68f8784fb2fb",
+   "files": [
+    {
+     "path": "src/routes/admin/+handler.js",
+     "content": "function checkAuth(context) {\n  const key = context.url.searchParams.get(\"key\");\n  if (key !== \"letmein\") {\n    return new Response(\"unauthorized\", { status: 401 });\n  }\n}\n\nexport function GET(context, next) {\n  const authError = checkAuth(context);\n  if (authError) return authError;\n  return next();\n}\n\nexport function POST(context, next) {\n  const authError = checkAuth(context);\n  if (authError) return authError;\n  return next();\n}\n\nexport function PUT(context, next) {\n  const authError = checkAuth(context);\n  if (authError) return authError;\n  return next();\n}\n\nexport function DELETE(context, next) {\n  const authError = checkAuth(context);\n  if (authError) return authError;\n  return next();\n}"
+    },
+    {
+     "path": "src/routes/admin/dashboard/+page.marko",
+     "content": "<h1>Dashboard</h1>\nSecret metrics"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "no key: 401",
+     "pass": false,
+     "detail": "500"
+    },
+    {
+     "name": "no key: unauthorized text",
+     "pass": false,
+     "detail": "\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Error</title>\n    <script type=\"module\">\n      const error = {\"message\":\"\\n    at src/routes/admin/dashboard/+page.ma"
+    },
+    {
+     "name": "no key: page not rendered",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "name": "key: 200",
+     "pass": false,
+     "detail": "500"
+    },
+    {
+     "name": "key: dashboard rendered",
+     "pass": true,
+     "detail": "\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>Error</title>\n    <script type=\"module\">\n      const error = {\"message\":\"\\n    at src/routes/admin/dashboard/+page.marko:2:1\\n      1 | \\u003ch1>Dashboard\\u003c/h1>\\n    > 2 | Secret metrics\\n        | ^^^^^^ Unable t"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+<const/tabs=[...input.tab || []]>
+<let/active=0>
+
+<div role="tablist">
+  <for|tab, i| of=tabs>
+    <button aria-selected=(i === active && "true") onClick() { active = i }>
+      ${tab.label}
+    </button>
+  </for>
+</div>
+<div id="panel">
+  <${tabs[active].content}/>
+</div>
