@@ -76,3 +76,34 @@ the guidance (omitting `by=`) and so cannot reveal every gap.
 
 Subject cost: exp5 54 generations (~1.43M tokens), exp4b 9 generations
 (~0.21M tokens).
+
+## Error-channel reachability of the new failures
+
+Post-hoc classification of all 37 exp4/exp4b/exp5 failures by whether the
+shipped error guidance could reach them (from each run's stored error text):
+
+| class | n | pointer present | specific hint present |
+|---|---|---|---|
+| compile-fatal | 24 (65%) | 23/24 | 9/24 |
+| runtime-fatal (`by=` scope) | 2 | 0/2 | 0/2 |
+| silent (wrong behavior, no error) | 11 (30%) | n/a | n/a |
+
+- Where failures throw at compile time — the entire unguided-C0 regime, both
+  tiers — the shipped stack attaches: the fix-guide pointer was present in
+  23/24 stored errors, and sonnet's Marko-5 output trips existing hints
+  (scriptlet, args-form, brace) as readily as haiku's React/Svelte output.
+  These experiments were one-shot, so the guidance was present but never
+  consumed; its repair value at haiku tier is established (exp2/exp3), at
+  sonnet tier untested.
+- The one compile-shaped escape (`t1-counter.C0.hh.r1`, the native-handler
+  assertion surfacing at SSR request time) arrived without the pointer —
+  a @marko/vite wrapper-coverage check worth running.
+- **The guided-condition residuals live outside the channel entirely**:
+  C1's failures are runtime (`by=city` — bare `city is not defined`, no
+  pointer: the vite pointer is compile-only) or silent (missing handler →
+  404). And the dominant unguided *edit-mode* failures (let-derive, vanilla
+  passes) never error at all. As guidance improves, the residual failure
+  distribution migrates from loud to silent — the error channel's structural
+  ceiling. Runtime-error pointers (recorded as run-repo feedback) recover
+  part of it; the silent tail needs verification loops and idiom auditing,
+  not better messages.
