@@ -1,8 +1,32 @@
 diff --git a/node_modules/mocha-autotest/dist/index.js b/node_modules/mocha-autotest/dist/index.js
-index 57f53f1..609eaec 100644
+index 57f53f1..5e1c7f4 100644
 --- a/node_modules/mocha-autotest/dist/index.js
 +++ b/node_modules/mocha-autotest/dist/index.js
-@@ -78,12 +78,8 @@ function runFixtureTest(name, dir, run, mode, context) {
+@@ -26,6 +26,15 @@ function autotest(fixturesName, run) {
+ 
+   const fixturesDirectory = _path.default.join(suiteDirectory, fixturesName);
+ 
++  // `scripts/test-parallel` slices allowlisted suites across worker processes:
++  // a fixture runs here when its index (round-robin modulo
++  // MARKO_TEST_SLOT_TOTAL) lands in this worker's MARKO_TEST_SLOTS, mirroring
++  // the scheme in runtime-tags' main.test.ts. Unlisted suites and runs without
++  // the env (plain `mocha`, `--grep`, UPDATE_EXPECTATIONS) are untouched.
++  const slotTotal = Number(process.env.MARKO_TEST_SLOT_TOTAL) || 0;
++  const slots = slotTotal && process.env.MARKO_TEST_SLOTS && (process.env.MARKO_TEST_SLICE_SUITES || "").split(",").includes(suiteName) ? new Set(process.env.MARKO_TEST_SLOTS.split(",").map(Number)) : null;
++  let fixtureIndex = 0;
++
+   describe(_path.default.join(suiteName, fixturesName), () => {
+     let modes = [];
+ 
+@@ -47,6 +56,7 @@ function autotest(fixturesName, run) {
+       let context = {};
+ 
+       if (fixtureName[0] === "~" || fixtureName[0] === "_") {// skip the fixture directory
++      } else if (slots && !slots.has(fixtureIndex++ % slotTotal)) {// fixture belongs to another worker's slice
+       } else if (modes.length > 1) {
+         describe(fixtureName, function () {
+           modes.forEach(mode => {
+@@ -78,12 +88,8 @@ function runFixtureTest(name, dir, run, mode, context) {
      const skip = main.skip || main["skip_" + mode];
      const fails = main.fails || main["fails_" + mode];
  
@@ -17,7 +41,7 @@ index 57f53f1..609eaec 100644
      }
    }
  
-@@ -128,10 +124,7 @@ function runFixtureTest(name, dir, run, mode, context) {
+@@ -128,10 +134,7 @@ function runFixtureTest(name, dir, run, mode, context) {
    };
  
    const skip = reason => {
