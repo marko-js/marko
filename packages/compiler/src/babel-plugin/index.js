@@ -5,6 +5,7 @@ import {
 } from "@marko/compiler/internal/babel";
 import path from "path";
 
+import { throwDeferredCompileErrors } from "../babel-utils/deferred-errors";
 import { diagnosticError } from "../babel-utils/diagnostics";
 import { getFileInternal, setFileInternal } from "../babel-utils/get-file";
 import { getTemplateId } from "../babel-utils/tags";
@@ -423,6 +424,7 @@ function traverseAll(file, visitors) {
     program,
     true,
   );
+  throwDeferredCompileErrors(program);
 }
 
 function addPlugin(meta, arr, plugin) {

@@ -365,6 +365,23 @@ export interface DiagnosticOptions {
       });
 }
 
+/**
+ * Defers a compile error so the current compile stage can keep going and
+ * report every error it finds at once (in the same aggregate form as parse
+ * errors) instead of aborting on the first mistake. Identical duplicate
+ * messages are deduped and the number of reported errors is capped.
+ * Non-Error values are thrown immediately.
+ */
+export function deferCompileError(path: t.NodePath<any>, error: unknown): void;
+
+/**
+ * Throws all errors deferred via `deferCompileError` for the file (as-is for
+ * a single error, aggregated otherwise). Does nothing when none were
+ * deferred. The compiler calls this itself at the end of each compile stage;
+ * call it earlier to stop before work that assumes an error-free template.
+ */
+export function throwDeferredCompileErrors(path: t.NodePath<any>): void;
+
 export function diagnosticError(
   path: t.NodePath<any>,
   options: DiagnosticOptions,

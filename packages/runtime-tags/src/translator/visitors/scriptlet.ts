@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
-import { getProgram } from "@marko/compiler/babel-utils";
+import { deferCompileError, getProgram } from "@marko/compiler/babel-utils";
 
-import { recordAnalyzeError } from "../util/analyze-errors";
 import { isOutputHTML } from "../util/marko-config";
 import { mergeReferences } from "../util/references";
 import { getOrCreateSection } from "../util/sections";
@@ -12,8 +11,8 @@ import type { TemplateVisitor } from "../util/visitors";
 export default {
   analyze(scriptlet) {
     if (!scriptlet.node.static) {
-      recordAnalyzeError(
-        scriptlet.hub.file,
+      deferCompileError(
+        scriptlet,
         scriptlet.buildCodeFrameError(
           "Scriptlets are not supported when using the tags api.",
         ),

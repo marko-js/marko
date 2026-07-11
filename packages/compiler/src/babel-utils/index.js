@@ -10,6 +10,10 @@ export {
 } from "./assert";
 export { computeNode } from "./compute";
 export {
+  deferCompileError,
+  throwDeferredCompileErrors,
+} from "./deferred-errors";
+export {
   diagnosticDeprecate,
   diagnosticError,
   diagnosticSuggest,

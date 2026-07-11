@@ -3,9 +3,9 @@ import {
   getTemplateId,
   loadFileForImport,
   resolveRelativePath,
+  throwDeferredCompileErrors,
 } from "@marko/compiler/babel-utils";
 
-import { throwAnalyzeErrors } from "../../util/analyze-errors";
 import { addAssetImport } from "../../util/asset-imports";
 import {
   type BindingPropTree,
@@ -93,9 +93,9 @@ export default {
     },
 
     exit(program) {
-      // Report every analyze error collected across the template at once;
+      // Report every deferred analyze error across the template at once;
       // throws before reference finalization since failed tags were skipped.
-      throwAnalyzeErrors(program.hub.file);
+      throwDeferredCompileErrors(program);
       finalizeReferences();
       const programExtra = program.node.extra!;
       const paramsBinding = programExtra.binding;

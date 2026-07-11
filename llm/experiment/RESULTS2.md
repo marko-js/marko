@@ -167,13 +167,17 @@ Round-2 subject cost: 82 generations, ~1.83M tokens. Experiment-2 total:
 
 ## Extension 2 — multi-error reporting prototype (Arm M1)
 
-Implemented in runtime-tags per the pre-registered addendum: the analyze stage
-collects every tag-level error (failed tag's subtree skipped, duplicates
-deduped, capped at 8) and throws them together from the program's analyze
-exit in the parse layer's aggregate format. Single-error output is
-byte-identical; 8512-test suite green; two new multi-error fixtures plus two
-existing fixtures now correctly reporting their second latent error
-(both misplaced `<return>`s, both invalid assignments).
+Implemented per the pre-registered addendum: the analyze stage collects every
+tag-level error (failed tag's subtree skipped, duplicates deduped, capped at
+8) and throws them together from the program's analyze exit. Single-error
+output is byte-identical; 8512-test suite green; two new multi-error fixtures
+plus two existing fixtures now correctly reporting their second latent error
+(both misplaced `<return>`s, both invalid assignments). On review the
+mechanism was unified with the compiler's existing parse-error aggregation
+instead of mirroring its format: `@marko/compiler/babel-utils` now exports
+`deferCompileError`/`throwDeferredCompileErrors` (backed by the same
+merge-errors machinery and drained by the compiler at the end of every
+compile stage), and the translator just defers.
 
 **Reach**: 16/17 compile-fatal frozen apps surface 2–4 distinct errors at
 once under the new build (the stacked mistakes were overwhelmingly

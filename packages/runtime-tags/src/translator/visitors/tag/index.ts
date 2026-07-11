@@ -1,7 +1,10 @@
 import { types as t } from "@marko/compiler";
-import { getTagDef, type Plugin } from "@marko/compiler/babel-utils";
+import {
+  deferCompileError,
+  getTagDef,
+  type Plugin,
+} from "@marko/compiler/babel-utils";
 
-import { recordAnalyzeError } from "../../util/analyze-errors";
 import * as hooks from "../../util/plugin-hooks";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -9,6 +12,12 @@ import AttributeTag from "./attribute-tag";
 import CustomTag from "./custom-tag";
 import DynamicTag from "./dynamic-tag";
 import NativeTag from "./native-tag";
+
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoTagExtra {
+    analyzeFailed?: boolean;
+  }
+}
 
 export default {
   analyze: {
@@ -45,7 +54,7 @@ export default {
         }
       } catch (err) {
         (tag.node.extra ??= {}).analyzeFailed = true;
-        recordAnalyzeError(tag.hub.file, err);
+        deferCompileError(tag, err);
         tag.skip();
       }
     },
@@ -60,7 +69,7 @@ export default {
         }
       } catch (err) {
         (tag.node.extra ??= {}).analyzeFailed = true;
-        recordAnalyzeError(tag.hub.file, err);
+        deferCompileError(tag, err);
         return;
       }
 
