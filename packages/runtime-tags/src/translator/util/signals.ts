@@ -954,6 +954,7 @@ export function getResumeRegisterId(
 export function writeSignals(section: Section) {
   const seen = new Set<Signal>();
   const written = new Set<Signal>();
+  initDefaultedValues(section);
   writeGetters(section);
 
   for (const signal of getSignals(section).values()) {
@@ -966,13 +967,7 @@ export function writeSignals(section: Section) {
 
     for (const value of signal.values) {
       writeSignal(value.signal);
-      if (value.signal.inline) {
-        // An inlined value is cloned into its reader and must keep its
-        // full expression.
-        traverseReplace(value, "value", replaceRenderNode);
-      } else {
-        traverseReplace(value, "value", replaceValueNode, signal);
-      }
+      traverseReplace(value, "value", replaceRenderNode);
     }
 
     forEach(signal.intersection, writeSignal);
@@ -1061,6 +1056,60 @@ export function writeSignals(section: Section) {
   }
 
   return written;
+}
+
+// A defaulted binding derives from its raw source through its `default`
+// edge (see the AssignmentPattern case in references.ts). The derivation
+// (`void 0 !== source ? source : fallback`) registers against the
+// fallback's references like any other derived value. When the raw source
+// alone drives it and its read lowers to the source signal's value
+// parameter, the fallback becomes a native parameter default instead:
+// preferably on the derived signal's own value parameter, leaving the
+// source forwarding alias style (which reduces to the derived signal
+// itself), otherwise on the source's parameter when the derived signal
+// must persist its value. A derivation driven by a join keeps the
+// conditional since its reads lower to scope reads.
+function initDefaultedValues(section: Section) {
+  forEach(section.bindings, (binding) => {
+    const bindingDefault = binding.default;
+    if (bindingDefault && !binding.pruned) {
+      const { source, value } = bindingDefault;
+      const derivedSignal = initValue(binding);
+      const sourceSignal = getSignal(section, source);
+      const refs = value.extra!.referencedBindings;
+      let derivation: t.Expression = createScopeReadExpression(source, section);
+      if (refs === source && canDefaultValueParam(sourceSignal)) {
+        const target = canDefaultValueParam(derivedSignal)
+          ? derivedSignal
+          : sourceSignal;
+        target.valueParamDefault = value;
+      } else {
+        derivation = t.conditionalExpression(
+          t.binaryExpression(
+            "!==",
+            t.unaryExpression("void", t.numericLiteral(0)),
+            derivation,
+          ),
+          createScopeReadExpression(source, section),
+          value,
+        );
+      }
+      addValue(section, refs, derivedSignal, derivation);
+    }
+  });
+}
+
+function canDefaultValueParam(signal: Signal) {
+  return (
+    !signal.hasSideEffect &&
+    !signal.forcePersist &&
+    !signal.inline &&
+    !signal.valueParamDefault &&
+    !getSerializeReason(
+      signal.section,
+      signal.referencedBindings as ReferencedBindings & Binding,
+    )
+  );
 }
 
 function writeGetters(section: Section) {
@@ -1469,34 +1518,6 @@ function replaceRenderNode(node: t.Node, signal?: Signal) {
     replaceBindingReadNode(node, signal) ||
     replaceRegisteredFunctionNode(node)
   );
-}
-
-function replaceValueNode(node: t.Node, signal?: Signal) {
-  return replaceDefaultedValueNode(node, signal) || replaceRenderNode(node);
-}
-
-// A defaulted binding's derivation (`void 0 !== source ? source : fallback`,
-// see the AssignmentPattern case in references.ts) collapses to a native
-// parameter default when the source read becomes the signal's value
-// parameter: the fallback moves onto the parameter in getSignalFn and the
-// conditional reduces to the source read. A source that persists to the
-// scope (side effect, serialize reason, or inlined signal) keeps the full
-// conditional since its reads lower to scope reads instead.
-function replaceDefaultedValueNode(node: t.Node, signal?: Signal) {
-  if (node.type === "ConditionalExpression" && signal) {
-    const defaultSource = node.extra?.defaultSource;
-    if (
-      defaultSource &&
-      signal.referencedBindings === defaultSource &&
-      !signal.hasSideEffect &&
-      !signal.inline &&
-      !signal.valueParamDefault &&
-      !getSerializeReason(signal.section, defaultSource)
-    ) {
-      signal.valueParamDefault = node.alternate;
-      return node.consequent;
-    }
-  }
 }
 
 function replaceEffectNode(node: t.Node) {

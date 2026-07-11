@@ -112,6 +112,7 @@ export interface Binding {
   noSerialize: boolean;
   noSerializeProperties: Opt<string>;
   upstreamAlias: Binding | undefined;
+  default: { source: Binding; value: t.Expression } | undefined;
   restOffset: number | undefined;
   scopeOffset: Binding | undefined;
   scopeAccessor: string | undefined;
@@ -164,8 +165,6 @@ declare module "@marko/compiler/dist/types" {
     referencedBindings?: ReferencedBindings;
     downstream?: Opt<Binding>;
     binding?: Binding;
-    defaultSource?: Binding;
-    defaultedValue?: t.ConditionalExpression;
     assignment?: Binding;
     assignmentTo?: Binding;
     read?: ExtraRead;
@@ -230,6 +229,7 @@ export function createBinding(
     getters: new Map(),
     propertyAliases: new Map(),
     upstreamAlias,
+    default: undefined,
     restOffset: undefined,
     scopeOffset: undefined,
     scopeAccessor: undefined,
@@ -756,12 +756,13 @@ function createBindingsAndTrackReferences(
       break;
     }
     // A defaulted binding (`b = x` in tag params or a destructured tag
-    // variable) is represented by two bindings: `defaultSource` holds the
+    // variable) is represented by two bindings: a source binding holds the
     // value applied at the pattern's position, and the binding for `left` is
-    // derived from it (`void 0 !== source ? source : fallback`). The DOM
-    // translation registers the derivation as a signal value (see
-    // `visitors/assignment-pattern.ts`); the HTML translation materializes it
-    // as a const statement so the source stays serializable for resume (see
+    // derived from it (`void 0 !== source ? source : fallback`) through its
+    // `default` edge. The DOM translation registers the derivation when the
+    // section's signals are written (see `initDefaultedValues` in
+    // `signals.ts`); the HTML translation materializes it as a const
+    // statement so the source stays serializable for resume (see
     // `strip-default-values.ts`).
     case "AssignmentPattern": {
       const { left, right } = lVal;
@@ -807,34 +808,8 @@ function createBindingsAndTrackReferences(
           }
         }
 
-        // The derivation the DOM translation registers for the binding,
-        // synthesized here so its source reads carry the same extras as any
-        // other analyzed reference. The conditional's own extra holds the
-        // source so the written signal can collapse it to a native parameter
-        // default (see `replaceDefaultedValueNode` in `signals.ts`).
-        const readSource = () => {
-          const id = t.identifier(defaultSource.name);
-          const idExtra = (id.extra = {} as t.NodeExtra);
-          idExtra.read = createRead(defaultSource, undefined);
-          idExtra.section = section;
-          return id;
-        };
-        const defaultedValue = t.conditionalExpression(
-          t.binaryExpression(
-            "!==",
-            t.unaryExpression("void", t.numericLiteral(0)),
-            readSource(),
-          ),
-          readSource(),
-          right,
-        );
-        (defaultedValue.extra = {} as t.NodeExtra).defaultSource =
-          defaultSource;
-
-        const extra = (lVal.extra ??= {});
-        extra.binding = binding;
-        extra.defaultSource = defaultSource;
-        extra.defaultedValue = defaultedValue;
+        binding.default = { source: defaultSource, value: right };
+        (lVal.extra ??= {}).binding = binding;
         setBindingDownstream(binding, valueExtra);
         addSetupExpr(section, right);
       }

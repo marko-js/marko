@@ -13,11 +13,11 @@ export function stripDefaultValues(
 ): t.LVal {
   switch (lVal.type) {
     case "AssignmentPattern": {
-      const defaultSource = lVal.extra?.defaultSource;
-      if (!defaultSource) break;
+      const bindingDefault = lVal.extra?.binding?.default;
+      if (!bindingDefault) break;
       const nestedStatements: t.Statement[] = [];
       const left = stripDefaultValues(lVal.left, nestedStatements);
-      const sourceId = t.identifier(defaultSource.name);
+      const sourceId = t.identifier(bindingDefault.source.name);
       statements.push(
         t.variableDeclaration("const", [
           t.variableDeclarator(

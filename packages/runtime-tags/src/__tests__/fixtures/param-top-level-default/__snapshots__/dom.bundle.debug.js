@@ -19,28 +19,28 @@ const $Local_content__b = ($scope, b) => _text($scope["#text/1"], b);
 const $Local_content__y__OR__$b = /*@__PURE__*/ _or(5, ($scope) => $Local_content__b($scope, void 0 !== $scope.$b2 ? $scope.$b2 : $scope._.y + 100));
 const $Local_content__y = /*@__PURE__*/ _closure_get("y", $Local_content__y__OR__$b);
 const $Local_content__setup = /*@__PURE__*/ _child_setup($Local_content__y);
-const $Local_content__$b = /*@__PURE__*/ _const("$b2", $Local_content__y__OR__$b);
 const $Local_content__a = ($scope, a) => _text($scope["#text/0"], a);
+const $Local_content__tag_param_ = /*@__PURE__*/ _const("$b2", $Local_content__y__OR__$b);
 const $Local_content__$params = ($scope, $params3) => {
 	$Local_content__a($scope, $params3[0]);
-	$Local_content__$b($scope, $params3[1]);
+	$Local_content__tag_param_($scope, $params3[1]);
 };
 const $for_content__label = ($scope, label) => _text($scope["#text/0"], label);
 const $for_content__x__OR__$label = /*@__PURE__*/ _or(4, ($scope) => $for_content__label($scope, void 0 !== $scope.$label ? $scope.$label : $scope._.x));
 const $for_content__x = /*@__PURE__*/ _for_closure("#ul/2", $for_content__x__OR__$label);
 const $for_content__setup = $for_content__x;
-const $for_content__$label = /*@__PURE__*/ _const("$label", $for_content__x__OR__$label);
 const $for_content__$params = ($scope, $params4) => $for_content__$label($scope, ($params4?.[0]).label);
+const $for_content__$label = /*@__PURE__*/ _const("$label", $for_content__x__OR__$label);
 const $child_content__b = ($scope, b) => _text($scope["#text/1"], b);
 const $child_content__x__OR__$b = /*@__PURE__*/ _or(5, ($scope) => $child_content__b($scope, void 0 !== $scope.$b ? $scope.$b : $scope._.x * 10));
 const $child_content__x = /*@__PURE__*/ _closure_get("x", $child_content__x__OR__$b);
 const $child_content__setup = $child_content__x;
-const $child_content__$b = /*@__PURE__*/ _const("$b", $child_content__x__OR__$b);
 const $child_content__a = ($scope, a) => _text($scope["#text/0"], a);
 const $child_content__$params = ($scope, $params2) => {
 	$child_content__a($scope, $params2[0]);
 	$child_content__$b($scope, $params2[1]);
 };
+const $child_content__$b = /*@__PURE__*/ _const("$b", $child_content__x__OR__$b);
 const $child_content = /*@__PURE__*/ _content("__tests__/template.marko_1_content", "<div id=known><!>:<!></div>", "D%c%l", $child_content__setup, $child_content__$params);
 const $x__closure = /*@__PURE__*/ _closure($child_content__x);
 const $x = /*@__PURE__*/ _let("x/5", ($scope) => {
@@ -63,7 +63,7 @@ function $setup($scope) {
 	$input_content($scope["#childScope/0"], $child_content($scope));
 	$Local_content__setup._($scope["#childScope/1"], $scope);
 	$Local_content__a($scope["#childScope/1"], "L");
-	$Local_content__$b($scope["#childScope/1"], void 0);
+	$Local_content__tag_param_($scope["#childScope/1"], void 0);
 	$x($scope, 1);
 	$y($scope, 1);
 	$for($scope, [[{}, { label: "a" }]]);

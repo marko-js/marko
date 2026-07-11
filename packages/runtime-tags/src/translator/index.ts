@@ -3,7 +3,6 @@ import type { Config } from "@marko/compiler";
 import coreTagLib from "./core";
 import runtimeInfo from "./util/runtime-info";
 import { extractVisitors } from "./util/visitors";
-import AssignmentPattern from "./visitors/assignment-pattern";
 import MarkoCDATA from "./visitors/cdata";
 import MarkoComment from "./visitors/comment";
 import MarkoDeclaration from "./visitors/declaration";
@@ -23,7 +22,6 @@ const visitors = extractVisitors({
   Program,
   Function,
   ReferencedIdentifier,
-  AssignmentPattern,
   ImportDeclaration,
   MarkoDocumentType,
   MarkoDeclaration,
