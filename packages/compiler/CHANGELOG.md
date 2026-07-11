@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.40.2
+
+### Patch Changes
+
+- [#3388](https://github.com/marko-js/marko/pull/3388) [`642c68d`](https://github.com/marko-js/marko/commit/642c68d4736d24533de0021901a6c556413c621c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Make common syntax errors self-guiding. Call-style control flow (`<if(cond)>`, `<await(x) p>`, `<show(x)>`) now says how to write the condition/value as an attribute; bare JS declarations at the template root (`let count = 0;`) and slashless `<let count=0>`/`<const x=1>` point at the tag-variable form and `static`; unknown tags from other frameworks get curated pointers (`<slot>` → `<${input.content}/>`, `<state>` → `<let>`) before falling back to nearest-name suggestions; JSX-style brace-wrapped attribute values (`onClick={handler}` and values that only parse once unwrapped) explain that attribute values are plain JavaScript expressions; attribute tags on `<await>` point at `<try>` with `<@placeholder>`/`<@catch>`. Also fixes a typo in the nested-attribute-tags assertion message ("Tag not support" → "Tag does not support").
+
+- [#3390](https://github.com/marko-js/marko/pull/3390) [`ec97955`](https://github.com/marko-js/marko/commit/ec97955940333049a7ceb014cae9cc7d1339c749) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report every analyze-stage error in a template at once instead of stopping at the first. Analyze failures are now recorded through the compiler's diagnostics channel (`diagnosticError`), and the compiler mirrors the parse layer by throwing all error diagnostics together at the end of the analyze stage (duplicates deduped, capped at 8) — or, when compiling with `errorRecovery`, keeping them as recoverable diagnostics for editors instead of throwing. The tags translator reports tag-level analysis failures this way, skipping the failed tag's subtree to avoid cascading follow-on errors. Templates with a single error produce byte-identical output.
+
 ## 5.40.1
 
 ### Patch Changes

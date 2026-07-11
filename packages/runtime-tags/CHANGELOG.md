@@ -1,5 +1,38 @@
 # @marko/runtime-tags
 
+## 6.3.3
+
+### Patch Changes
+
+- [#3391](https://github.com/marko-js/marko/pull/3391) [`9bb8b3d`](https://github.com/marko-js/marko/commit/9bb8b3d9f2bac2f7abec419d6077d233cf375791) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Keying a `<for>` by its own loop parameter (`<for|city| of=cities by=city>`) is now a guided compile error suggesting the property-string and function forms (`by="id"` / `by=(city) => key`), instead of dying at render time with a bare undefined-variable error — the `by=` expression is evaluated before the loop runs, so the loop parameter is not in scope there.
+
+- [#3393](https://github.com/marko-js/marko/pull/3393) [`ef4f23f`](https://github.com/marko-js/marko/commit/ef4f23f55faa0d2b48a978f247a693677cc5ed90) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose `cheatsheet.md` through the package `exports` map so module resolvers can locate it as `marko/cheatsheet.md`.
+
+- [#3388](https://github.com/marko-js/marko/pull/3388) [`642c68d`](https://github.com/marko-js/marko/commit/642c68d4736d24533de0021901a6c556413c621c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Make common syntax errors self-guiding. Call-style control flow (`<if(cond)>`, `<await(x) p>`, `<show(x)>`) now says how to write the condition/value as an attribute; bare JS declarations at the template root (`let count = 0;`) and slashless `<let count=0>`/`<const x=1>` point at the tag-variable form and `static`; unknown tags from other frameworks get curated pointers (`<slot>` → `<${input.content}/>`, `<state>` → `<let>`) before falling back to nearest-name suggestions; JSX-style brace-wrapped attribute values (`onClick={handler}` and values that only parse once unwrapped) explain that attribute values are plain JavaScript expressions; attribute tags on `<await>` point at `<try>` with `<@placeholder>`/`<@catch>`. Also fixes a typo in the nested-attribute-tags assertion message ("Tag not support" → "Tag does not support").
+
+- [#3332](https://github.com/marko-js/marko/pull/3332) [`5fc3bce`](https://github.com/marko-js/marko/commit/5fc3bced984f70a592f398e47a62a4e82d1df4e1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reads recorded after their owning expression was merged into another
+  node's extra (eg a `$global` read tracked at identifier-visit time after
+  an `<if>`'s analyze merged its test into the tag's extra) now land on the
+  merge target instead of splitting the expression's references.
+
+- [#3390](https://github.com/marko-js/marko/pull/3390) [`ec97955`](https://github.com/marko-js/marko/commit/ec97955940333049a7ceb014cae9cc7d1339c749) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Report every analyze-stage error in a template at once instead of stopping at the first. Analyze failures are now recorded through the compiler's diagnostics channel (`diagnosticError`), and the compiler mirrors the parse layer by throwing all error diagnostics together at the end of the analyze stage (duplicates deduped, capped at 8) — or, when compiling with `errorRecovery`, keeping them as recoverable diagnostics for editors instead of throwing. The tags translator reports tag-level analysis failures this way, skipping the failed tag's subtree to avoid cascading follow-on errors. Templates with a single error produce byte-identical output.
+
+- [#3332](https://github.com/marko-js/marko/pull/3332) [`5fc3bce`](https://github.com/marko-js/marko/commit/5fc3bced984f70a592f398e47a62a4e82d1df4e1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - `$signal` abort-ids are now allocated once during analyze and stamped on
+  each expression root's extra, so every output/entry translate of a cached
+  file reads the same id — agreement across compiles is structural instead
+  of a property of identical visit order. Previously the ids were allocated
+  at translate time from a module-level map keyed by section; sections are
+  cached-analysis objects that outlive compiles — the compiler `cache`
+  shares one analyzed file across every output/entry kind and each compile
+  translates a clone — so the old map leaked allocations across compiles of
+  the same cached file and drifted the ids (`$signal(scope, 0)` → `1`) on
+  the second dom-mode translate of the same cached file.
+
+- [#3392](https://github.com/marko-js/marko/pull/3392) [`d734bd0`](https://github.com/marko-js/marko/commit/d734bd0c5d5c34e0f7c91b04cf43cc6dc24afa9f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ship an LLM-optimized syntax reference (`cheatsheet.md`) inside the published `marko` package, giving tooling a stable in-package path (`node_modules/marko/cheatsheet.md`) to point coding agents at when they write or fix Marko code.
+
+- Updated dependencies [[`642c68d`](https://github.com/marko-js/marko/commit/642c68d4736d24533de0021901a6c556413c621c), [`ec97955`](https://github.com/marko-js/marko/commit/ec97955940333049a7ceb014cae9cc7d1339c749)]:
+  - @marko/compiler@5.40.2
+
 ## 6.3.2
 
 ### Patch Changes
