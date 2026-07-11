@@ -156,3 +156,21 @@ good suggestion; curated cross-framework tag aliases over Levenshtein) and one
 in `unclear.md` (AttrTag numeric indexing silently undefined). @marko/run
 findings (silently non-routable lookalike files) recorded with the run-repo
 deliverables.
+
+## Post-review revisions (v4, v5)
+
+Two review passes on the shipped sheet, each revalidated with fresh subject
+runs before landing:
+
+- **v4** — the @marko/run sheet and reference rewritten around the `Run`
+  namespace API (`Run.GET(handler)`, `Run.ALL(...)`, validation options,
+  `Run.href`) after review noted the docs taught the deprecated plain-export
+  style. Revalidated on t7/t8/h3 at n=2: 6/6, with every generated handler
+  using `Run.*`.
+- **v5** — review caught two marko6-sheet gaps: change handlers were shown
+  only in passing without stating that the `*Change` handler is what turns an
+  uncontrolled native input into a controlled one (`:=` being its shorthand),
+  and the async section was titled "server streaming" although `<await>` also
+  re-renders in the browser when handed a new promise (verified live:
+  state → `<const>` → new promise → placeholder → new result). Both fixed with
+  no size growth; revalidated on t2/t3/t5/h2 at n=2: 8/8.

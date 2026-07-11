@@ -279,6 +279,9 @@ No `<else>`; `value=` only.
   awaited content later, out of order. Without `<try>`, HTML output pauses at the
   `<await>` (in-order streaming).
 - `<try>` alone (with `@catch`) is a runtime error boundary.
+- `<await>` is reactive in the browser: when its `value=` promise changes (for
+  example a `<const>` recomputing from state), the boundary shows the
+  `@placeholder` again and renders the newly resolved value.
 - Rendering a promise directly (`${promise}`) is a runtime error telling you to use `<await>`.
 
 ### `<script>` — the client effect primitive
