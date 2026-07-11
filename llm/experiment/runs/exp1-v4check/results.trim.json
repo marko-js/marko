@@ -1,0 +1,353 @@
+{
+ "round": "exp1-v4check",
+ "runs": [
+  {
+   "runId": "h3-admin.C1.r1",
+   "taskId": "h3-admin",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "a9dc346dd65cb0ddd",
+   "files": [
+    {
+     "path": "src/routes/admin/+middleware.js",
+     "content": "export default Run.ALL((context, next) => {\n  if (context.url.searchParams.get(\"key\") !== \"letmein\") {\n    return new Response(\"unauthorized\", { status: 401 });\n  }\n  return next();\n});\n"
+    },
+    {
+     "path": "src/routes/admin/dashboard/+page.marko",
+     "content": "<h1>Dashboard</h1>\n<p>Secret metrics</p>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "no key: 401",
+     "pass": true,
+     "detail": "401"
+    },
+    {
+     "name": "no key: unauthorized text",
+     "pass": true,
+     "detail": "unauthorized"
+    },
+    {
+     "name": "no key: page not rendered",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "key: 200",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "name": "key: dashboard rendered",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp1-v4check_apps_h3-admin.C1.r1_dist_.marko-run_admin.dashboard.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp1-v4check_apps_h3-admin.C1.r1_dist_.marko-run_admin.dashboard.marko\" async blocking=render type=module>await Promise.a"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "h3-admin.C1.r2",
+   "taskId": "h3-admin",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "a1a90caaad04b10bb",
+   "files": [
+    {
+     "path": "src/routes/admin/+middleware.js",
+     "content": "export default Run.ALL((context, next) => {\n  if (context.url.searchParams.get(\"key\") !== \"letmein\") {\n    return new Response(\"unauthorized\", { status: 401 });\n  }\n  return next();\n});"
+    },
+    {
+     "path": "src/routes/admin/dashboard/+page.marko",
+     "content": "<h1>Dashboard</h1>\n<p>Secret metrics</p>"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "no key: 401",
+     "pass": true,
+     "detail": "401"
+    },
+    {
+     "name": "no key: unauthorized text",
+     "pass": true,
+     "detail": "unauthorized"
+    },
+    {
+     "name": "no key: page not rendered",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "key: 200",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "name": "key: dashboard rendered",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp1-v4check_apps_h3-admin.C1.r2_dist_.marko-run_admin.dashboard.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp1-v4check_apps_h3-admin.C1.r2_dist_.marko-run_admin.dashboard.marko\" async blocking=render type=module>await Promise.a"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t7-products.C1.r1",
+   "taskId": "t7-products",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "a574a009f2e676ef8",
+   "files": [
+    {
+     "path": "src/routes/products/$id/+page.marko",
+     "content": "import { getProduct } from \"../../../catalog.js\";\n\n<const/product=getProduct($global.params.id)>\n\n<if=product>\n  <h1 id=\"product-name\">${product.name}</h1>\n  <p id=\"product-price\">$${product.price}</p>\n</if>\n<else>\n  <h1 id=\"product-name\">Product not found</h1>\n</else>\n"
+    },
+    {
+     "path": "src/routes/api/products/$id/+handler.js",
+     "content": "import { getProduct } from \"../../../../catalog.js\";\n\nexport const GET = Run.GET((context) => {\n  const product = getProduct(context.params.id);\n\n  if (!product) {\n    return new Response(\n      JSON.stringify({ error: \"not found\" }),\n      {\n        status: 404,\n        headers: { \"content-type\": \"application/json\" }\n      }\n    );\n  }\n\n  return new Response(\n    JSON.stringify(product),\n    {\n      status: 200,\n      headers: { \"content-type\": \"application/json\" }\n    }\n  );\n});\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "page: product name",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp1-v4check_apps_t7-products.C1.r1_dist_.marko-run_products._.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp1-v4check_apps_t7-products.C1.r1_dist_.marko-run_products._.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/products.$.client-entry.marko\")]);document.q"
+    },
+    {
+     "name": "page: price format",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "page: not found text",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp1-v4check_apps_t7-products.C1.r1_dist_.marko-run_products._.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp1-v4check_apps_t7-products.C1.r1_dist_.marko-run_products._.marko\" async blocking=render type=module>await Promise.allSe"
+    },
+    {
+     "name": "api: 200",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "name": "api: json content-type",
+     "pass": true,
+     "detail": "application/json"
+    },
+    {
+     "name": "api: body matches product",
+     "pass": true,
+     "detail": "{\"id\":\"2\",\"name\":\"Basalt Mug\",\"price\":18}"
+    },
+    {
+     "name": "api: unknown id -> 404",
+     "pass": true,
+     "detail": "404"
+    },
+    {
+     "name": "api: 404 body",
+     "pass": true,
+     "detail": "{\"error\":\"not found\"}"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t7-products.C1.r2",
+   "taskId": "t7-products",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "aebc612d850c9d270",
+   "files": [
+    {
+     "path": "src/routes/products/$id/+page.marko",
+     "content": "import { getProduct } from \"../../../catalog.js\";\n\n<const/product=getProduct($global.params.id)>\n\n<if=product>\n  <h1 id=\"product-name\">${product.name}</h1>\n  <p id=\"product-price\">${`$${product.price}`}</p>\n</if>\n<else>\n  <h1 id=\"product-name\">Product not found</h1>\n</else>"
+    },
+    {
+     "path": "src/routes/api/products/$id/+handler.js",
+     "content": "import { getProduct } from \"../../../../catalog.js\";\n\nexport const GET = Run.GET((context) => {\n  const product = getProduct(context.params.id);\n  if (product) {\n    return new Response(JSON.stringify(product), {\n      status: 200,\n      headers: { \"content-type\": \"application/json\" }\n    });\n  } else {\n    return new Response(JSON.stringify({ error: \"not found\" }), {\n      status: 404,\n      headers: { \"content-type\": \"application/json\" }\n    });\n  }\n});"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "page: product name",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp1-v4check_apps_t7-products.C1.r2_dist_.marko-run_products._.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp1-v4check_apps_t7-products.C1.r2_dist_.marko-run_products._.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/products.$.client-entry.marko\")]);document.q"
+    },
+    {
+     "name": "page: price format",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "page: not found text",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp1-v4check_apps_t7-products.C1.r2_dist_.marko-run_products._.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp1-v4check_apps_t7-products.C1.r2_dist_.marko-run_products._.marko\" async blocking=render type=module>await Promise.allSe"
+    },
+    {
+     "name": "api: 200",
+     "pass": true,
+     "detail": "200"
+    },
+    {
+     "name": "api: json content-type",
+     "pass": true,
+     "detail": "application/json"
+    },
+    {
+     "name": "api: body matches product",
+     "pass": true,
+     "detail": "{\"id\":\"2\",\"name\":\"Basalt Mug\",\"price\":18}"
+    },
+    {
+     "name": "api: unknown id -> 404",
+     "pass": true,
+     "detail": "404"
+    },
+    {
+     "name": "api: 404 body",
+     "pass": true,
+     "detail": "{\"error\":\"not found\"}"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t8-guestbook.C1.r1",
+   "taskId": "t8-guestbook",
+   "condition": "C1",
+   "rep": 1,
+   "stage": "first",
+   "agentId": "ab07b461753543f67",
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "import { entries } from \"../../store.js\";\n\n<h1>Guestbook</h1>\n\n<if=entries.length>\n  <ul id=\"entries\">\n    <for|entry| of=entries>\n      <li class=\"entry\">${entry.message}</li>\n    </for>\n  </ul>\n</if>\n<else>\n  <p>Be the first to sign!</p>\n</else>\n\n<form method=\"post\">\n  <input type=\"text\" name=\"message\">\n  <button type=\"submit\">Submit</button>\n</form>"
+    },
+    {
+     "path": "src/routes/guestbook/+handler.js",
+     "content": "import { addEntry } from \"../../store.js\";\n\nexport const POST = Run.POST(async (context) => {\n  const form = await context.request.formData();\n  const message = String(form.get(\"message\") || \"\").trim();\n  \n  if (message) {\n    addEntry(message);\n  }\n  \n  return context.redirect(\"/guestbook\", 303);\n});"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "get: empty prompt",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp1-v4check_apps_t8-guestbook.C1.r1_dist_.marko-run_guestbook.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp1-v4check_apps_t8-guestbook.C1.r1_dist_.marko-run_guestbook.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/guestbook.client-entry.marko\")]);document.qu"
+    },
+    {
+     "name": "post: redirect status",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "post: location back to guestbook",
+     "pass": true,
+     "detail": "http://localhost:5158/guestbook"
+    },
+    {
+     "name": "get: entry rendered",
+     "pass": true,
+     "detail": " GuestbookHello from the graderSubmit"
+    },
+    {
+     "name": "get: entry li present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "get: empty prompt gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "post: whitespace redirects",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "get: whitespace not added",
+     "pass": true,
+     "detail": "entries=1"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t8-guestbook.C1.r2",
+   "taskId": "t8-guestbook",
+   "condition": "C1",
+   "rep": 2,
+   "stage": "first",
+   "agentId": "a6e5921f0566e0e65",
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "<h1>Guestbook</h1>\n\n<if=$global.data.entries.length>\n  <ul id=\"entries\">\n    <for|entry| of=$global.data.entries>\n      <li class=\"entry\">${entry.message}</li>\n    </for>\n  </ul>\n</if>\n<else>\n  <p>Be the first to sign!</p>\n</else>\n\n<form method=\"post\" action=\"/guestbook\">\n  <input type=\"text\" name=\"message\" />\n  <button type=\"submit\">Sign</button>\n</form>"
+    },
+    {
+     "path": "src/routes/guestbook/+handler.js",
+     "content": "import { entries, addEntry } from \"../../store.js\";\n\nexport const GET = Run.GET((context, next) => {\n  return next({ entries });\n});\n\nexport const POST = Run.POST(async (context) => {\n  const form = await context.request.formData();\n  const msg = String(form.get(\"message\") || \"\").trim();\n  if (msg) addEntry(msg);\n  return context.redirect(\"/guestbook\", 303);\n});"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "get: empty prompt",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp1-v4check_apps_t8-guestbook.C1.r2_dist_.marko-run_guestbook.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp1-v4check_apps_t8-guestbook.C1.r2_dist_.marko-run_guestbook.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/guestbook.client-entry.marko\")]);document.qu"
+    },
+    {
+     "name": "post: redirect status",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "post: location back to guestbook",
+     "pass": true,
+     "detail": "http://localhost:5159/guestbook"
+    },
+    {
+     "name": "get: entry rendered",
+     "pass": true,
+     "detail": " GuestbookHello from the graderSign"
+    },
+    {
+     "name": "get: entry li present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "get: empty prompt gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "post: whitespace redirects",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "get: whitespace not added",
+     "pass": true,
+     "detail": "entries=1"
+    }
+   ],
+   "guidance": ""
+  }
+ ]
+}

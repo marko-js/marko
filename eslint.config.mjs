@@ -8,6 +8,8 @@ export default tseslint.config(
     ignores: [
       "!packages/runtime-class/src/node_modules",
       ".cache",
+      // Verbatim experiment payloads (validated prompts/solutions); see llm/experiment/README.md.
+      "llm/experiment",
       ".sizes",
       ".vscode",
       "**/__snapshots__",

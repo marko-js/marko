@@ -134,7 +134,28 @@ export async function gradeRun({ taskDir, runDir, port }) {
   await server.stop();
 
   const pass = !fatal && checks.length > 0 && checks.every((c) => c.pass);
-  return { pass, fatal, checks, serverLog: trimLog(server.log()) };
+  return {
+    pass,
+    fatal,
+    checks,
+    guidance: guidanceLines(server.log()),
+    serverLog: trimLog(server.log()),
+  };
+}
+
+// Framework guidance lines (warnings) from the full, untrimmed server log.
+export function guidanceLines(log) {
+  const seen = new Set();
+  const lines = [];
+  for (const line of (log || "").split("\n")) {
+    const trimmed = line.replace(/\u001b\[[0-9;]*[A-Za-z]/g, "").trim();
+    if (!/\[marko-run\]|verb exports/i.test(trimmed)) continue;
+    if (seen.has(trimmed)) continue;
+    seen.add(trimmed);
+    lines.push(trimmed);
+    if (lines.length >= 6) break;
+  }
+  return lines.join("\n");
 }
 
 // Pull the useful part of a vite/marko error out of a 500 page / server log.

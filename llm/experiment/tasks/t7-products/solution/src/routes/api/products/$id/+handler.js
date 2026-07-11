@@ -1,6 +1,6 @@
 import { getProduct } from "../../../../catalog.js";
 
-export function GET(context) {
+export const GET = Run.GET((context) => {
   const product = getProduct(context.params.id);
   if (!product) {
     return new Response(JSON.stringify({ error: "not found" }), {
@@ -11,4 +11,4 @@ export function GET(context) {
   return new Response(JSON.stringify(product), {
     headers: { "content-type": "application/json" },
   });
-}
+});

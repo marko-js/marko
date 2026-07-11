@@ -54,26 +54,14 @@ never-consumed awaits with `new Promise(() => {})` instead of the shared
 counter. A robust fix could stamp each state object (capture `state` in
 `tick()` and drop stray resolutions after reset).
 
-## Give `<if(cond)>`-style argument misuse a targeted error
+## Structural parse errors still predate the new guided hints
 
-`packages/compiler/src/babel-utils/assert.js:60` | 2026-07-11 | impact:med | effort:low
+`packages/compiler/src/babel-plugin/parser.js:125` | 2026-07-11 | impact:low | effort:high
 
-Writing control flow with call-style arguments — `<if(cond)>`, `<await(user) promise>`, `<else(cond)>` — is the single most common wrong guess observed when LLMs (and likely Marko 4/5 users) author Tags API templates: in a controlled test of 16 LLM-generated templates it was the top compile error (5/16), and every occurrence got the generic "Tag does not support arguments." from `assertNoArgs`. The message never mentions the correct form, so the author's next guess is usually another wrong shape rather than `<if=cond>`. Suggested direction: let `assertNoArgs` accept the tag's expected form (callers like `packages/runtime-tags/src/translator/core/if.ts:486` and `core/await.ts:57` know it) and emit e.g. "Tag does not support arguments. The condition is written as a value attribute: `<if=cond>`" — mirroring how `on:click` already suggests `onClick`.
+The guided-error work added attribute-value and translator-level hints, but three observed wrong-syntax shapes die inside `htmljs-parser` (a separate package) before any hint site is reached: Svelte block syntax (`{#if}` / `{#each}` → "Mismatched group"), Marko-4-style `<state { ... }>` (consumes the rest of the file → "Missing ending tag"), and call-style loop args `<for(item of list)>` (argument text isn't a valid JS expression, and the compiler is translator-agnostic so a Tags-API-specific hint can't live there — `<for(x of y)>` may be legitimate under the class translator). Fixing these would need hint hooks in htmljs-parser's structural errors or a translator-aware error pass over `MarkoParseError` nodes before they aggregate-throw. Verified against captured LLM-generated templates: these were the only remaining unguided compile-error shapes out of ~20 broken templates.
 
-## Bare JS statements in concise mode produce misleading tag errors
+## Translator reports only the first error per template
 
-`packages/runtime-tags/src/translator/core/let.ts:64` | 2026-07-11 | impact:med | effort:med
+`packages/runtime-tags/src/translator/core/if.ts:486` | 2026-07-11 | impact:med | effort:high
 
-A template starting with plain JavaScript like `let celsius = 20;` (a natural reflex for anyone from Svelte/vanilla JS) parses as a concise `<let>` tag with bogus attributes and errors with "The `<let>` tag only supports the `value=` attribute and its change handler." — accurate but unactionable, since the author doesn't know they wrote a tag at all. Same story for `const`/`function` lines hitting other tags or "Unable to find entry point" errors. When a concise-mode line looks like a JS declaration (`let|const|var|function` + identifier + `=`/`(`), a hint such as "Top-level statements need a `static` prefix; for reactive state use `<let/celsius=20>`" would redirect both humans and code models. Observed twice in 16 independent LLM-authored templates.
-
-## Brace-wrapped attribute values fail before the helpful suggestion can fire
-
-`packages/runtime-tags/src/common/helpers.ts:27` | 2026-07-11 | impact:med | effort:med
-
-`getWrongAttrSuggestion` already turns `on:click=handler` into a great "did you mean `onClick`?" error, but the far more common JSX/Svelte idiom wraps the value in braces — `on:click={() => count++}` / `onClick={fn}` — and that dies earlier as a bare "Unexpected token" while parsing `{() => ...}` as an object literal, so the suggestion never fires (observed repeatedly across LLM-generated templates; the no-braces variant got the good error, the braces variant got the cryptic one). Consider catching expression-parse failures for attribute values that match `^\{[\s\S]*\}$` and appending "attribute values are plain JavaScript expressions — remove the surrounding `{ }`" so the JSX reflex gets redirected at the first error rather than after the braces are removed.
-
-## Cross-framework tag names deserve curated suggestions, not Levenshtein
-
-`packages/runtime-tags/src/translator/visitors/tag/custom-tag.ts:380` | 2026-07-11 | impact:low | effort:low
-
-Unknown-tag errors suggest the nearest known tag by edit distance, which turns `<slot/>` (the Vue/Svelte/web-components reflex for rendering passed content — written by 2/2 LLM attempts at a layout file) into "Did you mean `<set>`?", pointing authors at an unrelated tag. A small alias table consulted before the Levenshtein fallback would fix the recurring cases: `slot` → "render passed content with `<${input.content}/>`", `state` → `<let>`, `fragment`/`template` → plain content. The existing `knownWrongAttrs` table in `packages/runtime-tags/src/common/helpers.ts:5` is exactly this pattern for attributes; tags need the same.
+Translator-phase assertions (`assertNoArgs`, the `<let>`/`<const>` attribute checks, unknown-tag resolution, native-tag attribute validation) throw on the first failure, so a template with several distinct mistakes surfaces them one compile round-trip at a time. In a controlled repair experiment, LLM subjects fixed exactly the reported error and then died on the next hidden one (e.g. removed JSX braces, then hit the `on:click` → `onClick` suggestion they had never been shown); humans migrating a file from another framework face the same drip. The parse layer already aggregates via `MarkoParseError` nodes + `throwAggregateError` (`packages/compiler/src/util/merge-errors.ts`); extending a collect-and-continue mode to translator assertions (or at least to per-tag `analyze` errors, which are mostly independent) would compress multi-error fix loops proportionally to the error count.

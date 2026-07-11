@@ -1,11 +1,8 @@
 import { addEntry } from "../../store.js";
 
-export async function POST(context) {
+export const POST = Run.POST(async (context) => {
   const data = await context.request.formData();
   const message = String(data.get("message") || "").trim();
   if (message) addEntry(message);
-  return new Response(null, {
-    status: 303,
-    headers: { location: "/guestbook" },
-  });
-}
+  return context.redirect("/guestbook", 303);
+});

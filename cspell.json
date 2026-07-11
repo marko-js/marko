@@ -398,9 +398,7 @@
     "fixability"
   ],
   "ignoreRegExpList": [],
-  "files": [
-    "*"
-  ],
+  "files": ["*"],
   "ignorePaths": [
     "dist",
     "fixtures",

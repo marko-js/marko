@@ -16,6 +16,7 @@ for (let i = 2; i < args.length; i++) {
   else if (args[i] === "--repstart") flags.repstart = Number(args[++i]);
   else if (args[i] === "--conditions") flags.conditions = args[++i].split(",");
   else if (args[i] === "--repair") flags.repair = args[++i];
+  else if (args[i] === "--only-condition") flags.onlyCondition = args[++i];
   else tasks.push(args[i]);
 }
 const reps = flags.reps ?? 2;
@@ -47,6 +48,21 @@ ${files.map((f) => `--- ${f.path} ---\n${f.content}`).join("\n")}
 ${evidence.trim().slice(0, 3000)}
 </failure-evidence>`;
 
+function guidanceLines(serverLog) {
+  if (!serverLog) return "";
+  const seen = new Set();
+  const lines = [];
+  for (const line of serverLog.split("\n")) {
+    const trimmed = line.trim();
+    if (!/\[marko-run\]|verb exports/i.test(trimmed)) continue;
+    if (seen.has(trimmed)) continue;
+    seen.add(trimmed);
+    lines.push(trimmed);
+    if (lines.length >= 6) break;
+  }
+  return lines.join("\n");
+}
+
 async function sheetsFor(taskId) {
   if (sheetVersion === "none") return null;
   const dir = path.join(ROOT, "cheatsheets", sheetVersion);
@@ -59,23 +75,27 @@ async function sheetsFor(taskId) {
 
 const units = [];
 if (flags.repair) {
-  // Repair mode: one unit per failed run in the results file.
+  // Repair mode: `reps` units per failed run in the results file.
   const results = JSON.parse(await readFile(flags.repair, "utf8"));
   for (const r of results.runs) {
     if (r.pass || !r.files?.length) continue;
+    if (flags.onlyCondition && r.condition !== flags.onlyCondition) continue;
     const spec = await readFile(path.join(ROOT, "tasks", r.taskId, "spec.md"), "utf8");
     const sheets = r.condition === "C1" ? await sheetsFor(r.taskId) : null;
+    const guidance = r.guidance ?? guidanceLines(r.serverLog);
     const evidence = r.fatal
       ? `Server/compile error:\n${r.fatal.detail}`
-      : `Failed checks:\n${r.checks.filter((c) => !c.pass).map((c) => `- ${c.name}${c.detail ? ` (${c.detail})` : ""}`).join("\n")}`;
-    units.push({
-      runId: `${r.runId}-fix`,
-      taskId: r.taskId,
-      condition: r.condition,
-      rep: r.rep,
-      stage: "repair",
-      prompt: REPAIR_WRAPPER(spec, sheets, r.files, evidence),
-    });
+      : `Failed checks:\n${r.checks.filter((c) => !c.pass).map((c) => `- ${c.name}${c.detail ? ` (${c.detail})` : ""}`).join("\n")}${guidance ? `\n\nDev server output:\n${guidance}` : ""}`;
+    for (let i = 1; i <= (flags.reps ?? 1); i++) {
+      units.push({
+        runId: `${r.runId}-fix${flags.reps ? i : ""}`,
+        taskId: r.taskId,
+        condition: r.condition,
+        rep: r.rep,
+        stage: "repair",
+        prompt: REPAIR_WRAPPER(spec, sheets, r.files, evidence),
+      });
+    }
   }
 } else {
   for (const taskId of tasks) {
