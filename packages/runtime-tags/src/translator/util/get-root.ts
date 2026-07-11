@@ -27,11 +27,8 @@ export function getExprRoot(path: t.NodePath<t.Node>) {
   return curPath;
 }
 
-// The default value of a defaulted Marko binding (`b = x` in tag params or a
-// destructured tag variable) is its own expression root: its references drive
-// that binding's derivation rather than the expression the pattern appears
-// in. Defaults in plain JS statements (eg destructuring in a script) keep
-// their statement's root.
+// A Marko binding's default is its own expression root: its references
+// drive that binding's derivation, not the expression the pattern is in.
 function isMarkoBindingDefaultValue(path: t.NodePath<t.Node>) {
   if (path.key !== "right" || path.parentPath!.type !== "AssignmentPattern") {
     return false;

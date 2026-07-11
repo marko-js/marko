@@ -703,9 +703,7 @@ export function getSignalFn(signal: Signal): t.Expression {
           isOwnValueRead(expression.arguments[1], binding as Binding)
         ) {
           // The signal only forwards its scope and value to another signal:
-          // `(scope, value) => fn(scope, value)` is equivalent to `fn`. A
-          // collapsed parameter default must keep its own function since
-          // the default would not apply to the forwarded signal's parameter.
+          // `(scope, value) => fn(scope, value)` is equivalent to `fn`.
           return expression.callee;
         }
       }
@@ -1069,13 +1067,8 @@ export function writeSignals(section: Section) {
 // itself), otherwise on the source's parameter when the derived signal
 // must persist its value. A derivation driven by a join keeps the
 // conditional since its reads lower to scope reads.
-// A defaulted binding derives from its raw source through its
-// `defaultSource` edge (see the AssignmentPattern case in references.ts);
-// the fallback stays in the tree and arrives here from the pattern's
-// translate visitor. The derivation registers against the fallback's
-// references like any other derived value; once every signal exists,
-// `collapseDefaultedValues` trades the conditional for a native parameter
-// default where the source read would lower to a value parameter.
+// A defaulted binding's derivation; collapseDefaultedValues may replace
+// the conditional with a parameter default once every signal exists.
 export function initDefaultedValue(binding: Binding, value: t.Expression) {
   if (!binding.pruned) {
     const section = binding.section;
@@ -1097,14 +1090,8 @@ export function initDefaultedValue(binding: Binding, value: t.Expression) {
   }
 }
 
-// A derivation registered on its raw source's own signal (the source alone
-// drives it) moves its fallback onto a value parameter when the source
-// read would lower to one: preferably the derived signal's own value
-// parameter, leaving the source forwarding alias style (which reduces to
-// the derived signal itself), otherwise the source's parameter when the
-// derived signal must persist its value. A join driven derivation keeps
-// the conditional since its reads lower to scope reads, as does an inlined
-// one since its full value is cloned into its readers.
+// Moves a defaulted binding's fallback onto a value parameter (preferring
+// the derived signal's own) when the source read would lower to one.
 function collapseDefaultedValues(section: Section) {
   const signals = getSignals(section);
   forEach(section.bindings, (binding) => {

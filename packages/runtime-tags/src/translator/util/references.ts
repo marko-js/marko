@@ -250,10 +250,8 @@ export function createBinding(
       binding.upstreamAlias = propBinding;
       propBinding.aliases.add(binding);
     } else {
-      // The alias root always holds the raw property value: a defaulted
-      // destructure roots its source binding here (see the AssignmentPattern
-      // case), never the derived binding, so later aliases of the same
-      // property observe the value before any default is applied.
+      // The alias root holds the raw property value: a defaulted destructure
+      // roots its source binding here, never the derived binding.
       upstreamAlias!.propertyAliases.set(property, binding);
     }
   } else if (upstreamAlias) {
@@ -755,15 +753,8 @@ function createBindingsAndTrackReferences(
       }
       break;
     }
-    // A defaulted binding (`b = x` in tag params or a destructured tag
-    // variable) is represented by two bindings: a source binding holds the
-    // value applied at the pattern's position, and the binding for `left` is
-    // derived from it (`void 0 !== source ? source : fallback`) through its
-    // `defaultSource` edge; the fallback itself stays in the tree on the
-    // pattern. The DOM translation registers the derivation from the
-    // pattern's translate visitor (see `initDefaultedValue` in `signals.ts`);
-    // the HTML translation materializes it as a const statement so the
-    // source stays serializable for resume (see `strip-default-values.ts`).
+    // A default is two bindings: the source holds the applied value and
+    // `left` derives from it (see initDefaultedValue / stripDefaultValues).
     case "AssignmentPattern": {
       const { left, right } = lVal;
       const defaultSource = createBinding(

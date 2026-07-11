@@ -1,11 +1,8 @@
 import { types as t } from "@marko/compiler";
 
 /**
- * In HTML output a defaulted binding (`b = x` in tag params or a destructured
- * tag variable) keeps its pre default value in a separate variable so it can
- * be serialized for resume; the visible binding is then derived from it with
- * a const statement, mirroring the derivation the DOM output builds from the
- * same bindings (see the `AssignmentPattern` case in `references.ts`).
+ * Replaces defaulted patterns with their source variable in HTML output so
+ * the pre default value can serialize for resume; a const derives the rest.
  */
 export function stripDefaultValues(
   lVal: t.LVal,

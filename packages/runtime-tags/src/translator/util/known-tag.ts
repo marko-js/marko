@@ -886,9 +886,8 @@ function writeParamsToSignals(
     i++;
   }
 
-  // Declared params after the provided args are still applied (as undefined)
-  // to match the runtime params applier; otherwise joined signals (eg from
-  // rewritten param defaults) never settle during the initial render.
+  // Missing args still apply (as undefined) to match the runtime params
+  // applier; otherwise joined signals never settle during initial render.
   for (const key in propTree.props) {
     if (+key >= i) {
       addStatement(
@@ -1259,10 +1258,8 @@ function writeAttrsToSignals(
         addStatement(
           "render",
           info.tagSection,
-          // Content renders once per scope; param defaults are derived
-          // bindings within the body section (see the AssignmentPattern case
-          // in references.ts), so their references belong to the body rather
-          // than this statement.
+          // Param defaults derive within the body section, so their
+          // references belong to the body rather than this statement.
           undefined,
           t.expressionStatement(
             t.callExpression(
