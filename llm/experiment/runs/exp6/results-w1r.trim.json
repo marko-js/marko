@@ -1,0 +1,736 @@
+{
+ "round": "exp6",
+ "runs": [
+  {
+   "runId": "e1-filter.C0.r1.W1r.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n\n<let/query=\"\">\n\n<input id=\"q\" value:=query />\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/matched=recipes.filter(r => \n      r.title.toLowerCase().includes(query.toLowerCase())\n    )>\n    \n    <div id=\"match-count\">${matched.length} shown</div>\n    \n    <ul id=\"recipes\">\n      <for|recipe| of=matched by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r1.W1r.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r1.W1r.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.r1.W1r.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n\n<let/query=\"\">\n\n<input id=\"q\" value:=query />\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/matched=recipes.filter(r => \n      r.title.toLowerCase().includes(query.toLowerCase())\n    )>\n    \n    <div id=\"match-count\">${matched.length} shown</div>\n    \n    <ul id=\"recipes\">\n      <for|recipe| of=matched by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r1.W1r.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r1.W1r.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.r3.W1r.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value=query on-input(e => { query = e.target.value }) type=\"text\">\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filteredRecipes=recipes.filter(r => query === \"\" || r.title.toLowerCase().includes(query.toLowerCase()))>\n    <div id=\"match-count\">${filteredRecipes.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filteredRecipes by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \nThe `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n    at src/routes/+page.marko\n    \n    at src/routes/+page.marko\n    at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n    at assertNativeHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4792:85)\n    at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4340:44)\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/e1-filter.C0.r3.W1r.fix1/src/routes/+layout.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.r3.W1r.fix1/src/routes/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.r3.W1r.fix1/src/routes/recipes/$id/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.r3.W1r.fix1/src/routes/recipes/new/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: The `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n    at src/routes/+page.marko\nThe `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n    at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n    at assertNativeHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4792:85)\n    at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4340:44)\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experime"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.r3.W1r.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query type=\"text\">\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filteredRecipes=recipes.filter(r => query === \"\" || r.title.toLowerCase().includes(query.toLowerCase()))>\n    <div id=\"match-count\">${filteredRecipes.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filteredRecipes by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r3.W1r.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r3.W1r.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r1.W1r.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter(r => !query || r.title.toLowerCase().includes(query.toLowerCase()))>\n    <div id=\"match-count\">${filtered.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r1.W1r.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r1.W1r.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r1.W1r.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter(r => !query || r.title.toLowerCase().includes(query.toLowerCase()))>\n    <div id=\"match-count\">${filtered.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r1.W1r.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r1.W1r.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r2.W1r.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/q=\"\">\n<input id=\"q\" value:=q>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter(r => \n      q === \"\" || r.title.toLowerCase().includes(q.toLowerCase())\n    )>\n    <div id=\"match-count\">${filtered.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r2.W1r.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r2.W1r.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r2.W1r.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/q=\"\">\n<input id=\"q\" value:=q>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter(r => \n      q === \"\" || r.title.toLowerCase().includes(q.toLowerCase())\n    )>\n    <div id=\"match-count\">${filtered.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r2.W1r.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r2.W1r.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r4.W1r.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/q=\"\">\n<input id=\"q\" value=q>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter(r => r.title.toLowerCase().includes(q.toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    \n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r4.W1r.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r4.W1r.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r4.W1r.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/q=\"\">\n<input id=\"q\" value=q on-input=(e) => { q = e.target.value }>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter(r => r.title.toLowerCase().includes(q.toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    \n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r4.W1r.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r4.W1r.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": false,
+     "detail": "[\"Tomato soup\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r1.W1r.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<input id=\"q\" placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <p id=\"match-count\">${recipes.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <recipe-card recipe=recipe />\n      </for>\n    </ul>\n    <script>\n      const input = document.getElementById('q');\n      const matchCount = document.getElementById('match-count');\n      const recipeCards = Array.from(document.querySelectorAll('[data-recipe-title]'));\n      \n      function updateFiltered() {\n        const query = input.value.toLowerCase();\n        let visible = 0;\n        \n        recipeCards.forEach(card => {\n          const title = card.getAttribute('data-recipe-title').toLowerCase();\n          const matches = title.includes(query);\n          card.hidden = !matches;\n          if (matches) visible++;\n        });\n        \n        matchCount.textContent = `${visible} shown`;\n      }\n      \n      input.addEventListener('input', updateFiltered);\n    </script>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>"
+    },
+    {
+     "path": "src/tags/recipe-card.marko",
+     "content": "<li class=\"card\" data-recipe-title=input.recipe.title>\n  <a href=`/recipes/${input.recipe.id}`>${input.recipe.title}</a>\n  <p class=\"meta\">\n    <span class=\"minutes\">${input.recipe.minutes} min</span>\n    <span class=\"stars\">${\"★\".repeat(input.recipe.rating)}</span>\n  </p>\n</li>"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r1.W1r.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r1.W1r.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r1.W1r.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <recipe-card recipe=recipe hidden=(!filtered.includes(recipe))/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    },
+    {
+     "path": "src/tags/recipe-card.marko",
+     "content": "<li class=\"card\" hidden=input.hidden>\n  <a href=`/recipes/${input.recipe.id}`>${input.recipe.title}</a>\n  <p class=\"meta\">\n    <span class=\"minutes\">${input.recipe.minutes} min</span>\n    <span class=\"stars\">${\"★\".repeat(input.recipe.rating)}</span>\n  </p>\n</li>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r1.W1r.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r1.W1r.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r2.W1r.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.trim().toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <if=filtered.includes(recipe)>\n          <recipe-card recipe=recipe/>\n        </if>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.W1r.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.W1r.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r2.W1r.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1r",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<input id=\"q\" placeholder=\"Search recipes\">\n<p id=\"match-count\"></p>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <li data-recipe-title=recipe.title>\n          <recipe-card recipe=recipe/>\n        </li>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n\n<script>\n  const searchInput = document.getElementById('q');\n  const matchCount = document.getElementById('match-count');\n  const recipeItems = document.querySelectorAll('#recipes li');\n  \n  function updateSearch() {\n    const query = searchInput.value.toLowerCase().trim();\n    let visibleCount = 0;\n    \n    recipeItems.forEach(item => {\n      const title = item.getAttribute('data-recipe-title').toLowerCase();\n      const isVisible = title.includes(query);\n      item.style.display = isVisible ? '' : 'none';\n      if (isVisible) visibleCount++;\n    });\n    \n    matchCount.textContent = `${visibleCount} shown`;\n  }\n  \n  // Initialize the count on page load\n  updateSearch();\n  \n  searchInput.addEventListener('input', updateSearch);\n</script>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.W1r.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.W1r.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  }
+ ]
+}

@@ -197,6 +197,13 @@ Close dynamic tags with `</>`.
 - Updating = plain assignment (`count++`, `user = {...user, x}`) from handlers/scripts.
 - **Not reactive to its `value=` attribute** after init — `<let/x=input.x>` captures
   the initial value only, unless made controllable:
+- Evaluate-once also makes a never-assigned `<let>` the idiom for deliberately
+  capturing a _first_/untracked value (`<let/initialPrice=price>` to show
+  "was … now …"). Because the same shape is a common _accident_ — writing
+  `<let/filtered=items.filter(...)>` and expecting it to recompute — the
+  compiler warns on never-assigned `<let>`s with reactive initializers,
+  naming both readings: use `<const/>` to derive, keep `<let>` for an
+  intentional one-time capture.
 
 ```marko
 /* counter.marko — controllable state */

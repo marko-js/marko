@@ -74,3 +74,24 @@ mechanism that does not depend on the subject choosing to read.
 
 Costs: 23 regrades; Arm W 28 haiku repairs (~0.61M tokens); Arm S 36 sonnet
 repairs (~1.10M tokens).
+
+## Post-review revision — the intentional first-capture idiom
+
+Maintainer review: a never-assigned `<let>` is *sometimes deliberate* — it is
+the idiom for capturing a "first"/untracked value (`<let/initialPrice=price>`),
+since `<let>`'s evaluate-once semantics are the snapshot primitive. The
+shipped wording treated the shape as always-wrong. Since intent is not
+statically separable (the mistaken derive and the intentional capture are
+identical shapes), the fix is in the message, not the detection: the warning
+now names both readings — "…captured once and will not update… Use
+`<const/NAME=…>` for a derived value that recomputes; keep `<let>` if a
+one-time capture of the initial value is intended." The reference doc
+documents the idiom alongside the warning; no suppression mechanism exists in
+the compiler and none was invented.
+
+Conversion re-measured with the reworded message (same 7 chains, fresh
+evidence, n=2 — `runs/exp6/results-w1r`): **12/14 `<const/>` adoption, 0
+repeat-mistakes, 2 vanilla escapes, 10/14 pass** — statistically
+indistinguishable from the original wording (11/0/3, 8/14). Naming the
+legitimate reading does not dilute the fix signal; the conversion power
+lives in naming the variable, the cause, and the concrete alternative.

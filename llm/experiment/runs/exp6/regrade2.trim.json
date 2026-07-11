@@ -1,0 +1,387 @@
+{
+ "round": "exp6-regrade2",
+ "runs": [
+  {
+   "runId": "e1-filter.C0.r1",
+   "taskId": "e1-filter",
+   "condition": "C0",
+   "rep": 1,
+   "stage": "edit",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n\n<let/query=\"\">\n\n<input id=\"q\" value:=query />\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/matched=recipes.filter(r => \n      r.title.toLowerCase().includes(query.toLowerCase())\n    )>\n    \n    <div id=\"match-count\">${matched.length} shown</div>\n    \n    <ul id=\"recipes\">\n      <for|recipe| of=matched by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0.r1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0.r1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:9 The `<let/matched>` variable is never assigned, so its value is captured once and will not update when the values it reads change. Use `<const/matched=...>` for a derived value that recomputes; keep `<let>` if a one-time capture of the initial value is intended."
+  },
+  {
+   "runId": "e1-filter.C0.r3",
+   "taskId": "e1-filter",
+   "condition": "C0",
+   "rep": 3,
+   "stage": "edit",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query type=\"text\">\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filteredRecipes=recipes.filter(r => query === \"\" || r.title.toLowerCase().includes(query.toLowerCase()))>\n    <div id=\"match-count\">${filteredRecipes.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filteredRecipes by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0.r3_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0.r3_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:7 The `<let/filteredRecipes>` variable is never assigned, so its value is captured once and will not update when the values it reads change. Use `<const/filteredRecipes=...>` for a derived value that recomputes; keep `<let>` if a one-time capture of the initial value is intended."
+  },
+  {
+   "runId": "e1-filter.C0c.r1",
+   "taskId": "e1-filter",
+   "condition": "C0c",
+   "rep": 1,
+   "stage": "edit",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filtered=recipes.filter(r => !query || r.title.toLowerCase().includes(query.toLowerCase()))>\n    <div id=\"match-count\">${filtered.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0c.r1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0c.r1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:6 The `<let/filtered>` variable is never assigned, so its value is captured once and will not update when the values it reads change. Use `<const/filtered=...>` for a derived value that recomputes; keep `<let>` if a one-time capture of the initial value is intended."
+  },
+  {
+   "runId": "e1-filter.C0c.r2",
+   "taskId": "e1-filter",
+   "condition": "C0c",
+   "rep": 2,
+   "stage": "edit",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/q=\"\">\n<input id=\"q\" value:=q>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filtered=recipes.filter(r => \n      q === \"\" || r.title.toLowerCase().includes(q.toLowerCase())\n    )>\n    <div id=\"match-count\">${filtered.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0c.r2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0c.r2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:6 The `<let/filtered>` variable is never assigned, so its value is captured once and will not update when the values it reads change. Use `<const/filtered=...>` for a derived value that recomputes; keep `<let>` if a one-time capture of the initial value is intended."
+  },
+  {
+   "runId": "e1-filter.C0c.r4",
+   "taskId": "e1-filter",
+   "condition": "C0c",
+   "rep": 4,
+   "stage": "edit",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/q=\"\">\n<input id=\"q\" value:=q>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filtered=recipes.filter(r => r.title.toLowerCase().includes(q.toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    \n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0c.r4_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0c.r4_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:6 The `<let/filtered>` variable is never assigned, so its value is captured once and will not update when the values it reads change. Use `<const/filtered=...>` for a derived value that recomputes; keep `<let>` if a one-time capture of the initial value is intended."
+  },
+  {
+   "runId": "e1-filter.C0.sl.r1",
+   "taskId": "e1-filter",
+   "condition": "C0-sl",
+   "rep": 1,
+   "stage": "edit",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <recipe-card recipe=recipe hidden=(!filtered.includes(recipe))/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    },
+    {
+     "path": "src/tags/recipe-card.marko",
+     "content": "<li class=\"card\" hidden=input.hidden>\n  <a href=`/recipes/${input.recipe.id}`>${input.recipe.title}</a>\n  <p class=\"meta\">\n    <span class=\"minutes\">${input.recipe.minutes} min</span>\n    <span class=\"stars\">${\"★\".repeat(input.recipe.rating)}</span>\n  </p>\n</li>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0.sl.r1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0.sl.r1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:6 The `<let/filtered>` variable is never assigned, so its value is captured once and will not update when the values it reads change. Use `<const/filtered=...>` for a derived value that recomputes; keep `<let>` if a one-time capture of the initial value is intended."
+  },
+  {
+   "runId": "e1-filter.C0.sl.r2",
+   "taskId": "e1-filter",
+   "condition": "C0-sl",
+   "rep": 2,
+   "stage": "edit",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.trim().toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <if=filtered.includes(recipe)>\n          <recipe-card recipe=recipe/>\n        </if>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0.sl.r2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade2_apps_e1-filter.C0.sl.r2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:6 The `<let/filtered>` variable is never assigned, so its value is captured once and will not update when the values it reads change. Use `<const/filtered=...>` for a derived value that recomputes; keep `<let>` if a one-time capture of the initial value is intended."
+  }
+ ]
+}
