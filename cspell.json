@@ -395,7 +395,8 @@
     "networkidle",
     "cheatsheet",
     "cheatsheets",
-    "fixability"
+    "fixability",
+    "llms"
   ],
   "ignoreRegExpList": [],
   "files": ["*"],
