@@ -106,24 +106,34 @@ export default {
 
     if (isAttrTag) return;
 
+    const byAttr = getKnownAttrValues(tag.node).by;
+
     // Only `<for of>` accepts a string `by` (a property-name key shorthand); the
     // `in`/`to`/`until` runtimes invoke `by` as a function, so a string would
     // throw at render. Reject it at compile time with a helpful message.
-    if (forType !== "of") {
-      const byAttr = getKnownAttrValues(tag.node).by;
-      if (byAttr?.type === "StringLiteral") {
-        throw (
-          tag
-            .get("attributes")
-            .find(
-              (attr) => attr.isMarkoAttribute() && attr.node.name === "by",
-            ) || tag
-        ).buildCodeFrameError(
-          `The [\`<for>\` tag](https://markojs.com/docs/reference/core-tag#for) only supports a string \`by\` key with \`of\`; use a \`by=(${
-            forType === "in" ? "key, value" : "index"
-          }) => ...\` function for \`<for ${forType}>\`.`,
-        );
-      }
+    if (forType !== "of" && byAttr?.type === "StringLiteral") {
+      throw tag.hub.buildError(
+        byAttr,
+        `The [\`<for>\` tag](https://markojs.com/docs/reference/core-tag#for) only supports a string \`by\` key with \`of\`; use a \`by=(${
+          forType === "in" ? "key, value" : "index"
+        }) => ...\` function for \`<for ${forType}>\`.`,
+      );
+    }
+
+    // `by=` is evaluated once, before the loop runs, so the loop parameters
+    // are not in scope there. Keying a loop by its own parameter otherwise
+    // dies at render time with a bare undefined-variable error.
+    if (
+      byAttr?.type === "Identifier" &&
+      !tag.scope.getBinding(byAttr.name) &&
+      tag.node.body.params.some((param) =>
+        Object.hasOwn(t.getBindingIdentifiers(param), byAttr.name),
+      )
+    ) {
+      throw tag.hub.buildError(
+        byAttr,
+        `The \`by=\` attribute is evaluated before the loop runs, so \`${byAttr.name}\` is not in scope. Key with a property name string (\`by="id"\`) or a function (\`by=(${byAttr.name}) => key\`).`,
+      );
     }
 
     const bodySection = startSection(tagBody);
