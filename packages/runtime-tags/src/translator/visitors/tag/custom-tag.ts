@@ -361,6 +361,23 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
   return relativePath;
 }
 
+// Tags from other frameworks (or older Marko versions) that deserve a curated
+// pointer instead of a nearest-name suggestion.
+const knownWrongTags = new Map([
+  [
+    "slot",
+    "To render content passed to this tag, use a [dynamic tag](https://markojs.com/docs/reference/language#dynamic-tags): `<${input.content}/>`.",
+  ],
+  [
+    "state",
+    "Reactive state is declared with the [`<let>` tag](https://markojs.com/docs/reference/core-tag#let): `<let/name=initialValue>`.",
+  ],
+  [
+    "fragment",
+    "Marko templates and tag bodies may have multiple root nodes; no fragment wrapper is needed.",
+  ],
+]);
+
 function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
   const tagName = getTagName(tag);
   if (tagName && tag.scope.hasBinding(tagName)) {
@@ -371,7 +388,10 @@ function tagNotFoundError(tag: t.NodePath<t.MarkoTag>) {
       );
   }
   let didYouMean = "";
-  if (tagName) {
+  const knownWrongTagHint = tagName && knownWrongTags.get(tagName);
+  if (knownWrongTagHint) {
+    didYouMean = ` ${knownWrongTagHint}`;
+  } else if (tagName) {
     const closestTag = closest(
       tagName,
       Object.keys((getTaglibLookup(tag.hub.file) as any).merged.tags),

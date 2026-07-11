@@ -60,8 +60,12 @@ export default {
         } else {
           const start = attr.loc?.start;
           const end = attr.loc?.end;
-          const msg =
+          let msg =
             "The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler.";
+          if (!tagVar && /^[A-Za-z_$][\w$]*$/.test(attr.name)) {
+            // Written like a JS declaration (`let count = 0;` or `<let count=0>`).
+            msg += ` To declare reactive state, the variable goes after a slash: \`<let/${attr.name}=...>\`. For a one time module level value, prefix a plain JavaScript statement with \`static\`.`;
+          }
 
           if (start == null || end == null) {
             throw tag.get("name").buildCodeFrameError(msg);
@@ -85,7 +89,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) requires a [tag variable](https://markojs.com/docs/reference/language#tag-variables).",
+          "The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) requires a [tag variable](https://markojs.com/docs/reference/language#tag-variables), e.g. `<let/count=0>`.",
         );
     }
 

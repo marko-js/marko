@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-statement-let/template.marko:1:5
+    > 1 | let count = 0;
+        |     ^^^^^^^^^ The [`<let>` tag](https://markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://markojs.com/docs/reference/language#shorthand-value) and its change handler. To declare reactive state, the variable goes after a slash: `<let/count=...>`. For a one time module level value, prefix a plain JavaScript statement with `static`.
+      2 |
+      3 | <div>${count}</div>
+      4 |

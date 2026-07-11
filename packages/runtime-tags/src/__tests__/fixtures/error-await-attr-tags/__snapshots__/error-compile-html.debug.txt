@@ -1,0 +1,8 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-await-attr-tags/template.marko:3:3
+      1 | <await|user|=input.userPromise>
+      2 |   ${user.name}
+    > 3 |   <@catch|err|>${err.message}</@catch>
+        |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Tag does not support nested attribute tags. For pending and error UI, wrap the `<await>` in a [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) with `<@placeholder>` and `<@catch|err|>` attribute tags.
+      4 | </await>
+      5 |

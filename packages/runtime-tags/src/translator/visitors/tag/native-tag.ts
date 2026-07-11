@@ -1253,6 +1253,15 @@ function assertNativeHandlerAttr(
   tag: t.NodePath<t.MarkoTag>,
   attr: t.MarkoAttribute,
 ) {
+  if (t.isObjectExpression(attr.value)) {
+    throw tag.hub.buildError(
+      attr.value,
+      `The \`${attr.name}\` ${
+        isEventHandler(attr.name) ? "event handler" : "change handler"
+      } on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping \`{ }\` (e.g. \`${attr.name}=myHandler\` or \`${attr.name}() { ... }\`).`,
+      Error,
+    );
+  }
   if (computeNode(attr.value)?.value) {
     throw tag.hub.buildError(
       attr.value,

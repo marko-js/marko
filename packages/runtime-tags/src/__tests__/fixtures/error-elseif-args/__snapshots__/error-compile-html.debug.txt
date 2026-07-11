@@ -2,5 +2,5 @@
     at packages/runtime-tags/src/__tests__/fixtures/error-elseif-args/template.marko:2:10
       1 | <if=false>Skipped</if>
     > 2 | <else-if(input.show)>Hello World</else-if>
-        |          ^^^^^^^^^^ Tag does not support arguments.
+        |          ^^^^^^^^^^ Tag does not support arguments. Write the condition as a value attribute instead: `<else-if=condition>`.
       3 |

@@ -482,8 +482,14 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
 }
 
 function assertValidCondition(tag: t.NodePath<t.MarkoTag>) {
+  const conditionTagName = getTagName(tag);
   assertNoVar(tag);
-  assertNoArgs(tag);
+  assertNoArgs(
+    tag,
+    conditionTagName === "else"
+      ? "Write the condition as an attribute instead: `<else if=condition>`."
+      : `Write the condition as a value attribute instead: \`<${conditionTagName}=condition>\`.`,
+  );
   assertNoParams(tag);
   assertHasBody(tag);
   assertNoSpreadAttrs(tag);

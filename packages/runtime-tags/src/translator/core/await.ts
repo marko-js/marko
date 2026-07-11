@@ -54,9 +54,15 @@ declare module "@marko/compiler/dist/types" {
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
     assertNoVar(tag);
-    assertNoArgs(tag);
+    assertNoArgs(
+      tag,
+      "Write the promise as a value attribute and receive the result as a tag parameter instead: `<await|result|=promise>`.",
+    );
     assertNoSpreadAttrs(tag);
-    assertNoAttributeTags(tag);
+    assertNoAttributeTags(
+      tag,
+      "For pending and error UI, wrap the `<await>` in a [`<try>` tag](https://markojs.com/docs/reference/core-tag#try) with `<@placeholder>` and `<@catch|err|>` attribute tags.",
+    );
     const { node } = tag;
     const tagBody = tag.get("body");
     const section = getOrCreateSection(tag);

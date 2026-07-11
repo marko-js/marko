@@ -178,11 +178,14 @@ export function assertAllowedAttributes(
   path: t.NodePath<t.MarkoTag>,
   allowed: string[],
 ): void;
-export function assertNoArgs(path: t.NodePath<t.MarkoTag>): void;
+export function assertNoArgs(path: t.NodePath<t.MarkoTag>, hint?: string): void;
 export function assertNoVar(path: t.NodePath<t.MarkoTag>): void;
 export function assertNoAttributes(path: t.NodePath<t.MarkoTag>): void;
 export function assertNoParams(path: t.NodePath<t.MarkoTag>): void;
-export function assertNoAttributeTags(path: t.NodePath<t.MarkoTag>): void;
+export function assertNoAttributeTags(
+  path: t.NodePath<t.MarkoTag>,
+  hint?: string,
+): void;
 export function assertAttributesOrArgs(path: t.NodePath<t.MarkoTag>): void;
 export function assertAttributesOrSingleArg(path: t.NodePath<t.MarkoTag>): void;
 
