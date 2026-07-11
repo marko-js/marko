@@ -126,19 +126,19 @@ Don't fetch while rendering: start data loads early, pass the PROMISE through th
 
 ## DON'T (these are errors or silently wrong)
 
-| Wrong (React/Vue/Marko5 habit)                              | Right                                                                                |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| `{expr}` in markup, `className`, `key=`, `style={{...}}`    | `${expr}`, `class`, `by=` on `<for>`, `style={...}`                                  |
-| `onClick={() => ...}` / `@click` / `on-click("name")`       | `onClick() { ... }`                                                                  |
-| `const [x, setX] = useState()` / `state` / `class {}` block | `<let/x=0>` then `x = 1`                                                             |
-| `$ const y = x * 2;` (scriptlets are removed)               | `<const/y=x * 2>`                                                                    |
-| `<let x=0>`                                                 | `<let/x=0>`                                                                          |
-| `<if(cond)>`                                                | `<if=cond>`                                                                          |
-| `items.push(x)`                                             | `items = items.concat(x)`                                                            |
-| `input.renderBody`                                          | `input.content`                                                                      |
-| `<await>` with `@placeholder`/`@catch`                      | wrap in `<try>`                                                                      |
-| `el.focus()` on a ref                                       | `el().focus()` inside `<script>`/handler                                             |
-| `input.tab[0]` / `input.tab.length`                         | `[...input.tab ?? []]` first (attr tags are iterables, not arrays)                   |
-| bare text on its own line at template root                  | wrap in an element (`<p>...`), or prefix the line with `-- `                         |
-| `onInput(e) { q = e.target.value }` to sync an input        | `value:=q` — the change handler owns the value                                       |
-| fetching inside the component that renders the data         | start the promise early (route handler / top of template), pass it down to `<await>` |
+| Wrong (React/Vue/Marko5 habit) | Right |
+|---|---|
+| `{expr}` in markup, `className`, `key=`, `style={{...}}` | `${expr}`, `class`, `by=` on `<for>`, `style={...}` |
+| `onClick={() => ...}` / `@click` / `on-click("name")` | `onClick() { ... }` |
+| `const [x, setX] = useState()` / `state` / `class {}` block | `<let/x=0>` then `x = 1` |
+| `$ const y = x * 2;` (scriptlets are removed) | `<const/y=x * 2>` |
+| `<let x=0>` | `<let/x=0>` |
+| `<if(cond)>` | `<if=cond>` |
+| `items.push(x)` | `items = items.concat(x)` |
+| `input.renderBody` | `input.content` |
+| `<await>` with `@placeholder`/`@catch` | wrap in `<try>` |
+| `el.focus()` on a ref | `el().focus()` inside `<script>`/handler |
+| `input.tab[0]` / `input.tab.length` | `[...input.tab ?? []]` first (attr tags are iterables, not arrays) |
+| bare text on its own line at template root | wrap in an element (`<p>...`), or prefix the line with `-- ` |
+| `onInput(e) { q = e.target.value }` to sync an input | `value:=q` — the change handler owns the value |
+| fetching inside the component that renders the data | start the promise early (route handler / top of template), pass it down to `<await>` |

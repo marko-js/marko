@@ -12,7 +12,7 @@ Marko 6 = HTML superset. NOT JSX, NOT old Marko 4/5. `.marko` files are componen
    - remove: `items = items.toSpliced(i, 1)`
    - update: `items = items.toSpliced(i, 1, { ...item, done: true })`
    - object: `user = { ...user, name }`
-5. Events: method shorthand `onClick() { ... }` or `onClick=fn`. Handler gets the DOM event: `onInput(e) { q = e.target.value }`.
+5. Events: method shorthand `onClick() { ... }` or `onClick=fn`. Handler gets the DOM event: `onSubmit(e) { e.preventDefault(); save() }`. Don't sync input values through `onInput`/`onChange` listeners — that's what change handlers (next rule) are for, and they make the data's owner explicit.
 6. Native inputs are UNCONTROLLED by default: `value=` only sets the initial value. Adding the matching `*Change` handler is what makes them controlled — `valueChange` on `<input>`/`<textarea>`/`<select>`, `checkedChange` on checkboxes/radios, `openChange` on `<details>`/`<dialog>`. `value:=text` is the shorthand for `value=text valueChange(v) { text = v }`. (`<textarea value:=text/>` — value attribute, not body.)
 7. Write the change handler yourself when updates need transforming — number inputs give STRINGS: `<input type="number" value=n valueChange(v) { n = +v }>`.
 
@@ -84,6 +84,8 @@ import { getUser } from "../data.js";
 
 `@placeholder`/`@catch` go on `<try>`, never on `<await>`. On the server this streams (placeholder flushes first, content follows). It works in the browser too: hand `<await>` a new promise (e.g. a `<const>` derived from state) and it shows the placeholder again, then the new result.
 
+Don't fetch while rendering: start data loads early, pass the PROMISE through the template, and `<await>` it where the data is rendered. Fetching inside each component that renders the data serializes the requests (waterfalls). Under @marko/run, load in the route handler — `return next({ user: getUser() })`, no await — and render with `<await|user|=$global.data.user>`.
+
 ## Components
 
 - File `src/tags/product-card.marko` is auto-discovered as `<product-card>` from any template (no import needed). Attributes arrive as `input`: `${input.title}`.
@@ -124,17 +126,19 @@ import { getUser } from "../data.js";
 
 ## DON'T (these are errors or silently wrong)
 
-| Wrong (React/Vue/Marko5 habit)                              | Right                                                              |
-| ----------------------------------------------------------- | ------------------------------------------------------------------ |
-| `{expr}` in markup, `className`, `key=`, `style={{...}}`    | `${expr}`, `class`, `by=` on `<for>`, `style={...}`                |
-| `onClick={() => ...}` / `@click` / `on-click("name")`       | `onClick() { ... }`                                                |
-| `const [x, setX] = useState()` / `state` / `class {}` block | `<let/x=0>` then `x = 1`                                           |
-| `$ const y = x * 2;` (scriptlets are removed)               | `<const/y=x * 2>`                                                  |
-| `<let x=0>`                                                 | `<let/x=0>`                                                        |
-| `<if(cond)>`                                                | `<if=cond>`                                                        |
-| `items.push(x)`                                             | `items = items.concat(x)`                                          |
-| `input.renderBody`                                          | `input.content`                                                    |
-| `<await>` with `@placeholder`/`@catch`                      | wrap in `<try>`                                                    |
-| `el.focus()` on a ref                                       | `el().focus()` inside `<script>`/handler                           |
-| `input.tab[0]` / `input.tab.length`                         | `[...input.tab ?? []]` first (attr tags are iterables, not arrays) |
-| bare text on its own line at template root                  | wrap in an element (`<p>...`), or prefix the line with `-- `       |
+| Wrong (React/Vue/Marko5 habit)                              | Right                                                                                |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `{expr}` in markup, `className`, `key=`, `style={{...}}`    | `${expr}`, `class`, `by=` on `<for>`, `style={...}`                                  |
+| `onClick={() => ...}` / `@click` / `on-click("name")`       | `onClick() { ... }`                                                                  |
+| `const [x, setX] = useState()` / `state` / `class {}` block | `<let/x=0>` then `x = 1`                                                             |
+| `$ const y = x * 2;` (scriptlets are removed)               | `<const/y=x * 2>`                                                                    |
+| `<let x=0>`                                                 | `<let/x=0>`                                                                          |
+| `<if(cond)>`                                                | `<if=cond>`                                                                          |
+| `items.push(x)`                                             | `items = items.concat(x)`                                                            |
+| `input.renderBody`                                          | `input.content`                                                                      |
+| `<await>` with `@placeholder`/`@catch`                      | wrap in `<try>`                                                                      |
+| `el.focus()` on a ref                                       | `el().focus()` inside `<script>`/handler                                             |
+| `input.tab[0]` / `input.tab.length`                         | `[...input.tab ?? []]` first (attr tags are iterables, not arrays)                   |
+| bare text on its own line at template root                  | wrap in an element (`<p>...`), or prefix the line with `-- `                         |
+| `onInput(e) { q = e.target.value }` to sync an input        | `value:=q` — the change handler owns the value                                       |
+| fetching inside the component that renders the data         | start the promise early (route handler / top of template), pass it down to `<await>` |

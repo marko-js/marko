@@ -59,6 +59,7 @@
     "treeshaken",
     "prebundling",
     "subcomponents",
+    "unawaited",
     "unkeyed",
     "Autokeyed",
     "autokeys",

@@ -282,6 +282,12 @@ No `<else>`; `value=` only.
 - `<await>` is reactive in the browser: when its `value=` promise changes (for
   example a `<const>` recomputing from state), the boundary shows the
   `@placeholder` again and renders the newly resolved value.
+- Don't fetch while rendering: start data loads early and pass the _promise_
+  down (through attributes or route data), placing `<await>` where the data is
+  rendered. Fetching inside each component that renders the data serializes the
+  requests (waterfalls). Under @marko/run, load in the route handler with
+  `return next({ user: getUser() })` (unawaited) and render
+  `<await|user|=$global.data.user>`.
 - Rendering a promise directly (`${promise}`) is a runtime error telling you to use `<await>`.
 
 ### `<script>` — the client effect primitive
@@ -521,7 +527,9 @@ inst.destroy();
   `<script>` only for real side effects, `<lifecycle>` only for imperative libraries.
 - Prefer controllable (`value`/`valueChange`/`:=`) over state mirroring for
   parent-child sync; pass callback props (`input.onSelect?.(x)`) instead of an
-  event system.
+  event system. The same applies to native inputs: sync values with change
+  handlers, not `onInput`/`onChange` listeners — the change handler names the
+  value's owner.
 - Forward attributes with spread: `export interface Input extends Marko.HTML.Button {}`
   then `<button ...input>` — handlers ride along.
 - Static, non-interactive markup is free; ship less JS by keeping expressions

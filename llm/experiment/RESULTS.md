@@ -157,7 +157,7 @@ in `unclear.md` (AttrTag numeric indexing silently undefined). @marko/run
 findings (silently non-routable lookalike files) recorded with the run-repo
 deliverables.
 
-## Post-review revisions (v4, v5, v6)
+## Post-review revisions (v4–v7)
 
 Review passes on the shipped sheet, each revalidated with fresh subject
 runs before landing:
@@ -186,3 +186,21 @@ runs before landing:
   unmangled source, so no result is affected). Revalidated on t1/t4 at n=2:
   4/4, with both t4 subjects adopting the `?? []` spread form verbatim
   (`runs/exp1-v6check`).
+- **v7** — review flagged two missing pieces of guidance. (1) Golden rule 5's
+  DOM-event demo *was* the event-syncing anti-pattern
+  (`onInput(e) { q = e.target.value }`): agents commonly sync inputs through
+  `onInput`/`onChange` listeners instead of the declarative change-handler
+  pattern that makes the value's owner explicit. The rule now demos
+  `onSubmit` + `preventDefault` and points at the change-handler rule, backed
+  by a DON'T row (`value:=q` — the change handler owns the value). (2)
+  Fetch-while-rendering: new async-section guidance to start data loads
+  early, pass the promise through the template, and `<await>` where the data
+  renders — fetching inside each component serializes requests (waterfalls).
+  The run sheet's handler example now passes `entries: loadEntries()` and a
+  contract bullet names `next(data)` promise-passing as the first-class
+  version (verified live: unawaited promise through `next()` streams the
+  shell + placeholder before the resolved content in one response). Both
+  references extended to match. Revalidated on t2/h2/t8 at n=2: **6/6**, with
+  both t2 runs using `valueChange` casts, both h2 runs `value:=q`, both t8
+  runs `next({ entries })` → `$global.data`, and zero `onInput` listeners
+  (`runs/exp1-v7check`).
