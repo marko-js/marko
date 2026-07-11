@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-show-args/template.marko:1:7
+    > 1 | <show(input.visible)>Hello</show>
+        |       ^^^^^^^^^^^^^ Tag does not support arguments. Write the condition as a value attribute instead: `<show=condition>`.
+      2 |

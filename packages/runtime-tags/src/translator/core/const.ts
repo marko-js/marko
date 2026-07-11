@@ -29,10 +29,22 @@ export default {
     const [valueAttr] = node.attributes;
 
     if (!node.var) {
+      const looksLikeDeclaration =
+        !node.attributes.some(
+          (attr) =>
+            t.isMarkoAttribute(attr) && (attr.default || attr.name === "value"),
+        ) &&
+        node.attributes.length === 1 &&
+        t.isMarkoAttribute(node.attributes[0]) &&
+        /^[A-Za-z_$][\w$]*$/.test(node.attributes[0].name);
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The [`<const>` tag](https://markojs.com/docs/reference/core-tag#const) requires a [tag variable](https://markojs.com/docs/reference/language#tag-variables).",
+          `The [\`<const>\` tag](https://markojs.com/docs/reference/core-tag#const) requires a [tag variable](https://markojs.com/docs/reference/language#tag-variables)${
+            looksLikeDeclaration
+              ? `; the variable goes after a slash: \`<const/${(node.attributes[0] as t.MarkoAttribute).name}=...>\`. For a one time module level value, prefix a plain JavaScript statement with \`static\`.`
+              : ", e.g. `<const/doubled=count * 2>`."
+          }`,
         );
     }
 

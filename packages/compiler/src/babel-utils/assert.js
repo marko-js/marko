@@ -41,23 +41,23 @@ export function assertNoParams(path) {
   }
 }
 
-export function assertNoAttributeTags(path) {
+export function assertNoAttributeTags(path, hint) {
   if (path.node.attributeTags.length) {
     throw path.hub.buildError(
       path.node.attributeTags[0],
-      "Tag not support nested attribute tags.",
+      `Tag does not support nested attribute tags.${hint ? ` ${hint}` : ""}`,
     );
   }
 }
 
-export function assertNoArgs(path) {
+export function assertNoArgs(path, hint) {
   const args = path.node.arguments;
   if (args && args.length) {
     const start = args[0].loc.start;
     const end = args[args.length - 1].loc.end;
     throw path.hub.buildError(
       { loc: { start, end } },
-      "Tag does not support arguments.",
+      `Tag does not support arguments.${hint ? ` ${hint}` : ""}`,
     );
   }
 }

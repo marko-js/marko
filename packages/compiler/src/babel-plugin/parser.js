@@ -16,6 +16,22 @@ import { buildCodeFrameError } from "../util/build-code-frame";
 import throwAggregateError from "../util/merge-errors";
 
 const noop = () => {};
+const jsxStyleAttrValueReg = /^\{[\s\S]*\}$/;
+// A brace wrapped attribute value that only parses once unwrapped is almost
+// certainly a JSX/Svelte style value (eg `onClick={handler}`); say so instead
+// of surfacing the bare expression parse error.
+const withWrappedAttrValueHint = (file, part, rawValue, node) => {
+  const trimmed = rawValue.trim();
+  if (
+    node.type === "MarkoParseError" &&
+    jsxStyleAttrValueReg.test(trimmed) &&
+    parseExpression(file, trimmed.slice(1, -1), part.value.start).type !==
+      "MarkoParseError"
+  ) {
+    node.label += `${node.label.endsWith(".") ? "" : "."} Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping \`{ }\`.`;
+  }
+  return node;
+};
 const emptyRange = (part) => part.start === part.end;
 const isAttrTag = (tag) => tag.name.value?.[0] === "@";
 const isStatementTag = (tag) => tag.tagDef?.parseOptions?.statement;
@@ -412,10 +428,12 @@ export function parseMarko(file) {
     onAttrValue(part) {
       currentAttr.end = part.end;
       currentAttr.bound = part.bound;
-      currentAttr.value = parseExpression(
+      const rawAttrValue = parser.read(part.value);
+      currentAttr.value = withWrappedAttrValueHint(
         file,
-        parser.read(part.value),
-        part.value.start,
+        part,
+        rawAttrValue,
+        parseExpression(file, rawAttrValue, part.value.start),
       );
     },
 

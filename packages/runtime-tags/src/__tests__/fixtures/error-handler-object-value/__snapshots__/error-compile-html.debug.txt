@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-handler-object-value/template.marko:3:17
+      1 | static function handleClick() {}
+      2 |
+    > 3 | <button onClick={handleClick}>Click</button>
+        |                 ^^^^^^^^^^^^^ The `onClick` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function. Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }` (e.g. `onClick=myHandler` or `onClick() { ... }`).
+      4 |

@@ -328,7 +328,10 @@ function isLiteral(expr: t.Expression) {
 
 function assertValidShow(tag: t.NodePath<t.MarkoTag>) {
   assertNoVar(tag);
-  assertNoArgs(tag);
+  assertNoArgs(
+    tag,
+    "Write the condition as a value attribute instead: `<show=condition>`.",
+  );
   assertNoParams(tag);
   assertNoSpreadAttrs(tag);
   assertHasBody(tag);
