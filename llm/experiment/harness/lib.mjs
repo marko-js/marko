@@ -164,7 +164,7 @@ export function guidanceLines(log) {
   const lines = [];
   for (const line of (log || "").split("\n")) {
     const trimmed = line.replace(/\u001b\[[0-9;]*[A-Za-z]/g, "").trim();
-    if (!/\[marko-run\]|verb exports/i.test(trimmed)) continue;
+    if (!/\[marko-run\]|\[marko\] warning|verb exports/i.test(trimmed)) continue;
     if (seen.has(trimmed)) continue;
     seen.add(trimmed);
     lines.push(trimmed);

@@ -1,0 +1,1236 @@
+{
+ "round": "exp6",
+ "runs": [
+  {
+   "runId": "e1-filter.C0.r1.W0.fix1",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n\n<state|query|=\"\">\n\n<input\n  id=\"q\"\n  value=query\n  on-input|e| {\n    query = e.target.value\n  }\n/>\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/matched=recipes.filter(r => \n      r.title.toLowerCase().includes(query.toLowerCase())\n    )>\n    \n    <div id=\"match-count\">${matched.length} shown</div>\n    \n    <ul id=\"recipes\">\n      <for|recipe| of=matched by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:3:1\n      1 | \\u003ch1>Recipes\\u003c/h1>\n      2 |\n    > 3 | \\u003cstate|query|=\"\">\n        | ^^^^^^^^^^^^^^^^^ Missing ending \"state\" tag\n      4 |\n      5 | \\u003cinput\n      6 |   id=\"q\"\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:3:1\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/e1-filter.C0.r1.W0.fix1/src/routes/+layout.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.r1.W0.fix1/src/routes/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.r1.W0.fix1/src/routes/recipes/$id/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.r1.W0.fix1/src/routes/recipes/new/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:3:1\n      1 | <h1>Recipes</h1>\n      2 |\n    > 3 | <state|query|=\"\">\n        | ^^^^^^^^^^^^^^^^^ Missing ending \"state\" tag\n      4 |\n      5 | <input\n      6 |   id=\"q\"\n  1 | <h1>Recipes</h1>\n  2 |\n> 3 | <state|query|=\"\">\n    | ^^^^^^^^^^^^^^^^^ Missing ending \"state\" tag\n  4 |\n  5 | <input\n  6 |   id=\"q\"\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.r1.W0.fix2",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n\n<input id=\"q\" />\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <div id=\"match-count\">3 shown</div>\n    \n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <li data-recipe-title=recipe.title>\n          <recipe-card recipe=recipe/>\n        </li>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n\n<script>\n  const input = document.getElementById('q');\n  const matchCount = document.getElementById('match-count');\n  const recipeItems = document.querySelectorAll('#recipes li');\n  \n  function updateFilter() {\n    const query = input.value.toLowerCase();\n    let count = 0;\n    \n    recipeItems.forEach((item) => {\n      const title = item.dataset.recipeTitle.toLowerCase();\n      if (query === '' || title.includes(query)) {\n        item.style.display = '';\n        count++;\n      } else {\n        item.style.display = 'none';\n      }\n    });\n    \n    matchCount.textContent = `${count} shown`;\n  }\n  \n  input.addEventListener('input', updateFilter);\n  updateFilter(); // Initialize with default (all shown)\n</script>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r1.W0.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r1.W0.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.r1.W1.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n\n<let/query=\"\">\n\n<input id=\"q\" value:=query />\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/matched=recipes.filter(r => \n      r.title.toLowerCase().includes(query.toLowerCase())\n    )>\n    \n    <div id=\"match-count\">${matched.length} shown</div>\n    \n    <ul id=\"recipes\">\n      <for|recipe| of=matched by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r1.W1.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r1.W1.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.r1.W1.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n\n<let/query=\"\">\n\n<input id=\"q\" value:=query />\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/matched=recipes.filter(r => \n      r.title.toLowerCase().includes(query.toLowerCase())\n    )>\n    \n    <div id=\"match-count\">${matched.length} shown</div>\n    \n    <ul id=\"recipes\">\n      <for|recipe| of=matched by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r1.W1.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r1.W1.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.r3.W0.fix1",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<input id=\"q\" type=\"text\">\n<div id=\"match-count\">3 shown</div>\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <li data-title=recipe.title>\n          <recipe-card recipe=recipe/>\n        </li>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n\n<script>\n  const input = document.getElementById('q');\n  const matchCount = document.getElementById('match-count');\n  const recipeList = document.getElementById('recipes');\n  \n  function updateFilter() {\n    const query = input.value.toLowerCase();\n    const items = recipeList?.querySelectorAll('li[data-title]') || [];\n    let visibleCount = 0;\n\n    items.forEach((item) => {\n      const title = item.dataset.title.toLowerCase();\n      const matches = query === \"\" || title.includes(query);\n      if (matches) {\n        item.style.display = '';\n        visibleCount++;\n      } else {\n        item.style.display = 'none';\n      }\n    });\n\n    matchCount.textContent = `${visibleCount} shown`;\n  }\n  \n  input?.addEventListener('input', updateFilter);\n</script>"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r3.W0.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r3.W0.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.r3.W0.fix2",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value=query type=\"text\" on-input(e => query = e.target.value)>\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filteredRecipes=recipes.filter(r => query === \"\" || r.title.toLowerCase().includes(query.toLowerCase()))>\n    <div id=\"match-count\">${filteredRecipes.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filteredRecipes by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \nThe `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n    at src/routes/+page.marko\n    \n    at src/routes/+page.marko\n    at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n    at assertNativeHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4792:85)\n    at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4340:44)\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/e1-filter.C0.r3.W0.fix2/src/routes/+layout.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.r3.W0.fix2/src/routes/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.r3.W0.fix2/src/routes/recipes/$id/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.r3.W0.fix2/src/routes/recipes/new/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: The `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n    at src/routes/+page.marko\nThe `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n    at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n    at assertNativeHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4792:85)\n    at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4340:44)\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.r3.W1.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query type=\"text\">\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filteredRecipes=recipes.filter(r => query === \"\" || r.title.toLowerCase().includes(query.toLowerCase()))>\n    <div id=\"match-count\">${filteredRecipes.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filteredRecipes by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r3.W1.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r3.W1.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.r3.W1.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query type=\"text\">\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filteredRecipes=recipes.filter(r => query === \"\" || r.title.toLowerCase().includes(query.toLowerCase()))>\n    <div id=\"match-count\">${filteredRecipes.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filteredRecipes by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r3.W1.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.r3.W1.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r1.W0.fix1",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<input id=\"q\" value=\"\">\n<div id=\"match-count\">3 shown</div>\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <li data-title=recipe.title>\n          <recipe-card recipe=recipe/>\n        </li>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n\n<script>\n  const input = document.getElementById('q');\n  const matchCount = document.getElementById('match-count');\n  const items = document.querySelectorAll('#recipes li');\n\n  function updateFilter() {\n    const query = input.value.toLowerCase();\n    let count = 0;\n\n    items.forEach(item => {\n      const title = item.getAttribute('data-title').toLowerCase();\n      const matches = !query || title.includes(query);\n      item.style.display = matches ? '' : 'none';\n      if (matches) count++;\n    });\n\n    matchCount.textContent = count + ' shown';\n  }\n\n  input.addEventListener('input', updateFilter);\n\n  // Initialize match count\n  matchCount.textContent = items.length + ' shown';\n</script>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r1.W0.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r1.W0.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": false,
+     "detail": "6 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "6 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r1.W0.fix2",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<input id=\"q\">\n<div id=\"match-count\">3 shown</div>\n<ul id=\"recipes\">\n  <await|recipes|=$global.data.recipes>\n    <for|recipe| of=recipes by=\"id\">\n      <li data-recipe-title=\"${recipe.title}\">\n        <recipe-card recipe=recipe/>\n      </li>\n    </for>\n  </await>\n</ul>\n\n<script>\n  const input = document.getElementById('q');\n  const matchCount = document.getElementById('match-count');\n  \n  function updateFilter() {\n    const query = input.value.toLowerCase();\n    const recipeItems = document.querySelectorAll('#recipes li[data-recipe-title]');\n    let visibleCount = 0;\n    \n    recipeItems.forEach(item => {\n      const title = item.getAttribute('data-recipe-title').toLowerCase();\n      const matches = !query || title.includes(query);\n      \n      item.style.display = matches ? '' : 'none';\n      if (matches) visibleCount++;\n    });\n    \n    matchCount.textContent = `${visibleCount} shown`;\n  }\n  \n  input.addEventListener('input', updateFilter);\n  updateFilter(); // Set initial count\n</script>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r1.W0.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r1.W0.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "0 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r1.W1.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<input id=\"q\" type=\"text\" placeholder=\"Search...\">\n<div id=\"match-count\">3 shown</div>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <div class=\"recipe-item\" data-title=recipe.title>\n          <recipe-card recipe=recipe/>\n        </div>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n\n<script>\n  document.addEventListener('DOMContentLoaded', () => {\n    const q = document.getElementById('q');\n    const matchCount = document.getElementById('match-count');\n    const recipeItems = document.querySelectorAll('#recipes .recipe-item');\n    \n    function updateFilter() {\n      const query = q.value.toLowerCase();\n      let count = 0;\n      \n      recipeItems.forEach(item => {\n        const title = item.getAttribute('data-title').toLowerCase();\n        if (!query || title.includes(query)) {\n          item.style.display = '';\n          count++;\n        } else {\n          item.style.display = 'none';\n        }\n      });\n      \n      matchCount.textContent = `${count} shown`;\n    }\n    \n    q.addEventListener('input', updateFilter);\n    updateFilter(); // Set initial count\n  });\n</script>"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r1.W1.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r1.W1.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r1.W1.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value=query on-input=\"query = this.value\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter(r => !query || r.title.toLowerCase().includes(query.toLowerCase()))>\n    <div id=\"match-count\">${filtered.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:3:36\n      1 | \\u003ch1>Recipes\\u003c/h1>\n      2 | \\u003clet/query=\"\">\n    > 3 | \\u003cinput id=\"q\" value=query on-input=\"query = this.value\">\n        |                                    ^^^^^^^^^^^^^^^^^^^^ The `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n      4 | \\u003ctry>\n      5 |   \\u003cawait|recipes|=$global.data.recipes>\n      6 |     \\u003cconst/filtered=recipes.filter(r => !query || r.title.toLowerCase().includes(query.toLowerCase()))>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:3:36\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/e1-filter.C0c.r1.W1.fix2/src/routes/+layout.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r1.W1.fix2/src/routes/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r1.W1.fix2/src/routes/recipes/new/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r1.W1.fix2/src/routes/recipes/$id/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:3:36\n      1 | <h1>Recipes</h1>\n      2 | <let/query=\"\">\n    > 3 | <input id=\"q\" value=query on-input=\"query = this.value\">\n        |                                    ^^^^^^^^^^^^^^^^^^^^ The `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n      4 | <try>\n      5 |   <await|recipes|=$global.data.recipes>\n      6 |     <const/filtered=recipes.filter(r => !query || r.title.toLowerCase().includes(query.toLowerCase()))>\n  1 | <h1>Recipes</h1>\n  2 | <let/query=\"\">\n> 3 | <input id=\"q\" value=query on-input=\"query = this.value\">\n    |                                    ^^^^^^^^^^^^^^^^^^^^ The `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n  4 | <try>\n  5 |   <await|recipes|=$global.data.recipes>\n  6 |     <const/filtered=recipes.filter(r => !query "
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r2.W0.fix1",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<input id=\"q\" type=\"text\" />\n<div id=\"match-count\">3 shown</div>\n<ul id=\"recipes\">\n  <for|recipe| of=$global.data.recipes by=\"id\">\n    <recipe-card recipe=recipe data-title=recipe.title/>\n  </for>\n</ul>\n\n<script>\n  const queryInput = document.getElementById('q');\n  const matchCount = document.getElementById('match-count');\n  const recipesList = document.getElementById('recipes');\n  \n  function updateFilter() {\n    const query = queryInput.value.toLowerCase();\n    let count = 0;\n    \n    const items = recipesList.querySelectorAll('li[data-title]');\n    items.forEach(item => {\n      const title = item.getAttribute('data-title').toLowerCase();\n      if (query === '' || title.includes(query)) {\n        item.style.display = '';\n        count++;\n      } else {\n        item.style.display = 'none';\n      }\n    });\n    \n    matchCount.textContent = count + ' shown';\n  }\n  \n  queryInput.addEventListener('input', updateFilter);\n  updateFilter();\n</script>"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \nlist is not iterable\n    \n    at forOf (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1486:22)\n    at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix1/src/routes/+page.marko:13:34)\n    at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix1/dist/.marko-run/index.marko:18:40)\n    at render (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2752:53)\n    at _dynamic_tag (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2761:60)\n    at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix1/src/routes/+layout.marko:11:41)\n    at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix1/dist/.marko-run/index.marko:14:36)\n    at file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:3031:10\n    at Chunk.render (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2232:4)\n    at writeWaitReady (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1651:23)\n    at file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2812:39\n    at Chunk.render (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2232:4)\n    at Function.render (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2812:26)\n    at Object.render (/home/user/experiment/node_modules/@marko/run/dist/runtime/internal.js:320:20)\n    at render (/home/user/experiment/node_modules/\n---server log---\nerror: list is not iterable\u001b[0m\n      at forOf (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1486:22)\n      at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix1/src/routes/+page.marko:13:34)\n      at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix1/dist/.marko-run/index.marko:18:40)\n      at render (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2752:53)\n      at _dynamic_tag (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2761:60)\n      at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix1/src/routes/+layout.marko:11:41)\n      at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix1/dist/.marko-run/index.marko:14:36)\n      at file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:3031:10\n      at Chunk.render (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2232:4)\n      at writeWaitReady (file:///home/u"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r2.W0.fix2",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<input id=\"q\" />\n<div id=\"match-count\">3 shown</div>\n<ul id=\"recipes\">\n  <for|recipe| of=$global.data.recipes by=\"id\">\n    <div class=\"recipe-item\" data-title=recipe.title>\n      <recipe-card recipe=recipe/>\n    </div>\n  </for>\n</ul>\n\n<script>\n  const input = document.getElementById('q');\n  const matchCount = document.getElementById('match-count');\n  const items = document.querySelectorAll('.recipe-item');\n  \n  function updateFilter() {\n    const query = input.value.toLowerCase();\n    let shown = 0;\n    \n    items.forEach(item => {\n      const title = item.getAttribute('data-title').toLowerCase();\n      const matches = query === '' || title.includes(query);\n      \n      if (matches) {\n        item.style.display = '';\n        shown++;\n      } else {\n        item.style.display = 'none';\n      }\n    });\n    \n    matchCount.textContent = shown + ' shown';\n  }\n  \n  input.addEventListener('input', updateFilter);\n  updateFilter();\n</script>"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \nlist is not iterable\n    \n    at forOf (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1486:22)\n    at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix2/src/routes/+page.marko:13:34)\n    at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix2/dist/.marko-run/index.marko:18:40)\n    at render (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2752:53)\n    at _dynamic_tag (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2761:60)\n    at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix2/src/routes/+layout.marko:11:41)\n    at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix2/dist/.marko-run/index.marko:14:36)\n    at file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:3031:10\n    at Chunk.render (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2232:4)\n    at writeWaitReady (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1651:23)\n    at file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2812:39\n    at Chunk.render (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2232:4)\n    at Function.render (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2812:26)\n    at Object.render (/home/user/experiment/node_modules/@marko/run/dist/runtime/internal.js:320:20)\n    at render (/home/user/experiment/node_modules/\n---server log---\nerror: list is not iterable\u001b[0m\n      at forOf (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1486:22)\n      at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix2/src/routes/+page.marko:13:34)\n      at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix2/dist/.marko-run/index.marko:18:40)\n      at render (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2752:53)\n      at _dynamic_tag (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2761:60)\n      at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix2/src/routes/+layout.marko:11:41)\n      at eval (/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W0.fix2/dist/.marko-run/index.marko:14:36)\n      at file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:3031:10\n      at Chunk.render (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:2232:4)\n      at writeWaitReady (file:///home/u"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r2.W1.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/q=\"\">\n<input id=\"q\" value:=q>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter(r => \n      q === \"\" || r.title.toLowerCase().includes(q.toLowerCase())\n    )>\n    <div id=\"match-count\">${filtered.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r2.W1.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r2.W1.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r2.W1.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<script>\n  let q = \"\";\n</script>\n\n<h1>Recipes</h1>\n<input id=\"q\" value=q on-input=\"q = event.target.value\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter(r => \n      q === \"\" || r.title.toLowerCase().includes(q.toLowerCase())\n    )>\n    <div id=\"match-count\">${filtered.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:6:32\n      4 |\n      5 | \\u003ch1>Recipes\\u003c/h1>\n    > 6 | \\u003cinput id=\"q\" value=q on-input=\"q = event.target.value\">\n        |                                ^^^^^^^^^^^^^^^^^^^^^^^^ The `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n      7 | \\u003ctry>\n      8 |   \\u003cawait|recipes|=$global.data.recipes>\n      9 |     \\u003cconst/filtered=recipes.filter(r => \nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:6:32\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W1.fix2/src/routes/+layout.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W1.fix2/src/routes/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W1.fix2/src/routes/recipes/$id/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0c.r2.W1.fix2/src/routes/recipes/new/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:6:32\n      4 |\n      5 | <h1>Recipes</h1>\n    > 6 | <input id=\"q\" value=q on-input=\"q = event.target.value\">\n        |                                ^^^^^^^^^^^^^^^^^^^^^^^^ The `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n      7 | <try>\n      8 |   <await|recipes|=$global.data.recipes>\n      9 |     <const/filtered=recipes.filter(r => \n  4 |\n  5 | <h1>Recipes</h1>\n> 6 | <input id=\"q\" value=q on-input=\"q = event.target.value\">\n    |                                ^^^^^^^^^^^^^^^^^^^^^^^^ The `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n  7 | <try>\n  8 |   <await|recipes|=$global.data.recipes>\n  9 |     <const/filtered=recipes.filter(r => \n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r4.W0.fix1",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<input id=\"q\" type=\"text\">\n<p id=\"match-count\">3 shown</p>\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <li class=\"recipe-item\" data-title=recipe.title>\n          <recipe-card recipe=recipe/>\n        </li>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n\n<script>\n  const searchInput = document.getElementById('q');\n  const matchCount = document.getElementById('match-count');\n  const recipeItems = document.querySelectorAll('li.recipe-item');\n\n  function updateFilter() {\n    const query = searchInput.value.toLowerCase();\n    let visibleCount = 0;\n\n    recipeItems.forEach(item => {\n      const title = item.getAttribute('data-title').toLowerCase();\n      const isMatch = title.includes(query);\n      item.style.display = isMatch ? '' : 'none';\n      if (isMatch) visibleCount++;\n    });\n\n    matchCount.textContent = `${visibleCount} shown`;\n  }\n\n  searchInput.addEventListener('input', updateFilter);\n  updateFilter();\n</script>\n\n<style>\n  ul#recipes {\n    list-style: none;\n    padding: 0;\n  }\n</style>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r4.W0.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r4.W0.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r4.W0.fix2",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/q=\"\">\n<input id=\"q\" value=q on-input=function(e) { q = e.target.value }>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filtered=recipes.filter(r => r.title.toLowerCase().includes(q.toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    \n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r4.W0.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r4.W0.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:6 The `<let/filtered>` variable is never assigned, so its value is computed once and will not update when the values it reads change. For a derived value that recomputes, use `<const/filtered=...>` instead."
+  },
+  {
+   "runId": "e1-filter.C0c.r4.W1.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<input id=\"q\" type=\"text\">\n<p id=\"match-count\">3 shown</p>\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <li class=\"recipe-item\" data-title=recipe.title>\n          <recipe-card recipe=recipe/>\n        </li>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n\n<script>\n  const input = document.getElementById('q');\n  const matchCount = document.getElementById('match-count');\n  \n  function updateFilter() {\n    const query = input.value.toLowerCase();\n    const items = document.querySelectorAll('.recipe-item');\n    let visible = 0;\n    \n    items.forEach(item => {\n      const title = item.getAttribute('data-title').toLowerCase();\n      if (title.includes(query)) {\n        item.style.display = '';\n        visible++;\n      } else {\n        item.style.display = 'none';\n      }\n    });\n    \n    matchCount.textContent = visible + ' shown';\n  }\n  \n  input.addEventListener('input', updateFilter);\n  updateFilter();\n</script>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r4.W1.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r4.W1.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0c.r4.W1.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n\n<input id=\"q\" placeholder=\"Search recipes...\">\n<p id=\"match-count\">3 shown</p>\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <li data-title=recipe.title>\n          <recipe-card recipe=recipe/>\n        </li>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n\n<script>\n  const input = document.getElementById('q');\n  const matchCount = document.getElementById('match-count');\n  const recipeItems = document.querySelectorAll('#recipes li');\n  \n  function updateFilter() {\n    const query = input.value.toLowerCase();\n    let visibleCount = 0;\n    \n    recipeItems.forEach(item => {\n      const title = item.getAttribute('data-title').toLowerCase();\n      const isVisible = title.includes(query);\n      item.style.display = isVisible ? '' : 'none';\n      if (isVisible) visibleCount++;\n    });\n    \n    matchCount.textContent = `${visibleCount} shown`;\n  }\n  \n  input.addEventListener('input', updateFilter);\n  updateFilter();\n</script>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r4.W1.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0c.r4.W1.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r1.W0.fix1",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<input id=\"q\" placeholder=\"Search recipes\">\n<p id=\"match-count\"></p>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n\n<script>\ndocument.addEventListener('DOMContentLoaded', () => {\n  const input = document.getElementById('q');\n  const matchCount = document.getElementById('match-count');\n  const recipeList = document.getElementById('recipes');\n  \n  function filterRecipes() {\n    const query = input.value.toLowerCase();\n    const cards = recipeList.querySelectorAll('.card');\n    let count = 0;\n    \n    cards.forEach(card => {\n      const title = card.querySelector('a').textContent.toLowerCase();\n      const matches = title.includes(query);\n      card.style.display = matches ? '' : 'none';\n      if (matches) count++;\n    });\n    \n    matchCount.textContent = count + ' shown';\n  }\n  \n  input.addEventListener('input', filterRecipes);\n  \n  // Initialize count on page load\n  filterRecipes();\n});\n</script>"
+    },
+    {
+     "path": "src/tags/recipe-card.marko",
+     "content": "<li class=\"card\">\n  <a href=`/recipes/${input.recipe.id}`>${input.recipe.title}</a>\n  <p class=\"meta\">\n    <span class=\"minutes\">${input.recipe.minutes} min</span>\n    <span class=\"stars\">${\"★\".repeat(input.recipe.rating)}</span>\n  </p>\n</li>"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r1.W0.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r1.W0.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([i"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r1.W0.fix2",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\"/>\n<input id=\"q\" value=query placeholder=\"Search recipes\" on-input=function(event) {\n  query = event.target.value;\n}/>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filtered=recipes.filter(recipe => recipe.title.toLowerCase().includes(query.toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <recipe-card recipe=recipe hidden=!filtered.includes(recipe)/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>"
+    },
+    {
+     "path": "src/tags/recipe-card.marko",
+     "content": "<li class=\"card\" hidden={input.hidden ? \"\" : null}>\n  <a href=`/recipes/${input.recipe.id}`>${input.recipe.title}</a>\n  <p class=\"meta\">\n    <span class=\"minutes\">${input.recipe.minutes} min</span>\n    <span class=\"stars\">${\"★\".repeat(input.recipe.rating)}</span>\n  </p>\n</li>"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/tags/recipe-card.marko:1:31\n    > 1 | \\u003cli class=\"card\" hidden={input.hidden ? \"\" : null}>\n        |                               ^ Unexpected token, expected \",\". Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n      2 |   \\u003ca href=`/recipes/${input.recipe.id}`>${input.recipe.title}\\u003c/a>\n      3 |   \\u003cp class=\"meta\">\n      4 |     \\u003cspan class=\"minutes\">${input.recipe.minutes} min\\u003c/span>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/tags/recipe-card.marko:1:31\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/e1-filter.C0.sl.r1.W0.fix2/src/routes/+layout.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.sl.r1.W0.fix2/src/routes/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.sl.r1.W0.fix2/src/routes/recipes/$id/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.sl.r1.W0.fix2/src/routes/recipes/new/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/tags/recipe-card.marko:1:31\n    > 1 | <li class=\"card\" hidden={input.hidden ? \"\" : null}>\n        |                               ^ Unexpected token, expected \",\". Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n      2 |   <a href=`/recipes/${input.recipe.id}`>${input.recipe.title}</a>\n      3 |   <p class=\"meta\">\n      4 |     <span class=\"minutes\">${input.recipe.minutes} min</span>\n> 1 | <li class=\"card\" hidden={input.hidden ? \"\" : null}>\n    |                               ^ Unexpected token, expected \",\". Attribute values in Marko are plain JavaScript expressions, not JSX; remove the wrapping `{ }`.\n  2 |   <a href=`/recipes/${input.recipe.id}`>${input.recipe.title}</a>\n  3 |   <p class=\"meta\">\n  4 |     <span class=\"minutes\">${input.recipe.minutes} min</span>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/e"
+   },
+   "checks": [],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:8 The `<let/filtered>` variable is never assigned, so its value is computed once and will not update when the values it reads change. For a derived value that recomputes, use `<const/filtered=...>` instead."
+  },
+  {
+   "runId": "e1-filter.C0.sl.r1.W1.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value=query oninput:=(e) => query = e.target.value placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <recipe-card recipe=recipe hidden=(!filtered.includes(recipe))/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>"
+    },
+    {
+     "path": "src/tags/recipe-card.marko",
+     "content": "<li class=\"card\" hidden=input.hidden>\n  <a href=`/recipes/${input.recipe.id}`>${input.recipe.title}</a>\n  <p class=\"meta\">\n    <span class=\"minutes\">${input.recipe.minutes} min</span>\n    <span class=\"stars\">${\"★\".repeat(input.recipe.rating)}</span>\n  </p>\n</li>"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:3:36\n      1 | \\u003ch1>Recipes\\u003c/h1>\n      2 | \\u003clet/query=\"\">\n    > 3 | \\u003cinput id=\"q\" value=query oninput:=(e) => query = e.target.value placeholder=\"Search recipes\">\n        |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Attributes may only be bound to identifiers or member expressions\n      4 | \\u003ctry>\n      5 |   \\u003cawait|recipes|=$global.data.recipes>\n      6 |     \\u003cconst/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.toLowerCase()))>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:3:36\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/e1-filter.C0.sl.r1.W1.fix1/src/routes/+layout.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.sl.r1.W1.fix1/src/routes/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.sl.r1.W1.fix1/src/routes/recipes/new/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.sl.r1.W1.fix1/src/routes/recipes/$id/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:3:36\n      1 | <h1>Recipes</h1>\n      2 | <let/query=\"\">\n    > 3 | <input id=\"q\" value=query oninput:=(e) => query = e.target.value placeholder=\"Search recipes\">\n        |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Attributes may only be bound to identifiers or member expressions\n      4 | <try>\n      5 |   <await|recipes|=$global.data.recipes>\n      6 |     <const/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.toLowerCase()))>\n  1 | <h1>Recipes</h1>\n  2 | <let/query=\"\">\n> 3 | <input id=\"q\" value=query oninput:=(e) => query = e.target.value placeholder=\"Search recipes\">\n    |                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Attributes may only be bound to identifiers or member expressions\n  4 | <try>\n  5 |   <await|recipes|=$global.data.recipes>\n  6 |     <const/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.toLowerCase()))>\n\n    at aggregateBindingErrorsIntoJsError (file"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r1.W1.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <recipe-card recipe=recipe hidden=(!filtered.includes(recipe))/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    },
+    {
+     "path": "src/tags/recipe-card.marko",
+     "content": "<li class=\"card\" hidden=input.hidden>\n  <a href=`/recipes/${input.recipe.id}`>${input.recipe.title}</a>\n  <p class=\"meta\">\n    <span class=\"minutes\">${input.recipe.minutes} min</span>\n    <span class=\"stars\">${\"★\".repeat(input.recipe.rating)}</span>\n  </p>\n</li>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r1.W1.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r1.W1.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([i"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r2.W0.fix1",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<input id=\"q\" placeholder=\"Search recipes\">\n<p id=\"match-count\">3 shown</p>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <li data-title=recipe.title>\n          <recipe-card recipe=recipe/>\n        </li>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n\n<script>\n  const searchInput = document.getElementById('q');\n  const matchCount = document.getElementById('match-count');\n\n  function updateSearch() {\n    const query = searchInput.value.toLowerCase();\n    let visibleCount = 0;\n\n    const recipeItems = document.querySelectorAll('#recipes > li');\n    recipeItems.forEach((item) => {\n      const title = item.dataset.title;\n\n      if (title.toLowerCase().includes(query)) {\n        item.style.display = '';\n        visibleCount++;\n      } else {\n        item.style.display = 'none';\n      }\n    });\n\n    matchCount.textContent = `${visibleCount} shown`;\n  }\n\n  searchInput.addEventListener('input', updateSearch);\n\n  // Initial update to show count\n  updateSearch();\n</script>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.W0.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.W0.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([i"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": false,
+     "detail": "[\"\",\"Tomato soup\",\"\",\"Garlic bread\",\"\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r2.W0.fix2",
+   "taskId": "e1-filter",
+   "condition": "W0",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<input id=\"q\" placeholder=\"Search recipes\">\n<p id=\"match-count\">3 shown</p>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <div class=\"recipe-item\" data-title=recipe.title>\n          <recipe-card recipe=recipe/>\n        </div>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n\n<script>\n  const input = document.getElementById('q');\n  const matchCount = document.getElementById('match-count');\n  const recipeItems = document.querySelectorAll('.recipe-item');\n  \n  function filterRecipes() {\n    const query = input.value.trim().toLowerCase();\n    let visibleCount = 0;\n    \n    recipeItems.forEach(item => {\n      const title = item.getAttribute('data-title').toLowerCase();\n      const isMatch = title.includes(query);\n      item.style.display = isMatch ? '' : 'none';\n      if (isMatch) visibleCount++;\n    });\n    \n    matchCount.textContent = `${visibleCount} shown`;\n  }\n  \n  input.addEventListener('input', filterRecipes);\n  filterRecipes();\n</script>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.W0.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.W0.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([i"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r2.W1.fix1",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.trim().toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <if=filtered.includes(recipe)>\n          <recipe-card recipe=recipe/>\n        </if>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.W1.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.W1.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([i"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r2.W1.fix2",
+   "taskId": "e1-filter",
+   "condition": "W1",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<state/query=\"\">\n<input id=\"q\" value:=query placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.trim().toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <if=filtered.includes(recipe)>\n          <recipe-card recipe=recipe/>\n        </if>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:2:1\n      1 | \\u003ch1>Recipes\\u003c/h1>\n    > 2 | \\u003cstate/query=\"\">\n        | ^^^^^^^^^^^^^^^^ Missing ending \"state\" tag\n      3 | \\u003cinput id=\"q\" value:=query placeholder=\"Search recipes\">\n      4 | \\u003ctry>\n      5 |   \\u003cawait|recipes|=$global.data.recipes>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:2:1\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/e1-filter.C0.sl.r2.W1.fix2/src/routes/+layout.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.sl.r2.W1.fix2/src/routes/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.sl.r2.W1.fix2/src/routes/recipes/$id/+page.marko\n/home/user/experiment/runs/exp6/apps/e1-filter.C0.sl.r2.W1.fix2/src/routes/recipes/new/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:2:1\n      1 | <h1>Recipes</h1>\n    > 2 | <state/query=\"\">\n        | ^^^^^^^^^^^^^^^^ Missing ending \"state\" tag\n      3 | <input id=\"q\" value:=query placeholder=\"Search recipes\">\n      4 | <try>\n      5 |   <await|recipes|=$global.data.recipes>\n  1 | <h1>Recipes</h1>\n> 2 | <state/query=\"\">\n    | ^^^^^^^^^^^^^^^^ Missing ending \"state\" tag\n  3 | <input id=\"q\" value:=query placeholder=\"Search recipes\">\n  4 | <try>\n  5 |   <await|recipes|=$global.data.recipes>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite"
+   },
+   "checks": [],
+   "guidance": ""
+  }
+ ]
+}

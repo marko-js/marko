@@ -1,0 +1,791 @@
+{
+ "round": "exp6-regrade",
+ "runs": [
+  {
+   "runId": "e1-filter.C0.r1",
+   "taskId": "e1-filter",
+   "condition": "C0",
+   "rep": 1,
+   "stage": "edit",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n\n<let/query=\"\">\n\n<input id=\"q\" value:=query />\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/matched=recipes.filter(r => \n      r.title.toLowerCase().includes(query.toLowerCase())\n    )>\n    \n    <div id=\"match-count\">${matched.length} shown</div>\n    \n    <ul id=\"recipes\">\n      <for|recipe| of=matched by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0.r1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0.r1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:9 The `<let/matched>` variable is never assigned, so its value is computed once and will not update when the values it reads change. For a derived value that recomputes, use `<const/matched=...>` instead."
+  },
+  {
+   "runId": "e1-filter.C0.r3",
+   "taskId": "e1-filter",
+   "condition": "C0",
+   "rep": 3,
+   "stage": "edit",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query type=\"text\">\n\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filteredRecipes=recipes.filter(r => query === \"\" || r.title.toLowerCase().includes(query.toLowerCase()))>\n    <div id=\"match-count\">${filteredRecipes.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filteredRecipes by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0.r3_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0.r3_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import("
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:7 The `<let/filteredRecipes>` variable is never assigned, so its value is computed once and will not update when the values it reads change. For a derived value that recomputes, use `<const/filteredRecipes=...>` instead."
+  },
+  {
+   "runId": "e1-filter.C0c.r1",
+   "taskId": "e1-filter",
+   "condition": "C0c",
+   "rep": 1,
+   "stage": "edit",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filtered=recipes.filter(r => !query || r.title.toLowerCase().includes(query.toLowerCase()))>\n    <div id=\"match-count\">${filtered.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0c.r1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0c.r1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:6 The `<let/filtered>` variable is never assigned, so its value is computed once and will not update when the values it reads change. For a derived value that recomputes, use `<const/filtered=...>` instead."
+  },
+  {
+   "runId": "e1-filter.C0c.r2",
+   "taskId": "e1-filter",
+   "condition": "C0c",
+   "rep": 2,
+   "stage": "edit",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/q=\"\">\n<input id=\"q\" value:=q>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filtered=recipes.filter(r => \n      q === \"\" || r.title.toLowerCase().includes(q.toLowerCase())\n    )>\n    <div id=\"match-count\">${filtered.length} shown</div>\n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0c.r2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0c.r2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:6 The `<let/filtered>` variable is never assigned, so its value is computed once and will not update when the values it reads change. For a derived value that recomputes, use `<const/filtered=...>` instead."
+  },
+  {
+   "runId": "e1-filter.C0c.r4",
+   "taskId": "e1-filter",
+   "condition": "C0c",
+   "rep": 4,
+   "stage": "edit",
+   "baseVariant": "base-const",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/q=\"\">\n<input id=\"q\" value:=q>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filtered=recipes.filter(r => r.title.toLowerCase().includes(q.toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    \n    <ul id=\"recipes\">\n      <for|recipe| of=filtered by=\"id\">\n        <recipe-card recipe=recipe/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0c.r4_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0c.r4_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([impor"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:6 The `<let/filtered>` variable is never assigned, so its value is computed once and will not update when the values it reads change. For a derived value that recomputes, use `<const/filtered=...>` instead."
+  },
+  {
+   "runId": "t1-counter.C0.sl.r1",
+   "taskId": "t1-counter",
+   "condition": "C0-sl",
+   "rep": 1,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "class {\n  onCreate() {\n    this.state = { likes: 0 };\n  }\n}\n\nstyle {\n  /* no styles */\n}\n\n<button id=\"like\" onclick(){ state.likes++ }>\n  Likes: ${state.likes}\n</button>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:1:7\n    > 1 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      2 |   onCreate() {\n      3 |     this.state = { likes: 0 };\n      4 |   }\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:1:7\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/t1-counter.C0.sl.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:1:7\n    > 1 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      2 |   onCreate() {\n      3 |     this.state = { likes: 0 };\n      4 |   }\n> 1 | class {\n    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n  2 |   onCreate() {\n  3 |     this.state = { likes: 0 };\n  4 |   }\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experiment/runs/exp6-regrade/apps/t1-counter.C0.sl.r1/src/routes/+page.marko\n      at src/routes/+page.marko:1:7\n\u001b7\u001b[1A\u001b[2K\u001b[1G◀━━ GET /__"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t1-counter.C0.sl.r2",
+   "taskId": "t1-counter",
+   "condition": "C0-sl",
+   "rep": 2,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "class {\n  onCreate() {\n    this.state = { likes: 0 };\n  }\n}\n\n<button id=\"like\" onClick(){ this.state.likes++ }>\n  Likes: ${input.likes}\n</button>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:1:7\n    > 1 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      2 |   onCreate() {\n      3 |     this.state = { likes: 0 };\n      4 |   }\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:1:7\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/t1-counter.C0.sl.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:1:7\n    > 1 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      2 |   onCreate() {\n      3 |     this.state = { likes: 0 };\n      4 |   }\n> 1 | class {\n    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n  2 |   onCreate() {\n  3 |     this.state = { likes: 0 };\n  4 |   }\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experiment/runs/exp6-regrade/apps/t1-counter.C0.sl.r2/src/routes/+page.marko\n      at src/routes/+page.marko:1:7\n\u001b7\u001b[1A\u001b[2K\u001b[1G◀━━ GET /__"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t2-temperature.C0.sl.r1",
+   "taskId": "t2-temperature",
+   "condition": "C0-sl",
+   "rep": 1,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "class {\n  onCreate() {\n    this.state = { celsius: 20 };\n  }\n  onInput(event) {\n    const value = event.target.valueAsNumber;\n    this.state.celsius = Number.isNaN(value) ? 0 : value;\n  }\n  warmer() {\n    this.state.celsius = Number(this.state.celsius) + 1;\n  }\n}\n\nstatic function toFahrenheit(celsius) {\n  return (Number(celsius) * 9) / 5 + 32;\n}\n\n<input id=\"celsius\" type=\"number\" value=input.state.celsius on-input('onInput')>\n<span id=\"fahrenheit\">${toFahrenheit(input.state.celsius)}</span>\n<button id=\"warmer\" on-click('warmer')>Warmer</button>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:1:7\n    > 1 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      2 |   onCreate() {\n      3 |     this.state = { celsius: 20 };\n      4 |   }\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:1:7\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/t2-temperature.C0.sl.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:1:7\n    > 1 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      2 |   onCreate() {\n      3 |     this.state = { celsius: 20 };\n      4 |   }\n> 1 | class {\n    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n  2 |   onCreate() {\n  3 |     this.state = { celsius: 20 };\n  4 |   }\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t2-temperature.C0.sl.r2",
+   "taskId": "t2-temperature",
+   "condition": "C0-sl",
+   "rep": 2,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/celsius=20/>\n\n<input\n  id=\"celsius\"\n  type=\"number\"\n  value=celsius\n  onInput('input) => {\n    celsius = +input.target.value;\n  }\n/>\n<div id=\"fahrenheit\">${celsius * 9 / 5 + 32}</div>\n<button id=\"warmer\" onClick=() => {\n  celsius = celsius + 1;\n}>\n  Warmer\n</button>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:7:11\n       5 |   type=\"number\"\n       6 |   value=celsius\n    >  7 |   onInput('input) => {\n         |           ^ EOF reached while parsing string expression\n       8 |     celsius = +input.target.value;\n       9 |   }\n      10 | />\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:7:11\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/t2-temperature.C0.sl.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:7:11\n       5 |   type=\"number\"\n       6 |   value=celsius\n    >  7 |   onInput('input) => {\n         |           ^ EOF reached while parsing string expression\n       8 |     celsius = +input.target.value;\n       9 |   }\n      10 | />\n   5 |   type=\"number\"\n   6 |   value=celsius\n>  7 |   onInput('input) => {\n     |           ^ EOF reached while parsing string expression\n   8 |     celsius = +input.target.value;\n   9 |   }\n  10 | />\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experiment/runs/exp6-regrade/apps/t2-temperature.C0.sl.r2/src/rou"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t3-todos.C0.sl.r1",
+   "taskId": "t3-todos",
+   "condition": "C0-sl",
+   "rep": 1,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "class {\n  onCreate() {\n    this.state = {\n      todos: [],\n      text: \"\"\n    };\n  }\n\n  addTodo() {\n    const text = this.state.text.trim();\n    if (!text) return;\n    this.state.todos = [\n      ...this.state.todos,\n      { text, done: false }\n    ];\n    this.state.text = \"\";\n  }\n\n  toggleTodo(index) {\n    const todos = this.state.todos.slice();\n    todos[index] = { ...todos[index], done: !todos[index].done };\n    this.state.todos = todos;\n  }\n\n  onInput(event) {\n    this.state.text = event.target.value;\n  }\n}\n\nstatic function remaining(todos) {\n  return todos.filter(todo => !todo.done).length;\n}\n\n<div>\n  <input id=\"new-todo\" value=component.state.text on-input(\"onInput\")>\n  <button id=\"add\" on-click(\"addTodo\")>Add</button>\n\n  <div id=\"remaining\">${remaining(component.state.todos)} left</div>\n\n  <if(component.state.todos.length === 0)>\n    <div id=\"empty\">No todos yet</div>\n  </if>\n  <else>\n    <ul id=\"list\">\n      <for|todo, index| of=component.state.todos>\n        <li>\n          <input type=\"checkbox\" checked=todo.done on-click(\"toggleTodo\", index)>\n          ${todo.text}\n        </li>\n      </for>\n    </ul>\n  </else>\n</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:1:7\n    > 1 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      2 |   onCreate() {\n      3 |     this.state = {\n      4 |       todos: [],\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:1:7\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/t3-todos.C0.sl.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:1:7\n    > 1 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      2 |   onCreate() {\n      3 |     this.state = {\n      4 |       todos: [],\n> 1 | class {\n    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n  2 |   onCreate() {\n  3 |     this.state = {\n  4 |       t"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t3-todos.C0.sl.r2",
+   "taskId": "t3-todos",
+   "condition": "C0-sl",
+   "rep": 2,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "class {\n  onCreate() {\n    this.state = {\n      todos: [],\n      text: \"\"\n    };\n  }\n\n  onInput(event) {\n    this.state.text = event.target.value;\n  }\n\n  addTodo() {\n    const text = this.state.text.trim();\n    if (!text) return;\n    this.state.todos = [\n      ...this.state.todos,\n      { text, done: false }\n    ];\n    this.state.text = \"\";\n  }\n\n  toggleTodo(index) {\n    this.state.todos = this.state.todos.map((todo, i) =>\n      i === index ? { ...todo, done: !todo.done } : todo\n    );\n  }\n}\n\nstatic function remaining(todos) {\n  return todos.filter(todo => !todo.done).length;\n}\n\n<input id=\"new-todo\" value=input.state.text on-input('onInput')>\n<button id=\"add\" on-click('addTodo')>Add</button>\n\n<div id=\"empty\" if=(input.state.todos.length === 0)>\n  No todos yet\n</div>\n<ul id=\"list\" else>\n  <for|todo, index| of=input.state.todos>\n    <li>\n      <input type=\"checkbox\" checked=todo.done on-click('toggleTodo', index)>\n      ${todo.text}\n    </li>\n  </for>\n</ul>\n\n<div id=\"remaining\">${remaining(input.state.todos)} left</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:1:7\n    > 1 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      2 |   onCreate() {\n      3 |     this.state = {\n      4 |       todos: [],\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:1:7\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/t3-todos.C0.sl.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:1:7\n    > 1 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      2 |   onCreate() {\n      3 |     this.state = {\n      4 |       todos: [],\n> 1 | class {\n    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n  2 |   onCreate() {\n  3 |     this.state = {\n  4 |       todos: [],\n\n    at aggregateBindingErro"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t4-tabs.C0.sl.r1",
+   "taskId": "t4-tabs",
+   "condition": "C0-sl",
+   "rep": 1,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "export interface Input {\n}\n\nstatic function getBody(tab) {\n  return tab.content;\n}\n\n$ let activeIndex = 0;\n\n<div role=\"tablist\" no-update>\n  <for|tab, i| of=input.tab>\n    <button\n      onClick(){ activeIndex = i }\n      aria-selected=(i === activeIndex ? \"true\" : void 0)\n    >\n      ${tab.label}\n    </button>\n  </for>\n</div>\n<div id=\"panel\">\n  <for|tab, i| of=input.tab>\n    <if=i === activeIndex>\n      <${tab.content}/>\n    </if>\n  </for>\n</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/tags/tab-panel.marko:8:2\n       6 | }\n       7 |\n    >  8 | $ let activeIndex = 0;\n         |  ^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n       9 |\n      10 | \\u003cdiv role=\"tablist\" no-update>\n      11 |   \\u003cfor|tab, i| of=input.tab>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/tags/tab-panel.marko:8:2\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/t4-tabs.C0.sl.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/tags/tab-panel.marko:8:2\n       6 | }\n       7 |\n    >  8 | $ let activeIndex = 0;\n         |  ^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n       9 |\n      10 | <div role=\"tablist\" no-update>\n      11 |   <for|tab, i| of=input.tab>\n   6 | }\n   7 |\n>  8 | $ let activeIndex = 0;\n     |  ^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n   9 |\n  10 | <div role=\"tablist\" no-update>\n  11 |   <for|tab, i| of=input.tab>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experiment/runs/exp6-regrade/apps/t4-tabs.C0.sl.r1/sr"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t4-tabs.C0.sl.r2",
+   "taskId": "t4-tabs",
+   "condition": "C0-sl",
+   "rep": 2,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "static let uid = 0;\n\nclass {\n  onCreate() {\n    this.state = { active: 0 };\n  }\n}\n\n<div role=\"tablist\">\n  <for|tab, index| of=input.tab>\n    <button\n      aria-selected=(index === state.active ? \"true\" : \"false\")\n      onclick(){ state.active = index }\n    >${tab.label}</button>\n  </for>\n</div>\n<div id=\"panel\">\n  <for|tab, index| of=input.tab>\n    <if=(index === state.active)>\n      <${tab.renderBody}/>\n    </if>\n  </for>\n</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/tags/tab-panel.marko:3:7\n      1 | static let uid = 0;\n      2 |\n    > 3 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      4 |   onCreate() {\n      5 |     this.state = { active: 0 };\n      6 |   }\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/tags/tab-panel.marko:3:7\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/t4-tabs.C0.sl.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/tags/tab-panel.marko:3:7\n      1 | static let uid = 0;\n      2 |\n    > 3 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      4 |   onCreate() {\n      5 |     this.state = { active: 0 };\n      6 |   }\n  1 | static let uid = 0;\n  2 |\n> 3 | class {\n    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n  4 |   onCreate() {\n  5 |     this.state = { active: 0 };\n  6 |   }\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experiment/runs/exp6-regrade/apps/t4-tabs.C0.sl.r2/src/tags/tab"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "h2-search.C0.sl.r1",
+   "taskId": "h2-search",
+   "condition": "C0-sl",
+   "rep": 1,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities\";\n\nclass {\n  onCreate() {\n    this.state = { q: \"\" };\n  }\n}\n\n$ const q = state.q.toLowerCase();\n$ const results = cities.filter((city) => city.toLowerCase().includes(q));\n\n<div>\n  <input id=\"q\" value=state.q on-input(\"emit\", \"input\")\n    on-input=(e) => { state.q = e.target.value; }/>\n  <div id=\"count\">${results.length} matches</div>\n  <ul id=\"results\">\n    for|city| of=results\n      <li>${city}</li>\n  </ul>\n</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:3:7\n      1 | import { cities } from \"../cities\";\n      2 |\n    > 3 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      4 |   onCreate() {\n      5 |     this.state = { q: \"\" };\n      6 |   }\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:3:7\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/h2-search.C0.sl.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:3:7\n      1 | import { cities } from \"../cities\";\n      2 |\n    > 3 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      4 |   onCreate() {\n      5 |     this.state = { q: \"\" };\n      6 |   }\n  1 | import { cities } from \"../cities\";\n  2 |\n> 3 | class {\n    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n  4 |   onCreate() {\n  5 |     this.state = { q: \"\" };\n  6 |   }\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experiment/runs/exp6-regrade/apps/h2-search.C0."
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "h2-search.C0.sl.r2",
+   "taskId": "h2-search",
+   "condition": "C0-sl",
+   "rep": 2,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities\";\n\nclass {\n  onCreate() {\n    this.state = { q: \"\" };\n  }\n  input(event) {\n    this.state.q = event.target.value;\n  }\n}\n\n$ const q = state.q.toLowerCase();\n$ const matches = cities.filter((city) => city.toLowerCase().includes(q));\n\n<input id=\"q\" value=state.q on-input=input>\n<div id=\"count\">${matches.length} matches</div>\n<ul id=\"results\">\n  <for|city| of=matches>\n    <li>${city}</li>\n  </for>\n</ul>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:3:7\n      1 | import { cities } from \"../cities\";\n      2 |\n    > 3 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      4 |   onCreate() {\n      5 |     this.state = { q: \"\" };\n      6 |   }\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:3:7\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/h2-search.C0.sl.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:3:7\n      1 | import { cities } from \"../cities\";\n      2 |\n    > 3 | class {\n        |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n      4 |   onCreate() {\n      5 |     this.state = { q: \"\" };\n      6 |   }\n  1 | import { cities } from \"../cities\";\n  2 |\n> 3 | class {\n    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Invalid attribute name.\n  4 |   onCreate() {\n  5 |     this.state = { q: \"\" };\n  6 |   }\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "h2-search.C1.sl.r1",
+   "taskId": "h2-search",
+   "condition": "C1-sl",
+   "rep": 1,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\n<let/query=\"\">\n<const/results=cities.filter(city => city.toLowerCase().includes(query.trim().toLowerCase()))>\n\n<input id=\"q\" type=\"text\" placeholder=\"Search cities...\" value:=query>\n<p id=\"count\">${results.length} matches</p>\n<ul id=\"results\">\n  <for|city| of=results by=city>\n    <li>${city}</li>\n  </for>\n</ul>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:9:25\n       7 | \\u003cp id=\"count\">${results.length} matches\\u003c/p>\n       8 | \\u003cul id=\"results\">\n    >  9 |   \\u003cfor|city| of=results by=city>\n         |                         ^^^^^^^ The `by=` attribute is evaluated before the loop runs, so `city` is not in scope. Key with a property name string (`by=\"id\"`) or a function (`by=(city) => key`).\n      10 |     \\u003cli>${city}\\u003c/li>\n      11 |   \\u003c/for>\n      12 | \\u003c/ul>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:9:25\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/h2-search.C1.sl.r1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:9:25\n       7 | <p id=\"count\">${results.length} matches</p>\n       8 | <ul id=\"results\">\n    >  9 |   <for|city| of=results by=city>\n         |                         ^^^^^^^ The `by=` attribute is evaluated before the loop runs, so `city` is not in scope. Key with a property name string (`by=\"id\"`) or a function (`by=(city) => key`).\n      10 |     <li>${city}</li>\n      11 |   </for>\n      12 | </ul>\n   7 | <p id=\"count\">${results.length} matches</p>\n   8 | <ul id=\"results\">\n>  9 |   <for|city| of=results by=city>\n     |                         ^^^^^^^ The `by=` attribute is evaluated before the loop runs, so `city` is not in scope. Key with a property name string (`by=\"id\"`) or a function (`by=(city) => key`).\n  10 |     <li>${city}</li>\n  11 |   </for>\n  12 | </ul>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/u"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "h2-search.C1.sl.r2",
+   "taskId": "h2-search",
+   "condition": "C1-sl",
+   "rep": 2,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\n<let/query=\"\">\n<const/results=cities.filter(city => city.toLowerCase().includes(query.toLowerCase()))>\n\n<input id=\"q\" type=\"text\" placeholder=\"Search cities\" value:=query>\n<p id=\"count\">${results.length} matches</p>\n<ul id=\"results\">\n  <for|city| of=results by=city>\n    <li>${city}</li>\n  </for>\n</ul>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:9:25\n       7 | \\u003cp id=\"count\">${results.length} matches\\u003c/p>\n       8 | \\u003cul id=\"results\">\n    >  9 |   \\u003cfor|city| of=results by=city>\n         |                         ^^^^^^^ The `by=` attribute is evaluated before the loop runs, so `city` is not in scope. Key with a property name string (`by=\"id\"`) or a function (`by=(city) => key`).\n      10 |     \\u003cli>${city}\\u003c/li>\n      11 |   \\u003c/for>\n      12 | \\u003c/ul>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:9:25\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/h2-search.C1.sl.r2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:9:25\n       7 | <p id=\"count\">${results.length} matches</p>\n       8 | <ul id=\"results\">\n    >  9 |   <for|city| of=results by=city>\n         |                         ^^^^^^^ The `by=` attribute is evaluated before the loop runs, so `city` is not in scope. Key with a property name string (`by=\"id\"`) or a function (`by=(city) => key`).\n      10 |     <li>${city}</li>\n      11 |   </for>\n      12 | </ul>\n   7 | <p id=\"count\">${results.length} matches</p>\n   8 | <ul id=\"results\">\n>  9 |   <for|city| of=results by=city>\n     |                         ^^^^^^^ The `by=` attribute is evaluated before the loop runs, so `city` is not in scope. Key with a property name string (`by=\"id\"`) or a function (`by=(city) => key`).\n  10 |     <li>${city}</li>\n  11 |   </for>\n  12 | </ul>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/u"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t8-guestbook.C0.sl.r1",
+   "taskId": "t8-guestbook",
+   "condition": "C0-sl",
+   "rep": 1,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "import { entries } from \"../../store\";\n\n<h1>Guestbook</h1>\n<ul id=\"entries\">\n  <if(entries.length === 0)>\n    <li>Be the first to sign!</li>\n  </if>\n  <for|entry| of=entries>\n    <li class=\"entry\">${entry.message}</li>\n  </for>\n</ul>\n<form method=\"post\">\n  <input type=\"text\" name=\"message\" />\n  <button type=\"submit\">Sign</button>\n</form>\n"
+    },
+    {
+     "path": "src/routes/guestbook/+handler.js",
+     "content": "import { addEntry } from \"../../store\";\n\nexport async function POST(context) {\n  const formData = await context.request.formData();\n  const message = (formData.get(\"message\") || \"\").toString().trim();\n\n  if (message) {\n    addEntry(message);\n  }\n\n  return new Response(null, {\n    status: 303,\n    headers: {\n      Location: \"/guestbook\",\n    },\n  });\n}\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/guestbook/+page.marko:5:7\n      3 | \\u003ch1>Guestbook\\u003c/h1>\n      4 | \\u003cul id=\"entries\">\n    > 5 |   \\u003cif(entries.length === 0)>\n        |       ^^^^^^^^^^^^^^^^^^^^ Tag does not support arguments. Write the condition as a value attribute instead: `\\u003cif=condition>`.\n      6 |     \\u003cli>Be the first to sign!\\u003c/li>\n      7 |   \\u003c/if>\n      8 |   \\u003cfor|entry| of=entries>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/guestbook/+page.marko:5:7\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/t8-guestbook.C0.sl.r1/src/routes/guestbook/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/guestbook/+page.marko:5:7\n      3 | <h1>Guestbook</h1>\n      4 | <ul id=\"entries\">\n    > 5 |   <if(entries.length === 0)>\n        |       ^^^^^^^^^^^^^^^^^^^^ Tag does not support arguments. Write the condition as a value attribute instead: `<if=condition>`.\n      6 |     <li>Be the first to sign!</li>\n      7 |   </if>\n      8 |   <for|entry| of=entries>\n  3 | <h1>Guestbook</h1>\n  4 | <ul id=\"entries\">\n> 5 |   <if(entries.length === 0)>\n    |       ^^^^^^^^^^^^^^^^^^^^ Tag does not support arguments. Write the condition as a value attribute instead: `<if=condition>`.\n  6 |     <li>Be the first to sign!</li>\n  7 |   </if>\n  8 |   <for|entry| of=entries>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modu"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t8-guestbook.C0.sl.r2",
+   "taskId": "t8-guestbook",
+   "condition": "C0-sl",
+   "rep": 2,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "import { entries } from \"../../store\";\n\n$ const hasEntries = entries.length > 0;\n\n<div>\n  <h1>Guestbook</h1>\n  <ul id=\"entries\">\n    <if=hasEntries>\n      <for|entry| of=entries>\n        <li class=\"entry\">${entry.message}</li>\n      </for>\n    </if>\n    <else>\n      Be the first to sign!\n    </else>\n  </ul>\n  <form method=\"post\">\n    <input type=\"text\" name=\"message\">\n    <button type=\"submit\">Sign</button>\n  </form>\n</div>\n"
+    },
+    {
+     "path": "src/routes/guestbook/+handler.js",
+     "content": "import { addEntry } from \"../../store\";\n\nexport async function POST(context) {\n  const form = await context.request.formData();\n  const message = (form.get(\"message\") || \"\").toString().trim();\n\n  if (message) {\n    addEntry(message);\n  }\n\n  return new Response(null, {\n    status: 303,\n    headers: {\n      Location: \"/guestbook\",\n    },\n  });\n}\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/guestbook/+page.marko:3:2\n      1 | import { entries } from \"../../store\";\n      2 |\n    > 3 | $ const hasEntries = entries.length > 0;\n        |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      4 |\n      5 | \\u003cdiv>\n      6 |   \\u003ch1>Guestbook\\u003c/h1>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/guestbook/+page.marko:3:2\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6-regrade/apps/t8-guestbook.C0.sl.r2/src/routes/guestbook/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/guestbook/+page.marko:3:2\n      1 | import { entries } from \"../../store\";\n      2 |\n    > 3 | $ const hasEntries = entries.length > 0;\n        |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      4 |\n      5 | <div>\n      6 |   <h1>Guestbook</h1>\n  1 | import { entries } from \"../../store\";\n  2 |\n> 3 | $ const hasEntries = entries.length > 0;\n    |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n  4 |\n  5 | <div>\n  6 |   <h1>Guestbook</h1>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t8-guestbook.C1.sl.r2",
+   "taskId": "t8-guestbook",
+   "condition": "C1-sl",
+   "rep": 2,
+   "stage": "first",
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "export const GET = Run.GET((context, next) => {\n  return next();\n});\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "get: empty prompt",
+     "pass": false,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade_apps_t8-guestbook.C1.sl.r2_dist_.marko-run_guestbook.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade_apps_t8-guestbook.C1.sl.r2_dist_.marko-run_guestbook.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/guestbook.client-entry.marko\")]);docum"
+    },
+    {
+     "name": "post: redirect status",
+     "pass": false,
+     "detail": "404"
+    },
+    {
+     "name": "post: location back to guestbook",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "name": "get: entry rendered",
+     "pass": false,
+     "detail": " "
+    },
+    {
+     "name": "get: entry li present",
+     "pass": false,
+     "detail": ""
+    },
+    {
+     "name": "get: empty prompt gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "post: whitespace redirects",
+     "pass": false,
+     "detail": "404"
+    },
+    {
+     "name": "get: whitespace not added",
+     "pass": false,
+     "detail": "entries=0"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r1",
+   "taskId": "e1-filter",
+   "condition": "C0-sl",
+   "rep": 1,
+   "stage": "edit",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <recipe-card recipe=recipe hidden=(!filtered.includes(recipe))/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    },
+    {
+     "path": "src/tags/recipe-card.marko",
+     "content": "<li class=\"card\" hidden=input.hidden>\n  <a href=`/recipes/${input.recipe.id}`>${input.recipe.title}</a>\n  <p class=\"meta\">\n    <span class=\"minutes\">${input.recipe.minutes} min</span>\n    <span class=\"stars\">${\"★\".repeat(input.recipe.rating)}</span>\n  </p>\n</li>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0.sl.r1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0.sl.r1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([i"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:6 The `<let/filtered>` variable is never assigned, so its value is computed once and will not update when the values it reads change. For a derived value that recomputes, use `<const/filtered=...>` instead."
+  },
+  {
+   "runId": "e1-filter.C0.sl.r2",
+   "taskId": "e1-filter",
+   "condition": "C0-sl",
+   "rep": 2,
+   "stage": "edit",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.trim().toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <if=filtered.includes(recipe)>\n          <recipe-card recipe=recipe/>\n        </if>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0.sl.r2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0.sl.r2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([i"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:6 The `<let/filtered>` variable is never assigned, so its value is computed once and will not update when the values it reads change. For a derived value that recomputes, use `<const/filtered=...>` instead."
+  },
+  {
+   "runId": "e1-filter.C0.sl.r3",
+   "taskId": "e1-filter",
+   "condition": "C0-sl",
+   "rep": 3,
+   "stage": "edit",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" placeholder=\"Search recipes\" value=query onInput(e) { query = e.target.value }>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <let/visibleCount=recipes.length>\n    <p id=\"match-count\">${visibleCount} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <recipe-card recipe=recipe hidden=(!recipe.title.toLowerCase().includes(query.trim().toLowerCase()))/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    },
+    {
+     "path": "src/tags/recipe-card.marko",
+     "content": "<li class=\"card\" style=(input.hidden ? \"display:none\" : \"\")>\n  <a href=`/recipes/${input.recipe.id}`>${input.recipe.title}</a>\n  <p class=\"meta\">\n    <span class=\"minutes\">${input.recipe.minutes} min</span>\n    <span class=\"stars\">${\"★\".repeat(input.recipe.rating)}</span>\n  </p>\n</li>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0.sl.r3_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6-regrade_apps_e1-filter.C0.sl.r3_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([i"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": "\u001b8[marko] warning: src/routes/+page.marko:6 The `<let/visibleCount>` variable is never assigned, so its value is computed once and will not update when the values it reads change. For a derived value that recomputes, use `<const/visibleCount=...>` instead."
+  }
+ ]
+}

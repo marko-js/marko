@@ -29,6 +29,7 @@ import { resolveRelativeToEntry } from "../../util/resolve-relative-to-entry";
 import { getCompatRuntimeFile, getRuntimePath } from "../../util/runtime";
 import { startSection } from "../../util/sections";
 import { sectionHasSetupStatements } from "../../util/setup-statements";
+import { warnUnassignedDerivedLets } from "../../util/unassigned-lets";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
@@ -97,6 +98,7 @@ export default {
       // throws before reference finalization since failed tags were skipped.
       throwDeferredCompileErrors(program);
       finalizeReferences();
+      warnUnassignedDerivedLets();
       const programExtra = program.node.extra!;
       const paramsBinding = programExtra.binding;
       if (paramsBinding && !paramsBinding.pruned) {

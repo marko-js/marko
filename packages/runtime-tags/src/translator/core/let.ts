@@ -26,6 +26,7 @@ import {
   signalHasStatements,
 } from "../util/signals";
 import translateVar from "../util/translate-var";
+import { trackUnassignedLet } from "../util/unassigned-lets";
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
@@ -135,6 +136,13 @@ export default {
       }
     } else {
       setBindingDownstream(binding, false);
+    }
+
+    // Never-assigned lets with reactive initializers are reported at the
+    // program's analyze exit (assignments are already known here via the
+    // crawled scope, but reference resolution is not).
+    if (!valueChangeAttr && !binding.assignmentSections) {
+      trackUnassignedLet(tag);
     }
   },
   translate: {

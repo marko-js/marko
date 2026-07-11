@@ -1,0 +1,1479 @@
+{
+ "round": "exp6",
+ "runs": [
+  {
+   "runId": "t1-counter.C0.sl.r1.S.fix1",
+   "taskId": "t1-counter",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/likes=0/>\n\n<button id=\"like\" onclick(() => likes++)>Likes: ${likes}</button>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \nThe `onclick` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (`null`, `undefined`, `false`, `0`, …). To attach an event listener, use the `onClick` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.\n    at src/routes/+page.marko\n    \n    at src/routes/+page.marko\n    at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n    at assertValidNativeEventHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4805:17)\n    at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4346:6)\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/t1-counter.C0.sl.r1.S.fix1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: The `onclick` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (`null`, `undefined`, `false`, `0`, …). To attach an event listener, use the `onClick` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.\n    at src/routes/+page.marko\nThe `onclick` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (`null`, `undefined`, `false`, `0`, …). To attach an event listener, use the `onClick` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.\n    at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n    at assertValidNativeEventHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4805:17)\n    at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4346:6)\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t1-counter.C0.sl.r1.S.fix2",
+   "taskId": "t1-counter",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/likes=0/>\n\n<button id=\"like\" onclick(){ likes++ }>Likes: ${likes}</button>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:3:26\n      1 | \\u003clet/likes=0/>\n      2 |\n    > 3 | \\u003cbutton id=\"like\" onclick(){ likes++ }>Likes: ${likes}\\u003c/button>\n        |                          ^^^^^^^^^^^^^ The `onclick` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (`null`, `undefined`, `false`, `0`, …). To attach an event listener, use the `onClick` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.\n      4 |\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:3:26\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/t1-counter.C0.sl.r1.S.fix2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:3:26\n      1 | <let/likes=0/>\n      2 |\n    > 3 | <button id=\"like\" onclick(){ likes++ }>Likes: ${likes}</button>\n        |                          ^^^^^^^^^^^^^ The `onclick` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (`null`, `undefined`, `false`, `0`, …). To attach an event listener, use the `onClick` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.\n      4 |\n  1 | <let/likes=0/>\n  2 |\n> 3 | <button id=\"like\" onclick(){ likes++ }>Likes: ${likes}</button>\n    |                          ^^^^^^^^^^^^^ The `onclick` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (`null`, `undefined`, `false`, `0`, …). To attach an event listener, use the `onClick` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.\n  4 |\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at "
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t1-counter.C0.sl.r2.S.fix1",
+   "taskId": "t1-counter",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/likes = 0>\n\n<button id=\"like\" onClick(){ likes++ }>\n  Likes: ${likes}\n</button>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: initial Likes: 0",
+     "pass": true,
+     "detail": " Likes: 0 "
+    },
+    {
+     "name": "browser: button exists",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: two clicks -> Likes: 2",
+     "pass": true,
+     "detail": "Likes: 2"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t1-counter.C0.sl.r2.S.fix2",
+   "taskId": "t1-counter",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/likes=0>\n\n<button id=\"like\" onClick() { likes++ }>\n  Likes: ${likes}\n</button>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: initial Likes: 0",
+     "pass": true,
+     "detail": " Likes: 0 "
+    },
+    {
+     "name": "browser: button exists",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: two clicks -> Likes: 2",
+     "pass": true,
+     "detail": "Likes: 2"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t2-temperature.C0.sl.r1.S.fix1",
+   "taskId": "t2-temperature",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/celsius=20>\n<const/fahrenheit=(celsius * 9) / 5 + 32>\n\n<input id=\"celsius\" type=\"number\" value=celsius valueChange(v) { celsius = +v }>\n<span id=\"fahrenheit\">${fahrenheit}</span>\n<button id=\"warmer\" onClick() { celsius = celsius + 1 }>Warmer</button>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: fahrenheit 68",
+     "pass": true,
+     "detail": " 68Warmer "
+    },
+    {
+     "name": "browser: 100C -> 212F",
+     "pass": true,
+     "detail": "212"
+    },
+    {
+     "name": "browser: warmer -> celsius 101",
+     "pass": true,
+     "detail": "101"
+    },
+    {
+     "name": "browser: warmer -> fahrenheit 213.8",
+     "pass": true,
+     "detail": "213.8"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t2-temperature.C0.sl.r1.S.fix2",
+   "taskId": "t2-temperature",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/celsius=20>\n<const/fahrenheit=(Number(celsius) * 9) / 5 + 32>\n\n<input id=\"celsius\" type=\"number\" value=celsius onInput('() => celsius = Number(event.target.valueAsNumber) || 0')>\n<span id=\"fahrenheit\">${fahrenheit}</span>\n<button id=\"warmer\" onClick('() => celsius = Number(celsius) + 1')>Warmer</button>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    CompileError: The `onInput` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n        at src/routes/+page.marko\n        at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n        at assertNativeHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4792:85)\n        at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4340:44)\n    CompileError: The `onClick` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n        at src/routes/+page.marko\n        at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n        at assertNativeHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4792:85)\n        at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4340:44)\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n        at src/routes/+page.marko\n        at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n        at assertNativeHandlerAttr (/home/user/experiment/node_modules/mar\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/t2-temperature.C0.sl.r1.S.fix2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileErrors: \n    CompileError: The `onInput` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n        at src/routes/+page.marko\n        at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n        at assertNativeHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4792:85)\n        at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4340:44)\n\n    CompileError: The `onClick` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n        at src/routes/+p"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t2-temperature.C0.sl.r2.S.fix1",
+   "taskId": "t2-temperature",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/celsius=20/>\n\n<input\n  id=\"celsius\"\n  type=\"number\"\n  value=celsius\n  onInput=(e) => {\n    celsius = +e.target.value;\n  }\n/>\n<div id=\"fahrenheit\">${celsius * 9 / 5 + 32}</div>\n<button id=\"warmer\" onClick=() => {\n  celsius = celsius + 1;\n}>\n  Warmer\n</button>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: fahrenheit 68",
+     "pass": true,
+     "detail": " 68Warmer "
+    },
+    {
+     "name": "browser: 100C -> 212F",
+     "pass": true,
+     "detail": "212"
+    },
+    {
+     "name": "browser: warmer -> celsius 101",
+     "pass": false,
+     "detail": "100"
+    },
+    {
+     "name": "browser: warmer -> fahrenheit 213.8",
+     "pass": true,
+     "detail": "213.8"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t2-temperature.C0.sl.r2.S.fix2",
+   "taskId": "t2-temperature",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/celsius=20/>\n\n<input\n  id=\"celsius\"\n  type=\"number\"\n  value=celsius\n  onInput=(e) => {\n    celsius = +e.target.value;\n  }\n/>\n<div id=\"fahrenheit\">${celsius * 9 / 5 + 32}</div>\n<button id=\"warmer\" onClick=() => {\n  celsius = celsius + 1;\n}>\n  Warmer\n</button>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: fahrenheit 68",
+     "pass": true,
+     "detail": " 68Warmer "
+    },
+    {
+     "name": "browser: 100C -> 212F",
+     "pass": true,
+     "detail": "212"
+    },
+    {
+     "name": "browser: warmer -> celsius 101",
+     "pass": false,
+     "detail": "100"
+    },
+    {
+     "name": "browser: warmer -> fahrenheit 213.8",
+     "pass": true,
+     "detail": "213.8"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t3-todos.C0.sl.r1.S.fix1",
+   "taskId": "t3-todos",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/todos=[]>\n<let/text=\"\"/>\n\nstatic function remaining(todos) {\n  return todos.filter(todo => !todo.done).length;\n}\n\nfunction addTodo() {\n  const trimmed = text.trim();\n  if (!trimmed) return;\n  todos = [...todos, { text: trimmed, done: false }];\n  text = \"\";\n}\n\nfunction toggleTodo(index) {\n  todos = todos.map((todo, i) => i === index ? { ...todo, done: !todo.done } : todo);\n}\n\n<div>\n  <input id=\"new-todo\" value=text on-input(e => text = e.target.value)>\n  <button id=\"add\" on-click(addTodo)>Add</button>\n\n  <div id=\"remaining\">${remaining(todos)} left</div>\n\n  <if(todos.length === 0)>\n    <div id=\"empty\">No todos yet</div>\n  </if>\n  <else>\n    <ul id=\"list\">\n      <for|todo, index| of=todos>\n        <li>\n          <input type=\"checkbox\" checked=todo.done on-click(() => toggleTodo(index))>\n          ${todo.text}\n        </li>\n      </for>\n    </ul>\n  </else>\n</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    CompileError: The `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n        at src/routes/+page.marko\n        at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n        at assertNativeHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4792:85)\n        at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4340:44)\n    CompileError: The `on-click` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n        at src/routes/+page.marko\n        at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n        at assertNativeHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4792:85)\n        at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4340:44)\n    at src/routes/+page.marko:25:7\n      23 |   \\u003cdiv id=\"remaining\">${remaining(todos)} left\\u003c/div>\n      24 |\n    > 25 |   \\u003cif(todos.length === 0)>\n         |       ^^^^^^^^^^^^^^^^^^ Tag does not support arguments. Write the condition as a value attribute instead: `\\u003cif=condition>`.\n      26 |     \\u003cdiv id\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/t3-todos.C0.sl.r1.S.fix1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileErrors: \n    CompileError: The `on-input` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n        at src/routes/+page.marko\n        at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n        at assertNativeHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4792:85)\n        at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4340:44)\n\n    CompileError: The `on-click` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n        at src/routes/+page."
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t3-todos.C0.sl.r1.S.fix2",
+   "taskId": "t3-todos",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/todos=[]>\n<let/text=\"\">\n\n$ const remaining = todos.filter(todo => !todo.done).length;\n\nserver function addTodo() {\n  const trimmed = text.trim();\n  if (!trimmed) return;\n  todos = [...todos, { text: trimmed, done: false }];\n  text = \"\";\n}\n\nclient function toggleTodo(index) {\n  todos = todos.map((todo, i) =>\n    i === index ? { ...todo, done: !todo.done } : todo\n  );\n}\n\n<div>\n  <input id=\"new-todo\" value:input=text>\n  <button id=\"add\" on-click(() => {\n    const trimmed = text.trim();\n    if (!trimmed) return;\n    todos = [...todos, { text: trimmed, done: false }];\n    text = \"\";\n  })>Add</button>\n\n  <div id=\"remaining\">${remaining} left</div>\n\n  <if=todos.length === 0>\n    <div id=\"empty\">No todos yet</div>\n  </if>\n  <else>\n    <ul id=\"list\">\n      <for|todo, index| of=todos>\n        <li>\n          <input type=\"checkbox\" checked=todo.done on-click(() => {\n            todos = todos.map((t, i) =>\n              i === index ? { ...t, done: !t.done } : t\n            );\n          })>\n          ${todo.text}\n        </li>\n      </for>\n    </ul>\n  </else>\n</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:4:2\n      2 | \\u003clet/text=\"\">\n      3 |\n    > 4 | $ const remaining = todos.filter(todo => !todo.done).length;\n        |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      5 |\n      6 | server function addTodo() {\n      7 |   const trimmed = text.trim();\n    CompileError: The `on-click` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n        at src/routes/+page.marko\n        at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n        at assertNativeHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4792:85)\n        at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4340:44)\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:4:2\n        at src/routes/+page.marko\n        at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n        at assertNativeHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:4792:85)\n        at Object.enter (/home/user/experiment/node_modules/marko/dist/translator/index.js:4340:44)\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/t3-todos.C0.sl.r1.S.fix2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileErrors: \n    at src/routes/+page.marko:4:2\n      2 | <let/text=\"\">\n      3 |\n    > 4 | $ const remaining = todos.filter(todo => !todo.done).length;\n        |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      5 |\n      6 | server function addTodo() {\n      7 |   const trimmed = text.trim();\n\n    CompileError: The `on-click` event handler on a [native tag](https://markojs.com/docs/reference/native-tag) must be a function or a falsey value (`null`, `undefined`, `false`, `0`, …).\n        at src/routes/+page.marko\n        at MarkoFile.buildCodeFrameError (/home/user/experiment/node_modules/@marko/compiler/dist/babel-plugin/file.js:11:52)\n        at assertNativeHandlerAttr (/home/user/experiment/node_modules/marko/dist/translator/index.js:479"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t3-todos.C0.sl.r2.S.fix1",
+   "taskId": "t3-todos",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/todos=[]>\n<let/draft=\"\">\n<const/remaining=todos.filter(t => !t.done).length>\n\n<input id=\"new-todo\" value:=draft>\n<button id=\"add\" onClick() {\n  const text = draft.trim();\n  if (text) {\n    todos = todos.concat({ text, done: false });\n    draft = \"\";\n  }\n}>Add</button>\n\n<if=todos.length>\n  <ul id=\"list\">\n    <for|todo, i| of=todos>\n      <li>\n        <input\n          type=\"checkbox\"\n          checked=todo.done\n          checkedChange(v) { todos = todos.toSpliced(i, 1, { ...todo, done: v }) }\n        >\n        ${todo.text}\n      </li>\n    </for>\n  </ul>\n<else>\n  <div id=\"empty\">No todos yet</div>\n</else>\n\n<div id=\"remaining\">${remaining} left</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:14:1\n      12 | }>Add\\u003c/button>\n      13 |\n    > 14 | \\u003cif=todos.length>\n         | ^^^^^^^^^^^^^^^^^ Missing ending \"if\" tag\n      15 |   \\u003cul id=\"list\">\n      16 |     \\u003cfor|todo, i| of=todos>\n      17 |       \\u003cli>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:14:1\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/t3-todos.C0.sl.r2.S.fix1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:14:1\n      12 | }>Add</button>\n      13 |\n    > 14 | <if=todos.length>\n         | ^^^^^^^^^^^^^^^^^ Missing ending \"if\" tag\n      15 |   <ul id=\"list\">\n      16 |     <for|todo, i| of=todos>\n      17 |       <li>\n  12 | }>Add</button>\n  13 |\n> 14 | <if=todos.length>\n     | ^^^^^^^^^^^^^^^^^ Missing ending \"if\" tag\n  15 |   <ul id=\"list\">\n  16 |     <for|todo, i| of=todos>\n  17 |       <li>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experiment/runs/exp6/apps/t3-todos.C0.sl.r2.S.fix1/src/routes/+page.marko\n      at src/routes/+page.marko:14:1\n\u001b7\u001b[1"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t3-todos.C0.sl.r2.S.fix2",
+   "taskId": "t3-todos",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<let/todos=[]>\n<let/draft=\"\">\n<const/remaining=todos.filter(t => !t.done).length>\n\n<input id=\"new-todo\" value:=draft>\n<button id=\"add\" onClick() {\n  const text = draft.trim();\n  if (text) {\n    todos = todos.concat({ text, done: false });\n    draft = \"\";\n  }\n}>Add</button>\n\n<if=todos.length>\n  <ul id=\"list\">\n    <for|todo, i| of=todos>\n      <li>\n        <input\n          type=\"checkbox\"\n          checked=todo.done\n          checkedChange(v) { todos = todos.toSpliced(i, 1, { ...todo, done: v }) }\n        >\n        ${todo.text}\n      </li>\n    </for>\n  </ul>\n</if>\n<else>\n  <div id=\"empty\">No todos yet</div>\n</else>\n\n<div id=\"remaining\">${remaining} left</div>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: empty state",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_t3-todos.C0.sl.r2.S.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_t3-todos.C0.sl.r2.S.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('"
+    },
+    {
+     "name": "browser: two items",
+     "pass": true,
+     "detail": "2"
+    },
+    {
+     "name": "browser: empty state removed",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: remaining 2 left",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: input cleared",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: remaining 1 left after check",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: whitespace not added",
+     "pass": true,
+     "detail": "2"
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t4-tabs.C0.sl.r1.S.fix1",
+   "taskId": "t4-tabs",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "export interface Input {\n}\n\n<let/activeIndex=0>\n\n<div role=\"tablist\">\n  <for|tab, i| of=input.tab>\n    <button\n      onClick(){ activeIndex = i }\n      aria-selected=(i === activeIndex ? \"true\" : void 0)\n    >\n      ${tab.label}\n    </button>\n  </for>\n</div>\n<div id=\"panel\">\n  <for|tab, i| of=input.tab>\n    <if=i === activeIndex>\n      ${tab.renderBody()}\n    </if>\n  </for>\n</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \ntab.renderBody is not a function\n    \n    at eval (/home/user/experiment/runs/exp6/apps/t4-tabs.C0.sl.r1.S.fix1/src/tags/tab-panel.marko:30:82)\n    at withContext (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1691:10)\n    at withBranchId (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1768:9)\n    at _if (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1841:37)\n    at eval (/home/user/experiment/runs/exp6/apps/t4-tabs.C0.sl.r1.S.fix1/src/tags/tab-panel.marko:27:34)\n    at file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1776:42\n    at file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1827:4\n    at withContext (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1691:10)\n    at withBranchId (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1768:9)\n    at file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1826:3\n    at file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1776:3\n    at forOf (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1486:28)\n    at file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1774:35\n    at forBranches (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1818:2)\n    at _for_of (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1774:2)\n    at eval (/home/user/experimen\n---server log---\nerror: tab.renderBody is not a function\u001b[0m\n      at eval (/home/user/experiment/runs/exp6/apps/t4-tabs.C0.sl.r1.S.fix1/src/tags/tab-panel.marko:30:82)\n      at withContext (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1691:10)\n      at withBranchId (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1768:9)\n      at _if (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1841:37)\n      at eval (/home/user/experiment/runs/exp6/apps/t4-tabs.C0.sl.r1.S.fix1/src/tags/tab-panel.marko:27:34)\n      at file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1776:42\n      at file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1827:4\n      at withContext (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1691:10)\n      at withBranchId (file:///home/user/experiment/node_modules/marko/dist/debug/html.mjs:1768:9)\n      at file:///home/user/experiment/node_modules/marko/dist/debu"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t4-tabs.C0.sl.r1.S.fix2",
+   "taskId": "t4-tabs",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "<let/activeIndex=0>\n\n<div role=\"tablist\">\n  <for|tab, i| of=input.tab>\n    <button\n      onClick(){ activeIndex = i }\n      aria-selected=(i === activeIndex ? \"true\" : void 0)\n    >${tab.label}</button>\n  </for>\n</div>\n<div id=\"panel\">\n  <for|tab, i| of=input.tab>\n    <if=i === activeIndex>\n      <${tab.content}/>\n    </if>\n  </for>\n</div>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: labels present",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_t4-tabs.C0.sl.r1.S.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_t4-tabs.C0.sl.r1.S.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll('[marko-vite-preload=\"runs_exp6_apps_t4-tabs.C0.sl.r1.S.fix2_dist_.marko-run_index.marko\"]').forEach(el"
+    },
+    {
+     "name": "ssr: first tab content present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: three tab buttons",
+     "pass": true,
+     "detail": "3"
+    },
+    {
+     "name": "browser: first content visible",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content hidden",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first aria-selected",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: second content visible after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: first content hidden after click",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: aria-selected moved",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t4-tabs.C0.sl.r2.S.fix1",
+   "taskId": "t4-tabs",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "<let/active=0>\n\n<div role=\"tablist\">\n  <for|tab, index| of=input.tab>\n    <button\n      aria-selected=(index === active ? \"true\" : \"false\")\n      onclick(){ active = index }\n    >${tab.label}</button>\n  </for>\n</div>\n<div id=\"panel\">\n  <for|tab, index| of=input.tab>\n    <if=(index === active)>\n      <${tab.renderBody}/>\n    </if>\n  </for>\n</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/tags/tab-panel.marko:7:14\n       5 |     \\u003cbutton\n       6 |       aria-selected=(index === active ? \"true\" : \"false\")\n    >  7 |       onclick(){ active = index }\n         |              ^^^^^^^^^^^^^^^^^^^^ The `onclick` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (`null`, `undefined`, `false`, `0`, …). To attach an event listener, use the `onClick` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.\n       8 |     >${tab.label}\\u003c/button>\n       9 |   \\u003c/for>\n      10 | \\u003c/div>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/tags/tab-panel.marko:7:14\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/t4-tabs.C0.sl.r2.S.fix1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/tags/tab-panel.marko:7:14\n       5 |     <button\n       6 |       aria-selected=(index === active ? \"true\" : \"false\")\n    >  7 |       onclick(){ active = index }\n         |              ^^^^^^^^^^^^^^^^^^^^ The `onclick` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (`null`, `undefined`, `false`, `0`, …). To attach an event listener, use the `onClick` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.\n       8 |     >${tab.label}</button>\n       9 |   </for>\n      10 | </div>\n   5 |     <button\n   6 |       aria-selected=(index === active ? \"true\" : \"false\")\n>  7 |       onclick(){ active = index }\n     |              ^^^^^^^^^^^^^^^^^^^^ The `onclick` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (`null`, `undefined`, `false`, `0`, …). To attach an event listener, use the `onClick` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.\n   8 |     >${tab.label}</button>\n   9 |   </for>\n  10 | </div>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experim"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "t4-tabs.C0.sl.r2.S.fix2",
+   "taskId": "t4-tabs",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/tags/tab-panel.marko",
+     "content": "<let/active=0>\n<const/tabs=[...input.tab ?? []]>\n\n<div role=\"tablist\">\n  <for|tab, index| of=tabs>\n    <button\n      aria-selected=(index === active ? \"true\" : undefined)\n      onclick(){ active = index }\n    >${tab.label}</button>\n  </for>\n</div>\n<div id=\"panel\">\n  <${tabs[active].content}/>\n</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/tags/tab-panel.marko:8:14\n       6 |     \\u003cbutton\n       7 |       aria-selected=(index === active ? \"true\" : undefined)\n    >  8 |       onclick(){ active = index }\n         |              ^^^^^^^^^^^^^^^^^^^^ The `onclick` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (`null`, `undefined`, `false`, `0`, …). To attach an event listener, use the `onClick` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.\n       9 |     >${tab.label}\\u003c/button>\n      10 |   \\u003c/for>\n      11 | \\u003c/div>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/tags/tab-panel.marko:8:14\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/t4-tabs.C0.sl.r2.S.fix2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/tags/tab-panel.marko:8:14\n       6 |     <button\n       7 |       aria-selected=(index === active ? \"true\" : undefined)\n    >  8 |       onclick(){ active = index }\n         |              ^^^^^^^^^^^^^^^^^^^^ The `onclick` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (`null`, `undefined`, `false`, `0`, …). To attach an event listener, use the `onClick` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.\n       9 |     >${tab.label}</button>\n      10 |   </for>\n      11 | </div>\n   6 |     <button\n   7 |       aria-selected=(index === active ? \"true\" : undefined)\n>  8 |       onclick(){ active = index }\n     |              ^^^^^^^^^^^^^^^^^^^^ The `onclick` attribute on a [native tag](https://markojs.com/docs/reference/native-tag) must be a string or a falsey value (`null`, `undefined`, `false`, `0`, …). To attach an event listener, use the `onClick` [event handler attribute](https://markojs.com/docs/reference/event-handling) instead.\n   9 |     >${tab.label}</button>\n  10 |   </for>\n  11 | </div>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/exp"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "h2-search.C0.sl.r1.S.fix1",
+   "taskId": "h2-search",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities\";\n\n$ let q = \"\";\n$ const results = cities.filter((city) => city.toLowerCase().includes(q.toLowerCase()));\n\n<div>\n  <input id=\"q\" value=q on-input=(e) => { q = e.target.value; } />\n  <div id=\"count\">${results.length} matches</div>\n  <ul id=\"results\">\n    for|city| of=results\n      <li>${city}</li>\n  </ul>\n</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:3:2\n      1 | import { cities } from \"../cities\";\n      2 |\n    > 3 | $ let q = \"\";\n        |  ^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      4 | $ const results = cities.filter((city) => city.toLowerCase().includes(q.toLowerCase()));\n      5 |\n      6 | \\u003cdiv>\n    at src/routes/+page.marko:4:2\n      2 |\n      3 | $ let q = \"\";\n    > 4 | $ const results = cities.filter((city) => city.toLowerCase().includes(q.toLowerCase()));\n        |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      5 |\n      6 | \\u003cdiv>\n      7 |   \\u003cinput id=\"q\" value=q on-input=(e) => { q = e.target.value; } />\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:3:2\n    at src/routes/+page.marko:4:2\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/h2-search.C0.sl.r1.S.fix1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileErrors: \n    at src/routes/+page.marko:3:2\n      1 | import { cities } from \"../cities\";\n      2 |\n    > 3 | $ let q = \"\";\n        |  ^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      4 | $ const results = cities.filter((city) => city.toLowerCase().includes(q.toLowerCase()));\n      5 |\n      6 | <div>\n\n    at src/routes/+page.marko:4:2\n      2 |\n      3 | $ let q = \"\";\n    > 4 | $ const results = cities.filter((city) => city.toLowerCase().includes(q.toLowerCase()));\n        |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      5 |\n      6 | <div>\n      7 |   <input id=\"q\" value=q on-input=(e) => { q = e.target.value; } />\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n   "
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "h2-search.C0.sl.r1.S.fix2",
+   "taskId": "h2-search",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities\";\n\n$ var q = \"\";\n\n<div>\n  <input id=\"q\" value=q onInput('emit', 'input')\n</div>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:7:1\n      5 | \\u003cdiv>\n      6 |   \\u003cinput id=\"q\" value=q onInput('emit', 'input')\n    > 7 | \\u003c/div>\n        | ^ Invalid attribute name. Attribute name cannot begin with the \"\\u003c\" character.\n      8 |\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:7:1\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/h2-search.C0.sl.r1.S.fix2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:7:1\n      5 | <div>\n      6 |   <input id=\"q\" value=q onInput('emit', 'input')\n    > 7 | </div>\n        | ^ Invalid attribute name. Attribute name cannot begin with the \"<\" character.\n      8 |\n  5 | <div>\n  6 |   <input id=\"q\" value=q onInput('emit', 'input')\n> 7 | </div>\n    | ^ Invalid attribute name. Attribute name cannot begin with the \"<\" character.\n  8 |\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30651:4)\n    at async file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:33653:15\n\n\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8\u001b7\u001b[1A\u001b[2K\u001b[1G    GET /__ping__\n\u001b8  Plugin: marko-vite:pre\n  File: /home/user/experiment/runs/exp6/apps/h2-search.C0.sl.r1.S.fix2/src/routes/+page.marko\n      at src/routes/+page.marko:7:1\n\u001b7\u001b[1A\u001b[2K\u001b[1G◀━━ GET /__ping__\n\u001b"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "h2-search.C0.sl.r2.S.fix1",
+   "taskId": "h2-search",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities\";\n\n<let/q = \"\">\n\n$ const matches = cities.filter((city) => city.toLowerCase().includes(q.toLowerCase()));\n\n<input id=\"q\" value=q on-input(e) { q = e.target.value; }>\n<div id=\"count\">${matches.length} matches</div>\n<ul id=\"results\">\n  <for|city| of=matches>\n    <li>${city}</li>\n  </for>\n</ul>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:5:2\n      3 | \\u003clet/q = \"\">\n      4 |\n    > 5 | $ const matches = cities.filter((city) => city.toLowerCase().includes(q.toLowerCase()));\n        |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      6 |\n      7 | \\u003cinput id=\"q\" value=q on-input(e) { q = e.target.value; }>\n      8 | \\u003cdiv id=\"count\">${matches.length} matches\\u003c/div>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:5:2\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/h2-search.C0.sl.r2.S.fix1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:5:2\n      3 | <let/q = \"\">\n      4 |\n    > 5 | $ const matches = cities.filter((city) => city.toLowerCase().includes(q.toLowerCase()));\n        |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      6 |\n      7 | <input id=\"q\" value=q on-input(e) { q = e.target.value; }>\n      8 | <div id=\"count\">${matches.length} matches</div>\n  3 | <let/q = \"\">\n  4 |\n> 5 | $ const matches = cities.filter((city) => city.toLowerCase().includes(q.toLowerCase()));\n    |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n  6 |\n  7 | <input id=\"q\" value=q on-input(e) { q = e.target.value; }>\n  8 | <div id=\"count\">${matches.length} matches</div>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:3071"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "h2-search.C0.sl.r2.S.fix2",
+   "taskId": "h2-search",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities\";\n\n<let/q = \"\">\n$ const query = q.toLowerCase();\n$ const matches = cities.filter((city) => city.toLowerCase().includes(query));\n\n<input id=\"q\" value=q on-input=(e) => { q = e.target.value; }>\n<div id=\"count\">${matches.length} matches</div>\n<ul id=\"results\">\n  <for|city| of=matches>\n    <li>${city}</li>\n  </for>\n</ul>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:4:2\n      2 |\n      3 | \\u003clet/q = \"\">\n    > 4 | $ const query = q.toLowerCase();\n        |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      5 | $ const matches = cities.filter((city) => city.toLowerCase().includes(query));\n      6 |\n      7 | \\u003cinput id=\"q\" value=q on-input=(e) => { q = e.target.value; }>\n    at src/routes/+page.marko:5:2\n      3 | \\u003clet/q = \"\">\n      4 | $ const query = q.toLowerCase();\n    > 5 | $ const matches = cities.filter((city) => city.toLowerCase().includes(query));\n        |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      6 |\n      7 | \\u003cinput id=\"q\" value=q on-input=(e) => { q = e.target.value; }>\n      8 | \\u003cdiv id=\"count\">${matches.length} matches\\u003c/div>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:4:2\n    at src/routes/+page.marko:5:2\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/h2-search.C0.sl.r2.S.fix2/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileErrors: \n    at src/routes/+page.marko:4:2\n      2 |\n      3 | <let/q = \"\">\n    > 4 | $ const query = q.toLowerCase();\n        |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      5 | $ const matches = cities.filter((city) => city.toLowerCase().includes(query));\n      6 |\n      7 | <input id=\"q\" value=q on-input=(e) => { q = e.target.value; }>\n\n    at src/routes/+page.marko:5:2\n      3 | <let/q = \"\">\n      4 | $ const query = q.toLowerCase();\n    > 5 | $ const matches = cities.filter((city) => city.toLowerCase().includes(query));\n        |  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.\n      6 |\n      7 | <input id=\"q\" value=q on-input=(e) => { q = e.target.value; }>\n      8 | <div id=\"count\">${matches.length} matches</div>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experime"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "h2-search.C1.sl.r1.S.fix1",
+   "taskId": "h2-search",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\n<let/query=\"\">\n<const/results=cities.filter(city => city.toLowerCase().includes(query.trim().toLowerCase()))>\n\n<input id=\"q\" type=\"text\" placeholder=\"Search cities...\" value:=query>\n<p id=\"count\">${results.length} matches</p>\n<ul id=\"results\">\n  <for|city| of=results by=(city) => city>\n    <li>${city}</li>\n  </for>\n</ul>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cities",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_h2-search.C1.sl.r1.S.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_h2-search.C1.sl.r1.S.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll"
+    },
+    {
+     "name": "ssr: 10 matches",
+     "pass": true,
+     "detail": " 10 matchesAmsterdamAustinBarcelonaBerlinBostonLisbonLondonMelbourneOsloOsaka "
+    },
+    {
+     "name": "browser: 'os' filters case-insensitively",
+     "pass": true,
+     "detail": "Boston,Osaka,Oslo"
+    },
+    {
+     "name": "browser: count 3 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: count 0 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "h2-search.C1.sl.r1.S.fix2",
+   "taskId": "h2-search",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\n<let/query=\"\">\n<const/results=cities.filter(city => city.toLowerCase().includes(query.trim().toLowerCase()))>\n\n<input id=\"q\" type=\"text\" placeholder=\"Search cities...\" value:=query>\n<p id=\"count\">${results.length} matches</p>\n<ul id=\"results\">\n  <for|city| of=results by=(city) => city>\n    <li>${city}</li>\n  </for>\n</ul>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cities",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_h2-search.C1.sl.r1.S.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_h2-search.C1.sl.r1.S.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll"
+    },
+    {
+     "name": "ssr: 10 matches",
+     "pass": true,
+     "detail": " 10 matchesAmsterdamAustinBarcelonaBerlinBostonLisbonLondonMelbourneOsloOsaka "
+    },
+    {
+     "name": "browser: 'os' filters case-insensitively",
+     "pass": true,
+     "detail": "Boston,Osaka,Oslo"
+    },
+    {
+     "name": "browser: count 3 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: count 0 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "h2-search.C1.sl.r2.S.fix1",
+   "taskId": "h2-search",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\n<let/query=\"\">\n<const/results=cities.filter(city => city.toLowerCase().includes(query.toLowerCase()))>\n\n<input id=\"q\" type=\"text\" placeholder=\"Search cities\" value:=query>\n<p id=\"count\">${results.length} matches</p>\n<ul id=\"results\">\n  <for|city, i| of=results by=i>\n    <li>${city}</li>\n  </for>\n</ul>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": {
+    "phase": "compile-or-runtime",
+    "detail": "Error\n    \n  \n  \n    \nInternal Server Error\n    \n    at src/routes/+page.marko:9:28\n       7 | \\u003cp id=\"count\">${results.length} matches\\u003c/p>\n       8 | \\u003cul id=\"results\">\n    >  9 |   \\u003cfor|city, i| of=results by=i>\n         |                            ^^^^ The `by=` attribute is evaluated before the loop runs, so `i` is not in scope. Key with a property name string (`by=\"id\"`) or a function (`by=(i) => key`).\n      10 |     \\u003cli>${city}\\u003c/li>\n      11 |   \\u003c/for>\n      12 | \\u003c/ul>\nFix guide: READ ../../../../node_modules/marko/llms.md (Marko 6 syntax) before writing a fix.\n    \n    at src/routes/+page.marko:9:28\n---server log---\nError:   Failed to scan for dependencies from entries:\n  /home/user/experiment/runs/exp6/apps/h2-search.C1.sl.r2.S.fix1/src/routes/+page.marko\n\n  Build failed with 1 error:\n\n[plugin marko]\nCompileError: \n    at src/routes/+page.marko:9:28\n       7 | <p id=\"count\">${results.length} matches</p>\n       8 | <ul id=\"results\">\n    >  9 |   <for|city, i| of=results by=i>\n         |                            ^^^^ The `by=` attribute is evaluated before the loop runs, so `i` is not in scope. Key with a property name string (`by=\"id\"`) or a function (`by=(i) => key`).\n      10 |     <li>${city}</li>\n      11 |   </for>\n      12 | </ul>\n   7 | <p id=\"count\">${results.length} matches</p>\n   8 | <ul id=\"results\">\n>  9 |   <for|city, i| of=results by=i>\n     |                            ^^^^ The `by=` attribute is evaluated before the loop runs, so `i` is not in scope. Key with a property name string (`by=\"id\"`) or a function (`by=(i) => key`).\n  10 |     <li>${city}</li>\n  11 |   </for>\n  12 | </ul>\n\n    at aggregateBindingErrorsIntoJsError (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:48:18)\n    at unwrapBindingResult (file:///home/user/experiment/node_modules/rolldown/dist/shared/error-BHRSI0R7.mjs:18:128)\n    at scan (file:///home/user/experiment/node_modules/rolldown/dist/experimental-index.mjs:187:3)\n    at async Object.build (file:///home/user/experiment/node_modules/vite/dist/node/chunks/node.js:30712:3)\n    at async scan (file:///home/user/experimen"
+   },
+   "checks": [],
+   "guidance": ""
+  },
+  {
+   "runId": "h2-search.C1.sl.r2.S.fix2",
+   "taskId": "h2-search",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "import { cities } from \"../cities.js\";\n\n<let/query=\"\">\n<const/results=cities.filter(city => city.toLowerCase().includes(query.toLowerCase()))>\n\n<input id=\"q\" type=\"text\" placeholder=\"Search cities\" value:=query>\n<p id=\"count\">${results.length} matches</p>\n<ul id=\"results\">\n  <for|city| of=results by=(city) => city>\n    <li>${city}</li>\n  </for>\n</ul>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cities",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_h2-search.C1.sl.r2.S.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_h2-search.C1.sl.r2.S.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/index.client-entry.marko\")]);document.querySelectorAll"
+    },
+    {
+     "name": "ssr: 10 matches",
+     "pass": true,
+     "detail": " 10 matchesAmsterdamAustinBarcelonaBerlinBostonLisbonLondonMelbourneOsloOsaka "
+    },
+    {
+     "name": "browser: 'os' filters case-insensitively",
+     "pass": true,
+     "detail": "Boston,Osaka,Oslo"
+    },
+    {
+     "name": "browser: count 3 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: count 0 matches",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "browser: no page errors",
+     "pass": true,
+     "detail": ""
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t8-guestbook.C0.sl.r1.S.fix1",
+   "taskId": "t8-guestbook",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "import { entries } from \"../../store\";\n\n<h1>Guestbook</h1>\n<ul id=\"entries\">\n  <if=entries.length === 0>\n    <li>Be the first to sign!</li>\n  </if>\n  <for|entry| of=entries>\n    <li class=\"entry\">${entry.message}</li>\n  </for>\n</ul>\n<form method=\"post\">\n  <input type=\"text\" name=\"message\" />\n  <button type=\"submit\">Sign</button>\n</form>\n"
+    },
+    {
+     "path": "src/routes/guestbook/+handler.js",
+     "content": "import { addEntry } from \"../../store\";\n\nexport async function POST(context) {\n  const formData = await context.request.formData();\n  const message = (formData.get(\"message\") || \"\").toString().trim();\n\n  if (message) {\n    addEntry(message);\n  }\n\n  return new Response(null, {\n    status: 303,\n    headers: {\n      Location: \"/guestbook\",\n    },\n  });\n}\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "get: empty prompt",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_t8-guestbook.C0.sl.r1.S.fix1_dist_.marko-run_guestbook.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_t8-guestbook.C0.sl.r1.S.fix1_dist_.marko-run_guestbook.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/guestbook.client-entry.marko\")]);documen"
+    },
+    {
+     "name": "post: redirect status",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "post: location back to guestbook",
+     "pass": true,
+     "detail": "/guestbook"
+    },
+    {
+     "name": "get: entry rendered",
+     "pass": true,
+     "detail": " GuestbookHello from the graderSign"
+    },
+    {
+     "name": "get: entry li present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "get: empty prompt gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "post: whitespace redirects",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "get: whitespace not added",
+     "pass": true,
+     "detail": "entries=1"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t8-guestbook.C0.sl.r1.S.fix2",
+   "taskId": "t8-guestbook",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "import { entries } from \"../../store\";\n\n<h1>Guestbook</h1>\n<ul id=\"entries\">\n  <if=entries.length === 0>\n    Be the first to sign!\n  </if>\n  <for|entry| of=entries>\n    <li class=\"entry\">${entry.message}</li>\n  </for>\n</ul>\n<form method=\"post\">\n  <input type=\"text\" name=\"message\" />\n  <button type=\"submit\">Sign</button>\n</form>\n"
+    },
+    {
+     "path": "src/routes/guestbook/+handler.js",
+     "content": "import { addEntry } from \"../../store\";\n\nexport async function POST(context) {\n  const formData = await context.request.formData();\n  const message = (formData.get(\"message\") || \"\").toString().trim();\n\n  if (message) {\n    addEntry(message);\n  }\n\n  return new Response(null, {\n    status: 303,\n    headers: {\n      Location: \"/guestbook\",\n    },\n  });\n}\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "get: empty prompt",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_t8-guestbook.C0.sl.r1.S.fix2_dist_.marko-run_guestbook.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_t8-guestbook.C0.sl.r1.S.fix2_dist_.marko-run_guestbook.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/guestbook.client-entry.marko\")]);documen"
+    },
+    {
+     "name": "post: redirect status",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "post: location back to guestbook",
+     "pass": true,
+     "detail": "/guestbook"
+    },
+    {
+     "name": "get: entry rendered",
+     "pass": true,
+     "detail": " GuestbookHello from the graderSign"
+    },
+    {
+     "name": "get: entry li present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "get: empty prompt gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "post: whitespace redirects",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "get: whitespace not added",
+     "pass": true,
+     "detail": "entries=1"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t8-guestbook.C0.sl.r2.S.fix1",
+   "taskId": "t8-guestbook",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "import { entries } from \"../../store\";\n\n<const/hasEntries=entries.length > 0>\n\n<div>\n  <h1>Guestbook</h1>\n  <ul id=\"entries\">\n    <if=hasEntries>\n      <for|entry| of=entries by=\"id\">\n        <li class=\"entry\">${entry.message}</li>\n      </for>\n    </if>\n    <else>\n      Be the first to sign!\n    </else>\n  </ul>\n  <form method=\"post\">\n    <input type=\"text\" name=\"message\">\n    <button type=\"submit\">Sign</button>\n  </form>\n</div>\n"
+    },
+    {
+     "path": "src/routes/guestbook/+handler.js",
+     "content": "import { addEntry } from \"../../store\";\n\nexport async function POST(context) {\n  const form = await context.request.formData();\n  const message = (form.get(\"message\") || \"\").toString().trim();\n\n  if (message) {\n    addEntry(message);\n  }\n\n  return new Response(null, {\n    status: 303,\n    headers: {\n      Location: \"/guestbook\",\n    },\n  });\n}\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "get: empty prompt",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_t8-guestbook.C0.sl.r2.S.fix1_dist_.marko-run_guestbook.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_t8-guestbook.C0.sl.r2.S.fix1_dist_.marko-run_guestbook.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/guestbook.client-entry.marko\")]);documen"
+    },
+    {
+     "name": "post: redirect status",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "post: location back to guestbook",
+     "pass": true,
+     "detail": "/guestbook"
+    },
+    {
+     "name": "get: entry rendered",
+     "pass": true,
+     "detail": " 0>GuestbookHello from the graderSign"
+    },
+    {
+     "name": "get: entry li present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "get: empty prompt gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "post: whitespace redirects",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "get: whitespace not added",
+     "pass": true,
+     "detail": "entries=1"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t8-guestbook.C0.sl.r2.S.fix2",
+   "taskId": "t8-guestbook",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "import { entries } from \"../../store\";\n\n<div>\n  <h1>Guestbook</h1>\n  <ul id=\"entries\">\n    <if=entries.length>\n      <for|entry| of=entries>\n        <li class=\"entry\">${entry.message}</li>\n      </for>\n    </if>\n    <else>\n      Be the first to sign!\n    </else>\n  </ul>\n  <form method=\"post\">\n    <input type=\"text\" name=\"message\">\n    <button type=\"submit\">Sign</button>\n  </form>\n</div>\n"
+    },
+    {
+     "path": "src/routes/guestbook/+handler.js",
+     "content": "import { addEntry } from \"../../store\";\n\nexport async function POST(context) {\n  const form = await context.request.formData();\n  const message = (form.get(\"message\") || \"\").toString().trim();\n\n  if (message) {\n    addEntry(message);\n  }\n\n  return new Response(null, {\n    status: 303,\n    headers: {\n      Location: \"/guestbook\",\n    },\n  });\n}\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "get: empty prompt",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_t8-guestbook.C0.sl.r2.S.fix2_dist_.marko-run_guestbook.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_t8-guestbook.C0.sl.r2.S.fix2_dist_.marko-run_guestbook.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/guestbook.client-entry.marko\")]);documen"
+    },
+    {
+     "name": "post: redirect status",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "post: location back to guestbook",
+     "pass": true,
+     "detail": "/guestbook"
+    },
+    {
+     "name": "get: entry rendered",
+     "pass": true,
+     "detail": " GuestbookHello from the graderSign"
+    },
+    {
+     "name": "get: entry li present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "get: empty prompt gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "post: whitespace redirects",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "get: whitespace not added",
+     "pass": true,
+     "detail": "entries=1"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t8-guestbook.C1.sl.r2.S.fix1",
+   "taskId": "t8-guestbook",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "<h1>Guestbook</h1>\n<ul id=\"entries\">\n  <for|entry| of=$global.data.entries>\n    <li class=\"entry\">${entry.message}</li>\n  </for>\n</ul>\n<if=$global.data.entries.length === 0>\n  <p>Be the first to sign!</p>\n</if>\n<form method=\"post\">\n  <input type=\"text\" name=\"message\" />\n  <button type=\"submit\">Sign</button>\n</form>\n"
+    },
+    {
+     "path": "src/routes/guestbook/+handler.js",
+     "content": "import { entries, addEntry } from \"../../store.js\";\n\nexport const GET = Run.GET((context, next) => {\n  return next({ entries });\n});\n\nexport const POST = Run.POST(async (context) => {\n  const form = await context.request.formData();\n  const message = String(form.get(\"message\") || \"\").trim();\n  if (message) addEntry(message);\n  return context.redirect(\"/guestbook\", 303);\n});\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "get: empty prompt",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_t8-guestbook.C1.sl.r2.S.fix1_dist_.marko-run_guestbook.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_t8-guestbook.C1.sl.r2.S.fix1_dist_.marko-run_guestbook.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/guestbook.client-entry.marko\")]);documen"
+    },
+    {
+     "name": "post: redirect status",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "post: location back to guestbook",
+     "pass": true,
+     "detail": "http://localhost:5217/guestbook"
+    },
+    {
+     "name": "get: entry rendered",
+     "pass": true,
+     "detail": " GuestbookHello from the graderSign"
+    },
+    {
+     "name": "get: entry li present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "get: empty prompt gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "post: whitespace redirects",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "get: whitespace not added",
+     "pass": true,
+     "detail": "entries=1"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "t8-guestbook.C1.sl.r2.S.fix2",
+   "taskId": "t8-guestbook",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "files": [
+    {
+     "path": "src/routes/guestbook/+page.marko",
+     "content": "<ul id=\"entries\">\n  <for|entry| of=$global.data.entries>\n    <li class=\"entry\">${entry.message}</li>\n  </for>\n</ul>\n<if=$global.data.entries.length === 0>\n  Be the first to sign!\n</if>\n<form method=\"post\">\n  <input type=\"text\" name=\"message\">\n  <button type=\"submit\">Sign</button>\n</form>\n"
+    },
+    {
+     "path": "src/routes/guestbook/+handler.js",
+     "content": "import { entries, addEntry } from \"../../store.js\";\n\nexport const GET = Run.GET((context, next) => {\n  return next({ entries });\n});\n\nexport const POST = Run.POST(async (context) => {\n  const form = await context.request.formData();\n  const message = String(form.get(\"message\") || \"\").trim();\n  if (message) addEntry(message);\n  return context.redirect(\"/guestbook\", 303);\n});\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "get: empty prompt",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_t8-guestbook.C1.sl.r2.S.fix2_dist_.marko-run_guestbook.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_t8-guestbook.C1.sl.r2.S.fix2_dist_.marko-run_guestbook.marko\" async blocking=render type=module>await Promise.allSettled([import(\"/@vite/client\"),import(\"/dist/.marko-run/guestbook.client-entry.marko\")]);documen"
+    },
+    {
+     "name": "post: redirect status",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "post: location back to guestbook",
+     "pass": true,
+     "detail": "http://localhost:5218/guestbook"
+    },
+    {
+     "name": "get: entry rendered",
+     "pass": true,
+     "detail": " Hello from the graderSign"
+    },
+    {
+     "name": "get: entry li present",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "get: empty prompt gone",
+     "pass": true,
+     "detail": ""
+    },
+    {
+     "name": "post: whitespace redirects",
+     "pass": true,
+     "detail": "303"
+    },
+    {
+     "name": "get: whitespace not added",
+     "pass": true,
+     "detail": "entries=1"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r1.S.fix1",
+   "taskId": "e1-filter",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <recipe-card recipe=recipe hidden=(!filtered.includes(recipe))/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r1.S.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r1.S.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r1.S.fix2",
+   "taskId": "e1-filter",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <recipe-card recipe=recipe hidden=(!filtered.includes(recipe))/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r1.S.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r1.S.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r2.S.fix1",
+   "taskId": "e1-filter",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\"/>\n<input id=\"q\" value:=query placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.trim().toLowerCase()))/>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <if=filtered.includes(recipe)>\n          <recipe-card recipe=recipe/>\n        </if>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.S.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.S.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r2.S.fix2",
+   "taskId": "e1-filter",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" value:=query placeholder=\"Search recipes\">\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/filtered=recipes.filter((recipe) => recipe.title.toLowerCase().includes(query.trim().toLowerCase()))>\n    <p id=\"match-count\">${filtered.length} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <if=filtered.includes(recipe)>\n          <recipe-card recipe=recipe/>\n        </if>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    }
+   ],
+   "pass": true,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.S.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r2.S.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": true,
+     "detail": "[\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": true,
+     "detail": "1 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": true,
+     "detail": "[\"Tomato soup\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r3.S.fix1",
+   "taskId": "e1-filter",
+   "condition": "S",
+   "rep": 1,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" placeholder=\"Search recipes\" value=query onInput(e) { query = e.target.value }>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/normalizedQuery=query.trim().toLowerCase()>\n    <const/visibleCount=recipes.filter((recipe) => recipe.title.toLowerCase().includes(normalizedQuery)).length>\n    <p id=\"match-count\">${visibleCount} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <recipe-card recipe=recipe hidden=(!recipe.title.toLowerCase().includes(normalizedQuery))/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    },
+    {
+     "path": "src/tags/recipe-card.marko",
+     "content": "<li class=\"card\" style=(input.hidden ? \"display:none\" : \"\")>\n  <a href=`/recipes/${input.recipe.id}`>${input.recipe.title}</a>\n  <p class=\"meta\">\n    <span class=\"minutes\">${input.recipe.minutes} min</span>\n    <span class=\"stars\">${\"★\".repeat(input.recipe.rating)}</span>\n  </p>\n</li>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r3.S.fix1_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r3.S.fix1_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  },
+  {
+   "runId": "e1-filter.C0.sl.r3.S.fix2",
+   "taskId": "e1-filter",
+   "condition": "S",
+   "rep": 2,
+   "stage": "repair",
+   "baseVariant": "base",
+   "files": [
+    {
+     "path": "src/routes/+page.marko",
+     "content": "<h1>Recipes</h1>\n<let/query=\"\">\n<input id=\"q\" placeholder=\"Search recipes\" value=query onInput(e) { query = e.target.value }>\n<try>\n  <await|recipes|=$global.data.recipes>\n    <const/normalizedQuery=query.trim().toLowerCase()>\n    <const/visibleCount=recipes.filter((recipe) => recipe.title.toLowerCase().includes(normalizedQuery)).length>\n    <p id=\"match-count\">${visibleCount} shown</p>\n    <ul id=\"recipes\">\n      <for|recipe| of=recipes by=\"id\">\n        <recipe-card recipe=recipe hidden=(!recipe.title.toLowerCase().includes(normalizedQuery))/>\n      </for>\n    </ul>\n  </await>\n  <@placeholder><p>Loading recipes</p></@placeholder>\n</try>\n"
+    },
+    {
+     "path": "src/tags/recipe-card.marko",
+     "content": "<li class=\"card\" style=(input.hidden ? \"display:none\" : \"\")>\n  <a href=`/recipes/${input.recipe.id}`>${input.recipe.title}</a>\n  <p class=\"meta\">\n    <span class=\"minutes\">${input.recipe.minutes} min</span>\n    <span class=\"stars\">${\"★\".repeat(input.recipe.rating)}</span>\n  </p>\n</li>\n"
+    }
+   ],
+   "pass": false,
+   "fatal": null,
+   "checks": [
+    {
+     "name": "ssr: all cards in initial response",
+     "pass": true,
+     "detail": "<style marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r3.S.fix2_dist_.marko-run_index.marko\">html{visibility:hidden !important}</style><script marko-vite-preload=\"runs_exp6_apps_e1-filter.C0.sl.r3.S.fix2_dist_.marko-run_index.marko\" async blocking=render type=module>await Promise.allSettled([imp"
+    },
+    {
+     "name": "empty query: 3 visible",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "empty query: count",
+     "pass": true,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query lem: only Lemon pasta",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "query lem: count",
+     "pass": false,
+     "detail": "3 shown"
+    },
+    {
+     "name": "query TOMATO: case-insensitive",
+     "pass": false,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    },
+    {
+     "name": "cleared: 3 visible again",
+     "pass": true,
+     "detail": "[\"Tomato soup\",\"Garlic bread\",\"Lemon pasta\"]"
+    }
+   ],
+   "guidance": ""
+  }
+ ]
+}
