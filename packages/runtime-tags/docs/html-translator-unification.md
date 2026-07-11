@@ -306,6 +306,87 @@ is a user-observable change on both sides (server side effect order for
 mixed input/state templates; client initial and update cascade order), so
 it should ride a minor with a changeset and docs regardless.
 
+## Output changes that would ease unification
+
+The plan above treats today's compiled output shapes as fixed. Relaxing
+that helps a lot; the compiled output and the runtime ship atomically
+(published components ship `.marko` source, so compiled code always pairs
+with the compiler that produced it), which means the underscore-prefixed
+helper contracts can be reshaped freely as long as the resume wire format
+stays stable. Ranked by leverage:
+
+1. **HTML control flow as section functions plus the shared index/args
+   expression.** Today the HTML `<if>` builds a nested `t.ifStatement`
+   chain, steals the branch bodies' statement arrays, injects
+   `return <branchIndex>` into serializing branches, and wraps the chain in
+   `_if(cb, scopeId, accessor, guards, ...)`; `<for>` passes an inline
+   arrow plus positionally spread loop arguments. The DOM side instead
+   builds a branch index expression (`show ? 0 : 1`, fed through
+   `addValue`) and per-branch renderer tuples. If the HTML output became
+   named nested function declarations per branch body (still lexically
+   nested, so closures keep working) selected by that same index
+   expression, e.g. `_if(show ? 0 : 1, $ifBody0, $ifBody1, $scope0_id,
+accessor, guards)`, then the controlling-expression construction, the
+   branch bookkeeping, and the serialize-guard assembly all become shared
+   code, and the two build callbacks become mirror images. Lazy test
+   evaluation is preserved by the conditional expression, and the runtime
+   receives the branch index directly instead of recovering it from the
+   callback's return value. Cost: a few bytes per branch in SSR output for
+   the declarations and one extra call.
+2. **Harmonized helper signatures.** The HTML `_for_*` helpers take
+   `(list, cb, by, scopeId, accessor, serializeBranch, serializeMarker,
+serializeStateful, parentEndTag, singleNode)` while the DOM ones take
+   `(accessor, template, walks, setup, params)` with `[list, by]` arriving
+   through the signal. Aligning the value tuple and the marker/guard
+   argument order (and similarly `_script(scopeId, id)` vs
+   `_script(id, fn)`) lets one IR entry serializer emit both calls instead
+   of two hand-maintained shapes. Folding the `_peek_scope_id` +
+   `_set_serialize_reason` prologue into a single child-call helper does
+   the same for the `childCall` entry.
+3. **DOM: the `getSignalFn` interleave** described under phase 2 is itself
+   an output change (client bundles reorder statements), and is the
+   cheapest ordering win available.
+4. **HTML: hole temps** (also under phase 2) could be always-on rather
+   than rule-based, which simplifies the emitter at a measurable SSR byte
+   cost; rule-based is still the recommendation.
+5. **Conflict-driven buffering (opt-in exact parity).** The residual
+   "pinned constructs" deviation exists because branch and child bodies
+   write directly to the stream at their document position. Where the
+   emitter detects an actual conflict between canonical order and document
+   order, it could render just the conflicting construct into a string
+   hole (`const _b0 = show ? $ifBody0() : ""`), decoupling its execution
+   position from the stream entirely. Synchronous content buffers with no
+   time-to-first-byte cost; content that can fork asynchronously
+   (`<await>`, dynamic tags with unknown children) keeps streaming and
+   keeps today's behavior. Because it only triggers on conflicting shapes,
+   the common-case output is unchanged, and section-local order parity
+   becomes exact instead of "exact modulo pinned constructs".
+
+Considered and cut:
+
+- **Splitting server child exports into setup/apply pieces** (mirroring
+  `domExports`) would make custom tag translation truly identical in both
+  modes and align child interleaving, but it only pays off combined with
+  buffered writes everywhere, roughly doubles the per-template server
+  surface, and gives up the lean "one call, one input object" SSR
+  contract. Specifying child atomicity is the better trade.
+- **Moving all root `<let>`/`<const>` value initializations from `setup`
+  into the params signal at their sequence positions.** This is
+  semantically safer than it sounds: the `_let`/`_const` runtime guards
+  (`rendering && scope[Gen] === runId`) already make value initialization
+  a no-op when a signal re-runs for an update, and input-derived `<let>`
+  initial values ride the params signal today. It would dissolve the
+  "all state work before any input work" phase artifact entirely. Cut
+  because a template whose input is pruned has no params signal to host
+  the initializations, so the output would either vary per template
+  (making the order spec worse than the phase split it removes) or pay
+  for a synthesized params export, and `setup` must survive anyway for
+  effects, child wiring, and tag-variable plumbing.
+- **Making branch setup synchronous** (depth-first, matching HTML) breaks
+  closure initialization: a branch's closures must read owner values that
+  finish computing later in the enclosing cascade, and the queue is what
+  guarantees "later" at every nesting level.
+
 ## Risks and open questions
 
 - **Snapshot churn.** Phase 1 aims for byte-identical output; any diff in
