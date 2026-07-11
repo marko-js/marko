@@ -53,3 +53,27 @@ Workaround used by `catch-reject-sibling-pending-await`: model
 never-consumed awaits with `new Promise(() => {})` instead of the shared
 counter. A robust fix could stamp each state object (capture `state` in
 `tick()` and drop stray resolutions after reset).
+
+## Give `<if(cond)>`-style argument misuse a targeted error
+
+`packages/compiler/src/babel-utils/assert.js:60` | 2026-07-11 | impact:med | effort:low
+
+Writing control flow with call-style arguments — `<if(cond)>`, `<await(user) promise>`, `<else(cond)>` — is the single most common wrong guess observed when LLMs (and likely Marko 4/5 users) author Tags API templates: in a controlled test of 16 LLM-generated templates it was the top compile error (5/16), and every occurrence got the generic "Tag does not support arguments." from `assertNoArgs`. The message never mentions the correct form, so the author's next guess is usually another wrong shape rather than `<if=cond>`. Suggested direction: let `assertNoArgs` accept the tag's expected form (callers like `packages/runtime-tags/src/translator/core/if.ts:486` and `core/await.ts:57` know it) and emit e.g. "Tag does not support arguments. The condition is written as a value attribute: `<if=cond>`" — mirroring how `on:click` already suggests `onClick`.
+
+## Bare JS statements in concise mode produce misleading tag errors
+
+`packages/runtime-tags/src/translator/core/let.ts:64` | 2026-07-11 | impact:med | effort:med
+
+A template starting with plain JavaScript like `let celsius = 20;` (a natural reflex for anyone from Svelte/vanilla JS) parses as a concise `<let>` tag with bogus attributes and errors with "The `<let>` tag only supports the `value=` attribute and its change handler." — accurate but unactionable, since the author doesn't know they wrote a tag at all. Same story for `const`/`function` lines hitting other tags or "Unable to find entry point" errors. When a concise-mode line looks like a JS declaration (`let|const|var|function` + identifier + `=`/`(`), a hint such as "Top-level statements need a `static` prefix; for reactive state use `<let/celsius=20>`" would redirect both humans and code models. Observed twice in 16 independent LLM-authored templates.
+
+## Brace-wrapped attribute values fail before the helpful suggestion can fire
+
+`packages/runtime-tags/src/common/helpers.ts:27` | 2026-07-11 | impact:med | effort:med
+
+`getWrongAttrSuggestion` already turns `on:click=handler` into a great "did you mean `onClick`?" error, but the far more common JSX/Svelte idiom wraps the value in braces — `on:click={() => count++}` / `onClick={fn}` — and that dies earlier as a bare "Unexpected token" while parsing `{() => ...}` as an object literal, so the suggestion never fires (observed repeatedly across LLM-generated templates; the no-braces variant got the good error, the braces variant got the cryptic one). Consider catching expression-parse failures for attribute values that match `^\{[\s\S]*\}$` and appending "attribute values are plain JavaScript expressions — remove the surrounding `{ }`" so the JSX reflex gets redirected at the first error rather than after the braces are removed.
+
+## Cross-framework tag names deserve curated suggestions, not Levenshtein
+
+`packages/runtime-tags/src/translator/visitors/tag/custom-tag.ts:380` | 2026-07-11 | impact:low | effort:low
+
+Unknown-tag errors suggest the nearest known tag by edit distance, which turns `<slot/>` (the Vue/Svelte/web-components reflex for rendering passed content — written by 2/2 LLM attempts at a layout file) into "Did you mean `<set>`?", pointing authors at an unrelated tag. A small alias table consulted before the Levenshtein fallback would fix the recurring cases: `slot` → "render passed content with `<${input.content}/>`", `state` → `<let>`, `fragment`/`template` → plain content. The existing `knownWrongAttrs` table in `packages/runtime-tags/src/common/helpers.ts:5` is exactly this pattern for attributes; tags need the same.

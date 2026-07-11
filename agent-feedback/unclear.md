@@ -24,3 +24,9 @@ to it: the emitted style ELEMENTS interleave with the loop's content, so
 shorthand resets an interpolated `animation-delay` because the shorthand
 implicitly sets delay to `0s`. A docs example of a dynamic style in a loop,
 plus a note about element interleaving, would have saved the debugging session.
+
+## Repeated attribute tags look like arrays but are not — indexing silently yields undefined
+
+`packages/runtime-tags/src/translator/util/translate-attrs.ts:98` | 2026-07-11 | impact:med | effort:low
+
+`input.item` for repeated `<@item>` tags is the first tag object with a `[Symbol.iterator]`, so `<for of=input.item>` works — but `input.item.length` and `input.item[i]` are `undefined` with no warning, and that exact mistake (indexing into `input.tab` to pick the active tab, or `.length`-guarding it) recurred across independently LLM-generated components even when documentation showing the `[...input.tab || []]` spread idiom was provided in-context. The language reference documents iteration but never states the negative ("not an array; numeric indexing does not work"). A doc callout plus a MARKO_DEBUG-time hint when a `Marko.AttrTag` receives a numeric-index/`length` read (e.g. a dev-only Proxy) would catch the most common misread of the attribute-tag model.
