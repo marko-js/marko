@@ -11,17 +11,27 @@ const loadTagsByFile = new WeakMap();
 export function analyzeLoadImport(importDecl, tagEntry) {
   if (!importDecl.node.attributes?.length) return;
 
-  const loadAttrValuePath = importDecl
+  const loadAttrPath = importDecl
     .get("attributes")
     .find(
       (p) =>
         (p.node.key.type === "Identifier"
           ? p.node.key.name
           : p.node.key.value) === "load",
-    )
-    ?.get("value");
+    );
 
-  if (!loadAttrValuePath) return;
+  if (!loadAttrPath) return;
+
+  // Under hot reload every module is already eagerly loaded, so the lazy facade
+  // buys nothing and its HMR-cached template collides with the real template's
+  // `_` slot, recursing on render (see load-tag-browser.js). Drop the attribute
+  // so the import compiles as a normal eager tag import in dev.
+  if (importDecl.hub.file.markoOpts.hot) {
+    loadAttrPath.remove();
+    return;
+  }
+
+  const loadAttrValuePath = loadAttrPath.get("value");
 
   if (!tagEntry) {
     throw importDecl.buildCodeFrameError(
