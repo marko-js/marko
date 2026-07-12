@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.16
+
+### Patch Changes
+
+- [#3394](https://github.com/marko-js/marko/pull/3394) [`c3d3227`](https://github.com/marko-js/marko/commit/c3d32272ccddc04a9c84dc25b151901984709f53) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix an infinite recursion in dev mode (`hot: true`) when using `with { load }` imports, where the lazy facade collided with the real template in the hot-reload cache and recursed on render. Since dev loads every module eagerly, these imports now compile as normal eager imports under hot reload; production builds are unchanged.
+
 ## 5.39.15
 
 ### Patch Changes
