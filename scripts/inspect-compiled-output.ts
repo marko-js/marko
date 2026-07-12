@@ -3,6 +3,13 @@ import fs from "fs";
 import path from "path";
 import { parseArgs } from "util";
 
+// Shorthands for the two in-repo translators; any other -t value (e.g. a full
+// module id) is passed through to the compiler unchanged.
+const TRANSLATORS: Record<string, string> = {
+  tags: "@marko/runtime-tags/translator",
+  class: "marko/translator",
+};
+
 const args = parseArgs({
   allowPositionals: true,
   options: {
@@ -24,6 +31,11 @@ const args = parseArgs({
   },
 });
 
+const translator =
+  TRANSLATORS[args.values.translator] ||
+  args.values.translator ||
+  TRANSLATORS.tags;
+
 for (const entry of args.positionals) {
   const inputFileName = path.resolve(entry);
   const outputFileName = inputFileName + ".js";
@@ -38,7 +50,7 @@ for (const entry of args.positionals) {
       configFile: false,
       browserslistConfigFile: false,
     },
-    translator: args.values.translator || "@marko/runtime-tags/translator",
+    translator,
   });
 
   fs.writeFileSync(outputFileName, code);

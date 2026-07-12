@@ -18,7 +18,7 @@ All from repo root. Tests and tooling run directly from TS source (`~ts` Babel r
 npm test -- --grep "runtime-tags/translator <fixture> "  # scoped test run; bail: stops at first failure
 npm run test:parallel                                    # whole suite fanned across CPU cores (~3x faster than a serial npm test)
 npm run test:update -- --grep "..."                      # regenerate snapshots (review the diff!)
-npm run compile -- -t "" -o dom -d foo.marko             # compiled output -> foo.marko.js (-o html for SSR; omit -d for optimized)
+npm run compile -- -o dom -d foo.marko                   # compiled output -> foo.marko.js (-o html for SSR; omit -d for optimized)
 npm run build                                            # all packages -> dist/ + .d.ts
 npm run build:sizes                                      # bundle-size table; diffs vs .sizes.json
 npm run lint                                             # eslint + prettier check + cspell
@@ -26,7 +26,7 @@ npm run format                                           # eslint --fix + pretti
 npm run change                                           # add a changeset (required for user-facing changes)
 ```
 
-`npm run compile` is the fastest way to inspect what the translator generates. (`-t ""` works around a broken default for that flag — see `agent-feedback/dx.md`.)
+`npm run compile` is the fastest way to inspect what the translator generates. (Pass `-t class` for the Marko 5 translator; `-t` also accepts a full translator module id.)
 
 ## Repo invariants
 
