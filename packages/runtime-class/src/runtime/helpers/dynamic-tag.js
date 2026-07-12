@@ -13,6 +13,10 @@ var getComponentsContext = ComponentsContext.___getComponentsContext;
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_RENDER_BODY = 2;
 var IS_SERVER = typeof document === "undefined";
+// Heads a serialized class-method event reference on a Tags child's input;
+// tags-compat/runtime-dom.js revives it into a live handler on resume.
+// eslint-disable-next-line no-constant-condition
+var CLASS_EVENT_MARKER = "MARKO_DEBUG" ? "$compat_classEvent" : "$C_e";
 
 /**
  * Helper to render a dynamic tag
@@ -90,7 +94,7 @@ module.exports = function dynamicTag(
 
       if (renderer) {
         out.c(componentDef, key, customEvents);
-        renderer(attrs, out);
+        renderer(addTagsEvents(attrs, componentDef, customEvents), out);
         out.___assignedComponentDef = null;
       } else {
         var isFn = typeof render === "function";
@@ -157,6 +161,58 @@ function attrsToCamelCase(attrs) {
   return result;
 }
 
+// Fold a Class parent's `on-x(...)` bindings into `onX` input props for a Tags
+// child: a live handler in the browser, a resumable reference on the server.
+function addTagsEvents(attrs, componentDef, customEvents) {
+  var len = customEvents ? customEvents.length : 0;
+
+  if (len === 0) {
+    return attrs;
+  }
+
+  var result = attrs || {};
+  var event;
+
+  for (var i = len; i--;) {
+    event = customEvents[i];
+    var eventName = event[0];
+    var handler = event[1];
+    var extraArgs = event[3];
+    var prop = "on" + eventName.charAt(0).toUpperCase() + eventName.slice(1);
+
+    if (IS_SERVER) {
+      result[prop] =
+        typeof handler === "string"
+          ? extraArgs
+            ? [CLASS_EVENT_MARKER, componentDef.id, handler, extraArgs]
+            : [CLASS_EVENT_MARKER, componentDef.id, handler]
+          : undefined;
+    } else {
+      result[prop] = bindTagsEventHandler(
+        componentDef.___component,
+        handler,
+        extraArgs,
+      );
+    }
+  }
+
+  return result;
+}
+
+function bindTagsEventHandler(component, handler, extraArgs) {
+  return function () {
+    var fn = typeof handler === "function" ? handler : component[handler];
+    if (extraArgs) {
+      var args = extraArgs.slice();
+      for (var i = 0; i < arguments.length; i++) {
+        args.push(arguments[i]);
+      }
+      return fn.apply(component, args);
+    }
+    return fn.apply(component, arguments);
+  };
+}
+
 function addEvents(componentDef, customEvents, props) {
   var len = customEvents ? customEvents.length : 0;
 
@@ -179,3 +235,5 @@ function addEvents(componentDef, customEvents, props) {
 
   return result;
 }
+
+module.exports.___CLASS_EVENT_MARKER = CLASS_EVENT_MARKER;

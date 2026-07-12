@@ -1,0 +1,22 @@
+{
+  "dom": {
+    "template.marko.page.mjs": {
+      "total": {
+        "min": 69833,
+        "brotli": 21527
+      },
+      "files": {
+        "components/tags-pinger.marko": 706,
+        "components/class-host/component-browser.js": 381,
+        "components/class-host/index.marko": 951,
+        "template.marko": 661,
+        "v:template.marko.hydrate-6.js": 110,
+        "v:template.marko.hydrate-5.js": 242
+      }
+    }
+  },
+  "html": {
+    "min": 518,
+    "brotli": 343
+  }
+}

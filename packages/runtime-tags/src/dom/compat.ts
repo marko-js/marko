@@ -12,6 +12,9 @@ import { _content, createAndSetupBranch, type Renderer } from "./renderer";
 import { _resume, getRegisteredWithScope } from "./resume";
 import { destroyBranch } from "./scope";
 const classIdToBranch = new Map<string, BranchScope>();
+// Injected by the class runtime (runtime-dom.js); revives a serialized
+// class-method event reference, which only the class side can resolve.
+let classEventResolver: ((value: unknown, scope: Scope) => unknown) | undefined;
 // Keyed by the render handle — the one object reachable from both sides
 // of the interop boundary (the class side rebuilds its own $global at
 // hydration, so only the runtimeId/renderId values cross it) — and
@@ -38,9 +41,21 @@ export const compat = {
       if (scope.m5c) {
         classIdToBranch.set(scope.m5c, scope as BranchScope);
       }
+      // Revive any bridged class-method event references in this resumed scope.
+      if (classEventResolver) {
+        for (const key in scope) {
+          const resolved = classEventResolver(scope[key], scope);
+          if (resolved !== scope[key]) {
+            scope[key] = resolved;
+          }
+        }
+      }
     });
 
     _resume(RENDER_BODY_ID, warp10Noop);
+  },
+  setClassEventResolver(fn: (value: unknown, scope: Scope) => unknown) {
+    classEventResolver = fn;
   },
   getScope($global: Record<string, unknown>, scopeId: unknown) {
     return getRenderScopes($global)?.[scopeId as string];

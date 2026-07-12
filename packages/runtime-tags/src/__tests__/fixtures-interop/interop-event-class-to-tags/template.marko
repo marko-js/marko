@@ -1,0 +1,11 @@
+class {
+  onCreate() {
+    this.state = { pinged: "none" };
+  }
+  handlePing(count) {
+    this.state.pinged = count;
+  }
+}
+<div id="class">${state.pinged}</div>
+<tags-pinger onPing("handlePing")/>
+<init-components/>

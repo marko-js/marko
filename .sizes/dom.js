@@ -1,4 +1,4 @@
-// size: 25871 (min) 9521 (brotli)
+// size: 25964 (min) 9537 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -205,6 +205,7 @@ let empty = [],
   runRender = (render) => render.c(render.b, render.d),
   catchEnabled,
   classIdToBranch = /* @__PURE__ */ new Map(),
+  classEventResolver,
   scopesByRender = /* @__PURE__ */ new WeakMap(),
   getRenderScopes = ($global) => {
     let render = self[$global.runtimeId]?.[$global.renderId],
@@ -219,10 +220,20 @@ let empty = [],
     queueEffect,
     init(warp10Noop) {
       (_resume("$C_s", (scope) => {
-        ((getRenderScopes(scope.$)[scope.L] = scope),
-          scope.m5c && classIdToBranch.set(scope.m5c, scope));
+        if (
+          ((getRenderScopes(scope.$)[scope.L] = scope),
+          scope.m5c && classIdToBranch.set(scope.m5c, scope),
+          classEventResolver)
+        )
+          for (let key in scope) {
+            let resolved = classEventResolver(scope[key], scope);
+            resolved !== scope[key] && (scope[key] = resolved);
+          }
       }),
         _resume("$C_b", warp10Noop));
+    },
+    setClassEventResolver(fn) {
+      classEventResolver = fn;
     },
     getScope($global, scopeId) {
       return getRenderScopes($global)?.[scopeId];

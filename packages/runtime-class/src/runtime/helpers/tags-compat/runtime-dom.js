@@ -34,6 +34,26 @@ exports.p = function (domCompat) {
     return renderer;
   };
 
+  // Revive a serialized class-method event reference into a live handler, looked
+  // up lazily since a split parent may not be hydrated yet when the child resumes.
+  domCompat.setClassEventResolver(function (value, scope) {
+    if (Array.isArray(value) && value[0] === dynamicTag.___CLASS_EVENT_MARKER) {
+      const componentId = value[1];
+      const method = value[2];
+      const extraArgs = value[3];
+      return function () {
+        const component =
+          ___componentLookup[componentId] || scope.___marko5Component;
+        const args = extraArgs ? extraArgs.slice() : [];
+        for (let i = 0; i < arguments.length; i++) {
+          args.push(arguments[i]);
+        }
+        return component[method].apply(component, args);
+      };
+    }
+    return value;
+  });
+
   Component.prototype.___setCustomEventsOriginal =
     Component.prototype.___setCustomEvents;
   Component.prototype.___setCustomEvents = function (customEvents, scopeId) {

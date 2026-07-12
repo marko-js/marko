@@ -129,6 +129,8 @@ exports.p = function (htmlCompat) {
       const tagsRenderer = _.r;
       const willRerender = componentDef._wrr || htmlCompat.isInResumedBranch();
       out.bf("1", component, willRerender);
+      // A split parent won't re-feed the child a live handler at hydration, so
+      // register the child scope to let the resolver revive a bridged marker.
       htmlCompat.render(
         tagsRenderer,
         willRerender,
@@ -136,6 +138,7 @@ exports.p = function (htmlCompat) {
         component,
         input,
         writers.tagsAPI,
+        !willRerender && hasBridgedClassEvent(input),
       );
       out.ef();
     },
@@ -239,6 +242,21 @@ exports.p = function (htmlCompat) {
     return htmlCompat.register(id, renderer);
   };
 };
+
+function hasBridgedClassEvent(input) {
+  if (input && typeof input === "object" && !Array.isArray(input)) {
+    for (const key in input) {
+      const value = input[key];
+      if (
+        Array.isArray(value) &&
+        value[0] === dynamicTag5.___CLASS_EVENT_MARKER
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 
 function concatScripts(a, b) {
   return a ? (b ? a + ";" + b : a) : b;

@@ -106,6 +106,7 @@ export const compat = {
     component: any,
     input: any,
     completeChunks: Chunk[],
+    registerChildScope?: boolean,
   ) {
     const state = this.ensureState(classAPIOut.global);
     const boundary = new Boundary(state);
@@ -124,7 +125,7 @@ export const compat = {
     }
 
     head.render(() => {
-      if (willRerender) {
+      if (willRerender || registerChildScope) {
         const scopeId = _peek_scope_id();
         _scope(scopeId, { m5c: component.id });
         _script(scopeId, SET_SCOPE_REGISTER_ID);

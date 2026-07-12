@@ -76,22 +76,3 @@ stream in an order where the earlier callback fires before the overwrite),
 but it is one flush-ordering change away from a silent hydration freeze. A
 queue (or firing the pending callback before re-assigning) would make the
 inline runtime robust; weigh against inline-runtime byte cost.
-
-## Interop silently accepts Class-style event bindings on Tags API children
-
-`packages/runtime-class/src/translator/index.js:149` | 2026-07-10 | impact:med | effort:med
-
-When a Class API file renders a Tags API child with a declarative event binding
-(`<tags-child on-toggle("handleToggle")/>`), the interop compiles it without
-diagnostics but the binding can never fire: it registers a Class custom-event
-subscription (`customEvents` via `out.c(...)` in
-`src/runtime/helpers/dynamic-tag.js:92`), and Tags API components call function
-props instead of emitting events. The reverse direction IS bridged
-(`tags-compat/runtime-html.js:184-199` converts `onX`/`on-x` function
-attributes on Class children into events), which makes the asymmetry easy to
-assume away. During incremental 5→6 migrations this is a likely silent
-regression: converting a child to Tags API leaves every Class parent's
-`on-foo("method")` binding compiling-but-dead. The class translator already
-knows the child's `featureType` is `"tags"` at analyze time
-(`translator/index.js:149-155`), so it could error (or warn) on event args
-targeting a Tags child, pointing at function attributes as the fix.
