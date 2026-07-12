@@ -1,4 +1,5 @@
 import * as compiler from "@marko/compiler";
+import assert from "assert";
 import fs from "fs";
 import { html_beautify } from "js-beautify";
 import path from "path";
@@ -319,10 +320,22 @@ function testFixtures(interop?: true) {
           optimize &&
             !hasCompilerError &&
             after(() => {
-              fs.writeFileSync(
-                path.join(fixtureDir, "sizes.json"),
-                JSON.stringify(stats, null, 2) + "\n",
-              );
+              const sizesFile = path.join(fixtureDir, "sizes.json");
+              const actual = JSON.stringify(stats, null, 2) + "\n";
+              // Assert instead of rewriting: a --grep test:update refreshes only
+              // matched fixtures, so a silent rewrite would bury stale sizes.
+              if (process.env.UPDATE_EXPECTATIONS) {
+                fs.writeFileSync(sizesFile, actual);
+              } else {
+                const expected = fs.existsSync(sizesFile)
+                  ? fs.readFileSync(sizesFile, "utf8")
+                  : "";
+                assert.strictEqual(
+                  actual,
+                  expected,
+                  `sizes.json out of date for "${entry}" — run \`npm run test:update\``,
+                );
+              }
             });
 
           skipSSR ||
