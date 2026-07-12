@@ -18,6 +18,12 @@ import runtimeInfo from "./runtime-info";
 export type DOMRuntimeHelpers = keyof typeof import("../../dom");
 export type HTMLRuntimeHelpers = keyof typeof import("../../html");
 
+// Marked `@__PURE__` (see callRuntime) so a bundler may drop a call whose
+// result is unused, despite call-time side effects: `_resume` registration
+// (`_template`, `_dynamic_tag`) and the `_enable_catch()`/`enableBranches()`
+// latches. This is sound because registration only matters when the value is
+// referenced by a serialized register id (which keeps it in the module graph),
+// and the latches are re-triggered by whichever construct survives shaking.
 const pureDOMFunctions = new Set<string>([
   "_await_promise",
   "_await_content",
