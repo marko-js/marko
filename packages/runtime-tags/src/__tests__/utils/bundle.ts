@@ -20,6 +20,8 @@ const assetRuntimeId = "\0asset-runtime";
 const assetRuntimeIdRe = /\0asset-runtime$/;
 const virtualFilePrefix = "v:";
 const virtualRe = /(?:^|\/)v:/;
+// Test-only helpers (utils/resolve) are excluded from the measured bundle.
+const testUtilRe = /[\\/]__tests__[\\/]utils[\\/]/;
 
 export async function createServerRunner<T extends Record<string, string>>(
   cwd: string,
@@ -116,6 +118,9 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
       sourcemap: true,
       sourcemapExcludeSources: true,
       chunkFileNames: "[name].mjs",
+      // Split test-only helpers into their own chunk: still imported at runtime
+      // (same realm, so behavior is unchanged) but skipped by buildSnapshot.
+      manualChunks: (id) => (testUtilRe.test(id) ? "test-utils" : undefined),
     },
   });
   const htmlBuilt = build({
