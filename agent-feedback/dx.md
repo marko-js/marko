@@ -83,3 +83,9 @@ and merge the istanbul JSON at the end (the ~50s remap work splits cleanly
 per dump); prewarm the babel cache with one serial require pass in
 `scripts/test-parallel.js` before spawning workers on a cold cache (~6s net,
 needs a hardcoded heavy-module list that can rot).
+
+## Migration skill: Step 1 directory-conventions `find` matches `.git/refs/tags`
+
+`skills/marko-5-to-6-migration/SKILL.md:38` | 2026-07-12 | impact:low | effort:low
+
+The Step 1 assessment command `find . -type d \( -name components -o -name tags \) -not -path '*/node_modules/*'` prunes `node_modules` but not `.git`, so on any repo it reports `.git/refs/tags` as a `tags/` directory — a false signal in a step whose whole point is detecting whether the project uses `components/` vs `tags/` conventions. The inventory `cf()` grep helper two blocks down already excludes `.git` via `--exclude-dir`; the `find` should match it (add `-not -path '*/.git/*'` or an `-o -name .git -prune`). Also worth a one-line note in the same step: `npm ls marko …` returns empty on a fresh clone with no install, so fall back to reading `package.json`.
