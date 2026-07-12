@@ -1,16 +1,20 @@
 declare global {
   var __RESOLVE_STATE__: {
+    generation: number;
     lastId: number;
     promises: Map<number, Promise<number>>;
   };
 }
 
 const state = (globalThis.__RESOLVE_STATE__ ||= {
+  generation: 0,
   lastId: 0,
   promises: new Map(),
 });
 
 export function resetResolveState() {
+  // Bump the generation so still-pending tick() chains are seen as stale.
+  state.generation++;
   state.lastId = 0;
   state.promises = new Map();
 }
@@ -109,17 +113,21 @@ function getSharedPromise(id: number = state.lastId + 1): Promise<number> {
 
   let promise = state.promises.get(id);
   if (!promise) {
-    state.promises.set(id, (promise = getSharedPromise(id - 1).then(tick)));
+    const { generation } = state;
+    promise = getSharedPromise(id - 1).then(() => tick(generation));
+    state.promises.set(id, promise);
   }
   return promise;
 }
 
-function tick() {
+function tick(generation: number) {
   return new Promise<number>((r) => {
     setTimeout(() => {
       setImmediate(() => {
         setTimeout(() => {
-          r(++state.lastId);
+          // A tick still pending from an earlier generation must not advance
+          // lastId, or the next phase's wait() would never converge.
+          r(generation === state.generation ? ++state.lastId : state.lastId);
         });
       });
     });

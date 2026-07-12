@@ -26,25 +26,6 @@ Bare `npm audit` shows 3 advisories (`serialize-javascript` high, `js-yaml`/moch
 
 The `after()` hook writes each fixture's `sizes.json` on every optimized test run, not just under `UPDATE_EXPECTATIONS=1`. A runtime helper change validated with `npm run test:update -- --grep <name>` therefore captures new sizes only for grep-matched fixtures; any other fixture bundling the same helper keeps stale numbers that a later unrelated full run silently rewrites into the working tree (e.g. a `_lifecycle` change also resizes `for-resume-owns-branch-cleanup` and `if-resume-owns-branch-cleanup`, whose names do not match "lifecycle"). Either gate the write on `UPDATE_EXPECTATIONS` and fail on drift otherwise, or document that runtime `src/dom`/`src/html` changes require a full-suite pass before committing so all affected `sizes.json` land in the same diff.
 
-## Shared-promise test util corrupts `wait()` when a stream ends with unconsumed promises
-
-`packages/runtime-tags/src/__tests__/utils/resolve.ts:106` | 2026-07-10 | impact:med | effort:low
-
-If an SSR fixture's stream completes while a registered `resolveAfter(_, id)`
-promise is still pending (e.g. a `@catch` fires and the boundary stops waiting
-on a sibling await), the abandoned `tick()` timer chain later runs
-`r(++state.lastId)` against the state that `resetResolveState()` just reset.
-The steps' first `wait()` then sees `state.lastId` ahead of
-`state.promises.size` and its `while (id !== nextId)` loop never converges —
-the ssr test times out at 10s and mocha hangs afterwards on the leaked timers.
-Workaround used by `catch-reject-sibling-pending-await`: model
-never-consumed awaits with `new Promise(() => {})` instead of the shared
-counter. A robust fix could stamp each state object (capture `state` in
-`tick()` and drop stray resolutions after reset). Note `scripts/test-parallel`
-now passes `--exit` to its mocha workers, so leaked timers no longer wedge a
-parallel run — the underlying `wait()` corruption (and the 10s timeout it
-causes) still needs the fix described here.
-
 ## Further `test:parallel` speedups need CPU cuts, not scheduling
 
 `scripts/test-parallel.js:1` | 2026-07-11 | impact:med | effort:high
