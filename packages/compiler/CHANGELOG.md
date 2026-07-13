@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.41.0
+
+### Minor Changes
+
+- [#3418](https://github.com/marko-js/marko/pull/3418) [`688f52b`](https://github.com/marko-js/marko/commit/688f52bfef1dbf4029f3862d6a8cf6b2c2a9274e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Import tags from installed packages by the name their taglib was resolved through, instead of by a realpath which for a virtual store (eg pnpm) is not importable.
+
 ## 5.40.2
 
 ### Patch Changes

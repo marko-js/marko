@@ -1,6 +1,6 @@
 {
   "name": "marko",
-  "version": "5.39.17",
+  "version": "5.39.18",
   "private": true,
   "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
   "keywords": [
@@ -70,8 +70,8 @@
     "build": "babel ./src --out-dir ./dist --extensions .js --copy-files --config-file ../../babel.config.js --env-name=production"
   },
   "dependencies": {
-    "@marko/compiler": "^5.40.1",
-    "@marko/runtime-tags": "^6.3.4",
+    "@marko/compiler": "^5.41.0",
+    "@marko/runtime-tags": "^6.3.5",
     "app-module-path": "^2.2.0",
     "argly": "^1.2.0",
     "browser-refresh-client": "1.1.4",
