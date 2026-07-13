@@ -103,3 +103,69 @@ Profiling a 464 KB data-heavy payload (product records: nested objects, arrays, 
 `packages/runtime-tags/src/html/template.ts:274` | 2026-07-13 | impact:low | effort:low
 
 The 41-char literal `"Cannot read from a consumed render result"` is written verbatim three times — lines 274, 302 and 335 — and none is behind a `MARKO_DEBUG` guard, so all three ship. The minifier does not hoist repeated string literals into a shared binding. Hoist to a module-scope `const` and reference it in the three `new Error(...)` sites to drop ~80 bytes from the SSR runtime.
+
+## Remove the second-stage dynamic import from load entries
+
+`packages/runtime-tags/src/translator/visitors/program/index.ts:142` | 2026-07-13 | impact:high | effort:low
+
+A triggered load entry currently adds `import(template).then(() => ready(id))`, creating a second module-discovery/evaluation boundary. Use a static side-effect import then `ready(id)`; inspect complete emitted chunk graphs because `src/__tests__/utils/bundle.ts:274` currently omits entry-only chunks from `sizes.json`.
+
+## Consolidate each lazy template behind one load adapter
+
+`packages/runtime-tags/src/translator/visitors/tag/custom-tag.ts:187` | 2026-07-13 | impact:med | effort:med
+
+Lazy inputs and setup each create separate virtual modules, import records, promises, and generated loaders despite sharing one child implementation. Use one cached adapter per trigger/template while retaining fine-grained exports; measure increasing input counts plus shared, nested, error, and unmount cases.
+
+## Let parameter reason groups select client registration anchors
+
+`packages/runtime-tags/src/translator/util/known-tag.ts:240` | 2026-07-13 | impact:high | effort:high
+
+Parameter reason groups narrow HTML payload per known call site, but child DOM modules still install every optional `_resume` root. Export pure values plus group-keyed registration anchors so known callers retain only active behavior; stateful, circular, dynamic, or unknown callers conservatively retain all groups.
+
+## Couple dynamic-tag resume registration to the retained signal
+
+`packages/runtime-tags/src/translator/visitors/tag/dynamic-tag.ts:585` | 2026-07-13 | impact:med | effort:med
+
+`enableDynamicTagResume()` emits standalone non-pure `_resume_dynamic_tag()` beside an otherwise removable pure signal; `dynamic-tag-spread` consequently retains 6,128 minified / 2,523 Brotli bytes. Register through a retained `_dynamic_tag_resume(...)` shape so signal and native spread/event support shake together; keep controlled and lazy paths as positive tests.
+
+## Gate catch runtime enablement on retained boundary capability
+
+`packages/runtime-tags/src/translator/core/try.ts:194` | 2026-07-13 | impact:med | effort:high
+
+Every `<try>` emits non-pure `_enable_catch()` even when no client boundary survives. Gate it on a retained capability covering descendant effects, ready work, renderers, and recreation—not only `_try`, because lazy resumed effects can throw without that signal.
+
+## Coalesce async render microtasks
+
+`packages/runtime-tags/src/dom/queue.ts:97` | 2026-07-13 | impact:med | effort:low
+
+`queueAsyncRender()` schedules one microtask per completion, so the first drains shared work and later callbacks perform empty runs and advance `runId`. Coalesce with a scheduled bit cleared immediately before flushing; test simultaneous completions and effects that enqueue more work.
+
+## Use lightweight cleanup links for internal closure subscriptions
+
+`packages/runtime-tags/src/dom/signals.ts:265` | 2026-07-13 | impact:med | effort:high
+
+Each internal dynamic-closure subscription allocates an `AbortController`, listener, set entry, and closure. Store compact owner/set cleanup links destroyed directly with the scope, retaining `AbortController` only for public lifecycle APIs; validate large keyed-list reorder/destruction and owner swaps.
+
+## Index lazy ready work by channel and render
+
+`packages/runtime-tags/src/dom/resume.ts:74` | 2026-07-13 | impact:med | effort:high
+
+`ready(id)` scans every render, then every globally ready id to a fixed point, and splices consumed prefixes. Index pending renders and reverse dependencies by ready id and use cursors; preserve late reordered gates and source-stream order.
+
+## Avoid scanning every embedded render after unrelated DOM mutations
+
+`packages/runtime-tags/src/dom/resume.ts:81` | 2026-07-13 | impact:med | effort:med
+
+`initEmbedded()` checks every embedded anchor after every document child-list mutation, creating embedded-count × mutation-batch work. Process removed subtrees or group/schedule anchor checks while preserving move/reinsert, adoption, nested removal, and exactly-once destruction.
+
+## Propagate invoke-only inputs through local define tags after analysis
+
+`packages/runtime-tags/src/translator/util/known-tag.ts:675` | 2026-07-13 | impact:med | effort:high
+
+Invoke-only propagation skips same-program `<define>` props because reads are incomplete mid-analysis. A conservative post-analysis fixed point can make local handlers read persisted slots lazily, removing intersections, input updates, closure propagation, and owner state; compare with equivalent cross-file tags and cover recursion/aliases/hoists.
+
+## Skip closest-branch writes for sections that cannot resume
+
+`packages/runtime-tags/src/translator/util/signals.ts:1409` | 2026-07-13 | impact:low | effort:low
+
+`writeHTMLResumeStatements()` emits `_resume_branch(scopeId)` for some inert sections without a serialize reason (`html-style-injection` has no DOM bundle or scope payload). Omit or guard it with the finalized section reason while preserving empty referenced owners and ready-channel descendants.

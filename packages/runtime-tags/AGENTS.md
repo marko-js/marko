@@ -13,22 +13,32 @@ Published as `marko@6` and `@marko/runtime-tags`. Contains both the runtime and 
 
 Entries: `src/dom.ts`, `src/html.ts`, `src/translator/index.ts`. Type stubs for core tags: `tags/*.d.marko`.
 
-## Vocabulary
+## Architecture
 
-These terms appear everywhere; get them straight before editing.
-
-- **Section** (`translator/util/sections.ts`) — a compile-time render unit: the program body or any tag body that renders independently (an `<if>`/`<for>` branch, custom tag content). Per-section compiler state lives in `createSectionState(key, init)` getter/setter pairs.
-- **Binding** (`translator/util/references.ts` — largest file in the package) — a reactive value (`let`, `input`, `param`, `derived`, `dom`, ...) with tracked reads, aliases, closures, and assignments. `finalizeReferences()` (program analyze-exit) computes the reactivity graph and what must serialize.
-- **Signal** — compile time (`translator/util/signals.ts`): the update function emitted per binding per section, including the HTML-side resume statements. Runtime (`dom/signals.ts`): `(scope, value) => void` functions that dirty-check and queue renders.
-- **Scope** (`dom/scope.ts`) — a plain object holding one render instance's state, keyed by accessor chars. Branch scopes are created/destroyed by control flow.
-- **Renderer / branch** (`dom/renderer.ts`, `dom/control-flow.ts`) — a renderer is a template blueprint; branches are its live DOM instances.
-- **Walks** (`translator/util/walks.ts`, `dom/walker.ts`) — a run-length-encoded string of DOM-traversal ops; the client replays it to locate nodes instead of querying. `<!>` marker comments are emitted where structure is dynamic.
-- **Serialization / resume** (`html/serializer.ts`, `dom/resume.ts`) — SSR serializes scopes into an inline script; the client _resumes_ (attaches to existing DOM and state) instead of re-rendering. `translator/util/serialize-reasons.ts` decides what serializes and why.
-- **Accessors** (`common/accessor.debug.ts`) — enum property keys for runtime objects. Prod values are single chars, each enum restarting at `"a"` (deliberate, for gzip); debug values are readable strings.
+Read the [resume architecture guide](RESUMABILITY.md) before changing reference
+analysis, signals, serialization, resume, lazy loading, or generated DOM output.
+It defines the shared vocabulary and traces the compiler/runtime model end to end.
 
 ## Translator
 
-Phases run in order: `migrate → transform → analyze → translate`. `analyze` builds sections/bindings; `translate` emits code. Node visitors live in `visitors/` and are split per phase by `extractVisitors` (`util/visitors.ts`); `visitors/tag/index.ts` dispatches to `native-tag.ts` / `custom-tag.ts` / `dynamic-tag.ts` / `attribute-tag.ts` or a tag definition's own hooks.
+The compiler phase contract is strict:
+
+| Phase       | Contract                                                                                                                           |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Parse       | Create the initial hybrid Marko/Babel AST.                                                                                         |
+| `migrate`   | Apply userland and translator-provided Marko-to-Marko codemods that may be written back to disk.                                   |
+| `transform` | Apply typically userland Marko-to-Marko codemods that affect compilation only and must never be written back.                      |
+| Pre-analyze | Technically part of `transform`; normalize/simplify Marko before analysis when the analyzer or translator needs a canonical shape. |
+| `analyze`   | Annotate the AST, usually via `node.extra`, and compute output-neutral graph data: bindings, signals, ids, serialization reasons.  |
+| `translate` | Convert Marko to JavaScript for the configured `dom` or `html` output.                                                             |
+
+Everything through `analyze` is cached and reused across outputs. Therefore:
+
+- Mutating AST structure during `analyze` is an anti-pattern; perform reshaping in pre-analyze.
+- Never retain an AST node or `NodePath` across phases, including inside `node.extra`: nodes are cloned between phases. Store durable metadata/ids and resolve current nodes within the current phase.
+- Never make output-specific decisions before `translate`. Branch on `dom`/`html` only while translating.
+
+Node visitors live in `visitors/` and are split per phase by `extractVisitors` (`util/visitors.ts`); `visitors/tag/index.ts` dispatches to `native-tag.ts` / `custom-tag.ts` / `dynamic-tag.ts` / `attribute-tag.ts` or a tag definition's own hooks.
 
 Core tags are one file per tag in `core/`, registered in `core/index.ts`:
 
