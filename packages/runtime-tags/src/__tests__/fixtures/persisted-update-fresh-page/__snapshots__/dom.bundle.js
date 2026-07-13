@@ -61,7 +61,7 @@ const $update$3 = (patch, live) => {
 	if ("d" in patch) _update_seed(live, $value_seed, patch["d"]);
 	if ("c" in patch) $input_name_update(live, patch["c"]);
 };
-var shared_list_marko_update_default = _resume("d4", $update$3);
+const _merge$3 = _resume("d4", $update$3);
 
 // tags/actions.marko.update.mjs
 const $added_seed = _update_signal("b2");
@@ -70,9 +70,9 @@ const $update$2 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("m" in patch) _update_seed(live, $added_seed, patch["m"]);
 	if ("j" in patch) $productId_update(live, patch["j"]);
-	if ("a" in patch) shared_list_marko_update_default(patch["a"], live["a"]);
+	if ("a" in patch) _merge$3(patch["a"], live["a"]);
 };
-var actions_marko_update_default = _resume("b4", $update$2);
+const _merge$2 = _resume("b4", $update$2);
 
 // tags/layout.marko.update.mjs
 const $open_seed = _update_signal("c2");
@@ -81,7 +81,7 @@ const $update$1 = (patch, live) => {
 	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);
 	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
-var layout_marko_update_default = _resume("c3", $update$1);
+const _merge$1 = _resume("c3", $update$1);
 
 // template.marko.update.mjs
 const $for_update = _update_for(0, "a11", (branch, args) => _update_scope(args[0], branch));
@@ -97,7 +97,7 @@ const $try_content__update = (patch, live) => {
 };
 const $else_content2__update = (patch, live) => {
 	_update_scope(patch, live);
-	if ("d" in patch) actions_marko_update_default(patch["d"], live["d"]);
+	if ("d" in patch) _merge$2(patch["d"], live["d"]);
 	if ("Ae" in patch) _update_branch(patch, live, "e", $try_content__update);
 };
 const $Item_content__update = (patch, live) => {
@@ -113,17 +113,20 @@ const $Item_content__update = (patch, live) => {
 };
 const $Cart_content__update = (patch, live) => {
 	if ("f" in patch) _update_seed(live, $products_seed, patch["f"]);
-	if ("a" in patch) shared_list_marko_update_default(patch["a"], live["a"]);
+	if ("a" in patch) _merge$3(patch["a"], live["a"]);
 	if ("Ac" in patch) $for_update2(live, [patch["Ac"], "M"]);
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("d" in patch) _update_seed(live, $count_seed, patch["d"]);
-	if ("c" in patch) layout_marko_update_default(patch["c"], live["c"]);
+	if ("c" in patch) _merge$1(patch["c"], live["c"]);
 };
 _update_content("a7", $Item_content__update);
 _update_content("a5", $Cart_content__update);
-var template_marko_update_default = _resume("a12", $update);
+const _merge = _resume("a12", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // data.js
 function getRecommendations(id) {

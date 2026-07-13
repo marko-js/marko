@@ -23,4 +23,7 @@ const $update = (patch, live) => {
 	_update_scope(patch, live);
 	if ("Ad" in patch) _update_branch(patch, live, "d", $try_content__update);
 };
-var template_marko_update_default = _resume("a6", $update);
+const _merge = _resume("a6", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

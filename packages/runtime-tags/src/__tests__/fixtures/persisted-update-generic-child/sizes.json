@@ -14,12 +14,12 @@
     },
     "update.js": {
       "total": {
-        "min": 4604,
-        "brotli": 1843
+        "min": 4515,
+        "brotli": 1839
       },
       "files": {
-        "tags/toggle.marko.update.mjs": 309,
-        "template.marko.update.mjs": 381
+        "tags/toggle.marko.update.mjs": 292,
+        "template.marko.update.mjs": 399
       }
     }
   },

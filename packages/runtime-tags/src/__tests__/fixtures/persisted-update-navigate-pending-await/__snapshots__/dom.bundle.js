@@ -20,4 +20,7 @@ const $update = (patch, live) => {
 	_update_scope(patch, live);
 	if ("Ac" in patch) _update_branch(patch, live, "c", $try_content__update);
 };
-var template_marko_update_default = _resume("a5", $update);
+const _merge = _resume("a5", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

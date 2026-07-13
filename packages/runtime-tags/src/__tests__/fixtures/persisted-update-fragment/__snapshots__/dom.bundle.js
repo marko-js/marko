@@ -40,7 +40,7 @@ const $update$3 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("a" in patch) _update_seed(live, $value_seed, patch["a"]);
 };
-var store_marko_update_default = _resume("c3", $update$3);
+const _merge$3 = _resume("c3", $update$3);
 
 // tags/widget.marko.update.mjs
 const $clicks_seed = _update_signal("d1");
@@ -49,7 +49,7 @@ const $update$2 = (patch, live) => {
 	if ("g" in patch) _update_seed(live, $clicks_seed, patch["g"]);
 	_update_scope(patch, live);
 };
-var widget_marko_update_default = _resume("d2", $update$2);
+const _merge$2 = _resume("d2", $update$2);
 
 // tags/layout.marko.update.mjs
 const $open_seed = _update_signal("b2");
@@ -58,7 +58,7 @@ const $update$1 = (patch, live) => {
 	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);
 	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
-var layout_marko_update_default = _resume("b3", $update$1);
+const _merge$1 = _resume("b3", $update$1);
 
 // template.marko.update.mjs
 const $for_update = _update_for(6, "a5", (branch, args) => _update_scope(args[0], branch));
@@ -67,15 +67,18 @@ const $count_seed = _update_signal("a1");
 const $Dashboard_content__update = (patch, live) => {
 	_update_pair(patch, live);
 	_update_scope(patch, live);
-	if ("b" in patch) store_marko_update_default(patch["b"], live["b"]);
-	if ("f" in patch) widget_marko_update_default(patch["f"], live["f"]);
+	if ("b" in patch) _merge$3(patch["b"], live["b"]);
+	if ("f" in patch) _merge$2(patch["f"], live["f"]);
 	if ("Ag" in patch) $for_update(live, [patch["Ag"], "M"]);
 	if ("Dh" in patch) $if_update(live, patch["Dh"]);
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("d" in patch) _update_seed(live, $count_seed, patch["d"]);
-	if ("c" in patch) layout_marko_update_default(patch["c"], live["c"]);
+	if ("c" in patch) _merge$1(patch["c"], live["c"]);
 };
 _update_content("a7", $Dashboard_content__update);
-var template_marko_update_default = _resume("a8", $update);
+const _merge = _resume("a8", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

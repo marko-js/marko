@@ -4,7 +4,10 @@ const $update$3 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("value" in patch) _update_seed(live, $value_seed, patch["value"]);
 };
-var store_marko_update_default = _resume("__tests__/tags/store.marko_0_update", $update$3);
+const _merge$3 = _resume("__tests__/tags/store.marko_0_update", $update$3);
+function createPatch$3() {
+	return createPatch$4(_merge$3);
+}
 
 // tags/widget.marko.update.mjs
 const $clicks_seed = _update_signal("__tests__/tags/widget.marko_0_clicks/var");
@@ -13,7 +16,10 @@ const $update$2 = (patch, live) => {
 	if ("clicks" in patch) _update_seed(live, $clicks_seed, patch["clicks"]);
 	_update_scope(patch, live);
 };
-var widget_marko_update_default = _resume("__tests__/tags/widget.marko_0_update", $update$2);
+const _merge$2 = _resume("__tests__/tags/widget.marko_0_update", $update$2);
+function createPatch$2() {
+	return createPatch$4(_merge$2);
+}
 
 // tags/layout.marko.update.mjs
 const $open_seed = _update_signal("__tests__/tags/layout.marko_0_open/var");
@@ -22,7 +28,10 @@ const $update$1 = (patch, live) => {
 	if ("open" in patch) _update_seed(live, $open_seed, patch["open"]);
 	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
-var layout_marko_update_default = _resume("__tests__/tags/layout.marko_0_update", $update$1);
+const _merge$1 = _resume("__tests__/tags/layout.marko_0_update", $update$1);
+function createPatch$1() {
+	return createPatch$4(_merge$1);
+}
 
 // template.marko.update.mjs
 const $for_update = _update_for("#ul/6", "__tests__/template.marko_3_content/update", (branch, args) => _update_scope(args[0], branch));
@@ -31,8 +40,8 @@ const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $Dashboard_content__update = (patch, live) => {
 	_update_pair(patch, live);
 	_update_scope(patch, live);
-	if ("#childScope/1" in patch) store_marko_update_default(patch["#childScope/1"], live["#childScope/1"]);
-	if ("#childScope/5" in patch) widget_marko_update_default(patch["#childScope/5"], live["#childScope/5"]);
+	if ("#childScope/1" in patch) _merge$3(patch["#childScope/1"], live["#childScope/1"]);
+	if ("#childScope/5" in patch) _merge$2(patch["#childScope/5"], live["#childScope/5"]);
 	if ("BranchScopes:#ul/6" in patch) $for_update(live, [patch["BranchScopes:#ul/6"], "#LoopKey"]);
 	if ("ConditionalRenderer:#text/7" in patch) {
 		$if_update(live, patch["ConditionalRenderer:#text/7"]);
@@ -41,10 +50,13 @@ const $Dashboard_content__update = (patch, live) => {
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
-	if ("#childScope/2" in patch) layout_marko_update_default(patch["#childScope/2"], live["#childScope/2"]);
+	if ("#childScope/2" in patch) _merge$1(patch["#childScope/2"], live["#childScope/2"]);
 };
 _update_content("__tests__/template.marko_2_content", $Dashboard_content__update);
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$4(_merge);
+}
 
 // data.js
 const getSession = typeof window === "undefined" ? (user) => ({

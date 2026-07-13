@@ -12,10 +12,8 @@ type RunDOM = typeof import("@marko/runtime-tags/dom").run;
 type DOMRuntime = typeof import("@marko/runtime-tags/dom");
 type DOMPersistedRuntime = typeof import("@marko/runtime-tags/dom-persisted");
 export interface UpdateEntryModule {
-  default: (patch: unknown, live: unknown) => void;
-  __applyUpdate: DOMPersistedRuntime["applyUpdate"];
-  __createUpdate: DOMPersistedRuntime["createUpdate"];
-  __have: DOMPersistedRuntime["_have"];
+  createPatch: () => (source: string) => boolean;
+  have: DOMPersistedRuntime["_have"];
   __ready: DOMRuntime["ready"];
   __register: DOMRuntime["_resume"];
 }
@@ -194,7 +192,7 @@ export function run() { _run(); Object.values(___componentLookup).forEach((c) =>
               // (runtime instance included) stays inside the browser context.
               return (
                 code +
-                `\nexport { applyUpdate as __applyUpdate, createUpdate as __createUpdate, _have as __have } from "@marko/runtime-tags/dom-persisted";\nexport { ready as __ready, _resume as __register } from "@marko/runtime-tags/dom";`
+                `\nexport { ready as __ready, _resume as __register } from "@marko/runtime-tags/dom";`
               );
             }
 

@@ -28,4 +28,7 @@ const $update = (patch, live) => {
 };
 _update_content("a7", _update_scope);
 _update_content("a4", $Reports_content__update);
-var template_marko_update_default = _resume("a10", $update);
+const _merge = _resume("a10", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

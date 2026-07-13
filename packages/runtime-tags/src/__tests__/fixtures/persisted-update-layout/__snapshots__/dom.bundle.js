@@ -20,7 +20,7 @@ const $update$1 = (patch, live) => {
 	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);
 	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
-var layout_marko_update_default = _resume("b3", $update$1);
+const _merge$1 = _resume("b3", $update$1);
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("a0");
@@ -30,7 +30,10 @@ const $layout_content__update = (patch, live) => {
 };
 const $update = (patch, live) => {
 	if ("e" in patch) _update_seed(live, $count_seed, patch["e"]);
-	if ("a" in patch) layout_marko_update_default(patch["a"], live["a"]);
+	if ("a" in patch) _merge$1(patch["a"], live["a"]);
 };
 _update_content("a2", $layout_content__update);
-var template_marko_update_default = _resume("a3", $update);
+const _merge = _resume("a3", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

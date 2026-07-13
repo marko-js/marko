@@ -15,4 +15,7 @@ const $update = (patch, live) => {
 	if ("g" in patch) $input_label_update(live, patch["g"]);
 	_update_scope(patch, live);
 };
-var template_marko_update_default = _resume("a3", $update);
+const _merge = _resume("a3", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

@@ -24,7 +24,10 @@ const $update = (patch, live) => {
 };
 _update_content("a5", _update_scope);
 _update_content("a3", _update_scope);
-var template_marko_update_default = _resume("a6", $update);
+const _merge = _resume("a6", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // data.js
 const getLabel = typeof window === "undefined" ? (topic) => `${topic}` : void 0;

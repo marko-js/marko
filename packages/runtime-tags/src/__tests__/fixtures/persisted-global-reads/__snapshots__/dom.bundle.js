@@ -30,4 +30,7 @@ const $update = (patch, live) => {
 	}
 	$globals_update(live);
 };
-var template_marko_update_default = _resume("a5", $update);
+const _merge = _resume("a5", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

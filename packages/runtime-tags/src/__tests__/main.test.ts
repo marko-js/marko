@@ -379,13 +379,13 @@ function testFixtures(interop?: true) {
                     // renderer mismatch ships a fragment instead of failing the
                     // apply), and every persisted build now also needs it for a
                     // client-pending `<try>` boundary (see the "!"-prefixed half
-                    // of the echo in dom/update.ts's `_have`). `__have` is the
+                    // of the echo in dom/update.ts's `_have`). `have` is the
                     // real client primitive (re-exported from the `?update`
                     // entry): it walks the live tree and returns the JSON the
                     // run router sends as `x-marko-have`, decoded here the same
                     // way the run server does.
                     if (persistedRender?.patch) {
-                      const have = updateEntry.__have(liveRoot as any);
+                      const have = updateEntry.have();
                       if (have) {
                         // The full echo is sent for every persisted build,
                         // exactly like the run router: the server side is
@@ -411,26 +411,7 @@ function testFixtures(interop?: true) {
                     // resumable HTML). Frames apply one at a time (the
                     // streaming model -- async boundary bodies arrive in
                     // later frames, in resolution order).
-                    const frames: (
-                      ((ctx: unknown) => unknown) | string | unknown[]
-                    )[][] = [];
-                    for (const line of html.split("\n")) {
-                      if (line) {
-                        const fills: (
-                          ((ctx: unknown) => unknown) | string | unknown[]
-                        )[] = [];
-                        for (const item of new Function(`return (${line})`)()) {
-                          if (
-                            typeof item === "function" ||
-                            typeof item === "string" ||
-                            Array.isArray(item)
-                          ) {
-                            fills.push(item);
-                          }
-                        }
-                        if (fills.length) frames.push(fills);
-                      }
-                    }
+                    const frames = html.split("\n").filter(Boolean);
                     if (!frames.length) {
                       throw new Error(
                         "navigate(): update render carried no resume fills",
@@ -440,10 +421,7 @@ function testFixtures(interop?: true) {
                     // Intermediate frames log their own mutation batches
                     // (the last frame's log is the step's, via runSteps) so
                     // snapshots show the page settling frame by frame.
-                    const applyFrame = updateEntry.__createUpdate(
-                      updateEntry.default,
-                      liveRoot as any,
-                    );
+                    const applyFrame = updateEntry.createPatch();
                     // A truncated apply models the run router aborting a
                     // superseded navigation between frames (its per-frame
                     // `signal.aborted` check): the dropped frames never
@@ -453,7 +431,11 @@ function testFixtures(interop?: true) {
                       frames.length,
                     );
                     for (let i = 0; i < frameCount; i++) {
-                      applyFrame(frames[i] as any);
+                      if (!applyFrame(frames[i]!)) {
+                        throw new Error(
+                          `navigate(): frame ${i + 1} carried no resume fills`,
+                        );
+                      }
                       await browser.runAsyncScripts();
                       run();
                       if (i < frameCount - 1) {

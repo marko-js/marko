@@ -10,7 +10,10 @@ const $update = (patch, live) => {
 	if ("input_tick" in patch) live["input_tick"] = patch["input_tick"];
 	if ("BranchScopes:#text/2" in patch) _update_branch(patch, live, "#text/2", $try_content__update);
 };
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // template.marko
 const $template = "<button class=clicks>clicked <!></button><section><!></section>";

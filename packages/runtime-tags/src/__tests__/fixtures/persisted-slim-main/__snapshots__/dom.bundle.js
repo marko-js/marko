@@ -35,4 +35,7 @@ const $update = (patch, live) => {
 		if ($patchBranch2 && $liveBranch2 && $branchMerge2) $branchMerge2($patchBranch2, $liveBranch2);
 	}
 };
-var template_marko_update_default = _resume("a6", $update);
+const _merge = _resume("a6", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

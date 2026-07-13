@@ -7,7 +7,10 @@ const $update = (patch, live) => {
 	if ("input_label" in patch) $input_label_update(live, patch["input_label"]);
 	_update_scope(patch, live);
 };
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // template.marko
 const $template = "<button>toggle</button><div> </div><span><!> items</span>";

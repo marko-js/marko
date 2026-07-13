@@ -13,13 +13,16 @@ const $for_update = _update_for(0, "b0", (branch, args) => _update_scope(args[0]
 const $update$1 = (patch, live) => {
 	if ("Aa" in patch) $for_update(live, [patch["Aa"], "M"]);
 };
-var chip_list_marko_update_default = _resume("b1", $update$1);
+const _merge$1 = _resume("b1", $update$1);
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("a1");
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("d" in patch) _update_seed(live, $count_seed, patch["d"]);
-	if ("c" in patch) chip_list_marko_update_default(patch["c"], live["c"]);
+	if ("c" in patch) _merge$1(patch["c"], live["c"]);
 };
-var template_marko_update_default = _resume("a2", $update);
+const _merge = _resume("a2", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

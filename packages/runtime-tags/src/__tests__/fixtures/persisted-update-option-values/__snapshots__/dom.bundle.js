@@ -13,4 +13,7 @@ const $update = (patch, live) => {
 	if ("g" in patch) _update_seed(live, $count_seed, patch["g"]);
 	if ("Ac" in patch) $for_update(live, [patch["Ac"], "M"]);
 };
-var template_marko_update_default = _resume("a3", $update);
+const _merge = _resume("a3", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

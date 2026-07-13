@@ -4,14 +4,20 @@ const $update$2 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("n" in patch) _update_seed(live, $n_seed, patch["n"]);
 };
-var counter_marko_update_default = _resume("__tests__/tags/counter.marko_0_update", $update$2);
+const _merge$2 = _resume("__tests__/tags/counter.marko_0_update", $update$2);
+function createPatch$2() {
+	return createPatch$3(_merge$2);
+}
 
 // tags/widget.marko.update.mjs
 const $update$1 = (patch, live) => {
 	_update_scope(patch, live);
-	if ("#childScope/1" in patch) counter_marko_update_default(patch["#childScope/1"], live["#childScope/1"]);
+	if ("#childScope/1" in patch) _merge$2(patch["#childScope/1"], live["#childScope/1"]);
 };
-var widget_marko_update_default = _resume("__tests__/tags/widget.marko_0_update", $update$1);
+const _merge$1 = _resume("__tests__/tags/widget.marko_0_update", $update$1);
+function createPatch$1() {
+	return createPatch$3(_merge$1);
+}
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
@@ -19,9 +25,12 @@ const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	_update_scope(patch, live);
-	if ("#childScope/3" in patch) widget_marko_update_default(patch["#childScope/3"], live["#childScope/3"]);
+	if ("#childScope/3" in patch) _merge$1(patch["#childScope/3"], live["#childScope/3"]);
 };
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$3(_merge);
+}
 
 // tags/badge.marko
 const $template$4 = "<span> </span>";

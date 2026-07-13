@@ -28,7 +28,7 @@ const $update$2 = (patch, live) => {
 	if ("g" in patch) _update_seed(live, $clicks_seed, patch["g"]);
 	_update_scope(patch, live);
 };
-var widget_marko_update_default = _resume("c2", $update$2);
+const _merge$2 = _resume("c2", $update$2);
 
 // tags/layout.marko.update.mjs
 const $open_seed = _update_signal("b2");
@@ -37,13 +37,13 @@ const $update$1 = (patch, live) => {
 	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);
 	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
-var layout_marko_update_default = _resume("b3", $update$1);
+const _merge$1 = _resume("b3", $update$1);
 
 // template.marko.update.mjs
 const $for_update = _update_for(1, "a6", (branch, args) => _update_scope(args[0], branch));
 const $count_seed = _update_signal("a1");
 const $await_content__update = (patch, live) => {
-	if ("a" in patch) widget_marko_update_default(patch["a"], live["a"]);
+	if ("a" in patch) _merge$2(patch["a"], live["a"]);
 	if ("Ab" in patch) $for_update(live, [patch["Ab"], "M"]);
 };
 const $try_content__update = (patch, live) => {
@@ -57,7 +57,10 @@ const $Reports_content__update = (patch, live) => {
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("d" in patch) _update_seed(live, $count_seed, patch["d"]);
-	if ("c" in patch) layout_marko_update_default(patch["c"], live["c"]);
+	if ("c" in patch) _merge$1(patch["c"], live["c"]);
 };
 _update_content("a4", $Reports_content__update);
-var template_marko_update_default = _resume("a9", $update);
+const _merge = _resume("a9", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

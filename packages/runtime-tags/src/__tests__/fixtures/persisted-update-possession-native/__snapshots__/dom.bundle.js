@@ -16,7 +16,10 @@ const $update = (patch, live) => {
 };
 _update_content("a4", _update_scope);
 _update_content("a3", _update_scope);
-var template_marko_update_default = _resume("a5", $update);
+const _merge = _resume("a5", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // data.js
 const getNote = typeof window === "undefined" ? (topic) => `${topic} notes` : void 0;

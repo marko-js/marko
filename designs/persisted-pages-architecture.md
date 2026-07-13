@@ -96,9 +96,10 @@ contents, not a separately configurable behavior.
 
 The wire format is trusted application output encoded by Marko's serializer,
 not user JSON. Run transports and splits the stream but does not interpret it.
-Each generated update entry exposes Marko's `createPatch`, which executes frames
-through the same nonce-bearing script path as document resumes, validates their
-fills, and passes them to the compiled merge. MIME, same-origin routing, build
+Each generated update entry exposes a zero-argument `createPatch()` already
+bound to its compiled merge. It executes frames through the same nonce-bearing
+script path as document resumes, validates their fills, and applies them. MIME,
+same-origin routing, build
 identity, and fallback checks are part of the protocol boundary.
 
 ## Applying matched structure

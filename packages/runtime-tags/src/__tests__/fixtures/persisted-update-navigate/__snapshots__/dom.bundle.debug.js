@@ -16,7 +16,10 @@ const $update = (patch, live) => {
 	}
 	if ("BranchScopes:#ul/5" in patch) $for_update(live, [patch["BranchScopes:#ul/5"], "#LoopKey"]);
 };
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // tags/price.marko
 const $template$1 = "<span class=price>$<!></span>";

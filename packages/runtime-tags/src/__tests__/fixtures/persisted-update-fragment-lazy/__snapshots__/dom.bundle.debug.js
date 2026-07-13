@@ -5,7 +5,10 @@ const $update$1 = (patch, live) => {
 	if ("open" in patch) _update_seed(live, $open_seed, patch["open"]);
 	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
-var layout_marko_update_default = _resume("__tests__/tags/layout.marko_0_update", $update$1);
+const _merge$1 = _resume("__tests__/tags/layout.marko_0_update", $update$1);
+function createPatch$1() {
+	return createPatch$2(_merge$1);
+}
 
 // template.marko.update.mjs
 _load_ready("ready:__tests__/tags/gadget.marko", /*@__PURE__*/ _load_idle_trigger()(() => import("./v:gadget.marko.setup.mjs")));
@@ -17,10 +20,13 @@ const $Detail_content__update = (patch, live) => {
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
-	if ("#childScope/2" in patch) layout_marko_update_default(patch["#childScope/2"], live["#childScope/2"]);
+	if ("#childScope/2" in patch) _merge$1(patch["#childScope/2"], live["#childScope/2"]);
 };
 _update_content("__tests__/template.marko_2_content", $Detail_content__update);
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$2(_merge);
+}
 
 // tags/gadget.marko.update.mjs
 const $taps_seed = _update_signal("__tests__/tags/gadget.marko_0_taps/var");
@@ -29,7 +35,10 @@ const $update = (patch, live) => {
 	if ("taps" in patch) _update_seed(live, $taps_seed, patch["taps"]);
 	_update_scope(patch, live);
 };
-var gadget_marko_update_default = _resume("__tests__/tags/gadget.marko_0_update", $update);
+const _merge = _resume("__tests__/tags/gadget.marko_0_update", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // tags/gadget.marko
 const $template = "<div class=gadget><span class=gadget__label> </span><button class=gadget__tap>taps <!></button></div>";

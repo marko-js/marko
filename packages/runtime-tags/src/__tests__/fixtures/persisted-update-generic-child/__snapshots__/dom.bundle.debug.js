@@ -5,7 +5,10 @@ const $update$1 = (patch, live) => {
 	if ("on" in patch) _update_seed(live, $on_seed, patch["on"]);
 	_update_scope(patch, live);
 };
-var toggle_marko_update_default = _resume("__tests__/tags/toggle.marko_0_update", $update$1);
+const _merge$1 = _resume("__tests__/tags/toggle.marko_0_update", $update$1);
+function createPatch$1() {
+	return createPatch$2(_merge$1);
+}
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
@@ -13,9 +16,12 @@ const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	_update_scope(patch, live);
-	if ("#childScope/4" in patch) toggle_marko_update_default(patch["#childScope/4"], live["#childScope/4"]);
+	if ("#childScope/4" in patch) _merge$1(patch["#childScope/4"], live["#childScope/4"]);
 };
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$2(_merge);
+}
 
 // tags/badge.marko
 const $template$3 = "<span> </span>";

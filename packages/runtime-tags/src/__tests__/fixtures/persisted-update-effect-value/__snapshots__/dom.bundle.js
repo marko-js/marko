@@ -14,4 +14,7 @@ const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("d" in patch) $label_update(live, patch["d"]);
 };
-var template_marko_update_default = _resume("a2", $update);
+const _merge = _resume("a2", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

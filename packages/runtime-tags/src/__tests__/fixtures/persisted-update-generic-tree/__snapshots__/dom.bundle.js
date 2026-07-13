@@ -27,14 +27,14 @@ const $update$2 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("c" in patch) _update_seed(live, $n_seed, patch["c"]);
 };
-var counter_marko_update_default = _resume("d2", $update$2);
+const _merge$2 = _resume("d2", $update$2);
 
 // tags/widget.marko.update.mjs
 const $update$1 = (patch, live) => {
 	_update_scope(patch, live);
-	if ("b" in patch) counter_marko_update_default(patch["b"], live["b"]);
+	if ("b" in patch) _merge$2(patch["b"], live["b"]);
 };
-var widget_marko_update_default = _resume("e0", $update$1);
+const _merge$1 = _resume("e0", $update$1);
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("a1");
@@ -42,6 +42,9 @@ const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("l" in patch) _update_seed(live, $count_seed, patch["l"]);
 	_update_scope(patch, live);
-	if ("d" in patch) widget_marko_update_default(patch["d"], live["d"]);
+	if ("d" in patch) _merge$1(patch["d"], live["d"]);
 };
-var template_marko_update_default = _resume("a2", $update);
+const _merge = _resume("a2", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

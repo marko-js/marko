@@ -19,7 +19,7 @@ const $update$1 = (patch, live) => {
 	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);
 	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
-var layout_marko_update_default = _resume("c3", $update$1);
+const _merge$1 = _resume("c3", $update$1);
 
 // template.marko.update.mjs
 _load_ready("_b", /*@__PURE__*/ _load_idle_trigger()(() => import("./v:gadget.marko.setup.mjs")));
@@ -31,10 +31,13 @@ const $Detail_content__update = (patch, live) => {
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("d" in patch) _update_seed(live, $count_seed, patch["d"]);
-	if ("c" in patch) layout_marko_update_default(patch["c"], live["c"]);
+	if ("c" in patch) _merge$1(patch["c"], live["c"]);
 };
 _update_content("a3", $Detail_content__update);
-var template_marko_update_default = _resume("a4", $update);
+const _merge = _resume("a4", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // tags/gadget.marko.update.mjs
 const $taps_seed = _update_signal("b1");
@@ -43,7 +46,10 @@ const $update = (patch, live) => {
 	if ("g" in patch) _update_seed(live, $taps_seed, patch["g"]);
 	_update_scope(patch, live);
 };
-var gadget_marko_update_default = _resume("b2", $update);
+const _merge = _resume("b2", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // tags/gadget.marko
 const $template = "<div class=gadget><span class=gadget__label> </span><button class=gadget__tap>taps <!></button></div>";

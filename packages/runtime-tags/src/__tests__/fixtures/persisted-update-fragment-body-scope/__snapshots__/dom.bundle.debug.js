@@ -4,20 +4,26 @@ const $update$2 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("input_onReady" in patch) $input_onReady_update(live, patch["input_onReady"]);
 };
-var mounter_marko_update_default = _resume("__tests__/tags/mounter.marko_0_update", $update$2);
+const _merge$2 = _resume("__tests__/tags/mounter.marko_0_update", $update$2);
+function createPatch$2() {
+	return createPatch$3(_merge$2);
+}
 
 // tags/layout.marko.update.mjs
 const $update$1 = (patch, live) => {
 	if ("ConditionalRenderer:#text/0" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/0", "BranchScopes:#text/0");
 };
-var layout_marko_update_default = _resume("__tests__/tags/layout.marko_0_update", $update$1);
+const _merge$1 = _resume("__tests__/tags/layout.marko_0_update", $update$1);
+function createPatch$1() {
+	return createPatch$3(_merge$1);
+}
 
 // template.marko.update.mjs
 const $ready_seed = _update_signal("__tests__/template.marko_5_ready/var");
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $await_content__update = (patch, live) => {
 	if ("ready" in patch) _update_seed(live, $ready_seed, patch["ready"]);
-	if ("#childScope/0" in patch) mounter_marko_update_default(patch["#childScope/0"], live["#childScope/0"]);
+	if ("#childScope/0" in patch) _merge$2(patch["#childScope/0"], live["#childScope/0"]);
 	_update_scope(patch, live);
 };
 const $try_content__update = (patch, live) => {
@@ -29,10 +35,13 @@ const $Reports_content__update = (patch, live) => {
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
-	if ("#childScope/2" in patch) layout_marko_update_default(patch["#childScope/2"], live["#childScope/2"]);
+	if ("#childScope/2" in patch) _merge$1(patch["#childScope/2"], live["#childScope/2"]);
 };
 _update_content("__tests__/template.marko_2_content", $Reports_content__update);
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$3(_merge);
+}
 
 // data.js
 function getData(range) {

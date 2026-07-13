@@ -12,7 +12,7 @@ enableBranchesPersisted();
 const $update$1 = (patch, live) => {
 	if ("Da" in patch) _update_dynamic(patch, live, "Da", "Aa");
 };
-var layout_marko_update_default = _resume("b1", $update$1);
+const _merge$1 = _resume("b1", $update$1);
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("a1");
@@ -22,9 +22,12 @@ const $Widget_content__update = (patch, live) => {
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("d" in patch) _update_seed(live, $count_seed, patch["d"]);
-	if ("c" in patch) layout_marko_update_default(patch["c"], live["c"]);
+	if ("c" in patch) _merge$1(patch["c"], live["c"]);
 };
 _update_content("a5", _update_scope);
 _update_content("a4", $Widget_content__update);
 _update_content("a2", _update_scope);
-var template_marko_update_default = _resume("a8", $update);
+const _merge = _resume("a8", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

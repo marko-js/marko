@@ -6,7 +6,10 @@ const $update$3 = (patch, live) => {
 	if ("value" in patch) _update_seed(live, $value_seed, patch["value"]);
 	if ("input_name" in patch) $input_name_update(live, patch["input_name"]);
 };
-var shared_list_marko_update_default = _resume("__tests__/tags/shared-list.marko_0_update", $update$3);
+const _merge$3 = _resume("__tests__/tags/shared-list.marko_0_update", $update$3);
+function createPatch$3() {
+	return createPatch$4(_merge$3);
+}
 
 // tags/actions.marko.update.mjs
 const $added_seed = _update_signal("__tests__/tags/actions.marko_0_added/var");
@@ -15,9 +18,12 @@ const $update$2 = (patch, live) => {
 	_update_pair(patch, live);
 	if ("added" in patch) _update_seed(live, $added_seed, patch["added"]);
 	if ("productId" in patch) $productId_update(live, patch["productId"]);
-	if ("#childScope/0" in patch) shared_list_marko_update_default(patch["#childScope/0"], live["#childScope/0"]);
+	if ("#childScope/0" in patch) _merge$3(patch["#childScope/0"], live["#childScope/0"]);
 };
-var actions_marko_update_default = _resume("__tests__/tags/actions.marko_0_update", $update$2);
+const _merge$2 = _resume("__tests__/tags/actions.marko_0_update", $update$2);
+function createPatch$2() {
+	return createPatch$4(_merge$2);
+}
 
 // tags/layout.marko.update.mjs
 const $open_seed = _update_signal("__tests__/tags/layout.marko_0_open/var");
@@ -26,7 +32,10 @@ const $update$1 = (patch, live) => {
 	if ("open" in patch) _update_seed(live, $open_seed, patch["open"]);
 	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
-var layout_marko_update_default = _resume("__tests__/tags/layout.marko_0_update", $update$1);
+const _merge$1 = _resume("__tests__/tags/layout.marko_0_update", $update$1);
+function createPatch$1() {
+	return createPatch$4(_merge$1);
+}
 
 // template.marko.update.mjs
 const $for_update = _update_for("#ul/0", "__tests__/template.marko_12_content/update", (branch, args) => _update_scope(args[0], branch));
@@ -42,7 +51,7 @@ const $try_content__update = (patch, live) => {
 };
 const $else_content2__update = (patch, live) => {
 	_update_scope(patch, live);
-	if ("#childScope/3" in patch) actions_marko_update_default(patch["#childScope/3"], live["#childScope/3"]);
+	if ("#childScope/3" in patch) _merge$2(patch["#childScope/3"], live["#childScope/3"]);
 	if ("BranchScopes:#text/4" in patch) _update_branch(patch, live, "#text/4", $try_content__update);
 };
 const $Item_content__update = (patch, live) => {
@@ -58,17 +67,20 @@ const $Item_content__update = (patch, live) => {
 };
 const $Cart_content__update = (patch, live) => {
 	if ("products" in patch) _update_seed(live, $products_seed, patch["products"]);
-	if ("#childScope/0" in patch) shared_list_marko_update_default(patch["#childScope/0"], live["#childScope/0"]);
+	if ("#childScope/0" in patch) _merge$3(patch["#childScope/0"], live["#childScope/0"]);
 	if ("BranchScopes:#nav/2" in patch) $for_update2(live, [patch["BranchScopes:#nav/2"], "#LoopKey"]);
 };
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
-	if ("#childScope/2" in patch) layout_marko_update_default(patch["#childScope/2"], live["#childScope/2"]);
+	if ("#childScope/2" in patch) _merge$1(patch["#childScope/2"], live["#childScope/2"]);
 };
 _update_content("__tests__/template.marko_6_content", $Item_content__update);
 _update_content("__tests__/template.marko_1_content", $Cart_content__update);
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$4(_merge);
+}
 
 // data.js
 function getProduct(id) {

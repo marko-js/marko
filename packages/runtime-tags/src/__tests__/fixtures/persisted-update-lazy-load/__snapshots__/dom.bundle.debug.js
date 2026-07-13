@@ -8,7 +8,10 @@ const $update = (patch, live) => {
 	_update_scope(patch, live);
 	if ("ConditionalRenderer:#text/3" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/3", "BranchScopes:#text/3");
 };
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // tags/panel.marko.update.mjs
 const $hits_seed = _update_signal("__tests__/tags/panel.marko_0_hits/var");
@@ -17,7 +20,10 @@ const $update = (patch, live) => {
 	if ("hits" in patch) _update_seed(live, $hits_seed, patch["hits"]);
 	_update_scope(patch, live);
 };
-var panel_marko_update_default = _resume("__tests__/tags/panel.marko_0_update", $update);
+const _merge = _resume("__tests__/tags/panel.marko_0_update", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // tags/panel.marko
 const $template = "<button class=panel><!> hit <!></button>";

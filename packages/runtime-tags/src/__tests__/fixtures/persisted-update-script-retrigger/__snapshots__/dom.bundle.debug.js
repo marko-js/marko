@@ -5,7 +5,10 @@ const $update = (patch, live) => {
 	if ("mirror" in patch) _update_seed(live, $mirror_seed, patch["mirror"]);
 	_update_scope(patch, live);
 };
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // template.marko
 const $template = "<button class=take>take</button><p class=mirror><!> in stock</p><p class=server>server says <!></p>";

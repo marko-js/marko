@@ -7,7 +7,10 @@ const $update = (patch, live) => {
 };
 _update_content("__tests__/template.marko_2_content", _update_scope);
 _update_content("__tests__/template.marko_1_content", _update_scope);
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // data.js
 const getNote = typeof window === "undefined" ? (topic) => `${topic} notes` : undefined;

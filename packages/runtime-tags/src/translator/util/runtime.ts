@@ -66,6 +66,7 @@ const pureDOMFunctions = new Set<string>([
 ] satisfies DOMRuntimeHelpers[]);
 
 const updateDOMFunctions = new Set<string>([
+  "createPatch",
   "_load_ready",
   "_update_branch",
   "_update_content",

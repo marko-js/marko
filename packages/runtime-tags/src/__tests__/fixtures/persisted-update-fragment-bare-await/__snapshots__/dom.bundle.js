@@ -16,4 +16,7 @@ const $update = (patch, live) => {
 	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
 _update_content("a4", $Reports_content__update);
-var template_marko_update_default = _resume("a5", $update);
+const _merge = _resume("a5", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

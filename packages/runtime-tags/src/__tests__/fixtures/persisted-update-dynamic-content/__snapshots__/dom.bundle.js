@@ -48,7 +48,7 @@ const $update$1 = (patch, live) => {
 	if ("g" in patch) _update_seed(live, $open_seed, patch["g"]);
 	if ("Dc" in patch) _update_dynamic(patch, live, "Dc", "Ac");
 };
-var layout_marko_update_default = _resume("b3", $update$1);
+const _merge$1 = _resume("b3", $update$1);
 
 // template.marko.update.mjs
 const $for_update = _update_for(0, "a3", (branch, args) => _update_scope(args[0], branch));
@@ -65,8 +65,11 @@ const $update = (patch, live) => {
 	if ("l" in patch) live["l"] = patch["l"];
 	if ("m" in patch) live["m"] = patch["m"];
 	_update_scope(patch, live);
-	if ("d" in patch) layout_marko_update_default(patch["d"], live["d"]);
+	if ("d" in patch) _merge$1(patch["d"], live["d"]);
 };
 _update_content("a4", $Specs_content__update);
 _update_content("a2", _update_scope);
-var template_marko_update_default = _resume("a5", $update);
+const _merge = _resume("a5", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

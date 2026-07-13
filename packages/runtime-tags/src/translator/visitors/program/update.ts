@@ -116,11 +116,26 @@ export default {
       }
       // Built before imports are collected below -- `callRuntime` may add
       // the `_resume` import to the program body.
-      const defaultExport = t.exportDefaultDeclaration(
-        callRuntime(
-          "_resume",
-          t.stringLiteral(getResumeRegisterId(rootSection, "update")),
-          rootIdentifier,
+      const mergeIdentifier = program.scope.generateUidIdentifier("merge");
+      const mergeDeclaration = t.variableDeclaration("const", [
+        t.variableDeclarator(
+          mergeIdentifier,
+          callRuntime(
+            "_resume",
+            t.stringLiteral(getResumeRegisterId(rootSection, "update")),
+            rootIdentifier,
+          ),
+        ),
+      ]);
+      const patchExport = t.exportNamedDeclaration(
+        t.functionDeclaration(
+          t.identifier("createPatch"),
+          [],
+          t.blockStatement([
+            t.returnStatement(
+              callRuntime("createPatch", t.cloneNode(mergeIdentifier)),
+            ),
+          ]),
         ),
       );
       const body: t.Statement[] = [
@@ -164,26 +179,18 @@ export default {
           );
         }
       });
-      body.push(defaultExport);
-      // Re-export the appliers so consumers (the client router) need no
-      // knowledge of the runtime module path this entry compiled against (debug
-      // vs optimized). `createPatch` is the per-navigation streaming parser and
-      // applier (one call per response frame); `have` (runtime `_have`) builds the
-      // possession echo the router sends as `x-marko-have`.
+      body.push(
+        mergeDeclaration,
+        t.exportDefaultDeclaration(t.cloneNode(mergeIdentifier)),
+        patchExport,
+      );
+      // `have` (runtime `_have`) builds the possession echo the router sends as
+      // `x-marko-have`. The generated `createPatch()` above closes over this
+      // entry's merge so the router cannot pair it with another route.
       body.push(
         t.exportNamedDeclaration(
           null,
-          [
-            t.exportSpecifier(
-              t.identifier("applyUpdate"),
-              t.identifier("applyUpdate"),
-            ),
-            t.exportSpecifier(
-              t.identifier("createPatch"),
-              t.identifier("createPatch"),
-            ),
-            t.exportSpecifier(t.identifier("_have"), t.identifier("have")),
-          ],
+          [t.exportSpecifier(t.identifier("_have"), t.identifier("have"))],
           t.stringLiteral(getPersistedRuntimePath()),
         ),
       );

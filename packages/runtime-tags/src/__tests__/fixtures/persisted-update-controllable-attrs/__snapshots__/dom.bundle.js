@@ -24,11 +24,14 @@ const $update$1 = (patch, live) => {
 	if ("h" in patch) _update_seed(live, $qty_seed, patch["h"]);
 	_update_scope(patch, live);
 };
-var item_form_marko_update_default = _resume("b3", $update$1);
+const _merge$1 = _resume("b3", $update$1);
 
 // template.marko.update.mjs
 const $update = (patch, live) => {
 	_update_scope(patch, live);
-	if ("c" in patch) item_form_marko_update_default(patch["c"], live["c"]);
+	if ("c" in patch) _merge$1(patch["c"], live["c"]);
 };
-var template_marko_update_default = _resume("a0", $update);
+const _merge = _resume("a0", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

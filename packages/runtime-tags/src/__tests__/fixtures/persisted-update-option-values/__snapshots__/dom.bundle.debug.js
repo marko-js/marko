@@ -6,7 +6,10 @@ const $update = (patch, live) => {
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
 	if ("BranchScopes:#select/2" in patch) $for_update(live, [patch["BranchScopes:#select/2"], "#LoopKey"]);
 };
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // template.marko
 const $template = "<button>clicked <!></button><select name=sort></select>";

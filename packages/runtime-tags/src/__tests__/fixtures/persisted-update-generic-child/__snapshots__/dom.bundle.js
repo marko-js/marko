@@ -25,7 +25,7 @@ const $update$1 = (patch, live) => {
 	if ("g" in patch) _update_seed(live, $on_seed, patch["g"]);
 	_update_scope(patch, live);
 };
-var toggle_marko_update_default = _resume("d2", $update$1);
+const _merge$1 = _resume("d2", $update$1);
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("a1");
@@ -33,6 +33,9 @@ const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("o" in patch) _update_seed(live, $count_seed, patch["o"]);
 	_update_scope(patch, live);
-	if ("e" in patch) toggle_marko_update_default(patch["e"], live["e"]);
+	if ("e" in patch) _merge$1(patch["e"], live["e"]);
 };
-var template_marko_update_default = _resume("a2", $update);
+const _merge = _resume("a2", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

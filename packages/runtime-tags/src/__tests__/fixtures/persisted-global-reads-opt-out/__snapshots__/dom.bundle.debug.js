@@ -13,7 +13,10 @@ const $update = (patch, live) => {
 	}
 	$globals_update(live);
 };
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // template.marko
 const $template = "<h1> </h1><a>link</a><button> </button><section></section>";

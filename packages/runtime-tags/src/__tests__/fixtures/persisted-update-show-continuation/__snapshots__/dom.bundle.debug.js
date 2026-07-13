@@ -5,7 +5,10 @@ const $update = (patch, live) => {
 	if ("n" in patch) _update_seed(live, $n_seed, patch["n"]);
 	_update_scope(patch, live);
 };
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // template.marko
 const $template = "<h1> </h1><button class=inc>count <!></button><!><p class=detail> </p><span class=extra> </span><!><!>";

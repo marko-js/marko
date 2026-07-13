@@ -13,14 +13,14 @@
     },
     "update.js": {
       "total": {
-        "min": 10749,
-        "brotli": 4375
+        "min": 10644,
+        "brotli": 4340
       },
       "files": {
-        "tags/shared-list.marko.update.mjs": 402,
-        "tags/actions.marko.update.mjs": 468,
-        "tags/layout.marko.update.mjs": 346,
-        "template.marko.update.mjs": 1936
+        "tags/shared-list.marko.update.mjs": 380,
+        "tags/actions.marko.update.mjs": 426,
+        "tags/layout.marko.update.mjs": 329,
+        "template.marko.update.mjs": 1910
       }
     },
     "shared-list.mjs": {

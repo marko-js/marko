@@ -29,7 +29,10 @@ const $update = (patch, live) => {
 		if ($patchBranch && $liveBranch && $branchMerge) $branchMerge($patchBranch, $liveBranch);
 	}
 };
-var template_marko_update_default = _resume("a6", $update);
+const _merge = _resume("a6", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // data.ts
 const REGIONS = [

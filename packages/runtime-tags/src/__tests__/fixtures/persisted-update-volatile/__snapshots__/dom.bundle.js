@@ -12,4 +12,7 @@ const $update = (patch, live) => {
 	if ("i" in patch) _update_seed(live, $count_seed, patch["i"]);
 	_update_scope(patch, live);
 };
-var template_marko_update_default = _resume("a2", $update);
+const _merge = _resume("a2", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}

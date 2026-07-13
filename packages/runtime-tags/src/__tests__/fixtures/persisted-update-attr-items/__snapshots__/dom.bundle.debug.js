@@ -3,16 +3,22 @@ const $for_update = _update_for("#div/0", "__tests__/tags/chip-list.marko_1_cont
 const $update$1 = (patch, live) => {
 	if ("BranchScopes:#div/0" in patch) $for_update(live, [patch["BranchScopes:#div/0"], "#LoopKey"]);
 };
-var chip_list_marko_update_default = _resume("__tests__/tags/chip-list.marko_0_update", $update$1);
+const _merge$1 = _resume("__tests__/tags/chip-list.marko_0_update", $update$1);
+function createPatch$1() {
+	return createPatch$2(_merge$1);
+}
 
 // template.marko.update.mjs
 const $count_seed = _update_signal("__tests__/template.marko_0_count/var");
 const $update = (patch, live) => {
 	_update_pair(patch, live);
 	if ("count" in patch) _update_seed(live, $count_seed, patch["count"]);
-	if ("#childScope/2" in patch) chip_list_marko_update_default(patch["#childScope/2"], live["#childScope/2"]);
+	if ("#childScope/2" in patch) _merge$1(patch["#childScope/2"], live["#childScope/2"]);
 };
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$2(_merge);
+}
 
 // data.js
 function getCategories() {

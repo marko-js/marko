@@ -9,7 +9,10 @@ const $update = (patch, live) => {
 	if ("list" in patch) _update_seed(live, $list_seed, patch["list"]);
 	_update_scope(patch, live);
 };
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // template.marko
 const $template = "<h1> </h1><button class=toggle>toggle</button><button class=count>clicked <!></button><!><ul class=items></ul><button class=add>add</button>";

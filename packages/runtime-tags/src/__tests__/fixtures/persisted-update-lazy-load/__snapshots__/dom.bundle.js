@@ -15,7 +15,10 @@ const $update = (patch, live) => {
 	_update_scope(patch, live);
 	if ("Dd" in patch) _update_dynamic(patch, live, "Dd", "Ad");
 };
-var template_marko_update_default = _resume("a3", $update);
+const _merge = _resume("a3", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // tags/panel.marko.update.mjs
 const $hits_seed = _update_signal("b1");
@@ -24,7 +27,10 @@ const $update = (patch, live) => {
 	if ("g" in patch) _update_seed(live, $hits_seed, patch["g"]);
 	_update_scope(patch, live);
 };
-var panel_marko_update_default = _resume("b2", $update);
+const _merge = _resume("b2", $update);
+function createPatch() {
+	return createPatch$1(_merge);
+}
 
 // tags/panel.marko
 const $template = "<button class=panel><!> hit <!></button>";

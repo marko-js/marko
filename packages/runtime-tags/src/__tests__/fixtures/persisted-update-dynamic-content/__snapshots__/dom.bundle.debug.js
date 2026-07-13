@@ -5,7 +5,10 @@ const $update$1 = (patch, live) => {
 	if ("open" in patch) _update_seed(live, $open_seed, patch["open"]);
 	if ("ConditionalRenderer:#text/2" in patch) _update_dynamic(patch, live, "ConditionalRenderer:#text/2", "BranchScopes:#text/2");
 };
-var layout_marko_update_default = _resume("__tests__/tags/layout.marko_0_update", $update$1);
+const _merge$1 = _resume("__tests__/tags/layout.marko_0_update", $update$1);
+function createPatch$1() {
+	return createPatch$2(_merge$1);
+}
 
 // template.marko.update.mjs
 const $for_update = _update_for("#ul/0", "__tests__/template.marko_3_content/update", (branch, args) => _update_scope(args[0], branch));
@@ -22,11 +25,14 @@ const $update = (patch, live) => {
 	if ("Overview" in patch) live["Overview"] = patch["Overview"];
 	if ("Specs" in patch) live["Specs"] = patch["Specs"];
 	_update_scope(patch, live);
-	if ("#childScope/3" in patch) layout_marko_update_default(patch["#childScope/3"], live["#childScope/3"]);
+	if ("#childScope/3" in patch) _merge$1(patch["#childScope/3"], live["#childScope/3"]);
 };
 _update_content("__tests__/template.marko_2_content", $Specs_content__update);
 _update_content("__tests__/template.marko_1_content", _update_scope);
-var template_marko_update_default = _resume("__tests__/template.marko_0_update", $update);
+const _merge = _resume("__tests__/template.marko_0_update", $update);
+function createPatch() {
+	return createPatch$2(_merge);
+}
 
 // tags/layout.marko
 const $template$1 = "<aside><button class=toggle> </button></aside><section><!></section>";
