@@ -8,6 +8,6 @@ var template_default = _template("a", (input) => {
 		"c"
 	], (item) => {
 		_scope_id();
-		_html(`<div>${item ? _escape(`${_to_text(item)}`) : ""}</div>`);
+		_html(`<div>${item ? _escape(item) : ""}</div>`);
 	});
 }, 1);

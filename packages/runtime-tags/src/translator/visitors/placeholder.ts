@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { isVoid } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
+import { injectTextCoercion, kRawText } from "../util/body-to-text-literal";
 import evaluate from "../util/evaluate";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isNonHTMLText } from "../util/is-non-html-text";
@@ -94,6 +95,10 @@ export default {
 
       const { node } = placeholder;
       const { value } = node;
+      // Restore `_to_text` on a flattened `<if>` now that the output is known.
+      if (node.extra?.[kRawText]) {
+        injectTextCoercion(value);
+      }
       const valueExtra = evaluate(value);
       const { confident, computed } = valueExtra;
 

@@ -8,7 +8,7 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
-import { bodyToTextLiteral } from "../util/body-to-text-literal";
+import { bodyToRawTextLiteral, kRawText } from "../util/body-to-text-literal";
 import { getAccessorPrefix } from "../util/get-accessor-char";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
@@ -468,9 +468,13 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
   }
 
   let expr: t.Expression = t.stringLiteral("");
+  let rawText = false;
   for (let i = branches.length; i--;) {
     const branchTag = branches[i];
-    const text = bodyToTextLiteral(branchTag.node.body);
+    const text = bodyToRawTextLiteral(branchTag.node.body);
+    // A template literal means static text concatenated with a raw
+    // interpolation, which translate must still coerce.
+    rawText ||= t.isTemplateLiteral(text);
     expr = isCoreTagName(branchTag, "else")
       ? text
       : t.conditionalExpression(branchTag.node.attributes[0].value, text, expr);
@@ -479,7 +483,11 @@ export function flattenTextOnlyConditional(rootTag: t.NodePath<t.MarkoTag>) {
   for (let i = branches.length; i-- > 1;) {
     branches[i].remove();
   }
-  rootTag.replaceWith(t.markoPlaceholder(expr, true));
+  const placeholder = t.markoPlaceholder(expr, true);
+  if (rawText) {
+    (placeholder.extra ??= {})[kRawText] = true;
+  }
+  rootTag.replaceWith(placeholder);
 }
 
 function assertValidCondition(tag: t.NodePath<t.MarkoTag>) {

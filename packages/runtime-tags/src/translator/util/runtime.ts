@@ -12,6 +12,7 @@ import {
   _escape_style,
   _unescaped,
 } from "../../html";
+import { isTranslate } from "./get-compile-stage";
 import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
 
@@ -61,6 +62,13 @@ const pureDOMFunctions = new Set<string>([
 ] satisfies DOMRuntimeHelpers[]);
 
 export function importRuntime(name: DOMRuntimeHelpers | HTMLRuntimeHelpers) {
+  // The `dom`/`html` import path is only known at translate; emitting it into
+  // the cached, output-shared earlier AST leaks one runtime into the other.
+  if (!isTranslate()) {
+    throw new Error(
+      `\`importRuntime(${JSON.stringify(name)})\` may only be called during the translate stage.`,
+    );
+  }
   const { output } = getMarkoOpts();
   return importNamed(getFile(), getRuntimePath(output), name);
 }
