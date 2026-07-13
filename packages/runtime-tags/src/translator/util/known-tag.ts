@@ -70,6 +70,7 @@ import {
   getResumeRegisterId,
   initValue,
   setBindingSerializedValue,
+  signalHasStatements,
   writeHTMLResumeStatements,
 } from "./signals";
 import { createSectionState } from "./state";
@@ -347,7 +348,11 @@ export function knownTagTranslateDOM(
   if (node.var) {
     const varBinding = node.var.extra!.binding!;
     const source = initValue(varBinding);
-    source.register = true;
+    // Register for resume only when the child scope serializes (mirrors the HTML
+    // `_var` gate); keep it for empty signals so their `_var` decl isn't elided.
+    source.register =
+      !!getSerializeReason(tagSection, childScopeBinding) ||
+      !signalHasStatements(source);
     source.buildAssignment = (valueSection, value) => {
       const changeArgs = [
         createScopeReadExpression(childScopeBinding, valueSection),
