@@ -44,9 +44,9 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      # Coverage collection + the c8 report add ~45% to the job (the report
-      # alone is ~1 min of single-threaded remapping), so only the newest node
-      # version pays for it — coverage is version-independent for this suite.
+      # Coverage collection + the report still add to the job (the v8->istanbul
+      # remap is now fanned across cores by scripts/coverage-report.js), so only
+      # the newest node version pays for it — coverage is version-independent.
       - name: Run tests
         if: ${{ matrix.node != 26 }}
         run: npm run @ci:test:fast
@@ -57,6 +57,10 @@ jobs:
         if: ${{ matrix.node == 26 }}
         uses: codecov/codecov-action@v5
         with:
+          # Upload only the merged report; without this codecov's tree search
+          # also slurps the raw V8 dumps left in coverage/tmp (~38MB it can't use).
+          files: ./coverage/lcov.info
+          disable_search: true
           token: ${{ secrets.CODECOV_TOKEN }}
   release:
     runs-on: ubuntu-latest
