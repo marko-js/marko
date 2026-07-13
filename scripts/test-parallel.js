@@ -16,6 +16,7 @@
 // Usage: node scripts/test-parallel.js [extra mocha args...]
 //        MARKO_TEST_WORKERS=8 node scripts/test-parallel.js
 const { spawn } = require("node:child_process");
+const fs = require("node:fs");
 const os = require("node:os");
 const path = require("node:path");
 
@@ -62,6 +63,13 @@ main(process.argv.slice(2)).catch((err) => {
 });
 
 async function main(mochaArgs) {
+  // Under coverage (`NODE_V8_COVERAGE` set by @ci:test) the workers write V8
+  // dumps into this shared dir; clear any stale dumps first so a previous run's
+  // coverage can't leak into this one. `scripts/coverage-report.js` remaps them.
+  if (process.env.NODE_V8_COVERAGE) {
+    fs.rmSync(process.env.NODE_V8_COVERAGE, { recursive: true, force: true });
+    fs.mkdirSync(process.env.NODE_V8_COVERAGE, { recursive: true });
+  }
   const files = (
     await glob(SPEC_GLOB, { cwd: ROOT, absolute: true, filesOnly: true })
   ).filter((f) => !f.includes("node_modules"));
