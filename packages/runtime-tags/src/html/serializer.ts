@@ -3,6 +3,8 @@ import type { Boundary } from "./writer";
 export const K_SCOPE_ID = Symbol("Scope ID");
 const kTouchedIterator = Symbol.for("marko.touchedIterator");
 const { hasOwnProperty } = {};
+const objectProto = Object.prototype;
+const arrayProto = Array.prototype;
 const Generator = (function* () {})().constructor;
 const AsyncGenerator = (async function* () {})().constructor;
 patchIteratorNext(Generator.prototype);
@@ -610,14 +612,7 @@ function writeReferenceOr(
   parent: Reference | null,
   accessor: string,
 ) {
-  const scopeId = (val as ScopeInternals)[K_SCOPE_ID];
-
-  if (scopeId !== undefined) {
-    trackScope(state, val, scopeId);
-    state.buf.push("_(" + scopeId + ")");
-    return true;
-  }
-
+  // Scopes are handled in `writeObject`; functions/symbols never are.
   let ref = state.refs.get(val);
   if (ref) {
     if (!trackChannel(state, ref)) {
@@ -827,6 +822,14 @@ function writeObject(
 ) {
   if (val === null) return writeNull(state);
 
+  // Resolve scopes before the globals lookup (a scope is never a global).
+  const scopeId = (val as ScopeInternals)[K_SCOPE_ID];
+  if (scopeId !== undefined) {
+    trackScope(state, val, scopeId);
+    state.buf.push("_(" + scopeId + ")");
+    return true;
+  }
+
   const wellKnownObject = KNOWN_OBJECTS.get(val);
   if (wellKnownObject) {
     state.buf.push(wellKnownObject);
@@ -837,9 +840,15 @@ function writeObject(
 }
 
 function writeUnknownObject(state: State, val: object, ref: Reference) {
+  // Fast-path the common shapes by prototype identity before the
+  // `.constructor` read + switch; exotic prototypes fall through.
+  const proto = Object.getPrototypeOf(val);
+  if (proto === objectProto) return writePlainObject(state, val, ref);
+  if (proto === arrayProto) return writeArray(state, val as unknown[], ref);
+
   // The constructor is read from the prototype so an own `constructor`
   // property (e.g. parsed JSON data) cannot change how a value is written.
-  switch (Object.getPrototypeOf(val)?.constructor) {
+  switch (proto?.constructor) {
     case undefined:
       return writeNullObject(state, val, ref);
     case Object:
@@ -910,7 +919,7 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
 
 function writePlainObject(state: State, val: object, ref: Reference) {
   state.buf.push("{");
-  writeObjectProps(state, val, ref);
+  writeMaybeIterableProps(state, val, ref);
   state.buf.push("}");
   return true;
 }
@@ -1514,7 +1523,7 @@ function writeAsyncGenerator(
 
 function writeNullObject(state: State, val: object, ref: Reference) {
   state.buf.push("{");
-  state.buf.push(writeObjectProps(state, val, ref) + "__proto__:null}");
+  state.buf.push(writeMaybeIterableProps(state, val, ref) + "__proto__:null}");
   return true;
 }
 
@@ -1538,6 +1547,14 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
       }
     }
   }
+
+  return sep;
+}
+
+// Own props, plus the iterable form for user objects with `Symbol.iterator`
+// (e.g. attr tags). Scope flushes call `writeObjectProps` directly — never iterable.
+function writeMaybeIterableProps(state: State, val: object, ref: Reference) {
+  let sep = writeObjectProps(state, val, ref);
 
   if (hasSymbolIterator(val)) {
     // Attr tags (and other self first iterables) yield the object itself
@@ -1690,6 +1707,17 @@ function isCircular(
   return false;
 }
 
+const enum Char {
+  Dollar = 36, // $
+  Digit0 = 48, // 0
+  Digit9 = 57, // 9
+  UpperA = 65, // A
+  UpperZ = 90, // Z
+  Underscore = 95, // _
+  LowerA = 97, // a
+  LowerZ = 122, // z
+}
+
 export function toObjectKey(name: string) {
   if (name === "") {
     return '""';
@@ -1702,22 +1730,38 @@ export function toObjectKey(name: string) {
     return '["__proto__"]';
   }
 
-  const startChar = name[0];
-  if (isDigit(startChar)) {
-    if (startChar === "0") {
-      if (name !== "0") {
+  const len = name.length;
+  const c0 = name.charCodeAt(0);
+  if (c0 >= Char.Digit0 && c0 <= Char.Digit9) {
+    // Bare only if all-digit with no leading zero (a canonical array index).
+    if (c0 === Char.Digit0) {
+      if (len !== 1) {
         return quote(name, 1);
       }
     } else {
-      for (let i = 1; i < name.length; i++) {
-        if (!isDigit(name[i])) {
+      for (let i = 1; i < len; i++) {
+        const c = name.charCodeAt(i);
+        if (c < Char.Digit0 || c > Char.Digit9) {
           return quote(name, i);
         }
       }
     }
-  } else if (isWord(startChar)) {
-    for (let i = 1; i < name.length; i++) {
-      if (!isWordOrDigit(name[i])) {
+  } else if (
+    (c0 >= Char.LowerA && c0 <= Char.LowerZ) ||
+    (c0 >= Char.UpperA && c0 <= Char.UpperZ) ||
+    c0 === Char.Underscore ||
+    c0 === Char.Dollar
+  ) {
+    // Leading identifier char: stays bare while the rest are word/digit.
+    for (let i = 1; i < len; i++) {
+      const c = name.charCodeAt(i);
+      if (!(
+        (c >= Char.LowerA && c <= Char.LowerZ) ||
+        (c >= Char.UpperA && c <= Char.UpperZ) ||
+        (c >= Char.Digit0 && c <= Char.Digit9) ||
+        c === Char.Underscore ||
+        c === Char.Dollar
+      )) {
         return quote(name, i);
       }
     }
@@ -1925,23 +1969,6 @@ function hasOnlyZeros(typedArray: TypedArray) {
   }
 
   return true;
-}
-
-function isWordOrDigit(char: string) {
-  return isWord(char) || isDigit(char);
-}
-
-function isDigit(char: string) {
-  return char >= "0" && char <= "9";
-}
-
-function isWord(char: string) {
-  return (
-    (char >= "a" && char <= "z") ||
-    (char >= "A" && char <= "Z") ||
-    char === "_" ||
-    char === "$"
-  );
 }
 
 function patchIteratorNext(proto: Iterator<any>) {
