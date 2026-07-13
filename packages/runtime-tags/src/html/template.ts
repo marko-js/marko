@@ -186,7 +186,9 @@ class ServerRendered implements RenderedTemplate {
   }) {
     this.#read(
       (html) => {
+        // Flush per chunk so buffering transforms (eg. compression) stream.
         stream.write(html);
+        stream.flush?.();
       },
       (err) => {
         const socket = ("socket" in stream && stream.socket) as
@@ -207,31 +209,40 @@ class ServerRendered implements RenderedTemplate {
 
   toReadable() {
     let cancelled = false;
+    let started = false;
     let boundary: Boundary | undefined;
     const encoder = new TextEncoder();
-    return new ReadableStream({
-      start: (ctrl) => {
-        boundary = this.#read(
-          (html) => {
-            ctrl.enqueue(encoder.encode(html));
-          },
-          (err) => {
-            boundary = undefined;
-            if (!cancelled) {
-              ctrl.error(err);
-            }
-          },
-          () => {
-            boundary = undefined;
-            ctrl.close();
-          },
-        );
+    return new ReadableStream(
+      {
+        // Deferred to the first `pull` so wrapping this in a `Response` does
+        // not start consuming the render until it is actually read.
+        pull: (ctrl) => {
+          if (started) return;
+          started = true;
+          boundary = this.#read(
+            (html) => {
+              ctrl.enqueue(encoder.encode(html));
+            },
+            (err) => {
+              boundary = undefined;
+              if (!cancelled) {
+                ctrl.error(err);
+              }
+            },
+            () => {
+              boundary = undefined;
+              ctrl.close();
+            },
+          );
+        },
+        cancel: (reason) => {
+          cancelled = true;
+          boundary?.abort(reason);
+        },
       },
-      cancel: (reason) => {
-        cancelled = true;
-        boundary?.abort(reason);
-      },
-    });
+      // highWaterMark 0 avoids an eager pre-fill pull, preserving the deferral.
+      { highWaterMark: 0 },
+    );
   }
 
   then<TResult1 = string, TResult2 = never>(
