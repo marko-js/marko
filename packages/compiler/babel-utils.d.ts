@@ -54,6 +54,10 @@ export interface TagDefinition {
   isRepeated?: boolean;
   targetProperty?: string;
   taglibId: string;
+  /** Set when the taglib was discovered by resolving an installed package. */
+  packageName?: string;
+  /** The root directory of `packageName`, which contains all files for this tag. */
+  packageRoot?: string;
   types?: string;
   template?: string;
   renderer?: string;
@@ -303,7 +307,11 @@ export function parseTemplateLiteral(
   sourceEnd?: null | number,
 ): t.TemplateLiteral;
 
-export function resolveRelativePath(file: t.BabelFile, request: string): string;
+export function resolveRelativePath(
+  file: t.BabelFile,
+  request: string,
+  tagDef?: TagDefinition,
+): string;
 export function importDefault(
   file: t.BabelFile,
   request: string,

@@ -5,10 +5,13 @@ import { relativeImportPath } from "relative-import-path";
 
 const IMPORTS_KEY = Symbol();
 const FS_START = path.sep === "/" ? path.sep : /^(.*?:)/.exec(cwd)[1];
+const REG_NODE_MODULES = /[\\/]node_modules[\\/]/;
 
-export function resolveRelativePath(file, request) {
+export function resolveRelativePath(file, request, tagDef) {
   if (request.startsWith(FS_START)) {
-    request = relativeImportPath(file.opts.filename, request);
+    request =
+      packageImportPath(file.opts.filename, tagDef, request) ||
+      relativeImportPath(file.opts.filename, request);
   }
 
   if (file.markoOpts.optimize) {
@@ -19,6 +22,34 @@ export function resolveRelativePath(file, request) {
   }
 
   return request;
+}
+
+/**
+ * A tag installed into `node_modules` is imported through the name its package was
+ * resolved by, since its path is a realpath which may not be importable at all.
+ */
+function packageImportPath(from, tagDef, request) {
+  if (!tagDef?.packageName || !REG_NODE_MODULES.test(request)) return;
+
+  const { packageRoot } = tagDef;
+  // Within the package we stay relative, both because it always resolves and
+  // because a self reference would only work if the package exports the tag.
+  if (!isWithin(packageRoot, request) || isWithin(packageRoot, from)) return;
+
+  const subPath = path.relative(packageRoot, request);
+  return `${tagDef.packageName}/${subPath.split(path.sep).join("/")}`;
+}
+
+function isWithin(dir, filename) {
+  const rel = path.relative(dir, filename);
+  // `path.relative` walks out of the dir with `..`, or returns an absolute path
+  // when it cannot relate the two at all, eg across windows drives.
+  return (
+    !!rel &&
+    rel !== ".." &&
+    !rel.startsWith(`..${path.sep}`) &&
+    !path.isAbsolute(rel)
+  );
 }
 
 export function importDefault(file, request, nameHint) {

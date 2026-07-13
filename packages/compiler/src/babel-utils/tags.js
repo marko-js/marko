@@ -347,7 +347,8 @@ export function resolveTagImport(path, request) {
     const tagName = request.slice(1, -1);
     const tagDef = getTagDefForTagName(file, tagName);
     const tagEntry = tagDef && (tagDef.renderer || tagDef.template);
-    const relativePath = tagEntry && resolveRelativePath(file, tagEntry);
+    const relativePath =
+      tagEntry && resolveRelativePath(file, tagEntry, tagDef);
 
     if (!relativePath) {
       throw path.buildCodeFrameError(

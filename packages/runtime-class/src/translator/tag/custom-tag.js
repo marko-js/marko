@@ -49,7 +49,7 @@ export default function (path, isNullable) {
         // Normally new tags should not be added in the translate stage.
         // We make an exception here for core tags, init-components & _preserve being the primary culprits.
         // TODO: in the future refactor so this is not needed.
-        relativePath = resolveRelativePath(file, tagDef.renderer);
+        relativePath = resolveRelativePath(file, tagDef.renderer, tagDef);
       }
     }
 

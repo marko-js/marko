@@ -124,7 +124,9 @@ function find(dirname, registeredTaglibs, tagDiscoveryDirs) {
           rootPkg.__dirname,
         );
         if (taglibPath) {
-          var taglib = taglibLoader.loadTaglibFromFile(taglibPath, true);
+          // Resolving realpaths the taglib, which for a virtual store (eg pnpm) bears
+          // no relation to how it is imported, so hold onto the name it resolved by.
+          var taglib = taglibLoader.loadTaglibFromFile(taglibPath, true, name);
           addTaglib(taglib);
         }
       }

@@ -348,10 +348,11 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
   let relativePath: string | undefined;
 
   if (t.isStringLiteral(node.name)) {
+    const tagDef = getTagDef(tag);
     const template =
-      (node.extra?.featureType === "class" && getTagDef(tag)?.renderer) ||
+      (node.extra?.featureType === "class" && tagDef?.renderer) ||
       getTagTemplate(tag);
-    relativePath = template && resolveRelativePath(file, template);
+    relativePath = template && resolveRelativePath(file, template, tagDef);
   } else if (node.extra?.tagNameImported) {
     relativePath = node.extra.tagNameImported;
   }

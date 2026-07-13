@@ -26,11 +26,12 @@ function handleImport(taglib, importedTaglib) {
 }
 
 class Taglib {
-  constructor(filePath, isFromPackageJson) {
+  constructor(filePath, isFromPackageJson, packageName) {
     ok(filePath, '"filePath" expected');
     this.filePath = this.path /* deprecated */ = this.id = filePath;
     this.isFromPackageJson = isFromPackageJson === true;
     this.dirname = path.dirname(this.filePath);
+    this.packageName = packageName;
     this.scriptLang = undefined;
     this.tags = {};
     this.migrators = [];
@@ -72,6 +73,23 @@ class Taglib {
     }
     this.tags[tag.name] = tag;
     tag.taglibId = this.id || this.path;
+    this.setTagPackage(tag);
+  }
+
+  setPackageName(packageName) {
+    this.packageName = packageName;
+    for (var name in this.tags) {
+      if (hasOwnProperty.call(this.tags, name)) {
+        this.setTagPackage(this.tags[name]);
+      }
+    }
+  }
+
+  setTagPackage(tag) {
+    if (this.packageName) {
+      tag.packageName = this.packageName;
+      tag.packageRoot = this.dirname;
+    }
   }
 
   addImport(path) {

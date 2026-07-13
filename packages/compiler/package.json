@@ -76,7 +76,7 @@
     "lasso-package-root": "^1.0.1",
     "raptor-regexp": "^1.0.1",
     "raptor-util": "^3.2.0",
-    "relative-import-path": "^1.0.0",
+    "relative-import-path": "^1.0.1",
     "resolve-from": "^5.0.0",
     "self-closing-tags": "^1.0.1",
     "source-map-support": "^0.5.21"
