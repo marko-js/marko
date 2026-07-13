@@ -1013,6 +1013,7 @@ export function finalizeReferences() {
 
       forEach(binding.assignmentSections, (assignedSection) => {
         setReadsOwner(assignedSection, section);
+        // Deliberately `true`, not `binding.sources`: narrowing is a 0-byte no-op until a state-dropping pass exists.
         addOwnerSerializeReason(assignedSection, section, true);
       });
 

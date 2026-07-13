@@ -71,6 +71,7 @@ const BRANCHES_LOOKUP = new WeakMap<
 export const IfTag = {
   analyze(tag) {
     assertValidCondition(tag);
+    // Unlike `<show>`, a compile-time-constant condition is deliberately not folded: too rare to justify the branch-chain rewrite.
     if (tag.node.body.attributeTags) return;
     if (isLastBranch(tag)) {
       const branches = getBranches(tag);
