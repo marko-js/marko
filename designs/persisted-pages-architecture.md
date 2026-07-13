@@ -79,7 +79,7 @@ For an eligible navigation the adapter sends the original request with:
 The server accepts patch mode only when its matcher, route index, and build
 identity agree. Otherwise it returns a mismatch response and the client performs
 the original navigation. Patch responses use
-`Content-Type: text/marko-patch` and `Cache-Control: no-store`; they vary by live
+`Content-Type: text/javascript` and `Cache-Control: no-store`; they vary by live
 page state and must never enter a shared document cache.
 
 The server is stateless. It renders the target route from the request just as it
@@ -95,8 +95,8 @@ must seed fresh scopes and carry structural fragments. Fragments are patch
 contents, not a separately configurable behavior.
 
 The wire format is trusted application output encoded by Marko's serializer,
-not user JSON. The client uses the normal evaluator when policy permits and a
-nonce-bearing script path under a strict CSP. MIME, same-origin routing, build
+not user JSON. The client uses the same nonce-bearing script path as document
+resumes. MIME, same-origin routing, build
 identity, and fallback checks are part of the protocol boundary.
 
 ## Applying matched structure
