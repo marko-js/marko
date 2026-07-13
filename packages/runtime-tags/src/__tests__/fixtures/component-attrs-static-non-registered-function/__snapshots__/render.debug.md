@@ -10,5 +10,5 @@
 
 # Update
 ```js
-container.querySelectorAll("button").forEach(button => button.click());
+container.querySelectorAll("button").forEach((button)=>button.click());
 ```

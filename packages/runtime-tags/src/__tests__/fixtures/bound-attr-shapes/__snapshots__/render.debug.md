@@ -17,7 +17,7 @@ const input = container.querySelectorAll("input")[index];
 const window = input.ownerDocument.defaultView;
 input.value = value;
 input.dispatchEvent(new window.Event("input", {
-  bubbles: true
+bubbles: true
 }));
 ```
 ```html
@@ -43,7 +43,7 @@ const input = container.querySelectorAll("input")[index];
 const window = input.ownerDocument.defaultView;
 input.value = value;
 input.dispatchEvent(new window.Event("input", {
-  bubbles: true
+bubbles: true
 }));
 ```
 ```html

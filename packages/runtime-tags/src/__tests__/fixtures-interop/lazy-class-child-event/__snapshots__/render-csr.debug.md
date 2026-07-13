@@ -14,10 +14,8 @@ container.querySelector("#inc").click();
 
 # Update
 ```js
-const {
-defaultView
-  } = container.ownerDocument;
-  container.ownerDocument.body.dispatchEvent(new defaultView.MouseEvent("mouseover"));
+const { defaultView } = container.ownerDocument;
+container.ownerDocument.body.dispatchEvent(new defaultView.MouseEvent("mouseover"));
 ```
 
 # Update

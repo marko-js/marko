@@ -12,7 +12,7 @@ A "translator" is the Babel-plugin half of a runtime package; the compiler loads
 
 ## Commands
 
-All from repo root. Tests and tooling run directly from TS source (`~ts` Babel register hook; package `exports` point at `src/` until publish), so no build step is needed to iterate.
+All from repo root. Tests and tooling run directly from TS source (the swc register hook in `scripts/swc-register.js`, aliased `~ts`; package `exports` point at `src/` until publish), so no build step is needed to iterate.
 
 ```sh
 npm test -- --grep "runtime-tags/translator <fixture> "  # scoped test run; bail: stops at first failure

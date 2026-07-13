@@ -22,7 +22,7 @@ container.querySelector("button").click();
 ```js
 container.ownerDocument.body.dispatchEvent(new container.ownerDocument.defaultView.Event("mouseover", {
 bubbles: true
-  }));
+}));
 ```
 ```html
 <button>

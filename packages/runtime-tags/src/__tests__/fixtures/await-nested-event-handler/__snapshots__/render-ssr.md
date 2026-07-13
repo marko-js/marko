@@ -32,7 +32,7 @@ INSERT: div
 const div = container.querySelector("div");
 const window = div.ownerDocument.defaultView;
 div.dispatchEvent(new window.Event("change", {
-  bubbles: true
+bubbles: true
 }));
 ```
 ```html

@@ -15,7 +15,7 @@
 const input = container.querySelector("input");
 input.value = value;
 input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
-  bubbles: true
+bubbles: true
 }));
 ```
 ```html
@@ -34,7 +34,7 @@ REMOVE: div > span
 const input = container.querySelector("input");
 input.value = value;
 input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
-  bubbles: true
+bubbles: true
 }));
 ```
 ```html
@@ -59,7 +59,7 @@ UPDATE: div > span::text " " => "World"
 const input = container.querySelector("input");
 input.value = value;
 input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
-  bubbles: true
+bubbles: true
 }));
 ```
 ```html

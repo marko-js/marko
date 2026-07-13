@@ -26,6 +26,6 @@ const input = container.querySelectorAll("input")[2];
 const window = input.ownerDocument.defaultView;
 input.value = "typed";
 input.dispatchEvent(new window.Event("input", {
-  bubbles: true
+bubbles: true
 }));
 ```

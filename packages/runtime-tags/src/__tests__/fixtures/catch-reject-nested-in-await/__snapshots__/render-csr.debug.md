@@ -38,6 +38,6 @@ const div = container.querySelector("div");
 if (!div) return;
 const window = div.ownerDocument.defaultView;
 div.dispatchEvent(new window.Event("change", {
-  bubbles: true
+bubbles: true
 }));
 ```
