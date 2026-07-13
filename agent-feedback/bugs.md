@@ -76,3 +76,21 @@ stream in an order where the earlier callback fires before the overwrite),
 but it is one flush-ordering change away from a silent hydration freeze. A
 queue (or firing the pending callback before re-assigning) would make the
 inline runtime robust; weigh against inline-runtime byte cost.
+
+## `fromIter` drops a falsy first item
+
+`packages/runtime-tags/src/translator/util/optional.ts:209` | 2026-07-13 | impact:low | effort:low
+
+`fromIter` accumulates into `one` and branches on `else if (one)` (line 209), testing truthiness instead of presence. A first-yielded falsy item (`0`, `""`, `false`, `0n`) fails the test, so the second item overwrites it rather than promoting to `[one, item]`, silently discarding the first element. Its sibling `Opt` builders (`push`/`concat`/`filter`) all guard on `!== undefined`. Latent — no current caller feeds a falsy-first iterable — but the inconsistency is a trap. Fix with an explicit `let hasOne = false` flag (or a sentinel) so falsy items are handled like the other helpers.
+
+## `getAllKnownPropNames` enumerates only one level of `rest`
+
+`packages/runtime-tags/src/translator/util/binding-prop-tree.ts:121` | 2026-07-13 | impact:low | effort:low
+
+`getAllKnownPropNames` collects `propTree.props` keys plus `propTree.rest?.props` keys, stopping after one `rest` level, while its siblings `getKnownFromPropTree` and `hasAllKnownProps` (same file) recurse the full `rest` chain. A prop at `rest.rest.props` is thus resolved as "known" by `getKnownFromPropTree` yet absent from the name set `known-tag.ts` builds as `remaining` (`new Set(getAllKnownPropNames(propTree))`, ~lines 494/1025), which tracks known props still to emit — a missing name means that prop is never wired from the spread. Currently unreachable: no fixture builds a 2-level rest chain (instrumenting the whole suite found none), so the fix is byte-identical on every fixture. Fix: `if (propTree.rest) keys.push(...getAllKnownPropNames(propTree.rest));`.
+
+## `load` import with no default specifier crashes translate instead of a diagnostic
+
+`packages/runtime-tags/src/translator/visitors/import-declaration.ts:108` | 2026-07-13 | impact:low | effort:low
+
+The analyze pass validates that any _present_ specifiers are default specifiers (lines 91–97) but never requires one to exist, so a `load` import carrying zero specifiers passes analysis. Translate then does `node.specifiers.find(t.isImportDefaultSpecifier)!` (line 108); `.find` returns `undefined`, the `!`/destructure throws an opaque "Cannot destructure property 'local' of undefined" instead of a `buildCodeFrameError`. Fix: in the analyze block, after the specifier loop, throw a code-frame error when `!node.specifiers.some(t.isImportDefaultSpecifier)`.
