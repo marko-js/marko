@@ -1,4 +1,4 @@
-// size: 26068 (min) 9592 (brotli)
+// size: 26094 (min) 9602 (brotli)
 //#region packages/runtime-tags/dist/dom.mjs
 let empty = [],
   rest = Symbol(),
@@ -1848,7 +1848,10 @@ function _await_promise(nodeAccessor, params) {
         },
         (error) => {
           thisPromise === scope[promiseAccessor] &&
-            ((awaitCounter.i = scope[promiseAccessor] = 0),
+            ((scope[promiseAccessor] = 0),
+            tryPlaceholder && !awaitCounter.m
+              ? awaitCounter.c()
+              : (awaitCounter.i = 0),
             queueAsyncRender(scope, renderCatch, error));
         },
       ));
@@ -2579,7 +2582,7 @@ function insertLoaded(renderer, branch, marker, awaitCounter) {
 }
 function loadFailed(scope, awaitCounter) {
   return (error) => {
-    (awaitCounter && (awaitCounter.i = 0),
+    (awaitCounter && (awaitCounter.m ? (awaitCounter.i = 0) : awaitCounter.c()),
       queueAsyncRender(scope, renderCatch, error));
   };
 }

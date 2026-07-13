@@ -207,7 +207,14 @@ export function _await_promise(
       },
       (error) => {
         if (thisPromise === scope[promiseAccessor]) {
-          awaitCounter!.i = scope[promiseAccessor] = 0;
+          scope[promiseAccessor] = 0;
+          // Complete the counter to dismiss an ancestor `@placeholder` (renderCatch
+          // only unwinds the catch's own try); zero a placeholder-less or resumed one.
+          if (tryPlaceholder && !awaitCounter!.m) {
+            awaitCounter!.c();
+          } else {
+            awaitCounter!.i = 0;
+          }
           queueAsyncRender(scope, renderCatch, error);
         }
       },

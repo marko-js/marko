@@ -1,0 +1,9 @@
+import { rejectAfter } from "../../utils/resolve";
+
+client {
+  // Delays the browser-side load failure so the ancestor placeholder is shown
+  // before the rejection arrives.
+  await rejectAfter(new Error("load failed"), 2);
+}
+
+<span id="child">child</span>

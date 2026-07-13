@@ -1,0 +1,9 @@
+import Child from "./child.marko" with { load: "render" }
+
+<try>
+  <@placeholder>loading outer...</@placeholder>
+  <try>
+    <Child/>
+    <@catch|err|>caught: ${err.message}</@catch>
+  </try>
+</try>
