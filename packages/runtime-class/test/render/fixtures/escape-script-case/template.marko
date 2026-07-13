@@ -1,4 +1,6 @@
 <script>
-    var foo = ${JSON.stringify(input.foo)};
+    (function () {
+        var foo = ${JSON.stringify(input.foo)};
+    })();
 </script>
 <pre>${JSON.stringify(input.foo)}</pre>
