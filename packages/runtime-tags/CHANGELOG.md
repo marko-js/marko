@@ -1,5 +1,19 @@
 # @marko/runtime-tags
 
+## 6.3.4
+
+### Patch Changes
+
+- [#3399](https://github.com/marko-js/marko/pull/3399) [`0b2c95e`](https://github.com/marko-js/marko/commit/0b2c95e324d26e2fbee3e9cc3002d4107c3ee34e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Bridge a Class parent's declarative `on-x(...)` event bindings on a Tags API child so they fire, including across SSR resume and split (`component-browser`) parents.
+
+- [#3408](https://github.com/marko-js/marko/pull/3408) [`c889a27`](https://github.com/marko-js/marko/commit/c889a270110989c69a0db9dfd3f3b8f9c6fd576e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Make a server render's `toReadable()` lazy (it renders on first read, not on creation) and flush `pipe()` after each chunk so it streams through buffering transforms like `compression`.
+
+- [#3412](https://github.com/marko-js/marko/pull/3412) [`30dddc6`](https://github.com/marko-js/marko/commit/30dddc61012001543e0f2205bc0fdef93642c326) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix the text-only `<if>` optimization importing the output-specific `_to_text` helper during the cached pre-analyze phase, which could leak the server (HTML) runtime — including the serializer — into the client bundle. Runtime helper imports are now restricted to the translate phase.
+
+- [#3411](https://github.com/marko-js/marko/pull/3411) [`f9c24de`](https://github.com/marko-js/marko/commit/f9c24defbea7d25303da86a40937023dddb02df5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Faster server-side serialization: fast-path scope references and plain-object/array dispatch, and scan object keys by char code. Output is unchanged.
+
+- [#3409](https://github.com/marko-js/marko/pull/3409) [`e917c2d`](https://github.com/marko-js/marko/commit/e917c2d53eabdc75c47982ec516bd8b8f2a079be) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Custom tag variables whose child scope is never serialized now emit a plain, tree-shakeable signal instead of an impure `_var_resume` registration, shrinking client bundles.
+
 ## 6.3.3
 
 ### Patch Changes
